@@ -3,9 +3,14 @@
 ****************************************************/
 /obj/item/organ/internal
 	parent_bodypart = BP_CHEST
-
+	var/organ_tag = O_HEART
 	// Will be moved, removed or refactored.
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
+
+	var/damage = 0 // amount of damage to the organ
+	var/min_bruised_damage = 10
+
+	var/dead_icon
 
 
 
@@ -23,6 +28,15 @@
 		if(owner.organs_by_name[organ_tag] == src)
 			owner.organs_by_name -= organ_tag
 	return ..()
+
+/obj/item/organ/internal/proc/die()
+	if(is_robotic())
+		return
+	damage = max_damage
+	status |= ORGAN_DEAD
+	STOP_PROCESSING(SSobj, src)
+	if(owner && vital)
+		owner.death()
 
 /obj/item/organ/internal/remove(mob/living/carbon/human/M, special = 0)
 	owner = null
@@ -66,6 +80,22 @@
     insert_organ(target)
     ..()
 
+/obj/item/organ/internal/take_damage(amount, silent=0)
+	if(!isnum(silent))
+		return // prevent basic take_damage usage (TODO remove workaround)
+	if(is_robotic())
+		src.damage += (amount * 0.8)
+	else
+		src.damage += amount
+
+		//only show this if the organ is not robotic
+		if(owner && parent_bodypart && amount > 0)
+			var/obj/item/organ/external/parent = owner.get_organ(parent_bodypart)
+			if(parent && !silent)
+				owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
+	if(damage >= max_damage)
+		die()
+
 /obj/item/organ/internal/proc/rejuvenate()
 	damage = 0
 
@@ -80,6 +110,10 @@
 
 /obj/item/organ/internal/process()
 	//Process infections
+
+	//dead already, no need for more processing
+	if(status & ORGAN_DEAD)
+		return
 
 	if (is_robotic() || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic organs and bodyparts separate types instead of a flag
 		germ_level = 0
@@ -108,7 +142,8 @@
 
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
-
+		if(germ_level >= INFECTION_LEVEL_THREE)
+			die()
 
 /obj/item/organ/internal/emp_act(severity)
 	if(!is_robotic())
@@ -728,6 +763,7 @@
 	slot = "eyes"
 	var/list/eye_colour = list(0,0,0)
 	var/darksight = 2
+	var/nighteyes = FALSE
 
 /obj/item/organ/internal/eyes/proc/update_colour()
 	if(!owner)
@@ -758,6 +794,7 @@
 	name = "tajaran eyeballs"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
 	darksight = 8
+	nighteyes = TRUE
 
 /obj/item/organ/internal/eyes/unathi
 	name = "unathi eyeballs"
@@ -777,6 +814,17 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podkid"
 	item_state_world = "podkid"
+
+/obj/item/organ/internal/eyes/zombie_vision
+	name = "zombie eyes"
+	desc = "A dead set of eyes that don't blink"
+	darksight = 8
+	nighteyes = TRUE
+
+/obj/item/organ/internal/eyes/night_vision
+	name = "shadow eyes"
+	desc = "A spooky set of eyes that can see in the dark."
+	darksight = 8
 
 /obj/item/organ/internal/eyes/cybernetic
 	name = "cybernetic eyes"

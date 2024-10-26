@@ -10,7 +10,6 @@
 	item_state_world
 	germ_level = 0
 
-	var/organ_tag = O_HEART
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
 
 	// Strings.
@@ -27,12 +26,8 @@
 	var/obj/item/organ/external/parent // Master-limb.
 
 	// Damage vars.
-	var/damage = 0 // amount of damage to the organ
-	var/min_bruised_damage = 10
-	var/min_broken_damage = 30
-	var/max_damage
-
-	var/dead_icon
+	var/min_broken_damage = 30         // Damage before becoming broken
+	var/max_damage = 0                // Damage cap
 
 	var/sterile = 0 //can the organ be infected by germs?
 	var/requires_robotic_bodypart = FALSE
@@ -59,15 +54,6 @@
 /obj/item/organ/proc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	loc = null
 	owner = H
-
-/obj/item/organ/proc/die()
-	if(is_robotic())
-		return
-	damage = max_damage
-	status |= ORGAN_DEAD
-	STOP_PROCESSING(SSobj, src)
-	if(owner && vital)
-		owner.death()
 
 /obj/item/organ/process()
 
@@ -96,19 +82,11 @@
 			germ_level += rand(2,6)
 		if(germ_level >= INFECTION_LEVEL_TWO)
 			germ_level += rand(2,6)
-		if(germ_level >= INFECTION_LEVEL_THREE)
-			die()
-
-		if(damage >= max_damage)
-			die()
 
 	else if(owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
 		//** Handle antibiotics and curing infections
 		handle_antibiotics()
 
-	//check if we've hit max_damage
-	if(damage >= max_damage)
-		die()
 
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	set_owner(H, S)
@@ -159,19 +137,6 @@
 	else
 		return (istype(loc,/obj/structure/closet/secure_closet/freezer) || istype(loc,/obj/structure/closet/crate/freezer))
 
-/obj/item/organ/take_damage(amount, silent=0)
-	if(!isnum(silent))
-		return // prevent basic take_damage usage (TODO remove workaround)
-	if(is_robotic())
-		src.damage += (amount * 0.8)
-	else
-		src.damage += amount
-
-		//only show this if the organ is not robotic
-		if(owner && parent_bodypart && amount > 0)
-			var/obj/item/organ/external/parent = owner.get_organ(parent_bodypart)
-			if(parent && !silent)
-				owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
 
 /obj/item/organ/examine(mob/user)
 	. = ..(user)
@@ -341,9 +306,3 @@
 		if(!has_arm) //need atleast one hand to crawl
 			Stun(5)
 
-/obj/item/organ/proc/is_primary_organ(mob/living/carbon/human/O = null)
-	if (isnull(O))
-		O = owner
-	if (!istype(owner)) // You're not the primary organ of ANYTHING, bucko
-		return 0
-	return src == O.get_int_organ(organ_tag)

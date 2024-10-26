@@ -1191,10 +1191,6 @@
 	sight = initial(sight)
 	var/new_lighting_alpha = initial(lighting_alpha)
 
-	var/datum/species/S = all_species[get_species()]
-	if(S)
-		see_in_dark = S.darksight
-
 	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
 	if(changeling_aug)

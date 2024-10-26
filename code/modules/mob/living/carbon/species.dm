@@ -74,8 +74,6 @@
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
-	var/darksight = 2
-	var/nighteyes = FALSE
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -380,7 +378,6 @@
 	race_verbs = list(/mob/living/carbon/human/proc/air_sample)
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
-	darksight = 3
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
@@ -457,8 +454,6 @@
 	race_traits = list(TRAIT_NATURAL_AGILITY)
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
-	darksight = 8
-	nighteyes = TRUE
 
 	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
@@ -1166,7 +1161,6 @@
 
 /datum/species/abductor
 	name = ABDUCTOR
-	darksight = 3
 	dietflags = DIET_OMNI
 
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
@@ -1381,7 +1375,6 @@
 	heat_level_3 = 4000
 
 	blood_datum_path = /datum/dirt_cover/black_blood
-	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
 	bodypart_butcher_results = list()
@@ -1403,6 +1396,11 @@
 	,NO_EMOTION = TRUE
 	,NO_GENDERS = TRUE
 	)
+
+	has_organ = list(
+		O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
+		)
 
 	burn_mod = 2
 	brain_mod = 0
@@ -1538,8 +1536,6 @@
 
 /datum/species/zombie
 	name = ZOMBIE
-	darksight = 8
-	nighteyes = TRUE
 	dietflags = DIET_OMNI
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
@@ -1692,8 +1688,6 @@
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
 
-	darksight = 3
-
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
@@ -1738,8 +1732,6 @@
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 10
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 
-	darksight = 8
-
 	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES)
 
 	flags = list(
@@ -1767,6 +1759,7 @@
 
 	has_organ = list(
 		O_BRAIN  = /obj/item/organ/internal/brain/abomination
+		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
 		)
 	burn_mod = 0.2
 	brute_mod = 0.2
@@ -1911,7 +1904,7 @@
 	has_organ = list(
 		 O_HEART   = /obj/item/organ/internal/heart
 		,O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
 		,O_LUNGS   = /obj/item/organ/internal/lungs
 		,O_LIVER   = /obj/item/organ/internal/liver/serpentid
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
@@ -1922,7 +1915,6 @@
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 	unarmed_type = /datum/unarmed_attack/claws/serpentid
 	blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/snake
-	darksight = 8
 	offset_features = list(
 		OFFSET_UNIFORM = list(0,0),
 		OFFSET_ID = list(0,0),
@@ -2072,6 +2064,17 @@
 				NO_GENDERS = TRUE,
 				NO_FAT = TRUE,
 				)
+
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes/tajaran
+		,O_LUNGS   = /obj/item/organ/internal/lungs
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+
+
 	restricted_inventory_slots = list(SLOT_WEAR_ID, SLOT_BELT, SLOT_L_EAR, SLOT_R_EAR)
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
@@ -2080,8 +2083,6 @@
 	damage_mask = FALSE
 	min_age = 1
 	max_age = 5
-	darksight = 8
-	nighteyes = 1
 
 /datum/species/moth/on_gain(mob/living/carbon/human/H)
 	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
