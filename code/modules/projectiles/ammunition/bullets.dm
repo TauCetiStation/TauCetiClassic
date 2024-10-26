@@ -34,6 +34,21 @@
 	caliber = "Pea"
 	projectile_type = /obj/item/projectile/bullet/peabullet
 
+/obj/item/ammo_casing/pea/in_fire
+	name = "Burned pea bullet casing"
+	cases = list("обгоревший гороховый патрон", "обгоревшего горохового патрона", "обгоревшему гороховому патрону", "обгоревший гороховый патрон", "обгоревшим гороховым патроном", "обгоревшем гороховом патроне")
+	projectile_type = /obj/item/projectile/bullet/peabullet/in_fire
+
+/obj/item/ammo_casing/pea/virus
+	projectile_type = /obj/item/projectile/bullet/peabullet/virus
+
+/obj/item/ammo_casing/pea/virus/in_fire
+	name = "Burned pea bullet casing"
+	cases = list("обгоревший гороховый патрон", "обгоревшего горохового патрона", "обгоревшему гороховому патрону", "обгоревший гороховый патрон", "обгоревшим гороховым патроном", "обгоревшем гороховом патроне")
+	desc = "Гороховый патрон"
+	caliber = "Pea"
+	projectile_type = /obj/item/projectile/bullet/peabullet/virus/in_fire
+
 /obj/item/ammo_casing/c9mmr
 	desc = "Патрон от резиновой пули калибра 9мм."
 	icon_state = "casing_rubber"
@@ -227,6 +242,11 @@
 	caliber = "5.56mm"
 	icon_state = "casing_incendiary"
 	projectile_type = /obj/item/projectile/bullet/incendiary
+
+/obj/item/ammo_casing/a556/nonlethal
+	desc = "Патрон для нелетальной пули калибра 5.56 мм."
+	icon_state = "casing_rubber"
+	projectile_type = /obj/item/projectile/bullet/weakbullet/nl_rifle
 
 /obj/item/ammo_casing/a74
 	desc = "Патрон от пули калибра 7.74мм."

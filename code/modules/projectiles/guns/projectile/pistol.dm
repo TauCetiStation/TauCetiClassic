@@ -14,6 +14,11 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/silenced_pistol, /obj/item/ammo_box/magazine/silenced_pistol/nonlethal)
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced/nonlethal
+	name = "silenced pistol NL"
+	icon_state = "silenced_pistol_nl"
+	initial_mag = /obj/item/ammo_box/magazine/silenced_pistol/nonlethal
+
 /obj/item/weapon/gun/projectile/automatic/pistol/glock
 	name = "G17"
 	desc = "Полуавтоматический служебный пистолет калибра 9х19 мм. Предназначен для профессионалов."
@@ -65,6 +70,13 @@
 	initial_mag = /obj/item/ammo_box/magazine/stechkin
 	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended)
 	can_be_silenced = TRUE
+	fire_delay = 0
+	spread_increase = 0.5
+	spread_max = 1.5
+
+/obj/item/weapon/gun/projectile/automatic/pistol/stechkin/atom_init()
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/pistol/colt1911
 	desc = "Дешевая марсианская подделка Colt M1911. Использует менее смертоносные патроны 45-го калибра."
@@ -126,9 +138,76 @@
 	item_state = "peashooter"
 	origin_tech = "combat=1;materials=1"
 	initial_mag = /obj/item/ammo_box/magazine/pea
-	suitable_mags = /obj/item/ammo_box/magazine/pea
+	suitable_mags = list(/obj/item/ammo_box/magazine/pea)
 	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/update_icon()
+	if(magazine.ammo_count() < 6)
+		icon_state = "[initial(icon_state)]-[magazine.ammo_count()]"
 
 /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/attack_self(mob/living/user)
 	to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
 	return
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lighter/zippo))
+		new /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/in_fire(user.loc)
+		to_chat(user, "<span class='notice'>Горохострел обвил зажигалку намертво. Кажется, её уже не вытащить.</span>")
+		qdel(I)
+		qdel(src)
+	else
+		return ..()
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/in_fire
+	name = "Peashooter"
+	desc = "Горохострел. Стреляет горохом. У самого кончика стручка закреплена горящая зажигалка."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	icon_state = "peashooter_in_fire"
+	item_state = "peashooter_in_fire"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/pea/in_fire
+	suitable_mags = list(/obj/item/ammo_box/magazine/pea/in_fire)
+	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/in_fire/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lighter/zippo))
+		to_chat(user, "<span class='notice'>Горохострел игнорирует любые попытки добавить ещё одну зажигалку.</span>")
+	else
+		return
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus
+	name = "Virus Peashooter"
+	desc = "Горохострел Гиббингтоский. Стреляет особо большим горохом. У самого кончика стручка закреплена горящая зажигалка."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	icon_state = "peashooter_virus"
+	item_state = "peashooter_virus"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/pea/virus
+	suitable_mags = list(/obj/item/ammo_box/magazine/pea/virus)
+	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lighter/zippo))
+		new /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/in_fire(user.loc)
+		to_chat(user, "<span class='notice'>Горохострел обвил зажигалку намертво. Кажется, её уже не вытащить.</span>")
+		qdel(I)
+		qdel(src)
+	else
+		return ..()
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/in_fire
+	name = "Virus Peashooter"
+	desc = "Горохострел Гиббингтоский. Стреляет особо большим горохом."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	icon_state = "peashooter_virus_in_fire"
+	item_state = "peashooter_virus_in_fire"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/pea/virus/in_fire
+	suitable_mags = list(/obj/item/ammo_box/magazine/pea/virus/in_fire)
+	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/in_fire/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lighter/zippo))
+		to_chat(user, "<span class='notice'>Горохострел игнорирует любые попытки добавить ещё одну зажигалку.</span>")
+	else
+		return

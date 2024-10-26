@@ -218,6 +218,21 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = reagents.total_volume
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	seed_type = /obj/item/seeds/cucumberseed
+	name = "cucumber"
+	cases = list("огурец", "огурца", "огурцу", "огурец", "огурцом", "огурце")
+	desc = "Выглядит как слащавый огурчик."
+	icon_state = "cucumber"
+	item_state_world = "cucumber_world"
+	potency = 15
+	filling_color = "#598157"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cucumber/atom_init()
+	. = ..()
+	reagents.add_reagent("ethylredoxrazine", 1+round((potency / 10), 1))
+	bitesize = reagents.total_volume
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed_type = /obj/item/seeds/berryseed
 	name = "bunch of berries"
@@ -1185,6 +1200,7 @@
 	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
 	desc = "Нераскрывшийся плод горохострела, подозрительно напоминающий пистолет"
 	icon_state = "peashooter"
+	item_state_world = "peashooter_world"
 	potency = 25
 	filling_color = "#020108"
 	trash = /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
@@ -1195,6 +1211,25 @@
 	reagents.add_reagent("carbon", 1 + round(potency / 10, 1))
 	reagents.add_reagent("nitrogen", 1 + round(potency / 10, 1))
 	reagents.add_reagent("sulfur", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter/virus
+	seed_type = /obj/item/seeds/peashooter/virus
+	name = "virus peashooter"
+	cases = list("горохострел Гиббингтонский", "горохострела Гиббингтонского", "горохострелу Гиббингтонскому", "горохострел Гиббингтонский", "горохострелом Гиббингтонским", "горохостреле  Гиббингтонском")
+	desc = "Нераскрывшийся плод горохострела Гиббингтонского, подозрительно напоминающий пистолет"
+	icon_state = "peashooter_virus"
+	item_state_world = "peashooter_virus_world"
+	potency = 25
+	filling_color = "#020108"
+	trash = /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter/virus/atom_init()
+	. = ..()
+	reagents.add_reagent("potassium", 1 + round(potency / 25, 1))
+	reagents.add_reagent("carbon", 1 + round(potency / 10, 1))
+	reagents.add_reagent("iron", 1 + round(potency / 10, 1))
+	reagents.add_reagent("chlorine", 1 + round(potency / 10, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space

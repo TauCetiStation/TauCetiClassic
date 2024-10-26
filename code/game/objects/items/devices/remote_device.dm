@@ -135,6 +135,9 @@
 	icon_state = "rdc_hop"
 	region_access = list(6, 7, 57)
 
+/obj/item/device/remote_device/no_access
+	region_access = list()
+
 #undef REMOTE_OPEN
 #undef REMOTE_BOLT
 #undef REMOTE_EMERGENCY

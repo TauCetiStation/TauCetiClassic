@@ -294,6 +294,7 @@
 		sound_vol = 50
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
+	SEND_SIGNAL(src, COMSIG_HUMAN_SAY, message)
 
 /mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
 

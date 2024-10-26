@@ -80,11 +80,35 @@
 
 /obj/item/seeds/peashooter
 	name = "pack of peashooter seeds"
-	cases = list("семена Горохострела", "семян Горохострела", "семенам Горохострела", "семена Горохострела", "семенами Горохострела", "семенах Горохострела")
+	cases = list("семена Горохострела обыкновенного", "семян Горохострела обыкновенного", "семенам Горохострела обыкновенного", "семена Горохострела обыкновенного", "семенами Горохострела обыкновенного", "семенах Горохострела обыкновенного")
 	desc = "Эти семена вырастают в Горохострел"
-	icon_state = "seed-gatfruit"
+	icon_state = "seed-peashooter"
 	species = "peashooter"
 	plantname = "Peashooter Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
+	lifespan = 20
+	endurance = 20
+	maturation = 10
+	production = 10
+	yield = 2
+	potency = 60
+	growthstages = 2
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+
+/obj/item/seeds/peashooter/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/gibbingtons))
+		return
+	if(prob(holder.stage * 30))
+		mutatelist = list(/obj/item/seeds/peashooter/virus)
+		tray.mutatespecie()
+
+/obj/item/seeds/peashooter/virus
+	name = "pack of virus peashooter seeds"
+	cases = list("семена Горохострела Гиббингтонского", "семян Горохострела Гиббингтонского", "семенам Горохострела Гиббингтонского", "семена Горохострела Гиббингтонского", "семенами Горохострела Гиббингтонского", "семенах Горохострела Гиббингтонского")
+	desc = "Эти семена вырастают в Горохострел Гиббингтонский"
+	icon_state = "seed-peashooter_virus"
+	species = "peashooter_virus"
+	plantname = "Virus Peashooter Tree"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
 	lifespan = 20
 	endurance = 20
@@ -111,12 +135,13 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 5
+	mutatelist = list(/obj/item/seeds/peashooter)
 
 /obj/item/seeds/blackpepper/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
 	if(!istype(E, /datum/disease2/effect/gibbingtons))
 		return
-	if(prob(holder.stage * 10))
-		mutatelist = list(/obj/item/seeds/peashooter)
+	if(prob(holder.stage * 25))
+		mutatelist = list(/obj/item/seeds/peashooter/virus)
 		tray.mutatespecie()
 
 /obj/item/seeds/chiliseed
@@ -206,6 +231,24 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+
+/obj/item/seeds/cucumberseed
+	name = "pack of cucumber seeds"
+	cases = list("семена огурцов", "семян огурцов", "семенам огурцов", "семена огурцов", "семенами огурцов", "семенах огурцов")
+	desc = "Эти семена вырастают в огурцы."
+	icon_state = "seed-cucumber"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	species = "cucumber"
+	plantname = "Cucumbers"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	lifespan = 30
+	endurance = 20
+	maturation = 3
+	production = 4
+	yield = 4
+	potency = 4
+	plant_type = 0
+	growthstages = 4
 
 /obj/item/seeds/tobacco_space
 	name = "pack of space tobacco seeds"

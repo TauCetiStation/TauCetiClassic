@@ -477,7 +477,7 @@
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
 
 				M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
-
+				SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, M)
 				M.throw_at(target, 6, 8, attacker)
 				apply_effect(3, STUN,  M, attacker, attack_obj=attack_obj, min_value=1)
 				apply_effect(7, WEAKEN, M, attacker, attack_obj=attack_obj, min_value=1)

@@ -2,6 +2,7 @@
 	name = "personal AI device"
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pai"
+	item_state_world = "paioff_world"
 	item_state = "electronic"
 	flags = HEAR_PASS_SAY
 	w_class = SIZE_TINY
@@ -11,11 +12,11 @@
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 	var/searching = FALSE
+	var/prev_emotion = 6
 
 /obj/item/device/paicard/atom_init()
 	. = ..()
 	paicard_list += src
-	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	paicard_list -= src
@@ -300,16 +301,26 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	add_overlay("pai-happy")
+	if(icon_state != item_state_world)
+		prev_emotion = 1
+		cut_overlays()
+		add_overlay("pai-happy")
+	else
+		prev_emotion = 1
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
-	cut_overlays()
-	add_overlay("pai-off")
+	if(icon_state != item_state_world)
+		prev_emotion = 6
+		cut_overlays()
+		add_overlay("pai-off")
+	else
+		prev_emotion = 6
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
-	if(pai)
+	if(pai && icon_state != item_state_world)
 		cut_overlays()
+		prev_emotion = emotion
 		switch(emotion)
 			if(1) add_overlay("pai-happy")
 			if(2) add_overlay("pai-cat")
@@ -320,6 +331,18 @@
 			if(7) add_overlay("pai-sad")
 			if(8) add_overlay("pai-angry")
 			if(9) add_overlay("pai-what")
+	else
+		switch(emotion)
+			if(1) prev_emotion = 1
+			if(2) prev_emotion = 2
+			if(3) prev_emotion = 3
+			if(4) prev_emotion = 4
+			if(5) prev_emotion = 5
+			if(6) prev_emotion = 6
+			if(7) prev_emotion = 7
+			if(8) prev_emotion = 8
+			if(9) prev_emotion = 9
+
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")
@@ -333,3 +356,15 @@
 	. = list()
 	if(pai)
 		. += pai
+
+/obj/item/device/paicard/dropped(mob/user)
+	. = ..()
+	cut_overlays()
+	if(pai)
+		item_state_world = "pai_world"
+	else
+		item_state_world = "paioff_world"
+
+/obj/item/device/paicard/mob_pickup(mob/user, hand_index)
+	. = ..()
+	setEmotion(prev_emotion)

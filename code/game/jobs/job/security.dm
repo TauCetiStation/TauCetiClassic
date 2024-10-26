@@ -27,7 +27,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC , PLUVIAN)
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/warden
@@ -52,7 +52,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
+	restricted_species = list(TAJARAN, DIONA, VOX, IPC, PLUVIAN)
 	flags = JOB_FLAG_SECURITY
 
 /datum/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -81,7 +81,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA, IPC)
+	restricted_species = list(DIONA, IPC, PLUVIAN)
 	flags = JOB_FLAG_SECURITY
 
 /datum/job/officer
@@ -106,7 +106,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
+	restricted_species = list(DIONA, TAJARAN, VOX, IPC, PLUVIAN)
 	flags = JOB_FLAG_SECURITY
 
 /datum/job/officer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -136,7 +136,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, DIONA)
+	restricted_species = list(UNATHI, DIONA, PLUVIAN)
 	flags = JOB_FLAG_SECURITY
 
 /datum/job/cadet
@@ -161,5 +161,5 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
+	restricted_species = list(DIONA, TAJARAN, VOX, IPC, PLUVIAN)
 	flags = JOB_FLAG_SECURITY
