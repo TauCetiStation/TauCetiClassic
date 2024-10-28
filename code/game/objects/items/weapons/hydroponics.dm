@@ -25,7 +25,8 @@
 
 /obj/item/clothing/head/sunflower_crown
 	name = "sunflower crown"
-	desc = "A bright flower crown made out sunflowers that is sure to brighten up anyone's day!"
+	cases = list("венок из подсолнуха", "венка из подсолнуха", "венку из подсолнуха", "венок из подсолнуха", "венком из подсолнуха", "венке из подсолнуха")
+	desc = "Яркий венок из подсолнухов, который обязательно поднимет настроение любому!"
 	icon_state = "sunflower_crown"
 
 /*
@@ -34,7 +35,8 @@
 
 /obj/item/clothing/head/poppy_crown
 	name = "poppy crown"
-	desc = "A flower crown made out of a string of bright red poppies."
+	cases = list("маковый венок", "макового венка", "маковому венку", "маковый венок", "маковым венком", "маковом венке")
+	desc = "Венок из ярких красных маков."
 	icon_state = "poppy_crown"
 
 /*
