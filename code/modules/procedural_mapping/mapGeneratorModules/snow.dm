@@ -32,7 +32,7 @@
 			new snow_flora(T)
 
 			if(prob(1) && prob(5))
-				new /mob/living/simple_animal/hostile/mimic/copy/flora(T)
+				new /mob/living/simple_animal/hostile/bear(T)
 
 		if("mine_rocks")
 			new /obj/structure/flora/mine_rocks(T)
