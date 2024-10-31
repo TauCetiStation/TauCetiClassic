@@ -882,6 +882,25 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	mutatelist = list(/obj/item/seeds/bigtree)
+
+/obj/item/seeds/bigtree
+	name = "pack big tree"
+	desc = "It's a damn huge tree."
+	icon_state = "bigtree"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	species = "bigtree"
+	plantname = "Big Tree"
+	product_type = /obj/structure/flora/tree/jungle
+	lifespan = 80
+	endurance = 50
+	maturation = 15
+	production = 1
+	yield = 5
+	potency = 1
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
 
 /obj/item/seeds/glowshroom
 	name = "pack of glowshroom mycelium"
