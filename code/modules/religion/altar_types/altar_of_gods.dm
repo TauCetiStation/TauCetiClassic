@@ -362,7 +362,7 @@
 
 /obj/structure/altar_of_gods/proc/get_techs_list()
 	var/list/techs = list()
-	for(var/tech_name in religion.all_techs)
+	for(var/tech_name in religion.researched_techs)
 		techs += tech_name
 	return techs
 

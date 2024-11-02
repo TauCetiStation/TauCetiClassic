@@ -113,7 +113,7 @@
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
 
-/datum/religion/cult/get_tech_agent_lists()
+/datum/religion/cult/gen_tech_agent_lists()
 	..()
 	var/list/aspect_types = subtypesof(/datum/aspect)
 	for(var/type in aspect_types)

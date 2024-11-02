@@ -23,7 +23,7 @@
 	return pickweight(list(
 	/obj/item/clothing/glasses/gar/super = 5,
 	/obj/item/device/violin = 5,
-	/obj/item/device/guitar/electric= 3,
+	/obj/item/device/synth = 3,
 	/obj/item/device/guitar = 3,
 	/obj/item/weapon/survivalcapsule/elite = 1,
 	/obj/item/weapon/coin/diamond = 5,

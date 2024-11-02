@@ -107,7 +107,7 @@
 	// The whole composition of beings in religion. Contains any mobs, even dead and without mind.
 	var/list/mob/members = list()
 	// Tech_id by ref
-	var/list/all_techs = list()
+	var/list/researched_techs = list()
 	// Used for cloning and round result
 	var/list/datum/mind/members_minds = list()
 	// Easy access
@@ -615,9 +615,9 @@
 /datum/religion/proc/gen_agent_lists()
 	init_subtypes(build_agent_type, available_buildings)
 	init_subtypes(rune_agent_type, available_runes)
-	get_tech_agent_lists()
+	gen_tech_agent_lists()
 
-/datum/religion/proc/get_tech_agent_lists()
+/datum/religion/proc/gen_tech_agent_lists()
 	init_subtypes(tech_agent_type, available_techs)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
@@ -672,10 +672,10 @@
 
 /datum/religion/proc/add_tech(datum/religion_tech/tech)
 	tech.on_add(src)
-	all_techs[tech.id] = tech
+	researched_techs[tech.id] = tech
 
 /datum/religion/proc/get_tech(tech_id)
-	return all_techs[tech_id]
+	return researched_techs[tech_id]
 
 /datum/religion/proc/get_runes_by_type(rune_type)
 	var/list/valid_runes = list()
