@@ -288,7 +288,7 @@
 //The lab cage and captain's display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
 	showpiece = /obj/item/weapon/gun/energy/laser/selfcharging/captain
-	req_access = list(access_cent_specops) //this was intentional, presumably to make it slightly harder for caps to grab their gun roundstart
+	req_access =  20 //this was intentional, presumably to make it slightly harder for caps to grab their gun roundstart
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
