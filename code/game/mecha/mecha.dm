@@ -644,17 +644,21 @@
 		if(state==1)
 			state = 2
 			to_chat(user, "You undo the securing bolts.")
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		else if(state==2)
 			state = 1
 			to_chat(user, "You tighten the securing bolts.")
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		return
 	else if(isprying(W))
 		if(state==2)
 			state = 3
 			to_chat(user, "You open the hatch to the power unit")
+			playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
 		else if(state==3)
 			state=2
 			to_chat(user, "You close the hatch to the power unit")
+			playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 		return
 	else if(iscoil(W))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
@@ -663,22 +667,26 @@
 				to_chat(user, "There's not enough wire to finish the task.")
 				return
 			clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You replace the fused wires.")
 		return
 	else if(isscrewing(W))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You repair the damaged temperature controller.")
 		else if(state==3 && cell)
 			cell.forceMove(loc)
 			cell = null
 			state = 4
 			to_chat(user, "You unscrew and pry out the powercell.")
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			log_message("Powercell removed")
 		else if(state==4)
 			if(cell)
 				state=3
 				to_chat(user, "You screw the cell in place")
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			else
 				var/list/actions = list()
 				if(dna_lockable)
@@ -695,12 +703,14 @@
 						if("Exosuit DNA Scanner")
 							if(dna_lockable)
 								to_chat(user, "You unscrew DNA scanner from [name]")
+								playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 								dna_lockable = FALSE
 								dna = null
 								new /obj/item/mecha_parts/dna_scanner(loc)
 						if("Exosuit Tracker")
 							if(tracking && tracking.loc == src)
 								to_chat(user, "You unscrew [tracking.name] from [name]")
+								playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 								tracking.forceMove(loc)
 
 
@@ -711,6 +721,7 @@
 		if(state==4)
 			if(!cell)
 				to_chat(user, "You install the powercell")
+				playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 				user.drop_from_inventory(W, src)
 				cell = W
 				log_message("Powercell installed")
