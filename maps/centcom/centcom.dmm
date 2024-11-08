@@ -17,11 +17,12 @@
 /turf/environment/space,
 /area/space)
 "aac" = (
-/obj/item/weapon/reagent_containers/food/snacks/carrotfries,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/structure/window/thin/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/cakeslice,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /obj/structure/table,
-/obj/item/toy/plushie/white_cat{
-	name = "Plushie Scinia"
+/obj/item/toy/plushie/space_whale{
+	name = "Plushie Oculus"
 	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
@@ -1016,10 +1017,6 @@
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
-"acw" = (
-/obj/item/weapon/flora/pottedplant/orientaltree,
-/turf/simulated/shuttle/floor/evac,
-/area/shuttle/escape/centcom)
 "acx" = (
 /obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 1
@@ -1595,13 +1592,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/item/stack/sheet/metal{
-	amount = 15
-	},
+/obj/structure/closet/firecloset/full,
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
 "aeh" = (
@@ -1754,10 +1745,15 @@
 /area/centcom/tdome)
 "aeB" = (
 /obj/structure/window/thin/reinforced,
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
+/obj/item/weapon/reagent_containers/food/snacks/carrotfries,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/structure/table,
+/obj/item/toy/plushie/white_cat{
+	name = "Plushie Scinia"
 	},
-/turf/simulated/shuttle/floor/evac,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "sign_2"
+	},
 /area/shuttle/escape/centcom)
 "aeC" = (
 /turf/simulated/shuttle/floor/evac/sec1,
@@ -1859,13 +1855,18 @@
 /area/shuttle/escape/centcom)
 "aeU" = (
 /obj/structure/window/thin/reinforced,
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/item/weapon/reagent_containers/food/snacks/friedbanana,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
+/obj/structure/table,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor/evac,
+/obj/item/toy/plushie/tabby_cat{
+	name = "Plushie Bucherck"
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "sign_2"
+	},
 /area/shuttle/escape/centcom)
 "aeV" = (
 /obj/structure/object_wall/evac{
@@ -1929,9 +1930,7 @@
 /obj/structure/closet/emergency_wall{
 	pixel_y = 32
 	},
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "afh" = (
@@ -1967,9 +1966,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "afq" = (
@@ -2038,13 +2035,18 @@
 /area/shuttle/escape/centcom)
 "afz" = (
 /obj/structure/window/thin/reinforced,
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/item/weapon/reagent_containers/food/snacks/applepie,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor/evac,
+/obj/structure/table,
+/obj/item/toy/plushie/orange_fox{
+	name = "Plushie Wendy"
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "sign_2"
+	},
 /area/shuttle/escape/centcom)
 "afA" = (
 /obj/structure/object_wall/standart{
@@ -20031,9 +20033,7 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aWR" = (
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "aWS" = (
@@ -22637,9 +22637,7 @@
 	pixel_x = -31;
 	pixel_y = 4
 	},
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "bJz" = (
@@ -24451,9 +24449,7 @@
 	pixel_x = 31;
 	pixel_y = 4
 	},
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "eib" = (
@@ -25194,17 +25190,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
-"fsd" = (
-/obj/item/weapon/reagent_containers/food/snacks/friedbanana,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
-/obj/structure/table,
-/obj/item/toy/plushie/tabby_cat{
-	name = "Plushie Bucherck"
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "sign_2"
-	},
-/area/shuttle/escape/centcom)
 "ftb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -30428,9 +30413,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/schair/wagon/green{
-	dir = 1
-	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "oPb" = (
@@ -31123,23 +31106,16 @@
 	icon_state = "dark"
 	},
 /area/velocity)
-"qwu" = (
-/obj/item/weapon/reagent_containers/food/snacks/cakeslice,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/structure/table,
-/obj/item/toy/plushie/space_whale{
-	name = "Plushie Oculus"
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "sign_2"
-	},
-/area/shuttle/escape/centcom)
 "qwb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak,
 /turf/unsimulated/floor/carpet/blue2,
 /area/pluvian_heaven)
+"qwu" = (
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
 "qym" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -32102,17 +32078,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/waitingroom)
-"ylj" = (
-/obj/item/weapon/reagent_containers/food/snacks/applepie,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/structure/table,
-/obj/item/toy/plushie/orange_fox{
-	name = "Plushie Wendy"
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "sign_2"
-	},
-/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 ahG
@@ -51336,8 +51301,8 @@ aaM
 aaM
 aRs
 qwu
-aeB
-ylj
+aac
+qwu
 afz
 aga
 adW
@@ -51592,7 +51557,7 @@ aaM
 aaM
 aaM
 aUE
-acw
+aRG
 aRG
 aRG
 aRG
@@ -51849,9 +51814,9 @@ aaM
 aaM
 aaM
 aVM
-fsd
+qwu
 aeU
-aac
+qwu
 aeB
 aRG
 aRG
