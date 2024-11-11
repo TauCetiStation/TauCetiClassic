@@ -340,9 +340,6 @@
 	if((sdisabilities & BLIND || blinded) && !in_range(A, usr) || stat == UNCONSCIOUS)
 		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
-	if(stat == CONSCIOUS)
-		last_examined = A.name
-	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 	face_atom(A)
 	A.examine(src)
@@ -358,6 +355,9 @@
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
+	if(stat == CONSCIOUS)
+		last_examined = A.name
+	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
