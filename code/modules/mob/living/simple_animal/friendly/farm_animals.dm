@@ -266,7 +266,7 @@ var/global/chicken_count = 0
 							C.feed(src)
 							stop_automated_movement = FALSE
 	if(prob(15))
-		playsound(src, 'sound/voice/chiken_cluck.ogg', VOL_EFFECTS_MASTER, null, TRUE, null, -3)
+		playsound(src, 'sound/voice/chiken_cluck.ogg', VOL_EFFECTS_MASTER, vary = TRUE, extrarange = -3)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
