@@ -5,6 +5,7 @@
 	button_icon_state = "spread_infestation"
 	chemical_cost = 30
 	genomecost = 2
+	req_dna = 1
 
 //Makes some spiderlings. Good for setting traps and causing general trouble.
 /obj/effect/proc_holder/changeling/spiders/sting_action(mob/user)
