@@ -751,7 +751,6 @@
 		user.drop_from_inventory(W)
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
-		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 		return
 	else if(istype(W, /obj/item/mecha_parts/dna_scanner))
 		if(dna_lockable)
@@ -761,7 +760,6 @@
 		dna_lockable = TRUE
 		qdel(W)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
-		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
 		var/obj/item/weapon/melee/changeling_hammer/hammer = W
