@@ -492,9 +492,9 @@
 	name = "black-red book"
 	desc = "Ominous book with some gabblery written on yellow pages."
 	icon = 'icons/obj/library.dmi'
-	icon_state ="syndicate"
+	icon_state = "syndicate"
 	item_state_world = "syndicate_world"
-	item_state ="book"
+	item_state = "book"
 
 /obj/item/weapon/syndcodebook/attack_self(mob/user)
 
