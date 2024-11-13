@@ -554,16 +554,14 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help/tgui_act(action, params)
 	if(..())
 		return
+	. = TRUE
 	switch(action)
 		if("retitle")
 			Retitle()
-			. = TRUE
 		if("reopen")
 			Reopen()
-			. = TRUE
 		if("legacy")
 			TicketPanelLegacy()
-			. = TRUE
 
 //Forwarded action from admin/Topic
 /datum/admin_help/proc/Action(action)
