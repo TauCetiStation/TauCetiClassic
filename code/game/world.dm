@@ -45,7 +45,6 @@ var/global/it_is_a_snow_day = FALSE
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
-	LoadBans()
 	load_guard_blacklist()
 
 	spawn
@@ -673,7 +672,7 @@ var/global/failed_db_connections = 0
 	switch(type)
 		if (NET_ANNOUNCE_BAN)
 			// legacy system use files, we need DB for ban check
-			if (config.net_announcers["ban_receive"] && !self_flag && config && !config.ban_legacy_system)
+			if (config.net_announcers["ban_receive"] && !self_flag)
 				return proccess_ban_announce(data, sender)
 	return
 

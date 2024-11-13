@@ -76,6 +76,7 @@
 		if(G.use_tool(src, user, 10, 1))
 			add_uses(35) // count 2.5 uses as efficiency loss (it's not autolathe)
 			to_chat(user, "You insert a piece of glass into the [src.name]. It now has [uses] use\s.")
+			update_icon()
 			return
 	else
 		return ..()
@@ -89,6 +90,9 @@
 	if(uses == 0)
 		item_state_world = "lightreplacer0_empty_world"
 		item_state_inventory = "lightreplacer0_empty"
+	else
+		item_state_world = "lightreplacer0_world"
+		item_state_inventory = "lightreplacer0"
 	update_world_icon()
 
 /obj/item/device/lightreplacer/emag_act(mob/user)

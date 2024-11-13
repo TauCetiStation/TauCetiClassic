@@ -56,10 +56,10 @@
 	icon_state = "mesonmininghud"
 	icon_custom = null
 	toggleable = TRUE
-	sightglassesmod = "sepia"
+	sightglassesmod = "yellow"
 	hud_types = list(DATA_HUD_MINER)
 	vision_flags = SEE_TURFS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
 /datum/action/item_action/hands_free/toggle_goggles
@@ -67,6 +67,7 @@
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"
 	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_custom = 'icons/mob/eyes.dmi'
 	icon_state = "HUDmining"

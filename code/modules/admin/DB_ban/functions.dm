@@ -1,5 +1,5 @@
-
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
+// todo: job should be renamed as subtype or bansubtype
 /datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
 
 	if(!check_rights(R_BAN))
@@ -9,24 +9,18 @@
 		return
 
 	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
-	var/bantype_pass = 0
-	var/bantype_str
+
+	if(!(bantype in global.valid_ban_types))
+		CRASH("Unknown ban type [bantype]!")
+
 	switch(bantype)
 		if(BANTYPE_PERMA)
-			bantype_str = BANTYPE_PERMA_STR
 			duration = -1
-			bantype_pass = 1
-		if(BANTYPE_TEMP)
-			bantype_str = BANTYPE_TEMP_STR
-			bantype_pass = 1
 		if(BANTYPE_JOB_PERMA)
-			bantype_str = BANTYPE_JOB_PERMA_STR
 			duration = -1
-			bantype_pass = 1
-		if(BANTYPE_JOB_TEMP)
-			bantype_str = BANTYPE_JOB_TEMP_STR
-			bantype_pass = 1
-	if( !bantype_pass ) return
+		if(BANTYPE_CHAT_PERMA)
+			duration = -1
+
 	if( !istext(reason) ) return
 	if( !isnum(duration) ) return
 
@@ -82,13 +76,13 @@
 	reason = sanitize_sql(reason)
 	job = sanitize_sql(job)
 
-	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize(reason)]\" to the ban database."
+	var/msg = "[key_name_admin(usr)] has added a [bantype] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize(reason)]\" to the ban database."
 
 	var/datum/admin_help/AH = admin_ticket_log(ckey, msg)
 	if((bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP) && AH) // not sure if only for perma.
 		AH.Resolve()
 
-	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`ingameage`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [global.round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', [ingameage], '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
+	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`ingameage`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [global.round_id], '[bantype]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', [ingameage], '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	to_chat(usr, "<span class='notice'>Ban saved to database.</span>")
@@ -97,7 +91,7 @@
 	world.send2bridge(
 		type = list(BRIDGE_ADMINBAN),
 		attachment_title = "BAN",
-		attachment_msg = "**[key_name(usr)]** [text("has added a **[]** for **[] [] []** with the reason: ***[]*** to the ban database.", bantype_str, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[sanitize(reason)]"))]",
+		attachment_msg = "**[key_name(usr)]** [text("has added a **[]** for **[] [] []** with the reason: ***[]*** to the ban database.", bantype, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[sanitize(reason)]"))]",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
 	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)
@@ -109,40 +103,19 @@
 	if(!check_rights(R_BAN))
 		return
 
-	var/bantype_str
-	if(bantype)
-		var/bantype_pass = 0
-		switch(bantype)
-			if(BANTYPE_PERMA)
-				bantype_str = BANTYPE_PERMA_STR
-				bantype_pass = 1
-			if(BANTYPE_TEMP)
-				bantype_str = BANTYPE_TEMP_STR
-				bantype_pass = 1
-			if(BANTYPE_JOB_PERMA)
-				bantype_str = BANTYPE_JOB_PERMA_STR
-				bantype_pass = 1
-			if(BANTYPE_JOB_TEMP)
-				bantype_str = BANTYPE_JOB_TEMP_STR
-				bantype_pass = 1
-			if(BANTYPE_ANY_FULLBAN)
-				bantype_str = BANTYPE_ANY_FULLBAN_STR
-				bantype_pass = 1
-			if(BANTYPE_ANY_JOB)
-				bantype_str = BANTYPE_ANY_JOB_STR
-				bantype_pass = 1
-		if( !bantype_pass ) return
+	if(!(bantype || length(job)))
+		CRASH("Should have any of bantype or job!")
 
 	var/bantype_sql
-	if(bantype_str == "ANY")
-		bantype_sql = "(bantype = 'PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now() ) )"
-	else if(bantype_str == "ANYJOB")
-		bantype_sql = "(bantype = 'JOB_PERMABAN' OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now() ) )"
-	else
-		bantype_sql = "bantype = '[bantype_str]'"
+	if(bantype) 
+		if(!(bantype in global.valid_ban_types))
+			CRASH("Unknown ban type [bantype]!")
+		bantype_sql = "bantype = '[bantype]'"
+	else // any actual jobban then
+		bantype_sql = "(bantype = '[BANTYPE_JOB_PERMA]' OR (bantype = '[BANTYPE_JOB_TEMP]' AND expiration_time > Now()))"
 
 	var/sql = "SELECT id FROM erro_ban WHERE ckey = '[ckey(ckey)]' AND [bantype_sql] AND (unbanned is null OR unbanned = false)"
-	if(job)
+	if(length(job))
 		sql += " AND job = '[sanitize_sql(job)]'"
 
 	if(!establish_db_connection("erro_ban"))
@@ -296,17 +269,6 @@
 	query_update.Execute()
 
 
-/client/proc/DB_ban_panel()
-	set category = "Admin"
-	set name = "Banning Panel"
-	set desc = "Edit admin permissions."
-
-	if(!holder)
-		return
-
-	holder.DB_ban_panel()
-
-
 /datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, playerip = null, playercid = null, dbbantype = null, match = null)
 	if(!usr.client)
 		return
@@ -424,17 +386,10 @@
 					cidsearch  = "AND computerid LIKE '[playercid]%' "
 
 			if(dbbantype)
-				bantypesearch = "AND bantype = "
-
-				switch(dbbantype)
-					if(BANTYPE_TEMP)
-						bantypesearch += "'TEMPBAN' "
-					if(BANTYPE_JOB_PERMA)
-						bantypesearch += "'JOB_PERMABAN' "
-					if(BANTYPE_JOB_TEMP)
-						bantypesearch += "'JOB_TEMPBAN' "
-					else
-						bantypesearch += "'PERMABAN' "
+				if(dbbantype in global.valid_ban_types)
+					bantypesearch = "AND bantype = '[dbbantype]' "
+				else // idk if it's possible, i'm just updating legacy code
+					bantypesearch = "AND bantype = '[BANTYPE_PERMA]' "
 
 			var/DBQuery/select_query = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, ip, computerid, round_id, ingameage FROM erro_ban WHERE 1 [playersearch] [adminsearch] [ipsearch] [cidsearch] [bantypesearch] ORDER BY bantime DESC LIMIT 100")
 			select_query.Execute()
@@ -466,14 +421,18 @@
 
 				var/typedesc =""
 				switch(bantype)
-					if("PERMABAN")
+					if(BANTYPE_PERMA)
 						typedesc = "<font color='red'><b>PERMABAN</b></font>"
-					if("TEMPBAN")
+					if(BANTYPE_TEMP)
 						typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
-					if("JOB_PERMABAN")
+					if(BANTYPE_JOB_PERMA)
 						typedesc = "<b>JOBBAN</b><br><font size='2'>([job])</font>"
-					if("JOB_TEMPBAN")
+					if(BANTYPE_JOB_TEMP)
 						typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]</font>"
+					if(BANTYPE_CHAT_PERMA)
+						typedesc = "<b>CHAT BAN</b><br><font size='2'>([job])</font>"
+					if(BANTYPE_CHAT_TEMP)
+						typedesc = "<b>TEMP CHAT BAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]</font>"
 
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center'>[typedesc]</td>"
@@ -510,30 +469,25 @@
 	popup.set_content(output)
 	popup.open()
 
-//Version of DB_ban_record that can be used without holder.
+//Version of DB_ban_record that can be used without holder (fuck, someone pls rewrite bans)
 /proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
 	if(!establish_db_connection("erro_player"))
 		return 0
 
 	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
-	var/bantype_pass = 0
-	var/bantype_str
+
+
+	if(!(bantype in global.valid_ban_types))
+		CRASH("Unknown ban type [bantype]!")
+
 	switch(bantype)
 		if(BANTYPE_PERMA)
-			bantype_str = "PERMABAN"
 			duration = -1
-			bantype_pass = 1
-		if(BANTYPE_TEMP)
-			bantype_str = "TEMPBAN"
-			bantype_pass = 1
 		if(BANTYPE_JOB_PERMA)
-			bantype_str = "JOB_PERMABAN"
 			duration = -1
-			bantype_pass = 1
-		if(BANTYPE_JOB_TEMP)
-			bantype_str = "JOB_TEMPBAN"
-			bantype_pass = 1
-	if( !bantype_pass ) return 0
+		if(BANTYPE_CHAT_PERMA)
+			duration = -1
+
 	if( !istext(reason) ) return 0
 	if( !isnum(duration) ) return 0
 
@@ -582,14 +536,14 @@
 	reason = sanitize_sql(reason)
 	job = sanitize_sql(job)
 
-	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [global.round_id], '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
+	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', [global.round_id], '[bantype]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
-	message_admins("Tau Kitty has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.")
+	message_admins("Tau Kitty has added a [bantype] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.")
 	world.send2bridge(
 		type = list(BRIDGE_ADMINBAN),
 		attachment_title = "BOTBAN",
-		attachment_msg = "**Tau Kitty** has added a **[bantype_str]** for **[ckey]** **[(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""]** with the reason: ***\"[reason]\"*** to the ban database.",
+		attachment_msg = "**Tau Kitty** has added a **[bantype]** for **[ckey]** **[(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""]** with the reason: ***\"[reason]\"*** to the ban database.",
 		attachment_color = BRIDGE_COLOR_ADMINBAN,
 	)
 	if (bantype == BANTYPE_PERMA || bantype == BANTYPE_TEMP)

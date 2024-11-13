@@ -55,12 +55,15 @@ CREATE TABLE `erro_ban` (
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `erro_connection_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datetime` datetime DEFAULT NULL,
+  `datetime` datetime NOT NULL,
   `serverip` varchar(32) NOT NULL,
-  `ckey` varchar(45) DEFAULT NULL,
+  `ckey` varchar(45) NOT NULL,
   `ip` varchar(32) NOT NULL,
-  `computerid` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `computerid` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_uniq_history` (`ckey`,`datetime`,`computerid`,`ip`),
+  KEY `idx_history_cid` (`computerid`,`ckey`),
+  KEY `idx_history_ip` (`ip`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

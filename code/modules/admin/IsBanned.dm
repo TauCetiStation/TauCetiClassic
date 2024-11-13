@@ -40,58 +40,53 @@
 	return ban ? ban : stickyban_check(..(), key, computer_id, address, real_bans_only, is_admin) //default pager ban stuff
 
 /world/proc/get_ban_blacklist(key, address, computer_id)
+	if(!config.sql_enabled)
+		return
+
 	var/ckey = ckey(key)
-	// Legacy ban system
-	if(config.ban_legacy_system)
-		. = CheckBan( ckey, computer_id, address )
-		if(.)
-			log_access("Failed Login: [key] [computer_id] [address] - Banned [.[BANKEY_REASON]]")
-			message_admins("Failed Login: [key] id:[computer_id] ip:[address] - Banned [.[BANKEY_REASON]]")
 
-	// Database ban system
-	else
-		if(!establish_db_connection("erro_ban"))
-			error("Ban database connection failure. Key [ckey] not checked")
-			log_misc("Ban database connection failure. Key [ckey] not checked")
-			return
+	if(!establish_db_connection("erro_ban"))
+		error("Ban database connection failure. Key [ckey] not checked")
+		log_misc("Ban database connection failure. Key [ckey] not checked")
+		return
 
-		var/failedcid = TRUE
-		var/failedip = TRUE
-		var/ipquery = ""
-		var/cidquery = ""
-		if(address)
-			failedip = FALSE
-			ipquery = " OR ip = '[sanitize_sql(address)]' "
-		if(computer_id)
-			failedcid = FALSE
-			cidquery = " OR computerid = '[sanitize_sql(computer_id)]' "
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[ckey(ckey)]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
-		query.Execute()
-		while(query.NextRow())
-			var/pckey = query.item[1]
-			//var/pip = query.item[2]
-			//var/pcid = query.item[3]
-			var/ackey = query.item[4]
-			var/reason = query.item[5]
-			var/expiration = query.item[6]
-			var/duration = query.item[7]
-			var/bantime = query.item[8]
-			var/bantype = query.item[9]
+	var/failedcid = TRUE
+	var/failedip = TRUE
+	var/ipquery = ""
+	var/cidquery = ""
+	if(address)
+		failedip = FALSE
+		ipquery = " OR ip = '[sanitize_sql(address)]' "
+	if(computer_id)
+		failedcid = FALSE
+		cidquery = " OR computerid = '[sanitize_sql(computer_id)]' "
+	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[ckey(ckey)]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	query.Execute()
+	while(query.NextRow())
+		var/pckey = query.item[1]
+		//var/pip = query.item[2]
+		//var/pcid = query.item[3]
+		var/ackey = query.item[4]
+		var/reason = query.item[5]
+		var/expiration = query.item[6]
+		var/duration = query.item[7]
+		var/bantime = query.item[8]
+		var/bantype = query.item[9]
 
-			var/expires = ""
-			if(text2num(duration) > 0)
-				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
+		var/expires = ""
+		if(text2num(duration) > 0)
+			expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
 
-			var/desc = "\n"
-			desc += "Reason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n"
-			desc += "[reason]\n"
-			desc += "This ban was applied by [ackey] on [bantime], [expires]"
-			return list("reason"="[bantype]", "desc"="[desc]")
+		var/desc = "\n"
+		desc += "Reason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n"
+		desc += "[reason]\n"
+		desc += "This ban was applied by [ackey] on [bantime], [expires]"
+		return list("reason"="[bantype]", "desc"="[desc]")
 
-		if (failedcid)
-			message_admins("[key] has logged in with a blank computer id in the ban check.")
-		if (failedip)
-			message_admins("[key] has logged in with a blank ip in the ban check.")
+	if (failedcid)
+		message_admins("[key] has logged in with a blank computer id in the ban check.")
+	if (failedip)
+		message_admins("[key] has logged in with a blank ip in the ban check.")
 
 /world/proc/stickyban_check(list/byond_ban, key, computer_id, address, real_bans_only, is_admin)
 	. = byond_ban
