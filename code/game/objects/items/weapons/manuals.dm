@@ -514,5 +514,6 @@
 		user.add_language(LANGUAGE_TRINARY, LANGUAGE_CAN_UNDERSTAND)
 		user.add_language(LANGUAGE_GUTTER)
 		user.add_language(LANGUAGE_USL)
+		user.add_language(LANGUAGE_VOXPIDGIN, LANGUAGE_CAN_UNDERSTAND)
 		new /obj/effect/decal/cleanable/ash(user.loc)
 		qdel(src)
