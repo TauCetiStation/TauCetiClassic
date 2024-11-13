@@ -35,6 +35,7 @@
 
 /datum/religion_tech/cult/cooldown_reduction
 	id = RTECH_COOLDOWN_REDUCTION
+	info = /datum/building_agent/tech/cult/cooldown_reduction
 
 /datum/religion_tech/cult/reusable_runes
 	id = RTECH_REUSABLE_RUNE
