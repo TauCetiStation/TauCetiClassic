@@ -2316,3 +2316,76 @@
 	age = rand(S.min_age, S.max_age)
 
 	regenerate_icons()
+
+/datum/emote/human/cute_kiss
+	key = "kiss"
+
+	message_1p = "You are kissing"
+	message_3p = "kisses"
+
+	message_impaired_production = "kisses"
+
+	message_miming = "kisses"
+	message_muzzled = "kisses"
+
+	message_type = SHOWMSG_AUDIO
+	cooldown = 3 SECONDS
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/cute_kiss/get_impaired_msg(mob/user)
+	return "gives \a kiss"
+
+/datum/emote/human/cute_kiss/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_KISS_MALE, SOUNDIN_KISS_FEMALE)
+
+/datum/emote/human/cute_kiss/can_emote(mob/user, intentional)
+	if(!SSholiday.holidays[VALENTINES])
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/proc/do_kissing(var/mob/living/carbon/human/passion_victim)
+	if(!SSholiday.holidays[VALENTINES])
+		to_chat(src, "<span class='userdanger'>Do not ERP. ERP is bad.</span>")
+		return
+	//If somehow you teleporting away in proccess
+	if(!(passion_victim in view(1, src)))
+		to_chat(src, "<span class='warning'>They are too far away!</span>")
+		return
+	if(passion_victim.stat == DEAD)
+		to_chat(src, "<span class='warning'>[passion_victim] is dead...</span>")
+		return
+	if(!passion_victim.key || !passion_victim.mind)
+		to_chat(src, "<span class='warning'>They appear to be catatonic.</span>")
+		return
+	emote("kiss")
+	//If target has mindshield/loyalty implant we break it. By Power of Love
+	if(passion_victim.ismindprotect())
+		for(var/obj/item/weapon/implant/mind_protect/L in passion_victim)
+			if(L.implanted && L.imp_in == passion_victim)
+				qdel(L)
+		passion_victim.sec_hud_set_implants()
+	passion_victim.logout_reason = LOGOUT_SWAP
+	logout_reason = LOGOUT_SWAP
+
+	var/mob/dead/observer/ghost = passion_victim.ghostize(can_reenter_corpse = FALSE)
+	//If they have spells, transfer them. Now we basically have a backup mob.
+	ghost.spell_list = passion_victim.spell_list
+
+	mind.transfer_to(passion_victim, logout_modify = FALSE)
+	passion_victim.spell_list = spell_list//Now they are inside the victim's body.
+
+	ghost.mind.transfer_to(src, logout_modify = FALSE)
+	key = ghost.key	//have to transfer the key since the mind was not active
+	spell_list = ghost.spell_list
+
+	//Here we paralyze both mobs and knock them out for a time.
+	//Victim has some more times to adapt to new body
+	addtimer(CALLBACK(src, PROC_REF(Paralyse), 2), 2 SECONDS)
+	addtimer(CALLBACK(passion_victim, TYPE_PROC_REF(/mob/living, Paralyse), 3), 2 SECONDS)
+
+	//After a certain amount of time the victim gets a message about being in a different body.
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, "<span class='warning'>You feel woozy. <b>Your body doesn't seem like your own.</b></span>"), 5 SECONDS)
