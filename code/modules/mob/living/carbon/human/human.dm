@@ -2347,7 +2347,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/carbon/human/proc/do_kissing(var/mob/living/carbon/human/passion_victim)
+/mob/living/carbon/human/proc/do_kissing(mob/living/carbon/human/passion_victim)
 	if(!SSholiday.holidays[VALENTINES])
 		to_chat(src, "<span class='userdanger'>Do not ERP. ERP is bad.</span>")
 		return
