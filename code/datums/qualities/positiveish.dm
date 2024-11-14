@@ -414,6 +414,18 @@
 		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
 		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
 
+/datum/quality/positiveish/bestlawyer
+	name = "Best Lawyer"
+	desc = "Хороший адвокат всегда имеет козырь в рукаве."
+	requirement = "Адвокат."
+
+	jobs_required = list("Lawyer")
+
+/datum/quality/positiveish/bestlawyer/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Твоя ручка и штамп кажутся изменчивыми.</span>")
+	H.equip_or_collect(new /obj/item/weapon/pen/chameleon(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/weapon/stamp/chameleon(H), SLOT_L_STORE)
+
 /datum/quality/positiveish/fastwalker
 	name = "Fast Walker"
 	desc = "Упражнения спортивной ходьбой по таяранской методике дали свои плоды - ты способен передвигаться быстро, бесшумно и аккуратно, когда не бежишь."
