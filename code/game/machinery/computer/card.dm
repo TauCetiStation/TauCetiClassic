@@ -118,6 +118,53 @@
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
 
+	if(mode == 2)
+		var/list/jobsCategories = list(
+			"Command" = list(titles = command_positions, color = "#aac1ee"),
+			"NT Representatives" = list(titles = centcom_positions, color = "#6c7391"),
+			"Engineering" = list(titles = engineering_positions, color = "#ffd699"),
+			"Security" = list(titles = security_positions, color = "#ff9999"),
+			"Miscellaneous" = list(titles = list(), color = "#ffffff"),
+			"Synthetic" = list(titles = nonhuman_positions, color = "#ccffcc"),
+			"Service" = list(titles = civilian_positions, color = "#cccccc"),
+			"Medical" = list(titles = medical_positions, color = "#99ffe6"),
+			"Science" = list(titles = science_positions, color = "#e6b3e6"),
+		)
+		var/list/categorizedJobs = list()
+		var/list/categorizedJobsToFront = list()
+
+		for(var/datum/job/job in SSjob.occupations)
+			if(!job)
+				continue
+			var/list/jobList = list(list("name" = job.title, "type" = job.type, "quota" = job.quota))
+			var/categorized = FALSE
+			for(var/jobcat in jobsCategories)
+				if(!categorizedJobs[jobcat])
+					categorizedJobs[jobcat] = list("title" = jobcat, "jobs" = list(), color = jobsCategories[jobcat]["color"])
+				var/list/jobs = categorizedJobs[jobcat]["jobs"]
+				if(job.title in jobsCategories[jobcat]["titles"])
+					categorized = TRUE
+					if(jobcat == "Command")
+
+						if(job.title == "Captain") // Put captain at top of command jobs
+							jobs.Insert(1, jobList)
+						else
+							jobs += jobList
+					else // Put heads at top of non-command jobs
+						if(job.title in command_positions)
+							jobs.Insert(1, jobList)
+						else
+							jobs += jobList
+			if(!categorized)
+				categorizedJobs["Miscellaneous"]["jobs"] += jobList
+
+		for(var/category in categorizedJobs)
+			if(!length(categorizedJobs[category]["jobs"]))
+				continue
+			categorizedJobsToFront += list(categorizedJobs[category])
+
+		data["all_jobs"] = categorizedJobsToFront
+
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
 		for(var/access in get_all_centcom_access())
@@ -322,6 +369,24 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
+
+		if ("up_quota")
+			var/job_type = text2path(href_list["quotajob_type"])
+			var/datum/job/Job = SSjob.type_occupations[job_type]
+			if(Job)
+				if(Job.quota == 1)
+					Job.quota = 0
+				else
+					Job.quota = 1
+
+		if ("down_quota")
+			var/job_type = text2path(href_list["quotajob_type"])
+			var/datum/job/Job = SSjob.type_occupations[job_type]
+			if(Job)
+				if(Job.quota == 2)
+					Job.quota = 0
+				else
+					Job.quota = 2
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

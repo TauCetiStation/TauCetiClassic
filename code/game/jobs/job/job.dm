@@ -76,6 +76,8 @@
 
 	var/flags = 0
 
+	var/quota = 0 //0 is neutral, 1 is wanted, 2 is unwanted
+
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 

@@ -393,11 +393,20 @@
 					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
 						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
 							active++
+				var/priority = 0
+				var/priority_color = "#ffffff"
+				switch(job.quota)
+					if(1)
+						priority = "!+"
+						priority_color = "#83bf47"
+					if(2)
+						priority = "¡-"
+						priority_color = "#ee0000"
 				if(job.current_positions && active < job.current_positions)
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					dat += "<a class='[position_class]' style='display:block;width:170px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
 					number_of_extra_line_breaks++
 				else
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+					dat += "<a class='[position_class]' style='display:block;width:170px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
 			dat += "</fieldset><br>"
