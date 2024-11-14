@@ -621,6 +621,7 @@
 					C.electronics_damage = WC.burn
 
 				to_chat(usr, "<span class='notice'>You install the [W.name].</span>")
+				playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 				return
 
@@ -696,6 +697,7 @@
 				var/datum/robot_component/C = components[remove]
 				var/obj/item/robot_parts/robot_component/I = C.wrapped
 				to_chat(user, "You remove \the [I].")
+				playsound(src, 'sound/items/remove.ogg', VOL_EFFECTS_MASTER, 75)
 				if(istype(I))
 					I.brute = C.brute_damage
 					I.burn = C.electronics_damage

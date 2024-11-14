@@ -25552,7 +25552,7 @@
 	},
 /area/station/rnd/lab)
 "epH" = (
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "epI" = (
@@ -53220,7 +53220,7 @@
 /area/station/maintenance/medbay)
 "jEI" = (
 /obj/structure/table/woodentable,
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /obj/structure/mirror{
 	pixel_y = 30
 	},

@@ -42,7 +42,7 @@ var/global/can_call_ert
 		return
 	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 		return
-	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
+	if(code_name_eng[security_level] != "red") // Allow admins to reconsider if the alert level isn't Red
 
 		if(tgui_alert(usr, "На станции не введён красный код. Вы всё ещё хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 			return

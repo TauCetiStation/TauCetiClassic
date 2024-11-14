@@ -2108,6 +2108,7 @@
 #include "code\modules\musical_instruments\guitar.dm"
 #include "code\modules\musical_instruments\harmonica.dm"
 #include "code\modules\musical_instruments\piano.dm"
+#include "code\modules\musical_instruments\synth.dm"
 #include "code\modules\musical_instruments\violin.dm"
 #include "code\modules\nano\nanoexternal.dm"
 #include "code\modules\nano\nanointeraction.dm"
