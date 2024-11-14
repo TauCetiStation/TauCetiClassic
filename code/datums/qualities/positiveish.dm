@@ -414,14 +414,14 @@
 		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
 		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
 
-/datum/quality/positiveish/bestlawyer
-	name = "Best Lawyer"
-	desc = "Хороший адвокат всегда имеет козырь в рукаве."
+/datum/quality/positiveish/bettercallsaul
+	name = "Better Call Saul"
+	desc = "У меня есть знакомый, у которого есть знакомый, который дал вам набор лучшего адвоката"
 	requirement = "Адвокат."
 
 	jobs_required = list("Lawyer")
 
-/datum/quality/positiveish/bestlawyer/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/positiveish/bettercallsaul/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Твоя ручка и штамп кажутся изменчивыми.</span>")
 	H.equip_or_collect(new /obj/item/weapon/pen/chameleon(H), SLOT_R_STORE)
 	H.equip_or_collect(new /obj/item/weapon/stamp/chameleon(H), SLOT_L_STORE)
