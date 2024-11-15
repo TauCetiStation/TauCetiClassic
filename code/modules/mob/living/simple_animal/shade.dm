@@ -96,7 +96,8 @@
 
 /mob/living/simple_animal/shade/god/atom_init()
 	. = ..()
-	AddSpell(new /obj/effect/proc_holder/spell/no_target/god_gift(src))
+	if(SSholiday.holidays[NEW_YEAR])
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/god_gift(src))
 	gods_list += src
 
 /mob/living/simple_animal/shade/god/Destroy()
