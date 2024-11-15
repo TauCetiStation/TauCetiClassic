@@ -422,7 +422,7 @@
 	jobs_required = list("Lawyer")
 
 /datum/quality/positiveish/bettercallsaul/add_effect(mob/living/carbon/human/H, latespawn)
-	to_chat(H, "<span class='notice'>Твоя ручка и штамп кажутся изменчивыми.</span>")
+	to_chat(H, "<span class='notice'>Ты прихватил с собой ручку и штамп, способные подделывать подпись и печать.</span>")
 	H.equip_or_collect(new /obj/item/weapon/pen/chameleon(H), SLOT_R_STORE)
 	H.equip_or_collect(new /obj/item/weapon/stamp/chameleon(H), SLOT_L_STORE)
 
