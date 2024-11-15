@@ -2065,7 +2065,7 @@
 #include "code\modules\mob\living\simple_animal\hulk.dm"
 #include "code\modules\mob\living\simple_animal\hulk_powers.dm"
 #include "code\modules\mob\living\simple_animal\parrot.dm"
-#include "code\modules\mob\living\simple_animal\new_year_god"
+#include "code\modules\mob\living\simple_animal\new_year_god.dm"
 #include "code\modules\mob\living\simple_animal\pylon.dm"
 #include "code\modules\mob\living\simple_animal\shade.dm"
 #include "code\modules\mob\living\simple_animal\simple_animal.dm"
