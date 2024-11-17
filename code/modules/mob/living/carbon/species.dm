@@ -195,17 +195,6 @@
 	var/surgery_icobase = 'icons/mob/surgery.dmi'
 
 	var/slime_species = SLIME
-	switch(H.species.name)
-		if("Unathi")
-			slime_species = SLIME_UNATHI
-		if("Vox")
-			slime_species = SLIME_VOX
-		if("Tajaran")
-			slime_species = SLIME_TAJARAN
-		if("Skrell")
-			slime_species = SLIME_SKRELL
-		else
-			slime_species = SLIME
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -356,6 +345,20 @@
 // Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
 /datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
 	return 0
+
+/datum/species/proc/get_slime_species()
+	switch(name)
+		if("Unathi")
+			slime_species = SLIME_UNATHI
+		if("Vox")
+			slime_species = SLIME_VOX
+		if("Tajaran")
+			slime_species = SLIME_TAJARAN
+		if("Skrell")
+			slime_species = SLIME_SKRELL
+		else
+			slime_species = SLIME
+	return slime_species
 
 /datum/species/human
 	name = HUMAN
