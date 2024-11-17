@@ -194,6 +194,18 @@
 
 	var/surgery_icobase = 'icons/mob/surgery.dmi'
 
+	var/slime_species = SLIME
+	switch(H.species.name)
+		if("Unathi")
+			slime_species = SLIME_UNATHI
+		if("Vox")
+			slime_species = SLIME_VOX
+		if("Tajaran")
+			slime_species = SLIME_TAJARAN
+		if("Skrell")
+			slime_species = SLIME_SKRELL
+		else
+			slime_species = SLIME
 
 /datum/species/New()
 	blood_datum = new blood_datum_path

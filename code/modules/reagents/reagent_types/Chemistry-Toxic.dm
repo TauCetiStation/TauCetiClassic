@@ -763,19 +763,7 @@
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
 					H.emote("scream")
 			if(30)
-				var/slime_species
-				switch(H.species.name)
-					if("Unathi")
-						slime_species = SLIME_UNATHI
-					if("Vox")
-						slime_species = SLIME_VOX
-					if("Tajaran")
-						slime_species = SLIME_TAJARAN
-					if("Skrell")
-						slime_species = SLIME_SKRELL
-					else
-						slime_species = SLIME
-				if(H.set_species(slime_species))
+				if(H.set_species(H.species.slime_species))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						BP.status = 0
