@@ -346,20 +346,6 @@
 /datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
 	return 0
 
-/datum/species/proc/get_slime_species()
-	switch(name)
-		if("Unathi")
-			slime_species = SLIME_UNATHI
-		if("Vox")
-			slime_species = SLIME_VOX
-		if("Tajaran")
-			slime_species = SLIME_TAJARAN
-		if("Skrell")
-			slime_species = SLIME_SKRELL
-		else
-			slime_species = SLIME
-	return slime_species
-
 /datum/species/human
 	name = HUMAN
 	gender_limb_icons = TRUE
@@ -474,6 +460,7 @@
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
+	slime_species = SLIME_UNATHI
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
@@ -542,6 +529,7 @@
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
 	nighteyes = TRUE
+	slime_species = SLIME_TAJARAN
 
 	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
@@ -605,6 +593,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
+	slime_species = SLIME_SKRELL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
 	has_gendered_icons = FALSE
@@ -663,6 +652,7 @@
 	tail = "vox_prim"
 	has_gendered_icons = FALSE
 	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
+	slime_species = SLIME_VOX
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
