@@ -185,16 +185,15 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
-	// The type of skeleton species they would be turned into. default is human
+	// The type of skeleton/slime species they would be turned into. default is human
 	var/skeleton_type = SKELETON
+	var/slime_species = SLIME
 
 	var/default_mood_event
 
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
 
 	var/surgery_icobase = 'icons/mob/surgery.dmi'
-
-	var/slime_species = SLIME
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -460,7 +459,6 @@
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
-	slime_species = SLIME_UNATHI
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
@@ -495,6 +493,7 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_UNATHI
+	slime_species = SLIME_UNATHI
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD     = 'icons/mob/species/unathi/helmet.dmi',
@@ -529,7 +528,6 @@
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
 	nighteyes = TRUE
-	slime_species = SLIME_TAJARAN
 
 	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
@@ -571,6 +569,7 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_TAJARAN
+	slime_species = SLIME_TAJARAN
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD     = 'icons/mob/species/tajaran/helmet.dmi',
@@ -593,7 +592,6 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
-	slime_species = SLIME_SKRELL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
 	has_gendered_icons = FALSE
@@ -631,6 +629,7 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_SKRELL
+	slime_species = SLIME_SKRELL
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD = 'icons/mob/species/skrell/helmet.dmi',
@@ -652,7 +651,6 @@
 	tail = "vox_prim"
 	has_gendered_icons = FALSE
 	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
-	slime_species = SLIME_VOX
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -726,6 +724,7 @@
 			)
 
 	skeleton_type = SKELETON_VOX
+	slime_species = SLIME_VOX
 
 	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
 
