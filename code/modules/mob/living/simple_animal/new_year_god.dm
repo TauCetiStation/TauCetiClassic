@@ -19,7 +19,7 @@ var/global/list/possible_gifts = list()
 	if(!global.possible_gifts.len)
 		var/list/gift_types_list = subtypesof(/obj/item)
 		for(var/obj/item/I as anything in gift_types_list)
-			if(I.flags & ABSTRACT)
+			if(initial(I.flags) & ABSTRACT)
 				gift_types_list -= I
 			if(!initial(I.icon_state))
 				gift_types_list -= I
@@ -49,7 +49,7 @@ var/global/list/possible_gifts = list()
 /obj/effect/proc_holder/spell/no_target/god_gift/cast(list/targets, mob/user = usr)
 	var/turf/spawn_turf = get_turf(user)
 
-	for(var/mob/living/carbon/human/M in viewers(spawn_turf, world.view))
+	for(var/mob/living/carbon/M in viewers(spawn_turf, world.view))
 		if(M.mind)
 			M.flash_eyes()
 
