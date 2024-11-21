@@ -1856,6 +1856,7 @@
 	deform = 'icons/mob/human_races/r_skrell_slime.dmi'
 	has_gendered_icons = FALSE
 	gender_limb_icons = FALSE
+	eyes = "skrell_eyes"
 
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
