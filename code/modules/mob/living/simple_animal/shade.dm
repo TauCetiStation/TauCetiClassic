@@ -94,6 +94,9 @@
 			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
 	return
 
+/mob/living/simple_animal/shade/CanPass(atom/movable/mover, turf/target, height=0)
+	return TRUE
+
 /mob/living/simple_animal/shade/god
 	name = "Unbelievable God"
 	real_name = "Unbelievable God"
@@ -177,9 +180,6 @@
 
 /mob/living/simple_animal/shade/god/RangedAttack(atom/A, params)
 	god_attack(A)
-
-/mob/living/simple_animal/shade/god/CanPass(atom/movable/mover, turf/target, height=0)
-	return TRUE
 
 /mob/living/simple_animal/shade/god/verb/view_manfiest()
 	set name = "View Crew Manifest"
