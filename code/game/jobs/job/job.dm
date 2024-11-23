@@ -90,8 +90,11 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_JOB)
 
-	if (H.mind)
-		H.mind.skills.add_available_skillset(get_skillset(H))
+	if(H.mind)
+		var/use_job_skillsets = TRUE
+		if(H.client)
+			use_job_skillsets = !H.client.prefs.full_skillset
+		H.mind.skills.add_available_skillset(use_job_skillsets ? get_skillset(H) : /datum/skillset/max)
 		H.mind.skills.maximize_active_skills()
 
 	post_equip(H, visualsOnly)

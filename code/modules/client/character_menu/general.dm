@@ -45,6 +45,7 @@
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
+			. += "<br>Skillsets: <a href='?_src_=prefs;preference=skillset_option'>[full_skillset ? "Default" : "Custom"]</a>"
 			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
 				. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
@@ -633,6 +634,9 @@
 
 				if("gear")
 					submenu_type = "gear"
+				
+				if("skillset_option")
+					full_skillset = !full_skillset
 
 /datum/preferences/proc/get_valid_styles_from_cache(list/styles_cache)
 	var/hash = "[species][gender][species == IPC ? ipc_head : ""]"
