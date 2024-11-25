@@ -94,6 +94,18 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "newtons_pendulum"
 
+/obj/item/statuette
+	name = "statuette"
+	cases = list("статуэтка", "статуэтки", "статуэтке", "статуэтку", "статуэткой", "статуэтке")
+	desc = "Абстрактная статуэтка."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "statuette_1"
+
+/obj/item/statuette/atom_init(mapload)
+	. = ..()
+	var/statuette_number = rand(1, 8)
+	icon_state = "statuette_[statuette_number]"
+
 /obj/item/tableclock
 	name = "table clock"
 	desc = "Точное время в любое время."
