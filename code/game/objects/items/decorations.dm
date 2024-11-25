@@ -116,6 +116,45 @@
 
 		desc = "'Точное время в любое время'. Показывают: [worldtime2text()]"
 
+/obj/item/woodenclock
+	name = "wooden clock"
+	cases = list("настольные часы", "настольных часов", "настольным часам", "настольные часы", "настольными часами", "настольных часах")
+	desc = "Показывают время."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "wooden_clock"
+
+	var/image/hours_hand
+	var/image/minute_hand
+
+/obj/item/woodenclock/atom_init()
+	. = ..()
+
+	hours_hand = image('icons/obj/stationobjs.dmi', "clock_h_0")
+	hours_hand.pixel_y = -3
+	add_overlay(hours_hand)
+	minute_hand = image('icons/obj/stationobjs.dmi', "clock_m_0")
+	minute_hand.pixel_y = -3
+	add_overlay(minute_hand)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/woodenclock/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
+
+/obj/item/woodenclock/process()
+	var/new_hours_state = "clock_h_[worldtime_hours() % 12]"
+	if(hours_hand.icon_state != new_hours_state)
+		cut_overlay(hours_hand)
+		hours_hand.icon_state = new_hours_state
+		add_overlay(hours_hand)
+
+	var/new_minute_state = "clock_m_[(round(worldtime_minutes() / 5) % 12)]"
+
+	if(minute_hand.icon_state != new_minute_state)
+		cut_overlay(minute_hand)
+		minute_hand.icon_state = new_minute_state
+		add_overlay(minute_hand)
+
 /obj/item/wallclock
 	name = "wall clock"
 	desc = "Показывают время."
@@ -124,10 +163,19 @@
 
 	anchored = TRUE
 
+	var/image/hours_hand
+	var/image/minute_hand
+
 /obj/item/wallclock/atom_init(mapload)
 	. = ..()
 	if(!mapload)
 		anchored = FALSE
+
+	hours_hand = image('icons/obj/stationobjs.dmi', "clock_h_0")
+	add_overlay(hours_hand)
+	minute_hand = image('icons/obj/stationobjs.dmi', "clock_m_0")
+	add_overlay(minute_hand)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/wallclock/attack_hand(mob/user)
 	if(!Adjacent(usr) || usr.incapacitated())
@@ -138,6 +186,19 @@
 /obj/item/wallclock/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
+
+/obj/item/wallclock/process()
+	var/new_hours_state = "clock_h_[worldtime_hours() % 12]"
+	if(hours_hand.icon_state != new_hours_state)
+		cut_overlay(hours_hand)
+		hours_hand.icon_state = new_hours_state
+		add_overlay(hours_hand)
+
+	var/new_minute_state = "clock_m_[(round(worldtime_minutes() / 5) % 12)]"
+	if(minute_hand.icon_state != new_minute_state)
+		cut_overlay(minute_hand)
+		minute_hand.icon_state = new_minute_state
+		add_overlay(minute_hand)
 
 /obj/item/portrait
 	name = "portrait"
