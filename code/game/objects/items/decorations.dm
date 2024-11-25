@@ -94,6 +94,77 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "newtons_pendulum"
 
+/obj/item/vase
+	name = "vase"
+	cases = list("ваза", "вазы", "вазе", "вазу", "вазой", "вазе")
+	desc = "Ваза для цветка."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "vase_1"
+
+	var/list/canplace = list(/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
+							/obj/item/weapon/grown/sunflower, /obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
+							/obj/item/weapon/reagent_containers/food/snacks/grown/poppy)
+	var/obj/item/flower
+
+	var/image/flower_image
+	var/image/front_image
+
+/obj/item/vase/atom_init(mapload)
+	. = ..()
+	var/vase_number = rand(1, 10)
+	icon_state = "vase_[vase_number]"
+	front_image = image(icon, "[icon_state]_front")
+
+	if(mapload)
+		var/turf/T = get_turf(src)
+		for(var/obj/item/weapon/G in T.contents)
+			if(G.type in canplace)
+				G.forceMove(src)
+				flower = G
+				update_icon()
+				break
+
+/obj/item/vase/attackby(obj/item/I, mob/user, params)
+	if(I.type in canplace)
+		user.drop_from_inventory(I, src)
+		flower = I
+		update_icon()
+		return
+	return ..()
+
+/obj/item/vase/attack_hand(mob/user)
+	if(user && user.a_intent == INTENT_GRAB)
+		return ..()
+
+	if(flower)
+		if(ishuman(user))
+			user.put_in_hands(flower)
+		else
+			flower.forceMove(get_turf(src))
+		flower = null
+		update_icon()
+		return
+	..()
+
+/obj/item/vase/MouseDrop(mob/user)
+	. = ..()
+	if(user == usr && !usr.incapacitated() && Adjacent(usr))
+		var/prev_intent = user.a_intent
+		user.set_a_intent(INTENT_GRAB)
+		attack_hand(user)
+		user.set_a_intent(prev_intent)
+
+/obj/item/vase/update_icon()
+	cut_overlay(flower_image)
+	cut_overlay(front_image)
+
+	if(!flower)
+		return
+
+	flower_image = image(flower.icon, flower.item_state_world)
+	add_overlay(flower_image)
+	add_overlay(front_image)
+
 /obj/item/tableclock
 	name = "table clock"
 	desc = "Точное время в любое время."

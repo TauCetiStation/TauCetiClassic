@@ -1654,6 +1654,7 @@
 	desc = "Очень красивый! Кое-кто может забить тебя до смерти, если ты их растопчешь."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
+	item_state_world = "sunflower_world"
 	damtype = BURN
 	force = 0
 	throwforce = 1
