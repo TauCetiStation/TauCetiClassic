@@ -7,46 +7,30 @@
 
 	free_space = 100
 
-	var/theme_color = "sticker_theme_yellow"
+	windowX = 200
+	windowY = 200
+	windowTheme = "sticker_theme_yellow"
 
 /obj/item/weapon/paper/sticker/yellow
 	icon_state = "sticker_yellow"
 
-	theme_color = "sticker_theme_yellow"
+	windowTheme = "sticker_theme_yellow"
 
 /obj/item/weapon/paper/sticker/red
 	icon_state = "sticker_red"
 
-	theme_color = "sticker_theme_red"
+	windowTheme = "sticker_theme_red"
 
 /obj/item/weapon/paper/sticker/green
 	icon_state = "sticker_green"
 
-	theme_color = "sticker_theme_green"
+	windowTheme = "sticker_theme_green"
 
 /obj/item/weapon/paper/sticker/blue
 	icon_state = "sticker_blue"
 
-	theme_color = "sticker_theme_blue"
+	windowTheme = "sticker_theme_blue"
 
-/obj/item/weapon/paper/sticker/show_content(mob/user, forceshow = FALSE, forcestars = FALSE, infolinks = FALSE, view = TRUE)
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
-	assets.send(user)
-
-	name = sanitize(name)
-	var/data
-
-	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
-		data = "[stars(info)][stamp_text]"
-	else
-		data = "[infolinks ? info_links : info][stamp_text]"
-
-	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", 200, 200, ntheme = theme_color)
-		popup.set_content(data)
-		popup.open()
-
-	return data
 
 /obj/item/weapon/paper/sticker/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
