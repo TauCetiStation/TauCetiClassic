@@ -33,9 +33,10 @@
 
 
 /obj/item/weapon/paper/sticker/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
-	if(!istype(target, /obj/structure) && !ismachinery(target)) return
-	if(src.loc != user) return
+	if(!proximity)
+		return
+	if(!istype(target, /obj/structure) && !ismachinery(target))
+		return
 
 	var/list/click_params = params2list(params)
 	var/matrix/M = matrix()
@@ -76,13 +77,16 @@
 /obj/item/weapon/stickers/MouseDrop(mob/user)
 	. = ..()
 	if(user == usr && !usr.incapacitated() && Adjacent(usr))
-		attack_hand(user, forceGrab = TRUE)
+		if(ishuman(user))
+			user.put_in_hands(src)
+		else
+			forceMove(get_turf(user))
 
 /obj/item/weapon/stickers/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/stickers/attack_hand(mob/living/user, forceGrab = FALSE)
-	if(user && (forceGrab || user.a_intent == INTENT_GRAB))
+/obj/item/weapon/stickers/attack_hand(mob/living/user)
+	if(user && user.a_intent == INTENT_GRAB)
 		return ..()
 
 	var/obj/item/weapon/paper/sticker/S
