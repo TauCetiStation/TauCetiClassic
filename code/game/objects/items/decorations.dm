@@ -132,8 +132,8 @@
 		return
 	return ..()
 
-/obj/item/vase/attack_hand(mob/user)
-	if(user && user.a_intent == INTENT_GRAB)
+/obj/item/vase/attack_hand(mob/user, forceGrab = FALSE)
+	if(user && (forceGrab || user.a_intent == INTENT_GRAB))
 		return ..()
 
 	if(flower)
@@ -149,10 +149,7 @@
 /obj/item/vase/MouseDrop(mob/user)
 	. = ..()
 	if(user == usr && !usr.incapacitated() && Adjacent(usr))
-		var/prev_intent = user.a_intent
-		user.set_a_intent(INTENT_GRAB)
-		attack_hand(user)
-		user.set_a_intent(prev_intent)
+		attack_hand(user, forceGrab = TRUE)
 
 /obj/item/vase/update_icon()
 	cut_overlay(flower_image)
