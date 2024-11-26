@@ -82,32 +82,31 @@
 	front_side.layer = layer + 0.01
 	add_overlay(front_side)
 
-/obj/item/mars_globe
+/obj/item/globe
+	icon = 'icons/obj/items.dmi'
+
+/obj/item/globe/mars
 	name = "mars globe"
 	cases = list("глобус Марса", "глобуса Марса", "глобусу Марса", "глобус Марса", "глобусом Марса", "глобусе Марса")
 	desc = "Точное отображение поверхности Марса."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_mars"
 
-/obj/item/venus_globe
+/obj/item/globe/venus
 	name = "venus globe"
 	cases = list("глобус Венеры", "глобуса Венеры", "глобусу Венеры", "глобус Венеры", "глобусом Венеры", "глобусе Венеры")
 	desc = "Точное отображение поверхности Венеры."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_venus"
 
-/obj/item/earth_globe
+/obj/item/globe/earth
 	name = "earth globe"
 	cases = list("глобус Земли", "глобуса Земли", "глобусу Земли", "глобус Земли", "глобусом Земли", "глобусе Земли")
 	desc = "Точное отображение поверхности Земли."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_earth"
 
-/obj/item/yargon_globe
+/obj/item/globe/yargon
 	name = "yargon IV globe"
 	cases = list("глобус Яргона-4", "глобуса Яргона-4", "глобусу Яргона-4", "глобус Яргона-4", "глобусом Яргона-4", "глобусе Яргона-4")
 	desc = "Точное отображение поверхности Яргона-4."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_yargon4"
 
 /obj/item/newtons_pendulum
