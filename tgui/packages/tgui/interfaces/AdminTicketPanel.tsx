@@ -69,11 +69,11 @@ export const AdminTicketPanel = (props, context) => {
               </LabeledList.Item>
             )}
             <LabeledList.Item label="Actions">
-              <div dangerouslySetInnerHTML={{ __html: actions }} />
+              {actions}
             </LabeledList.Item>
             <LabeledList.Item label="Log">
               {Object.keys(log).map((L, i) => (
-                <div key={i} dangerouslySetInnerHTML={{ __html: log[L] }} />
+                log[L]
               ))}
             </LabeledList.Item>
           </LabeledList>
