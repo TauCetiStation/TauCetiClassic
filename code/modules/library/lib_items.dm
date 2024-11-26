@@ -127,7 +127,7 @@
 
 /obj/structure/bookcase/shelf/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
+		var/obj/item/choice = input("Which item would you like to remove from the shelf?") in contents
 		if(choice)
 			if(usr.incapacitated() || !Adjacent(usr))
 				return
