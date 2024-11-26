@@ -938,7 +938,7 @@
 
 /datum/uplink_item/device_tools/syndcodebook/rowena
 	name = "Rowena Ravenclaw Book"
-	desc = "This book will help you understand the language of all races, as well as speak them. \
+	desc = "This book will help you understand the language of all races. \
 	In this guide, you will learn how to use a variety of languages. Usage is limited."
 	item = /obj/item/weapon/syndcodebook/rowena
 	cost = 1
