@@ -203,3 +203,21 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/head/pluvia
+	name = "pluvia non la"
+	desc = "Prepare to heavy rain"
+	icon_state = "pluvia_hat"
+	item_state = "pluvia_hat"
+	flags = HEADCOVERSEYES
+
+/obj/item/clothing/head/pluvia/white
+	icon_state = "wpluvia_hat"
+	item_state = "wpluvia_hat"
+
+/obj/item/clothing/head/ricehat
+	name = "non la"
+	desc = "welcome to the rice fields"
+	icon_state = "ricehat"
+	item_state = "ricehat"
+	flags = HEADCOVERSEYES

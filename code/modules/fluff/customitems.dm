@@ -22,11 +22,12 @@
 #define FLUFF_TYPE_ACCESSORY "accessory"
 #define FLUFF_TYPE_LABCOAT "labcoat"
 #define FLUFF_TYPE_BACKPACK "backpack"
+#define FLUFF_TYPE_TIE  "tie"
 // other
 //#define FLUFF_TYPE_ROBOT "robot"
 #define FLUFF_TYPE_GHOST "ghost"
 
-#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST)
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE)
 
 
 /obj/item/customitem
@@ -73,6 +74,8 @@
 /obj/item/weapon/storage/backpack/custom
 	name = "Custom backpack"
 
+/obj/item/clothing/neck/custom
+	name = "Custom tie"
 
 /datum/custom_item
 	var/item_type // FLUFF_TYPES_LIST
@@ -283,6 +286,8 @@
 				item = new /obj/item/clothing/shoes/custom()
 			if(FLUFF_TYPE_BACKPACK)
 				item = new /obj/item/weapon/storage/backpack/custom()
+			if(FLUFF_TYPE_TIE)
+				item = new /obj/item/clothing/neck/custom()
 			if(FLUFF_TYPE_ACCESSORY)
 				var/obj/item/clothing/accessory/custom/accessory = new /obj/item/clothing/accessory/custom()
 				accessory.inv_overlay = image("icon" = custom_item_info.icon, "icon_state" = "[custom_item_info.icon_state]_inv")

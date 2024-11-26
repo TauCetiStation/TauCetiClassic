@@ -220,8 +220,6 @@
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
 
-	sprite_sheet_slot = SPRITE_SHEET_EARS
-
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
 
@@ -355,6 +353,14 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = SIZE_TINY
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
+
+//Neck
+/obj/item/clothing/neck
+	name = "neck"
+	icon = 'icons/obj/clothing/neck.dmi'
+	slot_flags = SLOT_FLAGS_NECK
+	w_class = SIZE_TINY
+	sprite_sheet_slot = SPRITE_SHEET_NECK
 
 //Mask
 /obj/item/clothing/mask

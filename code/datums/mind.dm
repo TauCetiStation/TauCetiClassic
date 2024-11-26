@@ -63,10 +63,22 @@
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 	var/creation_roundtime
 
+	// Pluvia sochial credit system
+	var/pluvian_social_credit = 0 // everyone has it, even if not pluvian, used for letter vote
+	var/pluvian_haram_points = 0
+	var/pluvian_blessed = 0
+
+	var/willpower_amount = 1
+	var/possible_willpower_effects = list(/datum/willpower_effect/painkiller, /datum/willpower_effect/skills, /datum/willpower_effect/nutrition, /datum/willpower_effect/fat)
+	var/willpower_effects = list()
+
 /datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
 	creation_roundtime = roundduration2text()
+	for(var/WE in possible_willpower_effects)
+		var/i = new WE
+		willpower_effects += i
 
 /datum/mind/proc/transfer_to(mob/new_character)
 	for(var/role in antag_roles)
@@ -707,6 +719,47 @@
 	all_factions += "-----"
 	return all_factions
 
+/datum/mind/proc/do_select_willpower_effect()
+	if(!ishuman(current))
+		return
+	var/mob/living/carbon/human/H = current
+	if(H.species.flags[NO_WILLPOWER])
+		return
+	if(H.stat == DEAD)
+		to_chat(H, "<span class='warning'>Мертвые не своевольничают.</span>")
+		return
+	if(!willpower_amount)
+		to_chat(H, "<span class='warning'>У вас нет воли.</span>")
+		return
+	var/datum/willpower_effect/selected_effect
+	var/list/names = list()
+	for(var/datum/willpower_effect/WE in willpower_effects)
+		names += WE.name
+
+	var/chosen_willpower_effect = tgui_input_list(H,"Вы собираете волю в кулак...","ВОЛЯ", names)
+	if(!chosen_willpower_effect)
+		return
+
+	for(var/datum/willpower_effect/selection in willpower_effects)
+		if(selection.name == chosen_willpower_effect)
+			selected_effect = selection
+
+	use_willpower_effect(selected_effect)
+
+/datum/mind/proc/can_use_willpower_effect(datum/willpower_effect/WE)
+	if(!ishuman(current))
+		return
+	if(willpower_amount < WE.cost)
+		to_chat(current, "<span class='warning'>Вам не хватает воли.</span>")
+		return FALSE
+	return WE.special_check(current)
+
+/datum/mind/proc/use_willpower_effect(datum/willpower_effect/WE)
+	if(!can_use_willpower_effect(WE))
+		return FALSE
+	WE.do_effect(current)
+	willpower_amount -= WE.cost
+
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
@@ -734,6 +787,15 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
+	
+	//Pluvia social credit system
+	mind.pluvian_social_credit = species.pluvian_social_credit
+	if(mind.assigned_job)
+		var/list/static/pluvian_haram_jobs = list("Captain","Head of Security","Warden","Security Officer","Security Cadet","Blueshield Officer","Internal Affairs Agent")
+		if(mind.assigned_job.title in pluvian_haram_jobs)
+			mind.pluvian_social_credit = 0
+	if(ispluvian(src))
+		global.pluvia_religion.add_member(src, HOLY_ROLE_PRIEST)
 
 //slime
 /mob/living/carbon/slime/mind_initialize()

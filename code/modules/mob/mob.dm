@@ -50,6 +50,7 @@
 	spawn()
 		if(client)
 			animate(client, color = null, time = 0)
+			hud_used.set_parallax(current_parallax)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -437,7 +438,6 @@
 
 	// New life, new quality.
 	client.prefs.selected_quality_name = null
-
 	M.key = key
 	M.name = M.key
 //	M.Login()	//wat
@@ -853,6 +853,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
 	updateDrugginesOverlay()
+	SEND_SIGNAL(src, COMSIG_HUMAN_ON_ADJUST_DRUGINESS, src)
 
 /mob/proc/setDrugginess(amount)
 	druggy = max(amount, 0)
@@ -881,13 +882,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(status_flags & GODMODE)
 		return
 	stuttering = max(amount, 0)
-
-//========== Shock Stage =========
-/mob/proc/AdjustShockStage(amount)
-	return
-
-/mob/proc/SetShockStage(amount)
-	return
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
@@ -971,7 +965,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.AdjustShockStage(20)
+		H.adjustHalLoss(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.

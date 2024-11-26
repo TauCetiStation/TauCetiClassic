@@ -298,7 +298,6 @@
 			L.SetDrunkenness(0)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				C.shock_stage = 0
 				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					H.restore_blood()

@@ -475,9 +475,9 @@
 	if (src.icon_vend) //Show the vending animation if needed
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
-	give_out_product(R)
-	src.vend_ready = 1
-	src.currently_vending = null
+		give_out_product(R)
+		src.vend_ready = 1
+		src.currently_vending = null
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))

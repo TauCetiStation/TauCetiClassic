@@ -39,10 +39,10 @@
 #define GAME_STATE_FINISHED		4
 
 //Security levels
-#define SEC_LEVEL_GREEN	0
-#define SEC_LEVEL_BLUE	1
-#define SEC_LEVEL_RED	2
-#define SEC_LEVEL_DELTA	3
+#define SEC_LEVEL_GREEN	1
+#define SEC_LEVEL_BLUE	2
+#define SEC_LEVEL_RED	3
+#define SEC_LEVEL_DELTA	4
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
@@ -349,6 +349,7 @@
 		/turf/simulated/wall/r_wall/purple, \
 		/turf/simulated/wall/r_wall/green, \
 		/turf/simulated/wall/r_wall/beige, \
+		/turf/simulated/wall/heaven, \
 		/obj/structure/falsewall, \
 		/obj/structure/falsewall/yellow, \
 		/obj/structure/falsewall/red, \
