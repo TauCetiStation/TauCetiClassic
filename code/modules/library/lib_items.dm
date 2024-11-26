@@ -101,7 +101,8 @@
 	var/obj/item/placeditem
 	var/list/canbeplaced = list(
 		/obj/item/mars_globe = list(4, -6),
-		/obj/item/newtons_pendulum = list(5, -8)
+		/obj/item/newtons_pendulum = list(5, -8),
+		/obj/item/bust = list(4, -6)
 		)
 
 /obj/structure/bookcase/shelf/atom_init()
