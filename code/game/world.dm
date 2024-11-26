@@ -480,15 +480,18 @@ var/global/shutdown_processed = FALSE
 /world/proc/update_status()
 	var/s = ""
 
+	if (config && config.siteurl)
+		s += "<a href=\"[config.siteurl]\">"
+
 	s += "<b>"
 
 	if (config && config.server_name)
 		s += "[config.server_name] &#8212; "
 
-	s += "[station_name()]</b>";
+	s += "[station_name()]</b>"
 
 	if (config && config.siteurl)
-		s += " (<a href=\"[config.siteurl]\">links</a>)"
+		s += "</a>";
 
 	s += "<br>Roleplay: <b>Medium</b>"
 
