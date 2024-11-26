@@ -416,7 +416,7 @@
 
 /datum/quality/positiveish/bettercallsaul
 	name = "Better Call Saul"
-	desc = "У меня есть знакомый, у которого есть знакомый, который дал вам набор лучшего адвоката"
+	desc = "У меня есть знакомый, у которого есть знакомый, который дал вам набор лучшего адвоката."
 	requirement = "Адвокат."
 
 	jobs_required = list("Lawyer")
