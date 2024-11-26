@@ -101,10 +101,7 @@
 		if(16 to 20)
 			S = new /obj/item/weapon/paper/sticker/yellow(src)
 
-	if(ishuman(user))
-		user.put_in_hands(S)
-	else
-		S.forceMove(get_turf(src))
+	user.put_in_hands(S)
 
 	stickers_amount--
 
