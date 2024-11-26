@@ -7,8 +7,8 @@
 
 	free_space = 100
 
-	windowX = 200
-	windowY = 200
+	windowWidth = 200
+	windowHeight = 200
 	windowTheme = "sticker_theme_yellow"
 
 /obj/item/weapon/paper/sticker/yellow
@@ -75,10 +75,7 @@
 /obj/item/weapon/stickers/MouseDrop(mob/user)
 	. = ..()
 	if(user == usr && !usr.incapacitated() && Adjacent(usr))
-		if(ishuman(user))
-			user.put_in_hands(src)
-		else
-			forceMove(get_turf(user))
+		user.put_in_hands(src)
 
 /obj/item/weapon/stickers/attack_paw(mob/user)
 	return attack_hand(user)

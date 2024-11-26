@@ -44,8 +44,8 @@
 	///Last world.time tick the contents of this paper was changed.
 	var/last_info_change = 0
 
-	var/windowX = 425
-	var/windowY = 600
+	var/windowWidth = 425
+	var/windowHeight = 600
 	var/windowTheme = CSS_THEME_LIGHT
 
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
@@ -95,7 +95,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", windowX, windowY, ntheme = windowTheme)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", windowWidth, windowHeight, ntheme = windowTheme)
 		popup.set_content(data)
 		popup.open()
 

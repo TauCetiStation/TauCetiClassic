@@ -95,7 +95,7 @@
 			var/obj/item/weapon/paper/P = W
 			dat += P.show_content(human_user, view = FALSE)
 
-			var/datum/browser/popup = new(human_user, "window=[name]", "[sanitize(P.name)]", P.windowX, P.windowY, ntheme = P.windowTheme)
+			var/datum/browser/popup = new(human_user, "window=[name]", "[sanitize(P.name)]", P.windowWidth, P.windowHeight, ntheme = P.windowTheme)
 			popup.set_content(dat)
 			popup.open()
 
