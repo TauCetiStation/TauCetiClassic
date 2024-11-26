@@ -103,7 +103,10 @@
 		/obj/item/mars_globe = list(4, -6),
 		/obj/item/newtons_pendulum = list(5, -8),
 		/obj/item/bust = list(4, -6),
-		/obj/item/globe = list(4, -6)
+		/obj/item/mars_globe = list(4, -6),
+		/obj/item/venus_globe = list(4, -6),
+		/obj/item/earth_globe = list(4, -6),
+		/obj/item/yargon_globe = list(4, -6)
 		)
 
 /obj/structure/bookcase/shelf/atom_init()

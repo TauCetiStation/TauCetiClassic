@@ -85,25 +85,25 @@
 /obj/item/globe
 	icon = 'icons/obj/items.dmi'
 
-/obj/item/globe/mars
+/obj/item/mars_globe
 	name = "mars globe"
 	cases = list("глобус Марса", "глобуса Марса", "глобусу Марса", "глобус Марса", "глобусом Марса", "глобусе Марса")
 	desc = "Точное отображение поверхности Марса."
 	icon_state = "globe_mars"
 
-/obj/item/globe/venus
+/obj/item/venus_globe
 	name = "venus globe"
 	cases = list("глобус Венеры", "глобуса Венеры", "глобусу Венеры", "глобус Венеры", "глобусом Венеры", "глобусе Венеры")
 	desc = "Точное отображение поверхности Венеры."
 	icon_state = "globe_venus"
 
-/obj/item/globe/earth
+/obj/item/earth_globe
 	name = "earth globe"
 	cases = list("глобус Земли", "глобуса Земли", "глобусу Земли", "глобус Земли", "глобусом Земли", "глобусе Земли")
 	desc = "Точное отображение поверхности Земли."
 	icon_state = "globe_earth"
 
-/obj/item/globe/yargon
+/obj/item/yargon_globe
 	name = "yargon IV globe"
 	cases = list("глобус Яргона-4", "глобуса Яргона-4", "глобусу Яргона-4", "глобус Яргона-4", "глобусом Яргона-4", "глобусе Яргона-4")
 	desc = "Точное отображение поверхности Яргона-4."
