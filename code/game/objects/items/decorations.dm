@@ -205,3 +205,22 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 			Portrait.icon_state = "portrait_empty"
 			Portrait.desc = newdesc
 			Portrait.add_overlay(Heads_photo)
+
+/obj/item/bust
+	name = "gypsum bust"
+	cases = list("гипсовый бюст", "гипсового бюста", "гипсовому бюсту", "гипсовый бюст", "гипсовым бюстом", "гипсомвом бюсте")
+	desc = "Гипсовый бюст должностного лица НаноТрейзен."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bust_1"
+
+/obj/item/bust/atom_init(mapload)
+	. = ..()
+	var/bust_number = rand(1, 3)
+	icon_state = "bust_[bust_number]"
+	switch(bust_number)
+		if(1)
+			desc = "Франклин Моррис - Главный представитель НаноТрейзен на территории СолГов."
+		if(2)
+			desc = "Эдвард Мунос - Начальник ОБОП НаноТрейзен."
+		if(3)
+			desc = "Маргарет Чейн - Директор отдела кооперации и связей с общественностью НаноТрейзен."
