@@ -46,8 +46,6 @@
 
 	AddComponent(/datum/component/bounded, target, 0, 0, CALLBACK(src, PROC_REF(resolve_stranded)))
 
-	return
-
 /obj/item/weapon/paper/sticker/proc/resolve_stranded(datum/component/bounded/bounds)
 	if(get_dist(bounds.master, src) <= 1 && isturf(loc))
 		forceMove(bounds.master.loc)
