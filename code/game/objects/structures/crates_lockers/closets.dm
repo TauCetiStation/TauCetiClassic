@@ -178,6 +178,9 @@
 	else if(istagger(W))
 		return
 
+	else if(istype(W, /obj/item/weapon/paper/sticker))
+		return
+
 	else
 		attack_hand(user)
 

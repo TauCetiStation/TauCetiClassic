@@ -74,7 +74,7 @@
 
 /obj/item/weapon/stickers/MouseDrop(mob/user)
 	. = ..()
-	if(user == usr && !usr.incapacitated() && Adjacent(usr))
+	if(.)
 		user.put_in_hands(src)
 
 /obj/item/weapon/stickers/attack_paw(mob/user)
