@@ -496,7 +496,7 @@
 	item_state_world = "syndicate_world"
 	item_state = "book"
 
-/obj/item/weapon/syndcodebook/attack_self(mob/user)
+/obj/item/weapon/syndcodebook/rowena/attack_self(mob/user)
 
 	if(do_after(user, 40, target = user))
 		user.visible_message(
