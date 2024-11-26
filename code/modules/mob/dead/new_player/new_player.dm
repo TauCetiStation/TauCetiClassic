@@ -397,11 +397,11 @@
 				var/priorityMessage = ""
 				var/priority_color = "#ffffff"
 				switch(job.quota)
-					if(1)
+					if(QUOTA_WANTED)
 						priority = "!+"
 						priority_color = "#83bf47"
 						priorityMessage = "Требуется"
-					if(2)
+					if(QUOTA_UNWANTED)
 						priority = "¡-"
 						priority_color = "#ee0000"
 						priorityMessage = "Не требуется"

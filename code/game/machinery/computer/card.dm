@@ -374,19 +374,19 @@
 			var/job_type = text2path(href_list["quotajob_type"])
 			var/datum/job/Job = SSjob.type_occupations[job_type]
 			if(Job)
-				if(Job.quota == 1)
-					Job.quota = 0
+				if(Job.quota == QUOTA_WANTED)
+					Job.quota = QUOTA_NEUTRAL
 				else
-					Job.quota = 1
+					Job.quota = QUOTA_WANTED
 
 		if ("down_quota")
 			var/job_type = text2path(href_list["quotajob_type"])
 			var/datum/job/Job = SSjob.type_occupations[job_type]
 			if(Job)
-				if(Job.quota == 2)
-					Job.quota = 0
+				if(Job.quota == QUOTA_UNWANTED)
+					Job.quota = QUOTA_NEUTRAL
 				else
-					Job.quota = 2
+					Job.quota = QUOTA_UNWANTED
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

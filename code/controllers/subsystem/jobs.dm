@@ -94,8 +94,8 @@ SUBSYSTEM_DEF(job)
 		unassigned -= player
 		job.current_positions++
 
-		if(job.quota == 1)
-			job.quota = 0
+		if(job.quota == QUOTA_WANTED)
+			job.quota = QUOTA_NEUTRAL
 		return TRUE
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return FALSE
