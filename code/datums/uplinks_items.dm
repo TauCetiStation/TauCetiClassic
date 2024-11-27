@@ -936,6 +936,14 @@
 	cost = 1
 	uplink_types = list("traitor", "dealer")
 
+/datum/uplink_item/device_tools/syndcodebook/rowena
+	name = "Rowena Ravenclaw Book"
+	desc = "This book will help you understand the language of all races. \
+	In this guide, you will learn how to use a variety of languages. Usage is limited."
+	item = /obj/item/weapon/syndcodebook/rowena
+	cost = 1
+	uplink_types = list("traitor", "dealer")
+
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. \
