@@ -487,3 +487,33 @@
 		user.add_language(LANGUAGE_SYCODE)
 		new /obj/effect/decal/cleanable/ash(user.loc)
 		qdel(src)
+
+/obj/item/weapon/syndcodebook/rowena
+	name = "black-red book"
+	desc = "Ominous book with some gabblery written on yellow pages."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "syndicate"
+	item_state_world = "syndicate_world"
+	item_state = "book"
+
+/obj/item/weapon/syndcodebook/rowena/attack_self(mob/user)
+
+	if(do_after(user, 40, target = user))
+		user.visible_message(
+			"<span class='warning'>[user] perks at \the [src] and nods. Suddenly, \the [src] burns to ashes!</span>",
+			"<span class='warning'>As soon as you finish reading \the [src], you become the speaker of many languages and [src] burns to ashes.</span>"
+		)
+		user.add_language(LANGUAGE_SOLCOMMON)
+		user.add_language(LANGUAGE_SINTAUNATHI, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_SIIKMAAS, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_SKRELLIAN, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_ROOTSPEAK, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_ROOTSONG, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_TRADEBAND)
+		user.add_language(LANGUAGE_TRINARY, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_GUTTER)
+		user.add_language(LANGUAGE_USL)
+		user.add_language(LANGUAGE_VOXPIDGIN, LANGUAGE_CAN_UNDERSTAND)
+		new /obj/effect/decal/cleanable/ash(user.loc)
+		qdel(src)

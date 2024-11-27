@@ -84,9 +84,31 @@
 
 /obj/item/mars_globe
 	name = "mars globe"
-	desc = "Глобус Марса."
+	cases = list("глобус Марса", "глобуса Марса", "глобусу Марса", "глобус Марса", "глобусом Марса", "глобусе Марса")
+	desc = "Точное отображение поверхности Марса."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "globe"
+	icon_state = "globe_mars"
+
+/obj/item/venus_globe
+	name = "venus globe"
+	cases = list("глобус Венеры", "глобуса Венеры", "глобусу Венеры", "глобус Венеры", "глобусом Венеры", "глобусе Венеры")
+	desc = "Точное отображение поверхности Венеры."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_venus"
+
+/obj/item/earth_globe
+	name = "earth globe"
+	cases = list("глобус Земли", "глобуса Земли", "глобусу Земли", "глобус Земли", "глобусом Земли", "глобусе Земли")
+	desc = "Точное отображение поверхности Земли."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_earth"
+
+/obj/item/yargon_globe
+	name = "yargon IV globe"
+	cases = list("глобус Яргона-4", "глобуса Яргона-4", "глобусу Яргона-4", "глобус Яргона-4", "глобусом Яргона-4", "глобусе Яргона-4")
+	desc = "Точное отображение поверхности Яргона-4."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_yargon4"
 
 /obj/item/newtons_pendulum
 	name = "newton's pendulum"
@@ -205,3 +227,22 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 			Portrait.icon_state = "portrait_empty"
 			Portrait.desc = newdesc
 			Portrait.add_overlay(Heads_photo)
+
+/obj/item/bust
+	name = "gypsum bust"
+	cases = list("гипсовый бюст", "гипсового бюста", "гипсовому бюсту", "гипсовый бюст", "гипсовым бюстом", "гипсомвом бюсте")
+	desc = "Гипсовый бюст должностного лица НаноТрейзен."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bust_1"
+
+/obj/item/bust/atom_init(mapload)
+	. = ..()
+	var/bust_number = rand(1, 3)
+	icon_state = "bust_[bust_number]"
+	switch(bust_number)
+		if(1)
+			desc = "Франклин Моррис - Главный представитель НаноТрейзен на территории СолГов."
+		if(2)
+			desc = "Эдвард Мунос - Начальник ОБОП НаноТрейзен."
+		if(3)
+			desc = "Маргарет Чейн - Директор отдела кооперации и связей с общественностью НаноТрейзен."

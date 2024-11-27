@@ -185,15 +185,15 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
-	// The type of skeleton species they would be turned into. default is human
+	// The type of skeleton/slime species they would be turned into. default is human
 	var/skeleton_type = SKELETON
+	var/slime_species = SLIME
 
 	var/default_mood_event
 
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
 
 	var/surgery_icobase = 'icons/mob/surgery.dmi'
-
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -493,6 +493,7 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_UNATHI
+	slime_species = SLIME_UNATHI
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD     = 'icons/mob/species/unathi/helmet.dmi',
@@ -568,6 +569,7 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_TAJARAN
+	slime_species = SLIME_TAJARAN
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD     = 'icons/mob/species/tajaran/helmet.dmi',
@@ -627,6 +629,7 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_SKRELL
+	slime_species = SLIME_SKRELL
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD = 'icons/mob/species/skrell/helmet.dmi',
@@ -721,6 +724,7 @@
 			)
 
 	skeleton_type = SKELETON_VOX
+	slime_species = SLIME_VOX
 
 	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
 
@@ -1744,13 +1748,14 @@
 
 /datum/species/slime
 	name = SLIME
-	icobase = 'icons/mob/human_races/r_slime.dmi'
-	deform = 'icons/mob/human_races/r_slime.dmi'
+	icobase = 'icons/mob/human_races/r_human_slime.dmi'
+	deform = 'icons/mob/human_races/r_human_slime.dmi'
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#05fffb"
 	unarmed_type = /datum/unarmed_attack/slime_glomp
-	has_gendered_icons = FALSE
+	has_gendered_icons = TRUE
+	gender_limb_icons = TRUE
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
@@ -1773,6 +1778,85 @@
 	max_age = 85
 
 	is_common = TRUE
+
+/datum/species/slime/unathi
+	name = SLIME_UNATHI
+	icobase = 'icons/mob/human_races/r_lizard_slime.dmi'
+	deform = 'icons/mob/human_races/r_lizard_slime.dmi'
+	gender_tail_icons = TRUE
+	tail = "unathi_slime"
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,IS_SOCIAL = TRUE
+	,HAS_TAIL = TRUE
+	)
+
+/datum/species/slime/vox
+	name = SLIME_VOX
+	icobase = 'icons/mob/human_races/r_vox_slime.dmi'
+	deform = 'icons/mob/human_races/r_vox_slime.dmi'
+	has_gendered_icons = FALSE
+	gender_limb_icons = FALSE
+	tail = "vox_slime"
+	eyes = "vox_eyes"
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,IS_SOCIAL = TRUE
+	,HAS_TAIL = TRUE
+	)
+
+	sprite_sheets = list(
+		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
+		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
+		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
+		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
+		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
+		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/species/vox/back.dmi'
+		)
+
+/datum/species/slime/tajaran
+	name = SLIME_TAJARAN
+	icobase = 'icons/mob/human_races/r_tajaran_slime.dmi'
+	deform = 'icons/mob/human_races/r_tajaran_slime.dmi'
+	gender_tail_icons = TRUE
+	tail = "tajaran_slime"
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,IS_SOCIAL = TRUE
+	,HAS_TAIL = TRUE
+	)
+
+/datum/species/slime/skrell
+	name = SLIME_SKRELL
+	icobase = 'icons/mob/human_races/r_skrell_slime.dmi'
+	deform = 'icons/mob/human_races/r_skrell_slime.dmi'
+	has_gendered_icons = FALSE
+	gender_limb_icons = FALSE
+	eyes = "skrell_eyes"
 
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
