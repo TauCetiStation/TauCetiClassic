@@ -131,6 +131,13 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_gestalt"
 
+/obj/item/pluvia_globe
+	name = "pluvia globe"
+	cases = list("глобус Плувии", "глобуса Плувии", "глобусу Плувии", "глобус Плувии", "глобусом Плувии", "глобусе Плувии")
+	desc = "Точное отображение поверхности Плувии."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_pluvia"
+
 /obj/item/newtons_pendulum
 	name = "newton's pendulum"
 	desc = "Вечный двигатель в миниатюре."
