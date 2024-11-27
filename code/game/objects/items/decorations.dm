@@ -110,6 +110,27 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_yargon4"
 
+/obj/item/moghes_globe
+	name = "moghes globe"
+	cases = list("глобус Могеса", "глобуса Могеса", "глобусу Могеса", "глобус Могеса", "глобусом Могеса", "глобусе Могеса")
+	desc = "Точное отображение поверхности Могеса."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_moghes"
+
+/obj/item/adhomai_globe
+	name = "adhomai globe"
+	cases = list("глобус Адомая", "глобуса Адомая", "глобусу Адомая", "глобус Адомая", "глобусом Адомая", "глобусе Адомая")
+	desc = "Точное отображение поверхности Адомая."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_adhomai"
+
+/obj/item/gestalt_globe
+	name = "dionaea gestalt model"
+	cases = list("модель гештальта", "модели гештальта", "модели гештальта", "модель гештальта", "моделью гештальта", "модели гештальта")
+	desc = "Модель единственного найденного гештальта Дион."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_gestalt"
+
 /obj/item/newtons_pendulum
 	name = "newton's pendulum"
 	desc = "Вечный двигатель в миниатюре."
