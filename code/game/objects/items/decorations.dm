@@ -101,9 +101,13 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "vase_1"
 
+	var/variants = 6
+
 	var/list/canplace = list(/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
-							/obj/item/weapon/grown/sunflower, /obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
-							/obj/item/weapon/reagent_containers/food/snacks/grown/poppy)
+							/obj/item/weapon/grown/sunflower,
+							/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
+							/obj/item/weapon/reagent_containers/food/snacks/grown/poppy
+							)
 	var/obj/item/flower
 
 	var/image/flower_image
@@ -111,7 +115,7 @@
 
 /obj/item/vase/atom_init(mapload)
 	. = ..()
-	var/vase_number = rand(1, 10)
+	var/vase_number = rand(1, variants)
 	icon_state = "vase_[vase_number]"
 	front_image = image(icon, "[icon_state]_front")
 
