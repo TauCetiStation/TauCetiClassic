@@ -83,25 +83,10 @@
 	add_overlay(front_side)
 
 /obj/item/globe
-	name = "random globe"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "globe_mars"
-
-/obj/item/globe/atom_init(mapload)
-	. = ..()
-
-	if(type == /obj/item/globe)
-		var/globeType = pick(subtypesof(type))
-		var/obj/item/globe/Globe = new globeType(loc)
-		Globe.pixel_x = pixel_x
-		Globe.pixel_y = pixel_y
-
-		return INITIALIZE_HINT_QDEL
-
-/obj/item/globe/mars
 	name = "mars globe"
 	cases = list("глобус Марса", "глобуса Марса", "глобусу Марса", "глобус Марса", "глобусом Марса", "глобусе Марса")
 	desc = "Точное отображение поверхности Марса."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_mars"
 
 /obj/item/globe/venus
