@@ -66,10 +66,6 @@
 	var/stickers_amount = 20
 
 /obj/item/weapon/stickers/update_icon()
-	if(!stickers_amount)
-		qdel(src)
-		return
-
 	icon_state = "stickers_[ceil(stickers_amount/5)]"
 
 /obj/item/weapon/stickers/MouseDrop(mob/user)
@@ -102,4 +98,9 @@
 
 	to_chat(user, "<span class='notice'>Вы взяли стикер.</span>")
 	add_fingerprint(user)
+
+	if(stickers_amount <= 0)
+		qdel(src)
+		return
+
 	update_icon()
