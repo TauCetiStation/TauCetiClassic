@@ -98,8 +98,8 @@
 	max_integrity = 50
 	resistance_flags = CAN_BE_HIT
 
-	var/obj/item/placeditem
-	var/list/canbeplaced = list(
+	var/obj/item/placedItem
+	var/list/canBePlaced = list(
 		/obj/item/mars_globe = list(4, -6),
 		/obj/item/newtons_pendulum = list(5, -8),
 		/obj/item/bust = list(4, -6),
@@ -116,16 +116,16 @@
 /obj/structure/bookcase/shelf/atom_init_late()
 	var/turf/T = get_turf(src)
 	for(var/obj/item/I in T.contents)
-		if(I.type in canbeplaced)
+		if(is_type_in_list(I, canBePlaced))
 			I.forceMove(src)
-			placeditem = I
+			placedItem = I
 			update_icon()
 			break
 
 /obj/structure/bookcase/shelf/attackby(obj/O, mob/user)
-	if(!placeditem && (O.type in canbeplaced))
+	if(!placedItem && is_type_in_list(O, canBePlaced))
 		user.drop_from_inventory(O, src)
-		placeditem = O
+		placedItem = O
 		update_icon()
 	else
 		..()
@@ -142,26 +142,26 @@
 			else
 				choice.loc = get_turf(src)
 
-			if(choice == placeditem)
-				placeditem = null
+			if(choice == placedItem)
+				placedItem = null
 			update_icon()
 
 /obj/structure/bookcase/shelf/update_icon()
 	cut_overlays()
 
 	var/shelficonstate = "shelf1"
-	if(placeditem)
+	if(placedItem)
 		shelficonstate = "shelf2"
-		placeditem.update_icon()
+		placedItem.update_icon()
 
-		var/list/placedoffsets = canbeplaced[placeditem.type]
-		placeditem.pixel_x = placedoffsets[1]
-		placeditem.pixel_y = placedoffsets[2]
+		var/list/placedoffsets = canBePlaced[get_type_in_list(placedItem, canBePlaced)]
+		placedItem.pixel_x = placedoffsets[1]
+		placedItem.pixel_y = placedoffsets[2]
 
-		add_overlay(placeditem)
+		add_overlay(placedItem)
 
-	if((placeditem ? contents.len - 1 : contents.len) < 5)
-		icon_state = "[shelficonstate]-[placeditem ? contents.len - 1 : contents.len]"
+	if((placedItem ? contents.len - 1 : contents.len) < 5)
+		icon_state = "[shelficonstate]-[placedItem ? contents.len - 1 : contents.len]"
 	else
 		icon_state = "[shelficonstate]-5"
 
