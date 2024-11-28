@@ -2325,7 +2325,7 @@
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
-/obj/item/mars_globe,
+/obj/item/globe,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormtwo)
 "aem" = (
@@ -64755,7 +64755,7 @@
 /obj/item/device/multitool{
 	pixel_x = -8
 	},
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = 4;
 	pixel_y = 16
 	},
@@ -66108,7 +66108,7 @@
 	pixel_x = 22;
 	pixel_y = -2
 	},
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = 12;
 	pixel_y = 16
 	},
@@ -109772,7 +109772,7 @@
 "uLT" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/blue,
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = -16;
 	pixel_y = -9
 	},
