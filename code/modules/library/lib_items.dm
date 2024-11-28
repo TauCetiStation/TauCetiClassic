@@ -100,17 +100,17 @@
 
 	var/obj/item/placeditem
 	var/list/canbeplaced = list(
-		/obj/item/mars_globe = list(4, -6),
+		/obj/item/mars_globe = list(5, -6),
 		/obj/item/newtons_pendulum = list(5, -8),
 		/obj/item/bust = list(4, -6),
-		/obj/item/mars_globe = list(4, -6),
-		/obj/item/venus_globe = list(4, -6),
-		/obj/item/earth_globe = list(4, -6),
-		/obj/item/yargon_globe = list(4, -6),
-		/obj/item/moghes_globe = list(4, -6),
-		/obj/item/adhomai_globe = list(4, -6),
-		/obj/item/gestalt_globe = list(4, -6),
-		/obj/item/pluvia_globe = list(4, -6)
+		/obj/item/mars_globe = list(5, -6),
+		/obj/item/venus_globe = list(5, -6),
+		/obj/item/earth_globe = list(5, -6),
+		/obj/item/yargon_globe = list(5, -6),
+		/obj/item/moghes_globe = list(5, -6),
+		/obj/item/adhomai_globe = list(5, -6),
+		/obj/item/gestalt_globe = list(5, -6),
+		/obj/item/pluvia_globe = list(5, -6)
 		)
 
 /obj/structure/bookcase/shelf/atom_init()
