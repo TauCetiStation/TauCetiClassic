@@ -13770,7 +13770,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = 8;
 	pixel_y = 14
 	},
@@ -13908,7 +13908,7 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/folder/red,
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = 8;
 	pixel_y = 2
 	},
@@ -33200,7 +33200,7 @@
 /area/station/bridge/meeting_room)
 "bgI" = (
 /obj/structure/table/woodentable,
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = 9
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -39125,7 +39125,7 @@
 	pixel_x = 4;
 	pixel_y = 12
 	},
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = 9;
 	pixel_y = 2
 	},

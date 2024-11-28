@@ -82,60 +82,68 @@
 	front_side.layer = layer + 0.01
 	add_overlay(front_side)
 
-/obj/item/mars_globe
-	name = "mars globe"
-	cases = list("глобус Марса", "глобуса Марса", "глобусу Марса", "глобус Марса", "глобусом Марса", "глобусе Марса")
-	desc = "Точное отображение поверхности Марса."
+/obj/item/globe
+	name = "random globe"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_mars"
 
-/obj/item/venus_globe
+/obj/item/globe/atom_init(mapload)
+	. = ..()
+
+	if(type == /obj/item/globe)
+		var/globeType = pick(subtypesof(type))
+		var/obj/item/globe/Globe = new globeType(loc)
+		Globe.pixel_x = pixel_x
+		Globe.pixel_y = pixel_y
+
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/globe/mars
+	name = "mars globe"
+	cases = list("глобус Марса", "глобуса Марса", "глобусу Марса", "глобус Марса", "глобусом Марса", "глобусе Марса")
+	desc = "Точное отображение поверхности Марса."
+	icon_state = "globe_mars"
+
+/obj/item/globe/venus
 	name = "venus globe"
 	cases = list("глобус Венеры", "глобуса Венеры", "глобусу Венеры", "глобус Венеры", "глобусом Венеры", "глобусе Венеры")
 	desc = "Точное отображение поверхности Венеры."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_venus"
 
-/obj/item/earth_globe
+/obj/item/globe/earth
 	name = "earth globe"
 	cases = list("глобус Земли", "глобуса Земли", "глобусу Земли", "глобус Земли", "глобусом Земли", "глобусе Земли")
 	desc = "Точное отображение поверхности Земли."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_earth"
 
-/obj/item/yargon_globe
+/obj/item/globe/yargon
 	name = "yargon IV globe"
 	cases = list("глобус Яргона-4", "глобуса Яргона-4", "глобусу Яргона-4", "глобус Яргона-4", "глобусом Яргона-4", "глобусе Яргона-4")
 	desc = "Точное отображение поверхности Яргона-4."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_yargon4"
 
-/obj/item/moghes_globe
+/obj/item/globe/moghes
 	name = "moghes globe"
 	cases = list("глобус Могеса", "глобуса Могеса", "глобусу Могеса", "глобус Могеса", "глобусом Могеса", "глобусе Могеса")
 	desc = "Точное отображение поверхности Могеса."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_moghes"
 
-/obj/item/adhomai_globe
+/obj/item/globe/adhomai
 	name = "adhomai globe"
 	cases = list("глобус Адомая", "глобуса Адомая", "глобусу Адомая", "глобус Адомая", "глобусом Адомая", "глобусе Адомая")
 	desc = "Точное отображение поверхности Адомая."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_adhomai"
 
-/obj/item/gestalt_globe
+/obj/item/globe/gestalt
 	name = "dionaea gestalt model"
 	cases = list("модель гештальта", "модели гештальта", "модели гештальта", "модель гештальта", "моделью гештальта", "модели гештальта")
 	desc = "Модель единственного найденного гештальта Дион."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_gestalt"
 
-/obj/item/pluvia_globe
+/obj/item/globe/pluvia
 	name = "pluvia globe"
 	cases = list("глобус Плувии", "глобуса Плувии", "глобусу Плувии", "глобус Плувии", "глобусом Плувии", "глобусе Плувии")
 	desc = "Точное отображение поверхности Плувии."
-	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_pluvia"
 
 /obj/item/newtons_pendulum
