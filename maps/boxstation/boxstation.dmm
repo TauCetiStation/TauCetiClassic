@@ -1283,11 +1283,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/bookcase/shelf{
-	pixel_y = -24
-	},
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/book/skillbook/robust,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -3156,7 +3151,6 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/random/misc/book,
 /obj/item/globe/moghes,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10489,6 +10483,7 @@
 	pixel_x = 12;
 	pixel_y = 8
 	},
+/obj/random/misc/book,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -13457,11 +13452,6 @@
 "awP" = (
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/wiki/guide_to_xenobiology,
-/obj/structure/bookcase/shelf{
-	pixel_y = -24
-	},
-/obj/random/misc/book,
-/obj/item/newtons_pendulum,
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
 	},
@@ -14208,9 +14198,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aym" = (
-/obj/structure/bookcase/shelf{
-	pixel_y = 32
-	},
 /obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = 4;
 	pixel_y = 3
@@ -14220,7 +14207,13 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/bust,
+/obj/structure/bookcase,
+/obj/machinery/door_control{
+	id = "lawyer_blast";
+	name = "Privacy Shutters";
+	pixel_y = 28;
+	req_access = list(38)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14230,12 +14223,6 @@
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/light/smart{
 	dir = 1
-	},
-/obj/machinery/door_control{
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	pixel_y = 28;
-	req_access = list(38)
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -18200,14 +18187,15 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/structure/sign/monkey_painting{
-	pixel_y = 32
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
 /mob/living/carbon/monkey/punpun,
+/obj/machinery/camera{
+	c_tag = "Bar Backroom";
+	dir = 6
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aFP" = (
@@ -19945,6 +19933,11 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/box/cups,
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/skillbook/robust,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -23576,6 +23569,7 @@
 /obj/structure/bookcase,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/detective,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aPQ" = (
@@ -29973,13 +29967,6 @@
 	pixel_x = -28;
 	range = 12
 	},
-/obj/structure/bookcase/shelf{
-	pixel_y = 32
-	},
-/obj/item/weapon/book/manual/wiki/jukebox,
-/obj/item/weapon/book/manual/wiki/barman_recipes{
-	pixel_y = 10
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -31807,13 +31794,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/bookcase/shelf{
-	pixel_y = 32
-	},
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/book/manual/wiki/possible_threats,
-/obj/item/weapon/book/manual/wiki/sop,
-/obj/item/bust,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bem" = (
@@ -31839,6 +31819,13 @@
 /obj/item/portrait/captain{
 	pixel_y = 32
 	},
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/sop,
+/obj/item/bust,
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "beo" = (
@@ -32035,9 +32022,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/structure/bookcase/shelf{
 	pixel_y = 32
 	},
@@ -32059,6 +32043,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
@@ -34575,7 +34562,6 @@
 	pixel_y = 32
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/random/misc/book,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
@@ -35859,6 +35845,7 @@
 	pixel_x = 2;
 	pixel_y = 5
 	},
+/obj/item/weapon/book/skillbook/exosuits,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "blF" = (
@@ -35981,12 +35968,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/alarm{
-	pixel_y = 28
+/obj/structure/sign/monkey_painting{
+	pixel_y = 32
 	},
-/obj/machinery/camera{
-	c_tag = "Bar Backroom"
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
 	},
+/obj/item/weapon/book/manual/wiki/barman_recipes{
+	pixel_y = 10
+	},
+/obj/item/weapon/book/manual/wiki/jukebox,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "blL" = (
@@ -41605,13 +41596,9 @@
 /obj/item/weapon/paper/depacc{
 	department_name = "Civilian"
 	},
-/obj/structure/bookcase/shelf{
-	pixel_y = -24
+/obj/machinery/recharger/wallcharger{
+	pixel_y = -30
 	},
-/obj/item/weapon/book/manual/wiki/possible_threats{
-	pixel_x = 6
-	},
-/obj/item/newtons_pendulum,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -42191,6 +42178,10 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -25
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -64023,9 +64014,13 @@
 /area/station/rnd/brainstorm_center)
 "cvc" = (
 /obj/machinery/light/smart,
-/obj/machinery/recharger/wallcharger{
-	pixel_y = -30
+/obj/structure/bookcase/shelf{
+	pixel_y = -24
 	},
+/obj/item/weapon/book/manual/wiki/possible_threats{
+	pixel_x = 6
+	},
+/obj/item/newtons_pendulum,
 /turf/simulated/floor{
 	dir = 0;
 	icon_state = "blue"
@@ -64500,6 +64495,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -64508,15 +64506,6 @@
 "cwY" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
-"cwZ" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -69105,8 +69094,7 @@
 /obj/structure/bookcase/shelf{
 	pixel_y = 32
 	},
-/obj/random/misc/book,
-/obj/random/misc/book,
+/obj/item/weapon/book/manual/wiki/hydroponics,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -72444,10 +72432,10 @@
 	},
 /area/station/medical/morgue)
 "fVd" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/item/weapon/flora/pottedplant{
+	icon_state = "plant-21"
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
 "fWb" = (
@@ -73437,6 +73425,10 @@
 	},
 /area/station/hallway/primary/central)
 "gWz" = (
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/nuclear,
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
 "gWR" = (
@@ -80586,12 +80578,8 @@
 	},
 /area/station/civilian/chapel/altar)
 "osT" = (
-/obj/item/weapon/book/manual/nuclear,
-/obj/structure/bookcase/shelf{
-	pixel_y = 32
-	},
-/obj/item/weapon/flora/pottedplant{
-	icon_state = "plant-21"
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
@@ -115269,7 +115257,7 @@ ctQ
 cuw
 bvS
 bra
-cwZ
+aPE
 bxW
 cxO
 aMR
