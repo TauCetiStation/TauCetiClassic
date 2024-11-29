@@ -120,50 +120,29 @@
 
 	if(mode == 2)
 		var/list/jobsCategories = list(
-			"Command" = list(titles = command_positions, color = "#aac1ee"),
-			"NT Representatives" = list(titles = centcom_positions, color = "#6c7391"),
-			"Engineering" = list(titles = engineering_positions, color = "#ffd699"),
-			"Security" = list(titles = security_positions, color = "#ff9999"),
-			"Miscellaneous" = list(titles = list(), color = "#ffffff"),
-			"Synthetic" = list(titles = nonhuman_positions, color = "#ccffcc"),
-			"Service" = list(titles = civilian_positions, color = "#cccccc"),
-			"Medical" = list(titles = medical_positions, color = "#99ffe6"),
-			"Science" = list(titles = science_positions, color = "#e6b3e6"),
+			list(title = "Command", jobs = command_positions, color = "#aac1ee"),
+			list(title = "NT Representatives", jobs = centcom_positions, color = "#6c7391"),
+			list(title = "Engineering", jobs = engineering_positions, color = "#ffd699"),
+			list(title = "Security", jobs = security_positions, color = "#ff9999"),
+			list(title = "Synthetic", jobs = nonhuman_positions, color = "#ccffcc"),
+			list(title = "Service", jobs = civilian_positions, color = "#cccccc"),
+			list(title = "Medical", jobs = medical_positions, color = "#99ffe6"),
+			list(title = "Science", jobs = science_positions, color = "#e6b3e6"),
 		)
-		var/list/categorizedJobs = list()
-		var/list/categorizedJobsToFront = list()
 
-		for(var/datum/job/job in SSjob.occupations)
-			if(!job)
-				continue
-			var/list/jobList = list(list("name" = job.title, "type" = job.type, "quota" = job.quota))
-			var/categorized = FALSE
-			for(var/jobcat in jobsCategories)
-				if(!categorizedJobs[jobcat])
-					categorizedJobs[jobcat] = list("title" = jobcat, "jobs" = list(), color = jobsCategories[jobcat]["color"])
-				var/list/jobs = categorizedJobs[jobcat]["jobs"]
-				if(job.title in jobsCategories[jobcat]["titles"])
-					categorized = TRUE
-					if(jobcat == "Command")
+		for(var/jobCategory in jobsCategories)
+			var/list/jobsList = jobCategory["jobs"]
+			var/list/newJobsList = list()
 
-						if(job.title == "Captain") // Put captain at top of command jobs
-							jobs.Insert(1, jobList)
-						else
-							jobs += jobList
-					else // Put heads at top of non-command jobs
-						if(job.title in command_positions)
-							jobs.Insert(1, jobList)
-						else
-							jobs += jobList
-			if(!categorized)
-				categorizedJobs["Miscellaneous"]["jobs"] += jobList
+			for(var/jobTitle in jobsList)
+				var/datum/job/job = SSjob.name_occupations[jobTitle]
+				if(!job)
+					continue
+				newJobsList += list(list("name" = jobTitle, "quota" = job.quota))
 
-		for(var/category in categorizedJobs)
-			if(!length(categorizedJobs[category]["jobs"]))
-				continue
-			categorizedJobsToFront += list(categorizedJobs[category])
+			jobCategory["jobs"] = newJobsList
 
-		data["all_jobs"] = categorizedJobsToFront
+		data["all_jobs"] = jobsCategories
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
@@ -371,8 +350,8 @@
 					datum_account.set_salary(0)		//no salary
 
 		if ("up_quota")
-			var/job_type = text2path(href_list["quotajob_type"])
-			var/datum/job/Job = SSjob.type_occupations[job_type]
+			var/job_name = sanitize(href_list["quotajob_name"], 50)
+			var/datum/job/Job = SSjob.name_occupations[job_name]
 			if(Job)
 				if(Job.quota == QUOTA_WANTED)
 					Job.quota = QUOTA_NEUTRAL
@@ -380,8 +359,8 @@
 					Job.quota = QUOTA_WANTED
 
 		if ("down_quota")
-			var/job_type = text2path(href_list["quotajob_type"])
-			var/datum/job/Job = SSjob.type_occupations[job_type]
+			var/job_name = sanitize(href_list["quotajob_name"], 50)
+			var/datum/job/Job = SSjob.name_occupations[job_name]
 			if(Job)
 				if(Job.quota == QUOTA_UNWANTED)
 					Job.quota = QUOTA_NEUTRAL
