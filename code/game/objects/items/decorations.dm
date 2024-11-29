@@ -185,11 +185,13 @@
 	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
 
 /obj/item/woodenclock/process()
+	var/timeChanged = FALSE
 	var/new_hours_state = "clock_h_[worldtime_hours() % 12]"
 	if(hours_hand.icon_state != new_hours_state)
 		cut_overlay(hours_hand)
 		hours_hand.icon_state = new_hours_state
 		add_overlay(hours_hand)
+		timeChanged = TRUE
 
 	var/new_minute_state = "clock_m_[(round(worldtime_minutes() / 5) % 12)]"
 
@@ -197,6 +199,11 @@
 		cut_overlay(minute_hand)
 		minute_hand.icon_state = new_minute_state
 		add_overlay(minute_hand)
+		timeChanged = TRUE
+
+	if(timeChanged && istype(loc, /obj/structure/bookcase/shelf))
+		var/obj/structure/bookcase/shelf/Shelf = loc
+		Shelf.update_icon()
 
 /obj/item/wallclock
 	name = "wall clock"
