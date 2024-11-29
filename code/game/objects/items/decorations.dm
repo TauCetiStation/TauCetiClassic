@@ -130,10 +130,10 @@
 	. = ..()
 
 	hours_hand = image('icons/obj/stationobjs.dmi', "clock_h_0")
-	hours_hand.pixel_y = -3
+	hours_hand.pixel_y = -7
 	add_overlay(hours_hand)
 	minute_hand = image('icons/obj/stationobjs.dmi', "clock_m_0")
-	minute_hand.pixel_y = -3
+	minute_hand.pixel_y = -7
 	add_overlay(minute_hand)
 	START_PROCESSING(SSobj, src)
 
