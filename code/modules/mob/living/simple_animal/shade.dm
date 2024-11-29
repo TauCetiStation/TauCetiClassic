@@ -2,6 +2,7 @@
 	name = "Shade"
 	real_name = "Shade"
 	desc = "Связанный дух."
+	density = FALSE
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
@@ -31,6 +32,42 @@
 	has_head = TRUE
 	has_arm = TRUE
 
+/mob/living/simple_animal/shade/Move(atom/NewLoc, direct)
+	. = TRUE
+
+	var/oldLoc = loc
+
+	set_dir(direct)
+	if(NewLoc)
+		if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+			return
+
+		forceMove(NewLoc)
+		return
+
+	forceMove(get_turf(src)) //Get out of closets and such as a ghostly being.
+	var/new_x = x
+	var/new_y = y
+	if((direct & NORTH) && y < world.maxy)
+		new_y++
+	else if((direct & SOUTH) && y > 1)
+		new_y--
+	if((direct & EAST) && x < world.maxx)
+		new_x++
+	else if((direct & WEST) && x > 1)
+		new_x--
+
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, locate(new_x, new_y,  z), direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
+
+	x = new_x
+	y = new_y
+
+	Moved(oldLoc, 0)
+
+/mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)
+	return TRUE
+
 /mob/living/simple_animal/shade/Life()
 	..()
 	if(stat == DEAD)
@@ -56,6 +93,9 @@
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
 	return
+
+/mob/living/simple_animal/shade/CanPass(atom/movable/mover, turf/target, height=0)
+	return TRUE
 
 /mob/living/simple_animal/shade/god
 	name = "Unbelievable God"
@@ -140,45 +180,6 @@
 
 /mob/living/simple_animal/shade/god/RangedAttack(atom/A, params)
 	god_attack(A)
-
-/mob/living/simple_animal/shade/god/CanPass(atom/movable/mover, turf/target, height=0)
-	return TRUE
-
-/mob/living/simple_animal/shade/god/Move(atom/NewLoc, direct)
-	. = TRUE
-
-	var/oldLoc = loc
-
-	set_dir(direct)
-	if(NewLoc)
-		if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
-			return
-
-		forceMove(NewLoc)
-		return
-
-	forceMove(get_turf(src)) //Get out of closets and such as a ghostly being.
-	var/new_x = x
-	var/new_y = y
-	if((direct & NORTH) && y < world.maxy)
-		new_y++
-	else if((direct & SOUTH) && y > 1)
-		new_y--
-	if((direct & EAST) && x < world.maxx)
-		new_x++
-	else if((direct & WEST) && x > 1)
-		new_x--
-
-	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, locate(new_x, new_y,  z), direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
-		return
-
-	x = new_x
-	y = new_y
-
-	Moved(oldLoc, 0)
-
-/mob/living/simple_animal/shade/god/Process_Spacemove(movement_dir = 0)
-	return TRUE
 
 /mob/living/simple_animal/shade/god/verb/view_manfiest()
 	set name = "View Crew Manifest"
