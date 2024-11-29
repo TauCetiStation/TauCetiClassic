@@ -134,7 +134,7 @@
 /obj/item/clothing/suit/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/suit/chameleon, /obj/item/clothing/suit/space/space_ninja,
-		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
+		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/justice,
 		/obj/item/clothing/suit/greatcoat)//Prevent infinite loops and bad suits.
 	for(var/U in subtypesof(/obj/item/clothing/suit)-blocked)
 		var/obj/item/clothing/suit/V = U
