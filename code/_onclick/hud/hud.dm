@@ -76,6 +76,7 @@ var/global/list/available_ui_styles = list(
 			H.w_uniform?.screen_loc = ui_iclothing
 			H.wear_suit?.screen_loc = ui_oclothing
 			H.wear_mask?.screen_loc = ui_mask
+			H.neck?.screen_loc = ui_neck
 			H.head?.screen_loc = ui_head
 		else
 			H.shoes?.screen_loc = null
@@ -86,6 +87,7 @@ var/global/list/available_ui_styles = list(
 			H.w_uniform?.screen_loc = null
 			H.wear_suit?.screen_loc = null
 			H.wear_mask?.screen_loc = null
+			H.neck?.screen_loc = null
 			H.head?.screen_loc = null
 
 
@@ -176,7 +178,7 @@ var/global/list/available_ui_styles = list(
 
 	mymob.update_action_buttons()
 	reorganize_alerts()
-	create_parallax() // todo: why we recreate parallax every time we change mob or press f12
+	set_parallax(mymob.current_parallax) // todo: why we recreate parallax every time we change mob or press f12
 	hidden_inventory_update()
 	persistant_inventory_update()
 

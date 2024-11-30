@@ -294,13 +294,6 @@
 
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ShM")
-		// Move Administration Shuttle
-		if("moveadminshuttle")
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShA")
-			move_admin_shuttle()
-			message_admins("<span class='notice'>[key_name_admin(usr)] moved the centcom administration shuttle</span>")
-			log_admin("[key_name(usr)] moved the centcom administration shuttle")
 		// Move Ferry
 		if("moveferry")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -483,16 +476,16 @@
 			message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 		// Security levels
 		if("securitylevel0")
-			set_security_level(0)
+			set_security_level(SEC_LEVEL_GREEN)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Green.</span>", 1)
 		if("securitylevel1")
-			set_security_level(1)
+			set_security_level(SEC_LEVEL_BLUE)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Blue.</span>", 1)
 		if("securitylevel2")
-			set_security_level(2)
+			set_security_level(SEC_LEVEL_RED)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Red.</span>", 1)
 		if("securitylevel3")
-			set_security_level(3)
+			set_security_level(SEC_LEVEL_DELTA)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Delta.</span>", 1)
 		// Drop asteroid
 		if("drop_asteroid")

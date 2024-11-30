@@ -248,6 +248,7 @@ var/global/chicken_count = 0
 		return
 	if(stat == CONSCIOUS && prob(3) && eggsleft > 0)
 		visible_message("[src] [pick("откладывает яйца.","поднимает шумиху.","начинает хрипло кудахтать.")]")
+		playsound(src, 'sound/voice/chiken_egg.ogg', VOL_EFFECTS_MASTER)
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
@@ -264,6 +265,8 @@ var/global/chicken_count = 0
 						if(loc == C.loc)
 							C.feed(src)
 							stop_automated_movement = FALSE
+	if(prob(15))
+		playsound(src, 'sound/voice/chiken_cluck.ogg', VOL_EFFECTS_MASTER, vary = TRUE, extrarange = -3)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()

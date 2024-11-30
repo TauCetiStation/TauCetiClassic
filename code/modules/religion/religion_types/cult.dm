@@ -113,7 +113,7 @@
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
 
-/datum/religion/cult/get_tech_agent_lists()
+/datum/religion/cult/gen_tech_agent_lists()
 	..()
 	var/list/aspect_types = subtypesof(/datum/aspect)
 	for(var/type in aspect_types)
@@ -242,7 +242,7 @@
 	M.AddSpell(new type(src))
 
 /datum/religion/cult/can_convert(mob/M)
-	if(M.my_religion)
+	if(M.my_religion && !istype(M.my_religion, /datum/religion/pluvia))
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
@@ -250,7 +250,7 @@
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.flags[NO_BLOOD])
+		if(H.species.flags[NO_BLOOD] || H.mind.pluvian_blessed)
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE

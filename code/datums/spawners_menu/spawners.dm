@@ -746,3 +746,100 @@
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE
 	setup_role(R, TRUE)
+
+/*
+ * SPACE TRADERS
+*/
+/datum/spawner/space_trader
+	name = "Космический торговец"
+	desc = "Космический торговец."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 4 MINUTES
+	var/money = 100
+	var/outfit
+	var/skillset
+
+/datum/spawner/space_trader/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new
+	C.create_human_apperance(H)
+	H.key = C.key
+	H.forceMove(spawnloc)
+	equip(H)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	add_faction_member(F, H, TRUE, TRUE)
+
+/datum/spawner/space_trader/proc/equip(mob/living/carbon/human/H)
+	H.equipOutfit(outfit)
+	H.mind.skills.add_available_skillset(skillset)
+	H.mind.skills.maximize_active_skills()
+
+	var/datum/money_account/MA = create_random_account_and_store_in_mind(H, money)
+	var/obj/item/weapon/card/id/cargo/C = new(H)
+	C.rank = "Space Trader"
+	C.assignment = C.rank
+	C.assign(H.real_name)
+	C.access = list(access_space_traders)
+	C.associated_account_number = MA.account_number
+	H.equip_or_collect(C, SLOT_WEAR_ID)
+
+	var/obj/item/device/pda/pda = new(H)
+	pda.assign(H.real_name)
+	pda.ownrank = C.rank
+	pda.owner_account = MA.account_number
+	pda.owner_fingerprints += C.fingerprint_hash
+	MA.owner_PDA = pda
+	H.equip_or_collect(pda, SLOT_R_STORE)
+
+/datum/spawner/space_trader/dealer
+	name = "Космоторговец барыга"
+	desc = "Барыга, владеющий торговым судном и товаром на нём. Заработайте столько денег, сколько сможете увезти!"
+	spawn_landmark_name = "Space Trader Dealer"
+	money = 200
+	outfit = /datum/outfit/space_trader/dealer
+	skillset = /datum/skillset/quartermaster
+
+/datum/spawner/space_trader/guard
+	name = "Космоторговец охранник"
+	desc = "ЧОПовец, нанятый барыгой для охраны судна и товара на нём от станционных воришек и космических пиратов."
+	spawn_landmark_name = "Space Trader Guard"
+	outfit = /datum/outfit/space_trader/guard
+	skillset = /datum/skillset/officer
+
+/datum/spawner/space_trader/porter
+	name = "Космоторговец посыльный"
+	desc = "Таяран грузчик, работающий на барыгу. Таскайте грузы, выставляйте товары на продажу, помогите барыге обогатиться и не забудьте спросить свою долю!"
+	spawn_landmark_name = "Space Trader Porter"
+	money = 20
+	outfit = /datum/outfit/space_trader/porter
+	skillset = /datum/skillset/cargotech
+
+/datum/spawner/space_trader/porter/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H
+	var/new_name
+
+	if(is_alien_whitelisted_banned(spectator, TAJARAN) || !is_alien_whitelisted(spectator, TAJARAN))
+		H = new
+	else
+		H = new(null, TAJARAN)
+		new_name = capitalize(pick(global.tajaran_male_first)) + " " + capitalize(pick(global.last_names))
+
+	C.create_human_apperance(H, new_name)
+	H.key = C.key
+	H.forceMove(spawnloc)
+	equip(H)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	add_faction_member(F, H, TRUE, TRUE)
+

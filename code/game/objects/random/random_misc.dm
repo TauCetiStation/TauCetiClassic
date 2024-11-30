@@ -24,7 +24,7 @@
 		/obj/item/device/guitar,\
 		/obj/item/device/harmonica,\
 		/obj/item/device/violin,\
-		/obj/item/device/guitar/electric\
+		/obj/item/device/synth\
 	)
 
 /obj/random/misc/storage

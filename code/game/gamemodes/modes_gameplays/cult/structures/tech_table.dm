@@ -132,9 +132,13 @@
 	for(var/name in tech_images)
 		var/is_aspect_tech = istype(tech_by_id[name], /datum/religion_tech/upgrade_aspect)
 		if(!category_images[ASPECT_CATEGORY] && is_aspect_tech)
-			category_images[ASPECT_CATEGORY] = tech_images[name]
+			var/image/old_image = tech_images[name]
+			var/image/copy = image(old_image.icon, old_image.loc, old_image.icon_state)
+			category_images[ASPECT_CATEGORY] = copy
 		else if(!category_images[UNIQ_CATEGORY] && !is_aspect_tech)
-			category_images[UNIQ_CATEGORY] = tech_images[name]
+			var/image/old_image = tech_images[name]
+			var/image/copy = image(old_image.icon, old_image.loc, old_image.icon_state)
+			category_images[UNIQ_CATEGORY] = copy
 		if(category_images[UNIQ_CATEGORY] && category_images[ASPECT_CATEGORY])
 			break
 
@@ -144,6 +148,7 @@
 	for(var/datum/religion_tech/T in religion.available_techs)
 		tech_images[T.id] = image(icon = T.info.icon, icon_state = T.info.icon_state)
 		tech_by_id[T.id] = T
+	sortTim(tech_by_id, GLOBAL_PROC_REF(cmp_text_asc))
 
 /obj/structure/cult/tech_table/proc/start_activity(datum/callback/end_activity)
 	LAZYINITLIST(pylon_around)

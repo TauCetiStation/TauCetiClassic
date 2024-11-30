@@ -2783,12 +2783,8 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "aeE" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/gravemarker{
-	icon_state = "cross"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/unexplored/safe)
+/turf/environment/space,
+/area/shuttle/trader/station)
 "aeF" = (
 /obj/random/misc/all,
 /obj/effect/decal/turf_decal/set_burned,
@@ -3839,9 +3835,7 @@
 /area/station/maintenance/science)
 "agY" = (
 /obj/random/scrap/safe_even,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "agZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5128,6 +5122,7 @@
 	},
 /obj/machinery/bot/cleanbot,
 /obj/effect/decal/turf_decal/goonplaque,
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ajg" = (
@@ -6264,9 +6259,7 @@
 /obj/structure/sign/painting{
 	pixel_x = 30
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "alJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8257,8 +8250,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/machinery/light/smart{
 	dir = 8
@@ -8766,8 +8758,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/item/weapon/book/manual/wiki/jukebox,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -8841,8 +8832,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/machinery/camera{
 	c_tag = "RnD Lab";
@@ -8889,6 +8879,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "ast_warn"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -8971,6 +8966,11 @@
 	dir = 8;
 	icon_state = "ast_warn"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
 	},
@@ -9029,8 +9029,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"
@@ -9123,8 +9122,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/device/suit_cooling_unit{
@@ -9157,8 +9155,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/machinery/alarm{
 	dir = 1;
@@ -9182,8 +9179,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -9766,6 +9762,10 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/server)
+"atD" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "atK" = (
 /obj/machinery/door/window/eastleft{
 	dir = 2;
@@ -9910,6 +9910,12 @@
 	icon_state = "black"
 	},
 /area/station/security/prison)
+"aCk" = (
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/ancestor_wisp_start,
+/turf/simulated/floor,
+/area/station/security/lobby)
 "aDA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -9971,6 +9977,17 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/storage)
+"aFl" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/lights/mixed{
+	pixel_y = 4
+	},
+/obj/random/tools/tech_supply,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "aFv" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -10512,9 +10529,7 @@
 	name = "largecell apc right";
 	pixel_x = 28
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "bcR" = (
 /obj/machinery/space_heater,
@@ -10576,6 +10591,27 @@
 	icon_state = "darkpurplecorners"
 	},
 /area/station/rnd/hallway)
+"bgp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "mining_outpost_pump";
+	name = "Mining Outpost Large Air Vent"
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "mining_outpost_airlock";
+	pixel_y = 28;
+	tag_airpump = "mining_outpost_pump";
+	tag_chamber_sensor = "mining_outpost_sensor";
+	tag_exterior_door = "mining_outpost_outer";
+	tag_interior_door = "mining_outpost_inner"
+	},
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "bgQ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -10709,6 +10745,14 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"bky" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "bkM" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
@@ -10738,6 +10782,14 @@
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/bridge)
+"bmc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/hallway/secondary/entry)
 "bmp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
@@ -10811,6 +10863,21 @@
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"bqC" = (
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "mining_outpost_airlock";
+	name = "interior access button";
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "bre" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -11360,6 +11427,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"bNg" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "bOJ" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
@@ -11520,8 +11598,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -11572,6 +11649,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blackcorner"
@@ -11581,9 +11659,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "cck" = (
 /obj/structure/table,
@@ -11901,6 +11977,16 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"cqZ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
 "cra" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor{
@@ -12017,9 +12103,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cxV" = (
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "cyF" = (
 /obj/machinery/newscaster{
@@ -12205,6 +12289,15 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
+"cLM" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "cMg" = (
 /obj/machinery/light/small,
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -12255,6 +12348,14 @@
 	icon_state = "dark"
 	},
 /area/station/bridge/teleporter)
+"cPm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "cPE" = (
 /obj/machinery/door/airlock/maintenance{
 	dir = 4;
@@ -12443,6 +12544,20 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/eva)
+"cVu" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "cWx" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
@@ -12628,8 +12743,7 @@
 	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -12695,6 +12809,19 @@
 	icon_state = "grass1"
 	},
 /area/station/hallway/secondary/arrival)
+"dll" = (
+/obj/structure/rack,
+/obj/random/tools/tech_supply/guaranteed,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/belt/utility,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "dlI" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
@@ -12812,8 +12939,7 @@
 	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -13261,6 +13387,7 @@
 	codes_txt = "patrol;next_patrol=Security";
 	location = "HoP"
 	},
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "dHV" = (
@@ -13408,9 +13535,7 @@
 "dNp" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "dNR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13449,6 +13574,14 @@
 "dQg" = (
 /turf/simulated/wall,
 /area/station/civilian/theatre)
+"dQj" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "dQA" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -13694,6 +13827,14 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"eex" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "browncorner"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "efy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -14119,9 +14260,7 @@
 	pixel_y = 32
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "eAC" = (
 /turf/simulated/floor/garden{
@@ -14579,6 +14718,19 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
+"eZx" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "eZP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -14591,6 +14743,18 @@
 /obj/random/foods/food_trash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"faw" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "faC" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -14939,14 +15103,19 @@
 	icon_state = "3,5"
 	},
 /area/shuttle/supply/station)
+"fsX" = (
+/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/turf/simulated/floor/bluegrid,
+/area/station/hallway/secondary/entry)
 "ftf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/rack_parts,
 /obj/item/ammo_casing,
 /obj/effect/decal/cleanable/cellular/meat,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "ftP" = (
 /obj/structure/object_wall/pod{
@@ -15048,9 +15217,7 @@
 /area/station/bridge)
 "fCc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "fCH" = (
 /obj/machinery/power/solar{
@@ -15069,8 +15236,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -15138,6 +15304,23 @@
 	},
 /turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
+"fGp" = (
+/obj/structure/table,
+/obj/item/weapon/mining_scanner{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/weapon/mining_scanner{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "fGY" = (
 /obj/machinery/disposal,
 /obj/machinery/light_switch{
@@ -15289,6 +15472,16 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"fRa" = (
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
+"fRd" = (
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "fRu" = (
 /obj/machinery/light/smart{
 	dir = 4
@@ -15424,6 +15617,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/office)
+"fWk" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
 "fXC" = (
 /obj/machinery/alarm{
 	pixel_y = 21
@@ -15468,6 +15671,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
+"fYq" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "fYz" = (
 /obj/machinery/vending/sustenance,
 /turf/simulated/floor{
@@ -15478,6 +15687,22 @@
 "gay" = (
 /turf/environment/space,
 /area/space)
+"gaY" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "gbe" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -16689,9 +16914,7 @@
 "hbt" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/game_kit/random,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "hbS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -16869,6 +17092,13 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
+"hnr" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "hnw" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -16885,9 +17115,7 @@
 	location = "Arrival2"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "hnM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -16946,9 +17174,7 @@
 /obj/structure/computerframe{
 	dir = 1
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "huf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -17160,7 +17386,7 @@
 /area/station/bridge)
 "hFM" = (
 /obj/structure/closet/theatrecloset,
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /obj/random/randomtoy,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
@@ -17179,6 +17405,13 @@
 	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
+"hHy" = (
+/obj/effect/landmark/ancestor_wisp_start,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
 /area/station/hallway/primary/central)
 "hHC" = (
 /obj/machinery/door/firedoor{
@@ -17213,6 +17446,19 @@
 /obj/effect/decal/cleanable/mucus,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"hKM" = (
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo left APC";
+	pixel_x = -27
+	},
+/obj/structure/cable/orange,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "hNg" = (
 /obj/random/scrap/safe_even,
 /obj/structure/spider/stickyweb,
@@ -17487,6 +17733,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"hZe" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/eva)
 "hZm" = (
 /obj/structure/window/thin/reinforced,
 /mob/living/carbon/monkey,
@@ -17717,6 +17973,19 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"ijJ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
 "ikd" = (
 /obj/machinery/telecomms/server/presets/security,
 /turf/simulated/floor/bluegrid{
@@ -17818,6 +18087,16 @@
 	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
+"ioh" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
 "ioA" = (
 /obj/item/clothing/suit/nerdshirt,
 /obj/item/weapon/beach_ball/holoball,
@@ -18124,6 +18403,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/spectro)
+"iDk" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "iDT" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	filter_type = "oxygen";
@@ -18756,6 +19051,13 @@
 /obj/structure/closet/secure_closet/hop,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
+"jlX" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/gravemarker{
+	icon_state = "cross"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/unexplored/safe)
 "jmQ" = (
 /obj/machinery/light/smart,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -19171,11 +19473,24 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/storage)
+"jDq" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "jDs" = (
 /obj/effect/decal/cleanable/cellular/meat,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "jDy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -19187,6 +19502,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"jEb" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "jEc" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -19290,6 +19622,13 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"jJn" = (
+/obj/machinery/mech_bay_recharge_port,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "jKM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -19381,9 +19720,7 @@
 /area/station/rnd/telesci)
 "jNU" = (
 /obj/random/foods/food_trash,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "jOg" = (
 /obj/machinery/air_sensor{
@@ -19673,6 +20010,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"jWR" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "mining_outpost_airlock";
+	name = "exterior access button";
+	pixel_x = -28
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "jXz" = (
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -19789,7 +20136,12 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
 /area/asteroid/mine/eva)
 "kdH" = (
 /obj/structure/closet/toolcloset,
@@ -20084,8 +20436,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/structure/closet/secure_closet/scientist,
 /obj/machinery/light/smart{
@@ -20429,6 +20780,16 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"kKO" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "kKW" = (
 /obj/machinery/floodlight{
 	dir = 8
@@ -20793,6 +21154,15 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
+"kYi" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "kYm" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/donut_box,
@@ -20871,9 +21241,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "lem" = (
 /obj/structure/cable{
@@ -20881,7 +21249,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
 /area/asteroid/mine/eva)
 "leO" = (
 /obj/structure/grille,
@@ -21160,6 +21530,15 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/hallway)
+"lty" = (
+/obj/structure/dispenser/oxygen,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "luf" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -21171,9 +21550,7 @@
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "luB" = (
 /obj/structure/cable{
@@ -21485,9 +21862,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "lKy" = (
 /obj/structure/closet/secure_closet/personal,
@@ -21692,6 +22067,19 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/dormitories/dormone)
+"lSM" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "lUt" = (
 /turf/simulated/wall,
 /area/station/maintenance/science)
@@ -21940,6 +22328,18 @@
 /obj/effect/decal/cleanable/mucus,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"mkb" = (
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "mkA" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -21982,6 +22382,22 @@
 	icon_state = "white"
 	},
 /area/station/medical/morgue)
+"mns" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/hallway/secondary/entry)
+"mny" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "mob" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -22263,6 +22679,31 @@
 /obj/item/weapon/disk/nuclear,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
+"mzO" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
+"mzX" = (
+/obj/structure/table,
+/obj/machinery/cell_charger{
+	pixel_y = 5
+	},
+/obj/item/weapon/stock_parts/cell/high,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "mBb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -22316,6 +22757,11 @@
 	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
+"mCR" = (
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/hallway/secondary/entry)
 "mDb" = (
 /obj/machinery/light{
 	dir = 8
@@ -22419,6 +22865,10 @@
 	icon_state = "blackcorner"
 	},
 /area/station/hallway/primary/central)
+"mJh" = (
+/obj/structure/glowshroom,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "mJj" = (
 /turf/simulated/wall,
 /area/station/medical/genetics_cloning)
@@ -22691,9 +23141,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "mVa" = (
 /obj/structure/disposalpipe/segment{
@@ -22731,11 +23179,40 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
+"mXJ" = (
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/obj/structure/table,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "mXM" = (
 /turf/simulated/floor{
 	icon_state = "blackcorner"
 	},
 /area/station/hallway/primary/central)
+"mXR" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/fire,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "mXT" = (
 /obj/machinery/mineral/processing_unit_console{
 	machinedir = 5
@@ -22822,6 +23299,9 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/primary/central)
+"nbl" = (
+/turf/simulated/mineral/random/caves,
+/area/space)
 "nbE" = (
 /obj/machinery/atm{
 	pixel_x = -28
@@ -22847,7 +23327,9 @@
 	name = "Cargo down APC";
 	pixel_y = -27
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
 /area/asteroid/mine/eva)
 "ncI" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -23200,8 +23682,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -23263,6 +23744,14 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"nqX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "nrh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -23529,6 +24018,18 @@
 	icon_state = "4,1"
 	},
 /area/shuttle/supply/station)
+"nDr" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_y = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "nDE" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -23723,8 +24224,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -23912,6 +24412,26 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics_cloning)
+"nSW" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "mining_outpost_pump";
+	name = "Mining Outpost Large Air Vent"
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "mining_outpost_sensor";
+	pixel_y = 28
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "nUm" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -24512,6 +25032,30 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"oCy" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/globose,
+/obj/item/clothing/suit/space/globose,
+/obj/item/clothing/suit/space/globose,
+/obj/item/clothing/suit/space/globose,
+/obj/item/clothing/suit/space/globose,
+/obj/item/clothing/head/helmet/space/globose,
+/obj/item/clothing/head/helmet/space/globose,
+/obj/item/clothing/head/helmet/space/globose,
+/obj/item/clothing/head/helmet/space/globose,
+/obj/item/clothing/head/helmet/space/globose,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "oCK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -24624,6 +25168,14 @@
 	icon_state = "vaultfull"
 	},
 /area/station/bridge/hop_office)
+"oEX" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "browncorner"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "oEZ" = (
 /obj/machinery/computer/mecha,
 /obj/machinery/computer/security/telescreen{
@@ -25206,6 +25758,12 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/eva)
+"pdy" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "pdF" = (
 /obj/machinery/computer/rdservercontrol,
 /turf/simulated/floor{
@@ -25239,6 +25797,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
+"peX" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "pge" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -25388,6 +25952,11 @@
 	dir = 10;
 	icon_state = "ast_warn"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
 	},
@@ -25438,6 +26007,16 @@
 	icon_state = "dark"
 	},
 /area/station/bridge/hop_office)
+"prZ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/eva)
 "psT" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/emergency{
@@ -25805,6 +26384,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "ast_warn"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -26263,6 +26847,21 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"pYU" = (
+/obj/machinery/door/airlock/mining/glass{
+	dir = 4;
+	name = "Mining outpost"
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "qaJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -26329,6 +26928,14 @@
 "qdP" = (
 /turf/simulated/wall,
 /area/station/medical/surgery)
+"qdZ" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/entry)
 "qex" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -26592,9 +27199,7 @@
 /area/station/civilian/kitchen)
 "qqb" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "qri" = (
 /obj/structure/table,
@@ -26823,6 +27428,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel)
+"qyo" = (
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo down APC";
+	pixel_y = -27
+	},
+/obj/structure/cable/orange,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "qyt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -26908,6 +27526,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"qBq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "qBM" = (
 /obj/structure/dryer{
 	dir = 8;
@@ -26986,6 +27612,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/lobby)
+"qCW" = (
+/obj/random/vending/snack,
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "qDp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -27131,9 +27769,7 @@
 /area/station/maintenance/dormitory)
 "qHC" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "qHG" = (
 /obj/machinery/telecomms/server/presets/supply,
@@ -27255,6 +27891,13 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"qMA" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "qNs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -27625,6 +28268,21 @@
 	icon_state = "showroomfloor"
 	},
 /area/station/civilian/cold_room)
+"rjq" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "rjI" = (
 /obj/item/weapon/wrench,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -27640,9 +28298,7 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "rkB" = (
 /obj/machinery/computer/card{
@@ -28003,6 +28659,14 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"rAY" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "trader_shuttle";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "rCI" = (
 /obj/machinery/vending/medical{
 	req_access = list()
@@ -28112,6 +28776,21 @@
 	icon_state = "darkred"
 	},
 /area/station/bridge)
+"rFZ" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "rGb" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -28270,6 +28949,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"rNa" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
 "rNo" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp{
@@ -28287,6 +28976,16 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"rNs" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
 "rNw" = (
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/spectro)
@@ -28777,8 +29476,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -29147,6 +29845,22 @@
 	icon_state = "showroomfloor"
 	},
 /area/station/civilian/cold_room)
+"sHm" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/item/weapon/flora/random,
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "sHs" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -29683,6 +30397,10 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"tpC" = (
+/mob/living/simple_animal/hostile/mimic/crate,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "tqc" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -29867,6 +30585,12 @@
 /obj/item/weapon/coin/gold,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"tAR" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "tBC" = (
 /obj/machinery/computer/atmos_alert,
 /obj/structure/cable{
@@ -30311,6 +31035,30 @@
 	icon_state = "vaultfull"
 	},
 /area/station/hallway/primary/central)
+"tTz" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "mining_outpost_outer";
+	locked = 1;
+	name = "Mining External Access"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "tTE" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -30502,6 +31250,18 @@
 	icon_state = "darkpurple"
 	},
 /area/station/rnd/hallway)
+"tYp" = (
+/obj/machinery/power/smes/fullcharge,
+/obj/structure/cable/orange{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "tYE" = (
 /obj/item/weapon/storage/firstaid/regular{
 	empty = 1;
@@ -30637,6 +31397,11 @@
 	icon_state = "dark"
 	},
 /area/station/tcommsat/chamber)
+"uez" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/ancestor_wisp_start,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "ueF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -30765,9 +31530,7 @@
 /obj/item/device/camera{
 	pixel_y = -12
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "unh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -30870,6 +31633,18 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics_cloning)
+"uro" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "usA" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow,
 /obj/structure/grille,
@@ -30886,6 +31661,20 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
+"uub" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1379;
+	id_tag = "mining_outpost_pump";
+	name = "Mining Outpost Large Air Vent"
+	},
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "uur" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,4"
@@ -30977,6 +31766,9 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"uAW" = (
+/turf/simulated/wall/yellow,
+/area/asteroid/mine/explored)
 "uBp" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -31128,6 +31920,11 @@
 /obj/random/tools/tool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"uEU" = (
+/turf/simulated/wall/yellow,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "uFy" = (
 /obj/structure/girder,
 /obj/effect/decal/turf_decal/set_burned,
@@ -31169,6 +31966,13 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
+"uIu" = (
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "uIN" = (
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/science)
@@ -31234,6 +32038,17 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"uLp" = (
+/obj/structure/stool/bed/chair/metal/yellow{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "uMa" = (
 /obj/machinery/door/airlock/command{
 	dir = 4;
@@ -31601,6 +32416,14 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"vej" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "veP" = (
 /obj/machinery/light/smart{
 	dir = 4
@@ -31907,6 +32730,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormone)
+"vty" = (
+/obj/structure/stool/bed/chair/metal/yellow,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "vuI" = (
 /obj/machinery/mineral/input,
 /obj/machinery/conveyor{
@@ -32074,14 +32906,24 @@
 /area/station/civilian/hydroponics)
 "vEl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "vES" = (
 /obj/structure/scrap_cube,
 /turf/environment/space,
 /area/space)
+"vEW" = (
+/obj/structure/rack,
+/obj/random/tools/tech_supply/guaranteed,
+/obj/item/weapon/shovel,
+/obj/item/clothing/glasses/hud/mining,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "vFc" = (
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital{
 	dir = 8
@@ -32200,6 +33042,9 @@
 	icon_state = "asteroid3"
 	},
 /area/station/hallway/secondary/arrival)
+"vLg" = (
+/turf/simulated/mineral/random/low_chance,
+/area/asteroid/mine/explored)
 "vLo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -32330,9 +33175,7 @@
 	},
 /area/station/security/prison)
 "vTC" = (
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "vUv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -32354,6 +33197,22 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"vVM" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "vVU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -33089,6 +33948,20 @@
 	icon_state = "0,3"
 	},
 /area/shuttle/supply/station)
+"wBu" = (
+/obj/structure/plasticflaps/mining,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "Mecha Shutters";
+	name = "Mecha Shutters"
+	},
+/obj/machinery/door_control{
+	id = "Mecha Shutters";
+	name = "Mecha Shutters Control";
+	pixel_x = -28
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "wDB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -33350,6 +34223,30 @@
 	icon_state = "brown"
 	},
 /area/station/hallway/primary/central)
+"wNe" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "mining_outpost_inner";
+	locked = 1;
+	name = "Mining External Access"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "wNs" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -33487,6 +34384,16 @@
 	icon_state = "1,2"
 	},
 /area/shuttle/supply/station)
+"wWf" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
 "wWt" = (
 /turf/simulated/floor/garden{
 	icon_state = "asteroid2"
@@ -33611,9 +34518,7 @@
 "xbG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/science)
 "xbK" = (
 /obj/machinery/door/airlock/external{
@@ -33631,6 +34536,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"xcW" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/hallway/secondary/entry)
 "xcY" = (
 /obj/machinery/pipedispenser,
 /turf/simulated/floor{
@@ -33648,6 +34561,16 @@
 /obj/random/tools/tool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"xeA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/landmark/ancestor_wisp_start,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "xfC" = (
 /obj/machinery/computer/security,
 /obj/item/device/radio/intercom{
@@ -34308,6 +35231,13 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"xGs" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
+/area/station/hallway/secondary/entry)
 "xGz" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -34668,6 +35598,17 @@
 	icon_state = "darkblue"
 	},
 /area/station/aisat/teleport)
+"xVj" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "xXy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -34679,6 +35620,19 @@
 "xXF" = (
 /turf/simulated/mineral/random/labormineral,
 /area/asteroid/mine/unexplored)
+"xYu" = (
+/turf/simulated/wall/yellow,
+/area/station/hallway/secondary/entry)
+"xYC" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "xYI" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
@@ -34896,9 +35850,7 @@
 	location = "Arrival1"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "ygZ" = (
 /obj/structure/stool/bed/chair/metal/yellow{
@@ -34992,9 +35944,7 @@
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "ykW" = (
 /turf/simulated/floor,
@@ -59793,7 +60743,7 @@ ceD
 wNy
 gDj
 aiH
-wNy
+uez
 aEC
 aiV
 gIQ
@@ -59804,7 +60754,7 @@ aqg
 vLo
 eQw
 eQw
-eQw
+hHy
 eQw
 asa
 uGd
@@ -60905,8 +61855,8 @@ gay
 gay
 gay
 gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -61162,10 +62112,10 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+vES
 gay
 gay
 gay
@@ -61419,11 +62369,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -61675,12 +62625,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -61932,11 +62882,11 @@ vES
 gay
 gay
 gay
+gEx
 gay
 gay
-gay
-gay
-gay
+gEx
+gEx
 gay
 gay
 gay
@@ -62190,8 +63140,8 @@ gay
 gay
 gay
 gay
-gEx
-gEx
+gay
+gay
 gay
 gay
 gay
@@ -62447,10 +63397,10 @@ gEx
 gEx
 gay
 gay
-gEx
-gEx
-gEx
-vES
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -62686,18 +63636,10 @@ lEA
 lEA
 lEA
 goP
-goP
-goP
-goP
-goP
-goP
+hvD
+hvD
+hvD
 gay
-gay
-gay
-gay
-gay
-gEx
-gEx
 gay
 gay
 gay
@@ -62705,10 +63647,18 @@ gay
 gay
 gay
 gEx
-aPn
-aPn
 gEx
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -62932,22 +63882,20 @@ lEA
 lEA
 lEA
 lEA
+vLg
+vLg
+vLg
 lEA
 lEA
 lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
+vLg
+vLg
+vLg
+cXm
+cXm
 gay
 gay
 gay
@@ -62960,12 +63908,14 @@ gay
 gay
 gay
 gay
-gEx
-gEx
-gEx
-gEx
-aPn
-gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -63187,23 +64137,23 @@ lEA
 lEA
 lEA
 lEA
+vLg
+vLg
+vLg
+cXm
+vLg
 lEA
 lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-yjd
+vLg
+vLg
+cXm
+cXm
+cXm
+cXm
+cXm
 gay
 gay
 gay
@@ -63217,11 +64167,11 @@ gay
 gay
 gay
 gay
-gEx
 gay
 gay
-gEx
-gEx
+gay
+gay
+gay
 gay
 gay
 gay
@@ -63444,24 +64394,24 @@ lEA
 lEA
 lEA
 lEA
+vLg
+tpC
+cXm
+cXm
+vLg
 lEA
 lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
+vLg
+cXm
+cXm
+peX
+cXm
+hvD
+hvD
+gay
 gay
 gay
 gay
@@ -63701,29 +64651,29 @@ lEA
 lEA
 lEA
 lEA
+vLg
+cXm
+cXm
+cXm
+vLg
+vLg
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
+vLg
+vLg
+cXm
+cXm
+uAW
+vLg
+vLg
+vLg
 gay
 gay
-goP
-goP
-goP
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -63958,29 +64908,27 @@ lEA
 lEA
 lEA
 lEA
+vLg
+vLg
+cXm
+cXm
+cXm
+vLg
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
-goP
-goP
+vLg
+cXm
+cXm
+vLg
+uEU
+uEU
+uEU
+uEU
+mzO
+mzO
+mzO
+uEU
 gay
 gay
 gay
@@ -63991,11 +64939,13 @@ gay
 gay
 gay
 gay
+aeE
+aeE
+aeE
 gay
-gay
-gay
-gay
-gay
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -64215,46 +65165,46 @@ lEA
 lEA
 lEA
 lEA
+vLg
+vLg
+vLg
+cXm
+cXm
+vLg
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
-goP
-goP
-goP
-goP
+vLg
+vLg
+cXm
+cXm
+uEU
+uEU
+bNg
+tYp
+sHm
+vty
+kKO
+uLp
+uEU
+mzO
+uEU
 gay
 gay
 gay
 gay
 gay
 gay
-gay
-vES
-gay
-gay
-gay
-gay
-gay
-vES
-gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -64474,45 +65424,45 @@ lEA
 lEA
 lEA
 lEA
+vLg
+cXm
+cXm
+vLg
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
-goP
+vLg
+cXm
+cXm
+cXm
+uEU
+lty
+iDk
+uro
+lSM
+eex
+uIu
+bky
+mzX
+fGp
+xYC
 gay
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -64730,46 +65680,46 @@ lEA
 lEA
 lEA
 lEA
+vLg
+vLg
+cXm
+cXm
+vLg
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
-goP
+vLg
+cXm
+cXm
+cXm
+uEU
+oCy
+jDq
+uIu
+mkb
+faw
+faw
+faw
+jEb
+qyo
+uEU
+uEU
 gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -64987,47 +65937,47 @@ lEA
 lEA
 lEA
 lEA
+vLg
+cXm
+cXm
+vLg
+vLg
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
-goP
+vLg
+mJh
+cXm
+cXm
+uEU
+cLM
+vVM
+bqC
+mny
+oEX
+uIu
+cPm
+rFZ
+bky
+vEW
+xYC
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -65242,49 +66192,49 @@ lEA
 lEA
 lEA
 lEA
+vLg
+vLg
+vLg
+cXm
+cXm
+vLg
+vLg
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
+vLg
+vLg
+cXm
+vLg
+uEU
+uEU
+wNe
+uEU
+uEU
+dQj
+uIu
+uIu
+rjq
+uIu
+dll
+xYC
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -65461,7 +66411,7 @@ iHK
 ews
 oxn
 dIJ
-eJe
+xeA
 ifz
 jcU
 nYR
@@ -65496,52 +66446,52 @@ lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
+vLg
+vLg
+vLg
+vLg
+cXm
+cXm
+cXm
+mJh
+mJh
+vLg
+vLg
+vLg
+vLg
+vLg
+cXm
+vLg
+uEU
+bgp
+xVj
+uub
+uEU
+mXJ
+nDr
+qCW
+gaY
+mny
+mXR
+xYC
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -65751,56 +66701,56 @@ skE
 goP
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-yjd
-vES
+vLg
+vLg
+vLg
+cXm
+cXm
+cXm
+fWk
+wWf
+wWf
+wWf
+wWf
+ioh
+cXm
+cXm
+vLg
+cXm
+cXm
+vLg
+uEU
+nSW
+eZx
+uub
+uEU
+uEU
+uEU
+xYu
+pYU
+xYu
+xYu
+xYu
+hvD
 gay
 gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
-gay
-gay
-gay
-gay
-vES
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-vES
 gay
 gay
 gay
@@ -66006,56 +66956,56 @@ pQv
 pQv
 skE
 goP
-goP
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-yjd
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gay
+hvD
+vLg
+uAW
+cXm
+cXm
+fWk
+wWf
+wWf
+rNs
+cXm
+peX
+cXm
+cXm
+rNa
+wWf
+wWf
+ioh
+cXm
+cXm
+vLg
+uEU
+uEU
+tTz
+uEU
+uEU
+vLg
+xYu
+jJn
+cVu
+hKM
+fRd
+xYu
+hvD
+hvD
+hvD
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -66262,57 +67212,57 @@ dHV
 kKn
 pQv
 skE
-goP
-goP
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
-goP
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-aPn
-aPn
-gEx
+hvD
+hvD
+cXm
+ijJ
+wWf
+wWf
+rNs
+cXm
+cXm
+cXm
+vLg
+uAW
+vLg
+vLg
+cXm
+cXm
+cXm
+rNa
+wWf
+ioh
+cXm
+fYq
+jWR
+cqZ
+cXm
+vLg
+vLg
+xYu
+qdZ
+mns
+xcW
+qBq
+xYu
+xYu
+xYu
+xYu
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -66509,7 +67459,7 @@ arH
 jWx
 jWx
 jWx
-jWx
+hZe
 ieT
 aqH
 arG
@@ -66519,58 +67469,58 @@ arG
 eyH
 pQv
 skE
-goP
-goP
+cXm
+fWk
+wWf
+rNs
+cXm
+cXm
+vLg
+vLg
+vLg
+vLg
+vLg
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
+vLg
+vLg
+vLg
+cXm
+cXm
+cXm
+rNa
+wWf
+wWf
+wWf
+rNs
+cXm
+cXm
+atD
+xYu
+fsX
+mCR
+bmc
+vej
+hnr
+fRa
+fRa
+rAY
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gEx
-gEx
-aPn
-gEx
 gay
 gay
 gay
@@ -66766,18 +67716,23 @@ rsV
 rsV
 aoH
 cVp
-jWx
+prZ
 pDR
 aqV
 aqV
 aqK
 pmZ
-jWx
-jWx
-skE
-skE
-goP
-goP
+lem
+lem
+wWf
+wWf
+wWf
+rNs
+cXm
+cXm
+vLg
+vLg
+vLg
 lEA
 lEA
 lEA
@@ -66786,48 +67741,43 @@ lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
+vLg
+vLg
+vLg
+vLg
+mJh
+mJh
+cXm
+cXm
+cXm
+cXm
+cXm
+cXm
+wBu
+pdy
+mCR
+mCR
+nqX
+hnr
+tAR
+fRa
+rAY
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gks
-gks
-gEx
-gEx
-gEx
 gay
 gay
 gay
@@ -67031,11 +67981,13 @@ mKx
 uJq
 jWx
 jWx
-skE
-yjd
-goP
-goP
-goP
+cXm
+cXm
+mJh
+mJh
+hvD
+vLg
+vLg
 lEA
 lEA
 lEA
@@ -67049,41 +68001,39 @@ lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gks
-gks
+vLg
+vLg
+vLg
+vLg
+vLg
+vLg
+cXm
+cXm
+cXm
+xYu
+xGs
+qMA
+aFl
+kYi
+xYu
+xYu
+xYu
+xYu
 aeE
-gks
-gEx
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -67288,14 +68238,14 @@ ara
 arb
 are
 jWx
+cXm
 skE
-yjd
+hvD
+hvD
+hvD
 goP
 goP
 goP
-goP
-goP
-goP
 lEA
 lEA
 lEA
@@ -67313,34 +68263,34 @@ lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-gay
-goP
-gay
-gay
-gay
-gay
-gay
-gay
+vLg
+vLg
+vLg
+vLg
+xYu
+xYu
+xYu
+xYu
+xYu
+xYu
+hvD
+hvD
+hvD
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
-gEx
-gEx
-gks
-gks
-gks
-gks
+gay
+aeE
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
@@ -67573,31 +68523,31 @@ lEA
 lEA
 lEA
 lEA
-lEA
-lEA
-lEA
-lEA
-lEA
-goP
-goP
-goP
-goP
-goP
-goP
+vLg
+vLg
+vLg
+vLg
+vLg
+vLg
+vLg
+hvD
+hvD
+gay
+gay
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gks
-gEx
-gEx
 gay
 gay
 gay
@@ -67838,24 +68788,24 @@ lEA
 goP
 goP
 goP
-goP
-goP
-goP
+hvD
+gay
+gay
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
-gay
-gay
-gay
-gEx
-aPn
-gEx
-gEx
-aPn
-gEx
-gEx
 gay
 gay
 gay
@@ -68096,22 +69046,22 @@ lEA
 lEA
 goP
 goP
-goP
-goP
-goP
-vES
+gay
+gay
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
+aeE
+aeE
+aeE
+aeE
+aeE
 gay
-gay
-gay
-gay
-gEx
-gEx
-aPn
-gEx
-gEx
 gay
 gay
 gay
@@ -68353,21 +69303,21 @@ lEA
 lEA
 goP
 goP
-goP
-goP
-goP
+nbl
+gay
+gay
+aeE
+aeE
+aeE
+aeE
 gay
 gay
 gay
+aeE
+aeE
+aeE
+aeE
 gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
 gay
 gay
 gay
@@ -68871,7 +69821,6 @@ goP
 goP
 goP
 gay
-vES
 gay
 gay
 gay
@@ -68883,7 +69832,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -69564,7 +70514,7 @@ aRD
 jAD
 qCT
 lLn
-abO
+aCk
 wNy
 sTk
 gfC
@@ -73007,9 +73957,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -73263,11 +74213,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+aPn
+aPn
+gEx
 gay
 gay
 gay
@@ -73519,13 +74469,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+gEx
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -73776,13 +74726,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gks
+gks
+gEx
+gEx
+gEx
 gay
 gay
 gay
@@ -74034,11 +74984,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gks
+gks
+jlX
+gks
+gEx
 gay
 gay
 gay
@@ -74290,12 +75240,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gks
+gks
+gks
+gks
 gay
 gay
 gay
@@ -74547,12 +75497,12 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
+gks
+gEx
+gEx
 gay
 gay
 gay
@@ -74804,13 +75754,13 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+gEx
+aPn
+gEx
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -75062,11 +76012,11 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
+gEx
+gEx
+aPn
+gEx
+gEx
 gay
 gay
 gay
@@ -75320,9 +76270,9 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
+gEx
+gEx
+gEx
 gay
 gay
 gay

@@ -80,6 +80,7 @@
 			chassis.visible_message("<span class='warning'>[chassis] squeezes [target].</span>")
 
 			M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
+			SEND_SIGNAL(chassis.occupant, COMSIG_HUMAN_HARMED_OTHER, M)
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -145,6 +146,7 @@
 				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
+					SEND_SIGNAL(chassis.occupant, COMSIG_HUMAN_HARMED_OTHER, M)
 
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
@@ -212,6 +214,8 @@
 				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
+					SEND_SIGNAL(chassis.occupant, COMSIG_HUMAN_HARMED_OTHER, M)
+
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
 	return 1

@@ -77,6 +77,8 @@
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
 #define HUMAN          	 "Human"
+#define PLUVIAN        	 "Pluvian"
+#define PLUVIAN_SPIRIT 	 "Pluvian Spirit"
 #define UNATHI         	 "Unathi"
 #define TAJARAN        	 "Tajaran"
 #define SKRELL         	 "Skrell"
@@ -99,6 +101,10 @@
 #define ZOMBIE_SKRELL  	 "Zombie Skrell"
 #define ZOMBIE_UNATHI  	 "Zombie Unathi"
 #define SLIME          	 "Slime"
+#define SLIME_UNATHI   	 "Slime Unathi"
+#define SLIME_VOX      	 "Slime Vox"
+#define SLIME_TAJARAN  	 "Slime Tajaran"
+#define SLIME_SKRELL   	 "Slime Skrell"
 #define ABOMINATION    	 "disgusting abomination"
 #define SERPENTID        "Serpentid"
 #define MOTH		     "Moth"

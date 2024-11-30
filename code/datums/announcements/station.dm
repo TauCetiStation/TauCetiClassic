@@ -77,7 +77,7 @@
 
 /datum/announcement/station/nuke_teleport/play(area/new_loc, area/old_loc)
 	if(new_loc && old_loc)
-		message = "Обнаружено подпространственное перемещение ядерной боеголовки из [CASE(old_loc, PREPOSITIONAL_CASE)] в [CASE(new_loc, PREPOSITIONAL_CASE)]. Требуется немедленное вмешательство!"
+		message = "Обнаружено подпространственное перемещение ядерной боеголовки из [CASE(old_loc, GENITIVE_CASE)] в [CASE(new_loc, ACCUSATIVE_CASE)]. Требуется немедленное вмешательство!"
 	..()
 
 /datum/announcement/station/maint_revoke

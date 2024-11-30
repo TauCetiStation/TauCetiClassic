@@ -758,9 +758,17 @@
 	siemens_coefficient = 0.8
 	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/under/pluvia
+	name = "pluvia suit"
+	icon_state = "pluvia"
+	item_state = "pluvia"
+	flags = ONESIZEFITSALL
 
-/obj/item/clothing/under/nostromo
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+/obj/item/clothing/under/pluvia_gold
+	name = "pluvia suit"
+	icon_state = "pluviaGold"
+	item_state = "pluviaGold"
+
 
 /obj/item/clothing/under/nostromo/blue
 	name = "blue uniform"
