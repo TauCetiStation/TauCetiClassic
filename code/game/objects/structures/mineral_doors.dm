@@ -173,15 +173,18 @@
 			if(try_lock(K, user))
 				break
 
-	else if(isscrewing(W) && locked)
-		playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
-		if(do_after(user, 2 SECOND, target = src, extra_checks = CALLBACK(src, PROC_REF(is_locked))))
-			if(prob(20))
-				locked = FALSE
-				lock_broken = TRUE
-				to_chat(user, "<span class='notice'>Вы сломали замок!</span>")
-			else
-				to_chat(user, "<span class='notice'>Замок не поддаётся!</span>")
+	else if(isscrewing(W))
+		if(lock_broken)
+			to_chat(user, "<span class='notice'>Замок этой двери уже сломан!</span>")
+		else
+			playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
+			if(do_after(user, 2 SECOND, target = src))
+				if(prob(20))
+					locked = FALSE
+					lock_broken = TRUE
+					to_chat(user, "<span class='notice'>Вы сломали замок!</span>")
+				else
+					to_chat(user, "<span class='notice'>Замок не поддаётся!</span>")
 
 	else
 		..()
