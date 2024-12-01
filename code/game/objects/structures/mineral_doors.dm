@@ -82,7 +82,6 @@
 
 /obj/structure/mineral_door/proc/Open()
 	if(locked)
-		user.visible_message("<span class='notice'>[user] trying to open the [src]!</span>", "<span class='notice'>The [src] won't budge!</span>")
 		return
 
 	isSwitchingStates = TRUE
