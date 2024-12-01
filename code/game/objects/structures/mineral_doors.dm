@@ -12,6 +12,8 @@
 	var/isSwitchingStates = FALSE
 	var/sheetAmount = 7
 	var/can_unwrench = TRUE
+	var/id = "base id"
+	var/locked = FALSE
 
 	var/sheetType
 
@@ -79,6 +81,10 @@
 		Close()
 
 /obj/structure/mineral_door/proc/Open()
+	if(locked)
+		visible_message("<span class='notice'>[user] trying to open the [name]!</span>", "<span class='notice'>The [name] won't budge!</span>")
+		return
+
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_opening", src)
@@ -154,6 +160,17 @@
 				if(!istype(src, /obj/structure/mineral_door/transparent))
 					set_opacity(TRUE)
 
+	else if(istype(W, /obj/item/weapon/key))
+		var/obj/item/weapon/key/K = W
+		if(close_state)
+			if(K.id == id)
+				visible_message("<span class='notice'>[user] [locked ? "unlocked" : "locked"] the [name]!</span>", "<span class='notice'>You [locked ? "unlocked" : "locked"] the [name]!</span>")
+				locked = !locked
+			else
+				to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
+		else
+			to_chat(user, "<span class='notice'>Сперва закройте дверь!</span>")
+
 	else
 		..()
 
@@ -184,6 +201,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel!</span>")
 		return
+	..()
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
@@ -270,6 +288,7 @@
 	icon_state = "resin"
 	max_integrity = 250
 	can_unwrench = FALSE
+	id = "xeno"
 	var/close_delay = 100
 
 /obj/structure/mineral_door/resin/c_airblock(turf/other)
@@ -306,3 +325,36 @@
 	else if(!isSwitchingStates)
 		add_fingerprint(user)
 		SwitchState()
+
+
+/obj/item/weapon/key
+	name = "key"
+	desc = "Открывает какую-то дверь."
+	icon_state = "key"
+	item_state_world = "key_world"
+	w_class = SIZE_MINUSCULE
+	var/id = "base id"
+
+/obj/item/weapon/key/examine(mob/user)
+	..()
+	to_chat(user, "There is a small tag reading [id].")
+
+/obj/item/weapon/key/red
+	icon_state = "key_red"
+	item_state_world = "key_red_world"
+
+/obj/item/weapon/key/green
+	icon_state = "key_green"
+	item_state_world = "key_green_world"
+
+/obj/item/weapon/key/yellow
+	icon_state = "key_yellow"
+	item_state_world = "key_yellow_world"
+
+/obj/item/weapon/key/blue
+	icon_state = "key_blue"
+	item_state_world = "key_blue_world"
+
+/obj/item/weapon/key/purple
+	icon_state = "key_purple"
+	item_state_world = "key_purple_world"
