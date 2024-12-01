@@ -35,7 +35,7 @@
 	if(!.)
 		return
 
-	if(!(get_security_level() == "delta"))
+	if(code_name_eng[security_level] != "delta")
 		to_chat(usr, "<span class='warning'>Для эвакуации необходимо запустить систему самоуничтожения корабля!</span>")
 		return FALSE
 
@@ -131,4 +131,48 @@
 			course -= rand(4, 6) * side
 			second_console.course -= rand(1, 3) * side
 
-/obj/machinery/nostromo
+
+/obj/machinery/nostromo/rejuvpod
+	name = "medical capsule"
+	desc = "Автоматическая медицинская капсула, способная излечить от всего, кроме смерти."
+	icon = 'icons/obj/Cryogenic3.dmi'
+	icon_state = "cryosleeper"
+	anchored = TRUE
+	density = FALSE
+	resistance_flags = FULL_INDESTRUCTIBLE
+	light_color = "#7bf9ff"
+
+/obj/machinery/nostromo/rejuvpod/MouseDrop_T(mob/target, mob/user)
+	if(user.incapacitated() || !ishuman(target) || target.stat == DEAD)
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	close_machine(target)
+	rejuvenate_occupant()
+
+/obj/machinery/nostromo/rejuvpod/proc/rejuvenate_occupant()
+	set waitfor = FALSE
+
+	if(!occupant || !ishuman(occupant))
+		open_machine()
+		return
+
+	var/mob/living/carbon/human/H = occupant
+	to_chat(H, "<span class='notice'><b>Капсула вводит вас в регенеративный анабиоз.</b></span>")
+
+	sleep(calc_heal_time(H))
+	H.rejuvenate()
+	open_machine()
+
+/obj/machinery/nostromo/rejuvpod/proc/calc_heal_time(mob/living/carbon/human/H)
+	var/heal_time = 10 SECOND
+	heal_time += (H.maxHealth - H.health) / 2 SECOND // 2 damage per second
+	heal_time += (7 - H.bodyparts.len) * 20 SECOND // 20 second on bodypart
+	return heal_time
+
+/obj/machinery/nostromo/rejuvpod/update_icon()
+	if(state_open)
+		icon_state = "cryosleeper"
+	else
+		icon_state = "cryosleeper_cl"

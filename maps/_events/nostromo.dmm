@@ -221,7 +221,7 @@
 	},
 /area/station/nostromo)
 "bi" = (
-/obj/machinery/cryopod_event{
+/obj/machinery/event/cryopod{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -287,9 +287,7 @@
 	},
 /area/station/nostromo)
 "bD" = (
-/obj/machinery/cryopod_event{
-	dir = 4
-	},
+/obj/machinery/event/cryopod,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "nostromo"
@@ -431,7 +429,7 @@
 	},
 /area/station/nostromo)
 "cp" = (
-/obj/machinery/cryopod_event{
+/obj/machinery/event/cryopod{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -448,9 +446,7 @@
 	},
 /area/station/nostromo)
 "cv" = (
-/obj/machinery/cryopod_event{
-	dir = 4
-	},
+/obj/machinery/event/cryopod,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "nostromo"
@@ -1778,11 +1774,11 @@
 /turf/simulated/wall/nostromo,
 /area/station/nostromo)
 "iY" = (
-/obj/structure/stool/bed/roller,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 4;
 	icon_state = "nostromo"
 	},
+/obj/structure/stool/bed/roller,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "nostromo"
@@ -8674,35 +8670,16 @@
 	},
 /area/station/nostromo)
 "Ko" = (
-/obj/structure/closet/secure_closet{
-	icon_closed = "cmosecure";
-	icon_opened = "cmosecure_open";
-	icon_state = "cmosecure";
-	name = "Doctors Locker";
-	req_access = list(12)
-	},
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/item/weapon/storage/box/syringes/mixture,
-/obj/item/stack/medical/advanced/bruise_pack,
-/obj/item/stack/medical/advanced/bruise_pack,
-/obj/item/stack/medical/advanced/ointment,
-/obj/item/stack/medical/advanced/ointment,
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/suture,
-/obj/item/stack/medical/suture,
-/obj/item/weapon/storage/pouch/medical_supply,
-/obj/item/weapon/storage/pouch/medical_supply,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 1;
 	icon_state = "nostromo"
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/syringes/mixture{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -8710,10 +8687,16 @@
 	},
 /area/station/nostromo)
 "Kp" = (
-/obj/machinery/vending/blood,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 5;
 	icon_state = "nostromo"
+	},
+/obj/structure/closet/secure_closet{
+	icon_closed = "cmosecure";
+	icon_opened = "cmosecure_open";
+	icon_state = "cmosecure";
+	name = "Doctors Locker";
+	req_access = list(12)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -8872,8 +8855,6 @@
 	},
 /area/station/nostromo)
 "Lf" = (
-/obj/item/weapon/gun/syringe,
-/obj/structure/rack,
 /obj/machinery/camera{
 	c_tag = "Med Lab";
 	dir = 6
@@ -8936,11 +8917,12 @@
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "Ly" = (
-/obj/structure/stool/bed,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 5;
 	icon_state = "nostromo"
 	},
+/obj/structure/rack,
+/obj/item/weapon/gun/syringe,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "nostromo"
@@ -9166,14 +9148,9 @@
 	},
 /area/station/nostromo)
 "MP" = (
-/obj/machinery/iv_drip,
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 4;
-	icon_state = "nostromo"
-	},
+/obj/machinery/nostromo/rejuvpod,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "nostromo"
+	icon_state = "nostromofull"
 	},
 /area/station/nostromo)
 "MR" = (
@@ -9595,13 +9572,11 @@
 	},
 /area/station/nostromo)
 "Pj" = (
-/obj/machinery/sleeper/upgraded{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 6;
 	icon_state = "nostromo"
 	},
+/obj/structure/stool/bed/roller,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "nostromo"
@@ -9849,17 +9824,6 @@
 /obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 10;
-	icon_state = "nostromo"
-	},
-/area/station/nostromo)
-"Qr" = (
-/obj/machinery/life_assist/artificial_ventilation,
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 6;
-	icon_state = "nostromo"
-	},
-/turf/simulated/floor{
-	dir = 6;
 	icon_state = "nostromo"
 	},
 /area/station/nostromo)
@@ -11995,7 +11959,7 @@
 	},
 /area/station/nostromo)
 "YL" = (
-/obj/machinery/cryopod_event{
+/obj/machinery/event/cryopod{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -12008,9 +11972,7 @@
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "YN" = (
-/obj/machinery/cryopod_event{
-	dir = 4
-	},
+/obj/machinery/event/cryopod,
 /turf/simulated/floor{
 	icon_state = "nostromo"
 	},
@@ -57181,7 +57143,7 @@ ZS
 ZS
 Km
 Qg
-sA
+MP
 Oc
 sA
 Ql
@@ -57698,7 +57660,7 @@ Qu
 sA
 sA
 YT
-Qr
+iS
 ZS
 Rn
 Ql
@@ -57952,7 +57914,7 @@ ZS
 ZS
 ZS
 Ly
-MP
+Jt
 iY
 Pj
 ZS

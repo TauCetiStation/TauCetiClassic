@@ -1,6 +1,6 @@
 var/global/list/event_cryopods = list()
 
-/obj/machinery/cryopod_event
+/obj/machinery/event/cryopod
 	name = "cryogenic freezer"
 	desc = "A man-sized pod for entering suspended animation."
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -9,6 +9,6 @@ var/global/list/event_cryopods = list()
 	anchored = TRUE
 	resistance_flags = FULL_INDESTRUCTIBLE
 
-/obj/machinery/cryopod_event/New(loc)
+/obj/machinery/event/cryopod/New(loc)
 	..()
 	event_cryopods += loc
