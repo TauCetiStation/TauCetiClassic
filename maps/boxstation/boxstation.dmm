@@ -13063,6 +13063,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aww" = (
@@ -52956,6 +52962,12 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "bQN" = (
@@ -80518,6 +80530,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"oYx" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "oZb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -118878,7 +118899,7 @@ afl
 avF
 aef
 aef
-aeJ
+oYx
 awT
 awM
 awM
@@ -119135,7 +119156,7 @@ bmu
 bcY
 aeJ
 aef
-aeJ
+oYx
 awT
 azG
 azG
