@@ -28457,7 +28457,9 @@
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "aZb" = (
-/obj/item/weapon/flora/random,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "aZc" = (
@@ -39109,9 +39111,8 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Teleporter Maintenance";
-	req_access = list(17)
+/obj/machinery/door/airlock{
+	name = "Central Emergency Storage"
 	},
 /turf/simulated/floor,
 /area/station/storage/emergency3)
@@ -63254,6 +63255,9 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "cuq" = (
@@ -75815,6 +75819,14 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"jQz" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue,
+/area/station/bridge/captain_quarters)
 "jRb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -76361,10 +76373,6 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "ksb" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Teleporter Maintenance";
-	req_access = list(17)
-	},
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
@@ -76376,6 +76384,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Central Emergency Storage"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "kss" = (
@@ -119680,7 +119691,7 @@ cnX
 bDD
 bDD
 bGj
-bDD
+jQz
 bpE
 brZ
 ark
