@@ -28457,6 +28457,7 @@
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "aZb" = (
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "aZc" = (
@@ -30899,8 +30900,22 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "bdu" = (
-/turf/simulated/wall,
-/area/station/civilian/hydroponics/old)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/black,
+/area/station/security/iaa_office)
 "bdv" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -31717,10 +31732,19 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "beM" = (
-/obj/structure/cable,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/command/glass{
+	dir = 4;
+	name = "IAA Office";
+	req_access = list(19, 38);
+	req_one_access = list(19, 38)
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31730,7 +31754,17 @@
 	name = "Internal Affairs";
 	opacity = 0
 	},
-/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -32079,8 +32113,15 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bfn" = (
-/turf/simulated/wall/r_wall,
-/area/station/storage/emergency3)
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Internal Affairs Agent"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/carpet/black,
+/area/station/security/iaa_office)
 "bfo" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -44522,13 +44563,8 @@
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bBZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/flora/tree{
-	pixel_x = -32
-	},
-/turf/simulated/floor/carpet/blue,
-/area/station/bridge/captain_quarters)
+/turf/simulated/wall,
+/area/station/civilian/hydroponics/old)
 "bCa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -47623,6 +47659,17 @@
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "bHu" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -69254,26 +69301,6 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
-"cYc" = (
-/obj/structure/table/woodentable,
-/obj/item/folder_holder,
-/obj/item/weapon/folder/white{
-	pixel_y = -3
-	},
-/obj/item/weapon/folder/blue{
-	pixel_x = 5
-	},
-/obj/item/weapon/folder{
-	pixel_x = -4
-	},
-/obj/item/weapon/folder/red{
-	pixel_y = 3
-	},
-/obj/item/weapon/folder/purple,
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/security/iaa_office)
 "cZM" = (
 /obj/structure/grille,
 /obj/effect/decal/turf_decal{
@@ -69941,23 +69968,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"dNI" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/machinery/faxmachine{
-	department = "Internal Affairs"
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/security/iaa_office)
 "dOK" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -70841,18 +70851,6 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
-"eOC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "ePa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor/plating,
@@ -71162,6 +71160,9 @@
 /obj/machinery/power/rad_collector,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
+"fkh" = (
+/turf/simulated/wall/r_wall,
+/area/station/storage/emergency3)
 "fkD" = (
 /obj/item/weapon/packageWrap,
 /obj/structure/table/glass,
@@ -74922,6 +74923,18 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"iXs" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "iYb" = (
 /obj/machinery/light/smart,
 /obj/structure/sign/nanotrasen{
@@ -77346,23 +77359,6 @@
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
-"lyC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/black,
-/area/station/security/iaa_office)
 "lzb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -78924,6 +78920,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"neM" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "nfb" = (
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
@@ -82252,44 +82254,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"qXI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/door/airlock/command/glass{
-	dir = 4;
-	name = "IAA Office";
-	req_access = list(19, 38);
-	req_one_access = list(19, 38)
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lawyer_blast";
-	name = "Internal Affairs";
-	opacity = 0
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/iaa_office)
 "qYi" = (
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2"
@@ -82883,6 +82847,23 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/break_room)
+"rBs" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/machinery/faxmachine{
+	department = "Internal Affairs"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "rBR" = (
 /obj/effect/decal/turf_decal{
 	dir = 5;
@@ -84518,6 +84499,25 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
+"tiU" = (
+/obj/structure/cable,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lawyer_blast";
+	name = "Internal Affairs";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/iaa_office)
 "tkb" = (
 /obj/machinery/shower{
 	dir = 1
@@ -85551,23 +85551,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"vbb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
-	},
-/area/station/security/iaa_office)
 "vbU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -85808,6 +85791,26 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"vKX" = (
+/obj/structure/table/woodentable,
+/obj/item/folder_holder,
+/obj/item/weapon/folder/white{
+	pixel_y = -3
+	},
+/obj/item/weapon/folder/blue{
+	pixel_x = 5
+	},
+/obj/item/weapon/folder{
+	pixel_x = -4
+	},
+/obj/item/weapon/folder/red{
+	pixel_y = 3
+	},
+/obj/item/weapon/folder/purple,
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "vNR" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -86765,16 +86768,6 @@
 	icon_state = "blue"
 	},
 /area/station/bridge/hop_office)
-"xAZ" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/obj/effect/landmark/start{
-	name = "Internal Affairs Agent"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/carpet/black,
-/area/station/security/iaa_office)
 "xCb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
@@ -110949,7 +110942,7 @@ wEL
 lrT
 wAe
 wAe
-eOC
+iXs
 uIm
 kQm
 aSM
@@ -111723,7 +111716,7 @@ bGn
 bGw
 bHp
 bHK
-dNI
+rBs
 bJM
 xqb
 bQl
@@ -111979,7 +111972,7 @@ bJM
 bGo
 bGx
 bHq
-xAZ
+bfn
 bIP
 bJM
 aMj
@@ -112492,7 +112485,7 @@ gvk
 bJM
 bGr
 bGC
-lyC
+bdu
 bHt
 bIT
 bJM
@@ -112748,10 +112741,10 @@ bJK
 asa
 bJM
 bGs
+neM
 bHu
-vbb
-bHu
-cYc
+neM
+vKX
 bJM
 bIZ
 bIZ
@@ -113006,8 +112999,8 @@ aSM
 bJM
 rzr
 udd
-qXI
 beM
+tiU
 bJM
 bJM
 aMS
@@ -119684,7 +119677,7 @@ bkw
 bfC
 bgO
 cnX
-bBZ
+bDD
 bDD
 bGj
 bDD
@@ -120458,12 +120451,12 @@ bdc
 jWb
 jZb
 tnb
-bfn
+fkh
 bxe
-bfn
+fkh
 bAb
 sNO
-bfn
+fkh
 cxt
 aKx
 bXt
@@ -120715,12 +120708,12 @@ bdc
 bpL
 bpL
 bpL
-bfn
-bfn
-bfn
+fkh
+fkh
+fkh
 sNO
 bAc
-bfn
+fkh
 cxi
 byd
 aDp
@@ -120977,7 +120970,7 @@ bpK
 bsp
 bAc
 bAc
-bfn
+fkh
 aPG
 ovb
 aEV
@@ -121229,12 +121222,12 @@ bdc
 bpL
 bpL
 bpL
-bfn
-bfn
+fkh
+fkh
 bso
-bfn
-bfn
-bfn
+fkh
+fkh
+fkh
 aIR
 ovb
 bht
@@ -132044,15 +132037,15 @@ bFo
 bFo
 aGG
 cak
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
 aah
 aaa
 aaa
@@ -132309,7 +132302,7 @@ bSY
 bSY
 bSY
 bSY
-bdu
+bBZ
 aah
 aaa
 aaa
@@ -132558,7 +132551,7 @@ cak
 bFo
 lOb
 cak
-bdu
+bBZ
 cKv
 iUO
 cEB
@@ -132566,7 +132559,7 @@ bkt
 bGu
 bkt
 oLb
-bdu
+bBZ
 aah
 aaa
 aaa
@@ -132814,8 +132807,8 @@ cak
 cak
 bFo
 lOb
-bdu
-bdu
+bBZ
+bBZ
 cEy
 cfB
 cil
@@ -133071,7 +133064,7 @@ cak
 bTA
 bFo
 lOb
-bdu
+bBZ
 cKi
 aDZ
 cfC
@@ -133328,7 +133321,7 @@ mMb
 bFo
 bFo
 lOb
-bdu
+bBZ
 cKh
 cer
 bHz
@@ -133337,7 +133330,7 @@ bkt
 bHo
 bGu
 oLb
-bdu
+bBZ
 aah
 aaa
 aaa
@@ -133585,7 +133578,7 @@ cak
 cak
 mUb
 lOb
-bdu
+bBZ
 ccR
 cew
 cfD
@@ -133594,7 +133587,7 @@ cbz
 bSY
 bSY
 bSY
-bdu
+bBZ
 aah
 aaa
 aaa
@@ -133842,16 +133835,16 @@ bFo
 bFo
 bFo
 lOb
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
-bdu
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
+bBZ
 aah
 aaa
 aaa
