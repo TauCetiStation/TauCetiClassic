@@ -82,7 +82,7 @@
 
 /obj/structure/mineral_door/proc/Open()
 	if(locked)
-		visible_message("<span class='notice'>[user] trying to open the [name]!</span>", "<span class='notice'>The [name] won't budge!</span>")
+		user.visible_message("<span class='notice'>[user] trying to open the [src]!</span>", "<span class='notice'>The [src] won't budge!</span>")
 		return
 
 	isSwitchingStates = TRUE
@@ -164,7 +164,7 @@
 		var/obj/item/weapon/key/K = W
 		if(close_state)
 			if(K.id == id)
-				visible_message("<span class='notice'>[user] [locked ? "unlocked" : "locked"] the [name]!</span>", "<span class='notice'>You [locked ? "unlocked" : "locked"] the [name]!</span>")
+				visible_message("<span class='notice'>[user] [locked ? "unlocked" : "locked"] the [src]!</span>", "<span class='notice'>You [locked ? "unlocked" : "locked"] the [src]!</span>")
 				locked = !locked
 			else
 				to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
