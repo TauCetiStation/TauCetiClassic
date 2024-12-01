@@ -70081,6 +70081,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"dUa" = (
+/obj/effect/landmark/start/blueshield_officer,
+/turf/simulated/floor/wood,
+/area/station/bridge/meeting_room)
 "dUb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -80530,15 +80534,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"oYx" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "oZb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -85508,6 +85503,15 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
+"uPN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "uRb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -114561,7 +114565,7 @@ aSY
 iZb
 bcO
 aAl
-bfu
+dUa
 bJY
 bfu
 biO
@@ -118899,7 +118903,7 @@ afl
 avF
 aef
 aef
-oYx
+uPN
 awT
 awM
 awM
@@ -119156,7 +119160,7 @@ bmu
 bcY
 aeJ
 aef
-oYx
+uPN
 awT
 azG
 azG
