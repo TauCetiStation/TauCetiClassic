@@ -75885,7 +75885,7 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "jVb" = (
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 1
 	},
 /turf/simulated/floor{
