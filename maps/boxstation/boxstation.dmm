@@ -42815,7 +42815,7 @@
 /area/station/cargo/storage)
 "byH" = (
 /obj/machinery/chem_dispenser/soda{
-	dir = 4
+	dir = 8
 	},
 /obj/structure/table,
 /turf/simulated/floor/carpet/blue,
@@ -77565,6 +77565,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"lGg" = (
+/obj/effect/landmark/start/blueshield_officer,
+/turf/simulated/floor/wood,
+/area/station/bridge/meeting_room)
 "lHb" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -80362,15 +80366,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
-"oLn" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "oMb" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -81373,10 +81368,6 @@
 	icon_state = "blue"
 	},
 /area/station/bridge/hop_office)
-"qde" = (
-/obj/effect/landmark/start/blueshield_officer,
-/turf/simulated/floor/wood,
-/area/station/bridge/meeting_room)
 "qex" = (
 /obj/structure/flora/junglebush,
 /turf/simulated/floor/grass,
@@ -85329,6 +85320,15 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"uxb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "uyE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -114565,7 +114565,7 @@ aSY
 iZb
 bcO
 aAl
-qde
+lGg
 bJY
 bfu
 biO
@@ -118903,7 +118903,7 @@ afl
 avF
 aef
 aef
-oLn
+uxb
 awT
 awM
 awM
@@ -119160,7 +119160,7 @@ bmu
 bcY
 aeJ
 aef
-oLn
+uxb
 awT
 azG
 azG
