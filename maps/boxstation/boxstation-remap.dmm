@@ -13647,10 +13647,6 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/mars_globe{
-	pixel_x = 8;
-	pixel_y = 14
-	},
 /obj/item/device/camera,
 /obj/item/device/taperecorder{
 	pixel_x = 7;
@@ -13799,10 +13795,6 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/folder/red,
-/obj/item/mars_globe{
-	pixel_x = 8;
-	pixel_y = 2
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -32962,9 +32954,6 @@
 /area/station/bridge/meeting_room)
 "bgI" = (
 /obj/structure/table/woodentable,
-/obj/item/mars_globe{
-	pixel_x = 9
-	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bgJ" = (
@@ -38810,10 +38799,6 @@
 	pixel_x = 4;
 	pixel_y = 12
 	},
-/obj/item/mars_globe{
-	pixel_x = 9;
-	pixel_y = 2
-	},
 /obj/item/device/flashlight/lamp/small{
 	pixel_x = -8;
 	pixel_y = 10
@@ -39885,8 +39870,7 @@
 	},
 /area/station/tcommsat/chamber)
 "btD" = (
-/turf/environment/space,
-/area/shuttle/administration/station)
+/turf/environment/space)
 "btE" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/cups,
@@ -46884,7 +46868,6 @@
 /area/station/rnd/hallway)
 "bFR" = (
 /obj/structure/closet/theatrecloset,
-/obj/item/device/guitar/electric,
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "bFS" = (
@@ -85124,8 +85107,7 @@
 /obj/effect/landmark{
 	name = "carpspawn"
 	},
-/turf/environment/space,
-/area/shuttle/administration/station)
+/turf/environment/space)
 "tQr" = (
 /obj/structure/rack,
 /obj/random/cloth/randomsuit,
