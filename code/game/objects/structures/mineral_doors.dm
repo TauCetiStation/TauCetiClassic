@@ -12,8 +12,10 @@
 	var/isSwitchingStates = FALSE
 	var/sheetAmount = 7
 	var/can_unwrench = TRUE
+
 	var/id = "base id"
 	var/locked = FALSE
+	var/lock_broken = FALSE
 
 	var/sheetType
 
@@ -82,6 +84,7 @@
 
 /obj/structure/mineral_door/proc/Open()
 	if(locked)
+		playsound(src, 'sound/effects/door_locked.ogg', VOL_EFFECTS_MASTER)
 		usr.visible_message("<span class='notice'>[usr] trying to open the [src]!</span>", "<span class='notice'>The [src] won't budge!</span>")
 		return
 
@@ -162,17 +165,49 @@
 
 	else if(istype(W, /obj/item/weapon/key))
 		var/obj/item/weapon/key/K = W
-		if(close_state)
-			if(K.id == id)
-				user.visible_message("<span class='notice'>[user] [locked ? "unlocked" : "locked"] the [src]!</span>", "<span class='notice'>You [locked ? "unlocked" : "locked"] the [src]!</span>")
-				locked = !locked
+		try_lock(K, user)
+
+	else if(istype(W, /obj/item/weapon/storage/keyring))
+		var/obj/item/weapon/storage/keyring/KR = W
+		for(var/obj/item/weapon/key/K in KR.contents)
+			if(try_lock(K, user))
+				break
+
+	else if(isscrewing(W) && locked)
+		playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
+		if(do_after(user, 2 SECOND, target = src, extra_checks = CALLBACK(src, PROC_REF(is_locked))))
+			if(prob(20))
+				locked = FALSE
+				lock_broken = TRUE
+				to_chat(user, "<span class='notice'>Вы сломали замок!</span>")
 			else
-				to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
-		else
-			to_chat(user, "<span class='notice'>Сперва закройте дверь!</span>")
+				to_chat(user, "<span class='notice'>Замок не поддаётся!</span>")
 
 	else
 		..()
+
+/obj/structure/mineral_door/proc/try_lock(obj/item/weapon/key/K, mob/user)
+	if(!close_state)
+		to_chat(user, "<span class='notice'>Сперва закройте дверь!</span>")
+		return TRUE
+	playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
+	if(do_after(user, 1 SECOND, target = src))
+		if(K.id == id && !lock_broken)
+			user.visible_message("<span class='notice'>[user] [locked ? "unlocked" : "locked"] the [src]!</span>", "<span class='notice'>You [locked ? "unlocked" : "locked"] the [src]!</span>")
+			locked = !locked
+			return TRUE
+		else
+			to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
+			return FALSE
+	return TRUE
+
+/obj/structure/mineral_door/proc/is_locked()
+	return locked
+
+/obj/structure/mineral_door/examine(mob/user)
+	..()
+	if(lock_broken)
+		to_chat(user, "Кажется замок этой двери сломан.")
 
 /obj/structure/mineral_door/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT || !sheetType)
@@ -337,7 +372,10 @@
 
 /obj/item/weapon/key/examine(mob/user)
 	..()
-	to_chat(user, "There is a small tag reading [id].")
+	if(id == null)
+		to_chat(user, "Кажется этот ключ сломан.")
+	else
+		to_chat(user, "There is a small tag reading [id].")
 
 /obj/item/weapon/key/red
 	icon_state = "key_red"
@@ -358,3 +396,21 @@
 /obj/item/weapon/key/purple
 	icon_state = "key_purple"
 	item_state_world = "key_purple_world"
+
+/obj/item/weapon/storage/keyring
+	name = "keyring"
+	desc = "Кольцо для хранения ключей."
+	can_hold = list(/obj/item/weapon/key)
+	storage_slots = 6
+	icon_state = "keyring0"
+	w_class = SIZE_MINUSCULE
+
+/obj/item/weapon/storage/keyring/atom_init(mapload)
+	. = ..()
+	if(mapload)
+		for(var/obj/item/weapon/key/K in src.loc)
+			K.forceMove(src)
+	update_icon()
+
+/obj/item/weapon/storage/keyring/update_icon()
+	icon_state = "keyring[min(contents.len, 3)]"
