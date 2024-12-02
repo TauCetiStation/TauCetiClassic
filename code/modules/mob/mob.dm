@@ -334,30 +334,34 @@
 
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view())
-	set name = "Examine"
-	set category = "IC"
+    set name = "Examine"
+    set category = "IC"
 
-	if((sdisabilities & BLIND || blinded) && !in_range(A, usr) || stat == UNCONSCIOUS)
-		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
-		return
+    if((sdisabilities & BLIND || blinded) && !in_range(A, usr) || stat == UNCONSCIOUS)
+        to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
+        return
 
-	face_atom(A)
-	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
-	A.examine(src)
-	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
-	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
-	if(!show_examine_log)
-		return
-	var/mob/living/carbon/human/H = src
-	if(ishuman(src))
-		if(H.head && H.head.flags_inv && HIDEEYES)
-			return
-		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
-			return
-	if(!A.z) //no message if we examine something in a backpack
-		return
-	if(stat == CONSCIOUS)
-		last_examined = A.name
+    face_atom(A)
+    hidden_eyes(A)
+    A.examine(src)
+    SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
+    SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+    if(stat == CONSCIOUS)
+        last_examined = A.name
+
+mob/proc/hidden_eyes(atom/A)
+    if(!show_examine_log)
+        return
+    var/mob/living/carbon/human/H = src
+    if(ishuman(src))
+        if(H.head && H.head.flags_inv & HIDEEYES)
+            return
+        if(H.wear_mask && H.wear_mask.flags_inv & HIDEEYES)
+            return
+    if(!A.z) //no message if we examine something in a backpack
+        return
+
+    visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
