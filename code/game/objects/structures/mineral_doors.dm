@@ -199,9 +199,8 @@
 			user.visible_message("<span class='notice'>[user] [locked ? "unlocked" : "locked"] the [src]!</span>", "<span class='notice'>You [locked ? "unlocked" : "locked"] the [src]!</span>")
 			locked = !locked
 			return TRUE
-		else
-			to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
-			return FALSE
+		to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
+		return FALSE
 	return TRUE
 
 /obj/structure/mineral_door/proc/is_locked()
