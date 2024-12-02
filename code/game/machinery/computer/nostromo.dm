@@ -136,7 +136,7 @@
 	name = "medical capsule"
 	desc = "Автоматическая медицинская капсула, способная излечить от всего, кроме смерти."
 	icon = 'icons/obj/Cryogenic3.dmi'
-	icon_state = "cryosleeper"
+	icon_state = "rejuvpod"
 	anchored = TRUE
 	density = FALSE
 	resistance_flags = FULL_INDESTRUCTIBLE
@@ -173,6 +173,6 @@
 
 /obj/machinery/nostromo/rejuvpod/update_icon()
 	if(state_open)
-		icon_state = "cryosleeper"
+		icon_state = "rejuvpod"
 	else
-		icon_state = "cryosleeper_cl"
+		icon_state = "rejuvpod_cl"
