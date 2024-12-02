@@ -165,31 +165,31 @@
 
 	else if(istype(W, /obj/item/weapon/key))
 		var/obj/item/weapon/key/K = W
-		try_lock(K, user)
+		try_key(K, user)
 
 	else if(istype(W, /obj/item/weapon/storage/keyring))
 		var/obj/item/weapon/storage/keyring/KR = W
 		for(var/obj/item/weapon/key/K in KR.contents)
-			if(try_lock(K, user))
+			if(try_key(K, user))
 				break
 
 	else if(isscrewing(W))
 		if(lock_broken)
 			to_chat(user, "<span class='notice'>Замок этой двери уже сломан!</span>")
-		else
-			playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
-			if(do_after(user, 2 SECOND, target = src))
-				if(prob(20))
-					locked = FALSE
-					lock_broken = TRUE
-					to_chat(user, "<span class='notice'>Вы сломали замок!</span>")
-				else
-					to_chat(user, "<span class='notice'>Замок не поддаётся!</span>")
+			return
+		playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
+		if(do_after(user, 2 SECOND, target = src))
+			if(prob(20))
+				locked = FALSE
+				lock_broken = TRUE
+				to_chat(user, "<span class='notice'>Вы сломали замок!</span>")
+			else
+				to_chat(user, "<span class='notice'>Замок не поддаётся!</span>")
 
 	else
 		..()
 
-/obj/structure/mineral_door/proc/try_lock(obj/item/weapon/key/K, mob/user)
+/obj/structure/mineral_door/proc/try_key(obj/item/weapon/key/K, mob/user)
 	if(!close_state)
 		to_chat(user, "<span class='notice'>Сперва закройте дверь!</span>")
 		return TRUE
@@ -202,9 +202,6 @@
 		to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
 		return FALSE
 	return TRUE
-
-/obj/structure/mineral_door/proc/is_locked()
-	return locked
 
 /obj/structure/mineral_door/examine(mob/user)
 	..()
@@ -224,6 +221,7 @@
 	icon_state = "metal"
 	max_integrity = 300
 	sheetType = /obj/item/stack/sheet/metal
+	can_unwrench = FALSE
 
 /obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
 	if(iswelding(W))
