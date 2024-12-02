@@ -85,7 +85,6 @@
 /obj/structure/mineral_door/proc/Open()
 	if(locked)
 		playsound(src, 'sound/effects/door_locked.ogg', VOL_EFFECTS_MASTER)
-		usr.visible_message("<span class='notice'>[usr] trying to open the [src]!</span>", "<span class='notice'>The [src] won't budge!</span>")
 		return
 
 	isSwitchingStates = TRUE
