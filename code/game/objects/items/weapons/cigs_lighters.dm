@@ -258,49 +258,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
 
-
-/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.isOn())
-			light("<span class='notice'>[user] insults [name] by lighting it with [I].</span>")
-
-	else if(istype(I, /obj/item/weapon/lighter/zippo))
-		var/obj/item/weapon/lighter/zippo/Z = I
-		if(Z.lit)
-			light("<span class='rose'>With a flick of their wrist, [user] lights their [name] with their [I].</span>")
-
-	else if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = I
-		if(L.lit)
-			light("<span class='notice'>[user] manages to offend their [name] by lighting it with [I].</span>")
-
-	else if(istype(I, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = I
-		if(M.lit)
-			light("<span class='notice'>[user] lights their [name] with their [I].</span>")
-
-	else if(istype(I, /obj/item/weapon/melee/energy/sword))
-		var/obj/item/weapon/melee/energy/sword/S = I
-		if(S.active)
-			light("<span class='warning'>[user] swings their [I], barely missing their nose. They light their [name] in the process.</span>")
-
-	else if(isigniter(I))
-		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name] with the power of science.</span>")
-
-	else if(istype(I, /obj/item/weapon/pen/edagger))
-		var/obj/item/weapon/pen/edagger/E = I
-		if(E.on)
-			light("<span class='warning'>[user] swings their [I], barely missing their nose. They light their [name] in the process.</span>")
-
-	else if(istype(I, /obj/item/weapon/spacecash))
-		var/obj/item/weapon/spacecash/S = I
-		if(S.is_burning)
-			var/span = S.worth >= 50 ? "warning" : "notice"
-			light("<span class='[span]'>With a flick of their wrist, [user] lights their [name] with their burning [I].</span>")
-	else
-		return ..()
-
 /////////////////
 //SMOKING PIPES//
 /////////////////
