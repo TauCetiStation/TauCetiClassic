@@ -349,7 +349,7 @@
     if(stat == CONSCIOUS)
         last_examined = A.name
 
-mob/proc/hidden_eyes(atom/A)
+/mob/proc/hidden_eyes(atom/A)
     if(!show_examine_log)
         return
     var/mob/living/carbon/human/H = src
