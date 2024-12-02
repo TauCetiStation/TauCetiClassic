@@ -101,6 +101,10 @@
 		for(var/obj/machinery/light/L in range(5, src))
 			L.flicker()
 
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/start_pulling(atom/movable/AM)
+	if(do_after(src, 2 SECONDS, target = AM))
+		..()
+
 //		STATISTICS
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
 	if(statpanel("Status"))
@@ -155,7 +159,8 @@
 	alien_spells += /obj/effect/proc_holder/spell/targeted/screech
 
 //		EAT CORPSE
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/can_eat_corpse(obj/item/weapon/grab/G)
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/can_eat_corpse()
+	var/obj/item/weapon/grab/G = locate() in src
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>Невозможно делать это в текущем состоянии.</span>")
 		return FALSE
@@ -170,7 +175,7 @@
 		to_chat(src, "<span class='warning'>Это невозможно съесть!</span>")
 		return FALSE
 	if(H in eaten_human)
-		to_chat(src, "<span class='warning'>Это тело уже всё обглодано!</span>")
+		to_chat(src, "<span class='warning'>Это тело уже обглодано!</span>")
 		return FALSE
 	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
 		to_chat(src, "<span class='warning'>Уже начался процесс разложения, это тело неупотребимо в пищу!</span>")
@@ -181,28 +186,28 @@
 	return TRUE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/eat_corpse()
-	var/obj/item/weapon/grab/G = locate() in src
-	if(can_eat_corpse(G))
-		to_chat(src, "<span class='notice'>Вы приступили к трапезе.</span>")
-		emote("growl")
-		apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
+	to_chat(src, "<span class='notice'>Вы приступили к трапезе.</span>")
+	emote("growl")
+	apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
 
-		var/mob/living/carbon/human/H = G.affecting
-		for(var/obj/item/organ/external/BP as anything in H.bodyparts)
-			do_after(src, 5 SECOND, target = H)
-			if(can_eat_corpse(G))
-				if(prob(30))
-					to_chat(src, "<span class='notice'>Вы [pick(
-						"сдираете кожу с [CASE(BP, GENITIVE_CASE)]",
-						"обгладываете [CASE(BP, ACCUSATIVE_CASE)]",
-						"отрываете кусок мяса от [CASE(BP, GENITIVE_CASE)]")] человека.</span>")
-				playsound(src, pick(alien_eat_corpse), VOL_EFFECTS_MASTER)
-				H.apply_damage(50, BRUTE, BP)
-				give_epoint(1)
-			else
-				break
-		remove_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
-		eaten_human += H
+	var/obj/item/weapon/grab/G = locate() in src
+	var/mob/living/carbon/human/H = G.affecting
+
+	for(var/obj/item/organ/external/BP as anything in H.bodyparts)
+		do_after(src, 5 SECOND, target = H)
+		if(can_eat_corpse())
+			if(prob(20))
+				to_chat(src, "<span class='notice'>Вы [pick(
+					"сдираете кожу с [CASE(BP, GENITIVE_CASE)]",
+					"обгладываете [CASE(BP, ACCUSATIVE_CASE)]",
+					"отрываете кусок мяса от [CASE(BP, GENITIVE_CASE)]")] человека.</span>")
+			playsound(src, pick(alien_eat_corpse), VOL_EFFECTS_MASTER)
+			H.apply_damage(50, BRUTE, BP)
+			give_epoint(1)
+		else
+			break
+	remove_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
+	eaten_human += H
 
 //		EVOLUTION POINT
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/give_epoint(amount)
@@ -269,6 +274,7 @@
 /datum/action/innate/alien/eat_corpse
 	name = "Съесть тело."
 	button_icon_state = "eat_corpse"
+	cooldown = 1 MINUTE
 
 /datum/action/innate/alien/eat_corpse/Grant(mob/T)
 	if(!isxenolonehunter(T))
@@ -278,8 +284,9 @@
 
 /datum/action/innate/alien/eat_corpse/Activate()
 	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = owner
-	if(L)
+	if(L.can_eat_corpse())
 		L.eat_corpse()
+		StartCooldown()
 
 //		REGENERATION
 /datum/action/innate/alien/regeneration
@@ -290,14 +297,18 @@
 /datum/action/innate/alien/regeneration/Activate()
 	var/mob/living/carbon/xenomorph/X = owner
 
-	if(!(locate(/obj/structure/alien/weeds) in X.loc) || !X.crawling)
-		to_chat(X, "<span class='warning'>Вы должны лежать на траве.</span>")
+	if(!(locate(/obj/structure/alien/weeds) in X.loc))
+		to_chat(X, "<span class='warning'>Вы должны находиться на траве.</span>")
 		return
 
+	if(!X.crawling)
+		X.crawl()
 	X.apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
 	StartCooldown()
 	if(!do_after(X, 10 SECONDS, target = X))
 		X.remove_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
+	if(X.crawling)
+		X.crawl()
 
 //		STATUS EFFECTS
 //		HUNT

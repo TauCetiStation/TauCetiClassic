@@ -227,14 +227,12 @@
 		flags ^= OPENCONTAINER
 		to_chat(user, "<span class='notice'You stuff some cloth into the bottleneck.</span>")
 
-	if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = I
-		if(L.lit && molotov_state == IS_MOLOTOV)
-			molotov_state = IS_LIT
-			lit_time = world.time + rand(200, 400)
-			user.visible_message("<span class='warning'>[user] lights up a molotov!</span>")
-			playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
-			START_PROCESSING(SSobj, src)
+	if(I.get_current_temperature >= 1000 && molotov_state == IS_MOLOTOV)
+		molotov_state = IS_LIT
+		lit_time = world.time + rand(200, 400)
+		user.visible_message("<span class='warning'>[user] lights up a molotov!</span>")
+		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
+		START_PROCESSING(SSobj, src)
 
 	update_icon()
 
