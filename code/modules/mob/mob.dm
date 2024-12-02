@@ -342,6 +342,7 @@
 		return
 
 	face_atom(A)
+	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
@@ -357,7 +358,6 @@
 		return
 	if(stat == CONSCIOUS)
 		last_examined = A.name
-	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
