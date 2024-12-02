@@ -108,6 +108,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/obj/O = target
 	if(istype(O) && O.get_current_temperature() >= 1000)
 		light("<span class='notice'>[user] casually lights the [name] from [target].</span>")
+	var/mob/living/L = target
+	if(istype(L) && L.on_fire)
+		light("<span class='notice'>[user] casually lights the [name] from [target].</span>")
 
 	var/obj/item/weapon/reagent_containers/glass/glass = target
 	if(istype(glass))	//you can dip cigarettes into beakers
