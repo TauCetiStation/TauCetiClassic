@@ -314,33 +314,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		smoketime = initial(smoketime)
 	return
 
-/obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.isOn())//
-			light("<span class='notice'>[user] recklessly lights [name] with [WT].</span>")
-
-	else if(istype(I, /obj/item/weapon/lighter/zippo))
-		var/obj/item/weapon/lighter/zippo/Z = I
-		if(Z.lit)
-			light("<span class='rose'>With much care, [user] lights their [name] with their [Z].</span>")
-
-	else if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = I
-		if(L.lit)
-			light("<span class='notice'>[user] manages to light their [name] with [L].</span>")
-
-	else if(istype(I, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = I
-		if(M.lit)
-			light("<span class='notice'>[user] lights their [name] with their [M].</span>")
-
-	else if(isigniter(I))
-		light("<span class='notice'>[user] fiddles with [I], and manages to light their [name] with the power of science.</span>")
-
-	else
-		return ..()
-
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
 	name = "corn cob pipe"
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen, kept popular in the modern age and beyond by space hipsters."
