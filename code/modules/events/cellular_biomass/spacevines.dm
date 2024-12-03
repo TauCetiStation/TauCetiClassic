@@ -186,3 +186,25 @@
 /obj/structure/spacevine/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume) //hotspots kill vines
 	if(exposed_temperature > T0C+100)
 		qdel(src)
+
+
+/obj/structure/spacevine/alien
+	name = "alien vines"
+	desc = "An extremely expansionistic alien weed."
+	icon_state = "ALight1"
+
+/obj/structure/spacevine/alien/grow()
+	..()
+	icon_state = "A" + icon_state
+
+/obj/effect/spacevine_controller/alien
+	vine_type = /obj/structure/spacevine/alien
+	slowdown_size = 120
+	collapse_size = 500
+
+/obj/structure/spacevine/alien/Crossed(atom/movable/AM)
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		H.adjustBruteLoss(5)
+		H.adjustFireLoss(10)
+		H.Stun(1)

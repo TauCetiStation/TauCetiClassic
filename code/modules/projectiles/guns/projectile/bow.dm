@@ -1,5 +1,4 @@
 /obj/item/weapon/arrow
-
 	name = "bolt"
 	cases = list("болт", "болта", "болту", "болт", "болтом", "болте")
 	desc = "У меня есть подсказка для тебя - найди цель"
@@ -10,15 +9,21 @@
 	w_class = SIZE_TINY
 	sharp = 1
 	edge = 0
+	var/heated_force = 15
 
 /obj/item/weapon/arrow/quill
-
 	name = "vox quill"
 	desc = "Колючее перо какого-то диковинного животного."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "quill"
 	item_state = "quill"
 	throwforce = 5
+
+/obj/item/weapon/arrow/heavy
+	name = "heavy bolt"
+	icon_state = "heavybolt"
+	throwforce = 8
+	heated_force = 40
 
 /obj/item/weapon/crossbow
 	name = "powered crossbow"
@@ -34,7 +39,7 @@
 	var/max_tension = 3                   // Highest possible tension.
 	var/release_speed = 4                 // Speed per unit of tension.
 	var/mob/living/current_user = null    // Used to see if the person drawing the bow started drawing it.
-	var/obj/item/weapon/arrow = null      // Nocked arrow.
+	var/obj/item/weapon/arrow/arrow = null      // Nocked arrow.
 	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
 
 /obj/item/weapon/crossbow/atom_init()
@@ -51,8 +56,7 @@
 			if(cell)
 				if(cell.charge >= 500)
 					to_chat(user, "<span class='notice'>В результате [CASE(arrow, ACCUSATIVE_CASE)] начинает раскаляться докрасна.</span>")
-					arrow.throwforce = 15
-					arrow.icon_state = "metal-rod-superheated"
+					arrow.throwforce = arrow.heated_force
 					cell.use(500)
 			return
 
@@ -62,10 +66,9 @@
 			cell = I
 			to_chat(user, "<span class='notice'>Вы вставляете батарейку в [CASE(src, ACCUSATIVE_CASE)] и подключаете его к катушке зажигания.</span>")
 			if(arrow)
-				if(istype(arrow,/obj/item/weapon/arrow) && arrow.throwforce < 15 && cell.charge >= 500)
+				if(istype(arrow,/obj/item/weapon/arrow) && arrow.throwforce < arrow.heated_force && cell.charge >= 500)
 					to_chat(user, "<span class='notice'>[capitalize(CASE(arrow, ACCUSATIVE_CASE))] мерцает и трещит, раскаляясь докрасна.</span>")
-					arrow.throwforce = 15
-					arrow.icon_state = "metal-rod-superheated"
+					arrow.throwforce = arrow.heated_force
 					cell.use(500)
 		else
 			to_chat(user, "<span class='notice'>Батарейка уже установлена в [CASE(src, ACCUSATIVE_CASE)]</span>")
@@ -88,6 +91,7 @@
 			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскивает [CASE(arrow, ACCUSATIVE_CASE)].","Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскиваете [CASE(arrow, ACCUSATIVE_CASE)].")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
+			A.throwforce = initial(A.throwforce)
 			arrow = null
 		else
 			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)].", "Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)].")

@@ -343,6 +343,7 @@
 		/turf/simulated/wall/purple, \
 		/turf/simulated/wall/green, \
 		/turf/simulated/wall/beige, \
+		/turf/simulated/wall/nostromo, \
 		/turf/simulated/wall/r_wall, \
 		/turf/simulated/wall/r_wall/yellow, \
 		/turf/simulated/wall/r_wall/red, \

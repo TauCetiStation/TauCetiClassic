@@ -71,6 +71,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
+	if(SSmapping.level_trait(z, ZTRAIT_INDECONSTRUCTABLE_PLATING))
+		can_deconstruct = FALSE
 
 /turf/simulated/floor/ChangeTurf()
 	var/old_holy = holy
@@ -458,7 +460,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	update_icon()
 	levelupdate()
 
-//Proc for make turf into plating 
+//Proc for make turf into plating
 /turf/simulated/floor/proc/remove_floor(obj/item/C, mob/user)
 	if(broken || burnt)
 		to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")

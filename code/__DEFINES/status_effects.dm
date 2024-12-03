@@ -15,6 +15,8 @@
 
 #define STATUS_EFFECT_SWARMS_GIFT /datum/status_effect/swarm_gift
 
+#define STATUS_EFFECT_ALIEN_ADRENALINE /datum/status_effect/alien_adrenaline
+#define STATUS_EFFECT_ALIEN_REGENERATION /datum/status_effect/alien_regeneration
 #define STATUS_EFFECT_ALERTNESS /datum/status_effect/alertness
 
 /////////////
@@ -31,11 +33,15 @@
 
 #define STATUS_EFFECT_CLUMSY /datum/status_effect/clumsy
 
+#define STATUS_EFFECT_SLOWDOWN /datum/status_effect/slowdown
+
 /////////////
 // NEUTRAL //
 /////////////
 
 #define STATUS_EFFECT_ARRAY_TURN_BACK /datum/status_effect/array_turn_back
+
+#define STATUS_EFFECT_ALIEN_HUNT /datum/status_effect/alien_hunt
 
 // Stasis helpers
 

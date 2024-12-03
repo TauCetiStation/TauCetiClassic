@@ -29,6 +29,10 @@
 
 	var/obj/item/inventory_mouth
 
+/mob/living/simple_animal/cat/load_default_emotes()
+	default_emotes += subtypesof(/datum/emote/cat)
+	return ..()
+
 /mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
@@ -45,7 +49,7 @@
 
 	for(var/mob/living/simple_animal/mouse/snack in oview(src, 3))
 		if(prob(15))
-			me_emote(pick("шипит!","злостно мяукает!"))
+			emote(pick("growl","hiss"))
 		break
 
 	if(stat == CONSCIOUS && !buckled)
@@ -267,3 +271,41 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/runtime/fake // fake runtime cat, does not disappear
 	disappear = FALSE
+
+/mob/living/simple_animal/cat/red
+	icon_state = "red_cat"
+	icon_living = "red_cat"
+	icon_dead = "red_cat_dead"
+	holder_type = /obj/item/weapon/holder/cat/red
+
+/mob/living/simple_animal/cat/red/jonesy
+	name = "Jonesy"
+	desc = "Корабельный рыжий кот Джонси. Крайне чувствителен."
+	sight = SEE_MOBS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	see_in_dark = 8
+	speed = -0.5
+	pass_flags = PASSTABLE
+	var/next_alert = 0
+
+/mob/living/simple_animal/cat/red/jonesy/atom_init()
+	. = ..()
+	create_spawner(/datum/spawner/living/jonesy, src)
+
+/mob/living/simple_animal/cat/red/jonesy/transfer_personality(client/candidate)
+	if(!candidate)
+		return
+	ckey = candidate.ckey
+	var/datum/faction/nostromo_cat/C = find_faction_by_type(/datum/faction/nostromo_cat)
+	if(C)
+		add_faction_member(C, src)
+
+/mob/living/simple_animal/cat/red/jonesy/Life()
+	..()
+	if(health < maxHealth) // slow regeneration
+		health++
+	if(world.time > next_alert) // no spam
+		for(var/mob/living/carbon/xenomorph/humanoid/X in oview(5, src))
+			next_alert = world.time + 2 MINUTE
+			emote(pick("growl","hiss"))
+			break

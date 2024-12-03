@@ -15,13 +15,13 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 		return
 
 	var/list/modes = list(
-		"Disallow All" = FSHIELD_PASS_DISALLOW, 
-		"Allow not living" = FSHIELD_PASS_ALLOW_NOT_LIVING, 
+		"Disallow All" = FSHIELD_PASS_DISALLOW,
+		"Allow not living" = FSHIELD_PASS_ALLOW_NOT_LIVING,
 		"Allow All" = FSHIELD_PASS_ALLOW_ALL,
 		)
 
 	var/mode = input("Choise new passmode", "Shield Passmode") as null|anything in modes
-	
+
 	if(!mode)
 		return
 
@@ -29,7 +29,7 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 		shield.switch_mode(modes[mode])
 
 	// forts event announcement
-	var/datum/map_module/forts/forts_module = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/forts_module = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 	if(forts_module)
 		var/mode_text
 		switch(modes[mode])

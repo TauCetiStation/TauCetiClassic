@@ -511,26 +511,27 @@ SUBSYSTEM_DEF(job)
 			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
 
 	//Give custom items
-	give_custom_items(H, job)
+	if(config.allow_loadout)
+		give_custom_items(H, job)
 
-	//Deferred item spawning.
-	for(var/thing in spawn_in_storage)
-		var/datum/gear/G = gear_datums[thing]
-		var/metadata = H.client.prefs.gear[G.display_name]
-		var/item = G.spawn_item(null, metadata)
+		//Deferred item spawning.
+		for(var/thing in spawn_in_storage)
+			var/datum/gear/G = gear_datums[thing]
+			var/metadata = H.client.prefs.gear[G.display_name]
+			var/item = G.spawn_item(null, metadata)
 
-		var/atom/placed_in = H.equip_or_collect(item)
-		if(placed_in)
-			to_chat(H, "<span class='notice'>Placing \the [item] in your [placed_in.name]!</span>")
-			continue
-		if(H.equip_to_appropriate_slot(item))
-			to_chat(H, "<span class='notice'>Placing \the [item] in your inventory!</span>")
-			continue
-		if(H.put_in_hands(item))
-			to_chat(H, "<span class='notice'>Placing \the [item] in your hands!</span>")
-			continue
-		to_chat(H, "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>")
-		qdel(item)
+			var/atom/placed_in = H.equip_or_collect(item)
+			if(placed_in)
+				to_chat(H, "<span class='notice'>Placing \the [item] in your [placed_in.name]!</span>")
+				continue
+			if(H.equip_to_appropriate_slot(item))
+				to_chat(H, "<span class='notice'>Placing \the [item] in your inventory!</span>")
+				continue
+			if(H.put_in_hands(item))
+				to_chat(H, "<span class='notice'>Placing \the [item] in your hands!</span>")
+				continue
+			to_chat(H, "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>")
+			qdel(item)
 
 	to_chat(H, "<B>You are the [alt_title ? alt_title : rank].</B>")
 	to_chat(H, "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
