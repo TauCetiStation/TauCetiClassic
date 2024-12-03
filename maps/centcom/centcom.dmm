@@ -31467,7 +31467,7 @@
 /obj/structure/table/woodentable{
 	dir = 10
 	},
-/obj/item/mars_globe{
+/obj/item/globe{
 	pixel_x = 8;
 	pixel_y = 2
 	},

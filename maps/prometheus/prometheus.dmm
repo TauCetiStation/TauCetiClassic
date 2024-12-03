@@ -25747,7 +25747,7 @@
 /obj/item/weapon/coin/bananium{
 	pixel_x = -3
 	},
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
