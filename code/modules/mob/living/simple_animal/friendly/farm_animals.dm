@@ -205,6 +205,7 @@ var/global/chicken_count = 0
 	turns_per_move = 3
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
 	health = 10
+	maxHealth = 10
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
