@@ -13,6 +13,10 @@
 	var/sheetAmount = 7
 	var/can_unwrench = TRUE
 
+	var/id = "base id"
+	var/locked = FALSE
+	var/lock_broken = FALSE
+
 	var/sheetType
 
 	max_integrity = 100
@@ -79,6 +83,10 @@
 		Close()
 
 /obj/structure/mineral_door/proc/Open()
+	if(locked)
+		playsound(src, 'sound/effects/door_locked.ogg', VOL_EFFECTS_MASTER)
+		return
+
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_opening", src)
@@ -154,8 +162,50 @@
 				if(!istype(src, /obj/structure/mineral_door/transparent))
 					set_opacity(TRUE)
 
+	else if(istype(W, /obj/item/weapon/key))
+		var/obj/item/weapon/key/K = W
+		try_key(K, user)
+
+	else if(istype(W, /obj/item/weapon/storage/keyring))
+		var/obj/item/weapon/storage/keyring/KR = W
+		for(var/obj/item/weapon/key/K in KR.contents)
+			if(try_key(K, user))
+				break
+
+	else if(isscrewing(W))
+		if(lock_broken)
+			to_chat(user, "<span class='notice'>Замок этой двери уже сломан!</span>")
+			return
+		playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
+		if(do_after(user, 2 SECOND, target = src))
+			if(prob(20))
+				locked = FALSE
+				lock_broken = TRUE
+				to_chat(user, "<span class='notice'>Вы сломали замок!</span>")
+			else
+				to_chat(user, "<span class='notice'>Замок не поддаётся!</span>")
+
 	else
 		..()
+
+/obj/structure/mineral_door/proc/try_key(obj/item/weapon/key/K, mob/user)
+	if(!close_state)
+		to_chat(user, "<span class='notice'>Сперва закройте дверь!</span>")
+		return TRUE
+	playsound(src, "sound/effects/door_lock[pick(1,4)].ogg", VOL_EFFECTS_MASTER)
+	if(do_after(user, 1 SECOND, target = src))
+		if(K.id == id && !lock_broken)
+			user.visible_message("<span class='notice'>[user] [locked ? "unlocked" : "locked"] the [src]!</span>", "<span class='notice'>You [locked ? "unlocked" : "locked"] the [src]!</span>")
+			locked = !locked
+			return TRUE
+		to_chat(user, "<span class='notice'>Ключ не подходит к этой двери!</span>")
+		return FALSE
+	return TRUE
+
+/obj/structure/mineral_door/examine(mob/user)
+	..()
+	if(lock_broken)
+		to_chat(user, "Кажется замок этой двери сломан.")
 
 /obj/structure/mineral_door/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT || !sheetType)
@@ -170,6 +220,7 @@
 	icon_state = "metal"
 	max_integrity = 300
 	sheetType = /obj/item/stack/sheet/metal
+	can_unwrench = FALSE
 
 /obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
 	if(iswelding(W))
@@ -184,6 +235,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel!</span>")
 		return
+	..()
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
@@ -270,6 +322,7 @@
 	icon_state = "resin"
 	max_integrity = 250
 	can_unwrench = FALSE
+	id = "xeno"
 	var/close_delay = 100
 
 /obj/structure/mineral_door/resin/c_airblock(turf/other)
@@ -306,3 +359,57 @@
 	else if(!isSwitchingStates)
 		add_fingerprint(user)
 		SwitchState()
+
+
+/obj/item/weapon/key
+	name = "key"
+	desc = "Открывает какую-то дверь."
+	icon_state = "key"
+	item_state_world = "key_world"
+	w_class = SIZE_MINUSCULE
+	var/id = "base id"
+
+/obj/item/weapon/key/examine(mob/user)
+	..()
+	if(id == null)
+		to_chat(user, "Кажется этот ключ сломан.")
+	else
+		to_chat(user, "There is a small tag reading [id].")
+
+/obj/item/weapon/key/red
+	icon_state = "key_red"
+	item_state_world = "key_red_world"
+
+/obj/item/weapon/key/green
+	icon_state = "key_green"
+	item_state_world = "key_green_world"
+
+/obj/item/weapon/key/yellow
+	icon_state = "key_yellow"
+	item_state_world = "key_yellow_world"
+
+/obj/item/weapon/key/blue
+	icon_state = "key_blue"
+	item_state_world = "key_blue_world"
+
+/obj/item/weapon/key/purple
+	icon_state = "key_purple"
+	item_state_world = "key_purple_world"
+
+/obj/item/weapon/storage/keyring
+	name = "keyring"
+	desc = "Кольцо для хранения ключей."
+	can_hold = list(/obj/item/weapon/key)
+	storage_slots = 6
+	icon_state = "keyring0"
+	w_class = SIZE_MINUSCULE
+
+/obj/item/weapon/storage/keyring/atom_init(mapload)
+	. = ..()
+	if(mapload)
+		for(var/obj/item/weapon/key/K in src.loc)
+			K.forceMove(src)
+	update_icon()
+
+/obj/item/weapon/storage/keyring/update_icon()
+	icon_state = "keyring[min(contents.len, 3)]"
