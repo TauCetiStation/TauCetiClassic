@@ -239,6 +239,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing += MA
 
 	update_tail_showing()
+	update_wing_layer()
 	overlays_standing[BODY_LAYER] = standing
 	apply_standing_overlay(BODY_LAYER)
 
@@ -829,6 +830,22 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_l_hand()
 
 	apply_standing_overlay(L_HAND_LAYER)
+
+/mob/living/carbon/human/proc/update_wing_layer()
+	remove_standing_overlay(WING_UNDERLIMBS_LAYER)
+	remove_standing_overlay(WING_LAYER)
+	var/datum/sprite_accessory/wing/body_accessory = global.body_wing_accessory_by_name[wing_accessory_name]
+	if(!istype(body_accessory))
+		return
+
+	var/mutable_appearance/wings = mutable_appearance(body_accessory.icon, body_accessory.icon_state, layer = -WING_LAYER)
+	overlays_standing[WING_LAYER] = wings
+
+	var/mutable_appearance/under_wing = mutable_appearance(body_accessory.icon, "[body_accessory.icon_state]_BEHIND", layer = -WING_UNDERLIMBS_LAYER)
+	overlays_standing[WING_UNDERLIMBS_LAYER] = under_wing
+
+	apply_standing_overlay(WING_UNDERLIMBS_LAYER)
+	apply_standing_overlay(WING_LAYER)
 
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_standing_overlay(TAIL_LAYER)
