@@ -345,7 +345,7 @@
 		N.cut_overlay(image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state))
 		N.add_overlay(image('icons/effects/Nuke_sprays.dmi', choice))
 		N.spray_icon_state = choice
-	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
+	if((istype(target, /obj/mecha) || ismachinery(target) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
 	if(istype(target, /obj/machinery/camera))
