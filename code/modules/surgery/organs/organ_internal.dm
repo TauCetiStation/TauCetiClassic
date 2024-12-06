@@ -155,22 +155,6 @@
 		if(2)
 			take_damage(7, 1)
 
-/obj/item/organ/internal/mechanize() //Being used to make robutt hearts, etc
-	if(!is_robotic())
-		var/list/states = icon_states('icons/obj/surgery.dmi') //Insensitive to specially-defined icon files for species like the Drask or whomever else. Everyone gets the same robotic heart.
-		if(slot == "heart" && ("[slot]-prosthetic-on" in states) && ("[slot]-prosthetic-off" in states)) //Give the robotic heart its robotic heart icons if they exist.
-			var/obj/item/organ/internal/heart/H = src
-			H.icon = icon('icons/obj/surgery.dmi')
-			H.icon_state = "[slot]-prosthetic"
-			H.dead_icon = "[slot]-prosthetic-off"
-			H.item_state_world = "[slot]-prosthetic_world"
-			H.update_icon()
-		else if("[slot]-prosthetic" in states) //Give the robotic organ its robotic organ icons if they exist.
-			icon = icon('icons/obj/surgery.dmi')
-			icon_state = "[slot]-prosthetic"
-			item_state_world = "[slot]-prosthetic_world"
-		name = "cybernetic [slot]"
-	..() //Go apply all the organ flags/robotic statuses.
 
 /****************************************************
 				ORGANS DEFINES

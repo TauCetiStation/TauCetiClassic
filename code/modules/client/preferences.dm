@@ -498,8 +498,24 @@ var/global/list/datum/preferences/preferences_datums = list()
 			new_BP.insert_organ(character)
 
 		else if(status == "Cybernetic" && IO)
-			IO.mechanize()
-
+			if(IO)
+				qdel(IO)
+			switch(name)
+				if(O_HEART)
+					var/obj/item/organ/internal/heart/cybernetic/C = new(null)
+					C.insert_organ(character)
+				if(O_KIDNEYS)
+					var/obj/item/organ/internal/kidneys/cybernetic/C = new(null)
+					C.insert_organ(character)
+				if(O_LIVER)
+					var/obj/item/organ/internal/liver/cybernetic/C = new(null)
+					C.insert_organ(character)
+				if(O_LUNGS)
+					var/obj/item/organ/internal/lungs/cybernetic/C = new(null)
+					C.insert_organ(character)
+				if(O_EYES)
+					var/obj/item/organ/internal/eyes/cybernetic/C = new(null)
+					C.insert_organ(character)
 		else
 			continue
 

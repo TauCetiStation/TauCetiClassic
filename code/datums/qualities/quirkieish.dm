@@ -27,8 +27,26 @@
 	var/obj/item/organ/external/r_leg/robot/RL = new(null)
 	RL.insert_organ(H)
 
-	for(var/obj/item/organ/internal/IO in H.organs)
-		IO.mechanize()
+	qdel(H.organs_by_name[O_HEART])
+	qdel(H.organs_by_name[O_KIDNEYS])
+	qdel(H.organs_by_name[O_LIVER])
+	qdel(H.organs_by_name[O_LUNGS])
+	qdel(H.organs_by_name[O_EYES])
+
+	var/obj/item/organ/internal/heart/cybernetic/CH = new(null)
+	CH.insert_organ(H)
+
+	var/obj/item/organ/internal/kidneys/cybernetic/CK = new(null)
+	CK.insert_organ(H)
+
+	var/obj/item/organ/internal/liver/cybernetic/CL = new(null)
+	CL.insert_organ(H)
+
+	var/obj/item/organ/internal/lungs/cybernetic/CU = new(null)
+	CU.insert_organ(H)
+
+	var/obj/item/organ/internal/eyes/cybernetic/CE = new(null)
+	CE.insert_organ(H)
 
 	H.regenerate_icons()
 

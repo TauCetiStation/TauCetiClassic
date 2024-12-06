@@ -219,10 +219,6 @@
 		var/obj/item/organ/internal/O = new path(null)
 		O.insert_organ(H)
 
-	if(flags[IS_SYNTHETIC])
-		for(var/obj/item/organ/internal/IO in H.organs)
-			IO.mechanize()
-
 /datum/species/proc/create_bodyparts(mob/living/carbon/human/H)
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
