@@ -76,6 +76,8 @@
 
 	var/flags = 0
 
+	var/quota = QUOTA_NEUTRAL
+
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 

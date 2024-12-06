@@ -61889,7 +61889,7 @@
 /area/station/hallway/secondary/entry)
 "ljP" = (
 /obj/structure/table/woodentable,
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -81027,14 +81027,14 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "pRM" = (
