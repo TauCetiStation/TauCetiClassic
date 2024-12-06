@@ -6,7 +6,7 @@
 
 /datum/surgery_step/organ_manipulation
 	priority = 1
-	allowed_species = null
+	allowed_species = list("exclude", IPC, DIONA)
 	var/obj/item/organ/internal/I = null
 
 /datum/surgery_step/organ_manipulation/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -27,32 +27,34 @@
 	max_duration = 50
 
 /datum/surgery_step/organ_manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-    if(!ishuman(target))
-        return FALSE
+	if(!ishuman(target))
+		return FALSE
 
-    if(target_zone in list(O_EYES , O_MOUTH, BP_HEAD))
-        return FALSE
+	if(target_zone in list(O_EYES , O_MOUTH, BP_HEAD))
+		return FALSE
 
+	var/obj/item/organ/internal/I = tool
+	if(I.requires_robotic_bodypart)
+		user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
+		return FALSE
 
+	if(target_zone != I.parent_bodypart)
+		user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
+		return FALSE
 
-    var/obj/item/organ/internal/I = tool
-    if(I.requires_robotic_bodypart)
-        user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
-        return FALSE
+	if(I.damage > (I.max_damage * 0.75))
+		user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
+		return FALSE
 
-    if(target_zone != I.parent_bodypart || target.get_organ_slot(I.slot))
-        user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
-        return FALSE
+	if(target.get_int_organ(I))
+		user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
+		return FALSE
 
-    if(I.damage > (I.max_damage * 0.75))
-        user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
-        return FALSE
+	if(!(target.get_species() in I.compability))
+		user.visible_message ( "<span class='warning'> \The [I] not compability to [target]</span>")
+		return FALSE
 
-    if(target.get_int_organ(I))
-        user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
-        return FALSE
-
-    return TRUE
+	return TRUE
 
 
 /datum/surgery_step/organ_manipulation/place/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

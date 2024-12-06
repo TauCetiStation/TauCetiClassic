@@ -890,9 +890,9 @@
 		)
 
 	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
+		O_HEART   = /obj/item/organ/internal/heart/diona,
 		O_BRAIN   = /obj/item/organ/internal/brain/diona,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_EYES    = /obj/item/organ/internal/eyes/diona,
 		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
 		O_LIVER   = /obj/item/organ/internal/liver/diona,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona

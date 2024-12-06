@@ -150,7 +150,7 @@
 //////////////////////////////////////////////////////////////////
 //						EYE SURGERY manipulation				//
 //////////////////////////////////////////////////////////////////
-
+/*
 /datum/surgery_step/eye/manipulation
 	priority = 1
 	allowed_species = null
@@ -169,12 +169,12 @@
 
 
 
-    var/obj/item/organ/internal/I = tool
+    var/obj/item/organ/internal/organ/eyes/I = tool
     if(I.requires_robotic_bodypart)
         user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
         return FALSE
 
-    if(target_zone != I.parent_bodypart || target.get_organ_slot(I.slot))
+    if(target_zone != I.parent_bodypart)
         user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
         return FALSE
 
@@ -214,7 +214,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 	if(IO)
 		IO.take_damage(5, 0)
-
+*/
 //////////////////////////////////////////////////////////////////
 //				EYE SURGERY manipulation for eyes				//
 //////////////////////////////////////////////////////////////////
@@ -222,6 +222,8 @@
 /datum/surgery_step/organ_manipulation/place_eye
 	priority = 2
 	allowed_tools = list(/obj/item/organ/internal/eyes = 100)
+
+	allowed_species = list("exclude", IPC, DIONA)
 
 	min_duration = 110
 	max_duration = 150
@@ -239,15 +241,11 @@
         user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
         return FALSE
 
-    if(target.get_organ_slot(I.slot))
-        user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
-        return FALSE
-
     if(I.damage > (I.max_damage * 0.75))
         user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
         return FALSE
 
-    if(target.get_int_organ(I))
+    if(target.get_int_organ_by_name(I))
         user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
         return FALSE
 
@@ -280,6 +278,8 @@
 	/obj/item/weapon/kitchenknife = 75,	\
 	/obj/item/weapon/shard = 50, 		\
 	)
+
+	allowed_species = list("exclude", IPC, DIONA)
 
 	min_duration = 110
 	max_duration = 150

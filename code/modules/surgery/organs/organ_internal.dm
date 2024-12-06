@@ -10,9 +10,11 @@
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 
+	var/tough = FALSE //can organ be easily die?
+
 	var/dead_icon
 
-
+	var/list/compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL) // races with which organs are compatible
 
 /obj/item/organ/internal/New(mob/living/carbon/holder)
 	if(istype(holder))
@@ -30,6 +32,8 @@
 	return ..()
 
 /obj/item/organ/internal/proc/die()
+	if(tough)
+		return
 	if(is_robotic())
 		return
 	damage = max_damage
@@ -45,8 +49,6 @@
 		M.organs -= src
 		if(M.organs_by_name[organ_tag] == src)
 			M.organs_by_name -= organ_tag
-		if(M.internal_organs_slot[slot] == src)
-			M.internal_organs_slot.Remove(slot)
 
 		if(vital && !special)
 			if(M.stat != DEAD)//safety check!
@@ -64,14 +66,13 @@
 /obj/item/organ/internal/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
-	var/obj/item/organ/internal/replaced = H.get_organ_slot(slot)
+	var/obj/item/organ/internal/replaced = H.get_int_organ_by_name(organ_tag)
 	if(replaced)
 		replaced.remove(H, special = 1)
 
 
 	owner.organs += src
 	owner.organs_by_name[organ_tag] = src
-	H.internal_organs_slot[slot] = src
 
 	if(parent)
 		parent.bodypart_organs += src
@@ -169,23 +170,26 @@
 	organ_tag = O_HEART
 	vital = TRUE
 	parent_bodypart = BP_CHEST
+	var/base_icon_state = "heart"
 	var/heart_status = HEART_NORMAL
 	var/fibrillation_timer_id = null
 	var/failing_interval = 1 MINUTE
 	var/beating = 0
 
+	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+
 /obj/item/organ/internal/heart/update_icon()
 	if(beating)
-		icon_state = "heart-on"
-		item_state_world = "heart-on_world"
+		item_state_world = "[base_icon_state]-on_world"
+		icon_state = "[base_icon_state]-on"
 	else
-		icon_state = "heart-off"
-		item_state_world = "heart-off_world"
+		item_state_world = "[base_icon_state]-off_world"
+		icon_state = "[base_icon_state]-off"
+
 
 /obj/item/organ/internal/heart/insert_organ(mob/living/carbon/M, special = 0)
 	..()
 	beating = 1
-	update_icon()
 	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 
@@ -223,16 +227,10 @@
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
 	icon_state = "heart-prosthetic"
 	item_state_world = "heart-prosthetic_world"
+	base_icon_state = "heart-prosthetic"
 	dead_icon = "heart-prosthetic-off"
 	status = ORGAN_ROBOT
-
-/obj/item/organ/internal/heart/cybernetic/update_icon()
-	if(beating)
-		icon_state = "heart-prosthetic"
-		item_state_world = "heart-prosthetic"
-	else
-		icon_state = "heart-prosthetic"
-		item_state_world = "heart-prosthetic"
+	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
@@ -275,6 +273,7 @@
 	name = "vox heart"
 	icon = 'icons/obj/special_organs/vox.dmi'
 	parent_bodypart = BP_GROIN
+	compability = list(VOX)
 
 /obj/item/organ/internal/heart/tajaran
 	name = "tajaran heart"
@@ -295,6 +294,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
 	item_state_world = "nymph"
+	compability = list(DIONA)
+	tough = TRUE
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
@@ -303,7 +304,6 @@
 	item_state_world = "lungs_world"
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
-	slot = "lungs"
 	var/has_gills = FALSE
 
 /obj/item/organ/internal/lungs/vox
@@ -312,6 +312,7 @@
 	desc = "They're filled with dust....wow."
 	parent_bodypart = BP_GROIN
 	icon = 'icons/obj/special_organs/vox.dmi'
+	compability = list(VOX)
 
 /obj/item/organ/internal/lungs/tajaran
 	name = "tajaran lungs"
@@ -334,6 +335,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
 	item_state_world = "nymph"
+	compability = list(DIONA)
+	tough = TRUE
 
 /obj/item/organ/internal/lungs/cybernetic
 	name = "cybernetic lungs"
@@ -342,6 +345,7 @@
 	item_state_world = "lungs-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
+	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
@@ -411,7 +415,6 @@
 	organ_tag = O_LIVER
 	parent_bodypart = BP_GROIN
 	var/alcohol_intensity = 1
-	slot = "liver"
 	process_accuracy = 10
 
 /obj/item/organ/internal/liver/diona
@@ -421,11 +424,14 @@
 	icon_state = "podkid"
 	item_state_world = "podkid"
 	alcohol_intensity = 0.5
+	compability = list(DIONA)
+	tough = TRUE
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
 	cases = list("канал отходов", "канала отходов", "каналу отходов", "канал отходов", "каналом отходов", "канале отходов")
 	icon = 'icons/obj/special_organs/vox.dmi'
+	compability = list(VOX)
 	alcohol_intensity = 1.6
 
 /obj/item/organ/internal/liver/tajaran
@@ -451,6 +457,7 @@
 	item_state_world = "liver-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
+	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
@@ -568,12 +575,12 @@
 	item_state_world = "kidneys_world"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_GROIN
-	slot = "kidneys"
 
 /obj/item/organ/internal/kidneys/vox
 	name = "filtration bladder"
 	cases = list("фильтрующий пузырь", "фильтрующего пузыря", "фильтрующему пузырю", "фильтрующий пузырь", "фильтрующим пузырём", "фильтрующем пузыре")
 	icon = 'icons/obj/special_organs/vox.dmi'
+	compability = list(VOX)
 
 /obj/item/organ/internal/kidneys/tajaran
 	name = "tajaran kidneys"
@@ -595,6 +602,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
 	item_state_world = "nymph"
+	compability = list(DIONA)
+	tough = TRUE
 
 /obj/item/organ/internal/kidneys/cybernetic
 	name = "cybernetic kidneys"
@@ -603,6 +612,7 @@
 	item_state_world = "kidneys-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
+	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"
@@ -660,7 +670,6 @@
 	organ_tag = O_BRAIN
 	vital = TRUE
 	parent_bodypart = O_BRAIN
-	slot = "brain"
 	icon_state = "brain2"
 	item_state_world = "brain2_world"
 
@@ -671,6 +680,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
 	item_state_world = "nymph"
+	compability = list(DIONA)
+	tough = TRUE
 
 /obj/item/organ/internal/brain/tajaran
 	icon = 'icons/obj/special_organs/tajaran.dmi'
@@ -685,6 +696,7 @@
 	icon = 'icons/obj/special_organs/vox.dmi'
 	icon_state = "cortical-stack"
 	item_state_world = "cortical-stack_world"
+	compability = list(VOX)
 
 /obj/item/organ/internal/brain/skrell
 	icon = 'icons/obj/special_organs/skrell.dmi'
@@ -744,7 +756,6 @@
 	cases = list("глаза", "глаз", "глазам", "глаза", "глазами", "глазах")
 	organ_tag = O_EYES
 	parent_bodypart = BP_HEAD
-	slot = "eyes"
 	var/list/eye_colour = list(0,0,0)
 	var/darksight = 2
 	var/nighteyes = FALSE
@@ -798,6 +809,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podkid"
 	item_state_world = "podkid"
+	compability = list(DIONA)
+	tough = TRUE
 
 /obj/item/organ/internal/eyes/zombie_vision
 	name = "zombie eyes"
@@ -817,6 +830,7 @@
 	item_state_world = "eyes-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
+	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
@@ -826,6 +840,7 @@
 	icon = 'icons/obj/robot_component.dmi'
 	icon_state = "camera"
 	item_state_world = "camera"
+
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()

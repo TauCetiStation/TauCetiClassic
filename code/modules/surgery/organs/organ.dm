@@ -30,8 +30,7 @@
 
 	var/sterile = 0 //can the organ be infected by germs?
 	var/requires_robotic_bodypart = FALSE
-	var/slot = "heart"
-	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
+
 
 /obj/item/organ/Destroy()
 	owner = null
