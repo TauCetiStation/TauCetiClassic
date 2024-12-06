@@ -1257,10 +1257,7 @@
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
-	if(!IO)
-		return
-
-	return IO.is_bruised()
+	return IO?.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
