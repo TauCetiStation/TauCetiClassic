@@ -14,6 +14,7 @@
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+	var/list/avaible_wings = list()
 	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
 	var/hud_offset_y = 0                                 // As above, but specifically for the HUD indicator.
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
@@ -2202,7 +2203,7 @@
 	flesh_color = "00FF00"
 	icobase = 'icons/mob/human_races/r_moth.dmi'
 	deform = 'icons/mob/human_races/r_moth.dmi'
-	tail = "moth_wings"
+	avaible_wings = list("Atlas Wings")
 	flags = list(
 				NO_BREATHE = TRUE,
 				NO_BLOOD = TRUE,
@@ -2215,7 +2216,6 @@
 				NO_MINORCUTS = TRUE,
 				NO_VOMIT = TRUE,
 				NO_EMOTION = TRUE,
-				HAS_TAIL = TRUE,
 				NO_DNA = TRUE,
 				NO_PAIN = TRUE,
 				NO_GENDERS = TRUE,
@@ -2236,7 +2236,14 @@
 	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
 	H.name = H.real_name
 	RegisterSignal(H, COMSIG_PARENT_ATTACKBY, PROC_REF(try_eat_item))
-	return ..()
+	randomise_wings(H)
+	. = ..()
+
+/datum/species/moth/proc/randomise_wings(mob/living/carbon/human/H)
+	if(SSholiday.holidays[NEW_YEAR])
+		H.wing_accessory_name = pick("Royal Wings", "Feathery Wings")
+		return
+	H.wing_accessory_name = pick(avaible_wings)
 
 /datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_moth_digest(M)

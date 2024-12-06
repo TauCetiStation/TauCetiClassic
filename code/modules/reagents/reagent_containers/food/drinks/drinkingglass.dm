@@ -564,6 +564,10 @@
 				icon_state = "gourdbeer"
 				name = "[get_gourd_name()] beer"
 				desc = "Тыквяк. Известный напиток на дрожжах из тыквячьего сока. Просто отвратителен."
+			if("kogelmogel")
+				icon_state = "kogelmogel"
+				name = "Kogel-Mogel"
+				desc = "Гоголь-Моголь. Сладкое лакомство."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
