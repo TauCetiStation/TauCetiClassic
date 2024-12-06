@@ -342,7 +342,7 @@
         return
 
     face_atom(A)
-    hidden_eyes(A)
+	hidden_eyes(A)
     A.examine(src)
     SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
     SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
