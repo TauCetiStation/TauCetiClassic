@@ -16,6 +16,8 @@
 	var/cookingProgress = 0
 	var/cookingThreshold = 50
 	var/fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/badrecipe
+
+	var/destroyOnEaten = TRUE
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, silent = FALSE)
 	if(!usr)	return
@@ -34,6 +36,8 @@
 		if(food_type)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "food_type", food_moodlet)
 		SSStatistics.score.foodeaten++
+		if(!destroyOnEaten)
+			return
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -49,7 +53,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
-	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
+	if(destroyOnEaten && (!reagents || !reagents.total_volume))				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
@@ -189,7 +193,8 @@
 	if(bitecount >= 5)
 		var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
 		user.visible_message("<b>[user]</b> [sattisfaction_text]")
-		qdel(src)
+		if(destroyOnEaten)
+			qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	..()
@@ -3585,4 +3590,57 @@
 	bitesize = 4
 	food_type = NATURAL_FOOD
 	list_reagents = list("protein" = 7, "plantmatter" = 3, "sodiumchloride" = 1, "blackpepper" = 1)
+
+
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox
+	name = "Lunchbox"
+	desc = "Домашняя еда в удобном контейнере"
+	icon_state = "lunchbox_green_closed"
+	filling_color = "#eddd00"
+	bitesize = 5
+	list_reagents = list("rice" = 10, "protein" = 6, "plantmatter" = 4)
+
+	destroyOnEaten = FALSE
+
+	var/box_color = "green"
+	var/opened = FALSE
+
+	var/image/food_overlay
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox/update_icon()
+	cut_overlay(food_overlay)
+	icon_state = "lunchbox_[box_color]_[opened ? "opened" : "closed"]"
+
+	if(opened && bitecount < 4)
+		food_overlay = image(icon = icon, icon_state = "lunchbox_food_[bitecount ? bitecount : 1]")
+		add_overlay(food_overlay)
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox/attack_self(mob/user)
+	opened = !opened
+	update_icon()
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
+	if(opened && reagents.total_volume)
+		return ..()
+
+	return FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox/On_Consume(mob/M, silent = FALSE)
+	. = ..()
+
+	update_icon()
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox/red
+	icon_state = "lunchbox_red_closed"
+	box_color = "red"
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox/yellow
+	icon_state = "lunchbox_yellow_closed"
+	box_color = "yellow"
+
+/obj/item/weapon/reagent_containers/food/snacks/lunchbox/blue
+	icon_state = "lunchbox_blue_closed"
+	box_color = "blue"
 
