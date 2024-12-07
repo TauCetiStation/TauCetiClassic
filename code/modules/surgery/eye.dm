@@ -147,74 +147,7 @@
 	BP.take_damage(0, 5, used_weapon = tool)
 	IO.take_damage(5, 0)
 
-//////////////////////////////////////////////////////////////////
-//						EYE SURGERY manipulation				//
-//////////////////////////////////////////////////////////////////
-/*
-/datum/surgery_step/eye/manipulation
-	priority = 1
-	allowed_species = null
-	var/obj/item/organ/internal/I = null
 
-/datum/surgery_step/eye/manipulation/place
-	allowed_tools = list(/obj/item/organ/internal = 100)
-
-	min_duration = 110
-	max_duration = 150
-
-
-/datum/surgery_step/eye/manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-    if(!ishuman(target))
-        return FALSE
-
-
-
-    var/obj/item/organ/internal/organ/eyes/I = tool
-    if(I.requires_robotic_bodypart)
-        user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
-        return FALSE
-
-    if(target_zone != I.parent_bodypart)
-        user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
-        return FALSE
-
-    if(I.damage > (I.max_damage * 0.75))
-        user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
-        return FALSE
-
-    if(target.get_int_organ(I))
-        user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
-        return FALSE
-
-    return TRUE
-
-
-
-/datum/surgery_step/eye/manipulation/place/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts transplanting \the [tool] into [target]'s [parse_zone(target_zone)].", \
-		"You start transplanting \the [tool] into [target]'s [parse_zone(target_zone)].")
-	..()
-
-/datum/surgery_step/eye/manipulation/place/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] mends the nerves and lenses in [target]'s with \the [tool].</span>" ,	\
-	"<span class='notice'>You mend the nerves and lenses in [target]'s with \the [tool].</span>")
-
-	I = tool
-	user.drop_from_inventory(tool)
-	I.insert_organ(target)
-	user.visible_message("<span class='notice'> [user] has transplanted \the [tool] into [target].</span>", \
-	"<span class='notice'> You have transplanted \the [tool] into [target].</span>")
-	I.status &= ~ORGAN_CUT_AWAY
-
-/datum/surgery_step/eye/manipulation/place/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, stabbing \the [tool] into [target]'s eye!</span>", \
-	"<span class='warning'>Your hand slips, stabbing \the [tool] into [target]'s eye!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-	if(IO)
-		IO.take_damage(5, 0)
-*/
 //////////////////////////////////////////////////////////////////
 //				EYE SURGERY manipulation for eyes				//
 //////////////////////////////////////////////////////////////////
