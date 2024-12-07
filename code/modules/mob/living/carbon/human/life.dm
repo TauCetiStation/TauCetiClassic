@@ -332,7 +332,7 @@ var/global/list/tourette_bad_words= list(
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/is_cant_breathe()
-	var/lungs = get_int_organ_by_name(O_LUNGS)
+	var/lungs = get_organ_by_name(O_LUNGS)
 	return ((handle_drowning() || health < config.health_threshold_crit) || !lungs) && !(reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_AV))
 
 /mob/living/carbon/human/handle_external_pre_breathing(datum/gas_mixture/breath)

@@ -36,7 +36,7 @@
 	owner = null
 	return ..()
 
-/obj/item/organ/proc/remove(mob/living/user,special = 0)
+/obj/item/organ/proc/remove(mob/living/user)
 	if(!istype(owner))
 		return
 
@@ -89,7 +89,7 @@
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	set_owner(H, S)
 
-	STOP_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
@@ -101,7 +101,7 @@
 	owner = target
 	STOP_PROCESSING(SSobj, src)
 	parent_bodypart.bodypart_organs |= src
-	if (!target.get_int_organ(src))
+	if (!target.get_organ_by_name(src))
 		target.organs_by_name += src
 		target.organs += src
 	src.loc = target
@@ -195,7 +195,6 @@
 	//processing organs is pretty cheap, do that first.
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
-		IO.on_life()
 
 	handle_stance()
 

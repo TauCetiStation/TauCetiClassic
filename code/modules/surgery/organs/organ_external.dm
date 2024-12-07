@@ -76,7 +76,7 @@
 	if(bodypart_organs)
 		for(var/obj/item/organ/internal/O in bodypart_organs)
 			bodypart_organs -= O
-			O.remove(owner,special = 1)
+			O.remove(owner)
 	QDEL_NULL(controller)
 	if(owner)
 		owner.bodyparts -= src

@@ -42,7 +42,7 @@
 	if(owner && vital)
 		owner.death()
 
-/obj/item/organ/internal/remove(mob/living/carbon/human/M, special = 0)
+/obj/item/organ/internal/remove(mob/living/carbon/human/M)
 	owner = null
 	STOP_PROCESSING(SSobj, src)
 	if(M)
@@ -50,13 +50,13 @@
 		if(M.organs_by_name[organ_tag] == src)
 			M.organs_by_name -= organ_tag
 
-		if(vital && !special)
+		if(vital)
 			if(M.stat != DEAD)//safety check!
 				M.death()
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/parent = H.get_organ(check_zone(parent_bodypart))
+		var/obj/item/organ/external/parent = H.get_bodypart(check_zone(parent_bodypart))
 		if(!istype(parent))
 			return
 		else
@@ -68,11 +68,13 @@
 
 	var/obj/item/organ/internal/replaced = H.get_organ_by_name(organ_tag)
 	if(replaced)
-		replaced.remove(H, special = 1)
+		replaced.remove(H)
 
 
 	owner.organs += src
 	owner.organs_by_name[organ_tag] = src
+
+	START_PROCESSING(SSobj, src)
 
 	if(parent)
 		parent.bodypart_organs += src
@@ -91,7 +93,7 @@
 
 		//only show this if the organ is not robotic
 		if(owner && parent_bodypart && amount > 0)
-			var/obj/item/organ/external/parent = owner.get_organ(parent_bodypart)
+			var/obj/item/organ/external/parent = owner.get_bodypart(parent_bodypart)
 			if(parent && !silent)
 				owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
 	if(damage >= max_damage)
@@ -105,9 +107,6 @@
 
 /obj/item/organ/internal/proc/is_broken()
 	return damage >= min_broken_damage
-
-/obj/item/organ/internal/proc/on_life()
-	return
 
 /obj/item/organ/internal/process()
 	//Process infections
@@ -187,7 +186,7 @@
 		icon_state = "[base_icon_state]-off"
 
 
-/obj/item/organ/internal/heart/insert_organ(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/insert_organ(mob/living/carbon/M)
 	..()
 	beating = 1
 	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
@@ -203,7 +202,7 @@
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
-/obj/item/organ/internal/heart/remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/remove(mob/living/carbon/M)
 	..()
 	VARSET_IN(src, beating, 0, 100 SECONDS)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2 MINUTES)
@@ -274,6 +273,7 @@
 	icon = 'icons/obj/special_organs/vox.dmi'
 	parent_bodypart = BP_GROIN
 	compability = list(VOX)
+	sterile = TRUE
 
 /obj/item/organ/internal/heart/tajaran
 	name = "tajaran heart"
@@ -313,6 +313,7 @@
 	parent_bodypart = BP_GROIN
 	icon = 'icons/obj/special_organs/vox.dmi'
 	compability = list(VOX)
+	sterile = TRUE
 
 /obj/item/organ/internal/lungs/tajaran
 	name = "tajaran lungs"
@@ -433,6 +434,7 @@
 	icon = 'icons/obj/special_organs/vox.dmi'
 	compability = list(VOX)
 	alcohol_intensity = 1.6
+	sterile = TRUE
 
 /obj/item/organ/internal/liver/tajaran
 	name = "tajaran liver"
@@ -581,6 +583,7 @@
 	cases = list("фильтрующий пузырь", "фильтрующего пузыря", "фильтрующему пузырю", "фильтрующий пузырь", "фильтрующим пузырём", "фильтрующем пузыре")
 	icon = 'icons/obj/special_organs/vox.dmi'
 	compability = list(VOX)
+	sterile = TRUE
 
 /obj/item/organ/internal/kidneys/tajaran
 	name = "tajaran kidneys"
@@ -697,22 +700,22 @@
 	icon_state = "cortical-stack"
 	item_state_world = "cortical-stack_world"
 	compability = list(VOX)
+	sterile = TRUE
 
 /obj/item/organ/internal/brain/skrell
 	icon = 'icons/obj/special_organs/skrell.dmi'
 	desc = "A brain with a odd division in the middle."
 
-/obj/item/organ/internal/brain/remove(mob/living/user,special = 0)
+/obj/item/organ/internal/brain/remove(mob/living/user)
 
 	if(!owner) return ..() // Probably a redundant removal; just bail
 	var/obj/item/organ/internal/brain/B = src
-	if(!special)
-		var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
+	var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
 
-		if(borer)
-			borer.detatch() //Should remove borer if the brain is removed - RR
+	if(borer)
+		borer.detatch() //Should remove borer if the brain is removed - RR
 
-		B.transfer_identity(user)
+	B.transfer_identity(user)
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
@@ -730,18 +733,17 @@
 	var/obj/item/device/mmi/posibrain/stored_mmi
 
 
-/obj/item/organ/internal/brain/ipc/remove(mob/living/carbon/human/M, special = 0)
-	if(!special)
-		var/brain_type = /obj/item/device/mmi/posibrain
+/obj/item/organ/internal/brain/ipc/remove(mob/living/carbon/human/M)
+	var/brain_type = /obj/item/device/mmi/posibrain
 
-		var/obj/item/organ/external/BP = owner.get_bodypart(parent_bodypart)
-		if(istype(BP, /obj/item/organ/external/chest/robot/ipc))
-			var/obj/item/organ/external/chest/robot/ipc/I = BP
-			brain_type = I.posibrain_type
+	var/obj/item/organ/external/BP = owner.get_bodypart(parent_bodypart)
+	if(istype(BP, /obj/item/organ/external/chest/robot/ipc))
+		var/obj/item/organ/external/chest/robot/ipc/I = BP
+		brain_type = I.posibrain_type
 
 
-		var/obj/item/device/mmi/P = new brain_type(owner.loc)
-		P.transfer_identity(owner)
+	var/obj/item/device/mmi/P = new brain_type(owner.loc)
+	P.transfer_identity(owner)
 
 
 /obj/item/organ/internal/brain/abomination
@@ -769,7 +771,7 @@
 		owner.b_eyes ? owner.b_eyes : 0
 		)
 
-/obj/item/organ/internal/eyes/insert_organ(mob/living/carbon/human/M, special = 0)
+/obj/item/organ/internal/eyes/insert_organ(mob/living/carbon/human/M)
 // Apply our eye colour to the target.
 	if(istype(M) && eye_colour)
 		var/mob/living/carbon/human/eyes = M
@@ -799,6 +801,7 @@
 /obj/item/organ/internal/eyes/vox
 	name = "vox eyeballs"
 	icon = 'icons/obj/special_organs/vox.dmi'
+	sterile = TRUE
 
 /obj/item/organ/internal/eyes/skrell
 	name = "skrell eyeballs"
