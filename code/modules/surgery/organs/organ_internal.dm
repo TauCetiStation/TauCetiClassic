@@ -66,7 +66,7 @@
 /obj/item/organ/internal/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
-	var/obj/item/organ/internal/replaced = H.get_int_organ_by_name(organ_tag)
+	var/obj/item/organ/internal/replaced = H.get_organ_by_name(organ_tag)
 	if(replaced)
 		replaced.remove(H, special = 1)
 
@@ -780,7 +780,7 @@
 	..()
 
 /mob/living/carbon/human/proc/update_eyes()
-	var/obj/item/organ/internal/eyes/eyes = get_int_organ(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/internal/eyes/eyes = get_organ_by_name(O_EYES)
 	if(eyes)
 		eyes.update_colour()
 		regenerate_icons()

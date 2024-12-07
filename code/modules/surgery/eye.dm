@@ -178,7 +178,7 @@
         user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
         return FALSE
 
-    if(target.get_int_organ_by_name(I))
+    if(target.get_organ_by_name(I))
         user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
         return FALSE
 
