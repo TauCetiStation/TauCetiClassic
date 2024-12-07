@@ -576,10 +576,11 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 			to_chat(user, "<span class='warning'>Помост не приспособлен для установки на нем покрытия.</span>")
 		if (!is_plating())
 			var/obj/item/CB = user.get_inactive_hand()
-			if (!isprying(CB))
-				return
-			remove_floor(CB, user)
-			place_floor(C)
+			if(CB)
+				if (!isprying(CB))
+					return
+				remove_floor(CB, user)
+				place_floor(C)
 		if(is_plating())
 			if(!broken && !burnt)
 				place_floor(C)

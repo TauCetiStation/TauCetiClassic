@@ -72,4 +72,4 @@
 
 /obj/item/device/modkit/vox
 	name = "Vox hardsuit modification kit"
-	target_species = VOX
+	target_species = list(VOX, SLIME_VOX)

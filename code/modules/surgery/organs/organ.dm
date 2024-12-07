@@ -96,7 +96,8 @@
 
 /obj/item/organ/proc/replaced(mob/living/carbon/human/target, obj/item/organ/external/parent_bodypart)
 
-	if(!istype(target)) return
+	if(!istype(target))
+		return
 
 	owner = target
 	STOP_PROCESSING(SSobj, src)
