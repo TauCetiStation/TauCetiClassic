@@ -71,7 +71,7 @@
 	var/maxdam = 0
 	var/obj/item/organ/external/damaged_organ = null
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_DEAD || BP.is_robotic())
+		if(BP.status & ORGAN_DEAD || BP.is_robotic_part())
 			continue
 		var/dam = BP.get_damage()
 		// make the choice of the organ depend on damage,
