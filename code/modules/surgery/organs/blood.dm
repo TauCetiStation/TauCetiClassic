@@ -179,7 +179,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	var/blood_max = 0
 	var/list/do_spray = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			continue
 
 		var/open_wound

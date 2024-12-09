@@ -16,15 +16,15 @@
 	var/obj/item/organ/external/groin = target.get_bodypart(BP_GROIN)
 	if (!groin)
 		return 0
-	if (groin.open < 1)
+	if (groin.open < 2)
 		return 0
 	return 1
 
 /datum/surgery_step/gender_reassignment/reshape_genitals
 	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/screwdriver = 50
 	)
 
 	min_duration = 110

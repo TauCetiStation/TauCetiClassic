@@ -541,6 +541,7 @@
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		IO.damage += 20
+		if(IO)
+			IO.damage += 20
 	victim.flash_eyes()
 	victim.visible_message("<span class='danger'>[attacker] pokes [victim] in the eye!</span>")

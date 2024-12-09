@@ -332,7 +332,8 @@ var/global/list/tourette_bad_words= list(
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/is_cant_breathe()
-	return (handle_drowning() || health < config.health_threshold_crit) && !(reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_AV))
+	var/lungs = get_organ_by_name(O_LUNGS)
+	return ((handle_drowning() || health < config.health_threshold_crit) || !lungs) && !(reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_AV))
 
 /mob/living/carbon/human/handle_external_pre_breathing(datum/gas_mixture/breath)
 	..()
@@ -1066,7 +1067,11 @@ var/global/list/tourette_bad_words= list(
 		set_EyesVision(sightglassesmod)
 		return FALSE
 
-	see_in_dark = species.darksight
+	var/obj/item/organ/internal/eyes/eyes = organs_by_name[O_EYES]
+	var/night = null
+	if(eyes)
+		see_in_dark = eyes.darksight
+		night = eyes.nighteyes
 
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G))
@@ -1082,7 +1087,7 @@ var/global/list/tourette_bad_words= list(
 	else
 		sightglassesmod = null
 
-	if(species.nighteyes)
+	if(night)
 		var/light_amount = 0
 		var/turf/T = get_turf(src)
 		light_amount = round(T.get_lumcount()*10)
