@@ -80,7 +80,7 @@
 		var/i = new WE
 		willpower_effects += i
 
-/datum/mind/proc/transfer_to(mob/new_character)
+/datum/mind/proc/transfer_to(mob/new_character, logout_modify = TRUE)
 	for(var/role in antag_roles)
 		var/datum/role/R = antag_roles[role]
 		R.PreMindTransfer(current)
@@ -109,10 +109,11 @@
 	for(var/role in antag_roles)
 		var/datum/role/R = antag_roles[role]
 		R.PostMindTransfer(new_character, old_character)
-
-	old_character.logout_reason = LOGOUT_SWAP
+	if(logout_modify)
+		old_character.logout_reason = LOGOUT_SWAP
 	if(active)
-		new_character.logout_reason = LOGOUT_SWAP
+		if(logout_modify)
+			new_character.logout_reason = LOGOUT_SWAP
 		new_character.key = key		//now transfer the key to link the client to our new body
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -787,7 +788,7 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
-	
+
 	//Pluvia social credit system
 	mind.pluvian_social_credit = species.pluvian_social_credit
 	if(mind.assigned_job)

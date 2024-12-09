@@ -437,143 +437,148 @@
 
 	assailant.SetNextMove(CLICK_CD_ACTION)
 
-	if(M == affecting)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			var/hit_zone = assailant.get_targetzone()
-			flick(hud.icon_state, hud)
-			switch(assailant.a_intent)
-				if(INTENT_HELP)
-					if(force_down)
-						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
-						force_down = 0
-						return
-					if(state >= GRAB_AGGRESSIVE)
-						if(!H.apply_pressure(assailant, hit_zone))
-							if(hit_zone == BP_CHEST)
-								var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
-								var/armor_block = H.run_armor_check(BP, MELEE)
+	if(M != affecting)
+		return
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	var/hit_zone = assailant.get_targetzone()
+	flick(hud.icon_state, hud)
+	switch(assailant.a_intent)
+		if(INTENT_HELP)
+			if(force_down)
+				to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
+				force_down = 0
+				return
+			if(state >= GRAB_AGGRESSIVE)
+				if(hit_zone == O_MOUTH && ishuman(user))
+					var/mob/living/carbon/human/H_H = user
+					H_H.force_vomit(H)
+				else if(!H.apply_pressure(assailant, hit_zone))
+					if(hit_zone == BP_CHEST)
+						var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
+						var/armor_block = H.run_armor_check(BP, MELEE)
 
-								var/chance_to_force_vomit = 30
-								if(H.stat != CONSCIOUS)
-									chance_to_force_vomit += 20
-								if(prob(armor_block))
-									chance_to_force_vomit = 0
-								user.visible_message("<span class='notice'>[user] squeezes [H], trying to make them puke.</span>")
-								if(prob(chance_to_force_vomit))
-									H.vomit(punched=TRUE)
-					else if(hit_zone == O_MOUTH && ishuman(user))
-						var/mob/living/carbon/human/H_H = user
-						H_H.force_vomit(H)
-					else
-						inspect_organ(affecting, assailant, hit_zone)
-				if(INTENT_GRAB)
-					if(state < GRAB_AGGRESSIVE)
-						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
-						return
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[check_zone(hit_zone)]
-					if(!BP)
-						return
-					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
-					var/armor = H.run_armor_check(H, MELEE)
-					if(armor < 2)
-						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
-					return
-				if(INTENT_HARM)
-					if(hit_zone == O_EYES)
-						if(state < GRAB_NECK)
-							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
-							return
-						if((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
-							to_chat(assailant, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
-							return
-						if(!affecting.has_organ(O_EYES))
-							to_chat(assailant, "<span class='danger'>You cannot locate any eyes on [affecting]!</span>")
-							return
-						assailant.visible_message("<span class='danger'>[assailant] pressed \his fingers into [affecting]'s eyes!</span>")
-						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
-
-						affecting.log_combat(assailant, "finger-pressed into the eyes")
-						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
-
-						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
-						IO.damage += rand(3,4)
-						if (IO.damage >= IO.min_broken_damage)
-							if(affecting.stat != DEAD)
-								to_chat(affecting, "<span class='warning'>You go blind!</span>")
-					else if(state >= GRAB_AGGRESSIVE && hit_zone == BP_CHEST)
 						var/chance_to_force_vomit = 30
-
-						if(ishuman(user))
-							var/mob/living/carbon/human/H_user = user
-							var/datum/unarmed_attack/attack = H_user.species.unarmed
-
-							var/damage = rand(1, 5)
-							damage += attack.damage
-
-							var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
-							var/armor_block = H.run_armor_check(BP, MELEE)
-
-							if(attack.damage_flags() & (DAM_SHARP|DAM_EDGE))
-								chance_to_force_vomit = 0
-							else
-								chance_to_force_vomit += attack.damage
-							if(prob(armor_block))
-								chance_to_force_vomit = 0
-							H.apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
-
-						else
-							H.adjustBruteLoss(3)
-
-						user.visible_message("<span class='warning'>[user] punches [H] in the gut, trying to make them puke.</span>")
+						if(H.stat != CONSCIOUS)
+							chance_to_force_vomit += 20
+						if(prob(armor_block))
+							chance_to_force_vomit = 0
+						user.visible_message("<span class='notice'>[user] squeezes [H], trying to make them puke.</span>")
 						if(prob(chance_to_force_vomit))
 							H.vomit(punched=TRUE)
-					else
-						if(affecting.lying)
-							return
-						assailant.visible_message("<span class='danger'>[assailant] thrusts \his head into [affecting]'s skull!</span>")
-						var/damage = 20
-						if(iscarbon(assailant))
-							var/mob/living/carbon/assailant_C = assailant
-							var/obj/item/clothing/hat = assailant_C.head
-							if(istype(hat))
-								damage += hat.force * 4
-						var/armor = affecting.run_armor_check(BP_HEAD, MELEE)
-						var/armor_assailant = assailant.run_armor_check(BP_HEAD, MELEE)
-						affecting.apply_damage(damage*rand(60, 82)/100, BRUTE, BP_HEAD, blocked = armor)
-						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor_assailant)
-						if(!armor && prob(damage))
-							affecting.apply_effect(20, PARALYZE)
-							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
-						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+			else if(hit_zone == O_MOUTH && ishuman(user))
+				var/mob/living/carbon/human/H_H = user
+				H_H.do_kissing(H)
+			else
+				inspect_organ(affecting, assailant, hit_zone)
+		if(INTENT_GRAB)
+			if(state < GRAB_AGGRESSIVE)
+				to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
+				return
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[check_zone(hit_zone)]
+			if(!BP)
+				return
+			assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
+			var/armor = H.run_armor_check(H, MELEE)
+			if(armor < 2)
+				to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
+				H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
+			return
+		if(INTENT_HARM)
+			if(hit_zone == O_EYES)
+				if(state < GRAB_NECK)
+					to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
+					return
+				if((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+					to_chat(assailant, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
+					return
+				if(!affecting.has_organ(O_EYES))
+					to_chat(assailant, "<span class='danger'>You cannot locate any eyes on [affecting]!</span>")
+					return
+				assailant.visible_message("<span class='danger'>[assailant] pressed \his fingers into [affecting]'s eyes!</span>")
+				to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
 
-						affecting.log_combat(assailant, "headbutted")
-						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
+				affecting.log_combat(assailant, "finger-pressed into the eyes")
+				SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
-						assailant.drop_from_inventory(src)
-						src.loc = null
-						qdel(src)
-						return
-				if(INTENT_PUSH)
-					if(state < GRAB_AGGRESSIVE)
-						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
-						return
-					to_chat(assailant, "<span class='warning'>You start forcing [affecting] to the ground.</span>")
-					if(!force_down)
-						sleep(20)
-						assailant.visible_message("<span class='danger'>[assailant] is forcing [affecting] to the ground!</span>")
-						force_down = 1
-						affecting.Weaken(3)
-						affecting.Stun(3)
-						step_to(assailant, affecting)
-						assailant.set_dir(EAST) //face the victim
-						affecting.set_dir(SOUTH) //face up
-						affecting.layer = 3.9
-						return
+				var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
+				IO.damage += rand(3,4)
+				if (IO.damage >= IO.min_broken_damage)
+					if(affecting.stat != DEAD)
+						to_chat(affecting, "<span class='warning'>You go blind!</span>")
+			else if(state >= GRAB_AGGRESSIVE && hit_zone == BP_CHEST)
+				var/chance_to_force_vomit = 30
+
+				if(ishuman(user))
+					var/mob/living/carbon/human/H_user = user
+					var/datum/unarmed_attack/attack = H_user.species.unarmed
+
+					var/damage = rand(1, 5)
+					damage += attack.damage
+
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
+					var/armor_block = H.run_armor_check(BP, MELEE)
+
+					if(attack.damage_flags() & (DAM_SHARP|DAM_EDGE))
+						chance_to_force_vomit = 0
 					else
-						to_chat(assailant, "<span class='warning'>You are already pinning [affecting] to the ground.</span>")
-						return
+						chance_to_force_vomit += attack.damage
+					if(prob(armor_block))
+						chance_to_force_vomit = 0
+					H.apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
+
+				else
+					H.adjustBruteLoss(3)
+
+				user.visible_message("<span class='warning'>[user] punches [H] in the gut, trying to make them puke.</span>")
+				if(prob(chance_to_force_vomit))
+					H.vomit(punched=TRUE)
+			else
+				if(affecting.lying)
+					return
+				assailant.visible_message("<span class='danger'>[assailant] thrusts \his head into [affecting]'s skull!</span>")
+				var/damage = 20
+				if(iscarbon(assailant))
+					var/mob/living/carbon/assailant_C = assailant
+					var/obj/item/clothing/hat = assailant_C.head
+					if(istype(hat))
+						damage += hat.force * 4
+				var/armor = affecting.run_armor_check(BP_HEAD, MELEE)
+				var/armor_assailant = assailant.run_armor_check(BP_HEAD, MELEE)
+				affecting.apply_damage(damage*rand(60, 82)/100, BRUTE, BP_HEAD, blocked = armor)
+				assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor_assailant)
+				if(!armor && prob(damage))
+					affecting.apply_effect(20, PARALYZE)
+					affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
+				playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+
+				affecting.log_combat(assailant, "headbutted")
+				SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
+
+				assailant.drop_from_inventory(src)
+				src.loc = null
+				qdel(src)
+				return
+		if(INTENT_PUSH)
+			if(state < GRAB_AGGRESSIVE)
+				to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
+				return
+			to_chat(assailant, "<span class='warning'>You start forcing [affecting] to the ground.</span>")
+			if(!force_down)
+				sleep(20)
+				assailant.visible_message("<span class='danger'>[assailant] is forcing [affecting] to the ground!</span>")
+				force_down = 1
+				affecting.Weaken(3)
+				affecting.Stun(3)
+				step_to(assailant, affecting)
+				assailant.set_dir(EAST) //face the victim
+				affecting.set_dir(SOUTH) //face up
+				affecting.layer = 3.9
+				return
+			else
+				to_chat(assailant, "<span class='warning'>You are already pinning [affecting] to the ground.</span>")
+				return
 
 /obj/item/weapon/grab/Destroy()
 	if(affecting)

@@ -54,6 +54,8 @@ var/global/list/SOUNDIN_GASP_MALE   = list('sound/voice/gasp/gasp_male_1.ogg', '
 var/global/list/SOUNDIN_GASP_FEMALE   = list('sound/voice/gasp/gasp_female_1.ogg', 'sound/voice/gasp/gasp_female_2.ogg', 'sound/voice/gasp/gasp_female_3.ogg', 'sound/voice/gasp/gasp_female_4.ogg', 'sound/voice/gasp/gasp_female_5.ogg')
 var/global/list/SOUNDIN_SNEEZE_MALE   	= list('sound/voice/sneeze/sneeze_male.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
 var/global/list/SOUNDIN_SNEEZE_FEMALE   = list('sound/voice/sneeze/sneeze_female.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
+var/global/list/SOUNDIN_KISS_MALE   = list('sound/voice/kiss/aaj_Kiss01_male.ogg', 'sound/voice/kiss/human_kissing_004_male.ogg', 'sound/voice/kiss/Kissing-sound-effect_male.ogg', 'sound/voice/kiss/zapsplat_human_kiss_single_male.ogg',)
+var/global/list/SOUNDIN_KISS_FEMALE = list('sound/voice/kiss/cabled_mess_kiss-sound-effect_female.ogg', 'sound/voice/kiss/comedy_kiss_001_female.ogg', 'sound/voice/kiss/comedy_kiss_002_female.ogg', 'sound/voice/kiss/guinefurrie__playful-kiss_female.ogg', 'sound/voice/kiss/lemonjolly_09-kiss_female.ogg', )
 
 // Human's pain
 var/global/list/SOUNDIN_FEMALE_LIGHT_PAIN   = list('sound/voice/mob/pain/female/light_1.ogg', 'sound/voice/mob/pain/female/light_2.ogg', 'sound/voice/mob/pain/female/light_3.ogg', 'sound/voice/mob/pain/female/light_4.ogg', 'sound/voice/mob/pain/female/light_5.ogg', 'sound/voice/mob/pain/female/light_6.ogg', 'sound/voice/mob/pain/female/light_7.ogg', 'sound/voice/mob/pain/female/light_8.ogg')
