@@ -1816,6 +1816,12 @@
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 
+/mob/living/carbon/human/proc/need_breathe()
+	if(!species.breathing_organ && should_have_organ(species.breathing_organ))
+		return 1
+	else
+		return 0
+
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
 	var/obj/item/organ/external/BP

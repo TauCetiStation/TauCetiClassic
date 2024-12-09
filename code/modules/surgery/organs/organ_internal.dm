@@ -160,142 +160,6 @@
 				ORGANS DEFINES
 ****************************************************/
 
-/obj/item/organ/internal/heart
-	name = "heart"
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "heart-on"
-	item_state_world = "heart-on_world"
-	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
-	organ_tag = O_HEART
-	vital = TRUE
-	parent_bodypart = BP_CHEST
-	var/base_icon_state = "heart"
-	var/heart_status = HEART_NORMAL
-	var/fibrillation_timer_id = null
-	var/failing_interval = 1 MINUTE
-	var/beating = 0
-
-	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
-
-/obj/item/organ/internal/heart/update_icon()
-	if(beating)
-		item_state_world = "[base_icon_state]-on_world"
-		icon_state = "[base_icon_state]-on"
-	else
-		item_state_world = "[base_icon_state]-off_world"
-		icon_state = "[base_icon_state]-off"
-
-
-/obj/item/organ/internal/heart/insert_organ(mob/living/carbon/M)
-	..()
-	beating = 1
-	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
-
-
-/obj/item/organ/internal/heart/proc/heart_stop()
-	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
-		heart_status = HEART_FAILURE
-		deltimer(fibrillation_timer_id)
-		fibrillation_timer_id = null
-		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
-	else
-		take_damage(1, 0)
-		fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-
-/obj/item/organ/internal/heart/remove(mob/living/carbon/M)
-	..()
-	VARSET_IN(src, beating, 0, 100 SECONDS)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2 MINUTES)
-
-
-/obj/item/organ/internal/heart/proc/heart_fibrillate()
-	heart_status = HEART_FIBR
-	if(HAS_TRAIT(owner, TRAIT_FAT))
-		failing_interval = 30 SECONDS
-	fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
-	owner.metabolism_factor.AddModifier("Heart", multiple = 0.5)
-
-/obj/item/organ/internal/heart/proc/heart_normalize()
-	heart_status = HEART_NORMAL
-	deltimer(fibrillation_timer_id)
-	fibrillation_timer_id = null
-	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
-
-/obj/item/organ/internal/heart/cybernetic
-	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
-	icon_state = "heart-prosthetic"
-	item_state_world = "heart-prosthetic_world"
-	base_icon_state = "heart-prosthetic"
-	dead_icon = "heart-prosthetic-off"
-	status = ORGAN_ROBOT
-	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
-
-/obj/item/organ/internal/heart/ipc
-	name = "cooling pump"
-	cases = list("помпа системы охлаждения", "помпы системы охлаждения", "помпе системы охлаждения", "помпу системы охлаждения", "помпой системы охлаждения", "помпой системы охлаждения")
-
-	var/pumping_rate = 5
-	var/bruised_loss = 3
-	requires_robotic_bodypart = TRUE
-	status = ORGAN_ROBOT
-	icon = 'icons/obj/device.dmi'
-	icon_state = "miniaturesuitcooler0"
-
-
-/obj/item/organ/internal/heart/ipc/update_icon()
-	if(beating)
-		icon_state = "miniaturesuitcooler0"
-		item_state_world = "miniaturesuitcooler0"
-	else
-		icon_state = "miniaturesuitcooler0"
-		item_state_world = "miniaturesuitcooler0"
-
-/obj/item/organ/internal/heart/ipc/process()
-	if(owner.nutrition < 1)
-		return
-	if(is_broken())
-		return
-
-	var/obj/item/organ/internal/lungs/ipc/lungs = owner.organs_by_name[O_LUNGS]
-	if(!istype(lungs))
-		return
-
-	var/pumping_volume = pumping_rate
-	if(is_bruised())
-		pumping_volume -= bruised_loss
-
-	if(pumping_volume > 0)
-		lungs.add_refrigerant(pumping_volume)
-
-/obj/item/organ/internal/heart/vox
-	name = "vox heart"
-	icon = 'icons/obj/special_organs/vox.dmi'
-	parent_bodypart = BP_GROIN
-	compability = list(VOX)
-	sterile = TRUE
-
-/obj/item/organ/internal/heart/tajaran
-	name = "tajaran heart"
-	icon = 'icons/obj/special_organs/tajaran.dmi'
-
-/obj/item/organ/internal/heart/unathi
-	name = "unathi heart"
-	icon = 'icons/obj/special_organs/unathi.dmi'
-	desc = "A large looking heart."
-
-/obj/item/organ/internal/heart/skrell
-	name = "skrell heart"
-	icon = 'icons/obj/special_organs/skrell.dmi'
-	desc = "A stream lined heart."
-
-/obj/item/organ/internal/heart/diona
-	name = "circulatory siphonostele"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "nymph"
-	item_state_world = "nymph"
-	compability = list(DIONA)
-	tough = TRUE
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
@@ -506,6 +370,27 @@
 	if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
 		src.damage -= 0.2 * process_accuracy
 
+	var/blood_total = owner.blood_amount()
+
+	// Blood regeneration if there is some space:
+	if(blood_total < BLOOD_VOLUME_NORMAL)
+		var/change_volume = 0.1 // Regenerate blood VERY slowly
+		if (owner.reagents.has_reagent("nutriment")) // Getting food speeds it up
+			change_volume += 0.4
+			owner.reagents.remove_reagent("nutriment", 0.1)
+		if (owner.reagents.has_reagent("copper") && owner.get_species(owner) == SKRELL) // skrell blood base on copper
+			change_volume += 1
+			owner.reagents.remove_reagent("copper", 0.1)
+		if (owner.reagents.has_reagent("iron")) // Hematogen candy anyone?
+			if(owner.get_species(owner) == SKRELL) // a little more toxins when trying to restore blood with iron
+				var/mob/living/carbon/human/H = owner
+				H.adjustToxLoss(1)
+			else
+				change_volume += 0.8
+				owner.reagents.remove_reagent("iron", 0.1)
+		owner.blood_add(change_volume)
+		blood_total += change_volume
+
 	// Damaged liver means some chemicals are very dangerous
 	if(src.damage >= src.min_bruised_damage)
 		for(var/datum/reagent/R in owner.reagents.reagent_list)
@@ -675,6 +560,87 @@
 	parent_bodypart = O_BRAIN
 	icon_state = "brain2"
 	item_state_world = "brain2_world"
+	var/oxygen_reserve = 6
+
+
+/obj/item/organ/internal/brain/process()
+
+	if(!owner)
+		return
+
+	if(!owner.should_have_organ(O_HEART))
+		return
+
+	// No heart? You are going to have a very bad time. Not 100% lethal because heart transplants should be a thing.
+	var/blood_volume = owner.get_blood_oxygenation()
+	if(blood_volume < BLOOD_VOLUME_SURVIVE_P)
+		if(!owner.reagents.has_reagent("inaprovaline") || prob(60))
+			oxygen_reserve = max(0, oxygen_reserve-1)
+	else
+		oxygen_reserve = min(initial(oxygen_reserve), oxygen_reserve+1)
+	if(!oxygen_reserve) //(hardcrit)
+		owner.Paralyse(3)
+
+/* i don't think it's needed
+	if(damage > 1 && damage < min_bruised_damage || heart_status == HEART_FIBR)
+		blood_volume *= 0.8
+	else if(damage >= min_bruised_damage && damage < min_broken_damage)
+		blood_volume *= 0.6
+	else if((damage >= min_broken_damage && damage < INFINITY) || heart_status == HEART_FAILURE)
+		blood_volume *= 0.3
+*/
+
+	// Effects of bloodloss
+	if(!HAS_TRAIT(src, TRAIT_CPB))
+		switch(blood_volume)
+			if(BLOOD_VOLUME_SAFE_P to 10000)
+				if(owner.pale)
+					owner.pale = FALSE
+					owner.update_body()
+			if(BLOOD_VOLUME_OKAY_P to BLOOD_VOLUME_SAFE_P)
+				if(!owner.pale)
+					owner.pale = TRUE
+					owner.update_body()
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(prob(1))
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(owner.oxyloss < 20)
+					owner.oxyloss += 3
+			if(BLOOD_VOLUME_BAD_P to BLOOD_VOLUME_OKAY_P)
+				if(!owner.pale)
+					owner.pale = TRUE
+					owner.update_body()
+				owner.blurEyes(6)
+				if(owner.oxyloss < 50)
+					owner.oxyloss += 10
+				owner.oxyloss += 1
+				if(prob(15))
+					owner.Paralyse(rand(1,3))
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(BLOOD_VOLUME_SURVIVE_P to BLOOD_VOLUME_BAD_P)
+				owner.oxyloss += 5
+				if(!owner.paralysis && prob(15))
+					owner.Paralyse(3,5)
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(0 to BLOOD_VOLUME_SURVIVE_P)
+				if(!iszombie(owner)) // zombies dont care about blood
+					owner.blurEyes(6)
+					owner.Paralyse(6)
+					owner.Weaken(6)
+					owner.oxyloss += 15
+
+	// Without enough blood you slowly go hungry.
+	if(blood_volume < BLOOD_VOLUME_SAFE_P)
+		if(owner.nutrition >= 300)
+			owner.nutrition -= 10
+		else if(owner.nutrition >= 200)
+			owner.nutrition -= 3
+
+	..()
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"

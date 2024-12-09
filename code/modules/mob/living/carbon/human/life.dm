@@ -35,6 +35,8 @@
 
 	voice = GetVoice()
 
+	var/obj/item/organ/internal/heart/heart = organs_by_name[O_HEART]
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
@@ -62,13 +64,12 @@
 
 			handle_pain()
 
-			handle_heart_beat()
 
 			//This block was in handle_regular_status_updates under != DEAD
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
-			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
-				handle_blood()
+			if(!species.flags[NO_BLOOD] && heart && bodytemperature >= 170)
+				heart.handle_blood()
 
 			handle_drunkenness()
 
@@ -95,7 +96,8 @@
 	if(species)
 		species.on_life(src)
 
-	pulse = handle_pulse()
+	if(istype(heart) && !(heart.status & ORGAN_DEAD))
+		pulse = heart.handle_pulse()
 
 	if(client)
 		handle_alerts()
@@ -1209,71 +1211,6 @@ var/global/list/tourette_bad_words= list(
 	SetCrawling(TRUE)
 	drop_from_inventory(l_hand)
 	drop_from_inventory(r_hand)
-
-/mob/living/carbon/human/proc/handle_heart_beat()
-
-	if(pulse == PULSE_NONE) return
-
-	if(pulse == PULSE_2FAST || traumatic_shock >= TRAUMATIC_SHOCK_INTENSE || isspaceturf(get_turf(src)))
-
-		var/temp = (5 - pulse)/2
-
-		if(heart_beat >= temp)
-			heart_beat = 0
-			playsound_local(null, 'sound/effects/singlebeat.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		else if(temp != 0)
-			heart_beat++
-
-/mob/living/carbon/human/proc/handle_pulse()
-
-	if(life_tick % 5)
-		return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
-
-	if(species && species.flags[NO_BLOOD])
-		return PULSE_NONE //No blood, no pulse.
-
-	if(HAS_TRAIT(src, TRAIT_CPB))
-		return PULSE_NORM
-
-	if(stat == DEAD)
-		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse
-
-	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	if(life_tick % 10)
-		switch(IO.heart_status)
-			if(HEART_FAILURE)
-				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
-				apply_effect(5,AGONY,0)
-				return PULSE_NONE
-			if(HEART_FIBR)
-				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
-				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-				apply_effect(1,AGONY,0)
-				return PULSE_SLOW
-
-	var/temp = PULSE_NORM
-
-	if(blood_amount() <= BLOOD_VOLUME_BAD)	//how much blood do we have
-		temp = PULSE_THREADY	//not enough :(
-
-	if(status_flags & FAKEDEATH)
-		temp = PULSE_NONE		//pretend that we're dead. unlike actual death, can be inflienced by meds
-
-	//handles different chems' influence on pulse
-	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.id in bradycardics)
-			if(temp <= PULSE_THREADY && temp >= PULSE_NORM)
-				temp--
-		if(R.id in tachycardics)
-			if(temp <= PULSE_FAST && temp >= PULSE_NONE)
-				temp++
-		if(R.id in heartstopper) //To avoid using fakedeath
-			temp = PULSE_NONE
-		if(R.id in cheartstopper) //Conditional heart-stoppage
-			if(R.volume >= R.overdose)
-				temp = PULSE_NONE
-
-	return temp
 
 /mob/living/carbon/human/handle_nutrition()
 	. = ..()

@@ -277,3 +277,12 @@
 #define TRAUMATIC_SHOCK_MIND_SHATTERING 80
 #define TRAUMATIC_SHOCK_CRITICAL        100
 
+// Initial blood volume.
+#define SPECIES_BLOOD_DEFAULT 560
+
+//Blood levels. These are percentages based on the species blood_volume far.
+#define BLOOD_VOLUME_FULL_P    100
+#define BLOOD_VOLUME_SAFE_P    85
+#define BLOOD_VOLUME_OKAY_P    70
+#define BLOOD_VOLUME_BAD_P     60
+#define BLOOD_VOLUME_SURVIVE_P 30

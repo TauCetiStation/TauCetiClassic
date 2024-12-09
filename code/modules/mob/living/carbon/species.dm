@@ -26,6 +26,7 @@
 	var/datum/action/innate/race/race_ability = null
 	var/list/race_verbs = list()
 	var/list/race_traits = list()
+	var/blood_oxy = 1
 	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
@@ -50,6 +51,10 @@
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
 	var/list/bodypart_butcher_results
+
+	var/breathing_organ           // If set, this organ is required for breathing. Defaults to "lungs" if the species has them.
+
+	var/blood_volume = SPECIES_BLOOD_DEFAULT  // Initial blood volume.
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
@@ -200,6 +205,9 @@
 
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
+
+	if(!breathing_organ && has_organ[O_LUNGS])
+		breathing_organ = O_LUNGS
 
 /datum/species/proc/can_be_role(role)
 	if(!prohibit_roles)
