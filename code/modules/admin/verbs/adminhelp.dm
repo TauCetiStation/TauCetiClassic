@@ -442,8 +442,12 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	)
 	AddInteraction("[key_name_admin(usr)] рассматривает данный тикет.")
 
-//Show the ticket panel
+
 /datum/admin_help/proc/TicketPanel()
+	tgui_interact(usr.client.mob)
+
+//Show the ticket panel
+/datum/admin_help/proc/TicketPanelLegacy()
 	var/list/dat = list("<title>Ticket #[id]</title>")
 	var/ref_src = "\ref[src]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
@@ -500,6 +504,64 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		message_admins(msg)
 		log_admin_private(msg)
 	TicketPanel()	//we have to be here to do this
+
+//tgui
+/datum/admin_help/tgui_assets(payload)
+	if(..())
+		return
+
+	TicketPanelLegacy()
+
+/datum/admin_help/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AdminTicketPanel", "Ticket #[id] - [LinkedReplyName("\ref[src]")]")
+		ui.open()
+
+/datum/admin_help/tgui_state(mob/user)
+	return global.admin_state
+
+/datum/admin_help/tgui_data(mob/user)
+	var/list/data = list()
+
+	data["id"] = id
+
+	var/ref_src = "\ref[src]"
+	data["title"] = name
+	data["name"] = LinkedReplyName(ref_src)
+
+	switch(state)
+		if(AHELP_ACTIVE)
+			data["state"] = "open"
+		if(AHELP_RESOLVED)
+			data["state"] = "resolved"
+		if(AHELP_CLOSED)
+			data["state"] = "closed"
+		else
+			data["state"] = "unknown"
+
+	data["opened_at"] = (world.time - opened_at)
+	data["closed_at"] = (world.time - closed_at)
+	data["opened_at_date"] = time_stamp(wtime = opened_at)
+	data["closed_at_date"] = time_stamp(wtime = closed_at)
+
+	data["actions"] = FullMonty(ref_src)
+
+	data["log"] = _interactions
+
+	return data
+
+/datum/admin_help/tgui_act(action, params)
+	if(..())
+		return
+	. = TRUE
+	switch(action)
+		if("retitle")
+			Retitle()
+		if("reopen")
+			Reopen()
+		if("legacy")
+			TicketPanelLegacy()
 
 //Forwarded action from admin/Topic
 /datum/admin_help/proc/Action(action)
