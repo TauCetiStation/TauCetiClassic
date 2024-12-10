@@ -12,6 +12,7 @@
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
 	l_pocket = /obj/item/device/pda/captain
+	r_pocket = /obj/item/device/multitool
 	back_style = BACKPACK_STYLE_CAPTAIN
 
 	implants = list(
