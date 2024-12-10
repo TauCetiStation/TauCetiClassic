@@ -118,6 +118,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/b_belly = 0
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
+	var/full_skillset = TRUE            //0 - using skillsets of job and roles
 	var/insurance = INSURANCE_NONE
 
 	//Some faction information.
