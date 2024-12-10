@@ -88,6 +88,11 @@
 
 	return INITIALIZE_HINT_NORMAL
 
+/turf/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/device/multitool))
+		MoveTurf()
+
 /turf/Destroy(force)
 	if(!force)
 		return QDEL_HINT_LETMELIVE // No qdelling turfs until proper method in ChangeTurf() proc as it is in other code bases.
