@@ -1636,6 +1636,13 @@
 	required_reagents = list("grapejuice" = 2, "cola" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/kogelmogel
+	name = "Kogel-Mogel"
+	id = "kogelmogel"
+	result = "kogelmogel"
+	required_reagents = list("egg" = 1, "sugar" = 1)
+	result_amount = 2
+
 
 
 ////DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
