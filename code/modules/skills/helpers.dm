@@ -11,6 +11,8 @@
 
 /proc/apply_skill_bonus(mob/user, value, required_skills, multiplier)
 	var/result = value
+	if(SSticker.is_lowpop)
+		return result
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/value_with_helpers = get_skill_with_assistance(user, required_skill)
 		result += value * multiplier * (value_with_helpers - required_skills[required_skill])
@@ -21,7 +23,7 @@
 	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, multiplier), target = target, extra_checks = extra_checks)
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skills, message_self = "", text_target = null, check_busy = TRUE, can_move = FALSE)
-	if(is_skill_competent(user, required_skills))
+	if(SSticker.is_lowpop ||  is_skill_competent(user, required_skills))
 		return TRUE
 	if(check_busy && user.is_busy())
 		return FALSE

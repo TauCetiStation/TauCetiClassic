@@ -221,3 +221,23 @@
 	icon_state = "ricehat"
 	item_state = "ricehat"
 	flags = HEADCOVERSEYES
+
+
+/obj/item/clothing/head/rim_deer
+	name = "deer antlers"
+	desc = "Оленьи рожки"
+	icon_state = "rim_deer"
+	body_parts_covered = 0
+
+/obj/item/clothing/head/rim_rabbit
+	name = "rabbit ears"
+	desc = "Заячьи ушки"
+	icon_state = "rim_rabbit"
+	body_parts_covered = 0
+
+/obj/item/clothing/head/rim_fox
+	name = "fox ears"
+	desc = "Лисьи ушки"
+	icon_state = "rim_fox"
+	body_parts_covered = 0
+

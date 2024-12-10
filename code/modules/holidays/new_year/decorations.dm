@@ -24,11 +24,32 @@
 /obj/item/decoration/garland
 	name = "garland"
 	desc = "Beautiful lights! Shinee!"
-	icon_state = "garland_on"
+	icon_state = "garland_1"
 	var/icon_state_off = "garland"
 	var/light_colors = list("#ff0000", "#6111ff", "#ffa500", "#44faff")
 	var/on = TRUE
 	var/brightness = 4
+	var/random = TRUE
+	var/variations = 3
+	glow_icon = 'icons/holidays/new_year/decorations.dmi'
+
+/obj/item/decoration/garland/long
+	icon_state = "garland_1"
+	icon_state_off = "garland_1"
+	glow_icon_state = "garland_1_lights"
+	random = FALSE
+
+/obj/item/decoration/garland/medium
+	icon_state = "garland_2"
+	icon_state_off = "garland_2"
+	glow_icon_state = "garland_2_lights"
+	random = FALSE
+
+/obj/item/decoration/garland/short
+	icon_state = "garland_3"
+	icon_state_off = "garland_3"
+	glow_icon_state = "garland_3_lights"
+	random = FALSE
 
 /obj/item/decoration/garland/proc/update_garland()
 	if(on)
@@ -40,6 +61,10 @@
 
 /obj/item/decoration/garland/atom_init()
 	. = ..()
+	if(random)
+		icon_state_off = "garland_[rand(1, variations)]"
+		glow_icon_state = "[icon_state_off]_lights"
+
 	light_color = pick(light_colors)
 	update_garland()
 
@@ -63,31 +88,41 @@
 // Tinsels
 /obj/item/decoration/tinsel
 	name = "tinsel"
-	desc = "Soft tinsel, pleasant to the touch. Ahhh..."
+	desc = "What's this? What's this? There's color everywhere!"
 	icon = 'icons/holidays/new_year/tinsel.dmi'
 	icon_state = "1"
-	var/variations = 4
-	var/random = TRUE // random color
+	var/variations = 20
+	var/random = TRUE
 
 /obj/item/decoration/tinsel/atom_init()
 	. = ..()
 	if(random)
 		icon_state = "[rand(1, variations)]"
 
-/obj/item/decoration/tinsel/green
+/obj/item/decoration/tinsel/attack_self(mob/user)
+	. = ..()
+	if(user.is_busy())
+		return
+	set_dir(turn(dir,-90))
+
+/obj/item/decoration/tinsel/socks
 	icon_state = "1"
 	random = FALSE
 
-/obj/item/decoration/tinsel/red
+/obj/item/decoration/tinsel/snowmen
 	icon_state = "2"
 	random = FALSE
 
-/obj/item/decoration/tinsel/yellow
+/obj/item/decoration/tinsel/pines
 	icon_state = "3"
 	random = FALSE
 
-/obj/item/decoration/tinsel/white
+/obj/item/decoration/tinsel/stars
 	icon_state = "4"
+	random = FALSE
+
+/obj/item/decoration/tinsel/balls
+	icon_state = "5"
 	random = FALSE
 
 // Snowflakes
@@ -281,6 +316,25 @@
 	if(icon_state == "snowman_hat")
 		new /obj/item/clothing/head/that(loc)
 	..()
+
+
+/obj/item/device/flashlight/lamp/fir_small
+	name = "small fir"
+	desc = "Маленькая ёлочка."
+	icon = 'icons/holidays/new_year/decorations.dmi'
+	icon_state = "small_christmas_tree"
+	brightness_on = 2
+	light_power = 0.6
+	light_color = list("#ff0000", "#6111ff", "#ffa500", "#44faff")
+
+	glow_icon = 'icons/holidays/new_year/decorations.dmi'
+	glow_icon_state = "small_christmas_tree_lights"
+
+
+/obj/item/decoration/wreath
+	name = "chistmas wreath"
+	desc = "Merry Christmas!"
+	icon_state = "wreath"
 
 #undef FLICKER_CD_MAX
 #undef FLICKER_CD_MIN

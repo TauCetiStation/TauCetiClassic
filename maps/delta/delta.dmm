@@ -81027,14 +81027,14 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
-/obj/item/mars_globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
+/obj/item/globe,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "pRM" = (

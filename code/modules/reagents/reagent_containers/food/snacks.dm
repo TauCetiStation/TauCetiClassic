@@ -2478,6 +2478,17 @@
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
 
+/obj/item/weapon/reagent_containers/food/snacks/mandarinslice
+	name = "Mandarin Slice"
+	desc = "Кусочек нового года."
+	icon_state = "mandarinslice"
+	item_state_world = "mandarinslice_world"
+	filling_color = "#faad28"
+	list_reagents = list("vitamin" = 1, "sugar" = 4)
+	bitesize = 15
+	food_type = NATURAL_FOOD
+	food_moodlet = /datum/mood_event/natural_food
+
 /obj/item/weapon/reagent_containers/food/snacks/cracker
 	name = "Cracker"
 	desc = "It's a salted cracker."
@@ -2895,6 +2906,7 @@
 	name = "candy cane"
 	desc = "A festive mint candy cane."
 	icon_state = "candycane"
+	item_state_world = "candycane_world"
 	filling_color = "#f2f2f2"
 	bitesize = 2
 	list_reagents = list("sugar" = 5)
