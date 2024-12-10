@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-
+	
 	// base turf luminosity, works against byond native darkness
 	// most likely you shouldn't touch it
 	// currently direcly used only by starlight/environment lighting
@@ -87,11 +87,6 @@
 		has_opaque_atom = TRUE
 
 	return INITIALIZE_HINT_NORMAL
-
-/turf/attackby(obj/item/W, mob/user, params)
-	. = ..()
-	if(istype(W, /obj/item/device/multitool))
-		MoveTurf()
 
 /turf/Destroy(force)
 	if(!force)
