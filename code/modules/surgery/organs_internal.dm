@@ -110,7 +110,7 @@
 		for(var/embed_organ in BP.bodypart_organs)
 			embed_organs += embed_organ
 		for(var/atom/embed_organ as anything in embed_organs)
-			embed_organs[embed_organ] = image(icon = embed_organ.icon, icon_state = embed_organ.icon_state)
+			embed_organs[embed_organ] = image(icon = embed_organ.icon, icon_state = initial(embed_organ.icon_state))
 		var/choosen_organ = show_radial_menu(user, target, embed_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
 		if(!choosen_organ)
 			user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
