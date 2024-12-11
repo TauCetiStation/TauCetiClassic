@@ -278,7 +278,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                   || !!o.germ_level
                   || !!o.unknown_implant)
                   && 'average')
-                || (!!o.status.robotic && 'label')
+                || (!!o.status.Cybernetic && 'label')
               }
               width="33%"
             >
@@ -346,7 +346,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                 )))}
                 {reduceOrganStatus([
                   !!o.status.splinted && <Box color="good">Наложена шина</Box>,
-                  !!o.status.robotic && <Box color="label">Протез</Box>,
+                  !!o.status.Cybernetic && <Box color="label">Протез</Box>,
                 ])}
               </Box>
             </Table.Cell>
@@ -381,7 +381,7 @@ const BodyScannerMainOrgansInternal = (props) => {
             <Table.Cell
               color={
                 ((!!o.dead || !!o.broken) && 'bad')
-                || (!!o.robotic && 'label')
+                || (!!o.Cybernetic && 'label')
                 || ((!!o.germ_level || !!o.bruised) && 'average')
               }
               width="33%"
@@ -410,8 +410,7 @@ const BodyScannerMainOrgansInternal = (props) => {
                   {reduceOrganStatus([!!o.germ_level && o.germ_level])}
                 </Box>
                 {reduceOrganStatus([
-                  !!o.robotic && <Box color="label">Протез</Box>,
-                  !!o.assisted && <Box color="label">Вспомогательный имплант</Box>,
+                  !!o.Cybernetic && <Box color="label">Протез</Box>,
                   !!o.dead && <Box color="bad" bold>Отказ</Box>,
                 ])}
               </Box>

@@ -79,9 +79,9 @@
 				else if(status == "amputated")
 					++ind
 					. += "<li>Amputated [organ_name]</li>"
-				else if(status == "mechanical")
+				else if(status == "Cybernetic")
 					++ind
-					. += "<li>Mechanical [organ_name]</li>"
+					. += "<li>Cybernetic [organ_name]</li>"
 			if(species == IPC)
 				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
 

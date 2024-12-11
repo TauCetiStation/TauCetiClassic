@@ -11,32 +11,16 @@
 	max_damage = 70
 	var/exhale_type = "carbon_dioxide"
 	var/breath_type = "oxygen"
-	var/has_gills = FALSE
 	var/active_breathing = 1
 	var/min_breath_pressure = 16
 	var/last_int_pressure
 	var/last_ext_pressure
-	var/max_pressure_diff = 60
 	var/breath_fail_ratio // How badly they failed a breath. Higher is worse.
 	var/poison_type = "phoron"
 	var/last_successful_breath
 	var/breathing = 0
-	var/safe_toxins_max = 0.2
 
 
-
-/obj/item/organ/internal/lungs/proc/rupture()
-	var/obj/item/organ/external/parent = owner.get_bodypart(parent_bodypart)
-	if(istype(parent))
-		owner.custom_pain("You feel a stabbing pain in your [parent.name]!", 50)
-	bruise()
-
-/obj/item/organ/internal/lungs/proc/check_rupturing(datum/gas_mixture/breath)
-//breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5
-	if(damage > 50)
-		var/lung_rupture_prob = is_robotic(src) ? prob(30) : prob(60) //Robotic lungs are less likely to rupture.
-		if(!is_bruised() && lung_rupture_prob) //only rupture if NOT already ruptured
-			rupture()
 
 /obj/item/organ/internal/lungs/proc/handle_breath(datum/gas_mixture/breath, forced)
 

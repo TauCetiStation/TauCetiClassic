@@ -116,6 +116,8 @@
 			user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
 		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>")
 			return
+		if(!(BP.open >= 2  && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)))
+			return
 		var/obj/item/organ/internal/I = choosen_organ
 		I.status |= ORGAN_CUT_AWAY
 		I.remove(target)

@@ -197,6 +197,15 @@
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
 
+
+	var/obj/item/organ/internal/liver/liver = organs_by_name[O_LIVER]
+	if(!liver && should_have_organ(liver))
+		adjustToxLoss(2)
+
+	var/obj/item/organ/internal/kidneys/kidneys = organs_by_name[O_LIVER]
+	if(!kidneys && should_have_organ(kidneys))
+		adjustToxLoss(1)
+
 	handle_stance()
 
 	if(!force_process && !bad_bodyparts.len)
