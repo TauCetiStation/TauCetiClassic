@@ -29,6 +29,7 @@ var/global/list/roles_ingame_minute_unlock = list(
 	ROLE_SHADOWLING = 4320,
 	ROLE_FAMILIES = 2160,
 	ROLE_REPLICATOR = 2880,
+	ROLE_FANATIC = 3600,
 	ROLE_GHOSTLY = 360,
 )
 
@@ -200,3 +201,17 @@ var/global/list/deconverted_roles = list()
 var/global/list/reagents_list = typecacheof(/datum/reagent)
 
 var/global/list/virus_types_by_pool
+
+var/global/list/fanatics_runes = list(
+	/datum/altrune/convert_sacrifice,
+	/datum/altrune/cauldron_of_blood,
+	/datum/altrune/cure,
+	/datum/altrune/communication,
+	/datum/altrune/armor,
+	/datum/altrune/claymore,
+	/datum/altrune/charm,
+	/datum/altrune/shield,
+	/datum/altrune/meet,
+	/datum/altrune/darkness,
+	/datum/altrune/madness,
+	)

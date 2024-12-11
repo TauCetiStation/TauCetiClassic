@@ -107,6 +107,13 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
+/obj/item/clothing/gloves/fanatics
+	name = "heavy red gloves"
+	desc = "Isolated red gloves."
+	icon_state = "fanatics_gloves"
+	item_state = "fanatics_gloves"
+	siemens_coefficient = 0
+
 /obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."

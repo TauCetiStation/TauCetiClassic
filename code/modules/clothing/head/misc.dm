@@ -414,3 +414,10 @@
 	desc = "Not a step back."
 	icon_state = "soviet_peakedcap"
 	item_state = "soviet_peakedcap"
+
+/obj/item/clothing/head/helmet/space/champion
+	name = "helm"
+	icon_state = null
+	flags = ABSTRACT | DROPDEL
+	canremove = FALSE
+	unacidable = TRUE

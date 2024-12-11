@@ -26,3 +26,37 @@
 	icon_state = "mantle-unathi"
 	item_state = "mantle-unathi"
 	body_parts_covered = UPPER_TORSO
+
+/obj/item/clothing/neck/fanatics_necklace
+	name = "green necklace"
+	desc = "Green necklace. The most ordinary green necklace without any special properties. Exactly."
+	icon_state = "fanaticscharm"
+	item_state = "fanaticscharm"
+
+/obj/item/clothing/neck/fanatics_necklace/atom_init()
+	. = ..()
+
+	var/obj/effect/effect/forcefield/red/R = new
+	AddComponent(/datum/component/forcefield, "strong blood aura", 40, 15 SECONDS, 25 SECONDS, R, FALSE, TRUE)
+
+/obj/item/clothing/neck/fanatics_necklace/proc/activate(mob/living/user)
+	if(isfanatic(user))
+		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
+
+/obj/item/clothing/neck/fanatics_necklace/proc/deactivate(mob/living/user)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
+
+/obj/item/clothing/neck/fanatics_necklace/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_NECK)
+		activate(user)
+
+/obj/item/clothing/neck/fanatics_necklace/dropped(mob/living/user)
+	. = ..()
+	if(slot_equipped == SLOT_NECK)
+		deactivate(user)
+
+/obj/item/clothing/neck/fanatics_necklace/examine(mob/user)
+	. = ..()
+	if(isfanatic(user))
+		to_chat(user, "<span class='fanatics'>Wearing this amulet around the neck will receive protection from damage.</span>")

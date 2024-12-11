@@ -81,6 +81,7 @@
 #define ANTAG_HUD_SPACECOP      "antag_hud_cop"
 #define ANTAG_HUD_REPLICATOR    "antag_hud_replicator"
 #define ANTAG_HUD_PIRATES       "antag_hud_pirates"
+#define ANTAG_HUD_FANATIC       "antag_hud_fanatic"
 #define ANTAG_HUD_TEAMS_RED     "antag_hud_teams_red"
 #define ANTAG_HUD_TEAMS_BLUE    "antag_hud_teams_blue"
 

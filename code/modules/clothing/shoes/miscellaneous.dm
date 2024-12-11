@@ -288,3 +288,14 @@
 	name = "Kung shoes"
 	desc = "Pair of a high red shoes."
 	icon_state = "kung_shoes"
+
+/obj/item/clothing/shoes/champion
+	icon_state = "golem"
+	item_state = null
+	canremove = FALSE
+	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
+	unacidable = TRUE
+
+/obj/item/clothing/shoes/champion/play_unique_footstep_sound()
+	..()
+	playsound(src, pick(SOUNDIN_HEAVYARMORSTEP), VOL_EFFECTS_MASTER)

@@ -903,7 +903,7 @@
 
 	is_common = TRUE
 
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST, ROLE_FANATIC)
 
 	// How fast do they regenerate. Podmen regenerate 50% slower.
 	var/regen_mod = 1.0
@@ -1167,7 +1167,7 @@
 
 	is_common = TRUE
 
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_FANATIC)
 
 	emotes = list(
 		/datum/emote/robot/beep,

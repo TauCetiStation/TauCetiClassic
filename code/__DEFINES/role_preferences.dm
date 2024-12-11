@@ -11,6 +11,7 @@
 #define ROLE_REV               "Revolutionary"
 #define ROLE_ALIEN             "Xenomorph"
 #define ROLE_CULTIST           "Cultist"
+#define ROLE_FANATIC           "Mrah'arh Fanatics"
 #define ROLE_BLOB              "Blob"
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
@@ -51,6 +52,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_SHADOWLING = null,
 	ROLE_FAMILIES   = null,
 	ROLE_REPLICATOR = null,
+	ROLE_FANATIC    = null,
 	ROLE_GHOSTLY    = list(IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE),
 )
 

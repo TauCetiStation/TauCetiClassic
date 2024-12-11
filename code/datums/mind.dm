@@ -787,7 +787,7 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
-	
+
 	//Pluvia social credit system
 	mind.pluvian_social_credit = species.pluvian_social_credit
 	if(mind.assigned_job)

@@ -44,6 +44,25 @@
 	force = 20
 	can_embed = 0
 
+/obj/item/weapon/claymore/fanatics
+	desc = "A straight, well-balanced double-edged greatsword of unknown origin. The grip and blade is covered with strange ornamentations."
+	icon_state = "dark_claymore"
+	item_state = "dark_claymore"
+	origin_tech = "materials=3;bluespace=2;combat=1"
+	flags = CONDUCT
+	flags_2 = CANT_BE_INSERTED
+	force = 25
+	can_embed = 0
+
+/obj/item/weapon/claymore/fanatics/attack(mob/living/target, mob/living/carbon/human/user)
+	if(isfanatic(user))
+		return ..()
+	user.adjustHalLoss(100)
+	user.AdjustWeakened(3)
+	to_chat(user, "<span class='warning'>Unbearable pain runs through your body when you try to use the claymore.</span>")
+	var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+	BP.take_damage(rand(force / 2, force))
+
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."

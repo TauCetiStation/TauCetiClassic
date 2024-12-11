@@ -44,6 +44,11 @@
 
 	icon_state = "at_shield2"
 
+/obj/effect/effect/forcefield/red
+	name = "forcefield"
+
+	icon_state = "shield-red"
+
 /*
  * A forcefield component.
  *

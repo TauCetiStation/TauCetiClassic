@@ -198,6 +198,9 @@
 #define TRAIT_WILLPOWER_IMPLANT   "willpower_implant"
 #define TRAIT_CAN_LEAP            "can_leap"
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
+#define TRAIT_FANATIC_INSPIRATION "fanatical_inspiration"
+#define TRAIT_FANATICS_CHAMPION   "fanatics_champion"
+#define TRAIT_DISTORTED_INVOCATION "distorted_invocation"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

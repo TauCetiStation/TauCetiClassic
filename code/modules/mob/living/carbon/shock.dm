@@ -100,7 +100,7 @@
 	if(reagents.has_reagent("prismaline"))
 		painkiller_multiplier = 3
 
-	if(reagents.has_reagent("stimulants"))
+	if(reagents.has_reagent("stimulants") || HAS_TRAIT(src, TRAIT_FANATICS_CHAMPION))
 		painkiller_effect *= min(0.1 * painkiller_multiplier, 1)
 	else if(reagents.has_reagent("oxycodone"))
 		painkiller_effect *= min(0.3 * painkiller_multiplier, 1)
@@ -108,7 +108,7 @@
 		painkiller_effect *= min(0.5 * painkiller_multiplier, 1)
 	else if(druggy)
 		painkiller_effect *= min(0.6 * painkiller_multiplier, 1)
-	else if(reagents.has_reagent("paracetamol") || reagents.has_reagent("synaptizine"))
+	else if(reagents.has_reagent("paracetamol") || reagents.has_reagent("synaptizine") || HAS_TRAIT(src, TRAIT_FANATIC_INSPIRATION))
 		painkiller_effect *= min(0.75 * painkiller_multiplier, 1)
 	else if(reagents.has_reagent("inaprovaline"))
 		painkiller_effect *= min(0.8 * painkiller_multiplier, 1)

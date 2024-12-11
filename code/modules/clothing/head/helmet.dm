@@ -337,3 +337,12 @@
 
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/head/helmet/fanatics_hood
+	name = "hood"
+	desc = "Thick villainous hood. Cruo stragarana malaxus!"
+	icon_state = "fanaticshood"
+	armor = list(melee = 70, bullet = 60, laser = 60, energy = 50, bomb = 40, bio = 0, rad = 0)
+	siemens_coefficient = 0.3
+	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEFACE|HIDEEYES

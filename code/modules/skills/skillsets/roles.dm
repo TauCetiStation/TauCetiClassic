@@ -288,3 +288,11 @@
 		/datum/skill/research = SKILL_LEVEL_PRO,
 		/datum/skill/command = SKILL_LEVEL_PRO
 	)
+
+/datum/skillset/fanatic
+	name = FANATIC
+	initial_skills = list(
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_ROBUST,
+		/datum/skill/command = SKILL_LEVEL_PRO
+	)

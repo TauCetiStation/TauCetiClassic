@@ -16,14 +16,14 @@
 
 
 var/global/power_fail_event = FALSE
-/proc/power_failure()
+/proc/power_failure(ambience_prob = 25)
 	if(power_fail_event)
 		return
 	power_fail_event = TRUE
 
 	var/datum/announcement/centcomm/grid_off/announcement = new
 	announcement.play()
-	if(prob(25))
+	if(prob(ambience_prob))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_ambience)), 600)
 
 	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)

@@ -18,7 +18,8 @@
 
 	if(RUN in mutations)
 		tally -= 0.5
-
+	if(HAS_TRAIT(src, TRAIT_FANATIC_INSPIRATION))
+		tally -= 0.15
 	if(lying)
 		tally += 7
 	if(m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_FAST_WALKER))

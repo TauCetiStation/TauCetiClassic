@@ -499,3 +499,55 @@
 	armor = list(melee = 40, bullet = 5, laser = 40, energy = 25, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
+
+/obj/item/clothing/suit/hooded/fanatics_robes
+	name = "robes"
+	cases = list("роба", "робы", "робе", "роба", "робой", "робе")
+	desc = "Красная роба, поверх которой накинута кираса."
+	icon_state = "fanaticsrobes"
+	item_state = "fanaticsrobes"
+	icon_suit_up = "fanaticsrobes_t"
+	hoodtype = /obj/item/clothing/head/helmet/fanatics_hood
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	allowed = list(/obj/item/weapon/kitchenknife/ritual, /obj/item/weapon/claymore/fanatics)
+	armor = list(melee = 70, bullet = 60, laser = 60, energy = 50, bomb = 40, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.3
+
+/obj/item/clothing/suit/armor/champion_armor
+	name = "champion armor"
+	cases = list("доспех чемпиона", "доспеха чемпиона", "доспеху чемпиона", "доспех чемпиона", "доспехом чемпиона", "доспехе чемпиона")
+	desc = "Пора веселиться."
+	icon_state = "champion"
+	item_state = "champion"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|HEAD
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|HEAD
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100)
+	allowed = list(/obj/item/weapon/kitchenknife/ritual, /obj/item/weapon/claymore/fanatics)
+	flags_inv = HIDEJUMPSUIT|HIDEGLOVES|HIDESHOES|HIDEMASK|HIDEEARS|HIDEFACE|HIDETAIL|HIDEEYES
+	siemens_coefficient = 0
+	unacidable = TRUE
+	canremove = FALSE
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS|HEAD
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	var/image/lamp = null
+
+/obj/item/clothing/suit/armor/champion_armor/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_SUIT)
+		update_icon(user)
+
+/obj/item/clothing/suit/armor/champion_armor/update_icon(mob/user)
+	if(user)
+		lamp = image(icon = 'icons/mob/suit.dmi', icon_state = "champion_eyes")
+		if(ishuman(user)) //Lets Update Lamps offset because human have height
+			var/mob/living/carbon/human/H = user
+			H.human_update_offset(lamp, TRUE)
+		lamp.plane = LIGHTING_LAMPS_PLANE
+		lamp.layer = ABOVE_LIGHTING_LAYER
+		lamp.alpha = 255
+		user.add_overlay(lamp)
+		update_inv_mob()

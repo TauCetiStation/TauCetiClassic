@@ -13,11 +13,12 @@ var/global/list/SOUNDIN_BONEBREAK = list('sound/effects/bonebreak1.ogg', 'sound/
 var/global/list/SOUNDIN_RUSTLE    = list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
 var/global/list/SOUNDIN_HORROR    = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/hallucinations/wail.ogg', 'sound/effects/screech.ogg', 'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/i_see_you_3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you_1.ogg', 'sound/hallucinations/i_see_you_2.ogg', 'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg', 'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg')
 // Simple footsteps
-var/global/list/SOUNDIN_CLOWNSTEP     = list('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
-var/global/list/SOUNDIN_FOOTSTEPS     = list('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
-var/global/list/SOUNDIN_WATER         = list('sound/effects/mob/footstep/water1.ogg', 'sound/effects/mob/footstep/water2.ogg', 'sound/effects/mob/footstep/water3.ogg', 'sound/effects/mob/footstep/water4.ogg')
-var/global/list/SOUNDIN_WATER_SHALLOW = list('sound/effects/mob/footstep/waterstep1.ogg', 'sound/effects/mob/footstep/waterstep2.ogg', 'sound/effects/mob/footstep/waterstep3.ogg')
-var/global/list/SOUNDIN_WATER_DEEP    = list('sound/effects/mob/footstep/swimming1.ogg', 'sound/effects/mob/footstep/swimming2.ogg', 'sound/effects/mob/footstep/swimming3.ogg')
+var/global/list/SOUNDIN_HEAVYARMORSTEP = list('sound/effects/heavyarmorstep1.ogg', 'sound/effects/heavyarmorstep2.ogg', 'sound/effects/heavyarmorstep3.ogg', 'sound/effects/heavyarmorstep4.ogg')
+var/global/list/SOUNDIN_CLOWNSTEP      = list('sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
+var/global/list/SOUNDIN_FOOTSTEPS      = list('sound/effects/tile1.wav', 'sound/effects/tile2.wav', 'sound/effects/tile3.wav', 'sound/effects/tile4.wav')
+var/global/list/SOUNDIN_WATER          = list('sound/effects/mob/footstep/water1.ogg', 'sound/effects/mob/footstep/water2.ogg', 'sound/effects/mob/footstep/water3.ogg', 'sound/effects/mob/footstep/water4.ogg')
+var/global/list/SOUNDIN_WATER_SHALLOW  = list('sound/effects/mob/footstep/waterstep1.ogg', 'sound/effects/mob/footstep/waterstep2.ogg', 'sound/effects/mob/footstep/waterstep3.ogg')
+var/global/list/SOUNDIN_WATER_DEEP     = list('sound/effects/mob/footstep/swimming1.ogg', 'sound/effects/mob/footstep/swimming2.ogg', 'sound/effects/mob/footstep/swimming3.ogg')
 // Projectiles' acts
 var/global/list/SOUNDIN_BULLETACT     = list('sound/effects/projectiles_acts/bullet_1.ogg', 'sound/effects/projectiles_acts/bullet_2.ogg', 'sound/effects/projectiles_acts/bullet_3.ogg')
 var/global/list/SOUNDIN_LASERACT      = list('sound/effects/projectiles_acts/laser_1.ogg', 'sound/effects/projectiles_acts/laser_2.ogg', 'sound/effects/projectiles_acts/laser_2.ogg')

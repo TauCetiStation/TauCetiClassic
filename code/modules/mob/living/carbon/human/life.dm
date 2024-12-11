@@ -803,6 +803,8 @@ var/global/list/tourette_bad_words= list(
 					adjustHalLoss(-3)
 				else
 					adjustHalLoss(-1)
+				if(HAS_TRAIT(src, TRAIT_FANATIC_INSPIRATION))
+					adjustHalLoss(-7)
 
 		if(stat == UNCONSCIOUS)
 			if(client)

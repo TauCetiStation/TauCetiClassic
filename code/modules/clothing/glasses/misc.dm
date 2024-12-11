@@ -60,3 +60,17 @@
 		var/image/I = gen_holy_overlay(F)
 		INVOKE_ASYNC(src, PROC_REF(animate_holy_overlay), I)
 		flick_overlay(I, list(user.client), assessment_cooldown)
+
+/obj/item/clothing/glasses/champion
+	icon_state = null
+	origin_tech = null
+	sightglassesmod = null
+	darkness_view = 7
+	sightglassesmod = "thermal"
+	unacidable = TRUE
+	flags = ABSTRACT | DROPDEL
+	canremove = 0
+	icon_state = null
+	flash_protection = FLASHES_FULL_PROTECTION
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	flash_protection_slots = list(SLOT_GLASSES)

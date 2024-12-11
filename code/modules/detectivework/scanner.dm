@@ -78,7 +78,7 @@
 	add_fingerprint(user)
 
 	//Special case for blood splatters, runes and gibs.
-	if (istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/rune) || istype(target, /obj/effect/decal/cleanable/blood/gibs))
+	if (istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/largerune) || istype(target, /obj/effect/altrune) || istype(target, /obj/effect/rune) || istype(target, /obj/effect/decal/cleanable/blood/gibs))
 		var/obj/effect/OE = target
 		if(!isnull(target.blood_DNA))
 			for(var/blood in OE.blood_DNA)

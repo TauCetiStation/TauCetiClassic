@@ -339,6 +339,11 @@
 	else
 		return ..()
 
+/obj/item/weapon/shield/buckler/fanatics
+	desc = "A shield made of some kind of durable wood interspersed with steel."
+	icon_state = "altbuckler"
+	block_chance = 50
+
 // *(BUCKLER craft in recipes.dm)*
 
 /obj/item/weapon/bucklerframe1

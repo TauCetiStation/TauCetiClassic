@@ -696,6 +696,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
 
+		//Fanatic
+		if(jobban_isbanned(M, ROLE_FANATIC) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_FANATIC];jobban4=\ref[M]'>[ROLE_FANATIC]</a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_FANATIC];jobban4=\ref[M]'>[ROLE_FANATIC]</a></td>"
+
 		jobs += "</tr><tr align='center'>"
 
 		jobs += "</tr></table>"
@@ -2396,7 +2402,7 @@
 		var/id = text2num(href_list["index"])
 
 		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
-			FROM erro_messages 
+			FROM erro_messages
 			WHERE id='[id]' AND deleted=0"})
 		query.Execute()
 
@@ -2429,7 +2435,7 @@
 		var/id = text2num(href_list["index"])
 
 		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
-			FROM erro_messages 
+			FROM erro_messages
 			WHERE id='[id]' AND deleted=0"})
 		query.Execute()
 
