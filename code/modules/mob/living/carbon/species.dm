@@ -1472,8 +1472,6 @@
 
 	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE)
 
-	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
-
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
@@ -1490,6 +1488,7 @@
 
 	has_organ = list(
 		O_BRAIN   = /obj/item/organ/internal/brain
+		,O_HEART = /obj/item/organ/internal/heart
 		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
 		)
 
