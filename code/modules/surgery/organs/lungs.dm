@@ -11,6 +11,7 @@
 	max_damage = 70
 	var/exhale_type = "carbon_dioxide"
 	var/breath_type = "oxygen"
+	var/has_gills = FALSE
 	var/active_breathing = 1
 	var/min_breath_pressure = 16
 	var/last_int_pressure
@@ -19,7 +20,6 @@
 	var/poison_type = "phoron"
 	var/last_successful_breath
 	var/breathing = 0
-
 
 
 /obj/item/organ/internal/lungs/proc/handle_breath(datum/gas_mixture/breath, forced)
@@ -176,8 +176,6 @@
 
 	handle_breath_temperature(breath)
 	breath.update_values()
-
-	check_rupturing()
 
 	if(failed_breath)
 		handle_failed_breath()
