@@ -97,6 +97,7 @@
 /obj/item/organ/internal/heart/proc/handle_blood()
 
 	if(!owner.species.flags[NO_BLOOD] && owner.bodytemperature >= 170 || owner.stat == DEAD || !owner)
+		return
 
 	if(owner.reagents.has_reagent("metatrombine"))
 		return
@@ -180,7 +181,6 @@
 //work!
 /obj/item/organ/internal/heart/insert_organ(mob/living/carbon/M)
 	..()
-	beating = 1
 	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 
@@ -196,6 +196,7 @@
 
 /obj/item/organ/internal/heart/remove(mob/living/carbon/M)
 	..()
+	heart_status = HEART_FAILURE
 	VARSET_IN(src, beating, 0, 100 SECONDS)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2 MINUTES)
 

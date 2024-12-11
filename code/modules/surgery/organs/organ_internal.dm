@@ -155,122 +155,12 @@
 		if(2)
 			take_damage(7, 1)
 
+/obj/item/organ/internal/proc/bruise()
+	damage = max(damage, min_bruised_damage)
 
 /****************************************************
 				ORGANS DEFINES
 ****************************************************/
-
-
-/obj/item/organ/internal/lungs
-	name = "lungs"
-	cases = list("лёгкие", "лёгких", "лёгким", "лёгкие", "лёгкими", "лёгких")
-	icon_state = "lungs"
-	item_state_world = "lungs_world"
-	organ_tag = O_LUNGS
-	parent_bodypart = BP_CHEST
-	var/has_gills = FALSE
-
-/obj/item/organ/internal/lungs/vox
-	name = "air capillary sack"
-	cases = list("воздушно-капиллярный мешок", "воздушно-капиллярного мешка", "воздушно-капиллярному мешку", "воздушно-капиллярный мешок", "воздушно-капиллярным мешком", "воздушно-капиллярном мешке")
-	desc = "They're filled with dust....wow."
-	parent_bodypart = BP_GROIN
-	icon = 'icons/obj/special_organs/vox.dmi'
-	compability = list(VOX)
-	sterile = TRUE
-
-/obj/item/organ/internal/lungs/tajaran
-	name = "tajaran lungs"
-	icon = 'icons/obj/special_organs/tajaran.dmi'
-
-/obj/item/organ/internal/lungs/unathi
-	name = "unathi lungs"
-	icon = 'icons/obj/special_organs/unathi.dmi'
-
-/obj/item/organ/internal/lungs/skrell
-	name = "respiration sac"
-	cases = list("дыхательная сумка", "дыхательной сумки", "дыхательной сумке", "дыхательную сумку", "дыхательной сумкой", "дыхательной сумке")
-	has_gills = TRUE
-	icon = 'icons/obj/special_organs/skrell.dmi'
-
-/obj/item/organ/internal/lungs/diona
-	name = "virga inopinatus"
-	cases = list("полая ветка", "полой ветки", "полой ветки", "полую ветку", "полой веткой", "полой ветке")
-	process_accuracy = 10
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "nymph"
-	item_state_world = "nymph"
-	compability = list(DIONA)
-	tough = TRUE
-
-/obj/item/organ/internal/lungs/cybernetic
-	name = "cybernetic lungs"
-	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
-	icon_state = "lungs-prosthetic"
-	item_state_world = "lungs-prosthetic_world"
-	origin_tech = "biotech=4"
-	status = ORGAN_ROBOT
-	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
-
-/obj/item/organ/internal/lungs/ipc
-	name = "cooling element"
-	cases = list("охлаждающий элемент", "охлаждающего элемента", "охлаждающему элементу", "охлаждающий элемент", "охлаждающим элементом", "охлаждающем элементе")
-
-	var/refrigerant_max = 50
-	var/refrigerant = 50
-	var/refrigerant_rate = 5
-	var/bruised_loss = 3
-	requires_robotic_bodypart = TRUE
-	status = ORGAN_ROBOT
-	icon = 'icons/obj/robot_component.dmi'
-	icon_state = "working"
-	item_state_world = "working"
-
-/obj/item/organ/internal/lungs/process()
-	..()
-	if (owner.species && owner.species.flags[NO_BREATHE])
-		return
-	if (germ_level > INFECTION_LEVEL_ONE)
-		if(!owner.reagents.has_reagent("dextromethorphan") && prob(5))
-			owner.emote("cough")		//respitory tract infection
-
-	if(is_bruised())
-		if(prob(2))
-			owner.emote("cough")
-			owner.drip(10)
-		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
-			owner.emote("gasp")
-			owner.losebreath += 15
-
-/obj/item/organ/internal/lungs/ipc/process()
-	if(owner.nutrition < 1)
-		return
-	var/temp_gain = owner.species.synth_temp_gain
-
-	if(refrigerant > 0 && !is_broken())
-		var/refrigerant_spent = refrigerant_rate
-		refrigerant -= refrigerant_rate
-		if(refrigerant < 0)
-			refrigerant_spent += refrigerant
-			refrigerant = 0
-
-		if(is_bruised())
-			refrigerant_spent -= bruised_loss
-
-		if(refrigerant_spent > 0)
-			temp_gain -= refrigerant_spent
-
-	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
-		owner.adjust_bodytemperature(-50)
-
-	if(temp_gain > 0)
-		owner.adjust_bodytemperature(temp_gain, max_temp = owner.species.synth_temp_max)
-
-/obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
-	if(refrigerant < refrigerant_max)
-		refrigerant += volume
-		if(refrigerant > refrigerant_max)
-			refrigerant = refrigerant_max
 
 /obj/item/organ/internal/liver
 	name = "liver"
@@ -280,6 +170,9 @@
 	organ_tag = O_LIVER
 	parent_bodypart = BP_GROIN
 	var/alcohol_intensity = 1
+	min_bruised_damage = 25
+	min_broken_damage = 45
+	max_damage = 70
 	process_accuracy = 10
 
 /obj/item/organ/internal/liver/diona
@@ -401,6 +294,14 @@
 			if(istype(R, /datum/reagent/toxin))
 				owner.adjustToxLoss(0.3 * process_accuracy)
 
+		// Without enough blood you slowly go hungry.
+	var/blood_volume = owner.get_blood_oxygenation()
+	if(blood_volume < BLOOD_VOLUME_SAFE_P)
+		if(owner.nutrition >= 300)
+			owner.nutrition -= 10
+		else if(owner.nutrition >= 200)
+			owner.nutrition -= 3
+
 /obj/item/organ/internal/liver/process()
 	..()
 	handle_liver_infection()
@@ -425,6 +326,7 @@
 	if(owner.reagents.get_reagent_amount("dexalinp") >= 3.0)
 		return
 	damage += 0.2
+
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
@@ -460,6 +362,9 @@
 	cases = list("почки", "почек", "почкам", "почки", "почками", "почках")
 	icon_state = "kidneys"
 	item_state_world = "kidneys_world"
+	min_bruised_damage = 25
+	min_broken_damage = 45
+	max_damage = 70
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_GROIN
 
@@ -581,15 +486,6 @@
 	if(!oxygen_reserve) //(hardcrit)
 		owner.Paralyse(3)
 
-/* i don't think it's needed
-	if(damage > 1 && damage < min_bruised_damage || heart_status == HEART_FIBR)
-		blood_volume *= 0.8
-	else if(damage >= min_bruised_damage && damage < min_broken_damage)
-		blood_volume *= 0.6
-	else if((damage >= min_broken_damage && damage < INFINITY) || heart_status == HEART_FAILURE)
-		blood_volume *= 0.3
-*/
-
 	// Effects of bloodloss
 	if(!HAS_TRAIT(src, TRAIT_CPB))
 		switch(blood_volume)
@@ -632,13 +528,6 @@
 					owner.Paralyse(6)
 					owner.Weaken(6)
 					owner.oxyloss += 15
-
-	// Without enough blood you slowly go hungry.
-	if(blood_volume < BLOOD_VOLUME_SAFE_P)
-		if(owner.nutrition >= 300)
-			owner.nutrition -= 10
-		else if(owner.nutrition >= 200)
-			owner.nutrition -= 3
 
 	..()
 
@@ -724,6 +613,7 @@
 	cases = list("глаза", "глаз", "глазам", "глаза", "глазами", "глазах")
 	organ_tag = O_EYES
 	parent_bodypart = BP_HEAD
+	max_damage = 45
 	var/list/eye_colour = list(0,0,0)
 	var/darksight = 2
 	var/nighteyes = FALSE

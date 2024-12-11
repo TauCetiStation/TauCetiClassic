@@ -334,8 +334,7 @@ var/global/list/tourette_bad_words= list(
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/is_cant_breathe()
-	var/lungs = get_organ_by_name(O_LUNGS)
-	return ((handle_drowning() || health < config.health_threshold_crit) || !lungs) && !(reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_AV))
+	return ((handle_drowning() || health < config.health_threshold_crit)) && !(reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_AV))
 
 /mob/living/carbon/human/handle_external_pre_breathing(datum/gas_mixture/breath)
 	..()
@@ -346,16 +345,30 @@ var/global/list/tourette_bad_words= list(
 				rupture_lung()
 
 /mob/living/carbon/human/breathe()
-	var/datum/gas_mixture/breath = ..()
 
-	failed_last_breath = inhale_alert
+	var/species_organ = species.breathing_organ
 
-	if(breath)
-		//spread some viruses while we are at it
-		if (virus2.len > 0)
-			if (prob(10) && get_infection_chance(src))
-				for(var/mob/living/carbon/M in view(1,src))
-					spread_disease_to(M)
+	if(species_organ)
+		var/active_breaths = 0
+		var/obj/item/organ/internal/lungs/L = organs_by_name[species_organ]
+		if(L)
+			active_breaths = L.active_breathing
+		..(active_breaths)
+
+/mob/living/carbon/human/handle_breath(datum/gas_mixture/breath)
+	if(status_flags & GODMODE)
+		return
+	var/species_organ = species.breathing_organ
+	if(!species_organ)
+		return
+
+	var/obj/item/organ/internal/lungs/L = organs_by_name[species_organ]
+	if(!L)
+		failed_last_breath = 1
+	else
+		failed_last_breath = L.handle_breath(breath) //if breath is null or vacuum, the lungs will handle it for us
+	return !failed_last_breath
+
 
 /mob/living/carbon/human/get_breath_from_internal(volume_needed)
 	if(!internal)
@@ -378,27 +391,6 @@ var/global/list/tourette_bad_words= list(
 		playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	return internal.remove_air_volume(volume_needed)
 
-/mob/living/carbon/human/handle_breath_temperature(datum/gas_mixture/breath)
-	// Hot air hurts :(
-	if(breath.temperature > species.heat_level_1)
-		if(breath.temperature > species.heat_level_3)
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-		else if(breath.temperature > species.heat_level_2)
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-		else
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-	else if(breath.temperature < species.breath_cold_level_1)
-		if(breath.temperature >= species.breath_cold_level_2)
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-		else if(breath.temperature >= species.breath_cold_level_3)
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-		else
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-
-	//breathing in hot/cold air also heats/cools you a bit
-	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
-
-	adjust_bodytemperature(affecting_temp / 5, use_insulation = TRUE, use_steps = TRUE)
 
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
 	if(suiciding)
@@ -522,25 +514,6 @@ var/global/list/tourette_bad_words= list(
 	return
 //END FIRE CODE
 
-
-/*
-/mob/living/carbon/human/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(difference > 50)
-		increments = difference/5
-	else
-		increments = difference/10
-	var/change = increments*boost	// Get the amount to change by (x per increment)
-	var/temp_change
-	if(current < loc_temp)
-		temperature = min(loc_temp, temperature+change)
-	else if(current > loc_temp)
-		temperature = max(loc_temp, temperature-change)
-	temp_change = (temperature - current)
-	return temp_change
-*/
 
 /mob/living/carbon/human/stabilize_body_temperature()
 	if (species.flags[IS_SYNTHETIC])
@@ -1232,7 +1205,7 @@ var/global/list/tourette_bad_words= list(
 
 */
 
-#undef HUMAN_MAX_OXYLOSS
+
 #undef HUMAN_CRIT_MAX_OXYLOSS
 
 #undef LIGHT_DAM_THRESHOLD

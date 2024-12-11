@@ -244,12 +244,12 @@
 
 	breath.update_values()
 
-/mob/living/carbon/proc/breathe()
+/mob/living/carbon/proc/breathe(active_breathe = 1)
 	if(is_skip_breathe())
 		return null
 
 	//First, check if we can breathe at all
-	if(suiciding || is_cant_breathe())
+	if(suiciding || is_cant_breathe() || !active_breathe)
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath > 0) //Suffocating so do not take a breath
@@ -290,10 +290,11 @@
 
 		handle_external_pre_breathing(breath)
 
-	if(!breath || (breath.total_moles <= 0))
-		handle_suffocating()
-		inhale_alert = TRUE
-		return
+	if(!breath)
+		var/static/datum/gas_mixture/vacuum //avoid having to create a new gas mixture for each breath in space
+		if(!vacuum) vacuum = new
+
+		breath = vacuum //still nothing? must be vacuum
 
 	breath.volume = BREATH_VOLUME
 
@@ -302,6 +303,9 @@
 	loc.assume_air(breath)
 
 	return breath
+
+/mob/living/carbon/proc/get_breath_volume()
+	return BREATH_VOLUME
 
 /mob/living/carbon/calculate_affecting_pressure(pressure)
 	return pressure

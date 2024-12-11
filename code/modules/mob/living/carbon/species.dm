@@ -52,7 +52,7 @@
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
 	var/list/bodypart_butcher_results
 
-	var/breathing_organ           // If set, this organ is required for breathing. Defaults to "lungs" if the species has them.
+	var/breathing_organ = O_LUNGS          // If set, this organ is required for breathing. Defaults to "lungs" if the species has them.
 
 	var/blood_volume = SPECIES_BLOOD_DEFAULT  // Initial blood volume.
 

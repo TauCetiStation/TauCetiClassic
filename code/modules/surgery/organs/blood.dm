@@ -374,10 +374,6 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	var/min_efficiency = recent_pump ? 0.5 : 0.3
 	blood_volume *= max(min_efficiency, (1-(heart.damage / heart.max_damage)))
 
-/*Need help with it
-	if(owner.reagents.has_reagent("metatrombine"))
-		blood_volume *= max(0, 1-chem_effects[CE_BLOCKAGE])
-*/
 	return min(blood_volume, 100)
 
 //Whether the species needs blood to carry oxygen. Used in get_blood_oxygenation and may be expanded based on blood rather than species in the future.

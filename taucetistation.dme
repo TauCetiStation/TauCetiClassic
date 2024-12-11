@@ -2481,6 +2481,7 @@
 #include "code\modules\surgery\organs_internal.dm"
 #include "code\modules\surgery\organs\blood.dm"
 #include "code\modules\surgery\organs\heart.dm"
+#include "code\modules\surgery\organs\lungs.dm"
 #include "code\modules\surgery\organs\organ.dm"
 #include "code\modules\surgery\organs\organ_external.dm"
 #include "code\modules\surgery\organs\organ_helpers.dm"
