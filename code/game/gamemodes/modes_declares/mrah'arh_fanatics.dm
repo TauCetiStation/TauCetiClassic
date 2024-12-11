@@ -1,5 +1,5 @@
 /datum/game_mode/fanatics
-	name = "Cabal"
+	name = "Mrah'arh's Fanatics"
 	config_name = "fanatics"
 	probability = 100
 
