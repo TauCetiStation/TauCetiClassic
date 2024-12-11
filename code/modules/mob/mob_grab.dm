@@ -498,10 +498,11 @@
 						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
-						IO.damage += rand(3,4)
-						if (IO.damage >= IO.min_broken_damage)
-							if(affecting.stat != DEAD)
-								to_chat(affecting, "<span class='warning'>You go blind!</span>")
+						if(IO)
+							IO.damage += rand(3,4)
+							if (IO.damage >= IO.min_broken_damage)
+								if(affecting.stat != DEAD)
+									to_chat(affecting, "<span class='warning'>You go blind!</span>")
 					else if(state >= GRAB_AGGRESSIVE && hit_zone == BP_CHEST)
 						var/chance_to_force_vomit = 30
 
