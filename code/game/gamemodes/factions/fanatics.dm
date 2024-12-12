@@ -14,19 +14,19 @@
 	var/datum/mind/sacrifice_target = null
 	var/list/sacrificed = list()
 	var/list/known_runes = list(
-	/datum/altrune/convert_sacrifice,
-	/datum/altrune/communication,
+	/datum/fanatic_rune/convert_sacrifice,
+	/datum/fanatic_rune/communication,
 	)
 	var/list/unknown_runes = list(
-	/datum/altrune/cauldron_of_blood,
-	/datum/altrune/cure,
-	/datum/altrune/armor,
-	/datum/altrune/claymore,
-	/datum/altrune/charm,
-	/datum/altrune/shield,
-	/datum/altrune/meet,
-	/datum/altrune/darkness,
-	/datum/altrune/madness,
+	/datum/fanatic_rune/cauldron_of_blood,
+	/datum/fanatic_rune/cure,
+	/datum/fanatic_rune/armor,
+	/datum/fanatic_rune/claymore,
+	/datum/fanatic_rune/charm,
+	/datum/fanatic_rune/shield,
+	/datum/fanatic_rune/meet,
+	/datum/fanatic_rune/darkness,
+	/datum/fanatic_rune/madness,
 	)
 	var/darkness_ritual_complete = FALSE
 
@@ -34,7 +34,7 @@
 /datum/faction/fanatics/proc/add_new_rune()
 	if((global.fanatics_runes.len) <= known_runes.len)
 		return
-	var/datum/altrune/new_rune = pick(unknown_runes)
+	var/datum/fanatic_rune/new_rune = pick(unknown_runes)
 	LAZYADD(known_runes, new_rune)
 	LAZYREMOVE(unknown_runes, new_rune)
 	for(var/datum/role/fanatic/F in members)

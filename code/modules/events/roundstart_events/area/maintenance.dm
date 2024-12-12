@@ -31,7 +31,7 @@
 /datum/event/feature/area/maintenance_spawn/antag_meta
 	possible_types = list(
 		/obj/effect/rune,
-		/obj/effect/altrune,
+		/obj/effect/fanatic_rune,
 		/obj/item/clothing/suit/hooded/fanatics_robes,
 		/obj/item/clothing/neck/fanatics_necklace,
 		/obj/item/weapon/kitchenknife/ritual,

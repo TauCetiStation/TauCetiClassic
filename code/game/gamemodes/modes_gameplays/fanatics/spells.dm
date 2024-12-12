@@ -10,30 +10,30 @@
 
 /obj/effect/proc_holder/spell/no_target/draw_rune/cast(list/targets, mob/user = usr)
 	for(var/atom/A in range(1, user.loc))
-		if(istype(A, /obj/effect/altrune) || istype(A,/obj/effect/largerune))
+		if(istype(A, /obj/effect/fanatic_rune) || istype(A,/obj/effect/largerune))
 			to_chat(user, "<span class='fanatics'>Рядом уже нарисована руна.</span>")
 			revert_cast(user)
 			return
 	var/datum/faction/fanatics/F = find_faction_by_type(/datum/faction/fanatics)
-	var/datum/altrune/chosen_power
+	var/datum/fanatic_rune/chosen_power
 	var/list/names = list()
-	for(var/datum/altrune/AR as anything in F.known_runes)
+	for(var/datum/fanatic_rune/AR as anything in F.known_runes)
 		names += AR.name
 	var/chosen_rune_effect = tgui_input_list(user,"Вы собираетесь нарисовать...","Кровавые Чары", names)
 	if(!chosen_rune_effect)
 		revert_cast(user)
 		return
-	for(var/datum/altrune/selection as anything in F.known_runes)
+	for(var/datum/fanatic_rune/selection as anything in F.known_runes)
 		if(selection.name == chosen_rune_effect)
 			chosen_power = selection
 
 	carve(user, chosen_power)
 
-/obj/effect/proc_holder/spell/no_target/draw_rune/proc/carve(mob/living/carbon/human/user, datum/altrune/power)
+/obj/effect/proc_holder/spell/no_target/draw_rune/proc/carve(mob/living/carbon/human/user, datum/fanatic_rune/power)
 	var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 	var/obj/item/W = user.get_active_hand()
 	for(var/atom/A in user.loc)
-		if(istype(A, /obj/effect/altrune) || istype(A,/obj/effect/largerune))
+		if(istype(A, /obj/effect/fanatic_rune) || istype(A,/obj/effect/largerune))
 			to_chat(user, "<span class='fanatics'>Рядом уже нарисована руна.</span>")
 			revert_cast(user)
 			return
@@ -65,12 +65,12 @@
 		return
 
 	for(var/atom/A in range(1, user.loc))
-		if(istype(A, /obj/effect/altrune) || istype(A,/obj/effect/largerune))
+		if(istype(A, /obj/effect/fanatic_rune) || istype(A,/obj/effect/largerune))
 			to_chat(user, "<span class='fanatics'>Здесь уже кто-то нарисовал руну.</span>")
 			revert_cast(user)
 			return
 
-	var/obj/effect/altrune/rune = new(user.loc)
+	var/obj/effect/fanatic_rune/rune = new(user.loc)
 	rune.power = new power
 	rune.power.holder = rune
 	rune.blood_DNA = list()
@@ -92,7 +92,7 @@
 		revert_cast(user)
 		return
 	for(var/atom/A in range(1, user.loc))
-		if(istype(A, /obj/effect/altrune) || istype(A,/obj/effect/largerune))
+		if(istype(A, /obj/effect/fanatic_rune) || istype(A,/obj/effect/largerune))
 			to_chat(user, "<span class='fanatics'>Здесь уже кто-то нарисовал руну.</span>")
 			revert_cast(user)
 			return
@@ -134,7 +134,7 @@
 		return
 
 	for(var/atom/A in range(1, user.loc))
-		if(istype(A, /obj/effect/altrune) || istype(A,/obj/effect/largerune))
+		if(istype(A, /obj/effect/fanatic_rune) || istype(A,/obj/effect/largerune))
 			to_chat(user, "<span class='fanatics'>Здесь уже кто-то нарисовал руну.</span>")
 			revert_cast(user)
 			return
@@ -143,7 +143,7 @@
 			return
 
 	var/obj/effect/largerune/rune = new(user.loc)
-	rune.power = new /datum/altrune/final_ritual
+	rune.power = new /datum/fanatic_rune/final_ritual
 	rune.power.holder = rune
 	rune.blood_DNA = list()
 	rune.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type

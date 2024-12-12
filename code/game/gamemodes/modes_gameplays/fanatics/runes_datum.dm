@@ -1,4 +1,4 @@
-/datum/altrune
+/datum/fanatic_rune
 	var/name
 	var/desc
 	var/req_near_fanatics = 1
@@ -7,13 +7,13 @@
 	var/use_time = 5 SECOND
 	var/message = ""
 
-	var/obj/effect/altrune/holder
+	var/obj/effect/fanatic_rune/holder
 
-/datum/altrune/Destroy()
+/datum/fanatic_rune/Destroy()
 	holder = null
 	return ..()
 
-/datum/altrune/proc/can_action(mob/living/carbon/human/user)
+/datum/fanatic_rune/proc/can_action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	if(!is_station_level(center.z))
 		to_chat(user, "<span class='fanatics'>Пелена между этой реальностью и Затимисом мешает использовать чары здесь. В пределах станции они должны подействовать.</span>")
@@ -48,22 +48,22 @@
 
 	return TRUE
 
-/datum/altrune/proc/before_action(mob/living/carbon/user)
+/datum/fanatic_rune/proc/before_action(mob/living/carbon/user)
 	if(!can_action(user))
 		return
 	action(user)
 
-/datum/altrune/proc/action(mob/living/carbon/user)
+/datum/fanatic_rune/proc/action(mob/living/carbon/user)
 	return
 
 ///////////////////////////////////////////////////runes///////////////////////////////////////////////////////
 
-/datum/altrune/convert_sacrifice
+/datum/fanatic_rune/convert_sacrifice
 	name = "Обращение и Жертвоприношение"
 	desc = "Позволяет Ϻрα'αрχѣ проникнуть в разум гуманоида на руне и обратить его. Или поглотить, если это невозможно."
 	use_time = 10 SECOND
 
-/datum/altrune/convert_sacrifice/before_action(mob/living/carbon/user)
+/datum/fanatic_rune/convert_sacrifice/before_action(mob/living/carbon/user)
 	var/list/candidates = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/human/C in center)
@@ -74,7 +74,7 @@
 		return
 	..()
 
-/datum/altrune/convert_sacrifice/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/convert_sacrifice/action(mob/living/carbon/human/user)
 	var/list/candidates = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/human/C in center)
@@ -105,12 +105,12 @@
 	holder.disappearance()
 
 
-/datum/altrune/cauldron_of_blood
+/datum/fanatic_rune/cauldron_of_blood
 	name = "Котел Крови"
 	desc = "Ускоряет ритм сердцебиения цели и повышает кровяное давление, заставляя цель испытывать сильную боль и разрывая артерии в ней. Вокруг руны должно находиться по меньшей мере три последователя."
 	req_near_fanatics = 3
 
-/datum/altrune/cauldron_of_blood/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/cauldron_of_blood/action(mob/living/carbon/human/user)
 	var/list/heretics = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/human/C in range(7, center))
@@ -149,12 +149,12 @@
 	playsound(holder, 'sound/magic/transfer_blood.ogg', VOL_EFFECTS_MASTER)
 
 
-/datum/altrune/cure
+/datum/fanatic_rune/cure
 	name = "Восстановление"
 	desc = "Кровавые чары сращивают кости, затягивают раны, исцеляют ожоги и восстанавливают органы существам поблизости. Рядом с руной должно находиться как минимум 3 последователя."
 	req_near_fanatics = 3
 
-/datum/altrune/cure/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/cure/action(mob/living/carbon/human/user)
 	var/list/fanatics = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/human/H in range(1, center))
@@ -174,13 +174,13 @@
 	playsound(holder, 'sound/magic/transfer_blood.ogg', VOL_EFFECTS_MASTER)
 
 
-/datum/altrune/communication
+/datum/fanatic_rune/communication
 	name = "Сообщение"
 	desc = "Передаёт сообщение в последователей."
 	use_time = 15 SECOND
 	var/information
 
-/datum/altrune/communication/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/communication/action(mob/living/carbon/human/user)
 	information = sanitize(input(user, "Введите сообщение:"))
 	if(!information)
 		return
@@ -196,11 +196,11 @@
 	holder.disappearance()
 
 
-/datum/altrune/armor
+/datum/fanatic_rune/armor
 	name = "Создание Брони"
 	desc = "Сотворяет набор надёжной брони."
 
-/datum/altrune/armor/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/armor/action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	user.vomit(vomit_type = VOMIT_BLOOD)
 	var/obj/item/clothing/suit/hooded/fanatics_robes/R = new(center)
@@ -214,11 +214,11 @@
 	holder.disappearance()
 
 
-/datum/altrune/claymore
+/datum/fanatic_rune/claymore
 	name = "Создание Меча"
 	desc = "Сотворяет смертоносный клеймор."
 
-/datum/altrune/claymore/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/claymore/action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	user.vomit(vomit_type = VOMIT_BLOOD)
 	var/obj/item/weapon/claymore/fanatics/C = new(center)
@@ -229,11 +229,11 @@
 	holder.disappearance()
 
 
-/datum/altrune/charm
+/datum/fanatic_rune/charm
 	name = "Создание Амулета"
 	desc = "Сотворяет защитный амулет."
 
-/datum/altrune/charm/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/charm/action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	user.vomit(vomit_type = VOMIT_BLOOD)
 	var/obj/item/clothing/neck/fanatics_necklace/C = new(center)
@@ -244,11 +244,11 @@
 	holder.disappearance()
 
 
-/datum/altrune/shield
+/datum/fanatic_rune/shield
 	name = "Создание Щита"
 	desc = "Сотворяет прочный щит."
 
-/datum/altrune/shield/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/shield/action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	user.vomit(vomit_type = VOMIT_BLOOD)
 	var/obj/item/weapon/shield/buckler/fanatics/C = new(center)
@@ -259,12 +259,12 @@
 	holder.disappearance()
 
 
-/datum/altrune/meet
+/datum/fanatic_rune/meet
 	name = "Сбор"
 	desc = "Болезненно призывает всех последователей на руну. Живых и мёртвых."
 	use_time = 30 SECOND
 
-/datum/altrune/meet/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/meet/action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/human/H in global.mob_list)
 		if(!isfanatic(H) || (get_dist(H, holder) > 3))
@@ -277,12 +277,12 @@
 	holder.visible_message("<span class='userdanger'>[bicon(holder)] Руна таинственно исчезает в небытие.</span>")
 	holder.disappearance()
 
-/datum/altrune/darkness
+/datum/fanatic_rune/darkness
 	name = "Тьма"
 	desc = "Из Затимиса вырвется ЭМИ, оставляющий станцию без света. На руне должна находиться батарейка. Этот ритуал можно провести лишь единожды."
 	use_time = 30 SECOND
 
-/datum/altrune/darkness/before_action(mob/living/carbon/user)
+/datum/fanatic_rune/darkness/before_action(mob/living/carbon/user)
 	var/datum/faction/fanatics/F = find_faction_by_type(/datum/faction/fanatics)
 	if(F.darkness_ritual_complete)
 		to_chat(user, "<span class='fanatics'>Этот ритуал можно провести лишь единожды.</span>")
@@ -295,7 +295,7 @@
 		to_chat(user, "<span class='fanatics'>На руне должна находиться батарейка.</span>")
 	return
 
-/datum/altrune/darkness/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/darkness/action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	var/datum/faction/fanatics/F = find_faction_by_type(/datum/faction/fanatics)
 	for(var/atom/A in center.contents)
@@ -318,13 +318,13 @@
 	to_chat(user, "<span class='fanatics'>На руне должна находиться батарейка.</span>")
 
 
-/datum/altrune/madness
+/datum/fanatic_rune/madness
 	name = "Безумие"
 	desc = "Слабые духом существа начнут испытывать сильные галлюцинации. Рядом с руной должно находиться три последователя, а на самой руне смирительная рубашка."
 	use_time = 30 SECOND
 	req_near_fanatics = 3
 
-/datum/altrune/madness/before_action(mob/living/carbon/user)
+/datum/fanatic_rune/madness/before_action(mob/living/carbon/user)
 	var/turf/center = get_turf(holder)
 	for(var/atom/A in center.contents)
 		if(istype(A, /obj/item/clothing/suit/straight_jacket))
@@ -333,7 +333,7 @@
 		to_chat(user, "<span class='fanatics'>На руне должна находиться смирительная рубашка.</span>")
 	return
 
-/datum/altrune/madness/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/madness/action(mob/living/carbon/human/user)
 	var/turf/center = get_turf(holder)
 	for(var/atom/A in center.contents)
 		if(istype(A, /obj/item/clothing/suit/straight_jacket))
@@ -357,12 +357,12 @@
 	to_chat(user, "<span class='fanatics'>На руне должна находиться смирительная рубашка.</span>")
 
 
-/datum/altrune/final_ritual
+/datum/fanatic_rune/final_ritual
 	desc = "Возвышает смертного до чемпиона Мра'арха. На руне должно находиться по меньшей мере 9 последователей."
 	use_time = 30 SECOND
 	req_near_fanatics = 9
 
-/datum/altrune/final_ritual/before_action(mob/living/carbon/user)
+/datum/fanatic_rune/final_ritual/before_action(mob/living/carbon/user)
 	if(SSticker.fanatics_end_ritual_has_completed)
 		to_chat(user, "<span class='fanatics'>Чемпион уже избран.</span>")
 		return
@@ -375,7 +375,7 @@
 
 	..()
 
-/datum/altrune/final_ritual/action(mob/living/carbon/human/user)
+/datum/fanatic_rune/final_ritual/action(mob/living/carbon/human/user)
 	if(SSticker.fanatics_end_ritual_has_completed)
 		to_chat(user, "<span class='fanatics'>Чемпион уже избран.</span>")
 		return

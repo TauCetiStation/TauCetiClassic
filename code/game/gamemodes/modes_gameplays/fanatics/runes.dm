@@ -1,25 +1,25 @@
-/obj/effect/altrune
+/obj/effect/fanatic_rune
 	name = "rune"
 	desc = ""
 	anchored = TRUE
 	icon = 'icons/obj/rune.dmi'
 	unacidable = 1
 	layer = TURF_LAYER
-	var/datum/altrune/power
+	var/datum/fanatic_rune/power
 	var/disappearance = FALSE
 
-/obj/effect/altrune/atom_init(mapload, mob/user, rand_icon = FALSE)
+/obj/effect/fanatic_rune/atom_init(mapload, mob/user, rand_icon = FALSE)
 	. = ..()
 	pixel_x = rand(-5,5)
 	pixel_y = rand(-5,5)
 	icon_state = "[rand(1,6)]"
 
-/obj/effect/altrune/Destroy()
+/obj/effect/fanatic_rune/Destroy()
 	QDEL_NULL(power)
 
 	return ..()
 
-/obj/effect/altrune/examine(mob/user)
+/obj/effect/fanatic_rune/examine(mob/user)
 	if(isfanatic(user) || isobserver(user))
 		to_chat(user,"<span class='fanatics'>Это же [bicon(src)] кровавая руна!</span>")
 		if(!power)
@@ -31,7 +31,7 @@
 
 	to_chat(user,"It's a rune. Somebody's being naughty leaving it here.")
 
-/obj/effect/altrune/attack_hand(mob/living/carbon/user)
+/obj/effect/fanatic_rune/attack_hand(mob/living/carbon/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(get_dist(user, src) > 1) // anti-telekinesis
 		return
@@ -72,7 +72,7 @@
 	else
 		power.before_action(user)
 
-/obj/effect/altrune/proc/disappearance()
+/obj/effect/fanatic_rune/proc/disappearance()
 	add_filter("disappearance", 1, motion_blur_filter(0, 0))
 	animate(get_filter("disappearance"), x = 25, y = 25,  time = 4 SECOND)
 	animate(src, alpha = 0, time = 2 SECONDS)
@@ -87,7 +87,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	unacidable = 1
 	layer = TURF_LAYER
-	var/datum/altrune/power
+	var/datum/fanatic_rune/power
 	icon_state = "rune_large"
 
 /obj/effect/largerune/atom_init(mapload, mob/user, rand_icon = FALSE)

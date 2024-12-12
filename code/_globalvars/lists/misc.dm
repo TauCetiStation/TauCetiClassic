@@ -203,15 +203,15 @@ var/global/list/reagents_list = typecacheof(/datum/reagent)
 var/global/list/virus_types_by_pool
 
 var/global/list/fanatics_runes = list(
-	/datum/altrune/convert_sacrifice,
-	/datum/altrune/cauldron_of_blood,
-	/datum/altrune/cure,
-	/datum/altrune/communication,
-	/datum/altrune/armor,
-	/datum/altrune/claymore,
-	/datum/altrune/charm,
-	/datum/altrune/shield,
-	/datum/altrune/meet,
-	/datum/altrune/darkness,
-	/datum/altrune/madness,
+	/datum/fanatic_rune/convert_sacrifice,
+	/datum/fanatic_rune/cauldron_of_blood,
+	/datum/fanatic_rune/cure,
+	/datum/fanatic_rune/communication,
+	/datum/fanatic_rune/armor,
+	/datum/fanatic_rune/claymore,
+	/datum/fanatic_rune/charm,
+	/datum/fanatic_rune/shield,
+	/datum/fanatic_rune/meet,
+	/datum/fanatic_rune/darkness,
+	/datum/fanatic_rune/madness,
 	)
