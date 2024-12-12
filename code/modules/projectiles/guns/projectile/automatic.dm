@@ -333,11 +333,11 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/proc/toggle_gl(mob/user)
 	using_gl = !using_gl
 	if(using_gl)
-		user.visible_message("<span class='warning'>[user] щелкает маленький переключатель, активируя [CASE(gl, NOMINATIVE_CASE)]!</span>",\
+		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(gl, NOMINATIVE_CASE)]!</span>",\
 		"<span class='warning'>Вы активируете [CASE(gl, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear an ominous click.")
 	else
-		user.visible_message("<span class='notice'>[user] щелкает маленьким переключателем, принимая решение прекратить все взрывать.</span>",\
+		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить все взрывать.</span>",\
 		"<span class='notice'>Вы деактивируете [CASE(gl, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
@@ -408,12 +408,12 @@
 	if(using_gl)
 		spread = 0
 		burst = 1
-		user.visible_message("<span class='warning'>[user] щелкает маленький переключатель, активируя [CASE(launcher, NOMINATIVE_CASE)]!</span>",\
+		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(launcher, NOMINATIVE_CASE)]!</span>",\
 		"<span class='warning'>Вы активируете [CASE(launcher, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear an ominous click.")
 	else
 		burst = 3
-		user.visible_message("<span class='notice'>[user] щелкает маленьким переключателем, принимая решение прекратить все взрывать.</span>",\
+		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить все взрывать.</span>",\
 		"<span class='notice'>Вы деактивируете [CASE(launcher, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
