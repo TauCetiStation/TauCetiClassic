@@ -84,7 +84,7 @@
 	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
-	else if(istype(target,/obj/effect/decal/cleanable) || istype(target,/obj/effect/fanatic_rune))
+	else if(istype(target,/obj/effect/decal/cleanable) || istype(target,/obj/effect/fanatics_rune))
 		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 		qdel(target)
 	else

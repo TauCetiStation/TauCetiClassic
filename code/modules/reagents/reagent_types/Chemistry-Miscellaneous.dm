@@ -202,7 +202,7 @@
 		flick_overlay_view(I, M, 30)
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
-	if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/fanatic_rune))
+	if(istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/fanatics_rune))
 		qdel(O)
 	else
 		if(O)

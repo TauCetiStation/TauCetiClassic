@@ -44,7 +44,7 @@
 	..()
 	qdel(src)
 
-/obj/effect/fanatic_rune/water_act(depth)
+/obj/effect/fanatics_rune/water_act(depth)
 	..()
 	qdel(src)
 
