@@ -90,7 +90,7 @@
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
-	desc = "Дробинка 12-го калибра типа \"жакан\"."
+	desc = "Тяжёлая пуля 12-го калибра типа \"жакан\"."
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/slug
