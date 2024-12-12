@@ -127,7 +127,7 @@
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"
-	desc = "Дробинка типа \"дротик\"."
+	desc = "ММГ-дробинка 12 калибра типа \"дротик\"."
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/energy/dart
 	m_amt = 2500
