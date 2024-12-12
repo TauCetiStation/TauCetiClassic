@@ -120,7 +120,7 @@
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
-	desc = "Патрон 12-го калибра типа \"зажигательная\"."
+	desc = "Патрон 12-го калибра типа \"зажигательный\"."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/buckshot
 	pellets = 12
