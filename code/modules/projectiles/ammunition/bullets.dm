@@ -90,7 +90,7 @@
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
-	desc = "Патрон 12-го калибра типа \"жакан\"."
+	desc = "Патрон 12-го калибра типа \"пуля\"."
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/slug
