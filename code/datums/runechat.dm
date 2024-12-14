@@ -146,7 +146,7 @@
 		r_icon_state = "radio"
 	else if (extra_classes.Find("emote"))
 		r_icon_state = "emote"
-	else if (fanatics_destore)
+	else if (distortion)
 		r_icon_state = "fanatics"
 	if (r_icon_state)
 		var/image/r_icon = image(runechat_icon, icon_state = r_icon_state)
@@ -205,7 +205,7 @@
 	LAZYADDASSOCLIST(owned_by.seen_messages, message_loc, src)
 	owned_by.images |= message
 	animate(message, alpha = 255, time = RUNECHAT_MESSAGE_SPAWN_TIME)
-	if(fanatics_destore)
+	if(distortion)
 		animate(message, pixel_x = rand(-10, 10), pixel_y = rand(0, 10), time = lifespan,  easing = QUAD_EASING, flags = ANIMATION_PARALLEL)
 
 	// Register with the runechat SS to handle EOL and destruction
