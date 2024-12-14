@@ -78,7 +78,7 @@
 	animate(src, alpha = 0, time = 2 SECONDS)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src), 6 SECONDS)
 
-//large runa, cant be removed, can only b drawn on de bridge and can only b used for final ritual
+// Large rune, used only for /datum/fanatics_rune/final_ritual. Cannot be cleaned or removed.
 
 /obj/effect/largerune
 	name = "blood rune"
