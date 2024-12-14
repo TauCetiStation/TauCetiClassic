@@ -33,8 +33,8 @@
 
 /obj/effect/fanatics_rune/attack_hand(mob/living/carbon/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(get_dist(user, src) > 1) // anti-telekinesis
-		return
+	if(!user.in_interaction_vicinity(src))
+		return FALSE
 	if(disappearance)
 		return
 	if(iscultist(user))
@@ -108,8 +108,8 @@
 
 /obj/effect/largerune/attack_hand(mob/living/carbon/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(get_dist(user, src) > 2)
-		return
+	if(!user.in_interaction_vicinity(src))
+		return FALSE
 	if(!isfanatic(user))
 		return
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle) || user.silent || HAS_TRAIT(user, TRAIT_MUTE))
