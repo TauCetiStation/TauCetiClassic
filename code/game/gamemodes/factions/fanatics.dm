@@ -13,12 +13,10 @@
 	// For objectives
 	var/datum/mind/sacrifice_target = null
 	var/list/sacrificed = list()
-	var/list/known_runes = list(
-	/datum/fanatics_rune/convert_sacrifice,
+	var/list/known_runes = list(/datum/fanatics_rune/convert_sacrifice,
 	/datum/fanatics_rune/communication,
 	)
-	var/list/unknown_runes = list(
-	/datum/fanatics_rune/cauldron_of_blood,
+	var/list/unknown_runes = list(/datum/fanatics_rune/cauldron_of_blood,
 	/datum/fanatics_rune/cure,
 	/datum/fanatics_rune/armor,
 	/datum/fanatics_rune/claymore,
