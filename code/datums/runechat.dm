@@ -49,7 +49,7 @@
 	/// States if end_of_life is being executed
 	var/isFading = FALSE
 	/// Makes the message twitch.
-	var/fanatics_destore = FALSE
+	var/distortion = FALSE
 
 /**
  * Constructs a chat message overlay
@@ -135,7 +135,7 @@
 		extra_classes |= "small"
 
 	if(HAS_TRAIT(owner, TRAIT_DISTORTED_INVOCATION) || HAS_TRAIT(owner, TRAIT_FANATICS_CHAMPION))
-		fanatics_destore = TRUE
+		distortion = TRUE
 
 	var/list/prefixes
 
