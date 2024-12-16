@@ -234,7 +234,9 @@ var/global/list/datum/preferences/preferences_datums = list()
 	if(!user || !user.client)	return
 	update_preview_icon()
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+	dat += "<meta http-equiv='X-UA-Compatible' content='IE=edge'>"
+	dat += "</head>"
 	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
