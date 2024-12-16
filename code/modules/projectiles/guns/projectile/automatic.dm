@@ -306,7 +306,8 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
-	desc = "Известный также как Дрозд, этот маленький сукин сын оснащен чертовым гранатометом! Как же это круто!"
+	desc = "Известный также как \"Дрозд\", этот маленький сукин сын оснащен чертовым гранатометом! Как же это круто!"
+	cases = list("автомат \"Дрозд\"", "автомата \"Дрозд\"", "автомату \"Дрозд\"", "автомат \"Дрозд\"", "автоматом \"Дрозд\"", "автомате \"Дрозд\"")
 	icon_state = "drozd"
 	item_state = "drozd"
 	initial_mag = /obj/item/ammo_box/magazine/drozd
@@ -332,12 +333,12 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/proc/toggle_gl(mob/user)
 	using_gl = !using_gl
 	if(using_gl)
-		user.visible_message("<span class='warning'>[user] щелкает маленький переключатель, активируя [gl]!</span>",\
-		"<span class='warning'>Вы активируете ваш [gl].</span>",\
+		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(gl, NOMINATIVE_CASE)]!</span>",\
+		"<span class='warning'>Вы активируете [CASE(gl, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear an ominous click.")
 	else
-		user.visible_message("<span class='notice'>[user] щелкает маленьким переключателем, принимая решение прекратить все взрывать.</span>",\
-		"<span class='notice'>Вы деактивируете ваш [gl].</span>",\
+		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить все взрывать.</span>",\
+		"<span class='notice'>Вы деактивируете [CASE(gl, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
@@ -370,6 +371,7 @@
 /obj/item/weapon/gun/projectile/automatic/m41a
 	name = "M41A pulse rifle"
 	desc = "Импульсная винтовка М41А, принятая на вооружение в КМП НТ. Малая поражающая способность с лихвой компенсируется количеством свинца, выпускаемого по противнику. Использует безгильзовые патроны 10х24 мм."
+	cases = list("импульсная винтовка M41A", "импульсной винтовки M41A", "импульсной винтовке M41A", "импульсную винтовку M41A", "импульсной винтовкой M41A", "импульсной винтовке M41A")
 	icon_state = "pulserifle"
 	item_state = "pulserifle"
 	fire_sound = 'sound/weapons/guns/gunshot_m41.ogg'
@@ -407,13 +409,13 @@
 	if(using_gl)
 		spread = 0
 		burst = 1
-		user.visible_message("<span class='warning'>[user] presses a button, activating their [launcher]!</span>",\
-		"<span class='warning'>You activate your [launcher].</span>",\
+		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(launcher, NOMINATIVE_CASE)]!</span>",\
+		"<span class='warning'>Вы активируете [CASE(launcher, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear an ominous click.")
 	else
 		burst = 3
-		user.visible_message("<span class='notice'>[user] presses a button, deciding to stop the bombings.</span>",\
-		"<span class='notice'>You deactivate your [launcher].</span>",\
+		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить все взрывать.</span>",\
+		"<span class='notice'>Вы деактивируете [CASE(launcher, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
