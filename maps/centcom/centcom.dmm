@@ -6976,6 +6976,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/garland,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "apR" = (
@@ -11704,6 +11705,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "azp" = (
@@ -13024,9 +13026,14 @@
 /area/centcom/specops)
 "aBY" = (
 /obj/machinery/door/airlock/centcom{
-	name = "General Access";
-	req_access = list(101)
+	name = "Special Operations";
+	req_access = list(103)
 	},
+/obj/machinery/door/poddoor{
+	id = "ERTBase";
+	name = "ERT"
+	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13131,6 +13138,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13427,6 +13435,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -14141,6 +14150,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -14479,6 +14489,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -17049,6 +17060,11 @@
 	icon_state = "darkred"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"aKF" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland,
+/turf/unsimulated/floor,
+/area/centcom/bar)
 "aKG" = (
 /obj/structure/table,
 /turf/simulated/shuttle/floor,
@@ -17215,6 +17231,16 @@
 	icon_state = "wood"
 	},
 /area/custom/syndicate_mothership)
+"aLb" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/tdome)
 "aLc" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -17927,6 +17953,7 @@
 /area/shuttle/syndicate/start)
 "aMB" = (
 /obj/machinery/door/airlock/external,
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -19835,14 +19862,15 @@
 /turf/simulated/floor/carpet/blue,
 /area/shuttle/escape/centcom)
 "aRH" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/door/airlock/centcom{
+	name = "General Access";
+	req_access = list(101)
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
-	name = "plating"
+	icon_state = "dark"
 	},
-/area/centcom/tdome)
+/area/centcom/specops)
 "aRU" = (
 /turf/unsimulated/floor{
 	icon_state = "red"
@@ -27792,17 +27820,9 @@
 	},
 /area/velocity)
 "hXb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Special Operations";
-	req_access = list(103)
-	},
-/obj/machinery/door/poddoor{
-	id = "ERTBase";
-	name = "ERT"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland,
+/turf/unsimulated/floor,
 /area/centcom/specops)
 "hXy" = (
 /obj/structure/closet/trader_stash{
@@ -58890,7 +58910,7 @@ aAE
 aCV
 aBQ
 aEj
-aaR
+hXb
 aFv
 bGb
 azF
@@ -60940,7 +60960,7 @@ aBC
 hbb
 bib
 aBb
-hXb
+aBY
 hbb
 aAE
 aCV
@@ -61966,7 +61986,7 @@ iIb
 aaM
 aaM
 aaM
-aaR
+hXb
 aCQ
 hkb
 aDY
@@ -62476,11 +62496,11 @@ fDb
 gGb
 ayL
 lpG
-aaR
+hXb
 hkb
 aBW
 aBR
-aaR
+hXb
 aCR
 aAE
 aCV
@@ -62520,7 +62540,7 @@ aaT
 aaM
 aKu
 aaM
-aaU
+aKF
 uSt
 jRb
 jRb
@@ -62529,7 +62549,7 @@ kWb
 lcb
 lqb
 lzb
-aaU
+aKF
 aaM
 eYb
 aKu
@@ -62747,7 +62767,7 @@ aEc
 aCV
 aBQ
 bib
-aBY
+aRH
 aAE
 aCV
 aCV
@@ -62777,7 +62797,7 @@ aaT
 aaM
 aKu
 aaM
-aaU
+aKF
 jTb
 jRb
 jRb
@@ -62786,7 +62806,7 @@ kWb
 ldb
 lqb
 nBb
-aaU
+aKF
 aaM
 lSb
 aKu
@@ -63004,7 +63024,7 @@ aEc
 aCV
 aBQ
 bib
-aBY
+aRH
 aAE
 aCV
 aCV
@@ -63034,7 +63054,7 @@ aaT
 aaM
 aKu
 aaM
-aaU
+aKF
 jUb
 jRb
 jRb
@@ -63043,7 +63063,7 @@ kWb
 leb
 lqb
 nBb
-aaU
+aKF
 aaM
 lTb
 aKu
@@ -63247,11 +63267,11 @@ fUb
 gGb
 ayL
 lpG
-aaR
+hXb
 aAD
 aBG
 aBS
-aaR
+hXb
 aCc
 aAE
 aCV
@@ -63291,7 +63311,7 @@ aaT
 aaM
 aKu
 ahJ
-aaU
+aKF
 jVb
 jRb
 jRb
@@ -63300,7 +63320,7 @@ kWb
 lcb
 lqb
 mnb
-aaU
+aKF
 aaM
 aqK
 aKu
@@ -64281,13 +64301,13 @@ bib
 bib
 aEl
 aBp
-aaR
+hXb
 aqf
-aaR
+hXb
 aBp
-aaR
+hXb
 aFQ
-aaR
+hXb
 aBp
 aBp
 aBp
@@ -64576,7 +64596,7 @@ aJu
 aJu
 aKu
 aaM
-aaU
+aKF
 jXb
 aON
 kyb
@@ -64585,7 +64605,7 @@ kVb
 lcb
 aON
 lqb
-aaU
+aKF
 aaM
 eYb
 aKu
@@ -64833,7 +64853,7 @@ aSj
 aJu
 aKu
 aaM
-aaU
+aKF
 jYb
 aOO
 kzb
@@ -64842,7 +64862,7 @@ aPy
 lfb
 aOO
 lCb
-aaU
+aKF
 aaM
 eYb
 aKu
@@ -65316,7 +65336,7 @@ aCM
 aAE
 aCV
 aBQ
-aaR
+hXb
 bfk
 bfk
 bfk
@@ -65573,7 +65593,7 @@ aCM
 aAE
 aCV
 aBQ
-aaR
+hXb
 bfk
 bfk
 bfv
@@ -65616,7 +65636,7 @@ lCb
 neb
 aSG
 aXv
-aRH
+aLb
 aUb
 aUn
 neb
@@ -66127,10 +66147,10 @@ aPz
 leb
 aSD
 aRU
-aRH
-aRH
+aLb
+aLb
 aTo
-aRH
+aLb
 aXv
 aUo
 neb
@@ -66384,7 +66404,7 @@ aPy
 aPy
 leb
 aRV
-aRH
+aLb
 aSJ
 aSJ
 aSJ
@@ -66898,7 +66918,7 @@ aPz
 aPz
 ldb
 aRV
-aRH
+aLb
 aSL
 aSL
 aSL
@@ -67155,10 +67175,10 @@ aPy
 ldb
 aSD
 aRU
-aRH
-aRH
+aLb
+aLb
 aTp
-aRH
+aLb
 aXv
 aUp
 neb
@@ -67672,7 +67692,7 @@ lqb
 neb
 aSG
 aXv
-aRH
+aLb
 aUc
 aUq
 neb
