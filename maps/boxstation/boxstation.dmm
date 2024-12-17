@@ -1830,7 +1830,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "adf" = (
 /obj/structure/rack,
@@ -9947,7 +9947,12 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/grid_floor,
+/obj/machinery/door_control{
+	id = "toxinsdriver";
+	name = "Toxin Door";
+	pixel_x = 28
+	},
+/turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "aqo" = (
 /obj/item/weapon/paper_bin,
@@ -15397,11 +15402,6 @@
 	network = list("Toxins Test Area");
 	pixel_y = 30
 	},
-/obj/machinery/driver_button{
-	id = "toxinsdriver";
-	layer = 4;
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/turf_decal{
 	dir = 5;
@@ -15877,7 +15877,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "aAN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -16179,10 +16179,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aBs" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -16205,12 +16201,10 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/closet/bombcloset,
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "aBt" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -16242,9 +16236,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aBx" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -16264,14 +16255,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aBz" = (
-/obj/structure/disposaloutlet{
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/wall,
-/area/station/rnd/tox_launch)
+/obj/item/decoration/garland,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
 "aBA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
 	dir = 4;
@@ -23447,6 +23442,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "aOv" = (
@@ -26401,6 +26397,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/arrival)
 "aTz" = (
@@ -28842,6 +28839,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "aXG" = (
@@ -28850,7 +28848,7 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/snow,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "aXH" = (
@@ -31829,6 +31827,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "bcI" = (
@@ -31872,6 +31871,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "bcM" = (
@@ -51584,6 +51584,7 @@
 	req_access = list(29)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "bLU" = (
@@ -55590,6 +55591,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "bTT" = (
@@ -56122,6 +56124,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "bVC" = (
@@ -58809,12 +58812,12 @@
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
 "ceP" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "Toxins Launcher Bay Door"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
-/turf/simulated/floor/grid_floor,
-/area/station/rnd/tox_launch)
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating/airless,
+/area/station/rnd/test_area)
 "ceQ" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -61335,16 +61338,14 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cml" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research{
-	name = "Toxins Research";
-	req_access = list(8)
+/obj/structure/lattice,
+/obj/machinery/door_control{
+	id = "toxinsdriver";
+	name = "Toxin Door";
+	pixel_y = -28
 	},
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/area/station/rnd/mixing)
+/turf/environment/space,
+/area/space)
 "cmn" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -61937,15 +61938,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "cnR" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/item/decoration/tinsel,
+/obj/machinery/door/poddoor{
+	id = "toxinsdriver";
+	name = "Toxins Launcher Bay Door"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat)
+/turf/simulated/floor/plating/airless,
+/area/station/rnd/tox_launch)
 "cnU" = (
 /obj/machinery/disposal,
 /obj/structure/window/thin/reinforced,
@@ -75695,6 +75694,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/tox_launch)
 "ixO" = (
@@ -78354,14 +78354,16 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/server)
 "lhs" = (
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/snow,
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/grass,
-/area/station/civilian/garden)
+/obj/item/decoration/garland,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
 "lhP" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -80183,14 +80185,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "ndb" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	id = "toxinsdriver"
-	},
-/obj/effect/decal/turf_decal/alpha/cyan{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor/plating/airless,
 /area/station/rnd/tox_launch)
 "neb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -80217,6 +80212,7 @@
 /obj/item/decoration/wreath{
 	pixel_y = 32
 	},
+/obj/item/weapon/grown/log,
 /turf/simulated/floor/wood{
 	icon_state = "wood6"
 	},
@@ -83162,6 +83158,7 @@
 /obj/structure/transit_tube{
 	icon_state = "N-S"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -87453,9 +87450,8 @@
 	opacity = 0
 	},
 /obj/item/decoration/tinsel,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+/turf/simulated/floor/wood{
+	icon_state = "wood6"
 	},
 /area/station/civilian/bar)
 "wow" = (
@@ -87725,17 +87721,17 @@
 /turf/simulated/wall,
 /area/station/civilian/chapel/mass_driver)
 "wLY" = (
-/obj/machinery/door/firedoor{
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	name = "Toxins Research";
+	req_access = list(8)
 	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "whitepurplefull"
 	},
-/area/station/aisat)
+/area/station/rnd/mixing)
 "wMu" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -126395,10 +126391,10 @@ aaa
 aaa
 aaa
 aaa
-cnR
-wLY
-wLY
-wLY
+lhs
+aBz
+aBz
+aBz
 cCW
 cnp
 cCW
@@ -126909,7 +126905,7 @@ aaa
 aaa
 aaa
 aaa
-cnR
+lhs
 cGx
 cEs
 cGx
@@ -129376,7 +129372,7 @@ aah
 bRf
 ixi
 aAM
-aBz
+ixi
 agM
 aDU
 arP
@@ -129393,7 +129389,7 @@ cgi
 aUA
 aUA
 cje
-cml
+wLY
 bcr
 bfG
 bEb
@@ -129596,41 +129592,41 @@ ceO
 ceO
 biK
 bjb
-biK
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 ceP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+cnR
 aqn
 ade
 ndb
@@ -129886,7 +129882,7 @@ aah
 aah
 aah
 aah
-aah
+cml
 bRf
 bRf
 bRf
@@ -138410,7 +138406,7 @@ dbM
 aTf
 ihg
 ixY
-lhs
+kwb
 aRS
 rXE
 eUb

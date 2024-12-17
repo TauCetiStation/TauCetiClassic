@@ -197,6 +197,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/tinsel{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -236,6 +239,9 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "Out2"
+	},
+/obj/item/decoration/tinsel{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -485,6 +491,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -499,6 +506,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -634,8 +642,8 @@
 /area/station/engineering/engine)
 "bn" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	dir = 4
+	dir = 4;
+	name = "Escape Airlock"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -672,6 +680,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "br" = (
@@ -786,6 +795,7 @@
 	icon_state = "gr_window_reinforced_phoron"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/black,
+/obj/item/decoration/garland,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engineering/engine)
 "bE" = (
@@ -857,6 +867,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "bM" = (
@@ -898,6 +909,9 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "Out2"
 	},
+/obj/item/decoration/tinsel{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -913,6 +927,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 8
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "bQ" = (
@@ -956,6 +971,7 @@
 	req_access = list(71)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1186,6 +1202,18 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
+"cq" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 10
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/engineering/atmos)
 "cr" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
@@ -1242,9 +1270,9 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -1264,6 +1292,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1333,6 +1362,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1677,9 +1707,9 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	name = "Engineering largecell apc down";
-	pixel_y = -27;
-	custom_smartlight_preset = "Engineering"
+	pixel_y = -27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
@@ -1719,6 +1749,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "dg" = (
@@ -1871,9 +1902,9 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
 	dir = 4;
 	name = "Cargo largecell apc right";
-	custom_smartlight_preset = "Cargo";
 	pixel_x = 27
 	},
 /turf/simulated/floor/plating,
@@ -2169,17 +2200,14 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dP" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_access = list(71)
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/cargo/storage)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/engineering/atmos)
 "dQ" = (
 /obj/structure/closet/crate/scicrate,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -2320,8 +2348,8 @@
 /area/station/hallway/secondary/exit)
 "ee" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall";
-	dir = 4
+	dir = 4;
+	name = "Escape Hall"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2938,11 +2966,11 @@
 	},
 /obj/machinery/door/airlock/mining{
 	autoclose = 0;
+	dir = 4;
 	frequency = 1379;
 	id_tag = "recucler_airlock_interior";
 	locked = 1;
-	name = "Recucler Internal Airlock";
-	dir = 4
+	name = "Recucler Internal Airlock"
 	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -3039,6 +3067,7 @@
 	name = "Recucler Access Button";
 	pixel_x = 28
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "fu" = (
@@ -3449,10 +3478,50 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"fY" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Bay";
+	req_access = list(71)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/cargo/storage)
+"fZ" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "Supply Dock Loading Door"
+	},
+/obj/structure/plasticflaps/mining,
+/obj/machinery/door/firedoor,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad2"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "ga" = (
 /obj/structure/sign/warning/fire,
 /turf/simulated/wall/r_wall,
 /area/station/engineering/engine)
+"gb" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor1";
+	name = "Supply Dock Loading Door"
+	},
+/obj/structure/plasticflaps/mining,
+/obj/machinery/door/firedoor,
+/obj/machinery/conveyor{
+	id = "QMLoad"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "go" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 1
@@ -3533,6 +3602,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "gC" = (
@@ -3605,6 +3675,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "he" = (
@@ -3662,9 +3733,9 @@
 /area/space)
 "hK" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Mech Bay";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -3744,6 +3815,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "im" = (
@@ -3762,6 +3834,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3819,6 +3892,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible/green,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "iJ" = (
@@ -3838,10 +3912,10 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD largecell apc top";
-	pixel_y = 27;
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -4131,6 +4205,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "lp" = (
@@ -4212,6 +4287,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "lT" = (
@@ -4240,6 +4316,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "mm" = (
@@ -4433,10 +4510,10 @@
 	icon_state = "damaged_4"
 	},
 /obj/machinery/power/apc{
-	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27;
-	dir = 8
+	dir = 8;
+	name = "Engineering left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -4529,9 +4606,9 @@
 	pixel_y = 5
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -4625,6 +4702,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4652,6 +4730,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 8
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engineering/engine)
 "qp" = (
@@ -4724,24 +4803,22 @@
 /turf/simulated/floor/bluegrid,
 /area/station/engineering/equip)
 "rb" = (
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor2";
-	name = "Supply Dock Loading Door"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/plasticflaps/mining,
 /obj/machinery/door/firedoor,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2"
-	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/area/station/engineering/atmos)
 "rm" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile{
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "ro" = (
@@ -4880,6 +4957,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "sB" = (
@@ -4933,6 +5011,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "sO" = (
@@ -5312,10 +5391,10 @@
 /area/station/hallway/secondary/arrival)
 "vT" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	dock_tag = "arrival_escape";
 	locked = 1;
-	name = "Escape Airlock";
-	dir = 4
+	name = "Escape Airlock"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -5568,8 +5647,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 10
+	dir = 5
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "yU" = (
@@ -5580,13 +5660,14 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "yW" = (
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering EVA";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5724,6 +5805,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Ab" = (
@@ -5965,6 +6047,7 @@
 	locked = 1;
 	name = "Solar Internal Airlock"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "BA" = (
@@ -6001,16 +6084,11 @@
 /turf/environment/space,
 /area/space)
 "BR" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/item/device/flashlight/lamp/fir/special/alternative{
+	pixel_x = -16
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/engineering/atmos)
+/turf/environment/space,
+/area/space)
 "BS" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -6043,6 +6121,7 @@
 	locked = 1;
 	name = "Solar External Airlock"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "BY" = (
@@ -6051,6 +6130,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Cf" = (
@@ -6079,8 +6159,10 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/visible/yellow,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "Cv" = (
@@ -6310,9 +6392,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -6372,8 +6454,8 @@
 /area/station/hallway/secondary/arrival)
 "DJ" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall";
-	dir = 4
+	dir = 4;
+	name = "Escape Hall"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -6424,6 +6506,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 1
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "Eb" = (
@@ -6458,6 +6541,7 @@
 	name = "Central Access"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6484,6 +6568,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6517,9 +6602,9 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 8;
 	name = "Engineering largecell apc left";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -6555,6 +6640,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "EM" = (
@@ -6605,6 +6691,7 @@
 /obj/structure/mineral_door/metal{
 	name = "Garage"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/space)
 "Fe" = (
@@ -6664,9 +6751,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engine Room";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -6692,6 +6779,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "FA" = (
@@ -6838,15 +6926,14 @@
 /turf/simulated/wall,
 /area/station/engineering/atmos)
 "Gn" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/structure/window/fulltile/reinforced{
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/engineering/atmos)
+/area/station/cargo/storage)
 "Gr" = (
 /obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
@@ -6932,9 +7019,9 @@
 /area/station/hallway/primary/central)
 "GM" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7160,6 +7247,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Hl" = (
@@ -7520,6 +7608,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Kb" = (
@@ -7670,6 +7759,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "Mb" = (
@@ -7689,6 +7779,7 @@
 	icon_state = "gr_window"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "Mn" = (
@@ -7867,16 +7958,14 @@
 	},
 /area/station/hallway/secondary/arrival)
 "NO" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
-	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "NP" = (
@@ -7947,6 +8036,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engineering/engine)
 "ON" = (
@@ -8118,6 +8208,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "PS" = (
@@ -8384,6 +8475,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/tinsel{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8466,9 +8560,9 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -8491,9 +8585,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
 	dir = 4;
 	name = "RnD largecell apc right";
-	custom_smartlight_preset = "RnD";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -8548,6 +8642,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "TO" = (
@@ -8621,6 +8716,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/tinsel{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8926,6 +9024,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "Wc" = (
@@ -8943,9 +9042,9 @@
 /area/shuttle/supply/station)
 "Wn" = (
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8971,6 +9070,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "WA" = (
@@ -8992,17 +9092,19 @@
 	},
 /area/station/engineering/atmos)
 "WD" = (
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor1";
-	name = "Supply Dock Loading Door"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/plasticflaps/mining,
-/obj/machinery/door/firedoor,
-/obj/machinery/conveyor{
-	id = "QMLoad"
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/green{
+	dir = 4
+	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/area/station/engineering/atmos)
 "WI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -9035,6 +9137,7 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "Xm" = (
@@ -9067,6 +9170,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "XB" = (
@@ -9142,6 +9246,7 @@
 	name = "Arrival Airlock"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "XZ" = (
@@ -9228,6 +9333,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/tinsel{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9243,6 +9351,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "YJ" = (
@@ -9312,6 +9421,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "Za" = (
@@ -34295,9 +34405,9 @@ SY
 Ux
 sg
 uR
-rb
+fZ
 sg
-rb
+fZ
 KZ
 Fk
 sF
@@ -34548,7 +34658,7 @@ lk
 di
 FQ
 IQ
-gs
+Gn
 dS
 lx
 UV
@@ -34805,7 +34915,7 @@ cJ
 cJ
 dt
 dI
-dP
+fY
 dT
 FQ
 Eb
@@ -35319,13 +35429,13 @@ lk
 at
 FQ
 aE
-gs
+Gn
 RH
 EM
 EM
-WD
+gb
 EM
-WD
+gb
 gE
 uS
 Hm
@@ -35568,7 +35678,7 @@ aS
 bg
 nI
 bE
-gs
+Gn
 cj
 cx
 cL
@@ -35576,7 +35686,7 @@ lk
 YO
 dx
 xk
-gs
+Gn
 cW
 CV
 Nc
@@ -37114,8 +37224,8 @@ sx
 Gl
 XG
 XG
-Gn
-Gn
+NO
+NO
 XG
 XG
 MC
@@ -37888,7 +37998,7 @@ VX
 Nz
 Gz
 fv
-NR
+dP
 SW
 NR
 NS
@@ -38145,7 +38255,7 @@ Nz
 TI
 Ve
 oK
-Ct
+rb
 AR
 zU
 QQ
@@ -38907,8 +39017,8 @@ wQ
 ap
 ap
 Gl
-rL
-rL
+Ct
+Ct
 Gl
 Vz
 Yi
@@ -38916,7 +39026,7 @@ Nz
 iQ
 Lc
 eX
-BR
+yT
 SW
 NR
 bo
@@ -39173,7 +39283,7 @@ uC
 WI
 iP
 fA
-yT
+cq
 AR
 zU
 Yc
@@ -39426,10 +39536,10 @@ MC
 MC
 Gl
 YI
-rL
+Ct
 YI
-NO
-NO
+WD
+WD
 Gl
 SW
 VK
@@ -40444,7 +40554,7 @@ hz
 MC
 MC
 MC
-MC
+BR
 MC
 MC
 MC
