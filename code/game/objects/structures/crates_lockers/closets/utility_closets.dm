@@ -164,6 +164,11 @@
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/head/bomb_hood(src)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		for (var/i in 1 to 2)
+			new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/clothing/head/santa(src)
 
 
 /obj/structure/closet/bombclosetsecurity
