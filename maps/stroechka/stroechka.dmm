@@ -9583,9 +9583,6 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "ZU" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 4
-	},
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	name = "largecell apc left";
@@ -9595,6 +9592,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

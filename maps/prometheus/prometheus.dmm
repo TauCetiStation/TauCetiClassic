@@ -41336,14 +41336,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "jnu" = (
-/obj/structure/stool/bar,
 /obj/machinery/light/smart{
 	dir = 4
 	},
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
-/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 5;
 	icon_state = "siding_wood_line"
@@ -63299,10 +63297,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "oJD" = (
-/obj/machinery/computer/arcade,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor/wood{
 	icon_state = "wood6"
 	},
