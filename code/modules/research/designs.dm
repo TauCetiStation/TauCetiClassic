@@ -2653,7 +2653,7 @@ other types of metals and chemistry for reagents).
 	id = "airbag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_SILVER = 500)
-	build_path = /obj/item/airbag
+	build_path = /obj/item/clothing/neck/airbag
 	category = list("Support")
 
 /datum/design/universal_pyrometer

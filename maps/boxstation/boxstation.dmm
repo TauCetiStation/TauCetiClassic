@@ -15747,7 +15747,7 @@
 	},
 /area/station/hallway/primary/central)
 "aBd" = (
-/obj/item/airbag,
+/obj/item/clothing/neck/airbag,
 /turf/environment/space,
 /area/space)
 "aBe" = (
