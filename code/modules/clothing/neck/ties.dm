@@ -29,7 +29,7 @@
 
 /obj/item/clothing/neck/airbag
 	name = "personal airbag"
-	desc = "One-use protection from high-speed collisions."
+	desc = "One-use protection from high-speed collisions and low pressure."
 	icon_state = "airbag"
 	item_state = "airbag"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_NECK
