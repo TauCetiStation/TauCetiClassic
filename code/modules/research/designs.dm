@@ -2649,7 +2649,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/airbag
 	name = "Personal airbag"
-	desc = "One-use protection from high-speed collisions"
+	desc = "One-use protection from high-speed collisions and low pressure."
 	id = "airbag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_SILVER = 500)
