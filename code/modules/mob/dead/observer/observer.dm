@@ -208,14 +208,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(stat == DEAD)
 		if(fake_death)
-			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
+			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another [config.deathtime_required / 600] minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
 			ghostize(can_reenter_corpse = FALSE)
 		else
 			ghostize(can_reenter_corpse = TRUE)
 	else
-		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
+		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another [config.deathtime_required / 600] minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 

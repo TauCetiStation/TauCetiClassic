@@ -83,7 +83,7 @@ var/global/bridge_secret = null
 	var/disable_player_mice = 0
 	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
-	var/deathtime_required = 18000	//30 minutes
+	var/deathtime_required = 6000	//10 minutes
 
 	var/usealienwhitelist = 0
 	var/use_alien_job_restriction = 0

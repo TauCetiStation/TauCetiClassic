@@ -416,7 +416,7 @@
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
-			to_chat(usr, "You must wait 30 minutes to respawn!")
+			to_chat(usr, "You must wait [config.deathtime_required / 600] minutes to respawn!")
 			return
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")
