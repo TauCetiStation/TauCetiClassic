@@ -121,7 +121,7 @@
 				. += "<b>Body Color</b>"
 				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]<br>"
 			if(species == UNATHI)
-				. += "<b>Belly & Jaw Color</b>"
+				. += "<b>Belly, Jaw & Tail Color</b>"
 				. += "<br><a href='?_src_=prefs;preference=belly;task=input'>Change Color</a> [color_square(r_belly, g_belly, b_belly)]"
 
 		//Gear
