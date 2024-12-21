@@ -213,6 +213,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			jaw.pixel_y += species.offset_features[OFFSET_FACE][2]
 			standing += jaw
 
+		var/mutable_appearance/tail = mutable_appearance('icons/mob/human.dmi', "[gender]_tail_unathi", -TAIL_LAYER)
+		tail.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
+		tail = update_height(tail, TRUE)
+		tail.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
+		tail.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
+		standing += tail
+
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_underwear.dmi', 'icons/mob/human_underwear_fat.dmi', "underwear[underwear]_[g]_s")
@@ -879,7 +886,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			overlays_standing[TAIL_LAYER] = standing
 
 	apply_standing_overlay(TAIL_LAYER)
-
 
 /mob/living/carbon/human/proc/update_surgery()
 	remove_standing_overlay(SURGERY_LAYER)

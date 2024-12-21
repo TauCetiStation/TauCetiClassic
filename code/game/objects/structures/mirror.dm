@@ -148,7 +148,7 @@
 				H.mind.name = newname
 
 		if ("skin tone")
-			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as num
+			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1-110=white, 111-220=black)", "Skin Tone") as num
 			if(new_tone)
 				H.s_tone = max(min(round(new_tone), 220), 1)
 				H.s_tone =  -H.s_tone + 35

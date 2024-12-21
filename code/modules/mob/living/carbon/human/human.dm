@@ -1081,7 +1081,7 @@
 		g_eyes = HEX_VAL_GREEN(new_eyes)
 		b_eyes = HEX_VAL_BLUE(new_eyes)
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
+	var/new_tone = input("Please select skin tone level: 1-220 (1-110=white, 111-220=black)", "Character Generation", "[35-s_tone]")  as text
 
 	if (!new_tone)
 		new_tone = 35

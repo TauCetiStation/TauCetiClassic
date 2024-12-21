@@ -122,7 +122,7 @@ var/global/can_call_ert
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 	if(H.species.flags[HAS_SKIN_TONE])
-		var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=альбинос, 35=белый, 150=чёрный, 220='очень' чёрный)", "Создание персонажа")  as text
+		var/new_tone = input(src, "Выберите тон кожи: 1-220 (1-110=белый, 111-220=черный)", "Создание персонажа")  as text
 		if (!new_tone)
 			new_tone = 35
 		H.s_tone = max(min(round(text2num(new_tone)), 220), 1)

@@ -140,8 +140,6 @@
 		return
 	if (owner.species.flags[HAS_SKIN_COLOR])
 		original_color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
-	else if(owner.species.flags[HAS_SKIN_TONE])
-		original_color = RGB_CONTRAST(owner.s_tone, owner.s_tone, owner.s_tone)
 
 // Keep in mind that this proc should work even if owner = null
 /obj/item/organ/external/proc/update_sprite()
@@ -150,6 +148,7 @@
 	var/fat = null
 	var/g
 	var/pump
+	var/black
 
 	if(owner && HAS_TRAIT(owner, TRAIT_FAT))
 		if(body_zone == BP_CHEST)
@@ -167,15 +166,22 @@
 
 	pump = pumped > pumped_threshold ? "pumped" : null
 
+	if(owner.s_tone >= -75 && owner.s_tone <= 34)
+		black = null
+	else if(owner.s_tone >= -185 && owner.s_tone <= -74)
+		black = "_b"
+	else
+		black = null
+
 	if (HUSK in mutations)
 		icon = 'icons/mob/human_races/husk.dmi'
 		icon_state = body_zone
 	else if (status & ORGAN_MUTATED)
 		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""][black]"
 	else
 		icon = species.icobase
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""][black]"
 
 	if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
