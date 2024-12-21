@@ -36327,7 +36327,7 @@
 /area/station/bridge/captain_quarters)
 "gtk" = (
 /obj/structure/lattice,
-/obj/item/airbag,
+/obj/item/clothing/neck/airbag,
 /turf/environment/space,
 /area/space)
 "gtC" = (
@@ -66762,15 +66762,15 @@
 	},
 /area/station/aisat)
 "mqc" = (
-/obj/item/airbag{
+/obj/item/clothing/neck/airbag{
 	pixel_x = -5;
 	pixel_y = -1
 	},
-/obj/item/airbag{
+/obj/item/clothing/neck/airbag{
 	pixel_x = 7;
 	pixel_y = -1
 	},
-/obj/item/airbag{
+/obj/item/clothing/neck/airbag{
 	pixel_x = 1;
 	pixel_y = 8
 	},
