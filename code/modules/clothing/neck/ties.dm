@@ -42,9 +42,10 @@
 	ADD_TRAIT(user, TRAIT_AIRBAG_PROTECTION, GENERIC_TRAIT)
 	to_chat(user, "<span class='warning'>Your [src] deploys!</span>")
 	playsound(src, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER)
-	sleep(50)
+	addtimer(CALLBACK(src, PROC_REF(delete)), 5 SECOND)
+
+/obj/item/clothing/neck/airbag/proc/delete(mob/user)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	REMOVE_TRAIT(user, TRAIT_AIRBAG_PROTECTION, GENERIC_TRAIT)
 	qdel(src)
-
