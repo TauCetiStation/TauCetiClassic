@@ -101,3 +101,17 @@
 	path = /obj/item/clothing/accessory/holster/armpit
 	cost = 2
 	allowed_roles = list("Captain", "Head of Security", "Head of Personnel", "Warden", "Security Officer", "Detective")
+
+/datum/gear/lunchbox
+	display_name = "Lunchbox Selection"
+	path = /obj/item/weapon/reagent_containers/food/snacks/lunchbox
+	cost = 2
+
+/datum/gear/lunchbox/New()
+	..()
+	var/colors = list()
+	colors["green"] = /obj/item/weapon/reagent_containers/food/snacks/lunchbox
+	colors["red"] = /obj/item/weapon/reagent_containers/food/snacks/lunchbox/red
+	colors["yellow"] = /obj/item/weapon/reagent_containers/food/snacks/lunchbox/yellow
+	colors["blue"] = /obj/item/weapon/reagent_containers/food/snacks/lunchbox/blue
+	gear_tweaks += new/datum/gear_tweak/path(colors)
