@@ -34,19 +34,19 @@
 				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
 				//the last job's selection color. Creating a rather nice effect.
 				for(var/i = 0, i < (limit - index), i += 1)
-					. += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
+					. += "<tr bgcolor='[lastJob.selection_color]'><td width='75%' align='right'><a>&nbsp;</a></td><td width='25%'><a>&nbsp;</a></td></tr>"
 			. += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
 			index = 0
 
 		. += "<tr bgcolor='[job.selection_color]'>"
-		. += "<td width='60%' align='right'>"
+		. += "<td width='75%' align='right'>"
 		var/rank = job.title
 		lastJob = job
 		if(!job.map_check())
 			. += "<del>[rank]</del></td><td><b> \[DISABLED]</b></td></tr>"
 			continue
 		if(jobban_isbanned(user, rank))
-			. += "<del>[rank]</del></td><td><b> \[BANNED]</b><br><a href='?_src_=prefs;preference=open_jobban_info;position=[rank]'>Show details</a></td></tr>"
+			. += "<del>[rank]</del></td><td><b><a href='?_src_=prefs;preference=open_jobban_info;position=[rank]'> \[BANNED]</a></b></td></tr>"
 			continue
 		if(!job.player_old_enough(user.client))
 			if(config.use_ingame_minutes_restriction_for_jobs)
@@ -67,7 +67,7 @@
 		else
 			. += "[rank]"
 
-		. += "</td><td width='40%'>"
+		. += "</td><td width='25%'>"
 
 		. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;dir=higher;text=[rank]' oncontextmenu='window.location.href=\"?_src_=prefs;preference=job;task=setJobLevel;text=[rank]\";return false;'>"
 
@@ -78,7 +78,7 @@
 				. += " <font color=red size=2>No</font>"
 			. += "</a></td></tr>"
 			if(job.alt_titles)
-				. += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+				. += "<tr bgcolor='[lastJob.selection_color]'><td width='75%' align='right'><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td><td width='25%'><a>&nbsp;</a></td></tr>"
 			continue
 
 		if(job_preferences[job.title] == JP_HIGH)
@@ -89,15 +89,13 @@
 			. += " <font color=orange size=2>Low</font>"
 		else
 			. += " <font color=red size=2>NEVER</font>"
-		if(job.alt_titles)
-			. += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 		. += "</a></td></tr>"
+		if(job.alt_titles)
+			. += "<tr bgcolor='[lastJob.selection_color]'><td width='75%' align='right'><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td><td><a>&nbsp;</a></td></tr>"
 
-	. += "</td></tr></table>"
+	. += "</table></table>"
 
-	. += "</center></table>"
-
-	. += "</tt>"
+	. += "</center></tt>"
 
 /datum/preferences/proc/process_link_occupation(mob/user, list/href_list)
 	if(href_list["preference"] == "job")
