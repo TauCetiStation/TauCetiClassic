@@ -37,7 +37,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
 
   var Byond = window.Byond = {};
   // Trident engine version
-  var tridentVersion = (function () {
+  Byond.TRIDENT = (function () {
     var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
     var majorVersion = groups && groups[1];
     return majorVersion
@@ -45,17 +45,24 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       : null;
   })();
 
+  // Blink engine version
+  Byond.BLINK = (function () {
+    let groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
+    let majorVersion = groups && groups[1];
+    return majorVersion ? parseInt(majorVersion, 10) : null;
+  })();
+
   // Basic checks to detect whether this page runs in BYOND
-  var isByond = (tridentVersion !== null || window.cef_to_byond)
+  var isByond = (Byond.TRIDENT !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
     && location.search !== '?external';
 
   // Version constants
   Byond.IS_BYOND = isByond;
-  Byond.IS_LTE_IE8 = tridentVersion !== null && tridentVersion <= 4;
-  Byond.IS_LTE_IE9 = tridentVersion !== null && tridentVersion <= 5;
-  Byond.IS_LTE_IE10 = tridentVersion !== null && tridentVersion <= 6;
-  Byond.IS_LTE_IE11 = tridentVersion !== null && tridentVersion <= 7;
+  Byond.IS_LTE_IE8 = Byond.TRIDENT !== null && Byond.TRIDENT <= 4;
+  Byond.IS_LTE_IE9 = Byond.TRIDENT !== null && Byond.TRIDENT <= 5;
+  Byond.IS_LTE_IE10 = Byond.TRIDENT !== null && Byond.TRIDENT <= 6;
+  Byond.IS_LTE_IE11 = Byond.TRIDENT !== null && Byond.TRIDENT <= 7;
 
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
