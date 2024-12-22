@@ -44,7 +44,7 @@ const RecipeList = (props, context) => {
 
   // let newSortedKeys = nonCategories.concat(categories);
 
-  return sortedKeys.map(title => {
+  return sortedKeys.map((title, i) => {
     // if (title === "--DIVIDER--") {
     //   return (
     //     <Box mt={1} mb={1}>
@@ -55,7 +55,7 @@ const RecipeList = (props, context) => {
     let recipe = recipes[title];
     if (recipe.ref === undefined) {
       return (
-        <Collapsible ml={1} mb={-0.7} color="label" title={title}>
+        <Collapsible key={i} ml={1} mb={-0.7} color="label" title={title}>
           <Box ml={1}>
             <RecipeList recipes={recipe} />
           </Box>
@@ -63,7 +63,7 @@ const RecipeList = (props, context) => {
       );
     } else {
       return (
-        <Recipe title={title} recipe={recipe} />
+        <Recipe key={i} title={title} recipe={recipe} />
       );
     }
   });

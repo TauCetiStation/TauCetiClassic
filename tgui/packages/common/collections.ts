@@ -212,7 +212,6 @@ export const reduce = (reducerFn, initialValue) => array => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-/* eslint-disable indent */
 export const uniqBy = <T extends unknown>(
   iterateeFn?: (value: T) => unknown
 ) => (array: T[]) => {
@@ -246,7 +245,6 @@ export const uniqBy = <T extends unknown>(
   }
   return result;
 };
-/* eslint-enable indent */
 
 export const uniq = uniqBy();
 

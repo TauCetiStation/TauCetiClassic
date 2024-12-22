@@ -12,6 +12,7 @@ import {
   Icon,
 } from '../components';
 import { Window } from '../layouts';
+import { Fragment } from 'inferno';
 
 type Poll = {
   name: string;
@@ -111,21 +112,21 @@ const VoteInfoModal = (_, context) => {
       свой голос
       <br />
       {currentPoll.minimumWinPercentage ? (
-        <>
+        <Fragment>
           Необходимо набрать минимум{' '}
           <Box inline bold>
             {currentPoll.minimumWinPercentage * 100}%
           </Box>
           , чтобы вариант победил
-        </>
+        </Fragment>
       ) : (
         ''
       )}
       {currentPoll.description && (
-        <>
+        <Fragment>
           <hr />
           <Box dangerouslySetInnerHTML={{ __html: sanitizeText(currentPoll.description) }} />
-        </>
+        </Fragment>
       )}
       <hr />
       <Button fluid align="center" onClick={() => setinfoModalOpen(false)}>
@@ -165,7 +166,7 @@ const Choices = (_, context) => {
           ) : undefined
         }>
         {!!currentPoll && currentPoll.choices.length !== 0 ? (
-          <>
+          <Fragment>
             {!currentPoll.showWarning ? (
               ''
             ) : (
@@ -203,7 +204,7 @@ const Choices = (_, context) => {
                 </Stack>
               ))}
             </Stack>
-          </>
+          </Fragment>
         ) : (
           <NoticeBox info mb="0">
             {!currentPoll

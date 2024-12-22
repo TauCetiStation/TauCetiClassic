@@ -54,6 +54,7 @@ export const Wires = (props, context) => {
                 )
                 : (
                   <Button
+                    key={status}
                     content={status.label}
                     onClick={() => act(status.act,
                       status.act_params ? status.act_params : undefined)} />

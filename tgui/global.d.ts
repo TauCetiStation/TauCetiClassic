@@ -23,6 +23,17 @@ declare global {
   }
 
   type ByondType = {
+  /**
+   * ID of the Byond window this script is running on.
+   * Can be used as a parameter to winget/winset.
+   */
+  windowId: string;
+
+  /**
+   * True if javascript is running in BYOND.
+   */
+  IS_BYOND: boolean;
+
     /**
      * Makes a BYOND call.
      *

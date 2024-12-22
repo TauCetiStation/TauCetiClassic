@@ -335,12 +335,12 @@ const BodyScannerMainOrgansExternal = (props) => {
                     !!o.open && 'Открытый разрез',
                   ])}
                 </Box>
-                {o.implant?.map((s) => (s.name ? (
-                  <Box color="good">
+                {o.implant?.map((s, i) => (s.name ? (
+                  <Box key={i} color="good">
                     {s.name}
                   </Box>
                 ) : (
-                  <Box color="average">
+                  <Box key={i} color="average">
                     Инородный объект
                   </Box>
                 )))}
