@@ -219,7 +219,7 @@ const TitleBar = (props, context) => {
           // IE8: Use a plain character instead of a unicode symbol.
           // eslint-disable-next-line react/no-unknown-property
           onclick={onClose}>
-          {Byond.IS_LTE_IE8 ? 'x' : '×'}
+          ×
         </div>
       )}
     </div>
