@@ -137,6 +137,7 @@ declare global {
      */
     __windowId__: string;
     Byond: ByondType;
+    __augmentStack__: (store: Store) => StackAugmentor;
   }
 
 }
