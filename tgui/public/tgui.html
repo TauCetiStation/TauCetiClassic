@@ -57,28 +57,18 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     && location.hostname === '127.0.0.1'
     && location.search !== '?external';
 
-  // Version constants
-  Byond.IS_BYOND = isByond;
-  Byond.IS_LTE_IE8 = Byond.TRIDENT !== null && Byond.TRIDENT <= 4;
-  Byond.IS_LTE_IE9 = Byond.TRIDENT !== null && Byond.TRIDENT <= 5;
-  Byond.IS_LTE_IE10 = Byond.TRIDENT !== null && Byond.TRIDENT <= 6;
-  Byond.IS_LTE_IE11 = Byond.TRIDENT !== null && Byond.TRIDENT <= 7;
-
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
 
   // Reviver for BYOND JSON
   // IE8: No reviver for you!
   // See: https://stackoverflow.com/questions/1288962
-  var byondJsonReviver;
-  if (!Byond.IS_LTE_IE8) {
-    byondJsonReviver = function (key, value) {
-      if (typeof value === 'object' && value !== null && value.__number__) {
-        return parseFloat(value.__number__);
-      }
-      return value;
-    };
-  }
+  var byondJsonReviver = function (key, value) {
+    if (typeof value === 'object' && value !== null && value.__number__) {
+      return parseFloat(value.__number__);
+    }
+    return value;
+  };
 
   // Makes a BYOND call.
   // See: https://secure.byond.com/docs/ref/skinparams.html
@@ -198,21 +188,10 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   var loadedAssetByUrl = {};
 
   var isStyleSheetLoaded = function (node, url) {
-    // Method #1 (works on IE10+)
     var styleSheet = node.sheet;
     if (styleSheet) {
       return styleSheet.rules.length > 0;
     }
-    // Method #2
-    var styleSheets = document.styleSheets;
-    var len = styleSheets.length;
-    for (var i = 0; i < len; i++) {
-      var styleSheet = styleSheets[i];
-      if (styleSheet.href.indexOf(url) !== -1) {
-        return styleSheet.rules.length > 0;
-      }
-    }
-    // All methods failed
     return false;
   };
 
@@ -260,9 +239,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       var node = document.createElement('script');
       node.type = 'text/javascript';
       // IE8: Prefer non-https protocols
-      node.src = Byond.IS_LTE_IE9
-        ? url.replace('https://', 'http://')
-        : url;
+      node.src = url;
       if (sync) {
         node.defer = true;
       }
@@ -284,9 +261,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       node.type = 'text/css';
       node.rel = 'stylesheet';
       // IE8: Prefer non-https protocols
-      node.href = Byond.IS_LTE_IE9
-        ? url.replace('https://', 'http://')
-        : url;
+      node.href = url;
       // Temporarily set media to something inapplicable
       // to ensure it'll fetch without blocking render
       if (!sync) {
@@ -342,7 +317,7 @@ window.onerror = function (msg, url, line, col, error) {
     else {
       window.onerror.__stack__ = stack;
     }
-    var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
+    var textProp = 'textContent';
     errorStack[textProp] = window.onerror.__stack__;
   }
   // Set window geometry
