@@ -721,3 +721,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	T.burnt = 0
 	T.broken = 0
 	T.update_icon()
+
+/client/proc/allow_browser_inspect()
+	set category = "Debug"
+	set name = "Allow Browser Inspect"
+	set desc = "Allow browser debugging via inspect"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	winset(usr, "", "browser-options=find,devtools")

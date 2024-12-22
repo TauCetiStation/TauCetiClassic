@@ -196,6 +196,7 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
 	/client/proc/generate_fulltile_window_placeholders,
+	/client/proc/allow_browser_inspect,
 #ifdef REFERENCE_TRACKING
 /client/proc/find_refs,
 /client/proc/qdel_then_find_references,
