@@ -16,30 +16,34 @@ export class ChatPanel extends Component {
     this.state = {
       scrollTracking: true,
     };
-    this.handleScrollTrackingChange = value => this.setState({
-      scrollTracking: value,
-    });
+    this.handleScrollTrackingChange = (value) =>
+      this.setState({
+        scrollTracking: value,
+      });
   }
 
   componentDidMount() {
     chatRenderer.mount(this.ref.current);
-    chatRenderer.events.on('scrollTrackingChanged',
-      this.handleScrollTrackingChange);
+    chatRenderer.events.on(
+      'scrollTrackingChanged',
+      this.handleScrollTrackingChange
+    );
     this.componentDidUpdate();
   }
 
   componentWillUnmount() {
-    chatRenderer.events.off('scrollTrackingChanged',
-      this.handleScrollTrackingChange);
+    chatRenderer.events.off(
+      'scrollTrackingChanged',
+      this.handleScrollTrackingChange
+    );
   }
 
   componentDidUpdate(prevProps) {
     requestAnimationFrame(() => {
       chatRenderer.ensureScrollTracking();
     });
-    const shouldUpdateStyle = (
-      !prevProps || shallowDiffers(this.props, prevProps)
-    );
+    const shouldUpdateStyle =
+      !prevProps || shallowDiffers(this.props, prevProps);
     if (shouldUpdateStyle) {
       chatRenderer.assignStyle({
         'width': '100%',
@@ -51,9 +55,7 @@ export class ChatPanel extends Component {
   }
 
   render() {
-    const {
-      scrollTracking,
-    } = this.state;
+    const { scrollTracking } = this.state;
     return (
       <>
         <div className="Chat" ref={this.ref} />
@@ -61,7 +63,8 @@ export class ChatPanel extends Component {
           <Button
             className="Chat__scrollButton"
             icon="arrow-down"
-            onClick={() => chatRenderer.scrollToBottom()}>
+            onClick={() => chatRenderer.scrollToBottom()}
+          >
             Scroll to bottom
           </Button>
         )}

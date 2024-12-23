@@ -120,7 +120,8 @@ export const SkillsConsole = (props, context) => {
                 }}
                 fluid
                 color="danger"
-                tooltip="This action will destroy the cartridge and begin the CMF manipulation procedure.">
+                tooltip="This action will destroy the cartridge and begin the CMF manipulation procedure."
+              >
                 Unpack cartridge
               </Button>
             </Box>
@@ -157,7 +158,8 @@ export const SkillsConsole = (props, context) => {
                     }}
                     fluid
                     disabled={can_inject === 0}
-                    color="green">
+                    color="green"
+                  >
                     Inject implant
                   </Button>
                   <Button.Confirm
@@ -166,7 +168,8 @@ export const SkillsConsole = (props, context) => {
                     }}
                     fluid
                     color="danger"
-                    confirmContent="Confirm ">
+                    confirmContent="Confirm "
+                  >
                     Abort
                   </Button.Confirm>
                 </Box>

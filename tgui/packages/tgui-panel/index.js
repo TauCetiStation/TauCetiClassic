@@ -78,7 +78,7 @@ const setupApp = () => {
   });
 
   // Resize the panel to match the non-browser output
-  Byond.winget('output').then(output => {
+  Byond.winget('output').then((output) => {
     Byond.winset('browseroutput', {
       'size': output.size,
     });
@@ -87,18 +87,21 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept([
-      './chat',
-      './game',
-      './Notifications',
-      './Panel',
-      './ping',
-      './settings',
-      './telemetry',
-      './emotes',
-    ], () => {
-      renderApp();
-    });
+    module.hot.accept(
+      [
+        './chat',
+        './game',
+        './Notifications',
+        './Panel',
+        './ping',
+        './settings',
+        './telemetry',
+        './emotes',
+      ],
+      () => {
+        renderApp();
+      }
+    );
   }
 };
 

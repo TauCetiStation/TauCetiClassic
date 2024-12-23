@@ -13,10 +13,7 @@ export const meta = {
 };
 
 const Story = (props, context) => {
-  const [
-    progress,
-    setProgress,
-  ] = useLocalState(context, 'progress', 0.5);
+  const [progress, setProgress] = useLocalState(context, 'progress', 0.5);
   return (
     <Section>
       <ProgressBar
@@ -27,16 +24,13 @@ const Story = (props, context) => {
         }}
         minValue={-1}
         maxValue={1}
-        value={progress}>
+        value={progress}
+      >
         Value: {Number(progress).toFixed(1)}
       </ProgressBar>
       <Box mt={1}>
-        <Button
-          content="-0.1"
-          onClick={() => setProgress(progress - 0.1)} />
-        <Button
-          content="+0.1"
-          onClick={() => setProgress(progress + 0.1)} />
+        <Button content="-0.1" onClick={() => setProgress(progress - 0.1)} />
+        <Button content="+0.1" onClick={() => setProgress(progress + 0.1)} />
       </Box>
     </Section>
   );

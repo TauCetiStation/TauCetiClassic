@@ -1,11 +1,10 @@
-
 import { createPopper, Placement, VirtualElement } from '@popperjs/core';
 import { Component, findDOMFromVNode, InfernoNode, render } from 'inferno';
 
 type TooltipProps = {
   children?: InfernoNode;
   content: InfernoNode;
-  position?: Placement,
+  position?: Placement;
 };
 
 type TooltipState = {
@@ -13,10 +12,12 @@ type TooltipState = {
 };
 
 const DEFAULT_OPTIONS = {
-  modifiers: [{
-    name: "eventListeners",
-    enabled: false,
-  }],
+  modifiers: [
+    {
+      name: 'eventListeners',
+      enabled: false,
+    },
+  ],
 };
 
 const NULL_RECT: DOMRect = {
@@ -66,23 +67,23 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
       return;
     }
 
-    domNode.addEventListener("mouseenter", () => {
+    domNode.addEventListener('mouseenter', () => {
       let renderedTooltip = Tooltip.renderedTooltip;
       if (renderedTooltip === undefined) {
-        renderedTooltip = document.createElement("div");
-        renderedTooltip.className = "Tooltip";
+        renderedTooltip = document.createElement('div');
+        renderedTooltip.className = 'Tooltip';
         document.body.appendChild(renderedTooltip);
         Tooltip.renderedTooltip = renderedTooltip;
       }
 
       Tooltip.currentHoveredElement = domNode;
 
-      renderedTooltip.style.opacity = "1";
+      renderedTooltip.style.opacity = '1';
 
       this.renderPopperContent();
     });
 
-    domNode.addEventListener("mouseleave", () => {
+    domNode.addEventListener('mouseleave', () => {
       this.fadeOut();
     });
   }
@@ -93,7 +94,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
     }
 
     Tooltip.currentHoveredElement = undefined;
-    Tooltip.renderedTooltip!.style.opacity = "0";
+    Tooltip.renderedTooltip!.style.opacity = '0';
   }
 
   renderPopperContent() {
@@ -113,7 +114,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
             renderedTooltip!,
             {
               ...DEFAULT_OPTIONS,
-              placement: this.props.position || "auto",
+              placement: this.props.position || 'auto',
             }
           );
 
@@ -121,13 +122,13 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
         } else {
           singletonPopper.setOptions({
             ...DEFAULT_OPTIONS,
-            placement: this.props.position || "auto",
+            placement: this.props.position || 'auto',
           });
 
           singletonPopper.update();
         }
       },
-      this.context,
+      this.context
     );
   }
 

@@ -23,7 +23,6 @@ export class AlertModal extends Component {
 
     this.buttonRefs = [createRef()];
     this.state = { current: 0 };
-
   }
 
   componentDidMount() {
@@ -67,26 +66,22 @@ export class AlertModal extends Component {
     const focusCurrentButton = () => this.setCurrent(current, false);
 
     return (
-      <Window
-        title={title}
-        width={350}
-        height={150}
-        canClose={timeout > 0}>
+      <Window title={title} width={350} height={150} canClose={timeout > 0}>
         {timeout && <Loader value={timeout} />}
         <Window.Content
           onFocus={focusCurrentButton}
-          onClick={focusCurrentButton}>
+          onClick={focusCurrentButton}
+        >
           <Section fill>
             <Flex direction="column">
               <Flex.Item grow={1}>
                 <Flex
                   direction="column"
                   className="AlertModal__Message"
-                  textAlign="center">
+                  textAlign="center"
+                >
                   <Flex.Item>
-                    <Box m={1}>
-                      {message}
-                    </Box>
+                    <Box m={1}>{message}</Box>
                   </Flex.Item>
                 </Flex>
               </Flex.Item>
@@ -98,8 +93,8 @@ export class AlertModal extends Component {
                         ref={this.buttonRefs[buttonIndex]}
                         className="Button Button--color--default"
                         px={3}
-                        onClick={() => act("choose", { choice: button })}
-                        onKeyDown={e => {
+                        onClick={() => act('choose', { choice: button })}
+                        onKeyDown={(e) => {
                           const keyCode = window.event ? e.which : e.keyCode;
 
                           /**
@@ -107,18 +102,20 @@ export class AlertModal extends Component {
                            * allow keyboard navigation, override tab behavior
                            */
                           if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
-                            act("choose", { choice: button });
+                            act('choose', { choice: button });
                           } else if (
-                            keyCode === KEY_LEFT
-                            || (e.shiftKey && keyCode === KEY_TAB)
+                            keyCode === KEY_LEFT ||
+                            (e.shiftKey && keyCode === KEY_TAB)
                           ) {
                             this.setCurrent(current - 1, keyCode === KEY_LEFT);
                           } else if (
-                            keyCode === KEY_RIGHT || keyCode === KEY_TAB
+                            keyCode === KEY_RIGHT ||
+                            keyCode === KEY_TAB
                           ) {
                             this.setCurrent(current + 1, keyCode === KEY_RIGHT);
                           }
-                        }}>
+                        }}
+                      >
                         {button}
                       </div>
                     </Flex.Item>
@@ -131,17 +128,17 @@ export class AlertModal extends Component {
       </Window>
     );
   }
-
 }
 
-export const Loader = props => {
+export const Loader = (props) => {
   const { value } = props;
 
   return (
     <div className="AlertModal__Loader">
       <Box
         className="AlertModal__LoaderProgress"
-        style={{ width: clamp01(value) * 100 + '%' }} />
+        style={{ width: clamp01(value) * 100 + '%' }}
+      />
     </div>
   );
 };
