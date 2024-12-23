@@ -32,7 +32,7 @@
 
 
 /datum/faction/fanatics/proc/add_new_rune()
-	if(global.fanatics_runes.len <= known_runes.len)
+	if((global.fanatics_runes.len - 1) <= known_runes.len)
 		return
 	var/datum/fanatics_rune/new_rune = pick(unknown_runes)
 	LAZYADD(known_runes, new_rune)
