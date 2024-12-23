@@ -6,9 +6,8 @@
  * @license MIT
  */
 
-export const IMPL_MEMORY = 0;
-export const IMPL_LOCAL_STORAGE = 1;
-export const IMPL_INDEXED_DB = 2;
+export const IMPL_HUB_STORAGE = 0;
+export const IMPL_INDEXED_DB = 1;
 
 const INDEXED_DB_VERSION = 1;
 const INDEXED_DB_NAME = 'tau-tgui';
@@ -17,76 +16,52 @@ const INDEXED_DB_STORE_NAME = 'storage-v1';
 const READ_ONLY = 'readonly';
 const READ_WRITE = 'readwrite';
 
-const testGeneric = testFn => () => {
+const testGeneric = (testFn) => () => {
   try {
     return Boolean(testFn());
-  }
-  catch {
+  } catch {
     return false;
   }
 };
 
-// Localstorage can sometimes throw an error, even if DOM storage is not
-// disabled in IE11 settings.
-// See: https://superuser.com/questions/1080011
-const testLocalStorage = testGeneric(() => (
-  window.localStorage && window.localStorage.getItem
-));
+const testHubStorage = testGeneric(
+  () => window.hubStorage && window.hubStorage.getItem
+);
 
+// TODO: Remove with 516
+// prettier-ignore
 const testIndexedDb = testGeneric(() => (
   (window.indexedDB || window.msIndexedDB)
   && (window.IDBTransaction || window.msIDBTransaction)
 ));
 
-class MemoryBackend {
+class HubStorageBackend {
   constructor() {
-    this.impl = IMPL_MEMORY;
-    this.store = {};
+    this.impl = IMPL_HUB_STORAGE;
   }
 
   get(key) {
-    return this.store[key];
-  }
-
-  set(key, value) {
-    this.store[key] = value;
-  }
-
-  remove(key) {
-    this.store[key] = undefined;
-  }
-
-  clear() {
-    this.store = {};
-  }
-}
-
-class LocalStorageBackend {
-  constructor() {
-    this.impl = IMPL_LOCAL_STORAGE;
-  }
-
-  get(key) {
-    const value = localStorage.getItem(key);
+    const value = window.hubStorage.getItem('tauceti-' + key);
     if (typeof value === 'string') {
       return JSON.parse(value);
     }
   }
 
   set(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    window.hubStorage.setItem('tauceti-' + key, JSON.stringify(value));
   }
 
   remove(key) {
-    localStorage.removeItem(key);
+    window.hubStorage.removeItem('tauceti-' + key);
   }
 
   clear() {
-    localStorage.clear();
+    window.hubStorage.clear();
   }
 }
 
 class IndexedDbBackend {
+  // TODO: Remove with 516
   constructor() {
     this.impl = IMPL_INDEXED_DB;
     /** @type {Promise<IDBDatabase>} */
@@ -96,8 +71,7 @@ class IndexedDbBackend {
       req.onupgradeneeded = () => {
         try {
           req.result.createObjectStore(INDEXED_DB_STORE_NAME);
-        }
-        catch (err) {
+        } catch (err) {
           reject(new Error('Failed to upgrade IDB: ' + req.error));
         }
       };
@@ -109,7 +83,8 @@ class IndexedDbBackend {
   }
 
   getStore(mode) {
-    return this.dbPromise.then(db => db
+    // prettier-ignore
+    return this.dbPromise.then((db) => db
       .transaction(INDEXED_DB_STORE_NAME, mode)
       .objectStore(INDEXED_DB_STORE_NAME));
   }
@@ -156,18 +131,18 @@ class IndexedDbBackend {
 class StorageProxy {
   constructor() {
     this.backendPromise = (async () => {
-      if (testIndexedDb()) {
-        try {
-          const backend = new IndexedDbBackend();
-          await backend.dbPromise;
-          return backend;
+      if (Byond.TRIDENT) {
+        // TODO: Remove with 516
+        if (testIndexedDb()) {
+          try {
+            const backend = new IndexedDbBackend();
+            await backend.dbPromise;
+            return backend;
+          } catch {}
         }
-        catch {}
+      } else if (testHubStorage()) {
+        return new HubStorageBackend();
       }
-      if (testLocalStorage()) {
-        return new LocalStorageBackend();
-      }
-      return new MemoryBackend();
     })();
   }
 

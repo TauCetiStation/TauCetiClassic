@@ -730,4 +730,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if(!check_rights(R_DEBUG))
 		return
 
-	winset(usr, "", "browser-options=find,devtools")
+	if(byond_version < 516)
+		to_chat(src, "<span class='warning'>You can only use this on 516!</span>")
+		return
+
+	to_chat(src, "<span class='info'>You can now right click to use inspect on browsers.</span>")
+	winset(src, "", "browser-options=byondstorage,find,devtools")

@@ -241,7 +241,7 @@ window "outputwindow"
 	elem "legacy_output_selector"
 		type = CHILD
 		pos = 0,0
-		size = 640x480
+		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffffff
@@ -283,7 +283,7 @@ window "output_legacy"
 	elem "output_legacy"
 		type = MAIN
 		pos = 0,0
-		size = 640x480
+		size = 640x456
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = none
@@ -292,7 +292,7 @@ window "output_legacy"
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
-		size = 640x480
+		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
@@ -302,7 +302,7 @@ window "output_browser"
 	elem "output_browser"
 		type = MAIN
 		pos = 0,0
-		size = 640x480
+		size = 640x456
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		background-color = none
@@ -311,7 +311,7 @@ window "output_browser"
 	elem "browseroutput"
 		type = BROWSER
 		pos = 0,0
-		size = 640x480
+		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = none
