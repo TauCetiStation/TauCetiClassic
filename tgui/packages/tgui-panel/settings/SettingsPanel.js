@@ -47,8 +47,7 @@ export const SettingsPanel = (props, context) => {
                       tabId: tab.id,
                     })
                   )
-                }
-              >
+                }>
                 {tab.name}
               </Tabs.Tab>
             ))}
@@ -213,8 +212,7 @@ export const SettingsGeneral = (props, context) => {
                 matchWord: !matchWord,
               })
             )
-          }
-        >
+          }>
           Match word
         </Button.Checkbox>
         <Button.Checkbox
@@ -225,8 +223,7 @@ export const SettingsGeneral = (props, context) => {
                 matchCase: !matchCase,
               })
             )
-          }
-        >
+          }>
           Match case
         </Button.Checkbox>
       </Box>

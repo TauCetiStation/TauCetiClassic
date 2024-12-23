@@ -48,8 +48,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
       <Box
         as="td"
         color={labelColor}
-        className={classes(['LabeledList__cell', 'LabeledList__label'])}
-      >
+        className={classes(['LabeledList__cell', 'LabeledList__label'])}>
         {label ? label + ':' : null}
       </Box>
       <Box
@@ -57,8 +56,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         color={color}
         textAlign={textAlign}
         className={classes(['LabeledList__cell', 'LabeledList__content'])}
-        colSpan={buttons ? undefined : 2}
-      >
+        colSpan={buttons ? undefined : 2}>
         {content}
         {children}
       </Box>
@@ -84,8 +82,7 @@ const LabeledListDivider = (props: LabeledListDividerProps) => {
         style={{
           'padding-top': padding,
           'padding-bottom': padding,
-        }}
-      >
+        }}>
         <Divider />
       </td>
     </tr>

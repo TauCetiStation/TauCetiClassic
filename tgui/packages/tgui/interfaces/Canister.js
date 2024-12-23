@@ -41,8 +41,7 @@ export const Canister = (props, context) => {
               disabled={!canLabel}
               onClick={() => act('relabel')}
             />
-          }
-        >
+          }>
           <LabeledControls>
             <LabeledControls.Item minWidth="66px" label="Pressure">
               <AnimatedNumber
@@ -139,8 +138,7 @@ export const Canister = (props, context) => {
                 onClick={() => act('eject')}
               />
             )
-          }
-        >
+          }>
           {!!hasHoldingTank && (
             <LabeledList>
               <LabeledList.Item label="Label">

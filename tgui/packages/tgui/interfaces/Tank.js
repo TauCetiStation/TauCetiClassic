@@ -22,8 +22,7 @@ export const Tank = (props, context) => {
                   good: [0.35, Infinity],
                   average: [0.15, 0.35],
                   bad: [-Infinity, 0.15],
-                }}
-              >
+                }}>
                 {data.tankPressure + ' kPa'}
               </ProgressBar>
             </LabeledList.Item>

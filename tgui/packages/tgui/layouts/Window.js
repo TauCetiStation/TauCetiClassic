@@ -96,13 +96,11 @@ export class Window extends Component {
             logger.log('pressed close');
             dispatch(backendSuspendStart());
           }}
-          canClose={canClose}
-        >
+          canClose={canClose}>
           {buttons}
         </TitleBar>
         <div
-          className={classes(['Window__rest', debugLayout && 'debug-layout'])}
-        >
+          className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
           {!suspended && children}
           {showDimmer && <div className="Window__dimmer" />}
         </div>
@@ -132,8 +130,7 @@ const WindowContent = (props) => {
   return (
     <Layout.Content
       className={classes(['Window__content', className])}
-      {...rest}
-    >
+      {...rest}>
       {(fitted && children) || (
         <div className="Window__contentPadding">{children}</div>
       )}
@@ -192,8 +189,7 @@ const TitleBar = (props, context) => {
       {process.env.NODE_ENV !== 'production' && (
         <div
           className="TitleBar__devBuildIndicator"
-          onClick={() => dispatch(toggleKitchenSink())}
-        >
+          onClick={() => dispatch(toggleKitchenSink())}>
           <Icon name="bug" />
         </div>
       )}
@@ -202,8 +198,7 @@ const TitleBar = (props, context) => {
           className="TitleBar__close TitleBar__clickable"
           // IE8: Synthetic onClick event doesn't work on IE8.
           // IE8: Use a plain character instead of a unicode symbol.
-          onclick={onClose}
-        >
+          onclick={onClose}>
           ×
         </div>
       )}

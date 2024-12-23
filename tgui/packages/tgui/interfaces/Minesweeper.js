@@ -21,8 +21,7 @@ export const Minesweeper = (props, context) => {
       width={width}
       height={height + 32}
       title={mines}
-      className="Minesweeper__Window"
-    >
+      className="Minesweeper__Window">
       <Window.Content fitted height={height + 32}>
         {grid.map((line) => (
           <>

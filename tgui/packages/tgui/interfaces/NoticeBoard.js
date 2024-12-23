@@ -22,8 +22,7 @@ export const NoticeBoard = (props, context) => {
               color="black"
               backgroundColor="white"
               style={{ padding: '2px 2px 0 2px' }}
-              mb={0.5}
-            >
+              mb={0.5}>
               <Flex.Item align="center" grow={1}>
                 <Box align="center">{notice.name}</Box>
               </Flex.Item>

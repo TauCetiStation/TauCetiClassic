@@ -53,8 +53,7 @@ export class Dropdown extends Component {
         className="Dropdown__menuentry"
         onClick={() => {
           this.setSelected(option);
-        }}
-      >
+        }}>
         {option}
       </Box>
     ));
@@ -101,8 +100,7 @@ export class Dropdown extends Component {
         className={classes([
           (noscroll && 'Dropdown__menu-noscroll') || 'Dropdown__menu',
           over && 'Dropdown__over',
-        ])}
-      >
+        ])}>
         {this.buildMenu()}
       </div>
     ) : null;
@@ -124,8 +122,7 @@ export class Dropdown extends Component {
               return;
             }
             this.setOpen(!this.state.open);
-          }}
-        >
+          }}>
           {icon && (
             <Icon name={icon} rotation={iconRotation} spin={iconSpin} mr={1} />
           )}

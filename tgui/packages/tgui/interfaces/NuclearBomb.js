@@ -75,8 +75,7 @@ export const NuclearBomb = (props, context) => {
                 onClick={() => act('deploy')}
               />
             </Box>
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item label="Диск аутентификации">
               <Box textAlign="right">
@@ -114,8 +113,7 @@ export const NuclearBomb = (props, context) => {
                   good: [0.65, Infinity],
                   average: [0.25, 0.65],
                   bad: [-Infinity, 0.25],
-                }}
-              >
+                }}>
                 {timeLeft} секунд
               </ProgressBar>
             </LabeledList.Item>

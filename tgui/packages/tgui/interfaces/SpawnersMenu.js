@@ -47,16 +47,14 @@ export const SpawnersMenu = (props, context) => {
                       }
                     />
                   </>
-                }
-              >
+                }>
                 <LabeledList>
                   {spawner.time_left && (
                     <LabeledList.Item
                       label={
                         spawner.time_type === 1 ? 'Регистрация' : 'Доступно'
                       }
-                      color={spawner.time_type === 1 ? 'green' : 'red'}
-                    >
+                      color={spawner.time_type === 1 ? 'green' : 'red'}>
                       {formatTime(spawner.time_left)}
                     </LabeledList.Item>
                   )}

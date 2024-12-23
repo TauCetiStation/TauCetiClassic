@@ -91,8 +91,7 @@ const Options = (props, context) => {
             ml={0.2}
             icon="copy"
             textAlign="center"
-            onClick={() => act('make_copy')}
-          >
+            onClick={() => act('make_copy')}>
             Copy
           </Button>
         </Flex.Item>
@@ -102,8 +101,7 @@ const Options = (props, context) => {
         textAlign="center"
         icon="reply"
         fluid
-        onClick={() => act('remove')}
-      >
+        onClick={() => act('remove')}>
         Remove item
       </Button>
     </Section>
@@ -122,8 +120,7 @@ const AIOptions = (props, context) => {
           icon="images"
           textAlign="center"
           disabled={!can_AI_print}
-          onClick={() => act('ai_photo')}
-        >
+          onClick={() => act('ai_photo')}>
           Print photo from database
         </Button>
       </Box>

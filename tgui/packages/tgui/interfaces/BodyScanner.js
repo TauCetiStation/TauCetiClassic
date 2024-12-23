@@ -110,8 +110,7 @@ const BodyScannerMainOccupant = (props, context) => {
             Извлечь
           </Button>
         </Fragment>
-      }
-    >
+      }>
       <LabeledList>
         <LabeledList.Item label="Имя">{occupant.name}</LabeledList.Item>
         <LabeledList.Item label="Здоровье">
@@ -136,14 +135,12 @@ const BodyScannerMainOccupant = (props, context) => {
                 good: [0.8, Infinity],
                 average: [0.6, 0.8],
                 bad: [-Infinity, 0.6],
-              }}
-            >
+              }}>
               <Box
                 inline
                 style={{
                   float: 'left',
-                }}
-              >
+                }}>
                 {occupant.blood.pulse} уд/мин
               </Box>
               <Box inline>{occupant.blood.percent}%</Box>
@@ -235,8 +232,7 @@ const BodyScannerMainDamageBar = (props) => {
       value={props.value / 100}
       mt="0.5rem"
       mb={!!props.marginBottom && '0.5rem'}
-      ranges={damageRange}
-    >
+      ranges={damageRange}>
       {round(props.value, 0)}
     </ProgressBar>
   );
@@ -263,8 +259,7 @@ const BodyScannerMainOrgansExternal = (props) => {
           <Table.Row
             key={i}
             textTransform="capitalize"
-            backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}
-          >
+            backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}>
             <Table.Cell
               color={
                 ((!!o.status.dead ||
@@ -280,8 +275,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                   'average') ||
                 (!!o.status.robotic && 'label')
               }
-              width="33%"
-            >
+              width="33%">
               {o.name}
             </Table.Cell>
             <Table.Cell textAlign="center" q>
@@ -290,14 +284,12 @@ const BodyScannerMainOrgansExternal = (props) => {
                 max={o.maxHealth}
                 mt={i > 0 && '0.5rem'}
                 value={o.totalLoss / o.maxHealth}
-                ranges={damageRange}
-              >
+                ranges={damageRange}>
                 <Box
                   inline
                   style={{
                     float: 'left',
-                  }}
-                >
+                  }}>
                   {!!o.bruteLoss && (
                     <Box inline position="relative">
                       <Icon name="bone" />
@@ -318,8 +310,7 @@ const BodyScannerMainOrgansExternal = (props) => {
               textAlign="right"
               verticalAlign="top"
               width="33%"
-              pt={i > 0 && 'calc(0.5rem + 2px)'}
-            >
+              pt={i > 0 && 'calc(0.5rem + 2px)'}>
               <Box inline>
                 <Box color="bad" bold>
                   {reduceOrganStatus([
@@ -382,16 +373,14 @@ const BodyScannerMainOrgansInternal = (props) => {
           <Table.Row
             key={i}
             textTransform="capitalize"
-            backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}
-          >
+            backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}>
             <Table.Cell
               color={
                 ((!!o.dead || !!o.broken) && 'bad') ||
                 (!!o.robotic && 'label') ||
                 ((!!o.germ_level || !!o.bruised) && 'average')
               }
-              width="33%"
-            >
+              width="33%">
               {o.name}
             </Table.Cell>
             <Table.Cell textAlign="center">
@@ -400,8 +389,7 @@ const BodyScannerMainOrgansInternal = (props) => {
                 max={o.maxHealth}
                 value={o.damage / o.maxHealth}
                 mt={i > 0 && '0.5rem'}
-                ranges={damageRange}
-              >
+                ranges={damageRange}>
                 {round(o.damage, 0)}
               </ProgressBar>
             </Table.Cell>
@@ -409,8 +397,7 @@ const BodyScannerMainOrgansInternal = (props) => {
               textAlign="right"
               verticalAlign="top"
               width="33%"
-              pt={i > 0 && 'calc(0.5rem + 2px)'}
-            >
+              pt={i > 0 && 'calc(0.5rem + 2px)'}>
               <Box inline>
                 <Box color="average">
                   {reduceOrganStatus([!!o.germ_level && o.germ_level])}

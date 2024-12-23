@@ -156,8 +156,7 @@ export const ListInput = (props, context) => {
                   }}
                   compact
                 />
-              }
-            >
+              }>
               <Flex wrap="wrap">
                 {displayedArray.map((button) => (
                   <Flex.Item key={button} basis="100%">

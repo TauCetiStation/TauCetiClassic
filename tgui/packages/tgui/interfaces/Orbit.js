@@ -72,8 +72,7 @@ const OrbitedButton = (props, context) => {
         act('orbit', {
           ref: thing.ref,
         })
-      }
-    >
+      }>
       {thing.name}
     </Button>
   );

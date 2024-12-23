@@ -81,12 +81,10 @@ export const Panel = (props, context) => {
                   rightSlot={
                     <Button
                       color="white"
-                      onClick={() => Byond.command('.reconnect')}
-                    >
+                      onClick={() => Byond.command('.reconnect')}>
                       Reconnect
                     </Button>
-                  }
-                >
+                  }>
                   You are either AFK, experiencing lag or the connection has
                   closed.
                 </Notifications.Item>
@@ -118,8 +116,7 @@ const HoboPanel = (props, context) => {
             'z-index': 1000,
           }}
           selected={settings.visible}
-          onClick={() => settings.toggle()}
-        >
+          onClick={() => settings.toggle()}>
           Settings
         </Button>
         {(settings.visible && <SettingsPanel />) || (

@@ -72,12 +72,10 @@ const CryoContent = (props, context) => {
           <Button
             icon={isOpen ? 'toggle-off' : 'toggle-on'}
             onClick={() => act(isOpen ? 'close' : 'open')}
-            selected={!isOpen}
-          >
+            selected={!isOpen}>
             {isOpen ? 'Открыто' : 'Закрыто'}
           </Button>
-        }
-      >
+        }>
         {hasOccupant ? (
           <LabeledList>
             <LabeledList.Item label="Пациент">
@@ -88,15 +86,13 @@ const CryoContent = (props, context) => {
                 min={occupant.health}
                 max={occupant.maxHealth}
                 value={occupant.health / occupant.maxHealth}
-                color={occupant.health > 0 ? 'good' : 'average'}
-              >
+                color={occupant.health > 0 ? 'good' : 'average'}>
                 <AnimatedNumber value={Math.round(occupant.health)} />
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item
               label="Состояние"
-              color={statNames[occupant.stat][0]}
-            >
+              color={statNames[occupant.stat][0]}>
               {statNames[occupant.stat][1]}
             </LabeledList.Item>
             <LabeledList.Item label="Температура">
@@ -108,8 +104,7 @@ const CryoContent = (props, context) => {
               <LabeledList.Item key={damageType.id} label={damageType.label}>
                 <ProgressBar
                   value={occupant[damageType.type] / 100}
-                  ranges={{ bad: [0.25, Infinity] }}
-                >
+                  ranges={{ bad: [0.25, Infinity] }}>
                   <AnimatedNumber
                     value={Math.round(occupant[damageType.type])}
                   />
@@ -133,28 +128,24 @@ const CryoContent = (props, context) => {
           <Button
             icon="eject"
             onClick={() => act('ejectBeaker')}
-            disabled={!isBeakerLoaded}
-          >
+            disabled={!isBeakerLoaded}>
             Извлечь сосуд
           </Button>
-        }
-      >
+        }>
         <LabeledList>
           <LabeledList.Item label="Питание">
             <Button
               icon="power-off"
               onClick={() => act(isOperating ? 'switchOff' : 'switchOn')}
               selected={isOperating}
-              disabled={isOpen || !hasAir}
-            >
+              disabled={isOpen || !hasAir}>
               {isOperating ? 'Вкл' : 'Выкл'}
             </Button>
           </LabeledList.Item>
           {hasAir ? (
             <LabeledList.Item
               label="Температура воздуха"
-              color={cellTemperatureStatus}
-            >
+              color={cellTemperatureStatus}>
               <AnimatedNumber value={cellTemperature} /> K
             </LabeledList.Item>
           ) : (

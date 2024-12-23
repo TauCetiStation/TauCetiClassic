@@ -39,12 +39,10 @@ export const MiningOreProcessingConsole = (props, context) => {
             <Button
               icon="power-off"
               selected={power}
-              onClick={() => act('power')}
-            >
+              onClick={() => act('power')}>
               {power ? 'Processing' : 'Disabled'}
             </Button>
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item
               label="Current unclaimed points"
@@ -52,12 +50,10 @@ export const MiningOreProcessingConsole = (props, context) => {
                 <Button
                   disabled={unclaimedPoints < 1}
                   icon="download"
-                  onClick={() => act('claim')}
-                >
+                  onClick={() => act('claim')}>
                   Claim
                 </Button>
-              }
-            >
+              }>
               <AnimatedNumber value={unclaimedPoints} />
             </LabeledList.Item>
           </LabeledList>
@@ -106,12 +102,10 @@ const MOPCOres = (props, context) => {
         <Button
           icon={showAllOres ? 'toggle-on' : 'toggle-off'}
           selected={showAllOres}
-          onClick={() => act('showAllOres')}
-        >
+          onClick={() => act('showAllOres')}>
           {showAllOres ? 'All Ores' : 'Ores in Machine'}
         </Button>
-      }
-    >
+      }>
       <LabeledList>
         {(ores.length &&
           ores.sort().map((ore) => (
@@ -136,8 +130,7 @@ const MOPCOres = (props, context) => {
                     })
                   }
                 />
-              }
-            >
+              }>
               <Box inline>
                 <AnimatedNumber value={ore.amount} />
               </Box>
@@ -155,8 +148,7 @@ const MOPCOres = (props, context) => {
               ore_values.sort().map((item) => (
                 <LabeledList.Item
                   key={item.name}
-                  label={toTitleCase(item.name)}
-                >
+                  label={toTitleCase(item.name)}>
                   {item.amount} points
                 </LabeledList.Item>
               ))}

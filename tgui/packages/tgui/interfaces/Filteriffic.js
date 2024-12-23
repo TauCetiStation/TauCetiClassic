@@ -252,8 +252,7 @@ const FilterEntry = (props, context) => {
             onClick={() => act('remove_filter', { name: name })}
           />
         </>
-      }
-    >
+      }>
       <Section level={2}>
         <LabeledList>
           {targetFilterPossibleKeys.map((entryName) => {
@@ -338,8 +337,7 @@ export const Filteriffic = (props, context) => {
                 })
               }
             />
-          }
-        >
+          }>
           {!hasFilters ? (
             <Box>No filters</Box>
           ) : (

@@ -13,15 +13,13 @@ export const GuestPass = (props, context) => {
           <Tabs.Tab
             icon="id-card"
             selected={!data.showlogs}
-            onClick={() => act('mode', { mode: 0 })}
-          >
+            onClick={() => act('mode', { mode: 0 })}>
             Issue Pass
           </Tabs.Tab>
           <Tabs.Tab
             icon="scroll"
             selected={data.showlogs}
-            onClick={() => act('mode', { mode: 1 })}
-          >
+            onClick={() => act('mode', { mode: 1 })}>
             Records ({data.issue_log.length})
           </Tabs.Tab>
         </Tabs>

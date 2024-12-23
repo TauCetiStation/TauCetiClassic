@@ -47,8 +47,7 @@ export const ChatPageSettings = (props, context) => {
                   pageId: page.id,
                 })
               )
-            }
-          >
+            }>
             Remove
           </Button>
         </Stack.Item>
@@ -68,8 +67,7 @@ export const ChatPageSettings = (props, context) => {
                   type: typeDef.type,
                 })
               )
-            }
-          >
+            }>
             {typeDef.name}
           </Button.Checkbox>
         ))}
@@ -87,8 +85,7 @@ export const ChatPageSettings = (props, context) => {
                     type: typeDef.type,
                   })
                 )
-              }
-            >
+              }>
               {typeDef.name}
             </Button.Checkbox>
           ))}

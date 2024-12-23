@@ -458,8 +458,7 @@ export const Particool = (props, context) => {
                 onClick={() => act('remove_particle')}
               />
             )
-          }
-        >
+          }>
           <GeneratorHelp />
           {!hasParticles ? (
             <Box>No particle</Box>

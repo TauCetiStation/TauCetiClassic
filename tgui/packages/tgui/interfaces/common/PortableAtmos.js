@@ -33,8 +33,7 @@ export const PortableBasicInfo = (props, context) => {
             selected={on}
             onClick={() => act('power')}
           />
-        }
-      >
+        }>
         <LabeledList>
           <LabeledList.Item label="Pressure">
             <AnimatedNumber value={pressure} />
@@ -73,8 +72,7 @@ export const PortableBasicInfo = (props, context) => {
             disabled={!holding}
             onClick={() => act('eject')}
           />
-        }
-      >
+        }>
         {holding ? (
           <LabeledList>
             <LabeledList.Item label="Label">{holding.name}</LabeledList.Item>

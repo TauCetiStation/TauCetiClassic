@@ -77,8 +77,7 @@ const ApcContent = (props, context) => {
                 disabled={isLocked}
                 onClick={() => act('breaker')}
               />
-            }
-          >
+            }>
             [ {externalPowerStatus.externalPowerText} ]
           </LabeledList.Item>
           <LabeledList.Item label="Аккумулятор">
@@ -100,8 +99,7 @@ const ApcContent = (props, context) => {
                 disabled={isLocked}
                 onClick={() => act('charge')}
               />
-            }
-          >
+            }>
             [ {chargingStatus.chargingText} ]
           </LabeledList.Item>
         </LabeledList>
@@ -119,8 +117,7 @@ const ApcContent = (props, context) => {
                     <Box
                       inline
                       mx={2}
-                      color={channel.status >= 2 ? 'good' : 'bad'}
-                    >
+                      color={channel.status >= 2 ? 'good' : 'bad'}>
                       {channel.status >= 2 ? 'Вкл.' : 'Выкл.'}
                     </Box>
                     <Button
@@ -148,8 +145,7 @@ const ApcContent = (props, context) => {
                       onClick={() => act('channel', topicParams.off)}
                     />
                   </>
-                }
-              >
+                }>
                 {channel.powerLoad}
               </LabeledList.Item>
             );
@@ -179,8 +175,7 @@ const ApcContent = (props, context) => {
               />
             </>
           )
-        }
-      >
+        }>
         <LabeledList>
           <LabeledList.Item
             label="Крышка"

@@ -170,8 +170,7 @@ const Choices = (_, context) => {
               onClick={() => setInfoModalOpen(true)}
             />
           ) : undefined
-        }
-      >
+        }>
         {!!currentPoll && currentPoll.choices.length !== 0 ? (
           <Fragment>
             {!currentPoll.showWarning ? (
@@ -199,8 +198,7 @@ const Choices = (_, context) => {
                         act('putVote', {
                           choiceRef: choice.ref,
                         })
-                      }
-                    >
+                      }>
                       {choice.name.replace(/^\w/, (c) => c.toUpperCase())}
                     </Button>
                     {!!choice.selected && (
@@ -252,8 +250,7 @@ const ListPolls = (_, context) => {
                               act('toggleAdminOnly', {
                                 pollRef: poll.type,
                               })
-                            }
-                          >
+                            }>
                             {poll.adminOnly
                               ? 'Только админы'
                               : 'Разрешено всем'}
@@ -309,8 +306,7 @@ const Timer = (_, context) => {
             <Button
               color="red"
               disabled={!isAdmin}
-              onClick={() => act('cancelVote')}
-            >
+              onClick={() => act('cancelVote')}>
               Отменить голосование
             </Button>
           )}

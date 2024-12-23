@@ -37,8 +37,7 @@ export const MafiaPanel = (props, context) => {
                   act('mf_action', {
                     atype: action,
                   })
-                }
-              >
+                }>
                 {action}
               </Button>
             </Stack.Item>
@@ -122,8 +121,7 @@ const MafiaLobby = (props, context) => {
             onClick={() => act('mf_spectate')}
           />
         </>
-      }
-    >
+      }>
       <NoticeBox info>
         В лобби {readyGhosts ? readyGhosts.length : '0'}/12 валидных игроков.
       </NoticeBox>
@@ -155,12 +153,10 @@ const MafiaRole = (props, context) => {
             'font-size': '14px',
             'line-height': 1.5,
             'font-weight': 'bold',
-          }}
-        >
+          }}>
           <TimeDisplay auto="down" value={timeleft} />
         </Box>
-      }
-    >
+      }>
       <Stack align="center">
         <Stack.Item grow textAlign="center">
           <Box bold>Вы - {roleinfo.role}</Box>
@@ -215,15 +211,13 @@ const MafiaListOfRoles = (props, context) => {
             но на других туда будут записываться ваши действия(детективные расследования)`}
           />
         </>
-      }
-    >
+      }>
       <Flex direction="column">
         {all_roles?.map((r) => (
           <Flex.Item
             key={r}
             height="30px"
-            className="Section__title candystripe"
-          >
+            className="Section__title candystripe">
             <Flex height="18px" align="center" justify="space-between">
               <Flex.Item>{r}</Flex.Item>
               <Flex.Item textAlign="right">
@@ -263,8 +257,7 @@ const MafiaJudgement = (props, context) => {
           Вы можете не голосовать, нажав на среднюю кнопку.
           `}
         />
-      }
-    >
+      }>
       <Flex justify="space-around">
         <Button
           icon="smile-beam"
@@ -281,8 +274,7 @@ const MafiaJudgement = (props, context) => {
           icon="angry"
           color="bad"
           disabled={!judgement_phase}
-          onClick={() => act('vote_guilty')}
-        >
+          onClick={() => act('vote_guilty')}>
           ВИНОВЕН!
         </Button>
       </Flex>
@@ -291,8 +283,7 @@ const MafiaJudgement = (props, context) => {
           icon="meh"
           color="white"
           disabled={!judgement_phase}
-          onClick={() => act('vote_abstain')}
-        >
+          onClick={() => act('vote_abstain')}>
           Воздержаться
         </Button>
       </Flex>
@@ -310,8 +301,7 @@ const MafiaPlayers = (props, context) => {
           <Flex.Item
             height="30px"
             className="Section__title candystripe"
-            key={player.ref}
-          >
+            key={player.ref}>
             <Stack height="18px" align="center">
               <Stack.Item grow color={!player.alive && 'red'}>
                 {player.name} {!player.alive && '(МЁРТВ)'}
@@ -330,8 +320,7 @@ const MafiaPlayers = (props, context) => {
                         atype: action,
                         target: player.ref,
                       })
-                    }
-                  >
+                    }>
                     {action}
                   </Button>
                 ))}
@@ -368,16 +357,14 @@ const MafiaAdmin = (props, context) => {
                     это нужно на тот случай, если какой-то игрок
                     каким-то образом сбегает (nullspace, телепортации, открытая дверь).
                     В любом случае, ОЧЕНЬ ПЛОХО ЕСЛИ ЭТО ПРОИЗОЙДЕТ.
-                    Используй это, чтобы игроков вернуть, а затем сообщи на гитхаб.`}
-        >
+                    Используй это, чтобы игроков вернуть, а затем сообщи на гитхаб.`}>
           Отправить Всех Домой
         </Button>
         <Button
           icon="sync-alt"
           onClick={() => act('new_game')}
           tooltip={multiline`
-                    Это незамедлительно завершает текущую игру и попытается начать новую`}
-        >
+                    Это незамедлительно завершает текущую игру и попытается начать новую`}>
           Новая Игра
         </Button>
         <Button
@@ -386,8 +373,7 @@ const MafiaAdmin = (props, context) => {
           tooltip={multiline`
                     Удаляет датумы, очищает все landmarks, убивает всех жителей и мафию,
                     стирает место игры. Нажми это, если действительно всё поломано.
-                    Ты ведь уже всё сломал, не так ли?`}
-        >
+                    Ты ведь уже всё сломал, не так ли?`}>
           Nuke
         </Button>
         <br />
@@ -397,8 +383,7 @@ const MafiaAdmin = (props, context) => {
           tooltip={multiline`
                     Это позволит создать свою настройку для игры, это так... просто.
                     Вы добавляете роль до тех пор, пока не нажмёте CANCEL или FINISH.
-                    Сбрасывается после завершения раунда, возвращая случайные настройки.`}
-        >
+                    Сбрасывается после завершения раунда, возвращая случайные настройки.`}>
           Создать Свою Игру
         </Button>
         <Button
@@ -406,8 +391,7 @@ const MafiaAdmin = (props, context) => {
           onClick={() => act('cancel_setup')}
           tooltip={multiline`
                     Если вы что-то напутали, то можете сюда нажать, чтобы сбросить свою настройку.
-                    Игра автоматически сбрасывает её после каждой игры.`}
-        >
+                    Игра автоматически сбрасывает её после каждой игры.`}>
           Сбросить Свою Игру
         </Button>
       </Section>

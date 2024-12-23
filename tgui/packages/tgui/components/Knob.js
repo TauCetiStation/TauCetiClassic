@@ -52,8 +52,7 @@ export const Knob = (props) => {
         suppressFlicker,
         unit,
         value,
-      }}
-    >
+      }}>
       {(control) => {
         const {
           dragging,
@@ -89,15 +88,13 @@ export const Knob = (props) => {
               },
               ...rest,
             })}
-            onMouseDown={handleDragStart}
-          >
+            onMouseDown={handleDragStart}>
             <div className="Knob__circle">
               <div
                 className="Knob__cursorBox"
                 style={{
                   transform: `rotate(${rotation}deg)`,
-                }}
-              >
+                }}>
                 <div className="Knob__cursor" />
               </div>
             </div>
@@ -106,14 +103,12 @@ export const Knob = (props) => {
             )}
             <svg
               className="Knob__ring Knob__ringTrackPivot"
-              viewBox="0 0 100 100"
-            >
+              viewBox="0 0 100 100">
               <circle className="Knob__ringTrack" cx="50" cy="50" r="50" />
             </svg>
             <svg
               className="Knob__ring Knob__ringFillPivot"
-              viewBox="0 0 100 100"
-            >
+              viewBox="0 0 100 100">
               <circle
                 className="Knob__ringFill"
                 style={{

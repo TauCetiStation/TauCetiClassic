@@ -88,8 +88,7 @@ export const Button = (props) => {
           return;
         }
       }}
-      {...rest}
-    >
+      {...rest}>
       {icon && iconPosition !== 'right' && (
         <Icon
           name={icon}
@@ -253,8 +252,7 @@ export class ButtonInput extends Component {
           'Button--color--' + color,
         ])}
         {...rest}
-        onClick={() => this.setInInput(true)}
-      >
+        onClick={() => this.setInInput(true)}>
         {icon && <Icon name={icon} rotation={iconRotation} spin={iconSpin} />}
         <div>{content}</div>
         <input

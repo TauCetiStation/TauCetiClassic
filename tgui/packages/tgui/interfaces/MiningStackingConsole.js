@@ -40,12 +40,10 @@ export const MiningStackingConsole = (props, context) => {
                       icon="eject"
                       onClick={() =>
                         act('release_stack', { stack: stack.type })
-                      }
-                    >
+                      }>
                       Eject
                     </Button>
-                  }
-                >
+                  }>
                   <AnimatedNumber value={stack.amt} />
                 </LabeledList.Item>
               ))) || (

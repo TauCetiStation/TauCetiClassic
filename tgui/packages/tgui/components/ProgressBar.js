@@ -31,8 +31,7 @@ export const ProgressBar = (props) => {
         className,
         computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(rest)}
-    >
+      {...computeBoxProps(rest)}>
       <div
         className="ProgressBar__fill ProgressBar__fill--animated"
         style={{

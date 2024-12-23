@@ -25,8 +25,7 @@ export const PortablePump = (props, context) => {
               selected={direction}
               onClick={() => act('direction')}
             />
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item label="Output">
               <NumberInput

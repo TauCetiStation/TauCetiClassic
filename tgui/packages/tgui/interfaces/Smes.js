@@ -56,12 +56,10 @@ export const Smes = (props, context) => {
                 <Button
                   icon={inputAttempt ? 'sync-alt' : 'times'}
                   selected={inputAttempt}
-                  onClick={() => act('tryinput')}
-                >
+                  onClick={() => act('tryinput')}>
                   {inputAttempt ? 'Auto' : 'Off'}
                 </Button>
-              }
-            >
+              }>
               <Box color={inputState}>
                 {(capacityPercent >= 100 && 'Fully Charged') ||
                   (inputting && 'Charging') ||
@@ -141,12 +139,10 @@ export const Smes = (props, context) => {
                 <Button
                   icon={outputAttempt ? 'power-off' : 'times'}
                   selected={outputAttempt}
-                  onClick={() => act('tryoutput')}
-                >
+                  onClick={() => act('tryoutput')}>
                   {outputAttempt ? 'On' : 'Off'}
                 </Button>
-              }
-            >
+              }>
               <Box color={outputState}>
                 {outputting
                   ? 'Sending'

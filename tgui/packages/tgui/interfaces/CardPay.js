@@ -61,8 +61,7 @@ export const CardPay = (props, context) => {
       theme=""
       width={220}
       height={340}
-      titleClassName="cardpay_window-titlebar"
-    >
+      titleClassName="cardpay_window-titlebar">
       <Window.Content className="cardpay_window-contents">
         <Box className="cardpay_monitor">
           <SegmentDisplay
@@ -76,8 +75,7 @@ export const CardPay = (props, context) => {
           height="208px"
           position="absolute"
           left="32px"
-          top="95px"
-        >
+          top="95px">
           {buttons}
           <Button
             className="cardpay_button cardpay_button--red"
@@ -113,8 +111,7 @@ export const CardPay = (props, context) => {
           left="25px"
           textColor="#333344"
           fontSize={0.85}
-          bold={1}
-        >
+          bold={1}>
           сброс
           <Button
             position="absolute"

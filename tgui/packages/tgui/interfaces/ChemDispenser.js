@@ -72,8 +72,7 @@ export const ChemDispenser = (_, context) => {
                 }
               />
             </>
-          }
-        >
+          }>
           {chemicals.map((chemical) => (
             <Button
               disabled={!isBeakerLoaded}
@@ -99,8 +98,7 @@ export const ChemDispenser = (_, context) => {
               disabled={!isBeakerLoaded}
               onClick={() => act('eject_beaker')}
             />
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item label={glass ? 'Glass' : 'Beaker'}>
               {(isBeakerLoaded && (

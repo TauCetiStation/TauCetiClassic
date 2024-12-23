@@ -70,16 +70,14 @@ export class AlertModal extends Component {
         {timeout && <Loader value={timeout} />}
         <Window.Content
           onFocus={focusCurrentButton}
-          onClick={focusCurrentButton}
-        >
+          onClick={focusCurrentButton}>
           <Section fill>
             <Flex direction="column">
               <Flex.Item grow={1}>
                 <Flex
                   direction="column"
                   className="AlertModal__Message"
-                  textAlign="center"
-                >
+                  textAlign="center">
                   <Flex.Item>
                     <Box m={1}>{message}</Box>
                   </Flex.Item>
@@ -114,8 +112,7 @@ export class AlertModal extends Component {
                           ) {
                             this.setCurrent(current + 1, keyCode === KEY_RIGHT);
                           }
-                        }}
-                      >
+                        }}>
                         {button}
                       </div>
                     </Flex.Item>

@@ -58,8 +58,7 @@ export const Autolathe = (props, context) => {
               selected={categories[category]}
               onSelected={(val) => setCategory(categories.indexOf(val))}
             />
-          }
-        >
+          }>
           <Input
             autoFocus
             fluid
@@ -84,8 +83,7 @@ export const Autolathe = (props, context) => {
                   icon="hammer"
                   iconSpin={busy === recipe.name}
                   disabled={!canBeMade(recipe, materials)}
-                  onClick={() => act('make', { make: recipe.ref })}
-                >
+                  onClick={() => act('make', { make: recipe.ref })}>
                   {toTitleCase(recipe.name)}
                 </Button>
                 {recipe.max_mult > 1 && (
@@ -153,8 +151,7 @@ const MaterialAmount = (props, context) => {
         <Box
           className={classes(['sheetmaterials32x32', csspath])}
           position="relative"
-          style={style}
-        >
+          style={style}>
           <Tooltip position="bottom" content={toTitleCase(name)} />
         </Box>
       </Flex.Item>
@@ -193,8 +190,7 @@ const MultButton = (recipe, materials, act, mult) => {
       <Button
         color={(recipe.hidden && 'red') || null}
         disabled={!canBeMade(recipe, materials, mult)}
-        onClick={() => act('make', { make: recipe.ref, multiplier: mult })}
-      >
+        onClick={() => act('make', { make: recipe.ref, multiplier: mult })}>
         x{mult}
       </Button>
     );

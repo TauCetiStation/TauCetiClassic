@@ -14,8 +14,7 @@ export const Wires = (props, context) => {
         wires.length * 25 +
         (statuses.length > 0 ? 35 : 0) +
         statuses.length * 12
-      }
-    >
+      }>
       <Window.Content>
         <Section>
           <LabeledList>

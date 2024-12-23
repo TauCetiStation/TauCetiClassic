@@ -20,8 +20,7 @@ export const SegmentDisplay = (props) => {
       height={display_height + 'px'}
       overflow="hidden"
       position="relative"
-      {...rest}
-    >
+      {...rest}>
       <Box
         width={segments_width + 'px'}
         height={segment_height + 'px'}
@@ -31,8 +30,7 @@ export const SegmentDisplay = (props) => {
         fontSize={display_height + 'px'}
         textAlign="right"
         fontFamily="Gys14Segment"
-        bold={0}
-      >
+        bold={0}>
         {' '}
         {segments}{' '}
       </Box>
@@ -45,8 +43,7 @@ export const SegmentDisplay = (props) => {
         fontSize={display_height + 'px'}
         textAlign="right"
         fontFamily="Gys14Segment"
-        bold={0}
-      >
+        bold={0}>
         {' '}
         {display_text}{' '}
       </Box>

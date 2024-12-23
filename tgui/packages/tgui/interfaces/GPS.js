@@ -105,8 +105,7 @@ const Settings = (properties, context) => {
           content={active ? 'On' : 'Off'}
           onClick={() => act('toggle')}
         />
-      }
-    >
+      }>
       <LabeledList>
         <LabeledList.Item label="Tag">
           <Input
@@ -120,8 +119,7 @@ const Settings = (properties, context) => {
             width="20px"
             mb="0"
             ml="0.25rem"
-            onClick={() => act('tag', { newtag: newTag })}
-          >
+            onClick={() => act('tag', { newtag: newTag })}>
             <Icon name="pen" />
           </Button>
         </LabeledList.Item>
@@ -168,15 +166,13 @@ const Signals = (properties, context) => {
           .map((signal, i) => (
             <Table.Row
               key={i}
-              backgroundColor={i % 2 === 0 && 'rgba(255, 255, 255, 0.05)'}
-            >
+              backgroundColor={i % 2 === 0 && 'rgba(255, 255, 255, 0.05)'}>
               <Table.Cell
                 width="30%"
                 verticalAlign="middle"
                 color="label"
                 p="0.25rem"
-                bold
-              >
+                bold>
                 {signal.tag}
               </Table.Cell>
               <Table.Cell verticalAlign="middle" color="grey">
@@ -188,8 +184,7 @@ const Signals = (properties, context) => {
                     opacity={Math.max(
                       1 - Math.min(signal.distance, 100) / 100,
                       0.5
-                    )}
-                  >
+                    )}>
                     <Icon
                       name={signal.distance > 0 ? 'arrow-right' : 'circle'}
                       rotation={-signal.angle}

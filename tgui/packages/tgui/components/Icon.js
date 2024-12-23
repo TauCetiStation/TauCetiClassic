@@ -58,8 +58,7 @@ export const IconStack = (props) => {
       as="span"
       class={classes(['IconStack', className])}
       style={style}
-      {...rest}
-    >
+      {...rest}>
       {children}
     </Box>
   );

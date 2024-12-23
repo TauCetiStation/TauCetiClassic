@@ -213,8 +213,7 @@ const SectSelectTab = (props, context) => {
           <Collapsible
             key={sect.name}
             title={<b>{sect.name}</b>}
-            color="transparent"
-          >
+            color="transparent">
             <Stack.Item key={sect.name}>
               <BlockQuote>
                 <Box>
@@ -238,8 +237,7 @@ const SectSelectTab = (props, context) => {
                   act('sect_select', {
                     path: sect.path,
                   })
-                }
-              >
+                }>
                 {sect.aspects_count ? 'Create' : 'Select'} {sect.name}
               </Button>
             </Stack.Item>
@@ -264,8 +262,7 @@ const Encyclopedia = (props, context) => {
             fluid
             key={category}
             selected={cat === category}
-            onClick={() => setCat(category)}
-          >
+            onClick={() => setCat(category)}>
             {toTitleCase(category)}
           </Tabs.Tab>
         ))}
@@ -421,8 +418,7 @@ const EAspectsTab = (props, context) => {
         <Section
           key={aspect.name}
           color={ASPECT2COLOR[aspect.name]}
-          title={aspect.name}
-        >
+          title={aspect.name}>
           <BlockQuote>
             <Box>{aspect.desc}</Box>
             {aspect.god_desc && (
@@ -555,8 +551,7 @@ const EReactionsTab = (props, context) => {
             capitalize(reaction.convertable_id) +
             ' to ' +
             capitalize(reaction.result_id)
-          }
-        >
+          }>
           <BlockQuote>
             {GetAspectBox('Needed Aspects:', reaction.needed_aspects, false)}
             {reaction.favor_cost ? <br /> : ''}
@@ -611,8 +606,7 @@ const RiteTab = (props, context) => {
                       act('perform_rite', {
                         rite_name: rite.name,
                       })
-                    }
-                  >
+                    }>
                     Invoke
                   </Button>
                   <Button
@@ -635,13 +629,11 @@ const RiteTab = (props, context) => {
                       act('talismaning_rite', {
                         rite_name: rite.name,
                       })
-                    }
-                  >
+                    }>
                     Talismaning
                   </Button>
                 </>
-              }
-            >
+              }>
               <Box color={favor < rite.favor_cost ? 'red' : 'yellow'} mb={0.5}>
                 <Icon name="star" /> Costs: {rite.favor_cost} favor
                 {rite.piety_cost > 0
