@@ -62,6 +62,10 @@ function task-test {
   yarn run jest
 }
 
+function task-prettier {
+  npx prettier --check packages @Args
+}
+
 ## Mr. Proper
 function task-clean {
   ## Build artifacts
@@ -125,6 +129,26 @@ if ($Args.Length -gt 0) {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-test @Rest
+    exit 0
+  }
+
+  ## Continuous integration scenario
+  if ($Args[0] -eq "--ci") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-clean
+    task-install
+    task-prettier
+    task-test @Rest
+    task-lint
+    task-webpack --mode=production
+    task-validate-build
+    exit 0
+  }
+
+  ## ## Run prettier
+  if ($Args[0] -eq "--prettier") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-prettier --write
     exit 0
   }
 

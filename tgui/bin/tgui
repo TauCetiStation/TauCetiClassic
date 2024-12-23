@@ -76,6 +76,11 @@ task-test() {
   yarn run jest
 }
 
+task-prettier() {
+  cd "${base_dir}"
+  npx prettier --check packages "${@}"
+}
+
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
@@ -158,9 +163,17 @@ fi
 if [[ ${1} == "--ci" ]]; then
   task-clean
   task-install
+  task-prettier
   task-lint
   task-webpack --mode=production
   task-validate-build
+  exit 0
+fi
+
+## Run prettier
+if [[ ${1} == '--prettier' ]]; then
+  shift 1
+  task-prettier --write "${@}"
   exit 0
 fi
 
