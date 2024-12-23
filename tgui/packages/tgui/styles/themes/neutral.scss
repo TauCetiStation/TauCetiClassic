@@ -6,7 +6,7 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$neutral: hsl(42.1, 100.0%, 50.0%);
+$neutral: hsl(42.1, 100%, 50%);
 
 @use '../colors.scss' with (
   $primary: $neutral,

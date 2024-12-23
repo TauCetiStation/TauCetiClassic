@@ -7,7 +7,7 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: hsl(0.0, 98.6%, 28.6%),
+  $primary: hsl(0, 98.6%, 28.6%),
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
@@ -25,23 +25,23 @@
     '../components/Button.scss',
     $with: (
       'color-default': colors.$primary,
-      'color-disabled': hsl(0.0, 0.0%, 21.2%),
+      'color-disabled': hsl(0, 0%, 21.2%),
       'color-selected': hsl(204.8, 62.3%, 31.2%),
-      'color-caution': hsl(29.5, 91.0%, 39.0%),
-      'color-danger': hsl(61.1, 100.0%, 30.8%)
+      'color-caution': hsl(29.5, 91%, 39%),
+      'color-danger': hsl(61.1, 100%, 30.8%)
     )
   );
   @include meta.load-css(
     '../components/Input.scss',
-    $with: ('border-color': hsl(0.0, 98.6%, 28.6%))
+    $with: ('border-color': hsl(0, 98.6%, 28.6%))
   );
   @include meta.load-css(
     '../components/NoticeBox.scss',
-    $with: ('background-color': hsl(203.6, 54.0%, 22.2%))
+    $with: ('background-color': hsl(203.6, 54%, 22.2%))
   );
   @include meta.load-css(
     '../components/NumberInput.scss',
-    $with: ('border-color': hsl(0.0, 98.6%, 28.6%))
+    $with: ('border-color': hsl(0, 98.6%, 28.6%))
   );
   @include meta.load-css(
     '../components/ProgressBar.scss',
@@ -58,7 +58,7 @@
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(203.6, 54.0%, 22.2%))
+    $with: ('background-color': hsl(203.6, 54%, 22.2%))
   );
 
   .Layout__content {

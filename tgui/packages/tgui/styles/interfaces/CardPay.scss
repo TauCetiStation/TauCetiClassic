@@ -1,17 +1,17 @@
 .cardpay_window-titlebar {
-  background: hsl(230.8, 16.0%, 84.1%) !important;
+  background: hsl(230.8, 16%, 84.1%) !important;
   border-radius: 5px 5px 0px 0px;
   box-shadow: 0px 0px 0px rgba(1, 1, 1, 0) !important;
   border-bottom: transparent !important;
 
   .TitleBar__title {
     font-weight: bold;
-    color: hsl(240.0, 14.3%, 23.3%);
+    color: hsl(240, 14.3%, 23.3%);
     left: 15px;
   }
   .TitleBar__close {
     background: transparent !important;
-    color: hsl(240.0, 14.3%, 23.3%);
+    color: hsl(240, 14.3%, 23.3%);
     font-weight: bold;
   }
   .TitleBar__statusIcon {
@@ -20,16 +20,16 @@
 }
 
 .cardpay_window-contents {
-  background: hsl(230.8, 16.0%, 84.1%) !important;
+  background: hsl(230.8, 16%, 84.1%) !important;
   border-radius: 0px 0px 15px 15px;
 }
 
 .cardpay_monitor {
   width: 208px;
   height: 50px;
-  background: hsl(0.0, 0.0%, 6.7%);
+  background: hsl(0, 0%, 6.7%);
   border-bottom: 2px solid hsl(231.4, 17.9%, 92.4%);
-  border-top: 3px solid hsl(232.2, 12.0%, 62.5%);
+  border-top: 3px solid hsl(232.2, 12%, 62.5%);
   padding: 0px;
   padding-top: 4px;
   padding-left: -20px;
@@ -39,7 +39,7 @@
 .cardpay_button {
   height: 48px;
   width: 48px;
-  background: hsl(232.2, 12.0%, 62.5%);
+  background: hsl(232.2, 12%, 62.5%);
   outline: hsl(232.5, 12.9%, 12.2%) solid 3px;
   border: 4px solid;
   border-top: 2px solid;
@@ -47,37 +47,37 @@
   margin-left: 2.5px;
   &:hover {
     border-top-width: 4px;
-    background: hsl(232.2, 12.0%, 62.5%) !important;
+    background: hsl(232.2, 12%, 62.5%) !important;
   }
 }
 
 .cardpay_button--normal {
-  background: hsl(232.2, 12.0%, 62.5%);
-  border-color: hsl(232.2, 12.0%, 62.5%);
+  background: hsl(232.2, 12%, 62.5%);
+  border-color: hsl(232.2, 12%, 62.5%);
   border-top-color: hsl(233.3, 14.8%, 76.1%);
 }
 
 .cardpay_button--normal.Button--selected {
   height: 48px;
   width: 48px;
-  background: hsl(232.2, 12.0%, 62.5%);
+  background: hsl(232.2, 12%, 62.5%);
   outline: hsl(232.5, 12.9%, 12.2%) solid 3px;
-  border: 4px solid hsl(232.2, 12.0%, 62.5%);
+  border: 4px solid hsl(232.2, 12%, 62.5%);
   border-top: 6px solid hsl(233.3, 14.8%, 76.1%);
   padding: 0px;
   margin-left: 2.5px;
   &:hover {
     border-top-width: 8px;
-    background: hsl(232.2, 12.0%, 62.5%) !important;
+    background: hsl(232.2, 12%, 62.5%) !important;
   }
 }
 
 .cardpay_button--red {
-  background: hsl(6.3, 100.0%, 30.0%);
-  border-color: hsl(6.3, 100.0%, 30.0%);
-  border-top-color: hsl(2.0, 77.2%, 44.7%);
+  background: hsl(6.3, 100%, 30%);
+  border-color: hsl(6.3, 100%, 30%);
+  border-top-color: hsl(2, 77.2%, 44.7%);
   &:hover {
-    background: hsl(6.3, 100.0%, 30.0%) !important;
+    background: hsl(6.3, 100%, 30%) !important;
   }
 }
 
@@ -94,7 +94,7 @@
 .cardpay_button-inside {
   height: 40px;
   width: 40px;
-  background: hsl(230.8, 16.0%, 84.1%);
+  background: hsl(230.8, 16%, 84.1%);
   border-bottom: 5px solid;
   border-radius: 5px;
   text-align: center;
@@ -107,9 +107,9 @@
 }
 
 .cardpay_button-inside--normal {
-  background: hsl(230.8, 16.0%, 84.1%);
+  background: hsl(230.8, 16%, 84.1%);
   border-bottom-color: hsl(231.4, 17.9%, 92.4%);
-  color: hsl(240.0, 14.3%, 23.3%);
+  color: hsl(240, 14.3%, 23.3%);
 }
 
 .cardpay_button-inside--red {
@@ -119,15 +119,15 @@
   text-shadow:
     0px -1px 1px hsl(359.6, 73.6%, 55.5%),
     0px -3px 5px hsl(359.6, 73.6%, 55.5%),
-    0px 1px 1px hsl(6.3, 100.0%, 30.0%),
-    0px 1px 5px hsl(6.3, 100.0%, 30.0%);
+    0px 1px 1px hsl(6.3, 100%, 30%),
+    0px 1px 5px hsl(6.3, 100%, 30%);
   box-shadow: inset 0px 0px 10px hsl(359.6, 73.6%, 55.5%);
 }
 
 .cardpay_button-inside--green {
-  background: hsl(152.8, 100.0%, 29.8%);
+  background: hsl(152.8, 100%, 29.8%);
   border-bottom-color: hsl(153.3, 93.9%, 32.4%);
-  color: hsl(152.8, 100.0%, 29.8%);
+  color: hsl(152.8, 100%, 29.8%);
   text-shadow:
     0px -1px 1px hsl(155.1, 97.8%, 35.7%),
     0px -3px 5px hsl(155.1, 97.8%, 35.7%),
@@ -139,16 +139,16 @@
 .cardpay_switch {
   height: 24px;
   width: 64px;
-  background: hsl(232.2, 12.0%, 62.5%);
+  background: hsl(232.2, 12%, 62.5%);
   border-bottom: 1px solid hsl(231.4, 17.9%, 92.4%);
-  border-top: 2px solid hsl(231.0, 12.3%, 31.8%);
+  border-top: 2px solid hsl(231, 12.3%, 31.8%);
   border-radius: 5px;
   padding: 0px;
   padding-left: 1px;
   margin-left: 2.5px;
   &:hover,
   &:focus {
-    background: hsl(232.2, 12.0%, 62.5%) !important;
+    background: hsl(232.2, 12%, 62.5%) !important;
   }
   &:hover {
     padding-left: 3px;
@@ -165,35 +165,35 @@
 .cardpay_switch-inside {
   height: 22px;
   width: 22px;
-  background: hsl(230.8, 16.0%, 84.1%);
+  background: hsl(230.8, 16%, 84.1%);
   border-bottom: 5px hsl(231.4, 17.9%, 92.4%) solid;
   border-radius: 5px;
   text-align: center;
   font-size: 13px;
   font-weight: bold;
-  color: hsl(230.8, 16.0%, 84.1%);
+  color: hsl(230.8, 16%, 84.1%);
   text-shadow:
     0px -1px 1px hsl(231.4, 17.9%, 92.4%),
     0px -3px 5px hsl(231.4, 17.9%, 92.4%),
-    0px 1px 1px hsl(231.0, 12.3%, 31.8%),
-    0px 1px 5px hsl(231.0, 12.3%, 31.8%);
+    0px 1px 1px hsl(231, 12.3%, 31.8%),
+    0px 1px 5px hsl(231, 12.3%, 31.8%);
   position: absolute;
 }
 
 .cardpay_resethole {
   height: 9px;
   width: 9px;
-  background: hsl(232.2, 12.0%, 62.5%);
-  border-top: 2px solid hsl(231.0, 12.3%, 31.8%);
+  background: hsl(232.2, 12%, 62.5%);
+  border-top: 2px solid hsl(231, 12.3%, 31.8%);
   border-bottom: 2px solid hsl(231.4, 17.9%, 92.4%);
   border-radius: 10px;
   padding: 0px;
   margin-left: 2.5px;
   &:focus {
-    background: hsl(232.2, 12.0%, 62.5%) !important;
+    background: hsl(232.2, 12%, 62.5%) !important;
   }
   &:hover {
     border-top-width: 3px;
-    background: hsl(230.5, 7.5%, 50.0%) !important;
+    background: hsl(230.5, 7.5%, 50%) !important;
   }
 }

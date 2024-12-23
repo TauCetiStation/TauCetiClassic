@@ -7,7 +7,7 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: hsl(0.0, 0.0%, 0.0%),
+  $primary: hsl(0, 0%, 0%),
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
@@ -28,10 +28,10 @@
     '../components/Button.scss',
     $with: (
       'color-default': hsl(52.3, 40.3%, 84.9%),
-      'color-disabled': hsl(0.0, 0.0%, 21.2%),
-      'color-selected': hsl(0.0, 90.3%, 32.4%),
-      'color-caution': hsl(29.5, 91.0%, 39.0%),
-      'color-danger': hsl(61.1, 100.0%, 30.8%)
+      'color-disabled': hsl(0, 0%, 21.2%),
+      'color-selected': hsl(0, 90.3%, 32.4%),
+      'color-caution': hsl(29.5, 91%, 39%),
+      'color-danger': hsl(61.1, 100%, 30.8%)
     )
   );
   @include meta.load-css(
@@ -45,14 +45,14 @@
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(50.9, 23.1%, 28.0%))
+    $with: ('background-color': hsl(50.9, 23.1%, 28%))
   );
 
   .Button {
     font-family: monospace;
-    color: hsl(60.0, 7.3%, 8.0%);
+    color: hsl(60, 7.3%, 8%);
     border: base.em(2px) outset hsl(52.3, 40.3%, 84.9%);
-    outline: base.em(1px) solid hsl(60.0, 7.3%, 8.0%);
+    outline: base.em(1px) solid hsl(60, 7.3%, 8%);
   }
 
   .Layout__content {
