@@ -7,12 +7,12 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: #000000,
+  $primary: hsl(0.0, 0.0%, 0.0%),
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
 @use '../base.scss' with (
-  $color-bg: #e8e4c9,
+  $color-bg: hsl(52.3, 40.3%, 84.9%),
   $color-bg-grad-spread: 0%,
   $border-radius: 0
 );
@@ -27,11 +27,11 @@
   @include meta.load-css(
     '../components/Button.scss',
     $with: (
-      'color-default': #e8e4c9,
-      'color-disabled': #363636,
-      'color-selected': #9d0808,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00
+      'color-default': hsl(52.3, 40.3%, 84.9%),
+      'color-disabled': hsl(0.0, 0.0%, 21.2%),
+      'color-selected': hsl(0.0, 90.3%, 32.4%),
+      'color-caution': hsl(29.5, 91.0%, 39.0%),
+      'color-danger': hsl(61.1, 100.0%, 30.8%)
     )
   );
   @include meta.load-css(
@@ -45,14 +45,14 @@
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #585337)
+    $with: ('background-color': hsl(50.9, 23.1%, 28.0%))
   );
 
   .Button {
     font-family: monospace;
-    color: #161613;
-    border: base.em(2px) outset #e8e4c9;
-    outline: base.em(1px) solid #161613;
+    color: hsl(60.0, 7.3%, 8.0%);
+    border: base.em(2px) outset hsl(52.3, 40.3%, 84.9%);
+    outline: base.em(1px) solid hsl(60.0, 7.3%, 8.0%);
   }
 
   .Layout__content {
