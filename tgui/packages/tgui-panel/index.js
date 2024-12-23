@@ -73,14 +73,13 @@ const setupApp = () => {
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
-  // Unhide the panel
-  Byond.winset('output', {
-    'is-visible': false,
+  Byond.winset('legacy_output_selector', {
+    left: 'output_browser',
   });
 
   // Resize the panel to match the non-browser output
   Byond.winget('output').then(output => {
-    Byond.winset('chat_panel', {
+    Byond.winset('browseroutput', {
       'size': output.size,
     });
   });
