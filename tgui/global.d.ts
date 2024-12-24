@@ -23,16 +23,26 @@ declare global {
   }
 
   type ByondType = {
-  /**
-   * ID of the Byond window this script is running on.
-   * Can be used as a parameter to winget/winset.
-   */
-  windowId: string;
+    /**
+     * ID of the Byond window this script is running on.
+     * Can be used as a parameter to winget/winset.
+     */
+    windowId: string;
 
-  /**
-   * True if javascript is running in BYOND.
-   */
-  IS_BYOND: boolean;
+    /**
+     * True if javascript is running in BYOND.
+     */
+    IS_BYOND: boolean;
+
+    /**
+     * Version of Trident engine of Internet Explorer. Null if N/A.
+     */
+    TRIDENT: number | null;
+
+    /**
+     * Version of Blink engine of WebView2. Null if N/A.
+     */
+    BLINK: number | null;
 
     /**
      * Makes a BYOND call.
@@ -139,8 +149,16 @@ declare global {
     Byond: ByondType;
     __store__: Store<unknown, AnyAction>;
     __augmentStack__: (store: Store) => StackAugmentor;
-  }
 
+    // IE IndexedDB stuff.
+    msIndexedDB: IDBFactory;
+    msIDBTransaction: IDBTransaction;
+
+    // 516 byondstorage API.
+    hubStorage: Storage;
+    domainStorage: Storage;
+    serverStorage: Storage;
+  }
 }
 
 export {};
