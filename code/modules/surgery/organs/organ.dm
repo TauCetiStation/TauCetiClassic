@@ -54,36 +54,8 @@
 	owner = H
 
 /obj/item/organ/process()
+	return 0
 
-	//dead already, no need for more processing
-	if(status & ORGAN_DEAD)
-		return
-
-	if(is_preserved())
-		return
-
-	//Process infections
-	if ((is_robotic()) || (sterile) ||(owner && owner.species && (owner.species.flags & IS_PLANT)))
-		germ_level = 0
-		return
-
-	if(!owner)
-		if(reagents)
-			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in reagents.reagent_list
-			if(B && prob(40))
-				reagents.remove_reagent("blood",0.1)
-				blood_splatter(src,B,1)
-		// Maybe scale it down a bit, have it REALLY kick in once past the basic infection threshold
-		// Another mercy for surgeons preparing transplant organs
-		germ_level++
-		if(germ_level >= INFECTION_LEVEL_ONE)
-			germ_level += rand(2,6)
-		if(germ_level >= INFECTION_LEVEL_TWO)
-			germ_level += rand(2,6)
-
-	else if(owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
-		//** Handle antibiotics and curing infections
-		handle_antibiotics()
 
 
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
@@ -94,20 +66,6 @@
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
 
-/obj/item/organ/proc/replaced(mob/living/carbon/human/target, obj/item/organ/external/parent_bodypart)
-
-	if(!istype(target))
-		return
-
-	owner = target
-	STOP_PROCESSING(SSobj, src)
-	parent_bodypart.bodypart_organs |= src
-	if (!target.get_organ_by_name(src))
-		target.organs_by_name += src
-		target.organs += src
-	src.loc = target
-	if(is_robotic())
-		status |= ORGAN_ROBOT
 
 /obj/item/organ/proc/receive_chem(chemical)
 	return 0
@@ -196,15 +154,6 @@
 	//processing organs is pretty cheap, do that first.
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
-
-
-	var/obj/item/organ/internal/liver/liver = organs_by_name[O_LIVER]
-	if(!liver && should_have_organ(liver))
-		adjustToxLoss(2)
-
-	var/obj/item/organ/internal/kidneys/kidneys = organs_by_name[O_LIVER]
-	if(!kidneys && should_have_organ(kidneys))
-		adjustToxLoss(1)
 
 	handle_stance()
 

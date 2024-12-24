@@ -16,6 +16,7 @@
 	var/min_breath_pressure = 16
 	var/last_int_pressure
 	var/last_ext_pressure
+	var/max_pressure_diff = 60
 	var/breath_fail_ratio // How badly they failed a breath. Higher is worse.
 	var/poison_type = "phoron"
 	var/last_successful_breath
@@ -222,6 +223,10 @@
 
 /obj/item/organ/internal/lungs/process()
 	..()
+
+	if(!owner)
+		return
+
 	if (owner.species && owner.species.flags[NO_BREATHE])
 		return
 	if (germ_level > INFECTION_LEVEL_ONE)

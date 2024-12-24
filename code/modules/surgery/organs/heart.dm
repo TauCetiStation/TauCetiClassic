@@ -7,6 +7,8 @@
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
 	max_damage = 45
+	min_bruised_damage = 15
+	min_broken_damage = 35
 	var/heart_beat
 	var/pulse = PULSE_NORM
 	var/base_icon_state = "heart"
@@ -26,8 +28,6 @@
 	else
 		item_state_world = "[base_icon_state]-off_world"
 		icon_state = "[base_icon_state]-off"
-
-//work?
 
 /obj/item/organ/internal/heart/process()
 	if(owner)
@@ -95,6 +95,9 @@
 /obj/item/organ/internal/heart/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
 
 /obj/item/organ/internal/heart/proc/handle_blood()
+
+	if(!owner)
+		return
 
 	if(!owner.species.flags[NO_BLOOD] && owner.bodytemperature >= 170 || owner.stat == DEAD || !owner)
 		return
@@ -177,11 +180,10 @@
 	else
 		owner.drip(blood_max) // No fancy shooting of blood, just bleeding
 
-
-//work!
 /obj/item/organ/internal/heart/insert_organ(mob/living/carbon/M)
 	..()
 	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
+
 
 
 /obj/item/organ/internal/heart/proc/heart_stop()

@@ -1489,7 +1489,7 @@
 	has_organ = list(
 		O_BRAIN   = /obj/item/organ/internal/brain
 		,O_HEART = /obj/item/organ/internal/heart
-		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision
 		)
 
 	burn_mod = 2
@@ -1931,7 +1931,7 @@
 
 	has_organ = list(
 		O_BRAIN  = /obj/item/organ/internal/brain/abomination
-		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision
 		)
 	burn_mod = 0.2
 	brute_mod = 0.2
@@ -2077,7 +2077,7 @@
 	has_organ = list(
 		 O_HEART   = /obj/item/organ/internal/heart
 		,O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision
 		,O_LUNGS   = /obj/item/organ/internal/lungs
 		,O_LIVER   = /obj/item/organ/internal/liver/serpentid
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
@@ -2240,7 +2240,7 @@
 	has_organ = list(
 		 O_HEART   = /obj/item/organ/internal/heart
 		,O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes/tajaran
+		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
 		,O_LUNGS   = /obj/item/organ/internal/lungs
 		,O_LIVER   = /obj/item/organ/internal/liver
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys

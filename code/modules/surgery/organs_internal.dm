@@ -46,7 +46,7 @@
 		user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
 		return FALSE
 
-	if(target.get_organ_by_name(I))
+	if(target.get_int_organ(I))
 		user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
 		return FALSE
 
@@ -134,3 +134,4 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
+
