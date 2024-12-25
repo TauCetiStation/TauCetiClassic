@@ -702,7 +702,7 @@ var/global/list/admin_verbs_hideable = list(
 		for (var/mob/V in hearers(O))
 			V.show_messageold(message, 2)
 		log_admin("[key_name(usr)] made [O] at [COORD(O)]. make a sound")
-		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 

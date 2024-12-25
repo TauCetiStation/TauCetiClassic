@@ -154,7 +154,7 @@ var/global/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
-	var/dat = "<center><div class='Section'>Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
+	var/dat = "<center><div class='Section'>Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><A href='byond://?src=\ref[src];move=1'>Начать полёт</A></div></center>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 330, 130)
 	popup.set_content(dat)
 	popup.open()
@@ -185,7 +185,7 @@ var/global/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
-	var/dat = "<center>Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><b><A href='?src=\ref[src];back=1'>Запросить шаттл обратно</A></b></center><br>"
+	var/dat = "<center>Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><b><A href='byond://?src=\ref[src];back=1'>Запросить шаттл обратно</A></b></center><br>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 290, 130)
 	popup.set_content(dat)
 	popup.open()

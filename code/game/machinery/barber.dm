@@ -398,20 +398,20 @@ A proc that does all the animations before mix()-ing.
 				display = "Main Menu."
 			if("log")
 				display = "Log Menu."
-		dat += "<A href='?src=\ref[src];action=switch_menu;stat=[tab]'>[display]</A>[tabs.Find(tab) < tabs.len ? "<BR>" : ""]"
+		dat += "<A href='byond://?src=\ref[src];action=switch_menu;stat=[tab]'>[display]</A>[tabs.Find(tab) < tabs.len ? "<BR>" : ""]"
 	dat += "</div><HR>"
 
 	if(menustat == "log")
 		dat += "<center>Log Options.</center><HR>"
 		dat += "<div class='Section'>"
-		dat += "<A href='?src=\ref[src];action=disable_notif'>[disable_notifications ? "Enable" : "Disable"] notifications</a>"
+		dat += "<A href='byond://?src=\ref[src];action=disable_notif'>[disable_notifications ? "Enable" : "Disable"] notifications</a>"
 		dat += "</div><HR>"
 
 		dat += "<center>Log Entries.</center><HR>"
 		if(error_log.len)
 			dat += "<div class='Section'>"
 			for(var/error in 1 to error_log.len)
-				dat += "<A class='red' href='?src=\ref[src];action=clear_log;entry=[error]'>X</A>[error_log[error]]<BR>"
+				dat += "<A class='red' href='byond://?src=\ref[src];action=clear_log;entry=[error]'>X</A>[error_log[error]]<BR>"
 			dat += "</div><BR>"
 		else
 			dat += "<div class='Section'><b>Log</b> <span class='red'>is empty.</span></div>"
@@ -454,19 +454,19 @@ A proc that does all the animations before mix()-ing.
 			dat += "<div class='Section'>"
 			if(beakers[tank_id])
 				if(tank_id == "output")
-					dat += "<A href='?src=\ref[src];action=choose_color'>Color to mix:</A> [color_square(hex = chosen_color)]<BR>"
-					dat += "<A href='?src=\ref[src];action=choose_quantity'>Quantity to create:</A> [chosen_quantity]<BR>"
-					dat += "<A href='?src=\ref[src];action=start_mix'>Mix</a>"
+					dat += "<A href='byond://?src=\ref[src];action=choose_color'>Color to mix:</A> [color_square(hex = chosen_color)]<BR>"
+					dat += "<A href='byond://?src=\ref[src];action=choose_quantity'>Quantity to create:</A> [chosen_quantity]<BR>"
+					dat += "<A href='byond://?src=\ref[src];action=start_mix'>Mix</a>"
 					dat += "<BR>"
-					dat += "<A href='?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload</a>"
+					dat += "<A href='byond://?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload</a>"
 				else
 					if(filling_tank_id == tank_id)
-						dat += "<A href='?src=\ref[src];action=close_hatch;tank_name=[tank_name]'>Close hatch</a><BR>"
+						dat += "<A href='byond://?src=\ref[src];action=close_hatch;tank_name=[tank_name]'>Close hatch</a><BR>"
 					else
-						dat += "<A href='?src=\ref[src];action=open_hatch;tank=[tank_id];tank_name=[tank_name]'>Open hatch</a><BR>"
-						dat += "<A href='?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload</a>"
+						dat += "<A href='byond://?src=\ref[src];action=open_hatch;tank=[tank_id];tank_name=[tank_name]'>Open hatch</a><BR>"
+						dat += "<A href='byond://?src=\ref[src];action=unload_tank;tank=[tank_id];tank_name=[tank_name]'>Unload</a>"
 			else
-				dat += "<A href='?src=\ref[src];action=load_tank;tank=[tank_id];tank_name=[tank_name]'>Load</a>"
+				dat += "<A href='byond://?src=\ref[src];action=load_tank;tank=[tank_id];tank_name=[tank_name]'>Load</a>"
 			dat += "</div>"
 
 	var/datum/browser/popup = new(user, "dye mixer", name, 350, 520)

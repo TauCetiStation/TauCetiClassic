@@ -44,43 +44,43 @@
 		return
 	var/dat
 	if (temp)
-		dat = "<tt>[temp]</tt><br><br><a href='?src=\ref[src];choice=Clear Screen'>Clear Screen</a>"
+		dat = "<tt>[temp]</tt><br><br><a href='byond://?src=\ref[src];choice=Clear Screen'>Clear Screen</a>"
 	else
-		dat = "Confirm Identity: <a href='?src=\ref[src];choice=Confirm Identity'>[scan ? scan.name : "----------"]</a><hr>"
+		dat = "Confirm Identity: <a href='byond://?src=\ref[src];choice=Confirm Identity'>[scan ? scan.name : "----------"]</a><hr>"
 		if (authenticated)
 			switch(screen)
 				if(SKILLS_MODE_MAIN_SCREEN)
 					dat += {"<p style='text-align:center;'>
-						<a href='?src=\ref[src];choice=Search Records'>Search Records</a><br>
-						<a href='?src=\ref[src];choice=New Record (General)'>New Record</a><br></p>
+						<a href='byond://?src=\ref[src];choice=Search Records'>Search Records</a><br>
+						<a href='byond://?src=\ref[src];choice=New Record (General)'>New Record</a><br></p>
 						<table style="text-align:center;" cellspacing="0" width="100%">
 						<tr><th>Records:</th></tr>
 						</table>
 						<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
-						<th><a href='?src=\ref[src];choice=Sorting;sort=name'>Name</a></th>
-						<th><a href='?src=\ref[src];choice=Sorting;sort=id'>ID</a></th>
-						<th><a href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</a></th>
-						<th><a href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</a></th>
+						<th><a href='byond://?src=\ref[src];choice=Sorting;sort=name'>Name</a></th>
+						<th><a href='byond://?src=\ref[src];choice=Sorting;sort=id'>ID</a></th>
+						<th><a href='byond://?src=\ref[src];choice=Sorting;sort=rank'>Rank</a></th>
+						<th><a href='byond://?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</a></th>
 						</tr>"}
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
 							for(var/datum/data/record/E in data_core.security)
 							var/background
 							dat += {"<tr style=[background]>
-							<td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>
+							<td><A href='byond://?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>
 							<td>[R.fields["id"]]</td>
 							<td>[R.fields["rank"]]</td>
 							<td>[R.fields["fingerprint"]]</td>
 							</tr>"}
 						dat += "</table><hr width='75%' />"
-					dat += "<A href='?src=\ref[src];choice=Record Maintenance'>Record Maintenance</A><br><br>"
-					dat += "<A href='?src=\ref[src];choice=Log Out'>Log Out</A>"
+					dat += "<A href='byond://?src=\ref[src];choice=Record Maintenance'>Record Maintenance</A><br><br>"
+					dat += "<A href='byond://?src=\ref[src];choice=Log Out'>Log Out</A>"
 				if(SKILLS_MODE_MAINTENACE_SCREEN)
 					dat += {"<b>Records Maintenance</b>
 					<hr><br>
-					<a href='?src=\ref[src];choice=Delete All Records'>Delete All Records</a><br><br>
-					<a href='?src=\ref[src];choice=Return'>Back</a>"}
+					<a href='byond://?src=\ref[src];choice=Delete All Records'>Delete All Records</a><br><br>
+					<a href='byond://?src=\ref[src];choice=Return'>Back</a>"}
 				if(SKILLS_MODE_EDIT_SCREEN)
 					dat += "<center><b>Employment Record</b></center><br>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
@@ -91,15 +91,15 @@
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
 						dat += {"<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>
-							Name: <a href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</a><br>
+							Name: <a href='byond://?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</a><br>
 							ID: [active1.fields["id"]]<br>
-							Sex: <a href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</a><br>
-							Age: <a href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</a><br>
+							Sex: <a href='byond://?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</a><br>
+							Age: <a href='byond://?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</a><br>
 							Home system: [active1.fields["home_system"]]<br>
 							Citizenship: [active1.fields["citizenship"]]<br>
 							Faction: [active1.fields["faction"]]<br>
 							Religion: [active1.fields["religion"]]<br>
-							Rank: <a href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</a><br>
+							Rank: <a href='byond://?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</a><br>
 							Fingerprint: [active1.fields["fingerprint"]]<br>
 							Insurance Account Number: [active1.fields["insurance_account_number"]]<br>
 							Insurance Type: [active1.fields["insurance_type"]]<br>
@@ -111,13 +111,13 @@
 					else
 						dat += "<b>General Record Lost!</b><br>"
 					dat += {"
-					<a href='?src=\ref[src];choice=Delete Record (ALL)'>Delete Record (ALL)</a><br><br>
-					<a href='?src=\ref[src];choice=Print Record'>Print Record</a><br>
-					<a href='?src=\ref[src];choice=Print Photos'>Print Photos</a><br>
-					<a href='?src=\ref[src];choice=Return'>Back</a><br>"}
+					<a href='byond://?src=\ref[src];choice=Delete Record (ALL)'>Delete Record (ALL)</a><br><br>
+					<a href='byond://?src=\ref[src];choice=Print Record'>Print Record</a><br>
+					<a href='byond://?src=\ref[src];choice=Print Photos'>Print Photos</a><br>
+					<a href='byond://?src=\ref[src];choice=Return'>Back</a><br>"}
 				if(SKILLS_MODE_SEARCH_SCREEN)
 					if(!Perp.len)
-						dat += "ERROR.  String could not be located.<br><br><A href='?src=\ref[src];choice=Return'>Back</A>"
+						dat += "ERROR.  String could not be located.<br><br><A href='byond://?src=\ref[src];choice=Return'>Back</A>"
 					else
 						dat += {"
 							<table style="text-align:center;" cellspacing="0" width="100%">
@@ -140,16 +140,16 @@
 								crimstat = E.fields["criminal"]
 							var/background
 							background = "'background-color:#00FF7F;'"
-							dat += "<tr style=[background]><td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>"
+							dat += "<tr style=[background]><td><A href='byond://?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>"
 							dat += "<td>[R.fields["id"]]</td>"
 							dat += "<td>[R.fields["rank"]]</td>"
 							dat += "<td>[R.fields["fingerprint"]]</td>"
 							dat += "<td>[crimstat]</td></tr>"
 						dat += "</table><hr width='75%' />"
-						dat += "<br><A href='?src=\ref[src];choice=Return'>Return to index</A>"
+						dat += "<br><A href='byond://?src=\ref[src];choice=Return'>Return to index</A>"
 				else
 		else
-			dat += "<A href='?src=\ref[src];choice=Log In'>Log In</A>"
+			dat += "<A href='byond://?src=\ref[src];choice=Log In'>Log In</A>"
 
 	var/datum/browser/popup = new(user, "secure_rec", "Employment Records", 600, 400)
 	popup.set_content("<TT>[dat]</TT>")
@@ -313,8 +313,8 @@ What a mess.*/
 			/*
 			temp = ""
 			temp += "Are you sure you wish to delete all Employment records?<br>"
-			temp += "<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
-			temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
+			temp += "<a href='byond://?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
+			temp += "<a href='byond://?src=\ref[src];choice=Clear Screen'>No</a>"
 			*/
 			temp = "<b>Error!</b> This function does not appear to be working at the moment. Our apologies."
 
@@ -327,8 +327,8 @@ What a mess.*/
 		if ("Delete Record (ALL)")
 			if (active1)
 				temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
-				temp += "<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
-				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
+				temp += "<a href='byond://?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
+				temp += "<a href='byond://?src=\ref[src];choice=Clear Screen'>No</a>"
 		// RECORD CREATE
 		if ("New Record (General)")
 			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
@@ -363,7 +363,7 @@ What a mess.*/
 						temp = "<h5>Rank:</h5>"
 						temp += "<ul>"
 						for(var/rank in joblist)
-							temp += "<li><a href='?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
+							temp += "<li><a href='byond://?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 						temp += "</ul>"
 					else
 						tgui_alert(usr, "You do not have the required rank to do this!")

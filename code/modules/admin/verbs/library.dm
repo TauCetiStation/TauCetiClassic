@@ -91,7 +91,7 @@
 		var/author = query.item[3]
 		var/ckey = query.item[4]
 		var/reason = query.item[5]
-		catalog += "<tr><td>[id]</td><td>[title]</td><td>[author]</td><td>[ckey]</td><td>[reason]</td><td><a href='?src=\ref[src];readbook=[id]'>Read</a>[permitted ? "<BR><a href='?src=\ref[src];restorebook=[id]'>Restore</a><BR>" : null][permitted ? "<a href='?src=\ref[src];deletebook=[id]'>Delete</a><BR>" : null]</td></tr>"
+		catalog += "<tr><td>[id]</td><td>[title]</td><td>[author]</td><td>[ckey]</td><td>[reason]</td><td><a href='byond://?src=\ref[src];readbook=[id]'>Read</a>[permitted ? "<BR><a href='byond://?src=\ref[src];restorebook=[id]'>Restore</a><BR>" : null][permitted ? "<a href='byond://?src=\ref[src];deletebook=[id]'>Delete</a><BR>" : null]</td></tr>"
 	catalog += "</table>"
 
 	var/datum/browser/popup = new(usr, "window=librecyclebin", "Book Inventory Management", 500, 500, ntheme = CSS_THEME_LIGHT)

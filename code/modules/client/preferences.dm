@@ -234,7 +234,9 @@ var/global/list/datum/preferences/preferences_datums = list()
 	if(!user || !user.client)	return
 	update_preview_icon()
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+	dat += "<meta http-equiv='X-UA-Compatible' content='IE=edge'>"
+	dat += "</head>"
 	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
@@ -258,7 +260,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
 		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
 		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
-		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
+		dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."

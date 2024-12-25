@@ -146,7 +146,7 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 		if(A.uplinkholder)
 			dat += "[A.uplinkholder.hidden_uplink.uses] telecrystals."
 		if(storedcrystals)
-			dat+= "<BR>Add TC: <a href ='?src=\ref[src];give1=\ref[A]'>1</a> | <a href ='?src=\ref[src];give5=\ref[A]'>5</a>"
+			dat+= "<BR>Add TC: <a href ='byond://?src=\ref[src];give1=\ref[A]'>1</a> | <a href ='byond://?src=\ref[src];give5=\ref[A]'>5</a>"
 		dat += "<BR>"
 
 	if(TCstations.len)
