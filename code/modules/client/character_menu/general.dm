@@ -129,14 +129,14 @@
 			. += "<b>Gear:</b><br>"
 			if(specie_obj.flags[HAS_UNDERWEAR])
 				if(gender == MALE)
-					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
+					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
 				else
-					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
+					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
 				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
 				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
-			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
-			. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
-			. += "PDA Ringtone: <a href ='?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
+			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
+			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
+			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
 	. += 							"</tr>"
@@ -154,7 +154,7 @@
 
 	//Backstory
 	. += 						"<b>Background information:</b>"
-	. += 						"<br>Nanotrasen Relation: <a href ='?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a>"
+	. += 						"<br>Nanotrasen Relation: <a href ='byond://?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a>"
 	. += 						"<br>Home system: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a>"
 	. += 						"<br>Citizenship: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a>"
 	. += 						"<br>Faction: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a>"
