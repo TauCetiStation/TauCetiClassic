@@ -56,8 +56,3 @@
 #if DM_VERSION < 515
 #define ceil(x) (-round(-(x)))
 #endif
-
-#if DM_VERSION < 516
-#define sign(x) ( ((x) > 0) - ((x) < 0) )
-#define lerp(a, b, amount) ( amount ? ((a) + ((b) - (a)) * (amount)) : a )
-#endif
