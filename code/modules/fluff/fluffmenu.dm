@@ -353,7 +353,7 @@ var/global/list/editing_item_oldname_list = list()
 		var/ticked = (item_name in custom_items)
 		var/accepted = (item.status == "accepted")
 		if(accepted || ticked)
-			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='byond://?_src_=prefs;preference=loadout;toggle_custom_gear=[ckey(item.name)]'>[item.name][accepted ? "" : " (not accepted)"]</a></td>"
+			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal; [ticked ? "font-weight:bold;" : ""]'href='byond://?_src_=prefs;preference=loadout;toggle_custom_gear=[ckey(item.name)]'>[item.name][accepted ? "" : " (not accepted)"]</a></td>"
 			. += "<td width = 5% style='vertical-align:top'>0</td>"
 			. += "<td><font size=2><i>[item.desc]</i></font></td>"
 			. += "</tr>"
