@@ -43,7 +43,7 @@
 	owner.organs -= src
 
 	loc = get_turf(owner)
-	STOP_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 	if(owner && vital) // I'd do another check for species or whatever so that you couldn't "kill" an IPC by removing a human head from them, but it doesn't matter since they'll come right back from the dead
 		owner.death()

@@ -99,7 +99,7 @@
 	if(!owner)
 		return
 
-	if(!owner.species.flags[NO_BLOOD] && owner.bodytemperature >= 170 || owner.stat == DEAD || !owner)
+	if(owner.species.flags[NO_BLOOD] || owner.bodytemperature < 170 || owner.stat == DEAD || !owner)
 		return
 
 	if(owner.reagents.has_reagent("metatrombine"))
@@ -160,10 +160,10 @@
 		if(PULSE_THREADY)
 			blood_max *= 1.8
 
-	if(reagents.has_reagent("inaprovaline"))
+	if(owner.reagents.has_reagent("inaprovaline"))
 		blood_max *= 0.8
 
-	if(!isturf(loc)) // No floor to drip on
+	if(!isturf(owner.loc)) // No floor to drip on
 		owner.blood_remove(blood_max)
 		return
 
@@ -171,7 +171,7 @@
 		if(prob(50)) // added 50 prob for message and halved delay between squit effects (difference between us and Bay12), lets see how this will be on live server.
 			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
 		next_blood_squirt = world.time + 50
-		var/turf/sprayloc = get_turf(src)
+		var/turf/sprayloc = get_turf(owner)
 		var/third = CEIL(blood_max / 3)
 		owner.drip(third, sprayloc)
 		blood_max -= third
@@ -237,7 +237,6 @@
 	icon_state = "heart-prosthetic"
 	item_state_world = "heart-prosthetic_world"
 	base_icon_state = "heart-prosthetic"
-	dead_icon = "heart-prosthetic-off"
 	status = ORGAN_ROBOT
 	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 

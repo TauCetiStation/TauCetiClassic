@@ -12,8 +12,6 @@
 
 	var/tough = FALSE //can organ be easily die?
 
-	var/dead_icon
-
 	var/list/compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL) // races with which organs are compatible
 
 /obj/item/organ/internal/New(mob/living/carbon/holder)
