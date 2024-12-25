@@ -196,7 +196,6 @@
 	var/obj/item/device/mmi/P = new brain_type(owner.loc)
 	P.transfer_identity(owner)
 
-	..()
 
 /obj/item/organ/internal/brain/abomination
 	name = "deformed brain"
