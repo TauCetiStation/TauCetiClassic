@@ -75,7 +75,7 @@
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
 		user.attack_log += "\[[time_stamp()]\]<font color='red'>used a Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 		//send message for AI
-		to_chat(user.connected_ai, "<span class='info'>HARM ALARM used by <a href=?src=\ref[user.connected_ai];track=\ref[user]>[user]</span>")
+		to_chat(user.connected_ai, "<span class='info'>HARM ALARM used by <a href=byond://?src=\ref[user.connected_ai];track=\ref[user]>[user]</span>")
 	else
 		user.audible_message("<span class='userdanger'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</span>")
 		playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, 100)

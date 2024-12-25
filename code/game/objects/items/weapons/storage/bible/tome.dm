@@ -50,7 +50,7 @@
 		to_chat(user, "В культе всего [cultists] [pluralize_russian(cultists, "последователь", "последователя", "последователей")]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
-		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
+		to_chat(user, "<a href='byond://?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
 	else
 		..()
 

@@ -16,7 +16,7 @@
 	for (var/name in global.keybindings_by_name)
 		var/datum/keybinding/kb = global.keybindings_by_name[name]
 		kb_categories[kb.category] += list(kb)
-	. += "<tr><td>Hotkeys Mode: <a href='?_src_=prefs;preference=hotkeys'>[hotkeys ? "Focus on Game" : "Focus on Chat"]</a></td></tr>"
+	. += "<tr><td>Hotkeys Mode: <a href='byond://?_src_=prefs;preference=hotkeys'>[hotkeys ? "Focus on Game" : "Focus on Chat"]</a></td></tr>"
 	. += "<center>"
 	for (var/category in kb_categories)
 		. += "<h3>[category]</h3>"

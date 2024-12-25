@@ -87,7 +87,7 @@ var/global/const/HOLOPAD_MODE = 0
 			for(var/mob/living/silicon/ai/AI as anything in ai_list)
 				if(!AI.client || AI.stat == DEAD)
 					continue
-				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
+				to_chat(AI, "<span class='info'>Your presence is requested at <a href='byond://?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
 		else
 			to_chat(user, "<span class='notice'>A request for AI presence was already sent recently.</span>")
 

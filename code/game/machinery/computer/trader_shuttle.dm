@@ -29,11 +29,11 @@
 		if(is_centcom_level(z))
 			dat += "<ul><li>Местоположение: <b>Космос</b></li>"
 			dat += "</ul>"
-			dat += "<a href='?src=\ref[src];station=1'>Пристыковаться к станции</a>"
+			dat += "<a href='byond://?src=\ref[src];station=1'>Пристыковаться к станции</a>"
 		else
 			dat += "<ul><li>Местоположение: <b>[station_name_ru()]</b></li>"
 			dat += "</ul>"
-			dat += "<a href='?src=\ref[src];space=1'>Начать процедуру отстыковки</a>"
+			dat += "<a href='byond://?src=\ref[src];space=1'>Начать процедуру отстыковки</a>"
 	else
 		if(is_centcom_level(z))
 			dat += "<ul><li>Местоположение: <b>Приближаемся к станции</b></li>"
