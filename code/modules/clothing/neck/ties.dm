@@ -33,12 +33,14 @@
 	icon_state = "airbag"
 	item_state = "airbag"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_NECK
+	var/deployed = FALSE
 
 /obj/item/clothing/neck/airbag/proc/deploy(mob/user)
 	user.drop_from_inventory(src, get_turf(src))
 	icon_state = "airbag_deployed"
 	anchored = TRUE
 	user.forceMove(src)
+	deployed = TRUE
 	ADD_TRAIT(user, TRAIT_AIRBAG_PROTECTION, GENERIC_TRAIT)
 	to_chat(user, "<span class='warning'>Your [src] deploys!</span>")
 	playsound(src, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER)
