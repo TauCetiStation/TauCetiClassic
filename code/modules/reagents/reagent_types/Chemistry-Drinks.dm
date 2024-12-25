@@ -263,6 +263,12 @@
 
 	if(!iscarbon(M))
 		return
+	var/mob/living/carbon/human/H = M
+	if(H)
+		var/obj/item/organ/internal/IO = H.organs_by_name[O_KIDNEYS]
+		if(!IO)
+			H.adjustToxLoss(0.5)
+
 	var/mob/living/carbon/C = M
 	C.AdjustClumsyStatus(-2)
 

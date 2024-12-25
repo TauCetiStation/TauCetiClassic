@@ -135,3 +135,117 @@
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
+
+/datum/surgery_step/organ_manipulation/treat_necrosis
+	priority = 0
+
+	allowed_tools = list(
+		/obj/item/weapon/reagent_containers/dropper = 100,
+		/obj/item/weapon/reagent_containers/glass/bottle = 90,
+		/obj/item/weapon/reagent_containers/glass/beaker = 75,
+		/obj/item/weapon/reagent_containers/spray = 60,
+	)
+
+	can_infect = FALSE
+
+	min_duration = 110
+	max_duration = 150
+
+/datum/surgery_step/organ_manipulation/treat_necrosis/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(..())
+		var/obj/item/weapon/reagent_containers/C = tool
+		if(!C.reagents.has_reagent("peridaxon"))
+			user.visible_message(
+				"[user] looks at \the [tool] and ponders.",
+				"You are not sure if \the [tool] contains the peridaxon necessary to treat the necrosis.",
+			)
+			return FALSE
+
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+		if(BP.stage == 3)
+			return FALSE
+
+		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
+
+
+/datum/surgery_step/organ_manipulation/treat_necrosis/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+
+	if (BP.bodypart_organs.len)
+		var/list/embed_organs = list()
+		for(var/embed_organ in BP.bodypart_organs)
+			var/obj/item/organ/internal/IO = embed_organ
+			if(IO.status & ORGAN_DEAD)
+				embed_organs += embed_organ
+		if(!embed_organs)
+			user.visible_message("<span class='warning'>The [BP] seems to already be in fine condition!")
+			return
+
+		user.visible_message(
+			"[user] starts applying medication to the affected tissue in [target]'s [BP.name] with \the [tool].",
+			"You start applying medication to the affected tissue in [target]'s [BP.name] with \the [tool].",
+			)
+
+	target.custom_pain("Something in your [BP.name] is causing you a lot of pain!")
+
+	return ..()
+
+/datum/surgery_step/organ_manipulation/treat_necrosis/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+
+	if (BP.bodypart_organs.len)
+		var/list/embed_organs = list()
+		for(var/embed_organ in BP.bodypart_organs)
+			var/obj/item/organ/internal/IO = embed_organ
+			if(IO.status & ORGAN_DEAD)
+				embed_organs += embed_organ
+		for(var/atom/embed_organ as anything in embed_organs)
+			embed_organs[embed_organ] = image(icon = embed_organ.icon, icon_state = initial(embed_organ.icon_state))
+		var/choosen_organ = show_radial_menu(user, target, embed_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
+		if(!choosen_organ)
+			user.visible_message("<span class='warning'>The [BP] seems to already be in fine condition!")
+			return
+
+		var/obj/item/organ/internal/IO = choosen_organ
+		var/obj/item/weapon/reagent_containers/container = tool
+		var/Peridaxon = FALSE
+
+		if(container.reagents.has_reagent("peridaxon"))
+			Peridaxon = TRUE
+
+		var/trans = container.reagents.trans_to(target, container.amount_per_transfer_from_this)
+		if(trans > 0)
+			container.reagents.reaction(target)	//technically it's contact, but the reagents are being applied to internal tissue
+
+			if(Peridaxon)
+				IO.status &= ~ORGAN_DEAD
+				IO.germ_level = 0
+				IO.damage = 0
+
+			user.visible_message(
+				"<span class='notice'>[user] applies [trans] units of the solution to affected tissue in [target]'s [BP.name]</span>",
+				"<span class='notice'>You apply [trans] units of the solution to affected tissue in [target]'s [BP.name] with \the [tool].</span>",
+			)
+
+	return
+
+/datum/surgery_step/organ_manipulation/treat_necrosis/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+
+	if(!istype(tool, /obj/item/weapon/reagent_containers))
+		return
+
+	var/obj/item/weapon/reagent_containers/container = tool
+
+	var/trans = container.reagents.trans_to(target, container.amount_per_transfer_from_this)
+	container.reagents.reaction(target)	//technically it's contact, but the reagents are being applied to internal tissue
+
+	user.visible_message(
+		"<span class='warning'>[user]'s hand slips, applying [trans] units of the solution to the wrong place in [target]'s [BP.name] with the [tool]!</span>",
+		"<span class='warning'>Your hand slips, applying [trans] units of the solution to the wrong place in [target]'s [BP.name] with the [tool]!</span>",
+	)
+
+	//no damage or anything, just wastes medicine
+
+	return
