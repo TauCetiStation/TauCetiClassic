@@ -41,7 +41,7 @@ export const captureExternalLinks = () => {
     // Open the link
     Byond.topic({
       tgui: 1,
-      window_id: window.__windowId__,
+      window_id: Byond.windowId,
       type: 'openLink',
       url,
     });

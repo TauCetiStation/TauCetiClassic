@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { sendMessage } from 'tgui/backend';
 import { storage } from 'common/storage';
 import { createLogger } from 'tgui/logging';
 
@@ -65,7 +64,7 @@ export const telemetryMiddleware = (store) => {
       const charset = document.defaultCharset;
       const connections = telemetry.connections.slice(0, limits.connections);
       const localTime = new Date().getTimezoneOffset() * -60;
-      sendMessage({
+      Byond.sendMessage({
         type: 'telemetry',
         payload: {
           charset,
