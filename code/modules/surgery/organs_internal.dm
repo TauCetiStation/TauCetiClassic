@@ -179,7 +179,7 @@
 			if(IO.status & ORGAN_DEAD)
 				embed_organs += embed_organ
 		if(!embed_organs)
-			user.visible_message("<span class='warning'>The [BP.name] seems to already be in fine condition!")
+			user.visible_message("<span class='warning'>The [BP.name] seems to already be in fine condition!</span>")
 			return
 
 		user.visible_message(
@@ -204,7 +204,7 @@
 			embed_organs[embed_organ] = image(icon = embed_organ.icon, icon_state = initial(embed_organ.icon_state))
 		var/choosen_organ = show_radial_menu(user, target, embed_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
 		if(!choosen_organ)
-			user.visible_message("<span class='warning'>The [BP.name] seems to already be in fine condition!")
+			user.visible_message("<span class='warning'>The [BP.name] seems to already be in fine condition!</span>")
 			return
 
 		var/obj/item/organ/internal/IO = choosen_organ
