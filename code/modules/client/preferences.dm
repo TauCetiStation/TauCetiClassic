@@ -260,7 +260,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
 		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
 		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
-		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
+		dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."

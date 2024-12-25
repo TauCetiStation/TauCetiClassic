@@ -35,9 +35,9 @@
 	var/dat ="<B>Статус импланта</B><BR>"
 
 	dat +="<B>Пациент:</B> [src.occupant ? "<BR>Имя: [src.occupant]<BR>Здоровье: [health_text]<BR>" : "<FONT color=red>Отсуствует</FONT>"]<BR>"
-	dat += "<B>Импланты:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Пополнить</A>"]<BR>"
+	dat += "<B>Импланты:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='byond://?src=\ref[src];replenish=1'>Пополнить</A>"]<BR>"
 	if(src.occupant)
-		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Имплант</A>" : "Перезарядка"]<BR>"
+		dat += "[src.ready ? "<A href='byond://?src=\ref[src];implant=1'>Имплант</A>" : "Перезарядка"]<BR>"
 	user.set_machine(src)
 
 	var/datum/browser/popup = new(user, "implant", (C_CASE(src, NOMINATIVE_CASE)))

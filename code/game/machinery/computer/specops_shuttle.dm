@@ -211,7 +211,7 @@ var/global/specops_shuttle_timeleft = 0
 		dat = temp
 	else
 		dat += {"\nМестоположение: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Отправляющийся на [station_name_ru] через [seconds] [seconds_word]":specops_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
-			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*Шаттл специального назначения уже отправляется.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Начать полёт</a><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
+			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*Шаттл специального назначения уже отправляется.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='byond://?src=\ref[src];sendtodock=1'>Начать полёт</a><BR>\n<BR>":"\n<A href='byond://?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
 	var/datum/browser/popup = new(user, "computer", "Шаттл специального назначения", 575, 450)
 	popup.set_content(dat)
@@ -237,7 +237,7 @@ var/global/specops_shuttle_timeleft = 0
 
 		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на Центральное командование через [(SPECOPS_MOVETIME / 10)] секунд.</span>")
 
-		temp += "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "Шаттл отправляется.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		specops_shuttle_moving_to_centcom = 1
 		specops_shuttle_time = world.timeofday + SPECOPS_MOVETIME
@@ -253,7 +253,7 @@ var/global/specops_shuttle_timeleft = 0
 
 		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на [station_name_ru] через [(SPECOPS_MOVETIME/10)] секунд.</span>")
 
-		temp += "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "Шаттл отправляется.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		specops_shuttle_moving_to_station = 1
 

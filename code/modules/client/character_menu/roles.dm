@@ -12,22 +12,22 @@
 	. += 			"<table width='100%'>"
 	. += 				"<tr><td colspan='2'><b>Special Role Preference:</b></td></tr>"
 	if(jobban_isbanned(user, "Syndicate"))
-		. += 			"<tr><td><font color='red'><b>You are banned from antagonist roles.</b></font><br><a href='?_src_=prefs;preference=open_jobban_info;position=Syndicate'>Show details</a></td></tr>"
+		. += 			"<tr><td><font color='red'><b>You are banned from antagonist roles.</b></font><br><a href='byond://?_src_=prefs;preference=open_jobban_info;position=Syndicate'>Show details</a></td></tr>"
 		src.be_role = list()
 	else
 		for (var/i in special_roles)
 			var/available_in_minutes = role_available_in_minutes(user, i)
 			if(jobban_isbanned(user, i))
-				. += 	"<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br><a href='?_src_=prefs;preference=open_jobban_info;position=[i]'>Show details</a></td></tr>"
+				. += 	"<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br><a href='byond://?_src_=prefs;preference=open_jobban_info;position=[i]'>Show details</a></td></tr>"
 			else if(available_in_minutes)
 				. += "<tr><td width='45%'><del>[i]</del>: </td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
 			else if(!CanBeRole(i))
 				. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[RESTRICTED]</b></font><br></td></tr>"
 			else
 				if(i in be_role)
-					. +="<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=be_role;be_role_type=[i]'>No</a></td></tr>"
+					. +="<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='byond://?_src_=prefs;preference=be_role;be_role_type=[i]'>No</a></td></tr>"
 				else
-					. +="<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=be_role;be_role_type=[i]'>Yes</a> / <b>No</b></td></tr>"
+					. +="<tr><td width='45%'>[i]: </td><td><a href='byond://?_src_=prefs;preference=be_role;be_role_type=[i]'>Yes</a> / <b>No</b></td></tr>"
 
 	. += 			"</table>"
 	. += 		"</td>"
@@ -41,7 +41,7 @@
 	. += 					"<b>Antag setup:</b>"
 	. += 				"</td></tr>"
 	. += 				"<tr><td colspan='2'>"
-	. += 					"Uplink Type : <a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype'>[uplinklocation]</a>"
+	. += 					"Uplink Type : <a href='byond://?src=\ref[user];preference=antagoptions;antagtask=uplinktype'>[uplinklocation]</a>"
 	. += 				"</td></tr>"
 	. += 			"</table>"
 
@@ -55,9 +55,9 @@
 		if((role in be_role) && !jobban_isbanned(user, role))
 			for (var/ignore in global.special_roles_ignore_question[role])
 				if(ignore in ignore_question)
-					. += 				"<tr><td width='45%'>[ignore]: </td><td><a href='?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>Yes</a> / <b>No</b></td></tr>"
+					. += 				"<tr><td width='45%'>[ignore]: </td><td><a href='byond://?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>Yes</a> / <b>No</b></td></tr>"
 				else
-					. += 				"<tr><td width='45%'>[ignore]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>No</a></td></tr>"
+					. += 				"<tr><td width='45%'>[ignore]: </td><td><b>Yes</b> / <a href='byond://?_src_=prefs;preference=ignore_question;ghost_role=[ignore]'>No</a></td></tr>"
 	. += 			"</table>"
 
 	. += 		"</td>"

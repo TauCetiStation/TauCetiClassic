@@ -32,31 +32,31 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	var/dat
 	if (src.temp)
-		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"
+		dat = "<TT>[src.temp]</TT><BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear Screen</A>"
 	else
-		dat = "Confirm Identity: <A href='?src=\ref[src];scan=1'>[src.scan ? "[src.scan.name]" : "----------"]</A><HR>"
+		dat = "Confirm Identity: <A href='byond://?src=\ref[src];scan=1'>[src.scan ? "[src.scan.name]" : "----------"]</A><HR>"
 		if (src.authenticated)
 			switch(src.screen)
 				if(1.0)
 					dat += {"
-						<A href='?src=\ref[src];search=1'>Search Records</A>
-						<BR><A href='?src=\ref[src];screen=2'>List Records</A>
+						<A href='byond://?src=\ref[src];search=1'>Search Records</A>
+						<BR><A href='byond://?src=\ref[src];screen=2'>List Records</A>
 						<BR>
-						<BR><A href='?src=\ref[src];screen=5'>Virus Database</A>
-						<BR><A href='?src=\ref[src];screen=6'>Medbot Tracking</A>
+						<BR><A href='byond://?src=\ref[src];screen=5'>Virus Database</A>
+						<BR><A href='byond://?src=\ref[src];screen=6'>Medbot Tracking</A>
 						<BR>
-						<BR><A href='?src=\ref[src];screen=3'>Record Maintenance</A>
-						<BR><A href='?src=\ref[src];logout=1'>Log Out</A><BR>
+						<BR><A href='byond://?src=\ref[src];screen=3'>Record Maintenance</A>
+						<BR><A href='byond://?src=\ref[src];logout=1'>Log Out</A><BR>
 						"}
 				if(2.0)
 					dat += "<B>Record List</B>:<HR>"
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general))
-							dat += "<A href='?src=\ref[src];d_rec=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]</A><BR>"
+							dat += "<A href='byond://?src=\ref[src];d_rec=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]</A><BR>"
 							//Foreach goto(132)
-					dat += "<HR><A href='?src=\ref[src];screen=1'>Back</A>"
+					dat += "<HR><A href='byond://?src=\ref[src];screen=1'>Back</A>"
 				if(3.0)
-					dat += "<B>Records Maintenance</B><HR>\n<A href='?src=\ref[src];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[src];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[src];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[src];screen=1'>Back</A>"
+					dat += "<B>Records Maintenance</B><HR>\n<A href='byond://?src=\ref[src];back=1'>Backup To Disk</A><BR>\n<A href='byond://?src=\ref[src];u_load=1'>Upload From disk</A><BR>\n<A href='byond://?src=\ref[src];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='byond://?src=\ref[src];screen=1'>Back</A>"
 				if(4.0)
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 					if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
@@ -69,19 +69,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 
 						dat += "<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>Name: [active1.fields["name"]] \
 								ID: [active1.fields["id"]]<BR>\n	\
-								Sex: <A href='?src=\ref[src];field=sex'>[active1.fields["sex"]]</A><BR>\n	\
-								Age: <A href='?src=\ref[src];field=age'>[active1.fields["age"]]</A><BR>\n	\
-								Fingerprint: <A href='?src=\ref[src];field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
-								Insurance Account Number: <A href='?src=\ref[src];field=insurance_account_number'>[active1.fields["insurance_account_number"]]</A><BR>\n	\
+								Sex: <A href='byond://?src=\ref[src];field=sex'>[active1.fields["sex"]]</A><BR>\n	\
+								Age: <A href='byond://?src=\ref[src];field=age'>[active1.fields["age"]]</A><BR>\n	\
+								Fingerprint: <A href='byond://?src=\ref[src];field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
+								Insurance Account Number: <A href='byond://?src=\ref[src];field=insurance_account_number'>[active1.fields["insurance_account_number"]]</A><BR>\n	\
 								Insurance Type: [active1.fields["insurance_type"]]<BR>\n \
-								Physical Status: <A href='?src=\ref[src];field=p_stat'>[active1.fields["p_stat"]]</A><BR>\n	\
-								Mental Status: <A href='?src=\ref[src];field=m_stat'>[active1.fields["m_stat"]]</A><BR></td><td align = center valign = top> \
+								Physical Status: <A href='byond://?src=\ref[src];field=p_stat'>[active1.fields["p_stat"]]</A><BR>\n	\
+								Mental Status: <A href='byond://?src=\ref[src];field=m_stat'>[active1.fields["m_stat"]]</A><BR></td><td align = center valign = top> \
 								Photo:<br><img src=front.png height=64 width=64 border=5 class=nearest><img src=side.png height=64 width=64 border=5 class=nearest></td></tr></table>"
 					else
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2)))
 						dat += text(
-							"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=b_type'>[]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
+							"<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='byond://?src=\ref[src];field=b_type'>[]</A><BR>\nDNA: <A href='byond://?src=\ref[src];field=b_dna'>[]</A><BR>\n<BR>\nMinor Disabilities: <A href='byond://?src=\ref[src];field=mi_dis'>[]</A><BR>\nDetails: <A href='byond://?src=\ref[src];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='byond://?src=\ref[src];field=ma_dis'>[]</A><BR>\nDetails: <A href='byond://?src=\ref[src];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='byond://?src=\ref[src];field=alg'>[]</A><BR>\nDetails: <A href='byond://?src=\ref[src];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='byond://?src=\ref[src];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='byond://?src=\ref[src];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='byond://?src=\ref[src];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>",
 							src.active2.fields["b_type"],
 							src.active2.fields["b_dna"],
 							src.active2.fields["mi_dis"],
@@ -96,24 +96,24 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						)
 						var/counter = 1
 						while(src.active2.fields["com_[counter]"])
-							dat += "[src.active2.fields["com_[counter]"]]<BR><A href='?src=\ref[src];del_c=[counter]'>Delete Entry</A><BR><BR>"
+							dat += "[src.active2.fields["com_[counter]"]]<BR><A href='byond://?src=\ref[src];del_c=[counter]'>Delete Entry</A><BR><BR>"
 							counter++
-						dat += "<A href='?src=\ref[src];add_c=1'>Add Entry</A><BR><BR>"
-						dat += "<A href='?src=\ref[src];del_r=1'>Delete Record (Medical Only)</A><BR><BR>"
+						dat += "<A href='byond://?src=\ref[src];add_c=1'>Add Entry</A><BR><BR>"
+						dat += "<A href='byond://?src=\ref[src];del_r=1'>Delete Record (Medical Only)</A><BR><BR>"
 					else
 						dat += "<B>Medical Record Lost!</B><BR>"
-						dat += "<A href='?src=\ref[src];new=1'>New Record</A><BR><BR>"
-					dat += "\n<A href='?src=\ref[src];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[src];print_photos=1'>Print Photos</A><BR>\n<A href='?src=\ref[src];screen=2'>Back</A><BR>"
+						dat += "<A href='byond://?src=\ref[src];new=1'>New Record</A><BR><BR>"
+					dat += "\n<A href='byond://?src=\ref[src];print_p=1'>Print Record</A><BR>\n<A href='byond://?src=\ref[src];print_photos=1'>Print Photos</A><BR>\n<A href='byond://?src=\ref[src];screen=2'>Back</A><BR>"
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for (var/ID in virusDB)
 						var/datum/data/record/v = virusDB[ID]
-						dat += "<br><a href='?src=\ref[src];vir=\ref[v]'>[v.fields["name"]]</a>"
+						dat += "<br><a href='byond://?src=\ref[src];vir=\ref[v]'>[v.fields["name"]]</a>"
 
-					dat += "<br><a href='?src=\ref[src];screen=1'>Back</a>"
+					dat += "<br><a href='byond://?src=\ref[src];screen=1'>Back</a>"
 				if(6.0)
 					dat += "<center><b>Medical Robot Monitor</b></center>"
-					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
+					dat += "<a href='byond://?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
 					for(var/obj/machinery/bot/medbot/M in bots_list)
@@ -133,7 +133,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 
 				else
 		else
-			dat += "<A href='?src=\ref[src];login=1'>Log In</A>"
+			dat += "<A href='byond://?src=\ref[src];login=1'>Log In</A>"
 
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records")
 	popup.set_content("<TT>[dat]</TT>")
@@ -227,13 +227,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 		if(href_list["vir"])
 			var/datum/data/record/v = locate(href_list["vir"])
 			src.temp = "<center>GNAv2 based virus lifeform V-[v.fields["id"]]</center>"
-			src.temp += "<br><b>Name:</b> <A href='?src=\ref[src];field=vir_name;edit_vir=\ref[v]'>[v.fields["name"]]</A>"
+			src.temp += "<br><b>Name:</b> <A href='byond://?src=\ref[src];field=vir_name;edit_vir=\ref[v]'>[v.fields["name"]]</A>"
 			src.temp += "<br><b>Antigen:</b> [v.fields["antigen"]]"
 			src.temp += "<br><b>Spread:</b> [v.fields["spread type"]] "
-			src.temp += "<br><b>Details:</b><br> <A href='?src=\ref[src];field=vir_desc;edit_vir=\ref[v]'>[v.fields["description"]]</A>"
+			src.temp += "<br><b>Details:</b><br> <A href='byond://?src=\ref[src];field=vir_desc;edit_vir=\ref[v]'>[v.fields["description"]]</A>"
 
 		if (href_list["del_all"])
-			src.temp = "Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[src];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[src];temp=1'>No</A><br>"
+			src.temp = "Are you sure you wish to delete all records?<br>\n\t<A href='byond://?src=\ref[src];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='byond://?src=\ref[src];temp=1'>No</A><br>"
 
 		if (href_list["del_all2"])
 			for(var/datum/data/record/R in data_core.medical)
@@ -354,13 +354,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						src.active2.fields["notes"] = t1
 				if("p_stat")
 					if (istype(src.active1, /datum/data/record))
-						src.temp = "<B>Physical Condition:</B><BR>\n\t<A href='?src=\ref[src];temp=1;p_stat=deceased'>*Deceased*</A><BR>\n\t<A href='?src=\ref[src];temp=1;p_stat=ssd'>*SSD*</A><BR>\n\t<A href='?src=\ref[src];temp=1;p_stat=active'>Active</A><BR>\n\t<A href='?src=\ref[src];temp=1;p_stat=unfit'>Physically Unfit</A><BR>\n\t<A href='?src=\ref[src];temp=1;p_stat=disabled'>Disabled</A><BR>"
+						src.temp = "<B>Physical Condition:</B><BR>\n\t<A href='byond://?src=\ref[src];temp=1;p_stat=deceased'>*Deceased*</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;p_stat=ssd'>*SSD*</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;p_stat=active'>Active</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;p_stat=unfit'>Physically Unfit</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;p_stat=disabled'>Disabled</A><BR>"
 				if("m_stat")
 					if (istype(src.active1, /datum/data/record))
-						src.temp = "<B>Mental Condition:</B><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=insane'>*Insane*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=unstable'>*Unstable*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=watch'>*Watch*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=stable'>Stable</A><BR>"
+						src.temp = "<B>Mental Condition:</B><BR>\n\t<A href='byond://?src=\ref[src];temp=1;m_stat=insane'>*Insane*</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;m_stat=unstable'>*Unstable*</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;m_stat=watch'>*Watch*</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;m_stat=stable'>Stable</A><BR>"
 				if("b_type")
 					if (istype(src.active2, /datum/data/record))
-						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=an'>[BLOOD_A_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=ap'>[BLOOD_A_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=bn'>[BLOOD_B_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=bp'>[BLOOD_B_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=abn'>[BLOOD_AB_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=abp'>[BLOOD_AB_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=on'>[BLOOD_O_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=op'>[BLOOD_O_PLUS]</A><BR>"
+						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=an'>[BLOOD_A_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=ap'>[BLOOD_A_PLUS]</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=bn'>[BLOOD_B_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=bp'>[BLOOD_B_PLUS]</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=abn'>[BLOOD_AB_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=abp'>[BLOOD_AB_PLUS]</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=on'>[BLOOD_O_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=op'>[BLOOD_O_PLUS]</A><BR>"
 				if("b_dna")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input DNA hash:", "Med. records", input_default(src.active1.fields["dna"]), null)  as text)
@@ -434,7 +434,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 
 		if (href_list["del_r"])
 			if (src.active2)
-				src.temp = "Are you sure you wish to delete the record (Medical Portion Only)?<br>\n\t<A href='?src=\ref[src];temp=1;del_r2=1'>Yes</A><br>\n\t<A href='?src=\ref[src];temp=1'>No</A><br>"
+				src.temp = "Are you sure you wish to delete the record (Medical Portion Only)?<br>\n\t<A href='byond://?src=\ref[src];temp=1;del_r2=1'>Yes</A><br>\n\t<A href='byond://?src=\ref[src];temp=1'>No</A><br>"
 
 		if (href_list["del_r2"])
 			if (src.active2)
