@@ -4,7 +4,7 @@
 	required_pref = ROLE_TRAITOR
 	logo_state = "synd-logo"
 
-	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
+	restricted_jobs = list("Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
@@ -114,6 +114,10 @@
 		return
 	for(var/datum/objective/O in objectives.GetObjectives())
 		O.give_required_equipment()
+	if(isrobot(antag.current))
+		var/mob/living/silicon/robot/robot = antag.current
+		robot.UnlinkSelf()
+		robot.emagged = TRUE
 
 /datum/role/traitor/RemoveFromRole(datum/mind/M, msg_admins)
 	if(isAI(M.current))
