@@ -52,7 +52,6 @@
 				oxygen_reserve = min(initial(oxygen_reserve), oxygen_reserve+1)
 			if(!oxygen_reserve) //(hardcrit)
 				owner.Paralyse(3)
-			var/can_heal = damage && damage < max_damage && (owner.reagents.has_reagent("brainheal?????")|| (damage < 30 && owner.reagents.has_reagent("inaprovaline")))
 			var/damprob
 			// Effects of bloodloss
 			if(!HAS_TRAIT(owner, TRAIT_CPB))
@@ -61,8 +60,6 @@
 						if(owner.pale)
 							owner.pale = FALSE
 							owner.update_body()
-						if(can_heal)
-							damage = max(damage-1, 0)
 					if(BLOOD_VOLUME_OKAY_P to BLOOD_VOLUME_SAFE_P)
 						if(!owner.pale)
 							owner.pale = TRUE
@@ -72,25 +69,25 @@
 						if(prob(1))
 							var/word = pick("dizzy", "woosey", "faint")
 							to_chat(src, "<span class='warning'>You feel [word]</span>")
-						damprob = owner.reagents.has_reagent("inaprovaline") ? 30 : 60
-						if(prob(damprob) && damage < 20)
-							take_damage(1)
+						if(owner.oxyloss < 20)
+							owner.oxyloss += 3
 					if(BLOOD_VOLUME_BAD_P to BLOOD_VOLUME_OKAY_P)
 						if(!owner.pale)
 							owner.pale = TRUE
 							owner.update_body()
 						owner.blurEyes(6)
-						damprob = owner.reagents.has_reagent("inaprovaline") ? 40 : 80
-						if(prob(damprob) && damage < 40)
-							take_damage(1)
+						if(owner.oxyloss < 50)
+							owner.oxyloss += 10
+						owner.oxyloss += 1
 						if(!owner.paralysis && prob(10))
 							owner.Paralyse(rand(1,3))
 							var/word = pick("dizzy", "woosey", "faint")
 							to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
 					if(BLOOD_VOLUME_SURVIVE_P to BLOOD_VOLUME_BAD_P)
 						owner.blurEyes(6)
+						owner.oxyloss += 5
 						damprob = owner.reagents.has_reagent("inaprovaline") ? 60 : 100
-						if(prob(damprob) && damage < 60)
+						if(prob(damprob) && damage < 40)// without blood the brain begins to die
 							take_damage(1)
 						if(!owner.paralysis && prob(15))
 							owner.Paralyse(3,5)
@@ -99,9 +96,8 @@
 					if(0 to BLOOD_VOLUME_SURVIVE_P)
 						if(!iszombie(owner)) // zombies dont care about blood
 							owner.blurEyes(6)
+							owner.oxyloss += 10
 							damprob = owner.reagents.has_reagent("inaprovaline") ? 80 : 100
-							if(prob(damprob))
-								take_damage(1)
 							if(prob(damprob))
 								take_damage(1)
 

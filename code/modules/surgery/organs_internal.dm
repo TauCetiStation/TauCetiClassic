@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/organ_manipulation
-	priority = 1
+	priority = 2
 	allowed_species = list("exclude", IPC, DIONA)
 	var/obj/item/organ/internal/I = null
 

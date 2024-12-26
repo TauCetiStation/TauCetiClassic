@@ -34,6 +34,10 @@
 		handle_pulse()
 		if(pulse)
 			handle_heart_beat()
+			if(pulse == PULSE_2FAST && prob(1))
+				take_damage(0.5)
+			if(pulse == PULSE_THREADY && prob(5))
+				take_damage(0.5)
 		handle_blood()
 	..()
 
