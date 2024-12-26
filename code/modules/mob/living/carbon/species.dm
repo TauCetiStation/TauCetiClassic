@@ -687,9 +687,6 @@
 
 	eyes = "vox_eyes"
 
-	inhale_type = "nitrogen"
-	poison_type = "oxygen"
-
 	flags = list(
 		IS_WHITELISTED = TRUE
 		,NO_SCAN = TRUE
@@ -807,9 +804,6 @@
 	burn_mod = 0.2
 
 	eyes = null
-	inhale_type = "nitrogen"
-	poison_type = "oxygen"
-
 	is_common = TRUE
 
 	flags = list(

@@ -169,6 +169,8 @@
 
 
 /obj/item/organ/internal/liver/ipc/process()
+	if(!owner)
+		return
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
 
 	if(!C)

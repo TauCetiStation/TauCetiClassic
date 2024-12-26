@@ -393,6 +393,9 @@ var/global/list/tourette_bad_words= list(
 
 
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
+	var/obj/item/organ/internal/lungs/lungs = organs_by_name[O_LUNGS]
+	if(!lungs)
+		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 4)
 	if(suiciding)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
 	else if(health > config.health_threshold_crit)

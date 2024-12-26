@@ -265,6 +265,8 @@
 		item_state_world = "miniaturesuitcooler0"
 
 /obj/item/organ/internal/heart/ipc/process()
+	if(!owner)
+		return
 	if(owner.nutrition < 1)
 		return
 	if(is_broken())

@@ -81,22 +81,23 @@
 
 /obj/item/organ/internal/kidneys/ipc/process()
 	if(!owner)
-		if(owner.nutrition < 1)
-			return
-		if(next_warning > world.time)
-			return
-		next_warning = world.time + 10 SECONDS
+		return
+	if(owner.nutrition < 1)
+		return
+	if(next_warning > world.time)
+		return
+	next_warning = world.time + 10 SECONDS
 
-		var/damage_report = ""
-		var/first = TRUE
+	var/damage_report = ""
+	var/first = TRUE
 
-		for(var/obj/item/organ/internal/IO in owner.organs)
-			if(IO.is_bruised())
-				if(!first)
-					damage_report += "\n"
-				first = FALSE
-				damage_report += "<span class='warning'><b>%[uppertext(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
+	for(var/obj/item/organ/internal/IO in owner.organs)
+		if(IO.is_bruised())
+			if(!first)
+				damage_report += "\n"
+			first = FALSE
+			damage_report += "<span class='warning'><b>%[uppertext(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
 
-		if(damage_report != "")
-			to_chat(owner, damage_report)
+	if(damage_report != "")
+		to_chat(owner, damage_report)
 

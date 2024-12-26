@@ -136,8 +136,6 @@
 		else if(prob(7))
 			owner.emote(pick("drool","moan","giggle"))
 
-
-	owner.inhale_alert = 0 // Reset our toxins alert for now.
 	// Too much poison in the air.
 	if(poison_pp > safe_toxins_max)
 		var/ratio = (poison / safe_toxins_max) * 10
@@ -145,7 +143,8 @@
 			owner.reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(poison_type, -poison * BREATH_USED_PART, update = FALSE) //update after
 		owner.poison_alert = TRUE
-
+	else
+		owner.poison_alert = FALSE
 	// Moved after reagent injection so we don't instantly poison ourselves with CO2 or whatever.
 	if(exhale_type && (!istype(owner.wear_mask)))
 		breath.adjust_gas_temp(exhale_type, inhaled_gas_used, owner.bodytemperature, update = 0) //update afterwards
@@ -172,7 +171,6 @@
 	// Were we able to breathe?
 	var/failed_breath = failed_inhale || failed_exhale
 	if(!failed_breath)
-		last_successful_breath = world.time
 		owner.adjustOxyLoss(-5 * inhale_efficiency)
 
 	handle_breath_temperature(breath)
@@ -250,6 +248,9 @@
 	icon = 'icons/obj/special_organs/vox.dmi'
 	compability = list(VOX)
 	sterile = TRUE
+	breath_type = "nitrogen"
+	poison_type = "oxygen"
+
 
 /obj/item/organ/internal/lungs/tajaran
 	name = "tajaran lungs"
@@ -299,6 +300,8 @@
 	item_state_world = "working"
 
 /obj/item/organ/internal/lungs/ipc/process()
+	if(!owner)
+		return
 	if(owner.nutrition < 1)
 		return
 	var/temp_gain = owner.species.synth_temp_gain
