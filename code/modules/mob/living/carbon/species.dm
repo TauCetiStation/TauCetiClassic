@@ -216,10 +216,10 @@
 
 /datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
 	if(deleteOld)
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			qdel(BP)
 		for(var/obj/item/organ/internal/IO in H.organs)
 			qdel(IO)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			qdel(BP)
 
 	create_bodyparts(H)
 
