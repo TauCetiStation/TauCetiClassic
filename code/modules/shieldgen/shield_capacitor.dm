@@ -81,20 +81,20 @@
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		t += "This capacitor is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
+		t += "This capacitor is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='byond://?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
 		t += "[time_since_fail > 2 ? "<span class='green'>Charging stable.</span>" : "<span class='red'>Warning, low charge!</span>"]<br>"
 		t += "Charge: [stored_charge] Watts ([100 * stored_charge/max_charge]%)<br>"
 		t += "Charge rate: \
-		<a href='?src=\ref[src];charge_rate=-100000'>----</a> \
-		<a href='?src=\ref[src];charge_rate=-10000'>---</a> \
-		<a href='?src=\ref[src];charge_rate=-1000'>--</a> \
-		<a href='?src=\ref[src];charge_rate=-100'>-</a>[charge_rate] Watts/sec \
-		<a href='?src=\ref[src];charge_rate=100'>+</a> \
-		<a href='?src=\ref[src];charge_rate=1000'>++</a> \
-		<a href='?src=\ref[src];charge_rate=10000'>+++</a> \
-		<a href='?src=\ref[src];charge_rate=100000'>+++</a><br>"
+		<a href='byond://?src=\ref[src];charge_rate=-100000'>----</a> \
+		<a href='byond://?src=\ref[src];charge_rate=-10000'>---</a> \
+		<a href='byond://?src=\ref[src];charge_rate=-1000'>--</a> \
+		<a href='byond://?src=\ref[src];charge_rate=-100'>-</a>[charge_rate] Watts/sec \
+		<a href='byond://?src=\ref[src];charge_rate=100'>+</a> \
+		<a href='byond://?src=\ref[src];charge_rate=1000'>++</a> \
+		<a href='byond://?src=\ref[src];charge_rate=10000'>+++</a> \
+		<a href='byond://?src=\ref[src];charge_rate=100000'>+++</a><br>"
 	t += "<hr>"
-	t += "<A href='?src=\ref[src]'>Refresh</A> "
+	t += "<A href='byond://?src=\ref[src]'>Refresh</A> "
 
 	var/datum/browser/popup = new(user, "shield_capacitor", "Shield Capacitor Control Console", 500, 400)
 	popup.set_content(t)

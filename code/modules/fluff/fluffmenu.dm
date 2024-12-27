@@ -3,19 +3,19 @@
 	var/list/custom_items = get_custom_items(user.client.ckey)
 
 	. += "<table align='center' width='570px'>"
-	. += "<tr><td colspan=3><center><b>Custom items slots: <font color='#E67300'>[user.client.get_custom_items_slot_count()]</font></b><br>\[<a href='?_src_=prefs;preference=fluff;show_info=1'>Information and how to get more</a>\]</center></td></tr>"
+	. += "<tr><td colspan=3><center><b>Custom items slots: <font color='#E67300'>[user.client.get_custom_items_slot_count()]</font></b><br>\[<a href='byond://?_src_=prefs;preference=fluff;show_info=1'>Information and how to get more</a>\]</center></td></tr>"
 
 	for(var/item_name in custom_items)
 		var/datum/custom_item/item = custom_items[item_name]
-		var/item_link = "<a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name], [item.item_type]</a>"
+		var/item_link = "<a href='byond://?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name], [item.item_type]</a>"
 		if(item.status == "submitted")
 			. += "<tr><td colspan=3><center>[item_link] <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
 		if(item.status == "accepted")
 			. += "<tr><td colspan=3><center>[item_link] <font color='#267F00'>(Accepted)</font></center></td></tr>"
 		if(item.status == "rejected")
-			. += "<tr><td colspan=3><center>[item_link] <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='byond://?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
 
-	. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;add_item=1'>Create new</a></center></td></tr>"
+	. += "<tr><td colspan=3><center><a href='byond://?_src_=prefs;preference=fluff;add_item=1'>Create new</a></center></td></tr>"
 
 	. += "</table>"
 
@@ -86,47 +86,47 @@ var/global/list/editing_item_oldname_list = list()
 	dat += "<table cellspacing='0' width='100%'>"
 	dat += "<tr>"
 	dat += "<td width=110>Type</td>"
-	dat += "<td>[readonly?"<b>[editing_item.item_type]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_type=1'>[editing_item.item_type]</a>"]</td>"
+	dat += "<td>[readonly?"<b>[editing_item.item_type]</b>":"<a class='small' href='byond://?_src_=prefs;preference=fluff;change_type=1'>[editing_item.item_type]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
 	dat += "<td>Name</td>"
-	dat += "<td>[readonly?"<b>[editing_item.name]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_name=1'>[editing_item.name]</a>"]</td>"
+	dat += "<td>[readonly?"<b>[editing_item.name]</b>":"<a class='small' href='byond://?_src_=prefs;preference=fluff;change_name=1'>[editing_item.name]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
 	dat += "<td>Description</td>"
-	dat += "<td>[readonly?"<b>[editing_item.desc]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_desc=1'>[editing_item.desc]</a>"]</td>"
+	dat += "<td>[readonly?"<b>[editing_item.desc]</b>":"<a class='small' href='byond://?_src_=prefs;preference=fluff;change_desc=1'>[editing_item.desc]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
 	dat += "<td>Hide hair<br>(for mask, hat or uniform)</td>"
-	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
+	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='byond://?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
 	dat += "</tr>"
 	if(!readonly)
 		dat += "<tr>"
 		dat += "<td>Icon</td>"
-		dat += "<td><a class='small' href='?_src_=prefs;preference=fluff;upload_icon=1'>Upload Icon</a></td>"
+		dat += "<td><a class='small' href='byond://?_src_=prefs;preference=fluff;upload_icon=1'>Upload Icon</a></td>"
 		dat += "</tr>"
 	dat += "<tr>"
 	dat += "<td>Icon name</td>"
-	dat += "<td>[readonly?"<b>[editing_item.icon_state]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_iconname=1'>[editing_item.icon_state]</a>"]</td>"
+	dat += "<td>[readonly?"<b>[editing_item.icon_state]</b>":"<a class='small' href='byond://?_src_=prefs;preference=fluff;change_iconname=1'>[editing_item.icon_state]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
-	dat += "<td>Sprite author<a class='small' href='?_src_=prefs;preference=fluff;author_info=1'>\[?\]</a></td>"
-	dat += "<td>[readonly?"<b>[editing_item.sprite_author ? editing_item.sprite_author : "no author"]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_author=1'>[editing_item.sprite_author ? editing_item.sprite_author : "no author"]</a>"]</td>"
+	dat += "<td>Sprite author<a class='small' href='byond://?_src_=prefs;preference=fluff;author_info=1'>\[?\]</a></td>"
+	dat += "<td>[readonly?"<b>[editing_item.sprite_author ? editing_item.sprite_author : "no author"]</b>":"<a class='small' href='byond://?_src_=prefs;preference=fluff;change_author=1'>[editing_item.sprite_author ? editing_item.sprite_author : "no author"]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
-	dat += "<td>OOC Info<a class='small' href='?_src_=prefs;preference=fluff;ooc_info=1'>\[?\]</a></td>"
-	dat += "<td>[readonly?"<b>[editing_item.info ? editing_item.info : "no info"]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_oocinfo=1'>[editing_item.info ? editing_item.info : "no info"]</a>"]</td>"
+	dat += "<td>OOC Info<a class='small' href='byond://?_src_=prefs;preference=fluff;ooc_info=1'>\[?\]</a></td>"
+	dat += "<td>[readonly?"<b>[editing_item.info ? editing_item.info : "no info"]</b>":"<a class='small' href='byond://?_src_=prefs;preference=fluff;change_oocinfo=1'>[editing_item.info ? editing_item.info : "no info"]</a>"]</td>"
 	dat += "</tr>"
 	dat += "</table></div>"
 
 	if(!readonly)
 		dat += "<br><b><font color='#FF4444'>Your item will be pre-moderated by admins before you can use it</font></b><br>"
-		dat += "<a class='small' href='?_src_=prefs;preference=fluff;submit=1'>Submit</a>"
+		dat += "<a class='small' href='byond://?_src_=prefs;preference=fluff;submit=1'>Submit</a>"
 
 		if(editing_item_oldname)
-			dat += " <a class='small' href='?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
+			dat += " <a class='small' href='byond://?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
 	if(editing_item.icon)
-		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
+		dat += " <a class='small' href='byond://?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
 	user << browse(dat, "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
@@ -353,7 +353,7 @@ var/global/list/editing_item_oldname_list = list()
 		var/ticked = (item_name in custom_items)
 		var/accepted = (item.status == "accepted")
 		if(accepted || ticked)
-			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='?_src_=prefs;preference=loadout;toggle_custom_gear=[ckey(item.name)]'>[item.name][accepted ? "" : " (not accepted)"]</a></td>"
+			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal; [ticked ? "font-weight:bold;" : ""]'href='byond://?_src_=prefs;preference=loadout;toggle_custom_gear=[ckey(item.name)]'>[item.name][accepted ? "" : " (not accepted)"]</a></td>"
 			. += "<td width = 5% style='vertical-align:top'>0</td>"
 			. += "<td><font size=2><i>[item.desc]</i></font></td>"
 			. += "</tr>"
@@ -388,14 +388,14 @@ var/global/list/editing_item_oldname_list = list()
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
-<th text-align:center;'>CKEY <a class='small' href='?src=\ref[src];custom_items=add'>\[+\]</a></th>
+<th text-align:center;'>CKEY <a class='small' href='byond://?src=\ref[src];custom_items=add'>\[+\]</a></th>
 <th text-align:center;'>Slot count</th>
 </tr>
 "}
 
 	for(var/user_ckey in slots)
 		output += "<tr>"
-		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=history;ckey=[user_ckey]'>[user_ckey]</a></td>"
+		output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];custom_items=history;ckey=[user_ckey]'>[user_ckey]</a></td>"
 		output += "<td style='text-align:center;'>[slots[user_ckey]]</td>"
 		output += "</tr>"
 
@@ -450,7 +450,7 @@ var/global/list/editing_item_oldname_list = list()
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
-<th text-align:center;'>[user_ckey] <a class='small' href='?src=\ref[src];custom_items=addckey;ckey=[user_ckey]'>\[+\]</a></th>
+<th text-align:center;'>[user_ckey] <a class='small' href='byond://?src=\ref[src];custom_items=addckey;ckey=[user_ckey]'>\[+\]</a></th>
 <th text-align:center;'>Amount</th>
 <th text-align:center;'>Reason</th>
 <th text-align:center;'>Added by</th>
@@ -460,7 +460,7 @@ var/global/list/editing_item_oldname_list = list()
 	var/i = 1
 	for(var/datum/custom_items_history/entry in history)
 		output += "<tr>"
-		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=history_remove;ckey=[user_ckey];index=[i]'>DELETE</a></td>"
+		output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];custom_items=history_remove;ckey=[user_ckey];index=[i]'>DELETE</a></td>"
 		output += "<td style='text-align:center;'>[entry.amount]</td>"
 		output += "<td style='text-align:center;'>[sanitize(entry.reason)]</td>"
 		output += "<td style='text-align:center;'>[entry.admin_ckey]</td>"

@@ -198,6 +198,7 @@
 #define TRAIT_WILLPOWER_IMPLANT   "willpower_implant"
 #define TRAIT_CAN_LEAP            "can_leap"
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
+#define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

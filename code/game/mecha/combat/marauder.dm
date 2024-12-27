@@ -199,9 +199,9 @@
 	var/output = {"<div class='wr'>
 						<div class='header'>Special</div>
 						<div class='links'>
-						<a href='?src=\ref[src];toggle_thrusters=1'>Toggle Thrusters</a><br>
-						<a href='?src=\ref[src];toggle_zoom=1'>Toggle zoom mode</a><br>
-						<a href='?src=\ref[src];smoke=1'>Smoke</a>
+						<a href='byond://?src=\ref[src];toggle_thrusters=1'>Toggle Thrusters</a><br>
+						<a href='byond://?src=\ref[src];toggle_zoom=1'>Toggle zoom mode</a><br>
+						<a href='byond://?src=\ref[src];smoke=1'>Smoke</a>
 						</div>
 						</div>
 						"}
