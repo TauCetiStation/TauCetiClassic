@@ -119,15 +119,15 @@ var/global/loopModeNames=list(
 		update_icon()
 		return
 	var/t = "<h1>Jukebox Interface</h1>"
-	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
-	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
+	t += "<b>Power:</b> <a href='byond://?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
+	t += "<b>Play Mode:</b> <a href='byond://?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
 	if(playlist == null)
 		t += "\[DOWNLOADING PLAYLIST, PLEASE WAIT\]"
 	else
 		if(check_reload())
 			t += "<b>Playlist:</b> "
 			for(var/plid in playlists)
-				t += "<a href='?src=\ref[src];playlist=[plid]'>[playlists[plid]]</a>"
+				t += "<a href='byond://?src=\ref[src];playlist=[plid]'>[playlists[plid]]</a>"
 		else
 			t += "<i>Please wait before changing playlists.</i>"
 		t += "<br />"
@@ -138,7 +138,7 @@ var/global/loopModeNames=list(
 		var/i
 		for(i = 1,i <= playlist.len,i++)
 			var/datum/song_info/song=playlist[i]
-			t += "<tr><th>#[i]</th><td><A href='?src=\ref[src];song=[i]' class='nobg'>[song.displaytitle()]</A></td><td>[song.album]</td></tr>"
+			t += "<tr><th>#[i]</th><td><A href='byond://?src=\ref[src];song=[i]' class='nobg'>[song.displaytitle()]</A></td><td>[song.album]</td></tr>"
 		t += "</table>"
 
 	var/datum/browser/popup = new (user,"jukebox",name,420,700)

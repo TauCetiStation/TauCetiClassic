@@ -39,9 +39,9 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		dat += "<ul><li>Местоположение: <b>[shuttle_location]</b></li>"
 		dat += {"<li>Готов лететь[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]</li>"}
 		dat += "</ul>"
-		dat += "<a href='?src=\ref[src];mine=1'>Шахтёрский аванпост</a> | "
-		dat += "<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> | "
-		dat += "<a href='?src=\ref[src];sci=1'>Научный аванпост</a><br>"
+		dat += "<a href='byond://?src=\ref[src];mine=1'>Шахтёрский аванпост</a> | "
+		dat += "<a href='byond://?src=\ref[src];station=1'>[station_name_ru()]</a> | "
+		dat += "<a href='byond://?src=\ref[src];sci=1'>Научный аванпост</a><br>"
 	else
 		dat = "Невозможно найти шаттл"
 

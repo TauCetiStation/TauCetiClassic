@@ -16,7 +16,7 @@
 	if(total_cost < max_cost)
 		fcolor = "#e67300"
 	. += "<table align='center' width='570px'>"
-	. += "<tr><td colspan=3><center><b><font color='[fcolor]'>[total_cost]/[max_cost]</font> loadout points spent.</b> \[<a href='?_src_=prefs;preference=loadout;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+	. += "<tr><td colspan=3><center><b><font color='[fcolor]'>[total_cost]/[max_cost]</font> loadout points spent.</b> \[<a href='byond://?_src_=prefs;preference=loadout;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 	. += "<tr><td colspan=3><center><b>"
 
 	var/firstcat = 1
@@ -28,7 +28,7 @@
 		if(category == gear_tab)
 			. += " <b>[category]</b> "
 		else
-			. += " <a href='?_src_=prefs;preference=loadout;select_category=[category]'>[category]</a> "
+			. += " <a href='byond://?_src_=prefs;preference=loadout;select_category=[category]'>[category]</a> "
 	. += "</b></center></td></tr>"
 	if(gear_tab == "Custom items")
 		. += FluffLoadout(user)
@@ -41,7 +41,7 @@
 	for(var/gear_name in LC.gear)
 		var/datum/gear/G = LC.gear[gear_name]
 		var/ticked = (G.display_name in gear)
-		. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='?_src_=prefs;preference=loadout;toggle_gear=[G.display_name]'>[G.display_name]</a></td>"
+		. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal; [ticked ? "font-weight:bold;" : ""]'href='byond://?_src_=prefs;preference=loadout;toggle_gear=[G.display_name]'>[G.display_name]</a></td>"
 		. += "<td width = 5% style='vertical-align:top'>[G.cost]</td>"
 		. += "<td><font size=2><i>[G.description]</i></font></td>"
 		. += "</tr>"
@@ -62,7 +62,7 @@
 		if(ticked)
 			. += "<tr><td colspan=3>"
 			for(var/datum/gear_tweak/tweak in G.gear_tweaks)
-				. += " <a href='?_src_=prefs;preference=loadout;gear=[G.display_name];tweak=\ref[tweak]'>[tweak.get_contents(get_tweak_metadata(G, tweak))]</a>"
+				. += " <a href='byond://?_src_=prefs;preference=loadout;gear=[G.display_name];tweak=\ref[tweak]'>[tweak.get_contents(get_tweak_metadata(G, tweak))]</a>"
 			. += "</td></tr>"
 	. += "</table>"
 

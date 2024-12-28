@@ -47,8 +47,8 @@
 
 /datum/role/operative/extraPanelButtons()
 	var/dat = ..()
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tp=1;'>(Tp to base)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tellcode=1'>(Tell code)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tp=1;'>(Tp to base)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tellcode=1'>(Tell code)</a>"
 	return dat
 
 /datum/role/operative/RoleTopic(href, href_list, datum/mind/M, admin_auth)

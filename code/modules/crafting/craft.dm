@@ -247,8 +247,8 @@
 		dat += "Crafting..."
 	else
 		if(config.craft_recipes_visibility) // no point in this button, if this disabled on server.
-			dat += "<A href='?src=\ref[src];action=toggle_recipes'>[!display_craftable_only ? "Showing All Recipes" : "Showing Craftable Recipes"]</A>"
-		dat += "<A href='?src=\ref[src];action=toggle_compact'>[display_compact ? "Compact" : "Detailed"]</A>"
+			dat += "<A href='byond://?src=\ref[src];action=toggle_recipes'>[!display_craftable_only ? "Showing All Recipes" : "Showing Craftable Recipes"]</A>"
+		dat += "<A href='byond://?src=\ref[src];action=toggle_compact'>[display_compact ? "Compact" : "Detailed"]</A>"
 		dat += "<BR>"
 		dat += "<div class='Section'>"
 
@@ -269,7 +269,7 @@
 				dat += "<div class='connect_description'>"
 				if(can_craft)
 					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
-					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft"
+					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='byond://?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft"
 				else
 					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='disabled'>Craft"
@@ -289,7 +289,7 @@
 			else
 				if(can_craft)
 					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
-					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft</A>"
+					dat += "[recipe_data["name"]]:&nbsp&nbsp<A href='byond://?src=\ref[src];action=make;recipe=[recipe_data["ref"]]'>Craft</A>"
 				else
 					dat += "<img src='data:image/jpeg;base64,[GetIconForResult(R)]'/>"
 					dat += "[recipe_data["name"]]:&nbsp&nbsp<span class='disabled'>Craft</span>"
