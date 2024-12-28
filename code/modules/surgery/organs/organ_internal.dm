@@ -100,6 +100,9 @@
 /obj/item/organ/internal/proc/is_broken()
 	return damage >= min_broken_damage
 
+/mob/living/carbon/human/proc/get_int_organ(typepath)
+	return (locate(typepath) in organs)
+
 /obj/item/organ/internal/process()
 	//Process infections
 
