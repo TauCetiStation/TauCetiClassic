@@ -5584,9 +5584,23 @@
 	},
 /area/station/solar/auxstarboard)
 "ajn" = (
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/auxstarboard)
+/area/station/solar/starboard)
 "ajo" = (
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -5847,6 +5861,21 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxstarboard)
 "ajI" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxstarboard)
 "ajJ" = (
@@ -5898,9 +5927,13 @@
 	},
 /area/station/security/main)
 "ajN" = (
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/auxport)
+/area/station/solar/port)
 "ajO" = (
 /obj/machinery/computer/prisoner{
 	dir = 8
@@ -6407,6 +6440,16 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "akE" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "akF" = (
@@ -7800,11 +7843,6 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "amO" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
@@ -7813,6 +7851,11 @@
 	pixel_x = -25;
 	pixel_y = -25;
 	req_access = list(13)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
@@ -8218,7 +8261,8 @@
 "anx" = (
 /obj/machinery/power/solar_control{
 	id = "auxsolareast";
-	name = "Fore Port Solar Control"
+	name = "Fore Port Solar Control";
+	track = 2
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -9295,7 +9339,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "apm" = (
-/obj/machinery/power/smes,
+/obj/machinery/power/smes{
+	outputting = 1;
+	input_attempt = 1;
+	input_level = 90000
+	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -11269,9 +11317,9 @@
 	req_access = list(10,13)
 	},
 /obj/structure/cable{
+	d1 = 1;
 	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxstarboard)
@@ -13171,7 +13219,11 @@
 	dir = 1;
 	network = list("SS13","Engineering")
 	},
-/obj/machinery/power/smes,
+/obj/machinery/power/smes{
+	input_level = 90000;
+	input_attempt = 1;
+	outputting = 1
+	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -29088,7 +29140,8 @@
 /obj/machinery/power/solar_control{
 	dir = 4;
 	id = "portsolar";
-	name = "Aft Port Solar Control"
+	name = "Aft Port Solar Control";
+	track = 2
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
@@ -62603,7 +62656,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "crw" = (
-/obj/machinery/power/smes,
+/obj/machinery/power/smes{
+	input_level = 90000;
+	input_attempt = 1;
+	outputting = 1
+	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -63005,12 +63062,38 @@
 /area/station/solar/port)
 "csy" = (
 /obj/structure/cable{
+	d1 = 2;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/area/station/solar/auxport)
 "csz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
 "csA" = (
@@ -63976,7 +64059,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "cuS" = (
-/obj/machinery/power/smes,
+/obj/machinery/power/smes{
+	outputting = 1;
+	input_level = 90000;
+	input_attempt = 1
+	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -64409,7 +64496,8 @@
 "cwF" = (
 /obj/machinery/power/solar_control{
 	id = "starboardsolar";
-	name = "Aft Starboard Solar Control"
+	name = "Aft Starboard Solar Control";
+	track = 2
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -65202,7 +65290,11 @@
 	pixel_y = 25;
 	req_access = list(10,13)
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
 "czc" = (
@@ -65366,6 +65458,16 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "czD" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
 "czE" = (
@@ -66878,12 +66980,12 @@
 /area/station/aisat/antechamber_interior)
 "cDz" = (
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/starboard)
+/area/station/solar/auxstarboard)
 "cDA" = (
 /turf/environment/space,
 /area/shuttle/vox/southwest_solars)
@@ -72568,6 +72670,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"ged" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "gfa" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,3"
@@ -73000,8 +73110,9 @@
 	req_access = list(13)
 	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
@@ -73265,7 +73376,8 @@
 "gQb" = (
 /obj/machinery/power/solar_control{
 	id = "auxsolareast";
-	name = "Fore Starboard Solar Control"
+	name = "Fore Starboard Solar Control";
+	track = 2
 	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -73513,6 +73625,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"haM" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "hbs" = (
 /obj/effect/decal/remains/robot,
 /turf/simulated/floor{
@@ -79549,6 +79669,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"nmE" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "nnb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -83721,6 +83854,19 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"rVy" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "rVP" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -103736,7 +103882,7 @@ cmr
 cmr
 cmr
 aah
-csy
+csx
 aah
 cmr
 cmr
@@ -103993,8 +104139,8 @@ cmp
 cmp
 cmp
 cms
-csz
-coc
+rVy
+ajN
 cod
 cod
 cod
@@ -104250,7 +104396,7 @@ cmt
 cmt
 cmt
 aah
-csz
+csx
 aah
 cmt
 cmt
@@ -104507,7 +104653,7 @@ aaa
 aah
 aah
 aah
-csz
+csx
 aaa
 aaa
 aah
@@ -104764,7 +104910,7 @@ cmr
 cmr
 cmr
 aah
-csz
+csx
 aah
 cmr
 cmr
@@ -105021,7 +105167,7 @@ cmp
 cmp
 cmp
 cms
-csz
+csx
 coc
 cod
 cod
@@ -105278,7 +105424,7 @@ cmt
 cmt
 cmt
 aah
-csz
+csx
 aah
 cmt
 cmt
@@ -105435,7 +105581,7 @@ akD
 aah
 aaa
 aah
-akD
+ged
 aah
 aaa
 aah
@@ -105535,7 +105681,7 @@ aah
 aaa
 aaa
 aaa
-csz
+csx
 aaa
 aaa
 aaa
@@ -105683,18 +105829,18 @@ aah
 abj
 acj
 acj
-ajN
+acj
+acj
+acj
+acj
+acj
 akE
-akE
-akE
-akE
-akE
-akE
-akE
-akE
-akE
-akE
-akE
+acj
+acj
+acj
+csy
+acj
+acj
 amO
 amc
 amp
@@ -105792,7 +105938,7 @@ cmr
 cmr
 cmr
 aah
-csz
+csx
 aah
 cmr
 cmr
@@ -105945,11 +106091,11 @@ aeZ
 aah
 aaa
 aah
-aeZ
+ged
 aah
 aaa
 aah
-aeZ
+ged
 aah
 aaa
 aah
@@ -106048,9 +106194,9 @@ cmp
 cmp
 cmp
 cmp
-cms
+ajN
 csz
-coc
+ajN
 cod
 cod
 cod
@@ -106306,7 +106452,7 @@ cmt
 cmt
 cmt
 aah
-csz
+csx
 aah
 cmt
 cmt
@@ -106563,7 +106709,7 @@ aah
 aaa
 aah
 aaa
-csz
+csx
 aaa
 aah
 aaa
@@ -106820,7 +106966,7 @@ aaa
 aaa
 aaa
 aaa
-csz
+csx
 aaa
 aah
 aaa
@@ -107077,7 +107223,7 @@ aah
 aaa
 aaa
 aaa
-csz
+csx
 aaa
 aaa
 aaa
@@ -137049,11 +137195,11 @@ ajH
 aah
 aah
 aah
-ajH
+cDz
 aah
 aaa
 aah
-ajH
+cDz
 aah
 aaa
 aah
@@ -137301,18 +137447,18 @@ aah
 ahv
 akC
 akC
-ajn
+akC
+akC
+akC
+akC
+akC
+nmE
+akC
+akC
+akC
 ajI
-ajI
-ajI
-ajI
-ajI
-ajI
-ajI
-ajI
-ajI
-ajI
-ajI
+akC
+akC
 asN
 aqY
 arX
@@ -137567,7 +137713,7 @@ ajJ
 aah
 aaa
 aah
-ajJ
+cDz
 aah
 aaa
 aah
@@ -137646,7 +137792,7 @@ aaa
 aah
 aaa
 aah
-cBD
+haM
 aaa
 aaa
 aah
@@ -137654,7 +137800,7 @@ cBD
 aaa
 aaa
 aah
-cBD
+haM
 aaa
 aaa
 aaa
@@ -137899,20 +138045,20 @@ cww
 cgj
 cwU
 cza
+cDK
+cDK
+cDK
+cDK
+ajn
+cDK
+cDK
+cDK
+cDK
+cDK
+cDK
+cDK
 czD
-czD
-czD
-czD
-czD
-czD
-czD
-czD
-czD
-czD
-czD
-czD
-czD
-cDz
+cDK
 cDK
 cDK
 cDZ
@@ -138160,7 +138306,7 @@ aaa
 aah
 aaa
 aah
-cBE
+haM
 aaa
 aaa
 aah
