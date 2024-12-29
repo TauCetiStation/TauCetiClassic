@@ -135,6 +135,34 @@
 	export_types = list(/obj/item/weapon/mining_scanner/improved)
 
 
+// musical instruments
+
+/datum/export/guitar
+	cost = 30
+	unit_name = "guitar"
+	export_types = list(/obj/item/device/guitar)
+
+/datum/export/harmonica
+	cost = 15
+	unit_name = "harmonica"
+	export_types = list(/obj/item/device/harmonica)
+
+/datum/export/synth
+	cost = 30
+	unit_name = "electronic synthesizer"
+	export_types = list(/obj/item/device/synth)
+
+/datum/export/violin
+	cost = 30
+	unit_name = "space violin"
+	export_types = list(/obj/item/device/violin)
+
+/datum/export/paino
+	cost = 200
+	unit_name = "space grand piano"
+	export_types = list(/obj/structure/device/piano/royal)
+
+
 // misc
 
 /datum/export/cryobag

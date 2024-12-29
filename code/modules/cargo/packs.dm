@@ -1786,6 +1786,23 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 //--------------MISCELLANEOUS-------------------
 //----------------------------------------------
 
+/datum/supply_pack/musical_instruments
+	name = "Musician Instruments"
+	contains = list(/obj/item/device/guitar,
+					/obj/item/device/harmonica,
+					/obj/item/device/synth,
+					/obj/item/device/violin)
+	group = "Miscellaneous"
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Musician Instruments"
+
+/datum/supply_pack/piano
+	name = "Piano"
+	contains = list(/obj/structure/device/piano)
+	group = "Miscellaneous"
+	crate_type = /obj/structure/largecrate
+	crate_name = "Piano"
+
 /datum/supply_pack/wizard
 	name = "Wizard costume"
 	contains = list(/obj/item/weapon/staff,
