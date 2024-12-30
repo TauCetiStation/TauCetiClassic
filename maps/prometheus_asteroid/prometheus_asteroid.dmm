@@ -36,6 +36,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/gearstore)
 "af" = (
@@ -406,6 +407,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/med)
 "aY" = (
@@ -1167,6 +1169,17 @@
 	icon_state = "black"
 	},
 /area/asteroid/mine/abandoned)
+"cH" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "cI" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored/dangerous)
@@ -1232,6 +1245,19 @@
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored/dangerous)
+"cQ" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "cS" = (
 /obj/structure/transit_tube{
 	icon_state = "NE-SW"
@@ -1823,6 +1849,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "gh" = (
@@ -2058,15 +2085,16 @@
 "hq" = (
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Mecha Shutters";
-	name = "Mecha Shutters";
-	dir = 4
+	name = "Mecha Shutters"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "hr" = (
@@ -2509,6 +2537,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/gearstore)
 "iU" = (
@@ -2765,6 +2794,7 @@
 	name = "Mining Shuttle Airlock";
 	req_one_access = list(48,65)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "jV" = (
@@ -3326,6 +3356,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/med)
 "mk" = (
@@ -3476,6 +3507,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/sample)
 "mJ" = (
@@ -3678,6 +3710,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "nD" = (
@@ -3761,6 +3794,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "nT" = (
@@ -3788,6 +3822,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3837,12 +3872,15 @@
 	},
 /area/asteroid/mine/production)
 "of" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/door/airlock/mining/glass{
+	name = "Break Room"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/asteroid/mine/west_outpost{
 	name = "Mining Outpost"
 	})
@@ -3975,6 +4013,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "oL" = (
@@ -4222,6 +4261,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4762,6 +4802,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4970,6 +5011,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "tG" = (
@@ -5033,6 +5075,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "tU" = (
@@ -5310,6 +5353,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "vi" = (
@@ -5396,6 +5440,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "vx" = (
@@ -5994,6 +6039,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/sample)
 "yy" = (
@@ -6596,6 +6642,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "Bb" = (
@@ -6713,14 +6760,13 @@
 	},
 /area/asteroid/research_outpost/iso2)
 "BD" = (
-/obj/machinery/door/airlock/mining{
-	name = "Mining Storage";
-	req_access = list(48)
-	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "BH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
@@ -7680,6 +7726,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Gv" = (
@@ -8021,6 +8068,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "Ie" = (
@@ -8082,6 +8130,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/anomaly)
 "Iw" = (
@@ -8384,6 +8433,7 @@
 	name = "Mining Station EVA";
 	req_access = list(48)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8875,6 +8925,7 @@
 	req_access = list(48)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9264,6 +9315,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9348,6 +9400,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9927,10 +9980,9 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/west_outpost{
-	name = "Mining Outpost"
-	})
+/area/asteroid/research_outpost/anomaly)
 "Rx" = (
 /obj/structure/dispenser/oxygen,
 /obj/machinery/firealarm{
@@ -10065,21 +10117,16 @@
 	},
 /area/asteroid/research_outpost/power)
 "RZ" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Infirmary"
+/obj/machinery/door/airlock/mining{
+	name = "Mining Storage";
+	req_access = list(48)
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/asteroid/research_outpost/med)
+/area/asteroid/mine/production)
 "Sa" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -10172,17 +10219,22 @@
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "SC" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Break Room"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Infirmary"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/asteroid/mine/west_outpost{
-	name = "Mining Outpost"
-	})
+/area/asteroid/research_outpost/med)
 "SH" = (
 /obj/structure/grille,
 /obj/item/weapon/ore/coal,
@@ -11353,6 +11405,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "Yk" = (
@@ -40932,7 +40985,7 @@ uY
 Bm
 Fp
 Eg
-jG
+BD
 Fr
 Di
 oR
@@ -41446,7 +41499,7 @@ oR
 Gx
 SI
 MJ
-BD
+RZ
 Fr
 no
 Qq
@@ -44781,7 +44834,7 @@ lm
 lm
 lm
 lm
-jG
+BD
 qG
 JC
 BO
@@ -45558,7 +45611,7 @@ Fr
 kD
 UU
 Ny
-RZ
+SC
 Yp
 Yz
 lr
@@ -46323,7 +46376,7 @@ lm
 lm
 lm
 lm
-jG
+BD
 sC
 oe
 UX
@@ -49414,9 +49467,9 @@ PW
 sE
 Qn
 Ug
-EJ
+Rt
 hx
-EJ
+Rt
 Qn
 Vd
 jg
@@ -49974,10 +50027,10 @@ aK
 IC
 gZ
 gZ
-Rt
+cQ
 oL
-Rt
-Rt
+cQ
+cQ
 gZ
 gZ
 gZ
@@ -50487,7 +50540,7 @@ QZ
 en
 Ge
 so
-SC
+of
 Uc
 JN
 aO
@@ -50744,7 +50797,7 @@ Qx
 en
 ue
 uJ
-of
+cH
 yb
 HZ
 bn
@@ -51001,7 +51054,7 @@ UW
 ID
 Xc
 xS
-of
+cH
 ql
 bn
 bn
