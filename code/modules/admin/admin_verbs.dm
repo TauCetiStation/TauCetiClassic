@@ -845,7 +845,7 @@ var/global/list/admin_verbs_hideable = list(
 		M.g_skin = hex2num(copytext(new_skin, 4, 6))
 		M.b_skin = hex2num(copytext(new_skin, 6, 8))
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input("Please select skin tone level: 1-220 (1-110=white, 111-220=black)", "Character Generation")  as text
 
 	if (new_tone)
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
