@@ -6,6 +6,7 @@
 
 /obj/item/organ
 	name = "organ"
+	icon = 'icons/obj/surgery.dmi'
 	germ_level = 0
 
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
@@ -25,25 +26,46 @@
 
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
+	var/max_damage = 0                // Damage cap
+
+	var/sterile = 0 //can the organ be infected by germs?
+	var/requires_robotic_bodypart = FALSE
+
 
 /obj/item/organ/Destroy()
 	owner = null
 	return ..()
 
+/obj/item/organ/proc/remove(mob/living/user)
+	if(!istype(owner))
+		return
+
+	owner.organs -= src
+
+	loc = get_turf(owner)
+	START_PROCESSING(SSobj, src)
+
+	if(owner && vital) // I'd do another check for species or whatever so that you couldn't "kill" an IPC by removing a human head from them, but it doesn't matter since they'll come right back from the dead
+		owner.death()
+	owner = null
+
 /obj/item/organ/proc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	loc = null
 	owner = H
 
+/obj/item/organ/process()
+	return 0
+
+
+
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	set_owner(H, S)
 
-	STOP_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
 
-/obj/item/organ/process()
-	return 0
 
 /obj/item/organ/proc/receive_chem(chemical)
 	return 0
@@ -71,6 +93,7 @@
 		return O.is_preserved()
 	else
 		return (istype(loc,/obj/structure/closet/secure_closet/freezer) || istype(loc,/obj/structure/closet/crate/freezer))
+
 
 /obj/item/organ/examine(mob/user)
 	. = ..(user)
@@ -161,6 +184,12 @@
 						if (W.infection_check())
 							W.germ_level += 1
 
+
+/obj/item/organ/proc/is_robotic()
+	if(status & ORGAN_ROBOT)
+		return TRUE
+	return FALSE
+
 /mob/living/carbon/human/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
@@ -226,3 +255,4 @@
 				break
 		if(!has_arm) //need atleast one hand to crawl
 			Stun(5)
+

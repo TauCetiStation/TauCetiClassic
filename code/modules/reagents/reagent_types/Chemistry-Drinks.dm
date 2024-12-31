@@ -263,6 +263,12 @@
 
 	if(!iscarbon(M))
 		return
+	var/mob/living/carbon/human/H = M
+	if(H)
+		var/obj/item/organ/internal/IO = H.organs_by_name[O_KIDNEYS]
+		if(!IO)
+			H.adjustToxLoss(0.5)
+
 	var/mob/living/carbon/C = M
 	C.AdjustClumsyStatus(-2)
 
@@ -753,6 +759,14 @@
 
 	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
 		drunkpwr *= 2
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/internal/liver/L = H.organs_by_name[O_LIVER]
+		if(!L)
+			drunkpwr *= 5
+		else
+			drunkpwr *= L.alcohol_intensity
 
 	M.AdjustDrunkenness(drunkpwr)
 

@@ -585,3 +585,11 @@ var/global/list/slot_equipment_priority = list(
 		if(SLOT_R_HAND)
 			return r_hand
 	return null
+
+// Returns all items which covers any given body part
+/mob/proc/get_covering_equipped_items(bodyparts)
+	. = list()
+	for(var/entry in get_equipped_items())
+		var/obj/item/I = entry
+		if(I.body_parts_covered & bodyparts)
+			. += I
