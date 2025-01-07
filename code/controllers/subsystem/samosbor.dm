@@ -1,0 +1,61 @@
+#define SAMOSBOR_CACHE_FOLDER "cache/samosbor"
+#define SAMOSBOR_CACHE_PATH(suffix) "[SAMOSBOR_CACHE_FOLDER]/milestones_[suffix].txt"
+
+SUBSYSTEM_DEF(samosbor)
+	name = "Samosbor"
+	init_order = SS_INIT_DEFAULT
+	flags = SS_NO_FIRE
+
+	var/current_milestone = 10 // also as first milestone
+	var/milestone_step = 10
+
+	var/day
+	var/notfication_timer
+
+/datum/controller/subsystem/samosbor/Initialize()
+	if(!config.samosbor)
+		return ..()
+
+	day = time2text(world.realtime, "YYYY_MM_DD")
+
+	var/cache_path = SAMOSBOR_CACHE_PATH(day)
+	if(fexists(cache_path))
+		var/cached_milestone = text2num(trim(file2text(cache_path)))
+
+		if(isnum(cached_milestone) && cached_milestone >= (current_milestone + milestone_step))
+			current_milestone = cached_milestone
+		else
+			fdel(cache_path)
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, PROC_REF(client_connected))
+
+	return ..()
+
+/datum/controller/subsystem/samosbor/proc/client_connected(datum/source, client/connected)
+	SIGNAL_HANDLER
+
+	var/players_online = length(global.clients)
+	if(players_online >= current_milestone)
+		INVOKE_ASYNC(src, PROC_REF(milestone_reached), players_online)
+
+/datum/controller/subsystem/samosbor/proc/milestone_reached(players_online)
+	world.log << "players_online [players_online]"
+
+	current_milestone = max(current_milestone, players_online - (players_online % milestone_step))
+
+	var/cache_path = SAMOSBOR_CACHE_PATH(day)
+	fdel(cache_path)
+	text2file(num2text(current_milestone), cache_path) // note: delete previous days files, todo or do it with host tools
+
+	// 30 seconds timer so we don't spam it at the start of the round
+	notfication_timer = addtimer(CALLBACK(src, PROC_REF(milestone_notification), current_milestone), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/datum/controller/subsystem/samosbor/proc/milestone_notification(milestone)
+	world.send2bridge(
+		type = list(BRIDGE_ANNOUNCE, BRIDGE_SAMOSBOR),
+		attachment_title = "New today's milestone reached: more than **[milestone]** players!",
+		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>"
+	)
+
+#undef SAMOSBOR_CACHE_FOLDER
+#undef SAMOSBOR_CACHE_PATH

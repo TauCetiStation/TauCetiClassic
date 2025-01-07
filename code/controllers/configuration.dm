@@ -233,6 +233,8 @@ var/global/bridge_secret = null
 	var/hard_deletes_overrun_threshold = 0.5
 	var/hard_deletes_overrun_limit = 0
 
+	var/samosbor = TRUE
+
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = type
