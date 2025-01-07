@@ -39,19 +39,20 @@ SUBSYSTEM_DEF(samosbor)
 		INVOKE_ASYNC(src, PROC_REF(milestone_reached), players_online)
 
 /datum/controller/subsystem/samosbor/proc/milestone_reached(players_online)
-	next_milestone = max(next_milestone, players_online - (players_online % milestone_step)) + milestone_step
+	var/current_milestone = max(next_milestone, players_online - (players_online % milestone_step))
+	next_milestone = current_milestone + milestone_step
 
 	var/cache_path = SAMOSBOR_CACHE_PATH(day)
 	fdel(cache_path)
 	text2file(num2text(next_milestone), cache_path) // note: delete previous days files, todo or do it with host tools
 
 	// 30 seconds timer so we don't spam it at the start of the round
-	notfication_timer = addtimer(CALLBACK(src, PROC_REF(milestone_notification), next_milestone), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	notfication_timer = addtimer(CALLBACK(src, PROC_REF(milestone_notification), current_milestone), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/controller/subsystem/samosbor/proc/milestone_notification(milestone)
 	world.send2bridge(
 		type = list(BRIDGE_ANNOUNCE, BRIDGE_SAMOSBOR),
-		attachment_title = "New today's milestone reached: more than **[milestone]** players!",
+		attachment_title = "New today's milestone reached: more than **[milestone]** players online!",
 		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>"
 	)
 
