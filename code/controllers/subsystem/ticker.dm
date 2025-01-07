@@ -42,6 +42,7 @@ SUBSYSTEM_DEF(ticker)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
+	var/is_lowpop = FALSE
 
 	var/force_end = FALSE // set TRUE to forse round end and show credits
 
@@ -304,10 +305,14 @@ SUBSYSTEM_DEF(ticker)
 		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	if(length(SSholiday.holidays))
-		to_chat(world, "<span clas='notice'>и...</span>")
+		to_chat(world, "<span class='notice'>и...</span>")
 		for(var/holidayname in SSholiday.holidays)
 			var/datum/holiday/holiday = SSholiday.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
+
+	if(totalPlayersReady <= 10)
+		is_lowpop = TRUE
+		to_chat(world, "<span class='notice'>Система штрафов и бонусов от умений персонажа отключена.</span>")
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()

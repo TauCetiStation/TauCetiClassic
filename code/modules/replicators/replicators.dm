@@ -669,7 +669,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	if(is_controlled())
 		if(user == src && FR.upgrades_amount > length(RAI.acquired_upgrades))
-			to_chat(user, "<span class='bold notice'><a href='?src=\ref[src];replicator_upgrade=1'>Upgrade Prospectives Analyzed. Click here to upgrade.</a></span>")
+			to_chat(user, "<span class='bold notice'><a href='byond://?src=\ref[src];replicator_upgrade=1'>Upgrade Prospectives Analyzed. Click here to upgrade.</a></span>")
 		return
 
 	switch(state)

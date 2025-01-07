@@ -79,30 +79,30 @@
 		var/points = experiment.points
 		dat += "<font color = #7E8D9F><b>Collected Samples : </b></font>[points]<br>"
 		dat += "<H4> Transfer data in exchange for supplies</H4>"
-		dat += "<a href='?src=\ref[src];dispense=injector'>Heal Injector</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=pistol'>Decloner</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=injector'>Heal Injector</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=pistol'>Decloner</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
 
 		if(!baton_modules_bought)
-			dat += "<a href='?src=\ref[src];dispense=permissions'>Additional Permissions for Advanced Baton</A><br>"
+			dat += "<a href='byond://?src=\ref[src];dispense=permissions'>Additional Permissions for Advanced Baton</A><br>"
 		else
 			dat += "<span class='disabled'>Additional Permissions for Advanced Baton</span><br>"
 
-		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
 
 		if(!camera)
-			dat += "<a href='?src=\ref[src];dispense=adv_console'>Advanced Console</A><br>"
+			dat += "<a href='byond://?src=\ref[src];dispense=adv_console'>Advanced Console</A><br>"
 		else
 			dat += "<span class='disabled'>Advanced Console</span><br>"
 
-		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=scientist_gear'>Additional scientist equipment</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=trans_gland'>Transforming gland</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=silence_gloves'>Silence gloves</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=recall_implant'>Recall implant</A><br>"
-		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=tool'>Science Tool</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=scientist_gear'>Additional scientist equipment</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=trans_gland'>Transforming gland</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=silence_gloves'>Silence gloves</A><br>"
+		dat += "<a href='byond://?src=\ref[src];dispense=recall_implant'>Recall implant</A><br>"
+		dat += "<a href='byond://?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
 		if(show_price_list)
 			dat += "<div class='Section'>[get_price_list()]</div>"
 	else
@@ -110,11 +110,11 @@
 
 	if(pad)
 		dat += "<H4> Teleport control</H4>"
-		dat += "<a href='?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
-		dat += "<a href='?src=\ref[src];teleporter_set=1'>Set Teleporter</A><br>"
+		dat += "<a href='byond://?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
+		dat += "<a href='byond://?src=\ref[src];teleporter_set=1'>Set Teleporter</A><br>"
 		dat += "<font color = #7E8D9F><b>Set to: </b></font>[pad.teleport_target ? "[copytext("[pad.target_name]",3)]" : "Nothing"]<br>"
 		if(gizmo && gizmo.marked)
-			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
+			dat += "<a href='byond://?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
 			dat += "<span class='disabled'>Retrieve Mark</span><br>"
 	else

@@ -326,6 +326,14 @@
 	color = "#104038" // rgb: 16, 64, 56
 	adj_temp = -5
 
+/datum/reagent/consumable/drink/kogelmogel
+	name = "Kogelmogel"
+	id = "kogelmogel"
+	description = "Новогодняя сладость."
+	adj_temp = 3
+	color = "#ffe58a"
+	taste_message = "sweet egg"
+
 /datum/reagent/consumable/drink/cold
 	name = "Cold drink"
 	adj_temp = -5

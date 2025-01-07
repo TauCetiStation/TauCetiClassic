@@ -91,7 +91,7 @@
 		W.make_wet()
 	if(item_to_discharge)
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrified water with [W.name]</font>"
-		msg_admin_attack("[key_name(user)] <font color='red'>electrified</font> water with [W.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+		msg_admin_attack("[key_name(user)] <font color='red'>electrified</font> water with [W.name] (<A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 		electrocute_act(power)
 */
 

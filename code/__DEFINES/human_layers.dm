@@ -1,15 +1,17 @@
 //Human Overlays Indexes/////////
-#define TOTAL_LAYERS          29
-#define FIRE_LOWER_LAYER      29
-#define BODY_LAYER            28
-#define EXTERNAL_APPEARANCE   27
-#define MUTATIONS_LAYER       26
-#define DAMAGE_LAYER          25
-#define SURGERY_LAYER         24 //bs12 specific.
-#define BANDAGE_LAYER         23
-#define UNIFORM_LAYER         22
-#define ID_LAYER              21
-#define SHOES_LAYER           20
+#define TOTAL_LAYERS          31
+#define WING_UNDERLIMBS_LAYER 31
+#define FIRE_LOWER_LAYER      30
+#define BODY_LAYER            29
+#define EXTERNAL_APPEARANCE   28
+#define MUTATIONS_LAYER       27
+#define DAMAGE_LAYER          26
+#define SURGERY_LAYER         25 //bs12 specific.
+#define BANDAGE_LAYER         24
+#define UNIFORM_LAYER         23
+#define ID_LAYER              22
+#define SHOES_LAYER           21
+#define WING_LAYER            20
 #define TAIL_LAYER            19 //bs12 specific. this hack is probably gonna come back to haunt me
 #define GLOVES_LAYER          18
 #define R_EAR_LAYER           17

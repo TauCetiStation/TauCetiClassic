@@ -75,6 +75,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/underslung
 	name = "underslung grenade launcher"
+	cases = list("подствольный гранатомёт", "подствольного гранатомёта", "подствольному гранатомёту", "подствольный гранатомёт", "подствольным гранатомётом", "подствольном гранатомёте")
 	desc = "Это маленькая крошечная пусковая установка. Вам не следовало этого видеть."
 	initial_mag = /obj/item/ammo_box/magazine/internal/m79/underslung
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'

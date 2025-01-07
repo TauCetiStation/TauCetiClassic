@@ -50,7 +50,7 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 	if(!total_alert_weight || total_alert_weight < 1)
 		return
 
-	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
+	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='byond://?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
 
 	if(!bridge_reported)
 		bridge_reported = TRUE
@@ -114,7 +114,7 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 		if(geoip_data["isp"] in guard_blacklist["ISP"])
 			bad_isp = TRUE
 
-		for(var/mask in guard_blacklist["ISP"]) 
+		for(var/mask in guard_blacklist["ISP"])
 			if(findtext(holder.address, mask)) // real ip masks?
 				bad_isp = TRUE
 				break

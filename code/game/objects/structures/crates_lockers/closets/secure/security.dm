@@ -36,7 +36,7 @@
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
 	new /obj/item/device/remote_device/captain(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/captain(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
@@ -99,7 +99,7 @@
 
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/device/flash(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hop(src)
 
@@ -173,7 +173,7 @@
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hos(src)

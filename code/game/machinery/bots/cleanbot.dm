@@ -85,17 +85,17 @@
 		Status: []<BR>
 		Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 		Maintenance panel is [open ? "opened" : "closed"]"},
-		text("<A href='?src=\ref[src];operation=start'>[on ? "On" : "Off"]</A>"))
+		text("<A href='byond://?src=\ref[src];operation=start'>[on ? "On" : "Off"]</A>"))
 	if(!src.locked || issilicon(user) || isobserver(user))
-		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"))
-		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[should_patrol ? "Yes" : "No"]</A>"))
-	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[beacon_freq]</A>"))
+		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='byond://?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"))
+		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='byond://?src=\ref[src];operation=patrol'>[should_patrol ? "Yes" : "No"]</A>"))
+	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='byond://?src=\ref[src];operation=freq'>[beacon_freq]</A>"))
 	if(src.open && !src.locked)
 		dat += text({"
 			Odd looking screw twiddled: []<BR>
 			Weird button pressed: []"},
-			text("<A href='?src=\ref[src];operation=screw'>[screwloose ? "Yes" : "No"]</A>"),
-			text("<A href='?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A>"))
+			text("<A href='byond://?src=\ref[src];operation=screw'>[screwloose ? "Yes" : "No"]</A>"),
+			text("<A href='byond://?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A>"))
 
 	var/datum/browser/popup = new(user, "window=autocleaner", src.name)
 	popup.set_content(dat)

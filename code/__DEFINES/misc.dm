@@ -416,3 +416,7 @@
 #define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
 		/obj/machinery/door/airlock = "wall", \
 )
+
+#define QUOTA_NEUTRAL 0
+#define QUOTA_WANTED 1
+#define QUOTA_UNWANTED 2
