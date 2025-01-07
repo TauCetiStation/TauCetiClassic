@@ -1,5 +1,5 @@
-#define setup_mimicry_active_text(topic_implant) "<a href='?src=\ref[src];remove=[topic_implant]'>Stop mimicry</a>|<b>Implanted</b></br>"
-#define setup_mimicry_unactive_text(topic_implant) "<b>No Implant</b>|<a href='?src=\ref[src];add=[topic_implant]'>Mimicry!</a></br>"
+#define setup_mimicry_active_text(topic_implant) "<a href='byond://?src=\ref[src];remove=[topic_implant]'>Stop mimicry</a>|<b>Implanted</b></br>"
+#define setup_mimicry_unactive_text(topic_implant) "<b>No Implant</b>|<a href='byond://?src=\ref[src];add=[topic_implant]'>Mimicry!</a></br>"
 
 /obj/effect/proc_holder/changeling/implant_managment
 	name = "Implant Managment"

@@ -755,7 +755,7 @@
 		if(O.client)
 			var/area/A = get_area(src)
 			if(A)
-				to_chat(O, "<span class='userdanger'>Golem rune created in [A.name] (<A HREF='?src=\ref[O];ghostplayerobservejump=\ref[src]'>JMP</A>).</span>")
+				to_chat(O, "<span class='userdanger'>Golem rune created in [A.name] (<A href='byond://?src=\ref[O];ghostplayerobservejump=\ref[src]'>JMP</A>).</span>")
 
 /obj/effect/golemrune/proc/check_spirit()
 	var/result = 1

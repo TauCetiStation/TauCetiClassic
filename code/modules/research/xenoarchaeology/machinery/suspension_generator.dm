@@ -106,21 +106,21 @@
 	if(locked && !isobserver(user))
 		dat += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		dat += "Suspension field generator is: [suspension_field ? "<font color=green>Enable</font>" : "<font color=red>Disable</font>" ] <br><b><A href='?src=\ref[src];toggle_field=1'>[suspension_field ? "\[Disable field\]" : "\[Enable field\]"]</a></b><br>"
+		dat += "Suspension field generator is: [suspension_field ? "<font color=green>Enable</font>" : "<font color=red>Disable</font>" ] <br><b><A href='byond://?src=\ref[src];toggle_field=1'>[suspension_field ? "\[Disable field\]" : "\[Enable field\]"]</a></b><br>"
 		dat += "<b>Select field mode</b><br>"
-		dat += "[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>"
-		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
-		dat += "[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
-		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
-		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
-		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
-		dat += "[field_type=="chlorine"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
-		dat += "[field_type=="phoron"?"<b>":""	]<A href='?src=\ref[src];select_field=phoron'>Phoron saturated field</A></b><br>"
+		dat += "[field_type=="carbon"?"<b>":""			]<A href='byond://?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>"
+		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='byond://?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
+		dat += "[field_type=="potassium"?"<b>":""		]<A href='byond://?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
+		dat += "[field_type=="mercury"?"<b>":""	]<A href='byond://?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
+		dat += "[field_type=="iron"?"<b>":""		]<A href='byond://?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
+		dat += "[field_type=="calcium"?"<b>":""	]<A href='byond://?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
+		dat += "[field_type=="chlorine"?"<b>":""	]<A href='byond://?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
+		dat += "[field_type=="phoron"?"<b>":""	]<A href='byond://?src=\ref[src];select_field=phoron'>Phoron saturated field</A></b><br>"
 		dat += "<hr>"
 		dat += "<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"
-		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
+		dat += "<A href='byond://?src=\ref[src];lock=1'>Lock console</A><br>"
 	dat += "<hr>"
-	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
+	dat += "<A href='byond://?src=\ref[src]'> Refresh console </A><BR>"
 
 	var/datum/browser/popup = new(user, "suspension", "Multi-phase mobile suspension field generator MK II \"Steadfast\"", 500, 400)
 	popup.set_content(dat)

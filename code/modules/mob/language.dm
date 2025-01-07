@@ -430,7 +430,7 @@
 			link_class = "class='good'"
 
 		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
-			lang_name = "<a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
+			lang_name = "<a href='byond://?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
 
 		dat += "<b>[lang_name] "
 		for(var/l_key in L.key)

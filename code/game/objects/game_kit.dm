@@ -52,7 +52,7 @@
 		interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
-	var/dat = text("<a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a> <a href='?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
+	var/dat = text("<a href='byond://?src=\ref[];mode=hia'>[]</a> <a href='byond://?src=\ref[];mode=remove'>remove</a> <a href='byond://?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
 	//board interface update
 	for (var/y = 1 to 8)
 		dat += "<tr>"
@@ -62,23 +62,23 @@
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)		//Copy the part of the board_stat string.
 			dat += "<td style='background-color:[color]' width=32 height=32>"
 			if (piece != "BB")		//If it is not "BB", but codename of the piece, then place picture of this piece onto the board
-				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
+				dat += "<a class='nobg' href='byond://?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
 			else		//If it is "BB" - place empty square
-				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
+				dat += "<a class='nobg' href='byond://?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
 			dat += "</td>"
 		dat += "</tr>"
 
 	//Pieces for people to click and place on the board
 	dat += "</table><HR><B>Chips:</B><BR>"
 	for (var/piece in list("CB", "CR"))
-		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='byond://?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 
 	dat += "<HR><B>Chess pieces:</B><BR>"
 	for (var/piece in list("WP", "WK", "WQ", "WI", "WN", "WR"))
-		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='byond://?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 	dat += "<br>"
 	for (var/piece in list("BP", "BK", "BQ", "BI", "BN", "BR"))
-		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='byond://?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 	data = dat
 
 /obj/item/weapon/game_kit/attack_ai(mob/user)

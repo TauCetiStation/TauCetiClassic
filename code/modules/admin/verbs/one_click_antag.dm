@@ -10,14 +10,14 @@
 
 /datum/admins/proc/one_click_antag()
 
-	var/dat = {"<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
-		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
-		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
-		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
-		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=7'>Make Aliens (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=8'>Make Vox Raiders (Requires Ghosts)</a><br>
+	var/dat = {"<a href='byond://?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=3'>Make Revs</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=4'>Make Cult</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=7'>Make Aliens (Requires Ghosts)</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=8'>Make Vox Raiders (Requires Ghosts)</a><br>
 		"}
 	var/datum/browser/popup = new(usr, "oneclickantag", "One-click Antagonist", 400, 400)
 	popup.set_content(dat)

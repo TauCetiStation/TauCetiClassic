@@ -81,38 +81,38 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	if(song_lines.len)
 		if(playing)
-			html += "<a href='?src=\ref[src];stop=1'>Stop Playing</a><br>"
+			html += "<a href='byond://?src=\ref[src];stop=1'>Stop Playing</a><br>"
 			html += "Repeats left: [repeat]<br><br>"
 		else
-			html += "<a href='?src=\ref[src];play=1'>Play Song</a><br>"
-			html += "<a href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times</a><br><br>"
+			html += "<a href='byond://?src=\ref[src];play=1'>Play Song</a><br>"
+			html += "<a href='byond://?src=\ref[src];repeat=1'>Repeat Song: [repeat] times</a><br><br>"
 
 	if(!show_edit)
-		html += "<a href='?src=\ref[src];show_edit=1'>Show Editor</a><br><br>"
+		html += "<a href='byond://?src=\ref[src];show_edit=1'>Show Editor</a><br><br>"
 	else
-		html += "<a href='?src=\ref[src];show_edit=0'>Hide Editor</a><br>"
+		html += "<a href='byond://?src=\ref[src];show_edit=0'>Hide Editor</a><br>"
 		if(song_lines.len)
-			html += "<a href='?src=\ref[src];newsong=1'>Start a New Song</a><br>"
-		html += "<a href='?src=\ref[src];import=1'>Import a Song</a><br><br>"
+			html += "<a href='byond://?src=\ref[src];newsong=1'>Start a New Song</a><br>"
+		html += "<a href='byond://?src=\ref[src];import=1'>Import a Song</a><br><br>"
 
 		if(song_lines.len)
-			html += "<a href='?src=\ref[src];change_tempo=1'>Tempo: [song_tempo] BPM</a><br><br>"
+			html += "<a href='byond://?src=\ref[src];change_tempo=1'>Tempo: [song_tempo] BPM</a><br><br>"
 
 			html += "<table>"
 			for(var/line_num in 1 to song_lines.len)
 				html += "<tr>"
 				html += "<td><b>Line [line_num]:</b></td>"
 				html += "<td>[song_lines[line_num]]</td>"
-				html += "<td><a href='?src=\ref[src];deleteline=[line_num]'>Delete Line</a> <a href='?src=\ref[src];modifyline=[line_num]'>Modify Line</a></td>"
+				html += "<td><a href='byond://?src=\ref[src];deleteline=[line_num]'>Delete Line</a> <a href='byond://?src=\ref[src];modifyline=[line_num]'>Modify Line</a></td>"
 				html += "</tr>"
 			html += "</table>"
 
-			html += "<a href='?src=\ref[src];newline=1'>Add Line</a><br><br>"
+			html += "<a href='byond://?src=\ref[src];newline=1'>Add Line</a><br><br>"
 
 		if(!show_help)
-			html += "<a href='?src=\ref[src];show_help=1'>Show help</a>"
+			html += "<a href='byond://?src=\ref[src];show_help=1'>Show help</a>"
 		else
-			html += "<a href='?src=\ref[src];show_help=0'>Hide Help</a><br>"
+			html += "<a href='byond://?src=\ref[src];show_help=0'>Hide Help</a><br>"
 			html += {"
 					Lines are a series of chords, separated by commas (,), each with notes seperated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
