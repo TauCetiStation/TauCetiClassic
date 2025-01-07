@@ -282,7 +282,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	toolspeed = 0.1
 	origin_tech = "materials=2;engineering=3"
 	qualities = list(
-		QUALITY_PRYING = 0.5
+		QUALITY_PRYING = 0.1
 	)
 
 /obj/item/weapon/shovel/spade
