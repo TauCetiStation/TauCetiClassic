@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(samosbor)
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_FIRE
 
-	var/current_milestone = 10 // also as first milestone
+	var/next_milestone = 10 // players online when we send the next notification
 	var/milestone_step = 10
 
 	var/day
@@ -22,8 +22,8 @@ SUBSYSTEM_DEF(samosbor)
 	if(fexists(cache_path))
 		var/cached_milestone = text2num(trim(file2text(cache_path)))
 
-		if(isnum(cached_milestone) && cached_milestone >= (current_milestone + milestone_step))
-			current_milestone = cached_milestone
+		if(isnum(cached_milestone) && cached_milestone >= (next_milestone + milestone_step))
+			next_milestone = cached_milestone
 		else
 			fdel(cache_path)
 
@@ -35,20 +35,18 @@ SUBSYSTEM_DEF(samosbor)
 	SIGNAL_HANDLER
 
 	var/players_online = length(global.clients)
-	if(players_online >= current_milestone)
+	if(players_online >= next_milestone)
 		INVOKE_ASYNC(src, PROC_REF(milestone_reached), players_online)
 
 /datum/controller/subsystem/samosbor/proc/milestone_reached(players_online)
-	world.log << "players_online [players_online]"
-
-	current_milestone = max(current_milestone, players_online - (players_online % milestone_step))
+	next_milestone = max(next_milestone, players_online - (players_online % milestone_step)) + milestone_step
 
 	var/cache_path = SAMOSBOR_CACHE_PATH(day)
 	fdel(cache_path)
-	text2file(num2text(current_milestone), cache_path) // note: delete previous days files, todo or do it with host tools
+	text2file(num2text(next_milestone), cache_path) // note: delete previous days files, todo or do it with host tools
 
 	// 30 seconds timer so we don't spam it at the start of the round
-	notfication_timer = addtimer(CALLBACK(src, PROC_REF(milestone_notification), current_milestone), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	notfication_timer = addtimer(CALLBACK(src, PROC_REF(milestone_notification), next_milestone), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/controller/subsystem/samosbor/proc/milestone_notification(milestone)
 	world.send2bridge(
