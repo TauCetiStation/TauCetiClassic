@@ -457,7 +457,7 @@
 		|New player notify
 		|Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
 		|Byond profile: <a href='[player_byond_profile]'>open</a>
-		|Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"})
+		|Guard report: <a href='byond://?_src_=holder;guard=\ref[M]'>show</a>"})
 
 		message_admins(adminmsg, emphasize = TRUE)
 

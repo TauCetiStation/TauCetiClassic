@@ -272,22 +272,22 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat += "Добро пожаловать в Новостной Модуль #[unit_no].<BR><FONT SIZE=1> Все системы новостной сети функционируют.</FONT>"
 				dat += "<BR><FONT SIZE=1>Собственность Nanotrasen Corp.</FONT>"
 				if(news_network.wanted_issue)
-					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Раздел \"Розыск\"</A>"
-				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Создать Новостной Канал</A>"
-				dat+= "<BR><A href='?src=\ref[src];view=1'>Новостные Каналы</A>"
-				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Создать Историю</A>"
-				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Распечатать газету</A>"
+					dat+= "<HR><A href='byond://?src=\ref[src];view_wanted=1'>Раздел \"Розыск\"</A>"
+				dat+= "<HR><BR><A href='byond://?src=\ref[src];create_channel=1'>Создать Новостной Канал</A>"
+				dat+= "<BR><A href='byond://?src=\ref[src];view=1'>Новостные Каналы</A>"
+				dat+= "<BR><A href='byond://?src=\ref[src];create_feed_story=1'>Создать Историю</A>"
+				dat+= "<BR><A href='byond://?src=\ref[src];menu_paper=1'>Распечатать газету</A>"
 				if(securityCaster)
 					var/wanted_already = 0
 					if(news_network.wanted_issue)
 						wanted_already = 1
 
 					dat+="<HR><B>Настройки безопасности:</B><BR>"
-					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Изменить") : ("Объявить в")] розыск</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Цензурировать Истории</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Отметить Новостной Канал ❌-меткой НаноТрейзен</A>"
+					dat+="<BR><A href='byond://?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Изменить") : ("Объявить в")] розыск</A>"
+					dat+="<BR><A href='byond://?src=\ref[src];menu_censor_story=1'>Цензурировать Истории</A>"
+					dat+="<BR><A href='byond://?src=\ref[src];menu_censor_channel=1'>Отметить Новостной Канал ❌-меткой НаноТрейзен</A>"
 				dat+="<BR><HR>Новостной модуль распознает вас, как: <FONT COLOR='green'>[scanned_user]</FONT>"
-				dat+="<BR><A href='?src=\ref[src];refresh=1'>Сканировать пользователя</A>"
+				dat+="<BR><A href='byond://?src=\ref[src];refresh=1'>Сканировать пользователя</A>"
 			if(1)
 				dat+= "Новостные Каналы станции<HR>"
 				if( isemptylist(news_network.network_channels) )
@@ -295,30 +295,30 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
 						if(CHANNEL.is_admin_channel)
-							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></B><BR>"
+							dat+="<B><A href='byond://?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></B><BR>"
 						else
-							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<span class='red'>***</span>") : null]<BR></B>"
-				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Обновить</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
+							dat+="<B><A href='byond://?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<span class='red'>***</span>") : null]<BR></B>"
+				dat+="<BR><HR><A href='byond://?src=\ref[src];refresh=1'>Обновить</A>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(2)
 				dat+="Создание Новостного Канала..."
-				dat+="<HR><B><A href='?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [channel_name]<BR>"
+				dat+="<HR><B><A href='byond://?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [channel_name]<BR>"
 				dat+="<B>Автор Канала:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Истории других пользователей</A>:</B> [(c_locked) ? ("НЕТ") : ("ДА")]<BR><HR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_channel=1'>Создать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
+				dat+="<B><A href='byond://?src=\ref[src];set_channel_lock=1'>Истории других пользователей</A>:</B> [(c_locked) ? ("НЕТ") : ("ДА")]<BR><HR>"
+				dat+="<BR><A href='byond://?src=\ref[src];submit_new_channel=1'>Создать</A><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(3)
 				dat+="Создание Истории..."
-				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Канал</A>:</B> [channel_name]<BR>" //MARK
+				dat+="<HR><B><A href='byond://?src=\ref[src];set_channel_receiving=1'>Канал</A>:</B> [channel_name]<BR>" //MARK
 				dat+="<B>Автор Истории:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Текст Истории</A>:</B> [msg] <BR>"
-				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>:</B>  [(photo ? "Снимок прикреплен" : "Нет снимка")]<BR><HR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Опубликовать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
+				dat+="<B><A href='byond://?src=\ref[src];set_new_message=1'>Текст Истории</A>:</B> [msg] <BR>"
+				dat+="<B><A href='byond://?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>:</B>  [(photo ? "Снимок прикреплен" : "Нет снимка")]<BR><HR>"
+				dat+="<BR><A href='byond://?src=\ref[src];submit_new_message=1'>Опубликовать</A><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(4)
 				dat+="История успешно опубликована в [channel_name].<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(5)
 				dat+="Канал \"[channel_name]\" успешно создан.<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(6)
 				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось опубликовать Историю.</B></FONT><HR><BR>"
 				if(channel_name=="")
@@ -335,7 +335,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				if(user_account.money < payment)
 					dat+="<FONT COLOR='maroon'>Недостаточно средств для оплаты публикации.</FONT><BR>"
 
-				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[3]'>Вернуться</A><BR>"
 			if(7)
 				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось создать Новостной Канал.</B></FONT><HR><BR>"
 				//var/list/existing_channels = list()            //Let's get dem existing channels - OBSOLETE
@@ -361,7 +361,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<FONT COLOR='maroon'>Имя Канала уже используется.</FONT><BR>"
 				if(scanned_user=="Unknown")
 					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[2]'>Вернуться</A><BR>"
 			if(8)
 				var/total_num=length(news_network.network_channels)
 				var/active_num=total_num
@@ -373,8 +373,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 						active_num--
 				dat+="В настоящий момент существует [total_num] Новостных Каналов, [active_num] из которых активны. Всего было создано [message_num] Историй."
 				dat+="<BR><BR><B>Количество жидкой бумаги:</B> [(paper_remaining) *100 ] см^3"
-				dat+="<BR><BR><A href='?src=\ref[src];print_paper=[0]'>Распечатать газету</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
+				dat+="<BR><BR><A href='byond://?src=\ref[src];print_paper=[0]'>Распечатать газету</A>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(9)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(viewing_channel.censored)
@@ -393,10 +393,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
-							dat+="<FONT SIZE=1>[((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.get_likes()]</FONT> \
-											   [((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.get_dislikes()]</FONT></FONT>"
+							dat+="<FONT SIZE=1>[((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='byond://?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.get_likes()]</FONT> \
+											   [((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='byond://?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.get_dislikes()]</FONT></FONT>"
 							if(securityCaster)
-								dat+=" <A href='?src=\ref[src];toggleDisplayVoters=\ref[MESSAGE]'>"
+								dat+=" <A href='byond://?src=\ref[src];toggleDisplayVoters=\ref[MESSAGE]'>"
 								dat+="<span class='fas fa-eye[MESSAGE.displayVoters ? "-slash" : ""]'></span>"
 								dat+="</a>"
 								dat+="<BR>"
@@ -419,10 +419,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 										dat+="</ol>"
 							else
 								dat+="<BR>"
-							dat+="<A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - ([MESSAGE.count_comments])<HR>"
+							dat+="<A href='byond://?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - ([MESSAGE.count_comments])<HR>"
 
-				dat+="<A href='?src=\ref[src];refresh=1'>Обновить</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Назад</A>"
+				dat+="<A href='byond://?src=\ref[src];refresh=1'>Обновить</A>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[1]'>Назад</A>"
 			if(10)
 				dat+="<B>Инструмент цензурирования НаноТрейзен</B><BR>"
 				dat+="<FONT SIZE=1>ПРИМЕЧАНИЕ: Из-за строения Новостных сетей полное удаление Историй невозможно.<BR>"
@@ -432,8 +432,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<I>Активных Каналов не найдено...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
-				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
+						dat+="<A href='byond://?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
+				dat+="<HR><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(11)
 				dat+="<B>Обработчик ❌-метки НаноТрейзен</B><HR>"
 				dat+="<FONT SIZE=1>❌-меткой должен быть отмечен Канал, который служба безопасности сочтет опасным для морального духа и дисциплины персонала станции. \
@@ -443,24 +443,24 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<I>Активных Каналов не найдено...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
+						dat+="<A href='byond://?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : null]<BR>"
 
-				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
+				dat+="<HR><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(12)
 				dat+="<B>[viewing_channel.channel_name]: </B>"
-				dat+="<FONT SIZE=1><A href='?src=\ref[src];censor_channel_author=\ref[viewing_channel]'>\[создано: <FONT COLOR='maroon'>[viewing_channel.author]</FONT> \]</FONT></A><BR>"
+				dat+="<FONT SIZE=1><A href='byond://?src=\ref[src];censor_channel_author=\ref[viewing_channel]'>\[создано: <FONT COLOR='maroon'>[viewing_channel.author]</FONT> \]</FONT></A><BR>"
 
 				if( isemptylist(viewing_channel.messages) )
 					dat+="<I>В этом Канале Истории не обнаружены...</I><BR>"
 				else
 					for(var/datum/feed_message/MESSAGE in viewing_channel.messages)
-						dat+="-<A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[MESSAGE.body] </A><BR>"
-						dat+="<FONT SIZE=1><A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT></A><BR>"
-						dat+="<HR><A href='?src=\ref[src];open_censor_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - <B><FONT SIZE=2><A href='?src=\ref[src];locked_comments=1'>[(viewing_channel.lock_comments) ? ("Открыть") : ("Закрыть")]</A></B></FONT><BR><HR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Назад</A>"
+						dat+="-<A href='byond://?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[MESSAGE.body] </A><BR>"
+						dat+="<FONT SIZE=1><A href='byond://?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT></A><BR>"
+						dat+="<HR><A href='byond://?src=\ref[src];open_censor_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - <B><FONT SIZE=2><A href='byond://?src=\ref[src];locked_comments=1'>[(viewing_channel.lock_comments) ? ("Открыть") : ("Закрыть")]</A></B></FONT><BR><HR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[10]'>Назад</A>"
 			if(13)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[viewing_channel.author]</FONT> \]</FONT><BR>"
-				dat+="Если вы считаете содержание опасным для станции, вы можете <A href='?src=\ref[src];toggle_d_notice=\ref[viewing_channel]'>Наложить ❌-метку на Канал</A>.<HR>"
+				dat+="Если вы считаете содержание опасным для станции, вы можете <A href='byond://?src=\ref[src];toggle_d_notice=\ref[viewing_channel]'>Наложить ❌-метку на Канал</A>.<HR>"
 				if(viewing_channel.censored)
 					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции и был отмечен ❌-меткой НаноТрейзен.<BR>"
 					dat+="Невозможно опубликовывать новые Истории, пока действует ❌-метка.</FONT><BR><BR>"
@@ -471,7 +471,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 						for(var/datum/feed_message/MESSAGE in viewing_channel.messages)
 							dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[создано <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 
-				dat+="<BR><A href='?src=\ref[src];setScreen=[11]'>Назад</A>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[11]'>Назад</A>"
 			if(14)
 				dat+="<B>Обработчик Розыска:</B>"
 				var/wanted_already = 0
@@ -483,20 +483,20 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				if(wanted_already)
 					dat+="<FONT SIZE=2><BR><I>Запрос розыска уже существует. Вы можете отредактировать его ниже.</FONT></I>"
 				dat+="<HR>"
-				dat+="<A href='?src=\ref[src];set_wanted_name=1'>Имя</A>: [channel_name] <BR>"
-				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Описание</A>: [msg] <BR>"
-				dat+="<A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>: [(photo ? "Снимок прикреплен" : "Нет снимка")]</BR>"
+				dat+="<A href='byond://?src=\ref[src];set_wanted_name=1'>Имя</A>: [channel_name] <BR>"
+				dat+="<A href='byond://?src=\ref[src];set_wanted_desc=1'>Описание</A>: [msg] <BR>"
+				dat+="<A href='byond://?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>: [(photo ? "Снимок прикреплен" : "Нет снимка")]</BR>"
 				if(wanted_already)
 					dat+="<B>Розыск создан:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
 				else
 					dat+="<B>Розыск будет создан:</B><FONT COLOR='green'> [scanned_user]</FONT><BR>"
-				dat+="<HR><BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Редактировать") : ("Опубликовать")]</A>"
+				dat+="<HR><BR><A href='byond://?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Редактировать") : ("Опубликовать")]</A>"
 				if(wanted_already)
-					dat+="<BR><A href='?src=\ref[src];cancel_wanted=1'>Удалить розыск</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A>"
+					dat+="<BR><A href='byond://?src=\ref[src];cancel_wanted=1'>Удалить розыск</A>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Отменить</A>"
 			if(15)
 				dat+="<FONT COLOR='green'>[channel_name] был объявлен в розыск.</FONT><BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(16)
 				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось создать розыск.</B></FONT><HR><BR>"
 				if(channel_name=="" || channel_name == "\[██████\]")
@@ -507,10 +507,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<FONT COLOR='maroon'>Недопустимое описание.</FONT><BR>"
 				if(is_guest)
 					dat+="<FONT COLOR='maroon'>Гостевой пропуск не поддерживается.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(17)
 				dat+="<B>Розыск успешно удален.</B><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(18)
 				dat+="<B><FONT COLOR ='maroon'>-- ОСОБО ОПАСНЫ --</B></FONT><BR><FONT SIZE=2>\[Опубликовано: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 				dat+="<B>Имя</B>: [news_network.wanted_issue.author]<BR>"
@@ -521,28 +521,28 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<BR><img src='tmp_photow.png' width = '180'>"
 				else
 					dat+="Отсутствует"
-				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A><BR>"
+				dat+="<BR><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Назад</A><BR>"
 			if(19)
 				dat+="<FONT COLOR='green'>Розыск в [channel_name] успешно изменен.</FONT><BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(20)
 				dat+="<FONT COLOR='green'>Печать завершена. Пожалуйста, заберите вашу газету из нижней части Новостного Модуля</FONT><BR><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[0]'>Вернуться</A>"
+				dat+="<A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A>"
 			if(21)
 				dat+="<FONT COLOR='maroon'>Ошибка печати. Недостаточно бумаги. Пожалуйста, уведомите обслуживающий персонал пополнить отсек для бумаги.</FONT><BR><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[0]'>Вернуться</A>"
+				dat+="<A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A>"
 			if(22)
 				dat+="<B><FONT COLOR='maroon'>ОШИБКА: Не удалось опубликовать комментарий.</B></FONT><HR><BR>"
 				if(comment_msg == "" || comment_msg == null)
 					dat+="<FONT COLOR='maroon'>Недопустимая длина комментария.</FONT><BR>"
 				if(scanned_user == "Unknown")
 					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[1]'>Вернуться</A><BR>"
 			if(23)
 				var/datum/feed_message/MESSAGE = viewing_message
 				dat+="Количество комментариев - [MESSAGE.count_comments]<BR>"
 				if(!viewing_channel.lock_comments)
-					dat+="<B><A href='?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Оставить комментарий</A></B>"
+					dat+="<B><A href='byond://?src=\ref[src];leave_a_comment=\ref[MESSAGE]'>Оставить комментарий</A></B>"
 				else
 					dat+="<B><FONT SIZE=3>Комментарии закрыты!</FONT></B>"
 				var/datum/comment_pages/PAGE = current_page
@@ -555,27 +555,27 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat+="<HR>"
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
 					i++
-					dat+="[(current_page != PAGES) ? ("<A href='?src=\ref[src];next_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
-				dat+="<HR><A href='?src=\ref[src];refresh=1'>Обновить</A><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[9]'>Вернуться</A>"
+					dat+="[(current_page != PAGES) ? ("<A href='byond://?src=\ref[src];next_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
+				dat+="<HR><A href='byond://?src=\ref[src];refresh=1'>Обновить</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];setScreen=[9]'>Вернуться</A>"
 			if(24)
 				dat+="<B>Story ([viewing_message.body])</B><HR>"
 				var/datum/feed_message/MESSAGE = viewing_message
 				dat+="Количество комментариев - [MESSAGE.count_comments]<HR>"
 				var/datum/comment_pages/PAGE = current_page
 				for(var/datum/message_comment/COMMENT in PAGE.comments)
-					dat+="<A href='?src=\ref[src];censor_author_comment=\ref[COMMENT]'><FONT COLOR='ORANGE'>[COMMENT.author]</FONT></A>"
+					dat+="<A href='byond://?src=\ref[src];censor_author_comment=\ref[COMMENT]'><FONT COLOR='ORANGE'>[COMMENT.author]</FONT></A>"
 					dat+=" <FONT COLOR='RED'>[COMMENT.time]</FONT><BR>"
-					dat+="-<A href='?src=\ref[src];censor_body_comment=\ref[COMMENT]'><FONT SIZE=3>[COMMENT.body]</FONT></A><BR>"
+					dat+="-<A href='byond://?src=\ref[src];censor_body_comment=\ref[COMMENT]'><FONT SIZE=3>[COMMENT.body]</FONT></A><BR>"
 				var/i = 0
 				for(var/datum/comment_pages/PAGES in MESSAGE.pages)
 					i++
-					dat+="[(current_page != PAGES) ? ("<A href='?src=\ref[src];next_censor_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
-				dat+="<HR><A href='?src=\ref[src];refresh=1'>Обновить</A><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[10]'>Вернуться</A>"
+					dat+="[(current_page != PAGES) ? ("<A href='byond://?src=\ref[src];next_censor_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
+				dat+="<HR><A href='byond://?src=\ref[src];refresh=1'>Обновить</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];setScreen=[10]'>Вернуться</A>"
 			if(25)
 				dat+="<B><FONT COLOR='maroon'>ОШИБКА: гостевой пропуск не поддерживается.</B></FONT><HR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
+				dat+="<BR><A href='byond://?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			else
 				dat+="Ошибка 404.<BR>[return_funny_title()]."
 
@@ -1106,7 +1106,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>Маленькая надпись внизу страницы гласит: \"[scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>След. Страница</A></DIV> <div style='float:left;'></DIV>"
+				dat+= "<HR><DIV STYLE='float:right;'><A href='byond://?src=\ref[src];next_page=1'>След. Страница</A></DIV> <div style='float:left;'></DIV>"
 			if(1) // X channel pages inbetween.
 				for(var/datum/feed_channel/NP in news_content)
 					pages++ //Let's get it right again.
@@ -1131,7 +1131,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>Маленькая надпись внизу страницы гласит: \"[scribble]\"</I>"
-				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Пред. Страница</A></DIV> <DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>След. Страница</A></DIV>"
+				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='byond://?src=\ref[src];prev_page=1'>Пред. Страница</A></DIV> <DIV STYLE='float:right;'><A href='byond://?src=\ref[src];next_page=1'>След. Страница</A></DIV>"
 			if(2) //Last page
 				for(var/datum/feed_channel/NP in news_content)
 					pages++
@@ -1149,7 +1149,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<I>[return_funny_title()]</I>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>Маленькая надпись внизу страницы гласит: \"[scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Пред. Страница</A></DIV>"
+				dat+= "<HR><DIV STYLE='float:left;'><A href='byond://?src=\ref[src];prev_page=1'>Пред. Страница</A></DIV>"
 			else
 				dat+="[return_funny_title()]"
 

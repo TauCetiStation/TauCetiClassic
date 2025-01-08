@@ -45,7 +45,7 @@
 		else
 			dat += "<td>[I.cur_assembly ? I.cur_assembly.fuel_type : "NONE"]</td>"
 			if(I.cur_assembly)
-				dat += "<td><a href='?src=\ref[src];toggle_injecting=\ref[I]'>\[[I.injecting ? "Halt injecting" : "Begin injecting"]\]</a></td>"
+				dat += "<td><a href='byond://?src=\ref[src];toggle_injecting=\ref[I]'>\[[I.injecting ? "Halt injecting" : "Begin injecting"]\]</a></td>"
 			else
 				dat += "<td>None</td>"
 			if(I.cur_assembly)
@@ -56,7 +56,7 @@
 		dat += "</tr>"
 
 	dat += {"</table><hr>
-		<A href='?src=\ref[src];refresh=1'>Refresh</A>"}
+		<A href='byond://?src=\ref[src];refresh=1'>Refresh</A>"}
 
 	var/datum/browser/popup = new(user, "fuel_control", "Fusion Fuel Control Console", 800, 400, src)
 	popup.set_content(dat)
