@@ -386,7 +386,7 @@ SUBSYSTEM_DEF(events)
 		world.send2bridge(
 			type = list(BRIDGE_ANNOUNCE),
 			attachment_title = "Ивент от администрации",
-			attachment_msg = custom_event_msg + "\nJoin now: <[BYOND_JOIN_LINK]>",
+			attachment_msg = custom_event_msg + "\nПрисоединиться сейчас: <[BYOND_JOIN_LINK]>",
 			attachment_color = BRIDGE_COLOR_ANNOUNCE,
 			mention = BRIDGE_MENTION_EVENT,
 		)
