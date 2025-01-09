@@ -233,6 +233,7 @@
 
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
+#define BRIDGE_JOIN_LINKS "Присоединиться: [BYOND_JOIN_LINK]"
 
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 

@@ -192,7 +192,7 @@ SUBSYSTEM_DEF(shuttle)
 				world.send2bridge(
 					type = list(BRIDGE_ROUNDSTAT),
 					attachment_title = "Шаттл пристыковался к станции",
-					attachment_msg = "Присоединиться сейчас: <[BYOND_JOIN_LINK]>",
+					attachment_msg = BRIDGE_JOIN_LINKS,
 					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 				)
 
