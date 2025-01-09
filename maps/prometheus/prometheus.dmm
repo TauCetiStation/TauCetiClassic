@@ -99753,7 +99753,7 @@
 /area/station/medical/cryo)
 "xXT" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/flora/pottedplant/crystal{
+/obj/item/weapon/flora/pottedplant/blueleaf{
 	pixel_y = 12
 	},
 /turf/simulated/floor{
