@@ -97,7 +97,7 @@
 
 /obj/item/weapon/flora/pottedplant/small
 	name = "small potted plant"
-	desc = "This is a pot of assorted small flora. Some look familiar."
+	desc = "This is a stinking corpse lily. It's a species of flowering plant in the parasitic genus Rafflesia."
 	icon_state = "plant-15"
 
 /obj/item/weapon/flora/pottedplant/aquatic
@@ -117,7 +117,7 @@
 
 /obj/item/weapon/flora/pottedplant/crystal
 	name = "crystalline potted plant"
-	desc = "These are rather cubic plants. Odd crystal formations grow on the end."
+	desc = "These are rather blue plants. They have strange twisted leaves grow on the end."
 	icon_state = "plant-19"
 
 /obj/item/weapon/flora/pottedplant/subterranean
@@ -150,8 +150,8 @@
 	icon_state = "plant-24"
 
 /obj/item/weapon/flora/pottedplant/dead
-	name = "dead potted plant"
-	desc = "This is the dried up remains of a dead plant. Someone should replace it."
+	name = "big potted cactus"
+	desc = "This is a big cactus. It's round and sharp"
 	icon_state = "plant-25"
 
 /obj/item/weapon/flora/pottedplant/large
