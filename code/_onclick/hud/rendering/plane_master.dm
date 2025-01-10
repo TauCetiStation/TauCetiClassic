@@ -75,3 +75,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		if(map_view && map_view != plane.assigned_map)
 			continue
 		plane.update_effects(src)
+
+// delete this with 516 release
+/client/proc/update_relays(relay_loc)
+	for(var/atom/movable/screen/render_plane_relay/relay in screen)
+		relay.screen_loc = relay_loc

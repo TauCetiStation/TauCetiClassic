@@ -69,6 +69,7 @@
 		client.perspective = MOB_PERSPECTIVE
 
 	client.update_plane_masters()
+	client.update_relays(client.byond_version >= 516 ? "1,1" : "CENTER")
 
 	// atom_huds
 	reload_huds()
