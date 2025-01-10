@@ -94,9 +94,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/syndie/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || ishuman(target)) return
-	if(!isturf(target.loc))
+	else if(!isturf(target.loc))
 		to_chat(user, "<span class='notice'>You need to take that [target.name] off and get some distance before cleaning it.</span>")
-		return
 		if(istype(target,/obj/effect/decal/cleanable))
 		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 		qdel(target)
