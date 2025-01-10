@@ -99,14 +99,11 @@
     else if(istype(target,/obj/effect/decal/cleanable))
         to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
         qdel(target)
-    else
         if(target.fingerprints)
             target.fingerprints = null
-    else
         if(target.suit_fibers)
             target.suit_fibers = null
         target.clean_blood()
-    else
         to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
     return
 
