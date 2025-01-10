@@ -294,7 +294,7 @@ SUBSYSTEM_DEF(ticker)
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
 		attachment_title = "Раунд начался, игровой режим - **[master_mode]**",
-		attachment_msg = "Раунд #[global.round_id]; Присоединиться сейчас: <[BYOND_JOIN_LINK]>",
+		attachment_msg = "Раунд #[global.round_id]; [BRIDGE_JOIN_LINKS]",
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 	)
 
