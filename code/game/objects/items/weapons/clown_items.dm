@@ -94,6 +94,8 @@
 
 	/obj/item/weapon/reagent_containers/food/snacks/soap/syndie/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || ishuman(target)) return
+	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
@@ -104,10 +106,9 @@
 			target.fingerprints = null
 		if(target.suit_fibers)
 			target.suit_fibers = null
-		target.clean_blood()
 		to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
 		target.clean_blood()
-		target.desc += "\nБлестит как никогда раньше..."
+		target.desc += "\nЗачистили до блеска..."
 	return
 
 
