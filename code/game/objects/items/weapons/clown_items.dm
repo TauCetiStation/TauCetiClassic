@@ -97,7 +97,7 @@
 	if(!isturf(target.loc))
 		to_chat(user, "<span class='notice'>You need to take that [target.name] off and get some distance before cleaning it.</span>")
 	return
-	if(!istype(target,/obj/effect/decal/cleanable))
+	else if(!istype(target,/obj/effect/decal/cleanable))
 		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 		qdel(target)
 	if(target.fingerprints)
