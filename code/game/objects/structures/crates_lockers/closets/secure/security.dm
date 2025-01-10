@@ -21,9 +21,9 @@
 		new /obj/item/weapon/gun/energy/gun/head(src)
 
 	new /obj/item/clothing/accessory/armor(src)
-	new /obj/item/clothing/suit/captunic(src)
-	new /obj/item/clothing/suit/captunic/capjacket(src)
-	new /obj/item/clothing/head/helmet/cap(src)
+	new /obj/item/clothing/suit/capjacket(src)
+	new /obj/item/clothing/head/caphat/alt(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/under/rank/captain(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/weapon/cartridge/captain(src)

@@ -13,20 +13,16 @@
 	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
 //Captain
-/obj/item/clothing/suit/captunic
-	name = "captain's parade tunic"
-	desc = "Worn by a Captain to show their class. Also has some space for armor plate."
-	icon_state = "captunic"
+
+/obj/item/clothing/suit/capjacket
+	name = "captain's uniform jacket"
+	desc = "A formal jacket for captain use. Also has some space for armor plate."
+	icon_state = "capjacket"
 	item_state = "bio_suit"
+	item_state_world = "capjacket_world"
 	valid_accessory_slots = list("armband", "decor", "armor")
 	restricted_accessory_slots = list("armband", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
-	flags_inv = HIDEJUMPSUIT
-
-/obj/item/clothing/suit/captunic/capjacket
-	name = "captain's uniform jacket"
-	desc = "A less formal jacket for everyday captain use. Also has some space for armor plate."
-	icon_state = "capjacket"
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie

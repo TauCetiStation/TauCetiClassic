@@ -18,6 +18,7 @@
 	icon_state = "captain"
 	item_state = "captain"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	item_state_world = "captain_world"
 
 
 /obj/item/clothing/under/rank/cargo
@@ -92,6 +93,7 @@
 	name = "head of personnel's jumpsuit"
 	icon_state = "hop"
 	item_state = "hop"
+	item_state_world = "hop_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/rank/head_of_personnel_whimsy
@@ -99,6 +101,7 @@
 	name = "head of personnel's suit"
 	icon_state = "hopwhimsy"
 	item_state = "hopwhimsy"
+	item_state_world = "hopwhimsy_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 
