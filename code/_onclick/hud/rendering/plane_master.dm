@@ -7,7 +7,7 @@ var/global/list/client_plane_masters = list()
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master
-	screen_loc = "CENTER"
+	screen_loc = "1,1"
 	icon_state = "blank"
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 
@@ -33,6 +33,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		assigned_map = map_view
 		// don't use fixed size, it can break map_view scaling
 		screen_loc = "[map_view]:1,1"
+		relay_loc = "[map_view]:1,1"
 
 /atom/movable/screen/plane_master/proc/generate_relays()
 	. = list()
