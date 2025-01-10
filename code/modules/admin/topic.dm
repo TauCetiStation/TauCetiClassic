@@ -322,7 +322,7 @@
 		message_admins("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "[SSticker.admin_delayed ? "**[key_name(usr)]** приостановил конец раунда" : "Теперь раунд закончится нормально"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 

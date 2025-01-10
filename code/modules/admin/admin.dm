@@ -774,7 +774,7 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] delayed the round start.")
 			world.send2bridge(
 				type = list(BRIDGE_ROUNDSTAT),
-				attachment_msg = "**[key_name(usr)]** delayed the round start",
+				attachment_msg = "**[key_name(usr)]** приостановил начало раунда",
 				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 			)
 		else
@@ -782,7 +782,7 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
 			world.send2bridge(
 				type = list(BRIDGE_ROUNDSTAT),
-				attachment_msg = "**[key_name(usr)]** set the pre-game delay to [newtime] seconds.",
+				attachment_msg = "**[key_name(usr)]** установил задержку перед началом раунда на [PLUR_SECONDS_IN(newtime)].",
 				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 			)
 		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -799,7 +799,7 @@ var/global/BSACooldown = 0
 		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].</span>")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "[SSticker.admin_delayed ? "**[key_name(usr)]** приостановил конец раунда" : "Теперь раунд закончится нормально"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
