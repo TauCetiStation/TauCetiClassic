@@ -7,7 +7,7 @@ var/global/list/client_plane_masters = list()
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master
-	screen_loc = "1,1"
+	screen_loc = "CENTER"
 	icon_state = "blank"
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 
