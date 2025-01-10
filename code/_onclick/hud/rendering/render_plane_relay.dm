@@ -9,7 +9,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/render_plane_relay)
 	plane = 0
 	appearance_flags = PASS_MOUSE | NO_CLIENT_COLOR | KEEP_TOGETHER
 
-/atom/movable/screen/render_plane_relay/atom_init(mapload, atom/movable/screen/plane_master/source_plane, render_plane)
+/atom/movable/screen/render_plane_relay/atom_init(mapload, atom/movable/screen/plane_master/source_plane, render_plane, relay_loc)
 	. = ..()
 
 	name = source_plane.render_target
@@ -17,7 +17,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/render_plane_relay)
 	render_source = source_plane.render_target
 
 	assigned_map = source_plane.assigned_map // for cleaning external maps
-	screen_loc = source_plane.screen_loc
+	screen_loc = relay_loc
 
 	plane = render_plane
 	layer = (source_plane.plane + abs(LOWEST_EVER_PLANE)) * 0.5 //layer must be positive but can be a decimal
