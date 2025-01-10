@@ -26074,7 +26074,7 @@
 	},
 /area/station/security/execution)
 "fJv" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/item/stack/sheet/wood,
 /obj/machinery/newscaster{
 	pixel_x = -28
