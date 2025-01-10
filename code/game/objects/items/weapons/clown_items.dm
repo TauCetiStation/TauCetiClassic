@@ -92,19 +92,23 @@
 		target.clean_blood()
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/soap/syndie/afterattack(atom/target, mob/user, proximity, params)
-    if(!proximity || ishuman(target)) return
-    if(user.client && (target in user.client.screen))
-        to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
-    else if(istype(target,/obj/effect/decal/cleanable))
-        to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
-        if(target.fingerprints)
-            target.fingerprints = null
-        if(target.suit_fibers)
-            target.suit_fibers = null
-        target.clean_blood()
-        to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
-    return
+obj/item/weapon/reagent_containers/food/snacks/soap/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || ishuman(target)) return
+	if(user.client && (target in user.client.screen))
+		to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
+	else if(istype(target,/obj/effect/decal/cleanable))
+		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
+		qdel(target)
+	else
+		if(target.fingerprints)
+			target.fingerprints = null
+		if(target.suit_fibers)
+			target.suit_fibers = null
+		target.clean_blood()
+		to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
+		target.desc += "\nБлестит как никогда раньше..."
+	return
+
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/attack(mob/target, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
