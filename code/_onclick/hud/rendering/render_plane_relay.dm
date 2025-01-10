@@ -4,7 +4,7 @@
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/render_plane_relay)
 /atom/movable/screen/render_plane_relay
-	screen_loc = "CENTER"
+	screen_loc = "1,1"
 	layer = -1
 	plane = 0
 	appearance_flags = PASS_MOUSE | NO_CLIENT_COLOR | KEEP_TOGETHER
