@@ -804,7 +804,7 @@
 		data["orders_and_offers"] = orders_and_offers_frontend
 
 		var/list/shopping_cart_frontend = list()
-		if(MA.shopping_cart.len)
+		if(MA?.shopping_cart.len)
 			for(var/index in MA.shopping_cart)
 				var/list/Item = MA.shopping_cart[index]
 				shopping_cart_frontend.len++
