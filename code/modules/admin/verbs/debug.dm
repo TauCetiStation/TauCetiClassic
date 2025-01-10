@@ -735,4 +735,4 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		return
 
 	to_chat(src, "<span class='info'>You can now right click to use inspect on browsers.</span>")
-	winset(src, "", "browser-options=byondstorage,find,devtools")
+	winset(src, "", "browser-options=byondstorage,find,devtools,refresh")
