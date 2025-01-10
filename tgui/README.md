@@ -90,6 +90,7 @@ doing development on IE8).
 - `bin/tgui --test` - Run tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --clean` - Clean up project repo.
+- `bin/tgui --prettier` - Run a prettier with write flag to fix code style issues.
 - `bin/tgui [webpack options]` - Build the project with custom webpack
 options.
 
