@@ -108,7 +108,6 @@
 			target.suit_fibers = null
 		to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
 		target.clean_blood()
-		target.desc += "\nЗачистили до блеска..."
 	return
 
 
