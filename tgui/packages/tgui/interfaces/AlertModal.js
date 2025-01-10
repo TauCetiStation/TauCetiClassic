@@ -88,6 +88,7 @@ export class AlertModal extends Component {
                   {buttons.map((button, buttonIndex) => (
                     <Flex.Item key={buttonIndex} mx={1}>
                       <div
+                        tabIndex="0"
                         ref={this.buttonRefs[buttonIndex]}
                         className="Button Button--color--default"
                         px={3}
