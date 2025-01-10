@@ -101,7 +101,7 @@
         to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
         qdel(target)
     else
-        to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+        to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
         // пальчики
         if(target.fingerprints)
             target.fingerprints = null
@@ -111,9 +111,6 @@
             target.suit_fibers = null
 
         target.clean_blood()
-
-        // бонус месейдж
-        to_chat(user, "<span class='notice'>Следы взаимодействия были очищены.</span>")
     return
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/attack(mob/target, mob/user, def_zone)
