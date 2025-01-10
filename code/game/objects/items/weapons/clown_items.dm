@@ -92,7 +92,8 @@
 		target.clean_blood()
 	return
 
-	/obj/item/weapon/reagent_containers/food/snacks/soap/syndie/afterattack(atom/target, mob/user, proximity, params)
+
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || ishuman(target)) return
 	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
@@ -108,6 +109,7 @@
 			target.suit_fibers = null
 		to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
 		target.clean_blood()
+		target.desc += "\nSomeone cleaned it up to a shine..."
 	return
 
 
