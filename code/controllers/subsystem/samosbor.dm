@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(samosbor)
 	var/notfication_timer
 
 /datum/controller/subsystem/samosbor/Initialize()
-	if(!config.samosbor)
+	if(!config.chat_bridge)
 		return ..()
 
 	day = time2text(world.realtime, "YYYY_MM_DD")
