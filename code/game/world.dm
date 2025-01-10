@@ -56,8 +56,8 @@ var/global/it_is_a_snow_day = FALSE
 
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
-		attachment_title = "Server starting up, new round will start soon",
-		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_title = "Сервер запущен, скоро начнется новый раунд",
+		attachment_msg = BRIDGE_JOIN_LINKS,
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 		mention = BRIDGE_MENTION_ROUNDSTART,
 	)
