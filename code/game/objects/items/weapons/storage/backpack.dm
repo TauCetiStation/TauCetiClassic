@@ -46,7 +46,8 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = SIZE_NORMAL
+	w_class = SIZE_HUMAN
+	max_w_class = SIZE_HUMAN
 	max_storage_space = 56
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
