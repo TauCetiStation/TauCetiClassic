@@ -106,8 +106,10 @@ obj/item/weapon/reagent_containers/food/snacks/soap/afterattack(atom/target, mob
 			target.suit_fibers = null
 		target.clean_blood()
 		to_chat(user, "<span class='notice'>You FULLY clean \the [target.name].</span>")
+		target.clean_blood()
 		target.desc += "\nБлестит как никогда раньше..."
 	return
+
 
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/attack(mob/target, mob/user, def_zone)
