@@ -308,7 +308,7 @@
 /turf/environment/levelupdate()
 	return
 
-/turf/environment/space/holospace/ex_act(severity)
+/turf/environment/ex_act(severity)
 	for(var/thing in contents)
 		var/atom/movable/movable_thing = thing
 		if(QDELETED(movable_thing))
