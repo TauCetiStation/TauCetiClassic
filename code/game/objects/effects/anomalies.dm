@@ -85,10 +85,17 @@
 	warp = new(src)
 	vis_contents += warp
 
+	START_PROCESSING(SSobj, src)
+	anomalyEffect()
+
 /obj/effect/anomaly/grav/Destroy()
 	vis_contents -= warp
+	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(warp)
 	return ..()
+
+/obj/effect/anomaly/grav/process() // Спасибо ДаркВотеру
+	anomalyEffect()
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
