@@ -213,7 +213,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if (powered())
 		stat &= ~NOPOWER
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
 	update_power_use()
 
 /obj/machinery/hologram/atom_break()
