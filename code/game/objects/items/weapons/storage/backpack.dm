@@ -28,6 +28,9 @@
 	S.opened = !S.opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
+	if(I == src)
+		to_chat(user, "<span class='red'>Не получается.</span>")
+		return
 	if(length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	return ..()
@@ -46,55 +49,51 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	w_class = SIZE_HUMAN
-	max_w_class = SIZE_HUMAN
+	max_w_class = SIZE_NORMAL
 	max_storage_space = 56
 
+	var/global/IsHoldingMalfunction = FALSE
+
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	
 	if(crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
-
-	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
+	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail && !(I == src))
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
-		var/obj/effect/anomaly/grav/grav_anomaly = new /obj/effect/anomaly/grav(src.loc)
+		if(!IsHoldingMalfunction)
+			Make_Anomaly(60 SECONDS, /obj/effect/anomaly/grav)
+	return .	
 
-		to_chat(user, "<span class='red'>A gravitational anomaly appears as the Bluespace interfaces destabilize!</span>")
-
-		grav_anomaly.anomalyEffect()
-
-		START_PROCESSING(SSobj, grav_anomaly)
+/obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
+	. = ..()
+	if(W == src)
+		Destroy() // каким-то образом удаляет экшен меню при попытке воспроизвести баг и фиксит его
+		to_chat(usr, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
+		Make_Anomaly(60 SECONDS, /obj/effect/anomaly/grav)
 
 		return
+	if(istype(W, /obj/item/weapon/storage/backpack/holding/) && !IsHoldingMalfunction && !(W == src))
+		to_chat(usr, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
+		Make_Anomaly(60 SECONDS, /obj/effect/anomaly/grav)
+		return
 
-	return ..()
+/obj/item/weapon/storage/backpack/holding/proc/Make_Anomaly(delay_time, current_anomaly)
+	var/turf/targloc = get_turf(src)
+	var/obj/effect/anomaly/anomaly = new current_anomaly(targloc)
+	IsHoldingMalfunction = TRUE
+	sleep(delay_time)
+	anomaly.Destroy()
+	Adjust_Malfunction_Global_Timer()
 
-//Дальше костыли для движения аномалии, притягивания и отталкивания, если есть идеи как оптимизировать или это все вообще фигня по другому надо было сообщите
-
-/obj/effect/anomaly/grav/anomalyEffect()
-	boing = 1
-	for(var/obj/O in orange(4, src))
-		if(!O.anchored)
-			step_towards(O, src)
-
-	for(var/mob/living/M in orange(4, src))
-		step_towards(M, src)
-
-	move_anomaly()
-
-	while(TRUE)	
-		sleep(20)
-		boing = 1
-		for(var/obj/O in orange(4, src))
-			if(!O.anchored)
-				step_towards(O, src)
-		for(var/mob/living/M in orange(4, src))
-			step_towards(M, src)
-		sleep(50)
-		move_anomaly()
-
-	return
+/obj/item/weapon/storage/backpack/holding/proc/Adjust_Malfunction_Global_Timer()
+	var/timer = 30 MINUTES
+	for(timer)
+		timer -= 1 SECOND
+		if(!timer)
+			IsHoldingMalfunction = FALSE
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
