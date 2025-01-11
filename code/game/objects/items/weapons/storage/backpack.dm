@@ -64,7 +64,7 @@
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
 		if(!IsHoldingMalfunction)
-			Make_Anomaly(60 SECONDS, /obj/effect/anomaly/grav)
+			Make_Anomaly(150 SECONDS, /obj/effect/anomaly/grav)
 	return .	
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
@@ -72,11 +72,10 @@
 	if(W == src)
 		Destroy() // каким-то образом удаляет экшен меню при попытке воспроизвести баг и фиксит его
 		to_chat(usr, "<span class='red'>Рюкзак засасывается сам в себя и исчезает.</span>")
-
 		return
 	if(istype(W, /obj/item/weapon/storage/backpack/holding/) && !IsHoldingMalfunction && !(W == src))
 		to_chat(usr, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
-		Make_Anomaly(60 SECONDS, /obj/effect/anomaly/grav)
+		Make_Anomaly(150 SECONDS, /obj/effect/anomaly/grav)
 		return
 
 /obj/item/weapon/storage/backpack/holding/proc/Make_Anomaly(delay_time, current_anomaly)
