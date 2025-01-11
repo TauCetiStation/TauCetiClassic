@@ -58,9 +58,43 @@
 	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
+		var/obj/effect/anomaly/grav/grav_anomaly = new /obj/effect/anomaly/grav(src.loc)
+
+		to_chat(user, "<span class='red'>A gravitational anomaly appears as the Bluespace interfaces destabilize!</span>")
+
+		grav_anomaly.anomalyEffect()
+
+		START_PROCESSING(SSobj, grav_anomaly)
+
 		return
 
 	return ..()
+
+//Дальше костыли для движения аномалии, притягивания и отталкивания, если есть идеи как оптимизировать или это все вообще фигня по другому надо было сообщите
+
+/obj/effect/anomaly/grav/anomalyEffect()
+	boing = 1
+	for(var/obj/O in orange(4, src))
+		if(!O.anchored)
+			step_towards(O, src)
+
+	for(var/mob/living/M in orange(4, src))
+		step_towards(M, src)
+
+	move_anomaly()
+
+	while(TRUE)	
+		sleep(20)
+		boing = 1
+		for(var/obj/O in orange(4, src))
+			if(!O.anchored)
+				step_towards(O, src)
+		for(var/mob/living/M in orange(4, src))
+			step_towards(M, src)
+		sleep(50)
+		move_anomaly()
+
+	return
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
