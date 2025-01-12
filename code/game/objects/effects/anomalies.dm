@@ -182,12 +182,17 @@
 /obj/effect/anomaly/bhole/atom_init()
 	. = ..()
 	aSignal.origin_tech = "materials=8;combat=4;engineering=4"
-	
+
 	START_PROCESSING(SSobj, src)
 	anomalyEffect()
 
 /obj/effect/anomaly/bhole/process() // Thanks to DarkWater
 	anomalyEffect()
+	
+/obj/effect/anomaly/bhole/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	anomalyNeutralize()
+	return ..()
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
