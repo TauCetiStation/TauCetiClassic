@@ -28,9 +28,6 @@
 	S.opened = !S.opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
-	if(I == src)
-		to_chat(user, "<span class='red'>Не получается.</span>")
-		return
 	if(length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	return ..()
@@ -52,46 +49,36 @@
 	max_w_class = SIZE_NORMAL
 	max_storage_space = 56
 
-	var/global/IsHoldingMalfunction = FALSE
-
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	
 	if(crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
+
 	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail && !(I == src))
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
-		if(!IsHoldingMalfunction)
-			Make_Anomaly(150 SECONDS, /obj/effect/anomaly/grav)
-	return .	
+		Make_Anomaly(150 SECONDS, /obj/effect/anomaly/bhole)
+
+	return ..()
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	. = ..()
 	if(W == src)
-		Destroy() // каким-то образом удаляет экшен меню при попытке воспроизвести баг и фиксит его
+		Destroy(W) // in my opinion, it is most effective to remove an object with a total cut of its action menu, because in addition to this action, qdel occurs
 		to_chat(usr, "<span class='red'>Рюкзак засасывается сам в себя и исчезает.</span>")
-		return
-	if(istype(W, /obj/item/weapon/storage/backpack/holding/) && !IsHoldingMalfunction && !(W == src))
+		return FALSE
+	if(istype(W, /obj/item/weapon/storage/backpack/holding))
 		to_chat(usr, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
-		Make_Anomaly(150 SECONDS, /obj/effect/anomaly/grav)
-		return
+		Make_Anomaly(150 SECONDS, /obj/effect/anomaly/bhole)
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/storage/backpack/holding/proc/Make_Anomaly(delay_time, current_anomaly)
 	var/turf/targloc = get_turf(src)
 	var/obj/effect/anomaly/anomaly = new current_anomaly(targloc)
-	IsHoldingMalfunction = TRUE
+	anomaly.anomalyEffect()
 	sleep(delay_time)
-	anomaly.Destroy()
-	Adjust_Malfunction_Global_Timer()
-
-/obj/item/weapon/storage/backpack/holding/proc/Adjust_Malfunction_Global_Timer()
-	var/timer = 30 MINUTES
-	for(timer)
-		timer -= 1 SECOND
-		if(!timer)
-			IsHoldingMalfunction = FALSE
+	qdel(anomaly)
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
