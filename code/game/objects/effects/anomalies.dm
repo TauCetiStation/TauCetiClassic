@@ -94,7 +94,7 @@
 	QDEL_NULL(warp)
 	return ..()
 
-/obj/effect/anomaly/grav/process() // Спасибо ДаркВотеру
+/obj/effect/anomaly/grav/process() // Thanks to DarkWater
 	anomalyEffect()
 
 /obj/effect/anomaly/grav/anomalyEffect()
