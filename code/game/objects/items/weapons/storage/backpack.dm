@@ -78,7 +78,7 @@
 	var/obj/effect/anomaly/anomaly = new current_anomaly(targloc)
 	anomaly.anomalyEffect()
 	sleep(delay_time)
-	qdel(anomaly)
+	qdel(current_anomaly)
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
