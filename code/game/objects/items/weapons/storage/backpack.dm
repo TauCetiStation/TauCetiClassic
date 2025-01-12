@@ -57,7 +57,7 @@
 	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail && !(I == src))
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
-		Make_Anomaly(150 SECONDS, /obj/effect/anomaly/bhole)
+		Make_Anomaly(50 SECONDS, /obj/effect/anomaly/bhole)
 
 	return ..()
 
@@ -69,7 +69,6 @@
 		return FALSE
 	if(istype(W, /obj/item/weapon/storage/backpack/holding))
 		to_chat(usr, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
-		Make_Anomaly(150 SECONDS, /obj/effect/anomaly/bhole)
 		return FALSE
 	return TRUE
 
@@ -78,8 +77,8 @@
 	var/obj/effect/anomaly/anomaly = new current_anomaly(targloc)
 	anomaly.anomalyEffect()
 	sleep(delay_time)
-	qdel(current_anomaly)
-
+	anomaly.Destroy()
+	
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
 		return 1 //No failure
