@@ -7,7 +7,7 @@ export const EmotePanelEditor = (props, context) => {
   const { customEmotes, allHumanEmotes } = data;
   return (
     <Window width={250} height={400} resizable>
-      <Window.Content>
+      <Window.Content scrollable>
         {allHumanEmotes.sort().map((emote) => (
           <Box fontSize="20px" key={emote}>
             <Button.Checkbox

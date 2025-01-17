@@ -117,7 +117,7 @@ export const AirLockMainSection = (props, context) => {
 export const AirlockElectronics = (props, context) => {
   return (
     <Window width={420} height={550}>
-      <Window.Content>
+      <Window.Content scrollable>
         <AirLockMainSection />
       </Window.Content>
     </Window>

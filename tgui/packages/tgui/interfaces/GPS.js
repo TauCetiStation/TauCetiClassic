@@ -37,7 +37,7 @@ export const GPS = (properties, context) => {
   const { emped, active, area, position, saved } = data;
   return (
     <Window>
-      <Window.Content>
+      <Window.Content scrollable>
         <Flex direction="column" height="100%">
           {emped ? (
             <Flex.Item grow="1" basis="0">

@@ -103,12 +103,14 @@ export const Knob = (props) => {
             )}
             <svg
               className="Knob__ring Knob__ringTrackPivot"
-              viewBox="0 0 100 100">
+              viewBox="0 0 100 100"
+              overflow="visible">
               <circle className="Knob__ringTrack" cx="50" cy="50" r="50" />
             </svg>
             <svg
               className="Knob__ring Knob__ringFillPivot"
-              viewBox="0 0 100 100">
+              viewBox="0 0 100 100"
+              overflow="visible">
               <circle
                 className="Knob__ringFill"
                 style={{

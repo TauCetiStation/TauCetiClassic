@@ -79,7 +79,7 @@ const GetInfoItem = (title, list) => {
   } else {
     listItems = list.map((elem) => (
       <li key={elem}>
-        <Box>{toTitleCase(elem)}</Box>
+        <Box inline>{toTitleCase(elem)}</Box>
       </li>
     ));
   }
@@ -121,7 +121,7 @@ const ReligionTab = (props, context) => {
               <Box textAlign="left" ml={3}>
                 <ui>
                   <li>
-                    <Box color="yellow">
+                    <Box inline color="yellow">
                       Favor: {favor} / {max_favor}
                       <span style={{ 'color': 'gray', 'font-size': '8pt' }}>
                         {' '}
@@ -130,7 +130,9 @@ const ReligionTab = (props, context) => {
                     </Box>
                   </li>
                   <li>
-                    <Box color="pink">Piety: {piety}</Box>
+                    <Box inline color="pink">
+                      Piety: {piety}
+                    </Box>
                   </li>
                 </ui>
               </Box>
@@ -164,7 +166,7 @@ const GetAspectBox = (title, aspects, need_br = true) => {
         <ui>
           {Object.keys(aspects).map((aspect) => (
             <li key={aspect}>
-              <Box color={ASPECT2COLOR[aspect]}>
+              <Box color={ASPECT2COLOR[aspect]} inline>
                 {aspect} = {aspects[aspect]}
               </Box>
             </li>
@@ -187,12 +189,16 @@ const GetCostsBox = (favor, piety, need_br = true) => {
         <ui>
           {!!favor && (
             <li>
-              <Box color="yellow">{favor} favor</Box>
+              <Box inline color="yellow">
+                {favor} favor
+              </Box>
             </li>
           )}
           {!!piety && (
             <li>
-              <Box color="pink">{piety} piety</Box>
+              <Box inline color="pink">
+                {piety} piety
+              </Box>
             </li>
           )}
         </ui>
@@ -207,7 +213,7 @@ const SectSelectTab = (props, context) => {
   const { sects, holds_religious_tool } = data;
 
   return (
-    <Section fill title="Sect Select">
+    <Section fill height={51} scrollable title="Sect Select">
       <Stack vertical>
         {sects.map((sect) => (
           <Collapsible
@@ -267,7 +273,7 @@ const Encyclopedia = (props, context) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      <Section height={52} fill scrollable width="100%">
+      <Section height={51} fill scrollable width="100%">
         <Stack.Item>
           {cat === 'RITES' && <ERitesTab />}
           {cat === 'SECTS' && <ESectsTab />}
@@ -333,7 +339,7 @@ const ERitesTab = (props, context) => {
                     <ui>
                       {rite.tips.map((tip) => (
                         <li key={tip}>
-                          <Box>{tip.replace(/<[/]?i>/g, '')}</Box>
+                          <Box inline>{tip.replace(/<[/]?i>/g, '')}</Box>
                         </li>
                       ))}
                     </ui>
@@ -657,7 +663,7 @@ const RiteTab = (props, context) => {
                         <ui>
                           {rite.tips.map((tip) => (
                             <li key={tip}>
-                              <Box>{tip.replace(/<[/]?i>/g, '')}</Box>
+                              <Box inline>{tip.replace(/<[/]?i>/g, '')}</Box>
                             </li>
                           ))}
                         </ui>
