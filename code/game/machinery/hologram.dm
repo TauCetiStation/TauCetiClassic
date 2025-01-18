@@ -209,13 +209,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/proc/clear_holo()
 	return
 
-/obj/machinery/hologram/power_change()
-	if (powered())
-		stat &= ~NOPOWER
-	else
-		stat |= ~NOPOWER
-	update_power_use()
-
 /obj/machinery/hologram/atom_break()
 	. = ..()
 	if(hologram)
