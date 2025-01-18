@@ -71,7 +71,6 @@
 	var/braintype = "Cyborg"
 	var/pose
 	var/can_be_security = FALSE
-	var/is_meka = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
