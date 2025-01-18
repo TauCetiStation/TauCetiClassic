@@ -71,6 +71,7 @@
 	var/braintype = "Cyborg"
 	var/pose
 	var/can_be_security = FALSE
+	var/is_meka = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
@@ -200,6 +201,7 @@
 		return
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
+	var/meka_module_sprites[0] //Used to store the associations between sprite names and sprite index.
 	if(module)
 		return
 
@@ -225,6 +227,8 @@
 			module_sprites["Acheron"] = "mechoid-Service"
 			module_sprites["Kodiak"] = "kodiak-service"
 			module_sprites["Maid"] = "kerfusMaid"
+			meka_module_sprites["Female"] = "fmekaserv"
+			meka_module_sprites["Male"] = "mmekaserv"
 
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
@@ -247,6 +251,8 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			meka_module_sprites["Female"] = "fmekamine"
+			meka_module_sprites["Male"] = "mmekamine"
 			give_hud(DATA_HUD_MINER)
 
 		if("Medical")
@@ -261,6 +267,8 @@
 			module_sprites["Drone Red"] = "drone-surgery"
 			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
+			meka_module_sprites["Female"] = "fmekamed"
+			meka_module_sprites["Male"] = "mmekamed"
 
 		if("Security")
 			if(can_be_security)
@@ -277,6 +285,8 @@
 				module_sprites["Acheron"] = "mechoid-Security"
 				module_sprites["Kodiak"] = "kodiak-sec"
 				module_sprites["NO ERP"] = "kerfusNoERP"
+				meka_module_sprites["Female"] = "fmekasec"
+				meka_module_sprites["Male"] = "mmekasec"
 			else
 				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
 				return
@@ -295,6 +305,8 @@
 			module_sprites["Acheron"] = "mechoid-Engineering"
 			module_sprites["Kodiak"] = "kodiak-eng"
 			module_sprites["Flushed"] = "kerfusFlushed"
+			meka_module_sprites["Female"] = "fmekaeng"
+			meka_module_sprites["Male"] = "mmekaeng"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -303,6 +315,8 @@
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Drone"] = "drone-janitor"
 			module_sprites["Acheron"] = "mechoid-Janitor"
+			meka_module_sprites["Female"] = "fmekajani"
+			meka_module_sprites["Male"] = "mmekajani"
 
 		if("PeaceKeeper")
 			if(!can_be_security)
@@ -312,6 +326,8 @@
 			module_sprites["Marina"] = "marina-peace"
 			module_sprites["Sleak"] = "sleek-peace"
 			module_sprites["Nanotrasen"] = "kerfusNT"
+			meka_module_sprites["Female"] = "fmekapeace"
+			meka_module_sprites["Male"] = "mmekapeace"
 
 		if("Combat")
 			build_combat_borg()
@@ -329,12 +345,17 @@
 
 	for(var/name in module_sprites)
 		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
+	for(var/name in meka_module_sprites)
+		choose_icon[name] = image(icon = 'icons/mob/tallrobots.dmi', icon_state = meka_module_sprites[name])
 
 	// Default skin of module
 	icon_state = module_sprites[pick(module_sprites)]
 	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
 	if(new_icon_state)
 		icon_state = module_sprites[new_icon_state]
+		if(!icon_state)
+			icon = 'icons/mob/tallrobots.dmi'
+			icon_state = meka_module_sprites[new_icon_state]
 
 	radio.config(module.channels)
 	radio.recalculateChannels()
