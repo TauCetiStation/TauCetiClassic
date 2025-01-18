@@ -28,6 +28,7 @@
 		return 0
 
 	R.uneq_all()
+	R.icon = 'icons/mob/robots.dmi'
 	R.icon_state = "robot"
 	clearlist(R.module.channels)
 	qdel(R.module)
