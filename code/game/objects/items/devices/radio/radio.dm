@@ -699,6 +699,11 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!grid)
 		on = 0
 		..()
+	if(hidden_uplink)
+		hidden_uplink.toggle()
+		usr << browse(null, "window=hidden")
+		on = 0
+		return 1
 /*	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
