@@ -160,15 +160,6 @@
 			s.start()
 		A.set_dir(src.dir)
 		A.starting = get_turf(src)
-		switch(dir)
-			if(NORTH)
-				A.original = locate(x, y+1, z)
-			if(EAST)
-				A.original = locate(x+1, y, z)
-			if(WEST)
-				A.original = locate(x-1, y, z)
-			else // Any other
-				A.original = locate(x, y-1, z)
 		A.process()
 
 
