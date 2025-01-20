@@ -49317,7 +49317,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "iRD" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -65526,7 +65526,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "mcB" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "mcD" = (
@@ -106494,7 +106494,7 @@
 /area/station/medical/cryo)
 "ufu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor,
 /area/station/maintenance/science)
@@ -115870,7 +115870,7 @@
 	},
 /area/station/cargo/recycleroffice)
 "vVT" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "dark"

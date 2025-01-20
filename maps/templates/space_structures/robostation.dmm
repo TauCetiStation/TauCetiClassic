@@ -401,7 +401,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bC" = (
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bD" = (
