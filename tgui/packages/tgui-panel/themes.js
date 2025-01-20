@@ -22,7 +22,7 @@ let setClientThemeTimer = null;
  * There's no way round it. We're essentially changing the skin by hand.
  * It's painful but it works, and is the way Lummox suggested.
  */
-export const setClientTheme = name => {
+export const setClientTheme = (name) => {
   // Transmit once for fast updates and again in a little while in case we won
   // the race against statbrowser init.
   clearInterval(setClientThemeTimer);
@@ -38,8 +38,8 @@ export const setClientTheme = name => {
       'rpanewindow.text-color': '#000000',
       'rpane.background-color': 'none',
       'rpane.text-color': '#000000',
-      'browseroutput.background-color': 'none',
-      'browseroutput.text-color': '#000000',
+      'legacy_output_selector.background-color': 'none',
+      'legacy_output_selector.text-color': '#000000',
       'outputwindow.background-color': 'none',
       'outputwindow.text-color': '#000000',
       'mainwindow.background-color': 'none',
@@ -90,8 +90,8 @@ export const setClientTheme = name => {
       'rpanewindow.text-color': COLOR_DARK_TEXT,
       'rpane.background-color': COLOR_DARK_BG,
       'rpane.text-color': COLOR_DARK_TEXT,
-      'browseroutput.background-color': COLOR_DARK_BG,
-      'browseroutput.text-color': COLOR_DARK_TEXT,
+      'chat_panel.background-color': COLOR_DARK_BG,
+      'chat_panel.text-color': COLOR_DARK_TEXT,
       'outputwindow.background-color': COLOR_DARK_BG,
       'outputwindow.text-color': COLOR_DARK_TEXT,
       'mainwindow.background-color': COLOR_DARK_BG,

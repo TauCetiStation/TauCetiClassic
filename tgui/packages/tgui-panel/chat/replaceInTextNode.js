@@ -7,15 +7,14 @@
 /**
  * Replaces text matching a regular expression with a custom node.
  */
-export const replaceInTextNode = (regex, createNode) => node => {
+export const replaceInTextNode = (regex, createNode) => (node) => {
   const text = node.textContent;
   const textLength = text.length;
   let match;
   let lastIndex = 0;
   let fragment;
   let n = 0;
-  // eslint-disable-next-line no-cond-assign
-  while (match = regex.exec(text)) {
+  while ((match = regex.exec(text))) {
     n += 1;
     // Lazy init fragment
     if (!fragment) {
@@ -26,8 +25,9 @@ export const replaceInTextNode = (regex, createNode) => node => {
     const matchIndex = match.index;
     // Insert previous unmatched chunk
     if (lastIndex < matchIndex) {
-      fragment.appendChild(document.createTextNode(
-        text.substring(lastIndex, matchIndex)));
+      fragment.appendChild(
+        document.createTextNode(text.substring(lastIndex, matchIndex))
+      );
     }
     lastIndex = matchIndex + matchLength;
     // Create a wrapper node
@@ -36,8 +36,9 @@ export const replaceInTextNode = (regex, createNode) => node => {
   if (fragment) {
     // Insert the remaining unmatched chunk
     if (lastIndex < textLength) {
-      fragment.appendChild(document.createTextNode(
-        text.substring(lastIndex, textLength)));
+      fragment.appendChild(
+        document.createTextNode(text.substring(lastIndex, textLength))
+      );
     }
     // Commit the fragment
     node.parentNode.replaceChild(fragment, node);
@@ -45,17 +46,15 @@ export const replaceInTextNode = (regex, createNode) => node => {
   return n;
 };
 
-
 // Highlight
 // --------------------------------------------------------
 
 /**
  * Default highlight node.
  */
-const createHighlightNode = text => {
+const createHighlightNode = (text) => {
   const node = document.createElement('span');
-  node.setAttribute('style',
-    'background-color:#fd4;color:#000');
+  node.setAttribute('style', 'background-color:#fd4;color:#000');
   node.textContent = text;
   return node;
 };
@@ -71,7 +70,7 @@ const createHighlightNode = text => {
 export const highlightNode = (
   node,
   regex,
-  createNode = createHighlightNode,
+  createNode = createHighlightNode
 ) => {
   if (!createNode) {
     createNode = createHighlightNode;
@@ -83,19 +82,18 @@ export const highlightNode = (
     // Is a text node
     if (node.nodeType === 3) {
       n += replaceInTextNode(regex, createNode)(node);
-    }
-    else {
+    } else {
       n += highlightNode(node, regex, createNode);
     }
   }
   return n;
 };
 
-
 // Linkify
 // --------------------------------------------------------
 
-const URL_REGEX = /(?:(?:https?:\/\/)|(?:www\.))(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#/%?=~_|$!:,.;()]+/ig;
+const URL_REGEX =
+  /(?:(?:https?:\/\/)|(?:www\.))(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#/%?=~_|$!:,.;()]+/gi;
 
 /**
  * Highlights the text in the node based on the provided regular expression.
@@ -103,7 +101,7 @@ const URL_REGEX = /(?:(?:https?:\/\/)|(?:www\.))(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&
  * @param {Node} node Node which you want to process
  * @returns {number} Number of matches
  */
-export const linkifyNode = node => {
+export const linkifyNode = (node) => {
   let n = 0;
   const childNodes = node.childNodes;
   for (let i = 0; i < childNodes.length; i++) {
@@ -112,21 +110,19 @@ export const linkifyNode = node => {
     // Is a text node
     if (node.nodeType === 3) {
       n += linkifyTextNode(node);
-    }
-    else if (tag !== 'a') {
+    } else if (tag !== 'a') {
       n += linkifyNode(node);
     }
   }
   return n;
 };
 
-const linkifyTextNode = replaceInTextNode(URL_REGEX, text => {
+const linkifyTextNode = replaceInTextNode(URL_REGEX, (text) => {
   const node = document.createElement('a');
   node.href = text;
   node.textContent = text;
   return node;
 });
-
 
 // Emojify
 // --------------------------------------------------------
@@ -139,10 +135,16 @@ const EMOJI_REGEX = /:[\w\-_]+:/g;
  * @param {Node} node Node which you want to process
  * @returns {number} Number of matches
  */
-export const emojifyNode = node => {
+export const emojifyNode = (node) => {
   node.innerHTML = node.innerHTML.replace(EMOJI_REGEX, emojifyTextNode);
 };
 
-const emojifyTextNode = text => {
-  return '<i class="em em-'+text.substring(1, text.length-1)+'">'+text+'</i>';
+const emojifyTextNode = (text) => {
+  return (
+    '<i class="em em-' +
+    text.substring(1, text.length - 1) +
+    '">' +
+    text +
+    '</i>'
+  );
 };

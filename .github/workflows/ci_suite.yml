@@ -42,7 +42,7 @@ jobs:
       - name: Code and Map Linting
         env:
           TEST: LINTING
-          NODE_VERSION: 12
+          NODE_VERSION: 20
         run: |
           bash test/run-test.sh
           bash scripts/build_tgui.sh

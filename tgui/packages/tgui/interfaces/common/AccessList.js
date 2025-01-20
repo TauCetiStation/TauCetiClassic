@@ -1,6 +1,13 @@
 import { sortBy } from 'common/collections';
 import { useLocalState } from '../../backend';
-import { Box, Button, Flex, LabeledList, Section, Tabs } from '../../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  Section,
+  Tabs,
+} from '../../components';
 
 const diffMap = {
   0: {
@@ -32,34 +39,33 @@ export const AccessList = (props, context) => {
     grantDep,
     denyDep,
   } = props;
-  const [
-    selectedAccessName,
-    setSelectedAccessName,
-  ] = useLocalState(context, 'accessName', accesses[0]?.name);
-  const selectedAccess = accesses
-    .find(access => access.name === selectedAccessName);
-  const selectedAccessEntries = sortBy(
-    entry => entry.desc,
-  )(selectedAccess?.accesses || []);
+  const [selectedAccessName, setSelectedAccessName] = useLocalState(
+    context,
+    'accessName',
+    accesses[0]?.name
+  );
+  const selectedAccess = accesses.find(
+    (access) => access.name === selectedAccessName
+  );
+  const selectedAccessEntries = sortBy((entry) => entry.desc)(
+    selectedAccess?.accesses || []
+  );
 
-  const checkAccessIcon = accesses => {
+  const checkAccessIcon = (accesses) => {
     let oneAccess = false;
     let oneInaccess = false;
     for (let element of accesses) {
       if (selectedList.includes(element.ref)) {
         oneAccess = true;
-      }
-      else {
+      } else {
         oneInaccess = true;
       }
     }
     if (!oneAccess && oneInaccess) {
       return 0;
-    }
-    else if (oneAccess && oneInaccess) {
+    } else if (oneAccess && oneInaccess) {
       return 1;
-    }
-    else {
+    } else {
       return 2;
     }
   };
@@ -68,25 +74,27 @@ export const AccessList = (props, context) => {
     <Section
       title="Access"
       flexGrow={sectionFlexGrow}
-      buttons={(
+      buttons={
         <>
           <Button
             icon="check-double"
             content="Select All"
             color="good"
-            onClick={() => grantAll()} />
+            onClick={() => grantAll()}
+          />
           <Button
             icon="undo"
             content="Deselect All"
             color="bad"
-            onClick={() => denyAll()} />
+            onClick={() => denyAll()}
+          />
           {sectionButtons}
         </>
-      )}>
+      }>
       <Flex>
         <Flex.Item>
           <Tabs vertical>
-            {accesses.map(access => {
+            {accesses.map((access) => {
               const entries = access.accesses || [];
               const icon = diffMap[checkAccessIcon(entries)].icon;
               const color = diffMap[checkAccessIcon(entries)].color;
@@ -112,7 +120,8 @@ export const AccessList = (props, context) => {
                 icon="check"
                 content="Select Region"
                 color="good"
-                onClick={() => grantDep(selectedAccess.regid)} />
+                onClick={() => grantDep(selectedAccess.regid)}
+              />
             </Flex.Item>
             <Flex.Item width="50%" ml={0}>
               <Button
@@ -120,7 +129,8 @@ export const AccessList = (props, context) => {
                 icon="times"
                 content="Deselect Region"
                 color="bad"
-                onClick={() => denyDep(selectedAccess.regid)} />
+                onClick={() => denyDep(selectedAccess.regid)}
+              />
             </Flex.Item>
           </Flex>
           {!!usedByRcd && (
@@ -132,16 +142,19 @@ export const AccessList = (props, context) => {
               </LabeledList>
             </Box>
           )}
-          {selectedAccessEntries.map(entry => (
+          {selectedAccessEntries.map((entry) => (
             <Button.Checkbox
               fluid
               key={entry.desc}
               content={entry.desc}
-              disabled={grantableList.length > 0
-                && !grantableList.includes(entry.ref)
-                && !selectedList.includes(entry.ref)}
+              disabled={
+                grantableList.length > 0 &&
+                !grantableList.includes(entry.ref) &&
+                !selectedList.includes(entry.ref)
+              }
               checked={selectedList.includes(entry.ref)}
-              onClick={() => accessMod(entry.ref)} />
+              onClick={() => accessMod(entry.ref)}
+            />
           ))}
         </Flex.Item>
       </Flex>
