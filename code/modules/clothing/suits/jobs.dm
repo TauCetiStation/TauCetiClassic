@@ -24,6 +24,16 @@
 	restricted_accessory_slots = list("armband", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 
+/obj/item/clothing/suit/captunic
+	name = "captain's parade tunic"
+	desc = "Once worn by the captain to show his class. Also has some space for armor plate."
+	icon_state = "captunic"
+	item_state = "bio_suit"
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
+	body_parts_covered = UPPER_TORSO|ARMS
+	flags_inv = HIDEJUMPSUIT
+
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
 	name = "chaplain hoodie"

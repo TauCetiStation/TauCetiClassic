@@ -1966,6 +1966,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/suit/chef,
 					/obj/item/clothing/suit/apron/overalls,
 					/obj/item/clothing/under/redcoat,
+					/obj/item/clothing/suit/captunic,
 					/obj/item/clothing/under/kilt)
 	name = "Costumes crate"
 	crate_type = /obj/structure/closet/crate/secure
