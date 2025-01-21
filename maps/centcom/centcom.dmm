@@ -12172,7 +12172,7 @@
 /area/centcom/prison)
 "aBg" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},

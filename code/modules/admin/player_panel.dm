@@ -76,15 +76,15 @@
 
 					body += "</td><td align='center'>";
 
-					body += "<a href='?src=\ref[src];adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?src=\ref[src];notes=show;mob="+ref+"'>N</a> - "
-					body += "<a href='?_src_=vars;Vars="+ref+"'>VV</a> - "
-					body += "<a href='?src=\ref[src];traitor="+ref+"'>TP</a> - "
-					body += "<a href='?src=\ref[usr];priv_msg=\ref"+ref+"'>PM</a> - "
-					body += "<a href='?src=\ref[src];subtlemessage="+ref+"'>SM</a> - "
-					body += "<a href='?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a><br>"
+					body += "<a href='byond://?src=\ref[src];adminplayeropts="+ref+"'>PP</a> - "
+					body += "<a href='byond://?src=\ref[src];notes=show;mob="+ref+"'>N</a> - "
+					body += "<a href='byond://?_src_=vars;Vars="+ref+"'>VV</a> - "
+					body += "<a href='byond://?src=\ref[src];traitor="+ref+"'>TP</a> - "
+					body += "<a href='byond://?src=\ref[usr];priv_msg=\ref"+ref+"'>PM</a> - "
+					body += "<a href='byond://?src=\ref[src];subtlemessage="+ref+"'>SM</a> - "
+					body += "<a href='byond://?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a><br>"
 					if(antagonist > 0)
-						body += "<font size='2'><a class='red' href='?src=\ref[src];check_antagonist=1'><b>Antagonist</b></a></font>";
+						body += "<font size='2'><a class='red' href='byond://?src=\ref[src];check_antagonist=1'><b>Antagonist</b></a></font>";
 
 					body += "</td></tr></table>";
 
@@ -195,7 +195,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information - <a href='?src=\ref[src];check_antagonist=1'>Check antagonists</a>
+					Hover over a line to see more information - <a href='byond://?src=\ref[src];check_antagonist=1'>Check antagonists</a>
 					<p>
 				</td>
 			</tr>
@@ -366,16 +366,16 @@
 
 
 		dat += {"<td>[(M.client ? "[M.client]" : "No client")]</td>
-		<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
-		<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
+		<td align=center><A href='byond://?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
+		<td align=center><A href='byond://?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 		"}
 		switch(is_special_character(M))
 			if(0)
-				dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
+				dat += {"<td align=center><A href='byond://?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
 			if(1)
-				dat += {"<td align=center><A class='red' HREF='?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
+				dat += {"<td align=center><A class='red' href='byond://?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
 			if(2)
-				dat += {"<td align=center><A class='red' HREF='?src=\ref[src];traitor=\ref[M]'><b>Traitor?</b></A></td>"}
+				dat += {"<td align=center><A class='red' href='byond://?src=\ref[src];traitor=\ref[M]'><b>Traitor?</b></A></td>"}
 
 	dat += "</table>"
 
@@ -390,15 +390,15 @@
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
 		if (!SSshuttle.online)
-			dat += "<a href='?src=\ref[src];call_shuttle=1'>Call Shuttle</a><br>"
+			dat += "<a href='byond://?src=\ref[src];call_shuttle=1'>Call Shuttle</a><br>"
 		else
 			switch(SSshuttle.location)
 				if(0)
-					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
-					dat += "<a href='?src=\ref[src];call_shuttle=2'>Send Back</a><br>"
+					dat += "ETA: <a href='byond://?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
+					dat += "<a href='byond://?src=\ref[src];call_shuttle=2'>Send Back</a><br>"
 				if(1)
-					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
-		dat += "<a href='?src=\ref[src];delay_round_end=1'>[SSticker.admin_delayed ? "End Round Normally" : "Delay Round End"]</a><br>"
+					dat += "ETA: <a href='byond://?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
+		dat += "<a href='byond://?src=\ref[src];delay_round_end=1'>[SSticker.admin_delayed ? "End Round Normally" : "Delay Round End"]</a><br>"
 
 		dat += SSticker.mode.AdminPanelEntry()
 
@@ -416,7 +416,7 @@
 				dat += "<br>"
 		else
 			dat += "<i>No orphaned roles are currently active.</i>"
-		dat += "<BR><BR><BR><a href='?src=\ref[src];check_antagonist=1'>Refresh</a>"
+		dat += "<BR><BR><BR><a href='byond://?src=\ref[src];check_antagonist=1'>Refresh</a>"
 
 		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 700, 700)
 		popup.set_content(dat)

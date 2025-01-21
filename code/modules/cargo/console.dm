@@ -54,20 +54,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 			dat += "<HR>Cargo Dep credits: [global.cargo_account.money]$<BR>"
 			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
 			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"
-			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
-			dat += "'[CARGOSHOPNAME]' discount: <A href='?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
+			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='byond://?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
+			dat += "'[CARGOSHOPNAME]' discount: <A href='byond://?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
 			dat += "'[CARGOSHOPNAME]' profits: [global.online_shop_profits]$<BR>\n<BR>"
 		else
 			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: [global.online_shop_delivery_cost*100]%<BR>\n<BR>"
 		if(requestonly)
-			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
+			dat += "\n<A href='byond://?src=\ref[src];order=categories'>Request items</A><BR><BR>"
 		else
-			dat += {"[SSshuttle.moving ? "\n*Must be away to order items*<BR>\n<BR>":SSshuttle.at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>"]
-			[SSshuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":SSshuttle.at_station ? "\n<A href='?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]"}
-		dat += {"<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
-		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>"}
+			dat += {"[SSshuttle.moving ? "\n*Must be away to order items*<BR>\n<BR>":SSshuttle.at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='byond://?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>"]
+			[SSshuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":SSshuttle.at_station ? "\n<A href='byond://?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='byond://?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]"}
+		dat += {"<A href='byond://?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
+		<A href='byond://?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>"}
 		if(!requestonly)
-			dat += "<A href='?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
+			dat += "<A href='byond://?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
 
 
 	var/datum/browser/popup = new(user, "computer", name, 500, 600)
@@ -82,17 +82,17 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 
 	if(href_list["send"])
 		if(!SSshuttle.can_move())
-			temp = "[safety_warning]<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			temp = "[safety_warning]<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 		else if(SSshuttle.at_station)
 			SSshuttle.moving = -1
 			SSshuttle.sell()
 			SSshuttle.send()
-			temp = "The supply shuttle has departed.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			temp = "The supply shuttle has departed.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 		else
 			SSshuttle.moving = 1
 			SSshuttle.buy()
 			SSshuttle.set_eta_timeofday()
-			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600,1)] minutes.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 			post_signal("supply")
 
 	if(href_list["order"])
@@ -103,15 +103,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 			//Request what?
 			last_viewed_group = "categories"
 			temp = "<b>Cargo Dep Credits: [global.cargo_account.money]</b><BR>"
-			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
+			temp += "<A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/supply_group_name in all_supply_groups )
-				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
+				temp += "<A href='byond://?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
 			temp = "<b>Cargo Dep Credits: [global.cargo_account.money]</b><BR>"
 			temp += "<b>Request from: [last_viewed_group]</b><BR>"
-			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR>"
+			temp += "<A href='byond://?src=\ref[src];order=categories'>Back to all categories</A><HR>"
 			temp += "<div class='blockCargo'>"
 			for(var/supply_name in SSshuttle.supply_packs)
 				var/datum/supply_pack/N = SSshuttle.supply_packs[supply_name]
@@ -122,7 +122,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 					continue
 				temp += {"<div class="spoiler"><input type="checkbox" id='[supply_name]'>"}
 				temp += {"<table><tr><td><span class="cargo32x32 [replace_characters("[N.crate_type]",  list("[/obj]/" = "", "/" = "-"))]"></span></td>"}
-				temp += {"<td><label for='[supply_name]'><b>[N.name]</b></label></td><td><A href='?src=\ref[src];doorder=[supply_name]'>Cost: [N.cost]</A></td></tr></table>"}		//the obj because it would get caught by the garbage
+				temp += {"<td><label for='[supply_name]'><b>[N.name]</b></label></td><td><A href='byond://?src=\ref[src];doorder=[supply_name]'>Cost: [N.cost]</A></td></tr></table>"}		//the obj because it would get caught by the garbage
 				temp += "<div><table>"
 				if(ispath(N.crate_type, /obj/structure/closet/critter))
 					var/obj/structure/closet/critter/C = N.crate_type
@@ -185,10 +185,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 
 		if(requestonly)
 			temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
-			temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			temp += "<BR><A href='byond://?src=\ref[src];order=[last_viewed_group]'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
 		else
 			temp = "Order request placed.<BR>"
-			temp += "<BR><A href='?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='?src=\ref[src];confirmorder=[O.id]'>Authorize Order</A>"
+			temp += "<BR><A href='byond://?src=\ref[src];order=[last_viewed_group]'>Back</A> | <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A> | <A href='byond://?src=\ref[src];confirmorder=[O.id]'>Authorize Order</A>"
 
 	if(href_list["confirmorder"])
 		//Find the correct supply_order datum
@@ -206,10 +206,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 					global.cargo_account.money -= P.cost
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
-					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					temp += "<BR><A href='byond://?src=\ref[src];viewrequests=1'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				else
 					temp = "Not enough credits.<BR>"
-					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					temp += "<BR><A href='byond://?src=\ref[src];viewrequests=1'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				break
 
 	if(href_list["online_shop_delivery_cost"])
@@ -232,7 +232,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 				temp += "[SO.object.name] approved by [SO.orderer] [SO.reason ? "([SO.reason])":""]<BR>"
 			else
 				temp += "#[SO.id] - [SO.object.name] approved by [SO.orderer][SO.reason ? " ([SO.reason])":""]<BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 	if(href_list["viewrequests"])
 		temp = "Current requests: <BR><BR>"
@@ -241,10 +241,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 			if(requestonly)
 				temp += "#[SO.id] - [SO.object.name] requested by [SO.orderer]<BR>"
 			else
-				temp += "#[SO.id] - [SO.object.name] requested by [SO.orderer]  [SSshuttle.moving ? "":SSshuttle.at_station ? "":"<A href='?src=\ref[src];confirmorder=[SO.id]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.id]'>Remove</A>"]<BR>"
+				temp += "#[SO.id] - [SO.object.name] requested by [SO.orderer]  [SSshuttle.moving ? "":SSshuttle.at_station ? "":"<A href='byond://?src=\ref[src];confirmorder=[SO.id]'>Approve</A> <A href='byond://?src=\ref[src];rreq=[SO.id]'>Remove</A>"]<BR>"
 		if(!requestonly)
-			temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			temp += "<BR><A href='byond://?src=\ref[src];clearreq=1'>Clear list</A>"
+		temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])
@@ -255,12 +255,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 				SSshuttle.requestlist.Cut(i,i+1)
 				temp = "Request removed.<BR>"
 				break
-		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+		temp += "<BR><A href='byond://?src=\ref[src];viewrequests=1'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
 	else if (href_list["clearreq"])
 		SSshuttle.requestlist.Cut()
 		temp = "List cleared.<BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 	if(href_list["viewcentcom"])
 		if(SSshuttle && SSshuttle.centcom_message)
@@ -269,7 +269,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 			temp += "<BR><BR>"
 		else
 			temp += "Can not find any messages from Centcom. <BR><BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 	if(href_list["mainmenu"])
 		temp = null

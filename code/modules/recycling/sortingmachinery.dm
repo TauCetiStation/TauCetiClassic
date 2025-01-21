@@ -273,12 +273,12 @@
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
 
-	dat += "<center><HR>Режим: <A href='?src=\ref[src];change_mode=1'>[modes[mode]]</A></center><BR>\n"
+	dat += "<center><HR>Режим: <A href='byond://?src=\ref[src];change_mode=1'>[modes[mode]]</A></center><BR>\n"
 
 	switch(modes[mode])
 		if("Метка")
 			for(var/i = 1, i <= tagger_locations.len, i++)
-				dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
+				dat += "<td><a href='byond://?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
 				if (i%4==0)
 					dat += "</tr><tr>"
@@ -288,17 +288,17 @@
 			if(autodescription)
 				dat += "Описание: [lot_description]"
 			else
-				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
-			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
-			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number ? lot_account_number : 111111]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
-			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
+				dat += "Описание: <A href='byond://?src=\ref[src];description=1'>[lot_description]</A>"
+			dat += " <A href='byond://?src=\ref[src];autodesc=1'>авто</A><BR>\n"
+			dat += "Номер аккаунта: <A href='byond://?src=\ref[src];number=1'>[lot_account_number ? lot_account_number : 111111]</A> <A href='byond://?src=\ref[src];takeid=1'>id</A><BR>\n"
+			dat += "Цена: <A href='byond://?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
 			if(autocategory)
 				dat += "Категория: [lot_category]"
 			else
-				dat += "Категория: <A href='?src=\ref[src];category=1'>[lot_category]</A>"
-			dat += " <A href='?src=\ref[src];autocateg=1'>авто</A><BR><BR>\n"
+				dat += "Категория: <A href='byond://?src=\ref[src];category=1'>[lot_category]</A>"
+			dat += " <A href='byond://?src=\ref[src];autocateg=1'>авто</A><BR><BR>\n"
 		if("Бирка")
-			dat += "Текст бирки: <A href='?src=\ref[src];label_text=1'>[label ? label : "Написать"]</A><BR>\n"
+			dat += "Текст бирки: <A href='byond://?src=\ref[src];label_text=1'>[label ? label : "Написать"]</A><BR>\n"
 
 	var/datum/browser/popup = new(user, "destTagScreen", "Маркировщик 2.3", 450, 400)
 	popup.set_content(dat)

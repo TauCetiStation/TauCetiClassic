@@ -41,10 +41,10 @@
 	for(var/prog in supported_programs)
 		if(prog == "Empty")
 			continue
-		dat += "<A href='?src=\ref[src];program=[supported_programs[prog]]'>([prog])</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];program=[supported_programs[prog]]'>([prog])</A><BR>"
 
 	dat += "<BR>"
-	dat += "<A href='?src=\ref[src];program=turnoff'>(Turn Off)</A><BR>"
+	dat += "<A href='byond://?src=\ref[src];program=turnoff'>(Turn Off)</A><BR>"
 
 	dat += "<BR>"
 	dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
@@ -55,15 +55,15 @@
 			if (emagged)
 				dat += "<span class='red'><b>ERROR</b>: Cannot re-enable Safety Protocols.</span><BR>"
 			else
-				dat += "<A class='green' href='?src=\ref[src];AIoverride=1'>Re-Enable Safety Protocols</A><BR>"
+				dat += "<A class='green' href='byond://?src=\ref[src];AIoverride=1'>Re-Enable Safety Protocols</A><BR>"
 		else
-			dat += "<A class='red' href='?src=\ref[src];AIoverride=1'>Override Safety Protocols</A><BR>"
+			dat += "<A class='red' href='byond://?src=\ref[src];AIoverride=1'>Override Safety Protocols</A><BR>"
 
 	dat += "<BR>"
 
 	if(safety_disabled)
 		for(var/prog in restricted_programs)
-			dat += "<A class='red' href='?src=\ref[src];program=[restricted_programs[prog]]'>Begin [prog]</A><BR>"
+			dat += "<A class='red' href='byond://?src=\ref[src];program=[restricted_programs[prog]]'>Begin [prog]</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
 		dat += "Safety Protocols are <span class='red'> DISABLED </span><BR>"
@@ -71,9 +71,9 @@
 		dat += "Safety Protocols are <span class='green'> ENABLED </span><BR>"
 
 	if(linkedholodeck.has_gravity)
-		dat += "Gravity is <A class='green' href='?src=\ref[src];gravity=1'>ON</A><BR>"
+		dat += "Gravity is <A class='green' href='byond://?src=\ref[src];gravity=1'>ON</A><BR>"
 	else
-		dat += "Gravity is <A class='blue' href='?src=\ref[src];gravity=1'>OFF</A><BR>"
+		dat += "Gravity is <A class='blue' href='byond://?src=\ref[src];gravity=1'>OFF</A><BR>"
 
 	var/datum/browser/popup = new(user, "computer", "Holodeck Control System", 400, 500)
 	popup.set_content(dat)
