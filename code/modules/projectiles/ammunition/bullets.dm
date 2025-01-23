@@ -90,7 +90,7 @@
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
-	desc = "Патрон от 12-го калибра типа пуля."
+	desc = "Патрон 12-го калибра типа \"пуля\"."
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/slug
@@ -98,21 +98,21 @@
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
-	desc = "Патрон от 12-го калибра типа картечь."
+	desc = "Патрон 12-го калибра типа \"картечь\"."
 	icon_state = "gshell"
 	pellets = 7
 	projectile_type = /obj/item/projectile/bullet/pellet
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
-	desc = "Патрон от 12-го калибра типа травматический."
+	desc = "Патрон 12-го калибра типа \"травмат\"."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/beanbag
 	m_amt = 300
 
 /obj/item/ammo_casing/shotgun/stunshot
 	name = "stun shell"
-	desc = "Патрон от 12-го калибра типа электрошок."
+	desc = "Патрон 12-го калибра типа \"электрошок\"."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
 	pellets = 5
@@ -120,14 +120,14 @@
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
-	desc = "Патрон от 12-го калибра типа зажигательный."
+	desc = "Патрон 12-го калибра типа \"зажигательный\"."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/buckshot
 	pellets = 12
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"
-	desc = "Патрон от 12-го калибра типа дротик."
+	desc = "Патрон 12 калибра типа \"флешетта\"."
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/energy/dart
 	m_amt = 2500
