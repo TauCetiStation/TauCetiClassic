@@ -38,8 +38,7 @@
 	if(!istype(target, /obj/structure) && !ismachinery(target))
 		return
 	if (crumpled)
-		..()
-		return
+		return ..()
 
 	var/list/click_params = params2list(params)
 	var/matrix/M = matrix()
