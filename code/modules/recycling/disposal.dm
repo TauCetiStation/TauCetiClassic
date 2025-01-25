@@ -408,7 +408,7 @@
 		set_light(1, 1, "#0c8801")
 
 	for(var/image/I in status_overlay)
-		I.plane = LIGHTING_LAMPS_PLANE
+		I.layer = DEFAULT_MACHINERY_LAYER + 0.01
 		add_overlay(I)
 
 // timed process
