@@ -393,8 +393,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
-							dat+="<FONT SIZE=1>[((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='byond://?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.get_likes()]</FONT> \
-											   [((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='byond://?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.get_dislikes()]</FONT></FONT>"
+							dat+="<FONT SIZE=1>[((scanned_user == MESSAGE.author) || (scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='byond://?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.get_likes()]</FONT> \
+											   [((scanned_user == MESSAGE.author) || (scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='byond://?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.get_dislikes()]</FONT></FONT>"
 							if(securityCaster)
 								dat+=" <A href='byond://?src=\ref[src];toggleDisplayVoters=\ref[MESSAGE]'>"
 								dat+="<span class='fas fa-eye[MESSAGE.displayVoters ? "-slash" : ""]'></span>"
@@ -658,7 +658,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		var/payment = 20
 		if(have_license)
 			payment /= 2
-		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || user_account.money < payment || is_guest)
+		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || (user_account && (user_account.suspended || user_account.money < payment)) || is_guest)
 			screen = 6
 		else
 			var/datum/feed_message/newMsg = new /datum/feed_message
@@ -667,7 +667,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			newMsg.body = msg
 			newMsg.author_account = user_account
 			newMsg.is_licensed = have_license
-			charge_to_account(user_account.account_number, "Newscaster", "Вы опубликовали новость", name, -payment)
+			if (user_account)
+				charge_to_account(user_account.account_number, "Newscaster", "Вы опубликовали новость", name, -payment)
 			charge_to_account(global.station_account.account_number, "Newscaster", "Опубликована новость", name, payment)
 			if(photo)
 				newMsg.img = photo.img
