@@ -25,7 +25,7 @@
 	if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo))
 		insert_sheet_at(user, pages.len+1, I)
 
-	else if(istype(I, /obj/item/weapon/lighter))
+	else if(istype(I, /obj/item/weapon) && I.get_current_temperature() >= PAPER_IGNITE_TEMPERATURE)
 		burnpaper(I, user)
 
 	else if(istype(I, /obj/item/weapon/paper_bundle))

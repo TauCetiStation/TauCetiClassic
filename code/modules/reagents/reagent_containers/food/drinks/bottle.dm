@@ -1,6 +1,7 @@
 #define IS_NOT_MOLOTOV 0
 #define IS_MOLOTOV 1
 #define IS_LIT 2
+#define BOTTLE_IGNITE_TEMPERATURE 1000
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
@@ -215,9 +216,8 @@
 		flags ^= OPENCONTAINER
 		to_chat(user, "<span class='notice'You stuff some cloth into the bottleneck.</span>")
 
-	if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = I
-		if(L.lit && molotov_state == IS_MOLOTOV)
+	if(istype(I, /obj/item/weapon) && I.get_current_temperature() >= BOTTLE_IGNITE_TEMPERATURE)
+		if(molotov_state == IS_MOLOTOV)
 			molotov_state = IS_LIT
 			lit_time = world.time + rand(200, 400)
 			user.visible_message("<span class='warning'>[user] lights up a molotov!</span>")

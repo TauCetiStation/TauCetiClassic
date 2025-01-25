@@ -67,7 +67,7 @@
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
-	else if(istype(I, /obj/item/weapon/lighter))
+	else if(istype(I, /obj/item/weapon) && I.get_current_temperature() >= PAPER_IGNITE_TEMPERATURE)
 		burnpaper(I, user)
 	else if(istype(I, /obj/item/device/occult_scanner))
 		for(var/A in photographed_names)
