@@ -3,7 +3,7 @@
  * also scraps of paper
  */
 
-#define PAPER_IGNITE_TEMPERATURE 500
+#define PAPER_IGNITE_TEMPERATURE 505
 
 /obj/item/weapon/paper
 	name = "paper"
@@ -372,6 +372,7 @@
 	var/datum/browser/popup = new(user, "paper_help", "Pen Help")
 	popup.set_content(dat)
 	popup.open()
+
 /obj/item/weapon/paper/proc/select_form(mob/user)
 	var/dat
 
@@ -393,39 +394,41 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/item/weapon/proc/burnpaper(obj/item/weapon/W, mob/user) //weapon, to use this in paper_bundle and photo
+/obj/item/weapon/proc/can_ignite_paper(obj/item/weapon/W, mob/user)
 	var/list/burnable = list(/obj/item/weapon/paper,
                           /obj/item/weapon/paper_bundle,
                           /obj/item/weapon/photo)
 
 	if(!is_type_in_list(src, burnable))
-		return
+		return FALSE
 
-	if(W.get_current_temperature() >= PAPER_IGNITE_TEMPERATURE && !user.restrained() && !user.is_busy())
-		var/class = "red"
-		if(istype(W, /obj/item/weapon/lighter/zippo))
-			class = "rose"
+	return W.get_current_temperature() >= PAPER_IGNITE_TEMPERATURE && !user.restrained() && !user.is_busy()
 
-		user.visible_message("<span class='[class]'>[user] holds \the [W] up to \the [src], it looks like \he's trying to burn it!</span>", \
-		"<span class='[class]'>You hold \the [W] up to \the [src], burning it slowly.</span>")
+/obj/item/weapon/proc/burnpaper(obj/item/weapon/W, mob/user) //weapon, to use this in paper_bundle and photo
+	var/class = "red"
+	if(istype(W, /obj/item/weapon/lighter/zippo))
+		class = "rose"
 
-		icon_state = "paper_onfire"
-		if(W.use_tool(W, user, 20, volume = 50))
-			if((get_dist(src, user) > 1) || W.get_current_temperature() < PAPER_IGNITE_TEMPERATURE)
-				update_icon()
-				return
-			user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
-			"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
+	user.visible_message("<span class='[class]'>[user] holds \the [W] up to \the [src], it looks like \he's trying to burn it!</span>", \
+	"<span class='[class]'>You hold \the [W] up to \the [src], burning it slowly.</span>")
 
-			if(user.get_inactive_hand() == src)
-				user.drop_from_inventory(src)
-
-			new /obj/effect/decal/cleanable/ash(src.loc)
-			qdel(src)
-
-		else
+	icon_state = "paper_onfire"
+	if(W.use_tool(W, user, 20, volume = 50))
+		if((get_dist(src, user) > 1) || W.get_current_temperature() < PAPER_IGNITE_TEMPERATURE)
 			update_icon()
-			to_chat(user, "<span class='warning'>You must hold \the [W] steady to burn \the [src].</span>")
+			return
+		user.visible_message("<span class='[class]'>[user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
+		"<span class='[class]'>You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
+
+		if(user.get_inactive_hand() == src)
+			user.drop_from_inventory(src)
+
+		new /obj/effect/decal/cleanable/ash(src.loc)
+		qdel(src)
+
+	else
+		update_icon()
+		to_chat(user, "<span class='warning'>You must hold \the [W] steady to burn \the [src].</span>")
 
 
 /obj/item/weapon/paper/Topic(href, href_list)
@@ -518,7 +521,7 @@
 			return
 
 	if(crumpled)
-		if(!(istype(I, /obj/item/weapon) && I.get_current_temperature() >= PAPER_IGNITE_TEMPERATURE))
+		if(!(istype(I, /obj/item/weapon) && can_ignite_paper(I, user)))
 			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
 			return
 		else
@@ -592,7 +595,7 @@
 		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
-	else if(istype(I, /obj/item/weapon) && I.get_current_temperature() >= PAPER_IGNITE_TEMPERATURE)
+	else if(istype(I, /obj/item/weapon) && can_ignite_paper(I, user))
 		burnpaper(I, user)
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) \
