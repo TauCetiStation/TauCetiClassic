@@ -121,7 +121,7 @@
 				. += "<b>Body Color</b>"
 				. += "<br><a href='byond://?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]<br>"
 			if(species == UNATHI)
-				. += "<b>Belly & Jaw Color</b>"
+				. += "<b>Belly, Jaw & Tail Color</b>"
 				. += "<br><a href='byond://?_src_=prefs;preference=belly;task=input'>Change Color</a> [color_square(r_belly, g_belly, b_belly)]"
 
 		//Gear
@@ -431,7 +431,7 @@
 				if("s_tone")
 					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35 - s_tone ) as num|null
+					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1-110 | 111-220 Dark)", "Character Preference", 35 - s_tone ) as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
