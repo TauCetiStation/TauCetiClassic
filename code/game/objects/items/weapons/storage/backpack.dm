@@ -54,13 +54,31 @@
 		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
 
-	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
+	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail && !(I == src))
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
-		return
+		Make_Anomaly(50 SECONDS, /obj/effect/anomaly/bhole)
 
 	return ..()
 
+/obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
+	. = ..()
+	if(W == src)
+		Destroy(W) // in my opinion, it is most effective to remove an object with a total cut of its action menu, because in addition to this action, qdel occurs
+		to_chat(usr, "<span class='red'>Рюкзак засасывается сам в себя и исчезает.</span>")
+		return FALSE
+	if(istype(W, /obj/item/weapon/storage/backpack/holding))
+		to_chat(usr, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/storage/backpack/holding/proc/Make_Anomaly(delay_time, current_anomaly)
+	var/turf/targloc = get_turf(src)
+	var/obj/effect/anomaly/anomaly = new current_anomaly(targloc)
+	anomaly.anomalyEffect()
+	sleep(delay_time)
+	anomaly.Destroy()
+	
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
 		return 1 //No failure
