@@ -1542,6 +1542,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/miningdrill
 	category = list("Machine")
 
+/datum/design/expshovel
+	name = "Experimental shovel"
+	desc = "This is an experimental shovel that digs damn fast!"
+	id = "expshovel"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
+	build_path = /obj/item/weapon/shovel/experimental
+	category = list("Equipment")
+
 /datum/design/mining_drill_brace
 	name = "Machine Design (Mining Drill Brace)"
 	desc = "Brace for mining drill."
