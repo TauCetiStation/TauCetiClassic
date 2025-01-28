@@ -292,7 +292,7 @@
 	for(var/obj/item/stack/AM in T.contents)
 		if(throwing || AM.throwing)
 			continue
-		if(istype(AM, merge_type))
+		if(AM.type == merge_type)
 			var/obj/item/stack/S = AM
 			S.merge(src)
 
@@ -340,7 +340,7 @@
 	use(amount, TRUE)
 
 /obj/item/stack/attackby(obj/item/I, mob/user, params)
-	if(istype(I, merge_type))
+	if(I.type == merge_type)
 		var/obj/item/stack/S = I
 		merge(S)
 		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
