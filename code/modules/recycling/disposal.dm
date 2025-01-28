@@ -127,8 +127,14 @@
 		for(var/mob/living/holdermob in I.contents)
 			holdermob.log_combat(usr, "placed in disposals")
 
+	if(istype(I, /obj/item/weapon/paper/sticker))
+		var/obj/item/weapon/paper/sticker/S = I
+		if (!S.crumpled)
+			return
+
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
+
 	user.drop_from_inventory(I, src)
 
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
