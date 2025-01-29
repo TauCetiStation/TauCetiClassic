@@ -6103,7 +6103,7 @@
 "Cw" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/engineering/chief,
-/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots/ce,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/item/clothing/mask/breath,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
