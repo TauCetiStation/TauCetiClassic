@@ -18,7 +18,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/superbiteburger)
 
 //fast food in automate
-/datum/export/ automateburger
+/datum/export/automateburger
 	cost = 15
 	unit_name = " automateburger"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/cheeseburger, /obj/item/weapon/reagent_containers/food/snacks/monkeyburger)
