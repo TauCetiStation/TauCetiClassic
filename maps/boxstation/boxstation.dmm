@@ -15670,7 +15670,7 @@
 /area/station/security/lobby)
 "aAZ" = (
 /obj/structure/rack,
-/obj/item/clothing/shoes/magboots/ce,
+/obj/item/clothing/shoes/ce,
 /obj/item/clothing/suit/space/rig/engineering/chief,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
