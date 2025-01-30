@@ -323,6 +323,17 @@
 	for(var/vowel in lowercase_vowels)
 		replacements[vowel] = "ё"
 
+/datum/language/burr
+	name = LANGUAGE_BURR
+	desc = "You're gibbering"
+	speech_verb = "says"
+	ask_verb = "asks"
+	exclaim_verb = "exclaims"
+	colour = "body"
+	accents = list(
+		"л" = "р",
+	)
+
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)
 

@@ -150,6 +150,21 @@
 	H.add_language(LANGUAGE_SALACKYI)
 	H.common_language = LANGUAGE_SALACKYI
 
+/datum/quality/negativeish/burr
+	name = "Картавый"
+	desc = "Ты стал картавым."
+	requirement = "Нет."
+
+/datum/quality/negativeish/burr/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
+	H.add_language(LANGUAGE_BURR)
+	H.forced_language = LANGUAGE_BURR
+
+	for(var/datum/language/language as anything in H.languages)
+		if(language.name == H.forced_language)
+			continue
+		H.remove_language(language.name)
 
 /datum/quality/negativeish/clumsy
 	name = "Clumsy"
