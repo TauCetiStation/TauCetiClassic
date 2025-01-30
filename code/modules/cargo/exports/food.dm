@@ -5,9 +5,7 @@
 /datum/export/burger
 	cost = 100
 	unit_name = "burger"
-	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/human/burger,
-		/obj/item/weapon/reagent_containers/food/snacks/monkeyburger,
-		/obj/item/weapon/reagent_containers/food/snacks/brainburger,
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/brainburger,
 		/obj/item/weapon/reagent_containers/food/snacks/roburger,
 		/obj/item/weapon/reagent_containers/food/snacks/xenoburger,
 		/obj/item/weapon/reagent_containers/food/snacks/fishburger,
@@ -19,6 +17,11 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger,
 		/obj/item/weapon/reagent_containers/food/snacks/superbiteburger)
 
+//fast food in automate
+/datum/export/ automateburger
+	cost = 15
+	unit_name = " automateburger"
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/cheeseburger, /obj/item/weapon/reagent_containers/food/snacks/monkeyburger)
 //--------------------------------------------
 //----------------Sandwich--------------
 //--------------------------------------------
@@ -53,8 +56,9 @@
 		/obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup,
 		/obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup)
 
+
 /datum/export/wishsoup
-	cost = 50
+	cost = 15
 	unit_name = "wishsoup"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup)
 
