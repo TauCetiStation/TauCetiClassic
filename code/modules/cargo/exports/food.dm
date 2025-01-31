@@ -58,7 +58,7 @@
 
 
 /datum/export/wishsoup
-	cost = 15
+	cost = 1
 	unit_name = "wishsoup"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup)
 
