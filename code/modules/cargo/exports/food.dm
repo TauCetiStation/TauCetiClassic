@@ -82,18 +82,6 @@
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread)
 
 //--------------------------------------------
-//----------------Pizza--------------
-//--------------------------------------------
-
-/datum/export/pizza
-	cost = 125
-	unit_name = "pizza"
-	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita,
-		/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroom,
-		/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetable)
-
-//--------------------------------------------
 //----------------Pie--------------
 //--------------------------------------------
 
