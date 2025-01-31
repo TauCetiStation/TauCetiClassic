@@ -41,3 +41,5 @@
 	new /obj/item/device/remote_device/research_director(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/lockbox/medal/rd(src)
+	new /obj/item/weapon/storage/toolbox/mechanical(src)
+	new /obj/item/weapon/storage/belt/utility(src)
