@@ -5,9 +5,10 @@
 	uniform = /obj/item/clothing/under/rank/research_director
 	shoes = /obj/item/clothing/shoes/brown
 	suit = /obj/item/clothing/suit/storage/labcoat
-
-	belt = /obj/item/device/pda/heads/rd
+	belt = /obj/item/weapon/storage/belt/utility/full
 	l_ear = /obj/item/device/radio/headset/heads/rd
+
+	l_pocket = /obj/item/device/pda/heads/ce
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
