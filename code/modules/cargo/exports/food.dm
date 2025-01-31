@@ -3,7 +3,7 @@
 //--------------------------------------------
 
 /datum/export/burger
-	cost = 100
+	cost = 40
 	unit_name = "burger"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/brainburger,
 		/obj/item/weapon/reagent_containers/food/snacks/roburger,
@@ -19,7 +19,7 @@
 
 //fast food in automate
 /datum/export/automateburger
-	cost = 15
+	cost = 10
 	unit_name = " automateburger"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/cheeseburger, /obj/item/weapon/reagent_containers/food/snacks/monkeyburger)
 //--------------------------------------------
@@ -27,7 +27,7 @@
 //--------------------------------------------
 
 /datum/export/sandwich
-	cost = 80
+	cost = 30
 	unit_name = "sandwich"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sandwich,
 		/obj/item/weapon/reagent_containers/food/snacks/toastedsandwich,
@@ -41,7 +41,7 @@
 //--------------------------------------------
 
 /datum/export/soup
-	cost = 100
+	cost = 70
 	unit_name = "soup"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup,
 		/obj/item/weapon/reagent_containers/food/snacks/soup/vegetablesoup,
@@ -67,7 +67,7 @@
 //--------------------------------------------
 
 /datum/export/bread
-	cost = 100
+	cost = 40
 	unit_name = "bread"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/xeno,
@@ -77,7 +77,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/cheese)
 
 /datum/export/plainbread
-	cost = 50
+	cost = 15
 	unit_name = "plainbread"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread)
 
@@ -86,7 +86,7 @@
 //--------------------------------------------
 
 /datum/export/pie
-	cost = 100
+	cost = 80
 	unit_name = "pie"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/pumpkin,
 		/obj/item/weapon/reagent_containers/food/snacks/pie,
@@ -102,7 +102,7 @@
 //--------------------------------------------
 
 /datum/export/cake
-	cost = 150
+	cost = 90
 	unit_name = "cake"
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/carrot,
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/cheese,
@@ -116,3 +116,18 @@
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/brain,
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/pumpkin)
 
+//--------------------------------------------
+//----------------Misc--------------
+//--------------------------------------------
+
+/datum/export/misc
+	cost = 150
+	unit_name = "misc"
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff,
+		/obj/item/weapon/reagent_containers/food/snacks/monkeysdelight,
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey,
+		/obj/item/weapon/reagent_containers/food/snacks/jundarek,
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha,
+		/obj/item/weapon/reagent_containers/food/snacks/appletart,
+		/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
+		/obj/item/weapon/reagent_containers/food/snacks/el_ehum)
