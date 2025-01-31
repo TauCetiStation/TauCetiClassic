@@ -268,7 +268,7 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/dyslalia
 	name = "Dyslalia"
-	desc = "Слайа судьба подалила тебе мношество дефектов лечи."
+	desc = "Слая судьба подалила тебе мношество дефектов лечи."
 	requirement = "Нет."
 
 /datum/quality/negativeish/dyslalia/add_effect(mob/living/carbon/human/H, latespawn)
