@@ -142,8 +142,7 @@
 		original_color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
 	else if(owner.species.flags[HAS_SKIN_TONE])
 		var/datum/skin_tone/tone = global.skin_tones_by_name[owner.s_tone]
-		var/list/rgb_tone = rgb2num(tone.hex)
-		original_color = RGB_CONTRAST(rgb_tone[1], rgb_tone[2], rgb_tone[3])
+		original_color = tone.hex
 
 // Keep in mind that this proc should work even if owner = null
 /obj/item/organ/external/proc/update_sprite()

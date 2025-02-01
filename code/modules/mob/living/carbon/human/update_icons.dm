@@ -871,8 +871,7 @@ Please contact me on #coderbus IRC. ~Carn x
 					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
 				else if(species.flags[HAS_SKIN_TONE]) // any humans with tails?
 					var/datum/skin_tone/T = global.skin_tones_by_name[s_tone]
-					var/list/rgb_tone = rgb2num(T.hex)
-					tail_s.color = RGB_CONTRAST(rgb_tone[1], rgb_tone[2], rgb_tone[3])
+					tail_s.color = T.hex
 
 			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 			standing = human_update_offset(standing, FALSE)
