@@ -8,7 +8,7 @@
 	belt = /obj/item/weapon/storage/belt/utility/full
 	l_ear = /obj/item/device/radio/headset/heads/rd
 
-	l_pocket = /obj/item/device/pda/heads/ce
+	l_pocket = /obj/item/device/pda/heads/rd
 
 	back_style = BACKPACK_STYLE_RESEARCH
 
