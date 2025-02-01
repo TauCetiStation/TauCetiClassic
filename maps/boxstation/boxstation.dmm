@@ -57183,7 +57183,10 @@
 /area/station/civilian/garden)
 "ccP" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile,
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ccQ" = (
