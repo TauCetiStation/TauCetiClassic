@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 52
+#define SAVEFILE_VERSION_MAX 53
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -466,6 +466,43 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (pre_52_hairstyles_to_modern_ones[h_style])
 			h_style = pre_52_hairstyles_to_modern_ones[h_style]
 
+	if(current_version < 53)
+		switch(clamp(35 - s_tone, 1, 220))
+			if(1 to 14)
+				s_tone = /datum/skin_tone/albino::name
+			if(15 to 28)
+				s_tone = /datum/skin_tone/porcelain::name
+			if(29 to 41)
+				s_tone = /datum/skin_tone/ivory::name
+			if(42 to 55)
+				s_tone = /datum/skin_tone/light_peach::name
+			if(56 to 69)
+				s_tone = /datum/skin_tone/beige::name
+			if(70 to 83)
+				s_tone = /datum/skin_tone/light_brown::name
+			if(84 to 97)
+				s_tone = /datum/skin_tone/peach::name
+			if(98 to 110)
+				s_tone = /datum/skin_tone/light_beige::name
+			if(111 to 124)
+				s_tone = /datum/skin_tone/olive::name
+			if(125 to 138)
+				s_tone = /datum/skin_tone/chestnut::name
+			if(139 to 152)
+				s_tone = /datum/skin_tone/macadamia::name
+			if(153 to 165)
+				s_tone = /datum/skin_tone/walnut::name
+			if(166 to 179)
+				s_tone = /datum/skin_tone/coffee::name
+			if(180 to 193)
+				s_tone = /datum/skin_tone/brown::name
+			if(194 to 207)
+				s_tone = /datum/skin_tone/medium_brown::name
+			if(208 to 220)
+				s_tone = /datum/skin_tone/dark_brown::name
+			else
+				s_tone = initial(s_tone)
+
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -837,7 +874,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	r_facial		= sanitize_integer(r_facial, 0, 255, initial(r_facial))
 	g_facial		= sanitize_integer(g_facial, 0, 255, initial(g_facial))
 	b_facial		= sanitize_integer(b_facial, 0, 255, initial(b_facial))
-	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
+	s_tone			= sanitize_inlist(s_tone, global.skin_tones, initial(s_tone))
 	r_skin			= sanitize_integer(r_skin, 0, 255, initial(r_skin))
 	g_skin			= sanitize_integer(g_skin, 0, 255, initial(g_skin))
 	b_skin			= sanitize_integer(b_skin, 0, 255, initial(b_skin))

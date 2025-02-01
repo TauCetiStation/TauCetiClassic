@@ -227,6 +227,16 @@
 		var/datum/metahelp/H = new help
 		global.metahelps[H.id] = H
 
+
+	global.skin_tones_by_ru_name = list()
+	global.skin_tones_by_name = list()
+	global.skin_tones = list()
+	for(var/tone in subtypesof(/datum/skin_tone))
+		var/datum/skin_tone/T = new tone
+		global.skin_tones_by_ru_name[T.cases[NOMINATIVE_CASE]] = T
+		global.skin_tones_by_name[T.name] = T
+		global.skin_tones += T
+
 	global.special_roles = get_list_of_primary_keys(special_roles_ignore_question)
 
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY

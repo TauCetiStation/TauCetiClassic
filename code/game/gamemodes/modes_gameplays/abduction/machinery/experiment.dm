@@ -69,10 +69,7 @@
 
 	// Skin tone
 	if(H.species.flags[HAS_SKIN_TONE])
-		if (H.s_tone >= 0)
-			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
-		else
-			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+		preview_icon.Blend(global.skin_tones_by_name[H.s_tone], ICON_ADD)
 
 	// Skin color
 	if(H.species.flags[HAS_SKIN_TONE])

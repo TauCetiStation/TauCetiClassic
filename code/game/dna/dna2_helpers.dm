@@ -161,7 +161,9 @@
 		H.g_belly  = dna.GetUIValueRange(DNA_UI_BELLY_G,   255)
 		H.b_belly  = dna.GetUIValueRange(DNA_UI_BELLY_B,   255)
 
-		H.s_tone   = 35 - dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220) // Value can be negative.
+		var/s_tone_index = dna.GetUIValueRange(DNA_UI_SKIN_TONE, length(global.skin_tones))
+		var/datum/skin_tone/T = global.skin_tones[s_tone_index]
+		H.s_tone = T.name
 
 		if (dna.GetUIState(DNA_UI_GENDER))
 			H.gender = FEMALE

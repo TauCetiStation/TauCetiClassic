@@ -1081,12 +1081,9 @@
 		g_eyes = HEX_VAL_GREEN(new_eyes)
 		b_eyes = HEX_VAL_BLUE(new_eyes)
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
-
-	if (!new_tone)
-		new_tone = 35
-	s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	s_tone =  -s_tone + 35
+	var/new_tone = input("Выберите цвет кожи", "Character Preference") in global.skin_tones_by_ru_name
+	var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+	s_tone = T.name
 
 	// hair
 	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
