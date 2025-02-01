@@ -339,16 +339,22 @@
 
 				if("h_style")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
+					if(!length(valid_hairstyles))
+						return
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style) as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
 
 				if("h_style_left")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
+					if(!length(valid_hairstyles))
+						return
 					h_style = valid_hairstyles[h_style][LEFT]
 
 				if("h_style_right")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
+					if(!length(valid_hairstyles))
+						return
 					h_style = valid_hairstyles[h_style][RIGHT]
 
 				if("grad_color")
@@ -385,16 +391,22 @@
 
 				if("f_style")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
+					if(!length(valid_facialhairstyles))
+						return
 					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style) as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
+					if(!length(valid_facialhairstyles))
+						return
 					f_style = valid_facialhairstyles[f_style][LEFT]
 
 				if("f_style_right")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
+					if(!length(valid_facialhairstyles))
+						return
 					f_style = valid_facialhairstyles[f_style][RIGHT]
 
 				if("underwear")
@@ -595,7 +607,7 @@
 									organ_data[organ] = "mechanical"
 				// Choosing a head for an IPC
 				if("ipc_head")
-					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar", "Human")
+					var/list/ipc_heads = list("Default", "Cobalt", "Cathod", "Thorax", "Axon")
 					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
 					h_style = random_hair_style(gender, species, ipc_head)
 
