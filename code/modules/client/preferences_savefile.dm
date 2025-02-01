@@ -476,7 +476,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				"human IPC screen"
 			)
 			if(h_style in ipc_hairstyles_reset)
-				h_style = "Default"
+				h_style = /datum/sprite_accessory/hair/ipc_screen_alert::name
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)

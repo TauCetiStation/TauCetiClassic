@@ -1231,7 +1231,7 @@
 		H.b_hair = 15
 		H.set_light(0)
 		if(BP.ipc_head == "Default")
-			H.h_style = "IPC off screen"
+			H.h_style = /datum/sprite_accessory/hair/ipc_screen_off::name
 		H.update_hair()
 
 /datum/species/abductor
