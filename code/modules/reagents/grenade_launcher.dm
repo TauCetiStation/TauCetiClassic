@@ -8,10 +8,33 @@
 	throw_range = 10
 	force = 5.0
 	var/list/grenades = list()
-	var/max_grenades = 3
+	var/max_grenades = 5
 	m_amt = 2000
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
+
+/obj/item/weapon/gun/grenadelauncher/attack_hand(mob/user)
+	if(loc == user)
+		if(grenades.len > 0)
+			var/obj/item/weapon/grenade/G = grenades[grenades.len]
+			grenades -= G
+			user.put_in_hands(G)
+			to_chat(user, "<span class='notice'>You take \the [G] out of \the [src].</span>")
+			to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
+		else
+			to_chat(user, "<span class='warning'>The grenade launcher is empty.</span>")
+	else
+		return ..()
+
+/obj/item/weapon/gun/grenadelauncher/attack_self(mob/user)
+	if(grenades.len > 0)
+		var/obj/item/weapon/grenade/G = grenades[grenades.len]
+		grenades -= G
+		user.put_in_hands(G)
+		to_chat(user, "<span class='notice'>You take \the [G] out of \the [src].</span>")
+		to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
+	else
+		to_chat(user, "<span class='warning'>The grenade launcher is empty.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
