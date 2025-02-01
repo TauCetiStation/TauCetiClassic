@@ -17,7 +17,7 @@
 	if(loc == user)
 		if(grenades.len > 0)
 			var/obj/item/weapon/grenade/G = grenades[grenades.len]
-			grenades -= G /
+			grenades -= G
 			user.put_in_hands(G)
 			to_chat(user, "<span class='notice'>You take \the [G] out of \the [src].</span>")
 			to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
