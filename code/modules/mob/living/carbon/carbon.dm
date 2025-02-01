@@ -1291,6 +1291,15 @@
 		txt = L.accentuate(txt, speaking)
 	return txt
 
+/mob/living/carbon/proc/message_with_dyslalia(txt)
+	var/list/defects = list(
+	"р" = "л",
+	"з" = "с",
+	"щ" = "шс",
+	"ж" = "ш",
+	"г" = "х",
+	)
+	return replace_characters(txt, defects)
 
 /**
  * Get the insulation that is appropriate to the temperature you're being exposed to.
