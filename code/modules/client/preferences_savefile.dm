@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 53
+#define SAVEFILE_VERSION_MAX 54
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -467,6 +467,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			h_style = pre_52_hairstyles_to_modern_ones[h_style]
 
 	if(current_version < 53)
+		ipc_head = initial(ipc_head)
+		// fuck named hairstyles, we should just move it to indexes
+		var/static/list/ipc_hairstyles_reset = list(
+			"alien IPC screen", 
+			"double IPC screen", 
+			"pillar IPC screen", 
+			"human IPC screen"
+		)
+		if(h_style in ipc_hairstyles_reset)
+			h_style = /datum/sprite_accessory/hair/ipc_screen_alert::name
+
+	if(current_version < 54)
 		switch(clamp(35 - s_tone, 1, 220))
 			if(1 to 14)
 				s_tone = /datum/skin_tone/albino::name
