@@ -223,6 +223,54 @@
 		T.ex_act(ex_act_force)
 	return
 
+/////////////////////
+/obj/effect/anomaly/gas
+    name = "gas anomaly"
+    icon_state = "pyro"
+    density = TRUE
+    var/boing = 0
+    var/list/gas_types = list("teargas", "acid", "drugs")
+    var/selected_gas
+    var/release_interval = 5 SECONDS
+
+/obj/effect/anomaly/gas/atom_init()
+    . = ..()
+    select_gas_type()
+    spawn(0)
+        start_gas_release()
+
+/obj/effect/anomaly/gas/proc/select_gas_type()
+    selected_gas = pick(gas_types)
+
+/obj/effect/anomaly/gas/proc/start_gas_release()
+    while(src && !QDELETED(src))
+        release_gas()
+        sleep(release_interval)
+
+/obj/effect/anomaly/gas/proc/release_gas()
+    switch(selected_gas)
+        if("teargas")
+            release_teargas()
+        if("acid")
+            release_acid()
+        if("drugs")
+            release_drugs()
+
+/obj/effect/anomaly/gas/proc/release_teargas()
+    visible_message("<span class='warning'>Газовая аномалия выпускает облако слезоточивого газа!</span>")
+    var/obj/item/weapon/grenade/chem_grenade/teargas/gas = new /obj/item/weapon/grenade/chem_grenade/teargas(src.loc)
+    gas.prime()
+
+/obj/effect/anomaly/gas/proc/release_acid()
+    visible_message("<span class='warning'>Газовая аномалия выпускает облако кислоты!</span>")
+    var/obj/item/weapon/grenade/chem_grenade/acid/gas = new /obj/item/weapon/grenade/chem_grenade/acid(src.loc)
+    gas.prime()
+
+/obj/effect/anomaly/gas/proc/release_drugs()
+    visible_message("<span class='warning'>Газовая аномалия выпускает облако наркотического газа!</span>")
+    var/obj/item/weapon/grenade/chem_grenade/drugs/gas = new /obj/item/weapon/grenade/chem_grenade/drugs(src.loc)
+    gas.prime()
+
 /////// CULT ///////
 /obj/effect/anomaly/bluespace/cult_portal
 	name = "ужасающий портал"
