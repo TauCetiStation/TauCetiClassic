@@ -14,26 +14,18 @@
 	icon_state = "sushiband"
 	item_state = "sushiband"
 
-//Captain: This probably shouldn't be space-worthy
+//Captain
 /obj/item/clothing/head/caphat
 	name = "captain's hat"
-	icon_state = "captain"
-	desc = "It's good being the king."
+	icon_state = "caphat"
 	item_state = "caphat"
+	item_state_world = "caphat_world"
+	desc = "It's good being the king."
 	siemens_coefficient = 0.9
 
-//Captain: This probably shouldn't be space-worthy
-/obj/item/clothing/head/helmet/cap
-	name = "captain's cap"
-	desc = "You fear to wear it for the negligence it brings."
-	icon_state = "capcap"
-	flags_inv = 0
-	body_parts_covered = HEAD
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
-	force = 0
-	hitsound = list()
+/obj/item/clothing/head/caphat/alt
+	icon_state = "caphat_alt"
+	item_state_world = "caphat_alt_world"
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood
