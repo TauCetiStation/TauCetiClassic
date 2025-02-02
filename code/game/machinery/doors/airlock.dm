@@ -1068,6 +1068,9 @@ var/global/list/airlock_overlays = list()
 	if(!W.can_use(user, 1))
 		return
 
+	if(get_dist(src, user) > 1)
+		return
+
 	var/list/optionlist
 	if(inner_material == "glass")
 		optionlist = list("Public", "Public2", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance")
