@@ -186,6 +186,17 @@
 	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
 	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
 
+/datum/spawner/living/lizard
+	name = "Ящерица"
+	desc = "Вы появляетесь в своём новом доме"
+	time_for_registration = null
+	register_only = FALSE
+
+/datum/spawner/living/lizard/spawn_body(mob/dead/spectator)
+	. = ..()
+	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
+	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
+
 /datum/spawner/living/sugar_larva
 	name = "Сладкая личинка"
 	desc = "Вы форма жизни используемая в качестве скота, ваша задача выжить на станции."
