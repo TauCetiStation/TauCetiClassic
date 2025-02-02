@@ -272,6 +272,19 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		QUALITY_PRYING = 0.75
 	)
 
+/obj/item/weapon/shovel/experimental
+	name = "experimental shovel"
+	desc = "It's a damn cool shovel."
+	icon_state = "expshovel"
+	item_state = "expshovel"
+	item_state_world = "expshovel_world"
+	force = 10.0
+	toolspeed = 0.1
+	origin_tech = "materials=2;engineering=3"
+	qualities = list(
+		QUALITY_PRYING = 0.1
+	)
+
 /obj/item/weapon/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
