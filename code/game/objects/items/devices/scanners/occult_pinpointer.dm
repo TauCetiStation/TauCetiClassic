@@ -42,17 +42,25 @@
 /obj/item/weapon/occult_pinpointer/process()
 	if(!active)
 		return
+
 	if(!target)
 		var/list/wisp_list = list()
 		for(var/mob/living/simple_animal/ancestor_wisp/W in living_list)
 			wisp_list += W
-		target = pick(wisp_list)
-		message_admins("[target]")
+
+		if(wisp_list.len > 0)
+			target = pick(wisp_list)
+			message_admins("[target]")
+		else
+			target = null
+
 	if(!target)
 		target = locate(target_type)
+
 	if(!target)
 		icon_state = "locnull"
 		return
-	set_dir(get_dir(src,target))
-	if(get_dist(src,target))
+
+	set_dir(get_dir(src, target))
+	if(get_dist(src, target))
 		icon_state = "locon"
