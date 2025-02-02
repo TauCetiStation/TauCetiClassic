@@ -433,3 +433,27 @@
 
 /datum/quality/positiveish/fastwalker/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_FAST_WALKER, QUALITY_TRAIT)
+
+/datum/quality/positiveish/strange_uncle
+	name = "Strange uncle"
+	desc = "Твой дядя состоял в странной секте, после смерти все его имущество досталось тебе."
+	requirement = "Все, кроме охраны, Синего щита, Капитана и ХоПа"
+
+	var/list/restricted_jobs = list("Security Officer",
+		"Security Cadet",
+		"Head of Security",
+		"Captain",
+		"Forensic Technician",
+		"Detective", "Captain",
+		"Warden",
+		"Head of Personnel",
+		"Blueshield Officer")
+
+/datum/quality/positiveish/strange_uncle/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in restricted_jobs)
+
+/datum/quality/positiveish/strange_uncle/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/clothing/suit/hooded/cultrobes(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/clothing/shoes/boots/cult(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/storage/bible/tome(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/device/cult_camera(H), SLOT_IN_BACKPACK)
