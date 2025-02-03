@@ -569,42 +569,51 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	update_sprite()
-	var/mutable_appearance/MA = mutable_appearance(icon, icon_state, -icon_layer)
-	MA.color = color
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
+	. = list(base_appearance)
 
-	return MA
+	if(species && species.alpha_color_mask)
+		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
+		color_appearance.color = color
+		. += color_appearance
+	else
+		base_appearance.color = color
 
 /obj/item/organ/external/head/get_icon(icon_layer)
 	if (!owner)
 		return
 
 	update_sprite()
-	var/mutable_appearance/MA = mutable_appearance(icon, icon_state, -icon_layer)
-	MA.color = color
-	. = list(MA)
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
+	. = list(base_appearance)
 
-	//Eyes
+	if(species && species.alpha_color_mask)
+		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
+		color_appearance.color = color
+		. += color_appearance
+	else
+		base_appearance.color = color
+
 	if(species && species.eyes)
-		var/eyes_layer = -icon_layer
-		var/mutable_appearance/img_eyes_s = mutable_appearance(species.eyes_icon, species.eyes, eyes_layer)
+		var/mutable_appearance/eyes_appearance = mutable_appearance(species.eyes_icon, species.eyes, -icon_layer)
 		if(species.eyes_glowing)
-			img_eyes_s.plane = LIGHTING_LAMPS_PLANE
-			img_eyes_s.layer = ABOVE_LIGHTING_LAYER
+			eyes_appearance.plane = LIGHTING_LAMPS_PLANE
+			eyes_appearance.layer = ABOVE_LIGHTING_LAYER
 
 		if(HULK in owner.mutations)
-			img_eyes_s.color = "#ff0000"
+			eyes_appearance.color = "#ff0000"
 		else if(species.name == SHADOWLING || iszombie(owner))
-			img_eyes_s.color = null
+			eyes_appearance.color = null
 		else
-			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+			eyes_appearance.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
 
-		. += img_eyes_s
+		. += eyes_appearance
 
 	//Mouth	(lipstick!)
 	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
-		var/mutable_appearance/lips = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -icon_layer)
-		lips.color = owner.lip_color
-		. += lips
+		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -icon_layer)
+		lips_appearance.color = owner.lip_color
+		. += lips_appearance
 
 // Runs once when attached
 /obj/item/organ/external/proc/check_rejection()

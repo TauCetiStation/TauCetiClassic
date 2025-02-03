@@ -243,7 +243,7 @@
 
 	t += "<BR>"
 	t += "<HR>"
-	t += "<A href='?src=\ref[src]'>Refresh</A>"
+	t += "<A href='byond://?src=\ref[src]'>Refresh</A>"
 
 	var/datum/browser/popup = new(user, "teg", null, 460, 300)
 	popup.set_content(t)

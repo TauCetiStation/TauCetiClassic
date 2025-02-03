@@ -1,42 +1,36 @@
-import { ProgressBar, NumberInput, Button, Section, Box, Flex } from '../components';
+import {
+  ProgressBar,
+  NumberInput,
+  Button,
+  Section,
+  Box,
+  Flex,
+} from '../components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const Photocopier = (props, context) => {
   const { data } = useBackend(context);
-  const {
-    isAI,
-    has_toner,
-    has_item,
-  } = data;
+  const { isAI, has_toner, has_item } = data;
 
   return (
-    <Window
-      title="Photocopier"
-      width={240}
-      height={isAI ? 309 : 234}>
+    <Window title="Photocopier" width={240} height={isAI ? 309 : 234}>
       <Window.Content>
         {has_toner ? (
           <Toner />
         ) : (
           <Section title="Toner">
-            <Box color="average">
-              No inserted toner cartridge.
-            </Box>
+            <Box color="average">No inserted toner cartridge.</Box>
           </Section>
         )}
         {has_item ? (
           <Options />
         ) : (
           <Section title="Options">
-            <Box color="average">
-              No inserted item.
-            </Box>
+            <Box color="average">No inserted item.</Box>
           </Section>
         )}
-        {!!isAI && (
-          <AIOptions />
-        )}
+        {!!isAI && <AIOptions />}
       </Window.Content>
     </Window>
   );
@@ -44,17 +38,13 @@ export const Photocopier = (props, context) => {
 
 const Toner = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    max_toner,
-    current_toner,
-  } = data;
+  const { max_toner, current_toner } = data;
 
   const average_toner = max_toner * 0.66;
   const bad_toner = max_toner * 0.33;
 
   return (
-    <Section
-      title="Toner">
+    <Section title="Toner">
       <ProgressBar
         ranges={{
           good: [average_toner, max_toner],
@@ -63,25 +53,20 @@ const Toner = (props, context) => {
         }}
         value={current_toner}
         minValue={0}
-        maxValue={max_toner} />
+        maxValue={max_toner}
+      />
     </Section>
   );
 };
 
 const Options = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    num_copies,
-    has_enough_toner,
-  } = data;
+  const { num_copies, has_enough_toner } = data;
 
   return (
     <Section title="Options">
       <Flex>
-        <Flex.Item
-          mt={0.4}
-          width={11}
-          color="label">
+        <Flex.Item mt={0.4} width={11} color="label">
           Make copies:
         </Flex.Item>
         <Flex.Item>
@@ -94,9 +79,12 @@ const Options = (props, context) => {
             minValue={1}
             maxValue={10}
             value={num_copies}
-            onDrag={(e, value) => act('set_copies', {
-              num_copies: value,
-            })} />
+            onDrag={(e, value) =>
+              act('set_copies', {
+                num_copies: value,
+              })
+            }
+          />
         </Flex.Item>
         <Flex.Item>
           <Button

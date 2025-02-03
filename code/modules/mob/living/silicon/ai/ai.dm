@@ -326,7 +326,7 @@ var/global/list/ai_verbs_default = list(
 				var/cameratext
 				if (alarm.cameras)
 					for (var/obj/machinery/camera/I in alarm.cameras)
-						cameratext += "<br>---- <A HREF=?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
+						cameratext += "<br>---- <A href=byond://?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
 				dat += "-- [alarm.area.name] [cameratext ? cameratext : "No Camera"]"
 
 				if (alarm.sources.len > 1)
@@ -620,7 +620,7 @@ var/global/list/ai_verbs_default = list(
 
 	var/cameratext = ""
 	for (var/obj/machinery/camera/C in cameralist)
-		cameratext += "[(cameratext == "")? "" : "|"]<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>"
+		cameratext += "[(cameratext == "")? "" : "|"]<A href=byond://?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>"
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 

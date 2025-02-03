@@ -7,16 +7,31 @@
     Thank you for your patience!
   </p>
 {{else}}
-  {{:helper.link('Access Modification', 'home', {'choice' : 'mode', 'mode_target' : 0}, !data.mode ? 'disabled' : null)}}
-  {{:helper.link('Crew Manifest', 'folder-open', {'choice' : 'mode', 'mode_target' : 1}, data.mode ? 'disabled' : null)}}
+  {{:helper.link('Access Modification', 'home', {'choice' : 'mode', 'mode_target' : 0}, data.mode == 0 ? 'disabled' : null)}}
+  {{:helper.link('Crew Manifest', 'folder-open', {'choice' : 'mode', 'mode_target' : 1}, data.mode == 1 ? 'disabled' : null)}}
+  {{:helper.link('Quotas', 'star', {'choice' : 'mode', 'mode_target' : 2}, data.mode == 2 ? 'disabled' : null)}}
   {{:helper.link('Print', 'print', {'choice' : 'print'}, (data.mode || data.has_modify) ? null : 'disabled')}}
 
-  {{if data.mode}}
+  {{if data.mode == 1}}
     <div class='item'>
       <h2>Crew Manifest</h2>
     </div>
     <div class='item'>
       {{:data.manifest}}
+    </div>
+  {{else data.mode == 2}}
+    <div class='item'>
+      {{for data.all_jobs:category:categ_num}}
+        <table style='margin-left:30%'><tr><td valign='top'><fieldset style='border: 2px solid {{:category.color}}; display: inline;'><legend align='center' style='color: {{:category.color}}'><b>{{:category.title}}</b></legend>
+          {{for data.all_jobs[categ_num].jobs:job}}
+            <div class='item' style='display:block;width:250px;background-color:#40628a;color:#ffffff'>
+              {{:helper.link('', 'arrowthick-1-n', {'choice' : "up_quota", 'quotajob_name' : job.name}, null, job.quota == 1 ? 'selected' : null, null)}}
+              {{:helper.link('', 'arrowthick-1-s', {'choice' : "down_quota", 'quotajob_name' : job.name}, null, job.quota == 2 ? 'selected' : null, null)}}
+              {{:job.name}}
+            </div>
+          {{/for}}
+        </fieldset><br></td></tr></table>
+      {{/for}}
     </div>
   {{else}}
     <div class='item'>
