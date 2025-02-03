@@ -97,9 +97,8 @@
 	..()
 
 /datum/announcement/centcomm/anomaly/gas
-	name = "Anomaly: Gravitational"
+	name = "Anomaly: Gas"
 	message = "На станции обнаружена газовая аномалия. Ожидаемое местоположение: неизвестно."
-	// sound = wip
 /datum/announcement/centcomm/anomaly/gas/play(area/A)
 	if(A)
 		message = "На [station_name_ru()] обнаружена газовая аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
