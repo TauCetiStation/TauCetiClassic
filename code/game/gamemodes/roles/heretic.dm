@@ -34,6 +34,8 @@
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "heretic", /datum/mood_event/heretic)
 	if(give_grasp)
 		antag.current.AddSpell(new /obj/effect/proc_holder/spell/in_hand/mansus_grasp)
+	for(var/datum/objective/O in objectives.GetObjectives())
+		O.give_required_equipment()
 
 /datum/role/heretic/proc/add_one_objective(datum/mind/heretic)
 	switch(rand(1,120))
@@ -42,8 +44,12 @@
 		if(21 to 25)
 			AppendObjective(/datum/objective/target/harm, TRUE)
 		if(26 to 30)
-			AppendObjective(/datum/objective/download_telecommunications_data, FALSE)
+			AppendObjective(/datum/objective/bomb, FALSE)
 		if(31 to 40)
+			AppendObjective(/datum/objective/download_telecommunications_data, FALSE)
+		if(41 to 50)
+			AppendObjective(/datum/objective/research_sabotage, FALSE)
+		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
 			AppendObjective(/datum/objective/target/dehead, TRUE)
