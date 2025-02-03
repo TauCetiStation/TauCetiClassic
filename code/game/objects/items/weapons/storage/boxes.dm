@@ -199,7 +199,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/r4046/chem/EMP(src)
 
-//Explosion 40x46mm
+//Explosion 40x46mm chek
 /obj/item/weapon/storage/box/r4046/explosion
 	name = "box of 40x46mm explosion grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
