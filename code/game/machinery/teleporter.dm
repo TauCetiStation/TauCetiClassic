@@ -65,15 +65,15 @@
 			data += "Calibration: <font color='red'>Sub-Optimal</font>"
 		data += "</div><BR>"
 
-		data += "<A href='?src=\ref[src];regimeset=1'>Change regime</A><BR>"
-		data += "<A href='?src=\ref[src];settarget=1'>Set target</A><BR>"
+		data += "<A href='byond://?src=\ref[src];regimeset=1'>Change regime</A><BR>"
+		data += "<A href='byond://?src=\ref[src];settarget=1'>Set target</A><BR>"
 		if(locked)
-			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
-			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
+			data += "<BR><A href='byond://?src=\ref[src];locked=1'>Get target from memory</A><BR>"
+			data += "<A href='byond://?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
 		else
 			data += "<BR><span class='disabled'>Get target from memory</span><BR>"
 			data += "<span class='disabled'>Eject GPS device</span><BR>"
-		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
+		data += "<BR><A href='byond://?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)

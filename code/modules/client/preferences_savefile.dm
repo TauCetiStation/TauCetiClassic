@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 52
+#define SAVEFILE_VERSION_MAX 53
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -466,6 +466,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (pre_52_hairstyles_to_modern_ones[h_style])
 			h_style = pre_52_hairstyles_to_modern_ones[h_style]
 
+	if(current_version < 53)
+		ipc_head = initial(ipc_head)
+		// fuck named hairstyles, we should just move it to indexes
+		var/static/list/ipc_hairstyles_reset = list(
+			"alien IPC screen", 
+			"double IPC screen", 
+			"pillar IPC screen", 
+			"human IPC screen"
+		)
+		if(h_style in ipc_hairstyles_reset)
+			h_style = /datum/sprite_accessory/hair/ipc_screen_alert::name
+
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -518,7 +530,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
 	There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences\n\
-	<a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
+	<a href='byond://?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, "<span class='userdanger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")

@@ -874,7 +874,7 @@
 		target_tile.assume_gas("phoron", 25, 1400)
 		spawn (0)
 			target_tile.hotspot_expose(700, 400)
-	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
+	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Orange slime extract activated by [key_name(usr)]")
 
 //Yellow
@@ -889,7 +889,7 @@
 
 /datum/chemical_reaction/slimeoverload/on_reaction(datum/reagents/holder, created_volume)
 	empulse(get_turf_loc(holder.my_atom), 3, 7)
-	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
+	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Yellow slime extract activated by [key_name(usr)]")
 
 /datum/chemical_reaction/slimecell
@@ -1025,7 +1025,7 @@
 
 /datum/chemical_reaction/slimeexplosion/proc/do_explosion(datum/reagents/holder)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
-	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
+	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Oil slime extract activated by [key_name(usr)]")
 
 //Light Pink
@@ -1635,6 +1635,13 @@
 	result = "grapesoda"
 	required_reagents = list("grapejuice" = 2, "cola" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/kogelmogel
+	name = "Kogel-Mogel"
+	id = "kogelmogel"
+	result = "kogelmogel"
+	required_reagents = list("egg" = 1, "sugar" = 1)
+	result_amount = 2
 
 
 

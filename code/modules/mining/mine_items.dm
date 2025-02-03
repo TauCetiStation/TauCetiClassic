@@ -121,7 +121,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
-	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
+	dat += "<b><A href='byond://?src=\ref[src];move=[1]'>Send</A></b></center>"
 
 	var/datum/browser/popup = new(user, "miningshuttle", "Mining Shuttle Control", 200, 150)
 	popup.set_content(dat)

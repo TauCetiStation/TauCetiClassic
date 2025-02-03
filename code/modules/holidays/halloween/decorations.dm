@@ -64,14 +64,8 @@
 	icon_state = "garland"
 	light_colors = list("#f8731e", "#ffd401", "#ef0001")
 	glow_icon = 'icons/holidays/halloween/decorations.dmi'
-	var/random = TRUE
-	var/variations = 7
-
-/obj/item/decoration/garland/halloween/atom_init()
-	if(random)
-		icon_state_off = "garland_[rand(1, variations)]"
-		glow_icon_state = "[icon_state_off]_lights"
-	. = ..()
+	random = TRUE
+	variations = 7
 
 /obj/item/decoration/garland/halloween/long
 	icon_state = "garland_1"
@@ -98,12 +92,6 @@
 	icon_state = "1"
 	variations = 20
 	random = TRUE
-
-/obj/item/decoration/tinsel/halloween/attack_self(mob/user)
-	. = ..()
-	if(user.is_busy())
-		return
-	set_dir(turn(dir,-90))
 
 /obj/item/decoration/tinsel/halloween/pumkings
 	icon_state = "1"

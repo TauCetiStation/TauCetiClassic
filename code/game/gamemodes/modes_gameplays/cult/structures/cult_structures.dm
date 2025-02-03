@@ -210,6 +210,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	light_color = "#990000"
 	light_range = 2
 	can_unwrench = FALSE
+	id = "cult"
 
 /obj/structure/mineral_door/cult/MobChecks(mob/user)
 	if(!..())
