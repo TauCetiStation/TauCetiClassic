@@ -241,6 +241,8 @@
 
 #define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
 
+#define isheretic(H) isrole(HERETIC, H)
+
 // BLOB
 
 #define isblob(A) (istype(A, /obj/structure/blob))

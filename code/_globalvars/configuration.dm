@@ -21,6 +21,7 @@ var/global/looc_allowed = 1
 var/global/dsay_allowed = 1
 var/global/dooc_allowed = 1
 var/global/traitor_scaling = 1
+var/global/heretic_scaling = 1
 //var/goonsay_allowed = 0
 var/global/dna_ident = 1
 var/global/abandon_allowed = 1

@@ -73,6 +73,7 @@
 #define ANTAG_HUD_CHANGELING    "antag_hud_chang"
 #define ANTAG_HUD_ABDUCTOR      "antag_hud_abductor"
 #define ANTAG_HUD_ALIEN         "antag_hud_alien"
+#define ANTAG_HUD_HERETIC       "antag_hud_heretic"
 #define ANTAG_HUD_DEATHCOM      "antag_hud_deathcom"
 #define ANTAG_HUD_ERT           "antag_hud_ert"
 #define ANTAG_HUD_MALF          "antag_hud_malf"

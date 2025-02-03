@@ -242,6 +242,34 @@ h2.alert {
 .cult {
   color: #800080;
 }
+.heretic {
+  color: #0d0d0d;
+  font-weight: bold;
+  animation: hypnocolor 1500ms infinite;
+  animation-direction: alternate;
+}
+
+@keyframes hypnocolor {
+  0% {
+    color: #0d0d0d;
+  }
+
+  25% {
+    color: #410194;
+  }
+
+  50% {
+    color: #7f17d8;
+  }
+
+  75% {
+    color: #410194;
+  }
+
+  100% {
+    color: #3bb5d3;
+  }
+}
 .alien {
   color: #6b286b;
 }
