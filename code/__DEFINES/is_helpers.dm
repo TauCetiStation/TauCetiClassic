@@ -241,7 +241,21 @@
 
 #define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
 
+//Heretic checks
+
+/// Checks if the given mob is a heretic.
 #define isheretic(H) isrole(HERETIC, H)
+/// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_HERETIC(H) (mob.mind?.has_antag_datum(/datum/role/heretic))
+
+/// Check if the given mob is a heretic monster.
+#define ishereticmonster(H) (mob.mind?.has_antag_datum(/datum/role/heretic_monster))
+/// Check if the given mob is a  lunatic
+#define islunatic(H) (mob.mind?.has_antag_datum(/datum/role/lunatic))
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define ishereticormonster(H) (isheretic(mob) || ishereticmonster(mob) || islunatic(mob))
+/// CHecks if the given mob is in the mansus realm
+#define isinmansus(H) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
 // BLOB
 

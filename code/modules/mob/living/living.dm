@@ -420,8 +420,22 @@
 		if(client)
 			client.update_plane_masters(/atom/movable/screen/plane_master/game_world)
 
-// ============================================================
+// ========== ORGAN ==========
+/mob/living/proc/getOrganLoss()
+	return organloss
 
+/mob/living/proc/adjustOrganLoss(mob/user, organ_flag, force)
+var/mob/living/carbon/human/H = user
+
+var/obj/item/organ/internal/I = H.organs_by_name[organ_flag]
+        I.damage += force
+
+/mob/living/proc/setOrganLoss(amount)
+	if(status_flags & GODMODE)
+		return
+	organloss = clamp(amount, 0, maxHealth * 2)
+
+// ============================================================
 /mob/living/proc/check_contents_for(A)
 	var/list/L = get_contents()
 
