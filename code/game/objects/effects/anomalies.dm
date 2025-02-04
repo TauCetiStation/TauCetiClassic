@@ -224,6 +224,7 @@
 	return
 
 /////////////////////
+
 /obj/effect/anomaly/gas
     name = "gas anomaly"
     icon_state = "pyro"
@@ -236,14 +237,13 @@
 /obj/effect/anomaly/gas/atom_init()
     . = ..()
     select_gas_type()
-    spawn(0)
-        start_gas_release()
+    INVOKE_ASYNC(src, PROC_REF(start_gas_release))
 
 /obj/effect/anomaly/gas/proc/select_gas_type()
     selected_gas = pick(gas_types)
 
 /obj/effect/anomaly/gas/proc/start_gas_release()
-    while(src && !QDELETED(src))
+    while(!QDELETED(src))
         release_gas()
         sleep(release_interval)
 
