@@ -424,11 +424,10 @@
 /mob/living/proc/getOrganLoss()
 	return organloss
 
-/mob/living/proc/adjustOrganLoss(mob/user, organ_flag, force)
-var/mob/living/carbon/human/H = user
-
-var/obj/item/organ/internal/I = H.organs_by_name[organ_flag]
-        I.damage += force
+/mob/living/proc/adjustOrganLoss(organ_flag, amount, target)
+	var/mob/living/carbon/human/H = target
+	var/obj/item/organ/internal/I = H.organs_by_name[organ_flag]
+	I.damage += amount
 
 /mob/living/proc/setOrganLoss(amount)
 	if(status_flags & GODMODE)
