@@ -42,7 +42,7 @@
 		"факс" = /obj/machinery/faxmachine,
 		"ядерную боеголовку" = /obj/machinery/nuclearbomb,
 		"раздатчик атмосферных труб" = /obj/machinery/pipedispenser,
-		"кота главврача Дасти" = /mob/living/simple_animal/cat/dusty,
+		"питомца главврача Дасти" = /mob/living/simple_animal/cat/dusty,
 		"плазменный дробовик" = /obj/item/weapon/gun/plasma/p104sass,
 		"ручной телепортер" = /obj/item/weapon/hand_tele,
 		"тыквяк" = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd,
