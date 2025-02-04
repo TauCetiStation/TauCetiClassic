@@ -439,6 +439,25 @@ var/global/list/slot_equipment_priority = list(
 
 	return items
 
+/mob/proc/get_inactive_held_item()
+	return get_item_for_held_index(get_inactive_hand_index())
+
+/mob/proc/get_inactive_hand_index()
+	var/other_hand = 0
+	if(!(active_hand_index % 2))
+		other_hand = active_hand_index-1 //finding the matching "left" limb
+	else
+		other_hand = active_hand_index+1 //finding the matching "right" limb
+	if(other_hand < 0 || other_hand > held_items.len)
+		other_hand = 0
+	return other_hand
+
+
+/mob/proc/get_item_for_held_index(i)
+	if(i > 0 && i <= held_items.len)
+		return held_items[i]
+	return null
+
 /mob/proc/check_obscured_slots()
 	return
 

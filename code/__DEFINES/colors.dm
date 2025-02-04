@@ -27,6 +27,7 @@
 #define COLOR_CYAN                      "#00ffff"
 #define COLOR_TEAL                      "#33cccc"
 #define COLOR_RED                       "#ff0000"
+#define COLOR_VIVID_RED                 "#FF3232"
 #define COLOR_CRIMSON                   "#dc143c"
 #define COLOR_CRIMSON_RED               "#990000"
 #define COLOR_PINK                      "#ff00ff"
