@@ -755,12 +755,12 @@
 		add_fingerprint(user)
 		if(occupant)
 			to_chat(user, "<span class='warning'>You can't customize a mech while someone is piloting it - that would be unsafe!</span>")
-			return ATTACK_CHAIN_PROCEED
+			return
 
 		var/obj/item/paintkit/paintkit = W
 		if(!(paintkit.allowed_types & mech_type))
 			to_chat(user, "<span class='warning'>This paintkit isn't meant for use on this class of exosuit.</span>")
-			return ATTACK_CHAIN_PROCEED
+			return
 
 		if(!user.drop_item(paintkit))
 			return ..()
@@ -780,7 +780,7 @@
 		desc = paintkit.new_desc
 		update_icon(TRUE)
 		qdel(paintkit)
-		return ATTACK_CHAIN_BLOCKED_ALL
+		return
 
 	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
 		var/obj/item/weapon/melee/changeling_hammer/hammer = W

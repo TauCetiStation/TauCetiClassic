@@ -297,7 +297,7 @@
     var/obj/mecha/mech = object
     if(mech.occupant)
         to_chat(user, "<span class='warning'>You can't customize a mech while someone is piloting it - that would be unsafe!</span>")
-        return ATTACK_CHAIN_PROCEED
+        return
 
     var/list/possibilities = list()
     for(var/path in subtypesof(/obj/item/paintkit))
@@ -308,10 +308,10 @@
 
     if(isemptylist(possibilities))
         to_chat(user, "<span class='warning'>There are no skins for this mech type!</span>")
-        return ATTACK_CHAIN_PROCEED
+        return
 
     INVOKE_ASYNC(src, PROC_REF(choose_paint), user, mech, possibilities)
-    return ATTACK_CHAIN_BLOCKED_ALL
+    return
 
 /obj/item/universal_paintkit/proc/choose_paint(mob/living/user, obj/mecha/mech, list/possibilities)
 	var/choice = tgui_input_list(user, "Pick your skin for mech.", "Paints", possibilities)
