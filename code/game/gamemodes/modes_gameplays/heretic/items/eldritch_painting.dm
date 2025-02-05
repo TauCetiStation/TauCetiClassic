@@ -99,7 +99,7 @@
 
 	to_chat(examiner, span_notice("Just gazing upon it clears your mind."))
 	examiner.remove_status_effect(/datum/status_effect/hallucination)
-	examiner.add_mood_event("heretic_eldritch_painting", /datum/mood_event/eldritch_painting/weeping_heretic)
+	SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "heretic_eldritch_painting", /datum/mood_event/eldritch_painting/weeping_heretic)
 
 // The First Desire painting, using a lot of the painting/eldritch framework
 /obj/item/wallframe/painting/eldritch/desire

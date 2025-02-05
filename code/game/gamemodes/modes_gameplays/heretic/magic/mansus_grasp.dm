@@ -21,7 +21,7 @@
 	return TRUE // This baby can hit anything
 
 /datum/action/cooldown/spell/touch/mansus_grasp/can_cast_spell(feedback = TRUE)
-	return ..() && (!!isheretic(owner) || !!IS_LUNATIC(owner))
+	return ..() && (!!isheretic(owner) || !!islunatic(owner))
 
 /datum/action/cooldown/spell/touch/mansus_grasp/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	victim.visible_message(

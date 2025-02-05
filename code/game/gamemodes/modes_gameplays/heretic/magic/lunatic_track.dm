@@ -9,12 +9,12 @@
 	cooldown_time = 4 SECONDS
 
 /datum/action/cooldown/lunatic_track/Grant(mob/granted)
-	if(!IS_LUNATIC(granted))
+	if(!islunatic(granted))
 		return
 	return ..()
 
 /datum/action/cooldown/lunatic_track/Activate(atom/target)
-	var/datum/antagonist/lunatic/lunatic_datum = IS_LUNATIC(owner)
+	var/datum/antagonist/lunatic/lunatic_datum = islunatic(owner)
 	var/mob/living/carbon/human/ascended_heretic = lunatic_datum.ascended_body
 	if(!(ascended_heretic))
 		owner.balloon_alert(owner, "what cruel fate, your master is gone...")

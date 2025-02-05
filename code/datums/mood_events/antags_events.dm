@@ -88,3 +88,12 @@
 	mood_change = 6
 	timeout = 3 MINUTES
 
+/datum/mood_event/moon_smile
+	description = "THE MOON SHOWS ME THE TRUTH AND ITS SMILE IS FACED TOWARDS ME!!!"
+	mood_change = 10
+	timeout = 2 MINUTES
+
+/datum/mood_event/moon_insanity
+	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
+	mood_change = -3
+	timeout = 5 MINUTES
