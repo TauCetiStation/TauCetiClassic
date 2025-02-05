@@ -20,7 +20,7 @@
 
 /obj/item/clothing/neck/heretic_focus/crimson_medallion/equipped(mob/living/user, slot)
 	. = ..()
-	if(!(slot & ITEM_SLOT_NECK))
+	if(!(slot & SLOT_NECK))
 		return
 
 	var/team_color = COLOR_ADMIN_PINK
@@ -120,7 +120,7 @@
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()
-	if(!(slot & ITEM_SLOT_NECK))
+	if(!(slot & SLOT_NECK))
 		return
 	if(!ishuman(user) || !ishereticormonster(user))
 		return

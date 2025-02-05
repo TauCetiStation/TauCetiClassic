@@ -443,6 +443,26 @@
 		return
 	return ..()
 
+/////////////////////////////////////Proteon from tg/////////////////////////////////
+/mob/living/simple_animal/construct/proteon
+	name = "Proteon"
+	real_name = "Proteon"
+	desc = "Слабая конструкция, предназначенная для обыска руин в поисках предметов привязанности Нар'Си. Эти зазубренные когти — не шутка."
+	icon_state = "proteon"
+	icon_living = "proteon"
+	maxHealth = 30
+	health = 30
+	melee_damage = 35
+	speed = -2
+	response_harm = "pinch"
+
+	sight = SEE_MOBS
+
+/mob/living/simple_animal/construct/proteon/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
+
+
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
 /mob/living/simple_animal/hostile/pylon/cult
 	name = "charged pylon"

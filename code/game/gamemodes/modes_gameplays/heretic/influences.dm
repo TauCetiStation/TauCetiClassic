@@ -157,7 +157,7 @@
 	var/mob/living/carbon/human/human_user = user
 	to_chat(human_user, span_userdanger("Your mind burns as you stare at the tear!"))
 	human_user.adjustOrganLoss(O_BRAIN, 10, human_user)
-	human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/heretic_influence
 	name = "reality smash"

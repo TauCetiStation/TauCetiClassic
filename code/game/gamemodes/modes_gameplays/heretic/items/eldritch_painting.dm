@@ -53,7 +53,7 @@
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	if(!user.can_block_magic(MAGIC_RESISTANCE))
-		user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
 		to_chat(user, span_hypnophrase("There's an itch in your brain. It's laughing at you..."))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -94,7 +94,7 @@
 	if(!isheretic(examiner))
 		to_chat(examiner, span_hypnophrase("Respite, for now...."))
 		examiner.mob_mood.mood_events.Remove("eldritch_weeping")
-		examiner.add_mood_event("weeping_withdrawal", /datum/mood_event/eldritch_painting/weeping_withdrawal)
+		SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "weeping_withdrawal", /datum/mood_event/eldritch_painting/weeping_withdrawal)
 		return
 
 	to_chat(examiner, span_notice("Just gazing upon it clears your mind."))
