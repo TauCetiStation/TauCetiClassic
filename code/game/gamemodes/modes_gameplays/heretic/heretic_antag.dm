@@ -43,7 +43,7 @@
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
 	/// The organ slot we place our Living Heart in.
-	var/living_heart_organ_slot = ORGAN_SLOT_HEART
+	var/living_heart_organ_slot = O_HEART
 	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
 	var/total_sacrifices = 0
 	/// A list of TOTAL how many high value sacrifices completed. (Heads of staff)
@@ -285,7 +285,7 @@
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	our_mob.faction |= FACTION_HERETIC
+	our_mob.faction |= F_HERETICS
 
 	if (!issilicon(our_mob))
 		GLOB.reality_smash_track.add_tracked_mind(owner)
@@ -299,7 +299,7 @@
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
-	our_mob.faction -= FACTION_HERETIC
+	our_mob.faction -= F_HERETICS
 
 	if (owner in GLOB.reality_smash_track.tracked_heretics)
 		GLOB.reality_smash_track.remove_tracked_mind(owner)
@@ -567,7 +567,7 @@
 
 	var/num_heads = 0
 	for(var/mob/player in GLOB.alive_player_list)
-		if(player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+		if(player.mind.assigned_role.job_flags & JOB_FLAG_HEAD_OF_STAFF)
 			num_heads++
 
 	var/datum/objective/minor_sacrifice/sac_objective = new()

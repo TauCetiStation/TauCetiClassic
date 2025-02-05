@@ -128,7 +128,7 @@
 	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 		return
 
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 100)
+	target.adjustOrganLoss(O_BRAIN, 10, target)
 	target.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"upgraded path of moon blades", \
@@ -168,7 +168,7 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
-	var/brain_damage = sacrifice.get_organ_loss(ORGAN_SLOT_BRAIN)
+	var/brain_damage = sacrifice.get_organ_loss(O_BRAIN)
 	// Checks if our target has enough brain damage
 	if(brain_damage < 50)
 		return FALSE
@@ -213,11 +213,12 @@
 		lunatic.set_master(user.mind, user)
 		var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(crewmate.drop_location())
 		var/static/list/slots = list(
-			"neck" = ITEM_SLOT_NECK,
-			"hands" = ITEM_SLOT_HANDS,
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"right pocket" = ITEM_SLOT_RPOCKET,
-			"left pocket" = ITEM_SLOT_RPOCKET,
+			"neck" = SLOT_NECK,
+			"right hand" = SLOT_R_HAND,
+			"left hand" = SLOT_L_HAND,
+			"backpack" = SLOT_IN_BACKPACK,
+			"right pocket" = SLOT_R_STORE,
+			"left pocket" = SLOT_L_STORE,
 		)
 		crewmate.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
 		crewmate.emote("laugh")
@@ -247,7 +248,7 @@
 		if(carbon_sanity < 30)
 			if(SPT_PROB(20, seconds_per_tick))
 				to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
-			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+			carbon_view.adjustOrganLoss(O_BRAIN, 5, carbon_view)
 		if(carbon_sanity < 10)
 			if(SPT_PROB(20, seconds_per_tick))
 				to_chat(carbon_view, span_warning("it echoes through you!"))

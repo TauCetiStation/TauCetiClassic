@@ -62,12 +62,12 @@
 	on_made_callback?.Invoke(human_target)
 	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
 	human_target.become_husk(TRAIT_STATUS_EFFECT(id))
-	human_target.faction |= FACTION_HERETIC
+	human_target.faction |= F_HERETICS
 
 	if(human_target.mind)
 		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 		heretic_monster.set_owner(master_mind)
-		human_target.mind.remove_antag_datum(/datum/antagonist/cult)
+		human_target.mind.remove_antag_datum(/datum/role/cult)
 
 	return TRUE
 
@@ -91,7 +91,7 @@
 	on_lost_callback?.Invoke(human_target)
 	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
 	human_target.cure_husk(TRAIT_STATUS_EFFECT(id))
-	human_target.faction -= FACTION_HERETIC
+	human_target.faction -= F_HERETICS
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
 
 	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)

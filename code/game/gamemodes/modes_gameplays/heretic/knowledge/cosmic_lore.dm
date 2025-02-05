@@ -127,13 +127,13 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	var/static/list/valid_organ_slots = list(
-		ORGAN_SLOT_HEART,
-		ORGAN_SLOT_LUNGS,
+		O_HEART,
+		O_LUNGS,
 		ORGAN_SLOT_STOMACH,
-		ORGAN_SLOT_EYES,
+		O_EYES,
 		ORGAN_SLOT_EARS,
-		ORGAN_SLOT_LIVER,
-		ORGAN_SLOT_BRAIN
+		O_LIVER,
+		O_BRAIN
 	)
 	if(source == target || !isliving(target))
 		return
@@ -144,7 +144,7 @@
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	var/need_mob_update = FALSE
 	need_mob_update += target.adjustFireLoss(5, updating_health = FALSE)
-	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 8)
+	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 8, target)
 	if(need_mob_update)
 		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
@@ -157,7 +157,7 @@
 		playsound(get_turf(second_target_resolved), 'sound/effects/magic/cosmic_energy.ogg', 25, FALSE)
 		need_mob_update = FALSE
 		need_mob_update += second_target_resolved.adjustFireLoss(14, updating_health = FALSE)
-		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 12)
+		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 12, second_target_resolved)
 		if(need_mob_update)
 			second_target_resolved.updatehealth()
 		if(third_target_resolved)
@@ -165,7 +165,7 @@
 			playsound(get_turf(third_target_resolved), 'sound/effects/magic/cosmic_energy.ogg', 50, FALSE)
 			need_mob_update = FALSE
 			need_mob_update += third_target_resolved.adjustFireLoss(28, updating_health = FALSE)
-			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14)
+			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14, third_target_resolved)
 			if(need_mob_update)
 				third_target_resolved.updatehealth()
 			if(combo_counter > 3)
@@ -243,7 +243,7 @@
 	star_gazer_mob.health = INFINITY
 	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands, radial_menu_offset = list(30,0), radial_menu_lifetime = 15 SECONDS, radial_relative_to_user = TRUE)
-	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(FACTION_HERETIC), current_owner = user)
+	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(F_HERETICS), current_owner = user)
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()
 	commands_action.Grant(user, star_gazer_mob)

@@ -44,7 +44,7 @@
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/caster)
 	var/victim_sanity = victim.mob_mood.sanity
 
-	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 - victim_sanity, 160)
+	victim.adjustOrganLoss(O_BRAIN, 100 - victim_sanity, victim)
 	for(var/i in 1 to round((120 - victim_sanity) / 10))
 		victim.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body), name)
 	if(victim_sanity < 15)

@@ -148,7 +148,7 @@
 
 	// First target, any command.
 	for(var/datum/mind/head_mind as anything in shuffle(valid_targets))
-		if(head_mind.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
+		if(head_mind.assigned_role?.job_flags & JOB_FLAG_HEAD_OF_STAFF)
 			final_targets += head_mind
 			valid_targets -= head_mind
 			break
@@ -210,7 +210,7 @@
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
-	if((sac_job_flag & JOB_HEAD_OF_STAFF))
+	if((sac_job_flag & JOB_FLAG_HEAD_OF_STAFF))
 		heretic_datum.knowledge_points += 3
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
@@ -342,7 +342,7 @@
 		sac_target.legcuffed = null
 		sac_target.update_worn_legcuffs()
 
-	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
+	sac_target.adjustOrganLoss(O_BRAIN, 85, sac_target)
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 

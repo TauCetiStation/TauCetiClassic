@@ -78,25 +78,25 @@
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		if(30 to 40)
 			// Don't fully kill liver that's important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 10, 90)
+			human_owner.adjustOrganLoss(O_LIVER, 10, human_owner)
 		if(40 to 50)
 			// Don't fully kill heart that's important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_HEART, 10, 90)
+			human_owner.adjustOrganLoss(O_HEART, 10, human_owner)
 		if(50 to 60)
 			// You can fully kill the stomach that's not crucial
-			human_owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 10)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 10, human_owner)
 		if(60 to 70)
 			// Same with eyes
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EYES, 5)
+			human_owner.adjustOrganLoss(O_EYES, 5, human_owner)
 		if(70 to 80)
 			// And same with ears
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EARS, 10)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_EARS, 10, human_owner)
 		if(80 to 90)
 			// But don't fully kill lungs that's usually important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10, 90)
+			human_owner.adjustOrganLoss(O_LUNGS, 10, human_owner)
 		if(90 to 95)
 			// And definitely don't fully kil brains
-			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
+			human_owner.adjustOrganLoss(O_BRAIN, 20, human_owner)
 		if(95 to 100)
 			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
 

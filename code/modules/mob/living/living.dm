@@ -231,6 +231,9 @@
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
+/mob/living/proc/setMaxHealth(newMaxHealth)
+	maxHealth = newMaxHealth
+
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
 		health = 100

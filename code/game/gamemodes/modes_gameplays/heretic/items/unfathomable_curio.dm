@@ -83,7 +83,7 @@
 		return
 
 	to_chat(wearer, span_warning("Laughter echoes in your mind...."))
-	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
+	wearer.adjustOrganLoss(O_BRAIN, 40, wearer)
 	wearer.dropItemToGround(src, TRUE)
 	wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
 
@@ -92,7 +92,7 @@
 	if(isheretic(user))
 		return
 
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+	user.adjustOrganLoss(O_BRAIN, 10, user)
 	user.adjust_temp_blindness(5 SECONDS)
 	. += span_notice("It. It looked. IT WRAPS ITSELF AROUND ME.")
 

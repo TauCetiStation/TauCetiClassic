@@ -191,8 +191,6 @@
 
 #define isshadowthrall(H) isrole(SHADOW_THRALL, H)
 
-#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
-
 #define iseminence(A) (istype(A, /mob/camera/eminence))
 
 #define isvoxraider(H) isrole(VOXRAIDER, H)
@@ -240,6 +238,18 @@
 #define isanycop(H) isrolebytype(/datum/role/cop, H)
 
 #define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
+
+
+//Cult checks
+
+/// Checks if the given mob is a blood cultist
+#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+/// Checks if the given mob is a blood cultist and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/role/cult))
+
+/// Checks if the mob is a sentient or non-sentient cultist
+#define iscultistorcultistmob(mob) ((iscultist(mob)) || (mob.faction.Find(F_BLOODCULT)))
 
 //Heretic checks
 
