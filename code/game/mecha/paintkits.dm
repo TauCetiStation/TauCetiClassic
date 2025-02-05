@@ -58,7 +58,7 @@
 
 	new_name = "Old Gygax"
 	new_desc = "An outdated security exosuit. It is a real achievement to find a preserved exosuit of this model."
-	new_icon = "gygax_alt"
+	new_icon = "gygax"
 	allowed_types = MECH_TYPE_GYGAX
 
 /obj/item/paintkit/ripley_red
@@ -150,16 +150,6 @@
 	new_desc = "My life for the empress!"
 	new_icon = "unathi"
 	allowed_types = MECH_TYPE_DURAND
-
-/obj/item/paintkit/phazon_blanco
-	name = "Phazon \"Blanco\" customisation kit"
-	icon_state = "paintkit_white"
-	desc = "A kit containing all the needed tools and parts to paint your Phazon white"
-
-	new_name = "Blanco"
-	new_desc = "It took more than six months of work to find the perfect pastel colors for this mech"
-	new_icon = "phazon_blanco"
-	allowed_types = MECH_TYPE_PHAZON
 
 /obj/item/paintkit/firefighter_aluminizer
 	name = "APLU \"Aluminizer\" customisation kit"
