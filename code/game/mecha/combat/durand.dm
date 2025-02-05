@@ -13,6 +13,7 @@
 	force = 40
 	var/defence = FALSE
 	var/defence_deflect = 35
+	mech_type = MECH_TYPE_DURAND
 	wreckage = /obj/effect/decal/mecha_wreckage/durand
 
 	var/datum/action/innate/mecha/mech_defence_mode/defence_action = new

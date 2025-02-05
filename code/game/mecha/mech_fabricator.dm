@@ -44,6 +44,7 @@
 								"Durand",
 								"Vindicator",
 								"Exosuit Equipment",
+								"Exosuit Paintkits",
 								"Cyborg Upgrade Modules",
 								"Cyborg Components",
 								"Misc",
