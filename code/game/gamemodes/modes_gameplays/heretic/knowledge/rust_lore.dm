@@ -203,7 +203,7 @@
 	if(ritual_location)
 		var/area/our_area = get_area(loc)
 		if(!istype(our_area, ritual_location))
-			to_chat(user, "<span class='heretic'>Ritual failed, must be in [initial(ritual_location.name)]!</span>") // "must be in bridge"
+			loc.balloon_alert(user, "ritual failed, must be in [initial(ritual_location.name)]!") // "must be in bridge"
 			return FALSE
 
 	return ..()

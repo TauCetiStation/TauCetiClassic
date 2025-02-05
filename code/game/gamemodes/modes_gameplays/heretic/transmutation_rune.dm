@@ -55,7 +55,7 @@
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/list/rituals = heretic_datum.get_rituals()
 	if(!length(rituals))
-		to_chat(user, "<span class='heretic'>No rituals available!</span>")
+		loc.balloon_alert(user, "no rituals available!")
 		is_in_use = FALSE
 		return
 
