@@ -38,7 +38,7 @@
 	gain_text = "The story of the footsoldier has been told since antiquity. It is one of blood and valor, \
 		and is championed by sword, steel and silver."
 	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_blade"
 
 /datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -261,7 +261,7 @@
 		You are able to infuse your mansus grasp directly into your blades, and your blades are more effective against structures."
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_blade"
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0

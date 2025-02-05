@@ -36,7 +36,7 @@
 	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
 		Their lantern, expired to ash - their watch, absent."
 	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_ash"
 
 /datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -48,7 +48,7 @@
 /datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	if(target.is_blind())
+	if(target.blinded)
 		return
 
 	if(!target.get_organ_slot(O_EYES))
@@ -128,7 +128,7 @@
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
 
 
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_ash"
 
 /datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)

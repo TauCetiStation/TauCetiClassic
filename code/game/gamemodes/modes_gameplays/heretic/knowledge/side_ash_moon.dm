@@ -33,8 +33,8 @@
 	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
 
 	required_atoms = list(
-		/obj/item/bodypart/leg/left = 1,
-		/obj/item/bodypart/leg/right = 1,
+		/obj/item/organ/external/l_leg = 1,
+		/obj/item/organ/external/r_leg = 1,
 		/obj/item/hatchet = 1,
 	)
 	duration = 3 MINUTES
@@ -42,7 +42,7 @@
 	curse_color = "#f19a9a"
 	cost = 1
 
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_paralysis"
 
 

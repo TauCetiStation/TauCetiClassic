@@ -137,10 +137,10 @@
 		/obj/item/organ/liver,
 		/obj/item/organ/stomach,
 		/obj/item/organ/appendix,
-		/obj/item/bodypart/arm/left,
-		/obj/item/bodypart/arm/right,
-		/obj/item/bodypart/leg/left,
-		/obj/item/bodypart/leg/right
+		/obj/item/organ/external/l_arm,
+		/obj/item/organ/external/r_arm,
+		/obj/item/organ/external/l_leg,
+		/obj/item/organ/external/r_leg
 	)
 	var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
 	new organ_or_bodypart_to_spawn(drop_location())

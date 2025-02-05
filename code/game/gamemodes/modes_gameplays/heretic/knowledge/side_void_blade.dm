@@ -32,7 +32,7 @@
 	limit = 1
 	cost = 1
 
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_shattered"
 
 

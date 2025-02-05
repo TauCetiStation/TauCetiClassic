@@ -40,7 +40,7 @@
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
 	cost = 1
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_lock"
 
 /datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -144,7 +144,7 @@
 	desc = "Your blade has a chance to cause a weeping avulsion on attack."
 	gain_text = "The Pilgrim-Surgeon was not an Steward. Nonetheless, its blades and sutures proved a match for their keys."
 	wound_type = /datum/wound/slash/flesh/critical
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_lock"
 	var/chance = 35
 
