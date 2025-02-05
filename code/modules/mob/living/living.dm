@@ -231,6 +231,9 @@
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
+/mob/living/proc/setMaxHealth(newMaxHealth)
+	maxHealth = newMaxHealth
+
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
 		health = 100
@@ -420,8 +423,21 @@
 		if(client)
 			client.update_plane_masters(/atom/movable/screen/plane_master/game_world)
 
-// ============================================================
+// ========== ORGAN ==========
+/mob/living/proc/getOrganLoss()
+	return organloss
 
+/mob/living/proc/adjustOrganLoss(organ_flag, amount, target)
+	var/mob/living/carbon/human/H = target
+	var/obj/item/organ/internal/I = H.organs_by_name[organ_flag]
+	I.damage += amount
+
+/mob/living/proc/setOrganLoss(amount)
+	if(status_flags & GODMODE)
+		return
+	organloss = clamp(amount, 0, maxHealth * 2)
+
+// ============================================================
 /mob/living/proc/check_contents_for(A)
 	var/list/L = get_contents()
 

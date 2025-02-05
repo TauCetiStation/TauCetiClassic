@@ -191,8 +191,6 @@
 
 #define isshadowthrall(H) isrole(SHADOW_THRALL, H)
 
-#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
-
 #define iseminence(A) (istype(A, /mob/camera/eminence))
 
 #define isvoxraider(H) isrole(VOXRAIDER, H)
@@ -240,6 +238,34 @@
 #define isanycop(H) isrolebytype(/datum/role/cop, H)
 
 #define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
+
+
+//Cult checks
+
+/// Checks if the given mob is a blood cultist
+#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+/// Checks if the given mob is a blood cultist and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/role/cult))
+
+/// Checks if the mob is a sentient or non-sentient cultist
+#define iscultistorcultistmob(mob) ((iscultist(mob)) || (mob.faction.Find(F_BLOODCULT)))
+
+//Heretic checks
+
+/// Checks if the given mob is a heretic.
+#define isheretic(H) isrole(HERETIC, H)
+/// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_HERETIC(H) (mob.mind?.has_antag_datum(/datum/role/heretic))
+
+/// Check if the given mob is a heretic monster.
+#define ishereticmonster(H) (mob.mind?.has_antag_datum(/datum/role/heretic_monster))
+/// Check if the given mob is a  lunatic
+#define islunatic(H) (mob.mind?.has_antag_datum(/datum/role/lunatic))
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define ishereticormonster(H) (isheretic(mob) || ishereticmonster(mob) || islunatic(mob))
+/// CHecks if the given mob is in the mansus realm
+#define isinmansus(H) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
 // BLOB
 
