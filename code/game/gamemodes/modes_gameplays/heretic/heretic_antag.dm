@@ -55,7 +55,7 @@
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
-	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
+	var/static/list/scribing_tools = typecacheof(list(/obj/item/weapon/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
 	/// Controls what types of turf we can spread rust to, increases as we unlock more powerful rust abilites
