@@ -132,3 +132,17 @@
 #define PAINKILLERS_EFFECT_HEAVY 0.6 //powerful painkillers, allow you to not see custom_pain() messages.
 #define PAINKILLERS_EFFECT_VERY_HEAVY 0.5 //very powerful painkillers that does not allow the user to determine the location of the injury.
 
+// core bitflags
+#define ATTACK_CHAIN_PROCEED (1<<2)	// intentionally not started with (1<<0) or 1, since 1 is equal to TRUE
+#define ATTACK_CHAIN_BLOCKED (1<<3)	// and we want to check validity of the core bitflags, returned by the attack chain procs
+// optional bitflags
+#define ATTACK_CHAIN_SUCCESS (1<<0)
+#define ATTACK_CHAIN_NO_AFTERATTACK (1<<1)
+// bitflag combinations
+#define ATTACK_CHAIN_PROCEED_SUCCESS (ATTACK_CHAIN_PROCEED|ATTACK_CHAIN_SUCCESS)
+#define ATTACK_CHAIN_BLOCKED_ALL (ATTACK_CHAIN_BLOCKED|ATTACK_CHAIN_NO_AFTERATTACK)
+#define ATTACK_CHAIN_CORE_RETURN_BITFLAGS (ATTACK_CHAIN_PROCEED|ATTACK_CHAIN_BLOCKED)
+/// Helper to check whether attack chain result was blocked
+#define ATTACK_CHAIN_CANCEL_CHECK(bitflags) ((bitflags) & ATTACK_CHAIN_BLOCKED)
+/// Helper to check whether attack chain result wasn't blocked and was successful
+#define ATTACK_CHAIN_SUCCESS_CHECK(bitflags) ((!ATTACK_CHAIN_CANCEL_CHECK(bitflags) && ((bitflags) & ATTACK_CHAIN_SUCCESS)))

@@ -10,6 +10,7 @@
 	var/list/cargo = new
 	var/cargo_capacity = 27
 	var/hides = 0
+	mech_type = MECH_TYPE_RIPLEY
 
 /obj/mecha/working/ripley/atom_init()
 	. = ..()

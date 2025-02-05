@@ -32,6 +32,7 @@
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
 	var/maxhealth = 300
+	var/mech_type = MECH_TYPE_NONE ///Mech subtype. Currently used in paintkits.
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list(BRUTE=0.8,BURN=1.2,BULLET=0.9,LASER=1,ENERGY=1,BOMB=1)
@@ -749,6 +750,37 @@
 		dna_lockable = TRUE
 		qdel(W)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
+
+	if(istype(W, /obj/item/paintkit))
+		add_fingerprint(user)
+		if(occupant)
+			to_chat(user, "<span class='warning'>You can't customize a mech while someone is piloting it - that would be unsafe!</span>")
+			return ATTACK_CHAIN_PROCEED
+
+		var/obj/item/paintkit/paintkit = W
+		if(!(paintkit.allowed_types & mech_type))
+			to_chat(user, "<span class='warning'>This paintkit isn't meant for use on this class of exosuit.</span>")
+			return ATTACK_CHAIN_PROCEED
+
+		if(!user.drop_item(paintkit))
+			return ..()
+		paintkit.forceMove(src)
+		user.visible_message("<span class='notice'>[user] opens [paintkit] and spends some quality time customising [name].</span>")
+
+		var/list/icon_states = paintkit.icon_states
+		var/transformed_mech_type = "[mech_type]"
+		if(transformed_mech_type in icon_states)
+			initial_icon = icon_states[transformed_mech_type]
+		else
+			initial_icon = paintkit.new_icon
+		if(paintkit.name_prefix)
+			name = "[paintkit.name_prefix] [name]"
+		else
+			name = paintkit.new_name
+		desc = paintkit.new_desc
+		update_icon(TRUE)
+		qdel(paintkit)
+		return ATTACK_CHAIN_BLOCKED_ALL
 
 	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
 		var/obj/item/weapon/melee/changeling_hammer/hammer = W
