@@ -645,6 +645,24 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
 	category = list("Mech")
 
+/datum/design/clarke_main
+	name = "Circuit Design(\"Clarke\" Central Control module)"
+	desc = "Allows for the construction of a \"Clarke\" Central Control module."
+	id = "clarke_main"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/clarke/main
+	category = list("Mech")
+
+/datum/design/clarke_peri
+	name = "Circuit Design (\"Clarke\" Peripherals Control module)"
+	desc = "Allows for the construction of a \"Clarke\" Peripheral Control module."
+	id = "clarke_peri"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mecha/clarke/peripherals
+	category = list("Mech")
+
 /datum/design/gygax_main
 	name = "Circuit Design (\"Gygax\" Central Control module)"
 	desc = "Allows for the construction of a \"Gygax\" Central Control module."
