@@ -265,6 +265,78 @@
 	category = list("Odysseus")
 
 
+//Clarke
+
+/datum/design/clarke_chassis
+	name = "Exosuit Chassis (\"Clarke\")"
+	id = "clarke_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/clarke
+	materials = list(MAT_METAL=25000,MAT_SILVER=10000)
+	starts_unlocked = TRUE
+	construction_time = 10 SECONDS
+	category = list("Clarke")
+
+/datum/design/clarke_torso
+	name = "Exosuit Torso (\"Clarke\")"
+	id = "clarkee_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_torso
+	materials = list(MAT_METAL=20000)
+	construction_time = 18 SECONDS
+	starts_unlocked = TRUE
+	category = list("Clarke")
+
+/datum/design/clarke_head
+	name = "Exosuit Head (\"Clarke\")"
+	id = "clarke_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_head
+	materials = list(MAT_METAL=10000,MAT_GLASS=10000)
+	construction_time = 10 SECONDS
+	starts_unlocked = TRUE
+	category = list("Clarke")
+
+/datum/design/clarke_left_arm
+	name = "Exosuit Left Arm (\"Clarke\")"
+	id = "clarke_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_left_arm
+	materials = list(MAT_METAL=12000)
+	construction_time = 12 SECONDS
+	starts_unlocked = TRUE
+	category = list("Clarke")
+
+/datum/design/clarke_right_arm
+	name = "Exosuit Right Arm (\"Clarke\")"
+	id = "clarke_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_right_arm
+	materials = list(MAT_METAL=12000)
+	construction_time = 12 SECONDS
+	starts_unlocked = TRUE
+	category = list("Clarke")
+
+/datum/design/clarke_left_leg
+	name = "Exosuit Left Tread (\"Clarke\")"
+	id = "clarke_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_left_leg
+	materials = list(MAT_METAL=15000,MAT_SILVER=20000)
+	construction_time = 13  SECONDS
+	starts_unlocked = TRUE
+	category = list("Clarke")
+
+/datum/design/clarke_right_leg
+	name = "Exosuit Right Tread (\"Clarke\")"
+	id = "clarke_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_right_leg
+	materials = list(MAT_METAL=15000,MAT_SILVER=20000)
+	starts_unlocked = TRUE
+	construction_time = 13 SECONDS
+	category = list("Clarke")
+
 //Gygax
 /datum/design/gygax_chassis
 	name = "Exosuit Chassis (\"Gygax\")"
