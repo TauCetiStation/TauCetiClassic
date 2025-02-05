@@ -131,7 +131,7 @@
 /obj/item/space_crawl
 	name = "space crawl"
 	desc = "You are unable to hold anything while in this form."
-	icon = 'icons/obj/antags/eldritch.dmi'
+	icon = 'icons/obj/eldritch.dmi'
 	item_flags = ABSTRACT | DROPDEL
 
 /obj/item/space_crawl/Initialize(mapload)

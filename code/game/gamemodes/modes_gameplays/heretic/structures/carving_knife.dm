@@ -3,7 +3,7 @@
 	name = "carving knife"
 	desc = "A small knife made of cold steel, pure and perfect. Its sharpness can carve into titanium itself - \
 		but only few can evoke the dangers that lurk beneath reality."
-	icon = 'icons/obj/antags/eldritch.dmi'
+	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "rune_carver"
 	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY

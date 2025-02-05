@@ -3,7 +3,7 @@
 	name = "Codex Cicatrix"
 	desc = "This heavy tome is full of cryptic scribbles and impossible diagrams. \
 	According to legend, it can be deciphered to reveal the secrets of the veil between worlds."
-	icon = 'icons/obj/antags/eldritch.dmi'
+	icon = 'icons/obj/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
 	worn_icon_state = "book"

@@ -108,7 +108,7 @@
 	cost = 1
 
 
-	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_path = 'icons/obj/eldritch.dmi'
 	research_tree_icon_state = "moon_amulette"
 	research_tree_icon_frame = 9
 
