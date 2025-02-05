@@ -4,7 +4,7 @@
 			is left confused for 10 seconds, and suffers oxygen loss and brain damage."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "mind_gate"
 
 	sound = 'sound/effects/magic/curse.ogg'

@@ -69,7 +69,7 @@
 	gain_text = "The footsoldier was known to be a fearsome duelist. \
 		Their general quickly appointed them as their personal Champion."
 	cost = 1
-	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_path = 'icons/hud/actions_ecult.dmi'
 	research_tree_icon_state = "shatter"
 	/// Whether the counter-attack is ready or not.
 	/// Used instead of cooldowns, so we can give feedback when it's ready again

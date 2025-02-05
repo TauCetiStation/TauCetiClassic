@@ -4,7 +4,7 @@
 		Wounds a random limb if no limb is sufficiently damaged."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "apetra_vulnera"
 
 	school = SCHOOL_FORBIDDEN

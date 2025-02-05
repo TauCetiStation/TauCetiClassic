@@ -4,7 +4,7 @@
 		Anyone with a star mark gets transported along with you."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "cosmic_rune"
 
 	sound = 'sound/effects/magic/forcewall.ogg'

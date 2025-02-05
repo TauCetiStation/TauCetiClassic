@@ -4,7 +4,7 @@
 	desc = "A touch spell that drains your enemy's sanity and knocks them down."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "mad_touch"
 
 	school = SCHOOL_FORBIDDEN

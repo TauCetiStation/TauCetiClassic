@@ -5,7 +5,7 @@
 		extinguishes themselves before it bounces, the chain will stop."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "flames"
 	sound = 'sound/effects/magic/fireball.ogg'
 

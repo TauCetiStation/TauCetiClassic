@@ -5,7 +5,7 @@
 		Afterwards, they will be chilled and returned to the mortal plane."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "voidball"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	sound = 'sound/effects/magic/voidblink.ogg'
@@ -80,7 +80,7 @@
 
 //----Voidball effect
 /obj/effect/abstract/voidball
-	icon = 'icons/mob/actions/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	icon_state = "voidball_effect"
 	layer = ABOVE_ALL_MOB_LAYER
 	vis_flags = VIS_INHERIT_ID
@@ -97,5 +97,5 @@
 /atom/movable/screen/alert/status_effect/void_prison
 	name = "Void Prison"
 	desc = "A Yawning void encases your mortal coil." //Go straight to jail, do not pass GO, do not collect 200$
-	icon = 'icons/mob/actions/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	icon_state = "voidball_effect"

@@ -5,7 +5,7 @@
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "furious_steel"
 	sound = 'sound/items/weapons/guillotine.ogg'
 
@@ -155,7 +155,7 @@
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
 	background_icon_state = "bg_heretic" // kept intentionally
 	overlay_icon_state = "bg_cult_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "cursed_steel"
 	sound = 'sound/items/weapons/guillotine.ogg'
 

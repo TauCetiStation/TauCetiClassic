@@ -5,7 +5,7 @@
 		It has a minimum range of 3 tiles and a maximum range of 9 tiles."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "voidblink"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 

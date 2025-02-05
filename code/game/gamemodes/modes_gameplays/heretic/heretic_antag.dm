@@ -78,7 +78,7 @@
 
 /datum/antagonist/heretic/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
 	//basic icon parameters
-	var/icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	var/icon_path = 'icons/hud/actions_ecult.dmi'
 	var/icon_state = "eye"
 	var/icon_frame = knowledge.research_tree_icon_frame
 	var/icon_dir = knowledge.research_tree_icon_dir
