@@ -124,7 +124,7 @@
 		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5, examiner)
 		to_chat(examiner, span_notice("You feel less hungry."))
 		to_chat(examiner, span_warning("You should stockpile raw meat and organs, before you get hungry again."))
-		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
+		SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
 		return
 
 	// A list made of the organs and bodyparts the heretic can get

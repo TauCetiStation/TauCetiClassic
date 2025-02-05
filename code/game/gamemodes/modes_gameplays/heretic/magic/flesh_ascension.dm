@@ -32,7 +32,7 @@
 			var/datum/brain_trauma/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))
 			nearby_human.gain_trauma(trauma, TRAUMA_RESILIENCE_LOBOTOMY)
 		// And a negative moodlet
-		nearby_human.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		SEND_SIGNAL(nearby_human, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 	return ..()
 

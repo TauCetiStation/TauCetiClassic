@@ -52,7 +52,7 @@
 
 	required_atoms = list(
 		/obj/item/stack/sheet/mineral/diamond = 1,
-		/obj/item/stack/sheet/mineral/plasma = 1,
+		/obj/item/stack/sheet/mineral/phoron = 1,
 	)
 	result_atoms = list(/obj/item/coin/eldritch)
 	cost = 1
