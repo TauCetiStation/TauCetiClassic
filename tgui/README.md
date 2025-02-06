@@ -37,7 +37,7 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.18.3+](https://nodejs.org/en/download/)
+- [Node v20](https://nodejs.org/en/download/)
 - [Yarn v1.22.4+](https://yarnpkg.com/getting-started/install) (optional)
 - [Git Bash](https://git-scm.com/downloads)
   or [MSys2](https://www.msys2.org/) (optional)
@@ -90,6 +90,7 @@ doing development on IE8).
 - `bin/tgui --test` - Run tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --clean` - Clean up project repo.
+- `bin/tgui --prettier` - Run a prettier with write flag to fix code style issues.
 - `bin/tgui [webpack options]` - Build the project with custom webpack
 options.
 

@@ -154,7 +154,7 @@
 /datum/role/changeling/extraPanelButtons()
 	var/dat = ..()
 	if(absorbed_dna.len && (antag.current.real_name != absorbed_dna[1]) )
-		dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];changeling_initialdna=1'>(Transform to initial appearance)</a>"
+		dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];changeling_initialdna=1'>(Transform to initial appearance)</a>"
 	return dat
 
 /datum/role/changeling/RoleTopic(href, href_list, datum/mind/M, admin_auth)

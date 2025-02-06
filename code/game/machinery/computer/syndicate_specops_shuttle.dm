@@ -128,7 +128,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 		dat = temp
 	else
 		dat  = {"\nМестоположение: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Отправляющийся на [station_name_ru] через [seconds] [seconds_word]":syndicate_elite_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
-			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*Шаттл элитного отряда Синдиката уже отправляется.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Возвращение шаттла на материнский корабль</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
+			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*Шаттл элитного отряда Синдиката уже отправляется.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='byond://?src=\ref[src];sendtodock=1'>Возвращение шаттла на материнский корабль</A><BR>\n<BR>":"\n<A href='byond://?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
 	var/datum/browser/popup = new(user, "computer", "Шаттл специального назначения", 575, 450)
 	popup.set_content(dat)
@@ -161,7 +161,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 
 		to_chat(usr, "<span class='notice'>Шаттл элитного отряда Синдиката прибудет на [station_name_ru] через [seconds] [seconds_word].</span>")
 
-		temp  = "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp  = "Шаттл отправляется.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 		syndicate_elite_shuttle_moving_to_station = TRUE
 		syndicate_elite_shuttle_time = world.timeofday + SYNDICATE_ELITE_MOVETIME
 		syndicate_elite_shuttle_move("station")

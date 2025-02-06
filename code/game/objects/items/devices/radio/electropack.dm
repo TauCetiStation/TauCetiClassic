@@ -109,7 +109,7 @@
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>
-<A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
+<A href='byond://?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
 <B>Frequency/Code</B> for electropack:<BR>
 Frequency:
 <A href='byond://?src=\ref[src];freq=-10'>-</A>

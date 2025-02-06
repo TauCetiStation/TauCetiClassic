@@ -99,7 +99,7 @@
 	var/i
 	for(i=contents.len, i>=1, i--)
 		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
+		dat += "<tr><td><a href='byond://?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
 	dat += "</table></center>"
 
 	var/datum/browser/popup = new(user, "filingcabinet", src.name, 350, 300)

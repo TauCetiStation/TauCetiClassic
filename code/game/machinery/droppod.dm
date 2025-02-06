@@ -600,22 +600,22 @@
 	var/output = {"<div class='wr'>
 				<div class='header'>Commands</div>
 				<div class='links'>
-				<a href='?src=\ref[src];start_aiming=1'>Aim</a><br>
-				[select_target ? "<a href='?src=\ref[src];select_target=1'>Select Target</a><br>" : null]</a><br>
-				<a href='?src=\ref[src];locked=1'>Pod is [(stat_flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
-				[ishuman(intruder) ? "<a href='?src=\ref[src];set_dna=1'>[stored_dna ? "un" : ""]set Dna</a><br>" : null]</a><br>
+				<a href='byond://?src=\ref[src];start_aiming=1'>Aim</a><br>
+				[select_target ? "<a href='byond://?src=\ref[src];select_target=1'>Select Target</a><br>" : null]</a><br>
+				<a href='byond://?src=\ref[src];locked=1'>Pod is [(stat_flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
+				[ishuman(intruder) ? "<a href='byond://?src=\ref[src];set_dna=1'>[stored_dna ? "un" : ""]set Dna</a><br>" : null]</a><br>
 				</div>
 				</div>
 				<hr>
 				<div class='wr'>
 				<div class='header'>Storage</div>
 				<div class='links'>
-				<a href='?src=\ref[src];eject_items=1'>Eject Items<br>
-				[Stored_Nuclear ? "<a href='?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
-				[second_intruder ? "<a href='?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
+				<a href='byond://?src=\ref[src];eject_items=1'>Eject Items<br>
+				[Stored_Nuclear ? "<a href='byond://?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
+				[second_intruder ? "<a href='byond://?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
 				</div>
 				</div>
-				<a href='?src=\ref[src];eject=1'><span id='eject'>Eject</span></a><br>
+				<a href='byond://?src=\ref[src];eject=1'><span id='eject'>Eject</span></a><br>
 				"}
 	return output
 

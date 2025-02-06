@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	
+
 	// base turf luminosity, works against byond native darkness
 	// most likely you shouldn't touch it
 	// currently direcly used only by starlight/environment lighting
@@ -150,7 +150,7 @@
 	var/atom/priority_target = mover.original
 
 	// Then check priority target if it on the tile
-	if(!isturf(priority_target) && priority_target.loc == T)
+	if(priority_target && !isturf(priority_target) && priority_target.loc == T)
 		if(isliving(priority_target))
 			if(!mover.check_miss(priority_target))
 				alive_obstacle = priority_target
@@ -307,6 +307,19 @@
 // override for environment turfs, since they should never hide anything
 /turf/environment/levelupdate()
 	return
+
+/turf/environment/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()

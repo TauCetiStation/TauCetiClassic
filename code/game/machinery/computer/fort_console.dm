@@ -67,7 +67,7 @@
 
 	html += "</div><div class='Section__title'>Purchase list</div><div class='Section'>"
 	for(var/datum/fort_console_lot/lot as anything in shoplist)
-		html += "<a href='?src=[REF(src)];purchase=[REF(lot)]' [lot.unlocked ? "" : "class='disabled'"] title='[lot.desc]'>[lot.name] ([lot.price] points)</a><br>"
+		html += "<a href='byond://?src=[REF(src)];purchase=[REF(lot)]' [lot.unlocked ? "" : "class='disabled'"] title='[lot.desc]'>[lot.name] ([lot.price] points)</a><br>"
 	html += "</div>"
 
 	var/datum/browser/popup = new(user, "fort_console", "Command Computer", 400, 700)

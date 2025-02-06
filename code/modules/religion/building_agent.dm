@@ -145,6 +145,11 @@
 	favor_cost = 0
 	piety_cost = 100
 
+/datum/building_agent/tech/aspect/New(name, icon, icon_state)
+	src.name = name
+	src.icon = icon
+	src.icon_state = icon_state
+
 /datum/building_agent/tech/cult
 
 /datum/building_agent/tech/cult/memorize_rune

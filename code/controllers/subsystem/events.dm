@@ -112,7 +112,7 @@ SUBSYSTEM_DEF(events)
 		to_chat(world, message)
 
 /datum/controller/subsystem/events/proc/GetInteractWindow()
-	var/html = "<A align='right' href='?src=\ref[src];refresh=1'>Refresh</A>"
+	var/html = "<A align='right' href='byond://?src=\ref[src];refresh=1'>Refresh</A>"
 	if(!config.allow_random_events)
 		html = "<span class='red'>Random events has been disabled by SERVER!</span><br>" + html
 	else
@@ -122,11 +122,11 @@ SUBSYSTEM_DEF(events)
 			if(!EC.delayed)
 				pause_all = TRUE
 				break
-		html += "<A align='right' href='?src=\ref[src];pause_all=[pause_all ? "Pause" : "Resume"]'>[pause_all ? "Pause" : "Resume"] All</A><br>"
+		html += "<A align='right' href='byond://?src=\ref[src];pause_all=[pause_all ? "Pause" : "Resume"]'>[pause_all ? "Pause" : "Resume"] All</A><br>"
 
 	if(selected_event_container)
 		var/event_time = max(0, selected_event_container.next_event_time - world.time)
-		html += "<A align='right' href='?src=\ref[src];back=1'>Back</A><br>"
+		html += "<A align='right' href='byond://?src=\ref[src];back=1'>Back</A><br>"
 		html += "Time till start: [round(event_time / 600, 0.1)]<br>"
 		html += "<div class='Section'>"
 		html += "<h2>Available [severity_to_string[selected_event_container.severity]] Events (queued & running events will not be displayed)</h2>"
@@ -135,13 +135,13 @@ SUBSYSTEM_DEF(events)
 		for(var/datum/event_meta/EM in selected_event_container.available_events)
 			html += "<tr>"
 			html += "<td>[EM.name]</td>"
-			html += "<td><A align='right' href='?src=\ref[src];set_weight=\ref[EM]'>[EM.weight]</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];set_weight=\ref[EM]'>[EM.weight]</A></td>"
 			html += "<td>[EM.min_weight]</td>"
 			html += "<td>[EM.max_weight]</td>"
-			html += "<td><A align='right' href='?src=\ref[src];toggle_oneshot=\ref[EM]'>[EM.one_shot]</A></td>"
-			html += "<td><A align='right' href='?src=\ref[src];toggle_enabled=\ref[EM]'>[EM.enabled]</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];toggle_oneshot=\ref[EM]'>[EM.one_shot]</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];toggle_enabled=\ref[EM]'>[EM.enabled]</A></td>"
 			html += "<td><span class='red'>[EM.get_weight(number_active_with_role())]</span></td>"
-			html += "<td><A align='right' href='?src=\ref[src];remove=\ref[EM];EC=\ref[selected_event_container]'>Remove</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];remove=\ref[EM];EC=\ref[selected_event_container]'>Remove</A></td>"
 			html += "</tr>"
 		html += "</table>"
 		html += "</div>"
@@ -151,16 +151,16 @@ SUBSYSTEM_DEF(events)
 		html += "<table align='center'>"
 		html += "<tr><th>Name</th><th class='collapsing'>Type</th><th class='collapsing'>Weight</th><th class='collapsing'>OneShot</th></tr>"
 		html += "<tr>"
-		html += "<td><A align='right' href='?src=\ref[src];set_name=\ref[new_event]'>[new_event.name ? new_event.name : "Enter Event"]</A></td>"
-		html += "<td><A align='right' href='?src=\ref[src];set_type=\ref[new_event]'>[new_event.event_type ? new_event.event_type : "Select Type"]</A></td>"
-		html += "<td><A align='right' href='?src=\ref[src];set_weight=\ref[new_event]'>[new_event.weight ? new_event.weight : 0]</A></td>"
-		html += "<td><A align='right' href='?src=\ref[src];toggle_oneshot=\ref[new_event]'>[new_event.one_shot]</A></td>"
+		html += "<td><A align='right' href='byond://?src=\ref[src];set_name=\ref[new_event]'>[new_event.name ? new_event.name : "Enter Event"]</A></td>"
+		html += "<td><A align='right' href='byond://?src=\ref[src];set_type=\ref[new_event]'>[new_event.event_type ? new_event.event_type : "Select Type"]</A></td>"
+		html += "<td><A align='right' href='byond://?src=\ref[src];set_weight=\ref[new_event]'>[new_event.weight ? new_event.weight : 0]</A></td>"
+		html += "<td><A align='right' href='byond://?src=\ref[src];toggle_oneshot=\ref[new_event]'>[new_event.one_shot]</A></td>"
 		html += "</tr>"
 		html += "</table>"
-		html += "<A align='right' href='?src=\ref[src];add=\ref[selected_event_container]'>Add</A><br>"
+		html += "<A align='right' href='byond://?src=\ref[src];add=\ref[selected_event_container]'>Add</A><br>"
 		html += "</div>"
 	else
-		html += "<A align='right' href='?src=\ref[src];toggle_report=1'>Round End Report: [report_at_round_end ? "On": "Off"]</A><br>"
+		html += "<A align='right' href='byond://?src=\ref[src];toggle_report=1'>Round End Report: [report_at_round_end ? "On": "Off"]</A><br>"
 		html += "<div class='Section'>"
 		html += "<h2>Event Start</h2>"
 
@@ -174,16 +174,16 @@ SUBSYSTEM_DEF(events)
 			html += "<td>[worldtime2text(max(EC.next_event_time, world.time))]</td>"
 			html += "<td>[round(next_event_at / 600, 0.1)]</td>"
 			html += "<td>"
-			html +=   "<A align='right' href='?src=\ref[src];dec_timer=2;event=\ref[EC]'>--</A>"
-			html +=   "<A align='right' href='?src=\ref[src];dec_timer=1;event=\ref[EC]'>-</A>"
-			html +=   "<A align='right' href='?src=\ref[src];inc_timer=1;event=\ref[EC]'>+</A>"
-			html +=   "<A align='right' href='?src=\ref[src];inc_timer=2;event=\ref[EC]'>++</A>"
+			html +=   "<A align='right' href='byond://?src=\ref[src];dec_timer=2;event=\ref[EC]'>--</A>"
+			html +=   "<A align='right' href='byond://?src=\ref[src];dec_timer=1;event=\ref[EC]'>-</A>"
+			html +=   "<A align='right' href='byond://?src=\ref[src];inc_timer=1;event=\ref[EC]'>+</A>"
+			html +=   "<A align='right' href='byond://?src=\ref[src];inc_timer=2;event=\ref[EC]'>++</A>"
 			html += "</td>"
 			html += "<td>"
-			html +=   "<A align='right' href='?src=\ref[src];pause=\ref[EC]'>[EC.delayed ? "Resume" : "Pause"]</A>"
+			html +=   "<A align='right' href='byond://?src=\ref[src];pause=\ref[EC]'>[EC.delayed ? "Resume" : "Pause"]</A>"
 			html += "</td>"
 			html += "<td>"
-			html +=   "<A align='right' href='?src=\ref[src];interval=\ref[EC]'>[EC.delay_modifier]</A>"
+			html +=   "<A align='right' href='byond://?src=\ref[src];interval=\ref[EC]'>[EC.delay_modifier]</A>"
 			html += "</td>"
 			html += "</tr>"
 		html += "</table>"
@@ -198,9 +198,9 @@ SUBSYSTEM_DEF(events)
 			var/datum/event_meta/EM = EC.next_event
 			html += "<tr>"
 			html += "<td>[severity_to_string[severity]]</td>"
-			html += "<td><A align='right' href='?src=\ref[src];select_event=\ref[EC]'>[EM ? EM.name : "Random"]</A></td>"
-			html += "<td><A align='right' href='?src=\ref[src];view_events=\ref[EC]'>View</A></td>"
-			html += "<td><A align='right' href='?src=\ref[src];clear=\ref[EC]'>Clear</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];select_event=\ref[EC]'>[EM ? EM.name : "Random"]</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];view_events=\ref[EC]'>View</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];clear=\ref[EC]'>Clear</A></td>"
 			html += "</tr>"
 		html += "</table>"
 		html += "</div>"
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(events)
 			html += "<td>[EM.name]</td>"
 			html += "<td>[no_end ? "N/A" : worldtime2text(ends_at)]</td>"
 			html += "<td>[no_end ? "N/A" : ends_in]</td>"
-			html += "<td><A align='right' href='?src=\ref[src];stop=\ref[E]'>Stop</A></td>"
+			html += "<td><A align='right' href='byond://?src=\ref[src];stop=\ref[E]'>Stop</A></td>"
 			html += "</tr>"
 		html += "</table>"
 		html += "</div>"
@@ -385,8 +385,8 @@ SUBSYSTEM_DEF(events)
 	if(config.chat_bridge && custom_event_msg)
 		world.send2bridge(
 			type = list(BRIDGE_ANNOUNCE),
-			attachment_title = "Custom Event",
-			attachment_msg = custom_event_msg + "\nJoin now: <[BYOND_JOIN_LINK]>",
+			attachment_title = "Ивент от администрации",
+			attachment_msg = "[custom_event_msg]\n[BRIDGE_JOIN_LINKS]",
 			attachment_color = BRIDGE_COLOR_ANNOUNCE,
 			mention = BRIDGE_MENTION_EVENT,
 		)

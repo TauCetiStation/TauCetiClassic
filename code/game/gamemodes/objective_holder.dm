@@ -39,17 +39,17 @@
 		var/obj_count = 1
 		for(var/datum/objective/O in objectives)
 			dat += {"<b>Objective #[obj_count++]</b>: [O.explanation_text]
-				[admin_edit ? " - <a href='?src=\ref[M];obj_delete=\ref[O];obj_holder=\ref[src]'>(remove)</a> - <a href='?src=\ref[M];obj_completed=\ref[O];obj_holder=\ref[src]'>(toggle:[O.completion_to_string()])</a>" : ""]
+				[admin_edit ? " - <a href='byond://?src=\ref[M];obj_delete=\ref[O];obj_holder=\ref[src]'>(remove)</a> - <a href='byond://?src=\ref[M];obj_completed=\ref[O];obj_holder=\ref[src]'>(toggle:[O.completion_to_string()])</a>" : ""]
 				<br>"}
 			if(check_success)
 				dat += {"<BR>[O.completion_to_string()]"}
 	if(admin_edit)
 		if (owner)
 			dat += "<b> Manage role: </b> <br/>"
-			dat += "<a href='?src=\ref[M];obj_add=1;obj_holder=\ref[src]'>(add personal objective)</a> <br/>"
+			dat += "<a href='byond://?src=\ref[M];obj_add=1;obj_holder=\ref[src]'>(add personal objective)</a> <br/>"
 		else if (faction)
 			dat += "<b> Manage faction: </b> <br/>"
-			dat += "<a href='?src=\ref[M];obj_add=1;obj_holder=\ref[src]'>(add faction objective)</a> <br/>"
-		dat += "<a href='?src=\ref[M];obj_gen=1;obj_holder=\ref[src];obj_owner=[faction?"\ref[faction]":"\ref[R]"]'>(generate objectives)</a> <br/>"
-		dat += "<a href='?src=\ref[M];obj_announce=1;obj_owner=[faction?"\ref[faction]":"\ref[R]"]'>(annouce objectives)</a><br/>"
+			dat += "<a href='byond://?src=\ref[M];obj_add=1;obj_holder=\ref[src]'>(add faction objective)</a> <br/>"
+		dat += "<a href='byond://?src=\ref[M];obj_gen=1;obj_holder=\ref[src];obj_owner=[faction?"\ref[faction]":"\ref[R]"]'>(generate objectives)</a> <br/>"
+		dat += "<a href='byond://?src=\ref[M];obj_announce=1;obj_owner=[faction?"\ref[faction]":"\ref[R]"]'>(annouce objectives)</a><br/>"
 	return dat
