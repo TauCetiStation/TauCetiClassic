@@ -45,7 +45,7 @@
 	ears?.adjustEarDamage(0, (moon_smile_duration + 1 SECONDS) / (2 SECONDS))
 
 	cast_on.adjust_silence(moon_smile_duration + 1 SECONDS)
-	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)
+	SEND_SIGNAL(cast_on, COMSIG_ADD_MOOD_EVENT, "moon_smile", /datum/mood_event/moon_smile)
 
 	// Only knocksdown if the target has a low enough sanity
 	if(cast_on.mob_mood.sanity < 40)

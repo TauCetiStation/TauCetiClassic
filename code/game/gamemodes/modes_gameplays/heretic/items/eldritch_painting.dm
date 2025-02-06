@@ -147,7 +147,7 @@
 	to_chat(examiner, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 	to_chat(examiner, span_warning("The void screams!"))
 	// Adds a negative mood event to our heretic
-	examiner.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
+	SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
 
 // Great chaparral over rolling hills, this one doesn't have the sensor type
 /obj/item/wallframe/painting/eldritch/vines
@@ -191,7 +191,7 @@
 	to_chat(examiner, span_notice("You are transfixed for a moment by the chaotic patterns the vines make."))
 	to_chat(examiner, span_notice("You feel life coalesce and bloom beneath you."))
 	new item_to_spawn(examiner.drop_location())
-	examiner.add_mood_event("heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
+	SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
 
 
 // Lady out of gates, gives a brain trauma causing the person to scratch themselves
@@ -244,8 +244,8 @@
 
 	if(!isheretic(examiner))
 		to_chat(examiner, span_hypnophrase("You feel the rust. The rot."))
-		examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
+		SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
 		return
 
 	to_chat(examiner, span_notice("The painting fills you with resolve."))
-	examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)
+	SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)

@@ -83,7 +83,7 @@
 		victim.balloon_alert(victim, "you feel unable to move away from the parade!")
 		mobs_hit += victim
 
-	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "Moon Insanity", /datum/mood_event/moon_insanity)
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, name)
 	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 

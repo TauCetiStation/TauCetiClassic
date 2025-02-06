@@ -8,6 +8,8 @@
 #define COLOR_ADMIRAL_BLUE              "#051094"
 #define COLOR_INDIGO                    "#281e5d"
 #define COLOR_GREEN                     "#008000"
+#define COLOR_VERY_PALE_LIME_GREEN      "#DDFFD3"
+#define COLOR_HERETIC_GREEN COLOR_VERY_PALE_LIME_GREEN
 #define COLOR_CROCODILE                 "#607d3b"
 #define COLOR_SEAWEED                   "#354a21"
 #define COLOR_DARK_GRAY                 "#404040"

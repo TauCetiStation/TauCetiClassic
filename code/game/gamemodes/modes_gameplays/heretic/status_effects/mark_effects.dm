@@ -283,7 +283,7 @@
 	owner.adjust_confusion(30 SECONDS)
 	owner.adjustOrganLoss(O_BRAIN, 25, owner)
 	owner.emote(pick("giggle", "laugh"))
-	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Moon Insanity", /datum/mood_event/moon_insanity)
 	return ..()
 
 /datum/status_effect/eldritch/moon/on_remove()

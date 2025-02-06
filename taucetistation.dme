@@ -688,6 +688,7 @@
 #include "code\game\gamemodes\modes_gameplays\heretic\items\eldritch_flask.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\eldritch_painting.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\forbidden_book.dm"
+#include "code\game\gamemodes\modes_gameplays\heretic\items\haunted_sword.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\heretic_armor.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\heretic_blades.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\heretic_necks.dm"
