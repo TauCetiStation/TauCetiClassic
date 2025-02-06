@@ -69,7 +69,7 @@
 
 		if(human_in_range.getStaminaLoss() <= 85 && SPT_PROB(30, seconds_per_tick))
 			human_in_range.emote(pick("giggle", "laugh"))
-			human_in_range.adjustStaminaLoss(10)
+			human_in_range.adjustHalLoss(10)
 
 		if(SPT_PROB(25, seconds_per_tick))
 			human_in_range.set_dizzy_if_lower(10 SECONDS)
