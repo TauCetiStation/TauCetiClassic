@@ -55,7 +55,7 @@
 /datum/action/cooldown/spell/aoe/void_pull/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
 	// If the victim's within the stun radius, they're stunned / knocked down
 	if(get_dist(victim, caster) < stun_radius)
-		victim.AdjustKnockdown(3 SECONDS)
+		victim.AdjustWeakened(3 SECONDS)
 		victim.AdjustParalyzed(0.5 SECONDS)
 
 	// Otherwise, they take a few steps closer

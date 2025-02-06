@@ -586,7 +586,7 @@
 	sac_target.set_jitter_if_lower(120 SECONDS)
 	sac_target.set_eye_blur_if_lower(100 SECONDS)
 	sac_target.set_dizzy_if_lower(1 MINUTES)
-	sac_target.AdjustKnockdown(80)
+	sac_target.AdjustWeakened(80)
 	sac_target.adjustHalLoss(120)
 
 	// Glad i'm outta there, though!

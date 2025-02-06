@@ -46,7 +46,7 @@
 	// Cultists are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
 	// Cultists have an identical effect on their stun hand. The heretic's faster spell charge time is made up for by their lack of teammates.
 	if(iscultist(carbon_hit))
-		carbon_hit.AdjustKnockdown(0.5 SECONDS)
+		carbon_hit.AdjustWeakened(0.5 SECONDS)
 		carbon_hit.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
 		carbon_hit.adjust_dizzy_up_to(1.5 SECONDS, 3 SECONDS)
 		ADD_TRAIT(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)) // We don't want this to be a good stunning tool, just minor disorientation
@@ -64,7 +64,7 @@
 		return TRUE
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
-	carbon_hit.AdjustKnockdown(5 SECONDS)
+	carbon_hit.AdjustWeakened(5 SECONDS)
 	carbon_hit.adjustHalLoss(80)
 	carbon_hit.apply_status_effect(/datum/status_effect/next_shove_stuns)
 

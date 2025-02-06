@@ -49,7 +49,7 @@
 
 	// Only knocksdown if the target has a low enough sanity
 	if(cast_on.mob_mood.sanity < 40)
-		cast_on.AdjustKnockdown(2 SECONDS)
+		cast_on.AdjustWeakened(2 SECONDS)
 	//Lowers sanity
 	cast_on.mob_mood.set_sanity(cast_on.mob_mood.sanity - 20)
 	return TRUE
