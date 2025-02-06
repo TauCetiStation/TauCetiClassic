@@ -140,6 +140,9 @@
 	if(HAS_TRAIT(src, TRAIT_DYSLALIA))
 		message = message_with_dyslalia(message)
 
+	if(HAS_TRAIT(src, TRAIT_HERETIC_SLURRING))
+		message = message_heretic_slurring(message)
+
 	if(!speaking)
 		switch(species.name)
 			if(PODMAN)

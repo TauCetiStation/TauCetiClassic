@@ -1301,6 +1301,34 @@
 	)
 	return replace_characters(txt, defects)
 
+/mob/living/carbon/proc/message_heretic_slurring(txt)
+	var/list/heretic_slurring = list(
+	"o" = "у",
+	"t" = "ч",
+	"a" = "ай",
+	"c" = "х",
+	"i" = "сш",
+	"m" = "нгх",
+	"k" = "х",
+	"о" = "у",
+	"т" = "ч",
+	"а" = "ай",
+	"с" = "ш",
+	"и" = "е",
+	"м" = "нгх",
+	"к" = "х",
+	"H" = " РУКИ НОЧИ... ",
+	"h" = " СВЕТ ",
+	"s" = " ПОТОК ",
+	"r" = " ТРЕСК ",
+	"Р" = " РУКИ НОЧИ... ",
+	"е" = " СВЕТ ",
+	"г" = " ПОТОК ",
+	"т" = " ТРЕСК ",
+	" " = " бездна... ",
+	)
+	return replace_characters(txt, heretic_slurring)
+
 /**
  * Get the insulation that is appropriate to the temperature you're being exposed to.
  * All clothing, natural insulation, and traits are combined returning a single value.

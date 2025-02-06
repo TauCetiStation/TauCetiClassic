@@ -201,6 +201,7 @@
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_MANSUS_TOUCHED      "mansus_touched"
+#define TRAIT_HERETIC_SLURRING    "heretic_slurring"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

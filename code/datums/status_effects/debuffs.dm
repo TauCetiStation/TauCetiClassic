@@ -269,6 +269,29 @@
 	desc = "Вы чувствуете головокружение."
 	icon_state = "woozy"
 
+/datum/status_effect/speech/slurring/heretic
+	id = "heretic_slurring"
+	alert_type = /atom/movable/screen/alert/status_effect/heretic_slurring
+	examine_text = "Looks shaken"
+
+/atom/movable/screen/alert/status_effect/heretic_slurring
+	name = "Невнятность"
+	desc = "Вы не можете связать и двух слов."
+	icon_state = "woozy"
+
+/datum/status_effect/clumsy/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/speech/slurring/heretic/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_HERETIC_SLURRING, STATUS_EFFECT_TRAIT)
+
+/datum/status_effect/speech/slurring/heretic/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_HERETIC_SLURRING, STATUS_EFFECT_TRAIT)
+
 /// Hallucination status effect. How most hallucinations end up happening.
 /datum/status_effect/hallucination
 	id = "hallucination"

@@ -249,3 +249,58 @@
 	else if(amount > 0)
 		C = apply_status_effect(STATUS_EFFECT_CLUMSY, amount SECONDS)
 	return C
+
+//////////////
+
+/mob/living/proc/adjust_timed_status_effect(duration, effect, max_duration)
+	if(!isnum(duration))
+		CRASH("adjust_timed_status_effect: called with an invalid duration. (Got: [duration])")
+
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("adjust_timed_status_effect: called with an invalid effect type. (Got: [effect])")
+
+	// If we have a max duration set, we need to check our duration does not exceed it
+	if(isnum(max_duration))
+		if(max_duration <= 0)
+			CRASH("adjust_timed_status_effect: Called with an invalid max_duration. (Got: [max_duration])")
+
+		if(duration >= max_duration)
+			duration = max_duration
+
+	var/datum/status_effect/existing = has_status_effect(effect)
+	if(existing)
+		if(isnum(max_duration) && duration > 0)
+			// Check the duration remaining on the existing status effect
+			// If it's greater than / equal to our passed max duration, we don't need to do anything
+			var/remaining_duration = existing.duration - world.time
+			if(remaining_duration >= max_duration)
+				return
+
+			// Otherwise, add duration up to the max (max_duration - remaining_duration),
+			// or just add duration if it doesn't exceed our max at all
+			existing.duration += min(max_duration - remaining_duration, duration)
+
+		else
+			existing.duration += duration
+
+		// If the duration was decreased and is now less 0 seconds,
+		// qdel it / clean up the status effect immediately
+		// (rather than waiting for the process tick to handle it)
+		if(existing.duration <= world.time)
+			qdel(existing)
+
+	else if(duration > 0)
+		apply_status_effect(effect, duration)
+	if(!isnum(duration))
+		CRASH("adjust_timed_status_effect: called with an invalid duration. (Got: [duration])")
+
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("adjust_timed_status_effect: called with an invalid effect type. (Got: [effect])")
+
+	// If we have a max duration set, we need to check our duration does not exceed it
+	if(isnum(max_duration))
+		if(max_duration <= 0)
+			CRASH("adjust_timed_status_effect: Called with an invalid max_duration. (Got: [max_duration])")
+
+		if(duration >= max_duration)
+			duration = max_duration
