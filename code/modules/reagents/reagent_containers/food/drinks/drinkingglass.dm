@@ -5,6 +5,7 @@
 	amount_per_transfer_from_this = 5
 	m_amt = 0
 	g_amt = 250
+	var/health = 1
 	volume = 25
 	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
 	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
@@ -24,6 +25,23 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
+
+	if(istype(P, /obj/item/projectile/beam))
+		return
+
+	if(P.damage > 0)
+		health -= P.damage
+		if(health <= 0)
+			shatter()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/proc/shatter()
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	new /obj/item/weapon/shard(loc)
+	reagents.standard_splash(loc)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
