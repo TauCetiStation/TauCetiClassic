@@ -179,9 +179,7 @@
 #define MECH_TYPE_PHAZON		(1<<6)
 #define MECH_TYPE_HONKER		(1<<7)
 #define MECH_TYPE_RETICENCE		(1<<8)
-#define MECH_TYPE_LOCKER		(1<<9)
 #define MECH_TYPE_MARAUDER		(1<<10)
-#define MECH_TYPE_SIDEWINTER	(1<<11)
 #define MECH_TYPE_OLD_DURAND	(1<<12)
 #define MECH_TYPE_DARK_GYGAX	(1<<13)
 

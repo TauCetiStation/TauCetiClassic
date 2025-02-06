@@ -30,17 +30,6 @@
 	new_icon = "titan"
 	allowed_types = MECH_TYPE_RIPLEY
 
-/obj/item/paintkit/ripley_mercenary
-	name = "APLU \"Strike the Earth!\" customisation kit"
-	icon_state = "paintkit_earth"
-	desc = "A kit containing all the needed tools and parts to turn a Ripley into an old Mercenaries APLU."
-
-
-	new_name = "APLU \"Strike the Earth!\""
-	new_desc = "Looks like an over worked, under maintained Ripley with some horrific damage."
-	new_icon = "earth"
-	allowed_types = MECH_TYPE_RIPLEY
-
 /obj/item/paintkit/gygax_syndie
 	name = "Syndicate Gygax customisation kit"
 	icon_state = "paintkit_Black"
@@ -70,6 +59,156 @@
 	new_desc = "A standard APLU exosuit with stylish orange flame decals."
 	new_icon = "ripley_flames_red"
 	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/ripley_blue
+	name = "APLU \"Bluestarter\" customisation kit"
+	icon_state = "paintkit_blue"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Bluestarter\""
+
+	new_name = "APLU \"Bluestarter\""
+	new_desc = "A standard APLU exosuit with stylish blue flame decals."
+	new_icon = "ripley_flames_blue"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/soviet_ripley
+	name = "APLU \"Soviet Ripley\" customisation kit"
+	icon_state = "paintkit_red"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Soviet Ripley\""
+
+	new_name = "APLU \"Soviet Ripley\""
+	new_desc = "A standard soviet ripley exosuitwith sickle and hammer."
+	new_icon = "soviet"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/pirate_ripley
+	name = "APLU \"Pirate Ripley\" customisation kit"
+	icon_state = "paintkit_pirate"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Pirate Ripley\""
+
+	new_name = "APLU \"Pirate Ripley\""
+	new_desc = "A standard pirate Ripley exosuit"
+	new_icon = "pirate"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/clown_ripley
+	name = "APLU \"Clown Ripley\" customisation kit"
+	icon_state = "paintkit_red"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Clown Ripley\""
+
+	new_name = "APLU \"Clown Ripley\""
+	new_desc = "A standard clown Ripley exosuit"
+	new_icon = "clowny"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/dreadnought_ripley
+	name = "APLU \"Dreadnought Ripley\" customisation kit"
+	icon_state = "paintkit_hauler"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Dreadnought Ripley\""
+
+	new_name = "APLU \"Dreadnought Ripley\""
+	new_desc = "A standard dreadnought Ripley exosuit"
+	new_icon = "dreadnought"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/ripley_med
+	name = "APLU \"Med Ripley\" customisation kit"
+	icon_state = "paintkit_white"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Med Ripley\""
+
+	new_name = "APLU \"Med Ripley\""
+	new_desc = "A standard med Ripley exosuit"
+	new_icon = "ripley_med"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/ripley_camo
+	name = "APLU \"Camo Ripley\" customisation kit"
+	icon_state = "paintkit_pobeda"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Camo Ripley\""
+
+	new_name = "APLU \"Camo Ripley\""
+	new_desc = "A standard camo Ripley exosuit"
+	new_icon = "ripley_camo"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/ripley_junker
+	name = "APLU \"Junker Ripley\" customisation kit"
+	icon_state = "paintkit"
+	desc = "A kit containing all the needed tools and parts to turn a Ripley into APLU \"Junker Ripley\""
+
+	new_name = "APLU \"Junker Ripley\""
+	new_desc = "A standard junker Ripley exosuit"
+	new_icon = "ripley_junker"
+	allowed_types = MECH_TYPE_RIPLEY
+
+/obj/item/paintkit/gygax_carp
+	name = "Gygax \"Carp\" customisation kit"
+	icon_state = "paintkit_plazmus"
+	desc = "A kit containing all the needed tools and parts to turn a Gygax into a carp space exosuit."
+
+	new_name = "Carp"
+	new_desc = "A heavy-duty old Gygax having the outdated coloring of a space carp!"
+	new_icon = "gygax_carp"
+	allowed_types = MECH_TYPE_GYGAX
+
+/obj/item/paintkit/gygax_blue
+	name = "Gygax \"Blue\" customisation kit"
+	icon_state = "paintkit_plazmus"
+	desc = "A kit containing all the needed tools and parts to turn a Gygax  blue."
+
+	new_name = "Blue"
+	new_desc = "A heavy-duty old Gygax having the outdated coloring blue!"
+	new_icon = "gygax_blue"
+	allowed_types = MECH_TYPE_GYGAX
+
+/obj/item/paintkit/gygax_blue
+	name = "Gygax \"Blue\" customisation kit"
+	icon_state = "paintkit_blue"
+	desc = "A kit containing all the needed tools and parts to turn a Gygax  blue."
+
+	new_name = "Blue"
+	new_desc = "A heavy-duty Gygax having the coloring blue"
+	new_icon = "gygax_blue"
+	allowed_types = MECH_TYPE_GYGAX
+
+/obj/item/paintkit/gygax_green
+	name = "Gygax \"Green\" customisation kit"
+	icon_state = "paintkit_pobeda"
+	desc = "A kit containing all the needed tools and parts to turn a Gygax green."
+
+	new_name = "Green"
+	new_desc = "A heavy-duty Gygax having the coloring green."
+	new_icon = "gygax_green"
+	allowed_types = MECH_TYPE_GYGAX
+
+/obj/item/paintkit/gygax_turtle
+	name = "Gygax \"Turtle\" customisation kit"
+	icon_state = "paintkit_pobeda"
+	desc = "A kit containing all the needed tools and parts to turn a Gygax turtle."
+
+	new_name = "Turtle"
+	new_desc = "A heavy-duty Gygax having the coloring turtle."
+	new_icon = "gygax_turtle"
+	allowed_types = MECH_TYPE_GYGAX
+
+/obj/item/paintkit/durand_turtle
+	name = "Durand \"Turtle\" modification kit"
+	icon_state = "paintkit_pobeda"
+	desc = "A kit containing all the needed tools and parts to turn a Durand turtle."
+
+	new_name = "Turtle"
+	new_desc = "A heavy-duty Durand having the coloring turtle."
+	new_icon = "durand_turtle"
+	allowed_types = MECH_TYPE_DURAND
+
+/obj/item/paintkit/paladin
+	name = "Durand \"Paladin\" modification kit"
+	icon_state = "paintkit_executor"
+	desc = "A kit containing all the needed tools and parts to turn a Durand paladin."
+
+	new_name = "Paladin"
+	new_desc = "A heavy-duty Durand having the coloring paladin."
+	new_icon = "paladin"
+	allowed_types = MECH_TYPE_DURAND
 
 /obj/item/paintkit/firefighter_Hauler
 	name = "APLU \"Hauler\" customisation kit"
