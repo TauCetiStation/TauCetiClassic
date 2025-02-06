@@ -252,7 +252,7 @@
 		star_touch_spell.set_star_gazer(star_gazer_mob)
 		star_touch_spell.ascended = TRUE
 
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/role/heretic/heretic_datum = user.mind.has_antag_datum(/datum/role/heretic)
 	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)
 	blade_upgrade.combo_duration = 10 SECONDS
 	blade_upgrade.combo_duration_amount = 10 SECONDS

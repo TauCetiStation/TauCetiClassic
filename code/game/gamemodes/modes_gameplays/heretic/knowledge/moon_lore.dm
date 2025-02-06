@@ -178,7 +178,7 @@
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, type)
-	user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
+	user.mind.add_antag_datum(/datum/role/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	var/amount_of_lunatics = 0
@@ -209,7 +209,7 @@
 		if(amount_of_lunatics > max_lunatics)
 			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you."))
 			continue
-		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
+		var/datum/role/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/role/lunatic)
 		lunatic.set_master(user.mind, user)
 		var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(crewmate.drop_location())
 		var/static/list/slots = list(

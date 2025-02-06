@@ -123,7 +123,7 @@
 			return PROJECTILE_PIERCE_PHASE
 
 		if(caster.mind)
-			var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+			var/datum/role/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/role/heretic_monster)
 			if(monster?.master == caster.mind)
 				return PROJECTILE_PIERCE_PHASE
 

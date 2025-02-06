@@ -1,5 +1,5 @@
 ///Tracking reasons
-/datum/antagonist/heretic_monster
+/datum/role/heretic_monster
 	name = "\improper Eldritch Horror"
 	roundend_category = "Heretics"
 	antagpanel_category = ANTAG_GROUP_HORRORS
@@ -12,7 +12,7 @@
 	/// Our master (a heretic)'s mind.
 	var/datum/mind/master
 
-/datum/antagonist/heretic_monster/on_removal()
+/datum/role/heretic_monster/on_removal()
 	if(!silent)
 		if(master?.current)
 			to_chat(master.current, span_warning("The essence of [owner], your servant, fades from your mind."))
@@ -26,7 +26,7 @@
 /*
  * Set our [master] var to a new mind.
  */
-/datum/antagonist/heretic_monster/proc/set_owner(datum/mind/master)
+/datum/role/heretic_monster/proc/set_owner(datum/mind/master)
 	src.master = master
 	owner.enslave_mind_to_creator(master.current)
 

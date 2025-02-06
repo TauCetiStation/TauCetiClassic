@@ -1,5 +1,5 @@
 // A type of antagonist created by the moon ascension
-/datum/antagonist/lunatic
+/datum/role/lunatic
 	name = "\improper Lunatic"
 	hijack_speed = 0
 	antagpanel_category = ANTAG_GROUP_HORRORS
@@ -16,7 +16,7 @@
 	// Our objective
 	var/datum/objective/lunatic/lunatic_obj
 
-/datum/antagonist/lunatic/on_gain()
+/datum/role/lunatic/on_gain()
 	// Masters gain an objective before so we dont want duplicates
 	for(var/objective in objectives)
 		if(!istype(objective, /datum/objective/lunatic))
@@ -28,7 +28,7 @@
 	return ..()
 
 /// Runs when the moon heretic creates us, used to give the lunatic a master
-/datum/antagonist/lunatic/proc/set_master(datum/mind/heretic_master, mob/living/carbon/human/heretic_body)
+/datum/role/lunatic/proc/set_master(datum/mind/heretic_master, mob/living/carbon/human/heretic_body)
 	src.ascended_heretic = heretic_master
 	src.ascended_body = heretic_body
 
@@ -37,11 +37,11 @@
 
 	to_chat(owner, span_boldnotice("Ruin the lie, save the truth through obeying [heretic_master] the ringleader!"))
 
-/datum/antagonist/lunatic/apply_innate_effects(mob/living/mob_override)
+/datum/role/lunatic/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge from the moon has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= F_HERETICS
-	add_team_hud(our_mob, /datum/antagonist/lunatic)
+	add_team_hud(our_mob, /datum/role/lunatic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
 	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
@@ -49,7 +49,7 @@
 	mad_touch.Grant(our_mob)
 	moon_track.Grant(our_mob)
 
-/datum/antagonist/lunatic/remove_innate_effects(mob/living/mob_override)
+/datum/role/lunatic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= F_HERETICS
@@ -73,17 +73,17 @@
 	explanation_text = "Assist your ringleader [master], do not harm fellow lunatics"
 
 // Lunatic master
-/datum/antagonist/lunatic/master
+/datum/role/lunatic/master
 	name = "\improper Ringleader"
 	antag_hud_name = "lunatic_master"
 
-/datum/antagonist/lunatic/master/on_gain()
+/datum/role/lunatic/master/on_gain()
 	var/datum/objective/lunatic/loony = new()
 	objectives += loony
 	loony.is_master = TRUE
 	loony.update_explanation_text()
 	return ..()
 
-/datum/antagonist/lunatic/master/apply_innate_effects(mob/living/mob_override)
+/datum/role/lunatic/master/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
-	add_team_hud(our_mob, /datum/antagonist/lunatic)
+	add_team_hud(our_mob, /datum/role/lunatic)

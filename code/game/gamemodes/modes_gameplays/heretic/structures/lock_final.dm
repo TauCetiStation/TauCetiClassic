@@ -75,7 +75,7 @@
 	var/mob/living/monster = new monster_type(loc)
 	monster.key = user.key
 	monster.set_name()
-	var/datum/antagonist/heretic_monster/woohoo_free_antag = new(src)
+	var/datum/role/heretic_monster/woohoo_free_antag = new(src)
 	monster.mind.add_antag_datum(woohoo_free_antag)
 	if(ascendee)
 		monster.faction = ascendee.current.faction

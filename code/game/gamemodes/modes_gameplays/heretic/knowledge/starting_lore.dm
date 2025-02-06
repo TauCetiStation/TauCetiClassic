@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return TRUE
 
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
+	var/datum/role/heretic/our_heretic = GET_HERETIC(user)
 	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	// For sanity's sake, check if they've got a living heart -
 	// even though it's not invokable if you already have one,
@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return FALSE
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
+	var/datum/role/heretic/our_heretic = GET_HERETIC(user)
 	var/obj/item/organ/our_new_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 
 	// Our heart is robotic or synthetic - we need to replace it, and we fortunately should have one by here
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
 	if(alert != "Yes I'm sure" || QDELETED(user) || QDELETED(src) || get_dist(user, loc) > 2)
 		return FALSE
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	if(QDELETED(heretic_datum) || heretic_datum.feast_of_owls)
 		return FALSE
 

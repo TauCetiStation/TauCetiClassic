@@ -552,7 +552,7 @@
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
-	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+	var/datum/role/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/role/heretic_monster)
 	heretic_monster.set_owner(user.mind)
 
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
@@ -644,7 +644,7 @@
 	return !was_completed
 
 /datum/heretic_knowledge/knowledge_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
+	var/datum/role/heretic/our_heretic = GET_HERETIC(user)
 	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
 	was_completed = TRUE
 
@@ -694,7 +694,7 @@
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	if(!can_be_invoked(heretic_datum))
 		return FALSE
 
@@ -715,7 +715,7 @@
 	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
 
 	// Show the cool red gradiant in our UI

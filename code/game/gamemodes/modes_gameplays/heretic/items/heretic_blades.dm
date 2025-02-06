@@ -144,7 +144,7 @@
 	. = ..()
 	if(!infused || target == user || !isliving(target))
 		return
-	var/datum/antagonist/heretic/heretic_datum = isheretic(user)
+	var/datum/role/heretic/heretic_datum = isheretic(user)
 	var/mob/living/living_target = target
 	if(!heretic_datum)
 		return
@@ -273,7 +273,7 @@
 /obj/item/melee/sickly_blade/cursed/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	. = ..()
 
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	if(!heretic_datum)
 		return NONE
 

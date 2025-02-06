@@ -237,7 +237,7 @@
 	// We don't need to set being_drained back since we delete after anyways
 	loc.balloon_alert(user, "influence drained")
 
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.knowledge_points += knowledge_to_gain
 
 	// Aaand now we delete it
@@ -267,5 +267,5 @@
 
 /// Hud used for heretics to see influences
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/heretic
-	antag_datum_type = /datum/antagonist/heretic
+	antag_datum_type = /datum/role/heretic
 	add_ghost_version = TRUE

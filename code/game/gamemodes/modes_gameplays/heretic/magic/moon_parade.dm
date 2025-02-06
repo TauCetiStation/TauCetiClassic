@@ -54,11 +54,11 @@
 	if(!caster.mind)
 		return PROJECTILE_PIERCE_HIT
 
-	var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+	var/datum/role/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/role/heretic_monster)
 	if(monster?.master == caster.mind)
 		return PROJECTILE_PIERCE_PHASE
 
-	var/datum/antagonist/lunatic/lunatic = victim.mind?.has_antag_datum(/datum/antagonist/lunatic)
+	var/datum/role/lunatic/lunatic = victim.mind?.has_antag_datum(/datum/role/lunatic)
 	if(lunatic?.ascended_heretic == caster.mind)
 		return PROJECTILE_PIERCE_PHASE
 

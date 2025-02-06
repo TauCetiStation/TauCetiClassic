@@ -1,5 +1,5 @@
 ///a heretic that got soultrapped by cultists. does nothing, other than signify they suck
-/datum/antagonist/soultrapped_heretic
+/datum/role/soultrapped_heretic
 	name = "\improper Soultrapped Heretic"
 	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
@@ -17,7 +17,7 @@
 	name = "soultrapped failure"
 	explanation_text = "Help the cult. Kill the cult. Help the crew. Kill the crew. Help your wielder. Kill your wielder. Kill everyone. Rattle your chains. Break your bindings."
 
-/datum/antagonist/soultrapped_heretic/on_gain()
+/datum/role/soultrapped_heretic/on_gain()
 	..()
 	var/policy = get_policy(ROLE_SOULTRAPPED_HERETIC)
 	if(policy)

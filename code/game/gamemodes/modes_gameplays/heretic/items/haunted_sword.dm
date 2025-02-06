@@ -315,7 +315,7 @@
 	// Get the heretic's new body and antag datum.
 	trapped_entity = trapped_mind?.current
 	trapped_entity.key = trapped_mind?.key
-	var/datum/antagonist/heretic/heretic_holder = GET_HERETIC(trapped_entity)
+	var/datum/role/heretic/heretic_holder = GET_HERETIC(trapped_entity)
 	if(!heretic_holder)
 		stack_trace("[soul_to_bind] in but not a heretic on the heretic soul blade.")
 
@@ -329,10 +329,10 @@
 
 	// Copy the objectives to keep for roundend, remove the datum as neither us nor the heretic need it anymore
 	var/list/copied_objectives = heretic_holder.objectives.Copy()
-	trapped_entity.mind.remove_antag_datum(/datum/antagonist/heretic)
+	trapped_entity.mind.remove_antag_datum(/datum/role/heretic)
 
 	// Add the fallen antag datum, give them a heads-up of what's happening.
-	var/datum/antagonist/soultrapped_heretic/bozo = new()
+	var/datum/role/soultrapped_heretic/bozo = new()
 	bozo.objectives |= copied_objectives
 	trapped_entity.mind.add_antag_datum(bozo)
 
