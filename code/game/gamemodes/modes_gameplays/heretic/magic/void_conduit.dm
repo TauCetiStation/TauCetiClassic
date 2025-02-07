@@ -1,20 +1,20 @@
-/datum/action/cooldown/spell/conjure/void_conduit
+/obj/effect/proc_holder/spell/conjure/void_conduit
 	name = "Void Conduit"
 	desc = "Opens a gate to the Void; it releases an intermittent pulse that damages windows and airlocks, \
 		while afflicting Heathens with void chill. \
 		Affected Heretics instead receive low pressure resistance."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "void_rift"
 
-	cooldown_time = 1 MINUTES
+	charge_max = 1 MINUTES
 
 	sound = null
 	school = SCHOOL_FORBIDDEN
 	invocation = "MBR'C' TH' V''D!"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
+
 
 	summon_radius = 0
 	summon_type = list(/obj/structure/void_conduit)

@@ -1,18 +1,18 @@
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+/obj/effect/proc_holder/spell/jaunt/ethereal_jaunt/ash
 	name = "Ashen Passage"
 	desc = "A short range spell that allows you to pass unimpeded through walls."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "ash_shift"
 	sound = null
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 15 SECONDS
+	charge_max = 15 SECONDS
 
 	invocation = "ASH'N P'SSG'"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
+
 
 	exit_jaunt_sound = null
 	jaunt_duration = 1.1 SECONDS
@@ -21,10 +21,10 @@
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ash_shift
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/ash_shift/out
 
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_steam_effects()
+/obj/effect/proc_holder/spell/jaunt/ethereal_jaunt/ash/do_steam_effects()
 	return
 
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long
+/obj/effect/proc_holder/spell/jaunt/ethereal_jaunt/ash/long
 	name = "Ashen Walk"
 	desc = "A long range spell that allows you pass unimpeded through multiple walls."
 	jaunt_duration = 5 SECONDS

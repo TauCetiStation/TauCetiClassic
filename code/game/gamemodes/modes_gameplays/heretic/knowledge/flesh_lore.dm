@@ -31,7 +31,7 @@
 		/obj/item/weapon/kitchenknife = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 	)
-	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
+	result_atoms = list(/obj/item/weapon/sickly_blade/flesh)
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
@@ -214,7 +214,7 @@
 		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
 	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
 		I learned that they could be silenced."
-	action_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
+	action_to_add = /obj/effect/proc_holder/spell/touch/flesh_surgery
 	cost = 1
 
 /datum/heretic_knowledge/summon/raw_prophet
@@ -293,7 +293,7 @@
 
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
+	var/obj/effect/proc_holder/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
 	worm_spell.Grant(user)
 
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)

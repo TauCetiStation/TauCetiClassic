@@ -27,7 +27,7 @@
 		/obj/item/weapon/kitchenknife = 1,
 		/obj/item/stack/sheet/mineral/silver = 1,
 	)
-	result_atoms = list(/obj/item/melee/sickly_blade/dark)
+	result_atoms = list(/obj/item/weapon/sickly_blade/dark)
 	limit = 4 // It's the blade path, it's a given
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
@@ -116,12 +116,12 @@
 	var/obj/item/striking_with
 
 	// First we'll check if the offhand is valid
-	if(!QDELETED(off_hand) && istype(off_hand, /obj/item/melee/sickly_blade))
+	if(!QDELETED(off_hand) && istype(off_hand, /obj/item/weapon/sickly_blade))
 		striking_with = off_hand
 
 	// Then we'll check the mainhand
 	// We do mainhand second, because we want to prioritize it over the offhand
-	if(!QDELETED(main_hand) && istype(main_hand, /obj/item/melee/sickly_blade))
+	if(!QDELETED(main_hand) && istype(main_hand, /obj/item/weapon/sickly_blade))
 		striking_with = main_hand
 
 	// No valid item in either slot? No riposte
@@ -185,7 +185,7 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	action_to_add = /datum/action/cooldown/spell/realignment
+	action_to_add = /obj/effect/proc_holder/spell/realignment
 	cost = 1
 
 
@@ -283,17 +283,17 @@
 	SIGNAL_HANDLER
 
 	var/held_item = cast_on.get_active_held_item()
-	if(!istype(held_item, /obj/item/melee/sickly_blade/dark))
+	if(!istype(held_item, /obj/item/weapon/sickly_blade/dark))
 		return NONE
-	var/obj/item/melee/sickly_blade/dark/held_blade = held_item
+	var/obj/item/weapon/sickly_blade/dark/held_blade = held_item
 	if(held_blade.infused)
 		return NONE
 	held_blade.infused = TRUE
 	held_blade.update_appearance(UPDATE_ICON)
 
 	//Infuse our off-hand blade just so it's nicer visually
-	var/obj/item/melee/sickly_blade/dark/off_hand_blade = cast_on.get_inactive_held_item()
-	if(istype(off_hand_blade, /obj/item/melee/sickly_blade/dark))
+	var/obj/item/weapon/sickly_blade/dark/off_hand_blade = cast_on.get_inactive_held_item()
+	if(istype(off_hand_blade, /obj/item/weapon/sickly_blade/dark))
 		off_hand_blade.infused = TRUE
 		off_hand_blade.update_appearance(UPDATE_ICON)
 	cast_on.update_held_items()
@@ -305,7 +305,7 @@
 		return
 
 	var/obj/item/off_hand = source.get_inactive_held_item()
-	if(QDELETED(off_hand) || !istype(off_hand, /obj/item/melee/sickly_blade))
+	if(QDELETED(off_hand) || !istype(off_hand, /obj/item/weapon/sickly_blade))
 		return
 	// If our off-hand is the blade that's attacking,
 	// quit out now to avoid an infinite stab combo
@@ -353,7 +353,7 @@
 ///Modifies our blade demolition modifier so we can take down doors with it
 /datum/heretic_knowledge/blade_upgrade/blade/proc/on_blade_equipped(mob/user, obj/item/equipped, slot)
 	SIGNAL_HANDLER
-	if(istype(equipped, /obj/item/melee/sickly_blade/dark))
+	if(istype(equipped, /obj/item/weapon/sickly_blade/dark))
 		equipped.demolition_mod = 1.5
 
 /datum/heretic_knowledge/spell/furious_steel
@@ -364,7 +364,7 @@
 		at a target, dealing damage and causing bleeding."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
-	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
+	action_to_add = /obj/effect/proc_holder/spell/pointed/projectile/furious_steel
 	cost = 1
 
 /datum/heretic_knowledge/ultimate/blade_final
@@ -409,8 +409,8 @@
 		delete_after_passing_max = FALSE,
 		recharge_time = 2 MINUTES,
 	)
-	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
-	steel_spell?.cooldown_time /= 2
+	var/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
+	steel_spell?.charge_max /= 2
 
 	var/mob/living/carbon/human/heretic = user
 	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.

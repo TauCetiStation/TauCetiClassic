@@ -1,43 +1,43 @@
 // Shoots out in a wave-like, what rust heretics themselves get
-/datum/action/cooldown/spell/cone/staggered/entropic_plume
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
 	desc = "Spews forth a disorienting plume that causes enemies to strike each other, \
 		briefly blinds them (increasing with range) and poisons them (decreasing with range). \
 		Also spreads rust in the path of the plume."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "entropic_plume"
 	sound = 'sound/effects/magic/forcewall.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	charge_max = 30 SECONDS
 
 	invocation = "'NTR'P'C PL'M'"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
+
 
 	cone_levels = 5
 	respect_density = TRUE
 
-/datum/action/cooldown/spell/cone/staggered/entropic_plume/cast(atom/cast_on)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/cast(atom/cast_on)
 	. = ..()
 	new /obj/effect/temp_visual/dir_setting/entropic(get_step(cast_on, cast_on.dir), cast_on.dir)
 
-/datum/action/cooldown/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf, mob/living/caster, level)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf, mob/living/caster, level)
 	if(ismob(caster))
 		caster.do_rust_heretic_act(target_turf)
 	else
 		target_turf.rust_heretic_act()
 
-/datum/action/cooldown/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, atom/caster, level)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, atom/caster, level)
 	if(victim.can_block_magic(antimagic_flags) || ishereticormonster(victim) || victim == caster)
 		return
 	victim.apply_status_effect(/datum/status_effect/amok)
 	victim.apply_status_effect(/datum/status_effect/cloudstruck, level * 1 SECONDS)
 	victim.adjust_disgust(100)
 
-/datum/action/cooldown/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
 	// At the first level (that isn't level 1) we will be small
 	if(current_level == 2)
 		return 3
@@ -67,20 +67,20 @@
 			pixel_x = -128
 
 // Shoots a straight line of rusty stuff ahead of the caster, what rust monsters get
-/datum/action/cooldown/spell/basic_projectile/rust_wave
+/obj/effect/proc_holder/spell/basic_projectile/rust_wave
 	name = "Patron's Reach"
 	desc = "Channels energy into your hands to release a wave of rust."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "rust_wave"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 35 SECONDS
+	charge_max = 35 SECONDS
 
 	invocation = "SPR'D TH' WO'D"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
+
 
 	projectile_type = /obj/projectile/magic/aoe/rust_wave
 
@@ -98,7 +98,7 @@
 
 /obj/projectile/magic/aoe/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	playsound(src, 'sound/items/tools/welder.ogg', 75, TRUE)
+	playsound(src, 'sound/items/Welder.ogg', 75, TRUE)
 	var/list/turflist = list()
 	var/turf/T1
 	turflist += get_turf(src)
@@ -113,7 +113,7 @@
 			continue
 		T.rust_heretic_act()
 
-/datum/action/cooldown/spell/basic_projectile/rust_wave/short
+/obj/effect/proc_holder/spell/basic_projectile/rust_wave/short
 	name = "Lesser Patron's Reach"
 	projectile_type = /obj/projectile/magic/aoe/rust_wave/short
 

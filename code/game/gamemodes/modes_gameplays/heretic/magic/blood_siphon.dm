@@ -1,29 +1,29 @@
-/datum/action/cooldown/spell/pointed/blood_siphon
+/obj/effect/proc_holder/spell/pointed/blood_siphon
 	name = "Blood Siphon"
 	desc = "A targeted spell that heals your wounds while damaging the enemy. \
 		It has a chance to transfer wounds between you and your enemy."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "blood_siphon"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 15 SECONDS
+	charge_max = 15 SECONDS
 
 	invocation = "FL'MS O'ET'RN'ITY."
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
+
 
 	cast_range = 6
 
-/datum/action/cooldown/spell/pointed/blood_siphon/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/pointed/blood_siphon/can_cast_spell(feedback = TRUE)
 	return ..() && isliving(owner)
 
-/datum/action/cooldown/spell/pointed/blood_siphon/is_valid_target(atom/cast_on)
+/obj/effect/proc_holder/spell/pointed/blood_siphon/is_valid_target(atom/cast_on)
 	return ..() && isliving(cast_on)
 
-/datum/action/cooldown/spell/pointed/blood_siphon/cast(mob/living/cast_on)
+/obj/effect/proc_holder/spell/pointed/blood_siphon/cast(mob/living/cast_on)
 	. = ..()
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
 	if(cast_on.can_block_magic())

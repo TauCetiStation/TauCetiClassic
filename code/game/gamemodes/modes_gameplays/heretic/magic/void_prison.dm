@@ -1,32 +1,32 @@
-/datum/action/cooldown/spell/pointed/void_prison
+/obj/effect/proc_holder/spell/pointed/void_prison
 	name = "Void Prison"
 	desc = "Sends a heathen into the void for 10 seconds. \
 		They will be unable to perform any actions for the duration. \
 		Afterwards, they will be chilled and returned to the mortal plane."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "voidball"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	sound = 'sound/effects/magic/voidblink.ogg'
 
-	cooldown_time = 1 MINUTES
+	charge_max = 1 MINUTES
 	cast_range = 3
 
 	sound = null
 	school = SCHOOL_FORBIDDEN
 	invocation = "V''D PR'S'N!"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
 
-/datum/action/cooldown/spell/pointed/void_prison/before_cast(atom/cast_on)
+
+/obj/effect/proc_holder/spell/pointed/void_prison/before_cast(atom/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
 	if(!ismob(cast_on))
 		return SPELL_CANCEL_CAST
 
-/datum/action/cooldown/spell/pointed/void_prison/cast(mob/living/carbon/human/cast_on)
+/obj/effect/proc_holder/spell/pointed/void_prison/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(

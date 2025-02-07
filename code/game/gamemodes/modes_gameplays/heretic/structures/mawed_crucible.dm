@@ -110,7 +110,7 @@
 	return ..()
 
 /obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
+	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/weapon/magic/mansus_fist))
 		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
 		set_anchored(!anchored)
 		balloon_alert(user, "[anchored ? "":"un"]anchored")

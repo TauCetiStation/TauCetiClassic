@@ -32,7 +32,7 @@
 /datum/action/cancel_crucible_soul
 	name = "Recall"
 	desc = "Use to end the blessing early"
-	button_icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/eldritch.dmi'
 	button_icon_state = "crucible_soul"
 
 /datum/action/cancel_crucible_soul/Trigger(trigger_flags)
@@ -321,7 +321,7 @@
 
 /datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
 	SIGNAL_HANDLER
-	if(!istype(spell, /datum/action/cooldown/spell/caretaker))
+	if(!istype(spell, /obj/effect/proc_holder/spell/caretaker))
 		owner.balloon_alert(owner, "may not cast spells in refuge!")
 		return SPELL_CANCEL_CAST
 

@@ -1,28 +1,28 @@
-/datum/action/cooldown/spell/aoe/void_pull
+/obj/effect/proc_holder/spell/aoe/void_pull
 	name = "Void Pull"
 	desc = "Calls the void, damaging, knocking down, and stunning people nearby. \
 		Distant foes are also pulled closer to you (but not damaged)."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "voidpull"
 	sound = 'sound/effects/magic/voidblink.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	charge_max = 30 SECONDS
 
 	invocation = "BR'NG F'RTH TH'M T' M'."
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
 
-	aoe_radius = 7
+
+	range = 7
 	/// The radius of the actual damage circle done before cast
 	var/damage_radius = 1
 	/// The radius of the stun applied to nearby people on cast
 	var/stun_radius = 4
 
 // Before the cast, we do some small AOE damage around the caster
-/datum/action/cooldown/spell/aoe/void_pull/before_cast(atom/cast_on)
+/obj/effect/proc_holder/spell/aoe/void_pull/before_cast(atom/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
@@ -34,9 +34,9 @@
 		nearby_living.apply_damage(30, BRUTE, wound_bonus = CANT_WOUND)
 		nearby_living.apply_status_effect(/datum/status_effect/void_chill, 1)
 
-/datum/action/cooldown/spell/aoe/void_pull/get_things_to_cast_on(atom/center, radius_override = 1)
+/obj/effect/proc_holder/spell/aoe/void_pull/get_things_to_cast_on(atom/center, radius_override = 1)
 	var/list/things = list()
-	for(var/mob/living/nearby_mob in view(radius_override || aoe_radius, center))
+	for(var/mob/living/nearby_mob in view(radius_override || range, center))
 		if(nearby_mob == owner || nearby_mob == center)
 			continue
 		// Don't grab people who are tucked away or something
@@ -52,7 +52,7 @@
 	return things
 
 // For the actual cast, we microstun people nearby and pull them in
-/datum/action/cooldown/spell/aoe/void_pull/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
+/obj/effect/proc_holder/spell/aoe/void_pull/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
 	// If the victim's within the stun radius, they're stunned / knocked down
 	if(get_dist(victim, caster) < stun_radius)
 		victim.AdjustWeakened(3 SECONDS)

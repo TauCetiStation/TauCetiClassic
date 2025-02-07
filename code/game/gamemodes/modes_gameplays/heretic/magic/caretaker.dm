@@ -1,30 +1,30 @@
-/datum/action/cooldown/spell/caretaker
+/obj/effect/proc_holder/spell/caretaker
 	name = "Caretaker’s Last Refuge"
 	desc = "Shifts you into the Caretaker's Refuge, rendering you translucent and intangible. \
 		While in the Refuge your movement is unrestricted, but you cannot use your hands or cast any spells. \
 		You cannot enter the Refuge while near other sentient beings, \
 		and you can be removed from it upon contact with antimagical artifacts."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "caretaker"
 	sound = 'sound/effects/curse/curse2.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 1 MINUTES
+	charge_max = 1 MINUTES
 
-	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
+	invocation_type = "none"
 
-/datum/action/cooldown/spell/caretaker/Remove(mob/living/remove_from)
+
+/obj/effect/proc_holder/spell/caretaker/Remove(mob/living/remove_from)
 	if(remove_from.has_status_effect(/datum/status_effect/caretaker_refuge))
 		remove_from.remove_status_effect(/datum/status_effect/caretaker_refuge)
 	return ..()
 
-/datum/action/cooldown/spell/caretaker/is_valid_target(atom/cast_on)
+/obj/effect/proc_holder/spell/caretaker/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/caretaker/before_cast(mob/living/cast_on)
+/obj/effect/proc_holder/spell/caretaker/before_cast(mob/living/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
@@ -37,7 +37,7 @@
 	if(!cast_on.has_status_effect(/datum/status_effect/caretaker_refuge))
 		return SPELL_NO_IMMEDIATE_COOLDOWN // cooldown only on exit
 
-/datum/action/cooldown/spell/caretaker/cast(mob/living/cast_on)
+/obj/effect/proc_holder/spell/caretaker/cast(mob/living/cast_on)
 	. = ..()
 
 	var/mob/living/carbon/carbon_user = owner

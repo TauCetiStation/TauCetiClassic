@@ -65,7 +65,7 @@
 
 	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
-		/obj/item/melee/sickly_blade/cursed = 0,
+		/obj/item/weapon/sickly_blade/cursed = 0,
 		/obj/item/clothing/neck/heretic_focus/crimson_medallion = 0,
 		/mob/living/basic/construct/harvester/heretic = 0,
 	)
@@ -96,7 +96,7 @@
 	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
 		var/datum/action/result_action = spell_knowledge.action_to_add
-		icon_path = result_action.button_icon
+		icon_path = result_action.icon
 		icon_state = result_action.button_icon_state
 
 	//if the knowledge is a summon, use the mob sprite
@@ -246,7 +246,7 @@
 	// This makes the image 64x64.
 	icon.Crop(-15, -15, 48, 48)
 
-	var/obj/item/melee/sickly_blade/blade = new
+	var/obj/item/weapon/sickly_blade/blade = new
 	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
 	qdel(blade)
 
@@ -363,7 +363,7 @@
 		return NONE
 
 	var/obj/item/offhand = source.get_inactive_held_item()
-	if(QDELETED(offhand) || !istype(offhand, /obj/item/melee/touch_attack/mansus_fist))
+	if(QDELETED(offhand) || !istype(offhand, /obj/item/weapon/magic/mansus_fist))
 		return NONE
 
 	try_draw_rune(source, target, additional_checks = CALLBACK(src, PROC_REF(check_mansus_grasp_offhand), source))
@@ -434,7 +434,7 @@
  */
 /datum/role/heretic/proc/check_mansus_grasp_offhand(mob/living/user)
 	var/obj/item/offhand = user.get_inactive_held_item()
-	return !QDELETED(offhand) && istype(offhand, /obj/item/melee/touch_attack/mansus_fist)
+	return !QDELETED(offhand) && istype(offhand, /obj/item/weapon/magic/mansus_fist)
 
 /// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL],
 /// Gives the heretic aliving heart on aheal or organ refresh
@@ -459,7 +459,7 @@
 		loot.throw_at(get_step_rand(source), 2, 4, pick(invokers), TRUE)
 
 	// Create the blade, give it the heretic and a randomly-chosen master for the soul sword component
-	var/obj/item/melee/cultblade/haunted/haunted_blade = new(get_turf(source), source, pick(invokers))
+	var/obj/item/weapon/cultblade/haunted/haunted_blade = new(get_turf(source), source, pick(invokers))
 
 	// Cool effect for the rune as well as the item
 	var/obj/effect/rune/convert/conversion_rune = locate() in get_turf(source)
@@ -969,4 +969,4 @@
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
-	r_hand = /obj/item/melee/touch_attack/mansus_fist
+	r_hand = /obj/item/weapon/magic/mansus_fist

@@ -29,8 +29,8 @@
 		team_color = COLOR_CULT_RED
 		magic_holder.magic_enhanced = TRUE
 	else if(ishereticormonster(user) && !active)
-		for(var/datum/action/cooldown/spell/spell_action in user.actions)
-			spell_action.cooldown_time *= 0.5
+		for(var/obj/effect/proc_holder/spell/spell_action in user.actions)
+			spell_action.charge_max *= 0.5
 			active = TRUE
 		team_color = COLOR_GREEN
 	else
@@ -61,8 +61,8 @@
 		to_chat(user, span_notice("Your heart and blood return to their regular old rhythm and flow."))
 
 	if(ishereticormonster(user) && active)
-		for(var/datum/action/cooldown/spell/spell_action in user.actions)
-			spell_action.cooldown_time *= 2
+		for(var/obj/effect/proc_holder/spell/spell_action in user.actions)
+			spell_action.charge_max *= 2
 			active = FALSE
 	QDEL_NULL(component)
 	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))

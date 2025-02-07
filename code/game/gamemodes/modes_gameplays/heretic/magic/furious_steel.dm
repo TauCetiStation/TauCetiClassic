@@ -1,20 +1,20 @@
-/datum/action/cooldown/spell/pointed/projectile/furious_steel
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel
 	name = "Furious Steel"
 	desc = "Summon three silver blades which orbit you. \
 		While orbiting you, these blades will protect you from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "furious_steel"
 	sound = 'sound/items/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 60 SECONDS
+	charge_max = 60 SECONDS
 	invocation = "F'LSH'NG S'LV'R!"
-	invocation_type = INVOCATION_SHOUT
+	invocation_type = "shout"
 
-	spell_requirements = NONE
+
 
 	active_msg = "You summon forth three blades of furious silver."
 	deactive_msg = "You conceal the blades of furious silver."
@@ -27,7 +27,7 @@
 	/// A ref to the status effect surrounding our heretic on activation.
 	var/datum/status_effect/protective_blades/blade_effect
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/Grant(mob/grant_to)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/Grant(mob/grant_to)
 	. = ..()
 	if(!owner)
 		return
@@ -35,17 +35,17 @@
 	if(isheretic(owner))
 		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/Remove(mob/remove_from)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
 	return ..()
 
 /// Signal proc for [SIGNAL_REMOVETRAIT], via [TRAIT_ALLOW_HERETIC_CASTING], to remove the effect when we lose the focus trait
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_focus_lost(mob/source)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/proc/on_focus_lost(mob/source)
 	SIGNAL_HANDLER
 
 	unset_click_ability(source, refund_cooldown = TRUE)
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/clicker, params, atom/target)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/clicker, params, atom/target)
 	// Let the caster prioritize using items like guns over blade casts
 	if(clicker.get_active_held_item())
 		return FALSE
@@ -55,7 +55,7 @@
 
 	return ..()
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/on_activation(mob/on_who)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/on_activation(mob/on_who)
 	. = ..()
 	if(!.)
 		return
@@ -72,27 +72,27 @@
 	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS, projectile_effect)
 	RegisterSignal(blade_effect, COMSIG_QDELETING, PROC_REF(on_status_effect_deleted))
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/on_deactivation(mob/on_who, refund_cooldown = TRUE)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/on_deactivation(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	QDEL_NULL(blade_effect)
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/before_cast(atom/cast_on)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/before_cast(atom/cast_on)
 	if(isnull(blade_effect) || !length(blade_effect.blades))
 		unset_click_ability(owner, refund_cooldown = TRUE)
 		return SPELL_CANCEL_CAST
 
 	return ..()
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/fire_projectile(mob/living/user, atom/target)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/fire_projectile(mob/living/user, atom/target)
 	. = ..()
 	qdel(blade_effect.blades[1])
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/ready_projectile(obj/projectile/to_launch, atom/target, mob/user, iteration)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/ready_projectile(obj/projectile/to_launch, atom/target, mob/user, iteration)
 	. = ..()
 	to_launch.def_zone = check_zone(user.zone_selected)
 
 /// If our blade status effect is deleted, clear our refs and deactivate
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_status_effect_deleted(datum/status_effect/protective_blades/source)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/proc/on_status_effect_deleted(datum/status_effect/protective_blades/source)
 	SIGNAL_HANDLER
 
 	blade_effect = null
@@ -141,29 +141,29 @@
 	wound_bonus = 25
 	outline_color = "#D7CBCA"
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/solo
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/solo
 	name = "Lesser Furious Steel"
-	cooldown_time = 20 SECONDS
+	charge_max = 20 SECONDS
 	projectile_amount = 1
 	active_msg = "You summon forth a blade of furious silver."
 	deactive_msg = "You conceal the blade of furious silver."
 
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/haunted
 	name = "Cursed Steel"
 	desc = "Summon two cursed blades which orbit you. \
 		While orbiting you, these blades will protect you from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
-	background_icon_state = "bg_heretic" // kept intentionally
+	action_background_icon_state = "bg_heretic" // kept intentionally
 	overlay_icon_state = "bg_cult_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "cursed_steel"
 	sound = 'sound/items/weapons/guillotine.ogg'
 
-	cooldown_time = 40 SECONDS
+	charge_max = 40 SECONDS
 	invocation = "IA!"
-	invocation_type = INVOCATION_SHOUT
+	invocation_type = "shout"
 
-	spell_requirements = NONE
+
 
 	active_msg = "You summon forth two cursed blades."
 	deactive_msg = "You conceal the cursed blades."

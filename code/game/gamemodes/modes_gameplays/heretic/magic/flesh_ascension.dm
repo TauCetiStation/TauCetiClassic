@@ -1,17 +1,17 @@
-/datum/action/cooldown/spell/shapeshift/shed_human_form
+/obj/effect/proc_holder/spell/shapeshift/shed_human_form
 	name = "Shed form"
 	desc = "Shed your fragile form, become one with the arms, become one with the emperor. \
 		Causes heavy amounts of brain damage and sanity loss to nearby mortals."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "worm_ascend"
 
 	school = SCHOOL_FORBIDDEN
 
 	invocation = "REALITY UNCOIL!"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
+
 
 	convert_damage = FALSE // Functionally meaningless on Armsy, we track how many segments it had instead
 	possible_shapes = list(/mob/living/basic/heretic_summon/armsy)
@@ -21,7 +21,7 @@
 	/// The radius around us that we cause brain damage / sanity damage to.
 	var/scare_radius = 9
 
-/datum/action/cooldown/spell/shapeshift/shed_human_form/do_shapeshift(mob/living/caster)
+/obj/effect/proc_holder/spell/shapeshift/shed_human_form/do_shapeshift(mob/living/caster)
 	// When we transform into the worm, everyone nearby gets freaked out
 	for(var/mob/living/carbon/human/nearby_human in view(scare_radius, caster))
 		if(ishereticormonster(nearby_human) || nearby_human == caster)
@@ -36,11 +36,11 @@
 
 	return ..()
 
-/datum/action/cooldown/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/basic/heretic_summon/armsy/caster)
+/obj/effect/proc_holder/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/basic/heretic_summon/armsy/caster)
 	if(istype(caster))
 		segment_length = caster.get_length() - 1 // Don't count the head
 
 	return ..()
 
-/datum/action/cooldown/spell/shapeshift/shed_human_form/create_shapeshift_mob(atom/loc)
+/obj/effect/proc_holder/spell/shapeshift/shed_human_form/create_shapeshift_mob(atom/loc)
 	return new shapeshift_type(loc, TRUE, segment_length)

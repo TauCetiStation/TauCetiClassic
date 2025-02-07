@@ -1,19 +1,19 @@
-/datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
+/obj/effect/proc_holder/spell/cone/staggered/cone_of_cold/void
 	name = "Void Blast"
 	desc = "Fires a cone of chilling void in front of you, freezing everything in its path. \
 		Enemies in the cone of the blast will be damaged slightly, slowed, and chilled overtime. \
 		Additionally, objects hit will be frozen and can shatter, and ground hit will be iced over and slippery - \
 		though they may thaw shortly if used in room temperature."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon_state = "icebeam"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	charge_max = 30 SECONDS
 
 	invocation = "FR'ZE!"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
+
 
 	// In room temperature, the ice won't last very long
 	// ...but in space / freezing rooms, it will stick around
@@ -29,7 +29,7 @@
 	// Also freezes stuff (Which will likely be unfrozen similarly to turfs)
 	unfreeze_object_duration = 30 SECONDS
 
-/datum/action/cooldown/spell/cone/staggered/cone_of_cold/void/do_mob_cone_effect(mob/living/target_mob, atom/caster, level)
+/obj/effect/proc_holder/spell/cone/staggered/cone_of_cold/void/do_mob_cone_effect(mob/living/target_mob, atom/caster, level)
 	if(ishereticormonster(target_mob))
 		return
 

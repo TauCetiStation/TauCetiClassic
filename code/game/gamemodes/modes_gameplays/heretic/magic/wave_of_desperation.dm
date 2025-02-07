@@ -1,27 +1,27 @@
-/datum/action/cooldown/spell/aoe/wave_of_desperation
+/obj/effect/proc_holder/spell/aoe/wave_of_desperation
 	name = "Wave Of Desperation"
 	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
 		Cannot be cast unless you are restrained, and the stress renders you unconscious 12 seconds later!"
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "uncuff"
 	sound = 'sound/effects/magic/swap.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 5 MINUTES
+	charge_max = 5 MINUTES
 
 	invocation = "F'K 'FF."
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
 
-	aoe_radius = 3
 
-/datum/action/cooldown/spell/aoe/wave_of_desperation/is_valid_target(mob/living/carbon/cast_on)
+	range = 3
+
+/obj/effect/proc_holder/spell/aoe/wave_of_desperation/is_valid_target(mob/living/carbon/cast_on)
 	return ..() && istype(cast_on) && (cast_on.handcuffed || cast_on.legcuffed)
 
 // Before the cast, we do some small AOE damage around the caster
-/datum/action/cooldown/spell/aoe/wave_of_desperation/before_cast(mob/living/carbon/cast_on)
+/obj/effect/proc_holder/spell/aoe/wave_of_desperation/before_cast(mob/living/carbon/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
@@ -40,9 +40,9 @@
 		victim.AdjustWeakened(3 SECONDS)
 		victim.AdjustParalyzed(0.5 SECONDS)
 
-/datum/action/cooldown/spell/aoe/wave_of_desperation/get_things_to_cast_on(atom/center, radius_override)
+/obj/effect/proc_holder/spell/aoe/wave_of_desperation/get_things_to_cast_on(atom/center, radius_override)
 	. = list()
-	for(var/atom/nearby in orange(center, radius_override ? radius_override : aoe_radius))
+	for(var/atom/nearby in orange(center, radius_override ? radius_override : range))
 		if(nearby == owner || nearby == center || isarea(nearby))
 			continue
 		if(!ismob(nearby))
@@ -58,7 +58,7 @@
 
 		. += nearby_mob
 
-/datum/action/cooldown/spell/aoe/wave_of_desperation/cast_on_thing_in_aoe(atom/victim, atom/caster)
+/obj/effect/proc_holder/spell/aoe/wave_of_desperation/cast_on_thing_in_aoe(atom/victim, atom/caster)
 	if(!ismob(victim))
 		SEND_SIGNAL(owner, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, victim)
 

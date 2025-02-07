@@ -1,19 +1,19 @@
-/datum/action/cooldown/spell/pointed/projectile/moon_parade
+/obj/effect/proc_holder/spell/pointed/projectile/moon_parade
 	name = "Lunar parade"
 	desc = "This unleashes the parade, making everyone in its way join it and suffer hallucinations."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "moon_parade"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
 	sound = 'sound/effects/magic/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	charge_max = 30 SECONDS
 
 	invocation = "L'N'R P'RAD"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
+
 
 	active_msg = "You prepare to make them join the parade!"
 	deactive_msg = "You stop the music and halt the parade... for now."

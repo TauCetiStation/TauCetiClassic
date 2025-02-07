@@ -1,32 +1,32 @@
-/datum/action/cooldown/spell/aoe/moon_ringleader
+/obj/effect/proc_holder/spell/aoe/moon_ringleader
 	name = "Ringleaders Rise"
 	desc = "Big AoE spell that deals brain damage and causes hallucinations to everyone in the AoE. \
 			The worse their sanity, the stronger this spell becomes. \
 			If their sanity is low enough, they even snap and go insane, and the spell then further halves their sanity."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "moon_ringleader"
 	sound = 'sound/effects/moon_parade.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 1 MINUTES
+	charge_max = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 	invocation = "R''S 'E"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
 
-	aoe_radius = 5
+
+	range = 5
 	/// Effect for when the spell triggers
 	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 
-/datum/action/cooldown/spell/aoe/moon_ringleader/cast(mob/living/caster)
+/obj/effect/proc_holder/spell/aoe/moon_ringleader/cast(mob/living/caster)
 	new moon_effect(get_turf(caster))
 	return ..()
 
-/datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
+/obj/effect/proc_holder/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
 	var/list/stuff = list()
-	var/list/o_range = orange(center, radius_override || aoe_radius) - list(owner, center)
+	var/list/o_range = orange(center, radius_override || range) - list(owner, center)
 	for(var/mob/living/carbon/nearby_mob in o_range)
 		if(nearby_mob.stat == DEAD)
 			continue
@@ -41,7 +41,7 @@
 
 	return stuff
 
-/datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/caster)
+/obj/effect/proc_holder/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/caster)
 	var/victim_sanity = victim.mob_mood.sanity
 
 	victim.adjustOrganLoss(O_BRAIN, 100 - victim_sanity, victim)

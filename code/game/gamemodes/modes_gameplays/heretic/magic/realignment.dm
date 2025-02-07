@@ -1,40 +1,40 @@
 // Realignment. It's like Fleshmend but solely for stamina damage and stuns. Sec meta
-/datum/action/cooldown/spell/realignment
+/obj/effect/proc_holder/spell/realignment
 	name = "Realignment"
 	desc = "Realign yourself, rapidly regenerating stamina and reducing any stuns or knockdowns. \
 		You cannot attack while realigning. Can be casted multiple times in short succession, but each cast lengthens the cooldown."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/implants.dmi'
+	icon = 'icons/hud/implants.dmi'
 	button_icon_state = "adrenal"
 	// sound = 'sound/effects/magic/whistlereset.ogg' I have no idea why this was commented out
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 6 SECONDS
+	charge_max = 6 SECONDS
 	cooldown_reduction_per_rank = -6 SECONDS // we're not a wizard spell but we use the levelling mechanic
 	spell_max_level = 10 // we can get up to / over a minute duration cd time
 
 	invocation = "R'S'T."
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
 
-/datum/action/cooldown/spell/realignment/is_valid_target(atom/cast_on)
+
+/obj/effect/proc_holder/spell/realignment/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/realignment/cast(mob/living/cast_on)
+/obj/effect/proc_holder/spell/realignment/cast(mob/living/cast_on)
 	. = ..()
 	cast_on.apply_status_effect(/datum/status_effect/realignment)
 	to_chat(cast_on, span_notice("We begin to realign ourselves."))
 
-/datum/action/cooldown/spell/realignment/after_cast(atom/cast_on)
+/obj/effect/proc_holder/spell/realignment/after_cast(atom/cast_on)
 	. = ..()
 	// With every cast, our spell level increases for a short time, which goes back down after a period
 	// and with every spell level, the cooldown duration of the spell goes up
 	if(level_spell())
-		var/reduction_timer = max(cooldown_time * spell_max_level * 0.5, 1.5 MINUTES)
+		var/reduction_timer = max(charge_max * spell_max_level * 0.5, 1.5 MINUTES)
 		addtimer(CALLBACK(src, PROC_REF(delevel_spell)), reduction_timer)
 
-/datum/action/cooldown/spell/realignment/get_spell_title()
+/obj/effect/proc_holder/spell/realignment/get_spell_title()
 	switch(spell_level)
 		if(1, 2)
 			return "Hasty " // Hasty Realignment

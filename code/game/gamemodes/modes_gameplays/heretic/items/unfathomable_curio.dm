@@ -29,8 +29,8 @@
 		/obj/item/eldritch_potion,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poppy, // Used to regain a Living Heart.
 		/obj/item/weapon/reagent_containers/food/snacks/grown/harebell, // Used to reroll targets
-		/obj/item/melee/rune_carver,
-		/obj/item/melee/sickly_blade,
+		/obj/item/weapon/rune_carver,
+		/obj/item/weapon/sickly_blade,
 		/obj/item/organ, // Organs are also often used in rituals.
 		/obj/item/reagent_containers/cup/beaker/eldritch,
 		/obj/item/stack/sheet/glass, // Glass is often used by moon heretics

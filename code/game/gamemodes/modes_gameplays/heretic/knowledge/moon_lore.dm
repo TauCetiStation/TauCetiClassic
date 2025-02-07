@@ -27,7 +27,7 @@
 		/obj/item/weapon/kitchenknife = 1,
 		/obj/item/stack/sheet/iron = 2,
 	)
-	result_atoms = list(/obj/item/melee/sickly_blade/moon)
+	result_atoms = list(/obj/item/weapon/sickly_blade/moon)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "moon_blade"
 
@@ -70,7 +70,7 @@
 		duration based on their sanity."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
 
-	action_to_add = /datum/action/cooldown/spell/pointed/moon_smile
+	action_to_add = /obj/effect/proc_holder/spell/pointed/moon_smile
 	cost = 1
 
 /datum/heretic_knowledge/mark/moon_mark
@@ -89,7 +89,7 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	action_to_add = /obj/effect/proc_holder/spell/pointed/projectile/moon_parade
 	cost = 1
 
 /datum/heretic_knowledge/moon_amulet
@@ -144,7 +144,7 @@
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
 
-	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
+	action_to_add = /obj/effect/proc_holder/spell/aoe/moon_ringleader
 	cost = 1
 
 

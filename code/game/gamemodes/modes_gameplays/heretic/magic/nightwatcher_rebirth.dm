@@ -1,27 +1,26 @@
-/datum/action/cooldown/spell/aoe/fiery_rebirth
+/obj/effect/proc_holder/spell/aoe/fiery_rebirth
 	name = "Nightwatcher's Rebirth"
 	desc = "A spell that extinguishes you and drains nearby heathens engulfed in flames of their life force, \
 		healing you for each victim drained. Those in critical condition \
 		will have the last of their vitality drained, killing them."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "smoke"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 1 MINUTES
+	charge_max = 1 MINUTES
 
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = SPELL_REQUIRES_HUMAN
+	invocation_type = "whisper"
 
-/datum/action/cooldown/spell/aoe/fiery_rebirth/cast(mob/living/carbon/human/cast_on)
+/obj/effect/proc_holder/spell/aoe/fiery_rebirth/cast(mob/living/carbon/human/cast_on)
 	cast_on.extinguish_mob()
 	return ..()
 
-/datum/action/cooldown/spell/aoe/fiery_rebirth/get_things_to_cast_on(atom/center)
+/obj/effect/proc_holder/spell/aoe/fiery_rebirth/get_things_to_cast_on(atom/center)
 	var/list/things = list()
-	for(var/mob/living/carbon/nearby_mob in range(aoe_radius, center))
+	for(var/mob/living/carbon/nearby_mob in range(range, center))
 		if(nearby_mob == owner || nearby_mob == center)
 			continue
 		if(!nearby_mob.mind || !nearby_mob.client)
@@ -35,7 +34,7 @@
 
 	return things
 
-/datum/action/cooldown/spell/aoe/fiery_rebirth/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/carbon/human/caster)
+/obj/effect/proc_holder/spell/aoe/fiery_rebirth/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/carbon/human/caster)
 	new /obj/effect/temp_visual/eldritch_smoke(get_turf(victim))
 	victim.Beam(caster, icon_state = "r_beam", time = 2 SECONDS)
 

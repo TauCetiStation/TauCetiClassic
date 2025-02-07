@@ -1,5 +1,5 @@
 // The rune carver, a heretic knife that can draw rune traps.
-/obj/item/melee/rune_carver
+/obj/item/weapon/rune_carver
 	name = "carving knife"
 	desc = "A small knife made of cold steel, pure and perfect. Its sharpness can carve into titanium itself - \
 		but only few can evoke the dangers that lurk beneath reality."
@@ -29,7 +29,7 @@
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 
-/obj/item/melee/rune_carver/Initialize(mapload)
+/obj/item/weapon/rune_carver/Initialize(mapload)
 	. = ..()
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
@@ -44,7 +44,7 @@
 	pain_mult = 3
 	rip_time = 15
 
-/obj/item/melee/rune_carver/examine(mob/user)
+/obj/item/weapon/rune_carver/examine(mob/user)
 	. = ..()
 	if(!ishereticormonster(user) && !isobserver(user))
 		return
@@ -55,7 +55,7 @@
 		var/potion_string = span_info("\tThe " + initial(trap.name) + " - " + initial(trap.carver_tip))
 		. += potion_string
 
-/obj/item/melee/rune_carver/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/weapon/rune_carver/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ishereticormonster(user))
 		return NONE
 	if(!isenvironmentturf(interacting_with) || is_type_in_typecache(interacting_with, blacklisted_turfs))
@@ -67,7 +67,7 @@
 /*
  * Begin trying to carve a rune. Go through a few checks, then call do_carve_rune if successful.
  */
-/obj/item/melee/rune_carver/proc/try_carve_rune(turf/open/target_turf, mob/user)
+/obj/item/weapon/rune_carver/proc/try_carve_rune(turf/open/target_turf, mob/user)
 	if(drawing)
 		target_turf.balloon_alert(user, "already carving!")
 		return
@@ -91,7 +91,7 @@
 /*
  * The actual proc that handles selecting the rune to draw and creating it.
  */
-/obj/item/melee/rune_carver/proc/do_carve_rune(turf/open/target_turf, mob/user)
+/obj/item/weapon/rune_carver/proc/do_carve_rune(turf/open/target_turf, mob/user)
 	// Assoc list of [name] to [image] for the radial (to show tooltips)
 	var/static/list/choices = list()
 	// Assoc list of [name] to [path] for after the radial
@@ -129,14 +129,14 @@
 /datum/action/item_action/rune_shatter
 	name = "Rune Break"
 	desc = "Destroys all runes carved by this blade."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon_state = "rune_break"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 
 /datum/action/item_action/rune_shatter/New(Target)
 	. = ..()
-	if(!istype(Target, /obj/item/melee/rune_carver))
+	if(!istype(Target, /obj/item/weapon/rune_carver))
 		qdel(src)
 		return
 
@@ -152,7 +152,7 @@
 		return
 	if(!ishereticormonster(owner))
 		return FALSE
-	var/obj/item/melee/rune_carver/target_sword = target
+	var/obj/item/weapon/rune_carver/target_sword = target
 	if(!length(target_sword.current_runes))
 		return FALSE
 
@@ -162,7 +162,7 @@
 		return
 
 	owner.playsound_local(get_turf(owner), 'sound/effects/magic/blind.ogg', 50, TRUE)
-	var/obj/item/melee/rune_carver/target_sword = target
+	var/obj/item/weapon/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)
 	target_sword.SpinAnimation(5, 1)
 	return TRUE
@@ -194,7 +194,7 @@
 	return ..()
 
 /obj/structure/trap/eldritch/attacked_by(obj/item/weapon, mob/living/user)
-	if(istype(weapon, /obj/item/melee/rune_carver) || istype(weapon, /obj/item/nullrod))
+	if(istype(weapon, /obj/item/weapon/rune_carver) || istype(weapon, /obj/item/nullrod))
 		loc.balloon_alert(user, "carving dispelled")
 		playsound(src, 'sound/items/sheath.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 		qdel(src)
@@ -213,7 +213,7 @@
 	var/mob/living/real_owner = owner?.resolve()
 	if(real_owner)
 		to_chat(real_owner, span_userdanger("[victim.real_name] has stepped foot on the alert rune in [get_area(src)]!"))
-		real_owner.playsound_local(get_turf(real_owner), 'sound/effects/magic/curse.ogg', 50, TRUE)
+		real_owner.playsound_local(get_turf(real_owner), 'sound/effects/curse.ogg', 50, TRUE)
 
 /obj/structure/trap/eldritch/tentacle
 	name = "grasping carving"

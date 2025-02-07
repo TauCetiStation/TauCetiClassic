@@ -1,19 +1,19 @@
-/datum/action/cooldown/spell/cosmic_rune
+/obj/effect/proc_holder/spell/cosmic_rune
 	name = "Cosmic Rune"
 	desc = "Creates a cosmic rune at your position, only two can exist at a time. Invoking one rune transports you to the other. \
 		Anyone with a star mark gets transported along with you."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "cosmic_rune"
 
 	sound = 'sound/effects/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 15 SECONDS
+	charge_max = 15 SECONDS
 
 	invocation = "ST'R R'N'"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
+
 
 	/// Storage for the first rune.
 	var/datum/weakref/first_rune
@@ -22,7 +22,7 @@
 	/// Rune removal effect.
 	var/obj/effect/rune_remove_effect = /obj/effect/temp_visual/cosmic_rune_fade
 
-/datum/action/cooldown/spell/cosmic_rune/cast(atom/cast_on)
+/obj/effect/proc_holder/spell/cosmic_rune/cast(atom/cast_on)
 	. = ..()
 	var/obj/effect/cosmic_rune/first_rune_resolved = first_rune?.resolve()
 	var/obj/effect/cosmic_rune/second_rune_resolved = second_rune?.resolve()
@@ -42,7 +42,7 @@
 		second_rune = make_new_rune(get_turf(cast_on), first_rune_resolved)
 
 /// Returns a weak reference to a new rune, linked to an existing rune if provided
-/datum/action/cooldown/spell/cosmic_rune/proc/make_new_rune(turf/target_turf, obj/effect/cosmic_rune/other_rune)
+/obj/effect/proc_holder/spell/cosmic_rune/proc/make_new_rune(turf/target_turf, obj/effect/cosmic_rune/other_rune)
 	var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(target_turf)
 	if(other_rune)
 		other_rune.link_rune(new_rune)

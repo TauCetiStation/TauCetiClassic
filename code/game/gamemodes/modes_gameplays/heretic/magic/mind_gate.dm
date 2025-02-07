@@ -1,30 +1,30 @@
-/datum/action/cooldown/spell/pointed/mind_gate
+/obj/effect/proc_holder/spell/pointed/mind_gate
 	name = "Mind Gate"
 	desc = "Deals you 20 brain damage and the target suffers a hallucination, \
 			is left confused for 10 seconds, and suffers oxygen loss and brain damage."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "mind_gate"
 
-	sound = 'sound/effects/magic/curse.ogg'
+	sound = 'sound/effects/curse.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 20 SECONDS
+	charge_max = 20 SECONDS
 
 	invocation = "Op' 'oY 'Mi'd"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
+
 	cast_range = 6
 
 	active_msg = "You prepare to open your mind..."
 
-/datum/action/cooldown/spell/pointed/mind_gate/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/pointed/mind_gate/can_cast_spell(feedback = TRUE)
 	return ..() && isliving(owner)
 
-/datum/action/cooldown/spell/pointed/mind_gate/is_valid_target(atom/cast_on)
+/obj/effect/proc_holder/spell/pointed/mind_gate/is_valid_target(atom/cast_on)
 	return ..() && ishuman(cast_on)
 
-/datum/action/cooldown/spell/pointed/mind_gate/cast(mob/living/carbon/human/cast_on)
+/obj/effect/proc_holder/spell/pointed/mind_gate/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("Your mind feels closed."))

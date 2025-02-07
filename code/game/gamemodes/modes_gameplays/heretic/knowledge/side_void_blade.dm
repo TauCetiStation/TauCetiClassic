@@ -129,7 +129,7 @@
 		/obj/item/weapon/shard = 1,
 		/obj/item/weapon/paper = 1,
 	)
-	result_atoms = list(/obj/item/melee/rune_carver)
+	result_atoms = list(/obj/item/weapon/rune_carver)
 	cost = 1
 
 

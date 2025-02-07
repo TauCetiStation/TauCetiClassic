@@ -1,15 +1,15 @@
 // Given to heretic monsters.
-/datum/action/cooldown/spell/shapeshift/eldritch
+/obj/effect/proc_holder/spell/shapeshift/eldritch
 	name = "Shapechange"
 	desc = "A spell that allows you to take on the form of another creature, gaining their abilities. \
 		After making your choice, you will be unable to change to another."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 
 	school = SCHOOL_FORBIDDEN
 	invocation = "SH'PE"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
+
 
 	possible_shapes = list(
 		/mob/living/basic/carp,

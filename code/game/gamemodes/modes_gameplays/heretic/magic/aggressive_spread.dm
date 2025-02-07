@@ -1,24 +1,23 @@
-/datum/action/cooldown/spell/aoe/rust_conversion
+/obj/effect/proc_holder/spell/aoe/rust_conversion
 	name = "Aggressive Spread"
 	desc = "Spreads rust onto nearby surfaces."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "corrode"
-	sound = 'sound/items/tools/welder.ogg'
+	sound = 'sound/items/Welder.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	charge_max = 30 SECONDS
 
 	invocation = "A'GRSV SPR'D"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	invocation_type = "whisper"
 
-	aoe_radius = 2
+	range = 2
 
-/datum/action/cooldown/spell/aoe/rust_conversion/get_things_to_cast_on(atom/center)
+/obj/effect/proc_holder/spell/aoe/rust_conversion/get_things_to_cast_on(atom/center)
 
-	var/list/things_to_convert = RANGE_TURFS(aoe_radius, center)
+	var/list/things_to_convert = RANGE_TURFS(range, center)
 
 	// Also converts things right next to you.
 	for(var/atom/movable/nearby_movable in view(1, center))
@@ -28,10 +27,10 @@
 
 	return things_to_convert
 
-/datum/action/cooldown/spell/aoe/rust_conversion/cast_on_thing_in_aoe(turf/victim, mob/living/caster)
+/obj/effect/proc_holder/spell/aoe/rust_conversion/cast_on_thing_in_aoe(turf/victim, mob/living/caster)
 	// We have less chance of rusting stuff that's further
 	var/distance_to_caster = get_dist(victim, caster)
-	var/chance_of_not_rusting = (max(distance_to_caster, 1) - 1) * 100 / (aoe_radius + 1)
+	var/chance_of_not_rusting = (max(distance_to_caster, 1) - 1) * 100 / (range + 1)
 
 	if(prob(chance_of_not_rusting))
 		return
@@ -41,6 +40,6 @@
 	else
 		victim.rust_heretic_act()
 
-/datum/action/cooldown/spell/aoe/rust_conversion/construct
+/obj/effect/proc_holder/spell/aoe/rust_conversion/construct
 	name = "Construct Spread"
-	cooldown_time = 15 SECONDS
+	charge_max = 15 SECONDS

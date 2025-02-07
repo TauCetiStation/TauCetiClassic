@@ -45,7 +45,7 @@
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
 	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
-	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
+	var/obj/effect/proc_holder/spell/in_hand/mansus_grasp/mad_touch = new /obj/effect/proc_holder/spell/in_hand/mansus_grasp()
 	mad_touch.Grant(our_mob)
 	moon_track.Grant(our_mob)
 

@@ -1,20 +1,20 @@
-/datum/action/cooldown/spell/charged/beam/fire_blast
+/obj/effect/proc_holder/spell/charged/beam/fire_blast
 	name = "Volcano Blast"
 	desc = "Charge up a blast of fire that chains between nearby targets, setting them ablaze. \
 		Targets already on fire will take priority. If the target fails to catch ablaze, or \
 		extinguishes themselves before it bounces, the chain will stop."
-	background_icon_state = "bg_heretic"
+	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/actions_ecult.dmi'
+	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "flames"
 	sound = 'sound/effects/magic/fireball.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 45 SECONDS
+	charge_max = 45 SECONDS
 
 	invocation = "V'LC'N!"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	invocation_type = "shout"
+
 	channel_time = 5 SECONDS
 	target_radius = 5
 	max_beam_bounces = 4
@@ -22,14 +22,14 @@
 	/// How long the beam visual lasts, also used to determine time between jumps
 	var/beam_duration = 2 SECONDS
 
-/datum/action/cooldown/spell/charged/beam/fire_blast/cast(atom/cast_on)
+/obj/effect/proc_holder/spell/charged/beam/fire_blast/cast(atom/cast_on)
 	var/mob/living/caster = get_caster_from_target(cast_on)
 	if(istype(caster))
 		// Caster becomes fireblasted, but in a good way - heals damage over time
 		caster.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration, -2)
 	return ..()
 
-/datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = 4)
+/obj/effect/proc_holder/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = 4)
 	// Send a beam from the origin to the hit mob
 	origin.Beam(to_beam, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/reacting/fire)
 
@@ -70,7 +70,7 @@
 			nearby_living.ignite_mob()
 
 /// Timer callback to continue the chain, calling send_fire_bream recursively.
-/datum/action/cooldown/spell/charged/beam/fire_blast/proc/continue_beam(mob/living/carbon/beamed, bounces)
+/obj/effect/proc_holder/spell/charged/beam/fire_blast/proc/continue_beam(mob/living/carbon/beamed, bounces)
 	// We will only continue the chain if we exist, are still on fire, and still have the status effect
 	if(QDELETED(beamed) || !beamed.on_fire || !beamed.has_status_effect(/datum/status_effect/fire_blasted))
 		return
@@ -85,7 +85,7 @@
 /// Pick a carbon mob in a radius around us that we can reach.
 /// Mobs on fire will have priority and be targeted over others.
 /// Returns null or a carbon mob.
-/datum/action/cooldown/spell/charged/beam/fire_blast/get_target(atom/center)
+/obj/effect/proc_holder/spell/charged/beam/fire_blast/get_target(atom/center)
 	var/list/possibles = list()
 	var/list/priority_possibles = list()
 	for(var/mob/living/carbon/to_check in view(target_radius, center))
