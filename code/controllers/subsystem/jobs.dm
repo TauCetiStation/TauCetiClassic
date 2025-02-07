@@ -546,6 +546,12 @@ SUBSYSTEM_DEF(job)
 
 	spawnId(H, rank, alt_title)
 
+	var/client/Cl = H.client
+	if(Cl && Cl.player_ingame_age)
+		if(isnum(Cl.player_ingame_age) && Cl.player_ingame_age < 5000)
+			var/obj/item/clothing/accessory/newbiebadge/badge = new /obj/item/clothing/accessory/newbiebadge(H)
+			H.equip_or_collect(badge, SLOT_NECK)
+
 //		H.update_icons()
 
 	return TRUE
