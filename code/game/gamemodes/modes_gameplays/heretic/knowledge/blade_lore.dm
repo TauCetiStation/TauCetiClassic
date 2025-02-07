@@ -25,7 +25,7 @@
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	required_atoms = list(
 		/obj/item/weapon/kitchenknife = 1,
-		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
+		/obj/item/stack/sheet/mineral/silver = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
 	limit = 4 // It's the blade path, it's a given
