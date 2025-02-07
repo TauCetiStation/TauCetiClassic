@@ -4,7 +4,7 @@
 	desc = "A mask created from suffering. When you look into its eyes, it looks back."
 	icon_state = "mad_mask"
 	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = SIZE_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT

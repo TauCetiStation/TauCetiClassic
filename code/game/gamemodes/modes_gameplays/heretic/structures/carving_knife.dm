@@ -8,7 +8,7 @@
 	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = SIZE_SMALL
 	wound_bonus = 20
 	force = 10
 	throwforce = 20

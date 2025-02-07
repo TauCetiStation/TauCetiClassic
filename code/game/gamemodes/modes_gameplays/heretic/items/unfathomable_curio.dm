@@ -17,7 +17,7 @@
 
 /obj/item/weapon/storage/belt/unfathomable_curio/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_specific_storage = SIZE_NORMAL
 	atom_storage.max_total_storage = 21
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_box/strilka310/lionhunter,

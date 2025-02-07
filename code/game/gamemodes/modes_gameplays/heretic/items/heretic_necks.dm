@@ -2,7 +2,7 @@
 	name = "amber focus"
 	desc = "An amber focusing glass that provides a link to the world beyond. The necklace seems to twitch, but only when you look at it from the corner of your eye."
 	icon_state = "eldritch_necklace"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = SIZE_SMALL
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/heretic_focus/Initialize(mapload)
@@ -109,7 +109,7 @@
 	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulsing of a thousand others."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eye_medalion"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = SIZE_SMALL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// A secondary clothing trait only applied to heretics.
 	var/heretic_only_trait = TRAIT_THERMAL_VISION
@@ -144,7 +144,7 @@
 	desc = "A strange medallion, which makes its wearer look like they're part of some cult."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eye_medalion"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = SIZE_SMALL
 
 
 // The amulet conversion tool used by moon heretics
@@ -153,7 +153,7 @@
 	desc = "A piece of the mind, the soul and the moon. Gazing into it makes your head spin and hear whispers of laughter and joy."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "moon_amulette"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = SIZE_SMALL
 	// How much damage does this item do to the targets sanity?
 	var/sanity_damage = 20
 

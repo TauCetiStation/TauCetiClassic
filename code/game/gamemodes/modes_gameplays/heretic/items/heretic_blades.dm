@@ -13,7 +13,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = SIZE_NORMAL
 	force = 20
 	throwforce = 10
 	wound_bonus = 5

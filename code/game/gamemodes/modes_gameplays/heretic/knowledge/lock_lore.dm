@@ -123,7 +123,7 @@
 	required_atoms = list(
 		/obj/item/toy/crayon = 1,
 		/obj/item/stack/sheet/wood = 1,
-		/obj/item/multitool = 1,
+		/obj/item/device/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
 	cost = 1

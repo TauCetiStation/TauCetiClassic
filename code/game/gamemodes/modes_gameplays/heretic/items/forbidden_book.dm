@@ -7,7 +7,7 @@
 	base_icon_state = "book"
 	icon_state = "book"
 	worn_icon_state = "book"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = SIZE_SMALL
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
 
@@ -40,11 +40,11 @@
 	if(book_open)
 		close_animation()
 		RemoveElement(/datum/element/heretic_focus)
-		update_weight_class(WEIGHT_CLASS_SMALL)
+		update_weight_class(SIZE_SMALL)
 	else
 		open_animation()
 		AddElement(/datum/element/heretic_focus)
-		update_weight_class(WEIGHT_CLASS_NORMAL)
+		update_weight_class(SIZE_NORMAL)
 
 /obj/item/codex_cicatrix/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)

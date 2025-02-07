@@ -23,7 +23,7 @@
 	worn_icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = SIZE_NORMAL
 	attack_verb_continuous = list("bashes", "curses")
 	attack_verb_simple = list("bash", "curse")
 	resistance_flags = FLAMMABLE

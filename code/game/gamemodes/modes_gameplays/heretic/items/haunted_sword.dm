@@ -179,11 +179,11 @@
 		return
 	if(user.mind?.holy_role)
 		on_priest_handle(user)
-	else if(iscultist_OR_CULTIST_MOB(user))
+	else if(iscultistorcultistmob(user))
 		on_cultist_handle(user)
-	else if(ishereticormonster(user) || IS_LUNATIC(user))
+	else if(ishereticormonster(user) || islunatic(user))
 		on_heresy_handle(user)
-	else if(IS_WIZARD(user))
+	else if(iswizard(user))
 		on_wizard_handle(user)
 	else
 		on_normie_handle(user)
