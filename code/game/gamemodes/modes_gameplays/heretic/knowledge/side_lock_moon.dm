@@ -39,9 +39,9 @@
 	required_atoms = list(
 		/obj/item/organ/lungs = 1,
 		/obj/item/stack/rods = 3,
-		/obj/item/storage/belt = 1,
+		/obj/item/weapon/storage/belt = 1,
 	)
-	result_atoms = list(/obj/item/storage/belt/unfathomable_curio)
+	result_atoms = list(/obj/item/weapon/storage/belt/unfathomable_curio)
 	cost = 1
 
 	research_tree_icon_path = 'icons/obj/clothing/belts.dmi'

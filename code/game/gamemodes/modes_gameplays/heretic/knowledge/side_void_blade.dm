@@ -126,8 +126,8 @@
 
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/shard = 1,
-		/obj/item/paper = 1,
+		/obj/item/weapon/shard = 1,
+		/obj/item/weapon/paper = 1,
 	)
 	result_atoms = list(/obj/item/melee/rune_carver)
 	cost = 1

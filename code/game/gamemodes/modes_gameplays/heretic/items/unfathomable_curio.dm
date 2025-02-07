@@ -1,6 +1,6 @@
 //Item for knock/moon heretic sidepath, it can block 5 hits of damage, acts as storage and if the heretic is examined the examiner suffers brain damage and blindness
 
-/obj/item/storage/belt/unfathomable_curio
+/obj/item/weapon/storage/belt/unfathomable_curio
 	name = "Unfathomable Curio"
 	desc = "It. It looks backs. It looks past. It looks in. It sees. It hides. It opens."
 	icon_state = "unfathomable_curio"
@@ -15,7 +15,7 @@
 	var/charge_increment_delay = 30 SECONDS
 	var/charge_recovery = 1
 
-/obj/item/storage/belt/unfathomable_curio/Initialize(mapload)
+/obj/item/weapon/storage/belt/unfathomable_curio/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
@@ -40,7 +40,7 @@
 	charge_recovery = charge_recovery, shield_icon = heretic_shield_icon, run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
 
 
-/obj/item/storage/belt/unfathomable_curio/equipped(mob/user, slot, initial)
+/obj/item/weapon/storage/belt/unfathomable_curio/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot & slot_flags))
 		return
@@ -50,12 +50,12 @@
 	if(!isheretic(user))
 		to_chat(user, span_warning("The curio wraps around you, and you feel the beating of something dark inside it..."))
 
-/obj/item/storage/belt/unfathomable_curio/dropped(mob/user)
+/obj/item/weapon/storage/belt/unfathomable_curio/dropped(mob/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 // Here we make sure our curio is only able to block while worn on the belt slot
-/obj/item/storage/belt/unfathomable_curio/proc/shield_reaction(mob/living/carbon/human/owner,
+/obj/item/weapon/storage/belt/unfathomable_curio/proc/shield_reaction(mob/living/carbon/human/owner,
 	atom/movable/hitby,
 	damage = 0,
 	attack_text = "the attack",
@@ -70,7 +70,7 @@
 	return NONE
 
 // Our on hit effect
-/obj/item/storage/belt/unfathomable_curio/proc/shield_damaged(mob/living/carbon/wearer, attack_text, new_current_charges)
+/obj/item/weapon/storage/belt/unfathomable_curio/proc/shield_damaged(mob/living/carbon/wearer, attack_text, new_current_charges)
 	var/list/brain_traumas = list(
 		/datum/brain_trauma/severe/mute,
 		/datum/brain_trauma/severe/flesh_desire,
@@ -87,7 +87,7 @@
 	wearer.dropItemToGround(src, TRUE)
 	wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
 
-/obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
+/obj/item/weapon/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	. = ..()
 	if(isheretic(user))
 		return

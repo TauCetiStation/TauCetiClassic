@@ -19,9 +19,9 @@
 	gain_text = "The Owl is the keeper of things that are not quite in practice, but in theory are. Many things are."
 
 	required_atoms = list(
-		/obj/item/shard = 1,
+		/obj/item/weapon/shard = 1,
 		/obj/item/clothing/suit = 1,
-		/obj/item/bedsheet = 1,
+		/obj/item/weapon/bedsheet = 1,
 	)
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/void)
 	cost = 1

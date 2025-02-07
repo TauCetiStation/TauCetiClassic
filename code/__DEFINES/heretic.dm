@@ -25,3 +25,8 @@
 /// - Skeletons cannot be husked (they are snowflaked instead of having a trait)
 /// - Monkeys are monkeys, not quite human (balance reasons)
 #define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !ismonkey(mob))
+
+/// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
+#define HERETIC_NO_HEART_ORGAN -1
+#define HERETIC_NO_LIVING_HEART 0
+#define HERETIC_HAS_LIVING_HEART 1

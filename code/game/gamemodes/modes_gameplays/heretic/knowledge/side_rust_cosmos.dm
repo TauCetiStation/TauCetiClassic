@@ -20,7 +20,7 @@
 
 	required_atoms = list(
 		/obj/structure/reagent_dispensers/watertank = 1,
-		/obj/item/shard = 1,
+		/obj/item/weapon/shard = 1,
 	)
 	result_atoms = list(/obj/item/reagent_containers/cup/beaker/eldritch)
 	cost = 1

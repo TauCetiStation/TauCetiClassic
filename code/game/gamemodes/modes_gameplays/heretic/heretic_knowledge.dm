@@ -593,11 +593,11 @@
 	)
 
 	var/static/list/potential_easy_items = list(
-		/obj/item/shard,
+		/obj/item/weapon/shard,
 		/obj/item/flashlight/flare/candle,
 		/obj/item/weapon/book,
 		/obj/item/weapon/pen,
-		/obj/item/paper,
+		/obj/item/weapon/paper,
 		/obj/item/toy/crayon,
 		/obj/item/device/flashlight,
 		/obj/item/clipboard,

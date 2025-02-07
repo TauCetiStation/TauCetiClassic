@@ -812,3 +812,21 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+/**
+ * Causes effects when the atom gets hit by a rust effect from heretics
+ *
+ * Override this if you want custom behaviour in whatever gets hit by the rust
+ * /turf/rust_turf should be used instead for overriding rust on turfs
+ */
+
+/atom/proc/rust_heretic_act()
+	return
+
+///wrapper proc that passes our mob's rust_strength to the target we are rusting
+/mob/living/proc/do_rust_heretic_act(atom/target)
+	var/datum/role/heretic/heretic_data = GET_HERETIC(src)
+	target.rust_heretic_act(heretic_data?.rust_strength)
+
+/mob/living/basic/heretic_summon/rust_walker/do_rust_heretic_act(atom/target)
+	target.rust_heretic_act(4)

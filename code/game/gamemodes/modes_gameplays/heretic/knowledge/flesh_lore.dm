@@ -264,8 +264,8 @@
 		/obj/item/organ/tail = 1,
 		/obj/item/organ/stomach = 1,
 		/obj/item/organ/tongue = 1,
-		/obj/item/pen = 1,
-		/obj/item/paper = 1,
+		/obj/item/weapon/pen = 1,
+		/obj/item/weapon/paper = 1,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/stalker
 	cost = 1

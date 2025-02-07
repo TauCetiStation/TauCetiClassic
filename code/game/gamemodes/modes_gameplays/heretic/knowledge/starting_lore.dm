@@ -264,10 +264,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
 	required_atoms = list(
 		list(/obj/item/toy/eldritch_book, /obj/item/weapon/book) = 1,
-		/obj/item/pen = 1,
+		/obj/item/weapon/pen = 1,
 		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse) = 1,
 	)
-	banned_atom_types = list(/obj/item/pen)
+	banned_atom_types = list(/obj/item/weapon/pen)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	is_starting_knowledge = TRUE
@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	research_tree_icon_state = "book"
 
 /datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
-	if(item_path == /obj/item/pen)
+	if(item_path == /obj/item/weapon/pen)
 		return "unique type of pen"
 	return ..()
 
