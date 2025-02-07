@@ -5,7 +5,6 @@
 	amount_per_transfer_from_this = 5
 	m_amt = 0
 	g_amt = 250
-	var/health = 1
 	volume = 25
 	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
 	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
@@ -16,12 +15,15 @@
 		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
 			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
-	..()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/proc/shatter()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	reagents.standard_splash(loc)
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
+	..()
+	shatter()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()
@@ -32,16 +34,7 @@
 	if(istype(P, /obj/item/projectile/beam))
 		return
 
-	if(P.damage > 0)
-		health -= P.damage
-		if(health <= 0)
-			shatter()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/proc/shatter()
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	new /obj/item/weapon/shard(loc)
-	reagents.standard_splash(loc)
-	qdel(src)
+	shatter()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
