@@ -24,7 +24,7 @@
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existence. Something's watching me."
-	required_atoms = list(/obj/item/knife = 1)
+	required_atoms = list(/obj/item/weapon/kitchenknife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
@@ -50,10 +50,10 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_void"
 
-/datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/void_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/void_grasp/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -79,11 +79,11 @@
 	/// Traits we apply to become immune to the environment
 	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
 
-/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/role/heretic/our_heretic)
 	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(check_environment))
 
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/role/heretic/our_heretic)
 	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
 	UnregisterSignal(user, COMSIG_LIVING_LIFE)
 
@@ -217,7 +217,7 @@
 		heretic_eyes?.color_cutoffs = list(30, 30, 30)
 		ascended_human.update_sight()
 
-/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/role/heretic/our_heretic)
 	on_death() // Losing is pretty much dying. I think
 
 /**

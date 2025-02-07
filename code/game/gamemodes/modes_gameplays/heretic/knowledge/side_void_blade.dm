@@ -125,7 +125,7 @@
 		I can carve the monolith to reveal the chains!"
 
 	required_atoms = list(
-		/obj/item/knife = 1,
+		/obj/item/weapon/kitchenknife = 1,
 		/obj/item/weapon/shard = 1,
 		/obj/item/weapon/paper = 1,
 	)

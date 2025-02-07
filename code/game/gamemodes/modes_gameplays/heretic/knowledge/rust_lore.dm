@@ -24,7 +24,7 @@
 		You can only create two at a time."
 	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
 	required_atoms = list(
-		/obj/item/knife = 1,
+		/obj/item/weapon/kitchenknife = 1,
 		/obj/item/trash = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
@@ -41,12 +41,12 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_rust"
 
-/datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
 	our_heretic.increase_rust_strength()
 
-/datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
 
 /datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -78,10 +78,10 @@
 	research_tree_icon_state = "cloud_swirl"
 
 
-/datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/role/heretic/our_heretic)
 	user.AddElement(/datum/element/leeching_walk)
 
-/datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/role/heretic/our_heretic)
 	user.RemoveElement(/datum/element/leeching_walk)
 
 /datum/heretic_knowledge/mark/rust_mark
@@ -92,7 +92,7 @@
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 	mark_type = /datum/status_effect/eldritch/rust
 
-/datum/heretic_knowledge/mark/rust_mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/mark/rust_mark/on_gain(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	our_heretic.increase_rust_strength()
 
@@ -116,7 +116,7 @@
 	cost = 1
 	research_tree_icon_frame = 5
 
-/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	our_heretic.increase_rust_strength(TRUE)
 
@@ -128,7 +128,7 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_rust"
 
-/datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	our_heretic.increase_rust_strength()
 
@@ -137,7 +137,7 @@
 		return
 	target.adjust_disgust(50)
 
-/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
@@ -192,7 +192,7 @@
 		TRAIT_STUNIMMUNE,
 	)
 
-/datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	// This map doesn't have a Bridge, for some reason??
 	// Let them complete the ritual anywhere

@@ -25,7 +25,7 @@
 		In addition, they can fit into utility belts."
 	gain_text = "The Locked Labyrinth leads to freedom. But only the trapped Stewards know the correct path."
 	required_atoms = list(
-		/obj/item/knife = 1,
+		/obj/item/weapon/kitchenknife = 1,
 		/obj/item/crowbar = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/lock)
@@ -43,11 +43,11 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_lock"
 
-/datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/lock_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/lock_grasp/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
@@ -122,7 +122,7 @@
 	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
 	required_atoms = list(
 		/obj/item/toy/crayon = 1,
-		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/stack/sheet/wood = 1,
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)

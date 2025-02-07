@@ -478,7 +478,7 @@
 
 	// Locate a cultist team (Is there a better way??)
 	var/mob/living/random_cultist = pick(invokers)
-	var/datum/role/cult/antag = random_cultist.mind.has_antag_datum(/datum/role/cult)
+	var/datum/role/cultist/antag = random_cultist.mind.has_antag_datum(/datum/role/cultist)
 	ASSERT(antag)
 	var/datum/team/cult/cult_team = antag.get_team()
 

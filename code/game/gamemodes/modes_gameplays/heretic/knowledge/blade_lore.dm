@@ -24,7 +24,7 @@
 		You can create up to four at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	required_atoms = list(
-		/obj/item/knife = 1,
+		/obj/item/weapon/kitchenknife = 1,
 		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
@@ -41,10 +41,10 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_blade"
 
-/datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/blade_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_grasp/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/blade_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -75,10 +75,10 @@
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
 
-/datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 
-/datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 /datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
@@ -206,7 +206,7 @@
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 
-/datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/role/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
@@ -214,7 +214,7 @@
 
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
-/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/role/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
 	if(in_duelist_stance)
 		user.remove_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_BATON_RESISTANCE), type)
@@ -268,13 +268,13 @@
 	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
 	var/last_weapon_force = -1
 
-/datum/heretic_knowledge/blade_upgrade/blade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_upgrade/blade/on_gain(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_blade_equipped))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(do_melee_effects))
 
-/datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_HERETIC_BLADE_ATTACK))
 

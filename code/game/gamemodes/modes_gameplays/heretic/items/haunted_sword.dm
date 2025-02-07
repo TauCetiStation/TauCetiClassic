@@ -39,7 +39,7 @@
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(IS_CULTIST(owner) && prob(final_block_chance))
+	if(iscultist(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
@@ -47,7 +47,7 @@
 		return FALSE
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!IS_CULTIST(user) && !free_use)
+	if(!iscultist(user) && !free_use)
 		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message(span_warning("A powerful force shoves [user] away from [target]!"), \
@@ -179,9 +179,9 @@
 		return
 	if(user.mind?.holy_role)
 		on_priest_handle(user)
-	else if(IS_CULTIST_OR_CULTIST_MOB(user))
+	else if(iscultist_OR_CULTIST_MOB(user))
 		on_cultist_handle(user)
-	else if(IS_HERETIC_OR_MONSTER(user) || IS_LUNATIC(user))
+	else if(ishereticormonster(user) || IS_LUNATIC(user))
 		on_heresy_handle(user)
 	else if(IS_WIZARD(user))
 		on_wizard_handle(user)
@@ -431,5 +431,5 @@
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
-	if(!IS_CULTIST(user) && !free_use)
+	if(!iscultist(user) && !free_use)
 		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))

@@ -6,7 +6,7 @@
 		to reroll your sacrifice targets."
 	gain_text = "The heart is the principle that continues and preserves."
 	required_atoms = list(
-		/obj/item/food/grown/harebell = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/harebell = 1,
 		/obj/item/weapon/book = 1,
 		/obj/item/clothing/under = 1,
 	)

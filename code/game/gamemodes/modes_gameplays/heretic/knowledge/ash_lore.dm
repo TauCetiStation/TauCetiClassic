@@ -23,7 +23,7 @@
 		You can only create two at a time."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	required_atoms = list(
-		/obj/item/knife = 1,
+		/obj/item/weapon/kitchenknife = 1,
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
@@ -39,10 +39,10 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_ash"
 
-/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -112,9 +112,9 @@
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	required_atoms = list(
 		/obj/item/organ/liver = 1,
-		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
+		/obj/item/weapon/melee/baton = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
-		/obj/item/flashlight/flare/candle = 4,
+		/obj/item/trash/candle = 4,
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1

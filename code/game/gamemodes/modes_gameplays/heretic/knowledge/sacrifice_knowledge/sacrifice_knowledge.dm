@@ -45,7 +45,7 @@
 	LAZYCLEARLIST(target_blacklist)
 	return ..()
 
-/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	obtain_targets(user, silent = TRUE, heretic_datum = our_heretic)
 	heretic_mind = our_heretic.owner
@@ -118,7 +118,7 @@
  *
  * Returns FALSE if no targets are found, TRUE if the targets list was populated.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE, datum/antagonist/heretic/heretic_datum)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE, datum/role/heretic/heretic_datum)
 
 	// First construct a list of minds that are valid objective targets.
 	var/list/datum/mind/valid_targets = list()
@@ -207,7 +207,7 @@
 
 	var/feedback = "Your patrons accept your offer"
 	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
-	var/datum/role/cult/cultist_datum = GET_CULTIST(sacrifice)
+	var/datum/role/cultist/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
 	if((sac_job_flag & JOB_FLAG_HEAD_OF_STAFF))

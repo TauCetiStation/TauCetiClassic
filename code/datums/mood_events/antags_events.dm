@@ -97,3 +97,8 @@
 	description = "THE MOON JUDGES AND FINDS ME WANTING!!!"
 	mood_change = -3
 	timeout = 5 MINUTES
+
+/datum/mood_event/amulet_insanity
+	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
+	mood_change = -6
+	timeout = 5 MINUTES

@@ -48,7 +48,7 @@
  * * user - The heretic who researched something
  * * our_heretic - The antag datum of who researched us. This should never be null.
  */
-/datum/heretic_knowledge/proc/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/proc/on_research(mob/user, datum/role/heretic/our_heretic)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(gain_text)
@@ -64,7 +64,7 @@
  * * user - the heretic which we're applying things to
  * * our_heretic - The antag datum of who gained us. This should never be null.
  */
-/datum/heretic_knowledge/proc/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/proc/on_gain(mob/user, datum/role/heretic/our_heretic)
 	return
 
 /**
@@ -75,7 +75,7 @@
  * * user - the heretic which we're removing things from
  * * our_heretic - The antag datum of who is losing us. This should never be null.
  */
-/datum/heretic_knowledge/proc/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/proc/on_lose(mob/user, datum/role/heretic/our_heretic)
 	return
 
 /**
@@ -84,7 +84,7 @@
  *
  * Return TRUE to have the ritual show up in the rituals list, FALSE otherwise.
  */
-/datum/heretic_knowledge/proc/can_be_invoked(datum/antagonist/heretic/invoker)
+/datum/heretic_knowledge/proc/can_be_invoked(datum/role/heretic/invoker)
 	return !!LAZYLEN(required_atoms)
 
 /**
@@ -195,7 +195,7 @@
 	QDEL_NULL(created_action_ref)
 	return ..()
 
-/datum/heretic_knowledge/spell/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/on_gain(mob/user, datum/role/heretic/our_heretic)
 	// Added spells are tracked on the body, and not the mind,
 	// because we handle heretic mind transfers
 	// via the antag datum (on_gain and on_lose).
@@ -203,7 +203,7 @@
 	created_action.Grant(user)
 	created_action_ref = WEAKREF(created_action)
 
-/datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/on_lose(mob/user, datum/role/heretic/our_heretic)
 	var/datum/action/cooldown/spell/created_action = created_action_ref?.resolve()
 	if(created_action?.owner == user)
 		created_action.Remove(user)
@@ -255,7 +255,7 @@
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
 
-/datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	our_heretic.heretic_path = GLOB.heretic_research_tree[type][HKT_ROUTE]
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path)
@@ -272,11 +272,11 @@
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 
-/datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/mark/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
-/datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/mark/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /**
@@ -336,11 +336,11 @@
 	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
 	cost = 2
 
-/datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, PROC_REF(on_ranged_eldritch_blade))
 
-/datum/heretic_knowledge/blade_upgrade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/blade_upgrade/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_HERETIC_RANGED_BLADE_ATTACK))
 
 
@@ -594,18 +594,18 @@
 
 	var/static/list/potential_easy_items = list(
 		/obj/item/weapon/shard,
-		/obj/item/flashlight/flare/candle,
+		/obj/item/trash/candle,
 		/obj/item/weapon/book,
 		/obj/item/weapon/pen,
 		/obj/item/weapon/paper,
 		/obj/item/toy/crayon,
 		/obj/item/device/flashlight,
-		/obj/item/clipboard,
+		/obj/item/weapon/clipboard,
 	)
 
 	var/static/list/potential_uncommoner_items = list(
-		/obj/item/restraints/legcuffs/beartrap,
-		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/weapon/legcuffs/beartrap,
+		/obj/item/weapon/handcuffs/cable,
 		/obj/item/weapon/circular_saw,
 		/obj/item/weapon/scalpel,
 		/obj/item/clothing/gloves/insulated,
@@ -622,7 +622,7 @@
 	// 1 uncommon item.
 	required_atoms[pick(potential_uncommoner_items)] += 1
 
-/datum/heretic_knowledge/knowledge_ritual/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/knowledge_ritual/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 
 	var/list/requirements_string = list()
@@ -637,7 +637,7 @@
 
 	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
 
-/datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
+/datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/role/heretic/invoker)
 	return !was_completed
 
 /datum/heretic_knowledge/knowledge_ritual/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -674,7 +674,7 @@
 	/// The sound that's played for the ascension announcement.
 	var/announcement_sound
 
-/datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/ultimate/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	var/total_points = 0
 	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(our_heretic.researched_knowledge))
@@ -684,7 +684,7 @@
 		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [our_heretic.total_sacrifices] people ([our_heretic.high_value_sacrifices] of which were high value)")
 
-/datum/heretic_knowledge/ultimate/can_be_invoked(datum/antagonist/heretic/invoker)
+/datum/heretic_knowledge/ultimate/can_be_invoked(datum/role/heretic/invoker)
 	if(invoker.ascended)
 		return FALSE
 

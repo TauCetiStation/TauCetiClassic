@@ -28,7 +28,7 @@
 		You can only create three at a time."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
 	required_atoms = list(
-		/obj/item/knife = 1,
+		/obj/item/weapon/kitchenknife = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
@@ -36,7 +36,7 @@
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
 
-/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 	var/datum/objective/heretic_summon/summon_objective = new()
 	summon_objective.owner = our_heretic.owner
@@ -59,10 +59,10 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_flesh"
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -122,7 +122,7 @@
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
-		/obj/item/food/grown/poppy = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poppy = 1,
 	)
 	limit = 2
 	cost = 1

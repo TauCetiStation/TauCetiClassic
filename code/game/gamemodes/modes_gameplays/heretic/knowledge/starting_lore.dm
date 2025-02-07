@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
 // Lasts until successfully fishing something up.
-/datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/role/heretic/our_heretic)
 	..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
 
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		you will additionally require a usable organic heart in the transmutation."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
-		/obj/item/food/grown/poppy = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poppy = 1,
 	)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 1 // Knowing how to remake your heart is important
@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	/// The typepath of the organ type required for our heart.
 	var/required_organ_type = /obj/item/organ/heart
 
-/datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/living_heart/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
 
 	var/obj/item/organ/where_to_put_our_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
@@ -124,13 +124,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	else
 		to_chat(user, span_boldnotice("You don't have a heart, or any chest organs for that matter. You didn't get a Living Heart because of it."))
 
-/datum/heretic_knowledge/living_heart/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/living_heart/on_lose(mob/user, datum/role/heretic/our_heretic)
 	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	if(our_living_heart)
 		qdel(our_living_heart.GetComponent(/datum/component/living_heart))
 
 // Don't bother letting them invoke this ritual if they have a Living Heart already in their chest
-/datum/heretic_knowledge/living_heart/can_be_invoked(datum/antagonist/heretic/invoker)
+/datum/heretic_knowledge/living_heart/can_be_invoked(datum/role/heretic/invoker)
 	if(invoker.has_living_heart() == HERETIC_HAS_LIVING_HEART)
 		return FALSE
 	return TRUE
@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	/// amount of research points granted
 	var/reward = 5
 
-/datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/antagonist/heretic/invoker)
+/datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/role/heretic/invoker)
 	return !invoker.feast_of_owls
 
 /datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)

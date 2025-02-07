@@ -246,7 +246,7 @@
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
 /// Checks if the given mob is a blood cultist and is guaranteed to return the datum if possible - will cause issues with above trait
-#define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/role/cult))
+#define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/role/cultist))
 
 /// Checks if the mob is a sentient or non-sentient cultist
 #define iscultistorcultistmob(mob) ((iscultist(mob)) || (mob.faction.Find(F_BLOODCULT)))

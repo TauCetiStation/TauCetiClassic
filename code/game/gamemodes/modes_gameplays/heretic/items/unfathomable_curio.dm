@@ -27,8 +27,8 @@
 		/obj/item/clothing/neck/heretic_focus,
 		/obj/item/codex_cicatrix,
 		/obj/item/eldritch_potion,
-		/obj/item/food/grown/poppy, // Used to regain a Living Heart.
-		/obj/item/food/grown/harebell, // Used to reroll targets
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poppy, // Used to regain a Living Heart.
+		/obj/item/weapon/reagent_containers/food/snacks/grown/harebell, // Used to reroll targets
 		/obj/item/melee/rune_carver,
 		/obj/item/melee/sickly_blade,
 		/obj/item/organ, // Organs are also often used in rituals.

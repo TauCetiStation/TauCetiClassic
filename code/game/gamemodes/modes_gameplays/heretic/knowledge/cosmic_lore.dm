@@ -24,8 +24,8 @@
 		You can only create two at a time."
 	gain_text = "A nebula appeared in the sky, its infernal birth shone upon me. This was the start of a great transcendence."
 	required_atoms = list(
-		/obj/item/knife = 1,
-		/obj/item/stack/sheet/mineral/plasma = 1,
+		/obj/item/weapon/kitchenknife = 1,
+		/obj/item/stack/sheet/mineral/phoron = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/cosmic)
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
@@ -41,10 +41,10 @@
 	research_tree_icon_path = 'icons/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_cosmos"
 
-/datum/heretic_knowledge/cosmic_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/cosmic_grasp/on_gain(mob/user, datum/role/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/cosmic_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/cosmic_grasp/on_lose(mob/user, datum/role/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /// Aplies the effect of the mansus grasp when it hits a target.
