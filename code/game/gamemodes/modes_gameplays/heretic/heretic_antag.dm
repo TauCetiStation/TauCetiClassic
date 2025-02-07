@@ -478,7 +478,7 @@
 
 	// Locate a cultist team (Is there a better way??)
 	var/mob/living/random_cultist = pick(invokers)
-	var/datum/role/cultist/antag = random_cultist.mind.has_antag_datum(/datum/role/cultist)
+	var/datum/role/cultist/antag = random_cultist.mind.GetRoleByType(/datum/role/cultist)
 	ASSERT(antag)
 	var/datum/team/cult/cult_team = antag.get_team()
 
@@ -900,7 +900,7 @@
 	explanation_text = "Sacrifice at least [target_amount] crewmembers."
 
 /datum/objective/minor_sacrifice/check_completion()
-	var/datum/role/heretic/heretic_datum = owner?.has_antag_datum(/datum/role/heretic)
+	var/datum/role/heretic/heretic_datum = owner?.GetRoleByType(/datum/role/heretic)
 	if(!heretic_datum)
 		return FALSE
 	return completed || (heretic_datum.total_sacrifices >= target_amount)
@@ -912,7 +912,7 @@
 	explanation_text = "Sacrifice 1 head of staff."
 
 /datum/objective/major_sacrifice/check_completion()
-	var/datum/role/heretic/heretic_datum = owner?.has_antag_datum(/datum/role/heretic)
+	var/datum/role/heretic/heretic_datum = owner?.GetRoleByType(/datum/role/heretic)
 	if(!heretic_datum)
 		return FALSE
 	return completed || (heretic_datum.high_value_sacrifices >= target_amount)
@@ -949,7 +949,7 @@
 	explanation_text = "Research at least [target_amount] knowledge from the Mansus. You start with [length(GLOB.heretic_start_knowledge)] researched."
 
 /datum/objective/heretic_research/check_completion()
-	var/datum/role/heretic/heretic_datum = owner?.has_antag_datum(/datum/role/heretic)
+	var/datum/role/heretic/heretic_datum = owner?.GetRoleByType(/datum/role/heretic)
 	if(!heretic_datum)
 		return FALSE
 	return completed || (length(heretic_datum.researched_knowledge) >= target_amount)

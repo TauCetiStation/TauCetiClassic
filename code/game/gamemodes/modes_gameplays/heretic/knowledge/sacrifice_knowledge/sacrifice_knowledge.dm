@@ -319,7 +319,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/begin_sacrifice(mob/living/carbon/human/sac_target)
 	. = FALSE
 
-	var/datum/role/heretic/our_heretic = heretic_mind?.has_antag_datum(/datum/role/heretic)
+	var/datum/role/heretic/our_heretic = heretic_mind?.GetRoleByType(/datum/role/heretic)
 	if(!our_heretic)
 		CRASH("[type] - begin_sacrifice was called, and no heretic [heretic_mind ? "antag datum":"mind"] could be found!")
 
@@ -504,7 +504,7 @@
 	sac_target.uncuff()
 	sac_target.clear_mood_event("shadow_realm")
 	if(isheretic(sac_target))
-		var/datum/role/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/role/heretic)
+		var/datum/role/heretic/victim_heretic = sac_target.mind?.GetRoleByType(/datum/role/heretic)
 		victim_heretic.knowledge_points -= 3
 
 	// Wherever we end up, we sure as hell won't be able to explain

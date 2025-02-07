@@ -279,7 +279,7 @@
 	desc = "Вы не можете связать и двух слов."
 	icon_state = "woozy"
 
-/datum/status_effect/clumsy/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/speech/slurring/heretic/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
 	return ..()
