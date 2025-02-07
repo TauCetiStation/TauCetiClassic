@@ -32,4 +32,4 @@
 #define HERETIC_HAS_LIVING_HEART 1
 
 /// JSON string file for all of our heretic influence flavors
-#define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
+#define HERETIC_INFLUENCE_FILE "common/heretic_influences.json"
