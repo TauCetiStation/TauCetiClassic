@@ -30,3 +30,6 @@
 #define HERETIC_NO_HEART_ORGAN -1
 #define HERETIC_NO_LIVING_HEART 0
 #define HERETIC_HAS_LIVING_HEART 1
+
+/// JSON string file for all of our heretic influence flavors
+#define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"

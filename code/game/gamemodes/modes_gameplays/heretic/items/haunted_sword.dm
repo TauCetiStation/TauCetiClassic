@@ -234,7 +234,7 @@
 
 /obj/item/weapon/cultblade/haunted/proc/on_normie_handle(mob/living/user, actiontype)
 	// todo make the former a subtype of latter
-	var/binding_implements = list(/obj/item/book/bible)
+	var/binding_implements = list(/obj/item/weapon/storage/bible)
 	if(!user.is_holding_item_of_types(binding_implements))
 		to_chat(user, span_notice("You need to wield a bible to bind [src]!"))
 		return
