@@ -34,6 +34,8 @@
 	grid_y = rand(7,10)
 
 	grid_mines = rand(7,17)
+	grid_blanks = 0
+	grid_pressed = 0
 
 	grid = new/list(grid_y, grid_x)
 
@@ -90,6 +92,9 @@
 
 /datum/minigame/minesweeper/proc/check_complete()
 	return grid_pressed == grid_blanks
+
+/datum/minigame/minesweeper/proc/get_difficulty()
+	return grid ? grid_mines/grid_blanks : 0
 
 #undef STATE_EMPTY
 #undef STATE_BLANK
