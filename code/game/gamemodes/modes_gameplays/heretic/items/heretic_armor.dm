@@ -1,15 +1,15 @@
 // Eldritch armor. Looks cool, hood lets you cast heretic spells.
-/obj/item/clothing/head/hooded/cult_hoodie/eldritch
+/obj/item/clothing/head/culthood/eldritch
+
 	name = "ominous hood"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "eldritch"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	flash_protect = FLASH_PROTECTION_WELDER
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flash_protection = FLASHES_FULL_PROTECTION
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 35, bomb = 10, bio = 10, rad = 0)
 
-/obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
+/obj/item/clothing/head/culthood/eldritch/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
 
@@ -17,24 +17,12 @@
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
 	icon_state = "eldritch_armor"
-	inhand_icon_state = null
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	hoodtype = /obj/item/clothing/head/culthood/eldritch
 	// Slightly better than normal cult robes
-	armor_type = /datum/armor/cultrobes_eldritch
-
-/datum/armor/cultrobes_eldritch
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
-	bomb = 35
-	bio = 20
-	fire = 20
-	acid = 20
-	wound = 20
+	armor = list(melee = 40, bullet = 45, laser = 55, energy = 50, bomb = 35, bio = 20, rad = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
 	. = ..()
@@ -47,27 +35,17 @@
 	. += span_notice("Allows you to cast heretic spells while the hood is up.")
 
 // Void cloak. Turns invisible with the hood up, lets you hide stuff.
-/obj/item/clothing/head/hooded/cult_hoodie/void
+/obj/item/clothing/head/culthood/void
 	name = "void hood"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
 		With each flash you lose comprehension of what you are seeing."
 	icon_state = "void_cloak"
 	flags_inv = NONE
-	flags_cover = NONE
+	flags = NONE
 	item_flags = EXAMINE_SKIP
-	armor_type = /datum/armor/cult_hoodie_void
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 15, bio = 0, rad = 0)
 
-/datum/armor/cult_hoodie_void
-	melee = 30
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 15
-	wound = 10
-
-/obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
+/obj/item/clothing/head/culthood/void/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
 
@@ -76,22 +54,13 @@
 	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
 		With each flash you lose comprehension of what you are seeing."
 	icon_state = "void_cloak"
-	inhand_icon_state = null
 	allowed = list(/obj/item/weapon/sickly_blade)
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
+	hoodtype = /obj/item/clothing/head/culthood/void
 	flags_inv = NONE
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	// slightly worse than normal cult robes
-	armor_type = /datum/armor/cultrobes_void
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 15, bio = 0, rad = 0)
 	alternative_mode = TRUE
-
-/datum/armor/cultrobes_void
-	melee = 30
-	bullet = 30
-	laser = 30
-	energy = 30
-	bomb = 15
-	wound = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()

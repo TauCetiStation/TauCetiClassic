@@ -86,7 +86,7 @@
 	user.adjustFireLoss( -(50 - abs(heal_amt)) ) // no double dipping
 
 	// I want it to poison the user but I also think it'd be neat if they got their juice as well. But that cancels most of the damage out. So I dunno.
-	user.reagents?.add_reagent(/datum/reagent/fuel/unholywater, rand(6, 10))
+	user.reagents?.add_reagent("unholywater", rand(6, 10))
 	user.reagents?.add_reagent(/datum/reagent/eldritch, rand(6, 10))
 	qdel(src)
 

@@ -5,7 +5,7 @@
 	icon_state = "mad_mask"
 	inhand_icon_state = null
 	w_class = SIZE_SMALL
-	flags_cover = MASKCOVERSEYES
+	flags = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	///Who is wearing this

@@ -20,7 +20,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
-	if(owner.mob_size >= MOB_SIZE_HUMAN)
+	if(owner.mob_size >= SIZE_HUMAN)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_underlay))
 		owner.update_icon(UPDATE_OVERLAYS)
 		return TRUE
@@ -47,7 +47,7 @@
 /datum/status_effect/eldritch/proc/on_effect()
 	SHOULD_CALL_PARENT(TRUE)
 
-	playsound(owner, 'sound/effects/magic/repulse.ogg', 75, TRUE)
+	playsound(owner, 'sound/magic/Repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
 //Each mark has different effects when it is destroyed that combine with the mansus grasp effect.

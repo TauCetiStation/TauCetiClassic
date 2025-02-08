@@ -44,7 +44,7 @@
 	icon_state = "cosmic_gem"
 	duration = 12
 
-/obj/effect/temp_visual/cosmic_gem/Initialize(mapload)
+/obj/effect/temp_visual/cosmic_gem/atom_init(mapload, ...)
 	. = ..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)

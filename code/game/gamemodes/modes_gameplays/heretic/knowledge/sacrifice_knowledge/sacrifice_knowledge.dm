@@ -281,7 +281,7 @@
 		return
 	// Remove the outline, we don't need it anymore.
 	rune?.remove_filter("reward_outline")
-	playsound(loc, 'sound/effects/magic/repulse.ogg', 75, TRUE)
+	playsound(loc, 'sound/magic/Repulse.ogg', 75, TRUE)
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	ASSERT(heretic_datum)
 	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
@@ -389,7 +389,7 @@
 	curse_organs(sac_target)
 
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
-	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/effects/magic/repulse.ogg', asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/Repulse.ogg', asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target(sac_target)
 		return
 

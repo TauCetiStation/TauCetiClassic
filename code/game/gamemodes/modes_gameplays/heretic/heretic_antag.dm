@@ -968,5 +968,5 @@
 	name = "Heretic (Preview only)"
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
-	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	head = /obj/item/clothing/head/culthood/eldritch
 	r_hand = /obj/item/weapon/magic/mansus_fist
