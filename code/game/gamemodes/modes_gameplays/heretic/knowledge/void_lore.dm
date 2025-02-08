@@ -162,7 +162,7 @@
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
 		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 
-	action_to_add = /obj/effect/proc_holder/spell/aoe/void_pull
+	action_to_add = /obj/effect/proc_holder/spell/aoe_turf/void_pull
 	cost = 1
 
 

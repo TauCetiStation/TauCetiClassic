@@ -116,7 +116,7 @@
 		// Rust
 		PATH_RUST = list(
 			WIELDER_SPELLS = list(/obj/effect/proc_holder/spell/cone/staggered/entropic_plume),
-			SWORD_SPELLS = list(/obj/effect/proc_holder/spell/aoe/rust_conversion, /obj/effect/proc_holder/spell/pointed/rust_construction),
+			SWORD_SPELLS = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion, /obj/effect/proc_holder/spell/pointed/rust_construction),
 			SWORD_PREFIX = "rusted",
 		),
 		// Cosmic

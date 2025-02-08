@@ -144,7 +144,7 @@
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
 
-	action_to_add = /obj/effect/proc_holder/spell/aoe/moon_ringleader
+	action_to_add = /obj/effect/proc_holder/spell/aoe_turf/moon_ringleader
 	cost = 1
 
 

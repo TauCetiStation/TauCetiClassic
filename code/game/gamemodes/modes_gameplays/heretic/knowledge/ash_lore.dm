@@ -145,7 +145,7 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	action_to_add = /obj/effect/proc_holder/spell/aoe/fiery_rebirth
+	action_to_add = /obj/effect/proc_holder/spell/aoe_turf/fiery_rebirth
 	cost = 1
 	research_tree_icon_frame = 5
 
@@ -201,7 +201,7 @@
 		existing_beam_spell.beam_duration *= 0.66 // Faster beams
 		existing_beam_spell.charge_max *= 0.66 // Lower cooldown
 
-	var/obj/effect/proc_holder/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
+	var/obj/effect/proc_holder/spell/aoe_turf/fiery_rebirth/fiery_rebirth = locate() in user.actions
 	fiery_rebirth?.charge_max *= 0.16
 
 	user.add_traits(traits_to_apply, type)
