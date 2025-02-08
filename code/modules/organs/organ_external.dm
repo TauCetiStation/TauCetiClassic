@@ -614,7 +614,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				-icon_layer
 			)
 
-			if(HULK in owner.mutations || LASEREYES in owner.mutations || iszombie(owner))
+			if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner))
 				eyes_colorable_layer.color = "#ff0000"
 			else
 				eyes_colorable_layer.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
