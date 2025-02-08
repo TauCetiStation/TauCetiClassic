@@ -425,6 +425,7 @@
 	name = "newbie badge"
 	desc = "Бейджик с надписью: \"Я здесь новенький!\"."
 	icon_state = "newbieBadge"
+	item_state_world = "newbieBadge_world"
 	slot_flags = SLOT_FLAGS_NECK | SLOT_FLAGS_TIE
 
 	item_action_types = list(/datum/action/item_action/hands_free/showBadge)
