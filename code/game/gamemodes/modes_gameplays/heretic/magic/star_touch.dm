@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/touch/star_touch
+/obj/effect/proc_holder/spell/in_hand/star_touch
 	name = "Star Touch"
 	desc = "Manifests cosmic fields on tiles next to you while marking the victim with a star mark \
 		or consuming an already present star mark to put them to sleep for 4 seconds. \
@@ -18,23 +18,23 @@
 
 	antimagic_flags = MAGIC_RESISTANCE
 
-	hand_path = /obj/item/weapon/touch_attack/star_touch
+	hand_path = /obj/item/weapon/magic/star_touch
 	/// Stores the weakref for the Star Gazer after ascending
 	var/datum/weakref/star_gazer
 	/// If the heretic is ascended or not
 	var/ascended = FALSE
 
-/obj/effect/proc_holder/spell/touch/star_touch/is_valid_target(atom/cast_on)
+/obj/effect/proc_holder/spell/in_hand/star_touch/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/touch/star_touch/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/star_touch/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	victim.visible_message(
 		span_danger("The spell bounces off of you!"),
 	)
 
-/obj/effect/proc_holder/spell/touch/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	if(victim.has_status_effect(/datum/status_effect/star_mark))
 		victim.apply_effect(4 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
 		victim.remove_status_effect(/datum/status_effect/star_mark)
@@ -45,7 +45,7 @@
 	caster.apply_status_effect(/datum/status_effect/cosmic_beam, victim)
 	return TRUE
 
-/obj/effect/proc_holder/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
+/obj/effect/proc_holder/spell/in_hand/star_touch/proc/get_turfs(mob/living/victim)
 	var/list/target_turfs = list(get_turf(owner))
 	var/range = ascended ? 2 : 1
 	var/list/directions = list(turn(owner.dir, 90), turn(owner.dir, 270))
@@ -55,24 +55,24 @@
 	return target_turfs
 
 /// To set the star gazer
-/obj/effect/proc_holder/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/heretic_summon/star_gazer/star_gazer_mob)
+/obj/effect/proc_holder/spell/in_hand/star_touch/proc/set_star_gazer(mob/living/basic/heretic_summon/star_gazer/star_gazer_mob)
 	star_gazer = WEAKREF(star_gazer_mob)
 
 /// To obtain the star gazer if there is one
-/obj/effect/proc_holder/spell/touch/star_touch/proc/get_star_gazer()
+/obj/effect/proc_holder/spell/in_hand/star_touch/proc/get_star_gazer()
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_resolved = star_gazer?.resolve()
 	if(star_gazer_resolved)
 		return star_gazer_resolved
 	return FALSE
 
-/obj/item/weapon/touch_attack/star_touch
+/obj/item/weapon/magic/star_touch
 	name = "Star Touch"
 	desc = "A sinister looking aura that distorts the flow of reality around it. \
 		Causes people with a star mark to sleep for 4 seconds, and causes people without a star mark to get one."
 	icon_state = "star"
 	inhand_icon_state = "star"
 
-/obj/item/weapon/touch_attack/star_touch/Initialize(mapload)
+/obj/item/weapon/magic/star_touch/Initialize(mapload)
 	. = ..()
 	AddComponent(\
 		/datum/component/effect_remover, \
@@ -85,18 +85,18 @@
 /*
  * Callback for effect_remover component.
  */
-/obj/item/weapon/touch_attack/star_touch/proc/after_clear_rune(obj/effect/target, mob/living/user)
+/obj/item/weapon/magic/star_touch/proc/after_clear_rune(obj/effect/target, mob/living/user)
 	new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(target))
-	var/obj/effect/proc_holder/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
+	var/obj/effect/proc_holder/spell/in_hand/star_touch/star_touch_spell = spell_which_made_us?.resolve()
 	star_touch_spell?.spell_feedback(user)
 	remove_hand_with_no_refund(user)
 
-/obj/item/weapon/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
+/obj/item/weapon/magic/star_touch/ignition_effect(atom/to_light, mob/user)
 	. = span_rose("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
 	remove_hand_with_no_refund(user)
 
-/obj/item/weapon/touch_attack/star_touch/attack_self(mob/living/user)
-	var/obj/effect/proc_holder/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
+/obj/item/weapon/magic/star_touch/attack_self(mob/living/user)
+	var/obj/effect/proc_holder/spell/in_hand/star_touch/star_touch_spell = spell_which_made_us?.resolve()
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = star_touch_spell?.get_star_gazer()
 	if(!star_gazer_mob)
 		balloon_alert(user, "no linked star gazer!")

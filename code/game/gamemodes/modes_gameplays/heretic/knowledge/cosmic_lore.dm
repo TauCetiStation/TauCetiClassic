@@ -86,7 +86,7 @@
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
-	action_to_add = /obj/effect/proc_holder/spell/touch/star_touch
+	action_to_add = /obj/effect/proc_holder/spell/in_hand/star_touch
 	cost = 1
 
 /datum/heretic_knowledge/spell/star_blast
@@ -246,7 +246,7 @@
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()
 	commands_action.Grant(user, star_gazer_mob)
-	var/obj/effect/proc_holder/spell/touch/star_touch/star_touch_spell = locate() in user.actions
+	var/obj/effect/proc_holder/spell/in_hand/star_touch/star_touch_spell = locate() in user.actions
 	if(star_touch_spell)
 		star_touch_spell.set_star_gazer(star_gazer_mob)
 		star_touch_spell.ascended = TRUE
