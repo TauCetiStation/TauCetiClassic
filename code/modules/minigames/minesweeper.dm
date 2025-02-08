@@ -19,11 +19,17 @@
 	if(grid[y][x]["flag"])
 		return TRUE //We fake pressed a button with a flag
 	if(grid[y][x]["state"] == STATE_MINE)
+		if(!grid_pressed)
+			moveFirstMine(y, x)
+			return button_press(y, x) //We pressed mine first, lets move it and press again
 		return FALSE //We lost
 	press_button(x, y)
 	return TRUE //We pressed a button
 
 /datum/minigame/minesweeper/proc/button_flag(y, x)
+	if(!grid_pressed)
+		return FALSE
+
 	var/list/L = grid[y][x]
 	if(L["state"] != STATE_EMPTY)
 		L["flag"] = !L["flag"]
@@ -95,6 +101,21 @@
 
 /datum/minigame/minesweeper/proc/get_difficulty()
 	return grid ? grid_mines/grid_blanks : 0
+
+/datum/minigame/minesweeper/proc/moveFirstMine(oldY, oldX)
+	var/list/L = grid[oldY][oldX]
+	L["state"] = STATE_BLANK
+	while(TRUE)
+		var/y = rand(1,grid_y)
+		var/x = rand(1,grid_x)
+		if(y == oldY && x == oldX)
+			continue
+		L = grid[y][x]
+		if(L["state"] == STATE_MINE)
+			continue
+		else
+			L["state"] = STATE_MINE
+			break
 
 #undef STATE_EMPTY
 #undef STATE_BLANK
