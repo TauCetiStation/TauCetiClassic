@@ -317,21 +317,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/underlay = image("icon"='icons/effects/genetics.dmi', "icon_state"=gene.OnDrawUnderlays(src,g,fat), "layer"=-MUTATIONS_LAYER)
 			if(underlay)
 				standing += underlay
-	for(var/mut in mutations)
-		switch(mut)
-			/*
-			if(HULK)
-				if(fat)
-					standing.underlays	+= "hulk_[fat]_s"
-				else
-					standing.underlays	+= "hulk_[g]_s"
-			if(COLD_RESISTANCE)
-				standing.underlays	+= "fire[fat]_s"
-			if(TK)
-				standing.underlays	+= "telekinesishead[fat]_s"
-			*/
-			if(LASEREYES)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		for(var/image/I in standing)
 			I = update_height(I)

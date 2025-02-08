@@ -10,9 +10,12 @@
 	var/alpha_color_mask = FALSE
 
 	var/damage_mask = TRUE
-	var/eyes_icon = 'icons/mob/human_face.dmi'
-	var/eyes = "eyes"                                    // Icon for eyes.
-	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
+
+	var/eyes_icon = 'icons/mob/human_races/eyes.dmi'
+	var/eyes_colorable_layer = "default" // Part of the eye to which we apply a user color, for example colored human iris
+	var/eyes_static_layer // Part that uses own predefined color, for example white human sclera
+	var/eyes_glowing = FALSE // Makes them glow in the dark
+
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
@@ -357,6 +360,9 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
 
+	eyes_colorable_layer = "human_colorable"
+	eyes_static_layer = "human"
+
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
 	,HAS_LIPS = TRUE
@@ -421,7 +427,7 @@
 	tox_mod = 0
 	clone_mod = 0
 	pluvian_social_credit = 0
-	eyes = "pluvia_ms_s"
+	eyes_static_layer = "pluvia"
 	eyes_glowing = TRUE
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -622,7 +628,7 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	eyes = "skrell_eyes"
+	eyes_colorable_layer = "skrell_colorable"
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 
@@ -668,7 +674,7 @@
 	breath_cold_level_2 = 50
 	breath_cold_level_3 = 0
 
-	eyes = "vox_eyes"
+	eyes_colorable_layer = "vox_colorable"
 
 	inhale_type = "nitrogen"
 	poison_type = "oxygen"
@@ -789,7 +795,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = null
+	eyes_colorable_layer = null
 	inhale_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -1090,7 +1096,7 @@
 	pluvian_social_credit = 0 // have no soul
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
-	eyes = null
+	eyes_colorable_layer = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -1431,7 +1437,7 @@
 	dietflags = DIET_OMNI
 	flesh_color = "#ff0000"
 
-	eyes = "shadowling_ms_s"
+	eyes_static_layer = "shadowling"
 	eyes_glowing = TRUE
 
 	warning_low_pressure = 50
@@ -1620,7 +1626,8 @@
 	has_gendered_icons = FALSE
 	race_traits = list(TRAIT_HEMOCOAGULATION)
 
-	eyes = "zombie_ms_s"
+	eyes_colorable_layer = /datum/species/human::eyes_colorable_layer
+	eyes_static_layer = /datum/species/human::eyes_static_layer
 	eyes_glowing = TRUE
 
 	flags = list(
@@ -1687,6 +1694,8 @@
 	speed_mod = -0.6
 	race_traits = list(TRAIT_HEMOCOAGULATION, TRAIT_NATURAL_AGILITY)
 
+
+
 	tail = "tajaran_zombie"
 
 	flesh_color = "#afa59e"
@@ -1712,6 +1721,8 @@
 
 	icobase = 'icons/mob/human_races/r_zombie_skrell.dmi'
 	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
+
+	eyes_colorable_layer = /datum/species/skrell::eyes_colorable_layer
 
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
@@ -1755,6 +1766,9 @@
 	name = SLIME
 	icobase = 'icons/mob/human_races/r_human_slime.dmi'
 	deform = 'icons/mob/human_races/r_human_slime.dmi'
+
+	eyes_colorable_layer = /datum/species/human::eyes_colorable_layer
+	eyes_static_layer = /datum/species/human::eyes_static_layer
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#05fffb"
@@ -1810,7 +1824,7 @@
 	has_gendered_icons = FALSE
 	gender_limb_icons = FALSE
 	tail = "vox_slime"
-	eyes = "vox_eyes"
+	eyes_colorable_layer = /datum/species/vox::eyes_colorable_layer
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -1861,7 +1875,8 @@
 	deform = 'icons/mob/human_races/r_skrell_slime.dmi'
 	has_gendered_icons = FALSE
 	gender_limb_icons = FALSE
-	eyes = "skrell_eyes"
+	eyes_colorable_layer = /datum/species/skrell::eyes_colorable_layer
+
 
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
@@ -2035,8 +2050,10 @@
 	deform = 'icons/mob/human_races/r_serpentid_grey.dmi'
 	damage_mask = FALSE
 	has_gendered_icons = FALSE
-	eyes_icon = 'icons/mob/serpentid_face.dmi'
-	eyes = "serpentid_eyes"
+
+	eyes_icon = 'icons/mob/human_races/eyes_serpentid.dmi'
+	eyes_colorable_layer = "serpentid_colorable"
+
 	base_color = "#336600"
 	flesh_color = "#525252"
 	blood_datum_path = /datum/dirt_cover/hemolymph
