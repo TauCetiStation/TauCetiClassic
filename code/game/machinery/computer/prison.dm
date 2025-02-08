@@ -60,7 +60,23 @@
 	Game.setup_game()
 	SStgui.close_uis(src)
 
+	if(emagged)
+		empulse(loc, 10, 15, custom_effects = EMP_SEBB)
+		emagged = FALSE
+
 /obj/machinery/computer/prison/proc/lost()
 	playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg'), VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
 	Game.setup_game()
 	SStgui.close_uis(src)
+
+	if(emagged)
+		explosion(loc, 0, 1, 7)
+		emagged = FALSE
+
+/obj/machinery/computer/prison/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+
+	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 80, FALSE, null, -6)
+	to_chat(user, "<span class='warning'>Новый уровень сложности разблокирован!</span>")
+	emagged = TRUE
