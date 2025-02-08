@@ -26,7 +26,7 @@
 		I start to realize the emptiness of existence. Something's watching me."
 	required_atoms = list(/obj/item/weapon/kitchenknife = 1)
 	result_atoms = list(/obj/item/weapon/sickly_blade/void)
-	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

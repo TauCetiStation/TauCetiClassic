@@ -28,7 +28,7 @@
 		/obj/item/stack/sheet/mineral/phoron = 1,
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/cosmic)
-	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "cosmic_blade"
 
 /datum/heretic_knowledge/cosmic_grasp

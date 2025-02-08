@@ -32,7 +32,7 @@
 /datum/action/cancel_crucible_soul
 	name = "Recall"
 	desc = "Use to end the blessing early"
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/heretic/weapon/eldritch.dmi'
 	button_icon_state = "crucible_soul"
 
 /datum/action/cancel_crucible_soul/Trigger(trigger_flags)

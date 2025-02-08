@@ -27,7 +27,7 @@
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/ash)
-	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "ash_blade"
 
 /datum/heretic_knowledge/ashen_grasp

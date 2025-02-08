@@ -22,7 +22,7 @@
 	)
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
-	research_tree_icon_path = 'icons/obj/eldritch.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/eldritch.dmi'
 	research_tree_icon_state = "eye_medalion"
 
 /datum/heretic_knowledge/curse/paralysis

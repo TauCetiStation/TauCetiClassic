@@ -2,12 +2,11 @@
 /obj/item/weapon/sickly_blade
 	name = "\improper sickly blade"
 	desc = "A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched..."
-	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon = 'icons/heretic/weapon/khopesh.dmi'
 	icon_state = "eldritch_blade"
-	inhand_icon_state = "eldritch_blade"
 	icon_angle = -45
-	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	lefthand_file = 'icons/heretic/inhands/blades_lefthand.dmi'
+	righthand_file = 'icons/heretic/inhands/blades_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -22,8 +21,7 @@
 	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 35
-	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
 
 /obj/item/weapon/sickly_blade/examine(mob/user)
@@ -88,7 +86,6 @@
 	desc = "Molten and unwrought, a hunk of metal warped to cinders and slag. \
 		Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
 	icon_state = "ash_blade"
-	inhand_icon_state = "ash_blade"
 	after_use_message = "The Nightwatcher hears your call..."
 	resistance_flags = FIRE_PROOF
 
@@ -134,7 +131,7 @@
 	desc = "A galliant blade, sundered and torn. \
 		Furiously, the blade cuts. Silver scars bind it forever to its dark purpose."
 	icon_state = "dark_blade"
-	base_icon_state = "dark_blade"
+	var/base_icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
 	after_use_message = "The Torn Champion hears your call..."
 	///If our blade is currently infused with the mansus grasp

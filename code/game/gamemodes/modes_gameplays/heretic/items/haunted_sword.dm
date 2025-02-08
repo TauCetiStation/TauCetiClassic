@@ -6,8 +6,8 @@
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
 	icon_angle = -45
-	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	lefthand_file = 'icons/heretic/inhands/blades_lefthand.dmi'
+	righthand_file = 'icons/heretic/inhands/blades_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -20,8 +20,7 @@
 	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	block_sound = 'sound/weapons/parry.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	/// If TRUE, it can be used at will by anyone, non-cultists included
 	var/free_use = FALSE
 	var/list/alt_continuous = list("stabs", "pierces", "impales")

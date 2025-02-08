@@ -28,7 +28,7 @@
 		/obj/item/trash = 1,
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/rust)
-	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "rust_blade"
 
 /datum/heretic_knowledge/rust_fist

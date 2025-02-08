@@ -3,7 +3,7 @@
 	name = "carving knife"
 	desc = "A small knife made of cold steel, pure and perfect. Its sharpness can carve into titanium itself - \
 		but only few can evoke the dangers that lurk beneath reality."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/heretic/weapon/eldritch.dmi'
 	icon_state = "rune_carver"
 	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -13,8 +13,7 @@
 	force = 10
 	throwforce = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)
 	embed_type = /datum/embedding/rune_carver
 

@@ -29,7 +29,7 @@
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/dark)
 	limit = 4 // It's the blade path, it's a given
-	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
 
 /datum/heretic_knowledge/blade_grasp

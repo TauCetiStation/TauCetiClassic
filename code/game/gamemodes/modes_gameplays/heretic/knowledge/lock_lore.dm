@@ -26,11 +26,11 @@
 	gain_text = "The Locked Labyrinth leads to freedom. But only the trapped Stewards know the correct path."
 	required_atoms = list(
 		/obj/item/weapon/kitchenknife = 1,
-		/obj/item/crowbar = 1,
+		/obj/item/weapon/crowbar = 1,
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/lock)
 	limit = 2
-	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "key_blade"
 
 /datum/heretic_knowledge/lock_grasp

@@ -14,5 +14,5 @@
 	add_filter("dio_knife", 2, list("type" = "outline", "color" = glow_color, "size" = 1))
 
 /obj/effect/floating_blade/haunted
-	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon = 'icons/heretic/weapon/khopesh.dmi'
 	icon_state = "render"

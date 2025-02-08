@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 1 // Knowing how to remake your heart is important
 	is_starting_knowledge = TRUE
-	research_tree_icon_path = 'icons/obj/eldritch.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/eldritch.dmi'
 	research_tree_icon_state = "living_heart"
 	research_tree_icon_frame = 1
 	/// The typepath of the organ type required for our heart.
@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	is_starting_knowledge = TRUE
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
 	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse))
-	research_tree_icon_path = 'icons/obj/eldritch.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/eldritch.dmi'
 	research_tree_icon_state = "book"
 
 /datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)

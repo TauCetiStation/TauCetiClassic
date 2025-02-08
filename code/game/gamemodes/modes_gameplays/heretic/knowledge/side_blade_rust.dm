@@ -42,7 +42,7 @@
 	result_atoms = list(/obj/structure/destructible/eldritch_crucible)
 	cost = 1
 
-	research_tree_icon_path = 'icons/obj/eldritch.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/eldritch.dmi'
 	research_tree_icon_state = "crucible"
 
 

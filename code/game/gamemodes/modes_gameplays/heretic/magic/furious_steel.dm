@@ -135,7 +135,7 @@
 
 /obj/projectile/floating_blade/haunted
 	name = "ritual blade"
-	icon = 'icons/obj/weapons/khopesh.dmi'
+	icon = 'icons/heretic/weapon/khopesh.dmi'
 	icon_state = "render"
 	damage = 35
 	wound_bonus = 25

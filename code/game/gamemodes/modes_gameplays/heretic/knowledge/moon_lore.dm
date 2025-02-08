@@ -28,7 +28,7 @@
 		/obj/item/stack/sheet/iron = 2,
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/moon)
-	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "moon_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/role/heretic/our_heretic)
@@ -108,7 +108,7 @@
 	cost = 1
 
 
-	research_tree_icon_path = 'icons/obj/eldritch.dmi'
+	research_tree_icon_path = 'icons/heretic/weapon/eldritch.dmi'
 	research_tree_icon_state = "moon_amulette"
 	research_tree_icon_frame = 9
 

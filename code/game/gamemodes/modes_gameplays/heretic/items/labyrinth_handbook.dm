@@ -24,8 +24,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_NORMAL
-	attack_verb_continuous = list("bashes", "curses")
-	attack_verb_simple = list("bash", "curse")
+	attack_verb = list("bash", "curse")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound = 'sound/items/handling/book_pickup.ogg'
