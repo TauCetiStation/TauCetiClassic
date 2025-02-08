@@ -15,7 +15,7 @@
 	var/charge_increment_delay = 30 SECONDS
 	var/charge_recovery = 1
 
-/obj/item/weapon/storage/belt/unfathomable_curio/Initialize(mapload)
+/obj/item/weapon/storage/belt/unfathomable_curio/atom_init()
 	. = ..()
 	atom_storage.max_specific_storage = SIZE_NORMAL
 	atom_storage.max_total_storage = 21

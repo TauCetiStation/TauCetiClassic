@@ -64,7 +64,7 @@
 	/// Effect for when someone teleports
 	var/obj/effect/rune_effect = /obj/effect/temp_visual/rune_light
 
-/obj/effect/cosmic_rune/Initialize(mapload)
+/obj/effect/cosmic_rune/atom_init()
 	. = ..()
 	var/image/silicon_image = image(icon = 'icons/obj/flora/traps.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
@@ -140,7 +140,7 @@
 	anchored = TRUE
 	duration = 5
 
-/obj/effect/temp_visual/cosmic_rune_fade/Initialize(mapload)
+/obj/effect/temp_visual/cosmic_rune_fade/atom_init()
 	. = ..()
 	var/image/silicon_image = image(icon = 'icons/obj/flora/traps.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
@@ -155,7 +155,7 @@
 	anchored = TRUE
 	duration = 5
 
-/obj/effect/temp_visual/rune_light/Initialize(mapload)
+/obj/effect/temp_visual/rune_light/atom_init()
 	. = ..()
 	var/image/silicon_image = image(icon = 'icons/obj/flora/traps.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE

@@ -72,7 +72,7 @@
 	icon_state = "mansus_grasp"
 	s_fire = 'sound/items/Welder.ogg'
 
-/obj/item/weapon/magic/mansus_fist/Initialize(mapload)
+/obj/item/weapon/magic/mansus_fist/atom_init()
 	. = ..()
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \

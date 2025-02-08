@@ -134,7 +134,7 @@
 	icon = 'icons/heretic/weapon/eldritch.dmi'
 	item_flags = ABSTRACT | DROPDEL
 
-/obj/item/space_crawl/Initialize(mapload)
+/obj/item/space_crawl/atom_init()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

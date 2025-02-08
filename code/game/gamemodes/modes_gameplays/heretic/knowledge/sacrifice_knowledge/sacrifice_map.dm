@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	/// What path this landmark is intended for.
 	var/for_heretic_path = PATH_START
 
-/obj/effect/landmark/heretic/Initialize(mapload)
+/obj/effect/landmark/heretic/atom_init()
 	. = ..()
 	GLOB.heretic_sacrifice_landmarks[for_heretic_path] = src
 
@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	/// Light power of the signpost.
 	var/power = 0.8
 
-/obj/structure/no_effect_signpost/void/Initialize(mapload)
+/obj/structure/no_effect_signpost/void/atom_init()
 	. = ..()
 	set_light(range, power)
 
@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	sound_environment = SOUND_ENVIRONMENT_CAVE
 	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE | NO_BOH
 
-/area/centcom/heretic_sacrifice/Initialize(mapload)
+/area/centcom/heretic_sacrifice/atom_init()
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index] + 'sound/ambience/misc/ambiatm1.ogg'
 	return ..()

@@ -32,7 +32,7 @@
 	/// The range at which people will get marked with a star mark.
 	var/star_mark_range = 3
 
-/obj/projectile/magic/star_ball/Initialize(mapload)
+/obj/projectile/magic/star_ball/atom_init()
 	. = ..()
 	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 

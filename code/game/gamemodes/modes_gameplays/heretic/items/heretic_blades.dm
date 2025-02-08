@@ -98,7 +98,7 @@
 	inhand_icon_state = "flesh_blade"
 	after_use_message = "The Marshal hears your call..."
 
-/obj/item/weapon/sickly_blade/flesh/Initialize(mapload)
+/obj/item/weapon/sickly_blade/flesh/atom_init()
 	. = ..()
 
 	AddComponent(
@@ -226,7 +226,7 @@
 	icon_state = "cursed_blade"
 	inhand_icon_state = "cursed_blade"
 
-/obj/item/weapon/sickly_blade/cursed/Initialize(mapload)
+/obj/item/weapon/sickly_blade/cursed/atom_init()
 	. = ..()
 
 	var/examine_text = {"Allows the scribing of blood runes of the cult of Nar'Sie.

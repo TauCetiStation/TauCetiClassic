@@ -104,7 +104,7 @@
 	layer = HIGH_PIPE_LAYER
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/destabilising_tear/Initialize(mapload)
+/obj/effect/temp_visual/destabilising_tear/atom_init()
 	. = ..()
 	transform *= 3
 	animate(src, transform = matrix().Scale(3.2), time = 0.15 SECONDS)

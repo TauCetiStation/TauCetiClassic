@@ -7,7 +7,7 @@
 	/// The override images we are applying
 	var/list/hallucinations
 
-/obj/item/organ/eyes/corrupt/Initialize(mapload)
+/obj/item/organ/eyes/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have wide dilated pupils, and no iris. Something is moving in the darkness.", BODY_ZONE_PRECISE_EYES)
@@ -43,7 +43,7 @@
 	desc = "This one tells only lies."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 
-/obj/item/organ/tongue/corrupt/Initialize(mapload)
+/obj/item/organ/tongue/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "The inside of %PRONOUN_Their mouth is full of stars.", BODY_ZONE_PRECISE_MOUTH)
@@ -84,7 +84,7 @@
 		/datum/reagent/drug/mushroomhallucinogen,
 	)
 
-/obj/item/organ/liver/corrupt/Initialize(mapload)
+/obj/item/organ/liver/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 
@@ -120,7 +120,7 @@
 	/// How long until we prompt the player to drink blood again?
 	COOLDOWN_DECLARE(message_cooldown)
 
-/obj/item/organ/stomach/corrupt/Initialize(mapload)
+/obj/item/organ/stomach/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have an unhealthy pallor.")
@@ -182,7 +182,7 @@
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 
-/obj/item/organ/heart/corrupt/Initialize(mapload)
+/obj/item/organ/heart/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 
@@ -210,7 +210,7 @@
 		/datum/gas/plasma = 20,
 	)
 
-/obj/item/organ/lungs/corrupt/Initialize(mapload)
+/obj/item/organ/lungs/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 
@@ -237,7 +237,7 @@
 	/// How likely are we to spawn worms?
 	var/worm_chance = 2
 
-/obj/item/organ/appendix/corrupt/Initialize(mapload)
+/obj/item/organ/appendix/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their abdomen is distended... and wiggling.", BODY_ZONE_PRECISE_GROIN)

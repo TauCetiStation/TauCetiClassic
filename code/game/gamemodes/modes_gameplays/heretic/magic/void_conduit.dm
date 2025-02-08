@@ -39,7 +39,7 @@
 	///Audio loop for the rift being alive
 	var/datum/looping_sound/void_conduit/soundloop
 
-/obj/structure/void_conduit/Initialize(mapload)
+/obj/structure/void_conduit/atom_init()
 	. = ..()
 	soundloop = new(src, start_immediately = TRUE)
 	timerid = QDEL_IN_STOPPABLE(src, 1 MINUTES)

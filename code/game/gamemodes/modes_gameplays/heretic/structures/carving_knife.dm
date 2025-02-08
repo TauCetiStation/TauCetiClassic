@@ -28,7 +28,7 @@
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 
-/obj/item/weapon/rune_carver/Initialize(mapload)
+/obj/item/weapon/rune_carver/atom_init()
 	. = ..()
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)

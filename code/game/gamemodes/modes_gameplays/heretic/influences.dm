@@ -82,7 +82,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	alpha = 0
 
-/obj/effect/visible_heretic_influence/Initialize(mapload)
+/obj/effect/visible_heretic_influence/atom_init()
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(show_presence)), 15 SECONDS)
 	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
@@ -171,7 +171,7 @@
 	/// The icon state applied to the image created for this influence.
 	var/real_icon_state = "reality_smash"
 
-/obj/effect/heretic_influence/Initialize(mapload)
+/obj/effect/heretic_influence/atom_init()
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
 	generate_name()

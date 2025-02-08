@@ -5,7 +5,7 @@
 	w_class = SIZE_SMALL
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/heretic_focus/Initialize(mapload)
+/obj/item/clothing/neck/heretic_focus/atom_init()
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
 
@@ -114,7 +114,7 @@
 	/// A secondary clothing trait only applied to heretics.
 	var/heretic_only_trait = TRAIT_THERMAL_VISION
 
-/obj/item/clothing/neck/eldritch_amulet/Initialize(mapload)
+/obj/item/clothing/neck/eldritch_amulet/atom_init()
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
 

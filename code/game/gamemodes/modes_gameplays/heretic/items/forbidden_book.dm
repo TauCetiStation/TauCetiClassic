@@ -11,7 +11,7 @@
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
 
-/obj/item/codex_cicatrix/Initialize(mapload)
+/obj/item/codex_cicatrix/atom_init()
 	. = ..()
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \

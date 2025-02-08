@@ -111,7 +111,7 @@
 	/// Color applied as an outline filter on init
 	var/outline_color = "#f8f8ff"
 
-/obj/projectile/floating_blade/Initialize(mapload)
+/obj/projectile/floating_blade/atom_init()
 	. = ..()
 	add_filter("dio_knife", 2, list("type" = "outline", "color" = outline_color, "size" = 1))
 

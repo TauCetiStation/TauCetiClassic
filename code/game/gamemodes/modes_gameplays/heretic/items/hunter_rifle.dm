@@ -16,7 +16,7 @@
 
 	pixel_x = -8
 
-/obj/item/gun/ballistic/rifle/lionhunter/Initialize(mapload)
+/obj/item/gun/ballistic/rifle/lionhunter/atom_init()
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 3.2)
 

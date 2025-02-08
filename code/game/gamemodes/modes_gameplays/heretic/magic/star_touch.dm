@@ -72,7 +72,7 @@
 	icon_state = "star"
 	inhand_icon_state = "star"
 
-/obj/item/weapon/magic/star_touch/Initialize(mapload)
+/obj/item/weapon/magic/star_touch/atom_init()
 	. = ..()
 	AddComponent(\
 		/datum/component/effect_remover, \

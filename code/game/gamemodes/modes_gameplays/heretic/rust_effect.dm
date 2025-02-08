@@ -7,7 +7,7 @@
 	layer = LOWER_RUNE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/effect/glowing_rune/Initialize(mapload)
+/obj/effect/glowing_rune/atom_init()
 	. = ..()
 	pixel_y = rand(-6, 6)
 	pixel_x = rand(-6, 6)

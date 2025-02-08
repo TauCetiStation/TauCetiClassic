@@ -37,7 +37,7 @@
 	// A list of the people we hit
 	var/list/mobs_hit = list()
 
-/obj/projectile/moon_parade/Initialize(mapload)
+/obj/projectile/moon_parade/atom_init()
 	. = ..()
 	soundloop = new(src,  TRUE)
 

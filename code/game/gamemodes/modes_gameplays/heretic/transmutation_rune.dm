@@ -12,7 +12,7 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
-/obj/effect/heretic_rune/Initialize(mapload)
+/obj/effect/heretic_rune/atom_init()
 	. = ..()
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE

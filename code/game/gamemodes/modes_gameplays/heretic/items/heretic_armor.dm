@@ -9,7 +9,7 @@
 	flash_protection = FLASHES_FULL_PROTECTION
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 35, bomb = 10, bio = 10, rad = 0)
 
-/obj/item/clothing/head/culthood/eldritch/Initialize(mapload)
+/obj/item/clothing/head/culthood/eldritch/atom_init()
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
 
@@ -45,7 +45,7 @@
 	item_flags = EXAMINE_SKIP
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 15, bio = 0, rad = 0)
 
-/obj/item/clothing/head/culthood/void/Initialize(mapload)
+/obj/item/clothing/head/culthood/void/atom_init()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
 
@@ -62,7 +62,7 @@
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 15, bio = 0, rad = 0)
 	alternative_mode = TRUE
 
-/obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
+/obj/item/clothing/suit/hooded/cultrobes/void/atom_init()
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/void_cloak)
 	make_visible()

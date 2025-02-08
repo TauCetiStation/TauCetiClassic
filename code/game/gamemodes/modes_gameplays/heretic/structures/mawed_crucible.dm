@@ -19,7 +19,7 @@
 	///Cooldown for the crucible to create mass from the eldritch
 	COOLDOWN_DECLARE(refill_cooldown)
 
-/obj/structure/destructible/eldritch_crucible/Initialize(mapload)
+/obj/structure/destructible/eldritch_crucible/atom_init()
 	. = ..()
 	break_message = span_warning("[src] falls apart with a thud!")
 	START_PROCESSING(SSobj, src)

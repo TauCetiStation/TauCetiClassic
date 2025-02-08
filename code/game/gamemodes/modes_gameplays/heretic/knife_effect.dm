@@ -7,7 +7,7 @@
 	/// The color the knife glows around it.
 	var/glow_color = "#ececff"
 
-/obj/effect/floating_blade/Initialize(mapload)
+/obj/effect/floating_blade/atom_init()
 	. = ..()
 	AddElement(/datum/element/movetype_handler)
 	ADD_TRAIT(src, TRAIT_MOVE_FLYING, INNATE_TRAIT)

@@ -26,7 +26,7 @@
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 
-/obj/item/weapon/cultblade/Initialize(mapload)
+/obj/item/weapon/cultblade/atom_init()
 	. = ..()
 	AddComponent(/datum/component/butchering, \
 	speed = 4 SECONDS, \
@@ -424,7 +424,7 @@
 	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
 	block_sound = 'sound/weapons/parry.ogg'
 
-/obj/item/weapon/cultblade/ghost/Initialize(mapload)
+/obj/item/weapon/cultblade/ghost/atom_init()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
