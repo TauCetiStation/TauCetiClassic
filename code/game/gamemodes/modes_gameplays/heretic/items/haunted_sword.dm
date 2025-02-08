@@ -18,8 +18,8 @@
 	block_chance = 50 // now it's officially a cult esword
 	wound_bonus = -50
 	bare_wound_bonus = 20
-	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	/// If TRUE, it can be used at will by anyone, non-cultists included
@@ -209,7 +209,7 @@
 	if(!do_after(user, 6 SECONDS, src))
 		to_chat(user, span_notice("You were interrupted!"))
 		return
-	playsound(user, 'sound/items/weapons/slice.ogg', 30, TRUE)
+	playsound(user, 'sound/weapons/slice.ogg', 30, TRUE)
 	return TRUE
 
 /obj/item/weapon/cultblade/haunted/proc/on_heresy_handle(mob/living/user, actiontype)
@@ -423,7 +423,7 @@
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
-	block_sound = 'sound/items/weapons/parry.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 
 /obj/item/weapon/cultblade/ghost/Initialize(mapload)
 	. = ..()

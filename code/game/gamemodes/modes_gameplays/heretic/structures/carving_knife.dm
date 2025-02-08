@@ -12,7 +12,7 @@
 	wound_bonus = 20
 	force = 10
 	throwforce = 20
-	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)

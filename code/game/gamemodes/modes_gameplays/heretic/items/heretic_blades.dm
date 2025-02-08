@@ -20,7 +20,7 @@
 	bare_wound_bonus = 15
 	toolspeed = 0.375
 	demolition_mod = 0.8
-	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 35
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
@@ -167,7 +167,7 @@
 	living_target.AdjustParalyzed(1.5 SECONDS)
 	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	living_target.balloon_alert(user, "backstab!")
-	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+	playsound(living_target, 'sound/weapons/guillotine.ogg', 100, TRUE)
 
 /obj/item/weapon/sickly_blade/dark/dropped(mob/user, silent)
 	. = ..()

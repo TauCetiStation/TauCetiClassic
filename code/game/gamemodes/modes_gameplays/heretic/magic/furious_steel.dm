@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "furious_steel"
-	sound = 'sound/items/weapons/guillotine.ogg'
+	sound = 'sound/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 60 SECONDS
@@ -157,7 +157,7 @@
 	overlay_icon_state = "bg_cult_border"
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "cursed_steel"
-	sound = 'sound/items/weapons/guillotine.ogg'
+	sound = 'sound/weapons/guillotine.ogg'
 
 	charge_max = 40 SECONDS
 	invocation = "IA!"
