@@ -22,7 +22,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_box/strilka310/lionhunter,
 		/obj/item/heretic_labyrinth_handbook,
-		/obj/item/bodypart, // Bodyparts are often used in rituals.
+		/obj/item/organ/external, // Bodyparts are often used in rituals.
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/neck/heretic_focus,
 		/obj/item/codex_cicatrix,

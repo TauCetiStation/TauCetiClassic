@@ -25,7 +25,7 @@
 	gain_text = "Under the light of the moon the laughter echoes."
 	required_atoms = list(
 		/obj/item/weapon/kitchenknife = 1,
-		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/metal = 2,
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/moon)
 	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
@@ -102,7 +102,7 @@
 	required_atoms = list(
 		/obj/item/organ/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
-		/obj/item/clothing/neck/tie = 1,
+		/obj/item/clothing/accessory/tie = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
 	cost = 1
@@ -161,7 +161,6 @@
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 
-	ascension_achievement = /datum/award/achievement/misc/moon_ascension
 	announcement_text = "%SPOOKY% Laugh, for the ringleader %NAME% has ascended! \
 						The truth shall finally devour the lie! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_moon.ogg'

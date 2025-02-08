@@ -379,7 +379,6 @@
 	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 
-	ascension_achievement = /datum/award/achievement/misc/blade_ascension
 	announcement_text = "%SPOOKY% Master of blades, the Torn Champion's disciple, %NAME% has ascended! Their steel is that which will cut reality in a maelstom of silver! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_blade.ogg'
 

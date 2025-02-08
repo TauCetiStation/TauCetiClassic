@@ -54,7 +54,7 @@
 	name = "cosmic rune"
 	desc = "A strange rune, that can instantly transport people to another location."
 	anchored = TRUE
-	icon = 'icons/obj/service/hand_of_god_structures.dmi'
+	icon = 'icons/obj/flora/traps.dmi'
 	icon_state = "cosmic_rune"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	plane = FLOOR_PLANE
@@ -66,7 +66,7 @@
 
 /obj/effect/cosmic_rune/Initialize(mapload)
 	. = ..()
-	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	var/image/silicon_image = image(icon = 'icons/obj/flora/traps.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
 	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
@@ -133,7 +133,7 @@
 
 /obj/effect/temp_visual/cosmic_rune_fade
 	name = "cosmic rune"
-	icon = 'icons/obj/service/hand_of_god_structures.dmi'
+	icon = 'icons/obj/flora/traps.dmi'
 	icon_state = "cosmic_rune_fade"
 	plane = FLOOR_PLANE
 	layer = RUNE_LAYER
@@ -142,13 +142,13 @@
 
 /obj/effect/temp_visual/cosmic_rune_fade/Initialize(mapload)
 	. = ..()
-	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	var/image/silicon_image = image(icon = 'icons/obj/flora/traps.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
 
 /obj/effect/temp_visual/rune_light
 	name = "cosmic rune"
-	icon = 'icons/obj/service/hand_of_god_structures.dmi'
+	icon = 'icons/obj/flora/traps.dmi'
 	icon_state = "cosmic_rune_light"
 	plane = FLOOR_PLANE
 	layer = RUNE_LAYER
@@ -157,6 +157,6 @@
 
 /obj/effect/temp_visual/rune_light/Initialize(mapload)
 	. = ..()
-	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	var/image/silicon_image = image(icon = 'icons/obj/flora/traps.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)

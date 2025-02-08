@@ -35,7 +35,7 @@
 	required_atoms = list(
 		/obj/item/organ/external/l_leg = 1,
 		/obj/item/organ/external/r_leg = 1,
-		/obj/item/hatchet = 1,
+		/obj/item/weapon/hatchet = 1,
 	)
 	duration = 3 MINUTES
 	duration_modifier = 2
@@ -73,7 +73,7 @@
 
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
-		/obj/item/bodypart/head = 1,
+		/obj/item/organ/external/head = 1,
 		/obj/item/weapon/book = 1,
 		)
 	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
