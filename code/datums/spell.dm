@@ -11,6 +11,8 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	opacity = 0
 	var/sound = null //The sound the spell makes when it is cast
 
+	var/owner = usr //Actually maybe usr won't always adequate inheritance of owner, but i really don't care, you know? It works, if not - Nasend will fix it :3
+
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
@@ -54,6 +56,11 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/static/list/casting_clothes
+
+/obj/effect/proc_holder/spell/proc/is_valid_target(mob/living/patient)
+	if (iscarbon(patient))
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/Destroy()
 	QDEL_NULL(action)

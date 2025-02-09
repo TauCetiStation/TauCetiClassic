@@ -5,7 +5,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "apetra_vulnera"
+	icon_state = "apetra_vulnera"
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 45 SECONDS
@@ -14,7 +14,8 @@
 	invocation_type = "whisper"
 
 
-	cast_range = 4
+	//cast_range = 4 -- cause idk what that var do, we're maybe fix it sometime in tests
+
 	/// What type of wound we apply
 	var/wound_type = /datum/wound/slash/flesh/critical/cleave
 

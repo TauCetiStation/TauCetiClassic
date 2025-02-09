@@ -4,7 +4,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "corrode"
+	icon_state = "corrode"
 	sound = 'sound/items/Welder.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -15,7 +15,7 @@
 
 	range = 2
 
-/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/get_things_to_cast_on(atom/center)
+/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/proc/get_things_to_cast_on(atom/center)
 
 	var/list/things_to_convert = RANGE_TURFS(range, center)
 
@@ -27,7 +27,7 @@
 
 	return things_to_convert
 
-/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/cast_on_thing_in_aoe(turf/victim, mob/living/caster)
+/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/proc/cast_on_thing_in_aoe(turf/victim, mob/living/caster)
 	// We have less chance of rusting stuff that's further
 	var/distance_to_caster = get_dist(victim, caster)
 	var/chance_of_not_rusting = (max(distance_to_caster, 1) - 1) * 100 / (range + 1)
