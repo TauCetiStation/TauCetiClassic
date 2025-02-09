@@ -135,7 +135,7 @@
 	riposte_ready = FALSE
 	addtimer(CALLBACK(src, PROC_REF(reset_riposte), source), BLADE_DANCE_COOLDOWN)
 
-/datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
+/datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/weapon/sickly_blade/weapon, attack_text)
 	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
 	source.balloon_alert(source, "riposte used")
 	source.visible_message(
@@ -300,7 +300,7 @@
 
 	return COMPONENT_CAST_HANDLESS
 
-/datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, atom/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, atom/target, obj/item/weapon/sickly_blade/blade)
 	if(target == source)
 		return
 
@@ -315,7 +315,7 @@
 	// Give it a short delay (for style, also lets people dodge it I guess)
 	addtimer(CALLBACK(src, PROC_REF(follow_up_attack), source, target, off_hand), 0.25 SECONDS)
 
-/datum/heretic_knowledge/blade_upgrade/blade/proc/follow_up_attack(mob/living/source, atom/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/blade_upgrade/blade/proc/follow_up_attack(mob/living/source, atom/target, obj/item/weapon/sickly_blade/blade)
 	if(QDELETED(source) || QDELETED(target) || QDELETED(blade))
 		return
 	// Sanity to ensure that the blade we're delivering an offhand attack with is ACTUALLY our offhand
@@ -414,7 +414,7 @@
 	var/mob/living/carbon/human/heretic = user
 	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
 
-/datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/weapon/sickly_blade/blade)
 	SIGNAL_HANDLER
 
 	if(target == source)

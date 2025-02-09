@@ -9,13 +9,13 @@
 	clothes_req = 0
 	charge_max = 10 SECONDS
 
-/obj/effect/proc_holder/spell/in_hand/mansus_grasp/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/mansus_grasp/on_antimagic_triggered(obj/item/weapon/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	victim.visible_message(
 		span_danger("The spell bounces off of [victim]!"),
 		span_danger("The spell bounces off of you!"),
 	)
 
-/obj/effect/proc_holder/spell/in_hand/mansus_grasp/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/mansus_grasp/cast_on_hand_hit(obj/item/weapon/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(!isliving(victim))
 		return FALSE
 
@@ -55,7 +55,7 @@
 
 	return TRUE
 
-/obj/effect/proc_holder/spell/in_hand/mansus_grasp/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/mansus_grasp/cast_on_secondary_hand_hit(obj/item/weapon/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(isliving(victim)) // if it's a living mob, go with our normal afterattack
 		return SECONDARY_ATTACK_CALL_NORMAL
 

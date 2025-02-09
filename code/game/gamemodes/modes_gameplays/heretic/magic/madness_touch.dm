@@ -21,13 +21,13 @@
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/in_hand/mad_touch/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/mad_touch/on_antimagic_triggered(obj/item/weapon/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	victim.visible_message(
 		span_danger("The spell bounces off of [victim]!"),
 		span_danger("The spell bounces off of you!"),
 	)
 
-/obj/effect/proc_holder/spell/in_hand/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/human/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/mad_touch/cast_on_hand_hit(obj/item/weapon/touch_attack/hand, mob/living/carbon/human/victim, mob/living/carbon/caster)
 	to_chat(caster, span_warning("[victim.name] has been cursed!"))
 	SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	return TRUE

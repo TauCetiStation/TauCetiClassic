@@ -29,12 +29,12 @@
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/in_hand/star_touch/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/star_touch/on_antimagic_triggered(obj/item/weapon/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	victim.visible_message(
 		span_danger("The spell bounces off of you!"),
 	)
 
-/obj/effect/proc_holder/spell/in_hand/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
+/obj/effect/proc_holder/spell/in_hand/star_touch/cast_on_hand_hit(obj/item/weapon/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	if(victim.has_status_effect(/datum/status_effect/star_mark))
 		victim.apply_effect(4 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
 		victim.remove_status_effect(/datum/status_effect/star_mark)
