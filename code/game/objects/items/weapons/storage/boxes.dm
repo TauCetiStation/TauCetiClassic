@@ -199,6 +199,17 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/r4046/chem/EMP(src)
 
+//Explosion 40x46mm
+/obj/item/weapon/storage/box/r4046/explosion
+	name = "box of 40x46mm explosive grenades (WARNING)"
+	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
+	icon_state = "4046_box(exp)"
+
+/obj/item/weapon/storage/box/r4046/explosion/atom_init()
+	. = ..()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/r4046/explosive(src)
+
 //EMPs
 /obj/item/weapon/storage/box/emps
 	name = "box of emp grenades"
