@@ -22,6 +22,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 8,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 8,
+		/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 8,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15,
 		/obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 2,
 		/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 2,
@@ -177,6 +178,7 @@
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(
 		/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/starkist = 10,
@@ -190,6 +192,7 @@
 	)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 3,
+		/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/starkist = 3,
@@ -275,6 +278,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/fries/cardboard = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard = 4,
 		/obj/item/weapon/reagent_containers/food/snacks/hotdog = 5,
+		/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 5,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 5,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 5,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 5,
@@ -285,6 +289,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/fries/cardboard = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard = 9,
 		/obj/item/weapon/reagent_containers/food/snacks/hotdog = 9,
+		/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 3,
