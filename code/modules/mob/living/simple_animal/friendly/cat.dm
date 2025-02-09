@@ -140,7 +140,7 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 /mob/living/simple_animal/cat/dusty
 	name = "Dusty"
-	desc = "Его шерсть на вид и ощупь напоминает бархат."
+	desc = "Шерсть этого зверька на вид и ощупь напоминает бархат."
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"

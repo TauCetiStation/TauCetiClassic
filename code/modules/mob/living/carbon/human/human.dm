@@ -1922,7 +1922,9 @@
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	var/obj/item/organ/internal/heart/Lungs = organs_by_name[O_LUNGS]
 
+	var/fail_damage = apply_skill_bonus(user, 20, list(/datum/skill/medical = SKILL_LEVEL_NONE),  multiplier = -0.20)
 	var/needed_massages = 12
+	var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		needed_massages = 20
 	if(Lungs && !Lungs.is_bruised())
@@ -1972,16 +1974,13 @@
 		else
 			massages_done_right--
 			to_chat(user, "<span class='warning'>You've skipped a beat.</span>")
+			if ((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2)
+				apply_damage(fail_damage, BRUTE, BP.body_zone)
 
 	else
 		to_chat(user, "<span class='warning'>It seems [src]'s [Heart] is too squishy... It doesn't beat at all!</span>")
 
 	last_massage = world.time
-
-	var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
-	if (((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2) && prob(5))
-		BP.fracture()
-		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	// just give a sound notification if already in the body
