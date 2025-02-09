@@ -201,7 +201,7 @@
 
 //Explosion 40x46mm
 /obj/item/weapon/storage/box/r4046/explosion
-	name = "box of 40x46mm explosion grenades (WARNING)"
+	name = "box of 40x46mm explosive grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
 	icon_state = "4046_box(exp)"
 
