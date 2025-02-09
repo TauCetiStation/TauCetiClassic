@@ -16276,14 +16276,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
-"aLi" = (
-/obj/machinery/door/airlock/centcom{
-	dir = 4;
-	name = "General Access";
-	req_access = list(101)
-	},
-/turf/unsimulated/wall/like_a_normal/green,
-/area/centcom/control)
 "aLj" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -19396,12 +19388,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aTV" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Courthouse"
-	},
-/turf/unsimulated/wall/like_a_normal/green,
-/area/centcom/living)
 "aTY" = (
 /turf/unsimulated/floor,
 /area/centcom/waitingroom)
@@ -19530,13 +19516,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aUz" = (
-/obj/machinery/conveyor{
-	dir = 10;
-	id = "CentComConv01"
-	},
-/turf/unsimulated/floor,
-/area/centcom/holding)
 "aUE" = (
 /obj/structure/window/shuttle/reinforced/evac{
 	icon_state = "13,20"
@@ -57434,7 +57413,7 @@ aTF
 aTF
 aTF
 aTF
-aUz
+aTF
 aNs
 aaM
 aaM
@@ -67688,7 +67667,7 @@ aJu
 aJu
 aJu
 aJu
-aLi
+nkX
 aJu
 aJu
 aJu
@@ -76962,7 +76941,7 @@ aQS
 jcb
 iNb
 iNb
-aTV
+aLj
 aBK
 aAm
 aaM
