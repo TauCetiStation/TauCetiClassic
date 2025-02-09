@@ -13,7 +13,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 
 	var/owner = usr //Actually maybe usr won't always adequate inheritance of owner, but i really don't care, you know? It works, if not - Nasend will fix it :3
 
-	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
+	var/school
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
@@ -34,10 +34,11 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/clothes_req = TRUE //see if it requires clothes
 	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
-	var/invocation_type = "none" //can be none, whisper and shout
+	var/invocation_type = "none" //can be none, whisper, emote and shout
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
+	var/spell_requirements
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -159,6 +160,8 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ", "`"))
+		if("emote")
+			user.say(invocation)
 	if(sound)
 		playsound(user, sound, VOL_EFFECTS_MASTER)
 

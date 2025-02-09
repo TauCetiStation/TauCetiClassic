@@ -10,6 +10,7 @@
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 1 MINUTES
+	spell_requirements = SPELL_REQUIRES_HUMAN
 
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
 	invocation_type = "whisper"

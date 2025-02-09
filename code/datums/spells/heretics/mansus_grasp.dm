@@ -8,6 +8,7 @@
 	school = "evocation"
 	clothes_req = 0
 	charge_max = 10 SECONDS
+	spell_requirements = SPELL_CASTABLE_WITHOUT_INVOCATION
 
 /obj/effect/proc_holder/spell/in_hand/mansus_grasp/on_antimagic_triggered(obj/item/weapon/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	victim.visible_message(
