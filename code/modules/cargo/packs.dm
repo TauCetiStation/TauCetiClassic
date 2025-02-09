@@ -411,7 +411,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	group = "Security"
 
 /datum/supply_pack/ballistic/exp4046
-	name = "40x46mm explosion grenades"
+	name = "40x46mm explosive grenades"
 	contains = list(/obj/item/weapon/storage/box/r4046/explosion,
 					/obj/item/weapon/storage/box/r4046/explosion)
 	additional_costs = 520
