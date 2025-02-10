@@ -160,7 +160,7 @@
 	if(!.)
 		return
 
-	owner.playsound_local(get_turf(owner), 'sound/effects/magic/blind.ogg', 50, TRUE)
+	owner.playsound_local(get_turf(owner), 'sound/magic/blind.ogg', 50, TRUE)
 	var/obj/item/weapon/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)
 	target_sword.SpinAnimation(5, 1)
@@ -249,4 +249,4 @@
 	carbon_victim.set_dizzy_if_lower(40 SECONDS)
 	carbon_victim.adjust_temp_blindness(4 SECONDS)
 	SEND_SIGNAL(carbon_victim, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
-	playsound(src, 'sound/effects/magic/blind.ogg', 75, TRUE)
+	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)
