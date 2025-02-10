@@ -7,7 +7,7 @@
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "cosmic_rune"
 
-	sound = 'sound/effects/magic/forcewall.ogg'
+	sound = 'sound/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN
 	charge_max = 15 SECONDS
 

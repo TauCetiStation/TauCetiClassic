@@ -64,7 +64,7 @@
 		return balloon_message
 
 	if(is_mining_level(their_z))
-		balloon_message = "on lavaland!"
+		balloon_message = "on asteroid!"
 		return balloon_message
 
 	if(is_away_level(their_z) || is_secret_level(their_z))

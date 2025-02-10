@@ -80,7 +80,7 @@
 
 	var/turf/target_turf = get_turf(target)
 	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)
-	playsound(target, 'sound/effects/magic/hereticknock.ogg', 100, TRUE, -1)
+	playsound(target, 'sound/magic/hereticknock.ogg', 100, TRUE, -1)
 
 	return COMPONENT_USE_HAND
 
@@ -95,7 +95,7 @@
 		Does not preserve the card originally used in the ritual."
 	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
 	required_atoms = list(
-		/obj/item/storage/wallet = 1,
+		/obj/item/weapon/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
 		/obj/item/card/id = 1,
 	)
@@ -127,7 +127,7 @@
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
 	cost = 1
-	research_tree_icon_path = 'icons/obj/service/library.dmi'
+	research_tree_icon_path = 'icons/obj/library.dmi'
 	research_tree_icon_state = "heretichandbook"
 
 /datum/heretic_knowledge/spell/burglar_finesse

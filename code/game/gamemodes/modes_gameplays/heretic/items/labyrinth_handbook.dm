@@ -16,7 +16,7 @@
 /obj/item/heretic_labyrinth_handbook
 	name = "labyrinth handbook"
 	desc = "A book containing the laws and regulations of the Locked Labyrinth, penned on an unknown substance. Its pages squirm and strain, looking to lash out and escape."
-	icon = 'icons/obj/service/library.dmi'
+	icon = 'icons/obj/library.dmi'
 	icon_state = "heretichandbook"
 	force = 10
 	damtype = BURN

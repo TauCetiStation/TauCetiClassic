@@ -8,7 +8,7 @@
 	button_icon_state = "moon_smile"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
-	sound = 'sound/effects/magic/blind.ogg'
+	sound = 'sound/magic/Blind.ogg'
 	school = SCHOOL_FORBIDDEN
 	charge_max = 20 SECONDS
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
