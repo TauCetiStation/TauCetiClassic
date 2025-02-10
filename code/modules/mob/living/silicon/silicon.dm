@@ -124,6 +124,8 @@
 		to_chat(user, "<span class='alert'>The armoured plating is too tough.</span>")
 	return FALSE
 
+/mob/living/silicon/rust_heretic_act()
+	adjustBruteLoss(500)
 
 //Silicon mob language procs
 

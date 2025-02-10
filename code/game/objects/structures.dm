@@ -111,6 +111,9 @@
 
 	return TRUE
 
+/obj/structure/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1)
+
 /obj/structure/proc/turf_is_crowded()
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))

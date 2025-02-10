@@ -378,6 +378,7 @@
 #include "code\datums\elements\cult_eyes.dm"
 #include "code\datums\elements\cult_halo.dm"
 #include "code\datums\elements\digitalcamo.dm"
+#include "code\datums\elements\rust.dm"
 #include "code\datums\elements\undertile.dm"
 #include "code\datums\emotes\emote.dm"
 #include "code\datums\emotes\misc.dm"

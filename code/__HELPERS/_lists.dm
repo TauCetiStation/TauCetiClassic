@@ -626,6 +626,9 @@
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
+/obj/machinery/rust_heretic_act()
+	take_damage(500, BRUTE, MELEE, 1)
+
 /proc/filter_list(list/L, type)
 	. = list()
 	for(var/entry in L)

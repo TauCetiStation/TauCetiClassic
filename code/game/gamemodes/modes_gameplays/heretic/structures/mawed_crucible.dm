@@ -1,5 +1,5 @@
 // The mawed crucible, a heretic structure that can create potions from bodyparts and organs.
-/obj/structure/destructible/eldritch_crucible
+/obj/structure/eldritch_crucible
 	name = "mawed crucible"
 	desc = "A deep basin made of cast iron, immortalized by steel-like teeth holding it in place. \
 		Staring at the vile extract within fills your mind with terrible ideas."
@@ -19,12 +19,12 @@
 	///Cooldown for the crucible to create mass from the eldritch
 	COOLDOWN_DECLARE(refill_cooldown)
 
-/obj/structure/destructible/eldritch_crucible/atom_init()
+/obj/structure/eldritch_crucible/atom_init()
 	. = ..()
 	break_message = span_warning("[src] falls apart with a thud!")
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/destructible/eldritch_crucible/process(seconds_per_tick)
+/obj/structure/eldritch_crucible/process(seconds_per_tick)
 	if(COOLDOWN_TIMELEFT(src, refill_cooldown))
 		return
 	if(current_mass >= max_mass)
@@ -34,7 +34,7 @@
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/destructible/eldritch_crucible/atom_deconstruct(disassembled = TRUE)
+/obj/structure/eldritch_crucible/atom_deconstruct(disassembled = TRUE)
 	// Create a spillage if we were destroyed with leftover mass
 	if(current_mass)
 		break_message = span_warning("[src] falls apart with a thud, spilling shining extract everywhere!")
@@ -48,7 +48,7 @@
 
 	return ..()
 
-/obj/structure/destructible/eldritch_crucible/examine(mob/user)
+/obj/structure/eldritch_crucible/examine(mob/user)
 	. = ..()
 	if(!ishereticormonster(user) && !isobserver(user))
 		return
@@ -68,16 +68,16 @@
 		var/potion_string = span_info("\tThe " + initial(potion.name) + " - " + initial(potion.crucible_tip))
 		. += potion_string
 
-/obj/structure/destructible/eldritch_crucible/examine_status(mob/user)
+/obj/structure/eldritch_crucible/examine_status(mob/user)
 	if(ishereticormonster(user) || isobserver(user))
 		return span_notice("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
 	return ..()
 
 // no breaky herety thingy
-/obj/structure/destructible/eldritch_crucible/rust_heretic_act()
+/obj/structure/eldritch_crucible/rust_heretic_act()
 	return
 
-/obj/structure/destructible/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
+/obj/structure/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
 	if(!iscarbon(user))
 		return ..()
 
@@ -109,7 +109,7 @@
 
 	return ..()
 
-/obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/structure/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/weapon/magic/mansus_fist))
 		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
 		set_anchored(!anchored)
@@ -129,7 +129,7 @@
 		balloon_alert(user, "refilled flask")
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/destructible/eldritch_crucible/attack_hand(mob/user, list/modifiers)
+/obj/structure/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -156,7 +156,7 @@
 /*
  * Wrapper for show_radial() to ensure in_use is enabled and disabled correctly.
  */
-/obj/structure/destructible/eldritch_crucible/proc/show_radial(mob/living/user)
+/obj/structure/eldritch_crucible/proc/show_radial(mob/living/user)
 	in_use = TRUE
 	create_potion(user)
 	in_use = FALSE
@@ -165,7 +165,7 @@
  * Shows the user of radial of possible potions,
  * and create the potion they chose.
  */
-/obj/structure/destructible/eldritch_crucible/proc/create_potion(mob/living/user)
+/obj/structure/eldritch_crucible/proc/create_potion(mob/living/user)
 
 	// Assoc list of [name] to [image] for the radial
 	var/static/list/choices = list()
@@ -205,7 +205,7 @@
  * Called when a non-heretic interacts with the crucible,
  * causing them to lose their active hand to it.
  */
-/obj/structure/destructible/eldritch_crucible/proc/bite_the_hand(mob/living/carbon/user)
+/obj/structure/eldritch_crucible/proc/bite_the_hand(mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_NODISMEMBER))
 		return
 
@@ -221,7 +221,7 @@
  * Consumes an organ or bodypart and increases the mass of the crucible.
  * If feeder is supplied, gives some feedback.
  */
-/obj/structure/destructible/eldritch_crucible/proc/consume_fuel(mob/living/feeder, obj/item/consumed)
+/obj/structure/eldritch_crucible/proc/consume_fuel(mob/living/feeder, obj/item/consumed)
 	if(current_mass >= max_mass)
 		if(feeder)
 			balloon_alert(feeder, "crucible full!")
@@ -237,7 +237,7 @@
 	qdel(consumed)
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/destructible/eldritch_crucible/update_icon_state()
+/obj/structure/eldritch_crucible/update_icon_state()
 	icon_state = "[base_icon_state][(current_mass == max_mass) ? null : "_empty"]"
 	return ..()
 

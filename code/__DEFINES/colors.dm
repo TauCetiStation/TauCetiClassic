@@ -38,6 +38,7 @@
 #define COLOR_LIGHT_PINK                "#ff87ff"
 #define COLOR_ADMIN_PINK                "#D100D1"
 #define COLOR_ORANGE                    "#ff9900"
+#define COLOR_RUSTED_GLASS              "#917c65"
 #define COLOR_TIGER                     "#fc6a03"
 #define COLOR_YELLOW                    "#ffff00"
 #define COLOR_GOLD                      "#d4af37"

@@ -202,6 +202,7 @@
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_MANSUS_TOUCHED      "mansus_touched"
 #define TRAIT_HERETIC_SLURRING    "heretic_slurring"
+#define TRAIT_RUSTY               "rust_trait"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
