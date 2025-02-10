@@ -315,6 +315,7 @@
 /obj/mecha/working/ripley/price = 40000
 /obj/mecha/working/hoverpod/price = 25000
 /obj/mecha/medical/odysseus/price = 30000
+/obj/mecha/working/clarke/price = 50000
 /obj/mecha/combat/price = 70000
 
 /obj/structure/closet/price = 200
