@@ -87,7 +87,7 @@
 
 	if(isbodypart(weapon))
 
-		var/obj/item/bodypart/consumed = weapon
+		var/obj/item/organ/external/consumed = weapon
 		if(!IS_ORGANIC_LIMB(consumed))
 			balloon_alert(user, "not organic!")
 			return
@@ -209,7 +209,7 @@
 	if(HAS_TRAIT(user, TRAIT_NODISMEMBER))
 		return
 
-	var/obj/item/bodypart/arm = user.get_active_hand()
+	var/obj/item/organ/external/arm = user.get_active_hand()
 	if(QDELETED(arm))
 		return
 

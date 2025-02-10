@@ -77,19 +77,19 @@
 		)
 		return TRUE
 
-	if(locate(/obj/item/bodypart) in atoms)
+	if(locate(/obj/item/organ/external) in atoms)
 		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/desire)
 		src.required_atoms = list(
 			/obj/item/canvas = 1,
-			/obj/item/bodypart = 1,
+			/obj/item/organ/external = 1,
 		)
 		return TRUE
 
-	if(locate(/obj/item/food/grown) in atoms)
+	if(locate(/obj/item/weapon/reagent_containers/food) in atoms)
 		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/vines)
 		src.required_atoms = list(
 			/obj/item/canvas = 1,
-			/obj/item/food/grown = 1,
+			/obj/item/weapon/reagent_containers/food = 1,
 		)
 		return TRUE
 

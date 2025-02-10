@@ -257,22 +257,22 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/codex_cicatrix
 	name = "Codex Cicatrix"
-	desc = "Allows you to transmute a book, any unique pen (anything but generic pens), and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
+	desc = "Allows you to transmute a book, any unique pen (anything but generic pens), and any animal's hide or leather to create a Codex Cicatrix. \
 		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
 		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
 	required_atoms = list(
-		list(/obj/item/toy/eldritch_book, /obj/item/weapon/book) = 1,
+		/obj/item/weapon/book = 1,
 		/obj/item/weapon/pen = 1,
-		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse) = 1,
+		list(/obj/item/stack/sheet/leather, /mob/living/simple_animal/mouse) = 1,
 	)
 	banned_atom_types = list(/obj/item/weapon/pen)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	is_starting_knowledge = TRUE
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
-	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse))
+	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /mob/living/simple_animal/mouse))
 	research_tree_icon_path = 'icons/heretic/weapon/eldritch.dmi'
 	research_tree_icon_state = "book"
 
@@ -311,7 +311,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// If it is, we will damage a random bodypart, and check that bodypart for its body type, to select between 'skin' or 'exterior'.
 	if(iscarbon(body))
 		var/mob/living/carbon/carbody = body
-		var/obj/item/bodypart/bodypart = pick(carbody.bodyparts)
+		var/obj/item/organ/external/bodypart = pick(carbody.bodyparts)
 		ripped_thing = bodypart
 
 		carbody.apply_damage(25, BRUTE, bodypart, sharpness = SHARP_EDGED)

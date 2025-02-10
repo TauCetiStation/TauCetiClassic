@@ -62,7 +62,7 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner
-	var/obj/item/bodypart/chest/organ_storage = owner.get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/organ/external/chest/organ_storage = owner.get_bodypart(BODY_ZONE_CHEST)
 	if (isnull(organ_storage))
 		carbon_owner.gib() // IDK how you don't have a chest but you're not getting away that easily
 		return

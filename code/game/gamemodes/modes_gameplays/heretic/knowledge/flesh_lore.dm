@@ -249,7 +249,7 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+	var/obj/item/organ/external/bodypart = pick(carbon_target.bodyparts)
 	var/datum/wound/crit_wound = new wound_type()
 	crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
 

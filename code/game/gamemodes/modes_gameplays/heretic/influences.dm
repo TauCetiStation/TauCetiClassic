@@ -109,7 +109,7 @@
 		return TRUE
 
 	var/mob/living/carbon/human/human_user = user
-	var/obj/item/bodypart/their_poor_arm = human_user.get_active_hand()
+	var/obj/item/organ/external/their_poor_arm = human_user.get_active_hand()
 	if(prob(25))
 		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
 		their_poor_arm.dismember()
@@ -138,7 +138,7 @@
 
 	// A very elaborate way to suicide
 	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
-	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
+	var/obj/item/organ/external/head/head = locate() in human_user.bodyparts
 	if(head)
 		head.dismember()
 		forceMove(head, src) // stored for later fishage

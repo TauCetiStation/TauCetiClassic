@@ -48,8 +48,8 @@
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
-	desc = "Allows you to transmute a piece of wood, with hide \
-		from any animal,and a camera to create the Lionhunter's rifle. \
+	desc = "Allows you to transmute a piece of wood, with mouse \
+		and a camera to create the Lionhunter's rifle. \
 		The Lionhunter's Rifle is a long ranged ballistic weapon with three shots. \
 		These shots function as normal, albeit weak high-caliber munitions when fired from \
 		close range or at inanimate objects. You can aim the rifle at distant foes, \
@@ -59,10 +59,10 @@
 
 	required_atoms = list(
 		/obj/item/stack/sheet/wood = 1,
-		/obj/item/stack/sheet/animalhide = 1,
+		/mob/living/simple_animal/mouse = 1,
 		/obj/item/device/camera = 1,
 	)
-	result_atoms = list(/obj/item/gun/ballistic/rifle/lionhunter)
+	result_atoms = list(/obj/item/weapon/gun/projectile/lionhunter)
 	cost = 1
 
 

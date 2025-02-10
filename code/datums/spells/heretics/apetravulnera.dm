@@ -39,7 +39,7 @@
 		return FALSE
 
 	var/a_limb_got_damaged = FALSE
-	for(var/obj/item/bodypart/bodypart in cast_on.bodyparts)
+	for(var/obj/item/organ/external/bodypart in cast_on.bodyparts)
 		if(bodypart.brute_dam < 15)
 			continue
 		a_limb_got_damaged = TRUE
