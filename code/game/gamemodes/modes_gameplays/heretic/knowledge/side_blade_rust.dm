@@ -23,7 +23,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 	cost = 1
 
-	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
+	research_tree_icon_path = 'icons/obj/clothing/suits.dmi'
 	research_tree_icon_state = "eldritch_armor"
 	research_tree_icon_frame = 12
 
@@ -66,8 +66,8 @@
 	cost = 1
 
 
-	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
-	research_tree_icon_state = "goldrevolver"
+	research_tree_icon_path = 'icons/obj/gun.dmi'
+	research_tree_icon_state = "synd_revolver"
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"

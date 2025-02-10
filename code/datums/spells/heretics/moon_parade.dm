@@ -18,10 +18,10 @@
 	active_msg = "You prepare to make them join the parade!"
 	deactive_msg = "You stop the music and halt the parade... for now."
 	cast_range = 12
-	projectile_type = /obj/projectile/moon_parade
+	projectile_type = /obj/item/projectile/moon_parade
 
 
-/obj/projectile/moon_parade
+/obj/item/projectile/moon_parade
 	name = "Lunar parade"
 	icon_state = "lunar_parade"
 	damage = 0
@@ -37,11 +37,11 @@
 	// A list of the people we hit
 	var/list/mobs_hit = list()
 
-/obj/projectile/moon_parade/atom_init()
+/obj/item/projectile/moon_parade/atom_init()
 	. = ..()
 	soundloop = new(src,  TRUE)
 
-/obj/projectile/moon_parade/prehit_pierce(atom/A)
+/obj/item/projectile/moon_parade/prehit_pierce(atom/A)
 	if(!isliving(firer) || !isliving(A))
 		return ..()
 
@@ -69,7 +69,7 @@
 
 	return ..()
 
-/obj/projectile/moon_parade/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/item/projectile/moon_parade/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(. == BULLET_ACT_BLOCK || !isliving(target))
 		return
@@ -87,7 +87,7 @@
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, name)
 	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 
-/obj/projectile/moon_parade/Destroy()
+/obj/item/projectile/moon_parade/Destroy()
 	for(var/mob/living/leftover_mob as anything in mobs_hit)
 		clear_mob(leftover_mob)
 	mobs_hit.Cut() // You never know
@@ -96,11 +96,11 @@
 
 // Blocks movement in order to make it appear like the character is transfixed to the projectile and wandering after it
 // Coded this way because its a simple way to hold the illusion compared to other methods
-/obj/projectile/moon_parade/proc/moon_block_move(datum/source)
+/obj/item/projectile/moon_parade/proc/moon_block_move(datum/source)
 	SIGNAL_HANDLER
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
 
-/obj/projectile/moon_parade/proc/clear_mob(datum/source)
+/obj/item/projectile/moon_parade/proc/clear_mob(datum/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_QDELETING))
 	mobs_hit -= source

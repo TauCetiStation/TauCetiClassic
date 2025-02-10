@@ -82,9 +82,9 @@
 	invocation_type = "whisper"
 
 
-	projectile_type = /obj/projectile/magic/aoe_turf/rust_wave
+	projectile_type = /obj/item/projectile/magic/aoe_turf/rust_wave
 
-/obj/projectile/magic/aoe_turf/rust_wave
+/obj/item/projectile/magic/aoe_turf/rust_wave
 	name = "Patron's Reach"
 	icon_state = "eldritch_projectile"
 	alpha = 180
@@ -96,7 +96,7 @@
 	range = 15
 	speed = 1
 
-/obj/projectile/magic/aoe_turf/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/item/projectile/magic/aoe_turf/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/items/Welder.ogg', 75, TRUE)
 	var/list/turflist = list()
@@ -115,8 +115,8 @@
 
 /obj/effect/proc_holder/spell/basic_projectile/rust_wave/short
 	name = "Lesser Patron's Reach"
-	projectile_type = /obj/projectile/magic/aoe_turf/rust_wave/short
+	projectile_type = /obj/item/projectile/magic/aoe_turf/rust_wave/short
 
-/obj/projectile/magic/aoe_turf/rust_wave/short
+/obj/item/projectile/magic/aoe_turf/rust_wave/short
 	range = 7
 	speed = 0.5
