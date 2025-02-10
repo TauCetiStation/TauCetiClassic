@@ -19,7 +19,7 @@
 	icon_state = "eldritch_armor"
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	allowed = list(/obj/item/weapon/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
+	allowed = list(/obj/item/weapon/sickly_blade, /obj/item/weapon/gun/projectile/lionhunter)
 	hoodtype = /obj/item/clothing/head/culthood/eldritch
 	// Slightly better than normal cult robes
 	armor = list(melee = 40, bullet = 45, laser = 55, energy = 50, bomb = 35, bio = 20, rad = 0)

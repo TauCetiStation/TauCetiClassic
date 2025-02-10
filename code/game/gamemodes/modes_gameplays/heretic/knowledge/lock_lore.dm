@@ -200,7 +200,7 @@
 /datum/heretic_knowledge/ultimate/lock_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	// buffs
-	var/obj/effect/proc_holder/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
+	var/obj/effect/proc_holder/spell/no_target/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
 	transform_spell.Grant(user)
 
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)

@@ -64,7 +64,7 @@
 	result_atoms = list(/obj/item/canvas)
 	cost = 1
 
-	research_tree_icon_path = 'icons/obj/signs.dmi'
+	research_tree_icon_path = 'icons/heretic/paintings/eldritch_paintings.dmi'
 	research_tree_icon_state = "eldritch_painting_weeping"
 
 

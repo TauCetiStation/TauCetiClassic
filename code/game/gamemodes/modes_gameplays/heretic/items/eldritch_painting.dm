@@ -2,7 +2,7 @@
 /obj/item/wallframe/painting/eldritch
 	name = "The Blank Canvas: A Study in Default Subtypes"
 	desc = "An impossible painting made of impossible paint. It should not exist in this reality."
-	icon = 'icons/obj/signs.dmi'
+	icon = 'icons/heretic/paintings/eldritch_paintings.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "eldritch_painting_debug"
@@ -12,7 +12,7 @@
 /obj/structure/sign/painting/eldritch
 	name = "The Blank Canvas: A Study in Default Subtypes"
 	desc = "An impossible painting made of impossible paint. It should not exist in this reality."
-	icon = 'icons/obj/signs.dmi'
+	icon = 'icons/heretic/paintings/eldritch_paintings.dmi'
 	icon_state = "eldritch_painting_debug"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE

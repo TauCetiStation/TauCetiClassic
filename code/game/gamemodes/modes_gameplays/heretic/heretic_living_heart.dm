@@ -143,7 +143,7 @@
 		last_tracked_name = null
 		return FALSE
 
-	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, extrarange = -11)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
 
 

@@ -267,7 +267,7 @@
 	if(!iscarbon(user))
 		return
 
-	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 
 	if(!ishereticormonster(user))
 		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))

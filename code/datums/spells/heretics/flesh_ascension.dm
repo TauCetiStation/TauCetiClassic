@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/shapeshift/shed_human_form
+/obj/effect/proc_holder/spell/no_target/shapeshift/shed_human_form
 	name = "Shed form"
 	desc = "Shed your fragile form, become one with the arms, become one with the emperor. \
 		Causes heavy amounts of brain damage and sanity loss to nearby mortals."
@@ -21,7 +21,7 @@
 	/// The radius around us that we cause brain damage / sanity damage to.
 	var/scare_radius = 9
 
-/obj/effect/proc_holder/spell/shapeshift/shed_human_form/do_shapeshift(mob/living/caster)
+/obj/effect/proc_holder/spell/no_target/shapeshift/shed_human_form/do_shapeshift(mob/living/caster)
 	// When we transform into the worm, everyone nearby gets freaked out
 	for(var/mob/living/carbon/human/nearby_human in view(scare_radius, caster))
 		if(ishereticormonster(nearby_human) || nearby_human == caster)
@@ -36,11 +36,11 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/shapeshift/shed_human_form/do_unshapeshift(mob/living/basic/heretic_summon/armsy/caster)
+/obj/effect/proc_holder/spell/no_target/shapeshift/shed_human_form/do_unshapeshift(mob/living/basic/heretic_summon/armsy/caster)
 	if(istype(caster))
 		segment_length = caster.get_length() - 1 // Don't count the head
 
 	return ..()
 
-/obj/effect/proc_holder/spell/shapeshift/shed_human_form/create_shapeshift_mob(atom/loc)
+/obj/effect/proc_holder/spell/no_target/shapeshift/shed_human_form/create_shapeshift_mob(atom/loc)
 	return new shapeshift_type(loc, TRUE, segment_length)
