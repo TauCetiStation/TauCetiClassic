@@ -166,7 +166,7 @@
 							if (place)
 								board_stat = text("[][][]", copytext(board_stat, 1, place), selected, copytext(board_stat, place + 2, 129))
 					selected = null
-					playsound(src, 'sound/misc/chess_move.ogg', 100, 1)
+					playsound(src, 'sound/misc/chess_move.ogg', VOL_EFFECTS_MASTER)
 				else
 					if (selected == "remove")
 						var/place = ((ty - 1) * 8 + tx) * 2 - 1
@@ -189,7 +189,7 @@
 								else
 									if (place)
 										board_stat = text("[][][]", copytext(board_stat, 1, place), selected, copytext(board_stat, place + 2, 129))
-							playsound(src, 'sound/misc/chess_move.ogg', 100, 1)
+							playsound(src, 'sound/misc/chess_move.ogg', VOL_EFFECTS_MASTER)
 		add_fingerprint(usr)
 		update()
 		for(var/mob/M in viewers(1, src.loc))		//If someone is playing with us - they would see that we made a move.
