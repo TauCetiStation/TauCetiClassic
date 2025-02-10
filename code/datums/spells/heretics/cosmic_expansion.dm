@@ -7,7 +7,7 @@
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "cosmic_domain"
 
-	sound = 'sound/effects/magic/cosmic_expansion.ogg'
+	sound = 'sound/effects/cosmic_expansion.ogg'
 	school = SCHOOL_FORBIDDEN
 	charge_max = 45 SECONDS
 

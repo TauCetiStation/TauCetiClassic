@@ -6,7 +6,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "uncuff"
-	sound = 'sound/effects/magic/swap.ogg'
+	sound = 'sound/effects/swap.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 5 MINUTES

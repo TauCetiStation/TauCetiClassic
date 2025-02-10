@@ -8,7 +8,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "entropic_plume"
-	sound = 'sound/effects/magic/forcewall.ogg'
+	sound = 'sound/effects/forcewall.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 30 SECONDS

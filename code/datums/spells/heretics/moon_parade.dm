@@ -7,7 +7,7 @@
 	button_icon_state = "moon_parade"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
-	sound = 'sound/effects/magic/cosmic_energy.ogg'
+	sound = 'sound/effects/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN
 	charge_max = 30 SECONDS
 

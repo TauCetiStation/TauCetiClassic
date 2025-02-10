@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "flames"
-	sound = 'sound/effects/magic/fireball.ogg'
+	sound = 'sound/magic/fireball.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 45 SECONDS

@@ -101,8 +101,8 @@
 		get_turf(linked_rune_resolved),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
-		asoundin = 'sound/effects/magic/cosmic_energy.ogg',
-		asoundout = 'sound/effects/magic/cosmic_energy.ogg',
+		asoundin = 'sound/effects/cosmic_energy.ogg',
+		asoundout = 'sound/effects/cosmic_energy.ogg',
 	)
 	for(var/mob/living/person_on_rune in get_turf(src))
 		if(person_on_rune.has_status_effect(/datum/status_effect/star_mark))

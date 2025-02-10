@@ -91,7 +91,7 @@
 	var/static/list/heretic_paths_to_haunted_sword_abilities = list(
 		// Ash
 		PATH_ASH = list(
-			WIELDER_SPELLS = list(/obj/effect/proc_holder/spell/jaunt/ethereal_jaunt/ash),
+			WIELDER_SPELLS = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/ash),
 			SWORD_SPELLS = list(/obj/effect/proc_holder/spell/pointed/ash_beams),
 			SWORD_PREFIX = "ashen",
 		),

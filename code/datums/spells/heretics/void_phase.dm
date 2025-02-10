@@ -50,7 +50,7 @@
 /// Does the AOE effect of the blinka t the passed turf
 /obj/effect/proc_holder/spell/pointed/void_phase/proc/cause_aoe(turf/target_turf, effect_type = /obj/effect/temp_visual/voidin)
 	new effect_type(target_turf)
-	playsound(target_turf, 'sound/effects/magic/voidblink.ogg', 60, FALSE)
+	playsound(target_turf, 'sound/effects/voidblink.ogg', 60, FALSE)
 	for(var/mob/living/living_mob in range(damage_radius, target_turf))
 		if(ishereticormonster(living_mob) || living_mob == owner)
 			continue

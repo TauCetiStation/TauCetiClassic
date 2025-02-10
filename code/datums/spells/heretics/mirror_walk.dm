@@ -1,12 +1,12 @@
-/obj/effect/proc_holder/spell/jaunt/mirror_walk
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk
 	name = "Mirror Walk"
 	desc = "Allows you to traverse invisibly and freely across the station within the realm of the mirror. \
 		You can only enter and exit the realm of mirrors when nearby reflective surfaces and items, \
 		such as windows, mirrors, and reflective walls or equipment."
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "ninja_cloak"
+	icon = 'icons/hud/actions.dmi'
+	action_icon_state = "ninja_cloak"
 
 	charge_max = 6 SECONDS
 	jaunt_type = /obj/effect/dummy/phased_mob/mirror_walk
@@ -22,15 +22,15 @@
 		/obj/structure/mirror,
 	))
 
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/Grant(mob/grant_to)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/Grant(mob/grant_to)
 	. = ..()
 	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/Remove(mob/remove_from)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/Remove(mob/remove_from)
 	. = ..()
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -49,14 +49,14 @@
 
 	return TRUE
 
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/cast(mob/living/cast_on)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/cast(mob/living/cast_on)
 	. = ..()
 	if(is_jaunting(cast_on))
 		return exit_jaunt(cast_on)
 	else
 		return enter_jaunt(cast_on)
 
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/enter_jaunt(mob/living/jaunter, turf/loc_override)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	var/atom/nearby_reflection = is_reflection_nearby(jaunter)
 	if(!nearby_reflection)
 		to_chat(jaunter, span_warning("There are no reflective surfaces nearby to enter the mirror's realm!"))
@@ -67,7 +67,7 @@
 	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED, hidden = TRUE))
 		return
 
-	playsound(jaunter, 'sound/effects/magic/ethereal_enter.ogg', 50, TRUE, -1)
+	playsound(jaunter, 'sound/effects/ethereal_enter.ogg', 50, TRUE, -1)
 	jaunter.visible_message(
 		span_boldwarning("[jaunter] phases out of reality, vanishing before your very eyes!"),
 		span_notice("You jump into the reflection coming off of [nearby_reflection], entering the mirror's realm."),
@@ -81,7 +81,7 @@
 	RegisterSignal(jaunt, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	return jaunt
 
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/exit_jaunt(mob/living/unjaunter, turf/loc_override)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/exit_jaunt(mob/living/unjaunter, turf/loc_override)
 	var/turf/phase_turf = get_turf(unjaunter)
 	var/atom/nearby_reflection = is_reflection_nearby(phase_turf)
 	if(!nearby_reflection)
@@ -104,10 +104,10 @@
 	return ..(unjaunter, phase_turf)
 
 // Play a spooky noise, provide textual feedback, and make the turf colder.
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	. = ..()
 	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
-	playsound(unjaunter, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	playsound(unjaunter, 'sound/effects/ethereal_exit.ogg', 50, TRUE, -1)
 	var/turf/phase_turf = get_turf(unjaunter)
 
 	// Chilly!
@@ -130,7 +130,7 @@
  * Returns an object reference to a "reflective" object in view if one was found,
  * or null if no object was found that was determined to be "reflective".
  */
-/obj/effect/proc_holder/spell/jaunt/mirror_walk/proc/is_reflection_nearby(atom/caster)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/proc/is_reflection_nearby(atom/caster)
 	for(var/atom/thing as anything in view(2, caster))
 		if(isitem(thing))
 			var/obj/item/item_thing = thing

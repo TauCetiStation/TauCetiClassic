@@ -223,7 +223,7 @@
 		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
 			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
 				if(mind.current)
-					SEND_SOUND(mind.current, 'sound/effects/magic/clockwork/narsie_attack.ogg')
+					SEND_SOUND(mind.current, 'sound/effects/clockwork/narsie_attack.ogg')
 					var/message = span_narsie("A vile heretic has ") + \
 					span_cult_large(span_hypnophrase("sacrificed")) + \
 					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")
@@ -249,7 +249,7 @@
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
 	to_chat(user, span_hierophant("Your patrons are rapturous!"))
-	playsound(sacrifice, 'sound/effects/magic/disintegrate.ogg', 75, TRUE)
+	playsound(sacrifice, 'sound/effects/disintegrate.ogg', 75, TRUE)
 
 	// Drop all items and splatter them around messily.
 	var/list/dustee_items = sacrifice.unequip_everything()

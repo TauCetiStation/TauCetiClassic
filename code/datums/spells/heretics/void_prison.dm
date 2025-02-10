@@ -8,7 +8,7 @@
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "voidball"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
-	sound = 'sound/effects/magic/voidblink.ogg'
+	sound = 'sound/effects/voidblink.ogg'
 
 	charge_max = 1 MINUTES
 	cast_range = 3

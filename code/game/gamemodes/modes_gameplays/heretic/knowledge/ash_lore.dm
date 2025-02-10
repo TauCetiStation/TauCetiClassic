@@ -63,7 +63,7 @@
 	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
 
-	action_to_add = /obj/effect/proc_holder/spell/jaunt/ethereal_jaunt/ash
+	action_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/ash
 	cost = 1
 
 

@@ -228,7 +228,7 @@
 	carbon_victim.Paralyze(5 SECONDS)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_R_LEG)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_L_LEG)
-	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/demon_attack1.ogg', 75, TRUE)
 
 /obj/structure/trap/eldritch/mad
 	name = "mad carving"
