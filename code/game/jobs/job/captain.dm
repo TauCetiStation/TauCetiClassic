@@ -49,7 +49,7 @@
 		access_security, access_sec_doors, access_brig, access_forensics_lockers,
 		access_medical, access_change_ids, access_ai_upload, access_eva, access_heads,
 		access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
-		access_crematorium, access_kitchen, access_cargo, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
+		access_crematorium, access_kitchen, access_cargo, access_cargoshop, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
 	)
