@@ -297,7 +297,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/item/weap = null
 	var/image/currentimage = null
 	var/icon/base = null
-	var/s_tone
 	var/mob/living/clone = null
 	var/image/left
 	var/image/right
