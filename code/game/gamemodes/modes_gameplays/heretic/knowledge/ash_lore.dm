@@ -24,7 +24,7 @@
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	required_atoms = list(
 		/obj/item/weapon/kitchenknife = 1,
-		/obj/item/match = 1,
+		/obj/item/weapon/match = 1,
 	)
 	result_atoms = list(/obj/item/weapon/sickly_blade/ash)
 	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
