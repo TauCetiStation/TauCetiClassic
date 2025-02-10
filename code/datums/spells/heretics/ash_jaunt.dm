@@ -4,7 +4,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "ash_shift"
+	action_icon_state = "ash_shift"
 	sound = null
 
 	school = SCHOOL_FORBIDDEN
