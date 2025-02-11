@@ -366,8 +366,9 @@
 
 /obj/item/weapon/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
-	if((!(slot & ITEM_SLOT_HANDS)) || bound)
+	if((!(slot & SLOT_FLAGS_GLOVES)) || bound)
 		return
+	#warn Missmatched slots? ^^^
 	for(var/obj/effect/proc_holder/spell/wielder_spell in path_wielder_actions)
 		wielder_spell.Grant(user)
 	binding_filters_update()

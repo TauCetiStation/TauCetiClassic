@@ -149,7 +149,7 @@
 		/obj/item/stack/sheet/mineral/phoron = 5,
 		/obj/item/clothing/suit/armor = 1,
 		/obj/item/device/flash = 1,
-		/obj/item/organ/lungs = 1,
+		/obj/item/organ/internal/lungs = 1,
 	)
 	cost = 1
 

@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	research_tree_icon_state = "living_heart"
 	research_tree_icon_frame = 1
 	/// The typepath of the organ type required for our heart.
-	var/required_organ_type = /obj/item/organ/heart
+	var/required_organ_type = /obj/item/organ/internal/heart
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/role/heretic/our_heretic)
 	. = ..()
@@ -94,8 +94,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// If a heretic is made from a species without a heart, we need to find a backup.
 	if(!where_to_put_our_heart)
 		var/static/list/backup_organs = list(
-			O_LUNGS = /obj/item/organ/lungs,
-			O_LIVER = /obj/item/organ/liver,
+			O_LUNGS = /obj/item/organ/internal/lungs,
+			O_LIVER = /obj/item/organ/internal/liver,
 			ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
 		)
 
@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create an Amber Focus. \
 		A focus must be worn in order to cast more advanced spells."
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/organ/internal/eyes = 1,
 		/obj/item/stack/sheet/glass = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)

@@ -100,7 +100,7 @@
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 
 	required_atoms = list(
-		/obj/item/organ/heart = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/accessory/tie = 1,
 	)
@@ -219,6 +219,7 @@
 			"right pocket" = SLOT_R_STORE,
 			"left pocket" = SLOT_L_STORE,
 		)
+		#warn Missmatched slots? ^^^
 		crewmate.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
 		crewmate.emote("laugh")
 		amount_of_lunatics++

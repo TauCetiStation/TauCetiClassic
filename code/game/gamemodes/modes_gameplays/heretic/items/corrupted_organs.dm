@@ -1,18 +1,18 @@
 /*
 /// Renders you unable to see people who were heretics at the time that this organ is gained
-/obj/item/organ/eyes/corrupt
+/obj/item/organ/internal/eyes/corrupt
 	name = "corrupt orbs"
 	desc = "These eyes have seen something they shouldn't have."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// The override images we are applying
 	var/list/hallucinations
 
-/obj/item/organ/eyes/corrupt/atom_init()
+/obj/item/organ/internal/eyes/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have wide dilated pupils, and no iris. Something is moving in the darkness.", BODY_ZONE_PRECISE_EYES)
 
-/obj/item/organ/eyes/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/eyes/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if (!organ_owner.client)
 		return
@@ -29,7 +29,7 @@
 	if (LAZYLEN(hallucinations))
 		organ_owner.client.images |= hallucinations
 
-/obj/item/organ/eyes/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/eyes/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if (!LAZYLEN(hallucinations))
 		return
@@ -65,7 +65,7 @@
 
 
 /// Randomly secretes alcohol or hallucinogens when you're drinking something
-/obj/item/organ/liver/corrupt
+/obj/item/organ/internal/liver/corrupt
 	name = "corrupt liver"
 	desc = "After what you've seen you could really go for a drink."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
@@ -84,20 +84,20 @@
 		/datum/reagent/drug/mushroomhallucinogen,
 	)
 
-/obj/item/organ/liver/corrupt/atom_init()
+/obj/item/organ/internal/liver/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 
-/obj/item/organ/liver/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/liver/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_drank))
 
-/obj/item/organ/liver/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/liver/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 /// If we drank something, add a little extra
-/obj/item/organ/liver/corrupt/proc/on_drank(atom/source, list/reagents, datum/reagents/source_reagents, methods)
+/obj/item/organ/internal/liver/corrupt/proc/on_drank(atom/source, list/reagents, datum/reagents/source_reagents, methods)
 	SIGNAL_HANDLER
 	if (!(methods & INGEST))
 		return
@@ -175,18 +175,18 @@
 
 
 /// Occasionally bombards you with spooky hands and lets everyone hear your pulse.
-/obj/item/organ/heart/corrupt
+/obj/item/organ/internal/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 
-/obj/item/organ/heart/corrupt/atom_init()
+/obj/item/organ/internal/heart/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 
-/obj/item/organ/heart/corrupt/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/internal/heart/corrupt/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if (!COOLDOWN_FINISHED(src, hand_cooldown) || IS_IN_MANSUS(owner) || !owner.needs_heart() || !is_beating() || owner.has_reagent(/datum/reagent/water/holywater))
 		return
@@ -195,7 +195,7 @@
 
 
 /// Sometimes cough out some kind of dangerous gas
-/obj/item/organ/lungs/corrupt
+/obj/item/organ/internal/lungs/corrupt
 	name = "corrupt lungs"
 	desc = "Some things SHOULD be drowned in tar."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
@@ -210,11 +210,11 @@
 		/datum/gas/plasma = 20,
 	)
 
-/obj/item/organ/lungs/corrupt/atom_init()
+/obj/item/organ/internal/lungs/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 
-/obj/item/organ/lungs/corrupt/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
+/obj/item/organ/internal/lungs/corrupt/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	. = ..()
 	if (!. || IS_IN_MANSUS(owner) || breather.has_reagent(/datum/reagent/water/holywater) || !prob(cough_chance))
 		return

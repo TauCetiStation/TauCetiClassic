@@ -16,7 +16,7 @@
 	gain_text = "Piercing eyes guided them through the mundane. Neither darkness nor terror could stop them."
 
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/organ/internal/eyes = 1,
 		/obj/item/weapon/shard = 1,
 		/obj/item/trash/candle = 1,
 	)

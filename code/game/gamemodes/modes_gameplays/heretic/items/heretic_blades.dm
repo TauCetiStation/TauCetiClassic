@@ -11,6 +11,7 @@
 	inhand_y_dimension = 64
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	#warn Missmatched slots? ^^^
 	sharpness = SHARP_EDGED
 	w_class = SIZE_NORMAL
 	force = 20

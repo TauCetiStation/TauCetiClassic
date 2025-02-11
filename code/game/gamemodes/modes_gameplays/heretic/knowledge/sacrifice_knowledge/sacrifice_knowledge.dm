@@ -32,10 +32,10 @@
 	/// Evil organs we can put in people
 	var/static/list/grantable_organs = list(
 		/obj/item/organ/appendix/corrupt,
-		/obj/item/organ/eyes/corrupt,
-		/obj/item/organ/heart/corrupt,
-		/obj/item/organ/liver/corrupt,
-		/obj/item/organ/lungs/corrupt,
+		/obj/item/organ/internal/eyes/corrupt,
+		/obj/item/organ/internal/heart/corrupt,
+		/obj/item/organ/internal/liver/corrupt,
+		/obj/item/organ/internal/lungs/corrupt,
 		/obj/item/organ/stomach/corrupt,
 		/obj/item/organ/tongue/corrupt,
 	)
@@ -415,7 +415,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
 	var/usable_organs = grantable_organs.Copy()
 	if (isplasmaman(sac_target))
-		usable_organs -= /obj/item/organ/lungs/corrupt // Their lungs are already more cursed than anything I could give them
+		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
 
 	var/total_implant = rand(2, 4)
 

@@ -111,7 +111,7 @@
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	required_atoms = list(
-		/obj/item/organ/liver = 1,
+		/obj/item/organ/internal/liver = 1,
 		/obj/item/weapon/melee/baton = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
 		/obj/item/trash/candle = 4,
