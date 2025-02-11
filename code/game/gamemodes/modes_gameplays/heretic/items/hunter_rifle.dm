@@ -8,6 +8,7 @@
 	name = "\improper Lionhunter's Rifle"
 	desc = "An antique looking rifle that looks immaculate despite being clearly very old."
 	slot_flags = SLOT_FLAGS_BACK
+	#warn Missmatched slots? ^^^
 	icon_state = "lionhunter"
 	initial_mag = /obj/item/ammo_box/magazine/internal/boltaction/lionhunter
 	fire_sound = 'sound/weapons/guns/gunshot_heavysniper.ogg'

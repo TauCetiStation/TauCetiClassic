@@ -27,6 +27,7 @@
 	. = ..()
 	if(!(slot & SLOT_WEAR_MASK))
 		return
+	#warn Missmatched slots? ^^^
 	if(!ishuman(user) || !user.mind)
 		return
 

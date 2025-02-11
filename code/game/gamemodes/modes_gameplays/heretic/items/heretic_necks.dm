@@ -22,6 +22,7 @@
 	. = ..()
 	if(!(slot & SLOT_NECK))
 		return
+	#warn Missmatched slots? ^^^
 
 	var/team_color = COLOR_ADMIN_PINK
 	if(iscultist(user))
@@ -122,6 +123,7 @@
 	. = ..()
 	if(!(slot & SLOT_NECK))
 		return
+	#warn Missmatched slots? ^^^
 	if(!ishuman(user) || !ishereticormonster(user))
 		return
 

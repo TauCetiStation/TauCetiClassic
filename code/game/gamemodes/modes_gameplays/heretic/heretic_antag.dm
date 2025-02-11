@@ -761,6 +761,7 @@
 
 	var/mob/living/pawn = owner.current
 	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), SLOT_NECK, TRUE, TRUE)
+	#warn Missmatched slots? ^^^
 	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))
 
 /datum/role/heretic/antag_panel_data()
