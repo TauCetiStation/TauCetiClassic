@@ -30,7 +30,7 @@
 	research_tree_icon_state = "void_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(!isenvironmentturf(loc))
+	if(!isopenturf(loc))
 		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
 
@@ -189,7 +189,7 @@
 	var/datum/proximity_monitor/advanced/void_storm/heavy_storm
 
 /datum/heretic_knowledge/ultimate/void_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(!isenvironmentturf(loc))
+	if(!isopenturf(loc))
 		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
 

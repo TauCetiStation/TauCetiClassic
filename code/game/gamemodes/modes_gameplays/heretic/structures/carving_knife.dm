@@ -57,7 +57,7 @@
 /obj/item/weapon/rune_carver/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ishereticormonster(user))
 		return NONE
-	if(!isenvironmentturf(interacting_with) || is_type_in_typecache(interacting_with, blacklisted_turfs))
+	if(!isopenturf(interacting_with) || is_type_in_typecache(interacting_with, blacklisted_turfs))
 		return NONE
 
 	INVOKE_ASYNC(src, PROC_REF(try_carve_rune), interacting_with, user)

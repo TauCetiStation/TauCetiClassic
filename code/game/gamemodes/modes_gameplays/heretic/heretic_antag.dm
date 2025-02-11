@@ -380,7 +380,7 @@
  */
 /datum/role/heretic/proc/try_draw_rune(mob/living/user, turf/target_turf, drawing_time = 20 SECONDS, additional_checks)
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target_turf))
-		if(!isenvironmentturf(nearby_turf) || is_type_in_typecache(nearby_turf, blacklisted_rune_turfs))
+		if(!isopenturf(nearby_turf) || is_type_in_typecache(nearby_turf, blacklisted_rune_turfs))
 			to_chat(user, "<span class='heretic'>Invalid placement for rune!</span>")
 			return
 

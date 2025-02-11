@@ -111,7 +111,7 @@
 	var/turf/phase_turf = get_turf(unjaunter)
 
 	// Chilly!
-	if (isenvironmentturf(phase_turf))
+	if (isopenturf(phase_turf))
 		phase_turf.TakeTemperature(-20)
 
 	var/atom/nearby_reflection = is_reflection_nearby(phase_turf)

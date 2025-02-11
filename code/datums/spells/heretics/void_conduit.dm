@@ -50,7 +50,7 @@
 	for(var/turf/affected_turf as anything in overlayed_turfs)
 		affected_turf.cut_overlay(void_overlay)
 	for(var/turf/affected_turf as anything in view(effect_range, src))
-		if(!isenvironmentturf(affected_turf))
+		if(!isopenturf(affected_turf))
 			continue
 		affected_turf.add_overlay(void_overlay)
 		overlayed_turfs += affected_turf

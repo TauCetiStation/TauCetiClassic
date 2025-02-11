@@ -276,7 +276,7 @@
 		return NONE
 
 	// Can only carve runes with it if off combat mode.
-	if(isenvironmentturf(target) && !user.combat_mode)
+	if(isopenturf(target) && !user.combat_mode)
 		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
 		return ITEM_INTERACT_BLOCKING
 	return NONE
