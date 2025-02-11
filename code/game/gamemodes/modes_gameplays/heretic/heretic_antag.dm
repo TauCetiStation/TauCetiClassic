@@ -633,7 +633,7 @@
 
 	parts += printplayer(owner)
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
-	parts += "The heretic's sacrifice targets were: [english_list(all_sac_targets, nothing_text = "No one")]."
+	parts += "The heretic's sacrifice targets were: [get_english_list(all_sac_targets, nothing_text = "No one")]."
 	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective as anything in objectives)
@@ -660,7 +660,7 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		string_of_knowledge += knowledge.name
 
-	parts += english_list(string_of_knowledge)
+	parts += get_english_list(string_of_knowledge)
 
 	return parts.Join("<br>")
 
@@ -774,7 +774,7 @@
 		else
 			string_of_knowledge += knowledge.name
 
-	return "<br><b>Research Done:</b><br>[english_list(string_of_knowledge, and_text = ", and ")]<br>"
+	return "<br><b>Research Done:</b><br>[get_english_list(string_of_knowledge, and_text = ", and ")]<br>"
 
 /datum/role/heretic/antag_panel_objectives()
 	. = ..()

@@ -151,7 +151,7 @@
 			var/list/req_text_list = list()
 			for(var/atom/possible_type as anything in req_type_list)
 				req_text_list += ritual.parse_required_item(possible_type)
-			formatted_thing += english_list(req_text_list, and_text = "or")
+			formatted_thing += get_english_list(req_text_list, and_text = "or")
 
 		else
 			formatted_thing = ritual.parse_required_item(req_type)
@@ -162,7 +162,7 @@
 		// Let them know it screwed up
 		loc.balloon_alert(user, "ritual failed, missing components!")
 		// Then let them know what they're missing
-		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
+		to_chat(user, span_hierophant_warning("You are missing [get_english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
 		return FALSE
 
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.
