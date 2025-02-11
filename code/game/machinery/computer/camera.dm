@@ -97,10 +97,14 @@
 		return TRUE
 
 /obj/machinery/computer/security/proc/switch_to_camera(obj/machinery/camera/camera_to_switch)
+	if(active_camera)
+		active_camera.being_looked_through = FALSE
+		active_camera.update_icon()
 	active_camera = camera_to_switch
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 	update_active_camera_screen()
+	camera_to_switch.announce_activation()
 
 //Camera control: moving.
 /obj/machinery/computer/security/proc/jump_on_click(mob/user,A)

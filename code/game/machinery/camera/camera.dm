@@ -31,6 +31,7 @@
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
 
 	var/show_paper_cooldown = 0
+	var/being_looked_through = FALSE
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -78,6 +79,8 @@
 /obj/machinery/camera/update_icon()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
+	else if(being_looked_through)
+		icon_state = "[initial(icon_state)]_active"
 	else
 		icon_state = "[isXRay() ? "xray" : ""][initial(icon_state)]"
 
@@ -463,3 +466,10 @@
 		deconstruct(FALSE)
 		return TRUE
 	return ..()
+
+/obj/machinery/camera/proc/announce_activation()
+	if(stat & BROKEN)
+		return
+	visible_message("<span class='small'>На [CASE(src, PREPOSITIONAL_CASE)] загорается маленькая красная лампочка.</span>")
+	being_looked_through = TRUE
+	update_icon()
