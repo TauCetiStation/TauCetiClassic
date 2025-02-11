@@ -31,10 +31,10 @@
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"
-	desc = "Allows you to transmute 10 iron sheets and a garbage item to fill the surrounding vicinity of the rune with rust."
+	desc = "Allows you to transmute 10 metal sheets and a garbage item to fill the surrounding vicinity of the rune with rust."
 	gain_text = "Reality begins to whisper to me. To give it its entropic end."
 	required_atoms = list(
-		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/sheet/metal = 10,
 		/obj/item/trash = 1,
 	)
 	cost = 0
@@ -97,7 +97,7 @@
 
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/sheet/metal = 10,
 		/obj/item/stack/cable_coil = 15,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker

@@ -1,4 +1,3 @@
-/*
 /// Renders you unable to see people who were heretics at the time that this organ is gained
 /obj/item/organ/internal/eyes/corrupt
 	name = "corrupt orbs"
@@ -248,4 +247,3 @@
 		return
 	owner.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM, vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0)
 	owner.Knockdown(0.5 SECONDS)
-*/

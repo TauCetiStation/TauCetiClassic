@@ -20,7 +20,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
 	desc = "Opens up the Path of Moon to you. \
-		Allows you to transmute 2 sheets of iron and a knife into an Lunar Blade. \
+		Allows you to transmute 2 sheets of metal and a knife into an Lunar Blade. \
 		You can only create two at a time."
 	gain_text = "Under the light of the moon the laughter echoes."
 	required_atoms = list(
