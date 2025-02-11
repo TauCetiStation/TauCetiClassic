@@ -10,3 +10,5 @@
 #define COMSIG_ATOM_TAKE_DAMAGE "atom_take_damage"
 	/// Return bitflags for the above signal which prevents the atom taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
+/// Called on the atom being hit, from /datum/component/anti_magic/on_attack() : (obj/item/weapon, mob/user, antimagic_flags)
+#define COMSIG_ATOM_HOLYATTACK "atom_holyattacked"

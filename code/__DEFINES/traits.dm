@@ -204,6 +204,12 @@
 #define TRAIT_HERETIC_SLURRING    "heretic_slurring"
 #define TRAIT_RUSTY               "rust_trait"
 
+/// The mob is holy and resistance to heretic magic
+#define TRAIT_HOLY "holy"
+
+/// The mob recently deflected heretic's spell
+#define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
+
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.

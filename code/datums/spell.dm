@@ -19,6 +19,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+	var/antimagic_flags = MAGIC_RESISTANCE
 
 	/****RELIGIOUS ASPECT****/
 	var/favor_cost = 0 //cost
@@ -352,6 +353,19 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
 	return cast_check(FALSE, user, FALSE)
 
+/**
+ * Checks to see if the mob can cast normal magic spells.
+ *
+ * args:
+ * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
+**/
+/mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
+	if(magic_flags == NONE) // magic with the NONE flag can always be cast
+		return TRUE
+
+	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, magic_flags)
+	return restrict_magic_flags == NONE
+
 /mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
 		return FALSE
@@ -361,8 +375,6 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/is_magic_blocked = FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, antimagic_sources) & COMPONENT_MAGIC_BLOCKED)
-		is_magic_blocked = TRUE
-	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		is_magic_blocked = TRUE
 	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		is_magic_blocked = TRUE
