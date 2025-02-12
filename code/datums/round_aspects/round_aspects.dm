@@ -188,7 +188,7 @@
             qdel(console)
 
     var/list/station_cameras = list()
-    for(var/obj/machinery/camera/camera in world)
+    for(var/obj/machinery/camera/camera in machines)
         if(is_station_level(camera.z) && camera.status)
             station_cameras += camera
 
