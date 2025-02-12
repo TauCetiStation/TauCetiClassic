@@ -210,6 +210,9 @@
 /// The mob recently deflected heretic's spell
 #define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
 
+/// Allows heretics to cast their spells.
+#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
+
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.
