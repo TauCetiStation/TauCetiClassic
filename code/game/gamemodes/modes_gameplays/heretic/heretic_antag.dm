@@ -139,7 +139,7 @@
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 	knowledge_data["cost"] = initial(knowledge.cost)
 	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
-	knowledge_data["bgr"] = GLOB.heretic_research_tree[knowledge][HKT_UI_BGR]
+	knowledge_data["bgr"] = heretic_research_tree[knowledge][HKT_UI_BGR]
 	knowledge_data["finished"] = done
 	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
 
@@ -167,10 +167,10 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in researched_knowledge)
 		var/list/knowledge_data = get_knowledge_data(knowledge,TRUE)
 
-		while(GLOB.heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
+		while(heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
 			tiers += list(list("nodes"=list()))
 
-		tiers[GLOB.heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
+		tiers[heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = get_knowledge_data(knowledge,FALSE)
@@ -179,10 +179,10 @@
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
 			knowledge_data["disabled"] ||= !can_ascend()
 
-		while(GLOB.heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
+		while(heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
 			tiers += list(list("nodes"=list()))
 
-		tiers[GLOB.heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
+		tiers[heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	data["knowledge_tiers"] = tiers
 
@@ -261,8 +261,8 @@
 	return ..()
 
 /datum/role/heretic/on_gain()
-	if(!GLOB.heretic_research_tree)
-		GLOB.heretic_research_tree = generate_heretic_research_tree()
+	if(!heretic_research_tree)
+		heretic_research_tree = generate_heretic_research_tree()
 
 	if(give_objectives)
 		forge_primary_objectives()
@@ -815,8 +815,8 @@
 	var/list/banned_knowledge = list()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		researchable_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_NEXT]
-		banned_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_BAN]
+		researchable_knowledge |= heretic_research_tree[knowledge_index][HKT_NEXT]
+		banned_knowledge |= heretic_research_tree[knowledge_index][HKT_BAN]
 		banned_knowledge |= knowledge.type
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
@@ -932,7 +932,7 @@
 		// (All the main paths are (should be) the same length, so it doesn't matter.)
 		var/rust_paths_found = 0
 		for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
-			if(GLOB.heretic_research_tree[knowledge][HKT_ROUTE] == PATH_RUST)
+			if(heretic_research_tree[knowledge][HKT_ROUTE] == PATH_RUST)
 				rust_paths_found++
 
 		main_path_length = rust_paths_found
