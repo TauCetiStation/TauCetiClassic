@@ -45,7 +45,7 @@
 
 	// Otherwise, if unblocked apply the damage and set them up
 	else
-		to_beam.apply_damage(20, BURN, wound_bonus = 5)
+		to_beam.apply_damage(25, BURN)
 		to_beam.adjust_fire_stacks(3)
 		to_beam.ignite_mob()
 		// Apply the fire blast status effect to show they got blasted
@@ -65,7 +65,7 @@
 			if(ishereticormonster(nearby_living) || nearby_living == owner)
 				continue
 			nearby_living.Knockdown(0.8 SECONDS)
-			nearby_living.apply_damage(15, BURN, wound_bonus = 5)
+			nearby_living.apply_damage(20, BURN)
 			nearby_living.adjust_fire_stacks(2)
 			nearby_living.ignite_mob()
 
@@ -151,7 +151,7 @@
 	var/mob/living/living_entered = entered
 	if(ishereticormonster(living_entered) || living_entered.has_status_effect(/datum/status_effect/fire_blasted))
 		return
-	living_entered.apply_damage(10, BURN, wound_bonus = 5)
+	living_entered.apply_damage(15, BURN)
 	living_entered.adjust_fire_stacks(2)
 	living_entered.ignite_mob()
 	// Apply the fireblasted effect - no overlay

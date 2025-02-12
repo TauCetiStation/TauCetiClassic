@@ -9,8 +9,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = SIZE_SMALL
-	wound_bonus = 20
-	force = 10
+	force = 25
 	throwforce = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")

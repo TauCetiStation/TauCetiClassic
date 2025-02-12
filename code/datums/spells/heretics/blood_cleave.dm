@@ -47,7 +47,7 @@
 		var/obj/item/organ/external/bodypart = pick(victim.bodyparts)
 		var/datum/wound/slash/flesh/crit_wound = new wound_type()
 		crit_wound.apply_wound(bodypart)
-		victim.apply_damage(20, BURN, wound_bonus = CANT_WOUND)
+		victim.apply_damage(20, BURN)
 
 		new /obj/effect/temp_visual/cleave(get_turf(victim))
 

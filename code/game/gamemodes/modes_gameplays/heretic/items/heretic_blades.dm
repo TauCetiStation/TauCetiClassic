@@ -14,10 +14,8 @@
 	#warn Missmatched slots? ^^^
 	sharpness = SHARP_EDGED
 	w_class = SIZE_NORMAL
-	force = 20
-	throwforce = 10
-	wound_bonus = 5
-	bare_wound_bonus = 15
+	force = 25
+	throwforce = 13
 	toolspeed = 0.375
 	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -159,7 +157,7 @@
 		return
 	// We're officially behind them, apply effects
 	living_target.AdjustParalyzed(1.5 SECONDS)
-	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
+	living_target.apply_damage(10, BRUTE)
 	living_target.balloon_alert(user, "backstab!")
 	playsound(living_target, 'sound/weapons/guillotine.ogg', 100, TRUE)
 
@@ -209,11 +207,9 @@
 	name = "\improper cursed blade"
 	desc = "A dark blade, cursed to bleed forever. In constant struggle between the eldritch and the dark, it is forced to accept any wielder as its master. \
 		Its eye's cornea drips blood endlessly into the ground, yet its piercing gaze remains on you."
-	force = 25
-	throwforce = 15
+	force = 30
+	throwforce = 20
 	block_chance = 35
-	wound_bonus = 25
-	bare_wound_bonus = 15
 	armour_penetration = 35
 	icon_state = "cursed_blade"
 

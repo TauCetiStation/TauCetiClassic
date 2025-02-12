@@ -103,10 +103,9 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "dio_knife"
 	speed = 0.5
-	damage = 25
+	damage = 30
 	armour_penetration = 100
 	sharpness = SHARP_EDGED
-	wound_bonus = 15
 	pass_flags = PASSTABLE | PASSFLAPS
 	/// Color applied as an outline filter on init
 	var/outline_color = "#f8f8ff"
@@ -137,8 +136,7 @@
 	name = "ritual blade"
 	icon = 'icons/heretic/weapon/khopesh.dmi'
 	icon_state = "render"
-	damage = 35
-	wound_bonus = 25
+	damage = 40
 	outline_color = "#D7CBCA"
 
 /obj/effect/proc_holder/spell/pointed/projectile/furious_steel/solo

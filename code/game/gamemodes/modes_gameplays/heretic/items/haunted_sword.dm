@@ -13,11 +13,9 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
-	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
+	force = 35 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
 	block_chance = 50 // now it's officially a cult esword
-	wound_bonus = -50
-	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
@@ -69,11 +67,9 @@
 	icon_state = "hauntedblade"
 	inhand_icon_state = "hauntedblade"
 	worn_icon_state = "hauntedblade"
-	force = 30
+	force = 25
 	throwforce = 25
 	block_chance = 55
-	wound_bonus = -25
-	bare_wound_bonus = 30
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 3

@@ -55,7 +55,7 @@
 
 	// We're officially behind them, apply effects
 	target.AdjustParalyzed(1.5 SECONDS)
-	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
+	target.apply_damage(10, BRUTE)
 	target.balloon_alert(source, "backstab!")
 	playsound(target, 'sound/weapons/guillotine.ogg', 100, TRUE)
 
@@ -427,7 +427,6 @@
 		damage = bonus_damage,
 		damagetype = BRUTE,
 		spread_damage = TRUE,
-		wound_bonus = 5,
 		sharpness = SHARP_EDGED,
 		attack_direction = get_dir(source, target),
 	)

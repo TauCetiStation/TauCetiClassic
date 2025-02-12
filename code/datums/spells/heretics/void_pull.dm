@@ -31,7 +31,7 @@
 
 	// Before we cast the actual effects, deal AOE damage to anyone adjacent to us
 	for(var/mob/living/nearby_living as anything in get_things_to_cast_on(cast_on, damage_radius))
-		nearby_living.apply_damage(30, BRUTE, wound_bonus = CANT_WOUND)
+		nearby_living.apply_damage(30, BRUTE)
 		nearby_living.apply_status_effect(/datum/status_effect/void_chill, 1)
 
 /obj/effect/proc_holder/spell/aoe_turf/void_pull/get_things_to_cast_on(atom/center, radius_override = 1)

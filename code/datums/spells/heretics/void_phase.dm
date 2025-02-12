@@ -56,7 +56,7 @@
 			continue
 		if(living_mob.can_block_magic(antimagic_flags))
 			continue
-		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
+		living_mob.apply_damage(40, BRUTE)
 		living_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 
 /obj/effect/temp_visual/voidin
