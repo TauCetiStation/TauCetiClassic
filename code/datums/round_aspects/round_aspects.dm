@@ -175,3 +175,25 @@
 	name = ROUND_ASPECT_HEALING_ALCOHOL
 	desc = "Алкоголь лечит физические повреждения."
 	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продлевает жизнь.</span>"
+
+/datum/round_aspect/no_cameras
+    name = ROUND_ASPECT_NO_CAMERAS
+    desc = "Все консоли камер на станции уничтожены, а часть камер на станции сломана."
+    afterspawn_IC_announcement = "<span class='warning'>Из-за технических неполадок все консоли камер на станции были уничтожены, а часть камер вышла из строя.</span>"
+
+/datum/round_aspect/no_cameras/after_start()
+
+    for(var/obj/machinery/computer/security/console in world)
+        if(is_station_level(console.z))
+            qdel(console)
+
+    var/list/station_cameras = list()
+    for(var/obj/machinery/camera/camera in world)
+        if(is_station_level(camera.z) && camera.status)
+            station_cameras += camera
+
+    var/num_to_break = round(station_cameras.len * 0.5)
+    for(var/i in 1 to num_to_break)
+        var/obj/machinery/camera/cam = pick_n_take(station_cameras)
+        cam.status = FALSE
+        cam.update_icon()
