@@ -55,10 +55,10 @@
 	var/dat = text("<a href='byond://?src=\ref[];mode=hia'>[]</a> <a href='byond://?src=\ref[];mode=remove'>remove</a> <a href='byond://?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table style='width: 100%; max-width: 512px; border-collapse: collapse;'>", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
 	//board interface update
 	for (var/y = 1 to 8)
-		dat += "<tr style='aspect-ratio: 1 / 1;'>" 
+		dat += "<tr style='aspect-ratio: 1 / 1;'>"
 
 		for (var/x = 1 to 8)
-			var/color = (y + x) % 2 ? "#999999" : istype(src, /obj/item/weapon/game_kit/chaplain) ? "#a2fad1" : "#ffffff" 
+			var/color = (y + x) % 2 ? "#999999" : istype(src, /obj/item/weapon/game_kit/chaplain) ? "#a2fad1" : "#ffffff"
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)
 			dat += "<td style='background-color:[color]; padding: 0; text-align: center; aspect-ratio: 1 / 1; width: 12.5%;'>"
 			if (piece != "BB")
