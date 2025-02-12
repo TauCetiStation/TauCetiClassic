@@ -78,7 +78,6 @@
 	desc = "This crescent blade is decrepit, wasting to rust. \
 		Yet still it bites, ripping flesh and bone with jagged, rotten teeth."
 	icon_state = "rust_blade"
-	inhand_icon_state = "rust_blade"
 	after_use_message = "The Rusted Hills hear your call..."
 
 // Path of Ash's blade
@@ -96,7 +95,6 @@
 	desc = "A crescent blade born from a fleshwarped creature. \
 		Keenly aware, it seeks to spread to others the suffering it has endured from its dreadful origins."
 	icon_state = "flesh_blade"
-	inhand_icon_state = "flesh_blade"
 	after_use_message = "The Marshal hears your call..."
 
 /obj/item/weapon/sickly_blade/flesh/atom_init()
@@ -122,7 +120,6 @@
 	desc = "Devoid of any substance, this blade reflects nothingness. \
 		It is a real depiction of purity, and chaos that ensues after its implementation."
 	icon_state = "void_blade"
-	inhand_icon_state = "void_blade"
 	after_use_message = "The Aristocrat hears your call..."
 
 // Path of the Blade's... blade.
@@ -133,7 +130,6 @@
 		Furiously, the blade cuts. Silver scars bind it forever to its dark purpose."
 	icon_state = "dark_blade"
 	var/base_icon_state = "dark_blade"
-	inhand_icon_state = "dark_blade"
 	after_use_message = "The Torn Champion hears your call..."
 	///If our blade is currently infused with the mansus grasp
 	var/infused = FALSE
@@ -177,10 +173,8 @@
 	. = ..()
 	if(infused)
 		icon_state = base_icon_state + "_infused"
-		inhand_icon_state = base_icon_state + "_infused"
 	else
 		icon_state = base_icon_state
-		inhand_icon_state = base_icon_state
 
 // Path of Cosmos's blade
 /obj/item/weapon/sickly_blade/cosmic
@@ -188,7 +182,6 @@
 	desc = "A mote of celestial resonance, shaped into a star-woven blade. \
 		An iridescent exile, carving radiant trails, desperately seeking unification."
 	icon_state = "cosmic_blade"
-	inhand_icon_state = "cosmic_blade"
 	after_use_message = "The Stargazer hears your call..."
 
 // Path of Knock's blade
@@ -197,7 +190,6 @@
 	desc = "A blade and a key, a key to what? \
 		What grand gates does it open?"
 	icon_state = "key_blade"
-	inhand_icon_state = "key_blade"
 	after_use_message = "The Stewards hear your call..."
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1.3
@@ -208,7 +200,6 @@
 	desc = "A blade of iron, reflecting the truth of the earth: All join the troupe one day. \
 		A troupe bringing joy, carving smiles on their faces if they want one or not."
 	icon_state = "moon_blade"
-	inhand_icon_state = "moon_blade"
 	after_use_message = "The Moon hears your call..."
 
 // Path of Nar'Sie's blade
@@ -225,7 +216,6 @@
 	bare_wound_bonus = 15
 	armour_penetration = 35
 	icon_state = "cursed_blade"
-	inhand_icon_state = "cursed_blade"
 
 /obj/item/weapon/sickly_blade/cursed/atom_init()
 	. = ..()
