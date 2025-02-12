@@ -295,7 +295,7 @@
 
 /datum/religion/cult/proc/first_rise()
 	for(var/mob/living/L in members)
-		playsound(L, 'sound/hallucinations/i_see_you_2.ogg', VOL_EFFECTS_MASTER)
+		playsound(L, 'sound/antag/bloodcult_eyes.ogg', VOL_EFFECTS_MASTER)
 		to_chat(L, "<span class='cult'>Культ набирает силы, вуаль реальности всё слабее, ваши глаза начинают светиться...</span>")
 		rise(L)
 	risen = TRUE
@@ -303,7 +303,7 @@
 
 /datum/religion/cult/proc/first_ascend()
 	for(var/mob/living/L in members)
-		playsound(L, 'sound/hallucinations/im_here1.ogg', VOL_EFFECTS_MASTER)
+		playsound(L, 'sound/antag/bloodcult_halos.ogg', VOL_EFFECTS_MASTER)
 		to_chat(L, "<span class='cult'>Культ всё сильнее, и приближается жатва - вы не можете больше скрывать свою истинную природу!</span>")
 		ascend(L)
 	ascendent = TRUE
