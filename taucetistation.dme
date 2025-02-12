@@ -444,6 +444,7 @@
 #include "code\datums\outfits\misc\space_traders.dm"
 #include "code\datums\outfits\misc\spy.dm"
 #include "code\datums\outfits\misc\survivalists.dm"
+#include "code\datums\particles\fire.dm"
 #include "code\datums\qualities\negativeish.dm"
 #include "code\datums\qualities\positiveish.dm"
 #include "code\datums\qualities\quality.dm"
