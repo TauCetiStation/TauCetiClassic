@@ -1,4 +1,4 @@
-/particles/fire
+/particles/smoke
 	icon = 'icons/effects/particles/fire.dmi'
 	icon_state = list("fire1", "fire2", "fire3")
 
@@ -22,5 +22,5 @@
 
 	grow = 0.1
 
-	gradient = list("yellow", "red")
+	gradient = list("grey", "black")
 	color_change = 0.1

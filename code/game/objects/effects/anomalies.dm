@@ -154,6 +154,8 @@
 	. = ..()
 	aSignal.origin_tech = "phorontech=8;powerstorage=4;biotech=6"
 
+	add_shared_particles(/particles/smoke, pool_size = 1)
+
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
 	var/turf/simulated/T = get_turf(src)
