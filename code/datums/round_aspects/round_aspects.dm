@@ -183,7 +183,7 @@
 
 /datum/round_aspect/no_cameras/after_start()
 
-    for(var/obj/machinery/computer/security/console in world)
+    for(var/obj/machinery/computer/security/console in computer_list)
         if(is_station_level(console.z == 2))
             qdel(console)
 
