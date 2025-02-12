@@ -94,9 +94,9 @@
 	door.open()
 
 ///An ID card capable of shapeshifting to other IDs given by the Key Keepers Burden knowledge
-/obj/item/card/id/advanced/heretic
+/obj/item/weapon/card/id/advanced/heretic
 	///List of IDs this card consumed
-	var/list/obj/item/card/id/fused_ids = list()
+	var/list/obj/item/weapon/card/id/fused_ids = list()
 	///The first portal in the portal pair, so we can clear it later
 	var/obj/effect/lock_portal/portal_one
 	///The second portal in the portal pair, so we can clear it later
@@ -106,7 +106,7 @@
 	/// are our created portals inverted? (heretics get sent to a random airlock, crew get sent to the target)
 	var/inverted = FALSE
 
-/obj/item/card/id/advanced/heretic/examine(mob/user)
+/obj/item/weapon/card/id/advanced/heretic/examine(mob/user)
 	. = ..()
 	if(!ishereticormonster(user))
 		return
@@ -116,7 +116,7 @@
 	. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
 	. += span_hypnophrase("<b>Ctrl-clicking the ID</b>, makes the ID make inverted portals instead, which teleport you onto a random airlock onstation, while heathens are teleported to the destination.")
 
-/obj/item/card/id/advanced/heretic/attack_self(mob/user)
+/obj/item/weapon/card/id/advanced/heretic/attack_self(mob/user)
 	. = ..()
 	if(!isheretic(user))
 		return
@@ -124,10 +124,10 @@
 	if(!cardname)
 		balloon_alert(user, "no options!")
 		return ..()
-	var/obj/item/card/id/card = fused_ids[cardname]
+	var/obj/item/weapon/card/id/card = fused_ids[cardname]
 	shapeshift(card)
 
-/obj/item/card/id/advanced/heretic/item_ctrl_click(mob/user)
+/obj/item/weapon/card/id/advanced/heretic/item_ctrl_click(mob/user)
 	if(!isheretic(user))
 		return CLICK_ACTION_BLOCKING
 	inverted = !inverted
@@ -135,30 +135,29 @@
 	return CLICK_ACTION_SUCCESS
 
 ///Changes our appearance to the passed ID card
-/obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
+/obj/item/weapon/card/id/advanced/heretic/proc/shapeshift(obj/item/weapon/card/id/advanced/card)
 	trim = card.trim
 	assignment = card.assignment
 	registered_age = card.registered_age
 	registered_name = card.registered_name
 	icon_state = card.icon_state
-	inhand_icon_state = card.inhand_icon_state
 	assigned_icon_state = card.assigned_icon_state
 	name = card.name //not update_label because of the captains spare moment
 	update_icon()
 
 ///Deletes and nulls our portal pair
-/obj/item/card/id/advanced/heretic/proc/clear_portals()
+/obj/item/weapon/card/id/advanced/heretic/proc/clear_portals()
 	QDEL_NULL(portal_one)
 	QDEL_NULL(portal_two)
 
 ///Clears portal references
-/obj/item/card/id/advanced/heretic/proc/clear_portal_refs()
+/obj/item/weapon/card/id/advanced/heretic/proc/clear_portal_refs()
 	SIGNAL_HANDLER
 	portal_one = null
 	portal_two = null
 
 ///Creates a portal pair at door1 and door2, displays a balloon alert to user
-/obj/item/card/id/advanced/heretic/proc/make_portal(mob/user, obj/machinery/door/door1, obj/machinery/door/door2)
+/obj/item/weapon/card/id/advanced/heretic/proc/make_portal(mob/user, obj/machinery/door/door1, obj/machinery/door/door2)
 	var/message = "linked"
 	if(portal_one || portal_two)
 		clear_portals()
@@ -171,13 +170,13 @@
 	portal_two.destination = portal_one
 	balloon_alert(user, "[message]")
 
-/obj/item/card/id/advanced/heretic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/card/id/advanced) || !isheretic(user))
+/obj/item/weapon/card/id/advanced/heretic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/weapon/card/id/advanced) || !isheretic(user))
 		return ..()
 	eat_card(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/card/id/advanced/heretic/proc/eat_card(obj/item/card/id/card, mob/user)
+/obj/item/weapon/card/id/advanced/heretic/proc/eat_card(obj/item/weapon/card/id/card, mob/user)
 	if(card == src)
 		return //no self vore
 	fused_ids[card.name] = card
@@ -187,10 +186,10 @@
 	if(!isnull(user))
 		balloon_alert(user, "consumed card")
 
-/obj/item/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+/obj/item/weapon/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!isheretic(user))
 		return NONE
-	if(istype(target, /obj/item/card/id))
+	if(istype(target, /obj/item/weapon/card/id))
 		eat_card(target, user)
 		return ITEM_INTERACT_SUCCESS
 	if(istype(target, /obj/effect/lock_portal))
@@ -214,7 +213,7 @@
 		balloon_alert(user, "link 1/2")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/card/id/advanced/heretic/Destroy()
+/obj/item/weapon/card/id/advanced/heretic/Destroy()
 	QDEL_LIST_ASSOC(fused_ids)
 	link = null
 	clear_portals()

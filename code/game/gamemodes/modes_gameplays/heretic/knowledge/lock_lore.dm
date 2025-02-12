@@ -97,9 +97,9 @@
 	required_atoms = list(
 		/obj/item/weapon/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
-		/obj/item/card/id = 1,
+		/obj/item/weapon/card/id = 1,
 	)
-	result_atoms = list(/obj/item/card/id/advanced/heretic)
+	result_atoms = list(/obj/item/weapon/card/id/advanced/heretic)
 	cost = 1
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "card_gold"
