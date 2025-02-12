@@ -145,3 +145,48 @@
 		icon_state = "coin_[cmineral]_[coinflip]"
 	else // default or small icon
 		icon_state = "coin_[cmineral]_[coinflip]_world"
+
+/obj/item/weapon/coin/eldritch
+	name = "eldritch coin"
+	desc = "A surprisingly heavy, ornate coin. Its sides seem to depict a different image each time you look."
+	icon_state = "coin_heretic"
+	item_state_world = "coin_heretic"
+	cmineral = "heretic"
+	sideslist = list("heretic", "blade")
+	/// The range at which airlocks are effected.
+	var/airlock_range = 5
+
+/obj/item/coin/eldritch/heads_action(mob/user)
+	var/mob/living/living_user = user
+	if(!isheretic(user))
+		living_user.adjustBruteLoss(5)
+		return
+	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
+		if(target_airlock.density)
+			target_airlock.open()
+			continue
+		target_airlock.close(force_crush = TRUE)
+
+/obj/item/coin/eldritch/tails_action(mob/user)
+	var/mob/living/living_user = user
+	if(!isheretic(user))
+		living_user.adjustFireLoss(5)
+		return
+	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
+		if(target_airlock.locked)
+			target_airlock.unlock()
+			continue
+		target_airlock.lock()
+
+/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/door/airlock))
+		return NONE
+	if(!isheretic(user))
+		user.adjustBruteLoss(5)
+		user.adjustFireLoss(5)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/machinery/door/airlock/target_airlock = interacting_with
+	to_chat(user, span_warning("You insert [src] into the airlock."))
+	target_airlock.emag_act(user, src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
