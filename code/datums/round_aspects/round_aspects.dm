@@ -184,7 +184,7 @@
 /datum/round_aspect/no_cameras/after_start()
 
     for(var/obj/machinery/computer/security/console in world)
-        if(is_station_level(console.z))
+        if(is_station_level(console.z == 2))
             qdel(console)
 
     var/list/station_cameras = list()
