@@ -367,7 +367,7 @@
 		verb = speaking.get_spoken_verb(ending)
 	else
 		if(ending == "!")
-			verb=pick("восклицает","кричит","орет")
+			verb=pick("восклицает","кричит","орёт")
 		else if(ending == "?")
 			verb="спрашивает"
 
