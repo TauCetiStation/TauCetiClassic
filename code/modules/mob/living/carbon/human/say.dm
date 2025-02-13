@@ -428,7 +428,7 @@
 				verb = pick("stammers", "stutters")
 			if(prob(braindam))
 				message = uppertext(message)
-				verb = pick("орёт как идиот","говорит довольно громко")
+				verb = pick("орёт как идиот","говорит громче обычного")
 
 	returns[1] = message
 	returns[2] = verb
