@@ -92,7 +92,7 @@
 		return
 
 	user.adjustOrganLoss(O_BRAIN, 10, user)
-	user.adjust_temp_blindness(5 SECONDS)
+	user.eye_blind(5 SECONDS)
 	. += span_notice("It. It looked. IT WRAPS ITSELF AROUND ME.")
 
 
