@@ -68,7 +68,7 @@
 		set_social_state(new_social_state)
 
 /mob/living/carbon/human/say(message, ignore_appearance)
-	var/verb = "says"
+	var/verb = "говорит"
 	var/message_range = world.view
 	var/italics = 0
 	var/alt_name = ""
@@ -76,7 +76,7 @@
 	var/sound_vol
 	if(client)
 		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
-			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
+			to_chat(src, "<span class='userdanger'>Вы не можете говорить в IC (Вам выдали мут).</span>")
 			return
 
 	message =  sanitize(message)
@@ -98,7 +98,7 @@
 
 	//check if we are miming
 	if (HAS_TRAIT(src, TRAIT_MIMING) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
-		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+		to_chat(usr, "<span class='userdanger'>Вы немы.</span>")
 		return
 
 	if(!ignore_appearance && name != GetVoice())
@@ -121,14 +121,14 @@
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		if (!(speaking && (speaking.flags & SIGNLANG)))
-			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
+			to_chat(usr, "<span class='userdanger'>Вы немы.</span>")
 			return
 
 	if (speaking && (speaking.flags & SIGNLANG))
 		var/obj/item/organ/external/LH = get_bodypart(BP_L_ARM)
 		var/obj/item/organ/external/RH = get_bodypart(BP_R_ARM)
 		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
-			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
+			to_chat(usr, "<span class='userdanger'>Вы пытаетесь жестикулировать, но ваши руки не реагируют.</span>")
 			return
 
 	message = approximate_sounds(message, speaking)
@@ -178,9 +178,9 @@
 		verb = speaking.get_spoken_verb(ending)
 	else
 		if(ending == "!")
-			verb = pick("exclaims","shouts","yells")
+			verb = pick("восклицает","кричит","орёт")
 		if(ending == "?")
-			verb = "asks"
+			verb = "спрашивает"
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode, verb)
@@ -251,7 +251,7 @@
 					message = stars(message, 20) // sleeping changeling has a little confused mind
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
-				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
+				log_say("Разум генокрада: [C.changelingID]/[mind.name]/[key] : [message]")
 				for(var/mob/Changeling as anything in mob_list)
 					if(ischangeling(Changeling))
 						to_chat(Changeling, n_message)
@@ -271,7 +271,7 @@
 				for(var/datum/orbit/O in orbiters)
 					to_chat(O.orbiter, n_message)
 				to_chat(src, n_message)
-				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
+				log_say("Разум генокрада: [C.changelingID]/[mind.name]/[key] : [message]")
 			return
 		if("mafia")
 			if(global.mafia_game)
@@ -396,7 +396,7 @@
 				else
 					message =  "[message]... Но я ГНОМ!"
 
-				verb = pick("yells like an idiot", "says rather loudly")
+				verb = pick("орёт как идиот", "говорит довольно громко")
 				speech_sound = 'sound/magic/GNOMED.ogg'
 
 		if(wear_mask)
@@ -406,18 +406,18 @@
 
 		if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
 			message = "[uppertext(message)]!!!"
-			verb = pick("yells","roars","hollers")
+			verb = pick("орёт","ревёт","кричит")
 			handled = 1
 		if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 			if(prob(50))
 				message = turret_talk(message, get_species())
 		if(slurring)
 			message = slur(message)
-			verb = pick("stammers","stutters")
+			verb = pick("заикается","заикаясь")
 			handled = 1
 		if (stuttering)
 			message = stutter(message)
-			verb = pick("stammers","stutters")
+			verb = pick("заикается","заикаясь")
 			handled = 1
 
 		var/braindam = getBrainLoss()
@@ -428,7 +428,7 @@
 				verb = pick("stammers", "stutters")
 			if(prob(braindam))
 				message = uppertext(message)
-				verb = pick("yells like an idiot","says rather loudly")
+				verb = pick("орёт как идиот","говорит довольно громко")
 
 	returns[1] = message
 	returns[2] = verb
