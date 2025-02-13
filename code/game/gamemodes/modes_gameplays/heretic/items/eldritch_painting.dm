@@ -135,7 +135,7 @@
 		/obj/item/organ/ears,
 		/obj/item/organ/internal/heart,
 		/obj/item/organ/internal/liver,
-		/obj/item/organ/stomach,
+		/obj/item/organ/internal/stomach,
 		/obj/item/organ/appendix,
 		/obj/item/organ/external/l_arm,
 		/obj/item/organ/external/r_arm,

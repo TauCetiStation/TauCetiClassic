@@ -108,7 +108,7 @@
 
 
 /// Rapidly become hungry if you are not digesting blood
-/obj/item/organ/stomach/corrupt
+/obj/item/organ/internal/stomach/corrupt
 	name = "corrupt stomach"
 	desc = "This parasite demands an unwholesome diet in order to be satisfied."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
@@ -119,21 +119,21 @@
 	/// How long until we prompt the player to drink blood again?
 	COOLDOWN_DECLARE(message_cooldown)
 
-/obj/item/organ/stomach/corrupt/atom_init()
+/obj/item/organ/internal/stomach/corrupt/atom_init()
 	. = ..()
 	AddElement(/datum/element/corrupted_organ)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have an unhealthy pallor.")
 
-/obj/item/organ/stomach/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/stomach/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_drank))
 
-/obj/item/organ/stomach/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/stomach/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 /// Check if we drank a little blood
-/obj/item/organ/stomach/corrupt/proc/on_drank(atom/source, list/reagents, datum/reagents/source_reagents, methods)
+/obj/item/organ/internal/stomach/corrupt/proc/on_drank(atom/source, list/reagents, datum/reagents/source_reagents, methods)
 	SIGNAL_HANDLER
 	if (!(methods & INGEST))
 		return
@@ -148,7 +148,7 @@
 	deltimer(thirst_timer)
 	thirst_timer = addtimer(VARSET_CALLBACK(src, thirst_satiated, FALSE), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
-/obj/item/organ/stomach/corrupt/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
+/obj/item/organ/internal/stomach/corrupt/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if (thirst_satiated || human.has_reagent(/datum/reagent/water/holywater))
 		return ..()
 

@@ -36,7 +36,7 @@
 		/obj/item/organ/internal/heart/corrupt,
 		/obj/item/organ/internal/liver/corrupt,
 		/obj/item/organ/internal/lungs/corrupt,
-		/obj/item/organ/stomach/corrupt,
+		/obj/item/organ/internal/stomach/corrupt,
 		/obj/item/organ/tongue/corrupt,
 	)
 

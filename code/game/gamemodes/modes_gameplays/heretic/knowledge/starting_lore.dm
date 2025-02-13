@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		var/static/list/backup_organs = list(
 			O_LUNGS = /obj/item/organ/internal/lungs,
 			O_LIVER = /obj/item/organ/internal/liver,
-			ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
+			ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
 		)
 
 		for(var/backup_slot in backup_organs)
