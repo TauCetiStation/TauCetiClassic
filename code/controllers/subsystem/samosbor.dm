@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(samosbor)
 
 /datum/controller/subsystem/samosbor/proc/milestone_notification(milestone)
 	world.send2bridge(
-		type = list(BRIDGE_ANNOUNCE, BRIDGE_SAMOSBOR),
+		type = list(BRIDGE_SAMOSBOR),
 		attachment_title = "Новый результат на сегодня: более [milestone] игроков онлайн!",
 		attachment_msg = BRIDGE_JOIN_LINKS
 	)
