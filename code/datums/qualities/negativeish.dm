@@ -265,3 +265,11 @@ var/global/list/allergen_reagents_list
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
 		return
 	H.adjustBrainLoss(60)
+
+/datum/quality/negativeish/dyslalia
+	name = "Dyslalia"
+	desc = "Слая судьба подалила тебе мношество дефектов лечи."
+	requirement = "Нет."
+
+/datum/quality/negativeish/dyslalia/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_DYSLALIA, QUALITY_TRAIT)

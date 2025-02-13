@@ -7,6 +7,8 @@
 
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
+	var/alpha_color_mask = FALSE
+
 	var/damage_mask = TRUE
 	var/eyes_icon = 'icons/mob/human_face.dmi'
 	var/eyes = "eyes"                                    // Icon for eyes.
@@ -1076,6 +1078,8 @@
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
+	alpha_color_mask = TRUE
+
 	language = LANGUAGE_TRINARY
 	unarmed_type = /datum/unarmed_attack/punch
 	race_verbs = list(
@@ -1227,7 +1231,7 @@
 		H.b_hair = 15
 		H.set_light(0)
 		if(BP.ipc_head == "Default")
-			H.h_style = "IPC off screen"
+			H.h_style = /datum/sprite_accessory/hair/ipc_screen_off::name
 		H.update_hair()
 
 /datum/species/abductor
