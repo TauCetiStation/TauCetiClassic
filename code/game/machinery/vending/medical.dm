@@ -129,7 +129,7 @@
 
 	)
 	contraband = list(
-		/obj/item/weapon/storage/firstaid/tactical = 1,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat = 1,
 	)
 	prices = list(
 
@@ -138,6 +138,5 @@
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space = 2,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian = 2,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment = 2,
-		/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat = 1,
 	)
 	private = TRUE
