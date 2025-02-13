@@ -251,7 +251,7 @@
 					message = stars(message, 20) // sleeping changeling has a little confused mind
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
-				log_say("Пси-связь: [C.changelingID]/[mind.name]/[key] : [message]")
+				log_say("Коллективный разум: [C.changelingID]/[mind.name]/[key] : [message]")
 				for(var/mob/Changeling as anything in mob_list)
 					if(ischangeling(Changeling))
 						to_chat(Changeling, n_message)
