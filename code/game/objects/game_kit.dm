@@ -107,7 +107,7 @@
 	if (!( data ))
 		update()
 
-	var/datum/browser/popup = new(user, "game_kit", "Game Board", 400, 515, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "game_kit", "Game Board", 320, 390, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(data)
 	popup.open()
 
