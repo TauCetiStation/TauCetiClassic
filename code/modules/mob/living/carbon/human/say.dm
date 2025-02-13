@@ -413,11 +413,11 @@
 				message = turret_talk(message, get_species())
 		if(slurring)
 			message = slur(message)
-			verb = pick("заикается","заикаясь")
+			verb = pick("запинается","заикается")
 			handled = 1
 		if (stuttering)
 			message = stutter(message)
-			verb = pick("заикается","заикаясь")
+			verb = pick("запинается","заикается")
 			handled = 1
 
 		var/braindam = getBrainLoss()
