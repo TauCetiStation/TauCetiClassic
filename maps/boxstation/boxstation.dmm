@@ -39940,9 +39940,6 @@
 	pixel_y = -2
 	},
 /obj/structure/table/glass,
-/obj/machinery/light_switch{
-	pixel_x = 27
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -51551,6 +51548,9 @@
 /area/station/hallway/primary/starboard)
 "bNw" = (
 /obj/machinery/life_assist/artificial_ventilation,
+/obj/machinery/light_switch{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
