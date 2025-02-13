@@ -18,11 +18,12 @@ var/global/list/announcement_sounds = list(
 	"admin_war_pipisky" = 'sound/AI/_admin_war_pipisky.ogg',
 	"admin_war_pizdec" = 'sound/AI/_admin_war_pizdec.ogg',
 	"admin_war_tishina" = 'sound/AI/_admin_war_tishina.ogg',
-	
+
 	"commandreport" = 'sound/AI/commandreport.ogg',
 	"announce" = 'sound/AI/announce.ogg',
 	"aiannounce" = 'sound/AI/aiannounce.ogg',
 	"portal" = 'sound/AI/portal.ogg',
+	"narsie" = 'sound/antag/bloodcult_scribe.ogg',
 
 	"yesert" = 'sound/AI/yesert.ogg',
 	"noert" = 'sound/AI/noert.ogg',
