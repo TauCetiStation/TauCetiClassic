@@ -429,7 +429,7 @@
 				M.SetConfused(7)
 
 			if(4 to 5)
-				M.SetConfused(5)
+				M.MakeConfused(5)
 
 /datum/chemical_reaction/napalm
 	name = "Napalm"
