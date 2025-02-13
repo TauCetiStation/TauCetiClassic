@@ -47,6 +47,7 @@
 	possible_gamemodes = list(
 		/datum/game_mode/blob,
 		/datum/game_mode/cult,
+		/datum/game_mode/heretics,
 		/datum/game_mode/infestation,
 		/datum/game_mode/nuclear,
 		/datum/game_mode/revolution,

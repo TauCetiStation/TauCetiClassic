@@ -444,3 +444,10 @@
 	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
+
+// Magic
+///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
+#define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"
+///from base of mob/can_block_magic(): (mob/user, casted_magic_flags, charge_cost)
+#define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"
+	#define COMPONENT_MAGIC_BLOCKED (1<<0)

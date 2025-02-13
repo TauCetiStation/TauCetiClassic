@@ -25,6 +25,7 @@ var/global/list/huds = list(
 	ANTAG_HUD_ALIEN = new/datum/atom_hud/antag/hidden,
 	ANTAG_HUD_DEATHCOM = new/datum/atom_hud/antag,
 	ANTAG_HUD_ERT = new/datum/atom_hud/antag,
+	ANTAG_HUD_HERETIC = new/datum/atom_hud/antag,
 	ANTAG_HUD_MALF = new/datum/atom_hud/antag/hidden,
 	ANTAG_HUD_ZOMB = new/datum/atom_hud/antag,
 	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden,

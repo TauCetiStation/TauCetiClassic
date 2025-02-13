@@ -171,6 +171,8 @@
 
 #define isunder(A) (istype(A, /obj/item/clothing/under))
 
+#define isstructure(A) (istype(A, /obj/structure))
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))
@@ -190,8 +192,6 @@
 #define isshadowling(H) isrole(SHADOW, H)
 
 #define isshadowthrall(H) isrole(SHADOW_THRALL, H)
-
-#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
 #define iseminence(A) (istype(A, /mob/camera/eminence))
 
@@ -240,6 +240,33 @@
 #define isanycop(H) isrolebytype(/datum/role/cop, H)
 
 #define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
+
+
+//Cult checks
+
+/// Checks if the given mob is a blood cultist
+#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+/// Checks if the given mob is a blood cultist and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_CULTIST(mob) (mob?.mind?.GetRoleByType(/datum/role/cultist))
+
+/// Checks if the mob is a sentient or non-sentient cultist
+#define iscultistorcultistmob(mob) ((iscultist(mob)) || (mob.faction.Find(F_BLOODCULT)))
+
+//Heretic checks
+
+/// Checks if the given mob is a heretic.
+#define isheretic(H) isrole(HERETIC, H)
+/// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_HERETIC(H) isrolebytype(/datum/role/heretic, H)
+/// Check if the given mob is a heretic monster.
+#define ishereticmonster(H) isrolebytype(/datum/role/heretic_monster, H)
+/// Check if the given mob is a  lunatic
+#define islunatic(H) isrolebytype(/datum/role/lunatic, H)
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define ishereticormonster(H) (isheretic(mob) || ishereticmonster(mob) || islunatic(mob))
+/// CHecks if the given mob is in the mansus realm
+#define isinmansus(H) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
 // BLOB
 

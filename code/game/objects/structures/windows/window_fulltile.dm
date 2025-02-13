@@ -50,7 +50,7 @@
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
-	
+
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
@@ -212,6 +212,13 @@
 	explosive_resistance = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
+
+/obj/structure/window/fulltile/reinforced/rust_heretic_act()
+	add_atom_colour(COLOR_RUSTED_GLASS, FIXED_COLOUR_PRIORITY)
+	AddElement(/datum/element/rust)
+	src.armor = armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	take_damage(get_integrity() * 0.5)
+	modify_max_integrity(max_integrity * 0.5)
 
 /**
  * Fulltile reinforced phoron

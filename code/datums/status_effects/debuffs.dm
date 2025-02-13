@@ -269,6 +269,29 @@
 	desc = "Вы чувствуете головокружение."
 	icon_state = "woozy"
 
+/datum/status_effect/speech/slurring/heretic
+	id = "heretic_slurring"
+	alert_type = /atom/movable/screen/alert/status_effect/heretic_slurring
+	examine_text = "Looks shaken"
+
+/atom/movable/screen/alert/status_effect/heretic_slurring
+	name = "Невнятность"
+	desc = "Вы не можете связать и двух слов."
+	icon_state = "woozy"
+
+/datum/status_effect/speech/slurring/heretic/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/speech/slurring/heretic/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_HERETIC_SLURRING, STATUS_EFFECT_TRAIT)
+
+/datum/status_effect/speech/slurring/heretic/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_HERETIC_SLURRING, STATUS_EFFECT_TRAIT)
+
 /// Hallucination status effect. How most hallucinations end up happening.
 /datum/status_effect/hallucination
 	id = "hallucination"
@@ -478,3 +501,16 @@
 	var/mutable_appearance/fake_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "[source.body_zone][5]") //bodyparts[source]
 	owner.healthdoll.add_overlay(fake_overlay)
 	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
+
+/datum/status_effect/rust_corruption
+	alert_type = null
+	id = "rust_turf_effects"
+	tick_interval = 2 SECONDS
+	remove_on_fullheal = TRUE
+
+/datum/status_effect/rust_corruption/tick(seconds_between_ticks)
+	if(issilicon(owner))
+		owner.adjustBruteLoss(10 * seconds_between_ticks)
+		return
+	owner.adjust_disgust(5 * seconds_between_ticks)
+	owner.reagents?.remove_any(0.75 * seconds_between_ticks)

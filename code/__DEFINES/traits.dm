@@ -200,6 +200,18 @@
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
+#define TRAIT_MANSUS_TOUCHED      "mansus_touched"
+#define TRAIT_HERETIC_SLURRING    "heretic_slurring"
+#define TRAIT_RUSTY               "rust_trait"
+
+/// The mob is holy and resistance to heretic magic
+#define TRAIT_HOLY "holy"
+
+/// The mob recently deflected heretic's spell
+#define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
+
+/// Allows heretics to cast their spells.
+#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

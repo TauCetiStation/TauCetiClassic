@@ -11,12 +11,15 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	opacity = 0
 	var/sound = null //The sound the spell makes when it is cast
 
-	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
+	var/owner = usr //Actually maybe usr won't always adequate inheritance of owner, but i really don't care, you know? It works, if not - Nasend will fix it :3
+
+	var/school
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+	var/antimagic_flags = MAGIC_RESISTANCE
 
 	/****RELIGIOUS ASPECT****/
 	var/favor_cost = 0 //cost
@@ -32,10 +35,11 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/clothes_req = TRUE //see if it requires clothes
 	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
-	var/invocation_type = "none" //can be none, whisper and shout
+	var/invocation_type = "none" //can be none, whisper, emote and shout
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
+	var/spell_requirements
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -54,6 +58,11 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/static/list/casting_clothes
+
+/obj/effect/proc_holder/spell/proc/is_valid_target(mob/living/patient)
+	if (iscarbon(patient))
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/Destroy()
 	QDEL_NULL(action)
@@ -152,6 +161,8 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ", "`"))
+		if("emote")
+			user.say(invocation)
 	if(sound)
 		playsound(user, sound, VOL_EFFECTS_MASTER)
 
@@ -341,3 +352,77 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
 	return cast_check(FALSE, user, FALSE)
+
+/**
+ * Checks to see if the mob can cast normal magic spells.
+ *
+ * args:
+ * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
+**/
+/mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
+	if(magic_flags == NONE) // magic with the NONE flag can always be cast
+		return TRUE
+
+	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, magic_flags)
+	return restrict_magic_flags == NONE
+
+/mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
+	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
+		return FALSE
+
+	// A list of all things which are providing anti-magic to us
+	var/list/antimagic_sources = list()
+	var/is_magic_blocked = FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, antimagic_sources) & COMPONENT_MAGIC_BLOCKED)
+		is_magic_blocked = TRUE
+	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
+		is_magic_blocked = TRUE
+
+	if(is_magic_blocked && charge_cost > 0 && !HAS_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC))
+		on_block_magic_effects(casted_magic_flags, antimagic_sources)
+
+	return is_magic_blocked
+
+/// Called whenever a magic effect with a charge cost is blocked and we haven't recently blocked magic.
+/mob/proc/on_block_magic_effects(magic_flags, list/antimagic_sources)
+	return
+
+/mob/living/on_block_magic_effects(magic_flags, list/antimagic_sources)
+	ADD_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT), 6 SECONDS)
+
+	var/mutable_appearance/antimagic_effect
+	var/antimagic_color
+	var/atom/antimagic_source = length(antimagic_sources) ? pick(antimagic_sources) : src
+
+	if(magic_flags & MAGIC_RESISTANCE)
+		visible_message(
+			span_warning("[src] pulses red as [ismob(antimagic_source) ? p_they() : antimagic_source] absorbs magic energy!"),
+			span_userdanger("An intense magical aura pulses around [ismob(antimagic_source) ? "you" : antimagic_source] as it dissipates into the air!"),
+		)
+		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
+		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
+		playsound(src, 'sound/effects/magic_block.ogg', 50, TRUE)
+
+	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
+		visible_message(
+			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
+			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
+		)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
+		playsound(src, 'sound/effects/magic_block_holy.ogg', 50, TRUE)
+
+	else if(magic_flags & MAGIC_RESISTANCE_MIND)
+		visible_message(
+			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
+			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
+		)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
+		antimagic_color = LIGHT_COLOR_DARK_BLUE
+		playsound(src, 'sound/effects/magic_block_mind.ogg', 50, TRUE)
+
+	mob_light(range = 2, power = 2, color = antimagic_color, duration = 5 SECONDS)
+	add_overlay(antimagic_effect)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)

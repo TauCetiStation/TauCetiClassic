@@ -504,3 +504,8 @@
 
 	L.apply_damages(reduced_heal ? 0 : hamt, reduced_heal ? 0 : hamt, hamt, hamt, hamt, hamt) // zero is for brute and burn in case of restoring bodyparts, because no point to heal them, since body parts restoration does that.
 	L.apply_effects(hamt, hamt, hamt, hamt, hamt, hamt, hamt, hamt)
+
+	/*
+	Heretics inhand spells also contains in code\datums\spells\heretics.
+	It is a gay shit, but looks prettier than we have before))) by Danistans
+	*/

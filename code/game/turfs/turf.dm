@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-
+	
 	// base turf luminosity, works against byond native darkness
 	// most likely you shouldn't touch it
 	// currently direcly used only by starlight/environment lighting

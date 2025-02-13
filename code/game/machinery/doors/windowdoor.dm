@@ -110,6 +110,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	if(W.use_tool(src, user, 50, 1))
 		color = new_color
 
+/obj/machinery/door/window/rust_heretic_act(atom/target)
+	add_atom_colour(COLOR_RUSTED_GLASS, FIXED_COLOUR_PRIORITY)
+	AddElement(/datum/element/rust)
+	src.armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	take_damage(get_integrity() * 0.5)
+	modify_max_integrity(max_integrity * 0.5)
+
 /obj/machinery/door/window/Bumped(atom/movable/AM)
 	if(operating || !src.density)
 		return

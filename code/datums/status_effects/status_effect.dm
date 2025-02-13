@@ -1,3 +1,5 @@
+#define adjust_stutter(duration) adjust_timed_status_effect(duration, /datum/status_effect/speech/stutter)
+
 var/global/list/spawnable_status_effects = list(
 	/datum/status_effect/incapacitating/sleeping = list(
 		set_duration = new /datum/admin_arguments_request/integer("duration", FALSE, def_arg_val=-1, desc="Please enter a duration for the effect. Enter -1 for it to be permanent(May be very hard to remove later)."),

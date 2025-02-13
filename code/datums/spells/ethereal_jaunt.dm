@@ -137,7 +137,7 @@
 		return
 
 	last_move = world.time
-	
+
 	var/turf/newLoc = get_step(src,direction)
 
 	if(SEND_SIGNAL(newLoc, COMSIG_ATOM_INTERCEPT_TELEPORT))
