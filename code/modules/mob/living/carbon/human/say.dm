@@ -347,7 +347,7 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Unknown")])"
+		return " (as [get_id_name("Неизвестный")])"
 	return ""
 
 /*
@@ -360,16 +360,16 @@
 */
 
 /mob/living/carbon/human/say_quote(message, datum/language/speaking = null)
-	var/verb = "says"
+	var/verb = "говорит"
 	var/ending = copytext(message, -1)
 
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)
 	else
 		if(ending == "!")
-			verb=pick("exclaims","shouts","yells")
+			verb=pick("восклицает","кричит","орет")
 		else if(ending == "?")
-			verb="asks"
+			verb="спрашивает"
 
 	return verb
 
@@ -392,7 +392,7 @@
 			handled = 1
 			if((message_mode != "changeling") && prob(40))
 				if(prob(80))
-					message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
+					message = pick("А-ХА-ХА-ХА!", "У-ХУ-ХУ-ХУ!", "Я ГНОМ!", "Я гнОмчик!", "Не гномей меня!", "Я не гномлин!", "Ты был за ГНОМЛЕН!")
 				else
 					message =  "[message]... Но я ГНОМ!"
 
