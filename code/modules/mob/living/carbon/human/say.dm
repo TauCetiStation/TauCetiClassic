@@ -396,7 +396,7 @@
 				else
 					message =  "[message]... Но я ГНОМ!"
 
-				verb = pick("орёт как идиот", "говорит довольно громко")
+				verb = pick("орёт как идиот", "говорит громче обычного")
 				speech_sound = 'sound/magic/GNOMED.ogg'
 
 		if(wear_mask)
