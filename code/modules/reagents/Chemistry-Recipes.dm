@@ -426,11 +426,10 @@
 		M.flash_eyes()
 		switch(get_dist(M, location))
 			if(0 to 3)
-				M.Stun(7)
-				M.Weaken(15)
+				M.MakeConfused(7)
 
 			if(4 to 5)
-				M.Stun(5)
+				M.MakeConfused(5)
 
 /datum/chemical_reaction/napalm
 	name = "Napalm"
