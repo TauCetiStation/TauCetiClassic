@@ -96,7 +96,7 @@ var/global/list/department_radio_keys = list(
 /mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "Вы не можете говорить в IC (Вам выдали мут).")
 			return
 		if (client.handle_spam_prevention(message,ADMIN_CD_IC))
 			return
@@ -136,7 +136,7 @@ var/global/list/department_radio_keys = list(
 		if (!isAI(src)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
-					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
+					M.show_message("<span class='notice'>[src] говорит в [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
 				if (speech_sound)
 					playsound_local(src, speech_sound, VOL_EFFECTS_MASTER, sound_vol * 0.5)
 
