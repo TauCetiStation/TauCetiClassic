@@ -22,8 +22,6 @@
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
 	antag_hud_name = "heretic"
-	hijack_speed = 0.5
-	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Turn a department into a testament for your dark knowledge."
@@ -57,7 +55,7 @@
 	/// A static typecache of all tools we can scribe with.
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/weapon/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
-	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/environment/space, /turf/open/lava, /turf/open/chasm))
 	/// Controls what types of turf we can spread rust to, increases as we unlock more powerful rust abilites
 	var/rust_strength = 0
 	/// Wether we are allowed to ascend

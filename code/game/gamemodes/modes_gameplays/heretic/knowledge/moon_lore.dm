@@ -31,9 +31,6 @@
 	research_tree_icon_path = 'icons/heretic/weapon/khopesh.dmi'
 	research_tree_icon_state = "moon_blade"
 
-/datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/role/heretic/our_heretic)
-	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
-
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
 	desc = "Your Mansus Grasp will cause your victims to hallucinate everyone as lunar mass, \
