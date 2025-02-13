@@ -426,7 +426,7 @@
 		M.flash_eyes()
 		switch(get_dist(M, location))
 			if(0 to 3)
-				M.SetConfused(7)
+				M.MakeConfused(7)
 
 			if(4 to 5)
 				M.MakeConfused(5)
