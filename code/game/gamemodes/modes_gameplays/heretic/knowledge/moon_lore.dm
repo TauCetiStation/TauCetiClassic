@@ -164,7 +164,7 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
-	var/brain_damage = sacrifice.get_organ_loss(O_BRAIN)
+	var/brain_damage = sacrifice.getOrganLoss(O_BRAIN)
 	// Checks if our target has enough brain damage
 	if(brain_damage < 50)
 		return FALSE

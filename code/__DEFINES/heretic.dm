@@ -31,5 +31,8 @@
 #define HERETIC_NO_LIVING_HEART 0
 #define HERETIC_HAS_LIVING_HEART 1
 
+/// Designates a heart as a living heart for a heretic.
+#define TRAIT_LIVING_HEART "living_heart"
+
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "common/heretic_influences.json"

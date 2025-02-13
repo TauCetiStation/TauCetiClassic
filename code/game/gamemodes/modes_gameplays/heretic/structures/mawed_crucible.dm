@@ -123,7 +123,7 @@
 		if(to_fill.reagents.total_volume >= to_fill.reagents.maximum_volume)
 			balloon_alert(user, "flask is full!")
 			return ITEM_INTERACT_SUCCESS
-		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
+		to_fill.reagents.add_reagent("eldritch", 50)
 		do_item_attack_animation(src, used_item = tool)
 		current_mass--
 		balloon_alert(user, "refilled flask")
@@ -271,7 +271,7 @@
 
 	if(!ishereticormonster(user))
 		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))
-		user.reagents?.add_reagent(/datum/reagent/eldritch, 10)
+		user.reagents?.add_reagent("eldritch", 10)
 		user.adjust_disgust(50)
 		qdel(src)
 		return TRUE

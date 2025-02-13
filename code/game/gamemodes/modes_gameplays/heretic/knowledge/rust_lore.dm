@@ -212,7 +212,6 @@
 	trigger(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 	var/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/rust_spread_spell = locate() in user.actions
 	rust_spread_spell?.charge_max /= 2
 
