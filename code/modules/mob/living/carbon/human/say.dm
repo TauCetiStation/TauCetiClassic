@@ -160,7 +160,7 @@
 				for(var/mob/M as anything in observer_list)
 					var/link = FOLLOW_LINK(M, user)
 					to_chat(M, "[link]<span class='abductor_team[1]'><b>[user.real_name]:</b> [sm]</span>")
-				log_say("Abductor: [key_name(src)] : [sm]")
+				log_say("Абдуктор: [key_name(src)] : [sm]")
 				return ""
 
 	if(get_species() == HOMUNCULUS)
