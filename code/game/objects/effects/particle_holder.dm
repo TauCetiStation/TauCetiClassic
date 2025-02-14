@@ -74,3 +74,9 @@
 /// Sets the particles position to the passed coordinates
 /obj/effect/abstract/particle_holder/proc/set_particle_position(x = 0, y = 0, z = 0)
 	particles.position = list(x, y, z)
+
+/obj/effect/abstract/particle_holder/proc/modify_particles_value(varName, varVal)
+	if(isnull(varVal))
+		particles.vars[varName] = initial(particles.vars[varName])
+	else
+		particles.vars[varName] = varVal
