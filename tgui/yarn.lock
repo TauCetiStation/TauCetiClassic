@@ -2471,6 +2471,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/trusted-types@npm:^2.0.7":
+  version: 2.0.7
+  resolution: "@types/trusted-types@npm:2.0.7"
+  checksum: 10/8e4202766a65877efcf5d5a41b7dd458480b36195e580a3b1085ad21e948bc417d55d6f8af1fd2a7ad008015d4117d5fdfe432731157da3c68678487174e4ba3
+  languageName: node
+  linkType: hard
+
 "@types/webpack-env@npm:^1.18.5":
   version: 1.18.5
   resolution: "@types/webpack-env@npm:1.18.5"
@@ -4043,10 +4050,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:2.5.4":
-  version: 2.5.4
-  resolution: "dompurify@npm:2.5.4"
-  checksum: 10/977a01ba3fbd58e2ac7c63a7d82a13d8e1c4555e99efc8f10e1d4fe0d22fa3e3d536f7243c9bfc07382cd21522f2cf2a8440e6a558f41cc509feb168e9cd2fb4
+"dompurify@npm:3.2.4":
+  version: 3.2.4
+  resolution: "dompurify@npm:3.2.4"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.7"
+  dependenciesMeta:
+    "@types/trusted-types":
+      optional: true
+  checksum: 10/98570c53385518a2f9b617f796926338856acfdd3369c88b5905bddf96bd7d391bf8a5433127155e0046e6faa2bfb767185fcd571b865dfabe624c099e2537f5
   languageName: node
   linkType: hard
 
@@ -9075,7 +9087,7 @@ __metadata:
     "@types/marked": "npm:^6.0.0"
     common: "workspace:*"
     csstype: "npm:^3.1.3"
-    dompurify: "npm:2.5.4"
+    dompurify: "npm:3.2.4"
     highlight.js: "npm:^11.10.0"
     inferno: "npm:^8.2.3"
     inferno-vnode-flags: "npm:^8.2.3"
