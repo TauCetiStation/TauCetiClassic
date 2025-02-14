@@ -1702,6 +1702,7 @@
 #include "code\modules\events\roundstart_events\roundstart.dm"
 #include "code\modules\events\roundstart_events\area\area_event.dm"
 #include "code\modules\events\roundstart_events\area\break_light.dm"
+#include "code\modules\events\roundstart_events\area\break_camera.dm"
 #include "code\modules\events\roundstart_events\area\cargo_storage.dm"
 #include "code\modules\events\roundstart_events\area\dirt.dm"
 #include "code\modules\events\roundstart_events\area\lasertag_ed.dm"
