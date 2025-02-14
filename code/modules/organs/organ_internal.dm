@@ -3,7 +3,7 @@
 ****************************************************/
 /obj/item/organ/internal
 	parent_bodypart = BP_CHEST
-
+	icon = 'icons/mob/organs/human.dmi'
 	// Strings.
 	var/organ_tag   = null      // Unique identifier.
 
@@ -17,6 +17,10 @@
 	// 1 - assisted
 	// 2 - mechanical
 	var/robotic = 0             // For being a robot
+
+/obj/item/organ/internal/atom_init()
+	. = ..()
+	item_state_world = "[icon_state]_world"
 
 /obj/item/organ/internal/Destroy()
 	if(parent)
@@ -132,6 +136,7 @@
 /obj/item/organ/internal/heart
 	name = "heart"
 	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
+	icon_state = "heart-off"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
@@ -190,10 +195,21 @@
 		lungs.add_refrigerant(pumping_volume)
 
 /obj/item/organ/internal/heart/vox
+	icon = 'icons/mob/organs/special_organs/vox.dmi'
 	parent_bodypart = BP_GROIN
+
+/obj/item/organ/internal/heart/tajaran
+	icon = 'icons/mob/organs/special_organs/tajaran.dmi'
+
+/obj/item/organ/internal/heart/unathi
+	icon = 'icons/mob/organs/special_organs/unathi.dmi'
+
+/obj/item/organ/internal/heart/skrell
+	icon = 'icons/mob/organs/special_organs/skrell.dmi'
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
+	icon_state = "lungs"
 	cases = list("лёгкие", "лёгких", "лёгким", "лёгкие", "лёгкими", "лёгких")
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
@@ -202,13 +218,21 @@
 
 /obj/item/organ/internal/lungs/vox
 	name = "air capillary sack"
+	icon = 'icons/mob/organs/special_organs/vox.dmi'
 	cases = list("воздушно-капиллярный мешок", "воздушно-капиллярного мешка", "воздушно-капиллярному мешку", "воздушно-капиллярный мешок", "воздушно-капиллярным мешком", "воздушно-капиллярном мешке")
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
+	icon = 'icons/mob/organs/special_organs/skrell.dmi'
 	cases = list("дыхательная сумка", "дыхательной сумки", "дыхательной сумке", "дыхательную сумку", "дыхательной сумкой", "дыхательной сумке")
 	has_gills = TRUE
+
+/obj/item/organ/internal/lungs/tajaran
+	icon = 'icons/mob/organs/special_organs/tajaran.dmi'
+
+/obj/item/organ/internal/lungs/unathi
+	icon = 'icons/mob/organs/special_organs/unathi.dmi'
 
 /obj/item/organ/internal/lungs/diona
 	name = "virga inopinatus"
@@ -272,10 +296,20 @@
 
 /obj/item/organ/internal/liver
 	name = "liver"
+	icon_state = "liver"
 	cases = list("печень", "печени", "печени", "печень", "печенью", "печени")
 	organ_tag = O_LIVER
 	parent_bodypart = BP_CHEST
 	process_accuracy = 10
+
+/obj/item/organ/internal/liver/tajaran
+	icon = 'icons/mob/organs/special_organs/tajaran.dmi'
+
+/obj/item/organ/internal/liver/unathi
+	icon = 'icons/mob/organs/special_organs/unathi.dmi'
+
+/obj/item/organ/internal/liver/skrell
+	icon = 'icons/mob/organs/special_organs/skrell.dmi'
 
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
@@ -283,6 +317,7 @@
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
+	icon = 'icons/mob/organs/special_organs/vox.dmi'
 	cases = list("канал отходов", "канала отходов", "каналу отходов", "канал отходов", "каналом отходов", "канале отходов")
 
 /obj/item/organ/internal/liver/ipc
@@ -391,12 +426,23 @@
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
+	icon_state = "kidneys"
 	cases = list("почки", "почек", "почкам", "почки", "почками", "почках")
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
 
+/obj/item/organ/internal/kidneys/tajaran
+	icon = 'icons/mob/organs/special_organs/tajaran.dmi'
+
+/obj/item/organ/internal/kidneys/unathi
+	icon = 'icons/mob/organs/special_organs/unathi.dmi'
+
+/obj/item/organ/internal/kidneys/skrell
+	icon = 'icons/mob/organs/special_organs/skrell.dmi'
+
 /obj/item/organ/internal/kidneys/vox
 	name = "filtration bladder"
+	icon = 'icons/mob/organs/special_organs/vox.dmi'
 	cases = list("фильтрующий пузырь", "фильтрующего пузыря", "фильтрующему пузырю", "фильтрующий пузырь", "фильтрующим пузырём", "фильтрующем пузыре")
 
 /obj/item/organ/internal/kidneys/diona
@@ -433,9 +479,22 @@
 
 /obj/item/organ/internal/brain
 	name = "brain"
+	icon_state = "brain2"
 	cases = list("мозг", "мозга", "мозгу", "мозг", "мозгом", "мозге")
 	organ_tag = O_BRAIN
 	parent_bodypart = BP_HEAD
+
+/obj/item/organ/internal/brain/tajaran
+	icon = 'icons/mob/organs/special_organs/tajaran.dmi'
+
+/obj/item/organ/internal/brain/unathi
+	icon = 'icons/mob/organs/special_organs/unathi.dmi'
+
+/obj/item/organ/internal/brain/skrell
+	icon = 'icons/mob/organs/special_organs/skrell.dmi'
+
+/obj/item/organ/internal/brain/vox
+	icon = 'icons/mob/organs/special_organs/vox.dmi'
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"
@@ -454,9 +513,22 @@
 
 /obj/item/organ/internal/eyes
 	name = "eyes"
+	icon_state = "eyes"
 	cases = list("глаза", "глаз", "глазам", "глаза", "глазами", "глазах")
 	organ_tag = O_EYES
 	parent_bodypart = BP_HEAD
+
+/obj/item/organ/internal/eyes/vox
+	icon = 'icons/mob/organs/special_organs/vox.dmi'
+
+/obj/item/organ/internal/eyes/tajaran
+	icon = 'icons/mob/organs/special_organs/tajaran.dmi'
+
+/obj/item/organ/internal/eyes/unathi
+	icon = 'icons/mob/organs/special_organs/unathi.dmi'
+
+/obj/item/organ/internal/eyes/skrell
+	icon = 'icons/mob/organs/special_organs/skrell.dmi'
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"

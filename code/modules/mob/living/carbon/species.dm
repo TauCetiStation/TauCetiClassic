@@ -356,6 +356,7 @@
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5, /obj/item/organ/internal/heart, /obj/item/organ/internal/brain, /obj/item/organ/internal/eyes, /obj/item/organ/internal/lungs, /obj/item/organ/internal/liver, /obj/item/organ/internal/kidneys)
 
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
@@ -381,6 +382,7 @@
 	primitive = /mob/living/carbon/monkey/pluvian
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5, /obj/item/organ/internal/heart, /obj/item/organ/internal/brain, /obj/item/organ/internal/eyes, /obj/item/organ/internal/lungs, /obj/item/organ/internal/liver, /obj/item/organ/internal/kidneys)
 	pluvian_social_credit = 0
 
 	flags = list(
@@ -460,6 +462,7 @@
 	unarmed_type = /datum/unarmed_attack/claws
 	race_verbs = list(/mob/living/carbon/human/proc/air_sample)
 	dietflags = DIET_MEAT | DIET_DAIRY
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5, /obj/item/organ/internal/heart/unathi, /obj/item/organ/internal/brain/unathi, /obj/item/organ/internal/eyes/unathi, /obj/item/organ/internal/lungs/unathi, /obj/item/organ/internal/liver/unathi, /obj/item/organ/internal/kidneys/unathi)
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
@@ -485,6 +488,15 @@
 	,NO_MINORCUTS = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
+	)
+
+	has_organ = list(
+	O_HEART   = /obj/item/organ/internal/heart/unathi,
+	O_BRAIN   = /obj/item/organ/internal/brain/unathi,
+	O_EYES    = /obj/item/organ/internal/eyes/unathi,
+	O_LUNGS   = /obj/item/organ/internal/lungs/unathi,
+	O_LIVER   = /obj/item/organ/internal/liver/unathi,
+	O_KIDNEYS = /obj/item/organ/internal/kidneys/unathi
 	)
 
 	flesh_color = "#34af10"
@@ -528,6 +540,7 @@
 	unarmed_type = /datum/unarmed_attack/claws
 	race_traits = list(TRAIT_NATURAL_AGILITY)
 	dietflags = DIET_OMNI
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5, /obj/item/organ/internal/heart/tajaran, /obj/item/organ/internal/brain/tajaran, /obj/item/organ/internal/eyes/tajaran, /obj/item/organ/internal/lungs/tajaran, /obj/item/organ/internal/liver/tajaran, /obj/item/organ/internal/kidneys/tajaran)
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
 	nighteyes = TRUE
@@ -563,6 +576,15 @@
 	,FUR = TRUE
 	)
 
+	has_organ = list(
+	O_HEART   = /obj/item/organ/internal/heart/tajaran,
+	O_BRAIN   = /obj/item/organ/internal/brain/tajaran,
+	O_EYES    = /obj/item/organ/internal/eyes/tajaran,
+	O_LUNGS   = /obj/item/organ/internal/lungs/tajaran,
+	O_LIVER   = /obj/item/organ/internal/liver/tajaran,
+	O_KIDNEYS = /obj/item/organ/internal/kidneys/tajaran
+	)
+
 	flesh_color = "#afa59e"
 	base_color = "#333333"
 
@@ -594,6 +616,7 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5, /obj/item/organ/internal/heart/skrell, /obj/item/organ/internal/brain/skrell, /obj/item/organ/internal/eyes/skrell, /obj/item/organ/internal/lungs/skrell, /obj/item/organ/internal/liver/skrell, /obj/item/organ/internal/kidneys/skrell)
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
@@ -614,12 +637,12 @@
 	)
 
 	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_HEART   = /obj/item/organ/internal/heart/skrell,
+		O_BRAIN   = /obj/item/organ/internal/brain/skrell,
+		O_EYES    = /obj/item/organ/internal/eyes/skrell,
 		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
-		O_LIVER   = /obj/item/organ/internal/liver,
-		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		O_LIVER   = /obj/item/organ/internal/liver/skrell,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/skrell
 		)
 
 	eyes = "skrell_eyes"
@@ -656,6 +679,7 @@
 	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
 
 	species_common_language = TRUE
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5, /obj/item/organ/internal/heart/vox, /obj/item/organ/internal/brain/vox, /obj/item/organ/internal/eyes/vox, /obj/item/organ/internal/lungs/vox, /obj/item/organ/internal/liver/vox, /obj/item/organ/internal/kidneys/vox)
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	race_ability = /datum/action/innate/race/leap
 	dietflags = DIET_OMNI
@@ -685,8 +709,8 @@
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_BRAIN   = /obj/item/organ/internal/brain/vox,
+		O_EYES    = /obj/item/organ/internal/eyes/vox,
 		O_LUNGS   = /obj/item/organ/internal/lungs/vox,
 		O_LIVER   = /obj/item/organ/internal/liver/vox,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox

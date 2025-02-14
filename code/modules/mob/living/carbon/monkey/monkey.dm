@@ -21,7 +21,7 @@
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/race = HUMAN // Used for restrictions checking.
 	holder_type = /obj/item/weapon/holder/monkey
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart, /obj/item/organ/internal/brain, /obj/item/organ/internal/eyes, /obj/item/organ/internal/lungs, /obj/item/organ/internal/liver, /obj/item/organ/internal/kidneys)
 	pull_size_ratio = 1.5
 	w_class = SIZE_BIG
 
@@ -107,6 +107,7 @@
 	icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
 	race = TAJARAN
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart, /obj/item/organ/internal/brain/tajaran, /obj/item/organ/internal/eyes/tajaran, /obj/item/organ/internal/lungs/tajaran, /obj/item/organ/internal/liver/tajaran, /obj/item/organ/internal/kidneys/tajaran)
 	holder_type = /obj/item/weapon/holder/monkey/farwa
 
 /mob/living/carbon/monkey/skrell
@@ -116,6 +117,7 @@
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
 	race = SKRELL
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart/skrell, /obj/item/organ/internal/brain/skrell, /obj/item/organ/internal/eyes/skrell, /obj/item/organ/internal/lungs/skrell, /obj/item/organ/internal/liver/skrell, /obj/item/organ/internal/kidneys/skrell)
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 	blood_datum = /datum/dirt_cover/purple_blood
 
@@ -126,6 +128,7 @@
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
 	race = UNATHI
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart/unathi, /obj/item/organ/internal/brain/unathi, /obj/item/organ/internal/eyes/unathi, /obj/item/organ/internal/lungs/unathi, /obj/item/organ/internal/liver/unathi, /obj/item/organ/internal/kidneys/unathi)
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
 /mob/living/carbon/monkey/pluvian
