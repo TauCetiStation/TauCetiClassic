@@ -4,7 +4,7 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
-	var/list/clothing_choices = list("brown_shoes", "black_shoes", "blue_shoes", "green_shoes", "purple_shoes", "red_shoes", "white_shoes", "yellow_shoes") // Варианты цветов
+	var/list/clothing_choices = list("brown_shoes", "black_shoes", "blue_shoes", "green_shoes", "purple_shoes", "red_shoes", "white_shoes", "yellow_shoes")
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/shoes/syndigaloshes/New()
