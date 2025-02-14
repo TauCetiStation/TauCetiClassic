@@ -20735,6 +20735,7 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/machinery/camera{
 	c_tag = "Engineering CE Office";
