@@ -691,9 +691,9 @@
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/stealthy_tools/syndigolashes
-	name = "No-Slip Brown Shoes"
+	name = "No-Slip Shoe soles"
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
-	item = /obj/item/clothing/shoes/syndigaloshes
+	item = /obj/item/clothing/accessory/soles
 	cost = 1
 	uplink_types = list("traitor")
 

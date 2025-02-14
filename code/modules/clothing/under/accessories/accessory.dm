@@ -449,3 +449,35 @@
 	usr.visible_message(
 		"<span class='warning'>[usr] показывает свой бейдж NanoTrasen Employee Adaptation Program.\nС надписью: \"Я здесь новенький!\".</span>",
 		"<span class='warning'>Вы показываете свой бейдж NanoTrasen Employee Adaptation Program.\nС надписью: \"Я здесь новенький!\".</span>")
+
+
+/obj/item/clothing/accessory/soles
+	name = "soles"
+	desc = "Накладная подошва."
+	icon_state = "soles"
+	item_state_world = "soles_world"
+
+	origin_tech = "syndicate=3"
+	siemens_coefficient = 0.8
+	permeability_coefficient = 0.05
+	slot = "soles"
+
+	var/noslipAdded = FALSE
+
+/obj/item/clothing/accessory/soles/on_attached(obj/item/clothing/S, mob/user, silent)
+	..()
+
+	S.siemens_coefficient = siemens_coefficient
+	S.permeability_coefficient = permeability_coefficient
+	if(S.flags & NOSLIP)
+		S.flags |= NOSLIP
+		noslipAdded = TRUE
+
+/obj/item/clothing/accessory/soles/on_removed(mob/user)
+	has_suit.siemens_coefficient = initial(has_suit.siemens_coefficient)
+	has_suit.permeability_coefficient = initial(has_suit.permeability_coefficient)
+	if(noslipAdded)
+		has_suit.flags &= ~NOSLIP
+		noslipAdded = FALSE
+
+	..()

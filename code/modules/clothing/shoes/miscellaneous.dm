@@ -175,6 +175,8 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+0.5
 
+	restricted_accessory_slots = list("soles")
+
 /obj/item/clothing/shoes/centcom
 	name = "dress shoes"
 	desc = "They appear impeccably polished."
@@ -283,6 +285,8 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "wjboots"
 	item_state = "wjboots"
+
+	restricted_accessory_slots = list("soles")
 
 /obj/item/clothing/shoes/kung
 	name = "Kung shoes"
