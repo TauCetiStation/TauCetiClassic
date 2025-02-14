@@ -469,7 +469,7 @@
 
 	S.siemens_coefficient = siemens_coefficient
 	S.permeability_coefficient = permeability_coefficient
-	if(S.flags & NOSLIP)
+	if(!(S.flags & NOSLIP))
 		S.flags |= NOSLIP
 		noslipAdded = TRUE
 
@@ -478,6 +478,7 @@
 	has_suit.permeability_coefficient = initial(has_suit.permeability_coefficient)
 	if(noslipAdded)
 		has_suit.flags &= ~NOSLIP
-		noslipAdded = FALSE
+
+	noslipAdded = FALSE
 
 	..()
