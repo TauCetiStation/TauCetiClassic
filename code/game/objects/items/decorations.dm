@@ -13,9 +13,8 @@
 		var/turf/T = get_turf(src)
 		var/obj/item/weapon/pen/Pen = locate() in T.contents
 		if(Pen)
-			var/list/offsets = pick(pens_locations)
-			Pen.pixel_x = offsets[1]
-			Pen.pixel_y = offsets[2]
+			Pen.pixel_x = -2
+			Pen.pixel_y = 5
 			Pen.forceMove(src)
 		update_icon()
 
