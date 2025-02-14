@@ -218,7 +218,7 @@
 		I closed my eyes with my head laid against their form. I was safe. \
 		WITNESS MY ASCENSION!"
 
-	announcement_text = "%SPOOKY% A Star Gazer has arrived into the station, %NAME% has ascended! This station is the domain of the Cosmos! %SPOOKY%"
+	announcement_text = "%SPOOKY% Звездочет почтил своим визитом это место, %NAME% – имя новой взошедшей звезды! Эта станция станет началом чего-то нового и безграничного! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_cosmic.ogg'
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(

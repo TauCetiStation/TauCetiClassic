@@ -162,7 +162,7 @@
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 
-	announcement_text = "%SPOOKY% Fear the blaze, for the Ashlord, %NAME% has ascended! The flames shall consume all! %SPOOKY%"
+	announcement_text = "%SPOOKY% Бойтесь же пламени, пламени %NAME%, Лорда пепла, что вознесся! Да сгинет этот мир в огне! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_ash.ogg'
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(

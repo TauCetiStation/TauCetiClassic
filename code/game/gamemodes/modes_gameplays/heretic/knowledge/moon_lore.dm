@@ -158,8 +158,8 @@
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 
-	announcement_text = "%SPOOKY% Laugh, for the ringleader %NAME% has ascended! \
-						The truth shall finally devour the lie! %SPOOKY%"
+	announcement_text = "%SPOOKY% Смейтесь же, веселитесь! Празднуйте восхождение нового звонаря – %NAME%! \
+						Да пусть сея правда пожрет всю ложь! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_moon.ogg'
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)

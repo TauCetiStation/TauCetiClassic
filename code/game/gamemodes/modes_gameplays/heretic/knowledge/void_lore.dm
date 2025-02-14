@@ -179,7 +179,7 @@
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"
 
-	announcement_text = "%SPOOKY% The nobleman of void %NAME% has arrived, stepping along the Waltz that ends worlds! %SPOOKY%"
+	announcement_text = "%SPOOKY% Несущий благородство пустоты %NAME% прибыл, и он откроет бал, где будут и танцы, и песни, и смерть этому миру! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_void.ogg'
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop

@@ -286,7 +286,7 @@
 		Men of this world, hear me, for the time has come! The Marshal guides my army! \
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
 	required_atoms = list(/mob/living/carbon/human = 4)
-	announcement_text = "%SPOOKY% Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %NAME% has ascended! Fear the ever twisting hand! %SPOOKY%"
+	announcement_text = "%SPOOKY% Неутихаемый вихрь! Реальность развернута. ВСКИНУВ СВОИ РУКИ, ЛОРД НОЧИ, %NAME% ВОЗНЕССЯ! Бойтесь же его бесприкаянной руки! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_flesh.ogg'
 
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)

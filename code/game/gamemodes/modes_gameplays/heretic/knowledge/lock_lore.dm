@@ -175,7 +175,7 @@
 		My foes were the Locks and my blades were the Key! \
 		The Labyrinth will be Locked no more, and freedom will be ours! WITNESS US!"
 	required_atoms = list(/mob/living/carbon/human = 3)
-	announcement_text = "Delta-class dimensional anomaly detec%SPOOKY% Reality rended, torn. Gates open, doors open, %NAME% has ascended! Fear the tide! %SPOOKY%"
+	announcement_text = "Обнаружена пространственная ано- %SPOOKY% код Дельта. Реальность трещит, разламывается. Эти врата... Путь открыт... %NAME% открыл его... Бойтесь же того, что грядет! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_knock.ogg'
 
 /datum/heretic_knowledge/ultimate/lock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
