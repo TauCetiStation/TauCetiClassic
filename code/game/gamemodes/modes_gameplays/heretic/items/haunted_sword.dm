@@ -3,8 +3,6 @@
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "cultblade"
-	inhand_icon_state = "cultblade"
-	worn_icon_state = "cultblade"
 	icon_angle = -45
 	lefthand_file = 'icons/heretic/inhands/blades_lefthand.dmi'
 	righthand_file = 'icons/heretic/inhands/blades_righthand.dmi'
@@ -65,8 +63,6 @@
 	name = "haunted longsword"
 	desc = "An eerie sword with a blade that is less 'black' than it is 'absolute nothingness'. It glows with furious, restrained green energy."
 	icon_state = "hauntedblade"
-	inhand_icon_state = "hauntedblade"
-	worn_icon_state = "hauntedblade"
 	force = 25
 	throwforce = 25
 	block_chance = 55

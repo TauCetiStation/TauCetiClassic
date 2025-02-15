@@ -69,7 +69,10 @@
 	name = "Star Touch"
 	desc = "A sinister looking aura that distorts the flow of reality around it. \
 		Causes people with a star mark to sleep for 4 seconds, and causes people without a star mark to get one."
+	icon = 'icons/obj/hand.dmi'
 	icon_state = "star"
+	lefthand_file = 'icons/mob/inhands/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/touchspell_righthand.dmi'
 	inhand_icon_state = "star"
 
 /obj/item/weapon/magic/star_touch/atom_init()

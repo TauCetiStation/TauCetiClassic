@@ -231,6 +231,8 @@
 /obj/item/weapon/magic/flesh_surgery
 	name = "\improper knit flesh"
 	desc = "Let's go practice medicine."
-	icon = 'icons/obj/weapons/hand.dmi'
+	icon = 'icons/obj/hand.dmi'
+	lefthand_file = 'icons/mob/inhands/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

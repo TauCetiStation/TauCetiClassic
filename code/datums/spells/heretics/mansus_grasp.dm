@@ -10,6 +10,17 @@
 	charge_max = 10 SECONDS
 	spell_requirements = SPELL_CASTABLE_WITHOUT_INVOCATION
 
+	invocation = "R'CH T'H TR'TH!"
+	invocation_type = INVOCATION_SHOUT
+
+	hand_path = /obj/item/melee/touch_attack/mansus_fist
+
+/datum/action/cooldown/spell/touch/mansus_grasp/is_valid_target(atom/cast_on)
+	return TRUE // This baby can hit anything
+
+/datum/action/cooldown/spell/touch/mansus_grasp/can_cast_spell(feedback = TRUE)
+	return ..() && (!!isheretic(owner) || !!islunatic(owner))
+
 /obj/effect/proc_holder/spell/in_hand/mansus_grasp/on_antimagic_triggered(obj/item/weapon/magic/hand, atom/victim, mob/living/carbon/caster)
 	victim.visible_message(
 		span_danger("The spell bounces off of [victim]!"),
@@ -70,7 +81,10 @@
 	desc = "A sinister looking aura that distorts the flow of reality around it. \
 		Causes knockdown, minor bruises, and major stamina damage. \
 		It gains additional beneficial effects as you expand your knowledge of the Mansus."
-	icon_state = "mansus_grasp"
+	icon = 'icons/obj/hand.dmi'
+	lefthand_file = 'icons/mob/inhands/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/touchspell_righthand.dmi'
+	icon_state = "mansus"
 	s_fire = 'sound/items/Welder.ogg'
 
 /obj/item/weapon/magic/mansus_fist/atom_init()
