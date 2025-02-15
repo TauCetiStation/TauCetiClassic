@@ -57,8 +57,8 @@ SUBSYSTEM_DEF(samosbor)
 	)
 	if (milestone >= 30)
 		world.send2bridge(
-   			type = list(BRIDGE_SAMOSBOR),
-			attachment_title = "Внимание! На сервере уже более [milestone] игроков!",
+   			type = list(BRIDGE_ANNOUNCE),
+			attachment_title = "Новый результат на сегодня: более [milestone] игроков онлайн!",
 			attachment_msg = BRIDGE_JOIN_LINKS
 		)
 
