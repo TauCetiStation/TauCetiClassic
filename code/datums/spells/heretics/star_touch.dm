@@ -73,7 +73,6 @@
 	icon_state = "star"
 	lefthand_file = 'icons/mob/inhands/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/touchspell_righthand.dmi'
-	inhand_icon_state = "star"
 
 /obj/item/weapon/magic/star_touch/atom_init()
 	. = ..()
