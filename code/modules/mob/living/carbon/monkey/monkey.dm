@@ -21,7 +21,7 @@
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/race = HUMAN // Used for restrictions checking.
 	holder_type = /obj/item/weapon/holder/monkey
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart, /obj/item/organ/internal/brain, /obj/item/organ/internal/eyes, /obj/item/organ/internal/lungs, /obj/item/organ/internal/liver, /obj/item/organ/internal/kidneys)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart = 1, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/eyes = 1, /obj/item/organ/internal/lungs = 1, /obj/item/organ/internal/liver = 1, /obj/item/organ/internal/kidneys = 1)
 	pull_size_ratio = 1.5
 	w_class = SIZE_BIG
 
@@ -107,7 +107,7 @@
 	icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
 	race = TAJARAN
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart, /obj/item/organ/internal/brain/tajaran, /obj/item/organ/internal/eyes/tajaran, /obj/item/organ/internal/lungs/tajaran, /obj/item/organ/internal/liver/tajaran, /obj/item/organ/internal/kidneys/tajaran)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart/tajaran = 1, /obj/item/organ/internal/brain/tajaran = 1, /obj/item/organ/internal/eyes/tajaran = 1, /obj/item/organ/internal/lungs/tajaran = 1, /obj/item/organ/internal/liver/tajaran = 1, /obj/item/organ/internal/kidneys/tajaran = 1)
 	holder_type = /obj/item/weapon/holder/monkey/farwa
 
 /mob/living/carbon/monkey/skrell
@@ -117,7 +117,7 @@
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
 	race = SKRELL
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart/skrell, /obj/item/organ/internal/brain/skrell, /obj/item/organ/internal/eyes/skrell, /obj/item/organ/internal/lungs/skrell, /obj/item/organ/internal/liver/skrell, /obj/item/organ/internal/kidneys/skrell)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart/skrell = 1, /obj/item/organ/internal/brain/skrell = 1, /obj/item/organ/internal/eyes/skrell = 1, /obj/item/organ/internal/lungs/skrell = 1, /obj/item/organ/internal/liver/skrell = 1, /obj/item/organ/internal/kidneys/skrell = 1)
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 	blood_datum = /datum/dirt_cover/purple_blood
 
@@ -128,7 +128,7 @@
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
 	race = UNATHI
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart/unathi, /obj/item/organ/internal/brain/unathi, /obj/item/organ/internal/eyes/unathi, /obj/item/organ/internal/lungs/unathi, /obj/item/organ/internal/liver/unathi, /obj/item/organ/internal/kidneys/unathi)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5, /obj/item/organ/internal/heart/unathi = 1, /obj/item/organ/internal/brain/unathi = 1, /obj/item/organ/internal/eyes/unathi = 1, /obj/item/organ/internal/lungs/unathi = 1, /obj/item/organ/internal/liver/unathi = 1, /obj/item/organ/internal/kidneys/unathi = 1)
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
 /mob/living/carbon/monkey/pluvian
