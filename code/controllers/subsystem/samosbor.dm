@@ -55,6 +55,12 @@ SUBSYSTEM_DEF(samosbor)
 		attachment_title = "Новый результат на сегодня: более [milestone] игроков онлайн!",
 		attachment_msg = BRIDGE_JOIN_LINKS
 	)
+	if (milestone >= 30)
+		world.send2bridge(
+   			type = list(BRIDGE_SAMOSBOR),
+			attachment_title = "Внимание! На сервере уже более [milestone] игроков!",
+			attachment_msg = BRIDGE_JOIN_LINKS
+		)
 
 #undef SAMOSBOR_CACHE_FOLDER
 #undef SAMOSBOR_CACHE_PATH
