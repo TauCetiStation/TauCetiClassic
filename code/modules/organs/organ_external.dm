@@ -139,7 +139,7 @@
 	if(!owner)
 		return
 	if (owner.species.flags[HAS_SKIN_COLOR])
-		original_color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
+		original_color = rgb(owner.r_skin, owner.g_skin, owner.b_skin)
 	else if(owner.species.flags[HAS_SKIN_TONE])
 		var/datum/skin_tone/tone = global.skin_tones_by_name[owner.s_tone]
 		original_color = tone.hex

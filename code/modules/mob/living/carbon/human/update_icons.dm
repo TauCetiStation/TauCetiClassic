@@ -853,7 +853,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				tail_s.color = HULK_SKIN_COLOR
 			else
 				if(species.flags[HAS_SKIN_COLOR])
-					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+					tail_s.color = rgb(r_skin, g_skin, b_skin)
 				else if(species.flags[HAS_SKIN_TONE]) // any humans with tails?
 					var/datum/skin_tone/T = global.skin_tones_by_name[s_tone]
 					tail_s.color = T.hex
