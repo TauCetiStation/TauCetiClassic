@@ -373,7 +373,7 @@
 
 /obj/item/weapon/cultblade/haunted/proc/binding_filters_update(mob/user)
 
-	var/h_color = heretic_path ? GLOB.heretic_path_to_color[heretic_path] : "#FF00FF"
+	var/h_color = heretic_path ? heretic_path_to_color[heretic_path] : "#FF00FF"
 
 	// on bound
 	if(bound)

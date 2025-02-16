@@ -7,7 +7,6 @@
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "mad_touch"
-	sound = null
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 20 SECONDS

@@ -5,8 +5,6 @@
 	show_in_antagpanel = FALSE
 	antag_moodlet = /datum/mood_event/heretics/lunatic
 	antag_hud_name = "lunatic"
-	can_assign_self_objectives = FALSE
-	hardcore_random_bonus = FALSE
 	// The mind of the ascended heretic who created us
 	var/datum/mind/ascended_heretic
 	// The body of the ascended heretic who created us

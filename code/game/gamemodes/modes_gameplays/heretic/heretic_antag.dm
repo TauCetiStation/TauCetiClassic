@@ -15,18 +15,13 @@
 
 /// The heretic antagonist itself.
 /datum/role/heretic
-	name = "\improper Heretic"
-	roundend_category = "Heretics"
-	antagpanel_category = "Heretic"
-	ui_name = "AntagInfoHeretic"
-	antag_moodlet = /datum/mood_event/heretics
-	job_rank = ROLE_HERETIC
-	antag_hud_name = "heretic"
-	preview_outfit = /datum/outfit/heretic
-	can_assign_self_objectives = TRUE
-	default_custom_objective = "Turn a department into a testament for your dark knowledge."
-	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
+	name = HERETIC
+	id = HERETIC
+	antag_moodlet = /datum/mood_event/heretics //datum/role/heretic/OnPostSetup(laterole)
+	required_pref = ROLE_HERETIC
+	antag_hud_type = ANTAG_HUD_HERETIC
+	antag_hud_name = "hudheretic"
+	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg' //datum/role/heretic/OnPostSetup(laterole)
 
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
@@ -55,7 +50,7 @@
 	/// A static typecache of all tools we can scribe with.
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/weapon/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
-	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/environment/space, /turf/open/lava, /turf/open/chasm))
+	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/environment/space))
 	/// Controls what types of turf we can spread rust to, increases as we unlock more powerful rust abilites
 	var/rust_strength = 0
 	/// Wether we are allowed to ascend
@@ -328,7 +323,7 @@
  * If so, allow them to cast like normal.
  * If not, cancel the cast, and returns [SPELL_CANCEL_CAST].
  */
-/datum/role/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
+/datum/role/heretic/proc/on_spell_cast(mob/living/source, obj/effect/proc_holder/spell/spell)
 	SIGNAL_HANDLER
 
 	// Heretic spells are of the forbidden school, otherwise we don't care
@@ -404,7 +399,7 @@
 /datum/role/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 20 SECONDS, additional_checks)
 	drawing_rune = TRUE
 
-	var/rune_colour = GLOB.heretic_path_to_color[heretic_path]
+	var/rune_colour = heretic_path_to_color[heretic_path]
 	target_turf.balloon_alert(user, "drawing rune...")
 	var/obj/effect/temp_visual/drawing_heretic_rune/drawing_effect
 	if (drawing_time < (10 SECONDS))
@@ -492,7 +487,7 @@
 
 		for(var/datum/mind/mind as anything in cult_team.members)
 			if(mind.current)
-				SEND_SOUND(mind.current, 'sound/effects/clockwork/narsie_attack.ogg')
+				SEND_SOUND(mind.current, 'sound/effects/narsie_attack.ogg')
 				to_chat(mind.current, span_cult_large(span_warning("Arcane and forbidden knowledge floods your forges and archives. The cult has learned how to create the ")) + span_cult_large(span_hypnophrase("[result]!")))
 
 	return SILENCE_SACRIFICE_MESSAGE|DUST_SACRIFICE
@@ -856,8 +851,6 @@
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */
 /datum/role/heretic/proc/can_ascend()
-	if(!can_assign_self_objectives)
-		return FALSE // We spurned the offer of the Mansus :(
 	if(feast_of_owls)
 		return FALSE // We sold our ambition for immediate power :/
 	for(var/datum/objective/must_be_done as anything in objectives)
@@ -962,10 +955,3 @@
 
 /datum/objective/heretic_summon/check_completion()
 	return completed || (num_summoned >= target_amount)
-
-/datum/outfit/heretic
-	name = "Heretic (Preview only)"
-
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
-	head = /obj/item/clothing/head/culthood/eldritch
-	r_hand = /obj/item/weapon/magic/mansus_fist

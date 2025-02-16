@@ -15,10 +15,10 @@
 
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 
-/datum/action/cooldown/spell/touch/mansus_grasp/is_valid_target(atom/cast_on)
+/obj/effect/proc_holder/spell/in_hand/mansus_grasp/is_valid_target(atom/cast_on)
 	return TRUE // This baby can hit anything
 
-/datum/action/cooldown/spell/touch/mansus_grasp/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/in_hand/mansus_grasp/can_cast_spell(feedback = TRUE)
 	return ..() && (!!isheretic(owner) || !!islunatic(owner))
 
 /obj/effect/proc_holder/spell/in_hand/mansus_grasp/on_antimagic_triggered(obj/item/weapon/magic/hand, atom/victim, mob/living/carbon/caster)

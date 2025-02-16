@@ -19,6 +19,7 @@
 #define COLOR_VIOLET                    "#9933ff"
 #define COLOR_OLIVE                     "#808000"
 #define COLOR_BROWN_ORANGE              "#824b28"
+#define COLOR_CARGO_BROWN               "#B18644"
 #define COLOR_DARK_ORANGE               "#b95a00"
 #define COLOR_GRAY40                    "#666666"
 #define COLOR_SEDONA                    "#cc6600"
@@ -30,6 +31,8 @@
 #define COLOR_TEAL                      "#33cccc"
 #define COLOR_RED                       "#ff0000"
 #define COLOR_DARK_RED                  "#A50824"
+#define COLOR_VIVID_RED                 "#FF3232"
+#define COLOR_SOFT_RED                  "#FA8282"
 #define COLOR_CULT_RED                  "#960000"
 #define COLOR_CRIMSON                   "#dc143c"
 #define COLOR_CRIMSON_RED               "#990000"
@@ -222,3 +225,15 @@
                                     0,    0,    1.25,   0, \
                                     0,    0,    0,      1, \
                                     -0.05,-0.05,-0.05,  0)
+
+var/global/list/heretic_path_to_color = list(
+		PATH_START = COLOR_LIME,
+		PATH_RUST = COLOR_CARGO_BROWN,
+		PATH_FLESH = COLOR_SOFT_RED,
+		PATH_ASH = COLOR_VIVID_RED,
+		PATH_VOID = COLOR_CYAN,
+		PATH_BLADE = COLOR_SILVER,
+		PATH_COSMIC = COLOR_PURPLE,
+		PATH_LOCK = COLOR_YELLOW,
+		PATH_MOON = COLOR_BLUE_LIGHT
+	)
