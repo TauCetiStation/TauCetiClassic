@@ -1,13 +1,47 @@
 /obj/item/clothing/shoes/syndigaloshes
-	desc = "A pair of brown shoes. They seem to have extra grip."
-	name = "brown shoes"
-	icon_state = "brown"
-	item_state = "brown"
+	icon_state = "brown_shoes"
+	item_state = "brown_shoes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
-	var/list/clothing_choices = list()
+	var/list/clothing_choices = list("brown_shoes", "black_shoes", "blue_shoes", "green_shoes", "purple_shoes", "red_shoes", "white_shoes", "yellow_shoes")
 	siemens_coefficient = 0.8
+
+/obj/item/clothing/shoes/syndigaloshes/New()
+	..()
+
+	var/random_choice = pick(clothing_choices)
+	icon_state = random_choice
+	item_state = random_choice
+
+	update_appearance()
+
+/obj/item/clothing/shoes/syndigaloshes/proc/update_appearance()
+	switch(icon_state)
+		if("brown_shoes")
+			name = "brown shoes"
+			desc = "A pair of brown shoes."
+		if("black_shoes")
+			name = "black shoes"
+			desc = "A pair of black shoes."
+		if("blue_shoes")
+			name = "blue shoes"
+			desc = "A pair of blue shoes."
+		if("green_shoes")
+			name = "green shoes"
+			desc = "A pair of green shoes."
+		if("purple_shoes")
+			name = "purple shoes"
+			desc = "A pair of purple shoes."
+		if("red_shoes")
+			name = "red shoes"
+			desc = "Stylish red shoes."
+		if("white_shoes")
+			name = "white shoes"
+			desc = "A pair of white shoes."
+		if("yellow_shoes")
+			name = "yellow shoes"
+			desc = "A pair of yellow shoes."
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
