@@ -119,6 +119,7 @@ What is the naming convention for planes or layers?
   #define SIGN_LAYER                      3.4   // Default value for /obj/structure/sign
   #define BELOW_MOB_LAYER                 3.7   // Currently used only by fluff struct in bluespace shelter
   //efine MOB_LAYER                       4     // For easy recordkeeping; this is a byond define
+  #define ABOVE_HUMAN_LAYER               4.08
   #define BELL_LAYER                      4.20
   #define INFRONT_MOB_LAYER               4.25
   //efine FLY_LAYER                       5     // For easy recordkeeping; this is a byond define
@@ -162,6 +163,8 @@ What is the naming convention for planes or layers?
   #define ABOVE_LIGHTING_LAYER 1
   #define RUNECHAT_LAYER 2
   #define RUNECHAT_LAYER_MAX 3
+
+  #define BALLOON_CHAT_PLANE 10
 
 ///--------------MISC--------------
 #define CAMERA_STATIC_PLANE 200

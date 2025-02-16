@@ -1586,6 +1586,7 @@
 #include "code\modules\awaymissions\pamphlet.dm"
 #include "code\modules\awaymissions\planetarium_spawner.dm"
 #include "code\modules\awaymissions\trigger.dm"
+#include "code\modules\balloon_alerts\balloon_alert.dm"
 #include "code\modules\bridge\chat_bridge.dm"
 #include "code\modules\bridge\commands\bans.dm"
 #include "code\modules\bridge\commands\communications.dm"
