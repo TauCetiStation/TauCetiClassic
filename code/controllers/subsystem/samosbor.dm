@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(samosbor)
 
 	var/next_milestone = 10 // players online when we send the next notification
 	var/milestone_step = 10
+	var/bridge_announce_milestone = 30
 
 	var/day
 	var/notfication_timer
@@ -50,17 +51,14 @@ SUBSYSTEM_DEF(samosbor)
 	notfication_timer = addtimer(CALLBACK(src, PROC_REF(milestone_notification), current_milestone), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/controller/subsystem/samosbor/proc/milestone_notification(milestone)
+	var/list/bridge_type = list(BRIDGE_SAMOSBOR)
+	if(milestone >= bridge_announce_milestone)
+		bridge_type += BRIDGE_ANNOUNCE
 	world.send2bridge(
-		type = list(BRIDGE_SAMOSBOR),
+		type = bridge_type
 		attachment_title = "Новый результат на сегодня: более [milestone] игроков онлайн!",
 		attachment_msg = BRIDGE_JOIN_LINKS
 	)
-	if (milestone >= 30)
-		world.send2bridge(
-   			type = list(BRIDGE_ANNOUNCE),
-			attachment_title = "Новый результат на сегодня: более [milestone] игроков онлайн!",
-			attachment_msg = BRIDGE_JOIN_LINKS
-		)
 
 #undef SAMOSBOR_CACHE_FOLDER
 #undef SAMOSBOR_CACHE_PATH
