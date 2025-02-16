@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(samosbor)
 		type = bridge_type
 		attachment_title = "Новый результат на сегодня: более [milestone] игроков онлайн!",
 		attachment_msg = BRIDGE_JOIN_LINKS
-)
+		)
 
 #undef SAMOSBOR_CACHE_FOLDER
 #undef SAMOSBOR_CACHE_PATH
