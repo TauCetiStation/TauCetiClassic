@@ -18,11 +18,14 @@
 	var/display_numbers = 0
 	var/ram_account = 0
 	var/reset = FALSE
+	var/resetOnly = FALSE
 
 	var/image/holoprice
 
 	var/mode = CARDPAY_ACCOUNTMODE
 	var/prevmode = CARDPAY_IDLEMODE
+
+	var/basic_icon_state = "card-pay"
 
 /obj/item/device/cardpay/atom_init(mapload)
 	. = ..()
@@ -109,6 +112,7 @@
 	var/list/data = list()
 	data["numbers"] = display_numbers
 	data["reset_numbers"] = reset
+	data["resetOnly"] = resetOnly
 	data["mode"] = mode
 	return data
 
@@ -179,14 +183,14 @@
 				changemode(CARDPAY_IDLEMODE)
 				visible_message("[bicon(src)] [name] <span class='warning'>Отмена транзакции.</span>")
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
-				flick("card-pay-error", src)
+				flick("[basic_icon_state]-error", src)
 
 		if(CARDPAY_ACCOUNTMODE)
 			if(!display_numbers)
 				changemode(CARDPAY_IDLEMODE)
 				visible_message("[bicon(src)] [name] <span class='warning'>Отмена ввода счёта.</span>")
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
-				flick("card-pay-error", src)
+				flick("[basic_icon_state]-error", src)
 
 		if(CARDPAY_ENTERPINMODE)
 			if(!display_numbers)
@@ -194,7 +198,7 @@
 				changemode(CARDPAY_IDLEMODE)
 				visible_message("[bicon(src)] [name] <span class='warning'>Отмена ввода пинкода.</span>")
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
-				flick("card-pay-error", src)
+				flick("[basic_icon_state]-error", src)
 
 	display_numbers = 0
 
@@ -205,12 +209,12 @@
 				return
 			if(!linked_account)
 				visible_message("[bicon(src)] [name] <span class='warning'>Нет подключённого счёта.</span>")
-				flick("card-pay-error", src)
+				flick("[basic_icon_state]-error", src)
 				return
 			var/datum/money_account/Acc = get_account(linked_account)
 			if(!Acc || Acc.suspended)
 				visible_message("[bicon(src)] [name] <span class='warning'>Подключённый счёт заблокирован.</span>")
-				flick("card-pay-error", src)
+				flick("[basic_icon_state]-error", src)
 				return
 			pay_amount = display_numbers
 			update_holoprice(clear = FALSE)
@@ -234,12 +238,12 @@
 					var/datum/money_account/Acc = get_account(ram_account)
 					if(!Acc || Acc.suspended)
 						visible_message("[bicon(src)] [name] <span class='warning'>Счёта не существует.</span>")
-						flick("card-pay-error", src)
+						flick("[basic_icon_state]-error", src)
 						return
 					Acc = attempt_account_access(ram_account, display_numbers, 2)
 					if(!Acc)
 						visible_message("[bicon(src)] [name] <span class='warning'>Невозможно оплатить с этого счёта.</span>")
-						flick("card-pay-error", src)
+						flick("[basic_icon_state]-error", src)
 						return
 					make_transaction(Acc, pay_amount)
 
@@ -247,7 +251,7 @@
 					var/datum/money_account/Acc = get_account(linked_account)
 					if(!Acc || Acc.suspended)
 						visible_message("[bicon(src)] [name] <span class='warning'>Счёта не существует.</span>")
-						flick("card-pay-error", src)
+						flick("[basic_icon_state]-error", src)
 						linked_account = 0
 						reset_anything()
 						return
@@ -256,7 +260,7 @@
 						changemode(CARDPAY_ACCOUNTMODE)
 					else
 						visible_message("[bicon(src)] [name] <span class='warning'>Неверный пинкод.</span>")
-						flick("card-pay-error", src)
+						flick("[basic_icon_state]-error", src)
 
 				else
 					reset_anything()
@@ -266,11 +270,11 @@
 	var/datum/money_account/Acc = get_account(display_numbers)
 	if(!Acc || Acc.suspended)
 		visible_message("[bicon(src)] [name] <span class='warning'>Счёта не существует.</span>")
-		flick("card-pay-error", src)
+		flick("[basic_icon_state]-error", src)
 		return
 	linked_account = display_numbers
 	visible_message("[bicon(src)] [name] <span class='notice'>Счёт подключён.</span>")
-	flick("card-pay-complete", src)
+	flick("[basic_icon_state]-complete", src)
 	playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 	changemode(CARDPAY_IDLEMODE)
 
@@ -278,7 +282,7 @@
 	var/datum/money_account/Acc = get_account(display_numbers)
 	if(!Acc || Acc.suspended)
 		visible_message("[bicon(src)] [name] <span class='warning'>Счёт заблокирован.</span>")
-		flick("card-pay-error", src)
+		flick("[basic_icon_state]-error", src)
 		return
 	if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == Acc.remote_access_pin || Acc.security_level == 0)
 		make_transaction(Acc, pay_amount)
@@ -319,9 +323,9 @@
 
 	switch(newmode)
 		if(CARDPAY_IDLEMODE)
-			icon_state = "card-pay-idle"
+			icon_state = "[basic_icon_state]-idle"
 		if(CARDPAY_ENTERPINMODE)
-			icon_state = "card-pay-processing"
+			icon_state = "[basic_icon_state]-processing"
 
 /obj/item/device/cardpay/proc/reset_anything()
 	mode = CARDPAY_IDLEMODE
@@ -334,12 +338,12 @@
 /obj/item/device/cardpay/proc/make_transaction(datum/money_account/Acc, amount)
 	if(amount > Acc.money)
 		visible_message("[bicon(src)] [name] <span class='warning'>Недостаточно средств!</span>")
-		flick("card-pay-error", src)
+		flick("[basic_icon_state]-error", src)
 		return
 
-	icon_state = "card-pay-idle"
+	icon_state = "[basic_icon_state]-idle"
 	visible_message("[bicon(src)] [name] <span class='notice'>Оплата прошла успешно.</span>")
-	flick("card-pay-complete", src)
+	flick("[basic_icon_state]-complete", src)
 	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 
 	var/datum/money_account/D = get_account(linked_account)
@@ -365,7 +369,54 @@
 		holoprice.icon_state = "holo_overlay_[length(num2text(pay_amount))]"
 	add_overlay(holoprice)
 
+
+
+
+#define CARDPAY_REFUNDMODE "Mode_Refund"
+
+/obj/item/device/cardpay/casino
+	name = "caps dealer"
+	desc = "Обменник денег на фишки и наоборот."
+
+	icon = 'icons/obj/casino.dmi'
+	icon_state = "caps_dealer-idle"
+
+	density = TRUE
+
+	resetOnly = TRUE
+
+	basic_icon_state = "caps_dealer"
+
+/obj/item/device/cardpay/casino/atom_init(mapload)
+	. = ..()
+
+	holoprice.pixel_x = 5
+	holoprice.pixel_y = 10
+
+/obj/item/device/cardpay/casino/make_transaction(datum/money_account/Acc, amount)
+	if(amount > Acc.money)
+		visible_message("[bicon(src)] [name] <span class='warning'>Недостаточно средств!</span>")
+		flick("[basic_icon_state]-error", src)
+		return
+
+	icon_state = "[basic_icon_state]-idle"
+	visible_message("[bicon(src)] [name] <span class='notice'>Оплата прошла успешно.</span>")
+	flick("[basic_icon_state]-complete", src)
+	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
+
+	var/datum/money_account/D = get_account(linked_account)
+	charge_to_account(Acc.account_number, "Обменник фишек [D.owner_name] ([D.account_number])", "Оплата", src.name, -amount)
+	charge_to_account(linked_account, "Обменник фишек [D.owner_name] ([D.account_number])", "Прибыль", src.name, amount)
+
+	new /obj/item/toy/caps(get_turf(src), amount)
+
+	pay_amount = 0
+	update_holoprice(clear = TRUE)
+	changemode(CARDPAY_IDLEMODE)
+
 #undef CARDPAY_IDLEMODE
 #undef CARDPAY_PAYMODE
 #undef CARDPAY_ACCOUNTMODE
 #undef CARDPAY_ENTERPINMODE
+
+#undef CARDPAY_REFUNDMODE
