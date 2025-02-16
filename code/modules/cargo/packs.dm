@@ -410,6 +410,16 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/ballistic/exp4046
+	name = "40x46mm explosive grenades"
+	contains = list(/obj/item/weapon/storage/box/r4046/explosion,
+					/obj/item/weapon/storage/box/r4046/explosion)
+	additional_costs = 520
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "40x46mm explosive grenades"
+	access = access_armory
+	group = "Security"
+
 /datum/supply_pack/ballistic/m79
 	name = "m79 grenade launcher"
 	contains = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79,

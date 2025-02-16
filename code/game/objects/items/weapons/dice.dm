@@ -217,6 +217,7 @@
 		poof()
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
+	playsound(src, 'sound/misc/dice.ogg', VOL_EFFECTS_MASTER)
 	result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
