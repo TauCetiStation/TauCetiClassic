@@ -1,5 +1,6 @@
 #define CARDPAY_IDLEMODE "Mode_Idle"
 #define CARDPAY_PAYMODE "Mode_Pay"
+#define CARDPAY_REFUNDMODE "Mode_Refund"
 #define CARDPAY_ACCOUNTMODE "Mode_Account"
 #define CARDPAY_ENTERPINMODE "Mode_EnterPin"
 
@@ -50,7 +51,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I
 		switch(mode)
-			if(CARDPAY_PAYMODE)
+			if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
 				display_numbers = Card.associated_account_number
 				pay_with_account()
 			if(CARDPAY_ACCOUNTMODE)
@@ -62,7 +63,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		switch(mode)
-			if(CARDPAY_PAYMODE)
+			if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
 				display_numbers = Card.associated_account_number
 				pay_with_account()
 			if(CARDPAY_ACCOUNTMODE)
@@ -74,7 +75,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/ewallet/Wallet = I
 		switch(mode)
-			if(CARDPAY_PAYMODE)
+			if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
 				display_numbers = Wallet.account_number
 				pay_with_account()
 			if(CARDPAY_ACCOUNTMODE)
@@ -176,7 +177,7 @@
 /obj/item/device/cardpay/proc/clear_numbers()
 	switch(mode)
 		if(CARDPAY_IDLEMODE)
-		if(CARDPAY_PAYMODE)
+		if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
 			if(!display_numbers)
 				pay_amount = 0
 				update_holoprice(clear = TRUE)
@@ -220,7 +221,7 @@
 			update_holoprice(clear = FALSE)
 			changemode(CARDPAY_PAYMODE)
 
-		if(CARDPAY_PAYMODE)
+		if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
 			if(!display_numbers)
 				return
 			pay_with_account()
@@ -284,12 +285,17 @@
 		visible_message("[bicon(src)] [name] <span class='warning'>Счёт заблокирован.</span>")
 		flick("[basic_icon_state]-error", src)
 		return
-	if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == Acc.remote_access_pin || Acc.security_level == 0)
-		make_transaction(Acc, pay_amount)
-		return
-	else
-		ram_account = display_numbers
-		changemode(CARDPAY_ENTERPINMODE)
+
+	switch(mode)
+		if(CARDPAY_PAYMODE)
+			if(usr.mind.get_key_memory(MEM_ACCOUNT_PIN) == Acc.remote_access_pin || Acc.security_level == 0)
+				make_transaction(Acc, pay_amount)
+				return
+			else
+				ram_account = display_numbers
+				changemode(CARDPAY_ENTERPINMODE)
+		if(CARDPAY_REFUNDMODE)
+			make_refund(Acc, pay_amount)
 
 /obj/item/device/cardpay/proc/enter_account()
 	switch(mode)
@@ -307,7 +313,7 @@
 					linked_account = 0
 					return
 				changemode(CARDPAY_ENTERPINMODE)
-		if(CARDPAY_PAYMODE)
+		if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
 			return
 		if(CARDPAY_ACCOUNTMODE)
 			changemode(CARDPAY_IDLEMODE)
@@ -357,6 +363,28 @@
 	else
 		changemode(CARDPAY_PAYMODE)
 
+/obj/item/device/cardpay/proc/make_refund(datum/money_account/Acc, amount)
+	var/datum/money_account/D = get_account(linked_account)
+	if(amount > D.money)
+		visible_message("[bicon(src)] [name] <span class='warning'>Недостаточно средств!</span>")
+		flick("[basic_icon_state]-error", src)
+		return
+
+	icon_state = "[basic_icon_state]-idle"
+	visible_message("[bicon(src)] [name] <span class='notice'>Возврат средств прошёл успешно.</span>")
+	flick("[basic_icon_state]-complete", src)
+	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
+
+	charge_to_account(Acc.account_number, "Терминал оплаты [D.owner_name] ([D.account_number])", "Возврат", src.name, -amount)
+	charge_to_account(linked_account, "Терминал оплаты [D.owner_name] ([D.account_number])", "Возврат", src.name, amount)
+
+	if(reset)
+		pay_amount = 0
+		update_holoprice(clear = TRUE)
+		changemode(CARDPAY_IDLEMODE)
+	else
+		changemode(CARDPAY_REFUNDMODE)
+
 /obj/item/device/cardpay/proc/update_holoprice(clear)
 	cut_overlay(holoprice)
 	if(clear)
@@ -372,7 +400,6 @@
 
 
 
-#define CARDPAY_REFUNDMODE "Mode_Refund"
 
 /obj/item/device/cardpay/casino
 	name = "caps dealer"
@@ -387,11 +414,31 @@
 
 	basic_icon_state = "caps_dealer"
 
+	w_class = SIZE_LARGE
+
 /obj/item/device/cardpay/casino/atom_init(mapload)
 	. = ..()
 
-	holoprice.pixel_x = 5
+	holoprice.pixel_x = 7
 	holoprice.pixel_y = 10
+
+/obj/item/device/cardpay/casino/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/caps))
+		var/datum/money_account/D = get_account(linked_account)
+		if(!D)
+			return
+
+		var/obj/item/toy/caps/Caps = I
+		var/toReturn = min(D.money, Caps.capsAmount)
+
+		pay_amount = toReturn
+		update_holoprice(clear = FALSE)
+		changemode(CARDPAY_REFUNDMODE)
+
+		if(Caps.capsAmount == toReturn)
+			qdel(Caps)
+	else
+		return ..()
 
 /obj/item/device/cardpay/casino/make_transaction(datum/money_account/Acc, amount)
 	if(amount > Acc.money)
@@ -416,7 +463,6 @@
 
 #undef CARDPAY_IDLEMODE
 #undef CARDPAY_PAYMODE
+#undef CARDPAY_REFUNDMODE
 #undef CARDPAY_ACCOUNTMODE
 #undef CARDPAY_ENTERPINMODE
-
-#undef CARDPAY_REFUNDMODE

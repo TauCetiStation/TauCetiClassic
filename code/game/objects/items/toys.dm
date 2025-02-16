@@ -1563,7 +1563,7 @@ Owl & Griffin toys
 			to_chat(usr, "<span class='notice'>Вы не можете дотянуться.</span>")
 
 	if(M.l_hand == src || M.r_hand == src)
-		to_chat(usr, "<span class='notice'>Вы берёте [pickupAmount] [pluralize_russian(pickupAmount, "фишку", "фишки", "фишек")].</span>")
+		to_chat(usr, "<span class='notice'>Вы берёте [capsAmount] [pluralize_russian(capsAmount, "фишку", "фишки", "фишек")].</span>")
 
 
 /*
