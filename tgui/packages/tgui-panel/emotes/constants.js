@@ -87,6 +87,8 @@ export const emojis = [
   'flash',
   'honk',
   'cakehat',
+  'faxbride',
+  'faxsent',
   'crash',
   'feelsgood',
   'itsok',
