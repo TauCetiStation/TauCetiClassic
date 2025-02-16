@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		our_replacement_heart.Insert(user, TRUE, TRUE)
 		if(our_new_heart)
 			// Throw our current heart out of our chest, violently
-			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [user.p_their()] chest!"))
+			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [P_THEIR(user)] chest!"))
 			INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 			selected_atoms -= our_new_heart // so we don't delete our old heart while we dramatically toss is out

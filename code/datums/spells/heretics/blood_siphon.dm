@@ -35,7 +35,7 @@
 		return FALSE
 
 	cast_on.visible_message(
-		span_danger("[cast_on] turns pale as a red glow envelops [cast_on.p_them()]!"),
+		span_danger("[cast_on] turns pale as a red glow envelops [P_THEM(cast_on)]!"),
 		span_danger("You pale as a red glow enevelops you!"),
 	)
 

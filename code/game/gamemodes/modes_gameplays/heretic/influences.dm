@@ -136,7 +136,7 @@
 		return
 
 	// A very elaborate way to suicide
-	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
+	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [P_THEIR(user)] head off!"))
 	var/obj/item/organ/external/head/head = locate() in human_user.bodyparts
 	if(head)
 		head.dismember()

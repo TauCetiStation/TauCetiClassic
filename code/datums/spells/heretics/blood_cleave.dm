@@ -40,7 +40,7 @@
 			continue
 
 		victim.visible_message(
-			span_danger("[victim]'s veins are shredded from within as an unholy blaze erupts from [victim.p_their()] blood!"),
+			span_danger("[victim]'s veins are shredded from within as an unholy blaze erupts from [P_THEIR(victim)] blood!"),
 			span_danger("Your veins burst from within and unholy flame erupts from your blood!")
 		)
 

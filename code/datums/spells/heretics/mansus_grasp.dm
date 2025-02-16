@@ -107,11 +107,11 @@
 	remove_hand_with_no_refund(user)
 
 /obj/item/weapon/magic/mansus_fist/ignition_effect(atom/to_light, mob/user)
-	. = span_rose("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
+	. = span_rose("[user] effortlessly snaps [P_THEIR(user)] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
 	remove_hand_with_no_refund(user)
 
 /obj/item/weapon/magic/mansus_fist/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] covers [P_THEIR(user)] face with [P_THEIR(user)] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/mob/living/carbon/carbon_user = user //iscarbon already used in spell's parent
 	var/obj/effect/proc_holder/spell/in_hand/mansus_grasp/source = spell_which_made_us?.resolve()
 	if(QDELETED(source) || !isheretic(user))

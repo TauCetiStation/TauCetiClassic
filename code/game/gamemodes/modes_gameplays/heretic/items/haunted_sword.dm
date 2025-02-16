@@ -196,7 +196,7 @@
 		return
 
 	user.visible_message(span_cult_bold("You begin slicing open your palm on top of [src]..."),\
-		span_cult_bold("[user] begins slicing open [user.p_their()] palm on top of [src]..."))
+		span_cult_bold("[user] begins slicing open [P_THEIR(user)] palm on top of [src]..."))
 	if(!do_after(user, 6 SECONDS, src))
 		to_chat(user, span_notice("You were interrupted!"))
 		return

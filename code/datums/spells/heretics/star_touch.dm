@@ -94,7 +94,7 @@
 	remove_hand_with_no_refund(user)
 
 /obj/item/weapon/magic/star_touch/ignition_effect(atom/to_light, mob/user)
-	. = span_rose("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
+	. = span_rose("[user] effortlessly snaps [P_THEIR(user)] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
 	remove_hand_with_no_refund(user)
 
 /obj/item/weapon/magic/star_touch/attack_self(mob/living/user)

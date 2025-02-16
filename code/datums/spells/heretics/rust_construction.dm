@@ -44,7 +44,7 @@
 		return
 
 	var/mob/living/living_owner = owner
-	invocation = span_danger("<b>[owner]</b> drags [owner.p_their()] hand[living_owner.usable_hands == 1 ? "":"s"] upwards as a wall of rust rises out of [cast_on]!")
+	invocation = span_danger("<b>[owner]</b> drags [P_THEIR(owner)] hand[living_owner.usable_hands == 1 ? "":"s"] upwards as a wall of rust rises out of [cast_on]!")
 	invocation_self_message = span_notice("You drag [living_owner.usable_hands == 1 ? "a hand":"your hands"] upwards as a wall of rust rises out of [cast_on].")
 
 /obj/effect/proc_holder/spell/pointed/rust_construction/cast(turf/cast_on)

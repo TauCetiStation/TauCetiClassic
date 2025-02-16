@@ -99,7 +99,7 @@
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	var/condition = (to_heal.damage > 0) ? "better" : "perfect"
 	caster.visible_message(
-		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore \the [to_heal] to [condition] condition!"),
+		span_warning("[caster]'s hand glows a brilliant red as [P_THEY(caster)] restore \the [to_heal] to [condition] condition!"),
 		span_notice("Your hand glows a brilliant red as you restore \the [to_heal] to [condition] condition!"),
 	)
 
@@ -120,7 +120,7 @@
 	playsound(to_heal, 'sound/magic/Staff_Healing.ogg', 30)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	caster.visible_message(
-		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore[caster.p_s()] [to_heal] to good condition!"),
+		span_warning("[caster]'s hand glows a brilliant red as [P_THEY(caster)] restore[caster.p_s()] [to_heal] to good condition!"),
 		span_notice("Your hand glows a brilliant red as you restore [to_heal] to good condition!"),
 	)
 	return TRUE
@@ -169,14 +169,14 @@
 
 		time_it_takes = 6 SECONDS
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into [caster.p_their()] own [parsed_zone]!"),
+			span_danger("[caster]'s hand glows a brilliant red as [P_THEY(caster)] reach[caster.p_es()] directly into [P_THEIR(caster)] own [parsed_zone]!"),
 			span_userdanger("Your hand glows a brilliant red as you reach directly into your own [parsed_zone]!"),
 		)
 
 	else
 		carbon_victim.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into [carbon_victim]'s [parsed_zone]!"),
-			span_userdanger("[caster]'s hand glows a brilliant red as [caster.p_they()] reach[caster.p_es()] directly into your [parsed_zone]!"),
+			span_danger("[caster]'s hand glows a brilliant red as [P_THEY(caster)] reach[caster.p_es()] directly into [carbon_victim]'s [parsed_zone]!"),
+			span_userdanger("[caster]'s hand glows a brilliant red as [P_THEY(caster)] reach[caster.p_es()] directly into your [parsed_zone]!"),
 		)
 
 	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
@@ -191,13 +191,13 @@
 	// Mainly so it gets across if you're taking the eyes of someone who's conscious
 	if(carbon_victim == caster)
 		caster.visible_message(
-			span_bolddanger("[caster] pulls [caster.p_their()] own [chosen_organ] out of [caster.p_their()] [parsed_zone]!!"),
+			span_bolddanger("[caster] pulls [P_THEIR(caster)] own [chosen_organ] out of [P_THEIR(caster)] [parsed_zone]!!"),
 			span_userdanger("You pull your own [chosen_organ] out of your [parsed_zone]!!"),
 		)
 
 	else
 		carbon_victim.visible_message(
-			span_bolddanger("[caster] pulls [carbon_victim]'s [chosen_organ] out of [carbon_victim.p_their()] [parsed_zone]!!"),
+			span_bolddanger("[caster] pulls [carbon_victim]'s [chosen_organ] out of [carbon_P_THEIR(victim)] [parsed_zone]!!"),
 			span_userdanger("[caster] pulls your [chosen_organ] out of your [parsed_zone]!!"),
 		)
 
