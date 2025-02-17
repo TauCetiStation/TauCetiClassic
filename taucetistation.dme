@@ -733,7 +733,6 @@
 #include "code\game\gamemodes\modes_gameplays\heretic\rust_effect.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\soultrapped_heretic.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\transmutation_rune.dm"
-#include "code\game\gamemodes\modes_gameplays\heretic\items\corrupted_organs.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\eldritch_flask.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\eldritch_painting.dm"
 #include "code\game\gamemodes\modes_gameplays\heretic\items\forbidden_book.dm"
