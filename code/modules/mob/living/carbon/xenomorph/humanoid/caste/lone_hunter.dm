@@ -15,9 +15,6 @@
 	acid_type = /obj/effect/alien/acid/queen_acid
 	var/epoint = 0
 	var/estage = 1
-	var/list/alien_attack = list(
-		'sound/antag/Alien_sounds/alien_attack1.ogg',
-		'sound/antag/Alien_sounds/alien_attack2.ogg')
 	var/list/alien_eat_corpse = list(
 		'sound/antag/Alien_sounds/alien_eat_corpse1.ogg',
 		'sound/antag/Alien_sounds/alien_eat_corpse2.ogg',
@@ -28,8 +25,7 @@
 		/datum/action/innate/alien/find_human,
 		/datum/action/innate/alien/eat_corpse,
 		/datum/action/innate/alien/regeneration)
-	var/scary_music_next_time = 0
-	var/current_scary_music = null
+	var/scary_sound_next_time = 0
 	var/adrenaline_next_time = 0
 	var/datum/map_module/alien/MM = null
 	var/mob/living/carbon/human/hunt_target = null
@@ -114,7 +110,7 @@
 
 //			SCREAMER WHEN LEAP
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap(mob/living/L)
-	play_scary_music()
+	play_scary_sound()
 
 //		HUNT AND ADRENALINE AFFECT THE ATTACK
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/UnarmedAttack(atom/A)
@@ -129,6 +125,7 @@
 			if(!H.stat)
 				if(prob(30))
 					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+					play_scary_sound()
 
 				if(!hunt_target && (estage < 5)) //
 					apply_status_effect(STATUS_EFFECT_ALIEN_HUNT, H)
@@ -142,13 +139,16 @@
 		SetNextMove(CLICK_CD_MELEE)
 
 //		SCARY MUSIC WHEN LEAP
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
-	if(MM && world.time > scary_music_next_time)
-		MM.delay_ambience(30 SECONDS)
-		current_scary_music = pick(alien_attack - current_scary_music)
-		scary_music_next_time = world.time + 1 MINUTE
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_sound()
+	if(MM && world.time > scary_sound_next_time)
+		var/scary_sound = pick(
+				'sound/hallucinations/scary_sound_1.ogg',
+				'sound/hallucinations/scary_sound_2.ogg',
+				'sound/hallucinations/scary_sound_3.ogg',
+				'sound/hallucinations/scary_sound_4.ogg')
+		scary_sound_next_time = world.time + 1 MINUTE
 		for(var/mob/M in orange(7, src))
-			M.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
+			M.playsound_music(scary_sound, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
 
 //		SLAUGHTER MODE WHEN SHIP BREAKDOWN
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/set_slaughter_mode()

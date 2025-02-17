@@ -175,13 +175,13 @@
 /datum/map_module/alien/proc/give_crew_signal(message)
 	if(!message)
 		return
-	for(var/mob/living/carbon/human/H as anything in crew_faction.crew)
-		if(H.stat != DEAD)
-			var/scary_sound = pick(
+	var/scary_sound = pick(
 				'sound/hallucinations/scary_sound_1.ogg',
 				'sound/hallucinations/scary_sound_2.ogg',
 				'sound/hallucinations/scary_sound_3.ogg',
 				'sound/hallucinations/scary_sound_4.ogg')
+	for(var/mob/living/carbon/human/H as anything in crew_faction.crew)
+		if(H.stat != DEAD)
 			H.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE, ignore_environment = TRUE)
 			to_chat(H, "<span class='warning'>[message]</span>")
 

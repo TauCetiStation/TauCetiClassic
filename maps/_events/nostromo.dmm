@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/item/weapon/flora/pottedplant/blueleaf,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "nostromo"
+	},
+/area/station/nostromo)
 "ad" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -60279,7 +60286,7 @@ ZS
 ZS
 ZS
 tH
-Kg
+ab
 PI
 XE
 XE
