@@ -1430,6 +1430,24 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/mandarinseed
+	name = "pack of mandarin seed"
+	cases = list("семена мандарина", "семян мандарина", "семенам мандарина", "семена мандарина", "семенами мандарина", "семенах мандарина")
+	desc = "Эти семена кислые."
+	icon_state = "seed-orange"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "orange"
+	plantname = "Mandarin Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mandarin
+	lifespan = 60
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 5
+	potency = 1
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/poisonberryseed
 	name = "pack of poison-berry seeds"
 	cases = list("семена ядовитых ягод", "семян ядовитых ягод", "семенам ядовитых ягод", "семена ядовитых ягод", "семенами ядовитых ягод", "семенах ядовитых ягод")

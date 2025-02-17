@@ -77,7 +77,7 @@
 		toggle_power()
 		log_investigate("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [key_name(usr)]",INVESTIGATE_SINGULO)
 		if (active)
-			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)])",0,1)
+			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)])",0,1)
 			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in [COORD(src)]")
 	else if(href_list["scan"])
 		part_scan()
@@ -86,7 +86,7 @@
 		if(strength > 2)
 			strength = 2
 		else
-			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)])",0,1)
+			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)])",0,1)
 			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in [COORD(src)]")
 			log_investigate("increased to <font color='red'>[strength]</font> by [key_name(usr)]",INVESTIGATE_SINGULO)
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
@@ -207,7 +207,7 @@
 	dat += "Status:<BR>"
 	if(!assembled)
 		dat += "Unable to detect all parts!<BR>"
-		dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
+		dat += "<A href='byond://?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
 	else
 		dat += "All parts in place.<BR><BR>"
 		dat += "Power:"
@@ -215,9 +215,9 @@
 			dat += "On<BR>"
 		else
 			dat += "Off <BR>"
-		dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
+		dat += "<A href='byond://?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
 		dat += "Particle Strength: [src.strength] "
-		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
+		dat += "<A href='byond://?src=\ref[src];strengthdown=1'>--</A>|<A href='byond://?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
 	var/datum/browser/popup = new(user, "pacontrol", "Particle Accelerator Control Panel", 420,500)
 	popup.set_content(dat)

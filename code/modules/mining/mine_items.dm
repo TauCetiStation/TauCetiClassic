@@ -121,7 +121,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
-	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
+	dat += "<b><A href='byond://?src=\ref[src];move=[1]'>Send</A></b></center>"
 
 	var/datum/browser/popup = new(user, "miningshuttle", "Mining Shuttle Control", 200, 150)
 	popup.set_content(dat)
@@ -270,6 +270,19 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
 		QUALITY_PRYING = 0.75
+	)
+
+/obj/item/weapon/shovel/experimental
+	name = "experimental shovel"
+	desc = "It's a damn cool shovel."
+	icon_state = "expshovel"
+	item_state = "expshovel"
+	item_state_world = "expshovel_world"
+	force = 10.0
+	toolspeed = 0.1
+	origin_tech = "materials=2;engineering=3"
+	qualities = list(
+		QUALITY_PRYING = 0.1
 	)
 
 /obj/item/weapon/shovel/spade
