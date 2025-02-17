@@ -535,6 +535,7 @@
 		return "[href]=-[Limit]'>-</A>" + rate + "[href]=[Limit]'>+</A>"
 	return rate
 
+
 #undef SMES_START_CHARGE
 #undef SMES_EPS
 #undef SMESRATE

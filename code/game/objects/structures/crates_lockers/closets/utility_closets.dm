@@ -50,22 +50,6 @@
 			new /obj/structure/closet/firecloset(src.loc)
 			qdel(src)*/
 
-/obj/structure/closet/emcloset/legacy/PopulateContents()
-	..()
-	new /obj/item/weapon/tank/oxygen(src)
-	new /obj/item/clothing/mask/gas/coloured(src)
-
-/obj/structure/closet/emcloset/antixeno/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/sk(src)
-	new /obj/item/clothing/suit/space/sk(src)
-	new /obj/item/weapon/tank/emergency_oxygen(src)
-	new /obj/item/clothing/mask/breath(src)
-
-/obj/structure/closet/emcloset/antixeno/toggle(mob/user) // humans can hide in closets
-	if(isxeno(user))
-		return
-	..()
-
 /*
  * Fire Closet
  */

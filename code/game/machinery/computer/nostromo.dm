@@ -582,3 +582,60 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = 3
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			CARGO DOOR CONTROL
+/obj/machinery/door_control/alien_space/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!istype(H.wear_suit, /obj/item/clothing/suit/space))
+			to_chat(H, "<span class='warning'>Эта кнопка открывает ворота в космос! Нажимать её, не надев скафандр - сущая глупость!</span>")
+			H.SetNextMove(CLICK_CD_INTERACT)
+			return
+	else
+		return
+	. = ..()
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			FLASH
+/obj/item/device/flash/nostromo/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	if(world.time < last_used + 30 SECOND)
+		to_chat(user, "Флэшер слишком горячий, чтобы пользоваться им снова!")
+		return
+
+	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
+	flick("flash2", src)
+	for(var/mob/living/carbon/C in oviewers(6, null))
+		if(isxenolonehunter(C))
+			C.flash_eyes()
+			C.apply_status_effect(STATUS_EFFECT_SLOWDOWN)
+		else
+			var/safety = C:eyecheck()
+			if(!safety)
+				if(!C.blinded)
+					C.flash_eyes()
+					C.apply_status_effect(STATUS_EFFECT_SLOWDOWN)
+
+/obj/item/device/flash/nostromo/attack(mob/living/M, mob/user)
+	if(world.time < last_used + 30 SECOND)
+		to_chat(user, "Флэшер слишком горячий, чтобы пользоваться им снова!")
+		return
+	..()
+	if(isxenolonehunter(M))
+		M.visible_message("<span class='warning'>Ксеноморф ослепляется светом флэшера!</span>", "<span class='danger'>Яркий свет флэшера ослепляет вас!</span>")
+		M.Stun(1, TRUE)
+		M.Weaken(1, TRUE)
+		M.flash_eyes()
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			CLOSET
+/obj/structure/closet/emcloset/antixeno/PopulateContents()
+	new /obj/item/clothing/head/helmet/space/sk(src)
+	new /obj/item/clothing/suit/space/sk(src)
+	new /obj/item/weapon/tank/emergency_oxygen(src)
+	new /obj/item/clothing/mask/breath(src)
+
+/obj/structure/closet/emcloset/antixeno/toggle(mob/user) // humans can hide in closets
+	if(isxeno(user))
+		return
+	..()
