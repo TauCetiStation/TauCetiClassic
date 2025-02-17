@@ -450,7 +450,7 @@
 
 	SEND_SIGNAL(sac_target, COMSIG_ADD_MOOD_EVENT, "shadow_realm", /datum/mood_event/shadow_realm)
 
-	sac_target.flash_act()
+	sac_target.flash_eyes()
 	sac_target.blurEyes(30 SECONDS)
 	sac_target.set_jitter_if_lower(20 SECONDS)
 	sac_target.set_dizzy_if_lower(20 SECONDS)
@@ -581,7 +581,7 @@
 		to_chat(sac_target, span_big(span_hypnophrase("You don't remember anything leading up to the experience - All you can think about are those horrific hands...")))
 
 	// Oh god where are we?
-	sac_target.flash_act()
+	sac_target.flash_eyes()
 	sac_target.adjust_confusion(60 SECONDS)
 	sac_target.set_jitter_if_lower(120 SECONDS)
 	sac_target.blurEyes(100 SECONDS)
