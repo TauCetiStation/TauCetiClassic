@@ -129,7 +129,6 @@
 			if(!H.stat)
 				if(prob(30))
 					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-				play_scary_music()
 
 				if(!hunt_target && (estage < 5)) //
 					apply_status_effect(STATUS_EFFECT_ALIEN_HUNT, H)
@@ -142,13 +141,13 @@
 	if(ismob(A))
 		SetNextMove(CLICK_CD_MELEE)
 
-//		SCARY MUSIC WHEN ATTACK
+//		SCARY MUSIC WHEN LEAP
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
 	if(MM && world.time > scary_music_next_time)
 		MM.delay_ambience(30 SECONDS)
 		current_scary_music = pick(alien_attack - current_scary_music)
 		scary_music_next_time = world.time + 1 MINUTE
-		for(var/mob/M in range(7, src))
+		for(var/mob/M in orange(7, src))
 			M.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
 
 //		SLAUGHTER MODE WHEN SHIP BREAKDOWN
