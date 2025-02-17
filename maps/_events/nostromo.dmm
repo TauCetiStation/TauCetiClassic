@@ -2725,6 +2725,19 @@
 	icon_state = "nostromochoco"
 	},
 /area/station/nostromo)
+"nf" = (
+/obj/effect/decal/turf_decal/alpha/black{
+	dir = 4;
+	icon_state = "nostromocorner"
+	},
+/obj/structure/stool/bed/chair/office/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "nostromo"
+	},
+/area/station/nostromo)
 "ng" = (
 /obj/structure/container/up{
 	icon_state = "grant_r 0,1"
@@ -3210,7 +3223,7 @@
 /obj/structure/stool/bed/chair/schair,
 /obj/machinery/door_control{
 	id = "Narcissus";
-	name = "Unbolt door";
+	name = "Door bolt";
 	pixel_y = 28;
 	specialfunctions = 4
 	},
@@ -3567,6 +3580,10 @@
 	dir = 8;
 	icon_state = "nostromo"
 	},
+/obj/machinery/door/poddoor/cargo{
+	id = "warehouse";
+	name = "Warehouse lock"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "nostromo"
@@ -3577,6 +3594,10 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 4;
 	icon_state = "nostromo"
+	},
+/obj/machinery/door/poddoor/cargo{
+	id = "warehouse";
+	name = "Warehouse lock"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -4530,11 +4551,6 @@
 	},
 /area/station/nostromo)
 "uO" = (
-/obj/machinery/power/port_gen/riteg{
-	power_gen = 50000;
-	rad_cooef = 80;
-	resistance_flags = 64
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -4542,6 +4558,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/port_gen/riteg/nostromo,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "uR" = (
@@ -7193,6 +7210,7 @@
 	dir = 5;
 	icon_state = "nostromo"
 	},
+/obj/item/weapon/lighter/zippo,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "nostromo"
@@ -8691,13 +8709,10 @@
 	dir = 5;
 	icon_state = "nostromo"
 	},
-/obj/structure/closet/secure_closet{
-	icon_closed = "cmosecure";
-	icon_opened = "cmosecure_open";
-	icon_state = "cmosecure";
-	name = "Doctors Locker";
-	req_access = list(12)
-	},
+/obj/structure/closet/crate/medical,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/box/beakers,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "nostromo"
@@ -8752,10 +8767,12 @@
 	icon_state = "nostromo"
 	},
 /obj/item/clothing/accessory/holobadge{
+	emagged = 1;
 	pixel_x = -4;
 	pixel_y = 5
 	},
 /obj/item/clothing/accessory/holobadge{
+	emagged = 1;
 	pixel_x = 7;
 	pixel_y = 3
 	},
@@ -8921,8 +8938,7 @@
 	dir = 5;
 	icon_state = "nostromo"
 	},
-/obj/structure/rack,
-/obj/item/weapon/gun/syringe,
+/obj/machinery/chem_dispenser/nostromo,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "nostromo"
@@ -9018,6 +9034,10 @@
 /obj/structure/table/reinforced,
 /obj/effect/decal/turf_decal/alpha/black{
 	icon_state = "nostromo"
+	},
+/obj/item/weapon/storage/food/normal/sosjerky{
+	pixel_x = -9;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "nostromo"
@@ -9136,6 +9156,7 @@
 	dir = 9;
 	icon_state = "nostromo"
 	},
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "nostromo"
@@ -9357,11 +9378,6 @@
 /area/station/nostromo)
 "Oa" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/bottle/peridaxon,
-/obj/item/weapon/storage/pill_bottle/bicaridine{
-	pixel_x = 9;
-	pixel_y = -9
-	},
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -9373,6 +9389,10 @@
 	pixel_x = 6;
 	pixel_y = 11
 	},
+/obj/item/weapon/reagent_containers/glass/beaker{
+	pixel_x = -5
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/peridaxon,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "nostromo"
@@ -9533,10 +9553,7 @@
 	dir = 10;
 	icon_state = "nostromo"
 	},
-/obj/item/weapon/storage/pill_bottle/spaceacillin{
-	pixel_x = 7;
-	pixel_y = 4
-	},
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "nostromo"
@@ -11464,6 +11481,18 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
+	icon_state = "nostromo"
+	},
+/area/station/nostromo)
+"Ww" = (
+/obj/effect/decal/turf_decal/alpha/black{
+	dir = 4;
+	icon_state = "nostromo"
+	},
+/obj/item/weapon/gun/syringe,
+/obj/structure/rack,
+/turf/simulated/floor{
+	dir = 4;
 	icon_state = "nostromo"
 	},
 /area/station/nostromo)
@@ -57656,7 +57685,7 @@ ZS
 ZS
 ZS
 Kp
-Qu
+nf
 sA
 sA
 YT
@@ -57914,7 +57943,7 @@ ZS
 ZS
 ZS
 Ly
-Jt
+Ww
 iY
 Pj
 ZS

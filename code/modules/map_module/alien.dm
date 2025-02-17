@@ -108,12 +108,12 @@
 	output_text += {"<font size='2'>
 Здесь вы найдёте информацию по всем доступным вам кнопкам.
 <BR> 1. Crew Message - послать экипажу сообщение.
-<BR> 2. Delay Ambience - отсрочить эмбиенс.
-<BR> 3. Lights Blinking - по всему кораблю замигают лампочки.
-<BR> 4. Open Cargo - открыть склад.
+<BR> 2. Delay Ambience - отсрочить проигрывание эмбиента.
+<BR> 3. Lights Blinking - мигание лампочек.
+<BR> 4. Open Cargo - открыть экипажу склад.
 <BR> 5. Open Evac - разблокировать механизм самоуничтожения и возможность эвакуации.
-<BR> 6. Play Ambience - проиграть эмбиенс
-<BR> 7. SMES Stability - изменить стабильность СМЕСа
+<BR> 6. Play Ambience - проиграть эмбиент прямо сейчас.
+<BR> 7. SMES Stability - изменить стабильность СМЕСа.
 <BR> 8. Ship Course - изменить курс корабля.
 </font>"}
 	var/datum/browser/popup = new(usr, "window=Информация", "Информация", 500, 600, ntheme = CSS_THEME_DARK)
@@ -133,6 +133,9 @@
 		cargo_open = TRUE
 		for(var/obj/BW as anything in landmarks_list["Nostromo Cargo Blockway"])
 			qdel(BW)
+		for(var/obj/machinery/door/poddoor/P in poddoor_list)
+			if(P.id == "warehouse")
+				P.do_open()
 		AI_announce("cargo")
 		spawn_crate()
 
@@ -174,7 +177,8 @@
 		return
 	for(var/mob/living/carbon/human/H as anything in crew_faction.crew)
 		if(H.stat != DEAD)
-			var/scary_sound = pick('sound/hallucinations/scary_sound_1.ogg',
+			var/scary_sound = pick(
+				'sound/hallucinations/scary_sound_1.ogg',
 				'sound/hallucinations/scary_sound_2.ogg',
 				'sound/hallucinations/scary_sound_3.ogg',
 				'sound/hallucinations/scary_sound_4.ogg')
@@ -205,7 +209,7 @@
 
 /datum/map_module/alien/proc/delay_ambience(delay = 0)
 	if(!delay)
-		delay = input("На сколько секунд вы хотите отсрочить эмбиенс?", "Значение") as num|null
+		delay = input("На сколько секунд вы хотите отсрочить эмбиент?", "Значение") as num|null
 		delay = delay SECONDS
 	ambience_player.ambience_next_time += delay
 
@@ -277,7 +281,8 @@
 	if(isxenolarva(M))
 		larva = M
 	else if(isxenolonehunter(M))
-		UnregisterSignal(larva, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING)) // LARVA EVOLVE - NOT DIED
+		if(larva)
+			UnregisterSignal(larva, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING)) // LARVA EVOLVE - NOT DIED
 		alien = M
 		lights_blinking()
 		give_crew_signal("Леденящий ужас спускается по твоему позвоночнику…")
