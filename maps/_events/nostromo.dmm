@@ -8291,13 +8291,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/grid_floor/brown,
 /area/station/nostromo)
-"IY" = (
-/obj/item/weapon/flora/pottedplant/crystal,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "nostromo"
-	},
-/area/station/nostromo)
 "IZ" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -60286,7 +60279,7 @@ ZS
 ZS
 ZS
 tH
-IY
+Kg
 PI
 XE
 XE
