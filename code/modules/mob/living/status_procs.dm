@@ -51,6 +51,8 @@
 /mob/living/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
+	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+		return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	amount *= SS_WAIT_DEFAULT // workaround for our Stun amount
 	if(S)

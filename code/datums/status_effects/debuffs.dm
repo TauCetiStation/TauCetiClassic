@@ -93,6 +93,8 @@
 			carbon_owner = owner
 		if(ishuman(owner))
 			human_owner = owner
+		if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+			return
 		ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()

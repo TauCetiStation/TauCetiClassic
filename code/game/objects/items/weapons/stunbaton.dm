@@ -63,6 +63,8 @@
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
 		return
+	if(HAS_TRAIT(M, TRAIT_BATON_RESISTANCE))
+		return
 	. = ..()
 	//legacy. Mob can be deleted after the attack, so we gotta be wary of that.
 	if(QDELETED(M))
