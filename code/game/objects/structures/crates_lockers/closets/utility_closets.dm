@@ -50,6 +50,11 @@
 			new /obj/structure/closet/firecloset(src.loc)
 			qdel(src)*/
 
+/obj/structure/closet/emcloset/legacy/PopulateContents()
+	..()
+	new /obj/item/weapon/tank/oxygen(src)
+	new /obj/item/clothing/mask/gas/coloured(src)
+
 /*
  * Fire Closet
  */
