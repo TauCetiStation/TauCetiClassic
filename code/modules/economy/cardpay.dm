@@ -19,7 +19,7 @@
 	var/display_numbers = 0
 	var/ram_account = 0
 	var/reset = FALSE
-	var/resetOnly = FALSE
+	var/noReset = FALSE
 
 	var/image/holoprice
 
@@ -51,7 +51,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I
 		switch(mode)
-			if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
+			if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 				display_numbers = Card.associated_account_number
 				pay_with_account()
 			if(CARDPAY_ACCOUNTMODE)
@@ -63,7 +63,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		switch(mode)
-			if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
+			if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 				display_numbers = Card.associated_account_number
 				pay_with_account()
 			if(CARDPAY_ACCOUNTMODE)
@@ -75,7 +75,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/ewallet/Wallet = I
 		switch(mode)
-			if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
+			if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 				display_numbers = Wallet.account_number
 				pay_with_account()
 			if(CARDPAY_ACCOUNTMODE)
@@ -113,7 +113,7 @@
 	var/list/data = list()
 	data["numbers"] = display_numbers
 	data["reset_numbers"] = reset
-	data["resetOnly"] = resetOnly
+	data["noReset"] = noReset
 	data["mode"] = mode
 	return data
 
@@ -140,6 +140,8 @@
 			return TRUE
 
 		if("togglereset")
+			if(noReset)
+				return
 			reset = !reset
 			if(reset)
 				to_chat(usr, "<span class='notice'>Включён режим оплаты.</span>")
@@ -162,7 +164,7 @@
 			if(display_numbers > 999)
 				display_numbers %= 1000
 
-		if(CARDPAY_PAYMODE)
+		if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 			if(display_numbers > 999999)
 				display_numbers %= 1000000
 
@@ -177,7 +179,7 @@
 /obj/item/device/cardpay/proc/clear_numbers()
 	switch(mode)
 		if(CARDPAY_IDLEMODE)
-		if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
+		if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 			if(!display_numbers)
 				pay_amount = 0
 				update_holoprice(clear = TRUE)
@@ -221,7 +223,7 @@
 			update_holoprice(clear = FALSE)
 			changemode(CARDPAY_PAYMODE)
 
-		if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
+		if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 			if(!display_numbers)
 				return
 			pay_with_account()
@@ -313,7 +315,7 @@
 					linked_account = 0
 					return
 				changemode(CARDPAY_ENTERPINMODE)
-		if(CARDPAY_PAYMODE || CARDPAY_REFUNDMODE)
+		if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 			return
 		if(CARDPAY_ACCOUNTMODE)
 			changemode(CARDPAY_IDLEMODE)
@@ -410,17 +412,18 @@
 
 	density = TRUE
 
-	resetOnly = TRUE
-
 	basic_icon_state = "caps_dealer"
 
 	w_class = SIZE_LARGE
 
+	reset = TRUE
+	noReset = TRUE
+
 /obj/item/device/cardpay/casino/atom_init(mapload)
 	. = ..()
 
-	holoprice.pixel_x = 7
-	holoprice.pixel_y = 10
+	holoprice.pixel_x = 9
+	holoprice.pixel_y = 5
 
 /obj/item/device/cardpay/casino/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/caps))
@@ -437,6 +440,8 @@
 
 		if(Caps.capsAmount == toReturn)
 			qdel(Caps)
+		else
+			Caps.capsAmount -= toReturn
 	else
 		return ..()
 

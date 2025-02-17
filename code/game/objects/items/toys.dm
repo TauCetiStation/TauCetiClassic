@@ -1536,6 +1536,20 @@ Owl & Griffin toys
 		user.put_in_active_hand(src)
 		return
 
+	var/static/icon/radial_icons = 'icons/hud/radial.dmi'
+	var/static/radial_pickAll = image(icon = radial_icons, icon_state = "radial_pickup")
+	var/static/radial_pickFew = image(icon = radial_icons, icon_state = "radial_split")
+	var/list/options = list()
+
+	options["Взять всё"] = radial_pickAll
+	options["Взять часть"] = radial_pickFew
+
+	var/choice = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
+
+	if(choice == "Взять всё")
+		user.put_in_active_hand(src)
+		return
+
 	var/pickupAmount = text2num(input(user, "Сколько фишек взять?", "1") as text)
 	if(pickupAmount <= 0 || pickupAmount > capsAmount)
 		return
