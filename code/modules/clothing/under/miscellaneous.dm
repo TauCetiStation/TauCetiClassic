@@ -530,16 +530,19 @@
 	item_state = "mafia_tan"
 
 /obj/item/clothing/under/rank/capcamsole
-	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
+	desc = "It's a blue camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
 	name = "captain's camisole"
 	icon_state = "capcamisole"
 	item_state = "capcamisole"
+	item_state_world = "capcamisole_world"
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/rank/goodman_shirt
 	name = "head of personnel's suit"
 	desc = "A good suit for good men."
-	icon_state = "gmshirt"
-	item_state = "gmshirt"
+	icon_state = "gm_shirt"
+	item_state = "gm_shirt"
+	item_state_world = "gmshirt_world"
 
 /obj/item/clothing/under/rank/centcom/representative
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Ensign\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."

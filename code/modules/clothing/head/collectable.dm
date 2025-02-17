@@ -44,9 +44,8 @@
 /obj/item/clothing/head/collectable/captain
 	name = "collectable captain's hat"
 	desc = "A Collectable Hat that'll make you look just like a real comdom!"
-	icon_state = "captain"
-	item_state = "caphat"
-	body_parts_covered = 0
+	icon_state = "captain_old"
+	item_state = "captain_old"
 
 /obj/item/clothing/head/collectable/police
 	name = "collectable police officer's hat"
