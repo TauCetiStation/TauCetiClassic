@@ -38,8 +38,8 @@
 	var/research_tree_icon_state
 	var/research_tree_icon_frame = 1
 	var/research_tree_icon_dir = SOUTH
-	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
-	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
+	///Determines what kind of monster ghosts will ignore from here on out. Defaults to IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
+	var/poll_ignore_define = IGNORE_HERETIC_MONSTER
 
 /** Called when the knowledge is first researched.
  * This is only ever called once per heretic.

@@ -38,6 +38,14 @@
 #define IGNORE_LARVA        "Larva"
 #define IGNORE_EVENT_BLOB   "Event blob"
 #define IGNORE_EMINENCE     "Eminence"
+#define IGNORE_RUST_SPIRIT  "Rust spirit"
+#define IGNORE_RAW_PROPHET  "Raw prophet"
+#define IGNORE_MAID_IN_MIRROR "Maid in mirror"
+#define IGNORE_HERETIC_MONSTER "Heretic monster"
+#define IGNORE_FIRE_SHARK   "Fire shark"
+#define IGNORE_ASH_SPIRIT   "Ash spirit"
+#define IGNORE_STALKER      "Stalker"
+
 
 var/global/list/special_roles_ignore_question = list(
 	ROLE_TRAITOR    = null,

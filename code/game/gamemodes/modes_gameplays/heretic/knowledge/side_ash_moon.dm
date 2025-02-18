@@ -79,5 +79,5 @@
 	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
 	cost = 1
 
-	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
+	poll_ignore_define = IGNORE_ASH_SPIRIT
 
