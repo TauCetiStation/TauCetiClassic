@@ -5,7 +5,7 @@
 		Taking damage while cloaked may cause it to lift suddenly, causing negative effects. "
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	icon = 'icons/hud/actions.dmi'
 	button_icon_state = "ninja_cloak"
 	sound = 'sound/effects/curse/curse2.ogg'
 
