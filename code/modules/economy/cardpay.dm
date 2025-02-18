@@ -14,6 +14,8 @@
 	m_amt = 7000
 	g_amt = 2000
 
+	layer = DEFAULT_MACHINERY_LAYER //Хотим чтобы предметы на столе были всегда выше терминала.
+
 	var/linked_account = 0
 	var/pay_amount = 0
 	var/display_numbers = 0

@@ -123,15 +123,15 @@ export const CardPay = (props, context) => {
           />
         </Box>
         {!noReset && (
-        <Button
-          selected={reset_numbers ? 1 : 0}
-          position="absolute"
-          top="60px"
-          left="140px"
-          className="cardpay_switch"
-          content={<Box className="cardpay_switch-inside">|||</Box>}
-          onClick={() => act('togglereset')}
-        />
+          <Button
+            selected={reset_numbers ? 1 : 0}
+            position="absolute"
+            top="60px"
+            left="140px"
+            className="cardpay_switch"
+            content={<Box className="cardpay_switch-inside">|||</Box>}
+            onClick={() => act('togglereset')}
+          />
         )}
       </Window.Content>
     </Window>
