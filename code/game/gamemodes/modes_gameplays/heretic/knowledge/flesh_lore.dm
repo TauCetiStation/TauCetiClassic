@@ -255,13 +255,13 @@
 
 /datum/heretic_knowledge/summon/stalker
 	name = "Lonely Ritual"
-	desc = "Allows you to transmute a stomach, a tongue, a pen and a piece of paper to create a Stalker. \
+	desc = "Allows you to transmute a kidneys, a tongue, a pen and a piece of paper to create a Stalker. \
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 
 	required_atoms = list(
-		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/internal/kidneys = 1,
 		/obj/item/organ/tongue = 1,
 		/obj/item/weapon/pen = 1,
 		/obj/item/weapon/paper = 1,

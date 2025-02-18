@@ -129,7 +129,7 @@
 	var/static/list/valid_organ_slots = list(
 		O_HEART,
 		O_LUNGS,
-		ORGAN_SLOT_STOMACH,
+		O_KIDNEYS,
 		O_EYES,
 		ORGAN_SLOT_EARS,
 		O_LIVER,

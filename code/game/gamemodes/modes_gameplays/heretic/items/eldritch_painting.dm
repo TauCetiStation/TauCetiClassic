@@ -121,7 +121,7 @@
 		// Gives them some nutrition
 		examiner.adjust_nutrition(50)
 		to_chat(examiner, span_warning("You feel a searing pain in your stomach!"))
-		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5, examiner)
+		examiner.adjustOrganLoss(O_KIDNEYS, 5, examiner)
 		to_chat(examiner, span_notice("You feel less hungry."))
 		to_chat(examiner, span_warning("You should stockpile raw meat and organs, before you get hungry again."))
 		SEND_SIGNAL(examiner, COMSIG_ADD_MOOD_EVENT, "respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
@@ -135,7 +135,7 @@
 		/obj/item/organ/ears,
 		/obj/item/organ/internal/heart,
 		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/stomach,
+		/obj/item/organ/internal/kidneys,
 		/obj/item/organ/appendix,
 		/obj/item/organ/external/l_arm,
 		/obj/item/organ/external/r_arm,

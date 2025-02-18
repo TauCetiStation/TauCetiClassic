@@ -84,7 +84,7 @@
 			human_owner.adjustOrganLoss(O_HEART, 10, human_owner)
 		if(50 to 60)
 			// You can fully kill the stomach that's not crucial
-			human_owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 10, human_owner)
+			human_owner.adjustOrganLoss(O_KIDNEYS, 10, human_owner)
 		if(60 to 70)
 			// Same with eyes
 			human_owner.adjustOrganLoss(O_EYES, 5, human_owner)
@@ -183,7 +183,7 @@
 /datum/status_effect/moon_converted
 	id = "moon converted"
 	alert_type = /atom/movable/screen/alert/status_effect/moon_converted
-	duration = STATUS_EFFECT_PERMANENT
+	duration = -1
 	status_type = STATUS_EFFECT_REPLACE
 	///used to track damage
 	var/damage_sustained = 0
