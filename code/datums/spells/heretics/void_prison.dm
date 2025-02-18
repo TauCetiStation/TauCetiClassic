@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "voidball"
+	action_icon_state = "voidball"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	sound = 'sound/effects/voidblink.ogg'
 

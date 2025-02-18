@@ -5,7 +5,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "moon_smile"
+	action_icon_state = "moon_smile"
 	charge_max = 4 SECONDS
 
 /datum/action/cooldown/lunatic_track/Grant(mob/granted)

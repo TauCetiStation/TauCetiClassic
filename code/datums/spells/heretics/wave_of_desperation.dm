@@ -38,7 +38,7 @@
 
 	for(var/mob/living/victim in get_things_to_cast_on(cast_on, radius_override = 1))
 		victim.AdjustWeakened(3 SECONDS)
-		victim.AdjustParalyzed(0.5 SECONDS)
+		victim.AdjustParalysis(0.5 SECONDS)
 
 /obj/effect/proc_holder/spell/aoe_turf/wave_of_desperation/get_things_to_cast_on(atom/center, radius_override)
 	. = list()

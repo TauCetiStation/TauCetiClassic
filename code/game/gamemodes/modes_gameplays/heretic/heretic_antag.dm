@@ -90,7 +90,7 @@
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
 		var/datum/action/result_action = spell_knowledge.action_to_add
 		icon_path = result_action.icon
-		icon_state = result_action.button_icon_state
+		icon_state = result_action.action_icon_state
 
 	//if the knowledge is a summon, use the mob sprite
 	else if(ispath(knowledge,/datum/heretic_knowledge/summon))

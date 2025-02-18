@@ -5,7 +5,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "moon_smile"
+	action_icon_state = "moon_smile"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
 	sound = 'sound/magic/Blind.ogg'
@@ -40,9 +40,8 @@
 	cast_on.eye_blind(moon_smile_duration + 1 SECONDS)
 	cast_on.blurEyes(moon_smile_duration + 2 SECONDS)
 
-	var/obj/item/organ/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
 	//adjustEarDamage takes deafness duration parameter in one unit per two seconds, instead of the normal time, so we divide by two seconds
-	ears?.adjustEarDamage(0, (moon_smile_duration + 1 SECONDS) / (2 SECONDS))
+	cast_on.adjustEarDamage(0, (moon_smile_duration + 1 SECONDS) / (2 SECONDS))
 
 	cast_on.adjust_silence(moon_smile_duration + 1 SECONDS)
 	SEND_SIGNAL(cast_on, COMSIG_ADD_MOOD_EVENT, "moon_smile", /datum/mood_event/moon_smile)

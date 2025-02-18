@@ -4,7 +4,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "star_blast"
+	action_icon_state = "star_blast"
 
 	sound = 'sound/effects/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN

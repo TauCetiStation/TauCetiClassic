@@ -71,7 +71,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_heretic"
 	icon = 'icons/heretic/weapon/eldritch.dmi'
-	button_icon_state = "living_heart"
+	action_icon_state = "living_heart"
 	charge_max = 4 SECONDS
 
 	/// Tracks whether we were right clicked or left clicked in our last trigger

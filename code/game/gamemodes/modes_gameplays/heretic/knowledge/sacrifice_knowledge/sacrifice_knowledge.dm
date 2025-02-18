@@ -350,7 +350,7 @@
 	else
 		to_chat(sac_target, span_hypnophrase("Your mind begins to tear apart as you watch dark tendrils envelop you."))
 
-	sac_target.AdjustParalyzed(SACRIFICE_SLEEP_DURATION * 1.2)
+	sac_target.AdjustParalysis(SACRIFICE_SLEEP_DURATION * 1.2)
 	sac_target.AdjustImmobilized(SACRIFICE_SLEEP_DURATION * 1.2)
 
 	addtimer(CALLBACK(src, PROC_REF(after_target_sleeps), sac_target, destination), SACRIFICE_SLEEP_DURATION * 0.5) // Teleport to the minigame

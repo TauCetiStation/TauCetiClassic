@@ -3,7 +3,7 @@
 	desc = "Transforms a rusted floor into a full wall of rust. Creating a wall underneath a mob will harm it."
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon_state = "shield"
+	action_icon_state = "shield"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 
@@ -96,7 +96,7 @@
 				span_userdanger("\A [new_wall] [rises_message] beneath your feet and slams into you!"),
 			)
 			living_mob.apply_damage(15, BRUTE)
-			living_mob.Knockdown(5 SECONDS)
+			living_mob.Weaken(5 SECONDS)
 		living_mob.SpinAnimation(5, 1)
 
 		// If we're a multiz map send them to the next floor

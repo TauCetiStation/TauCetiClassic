@@ -5,7 +5,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "fire_ring"
+	action_icon_state = "fire_ring"
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 70 SECONDS
@@ -65,7 +65,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "fire_ring"
+	action_icon_state = "fire_ring"
 	sound = 'sound/items/Welder.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -105,7 +105,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "flames"
+	action_icon_state = "flames"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
 	school = SCHOOL_FORBIDDEN

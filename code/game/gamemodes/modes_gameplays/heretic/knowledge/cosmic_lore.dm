@@ -131,7 +131,6 @@
 		O_LUNGS,
 		O_KIDNEYS,
 		O_EYES,
-		ORGAN_SLOT_EARS,
 		O_LIVER,
 		O_BRAIN
 	)

@@ -152,12 +152,12 @@
 /datum/action/item_action/haunted_blade
 	name = "Unseal Spirit" // img is of a chained shade
 	icon = 'icons/mob/actions/actions_cult.dmi'
-	button_icon_state = "spirit_sealed"
+	action_icon_state = "spirit_sealed"
 
 /datum/action/item_action/haunted_blade/apply_button_icon(atom/movable/screen/movable/action_button/button, force)
 	var/obj/item/weapon/cultblade/haunted/blade = target
 	if(istype(blade))
-		button_icon_state = "spirit_[blade.bound ? "sealed" : "unsealed"]"
+		action_icon_state = "spirit_[blade.bound ? "sealed" : "unsealed"]"
 		name = "[blade.bound ? "Unseal" : "Seal"] Spirit"
 
 	return ..()

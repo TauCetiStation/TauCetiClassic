@@ -40,11 +40,11 @@
 	if(book_open)
 		close_animation()
 		RemoveElement(/datum/element/heretic_focus)
-		update_weight_class(SIZE_SMALL)
+		w_class = SIZE_SMALL
 	else
 		open_animation()
 		AddElement(/datum/element/heretic_focus)
-		update_weight_class(SIZE_NORMAL)
+		w_class = SIZE_NORMAL
 
 /obj/item/codex_cicatrix/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)

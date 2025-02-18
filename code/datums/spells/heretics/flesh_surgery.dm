@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "mad_touch"
+	action_icon_state = "mad_touch"
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 20 SECONDS

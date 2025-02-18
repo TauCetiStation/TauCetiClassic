@@ -5,7 +5,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "cosmic_rune"
+	action_icon_state = "cosmic_rune"
 
 	sound = 'sound/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN

@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions.dmi'
-	button_icon_state = "ninja_cloak"
+	action_icon_state = "ninja_cloak"
 	sound = 'sound/effects/curse/curse2.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -105,7 +105,7 @@
 		span_userdanger("You are pulled out of the shadows!"),
 	)
 
-	removed.Knockdown(0.5 SECONDS)
+	removed.Weaken(0.5 SECONDS)
 	removed.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak/early_remove)
 	addtimer(CALLBACK(removed, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/shadow_cloak/early_remove), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
 	StartCooldown(uncloak_time * 2/3)

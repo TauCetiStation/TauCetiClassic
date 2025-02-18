@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "furious_steel"
+	action_icon_state = "furious_steel"
 	sound = 'sound/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -154,7 +154,7 @@
 	action_background_icon_state = "bg_heretic" // kept intentionally
 	overlay_icon_state = "bg_cult_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "cursed_steel"
+	action_icon_state = "cursed_steel"
 	sound = 'sound/weapons/guillotine.ogg'
 
 	charge_max = 40 SECONDS

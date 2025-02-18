@@ -96,8 +96,8 @@
 
 /obj/effect/temp_visual/destabilising_tear
 	name = "destabilised tear"
-	icon = 'icons/obj/anomaly.dmi'
-	icon_state = "bhole3"
+	icon = 'icons/effects/anomalies.dmi'
+	icon_state = "vortex"
 	color = COLOR_VOID_PURPLE
 	light_color = COLOR_VOID_PURPLE
 	light_range = 20

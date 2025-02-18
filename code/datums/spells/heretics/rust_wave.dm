@@ -7,7 +7,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "entropic_plume"
+	action_icon_state = "entropic_plume"
 	sound = 'sound/magic/ForceWall.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -73,7 +73,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "rust_wave"
+	action_icon_state = "rust_wave"
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 35 SECONDS

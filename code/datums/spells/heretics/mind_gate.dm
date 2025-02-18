@@ -5,7 +5,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "mind_gate"
+	action_icon_state = "mind_gate"
 
 	sound = 'sound/effects/curse.ogg'
 	school = SCHOOL_FORBIDDEN

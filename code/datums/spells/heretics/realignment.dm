@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/implants.dmi'
-	button_icon_state = "adrenal"
+	action_icon_state = "adrenal"
 	// sound = 'sound/effects/whistlereset.ogg' I have no idea why this was commented out
 
 	school = SCHOOL_FORBIDDEN

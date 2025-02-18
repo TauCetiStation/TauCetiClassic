@@ -54,7 +54,7 @@
 		return
 
 	// We're officially behind them, apply effects
-	target.AdjustParalyzed(1.5 SECONDS)
+	target.AdjustParalysis(1.5 SECONDS)
 	target.apply_damage(10, BRUTE)
 	target.balloon_alert(source, "backstab!")
 	playsound(target, 'sound/weapons/guillotine.ogg', 100, TRUE)

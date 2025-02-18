@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "flames"
+	action_icon_state = "flames"
 	sound = 'sound/magic/fireball.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -64,7 +64,7 @@
 		for(var/mob/living/nearby_living in range(1, to_beam))
 			if(ishereticormonster(nearby_living) || nearby_living == owner)
 				continue
-			nearby_living.Knockdown(0.8 SECONDS)
+			nearby_living.Weaken(0.8 SECONDS)
 			nearby_living.apply_damage(20, BURN)
 			nearby_living.adjust_fire_stacks(2)
 			nearby_living.ignite_mob()

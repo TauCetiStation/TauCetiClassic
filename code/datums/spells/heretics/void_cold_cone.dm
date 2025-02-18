@@ -6,7 +6,7 @@
 		though they may thaw shortly if used in room temperature."
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon_state = "icebeam"
+	action_icon_state = "icebeam"
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 30 SECONDS

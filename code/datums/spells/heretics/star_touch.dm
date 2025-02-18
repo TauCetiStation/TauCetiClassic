@@ -8,7 +8,7 @@
 	action_background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	icon = 'icons/hud/actions_ecult.dmi'
-	button_icon_state = "star_touch"
+	action_icon_state = "star_touch"
 
 	sound = 'sound/items/Welder.ogg'
 	school = SCHOOL_FORBIDDEN
