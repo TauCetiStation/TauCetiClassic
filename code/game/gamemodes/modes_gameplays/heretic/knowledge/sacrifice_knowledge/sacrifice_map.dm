@@ -1,7 +1,7 @@
 // Some various defines used in the heretic sacrifice map.
 
 /// A global assoc list of all landmarks that denote a heretic sacrifice location. [string heretic path] = [landmark].
-GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
+var/global/list/heretic_sacrifice_landmarks = list()
 
 /// Lardmarks meant to designate where heretic sacrifices are sent.
 /obj/effect/landmark/heretic
@@ -12,10 +12,10 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
 /obj/effect/landmark/heretic/atom_init()
 	. = ..()
-	GLOB.heretic_sacrifice_landmarks[for_heretic_path] = src
+	heretic_sacrifice_landmarks[for_heretic_path] = src
 
 /obj/effect/landmark/heretic/Destroy()
-	GLOB.heretic_sacrifice_landmarks[for_heretic_path] = null
+	heretic_sacrifice_landmarks[for_heretic_path] = null
 	return ..()
 
 /obj/effect/landmark/heretic/ash
@@ -84,14 +84,19 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 /area/centcom/heretic_sacrifice
 	name = "Mansus"
 	icon_state = "heretic"
-	default_gravity = STANDARD_GRAVITY
-	ambience_index = AMBIENCE_SPOOKY
+	ambience = list(
+	'sound/ambience/ambimo1.ogg',
+	'sound/ambience/ambimo2.ogg',
+	'sound/ambience/ambimystery.ogg',
+	'sound/ambience/ambiodd.ogg',
+	'sound/ambience/ambiruin6.ogg',
+	'sound/ambience/ambiruin7.ogg'
+	)
 	sound_environment = SOUND_ENVIRONMENT_CAVE
-	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE | NO_BOH
 
 /area/centcom/heretic_sacrifice/atom_init()
 	if(!ambientsounds)
-		ambientsounds = GLOB.ambience_assoc[ambience_index] + 'sound/ambience/misc/ambiatm1.ogg'
+		ambientsounds = ambience + 'sound/ambience/misc/ambiatm1.ogg'
 	return ..()
 
 /area/centcom/heretic_sacrifice/ash //also, the default
@@ -107,10 +112,17 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
 /area/centcom/heretic_sacrifice/rust
 	name = "Mansus Rust Gate"
-	ambience_index = AMBIENCE_REEBE
+	ambience = list(
+	'sound/ambience/ambireebe1.ogg',
+	'sound/ambience/ambireebe2.ogg',
+	'sound/ambience/ambireebe3.ogg'
+	)
 	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE
 
 /area/centcom/heretic_sacrifice/lock
 	name = "Mansus Lock Gate"
-	ambience_index = AMBIENCE_DANGER
+	ambience = list(
+	'sound/ambience/ambidanger.ogg',
+	'sound/ambience/ambidanger2.ogg'
+	)
 	sound_environment = SOUND_ENVIRONMENT_PSYCHOTIC

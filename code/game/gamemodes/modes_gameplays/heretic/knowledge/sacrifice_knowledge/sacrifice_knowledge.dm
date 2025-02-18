@@ -313,10 +313,10 @@
 	if(!our_heretic)
 		CRASH("[type] - begin_sacrifice was called, and no heretic [heretic_mind ? "antag datum":"mind"] could be found!")
 
-	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
+	if(!LAZYLEN(heretic_sacrifice_landmarks))
 		CRASH("[type] - begin_sacrifice was called, but no heretic sacrifice landmarks were found!")
 
-	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path] || GLOB.heretic_sacrifice_landmarks[PATH_START]
+	var/obj/effect/landmark/heretic/destination_landmark = heretic_sacrifice_landmarks[our_heretic.heretic_path] || heretic_sacrifice_landmarks[PATH_START]
 	if(!destination_landmark)
 		CRASH("[type] - begin_sacrifice could not find a destination landmark OR default landmark to send the sacrifice! (Heretic's path: [our_heretic.heretic_path])")
 
