@@ -207,9 +207,6 @@
 #define TRAIT_STUNIMMUNE          "stun_immunity"
 #define TRAIT_BATON_RESISTANCE    "baton_resistance"
 
-/// This human is immune to the effects of being exploded. (ex_act)
-#define TRAIT_BOMBIMMUNE "bomb_immunity"
-
 /// The mob is holy and resistance to heretic magic
 #define TRAIT_HOLY "holy"
 
