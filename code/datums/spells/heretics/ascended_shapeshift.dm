@@ -9,10 +9,10 @@
 	icon = 'icons/hud/actions_ecult.dmi'
 	action_icon_state = "lock_ascension"
 	possible_shapes = list(
-		/mob/living/basic/heretic_summon/ash_spirit,
-		/mob/living/basic/heretic_summon/raw_prophet/ascended,
-		/mob/living/basic/heretic_summon/rust_walker,
-		/mob/living/basic/heretic_summon/stalker,
+		/mob/living/simple_animal/heretic_summon/ash_spirit,
+		/mob/living/simple_animal/heretic_summon/raw_prophet/ascended,
+		/mob/living/simple_animal/heretic_summon/rust_walker,
+		/mob/living/simple_animal/heretic_summon/stalker,
 	)
 
 /obj/effect/proc_holder/spell/no_target/shapeshift/eldritch/ascension/do_shapeshift(mob/living/caster)

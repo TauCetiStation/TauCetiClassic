@@ -109,7 +109,7 @@
 	name = "bone-shards"
 	desc = "What once appeared to be a normal human fist, now holds a mauled nest of sharp bone-shards."
 	color = "#001aff"
-	hitsound = SFX_SHATTER
+	hitsound = SOUNDIN_SHATTER
 	force = 20
 	demolition_mod = 1.5
 	sharpness = SHARP_EDGED
@@ -151,6 +151,6 @@
 	)
 	cost = 1
 
-	mob_to_summon = /mob/living/basic/heretic_summon/maid_in_the_mirror
+	mob_to_summon = /mob/living/simple_animal/heretic_summon/maid_in_the_mirror
 	poll_ignore_define = IGNORE_MAID_IN_MIRROR
 

@@ -60,7 +60,7 @@
 	var/list/unlocked_heretic_items = list(
 		/obj/item/weapon/sickly_blade/cursed = 0,
 		/obj/item/clothing/neck/heretic_focus/crimson_medallion = 0,
-		/mob/living/basic/construct/harvester/heretic = 0,
+		/mob/living/simple_animal/construct/harvester/heretic = 0,
 	)
 	/// Simpler version of above used to limit amount of loot that can be hoarded
 	var/rewards_given = 0

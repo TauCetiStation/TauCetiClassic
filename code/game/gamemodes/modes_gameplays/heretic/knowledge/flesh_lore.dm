@@ -225,7 +225,7 @@
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/organ/external/l_arm = 1,
 	)
-	mob_to_summon = /mob/living/basic/heretic_summon/raw_prophet
+	mob_to_summon = /mob/living/simple_animal/heretic_summon/raw_prophet
 	cost = 1
 	poll_ignore_define = IGNORE_RAW_PROPHET
 
@@ -262,7 +262,7 @@
 		/obj/item/weapon/pen = 1,
 		/obj/item/weapon/paper = 1,
 	)
-	mob_to_summon = /mob/living/basic/heretic_summon/stalker
+	mob_to_summon = /mob/living/simple_animal/heretic_summon/stalker
 	cost = 1
 
 	poll_ignore_define = IGNORE_STALKER

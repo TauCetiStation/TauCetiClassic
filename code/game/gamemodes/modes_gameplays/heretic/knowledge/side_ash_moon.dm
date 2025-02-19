@@ -76,7 +76,7 @@
 		/obj/item/organ/external/head = 1,
 		/obj/item/weapon/book = 1,
 		)
-	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
+	mob_to_summon = /mob/living/simple_animal/heretic_summon/ash_spirit
 	cost = 1
 
 	poll_ignore_define = IGNORE_ASH_SPIRIT

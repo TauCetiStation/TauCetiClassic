@@ -60,7 +60,7 @@
 
 /// To obtain the star gazer if there is one
 /obj/effect/proc_holder/spell/in_hand/star_touch/proc/get_star_gazer()
-	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_resolved = star_gazer?.resolve()
+	var/mob/living/simple_animal/heretic_summon/star_gazer/star_gazer_resolved = star_gazer?.resolve()
 	if(star_gazer_resolved)
 		return star_gazer_resolved
 	return FALSE
@@ -99,7 +99,7 @@
 
 /obj/item/weapon/magic/star_touch/attack_self(mob/living/user)
 	var/obj/effect/proc_holder/spell/in_hand/star_touch/star_touch_spell = spell_which_made_us?.resolve()
-	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = star_touch_spell?.get_star_gazer()
+	var/mob/living/simple_animal/heretic_summon/star_gazer/star_gazer_mob = star_touch_spell?.get_star_gazer()
 	if(!star_gazer_mob)
 		balloon_alert(user, "no linked star gazer!")
 		return ..()
@@ -205,7 +205,7 @@
 
 /// What to add when the beam connects to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
-	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
+	if(!istype(target, /mob/living/simple_animal/heretic_summon/star_gazer))
 		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 
 /// What to process when the beam is connected to a target
@@ -215,5 +215,5 @@
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
-	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
+	if(!istype(target, /mob/living/simple_animal/heretic_summon/star_gazer))
 		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
