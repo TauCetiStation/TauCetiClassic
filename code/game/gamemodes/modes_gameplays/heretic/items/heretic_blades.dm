@@ -60,7 +60,7 @@
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 	else
 		to_chat(user,span_warning("You shatter [src]."))
-	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
+	playsound(src, SOUNDIN_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
 /obj/item/weapon/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
@@ -189,8 +189,10 @@
 		What grand gates does it open?"
 	icon_state = "key_blade"
 	after_use_message = "The Stewards hear your call..."
-	tool_behaviour = TOOL_CROWBAR
-	toolspeed = 1.3
+	qualities = list(
+		QUALITY_PRYING = 0.1
+	)
+	toolspeed = 0.1
 
 // Path of Moon's blade
 /obj/item/weapon/sickly_blade/moon
