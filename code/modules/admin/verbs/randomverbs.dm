@@ -234,7 +234,7 @@
 		if("Sentinel")	new_xeno = new /mob/living/carbon/xenomorph/humanoid/sentinel(spawn_here)
 		if("Drone")		new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(spawn_here)
 		if("Larva")		new_xeno = new /mob/living/carbon/xenomorph/larva(spawn_here)
-		if("Lone Hunter")new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter/lone(spawn_here)
+		if("Lone Hunter") new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter/lone(spawn_here)
 		else			return 0
 
 	new_xeno.ckey = ckey
