@@ -6,7 +6,6 @@
 	icon_living = "star_gazer"
 	pixel_x = -32
 	base_pixel_x = -32
-	mob_biotypes = MOB_HUMANOID | MOB_SPECIAL
 	response_help = "pass through"
 	speed = -0.2
 	maxHealth = 6000

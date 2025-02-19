@@ -34,7 +34,8 @@
 		/obj/item/taperoll/engineering,
 		/obj/item/weapon/gun/energy/pyrometer,
 		/obj/item/device/science_tool,
-		/obj/item/weapon/multi
+		/obj/item/weapon/multi,
+		/obj/item/weapon/sickly_blade/lock
 		)
 
 

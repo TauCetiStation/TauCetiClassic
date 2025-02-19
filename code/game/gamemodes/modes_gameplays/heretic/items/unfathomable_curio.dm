@@ -4,22 +4,11 @@
 	name = "Unfathomable Curio"
 	desc = "It. It looks backs. It looks past. It looks in. It sees. It hides. It opens."
 	icon_state = "unfathomable_curio"
-	worn_icon_state = "unfathomable_curio"
+	max_w_class = SIZE_NORMAL
 	content_overlays = FALSE
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-	//Vars used for the shield component
-	var/heretic_shield_icon = "unfathomable_shield"
-	var/max_charges = 1
-	var/recharge_start_delay = 30 SECONDS
-	var/charge_increment_delay = 30 SECONDS
-	var/charge_recovery = 1
-
-/obj/item/weapon/storage/belt/unfathomable_curio/atom_init()
-	. = ..()
-	atom_storage.max_specific_storage = SIZE_NORMAL
-	atom_storage.max_total_storage = 21
-	atom_storage.set_holdable(list(
+	can_hold = list(
 		/obj/item/ammo_box/strilka310/lionhunter,
 		/obj/item/heretic_labyrinth_handbook,
 		/obj/item/clothing/neck/eldritch_amulet,
@@ -33,7 +22,13 @@
 		/obj/item/organ, // Organs are also often used in rituals.
 		/obj/item/reagent_containers/cup/beaker/eldritch,
 		/obj/item/stack/sheet/glass, // Glass is often used by moon heretics
-	))
+		)
+	//Vars used for the shield component
+	var/heretic_shield_icon = "unfathomable_shield"
+	var/max_charges = 1
+	var/recharge_start_delay = 30 SECONDS
+	var/charge_increment_delay = 30 SECONDS
+	var/charge_recovery = 1
 
 	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, shield_icon = heretic_shield_icon, run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
