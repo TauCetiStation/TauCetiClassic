@@ -44,7 +44,6 @@
 		return
 	if(!target && length(pluvian_wisps))
 		target = pick(pluvian_wisps)
-		message_admins("[target]")
 	if(!target)
 		target = locate(target_type)
 	if(!target)
