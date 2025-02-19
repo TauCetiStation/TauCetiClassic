@@ -75,10 +75,6 @@
 		target.balloon_alert(source, "at ghoul limit!")
 		return COMPONENT_BLOCK_HAND_USE
 
-	if(HAS_TRAIT(target, TRAIT_HUSK))
-		target.balloon_alert(source, "husked!")
-		return COMPONENT_BLOCK_HAND_USE
-
 	if(!IS_VALID_GHOUL_MOB(target))
 		target.balloon_alert(source, "invalid body!")
 		return COMPONENT_BLOCK_HAND_USE
@@ -139,7 +135,7 @@
 	for(var/mob/living/carbon/human/body in atoms)
 		if(body.stat != DEAD)
 			continue
-		if(!IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
+		if(!IS_VALID_GHOUL_MOB(body))
 			to_chat(user, span_hierophant_warning("[body] is not in a valid state to be made into a ghoul."))
 			continue
 
