@@ -69,8 +69,7 @@
 
 /// Variant raw prophet used by eldritch transformation with more base attack power
 /mob/living/simple_animal/heretic_summon/raw_prophet/ascended
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 20
 
 /// NPC variant with a less bullshit ability
 /mob/living/simple_animal/heretic_summon/raw_prophet/ruins

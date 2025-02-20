@@ -18,7 +18,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
 
 	var/static/list/grantable_spells = list(
-		/obj/effect/proc_holder/spell/aoe/rust_conversion = BB_GENERIC_ACTION,
+		/obj/effect/proc_holder/spell/aoe_turf/rust_conversion = BB_GENERIC_ACTION,
 		/obj/effect/proc_holder/spell/basic_projectile/rust_wave/short = BB_TARGETED_ACTION,
 	)
 	grant_actions_by_list(grantable_spells)
