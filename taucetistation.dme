@@ -379,6 +379,7 @@
 #include "code\datums\elements\cult_eyes.dm"
 #include "code\datums\elements\cult_halo.dm"
 #include "code\datums\elements\digitalcamo.dm"
+#include "code\datums\elements\effect_trail.dm"
 #include "code\datums\elements\leeching_walk.dm"
 #include "code\datums\elements\rust.dm"
 #include "code\datums\elements\undertile.dm"
