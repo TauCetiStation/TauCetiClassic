@@ -76,7 +76,7 @@
 	var/sound_vol
 	if(client)
 		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
-			to_chat(src, "<span class='userdanger'>Вы не можете говорить в IC (Вам выдали мут).</span>")
+			to_chat(src, "<span class='userdanger'>Вы не можете общаться с другими в игровом мире (Вам ограничили общение).</span>")
 			return
 
 	message =  sanitize(message)
