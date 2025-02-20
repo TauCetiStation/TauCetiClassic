@@ -211,6 +211,9 @@ var/global/list/datum/stack_recipe/old_cloth_recipes = list (
 		make_old()
 		recipes = old_cloth_recipes
 
+/obj/item/stack/sheet/cloth/three
+	amount = 3
+
 /*
  * Cardboard
  */

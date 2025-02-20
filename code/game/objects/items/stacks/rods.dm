@@ -17,6 +17,9 @@
 		QUALITY_PRYING = 0.5
 	)
 
+/obj/item/stack/rods/ten
+	amount = 10
+
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
 	if((amount <= 5) && (amount > 0))

@@ -77,3 +77,21 @@
 
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
 	return FALSE
+
+/mob/living/carbon/xenomorph/larva/lone
+	maxHealth = 80
+	health = 80
+	speed = -1.5
+	ventcrawler = 0
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/hide,
+						/obj/effect/proc_holder/spell/no_target/larva_evolve/lone)
+
+/mob/living/carbon/xenomorph/larva/lone/atom_init()
+	. = ..()
+	name = "alien larva"
+	real_name = name
+	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
+	if(MM)
+		MM.alien_appeared(src)
+	else
+		ventcrawler = 2

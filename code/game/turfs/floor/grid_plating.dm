@@ -46,3 +46,6 @@
 		icon_state = initial(icon_state)
 
 	levelupdate()
+
+/turf/simulated/floor/grid_floor/brown
+	icon_state = "grid_brown"

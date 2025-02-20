@@ -54,6 +54,9 @@
 /turf/simulated/wall/beige
 	icon = 'icons/turf/walls/has_false_walls/wall_beige.dmi'
 
+/turf/simulated/wall/nostromo
+	icon = 'icons/turf/walls/has_false_walls/wall_nostromo.dmi'
+
 /turf/simulated/wall/proc/change_color(color)
 	var/new_type
 	switch(color)
