@@ -15,7 +15,7 @@
 
 /mob/living/simple_animal/heretic_summon/rust_walker/atom_init()
 	. = ..()
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_RUST)
 
 	var/static/list/grantable_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/rust_conversion = BB_GENERIC_ACTION,

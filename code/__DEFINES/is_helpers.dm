@@ -23,6 +23,10 @@
 
 #define iswaterturf(A) (istype(A, /turf/simulated/floor/beach/water) || istype(A, /turf/unsimulated/beach/water) || istype(A, /turf/unsimulated/jungle/water))
 
+#define isopenturf(A) (istype(A, /turf/open))
+
+#define isclosedturf(A) (istype(A, /turf/closed))
+
 // HUMAN
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -264,7 +268,7 @@
 /// Check if the given mob is a  lunatic
 #define islunatic(H) isrolebytype(/datum/role/lunatic, H)
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
-#define ishereticormonster(H) (isheretic(mob) || ishereticmonster(mob) || islunatic(mob))
+#define ishereticormonster(H) (isheretic(H) || ishereticmonster(H) || islunatic(H))
 /// CHecks if the given mob is in the mansus realm
 #define isinmansus(H) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 

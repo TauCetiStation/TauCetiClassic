@@ -41,7 +41,7 @@
 // Examining them will harm them, on a cooldown.
 /mob/living/simple_animal/heretic_summon/maid_in_the_mirror/examine(mob/user)
 	. = ..()
-	if(!harmed_by_examine || user == src || user.stat == DEAD || !isliving(user) || IS_HERETIC_OR_MONSTER(user))
+	if(!harmed_by_examine || user == src || user.stat == DEAD || !isliving(user) || ishereticormonster(user))
 		return
 
 	var/user_ref = REF(user)

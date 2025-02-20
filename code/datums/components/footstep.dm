@@ -35,6 +35,8 @@
 			footstep_sounds = global.footstep
 		if(FOOTSTEP_MOB_SLIME)
 			footstep_sounds = 'sound/effects/mob/footstep/slime1.ogg'
+		if(FOOTSTEP_MOB_RUST)
+			footstep_sounds = 'sound/effects/mob/footstep/rustystep1.ogg'
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), PROC_REF(play_simplestep)) //Note that this doesn't get called for humans.
 
 ///Prepares a footstep. Determines if it should get played. Returns the turf it should get played on. Note that it is always a /turf/open
