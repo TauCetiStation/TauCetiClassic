@@ -1,6 +1,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/candycock
 	name = "candy cock"
-	desc = "Леденец в форме петуха."
+	desc = "Р›РµРґРµРЅРµС† РІ С„РѕСЂРјРµ РїРµС‚СѓС…Р°."
 	icon = 'icons/holidays/maslenitsa/food.dmi'
 	icon_state = "candycock"
 	item_state_world = "candycock_world"
@@ -10,7 +10,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pancake
 	name = "pancake"
-	desc = "Не путать с блинами!"
+	desc = "РќРµ РїСѓС‚Р°С‚СЊ СЃ Р±Р»РёРЅР°РјРё!"
 	icon = 'icons/holidays/maslenitsa/food.dmi'
 	icon_state = "oladushek"
 	item_state_world = "oladushek_world"
@@ -20,7 +20,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bublik
 	name = "bublik"
-	desc = "Дырка продаётся отдельно!"
+	desc = "Р”С‹СЂРєР° РїСЂРѕРґР°С‘С‚СЃСЏ РѕС‚РґРµР»СЊРЅРѕ!"
 	icon = 'icons/holidays/maslenitsa/food.dmi'
 	icon_state = "bublik"
 	item_state_world = "bublik_world"

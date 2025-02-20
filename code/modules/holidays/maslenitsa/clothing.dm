@@ -1,6 +1,6 @@
 /obj/item/clothing/neck/bundle_of_bubliks
 	name = "bundle of bubliks"
-	desc = "������� �� ������."
+	desc = "Бублики на верёвке."
 	icon_state = "baranki_7"
 
 	var/bubliksAmount = 7
@@ -26,3 +26,10 @@
 		qdel(Bundle)
 
 	Bundle.icon_state = "baranki_[Bundle.bubliksAmount]"
+
+/obj/item/clothing/head/jesterhat
+	name = "Jester's hat"
+	desc = "Да, я с виду шут, но в душе король!"
+	icon_state = "jester"
+	flags = HEADCOVERSEYES | BLOCKHAIR
+	body_parts_covered = HEAD

@@ -1,6 +1,6 @@
 // Tinsels
 /obj/item/decoration/tinsel/maslenitsa
-	desc = "Ярмарка в самом разгаре!"
+	desc = "РЇСЂРјР°СЂРєР° РІ СЃР°РјРѕРј СЂР°Р·РіР°СЂРµ!"
 	icon = 'icons/holidays/maslenitsa/tinsel.dmi'
 	icon_state = "1"
 	variations = 4
