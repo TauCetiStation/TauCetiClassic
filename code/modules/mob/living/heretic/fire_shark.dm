@@ -17,7 +17,7 @@
 	attack_verb_simple = "bite"
 	damage_coeff = list(BRUTE = 1, BURN = 0.25, TOX = 0, STAMINA = 0, OXY = 0)
 	faction = "heretic"
-	mob_size = MOB_SIZE_TINY
+	w_class = SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles

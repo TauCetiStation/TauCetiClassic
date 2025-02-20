@@ -17,7 +17,7 @@
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
-	mob_size = MOB_SIZE_HUGE
+	w_class = SIZE_MASSIVE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	///Previous segment in the chain, we hold onto this purely to keep track of how long we currently are and to attach new growth to the back

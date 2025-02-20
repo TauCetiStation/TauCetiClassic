@@ -2112,6 +2112,7 @@
 #include "code\modules\mob\living\carbon\xenomorph\special\facehugger\life.dm"
 #include "code\modules\mob\living\heretic\_heretic_summon.dm"
 #include "code\modules\mob\living\heretic\ash_spirit.dm"
+#include "code\modules\mob\living\heretic\fire_shark.dm"
 #include "code\modules\mob\living\heretic\flesh_stalker.dm"
 #include "code\modules\mob\living\heretic\flesh_worm.dm"
 #include "code\modules\mob\living\heretic\maid_in_the_mirror.dm"

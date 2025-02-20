@@ -5,7 +5,6 @@
 	icon_state = "star_gazer"
 	icon_living = "star_gazer"
 	pixel_x = -32
-	base_pixel_x = -32
 	response_help = "pass through"
 	speed = -0.2
 	maxHealth = 6000
@@ -14,21 +13,18 @@
 	obj_damage = 400
 	armour_penetration = 20
 	melee_damage = 40
-	sentience_type = SENTIENCE_BOSS
 	attack_verb = "ravage"
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
-	death_sound = 'sound/effects/magic/cosmic_expansion.ogg'
+	death_sound = 'sound/effects/cosmic_expansion.ogg'
 
-	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
-	can_buckle_to = FALSE
-	mob_size = MOB_SIZE_HUGE
+	w_class = SIZE_MASSIVE
 	layer = LARGE_MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
@@ -39,17 +35,13 @@
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	AddElement(/datum/element/ai_target_damagesource)
 	AddComponent(/datum/component/regenerator, outline_colour = "#b97a5d")
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_LAVA_IMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
-	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	set_light(4, l_color = "#dcaa5b")
 

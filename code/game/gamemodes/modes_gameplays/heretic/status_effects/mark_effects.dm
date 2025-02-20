@@ -20,7 +20,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
-	if(owner.mob_size >= SIZE_HUMAN)
+	if(owner.w_class >= SIZE_HUMAN)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_underlay))
 		owner.update_icon(UPDATE_OVERLAYS)
 		return TRUE
