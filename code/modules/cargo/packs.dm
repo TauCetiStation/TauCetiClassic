@@ -1859,6 +1859,16 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/suit/lasertag/bluetag)
 	group = "Miscellaneous"
 
+/datum/supply_pack/casino
+	name = "Casino Starter Pack"
+	contains = list(/obj/item/device/cardpay/casino,
+					/obj/item/toy/cards,
+					/obj/item/toy/cards,
+					/obj/item/weapon/storage/pill_bottle/dice,
+					/obj/item/weapon/storage/pill_bottle/dice,
+					/obj/item/weapon/cane)
+	group = "Miscellaneous"
+
 //----------------------------------------------
 //-----------------RANDOMISED-------------------
 //----------------------------------------------

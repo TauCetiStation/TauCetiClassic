@@ -6,7 +6,7 @@ import { SegmentDisplay } from '../components/SegmentDisplay';
 
 export const CardPay = (props, context) => {
   const { act, data } = useBackend(context);
-  const { numbers, reset_numbers, mode } = data;
+  const { numbers, reset_numbers, noReset, mode } = data;
   const buttons = [];
   for (let row = 0; row < 3; row++) {
     for (let col = 1; col < 4; col++) {
@@ -40,6 +40,7 @@ export const CardPay = (props, context) => {
           result_text += '-';
         }
         break;
+      case 'Mode_Refund':
       case 'Mode_Pay':
         result_text += 'N°' + (numbers ? numtext : '-');
         for (let excess = 1; excess <= 6 - numtext.length; excess++) {
@@ -121,15 +122,17 @@ export const CardPay = (props, context) => {
             onClick={() => act('toggleenteraccount')}
           />
         </Box>
-        <Button
-          selected={reset_numbers ? 1 : 0}
-          position="absolute"
-          top="60px"
-          left="140px"
-          className="cardpay_switch"
-          content={<Box className="cardpay_switch-inside">|||</Box>}
-          onClick={() => act('togglereset')}
-        />
+        {!noReset && (
+          <Button
+            selected={reset_numbers ? 1 : 0}
+            position="absolute"
+            top="60px"
+            left="140px"
+            className="cardpay_switch"
+            content={<Box className="cardpay_switch-inside">|||</Box>}
+            onClick={() => act('togglereset')}
+          />
+        )}
       </Window.Content>
     </Window>
   );
