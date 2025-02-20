@@ -11,13 +11,15 @@ SUBSYSTEM_DEF(samosbor)
 	var/bridge_announce_milestone = 30
 
 	var/day
+	var/day_shift = 4 HOURS // starts day at 4 am
+
 	var/notfication_timer
 
 /datum/controller/subsystem/samosbor/Initialize()
 	if(!config.chat_bridge)
 		return ..()
 
-	day = time2text(world.realtime, "YYYY_MM_DD")
+	day = time2text(world.realtime - day_shift, "YYYY_MM_DD")
 
 	var/cache_path = SAMOSBOR_CACHE_PATH(day)
 	if(fexists(cache_path))
