@@ -120,7 +120,7 @@
 	if(!isheretic(examiner))
 		// Gives them some nutrition
 		examiner.adjust_nutrition(50)
-		to_chat(examiner, span_warning("You feel a searing pain in your stomach!"))
+		to_chat(examiner, span_warning("You feel a searing pain in your kidneys!"))
 		examiner.adjustOrganLoss(O_KIDNEYS, 5, examiner)
 		to_chat(examiner, span_notice("You feel less hungry."))
 		to_chat(examiner, span_warning("You should stockpile raw meat and organs, before you get hungry again."))
