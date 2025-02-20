@@ -352,6 +352,7 @@
 #include "code\datums\components\logout_spawner.dm"
 #include "code\datums\components\magic_item.dm"
 #include "code\datums\components\mechanic_description.dm"
+#include "code\datums\components\mob_chain.dm"
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\seethrough.dm"

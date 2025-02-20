@@ -36,7 +36,7 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/no_target/shapeshift/shed_human_form/do_unshapeshift(mob/living/basic/heretic_summon/armsy/caster)
+/obj/effect/proc_holder/spell/no_target/shapeshift/shed_human_form/do_unshapeshift(mob/living/simple_animal/heretic_summon/armsy/caster)
 	if(istype(caster))
 		segment_length = caster.get_length() - 1 // Don't count the head
 

@@ -46,7 +46,7 @@
 /datum/status_effect/void_prison/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	stasis_overlay = new /obj/effect/abstract/voidball(new_owner)
-	RegisterSignal(stasis_overlay, COMSIG_QDELETING, PROC_REF(clear_overlay))
+	RegisterSignal(stasis_overlay, COMSIG_PARENT_QDELETING, PROC_REF(clear_overlay))
 	new_owner.vis_contents += stasis_overlay
 	stasis_overlay.animate_opening()
 	addtimer(CALLBACK(src, PROC_REF(enter_prison), new_owner), 1 SECONDS)
