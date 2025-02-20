@@ -52,12 +52,12 @@
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
-	ADD_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
 	return TRUE
 
 /datum/status_effect/duskndawn/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
 
 // WOUNDED SOLDIER
@@ -215,7 +215,7 @@
 	if(HAS_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED))
 		return
 
-	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, STATUS_EFFECT_TRAIT)
 
 	var/obj/effect/floating_blade/to_remove = blades[1]
 
@@ -228,7 +228,7 @@
 
 	qdel(to_remove)
 
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id)), 0.1 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, STATUS_EFFECT_TRAIT), 0.1 SECONDS)
 
 	return SUCCESSFUL_BLOCK
 
@@ -289,11 +289,11 @@
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
 	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
-	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(caretaking_traits, STATUS_EFFECT_TRAIT)
 	return TRUE
 
 /datum/status_effect/caretaker_refuge/on_remove()
-	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(caretaking_traits, STATUS_EFFECT_TRAIT)
 	owner.alpha = initial(owner.alpha)
 	owner.density = initial(owner.density)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
@@ -338,11 +338,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
 
 /datum/status_effect/moon_grasp_hide/on_apply()
-	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), STATUS_EFFECT_TRAIT)
 	return TRUE
 
 /datum/status_effect/moon_grasp_hide/on_remove()
-	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), STATUS_EFFECT_TRAIT)
 
 /atom/movable/screen/alert/status_effect/moon_grasp_hide
 	name = "Blessing of The Moon"

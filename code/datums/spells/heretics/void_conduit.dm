@@ -122,8 +122,8 @@
 	alert_type = null
 
 /datum/status_effect/void_conduit/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, STATUS_EFFECT_TRAIT)
 	return TRUE
 
 /datum/status_effect/void_conduit/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, STATUS_EFFECT_TRAIT)
