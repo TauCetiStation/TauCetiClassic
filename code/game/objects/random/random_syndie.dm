@@ -75,7 +75,7 @@
 	prob(100);/obj/item/weapon/storage/secure/briefcase/syndie,\
 	prob(100);/obj/item/weapon/plastique,\
 	prob(100);/obj/item/weapon/storage/backpack/satchel/flat,\
-	prob(100);/obj/item/clothing/shoes/syndigaloshes,\
+	prob(100);/obj/item/clothing/accessory/soles,\
 	prob(100);/obj/item/weapon/storage/belt/military,\
 	prob(100);/obj/item/weapon/storage/toolbox/syndicate,\
 	prob(100);/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,\
