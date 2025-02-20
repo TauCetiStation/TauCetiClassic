@@ -4,6 +4,7 @@
  */
 /datum/element/rust
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	id_arg_index = 2
 	/// The rust image itself, since the icon and icon state are only used as an argument
 	var/image/rust_overlay
 
@@ -26,7 +27,7 @@
 	UnregisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
 	UnregisterSignal(source, COMSIG_ATOM_ITEM_INTERACTION)
-	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
+	UnregisterSignal(source, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER))
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	source.update_appearance()
 
