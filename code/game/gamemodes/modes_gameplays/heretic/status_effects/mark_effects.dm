@@ -106,7 +106,7 @@
 
 /datum/status_effect/eldritch/void/on_effect()
 	owner.apply_status_effect(/datum/status_effect/void_chill, 3)
-	owner.adjust_silence(10 SECONDS)
+	owner.silent += (10 SECONDS)
 	return ..()
 
 // MARK OF BLADES

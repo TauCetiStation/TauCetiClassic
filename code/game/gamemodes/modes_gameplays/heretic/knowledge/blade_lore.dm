@@ -228,7 +228,7 @@
 	if(in_duelist_stance)
 		examine_list += span_warning("[source] looks unnaturally poised[held_item?.force >= 15 ? " and ready to strike out":""].")
 
-/datum/heretic_knowledge/duel_stance/proc/on_wound_gain(mob/living/source, datum/wound/gained_wound, obj/item/bodypart/limb)
+/datum/heretic_knowledge/duel_stance/proc/on_wound_gain(mob/living/source, datum/wound/gained_wound, obj/item/organ/external)
 	SIGNAL_HANDLER
 
 	if(gained_wound.blood_flow <= 0)

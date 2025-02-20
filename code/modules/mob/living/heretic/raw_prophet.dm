@@ -24,7 +24,7 @@
 /mob/living/simple_animal/heretic_summon/raw_prophet/atom_init()
 	. = ..()
 	AddElement(/datum/element/wheel)
-	var/static/list/body_parts = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/eyes)
+	var/static/list/body_parts = list(/obj/effect/gibspawner/human, /obj/item/organ/external/l_arm, /obj/item/organ/internal/eyes)
 	AddElement(/datum/element/death_drops, body_parts)
 	AddComponent(/datum/component/focused_attacker)
 	var/on_link_message = "You feel something new enter your sphere of mind... \
@@ -47,7 +47,7 @@
 /// Returns a list of abilities that we should add.
 /mob/living/simple_animal/heretic_summon/raw_prophet/proc/get_innate_abilities()
 	var/list/returnable_list = innate_abilities.Copy()
-	returnable_list += list(/obj/effect/proc_holder/spell/pointed/blind/eldritch = BB_TARGETED_ACTION)
+	returnable_list += list(/obj/effect/proc_holder/spell/targeted/trigger/blind/eldritch = BB_TARGETED_ACTION)
 	return returnable_list
 
 /*

@@ -93,10 +93,10 @@
 	register_behind(null)
 
 /mob/living/simple_animal/heretic_summon/armsy/melee_attack(atom/target, list/modifiers, ignore_cooldown)
-	if(!istype(target, /obj/item/bodypart/arm))
+	if(!istype(target, /obj/item/organ/external/l_arm || /obj/item/organ/external/r_arm))
 		return ..()
 	visible_message(span_warning("[src] devours [target]!"))
-	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/demon_consume.ogg', 50, TRUE)
 	qdel(target)
 	on_arm_eaten()
 

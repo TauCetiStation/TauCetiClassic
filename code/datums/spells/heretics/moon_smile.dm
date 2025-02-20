@@ -43,7 +43,7 @@
 	//adjustEarDamage takes deafness duration parameter in one unit per two seconds, instead of the normal time, so we divide by two seconds
 	cast_on.adjustEarDamage(0, (moon_smile_duration + 1 SECONDS) / (2 SECONDS))
 
-	cast_on.adjust_silence(moon_smile_duration + 1 SECONDS)
+	cast_on.silent += (moon_smile_duration + 1 SECONDS)
 	SEND_SIGNAL(cast_on, COMSIG_ADD_MOOD_EVENT, "moon_smile", /datum/mood_event/moon_smile)
 
 	// Only knocksdown if the target has a low enough sanity
