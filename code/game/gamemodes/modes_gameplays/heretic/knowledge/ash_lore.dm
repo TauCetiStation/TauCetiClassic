@@ -55,7 +55,7 @@
 		return
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
-	target.adjustOrganLoss(O_EYES, 15)
+	target.adjustOrganLoss(O_EYES, 15, target)
 	target.blurEyes(20 SECONDS)
 
 /datum/heretic_knowledge/spell/ash_passage

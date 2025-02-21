@@ -35,7 +35,7 @@
 	cast_on.adjustOxyLoss(30)
 	cast_on.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body), "Mind gate, cast by [owner]")
 	cast_on.cause_hallucination(/datum/hallucination/delusion/preset/heretic/gate, "Caused by mindgate")
-	cast_on.adjustOrganLoss(O_BRAIN, 30)
+	cast_on.adjustOrganLoss(O_BRAIN, 30, cast_on)
 
 	var/mob/living/living_owner = owner
-	living_owner.adjustOrganLoss(O_BRAIN, 20, 140)
+	living_owner.adjustOrganLoss(O_BRAIN, 20, living_owner)
