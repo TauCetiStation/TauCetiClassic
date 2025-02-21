@@ -16,6 +16,7 @@
 	response_disarm = "flail at"
 	response_harm = "tear"
 	death_message = "implodes into itself."
+	loot_list = list(/obj/effect/gibspawner/generic = 1)
 
 	min_oxy = 0
 	max_oxy = 0
@@ -26,7 +27,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
-	maxbodytemp = 0
+	maxbodytemp = INFINITY
 	unsuitable_atoms_damage = 0
 
 	ai_controller = null
@@ -34,4 +35,3 @@
 
 /mob/living/simple_animal/heretic_summon/atom_init()
 	. = ..()
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))

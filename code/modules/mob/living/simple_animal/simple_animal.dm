@@ -22,6 +22,11 @@
 	var/stop_automated_movement = FALSE // Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = TRUE // Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = TRUE // When set to 1 this stops the animal from moving when someone is pulling it.
+	/// A dict of sort type = amount.
+	var/list/loot_list = list()
+	/// All amounts of loot from loot_list are multiplied by this value.
+	var/loot_mod = 1.0
+
 
 	// Interaction
 	var/response_help   = "pets the"

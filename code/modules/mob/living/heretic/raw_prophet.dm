@@ -14,6 +14,7 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	loot_list = list(/obj/effect/gibspawner/human, /obj/item/organ/external/l_arm, /obj/item/organ/internal/eyes)
 	/// List of innate abilities we have to add.
 	var/static/list/innate_abilities = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/ash/long = null,
@@ -24,8 +25,6 @@
 /mob/living/simple_animal/heretic_summon/raw_prophet/atom_init()
 	. = ..()
 	AddElement(/datum/element/wheel)
-	var/static/list/body_parts = list(/obj/effect/gibspawner/human, /obj/item/organ/external/l_arm, /obj/item/organ/internal/eyes)
-	AddElement(/datum/element/death_drops, body_parts)
 	AddComponent(/datum/component/focused_attacker)
 	var/on_link_message = "You feel something new enter your sphere of mind... \
 		You hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link."

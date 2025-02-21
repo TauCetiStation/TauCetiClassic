@@ -1,8 +1,4 @@
 /mob/living/simple_animal/hostile
-	/// A dict of sort type = amount.
-	var/list/loot_list = list()
-	/// All amounts of loot from loot_list are multiplied by this value.
-	var/loot_mod = 1.0
 
 /mob/living/simple_animal/hostile/death(gibbed)
 	spawn_loot()

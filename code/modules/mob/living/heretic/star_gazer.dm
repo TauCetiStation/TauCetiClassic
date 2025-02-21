@@ -27,13 +27,12 @@
 	w_class = SIZE_MASSIVE
 	layer = LARGE_MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	loot_list = list(/obj/effect/temp_visual/cosmic_domain)
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
 
 /mob/living/simple_animal/heretic_summon/star_gazer/atom_init()
 	. = ..()
-	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
-	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)

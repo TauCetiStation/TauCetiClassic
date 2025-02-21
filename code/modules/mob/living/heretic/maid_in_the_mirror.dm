@@ -15,6 +15,7 @@
 	melee_damage = 16
 	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	death_message = "shatters and vanishes, releasing a gust of cold air."
+	loot_list = list(/obj/effect/decal/cleanable/ash, /obj/item/clothing/suit/armor/vest, /obj/item/organ/internal/lungs, /obj/item/weapon/shard)
 	/// Whether we take damage when someone looks at us
 	var/harmed_by_examine = TRUE
 	/// How often being examined by a specific mob can hurt us
@@ -24,13 +25,6 @@
 
 /mob/living/simple_animal/heretic_summon/maid_in_the_mirror/atom_init()
 	. = ..()
-	var/static/list/loot = list(
-		/obj/effect/decal/cleanable/ash,
-		/obj/item/clothing/suit/armor/vest,
-		/obj/item/organ/internal/lungs,
-		/obj/item/weapon/shard,
-	)
-	AddElement(/datum/element/death_drops, loot)
 	GRANT_ACTION(/obj/effect/proc_holder/spell/jaunt/mirror_walk)
 
 /mob/living/simple_animal/heretic_summon/maid_in_the_mirror/death(gibbed)
