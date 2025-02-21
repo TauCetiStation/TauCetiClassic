@@ -77,6 +77,11 @@
 	var/can_block_air = FALSE // shared flag between /turf/s and /movable/s, you should use it only for movables
 	                          // if you want to set it true for object then remember to create CanPass or c_airblock methods or it will do nothing (pls refactor it)
 
+	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error	///The config type to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config
+	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
+	var/greyscale_colors
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -250,6 +255,31 @@
 	if(ispath(container))
 		return istype(src.loc, container)
 	return src in container
+
+/// Handles updates to greyscale value updates.
+/// The colors argument can be either a list or the full color string.
+/// Child procs should call parent last so the update happens after all changes.
+/atom/proc/set_greyscale(list/colors, new_config)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(colors))
+		colors = colors.Join("")
+	if(!isnull(colors) && greyscale_colors != colors) // If you want to disable greyscale stuff then give a blank string
+		greyscale_colors = colors
+
+	if(!isnull(new_config) && greyscale_config != new_config)
+		greyscale_config = new_config
+
+	update_greyscale()
+
+/// Checks if this atom uses the GAGS system and if so updates the icon
+/atom/proc/update_greyscale()
+	SHOULD_CALL_PARENT(TRUE)
+	if(greyscale_colors && greyscale_config)
+		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
+		return
+	update_atom_colour()
+	QUEUE_SMOOTH(src)
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)

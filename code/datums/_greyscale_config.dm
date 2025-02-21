@@ -133,8 +133,6 @@
 
 	ReadMetadata()
 
-	SEND_SIGNAL(src, COMSIG_GREYSCALE_CONFIG_REFRESHED)
-
 	return TRUE
 
 /// Called after every config has refreshed, this proc handles data verification that depends on multiple entwined configurations.
