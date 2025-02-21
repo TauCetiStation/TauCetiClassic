@@ -284,6 +284,8 @@
 #define REGION_COMMAND		7
 #define REGION_CENTCOMM		8
 
+// be wary this adds little overhead with additional proc calls
+// consider modifying existing atom_init/Destroy for atoms with numerous instances
 #define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
 	. = ..();\
 	global.##list += src;}\

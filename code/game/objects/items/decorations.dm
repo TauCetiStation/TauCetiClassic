@@ -6,25 +6,45 @@
 
 	var/obj/item/weapon/pen/holded
 
+/obj/item/pen_holder/atom_init(mapload)
+	. = ..()
+
+	if(mapload)
+		var/turf/T = get_turf(src)
+		var/obj/item/weapon/pen/Pen = locate() in T.contents
+		if(Pen)
+			Pen.forceMove(src)
+			holded = Pen
+
+			update_icon()
+
 /obj/item/pen_holder/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) && !holded)
 		user.drop_from_inventory(I, src)
 		holded = I
-		holded.pixel_x = -2
-		holded.pixel_y = 5
-		underlays += holded
-		icon_state = "penholder_full"
+
+		update_icon()
 
 /obj/item/pen_holder/attack_hand(mob/user)
 	if(holded)
-		underlays = null
 		holded.pixel_x = 0
 		holded.pixel_y = 0
 		user.put_in_active_hand(holded)
 		holded = null
-		icon_state = "penholder"
+
+		update_icon()
 	else
 		..()
+
+/obj/item/pen_holder/update_icon()
+	underlays = null
+	icon_state = "penholder"
+
+	if(holded)
+		icon_state = "penholder_full"
+		holded.pixel_x = -2
+		holded.pixel_y = 5
+		underlays += holded
 
 /obj/item/pens_bin
 	name = "pens bin"
@@ -65,6 +85,8 @@
 		var/obj/item/weapon/pen/selection = show_radial_menu(user, src, pens, require_near = TRUE, tooltips = TRUE)
 
 		if(selection)
+			selection.pixel_x = 0
+			selection.pixel_y = 0
 			if(ishuman(user))
 				user.put_in_hands(selection)
 			else
