@@ -15,15 +15,26 @@
 		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
 			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
-	..()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/proc/shatter()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	reagents.standard_splash(loc)
 	qdel(src)
 
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
+	..()
+	shatter()
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
+
+	if(istype(P, /obj/item/projectile/beam))
+		return
+
+	shatter()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
