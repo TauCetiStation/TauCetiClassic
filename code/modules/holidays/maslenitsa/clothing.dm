@@ -31,5 +31,6 @@
 	name = "Jester's hat"
 	desc = "Да, я с виду шут, но в душе король!"
 	icon_state = "jester"
+	item_state_world = "jester_world"
 	flags = HEADCOVERSEYES | BLOCKHAIR
 	body_parts_covered = HEAD
