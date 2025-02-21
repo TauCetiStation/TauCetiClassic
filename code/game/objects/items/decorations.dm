@@ -52,7 +52,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "pens_bin"
 
-	var/list/pens_locations = list(list(-2, 4), list(-2, 5), list(-3, 6), list(-3, 7), list(-4, 7))
+	var/itemsMax = 5
+
+	var/image/front_side
 
 /obj/item/pens_bin/atom_init(mapload)
 	. = ..()
@@ -60,17 +62,13 @@
 	if(mapload)
 		var/turf/T = get_turf(src)
 		for(var/obj/item/weapon/pen/Pen in T.contents)
-			var/list/offsets = pick(pens_locations)
-			Pen.pixel_x = offsets[1]
-			Pen.pixel_y = offsets[2]
 			Pen.forceMove(src)
-		update_icon()
+
+	front_side = image('icons/obj/items.dmi', "pens_bin_front")
+	update_icon()
 
 /obj/item/pens_bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/pen))
-		var/list/offsets = pick(pens_locations)
-		I.pixel_x = offsets[1]
-		I.pixel_y = offsets[2]
+	if(istype(I, /obj/item/weapon/pen) && contents.len < itemsMax)
 		user.drop_from_inventory(I, src)
 		update_icon()
 		return
@@ -79,14 +77,16 @@
 /obj/item/pens_bin/attack_hand(mob/user)
 	if(contents.len)
 		var/list/pens = list()
+		pens["Pickup"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 		for(var/obj/item/weapon/pen in contents)
 			pens[pen] = image(icon = pen.icon, icon_state = pen.icon_state)
 
 		var/obj/item/weapon/pen/selection = show_radial_menu(user, src, pens, require_near = TRUE, tooltips = TRUE)
 
 		if(selection)
-			selection.pixel_x = 0
-			selection.pixel_y = 0
+			if(selection == "Pickup")
+				return ..()
+
 			if(ishuman(user))
 				user.put_in_hands(selection)
 			else
@@ -96,12 +96,14 @@
 		..()
 
 /obj/item/pens_bin/update_icon()
-	cut_overlays()
-	for(var/obj/item/weapon/pen/Pen in contents)
-		add_overlay(Pen)
+	cut_overlay(front_side)
+	front_side.clear_filters()
 
-	var/image/front_side = image('icons/obj/items.dmi', "pens_bin_front")
-	front_side.layer = layer + 0.01
+	var/i = 1
+	for(var/obj/item/Pen in contents)
+		front_side.add_filter("add_item_[i])", 1, layering_filter(x = rand(-3, -1), y = rand(4, 7), icon = icon(Pen.icon, Pen.icon_state), flags = FILTER_UNDERLAY))
+		i++
+
 	add_overlay(front_side)
 
 /obj/item/globe
@@ -357,3 +359,81 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 			desc = "Эдвард Мунос - Начальник ОБОП НаноТрейзен."
 		if(3)
 			desc = "Маргарет Чейн - Директор отдела кооперации и связей с общественностью НаноТрейзен."
+
+/obj/item/jar
+	name = "jar"
+	desc = "Банка для печенья или конфет."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "candy_jar"
+
+	var/itemsMax = 10
+
+	var/list/spawn_paths = list()
+
+	var/image/front_side
+
+/obj/item/jar/atom_init(mapload)
+	. = ..()
+
+	if(spawn_paths)
+		for(var/i in 1 to rand(7, itemsMax))
+			var/item_path = pick(spawn_paths)
+			if(!item_path)
+				break
+
+			new item_path(src)
+
+	front_side = image(icon = 'icons/obj/items.dmi', icon_state = "candy_jar_front")
+
+	update_icon()
+
+/obj/item/jar/attackby(obj/item/I, mob/user, params)
+	if(I.w_class <= SIZE_TINY && contents.len < itemsMax)
+		user.drop_from_inventory(I, src)
+		update_icon()
+		return
+	return ..()
+
+/obj/item/jar/attack_hand(mob/user)
+	if(contents.len)
+		var/list/candies = list()
+		candies["Pickup"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
+
+		for(var/obj/item/Candy in contents)
+			candies[Candy] = image(icon = Candy.icon, icon_state = Candy.icon_state)
+
+		var/obj/item/selection = show_radial_menu(user, src, candies, require_near = TRUE, tooltips = TRUE)
+
+		if(selection)
+			if(selection == "Pickup")
+				return ..()
+
+			if(ishuman(user))
+				user.put_in_hands(selection)
+			else
+				selection.forceMove(get_turf(src))
+
+			update_icon()
+	else
+		..()
+
+/obj/item/jar/update_icon()
+	cut_overlay(front_side)
+	front_side.clear_filters()
+
+	var/i = 1
+	for(var/obj/item/Candy in contents)
+		front_side.add_filter("add_item_[i])", 1, layering_filter(x = rand(-4, 4), y = rand(-8, 2), icon = icon(Candy.icon, Candy.icon_state), flags = FILTER_UNDERLAY))
+		i++
+
+	front_side.add_filter("jar_front", 1, alpha_mask_filter(icon = icon('icons/obj/items.dmi', "candy_jar_mask")))
+
+	add_overlay(front_side)
+
+/obj/item/jar/candy
+	name = "candy jar"
+	spawn_paths = list(/obj/random/foods/candies)
+
+/obj/item/jar/cookie
+	name = "cookie jar"
+	spawn_paths = list(/obj/item/weapon/reagent_containers/food/snacks/cookie)
