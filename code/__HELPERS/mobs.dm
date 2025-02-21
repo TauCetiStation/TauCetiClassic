@@ -174,14 +174,7 @@
 	return list(red, green, blue)
 
 /proc/random_skin_tone()
-	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
-		if("caucasian")		. = -10
-		if("afroamerican")	. = -115
-		if("african")		. = -165
-		if("latino")		. = -55
-		if("albino")		. = 34
-		else				. = rand(-185,34)
-	return min(max( .+rand(-25, 25), -185),34)
+	return pick(global.skin_tones_by_name)
 
 /proc/skintone2racedescription(tone)
 	switch (tone)
