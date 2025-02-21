@@ -133,7 +133,7 @@
 /// Update our visuals based on if we have someone in front and behind
 /datum/component/mob_chain/proc/on_update_icon_state(mob/living/our_mob)
 	SIGNAL_HANDLER
-	var/current_icon_state = our_mob.base_icon_state
+	var/current_icon_state = our_mob.icon_state
 	if(isnull(front))
 		current_icon_state = "[current_icon_state]_start"
 	else if(isnull(back))
@@ -171,7 +171,7 @@
 	SIGNAL_HANDLER
 	if (forced)
 		return
-	back?.adjustStaminaLoss(amount, forced = forced)
+	back?.adjustHalLoss(amount, forced = forced)
 
 /// On damage or heal, affect our furthest segment
 /datum/component/mob_chain/proc/on_adjust_damage(mob/living/our_mob, type, amount, forced)
@@ -210,7 +210,7 @@
 	desc = "Forces your body to contract onto a single tile."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon = 'icons/hud/actions_ecult.dmi'
 	button_icon_state = "worm_contract"
 	cooldown_time = 30 SECONDS
 	melee_cooldown_time = 0 SECONDS
