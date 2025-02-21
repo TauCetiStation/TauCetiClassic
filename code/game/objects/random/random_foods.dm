@@ -164,11 +164,9 @@
 /obj/random/foods/candies/item_to_spawn()
 	return pick(
 		/obj/item/weapon/reagent_containers/food/snacks/candy/taffy,
-
 		/obj/random/foods/gummybear,
 		/obj/random/foods/gummyworm,
 		/obj/random/foods/jellybean,
-
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candycane,
 		/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,
 	)
