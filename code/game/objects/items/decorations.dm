@@ -85,6 +85,8 @@
 		var/obj/item/weapon/pen/selection = show_radial_menu(user, src, pens, require_near = TRUE, tooltips = TRUE)
 
 		if(selection)
+			selection.pixel_x = 0
+			selection.pixel_y = 0
 			if(ishuman(user))
 				user.put_in_hands(selection)
 			else
@@ -95,7 +97,7 @@
 
 /obj/item/pens_bin/update_icon()
 	cut_overlays()
-	for(var/obj/item/Pen in contents)
+	for(var/obj/item/weapon/pen/Pen in contents)
 		add_overlay(Pen)
 
 	var/image/front_side = image('icons/obj/items.dmi', "pens_bin_front")
