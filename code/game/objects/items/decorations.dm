@@ -395,27 +395,29 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	return ..()
 
 /obj/item/jar/attack_hand(mob/user)
-	if(contents.len)
-		var/list/candies = list()
-		candies["Pickup"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
+	if(!contents.len)
+		return ..()
 
-		for(var/obj/item/Candy in contents)
-			candies[Candy] = image(icon = Candy.icon, icon_state = Candy.icon_state)
+	var/list/candies = list()
+	candies["Pickup"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
-		var/obj/item/selection = show_radial_menu(user, src, candies, require_near = TRUE, tooltips = TRUE)
+	for(var/obj/item/Candy in contents)
+		candies[Candy] = image(icon = Candy.icon, icon_state = Candy.icon_state)
 
-		if(selection)
-			if(selection == "Pickup")
-				return ..()
+	var/obj/item/selection = show_radial_menu(user, src, candies, require_near = TRUE, tooltips = TRUE)
 
-			if(ishuman(user))
-				user.put_in_hands(selection)
-			else
-				selection.forceMove(get_turf(src))
+	if(!selection)
+		return
 
-			update_icon()
+	if(selection == "Pickup")
+		return ..()
+
+	if(ishuman(user))
+		user.put_in_hands(selection)
 	else
-		..()
+		selection.forceMove(get_turf(src))
+
+	update_icon()
 
 /obj/item/jar/update_icon()
 	cut_overlay(front_side)
