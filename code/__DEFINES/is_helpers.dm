@@ -122,6 +122,8 @@
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
 
+#define isorgan(A) (istype(A, /obj/item/organ/internal))
+
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
