@@ -299,7 +299,7 @@
 		to_chat(user, "<span class='notice'>You can open its maintenance panel with a <b>screwdriver</b>.</span>")
 
 	if(client_computers.len)
-		to_chat(user, "<span class='warning'>Камера активна! Кто-то наблюдает за тобой!")
+		to_chat(user, "<span class='warning'>Камера активна! Кто-то наблюдает за тобой!</span>")
 
 /obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
 	status = !status
