@@ -18,7 +18,7 @@
 	/// if true the heretic is teleported to a random airlock, nonheretics are sent to the target
 	var/inverted = FALSE
 
-/obj/effect/lock_portal/Initialize(mapload, target, invert = FALSE)
+/obj/effect/lock_portal/atom_init(mapload, target, invert = FALSE)
 	. = ..()
 	if(target)
 		our_airlock = target

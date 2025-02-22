@@ -176,7 +176,7 @@
 	/// Reference to trap owner mob
 	var/datum/weakref/owner
 
-/obj/structure/trap/eldritch/Initialize(mapload, new_owner)
+/obj/structure/trap/eldritch/atom_init(mapload, new_owner)
 	. = ..()
 	if(new_owner)
 		owner = WEAKREF(new_owner)

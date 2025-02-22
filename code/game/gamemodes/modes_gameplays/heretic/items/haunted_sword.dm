@@ -277,7 +277,7 @@
 	playsound(src ,'sound/effects/hallucinations/wail.ogg', 20, TRUE)	// add BOUND alert and UNBOUND
 	binding_filters_update()
 
-/obj/item/weapon/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
+/obj/item/weapon/cultblade/haunted/atom_init(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
 	. = ..()
 
 	AddElement(/datum/element/heretic_focus)

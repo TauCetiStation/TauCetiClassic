@@ -24,7 +24,7 @@
 		/mob/living/simple_animal/heretic_summon/star_gazer,
 	)
 
-/obj/structure/lock_tear/Initialize(mapload, datum/mind/ascendant_mind)
+/obj/structure/lock_tear/atom_init(mapload, datum/mind/ascendant_mind)
 	. = ..()
 	transform *= 3
 	if(isnull(monster_types))

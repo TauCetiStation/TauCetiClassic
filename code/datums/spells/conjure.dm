@@ -129,7 +129,7 @@
 	/// Flags for what antimagic can just ignore our forcefields
 	var/antimagic_flags = MAGIC_RESISTANCE
 
-/obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
+/obj/effect/forcefield/cosmic_field/atom_init(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
 	antimagic_flags = flags
 

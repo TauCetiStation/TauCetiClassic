@@ -28,7 +28,7 @@
 	/// The range of the paintings effect
 	var/range = 7
 
-/obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/atom_init(mapload, dir, building)
 	. = ..()
 	if(ispath(applied_trauma))
 		var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(apply_trauma))
@@ -175,7 +175,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
 	)
 
-/obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/vines/atom_init(mapload, dir, building)
 	. = ..()
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
 

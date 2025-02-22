@@ -212,7 +212,7 @@
 	pixel_z = -48
 	greyscale_config = /datum/greyscale_config/heretic_rune
 
-/obj/effect/heretic_rune/big/Initialize(mapload, path_colour)
+/obj/effect/heretic_rune/big/atom_init(mapload, path_colour)
 	. = ..()
 	if (path_colour)
 		set_greyscale(colors = list(path_colour))
@@ -230,7 +230,7 @@
 	/// We only set this state after setting the colour, otherwise the animation doesn't colour correctly
 	var/animation_state = "transmutation_rune_draw"
 
-/obj/effect/temp_visual/drawing_heretic_rune/Initialize(mapload, path_colour = COLOR_WHITE)
+/obj/effect/temp_visual/drawing_heretic_rune/atom_init(mapload, path_colour = COLOR_WHITE)
 	. = ..()
 	set_greyscale(colors = list(path_colour))
 	icon_state = animation_state

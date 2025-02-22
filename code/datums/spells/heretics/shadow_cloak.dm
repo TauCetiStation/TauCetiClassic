@@ -227,7 +227,7 @@
 	duration = 0.75 SECONDS
 	icon_state = "curse"
 
-/obj/effect/temp_visual/dir_setting/cloak_walk/Initialize(mapload, set_dir)
+/obj/effect/temp_visual/dir_setting/cloak_walk/atom_init(mapload, set_dir)
 	. = ..()
 	animate(src, alpha = 0, time = duration - 1)
 
