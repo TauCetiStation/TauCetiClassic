@@ -14,7 +14,7 @@
 	var/static/list/actions_to_add = list(
 		/obj/effect/proc_holder/spell/emp/eldritch = BB_GENERIC_ACTION,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/ash = null,
-		/obj/effect/proc_holder/spell/shapeshift/eldritch = BB_SHAPESHIFT_ACTION,
+		/obj/effect/proc_holder/spell/no_target/shapeshift/eldritch = BB_SHAPESHIFT_ACTION,
 	)
 
 /mob/living/simple_animal/heretic_summon/stalker/atom_init()
