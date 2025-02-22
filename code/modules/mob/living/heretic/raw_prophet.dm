@@ -14,7 +14,7 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	loot_list = list(/obj/effect/gibspawner/human, /obj/item/organ/external/l_arm, /obj/item/organ/internal/eyes)
+	loot_list = list(/obj/effect/gibspawner/human = 1, /obj/item/organ/external/l_arm = 1, /obj/item/organ/internal/eyes = 1)
 	/// List of innate abilities we have to add.
 	var/static/list/innate_abilities = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/ash/long = null,

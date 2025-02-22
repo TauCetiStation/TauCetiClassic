@@ -27,7 +27,7 @@
 	w_class = SIZE_MASSIVE
 	layer = LARGE_MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	loot_list = list(/obj/effect/temp_visual/cosmic_domain)
+	loot_list = list(/obj/effect/temp_visual/cosmic_domain = 1)
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
 
