@@ -52,9 +52,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "pens_bin"
 
-	var/itemsMax = 5
-
-	var/image/front_side
+	var/list/pens_locations = list(list(-2, 4), list(-2, 5), list(-3, 6), list(-3, 7), list(-4, 7))
 
 /obj/item/pens_bin/atom_init(mapload)
 	. = ..()
@@ -62,13 +60,17 @@
 	if(mapload)
 		var/turf/T = get_turf(src)
 		for(var/obj/item/weapon/pen/Pen in T.contents)
+			var/list/offsets = pick(pens_locations)
+			Pen.pixel_x = offsets[1]
+			Pen.pixel_y = offsets[2]
 			Pen.forceMove(src)
-
-	front_side = image('icons/obj/items.dmi', "pens_bin_front")
-	update_icon()
+		update_icon()
 
 /obj/item/pens_bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/pen) && contents.len < itemsMax)
+	if(istype(I, /obj/item/weapon/pen))
+		var/list/offsets = pick(pens_locations)
+		I.pixel_x = offsets[1]
+		I.pixel_y = offsets[2]
 		user.drop_from_inventory(I, src)
 		update_icon()
 		return
@@ -77,16 +79,12 @@
 /obj/item/pens_bin/attack_hand(mob/user)
 	if(contents.len)
 		var/list/pens = list()
-		pens["Pickup"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 		for(var/obj/item/weapon/pen in contents)
 			pens[pen] = image(icon = pen.icon, icon_state = pen.icon_state)
 
 		var/obj/item/weapon/pen/selection = show_radial_menu(user, src, pens, require_near = TRUE, tooltips = TRUE)
 
 		if(selection)
-			if(selection == "Pickup")
-				return ..()
-
 			if(ishuman(user))
 				user.put_in_hands(selection)
 			else
@@ -96,14 +94,12 @@
 		..()
 
 /obj/item/pens_bin/update_icon()
-	cut_overlay(front_side)
-	front_side.clear_filters()
-
-	var/i = 1
+	cut_overlays()
 	for(var/obj/item/Pen in contents)
-		front_side.add_filter("add_item_[i])", 1, layering_filter(x = rand(-3, -1), y = rand(4, 7), icon = icon(Pen.icon, Pen.icon_state), flags = FILTER_UNDERLAY))
-		i++
+		add_overlay(Pen)
 
+	var/image/front_side = image('icons/obj/items.dmi', "pens_bin_front")
+	front_side.layer = layer + 0.01
 	add_overlay(front_side)
 
 /obj/item/globe
