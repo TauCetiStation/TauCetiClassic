@@ -9,7 +9,8 @@
 	health = 16
 	maxHealth = 16
 	melee_damage = 8
-	attack_sound = 'sound/items/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
+	ventcrawler = 2
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	attack_verb_simple = "bite"
@@ -29,4 +30,3 @@
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
