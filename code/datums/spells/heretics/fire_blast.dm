@@ -47,7 +47,7 @@
 	else
 		to_beam.apply_damage(25, BURN)
 		to_beam.adjust_fire_stacks(3)
-		to_beam.ignite_mob()
+		to_beam.IgniteMob()
 		// Apply the fire blast status effect to show they got blasted
 		to_beam.apply_status_effect(/datum/status_effect/fire_blasted, beam_duration * 0.5)
 
@@ -67,7 +67,7 @@
 			nearby_living.Weaken(0.8 SECONDS)
 			nearby_living.apply_damage(20, BURN)
 			nearby_living.adjust_fire_stacks(2)
-			nearby_living.ignite_mob()
+			nearby_living.IgniteMob()
 
 /// Timer callback to continue the chain, calling send_fire_bream recursively.
 /obj/effect/proc_holder/spell/charged/beam/fire_blast/proc/continue_beam(mob/living/carbon/beamed, bounces)
@@ -153,7 +153,7 @@
 		return
 	living_entered.apply_damage(15, BURN)
 	living_entered.adjust_fire_stacks(2)
-	living_entered.ignite_mob()
+	living_entered.IgniteMob()
 	// Apply the fireblasted effect - no overlay
 	living_entered.apply_status_effect(/datum/status_effect/fire_blasted)
 

@@ -91,7 +91,7 @@
 	playsound(our_turf, 'sound/effects/cosmic_energy.ogg', 50, TRUE, -1)
 	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
 	new /obj/effect/temp_visual/space_explosion(our_turf)
-	jaunter.extinguish_mob()
+	jaunter.ExtinguishMob()
 
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	return TRUE

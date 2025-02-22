@@ -16,7 +16,7 @@
 	invocation_type = "whisper"
 
 /obj/effect/proc_holder/spell/aoe_turf/fiery_rebirth/cast(mob/living/carbon/human/cast_on)
-	cast_on.extinguish_mob()
+	cast_on.ExtinguishMob()
 	return ..()
 
 /obj/effect/proc_holder/spell/aoe_turf/fiery_rebirth/get_things_to_cast_on(atom/center)
