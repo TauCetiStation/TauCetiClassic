@@ -98,13 +98,14 @@
 
 /obj/machinery/computer/security/proc/switch_to_camera(obj/machinery/camera/camera_to_switch)
 	if(active_camera)
-		active_camera.being_looked_through = FALSE
+		active_camera.client_computers -= src
 		active_camera.update_icon()
 	active_camera = camera_to_switch
+	active_camera.client_computers += src
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 	update_active_camera_screen()
-	camera_to_switch.announce_activation()
+	active_camera.set_active()
 
 //Camera control: moving.
 /obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
@@ -180,6 +181,8 @@
 
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		active_camera.client_computers -= src
+		active_camera.update_icon()
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
