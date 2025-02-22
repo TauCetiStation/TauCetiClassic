@@ -2,10 +2,23 @@
 	name = "bundle of bubliks"
 	desc = "Бублики на верёвке."
 	icon_state = "baranki_7"
+	item_state = "baranki_7"
+	item_state_world = "baranki_world"
 
 	var/bubliksAmount = 7
 
 	item_action_types = list(/datum/action/item_action/hands_free/pickBublik)
+
+/obj/item/clothing/neck/bundle_of_bubliks/update_world_icon()
+	update_icon()
+
+/obj/item/clothing/neck/bundle_of_bubliks/update_icon()
+	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE))
+		icon_state = "baranki_[bubliksAmount]"
+	else
+		icon_state = "baranki_[bubliksAmount]_world"
+
+	item_state = "baranki_[bubliksAmount]"
 
 /datum/action/item_action/hands_free/pickBublik
 	name = "Pick a Bublik"
@@ -25,7 +38,7 @@
 	if(!Bundle.bubliksAmount)
 		qdel(Bundle)
 
-	Bundle.icon_state = "baranki_[Bundle.bubliksAmount]"
+	Bundle.update_icon()
 
 /obj/item/clothing/head/jesterhat
 	name = "Jester's hat"
