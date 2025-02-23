@@ -114,7 +114,6 @@
 		MM.equip(H)
 	return ..()
 
-#define NOSTROMO_CAT		"Nostromo Cat"
 
 /datum/faction/nostromo_cat
 	name = NOSTROMO_CAT
