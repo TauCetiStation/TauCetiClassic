@@ -15,9 +15,9 @@
 	if(!silent)
 		if(master?.current)
 			to_chat(master.current, span_warning("The essence of [owner], your servant, fades from your mind."))
-		if(owner.current)
-			to_chat(owner.current, span_deconversion_message("Your mind begins to fill with haze - your master is no longer[master ? " [master]":""], you are free!"))
-			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] been freed from the chains of the Mansus!"), ignored_mobs = owner.current)
+		if(antag.current)
+			to_chat(antag.current, span_deconversion_message("Your mind begins to fill with haze - your master is no longer[master ? " [master]":""], you are free!"))
+			antag.current.visible_message(span_deconversion_message("[antag.current] looks like [antag.current.p_theyve()] been freed from the chains of the Mansus!"), ignored_mobs = antag.current)
 
 	master = null
 	return ..()
@@ -36,5 +36,5 @@
 
 	objectives += master_obj
 	owner.announce_objectives()
-	to_chat(owner, span_boldnotice("You are a [ishuman(owner.current) ? "shambling corpse returned":"horrible creation brought"] to this plane through the Gates of the Mansus."))
+	to_chat(owner, span_boldnotice("You are a [ishuman(antag.current) ? "shambling corpse returned":"horrible creation brought"] to this plane through the Gates of the Mansus."))
 	to_chat(owner, span_notice("Your master is [master]. Assist them to all ends."))

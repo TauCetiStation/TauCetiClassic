@@ -210,10 +210,10 @@
 			return TRUE
 
 /datum/role/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
-	if (isnull(owner) || isnull(owner.current))
+	if (isnull(owner) || isnull(antag.current))
 		return
 	var/confirmed = tgui_alert(
-		owner.current,
+		antag.current,
 		message = "Are you sure? You will no longer be able to Ascend.",
 		title = "Reject the call?",
 		buttons = list("Yes", "No"),
@@ -229,7 +229,7 @@
 
 /datum/role/heretic/farewell()
 	if(!silent)
-		to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
+		to_chat(antag.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
 	return ..()
 
 /datum/role/heretic/on_gain()
@@ -249,13 +249,13 @@
 /datum/role/heretic/on_removal()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_lose(owner.current, src)
+		knowledge.on_lose(antag.current, src)
 
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
 
 /datum/role/heretic/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/our_mob = mob_override || owner.current
+	var/mob/living/our_mob = mob_override || antag.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= F_HERETICS
 
@@ -269,7 +269,7 @@
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
 
 /datum/role/heretic/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/our_mob = mob_override || owner.current
+	var/mob/living/our_mob = mob_override || antag.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= F_HERETICS
 
@@ -594,8 +594,8 @@
  */
 /datum/role/heretic/proc/passive_influence_gain()
 	knowledge_points++
-	if(owner.current.stat <= SOFT_CRIT)
-		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
+	if(antag.current.stat <= SOFT_CRIT)
+		to_chat(antag.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 
 /datum/role/heretic/roundend_report()
@@ -662,7 +662,7 @@
 		to_chat(admin, span_warning("The heretic doesn't have a living heart knowledge for some reason. What?"))
 		return
 
-	heart_knowledge.on_research(owner.current, src)
+	heart_knowledge.on_research(antag.current, src)
 
 /**
  * Admin proc for adding a marked mob to a heretic's sac list.
@@ -678,8 +678,8 @@
 		return
 
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
-		to_chat(owner.current, span_danger("The Mansus has modified your targets. Go find them!"))
-		to_chat(owner.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role?.title || "human"]."))
+		to_chat(antag.current, span_danger("The Mansus has modified your targets. Go find them!"))
+		to_chat(antag.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role?.title || "human"]."))
 
 	add_sacrifice_target(new_target)
 
@@ -707,7 +707,7 @@
 		return
 
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
-		to_chat(owner.current, span_danger("The Mansus has modified your targets."))
+		to_chat(antag.current, span_danger("The Mansus has modified your targets."))
 
 /**
  * Admin proc for easily adding / removing knowledge points.
@@ -731,7 +731,7 @@
 		to_chat(admin, span_warning("You shouldn't be using this!"))
 		return
 
-	var/mob/living/pawn = owner.current
+	var/mob/living/pawn = antag.current
 	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), SLOT_NECK, TRUE, TRUE)
 	#warn Missmatched slots? ^^^
 	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))
@@ -775,8 +775,8 @@
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
 	researched_knowledge[knowledge_type] = initialized_knowledge
-	initialized_knowledge.on_research(owner.current, src)
-	update_static_data(owner.current)
+	initialized_knowledge.on_research(antag.current, src)
+	update_static_data(antag.current)
 	return TRUE
 
 /**
@@ -848,7 +848,7 @@
  * and returns HERETIC_HAS_LIVING_HEART if they have a living heart
  */
 /datum/role/heretic/proc/has_living_heart()
-	var/obj/item/organ/our_living_heart = owner.current?.get_organ_slot(living_heart_organ_slot)
+	var/obj/item/organ/our_living_heart = antag.current?.get_organ_slot(living_heart_organ_slot)
 	if(!our_living_heart)
 		return HERETIC_NO_HEART_ORGAN
 
