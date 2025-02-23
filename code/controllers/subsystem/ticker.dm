@@ -301,8 +301,9 @@ SUBSYSTEM_DEF(ticker)
 	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Приятной игры!</B></FONT>")
-	for(var/mob/M as anything in player_list)
-		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	if(!config.disable_station_announce)
+		for(var/mob/M as anything in player_list)
+			M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	if(length(SSholiday.holidays))
 		to_chat(world, "<span class='notice'>и...</span>")
@@ -379,7 +380,8 @@ SUBSYSTEM_DEF(ticker)
 				if(M.stat != DEAD)	//Just you wait for real destruction!
 					var/turf/T = get_turf(M)
 					if(T && is_station_level(T.z))
-						M.death(0)	//No mercy
+						if(T.explosive_resistance != INFINITY)
+							M.death(0)
 
 		if(1)	//nuke was nearby but (mostly) missed
 			if(override == "nuclear emergency")

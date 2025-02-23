@@ -568,3 +568,29 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 /obj/effect/landmark/red_team
 	name = "Red Team"
 	icon_state = "x"
+
+//		DYNAMIC AMBIENCE
+/obj/effect/landmark/ambience
+	name = "Ambience"
+	var/ambience_next_time
+	var/ambience = list()
+	var/current_ambience
+
+/obj/effect/landmark/ambience/atom_init()
+	. = ..()
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(round_start))
+
+/obj/effect/landmark/ambience/proc/round_start()
+	ambience_next_time = world.time + 1 MINUTE
+	START_PROCESSING(SSobj, src)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/effect/landmark/ambience/process()
+	if(world.time > ambience_next_time)
+		ambience_next_time = world.time + rand(2, 4) MINUTE
+		current_ambience = pick(ambience - current_ambience)
+		play_current_ambience()
+
+/obj/effect/landmark/ambience/proc/play_current_ambience()
+	for(var/mob/M as anything in player_list)
+		M.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)

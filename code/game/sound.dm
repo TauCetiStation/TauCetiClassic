@@ -167,7 +167,11 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /mob/proc/playsound_lobbymusic()
 	if(!SSticker || !SSticker.login_music || !client)
 		return
-	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
+	var/music = SSticker.login_music
+	var/datum/map_module/MM = SSmapping.get_map_module()
+	if(MM && MM.map_lobby_music)
+		music = MM.map_lobby_music
+	playsound_music(music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
 	if(!client || !client.prefs_ready)
