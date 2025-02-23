@@ -85,7 +85,7 @@
 		return
 
 	if(href_list["lobby_ready"])
-		if(config.alt_lobby_menu)
+		if(config.alt_lobby_menu || !config.allow_qualities)
 			return
 		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
