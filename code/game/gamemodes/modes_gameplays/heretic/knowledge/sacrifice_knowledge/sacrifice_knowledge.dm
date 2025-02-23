@@ -554,7 +554,7 @@
 
 	// Oh god where are we?
 	sac_target.flash_eyes()
-	sac_target.adjust_confusion(60 SECONDS)
+	sac_target.AdjustConfused(60 SECONDS)
 	sac_target.set_jitter_if_lower(120 SECONDS)
 	sac_target.blurEyes(100 SECONDS)
 	sac_target.set_dizzy_if_lower(1 MINUTES)
