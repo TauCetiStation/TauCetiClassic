@@ -10,7 +10,7 @@
 /obj/item/weapon/grenade/flashbang/prime()
 	..()
 
-	var/flashbang_turf = get_turf(src)
+	var/turf/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
 
@@ -19,13 +19,22 @@
 	S.start()
 	new /obj/effect/dummy/lighting_obj(flashbang_turf, LIGHT_COLOR_WHITE, (flashbang_range + 2), 4, 2)
 
+	var/savedByHero = FALSE
+	for(var/mob/living/carbon/human/H in flashbang_turf.contents)
+		if(!H.lying)
+			continue
+
+		savedByHero = TRUE
+		bang(flashbang_turf, H) //Hero takes double flashbang damage.
+		break
+
 	for(var/obj/structure/closet/L in hear(flashbang_range, flashbang_turf))
 		if(locate(/mob/living/carbon) in L)
 			for(var/mob/living/carbon/M in L)
-				bang(flashbang_turf, M)
+				bang(flashbang_turf, M, savedByHero)
 
 	for(var/mob/living/carbon/M in hear(flashbang_range, flashbang_turf))
-		bang(flashbang_turf, M)
+		bang(flashbang_turf, M, savedByHero)
 
 	for(var/obj/structure/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
 		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
@@ -33,13 +42,13 @@
 
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)	// Added a new proc called 'bang' that takes a location and a person to be banged.
+/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M, savedByHero = FALSE)	// Added a new proc called 'bang' that takes a location and a person to be banged.
 	to_chat(M, "<span class='warning'><B>BANG</B></span>")
 	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 
 //Checking for protections
-	var/eye_safety = 0
-	var/ear_safety = 0
+	var/eye_safety = savedByHero ? 1 : 0 //Hero saves our eyes.
+	var/ear_safety = savedByHero ? 1 : 0 //Hero saves our ears.
 	if(iscarbon(M))
 		eye_safety = M.eyecheck()
 		if(ishuman(M))

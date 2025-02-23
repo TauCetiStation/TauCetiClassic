@@ -134,6 +134,18 @@ SUBSYSTEM_DEF(explosions)
 	if(!epicenter)
 		return
 
+
+	var/blastProtectionMultiplier = 1
+	for(var/mob/living/carbon/human/H in epicenter.contents)
+		if(!H.lying)
+			continue
+
+		blastProtectionMultiplier -= 0.3 //30% reduction for a single hero
+		if(blastProtectionMultiplier <= 0.6) //40% reduction max for balance purpose
+			blastProtectionMultiplier = 0.6
+			break
+
+
 	if(isnull(flame_range))
 		flame_range = light_impact_range
 	if(isnull(flash_range))
@@ -142,11 +154,11 @@ SUBSYSTEM_DEF(explosions)
 	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
 
 	if(!ignorecap)
-		devastation_range = min(MAX_EX_DEVESTATION_RANGE , devastation_range)
-		heavy_impact_range = min(MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min(MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min(MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min(MAX_EX_FLAME_RANGE, flame_range)
+		devastation_range = round(min(MAX_EX_DEVESTATION_RANGE, devastation_range) * blastProtectionMultiplier)
+		heavy_impact_range = round(min(MAX_EX_HEAVY_RANGE, heavy_impact_range) * blastProtectionMultiplier)
+		light_impact_range = round(min(MAX_EX_LIGHT_RANGE, light_impact_range) * blastProtectionMultiplier)
+		flash_range = round(min(MAX_EX_FLASH_RANGE, flash_range) * blastProtectionMultiplier)
+		flame_range = round(min(MAX_EX_FLAME_RANGE, flame_range) * blastProtectionMultiplier)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
