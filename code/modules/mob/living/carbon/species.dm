@@ -2277,8 +2277,8 @@
 	return ..()
 
 // copypast from ipc yeaah
-/datum/species/nostromo_android
-	name = NOSTROMO_ANDROID
+/datum/species/android
+	name = ANDROID
 	icobase = 'icons/mob/human_races/r_android.dmi'
 	eyes_icon = 'icons/mob/human_face.dmi'
 	eyes = "eyes"
@@ -2288,8 +2288,8 @@
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
-	brute_mod = 3
-	burn_mod = 3
+	brute_mod = 1.5
+	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0
@@ -2340,3 +2340,9 @@
 	is_common = TRUE
 
 	default_mood_event = /datum/mood_event/machine
+
+
+/datum/species/android/nostromo
+	name = NOSTROMO_ANDROID
+	brute_mod = 2
+	burn_mod = 2

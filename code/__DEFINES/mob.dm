@@ -108,6 +108,7 @@
 #define ABOMINATION    	 "disgusting abomination"
 #define SERPENTID        "Serpentid"
 #define MOTH		     "Moth"
+#define ANDROID		     "Android"
 
 
 #define MONKEY         	 "Monkey"

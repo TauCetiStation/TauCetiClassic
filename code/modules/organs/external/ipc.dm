@@ -24,7 +24,7 @@
 	controller_type = /datum/bodypart_controller/robot/ipc
 
 /obj/item/organ/external/head/robot/ipc/is_compatible(mob/living/carbon/human/H)
-	if(H.species.name == IPC)
+	if(H.species.name in (IPC, ANDROID, NOSTROMO_ANDROID))
 		return TRUE
 
 	return FALSE
