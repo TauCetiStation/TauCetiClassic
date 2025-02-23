@@ -42,8 +42,6 @@
 			QDEL_NULL(role.antag.original)
 	return ..()
 
-#define F_NOSTROMO_CREW		"Nostromo Crew"
-#define NOSTROMO_CREWMATE	"Nostromo Crewmate"
 
 /datum/faction/nostromo_crew
 	name = F_NOSTROMO_CREW
@@ -95,7 +93,6 @@
 	if(dead_crew == alltime_crew)
 		round_end = TRUE
 
-#define NOSTROMO_ANDROID	"Nostromo Android"
 
 /datum/faction/nostromo_android
 	name = NOSTROMO_ANDROID
