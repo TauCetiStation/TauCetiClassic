@@ -11,6 +11,12 @@
 	invocation = "E'P"
 	invocation_type = "whisper"
 
+	var/emp_heavy = 2
+	var/emp_light = 3
 
-	emp_heavy = 6
-	emp_light = 10
+/obj/effect/proc_holder/spell/emp/eldritch/cast(list/targets)
+
+	for(var/mob/living/target in targets)
+		empulse(target.loc, emp_heavy, emp_light, custom_effects = EMP_SEBB)
+
+	return
