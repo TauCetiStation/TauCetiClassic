@@ -60,7 +60,7 @@
 	INVOKE_ASYNC(unlinked_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	unlinked_mob.AdjustParalysis(0.5 SECONDS) //micro stun
 
-/mob/living/simple_animal/heretic_summon/raw_prophet/melee_attack(atom/target, list/modifiers, ignore_cooldown)
+/mob/living/simple_animal/heretic_summon/raw_prophet/get_unarmed_attack(atom/target, list/modifiers, ignore_cooldown)
 	SpinAnimation(speed = 5, loops = 1)
 	if (target == src)
 		return

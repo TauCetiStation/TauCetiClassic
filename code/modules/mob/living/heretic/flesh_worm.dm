@@ -91,7 +91,7 @@
 	SIGNAL_HANDLER
 	register_behind(null)
 
-/mob/living/simple_animal/heretic_summon/armsy/melee_attack(atom/target, list/modifiers, ignore_cooldown)
+/mob/living/simple_animal/heretic_summon/armsy/get_unarmed_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(!istype(target, /obj/item/organ/external/l_arm || /obj/item/organ/external/r_arm))
 		return ..()
 	visible_message(span_warning("[src] devours [target]!"))

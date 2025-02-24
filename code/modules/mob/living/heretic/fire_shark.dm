@@ -13,7 +13,7 @@
 	ventcrawler = 2
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
-	attack_verb_simple = "bite"
+	attacktext = "bite"
 	damage_coeff = list(BRUTE = 1, BURN = 0.25, TOX = 0, STAMINA = 0, OXY = 0)
 	faction = "heretic"
 	w_class = SIZE_TINY

@@ -45,7 +45,7 @@
 	set_light(4, l_color = "#dcaa5b")
 
 // Star gazer attacks everything around itself applies a spooky mark
-/mob/living/simple_animal/heretic_summon/star_gazer/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+/mob/living/simple_animal/heretic_summon/star_gazer/get_unarmed_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if (!. || !isliving(target))
 		return
