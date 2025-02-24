@@ -68,7 +68,7 @@
 	var/mob/living/simple_animal/heretic_summon/armsy/prev = src
 	for(var/i in 1 to worm_length)
 		prev = new_segment(behind = prev)
-	update_appearance(UPDATE_ICON_STATE)
+	update_icon()
 
 /// Grows a new segment behind the passed mob
 /mob/living/simple_animal/heretic_summon/armsy/proc/new_segment(mob/living/simple_animal/heretic_summon/armsy/behind)
@@ -82,7 +82,7 @@
 	if(!isnull(back)) // Shouldn't happen but just in case
 		UnregisterSignal(back, COMSIG_PARENT_QDELETING)
 	back = tail
-	update_appearance(UPDATE_ICON_STATE)
+	update_icon()
 	if(!isnull(back))
 		RegisterSignal(back, COMSIG_PARENT_QDELETING, PROC_REF(tail_deleted))
 

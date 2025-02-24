@@ -32,7 +32,7 @@
 	COOLDOWN_START(src, refill_cooldown, 30 SECONDS)
 	current_mass++
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
-	update_appearance(UPDATE_ICON_STATE)
+	update_icon()
 
 /obj/structure/eldritch_crucible/atom_deconstruct(disassembled = TRUE)
 	// Create a spillage if we were destroyed with leftover mass
@@ -198,7 +198,7 @@
 	balloon_alert(user, "potion created")
 
 	current_mass = 0
-	update_appearance(UPDATE_ICON_STATE)
+	update_icon()
 
 /*
  * "Bites the hand that feeds it", except more literally.
@@ -235,7 +235,7 @@
 		balloon_alert(feeder, "crubile fed ([current_mass] / [max_mass])")
 
 	qdel(consumed)
-	update_appearance(UPDATE_ICON_STATE)
+	update_icon()
 
 /obj/structure/eldritch_crucible/update_icon_state()
 	icon_state = "[base_icon_state][(current_mass == max_mass) ? null : "_empty"]"

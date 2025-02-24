@@ -25,7 +25,7 @@
 
 /mob/living/simple_animal/heretic_summon/rust_walker/setDir(newdir)
 	. = ..()
-	update_appearance(UPDATE_ICON_STATE)
+	update_icon()
 
 /mob/living/simple_animal/heretic_summon/rust_walker/update_icon_state()
 	. = ..()
