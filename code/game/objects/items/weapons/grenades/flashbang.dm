@@ -21,7 +21,7 @@
 
 	var/savedByHero = FALSE
 	for(var/mob/living/carbon/human/H in flashbang_turf.contents)
-		if(!H.lying)
+		if(!(H.lying && !H.timeofdeath)) //Mob is lying and is alive (Deadmen can't be heroes)
 			continue
 
 		savedByHero = TRUE
@@ -50,7 +50,7 @@
 	var/eye_safety = savedByHero ? 1 : 0 //Hero saves our eyes.
 	var/ear_safety = savedByHero ? 1 : 0 //Hero saves our ears.
 	if(iscarbon(M))
-		eye_safety = M.eyecheck()
+		eye_safety = savedByHero ? 1 : M.eyecheck()
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))

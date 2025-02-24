@@ -137,8 +137,15 @@ SUBSYSTEM_DEF(explosions)
 
 	var/blastProtectionMultiplier = 1
 	for(var/mob/living/carbon/human/H in epicenter.contents)
-		if(!H.lying)
+		if(!(H.lying && !H.timeofdeath)) //Mob is lying and is alive (Deadmen can't be heroes)
 			continue
+
+		if(devastation_range) //Double trouble for a Hero
+			SSexplosions.high_mov_atom += H
+		else if(heavy_impact_range)
+			SSexplosions.med_mov_atom += H
+		else
+			SSexplosions.low_mov_atom += H
 
 		blastProtectionMultiplier -= 0.3 //30% reduction for a single hero
 		if(blastProtectionMultiplier <= 0.6) //40% reduction max for balance purpose
