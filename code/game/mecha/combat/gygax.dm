@@ -3,7 +3,7 @@
 	name = "Gygax"
 	icon_state = "gygax"
 	initial_icon = "gygax"
-	step_in = 3
+	step_in = 2
 	dir_in = 1 //Facing North.
 	health = 300
 	deflect_chance = 15
@@ -13,7 +13,7 @@
 	var/overload_coeff = 2
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax
 	internal_damage_threshold = 35
-	max_equip = 3
+	max_equip = 5
 	var/overload = FALSE
 
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
@@ -83,8 +83,8 @@
 	overload_coeff = 1
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark
 	dna_lockable = TRUE
-	max_equip = 4
-	step_energy_drain = 5
+	max_equip = 6
+	step_energy_drain = 10
 
 /obj/mecha/combat/gygax/dark/atom_init()
 	. = ..()

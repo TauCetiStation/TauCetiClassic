@@ -5,10 +5,10 @@
 	name = "Marauder"
 	icon_state = "marauder"
 	initial_icon = "marauder"
-	step_in = 5
+	step_in = 3
 	health = 500
 	deflect_chance = 25
-	damage_absorption = list(BRUTE=0.5,BURN=0.7,BULLET=0.45,LASER=0.6,ENERGY=0.7,BOMB=0.7)
+	damage_absorption = list(BRUTE=0.5,BURN=0.7,BULLET=0.45,LASER=0.7,ENERGY=0.7,BOMB=0.7)
 	max_temperature = 60000
 	infra_luminosity = 3
 	var/zoom_mode = FALSE
@@ -23,8 +23,8 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
-	force = 45
-	max_equip = 4
+	force = 50
+	max_equip = 6
 	var/thrusters_active = FALSE
 	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 
@@ -64,11 +64,11 @@
 	icon_state = "seraph"
 	initial_icon = "seraph"
 	operation_req_access = list(access_cent_creed)
-	step_in = 3
+	step_in = 2
 	health = 550
 	wreckage = /obj/effect/decal/mecha_wreckage/seraph
 	internal_damage_threshold = 20
-	force = 55
+	force = 60
 	max_equip = 5
 
 /obj/mecha/combat/marauder/mauler

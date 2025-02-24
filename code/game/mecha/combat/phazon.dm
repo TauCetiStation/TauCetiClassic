@@ -21,7 +21,7 @@
 	var/phasing_energy_drain = 200
 	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
-	max_equip = 4
+	max_equip = 6
 
 /obj/mecha/combat/phazon/Destroy()
 	QDEL_NULL(switch_damtype_action)
