@@ -195,7 +195,7 @@
 	. = ..()
 	// This map doesn't have a Bridge, for some reason??
 	// Let them complete the ritual anywhere
-	if(!GLOB.areas_by_type[ritual_location])
+	if(!areas_by_type[ritual_location])
 		ritual_location = null
 
 /datum/heretic_knowledge/ultimate/rust_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

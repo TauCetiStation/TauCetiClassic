@@ -9,3 +9,6 @@ var/global/master_last_mode = null // this variable contain the last played mode
 var/global/list/modes_failed_start = list()
 
 var/global/autotraitors_spawn_cd = 15 MINUTES
+
+/// We want reality_smash_tracker to exist only once and be accessible from anywhere.
+var/datum/reality_smash_tracker/reality_smash_track = new

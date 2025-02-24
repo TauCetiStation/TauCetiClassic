@@ -230,7 +230,7 @@
 		to_chat(user, span_notice("You need to wield a bible to bind [src]!"))
 		return
 
-	var/passage = "[pick(GLOB.first_names_male)] [rand(1,9)]:[rand(1,25)]" // Space Bibles will have Alejandro 9:21 passages, as part of the Very New Testament.
+	var/passage = "[pick(first_names_male)] [rand(1,9)]:[rand(1,25)]" // Space Bibles will have Alejandro 9:21 passages, as part of the Very New Testament.
 	user.visible_message(span_cult_bold("You start reading aloud the passage in [passage]..."), span_cult_bold("[user] starts reading aloud the passage in [passage]..."))
 	if(!do_after(user, 12 SECONDS, src))
 		to_chat(user, span_notice("You were interrupted!"))

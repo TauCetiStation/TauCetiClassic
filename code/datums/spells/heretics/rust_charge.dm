@@ -23,7 +23,7 @@
 	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	victim.rust_heretic_act()
-	for(var/dir in GLOB.cardinals)
+	for(var/dir in cardinal)
 		var/turf/nearby_turf = get_step(victim, dir)
 		if(istype(nearby_turf))
 			nearby_turf.rust_heretic_act()
@@ -31,7 +31,7 @@
 /datum/action/cooldown/mob_cooldown/charge/rust/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
 		return
-	for(var/dir in GLOB.cardinals)
+	for(var/dir in cardinal)
 		var/turf/source = get_turf(owner)
 		var/turf/closed/next_turf = get_step(charger, dir)
 		if(!istype(source) || !istype(next_turf) || !HAS_TRAIT(source, TRAIT_RUSTY) || !HAS_TRAIT(next_turf, TRAIT_RUSTY))

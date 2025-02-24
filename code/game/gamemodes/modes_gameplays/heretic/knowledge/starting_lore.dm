@@ -1,8 +1,7 @@
 // Heretic starting knowledge.
 
 /// Global list of all heretic knowledge that have is_starting_knowledge = TRUE. List of PATHS.
-GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
-
+var/list/heretic_start_knowledge = initialize_starting_knowledge()
 /**
  * Returns a list of all heretic knowledge TYPEPATHS
  * that have route set to PATH_START.
@@ -170,7 +169,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 			user.apply_damage(20, BRUTE, BP_CHEST)
 			selected_atoms -= our_new_heart // so we don't delete our old heart while we dramatically toss is out
-			our_new_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
+			our_new_heart.throw_at(get_edge_target_turf(user, pick(alldirs)), 2, 2)
 		our_new_heart = our_replacement_heart
 
 	if(!our_new_heart)

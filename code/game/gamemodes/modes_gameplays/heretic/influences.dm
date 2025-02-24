@@ -22,7 +22,7 @@
 	var/list/datum/mind/tracked_heretics = list()
 
 /datum/reality_smash_tracker/Destroy(force)
-	if(GLOB.reality_smash_track == src)
+	if(reality_smash_track == src)
 		stack_trace("[type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 		message_admins("The [type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 	QDEL_LIST(smashes)
@@ -172,7 +172,7 @@
 
 /obj/effect/heretic_influence/atom_init()
 	. = ..()
-	GLOB.reality_smash_track.smashes += src
+	reality_smash_track.smashes += src
 	generate_name()
 
 	var/image/heretic_image = image(icon, src, real_icon_state, OBJ_LAYER)
@@ -180,13 +180,12 @@
 
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
-	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
 
 /obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
-	return (user.mind in GLOB.reality_smash_track.tracked_heretics)
+	return (user.mind in reality_smash_track.tracked_heretics)
 
 /obj/effect/heretic_influence/Destroy()
-	GLOB.reality_smash_track.smashes -= src
+	reality_smash_track.smashes -= src
 	return ..()
 
 /obj/effect/heretic_influence/attack_hand_secondary(mob/user, list/modifiers)
@@ -253,7 +252,7 @@
 	var/obj/effect/visible_heretic_influence/illusion = new /obj/effect/visible_heretic_influence(drop_location())
 	illusion.name = "\improper" + pick_list(HERETIC_INFLUENCE_FILE, "drained") + " " + format_text(name)
 
-	GLOB.reality_smash_track.num_drained++
+	reality_smash_track.num_drained++
 	qdel(src)
 
 /**

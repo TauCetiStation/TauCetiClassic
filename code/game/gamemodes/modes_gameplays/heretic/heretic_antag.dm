@@ -239,7 +239,7 @@
 	if(give_objectives)
 		forge_primary_objectives()
 
-	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
+	for(var/starting_knowledge in heretic_start_knowledge)
 		gain_knowledge(starting_knowledge)
 
 
@@ -260,7 +260,7 @@
 	our_mob.faction |= F_HERETICS
 
 	if (!issilicon(our_mob))
-		GLOB.reality_smash_track.add_tracked_mind(owner)
+		reality_smash_track.add_tracked_mind(owner)
 
 	ADD_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
 	RegisterSignal(our_mob, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
@@ -273,8 +273,8 @@
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= F_HERETICS
 
-	if (owner in GLOB.reality_smash_track.tracked_heretics)
-		GLOB.reality_smash_track.remove_tracked_mind(owner)
+	if (owner in reality_smash_track.tracked_heretics)
+		reality_smash_track.remove_tracked_mind(owner)
 
 	REMOVE_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
 	UnregisterSignal(our_mob, list(
@@ -421,7 +421,7 @@
 /datum/role/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
 	SIGNAL_HANDLER
 
-	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) // uhh let's find the guy to shove him back in
+	for(var/mob/dead/observer/ghost in dead_mob_list) // uhh let's find the guy to shove him back in
 		if((ghost.mind?.current == source) && ghost.client) // is it the same guy and do they have the same client
 			ghost.reenter_corpse() // shove them in! it doesnt do it automatically
 
@@ -910,14 +910,14 @@
 	// Factor in the length of the main path first.
 	target_amount = main_path_length
 	// Add in the base research we spawn with, otherwise it'd be too easy.
-	target_amount += length(GLOB.heretic_start_knowledge)
+	target_amount += length(heretic_start_knowledge)
 	// And add in some buffer, to require some sidepathing, especially since heretics get some free side paths.
 	target_amount += rand(2, 4)
 	update_explanation_text()
 
 /datum/objective/heretic_research/update_explanation_text()
 	. = ..()
-	explanation_text = "Research at least [target_amount] knowledge from the Mansus. You start with [length(GLOB.heretic_start_knowledge)] researched."
+	explanation_text = "Research at least [target_amount] knowledge from the Mansus. You start with [length(heretic_start_knowledge)] researched."
 
 /datum/objective/heretic_research/check_completion()
 	var/datum/role/heretic/heretic_datum = owner?.GetRoleByType(/datum/role/heretic)
