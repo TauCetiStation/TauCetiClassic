@@ -3,7 +3,7 @@
 	name = "APLU \"Ripley\""
 	icon_state = "ripley"
 	initial_icon = "ripley"
-	step_in = 6
+	step_in = 5
 	max_temperature = 20000
 	health = 200
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
@@ -86,7 +86,7 @@
 	name = "DEATH-RIPLEY"
 	icon_state = "deathripley"
 	initial_icon = "deathripley"
-	step_in = 2
+	step_in = 1
 	opacity=0
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
@@ -110,7 +110,7 @@
 	operation_req_access = list(access_syndicate)
 	internals_req_access = list(access_syndicate)
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/deathripley
-	max_equip = 2
+	max_equip = 4
 
 /obj/mecha/working/ripley/deathripley/pirate/atom_init()
 	. = ..()
