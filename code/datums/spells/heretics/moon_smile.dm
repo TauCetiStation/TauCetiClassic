@@ -15,7 +15,7 @@
 	invocation = "Mo'N S'M'LE"
 	invocation_type = "shout"
 
-	cast_range = 6
+	range = 6
 
 	active_msg = "You prepare to let them see the true face..."
 

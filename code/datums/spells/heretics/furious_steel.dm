@@ -18,7 +18,7 @@
 
 	active_msg = "You summon forth three blades of furious silver."
 	deactive_msg = "You conceal the blades of furious silver."
-	cast_range = 20
+	range = 20
 	projectile_type = /obj/item/projectile/floating_blade
 	projectile_amount = 3
 

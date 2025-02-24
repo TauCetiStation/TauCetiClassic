@@ -16,9 +16,9 @@
 	invocation_type = "whisper"
 
 
-	cast_range = 9
+	range = 9
 	/// The minimum range to cast the phase.
-	var/min_cast_range = 3
+	var/min_range = 3
 	/// The radius of damage around the void bubble
 	var/damage_radius = 1
 
@@ -27,7 +27,7 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) < min_cast_range)
+	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) < min_range)
 		cast_on.balloon_alert(owner, "too close!")
 		return . | SPELL_CANCEL_CAST
 

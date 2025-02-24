@@ -14,7 +14,7 @@
 	invocation_type = "whisper"
 
 
-	//cast_range = 4 -- cause idk what that var do, we're maybe fix it sometime in tests
+	//range = 4 -- cause idk what that var do, we're maybe fix it sometime in tests
 
 	/// What type of wound we apply
 	var/wound_type = /datum/wound/slash/flesh/critical/cleave

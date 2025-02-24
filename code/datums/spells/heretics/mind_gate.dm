@@ -14,7 +14,7 @@
 	invocation = "Op' 'oY 'Mi'd"
 	invocation_type = "whisper"
 
-	cast_range = 6
+	range = 6
 
 	active_msg = "You prepare to open your mind..."
 

@@ -11,7 +11,7 @@
 	sound = 'sound/effects/voidblink.ogg'
 
 	charge_max = 1 MINUTES
-	cast_range = 3
+	range = 3
 
 	sound = null
 	school = SCHOOL_FORBIDDEN

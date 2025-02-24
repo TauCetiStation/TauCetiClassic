@@ -15,7 +15,7 @@
 	invocation_type = "whisper"
 
 
-	cast_range = 6
+	range = 6
 
 /obj/effect/proc_holder/spell/pointed/blood_siphon/can_cast_spell(feedback = TRUE)
 	return ..() && isliving(owner)

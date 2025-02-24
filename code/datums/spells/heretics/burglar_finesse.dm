@@ -13,7 +13,7 @@
 	invocation_type = "whisper"
 
 
-	cast_range = 6
+	range = 6
 
 /obj/effect/proc_holder/spell/pointed/burglar_finesse/is_valid_target(mob/living/carbon/human/cast_on)
 	if(!istype(cast_on))

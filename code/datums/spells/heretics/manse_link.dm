@@ -16,7 +16,7 @@
 
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
-	cast_range = 7
+	range = 7
 
 	/// The time it takes to link to a mob.
 	var/link_time = 6 SECONDS

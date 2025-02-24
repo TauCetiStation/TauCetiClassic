@@ -14,7 +14,7 @@
 	invocation_type = "whisper"
 
 
-	cast_range = 4
+	range = 4
 
 	/// The radius of the cleave effect
 	var/cleave_radius = 1

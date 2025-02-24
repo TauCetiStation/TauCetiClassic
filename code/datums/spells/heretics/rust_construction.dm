@@ -15,7 +15,7 @@
 	invocation_type = INVOCATION_EMOTE
 
 
-	cast_range = 4
+	range = 4
 
 	/// How long does the filter last on walls we make?
 	var/filter_duration = 2 MINUTES
