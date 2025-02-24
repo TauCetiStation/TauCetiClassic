@@ -1185,7 +1185,7 @@
 /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield
 	name = "Advanced EMP Shielding Module"
 	desc = "A powerful EMP shielding module that provides protection, completely neutralizing EMP effects up to three times before requiring replacement."
-	icon_state = "emp_shield"
+	icon_state = "tesla"
 	origin_tech = "magnets=4"
 	var/uses = 6
 
