@@ -13,7 +13,7 @@
 	obj_damage = 400
 	armour_penetration = 20
 	melee_damage = 40
-	attack_verb = "ravage"
+	attacktext = "ravage"
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	melee_attack_cooldown = 0.6 SECONDS
