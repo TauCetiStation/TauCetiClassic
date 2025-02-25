@@ -1329,7 +1329,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("basic_robotics")
 	required_tech_levels = list()
-	cost = 100
+	cost = 500
 
 	unlocks_designs = list("ripley_main", "ripley_peri")
 
@@ -1377,7 +1377,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("advanced_robotics")
 	required_tech_levels = list()
-	cost = 2000
+	cost = 1500
 
 	unlocks_designs = list("aifixer", "safeguard_module", "onentemploye_module", "protectstation_module", "notele_module", "quarantine_module", "oxygen_module", "freeform_module", "reset_module", "purge_module", "freeformcore_module", "asimov_module", "paladin_module", "holopad", "aicore", "aiupload", "borgupload")
 
