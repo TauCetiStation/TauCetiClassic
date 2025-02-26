@@ -3,7 +3,7 @@
 	name = OUTFIT_JOB_NAME("Captain")
 
 	uniform = /obj/item/clothing/under/rank/captain
-	shoes = /obj/item/clothing/shoes/brown
+	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/caphat
 	glasses = /obj/item/clothing/glasses/sunglasses
 
@@ -28,7 +28,7 @@
 	name = OUTFIT_JOB_NAME("Head of Personnel")
 
 	uniform = /obj/item/clothing/under/rank/head_of_personnel
-	shoes = /obj/item/clothing/shoes/brown
+	shoes = /obj/item/clothing/shoes/laceup
 
 	l_ear = /obj/item/device/radio/headset/heads/hop
 	belt = /obj/item/device/pda/heads/hop
