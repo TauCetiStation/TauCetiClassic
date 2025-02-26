@@ -249,9 +249,9 @@
 	visible_message(span_danger("[user] has unbound [src]!"))
 	bound = FALSE
 	for(var/obj/effect/proc_holder/spell/sword_spell as anything in path_sword_actions)
-		sword_spell.Grant(trapped_entity)
+		trapped_entity.AddSpell(sword_spell)
 	for(var/obj/effect/proc_holder/spell/wielder_spell as anything in path_wielder_actions)
-		wielder_spell.Grant(user)
+		user.AddSpell(wielder_spell)
 	free_use = TRUE
 	force += 5
 	armour_penetration += 10
@@ -313,7 +313,7 @@
 	// Give the spirit a spell that lets them try to fly around.
 	var/obj/effect/proc_holder/spell/pointed/sword_fling/fling_act = \
 	new /obj/effect/proc_holder/spell/pointed/sword_fling(trapped_mind, to_fling = src)
-	fling_act.Grant(trapped_entity)
+	trapped_entity.AddSpell(fling_act)
 
 	// Set the sword's path for spell selection.
 	heretic_path = heretic_holder.heretic_path

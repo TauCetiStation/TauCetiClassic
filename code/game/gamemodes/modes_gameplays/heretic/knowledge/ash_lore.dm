@@ -189,10 +189,10 @@
 /datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	var/obj/effect/proc_holder/spell/fire_sworn/circle_spell = new(user.mind)
-	circle_spell.Grant(user)
+	user.AddSpell(circle_spell)
 
 	var/obj/effect/proc_holder/spell/fire_cascade/big/screen_wide_fire_spell = new(user.mind)
-	screen_wide_fire_spell.Grant(user)
+	user.AddSpell(screen_wide_fire_spell)
 
 	var/obj/effect/proc_holder/spell/charged/beam/fire_blast/existing_beam_spell = locate() in user.actions
 	if(existing_beam_spell)

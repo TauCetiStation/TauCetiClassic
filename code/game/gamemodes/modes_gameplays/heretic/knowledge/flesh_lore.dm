@@ -288,7 +288,7 @@
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	var/obj/effect/proc_holder/spell/no_target/shapeshift/shed_human_form/worm_spell = new(user.mind)
-	worm_spell.Grant(user)
+	user.AddSpell(worm_spell)
 
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)

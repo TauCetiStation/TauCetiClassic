@@ -201,7 +201,7 @@
 	. = ..()
 	// buffs
 	var/obj/effect/proc_holder/spell/no_target/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
-	transform_spell.Grant(user)
+	user.AddSpell(transform_spell)
 
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	var/datum/heretic_knowledge/blade_upgrade/flesh/lock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/lock)

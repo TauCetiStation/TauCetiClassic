@@ -206,7 +206,7 @@
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/role/heretic/our_heretic)
 	var/obj/effect/proc_holder/spell/created_action = created_action_ref?.resolve()
 	if(created_action?.owner == user)
-		created_action.Remove(user)
+		user.RemoveSpell(created_action)
 
 /**
  * A knowledge subtype for knowledge that can only
