@@ -858,7 +858,7 @@
 	id = "emp_shield"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield
-	materials = list(MAT_METAL=10000, MAT_GOLD=500, MAT_SILVER=500)
+	materials = list(MAT_METAL=5000, MAT_GOLD=1500, MAT_SILVER=500)
 	construction_time = 50
 	category = list("Exosuit Equipment")
 
