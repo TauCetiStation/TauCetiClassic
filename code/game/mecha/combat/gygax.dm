@@ -5,7 +5,7 @@
 	initial_icon = "gygax"
 	step_in = 2
 	dir_in = 1 //Facing North.
-	health = 300
+	health = 400
 	deflect_chance = 15
 	damage_absorption = list(BRUTE=0.75,BURN=1,BULLET=0.8,LASER=0.7,ENERGY=0.85,BOMB=1)
 	max_temperature = 25000
@@ -48,7 +48,7 @@
 	name = "Gygax Ultra"
 	icon_state = "ultra"
 	initial_icon = "ultra"
-	health = 350
+	health = 450
 	deflect_chance = 20
 	damage_absorption = list(BRUTE=0.65,BURN=0.9,BULLET=0.7,LASER=0.6,ENERGY=0.75,BOMB=0.9)
 	max_temperature = 30000
@@ -76,7 +76,7 @@
 	name = "Dark Gygax"
 	icon_state = "darkgygax"
 	initial_icon = "darkgygax"
-	health = 400
+	health = 500
 	deflect_chance = 25
 	damage_absorption = list(BRUTE=0.6,BURN=0.8,BULLET=0.6,LASER=0.5,ENERGY=0.65,BOMB=0.8)
 	max_temperature = 45000
