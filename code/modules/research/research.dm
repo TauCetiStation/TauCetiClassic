@@ -1329,7 +1329,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("basic_robotics")
 	required_tech_levels = list()
-	cost = 500
+	cost = 250
 
 	unlocks_designs = list("ripley_main", "ripley_peri")
 
@@ -1345,7 +1345,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("basic_robotics")
 	required_tech_levels = list()
-	cost = 500
+	cost = 250
 
 	unlocks_designs = list("odysseus_main", "odysseus_peri")
 
@@ -1361,7 +1361,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("mech_odysseus", "mech_ripley")
 	required_tech_levels = list()
-	cost = 500
+	cost = 250
 
 	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
 
@@ -1393,7 +1393,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("advanced_robotics")
 	required_tech_levels = list()
-	cost = 2000
+	cost = 4000
 
 	unlocks_designs = list("gygax_main", "gygax_peri", "gygax_targ")
 
@@ -1441,7 +1441,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("mech_durand")
 	required_tech_levels = list()
-	cost = 3000
+	cost = 4000
 
 	unlocks_designs = list("vindicator_main", "vindicator_peri", "vindicator_targ")
 
