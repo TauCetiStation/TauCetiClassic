@@ -96,6 +96,8 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
 	ME.attach(src)
+    ME = new /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield(src)
+	ME.attach(src)
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/gygax/dark/add_cell(obj/item/weapon/stock_parts/cell/C=null)
