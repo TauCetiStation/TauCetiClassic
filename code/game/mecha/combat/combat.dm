@@ -2,7 +2,7 @@
 	force = 30
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
-	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/window, /obj/structure/grille, /turf/simulated/wall)
+	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/, /turf/simulated/wall, /obj/machinery)
 	internal_damage_threshold = 50
 	maint_access = 0
 	//add_req_access = 0
@@ -89,13 +89,13 @@
 					if(iswallturf(target))
 						var/turf/simulated/wall/W = target
 						W.add_dent(WALL_DENT_HIT)
-						if(prob(5))
-							W.dismantle_wall(TRUE)
-							occupant_message("<span class='notice'>You smash through the wall.</span>")
-							visible_message("<b>[name] smashes through the wall</b>")
-							playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
+						W.take_damage(rand(75, 125))
+						playsound(src, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER)
+					else if(istype(target, /obj/mecha))
+						target.take_damage(rand(force / 2, force), BRUTE, MELEE, 0)
 					else
-						target.attackby(src,src.occupant)
+						target.take_damage(rand(force * 4, force * 6), BRUTE, MELEE, 0)
+					playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 					melee_can_hit = FALSE
 					VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
 					break
