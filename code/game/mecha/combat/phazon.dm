@@ -6,7 +6,7 @@
 	step_in = 1
 	dir_in = 1 //Facing North.
 	step_energy_drain = 3
-	health = 200
+	health = 300
 	deflect_chance = 30
 	damage_absorption = list(BRUTE=0.7,BURN=0.7,BULLET=0.7,LASER=0.7,ENERGY=0.7,BOMB=0.7)
 	max_temperature = 25000
@@ -16,7 +16,7 @@
 	//operation_req_access = list()
 	dna_lockable = TRUE
 	internal_damage_threshold = 25
-	force = 15
+	force = 25
 	var/phasing = FALSE
 	var/phasing_energy_drain = 200
 	var/datum/action/innate/mecha/mech_switch_damtype/switch_damtype_action = new
