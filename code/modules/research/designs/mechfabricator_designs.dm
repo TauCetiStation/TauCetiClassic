@@ -167,7 +167,7 @@
 	id = "ripley_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
-	materials = list(MAT_METAL=20000)
+	materials = list(MAT_METAL=25000)
 	construction_time = 150
 	starts_unlocked = TRUE
 	category = list("Ripley")
@@ -281,7 +281,7 @@
 	id = "gygax_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_torso
-	materials = list(MAT_METAL=46000, MAT_GLASS=18000, MAT_DIAMOND=1000)
+	materials = list(MAT_METAL=46000, MAT_GLASS=18000, MAT_DIAMOND=1600)
 	construction_time = 300
 	starts_unlocked = TRUE
 	category = list("Gygax")
@@ -291,7 +291,7 @@
 	id = "gygax_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_head
-	materials = list(MAT_METAL=18000, MAT_GLASS=9000, MAT_DIAMOND=1000)
+	materials = list(MAT_METAL=16000, MAT_GLASS=10000, MAT_DIAMOND=1600)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax")
@@ -301,7 +301,7 @@
 	id = "gygax_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_arm
-	materials = list(MAT_METAL=30000, MAT_DIAMOND=500)
+	materials = list(MAT_METAL=30000, MAT_DIAMOND=800)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax")
@@ -311,7 +311,7 @@
 	id = "gygax_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_arm
-	materials = list(MAT_METAL=30000, MAT_DIAMOND=500)
+	materials = list(MAT_METAL=30000, MAT_DIAMOND=800)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax")
@@ -321,7 +321,7 @@
 	id = "gygax_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_left_leg
-	materials = list(MAT_METAL=35000, MAT_DIAMOND=500)
+	materials = list(MAT_METAL=35000, MAT_DIAMOND=800)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax")
@@ -331,7 +331,7 @@
 	id = "gygax_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_right_leg
-	materials = list(MAT_METAL=35000, MAT_DIAMOND=500)
+	materials = list(MAT_METAL=35000, MAT_DIAMOND=800)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax")
@@ -382,7 +382,7 @@
 	id = "ultra_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_left_arm
-	materials = list(MAT_METAL=43750, MAT_DIAMOND=1050)
+	materials = list(MAT_METAL=43750, MAT_DIAMOND=1000)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax Ultra")
@@ -392,7 +392,7 @@
 	id = "ultra_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_right_arm
-	materials = list(MAT_METAL=43750, MAT_DIAMOND=1050)
+	materials = list(MAT_METAL=43750, MAT_DIAMOND=1000)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax Ultra")
@@ -402,7 +402,7 @@
 	id = "ultra_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_left_leg
-	materials = list(MAT_METAL=50000, MAT_DIAMOND=1050)
+	materials = list(MAT_METAL=50000, MAT_DIAMOND=1000)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax Ultra")
@@ -412,7 +412,7 @@
 	id = "ultra_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ultra_right_leg
-	materials = list(MAT_METAL=50000, MAT_DIAMOND=1050)
+	materials = list(MAT_METAL=50000, MAT_DIAMOND=1000)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Gygax Ultra")
@@ -463,7 +463,7 @@
 	id = "durand_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_arm
-	materials = list(MAT_METAL=35000, MAT_SILVER=3500)
+	materials = list(MAT_METAL=35000, MAT_SILVER=3200)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Durand")
@@ -473,7 +473,7 @@
 	id = "durand_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_arm
-	materials = list(MAT_METAL=35000, MAT_SILVER=3500)
+	materials = list(MAT_METAL=35000, MAT_SILVER=3200)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Durand")
@@ -483,7 +483,7 @@
 	id = "durand_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_leg
-	materials = list(MAT_METAL=40000, MAT_SILVER=3500)
+	materials = list(MAT_METAL=40000, MAT_SILVER=3200)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Durand")
@@ -493,7 +493,7 @@
 	id = "durand_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_leg
-	materials = list(MAT_METAL=40000, MAT_SILVER=3500)
+	materials = list(MAT_METAL=40000, MAT_SILVER=3200)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Durand")
@@ -585,7 +585,7 @@
 	id = "vindicator_armour"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/vindicator_armour
-	materials = list(MAT_METAL=60000, MAT_URANIUM=13000)
+	materials = list(MAT_METAL=60000, MAT_URANIUM=12000)
 	construction_time = 660
 	starts_unlocked = TRUE
 	category = list("Vindicator")
