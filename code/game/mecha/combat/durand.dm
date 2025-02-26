@@ -5,7 +5,7 @@
 	initial_icon = "durand"
 	step_in = 3
 	dir_in = 1 //Facing North.
-	health = 400
+	health = 500
 	deflect_chance = 25
 	damage_absorption = list(BRUTE=0.5,BURN=1.1,BULLET=0.65,LASER=0.85,ENERGY=0.9,BOMB=0.8)
 	max_temperature = 30000
@@ -100,7 +100,7 @@
 	initial_icon = "vindicator"
 	step_in = 3
 	dir_in = 1 //Facing North.
-	health = 440
+	health = 540
 	deflect_chance = 25
 	damage_absorption = list(BRUTE=0.5,BURN=1.0,BULLET=0.55,LASER=0.75,ENERGY=0.8,BOMB=0.7)
 	max_temperature = 30000
