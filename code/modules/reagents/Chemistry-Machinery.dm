@@ -421,12 +421,16 @@
 			var/name = sanitize_safe(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")) as text|null, MAX_NAME_LEN)
 			if(!name)
 				return FALSE
-			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			P.name = "[name] bottle"
-			P.icon_state = "bottle[bottlesprite]"
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
-			reagents.trans_to(P, 30)
+			var/a = 1
+			if(text2num(href_list["bulk"]))
+				a = ceil(reagents.total_volume / 30)
+			for(var/i = 0; i < a; i++)
+				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+				P.name = "[name] bottle"
+				P.icon_state = "bottle[bottlesprite]"
+				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_y = rand(-7, 7)
+				reagents.trans_to(P, 30)
 		else
 			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 			reagents.trans_to(P, 50)
@@ -671,7 +675,8 @@
 			dat += "<LI><A href='byond://?src=\ref[src];createpill=1'>Create pack</A> (10 units max)<BR>"
 		else
 			dat += "<LI><span class='disabled'>Create pack</span> (10 units max)<BR>"
-	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
+	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1;bulk=0'>Create bottle</A> ([condi ? "50" : "30"] units max)"
+	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1;bulk=1'>Create multiple bottles</A> ([condi ? "50" : "30"] units max)"
 	dat += "</UL>"
 
 	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
