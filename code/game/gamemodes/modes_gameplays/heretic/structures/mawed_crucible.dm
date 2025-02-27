@@ -214,7 +214,7 @@
 		return
 
 	to_chat(user, span_userdanger("[src] grabs your [arm.name]!"))
-	arm.dismember()
+	arm.droplimb(no_explode = TRUE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
 	consume_fuel(consumed = arm)
 
 /*
