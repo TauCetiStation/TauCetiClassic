@@ -1202,12 +1202,12 @@
 
 /mob/living/silicon/robot/pickup_ore()
 	var/turf/simulated/floor/F = get_turf(src)
-	var/obj/item/weapon/storage/bag/ore/B
 	if(istype(module, /obj/item/weapon/robot_module/miner))
-		for(var/bag in module.modules)
-			if(istype(bag, /obj/item/weapon/storage/bag/ore))
-				B = bag
-				if(B.max_storage_space == B.storage_space_used())
-					return
-				F.attackby(B, src)
-				break
+		for(var/obj/item/weapon/storage/bag/ore/B in module.modules)
+			if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
+				continue
+			F.attackby(B, src)
+			if(istype(src.pulling, /obj/structure/ore_box) && B.storage_space_used())
+				var/obj/structure/ore_box/O = src.pulling
+				O.attackby(B, src)
+			break
