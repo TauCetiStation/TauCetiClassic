@@ -197,7 +197,7 @@
 
 	else
 		carbon_victim.visible_message(
-			span_bolddanger("[caster] pulls [carbon_victim]'s [chosen_organ] out of [carbon_P_THEIR(victim)] [parsed_zone]!!"),
+			span_bolddanger("[caster] pulls [carbon_victim]'s [chosen_organ] out of [P_THEIR(carbon_victim)] [parsed_zone]!!"),
 			span_userdanger("[caster] pulls your [chosen_organ] out of your [parsed_zone]!!"),
 		)
 

@@ -86,7 +86,7 @@
 	if (!vary_icon_state)
 		return
 	var/mob/living/body = parent
-	body.update_appearance(UPDATE_ICON_STATE)
+	body.update_icon()
 
 /// Called when something sets us as ITS front
 /datum/component/mob_chain/proc/on_gained_tail(mob/living/body, mob/living/tail)
@@ -121,7 +121,7 @@
 /datum/component/mob_chain/proc/on_deletion()
 	SIGNAL_HANDLER
 	QDEL_NULL(back)
-	front?.update_appearance(UPDATE_ICON)
+	front?.update_icon()
 
 /// Pull our tail behind us when we move
 /datum/component/mob_chain/proc/on_moved(mob/living/mover, turf/old_loc)

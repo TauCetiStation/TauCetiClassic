@@ -111,7 +111,7 @@
 	var/obj/item/organ/external/their_poor_arm = human_user.get_active_hand()
 	if(prob(25))
 		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
-		their_poor_arm.dismember()
+		their_poor_arm.droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_BLUNT)
 		forceMove(their_poor_arm, src) // stored for later fishage
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
@@ -139,7 +139,7 @@
 	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [P_THEIR(user)] head off!"))
 	var/obj/item/organ/external/head/head = locate() in human_user.bodyparts
 	if(head)
-		head.dismember()
+		head.droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_BLUNT)
 		forceMove(head, src) // stored for later fishage
 	else
 		human_user.gib(DROP_ALL_REMAINS)

@@ -7,7 +7,7 @@ import {
   Section,
   Stack,
   Tabs,
-} from 'tgui-core/components';
+} from 'tgui/components';
 import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';

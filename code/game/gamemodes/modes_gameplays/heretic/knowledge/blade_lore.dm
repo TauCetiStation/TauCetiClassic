@@ -289,13 +289,13 @@
 	if(held_blade.infused)
 		return NONE
 	held_blade.infused = TRUE
-	held_blade.update_appearance(UPDATE_ICON)
+	held_blade.update_icon()
 
 	//Infuse our off-hand blade just so it's nicer visually
 	var/obj/item/weapon/sickly_blade/dark/off_hand_blade = cast_on.get_inactive_held_item()
 	if(istype(off_hand_blade, /obj/item/weapon/sickly_blade/dark))
 		off_hand_blade.infused = TRUE
-		off_hand_blade.update_appearance(UPDATE_ICON)
+		off_hand_blade.update_icon()
 	cast_on.update_held_items()
 
 	return COMPONENT_CAST_HANDLESS

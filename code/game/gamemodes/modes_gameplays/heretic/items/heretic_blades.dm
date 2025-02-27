@@ -150,7 +150,7 @@
 	//Remove the infusion from any blades we own (and update their sprite)
 	for(var/obj/item/weapon/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/weapon/sickly_blade/dark))
 		to_infuse.infused = FALSE
-		to_infuse.update_appearance(UPDATE_ICON)
+		to_infuse.update_icon()
 	user.update_held_items()
 
 	if(!check_behind(user, living_target))
@@ -165,7 +165,7 @@
 	. = ..()
 	if(infused)
 		infused = FALSE
-		update_appearance(UPDATE_ICON)
+		update_icon()
 
 /obj/item/weapon/sickly_blade/dark/update_icon_state()
 	. = ..()

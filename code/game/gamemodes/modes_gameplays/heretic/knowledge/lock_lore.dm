@@ -56,7 +56,7 @@
 	var/obj/item/clothing/under/suit = target.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	if(istype(suit) && suit.adjusted == NORMAL_STYLE)
 		suit.toggle_jumpsuit_adjust()
-		suit.update_appearance()
+		suit.update_icon()
 
 /datum/heretic_knowledge/lock_grasp/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
@@ -201,7 +201,7 @@
 	. = ..()
 	// buffs
 	var/obj/effect/proc_holder/spell/no_target/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
-	transform_spell.Grant(user)
+	user.AddSpell(transform_spell)
 
 	var/datum/role/heretic/heretic_datum = GET_HERETIC(user)
 	var/datum/heretic_knowledge/blade_upgrade/flesh/lock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/lock)

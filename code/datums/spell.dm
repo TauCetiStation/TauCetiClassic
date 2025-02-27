@@ -11,7 +11,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	opacity = 0
 	var/sound = null //The sound the spell makes when it is cast
 
-	var/owner = usr //Actually maybe usr won't always adequate inheritance of owner, but i really don't care, you know? It works, if not - Nasend will fix it :3
+	var/mob/living/owner = usr
 
 	var/school
 

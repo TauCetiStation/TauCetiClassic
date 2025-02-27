@@ -42,8 +42,8 @@
 
 	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
 	var/obj/effect/proc_holder/spell/in_hand/mansus_grasp/mad_touch = new /obj/effect/proc_holder/spell/in_hand/mansus_grasp()
-	mad_touch.Grant(our_mob)
-	moon_track.Grant(our_mob)
+	our_mob.AddSpell(mad_touch)
+	our_mob.AddSpell(moon_track)
 
 /datum/role/lunatic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || antag.current
