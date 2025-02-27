@@ -52,7 +52,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 8 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/realignment
-	tick_interval = 0.2 SECONDS
+	tick_interval = 2
 	show_duration = TRUE
 	///Traits to add/remove
 	var/list/realignment_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_PACIFISM)

@@ -411,7 +411,7 @@
 	steel_spell?.charge_max /= 2
 
 	var/mob/living/carbon/human/heretic = user
-	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
+	heretic.species.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
 
 /datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/weapon/sickly_blade/blade)
 	SIGNAL_HANDLER

@@ -49,7 +49,7 @@
 		T.clean_blood()
 		T.dirt = max(0, T.dirt - amount * 20) // #define MAGICAL_CLEANING_CONSTANT 20
 		for(var/obj/effect/O in T)
-			if(istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay))
+			if(istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay) || istype(O,/obj/effect/glowing_rune) || istype(O,/obj/effect/cosmic_rune) || istype(O,/obj/effect/heretic_rune))
 				qdel(O)
 	reagents.reaction(T, TOUCH, amount)
 	if(T.reagents)

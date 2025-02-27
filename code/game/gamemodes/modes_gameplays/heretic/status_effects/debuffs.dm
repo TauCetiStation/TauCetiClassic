@@ -154,7 +154,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/heretic_lastresort
 	duration = 12 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = STATUS_EFFECT_NO_TICK
+	tick_interval = 0
 
 /atom/movable/screen/alert/status_effect/heretic_lastresort
 	name = "Last Resort"
