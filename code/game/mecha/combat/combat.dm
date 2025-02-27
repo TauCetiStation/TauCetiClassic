@@ -2,7 +2,7 @@
 	force = 30
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
-	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/, /turf/simulated/wall, /obj/machinery)
+	var/list/destroyable_obj = list(/obj/mecha, /obj/structure, /turf/simulated/wall, /obj/machinery)
 	internal_damage_threshold = 50
 	maint_access = 0
 	//add_req_access = 0
