@@ -61,7 +61,7 @@
 
 	on_made_callback?.Invoke(human_target)
 	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, STATUS_EFFECT_TRAIT)
-	human_target.become_husk(STATUS_EFFECT_TRAIT)
+	human_target.mutations.Remove(HUSK)
 	human_target.faction |= F_HERETICS
 
 	if(human_target.mind)
@@ -90,7 +90,7 @@
 
 	on_lost_callback?.Invoke(human_target)
 	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, STATUS_EFFECT_TRAIT)
-	human_target.cure_husk(STATUS_EFFECT_TRAIT)
+	human_target.mutations.Add(HUSK)
 	human_target.faction -= F_HERETICS
 	human_target.mind?.remove_antag_datum(/datum/role/heretic_monster)
 

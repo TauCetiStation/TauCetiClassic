@@ -34,7 +34,7 @@
 		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
 
-	var/turf/open/our_turf = loc
+	var/turf/our_turf = loc
 	if(our_turf.GetTemperature() > T0C)
 		loc.balloon_alert(user, "ritual failed, not cold enough!")
 		return FALSE
@@ -76,14 +76,11 @@
 	research_tree_icon_path = 'icons/effects/effects.dmi'
 	research_tree_icon_state = "the_freezer"
 
-	/// Traits we apply to become immune to the environment
-	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
-
 /datum/heretic_knowledge/cold_snap/on_gain(mob/living/carbon/human/user, datum/role/heretic/our_heretic)
 	user.species.flags += NO_BREATHE
 	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
 
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/role/heretic/our_heretic)
+/datum/heretic_knowledge/cold_snap/on_lose(mob/living/carbon/human/user, datum/role/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
 	user.species.flags -= NO_BREATHE
 
@@ -96,9 +93,9 @@
 		var/affected_temperature = environment.return_temperature()
 		var/affected_pressure = environment.return_pressure()
 		if(affected_temperature <= T0C || affected_pressure < ONE_ATMOSPHERE)
-			user.add_traits(gain_traits, type)
+			ADD_TRAIT(user, TRAIT_NO_SLIP_SLIDE, type)
 		else
-			user.remove_traits(gain_traits, type)
+			REMOVE_TRAIT(user, TRAIT_NO_SLIP_SLIDE, type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
