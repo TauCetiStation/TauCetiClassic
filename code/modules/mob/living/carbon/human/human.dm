@@ -2269,8 +2269,8 @@
 		if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
 			continue
 		F.attackby(B, src)
-		if(istype(src.pulling, /obj/structure/ore_box) && B.storage_space_used())
-			var/obj/structure/ore_box/O = src.pulling
+		if(istype(pulling, /obj/structure/ore_box) && B.storage_space_used())
+			var/obj/structure/ore_box/O = pulling
 			O.attackby(B, src)
 		break
 
