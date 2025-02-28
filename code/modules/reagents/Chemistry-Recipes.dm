@@ -417,14 +417,14 @@
 
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
-		A.flash_lighting_fx(_range = (FLASH_LIGHT_RANGE * (sqrt(created_volume+1) / (created_volume+1))), _reset_lighting = FALSE)
+		A.flash_lighting_fx(_range = (FLASH_LIGHT_RANGE * (created_volume / (created_volume + 10)))), _reset_lighting = FALSE)
 
 	for(var/mob/living/carbon/M in viewers(world.view, location))
 		var/dist = get_dist(M, location)
 		if(M.eyecheck() > 0 && dist > 0)
 			continue
 		M.flash_eyes()
-		if(dist <= 6)
+		if(dist < world.view)
 			var/duration = floor(sqrt(created_volume) / 2) / sqrt(dist + 1)
 			M.Stun(duration)
 			M.Weaken(duration * 1.2)
