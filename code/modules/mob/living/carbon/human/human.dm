@@ -2273,7 +2273,7 @@
 			var/obj/structure/ore_box/O = src.pulling
 			O.attackby(B, src)
 		break
-	
+
 /mob/living/carbon/human/proc/randomize_appearance()
 	gender = pick(MALE, FEMALE)
 
