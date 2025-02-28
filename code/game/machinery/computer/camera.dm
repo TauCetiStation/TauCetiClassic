@@ -181,8 +181,9 @@
 
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
-		active_camera.client_computers -= src
-		active_camera.update_icon()
+		if(active_camera)
+			active_camera.client_computers -= src
+			active_camera.update_icon()
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
