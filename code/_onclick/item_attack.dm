@@ -61,6 +61,10 @@
 		if (do_surgery(M, user, src))
 			return FALSE
 
+	if(damtype != HALLOSS && force && HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		return FALSE
+
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if(user.ClumsyProbabilityCheck(50))
 			M = user
