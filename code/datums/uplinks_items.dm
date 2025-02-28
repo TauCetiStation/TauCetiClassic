@@ -52,6 +52,8 @@
 				continue
 			if(I.uplink_types.len && !(uplink.uplink_type in I.uplink_types))
 				continue
+			if(!I.special_conditions(uplink.uplink_type))
+				continue
 			if(I.last)
 				last += I
 				continue
@@ -95,6 +97,9 @@
 
 	// used for dealer items
 	var/need_wanted_level
+
+/datum/uplink_item/proc/special_conditions(uplink_type)
+	return TRUE
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 	if(item)
@@ -332,6 +337,10 @@
 	cost = 5
 	uplink_types = list("nuclear", "traitor")
 
+/datum/uplink_item/dangerous/emp/New()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost = 2
+
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
 	desc = "The Minibomb is a grenade with a five-second fuse."
@@ -360,7 +369,16 @@
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark
 	cost = 40
-	uplink_types = list("nuclear")
+	uplink_types = list("nuclear", "traitor")
+
+/datum/uplink_item/dangerous/gygax/special_conditions(uplink_type)
+	if(uplink_type == "nuclear")
+		return TRUE
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS) && uplink_type == "traitor")
+		cost = 20
+		return TRUE
+	return FALSE
+
 
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
@@ -1050,6 +1068,10 @@
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
+
+/datum/uplink_item/implants/emp/New()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost = 1
 
 /datum/uplink_item/implants/emp/dealer
 	cost = 14
