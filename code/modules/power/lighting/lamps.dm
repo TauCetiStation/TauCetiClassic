@@ -200,7 +200,7 @@
 			to_chat(user, "There is a working [fitting] already inserted.")
 			return
 		var/obj/item/device/lightreplacer/LR = W
-		if(LR.use_tool(src, user, 10, 1))
+		if(LR.use_tool(src, user, 5, 1))
 			if(status != LIGHT_EMPTY) // drop old bulb first
 				drop_light_bulb(user)
 			status = LIGHT_OK
@@ -420,10 +420,7 @@
 	switchcount = 0
 
 	dropping_bulb.update()
-
-	if(user) //puts it in our hands
-		dropping_bulb.add_fingerprint(user)
-		user.try_take(dropping_bulb)
+	dropping_bulb.dropped()
 
 	status = LIGHT_EMPTY
 	inserted_bulb_type = null
