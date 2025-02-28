@@ -417,7 +417,7 @@
 
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
-		A.flash_lighting_fx(_range = (created_volume / 3 + 2), _reset_lighting = FALSE)
+		A.flash_lighting_fx(_range = (FLASH_LIGHT_RANGE * (sqrt(created_volume+1) / (created_volume+1))), _reset_lighting = FALSE)
 
 	for(var/mob/living/carbon/M in viewers(world.view, location))
 		var/dist = get_dist(M, location)
