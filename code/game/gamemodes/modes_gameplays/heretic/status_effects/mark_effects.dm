@@ -267,7 +267,7 @@
 	SIGNAL_HANDLER
 
 	// The grasp itself deals stamina damage so we will ignore it
-	if(damagetype == STAMINA)
+	if(damagetype == HALLOSS)
 		return
 
 	damage_sustained += damage

@@ -19,7 +19,7 @@
 	invocation_type = "none"
 
 	///List of traits that are added to the heretic while in space phase jaunt
-	var/static/list/jaunting_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD, TRAIT_NOBREATH)
+	var/static/list/jaunting_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/Grant(mob/grant_to)
 	. = ..()
@@ -62,7 +62,7 @@
 /**
  * Attempts to enter the passed space or misc turfs.
  */
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_enter_jaunt(turf/our_turf, mob/living/jaunter)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_enter_jaunt(turf/our_turf, mob/living/carbon/human/jaunter)
 	// Begin the jaunt
 	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	var/obj/effect/dummy/phased_mob/holder = enter_jaunt(jaunter, our_turf)
@@ -87,6 +87,7 @@
 		jaunter.put_in_hands(right_hand)
 
 	jaunter.add_traits(jaunting_traits, SPACE_PHASING)
+	jaunter.species.flags += NO_BREATHE
 	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	playsound(our_turf, 'sound/effects/cosmic_energy.ogg', 50, TRUE, -1)
 	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
@@ -99,7 +100,7 @@
 /**
  * Attempts to Exit the passed space or misc turf.
  */
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_exit_jaunt(turf/our_turf, mob/living/jaunter, force = FALSE)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_exit_jaunt(turf/our_turf, mob/living/carbon/human/jaunter, force = FALSE)
 	if(!force && HAS_TRAIT_FROM(jaunter, TRAIT_NO_TRANSFORM, REF(src)))
 		to_chat(jaunter, span_warning("You cannot exit yet!!"))
 		return FALSE
@@ -107,6 +108,7 @@
 	if(!exit_jaunt(jaunter, our_turf))
 		return FALSE
 	jaunter.remove_traits(jaunting_traits, SPACE_PHASING)
+	jaunter.species.flags -= NO_BREATHE
 	our_turf.visible_message(span_boldwarning("[jaunter] rises out of [our_turf]!"))
 	return TRUE
 

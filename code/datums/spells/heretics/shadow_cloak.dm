@@ -197,7 +197,7 @@
 	SIGNAL_HANDLER
 
 	// Stam damage is generally bursty, so we'll half it
-	if(damagetype == STAMINA)
+	if(damagetype == HALLOSS)
 		damage *= 0.5
 
 	// Add incoming damage to the total damage sustained

@@ -18,7 +18,7 @@
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, HALLOSS = 0, OXY = 0)
 	death_sound = 'sound/effects/cosmic_expansion.ogg'
 
 	move_force = MOVE_FORCE_OVERPOWERING

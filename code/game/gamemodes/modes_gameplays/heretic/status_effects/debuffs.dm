@@ -219,7 +219,7 @@
 	SIGNAL_HANDLER
 
 	// Stamina damage is funky so we will ignore it
-	if(damagetype == STAMINA)
+	if(damagetype == HALLOSS)
 		return
 
 	damage_sustained += damage

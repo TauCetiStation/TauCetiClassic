@@ -164,16 +164,6 @@
 
 	announcement_text = "%SPOOKY% Бойтесь же пламени, пламени %NAME%, Лорда пепла, что вознесся! Да сгинет этот мир в огне! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_ash.ogg'
-	/// A static list of all traits we apply on ascension.
-	var/static/list/traits_to_apply = list(
-		TRAIT_BOMBIMMUNE,
-		TRAIT_NOBREATH,
-		TRAIT_NOFIRE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-	)
 
 /datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
@@ -186,7 +176,7 @@
 		return TRUE
 	return FALSE
 
-/datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/carbon/human/user, list/selected_atoms, turf/loc)
 	. = ..()
 	var/obj/effect/proc_holder/spell/fire_sworn/circle_spell = new(user.mind)
 	user.AddSpell(circle_spell)
@@ -203,4 +193,11 @@
 	var/obj/effect/proc_holder/spell/aoe_turf/fiery_rebirth/fiery_rebirth = locate() in user.actions
 	fiery_rebirth?.charge_max *= 0.16
 
-	user.add_traits(traits_to_apply, type)
+	ADD_TRAIT(user, TRAIT_BOMBIMMUNE, type)
+	ADD_TRAIT(user, TRAIT_NOFIRE, type)
+	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
+	ADD_TRAIT(user, TRAIT_RESISTHEAT, type)
+	ADD_TRAIT(user, TRAIT_RESISTHIGHPRESSURE, type)
+	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, type)
+
+	user.species.flags += NO_BREATHE

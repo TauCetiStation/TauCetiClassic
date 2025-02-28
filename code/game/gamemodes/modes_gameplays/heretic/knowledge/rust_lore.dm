@@ -178,7 +178,6 @@
 		TRAIT_BOMBIMMUNE,
 		TRAIT_IGNORESLOWDOWN,
 		TRAIT_NO_SLIP_ALL,
-		TRAIT_NOBREATH,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_RADIMMUNE,
@@ -211,7 +210,6 @@
 	. = ..()
 	trigger(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	var/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/rust_spread_spell = locate() in user.actions
 	rust_spread_spell?.charge_max /= 2
 
@@ -254,7 +252,7 @@
  *
  * Gives our heretic ([source]) buffs if they stand on rust.
  */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_move(mob/living/source, atom/old_loc, dir, forced, list/old_locs)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_move(mob/living/carbon/human/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
 	// If we're on a rusty turf, and haven't given out our traits, buff our guy
@@ -262,6 +260,7 @@
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		if(!immunities_active)
 			source.add_traits(conditional_immunities, type)
+			source.species.flags += NO_BREATHE
 			source.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 			immunities_active = TRUE
 
@@ -269,6 +268,7 @@
 	else
 		if(immunities_active)
 			source.remove_traits(conditional_immunities, type)
+			source.species.flags -= NO_BREATHE
 			source.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 			immunities_active = FALSE
 

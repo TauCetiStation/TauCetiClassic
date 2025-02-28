@@ -7,7 +7,7 @@
 	gender = NEUTER
 
 	habitable_atmos = null
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, HALLOSS = 0, OXY = 0)
 	speed = 0
 	melee_attack_cooldown = CLICK_CD_MELEE
 

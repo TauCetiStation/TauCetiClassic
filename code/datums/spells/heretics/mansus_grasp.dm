@@ -47,8 +47,6 @@
 		carbon_hit.AdjustWeakened(0.5 SECONDS)
 		carbon_hit.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
 		carbon_hit.adjust_dizzy_up_to(1.5 SECONDS, 3 SECONDS)
-		ADD_TRAIT(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)) // We don't want this to be a good stunning tool, just minor disorientation
-		addtimer(TRAIT_CALLBACK_REMOVE(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)), 1 SECONDS)
 
 		var/old_color = carbon_hit.color
 		carbon_hit.color = COLOR_CULT_RED
