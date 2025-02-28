@@ -31,7 +31,7 @@
 		var/mob/living/M = target
 		if(src.occupant.a_intent == INTENT_HARM)
 			playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
-			src.do_attack_animation(target, null, TRUE, "smash")
+			do_attack_animation(target, null, TRUE, "smash")
 			if(damtype == BRUTE)
 				step_away(M,src,15)
 			if(ishuman(target))
@@ -90,14 +90,14 @@
 					if(iswallturf(target))
 						var/turf/simulated/wall/W = target
 						W.add_dent(WALL_DENT_HIT)
-						src.do_attack_animation(target, null, TRUE, "smash")
+						do_attack_animation(target, null, TRUE, "smash")
 						W.take_damage(rand(75, 125))
 						playsound(src, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER)
 					else if(istype(target, /obj/mecha))
-						src.do_attack_animation(target, null, TRUE, "smash")
+						do_attack_animation(target, null, TRUE, "smash")
 						target.take_damage(rand(force / 2, force), BRUTE, MELEE, 0)
 					else
-						src.do_attack_animation(target, null, TRUE, "smash")
+						do_attack_animation(target, null, TRUE, "smash")
 						target.take_damage(rand(force * 4, force * 6), BRUTE, MELEE, 0)
 					playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 					melee_can_hit = FALSE
