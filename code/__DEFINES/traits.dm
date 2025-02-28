@@ -206,6 +206,7 @@
 #define TRAIT_SLEEPIMMUNE         "sleep_immunity"
 #define TRAIT_STUNIMMUNE          "stun_immunity"
 #define TRAIT_BATON_RESISTANCE    "baton_resistance"
+#define TRAIT_IGNORESLOWDOWN      "ignoreslow"
 
 /// The mob is holy and resistance to heretic magic
 #define TRAIT_HOLY "holy"

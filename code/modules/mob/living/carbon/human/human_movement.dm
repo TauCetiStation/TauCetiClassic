@@ -2,6 +2,9 @@
 	var/tally = 0
 	var/nullify_debuffs = FALSE
 
+	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
+		nullify_debuffs = TRUE
+
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.strained_muscles)
@@ -91,12 +94,16 @@
 			tally += item_slowdown
 		else if(!chem_nullify_debuff)
 			weight_tally += item_slowdown
+		else if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
+			weight_tally += item_slowdown
 
 	item_slowdown = back?.slowdown
 	if(item_slowdown)
 		if(item_slowdown < 0)
 			tally += item_slowdown
 		else if(!chem_nullify_debuff)
+			weight_tally += item_slowdown
+		else if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
 			weight_tally += item_slowdown
 
 	if(shoes)
@@ -105,6 +112,8 @@
 			if(item_slowdown < 0)
 				tally += item_slowdown
 			else if(!chem_nullify_debuff)
+				weight_tally += item_slowdown
+			else if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
 				weight_tally += item_slowdown
 	else
 		tally += species.speed_mod_no_shoes

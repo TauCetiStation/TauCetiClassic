@@ -40,8 +40,7 @@
 	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	AddElement(/datum/element/ai_target_damagesource)
 	AddComponent(/datum/component/regenerator, outline_colour = "#b97a5d")
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
 	set_light(4, l_color = "#dcaa5b")
 
 // Star gazer attacks everything around itself applies a spooky mark
