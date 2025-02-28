@@ -9,12 +9,11 @@
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/M)
     if(istype(M, /obj/mecha/working/clarke))
-        return 1
+        return TRUE
 
     if(istype(M, /obj/mecha/working/ripley))
-        return 1
-
-    return 0
+        return TRUE
+    return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/mecha/M)
 	..()

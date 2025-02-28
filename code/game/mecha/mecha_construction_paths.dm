@@ -1832,9 +1832,6 @@
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "clarke0"
 	const_holder.density = TRUE
-	spawn()
-		qdel(src)
-	return
 
 
 /datum/construction/reversible/mecha/clarke

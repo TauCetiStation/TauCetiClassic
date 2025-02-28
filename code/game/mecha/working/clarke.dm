@@ -10,7 +10,6 @@
 	deflect_chance = 15
 	lights_power = 8
 	max_equip = 3
-	deflect_chance = 20
 	step_energy_drain = 6
 	var/cargo_capacity = 15
 	var/list/cargo = new
