@@ -17,7 +17,7 @@
 
 	range = 6
 
-/obj/effect/proc_holder/spell/pointed/blood_siphon/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/pointed/blood_siphon/perform(feedback = TRUE)
 	return ..() && isliving(owner)
 
 /obj/effect/proc_holder/spell/pointed/blood_siphon/is_valid_target(atom/cast_on)

@@ -18,7 +18,7 @@
 /obj/effect/proc_holder/spell/in_hand/mansus_grasp/is_valid_target(atom/cast_on)
 	return TRUE // This baby can hit anything
 
-/obj/effect/proc_holder/spell/in_hand/mansus_grasp/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/in_hand/mansus_grasp/perform(feedback = TRUE)
 	return ..() && (!!isheretic(owner) || !!islunatic(owner))
 
 /obj/effect/proc_holder/spell/in_hand/mansus_grasp/on_antimagic_triggered(obj/item/weapon/magic/hand, atom/victim, mob/living/carbon/caster)

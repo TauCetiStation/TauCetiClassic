@@ -29,7 +29,7 @@
 	. = ..()
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/perform(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -41,7 +41,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/cast(mob/living/cast_on)
 	. = ..()
-	// Should always return something because we checked that in can_cast_spell before arriving here
+	// Should always return something because we checked that in perform before arriving here
 	var/turf/our_turf = get_turf(cast_on)
 	do_spacecrawl(our_turf, cast_on)
 

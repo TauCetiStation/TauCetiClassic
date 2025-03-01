@@ -30,7 +30,7 @@
 	. = ..()
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mirror_walk/perform(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
