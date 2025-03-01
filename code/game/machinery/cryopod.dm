@@ -171,6 +171,19 @@ var/global/list/frozen_items = list()
 	. = ..()
 	QDEL_NULL(announce)
 
+/obj/machinery/cryopod/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
+	qdel(src)
+
 /obj/machinery/cryopod/proc/delete_objective(datum/objective/target/O)
 	if(!O)
 		return
