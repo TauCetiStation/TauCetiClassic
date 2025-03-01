@@ -913,7 +913,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 				n_sheet.set_amount(sheet_amount)
 
 /datum/supply_pack/fancy_table
-	name = "Random fancy table"
+	name = "mixed fancy tables"
 	contains = list(/obj/item/weapon/table_parts/wood/fancy,
 		/obj/item/weapon/table_parts/wood/fancy,
 		/obj/item/weapon/table_parts/wood/fancy,
