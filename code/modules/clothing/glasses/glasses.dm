@@ -225,6 +225,13 @@
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 
+/obj/item/clothing/glasses/welding/superior/cheif_eng
+	name = "superior welding goggles"
+	desc = "Welding goggles made from more expensive materials, strangely smells like oil."
+	icon_state = "rwelding_CE-g"
+	item_state = "rwelding_CE-g"
+	item_state_world = "rwelding_CE-g_w"
+
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight."
