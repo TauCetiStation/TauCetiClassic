@@ -111,10 +111,8 @@
 	if(!used)
 		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
 		used = 1
-		icon_state = "health1"
 		spawn(cooldown) // splits off to handle the cooldown while handling wavelength
 			used = 0
-			icon_state = "health"
 		to_chat(user,"<span class='warning'>Успешное облучение [M].</span>")
 		M.log_combat(user, "irradiated with [name]")
 		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
@@ -173,6 +171,8 @@
 
 /obj/item/device/healthanalyzer/psychology
 	name = "Health and Mental Analyzer"
+
 	cases = list("анализатор здоровья и психики", "анализатора здоровья и психики", "анализатору здоровья и психики", "анализатор здоровья психики", "анализатором здоровья и психики", "анализаторе здоровья и психики")
 	desc = "Анализатор здоровья и психики, способный просканировать жизненные и психические показатели пациента."
 	scan_hallucination = TRUE
+	icon_state = "psyholog"
