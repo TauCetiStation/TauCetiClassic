@@ -4,7 +4,7 @@
 	var/total_TC = 0
 	var/spent_TC = 0
 	var/uplink_uses
-	var/uplink_type = "traitor"
+	var/uplink_type = UPLINK_TYPE_TRAITOR
 
 	// Dont uplink
 	var/syndicate_awareness = SYNDICATE_UNAWARE
