@@ -317,13 +317,14 @@
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
 		..()
+		playsound(src, 'sound/machines/sleeper_open.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		if(beaker)
 			beaker.loc = src
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
 		to_chat(target, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
-		playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+		playsound(src, 'sound/machines/sleeper_close.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
