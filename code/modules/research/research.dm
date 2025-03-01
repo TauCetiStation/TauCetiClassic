@@ -1329,7 +1329,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("basic_robotics")
 	required_tech_levels = list()
-	cost = 500
+	cost = 250
 
 	unlocks_designs = list("ripley_main", "ripley_peri")
 
@@ -1345,7 +1345,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("basic_robotics")
 	required_tech_levels = list()
-	cost = 500
+	cost = 250
 
 	unlocks_designs = list("odysseus_main", "odysseus_peri")
 
@@ -1361,7 +1361,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("mech_odysseus", "mech_ripley")
 	required_tech_levels = list()
-	cost = 1000
+	cost = 250
 
 	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
 
@@ -1377,7 +1377,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("advanced_robotics")
 	required_tech_levels = list()
-	cost = 2000
+	cost = 1500
 
 	unlocks_designs = list("aifixer", "safeguard_module", "onentemploye_module", "protectstation_module", "notele_module", "quarantine_module", "oxygen_module", "freeform_module", "reset_module", "purge_module", "freeformcore_module", "asimov_module", "paladin_module", "holopad", "aicore", "aiupload", "borgupload")
 
@@ -1393,7 +1393,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("advanced_robotics")
 	required_tech_levels = list()
-	cost = 2000
+	cost = 4000
 
 	unlocks_designs = list("gygax_main", "gygax_peri", "gygax_targ")
 
@@ -1409,7 +1409,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("mech_gyrax")
 	required_tech_levels = list()
-	cost = 4000
+	cost = 3000
 
 	unlocks_designs = list("ultra_main", "ultra_peri", "ultra_targ")
 
@@ -1473,7 +1473,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("mech_utility_modules")
 	required_tech_levels = list()
-	cost = 5000
+	cost = 3000
 
 	unlocks_designs = list("mech_teleporter")
 
@@ -1491,7 +1491,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("mech_ccw_armor", "mech_proj_armor")
+	unlocks_designs = list("mech_ccw_armor", "mech_proj_armor", "emp_shield")
 
 /datum/technology/mech_weaponry_modules
 	name = "Exosuit Weaponry"
@@ -1521,7 +1521,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("mech_weaponry_modules")
 	required_tech_levels = list()
-	cost = 4000
+	cost = 3000
 
 	unlocks_designs = list("mech_carbine", "mech_laser_heavy", "mech_ion", "mech_pulse", "mech_missile_rack", "clusterbang_launcher")
 
@@ -1553,7 +1553,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("basic_hardsuit_modules")
 	required_tech_levels = list()
-	cost = 2000
+	cost = 1500
 
 	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer", "rigempshield")
 
@@ -1569,7 +1569,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("advanced_hardsuit_modules")
 	required_tech_levels = list()
-	cost = 5000
+	cost = 4000
 
 	unlocks_designs = list("rigmountedlaserrifle", "rigrcd", "rigmedteleport", "rignuclearreactor", "rigrelay")
 
