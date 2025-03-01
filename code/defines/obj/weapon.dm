@@ -413,6 +413,26 @@
 	icon_state = "fancyblack_tableparts"
 	table_type = /obj/structure/table/woodentable/fancy/black
 
+/obj/item/weapon/table_parts/wood/fancy/blue
+	icon_state = "fancyblue_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy/blue
+
+/obj/item/weapon/table_parts/wood/fancy/cyan
+	icon_state = "fancycyan_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy/cyan
+
+/obj/item/weapon/table_parts/wood/fancy/green
+	icon_state = "fancygreen_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy/green
+
+/obj/item/weapon/table_parts/wood/fancy/orange
+	icon_state = "fancyorange_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy/orange
+
+/obj/item/weapon/table_parts/wood/fancy/purple
+	icon_state = "fancypurple_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy/purple
+
 /obj/item/weapon/table_parts/glass
 	name = "glass table parts"
 	desc = "Very fragile."
