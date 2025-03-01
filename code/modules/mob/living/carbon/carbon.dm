@@ -348,6 +348,9 @@
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 				pressure_alert = -2
+			if(HAS_TRAIT(src, TRAIT_RESISTCOLD))
+				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				pressure_alert = -2
 			else
 				pressure_alert = -1
 

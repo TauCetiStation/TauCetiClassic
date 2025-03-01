@@ -89,6 +89,8 @@
 	if(amount > 0)
 		if(RESIST_HEAT in mutations)
 			return
+		if(HAS_TRAIT(src, TRAIT_RESISTHEAT))
+			return
 		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)

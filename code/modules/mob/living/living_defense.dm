@@ -257,6 +257,9 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
+	if(HAS_TRAIT(src, TRAIT_NOFIRE))
+		return FALSE
+
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)

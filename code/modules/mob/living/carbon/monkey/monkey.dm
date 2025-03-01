@@ -53,6 +53,8 @@
 			return
 		if(RESIST_HEAT in mutations)
 			highpress_damage /= 3
+		if(HAS_TRAIT(src, TRAIT_RESISTHEAT))
+			highpress_damage /= 3
 		adjustBruteLoss(min(((adjusted_pressure / hazard_HIGH_pressure) - 1) * PRESSURE_DAMAGE_COEFFICIENT, highpress_damage))
 		pressure_alert = 2
 	else if(adjusted_pressure < warning_LOW_pressure)
@@ -60,6 +62,8 @@
 			pressure_alert = -1
 			return
 		if(COLD_RESISTANCE in mutations)
+			lowpress_damage /= 3
+		if(HAS_TRAIT(src, TRAIT_RESISTCOLD))
 			lowpress_damage /= 3
 		adjustBruteLoss(lowpress_damage)
 		pressure_alert = -2
@@ -82,10 +86,16 @@
 		if(RESIST_HEAT in mutations)
 			temp_alert = 1
 			return
+		if(HAS_TRAIT(src, TRAIT_RESISTHEAT))
+			temp_alert = 1
+			return
 		temp_alert = 2
 		adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
 	else if(bodytemperature < cold_lvl_1)
 		if(COLD_RESISTANCE in mutations)
+			temp_alert = -1
+			return
+		if(HAS_TRAIT(src, TRAIT_RESISTCOLD))
 			temp_alert = -1
 			return
 		temp_alert = -2

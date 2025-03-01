@@ -258,6 +258,8 @@
 			return 0
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
+		if(HAS_TRAIT(src, TRAIT_RESISTCOLD))  //fireproof
+			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = burn_amount / H.bodyparts.len
 		var/extradam = 0	//added to when organ is at max dam
@@ -267,6 +269,8 @@
 		return 1
 	else if(ismonkey(src))
 		if (COLD_RESISTANCE in src.mutations) //fireproof
+			return 0
+		if(HAS_TRAIT(src, TRAIT_RESISTCOLD)) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)

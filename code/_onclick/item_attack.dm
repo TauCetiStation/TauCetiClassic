@@ -269,6 +269,9 @@
 			if (!(COLD_RESISTANCE in mutations))
 				to_chat(src, "Aargh it burns!")
 				take_bodypart_damage(0, power)
+			if(!HAS_TRAIT(src, TRAIT_RESISTCOLD))
+				to_chat(src, "Aargh it burns!")
+				take_bodypart_damage(0, power)
 	return TRUE
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
