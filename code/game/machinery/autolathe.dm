@@ -354,6 +354,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	stored_material[MAT_METAL] += m_amt
 	stored_material[MAT_GLASS] += g_amt
 	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
+	playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	if(I && I.loc == src)
 		qdel(I)
 	busy = FALSE
@@ -445,6 +446,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 			use_power(power)
 			icon_state = "autolathe"
 			flick("autolathe_n",src)
+			playsound(src, 'sound/machines/autolathe.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			spawn(32/coeff)
 				if(istype(recipe, /datum/autolathe_recipe/stack))
 					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] * multiplier

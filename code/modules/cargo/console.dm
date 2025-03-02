@@ -83,16 +83,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	if(href_list["send"])
 		if(!SSshuttle.can_move())
 			temp = "[safety_warning]<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
+			playsound(src, 'sound/machines/cargo_shuttle_error.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		else if(SSshuttle.at_station)
 			SSshuttle.moving = -1
 			SSshuttle.sell()
 			SSshuttle.send()
 			temp = "The supply shuttle has departed.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
+			playsound(src, 'sound/machines/cargo_shuttle_send.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		else
 			SSshuttle.moving = 1
 			SSshuttle.buy()
 			SSshuttle.set_eta_timeofday()
 			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600,1)] minutes.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
+			playsound(src, 'sound/machines/cargo_shuttle_call.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			post_signal("supply")
 
 	if(href_list["order"])
@@ -207,9 +210,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
 					temp += "<BR><A href='byond://?src=\ref[src];viewrequests=1'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					if(prob(5))
+						playsound(src, 'sound/machines/megabuy.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+					else
+						playsound(src, 'sound/machines/buysound.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				else
 					temp = "Not enough credits.<BR>"
 					temp += "<BR><A href='byond://?src=\ref[src];viewrequests=1'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
+					playsound(src, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				break
 
 	if(href_list["online_shop_delivery_cost"])
