@@ -473,5 +473,5 @@
 /obj/machinery/camera/proc/set_active()
 	if(stat & BROKEN)
 		return
-	playsound(src, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
+	playsound(src, 'sound/machines/camera_activate.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 	update_icon()
