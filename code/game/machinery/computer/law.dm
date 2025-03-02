@@ -29,7 +29,7 @@
 
 	if(istype(O, /obj/item/device/binary_decoder))
 		if(!current)
-			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации!")
+			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации!</b></span>")
 			return
 		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, required_skills, -0.2))
 			if(current)
