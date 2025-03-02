@@ -37584,7 +37584,6 @@
 /obj/item/weapon/stickers{
 	pixel_y = 16
 	},
-/obj/item/device/binary_decoder,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "boJ" = (
@@ -42710,6 +42709,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
@@ -81205,9 +81205,6 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "pnp" = (
-/obj/item/device/binary_decoder{
-	pixel_y = 10
-	},
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
