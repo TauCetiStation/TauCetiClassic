@@ -424,15 +424,15 @@
 			var/a = 1
 			if(text2num(href_list["bulk"]))
 				a = ceil(reagents.total_volume / 30)
-			for(var/i = 0; i < a; i++)
-				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			for(var/i = 1 to a)
+				var/obj/item/weapon/reagent_containers/glass/bottle/P = new(loc)
 				P.name = "[name] bottle"
 				P.icon_state = "bottle[bottlesprite]"
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P, 30)
 		else
-			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+			var/obj/item/weapon/reagent_containers/food/condiment/P = new(loc)
 			reagents.trans_to(P, 50)
 
 	else if(href_list["changepill"])
