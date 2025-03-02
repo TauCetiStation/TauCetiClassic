@@ -119,7 +119,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
-	if(!icon_exists(icon_path, "[t_state][icon_state_appendix]"))
+	if(icon_path != def_icon_path && !icon_exists(icon_path, "[t_state][icon_state_appendix]"))
 		icon_path = def_icon_path
 
 	var/fem = ""
