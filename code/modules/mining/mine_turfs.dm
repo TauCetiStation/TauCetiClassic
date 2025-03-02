@@ -711,6 +711,12 @@
 			for(var/obj/item/weapon/ore/O in contents)
 				O.attackby(W,user)
 				return
+	else if(istype(W, /obj/item/weapon/storage/bag/holding))
+		var/obj/item/weapon/storage/bag/holding/S = W
+		if(S.collection_mode)
+			for(var/obj/item/weapon/ore/O in contents)
+				O.attackby(W,user)
+				return
 	else if(istype(W, /obj/item/weapon/storage/bag/fossils))
 		var/obj/item/weapon/storage/bag/fossils/S = W
 		if(S.collection_mode)
