@@ -2,7 +2,6 @@
 	force = 30
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
-	var/list/destroyable_obj = list(/obj/mecha, /obj/structure, /turf/simulated/wall, /obj/machinery)
 	internal_damage_threshold = 50
 	maint_access = 0
 	//add_req_access = 0
@@ -83,26 +82,32 @@
 
 	else
 		if(damtype == BRUTE)
-			for(var/target_type in destroyable_obj)
-				if(istype(target, target_type) && hascall(target, "attackby"))
-					occupant_message("You hit [target].")
-					visible_message("<font color='red'><b>[name] hits [target]</b></font>")
-					if(iswallturf(target))
-						var/turf/simulated/wall/W = target
-						W.add_dent(WALL_DENT_HIT)
-						do_attack_animation(target, null, TRUE, "smash")
-						W.take_damage(rand(75, 125))
-						playsound(src, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER)
-					else if(istype(target, /obj/mecha))
-						do_attack_animation(target, null, TRUE, "smash")
-						target.take_damage(rand(force / 2, force), BRUTE, MELEE, 0)
-					else
-						do_attack_animation(target, null, TRUE, "smash")
-						target.take_damage(rand(force * 4, force * 6), BRUTE, MELEE, 0)
-					playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
-					melee_can_hit = FALSE
-					VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
-					break
+			if(istype(target, /obj/mecha))
+				occupant_message("You hit [target].")
+				visible_message("<font color='red'><b>[name] hits [target]</b></font>")
+				do_attack_animation(target, null, TRUE, "smash")
+				target.take_damage(rand(force / 2, force), BRUTE, MELEE, 0)
+				melee_can_hit = FALSE
+				VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
+			else if(iswallturf(target))
+				occupant_message("You hit [target].")
+				visible_message("<font color='red'><b>[name] hits [target]</b></font>")
+				var/turf/simulated/wall/W = target
+				W.add_dent(WALL_DENT_HIT)
+				do_attack_animation(target, null, TRUE, "smash")
+				W.take_damage(rand(75, 125))
+				playsound(src, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER)
+				melee_can_hit = FALSE
+				VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
+			else if(target.uses_integrity)
+				occupant_message("You hit [target].")
+				visible_message("<font color='red'><b>[name] hits [target]</b></font>")
+				do_attack_animation(target, null, TRUE, "smash")
+				target.take_damage(rand(force * 4, force * 6), BRUTE, MELEE, 0)
+				playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
+				melee_can_hit = FALSE
+				VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
+
 
 /obj/mecha/combat/moved_inside(mob/living/carbon/human/H)
 	if(..())
