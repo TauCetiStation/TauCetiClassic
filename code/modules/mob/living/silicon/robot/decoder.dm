@@ -16,7 +16,7 @@
 	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 	var/obj/item/weapon/paper/P = new(usr.loc)
 	P.fields = 0
-	P.name = "Законы [S.name]:"
+	P.name = "[S.name] Laws:"
 	P.info = "<tt>[S.write_laws()]</tt>"
 	P.updateinfolinks()
 	P.update_icon()
@@ -42,7 +42,7 @@
 
 /obj/machinery/ai_laws_server/attackby(obj/item/I, mob/user)
 	if(stat & NOPOWER)
-		to_chat(usr, "Консоль загрузки законов обесточена!")
+		to_chat(usr, "Сервер законов ИИ обесточен!")
 		return
 
 	if(istype(I, /obj/item/device/binary_decoder))
@@ -72,4 +72,4 @@
 	if (!current)
 		to_chat(user, "Активных ИИ не обнаружено.")
 	else
-		to_chat(user, "[current.name] selected for law changes.")
+		to_chat(user, "Выбран [current.name].")
