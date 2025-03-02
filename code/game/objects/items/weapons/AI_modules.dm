@@ -25,6 +25,12 @@ AI MODULES
 /obj/item/weapon/aiModule/proc/install(obj/machinery/computer/C)
 	if (istype(C, /obj/machinery/computer/aiupload))
 		var/obj/machinery/computer/aiupload/comp = C
+		if(comp.stat & NOPOWER)
+			to_chat(usr, "Консоль загрузки законов обесточена!")
+			return
+		if(comp.stat & BROKEN)
+			to_chat(usr, "Консоль загрузки законов сломана!")
+			return
 		if (!comp.current)
 			to_chat(usr, "Вы не выбрали ИИ, которому будут загружены законы!")
 			return

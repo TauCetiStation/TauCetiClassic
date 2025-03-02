@@ -12,15 +12,8 @@
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/O, mob/user)
 	if(!is_station_level(z))
-		to_chat(user, "<span class='warning'><b>Невозможно установить соединение</b>:</span> Вы слишком далеко от станции!")
-		return
-	if(stat & NOPOWER)
-		to_chat(usr, "Консоль загрузки законов обесточена!")
-		return
-	if(stat & BROKEN)
-		to_chat(usr, "Консоль загрузки законов сломана!")
-		return
-
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
+			return
 	if(istype(O, /obj/item/weapon/aiModule))
 		if(!do_skill_checks(user))
 			return
