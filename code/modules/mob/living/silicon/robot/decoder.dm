@@ -16,7 +16,7 @@
 	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 	var/obj/item/weapon/paper/P = new(usr.loc)
 	P.fields = 0
-	P.name = "[S.name] laws:"
+	P.name = "Законы [S.name]:"
 	P.info = "<tt>[S.write_laws()]</tt>"
 	P.updateinfolinks()
 	P.update_icon()

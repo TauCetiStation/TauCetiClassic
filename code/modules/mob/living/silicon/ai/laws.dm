@@ -79,7 +79,7 @@
 	if(forced)
 		prefix = ";"
 
-	if(say("[prefix]Current Active Laws:") != 1)
+	if(say("[prefix]Текущие активные законы:") != 1)
 		return
 
 	//laws_sanity_check()
