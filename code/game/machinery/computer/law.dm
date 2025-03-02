@@ -26,16 +26,6 @@
 			return
 		var/obj/item/weapon/aiModule/M = O
 		M.install(src)
-
-	if(istype(O, /obj/item/device/binary_decoder))
-		if(!current)
-			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации!</b></span>")
-			return
-		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, required_skills, -0.2))
-			if(current)
-				var/obj/item/device/binary_decoder/D = O
-				D.print_laws(current)
-				current.statelaws(forced = TRUE)
 	else
 		..()
 

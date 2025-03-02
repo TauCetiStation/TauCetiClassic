@@ -21,3 +21,55 @@
 	P.updateinfolinks()
 	P.update_icon()
 	usr.put_in_hands(P)
+
+/obj/machinery/ai_laws_server
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "comm_server"
+	name = "AI Laws Server"
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 100
+
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NONE, /datum/skill/research = SKILL_LEVEL_PRO)
+	fumbling_time = 3 SECONDS
+	req_access = list(access_rd)
+
+	resistance_flags = FULL_INDESTRUCTIBLE
+
+	var/mob/living/silicon/ai/current = null
+
+/obj/machinery/ai_laws_server/attackby(obj/item/I, mob/user)
+	if(stat & NOPOWER)
+		to_chat(usr, "Консоль загрузки законов обесточена!")
+		return
+
+	if(istype(I, /obj/item/device/binary_decoder))
+		if(!current)
+			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации!</b></span>")
+			return
+		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, required_skills, -0.2))
+			if(current)
+				var/obj/item/device/binary_decoder/D = I
+				D.print_laws(current)
+				current.statelaws(forced = TRUE)
+
+/obj/machinery/ai_laws_server/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/carbon/human/H = user
+	// AI and borgs apparently call attack_hand for some reason :).
+	if(!istype(H))
+		return
+	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return
+	if(!do_skill_checks(user))
+		return
+	current = select_active_ai(user)
+	if (!current)
+		to_chat(user, "No active AIs detected.")
+	else
+		to_chat(user, "[current.name] selected for law changes.")

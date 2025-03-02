@@ -352,9 +352,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -1539,7 +1537,9 @@
 	name = "AI Satellite Antechamber";
 	pixel_x = -26
 	},
-/obj/machinery/space_heater,
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

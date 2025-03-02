@@ -67956,8 +67956,7 @@
 	},
 /area/station/medical/genetics_cloning)
 "mBV" = (
-/obj/structure/table,
-/obj/item/weapon/aiModule/corp,
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "mCj" = (
@@ -94502,9 +94501,9 @@
 	},
 /area/station/medical/hallway/outbranch)
 "rQV" = (
-/obj/structure/table,
-/obj/item/weapon/aiModule/asimov,
 /obj/machinery/light/smart,
+/obj/item/weapon/aiModule/corp,
+/obj/structure/table,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "rQZ" = (

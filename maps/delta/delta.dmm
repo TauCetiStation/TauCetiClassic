@@ -33050,8 +33050,8 @@
 	},
 /area/station/engineering/break_room)
 "evW" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/light/smart,
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -62855,12 +62855,14 @@
 	},
 /area/station/cargo/qm)
 "lvz" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/machinery/computer/smartlight{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -86578,7 +86580,6 @@
 "rmh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/computer/smartlight,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
