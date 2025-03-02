@@ -608,9 +608,10 @@
 	if(opened) // Are they trying to insert something?
 		if(istype(W, /obj/item/device/binary_decoder))
 			if(do_skilled(user, src, SKILL_TASK_DIFFICULT, /datum/skill/research = SKILL_LEVEL_PRO, -0.2))
-				var/obj/item/device/binary_decoder/D = W
-				D.print_laws(src)
-				return
+				if(opened)
+					var/obj/item/device/binary_decoder/D = W
+					D.print_laws(src)
+					return
 
 		for(var/V in components)
 			var/datum/robot_component/C = components[V]
