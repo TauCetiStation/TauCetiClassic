@@ -902,8 +902,8 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/storage/emergency3
-	name = "Central Emergency Storage"
-	cases = list("центральное экстренное хранилище", "центрального экстренного хранилища", "центральному экстренному хранилищу", "центральное экстренное хранилище", "центральным экстренным хранилищем", "центральном экстренном хранилище")
+	name = "South Emergency Storage"
+	cases = list("южное экстренное хранилище", "южного экстренного хранилища", "южному экстренному хранилищу", "южное экстренное хранилище", "южным экстренным хранилищем", "южном экстренном хранилище")
 	icon_state = "emergencystorage"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
