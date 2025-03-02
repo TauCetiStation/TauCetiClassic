@@ -12,16 +12,24 @@
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/O, mob/user)
 	if(!is_station_level(z))
-		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
+		to_chat(user, "<span class='warning'><b>Невозможно установить соединение</b>:</span> Вы слишком далеко от станции!")
 		return
+	if(stat & NOPOWER)
+		to_chat(usr, "Консоль загрузки законов обесточена!")
+		return
+	if(stat & BROKEN)
+		to_chat(usr, "Консоль загрузки законов сломана!")
+		return
+
 	if(istype(O, /obj/item/weapon/aiModule))
 		if(!do_skill_checks(user))
 			return
 		var/obj/item/weapon/aiModule/M = O
 		M.install(src)
+
 	if(istype(O, /obj/item/device/binary_decoder))
 		if(!current)
-			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации о законах!")
+			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации!")
 			return
 		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, required_skills, -0.2))
 			if(current)
