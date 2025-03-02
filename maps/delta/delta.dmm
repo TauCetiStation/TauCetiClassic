@@ -8087,7 +8087,8 @@
 /area/space)
 "anm" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -15372,7 +15373,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "azG" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -20432,7 +20435,8 @@
 /area/station/maintenance/engineering)
 "bvf" = (
 /obj/machinery/computer/station_alert{
-	dir = 1
+	dir = 1;
+	muted = 1
 	},
 /turf/simulated/floor{
 	icon_state = "red"
@@ -43192,7 +43196,8 @@
 /area/station/cargo/storage)
 "gRG" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -72067,7 +72072,8 @@
 /area/station/engineering/atmos/supermatter)
 "nGh" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_left"
