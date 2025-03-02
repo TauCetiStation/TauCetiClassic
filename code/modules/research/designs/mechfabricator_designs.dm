@@ -972,3 +972,394 @@
 	construction_time = 50
 	starts_unlocked = TRUE
 	category = list("Misc")
+
+//Paintkits
+/datum/design/paint_ripley_titan
+	name = "Ripley, Firefighter \"Titan's Fist\""
+	id = "p_titan"
+	build_type = MECHFAB
+	build_path = /obj/item/paintkit/ripley_titansfist
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	starts_unlocked = TRUE
+	category = list("Exosuit Paintkits")
+
+
+/datum/design/paint_ripley_red
+	name = "Ripley, Firefighter \"Firestarter\""
+	id = "p_red"
+	build_type = MECHFAB
+	build_path = /obj/item/paintkit/ripley_red
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	starts_unlocked = TRUE
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_firefighter_hauler
+	name = "Ripley, Firefighter \"Hauler\""
+	id = "p_hauler"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/firefighter_Hauler
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_firefighter_zairjah
+	name = "Ripley, Firefighter \"Zairjah\""
+	id = "p_zairjah"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/firefighter_zairjah
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_firefighter_combat
+	name = "Ripley, Firefighter \"Combat Ripley\""
+	id = "p_combat"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/firefighter_combat
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_firefighter_reaper
+	name = "Ripley, Firefighter \"Reaper\""
+	id = "p_reaper"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/firefighter_Reaper
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_firefighter_aluminizer
+	name = "Ripley, Firefighter \"Aluminizer\""
+	id = "p_aluminizer"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/firefighter_aluminizer
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_ripley_nt
+	name = "Ripley, Firefighter \"NT Special\""
+	id = "p_ripleynt"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/ripley_nt
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_clarke_orangey
+	name = "Clarke \"Orangey\""
+	id = "p_orangey"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/clarke_orangey
+	materials = list(MAT_METAL = 20000, MAT_DIAMOND = 2000, MAT_URANIUM = 2000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_clarke_spiderclarke
+	name = "Clarke \"Spiderclarke\""
+	id = "p_spiderclarke"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/clarke_spiderclarke
+	materials = list(MAT_METAL = 20000, MAT_DIAMOND = 2000, MAT_URANIUM = 2000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_odysseus_hermes
+	name = "Odysseus \"Hermes\""
+	id = "p_hermes"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/odysseus_hermes
+	materials = list(MAT_METAL = 20000, MAT_DIAMOND = 2000, MAT_URANIUM = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_odysseus_reaper
+	name = "Odysseus \"Reaper\""
+	id = "p_odyreaper"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/odysseus_death
+	materials = list(MAT_METAL = 20000, MAT_DIAMOND = 2000, MAT_URANIUM = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_gygax_alt
+	name = "Gygax \"Old\""
+	id = "p_altgygax"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/gygax_alt
+	materials = list(MAT_METAL = 30000, MAT_DIAMOND = 3000, MAT_URANIUM = 3000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_gygax_pobeda
+	name = "Gygax \"Pobeda\""
+	id = "p_pobedagygax"
+	build_type = MECHFAB
+	build_path = /obj/item/paintkit/gygax_pobeda
+	starts_unlocked = TRUE
+	materials = list(MAT_METAL = 30000, MAT_DIAMOND = 3000, MAT_URANIUM = 3000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_gygax_white
+	name = "Gygax \"White\""
+	id = "p_whitegygax"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/gygax_white
+	materials = list(MAT_METAL = 30000, MAT_DIAMOND = 3000, MAT_URANIUM = 3000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_gygax_medgax
+	name = "Gygax \"Medgax\""
+	id = "p_medgax"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/gygax_medgax
+	materials = list(MAT_METAL = 30000, MAT_DIAMOND = 3000, MAT_URANIUM = 3000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_gygax_black
+	name = "Gygax \"Syndicate\""
+	id = "p_blackgygax"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/gygax_syndie
+	materials = list(MAT_METAL = 30000, MAT_DIAMOND = 3000, MAT_URANIUM = 3000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_gygax_pirate
+	name = "Gygax \"Pirate\""
+	id = "p_pirategygax"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/gygax_pirate
+	materials = list(MAT_METAL = 30000, MAT_DIAMOND = 3000, MAT_URANIUM = 3000)
+	construction_time = 30 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_durand_unathi
+	name = "Durand \"Kharn MK. IV\""
+	id = "p_unathi"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/durand_unathi
+	construction_time = 30 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_durand_shire
+	name = "Durand \"Shire\""
+	id = "p_shire"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/durand_shire
+	materials = list(MAT_METAL = 40000, MAT_DIAMOND = 4000, MAT_URANIUM = 4000)
+	construction_time = 30 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_durand_pirate
+	name = "Durand \"Pirate\""
+	id = "p_durandpirate"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/durand_pirate
+	materials = list(MAT_METAL = 40000, MAT_DIAMOND = 4000, MAT_URANIUM = 4000)
+	construction_time = 30 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_durand_nt
+	name = "Durand \"NT Special\""
+	id = "p_durandnt"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/durand_nt
+	materials = list(MAT_METAL = 40000, MAT_DIAMOND = 4000, MAT_URANIUM = 4000)
+	construction_time = 30 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_durand_soviet
+	name = "Durand \"Dollhouse\""
+	id = "p_soviet"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/durand_soviet
+	materials = list(MAT_METAL = 40000, MAT_DIAMOND = 4000, MAT_URANIUM = 4000)
+	construction_time = 30 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_durand_executor
+	name = "Durand \"mk.V Executioner\""
+	id = "p_executor"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/durand_executor
+	materials = list(MAT_METAL = 40000, MAT_DIAMOND = 4000, MAT_SILVER = 4000)
+	construction_time = 30 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/paint_ashed
+	name = "Ashed \"Mechs\""
+	id = "p_ashed"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/ashed
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 8000, MAT_GLASS = 8000)
+	construction_time = 20 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/ripley_blue
+	name = "Ripley \"Bluestarter\""
+	id = "p_ripley_blue"
+	build_type = MECHFAB
+	starts_unlocked = TRUE
+	build_path = /obj/item/paintkit/ripley_blue
+	materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+	construction_time = 10 SECONDS
+	category = list("Exosuit Paintkits")
+
+/datum/design/soviet_ripley
+    name = "Ripley \"Soviet Ripley\""
+    id = "p_soviet_ripley"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/soviet_ripley
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/pirate_ripley
+    name = "Ripley \"Pirate Ripley\""
+    id = "p_pirate_ripley"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/pirate_ripley
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/clown_ripley
+    name = "Ripley \"Clown Ripley\""
+    id = "p_clown_ripley"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/clown_ripley
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/dreadnought_ripley
+    name = "Ripley \"Dreadnought Ripley\""
+    id = "p_dreadnought_ripley"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/dreadnought_ripley
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 20 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/med_ripley
+    name = "Ripley \"Med Ripley\""
+    id = "p_med_ripley"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/ripley_med
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/camo_ripley
+    name = "Ripley \"Camo Ripley\""
+    id = "p_camo_ripley"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/ripley_camo
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/junker_ripley
+    name = "Ripley \"Junker Ripley\""
+    id = "p_junker_ripley"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/ripley_junker
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/gygax_carp
+    name = "Gygax \"Carp\""
+    id = "p_gygax_carp"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/gygax_carp
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 20 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/gygax_blue
+    name = "Gygax \"Blue\""
+    id = "p_gygax_blue"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/gygax_blue
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/gygax_green
+    name = "Gygax \"Green\""
+    id = "p_gygax_green"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/gygax_green
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/gygax_turtle
+    name = "Gygax \"Turtle\""
+    id = "p_gygax_turtle"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/gygax_turtle
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/durand_turtle
+    name = "Durand \"Turtle\""
+    id = "p_durand_turtle"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/durand_turtle
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 10 SECONDS
+    category = list("Exosuit Paintkits")
+
+/datum/design/paladin
+    name = "Durand \"Paladin\""
+    id = "p_paladin"
+    build_type = MECHFAB
+    starts_unlocked = TRUE
+    build_path = /obj/item/paintkit/paladin
+    materials = list(MAT_METAL = 20000, MAT_PHORON = 2000, MAT_GLASS = 2000)
+    construction_time = 30 SECONDS
+    category = list("Exosuit Paintkits")

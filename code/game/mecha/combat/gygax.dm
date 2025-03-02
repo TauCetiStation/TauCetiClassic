@@ -15,6 +15,7 @@
 	internal_damage_threshold = 35
 	max_equip = 3
 	var/overload = FALSE
+	mech_type = MECH_TYPE_GYGAX
 
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 
