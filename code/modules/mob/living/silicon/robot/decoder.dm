@@ -64,7 +64,7 @@
 	if(!istype(H))
 		return
 	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
+		to_chat(user, "<span class='warning'>В доступе отказано.</span>")
 		return
 	if(!do_skill_checks(user))
 		return
