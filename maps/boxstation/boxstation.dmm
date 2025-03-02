@@ -19199,8 +19199,8 @@
 "aHM" = (
 /obj/structure/table/woodentable,
 /obj/item/globe/adhomai{
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -24940,8 +24940,8 @@
 /obj/structure/table/woodentable,
 /obj/random/misc/book,
 /obj/item/bust{
-	pixel_y = 4;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -37584,6 +37584,7 @@
 /obj/item/weapon/stickers{
 	pixel_y = 16
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "boJ" = (
@@ -81204,6 +81205,9 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "pnp" = (
+/obj/item/device/binary_decoder{
+	pixel_y = 10
+	},
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,

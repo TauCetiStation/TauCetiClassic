@@ -521,6 +521,33 @@ var/global/list/airlock_overlays = list()
 	popup.set_content(t1)
 	popup.open()
 
+/obj/machinery/door/airlock/proc/show_decoder_command_interface(mob/user)
+	user.set_machine(src)
+	var/t1 = ""
+
+	t1 += text("Emergency access override is [emergency ? "enabled" : "disabled"]. ")
+	t1 += text("<A href='byond://?src=\ref[];decoder=1'>Switch emergency access?</a><br>\n", src)
+
+	t1 += text("Door bolts are [locked ? "down" : "up"]. ")
+	t1 += text("<A href='byond://?src=\ref[];decoder=2'>Switch door bolts?</a><br>\n", src)
+
+	t1 += text("Door lights are [lights ? "on" : "off"]. ")
+	t1 += text("<A href='byond://?src=\ref[];decoder=3'>Switch door light?</a><br>\n", src)
+
+	t1 += text("Door is [secondsElectrified ? "electrified" : "not electrified"]. ")
+	t1 += text("<A href='byond://?src=\ref[];decoder=4'>Switch door electrification</a><br>\n", src)
+
+	t1 += text("Door safeties [safe ? "operating normally" : "disabled"]. ")
+	t1 += text("<A href='byond://?src=\ref[];decoder=5'>Switch door safeties</a><br>\n", src)
+
+	t1 += text("Door timing circuitry operating [normalspeed ? "normally" : "abnormally"]. ")
+	t1 += text("<A href='byond://?src=\ref[];decoder=6'>Switch door timing</a><br>\n", src)
+
+	t1 += text("<A href='byond://?src=\ref[];decoder=7'>[density ? "Open" : "Close"] door</a><br>\n", src)
+
+	var/datum/browser/popup = new(user, "airlock", "Airlock Control")
+	popup.set_content(t1)
+	popup.open()
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
 	if(!aiHacking)
@@ -887,6 +914,67 @@ var/global/list/airlock_overlays = list()
 					else
 						to_chat(usr, "Emergency access is already disabled!")
 
+	if(href_list["decoder"])
+		var/code = text2num(href_list["decoder"])
+		switch (code)
+			if(1)
+				emergency = !emergency
+				update_icon()
+
+			if(2)
+				if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+					to_chat(usr, "The door bolt drop wire is cut.<br>\n")
+				else if(locked)
+					if(hasPower())
+						unbolt()
+					else
+						to_chat(usr, "Cannot raise door bolts due to power failure.<br>\n")
+				else
+					bolt()
+
+			if(3)
+				if(isWireCut(AIRLOCK_WIRE_LIGHT))
+					to_chat(usr, "Control to door bolt lights has been severed.")
+				else
+					lights = !lights
+					update_icon()
+
+			if(4)
+				if(secondsElectrified)
+					if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+						to_chat(usr, "Can't un-electrify the airlock - The electrification wire is cut.")
+					else
+						secondsElectrified = 0
+				else
+					shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
+					secondsElectrified = 30
+					diag_hud_set_electrified()
+					START_PROCESSING(SSmachines, src)
+
+			if(5)
+				if (isWireCut(AIRLOCK_WIRE_SAFETY))
+					to_chat(usr, "Control to door sensors is disabled.")
+				else
+					safe = !safe
+
+			if(6)
+				if(isWireCut(AIRLOCK_WIRE_SPEED))
+					to_chat(usr, "Control to door timing circuitry has been severed.")
+				else
+					normalspeed = !normalspeed
+
+			if(7)
+				if(welded)
+					to_chat(usr, "The airlock has been welded shut!")
+				else if(locked)
+					to_chat(usr, "The door bolts are down!")
+				else
+					if(density)
+						open()
+					else
+						close()
+
 	if(!no_window)
 		updateUsrDialog()
 
@@ -967,6 +1055,9 @@ var/global/list/airlock_overlays = list()
 
 	else if(istype(C, /obj/item/weapon/airlock_painter)) 		//airlock painter
 		change_paintjob(C, user)
+	else if(istype(C, /obj/item/device/binary_decoder) && p_open)
+		if(do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_PRO), -0.2))
+			show_decoder_command_interface(user)
 	else
 		return ..()
 
