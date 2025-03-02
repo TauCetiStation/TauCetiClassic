@@ -106404,6 +106404,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/device/binary_decoder{
+	pixel_y = -8
+	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "ueD" = (

@@ -35906,6 +35906,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/device/binary_decoder{
+	pixel_y = -10
+	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "blH" = (
@@ -42709,7 +42712,6 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},

@@ -6663,6 +6663,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

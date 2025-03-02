@@ -23397,6 +23397,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/device/binary_decoder{
+	pixel_y = -10
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
