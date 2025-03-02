@@ -70,6 +70,6 @@
 		return
 	current = select_active_ai(user)
 	if (!current)
-		to_chat(user, "No active AIs detected.")
+		to_chat(user, "Активных ИИ не обнаружено.")
 	else
 		to_chat(user, "[current.name] selected for law changes.")
