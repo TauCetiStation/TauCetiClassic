@@ -125,7 +125,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/fem = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(t_state != null)
-			if(icon_exists(def_icon_path, "[t_state]_fem"))
+			if(icon_exists(icon_path, "[t_state]_fem"))
 				fem = "_fem"
 
 	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
