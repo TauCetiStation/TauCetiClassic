@@ -204,7 +204,7 @@
 	shuffle(filtered_candidates)
 
 	for(var/mob/dead/M in filtered_candidates)
-		if(positions > 0 && can_spawn(spectator))
+		if(positions > 0 && can_spawn(M))
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)

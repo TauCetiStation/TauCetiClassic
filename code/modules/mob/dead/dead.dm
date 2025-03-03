@@ -11,7 +11,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/Logout()
 	..()
 	for(var/datum/spawner/S in registred_spawners)
-		registred_spawner.cancel_registration(src)
+		S.cancel_registration(src)
 
 /mob/dead/Destroy()
 	QDEL_NULL(spawners_menu)
@@ -45,5 +45,5 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	to_chat(src, "<span class='notice'>You can not emote.</span>")
 
 /mob/dead/proc/remove_registration_for_spawners()
-	for(var/datum/spawner/S registred_spawners)
-		S.registered_candidates -= src
+	for(var/datum/spawner/S in registred_spawners)
+		S.cancel_registration(src)
