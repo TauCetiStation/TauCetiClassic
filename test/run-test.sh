@@ -241,8 +241,8 @@ function run_code_tests {
 
     run_test "check eof" "newline_at_eof"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
-    run_test "check tags" "python2 scripts/tag-matcher.py ."
-    run_test "check color hex" "python2 scripts/color-hex-checker.py ."
+    run_test "check tags" "python3 scripts/tag-matcher.py ."
+    run_test "check color hex" "python3 scripts/color-hex-checker.py ."
 }
 
 function run_map_tests {
