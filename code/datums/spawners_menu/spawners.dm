@@ -127,7 +127,7 @@
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.registred_spawner = null
+			M.registred_spawners -= src
 		registered_candidates = null
 
 	return ..()
@@ -157,6 +157,9 @@
 	if(!spectator.client || spectator.client.is_in_spawner)
 		return
 
+	if(!can_spawn(spectator))
+		return
+
 	if(!register_only)
 		if(positions < 1)
 			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
@@ -165,27 +168,19 @@
 			do_spawn(spectator)
 		return
 
-	// todo: registration for multiple spawners?
 	if(spectator in registered_candidates)
 		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
-	else if(spectator.registred_spawner)
-		to_chat(spectator, "<span class='notice'>Вы уже ждете роль \"[spectator.registred_spawner.name]\". Сначала отмените заявку.</span>")
-		return
-
-	if(!can_spawn(spectator))
-		return
-
 	registered_candidates += spectator
-	spectator.registred_spawner = src
+	spectator.registred_spawners += src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.registred_spawner = null
+	spectator.registred_spawners -= src
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
@@ -209,19 +204,16 @@
 	shuffle(filtered_candidates)
 
 	for(var/mob/dead/M in filtered_candidates)
-		if(positions > 0)
+		if(positions > 0 && can_spawn(spectator))
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
+			M.remove_registration_for_spawners()
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
-	if(!can_spawn(spectator))
-		positions++
-		return
-
 	var/client/C = spectator.client
 
 	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
