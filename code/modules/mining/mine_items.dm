@@ -444,7 +444,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
 	name = "mining explosives"
-	desc = "Используется для шахтерских взрывных работ. Используя её, не забывайте о технике безопастности"
+	desc = "Используется для шахтерских взрывных работ. Используя её, не забывайте о технике безопасности"
 	gender = PLURAL
 	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
