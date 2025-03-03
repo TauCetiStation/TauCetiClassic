@@ -104,7 +104,7 @@
 			return
 		user.remove_from_mob(src)
 		M.equip_to_slot_if_possible(src, SLOT_HEAD, disable_warning = TRUE)
-		user.visible_message("<span class='danger'>[user] slams [name] on the [M]'s head!</span>")
+		user.visible_message("<span class='danger'>[user] slams [name] on the [M]'s head!")
 		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
 		if(force > 0)
 			SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
