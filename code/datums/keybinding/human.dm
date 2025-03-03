@@ -35,3 +35,15 @@
 /datum/keybinding/human/emote_panel/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
 	H.emote_panel()
+
+/datum/keybinding/human/race_ability
+	hotkey_keys = list("U")
+	name = "race_ability"
+	full_name = "Race Ability"
+	description = "Activates your racial ability."
+
+/datum/keybinding/human/race_ability/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	var/datum/action/A = locate(H.species.race_ability) in H.actions
+	if(A)
+		A.Trigger()

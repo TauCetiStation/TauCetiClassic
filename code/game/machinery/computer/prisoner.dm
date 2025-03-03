@@ -19,7 +19,7 @@
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	var/dat = ""
 	if(screen == 0)
-		dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
+		dat += "<HR><A href='byond://?src=\ref[src];lock=1'>Unlock Console</A>"
 	else if(screen == 1)
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/Tr = null
@@ -28,9 +28,9 @@
 			if((Tr) && (Tr.z != src.z))	continue//Out of range
 			if(!C.implanted) continue
 			dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
-			dat += "<A class='red' href='?src=\ref[src];inject1=\ref[C]'>1</A>"
-			dat += "<A class='red' href='?src=\ref[src];inject5=\ref[C]'>5</A>"
-			dat += "<A class='red' href='?src=\ref[src];inject10=\ref[C]'>10</A><BR>"
+			dat += "<A class='red' href='byond://?src=\ref[src];inject1=\ref[C]'>1</A>"
+			dat += "<A class='red' href='byond://?src=\ref[src];inject5=\ref[C]'>5</A>"
+			dat += "<A class='red' href='byond://?src=\ref[src];inject10=\ref[C]'>10</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
 		for(var/obj/item/weapon/implant/tracking/T in implant_list)
@@ -45,9 +45,9 @@
 			if(T.malfunction)
 				loc_display = pick(teleportlocs)
 			dat += "ID: [T.id] | Location: [loc_display]<BR>"
-			dat += "<A class='red' href='?src=\ref[src];warn=\ref[T]'><i>Message Holder</i></A> |<BR>"
+			dat += "<A class='red' href='byond://?src=\ref[src];warn=\ref[T]'><i>Message Holder</i></A> |<BR>"
 			dat += "********************************<BR>"
-		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
+		dat += "<HR><A href='byond://?src=\ref[src];lock=1'>Lock Console</A>"
 
 	var/datum/browser/popup = new(user, "computer", "Prisoner Implant Manager System", 400, 500)
 	popup.set_content(dat)

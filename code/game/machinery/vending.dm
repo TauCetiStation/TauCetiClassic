@@ -10,6 +10,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
+	damage_deflection = 10
 
 	var/subname = null // subname for vendor's circuit name
 
@@ -52,6 +53,7 @@
 	var/extended_inventory = 0 //can we access the hidden inventory?
 	var/obj/item/weapon/coin/coin
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	var/datum/data/vending_product/unstable_product = null
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/ewallet/ewallet
@@ -82,6 +84,7 @@
 	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
+	update_unstable_product()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -463,8 +466,6 @@
 		else
 			QDEL_NULL(coin)
 
-	R.amount--
-
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 		spawn(0)
 			speak(src.vend_reply)
@@ -474,11 +475,9 @@
 	if (src.icon_vend) //Show the vending animation if needed
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
-		new R.product_path(get_turf(src))
-		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
+		give_out_product(R)
 		src.vend_ready = 1
 		src.currently_vending = null
-		updateUsrDialog()
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))
@@ -582,18 +581,12 @@
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
-
-		R.amount--
-		throw_item = new dump_path(src.loc)
-		break
-	if (!throw_item)
+	var/list/AP = get_available_products()
+	if(AP.len)
+		throw_item = give_out_product(pick(AP))
+	else
 		return 0
+
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
@@ -610,6 +603,41 @@
 		return 1
 	else
 		return 0
+
+/obj/machinery/vending/proc/get_available_products()
+	var/list/available_products = list()
+	for(var/datum/data/vending_product/VP in product_records)
+		if(VP.amount && VP.product_path)
+			available_products += VP
+	return available_products
+
+/obj/machinery/vending/proc/give_out_product(datum/data/vending_product/VP)
+	playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
+	VP.amount--
+	if(VP == unstable_product)
+		unstable_product = null
+	updateUsrDialog()
+	update_unstable_product()
+	return new VP.product_path(src.loc)
+
+/obj/machinery/vending/proc/update_unstable_product()
+	if(!unstable_product && prob(5))
+		var/list/AP = get_available_products()
+		if(AP.len)
+			unstable_product = pick(AP)
+
+/obj/machinery/vending/examine(mob/user, distance)
+	. = ..()
+	if(unstable_product && distance < 3) // need to be close to see
+		to_chat(user, "<span class='notice'>\The [unstable_product.product_name] seems to be loose. I bet I can punch it out!</span>")
+
+/obj/machinery/vending/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(unstable_product && prob(50))
+		do_shake_animation(2, 10, intensity_dropoff = 0.9)
+		give_out_product(unstable_product)
+
+	update_unstable_product()
 
 /*
  * Vending machine types

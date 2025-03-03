@@ -19,7 +19,8 @@
 	for(var/area in areas_for_objective)
 		if(istype(A, area) && devastation_range >= 1)
 			already_completed = TRUE
-	UnregisterSignal(SSexplosions, COMSIG_EXPLOSIONS_EXPLODE)
+			UnregisterSignal(SSexplosions, COMSIG_EXPLOSIONS_EXPLODE)
+			break
 
 /datum/objective/bomb/check_completion()
 	if(!already_completed)

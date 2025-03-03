@@ -45,6 +45,7 @@ return_location()
 /datum/plot_vector
 	var/turf/source
 	var/turf/target
+	var/cardinal_dir // in case we don't have a specific target
 	var/angle = 0	// direction of travel in degrees
 	var/loc_x = 0	// in pixels from the left edge of the map
 	var/loc_y = 0	// in pixels from the bottom edge of the map
@@ -52,16 +53,23 @@ return_location()
 	var/offset_x = 0	// distance to increment each step
 	var/offset_y = 0
 
-/datum/plot_vector/proc/setup(turf/S, turf/T, xo = 0, yo = 0, angle_offset=0)
+/datum/plot_vector/proc/setup(turf/S, turf/T, xo = 0, yo = 0, angle_offset=0, dir)
 	source = S
 	target = T
+	cardinal_dir = dir
 
 	if(!istype(source))
 		source = get_turf(source)
-	if(!istype(target))
+
+	if(!istype(source))
+		return
+
+	if(!target && cardinal_dir)
+		target = get_step(source, cardinal_dir)
+	else if(!istype(target))
 		target = get_turf(target)
 
-	if(!istype(source) || !istype(target))
+	if(!istype(target))
 		return
 
 	// convert coordinates to pixel space (default is 32px/turf, 8160px across for a size 255 map)
@@ -89,14 +97,14 @@ return_location()
 	// calculate the offset per increment step
 	if(abs(angle) in list(0, 45, 90, 135, 180))		// check if the angle is a cardinal
 		if(abs(angle) in list(0, 45, 135, 180))		// if so we can skip the trigonometry and set these to absolutes as
-			offset_x = sign(dx)						// they will always be a full step in one or more directions
+			offset_x = SIGN(dx)						// they will always be a full step in one or more directions
 		if(abs(angle) in list(45, 90, 135))
-			offset_y = sign(dy)
+			offset_y = SIGN(dy)
 	else if(abs(dy) > abs(dx))
 		offset_x = COT(abs(angle))					// otherwise set the offsets
-		offset_y = sign(dy)
+		offset_y = SIGN(dy)
 	else
-		offset_x = sign(dx)
+		offset_x = SIGN(dx)
 		offset_y = tan(angle)
 		if(dx < 0)
 			offset_y = -offset_y

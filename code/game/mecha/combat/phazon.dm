@@ -14,6 +14,7 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/phazon
 	add_req_access = 1
 	//operation_req_access = list()
+	dna_lockable = TRUE
 	internal_damage_threshold = 25
 	force = 15
 	var/phasing = FALSE
@@ -92,8 +93,8 @@
 	var/output = {"<div class='wr'>
 						<div class='header'>Special</div>
 						<div class='links'>
-						<a href='?src=\ref[src];phasing=1'><span id="phasing_command">[phasing?"Dis":"En"]able phasing</span></a><br>
-						<a href='?src=\ref[src];switch_damtype=1'>Change melee damage type</a><br>
+						<a href='byond://?src=\ref[src];phasing=1'><span id="phasing_command">[phasing?"Dis":"En"]able phasing</span></a><br>
+						<a href='byond://?src=\ref[src];switch_damtype=1'>Change melee damage type</a><br>
 						</div>
 						</div>
 						"}

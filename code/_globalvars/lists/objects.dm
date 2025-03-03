@@ -71,6 +71,7 @@ var/global/list/all_supply_pack = list()
 var/global/list/all_command_microphones = list()
 var/global/list/global_objectives = list() //objectives that need to be completed by several factions or roles
 var/global/list/air_alarms = list()
+var/global/list/pluvian_wisps = list()
 
 var/global/list/spells_by_aspects = list()
 var/global/list/rites_by_aspects = list()
@@ -78,3 +79,4 @@ var/global/list/holy_reagents_by_aspects = list()
 var/global/list/faith_reactions = list()
 var/global/list/faith_reactions_by_aspects = list()
 var/global/list/bells = list()
+var/global/list/washing_items_list = list()

@@ -112,7 +112,7 @@
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/hypospray/cmo(src)
 	new /obj/item/clothing/suit/surgicalapron(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/medical_supply(src)
 	new /obj/item/weapon/storage/lockbox/medal/cmo(src)
 

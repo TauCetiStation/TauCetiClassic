@@ -6,25 +6,45 @@
 
 	var/obj/item/weapon/pen/holded
 
+/obj/item/pen_holder/atom_init(mapload)
+	. = ..()
+
+	if(mapload)
+		var/turf/T = get_turf(src)
+		var/obj/item/weapon/pen/Pen = locate() in T.contents
+		if(Pen)
+			Pen.forceMove(src)
+			holded = Pen
+
+			update_icon()
+
 /obj/item/pen_holder/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) && !holded)
 		user.drop_from_inventory(I, src)
 		holded = I
-		holded.pixel_x = -2
-		holded.pixel_y = 5
-		underlays += holded
-		icon_state = "penholder_full"
+
+		update_icon()
 
 /obj/item/pen_holder/attack_hand(mob/user)
 	if(holded)
-		underlays = null
 		holded.pixel_x = 0
 		holded.pixel_y = 0
 		user.put_in_active_hand(holded)
 		holded = null
-		icon_state = "penholder"
+
+		update_icon()
 	else
 		..()
+
+/obj/item/pen_holder/update_icon()
+	underlays = null
+	icon_state = "penholder"
+
+	if(holded)
+		icon_state = "penholder_full"
+		holded.pixel_x = -2
+		holded.pixel_y = 5
+		underlays += holded
 
 /obj/item/pens_bin
 	name = "pens bin"
@@ -65,6 +85,8 @@
 		var/obj/item/weapon/pen/selection = show_radial_menu(user, src, pens, require_near = TRUE, tooltips = TRUE)
 
 		if(selection)
+			selection.pixel_x = 0
+			selection.pixel_y = 0
 			if(ishuman(user))
 				user.put_in_hands(selection)
 			else
@@ -82,11 +104,54 @@
 	front_side.layer = layer + 0.01
 	add_overlay(front_side)
 
-/obj/item/mars_globe
+/obj/item/globe
 	name = "mars globe"
-	desc = "Глобус Марса."
+	cases = list("глобус Марса", "глобуса Марса", "глобусу Марса", "глобус Марса", "глобусом Марса", "глобусе Марса")
+	desc = "Точное отображение поверхности Марса."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "globe"
+	icon_state = "globe_mars"
+
+/obj/item/globe/venus
+	name = "venus globe"
+	cases = list("глобус Венеры", "глобуса Венеры", "глобусу Венеры", "глобус Венеры", "глобусом Венеры", "глобусе Венеры")
+	desc = "Точное отображение поверхности Венеры."
+	icon_state = "globe_venus"
+
+/obj/item/globe/earth
+	name = "earth globe"
+	cases = list("глобус Земли", "глобуса Земли", "глобусу Земли", "глобус Земли", "глобусом Земли", "глобусе Земли")
+	desc = "Точное отображение поверхности Земли."
+	icon_state = "globe_earth"
+
+/obj/item/globe/yargon
+	name = "yargon IV globe"
+	cases = list("глобус Яргона-4", "глобуса Яргона-4", "глобусу Яргона-4", "глобус Яргона-4", "глобусом Яргона-4", "глобусе Яргона-4")
+	desc = "Точное отображение поверхности Яргона-4."
+	icon_state = "globe_yargon4"
+
+/obj/item/globe/moghes
+	name = "moghes globe"
+	cases = list("глобус Могеса", "глобуса Могеса", "глобусу Могеса", "глобус Могеса", "глобусом Могеса", "глобусе Могеса")
+	desc = "Точное отображение поверхности Могеса."
+	icon_state = "globe_moghes"
+
+/obj/item/globe/adhomai
+	name = "adhomai globe"
+	cases = list("глобус Адомая", "глобуса Адомая", "глобусу Адомая", "глобус Адомая", "глобусом Адомая", "глобусе Адомая")
+	desc = "Точное отображение поверхности Адомая."
+	icon_state = "globe_adhomai"
+
+/obj/item/globe/gestalt
+	name = "dionaea gestalt model"
+	cases = list("модель гештальта", "модели гештальта", "модели гештальта", "модель гештальта", "моделью гештальта", "модели гештальта")
+	desc = "Модель единственного найденного гештальта Дион."
+	icon_state = "globe_gestalt"
+
+/obj/item/globe/pluvia
+	name = "pluvia globe"
+	cases = list("глобус Плувии", "глобуса Плувии", "глобусу Плувии", "глобус Плувии", "глобусом Плувии", "глобусе Плувии")
+	desc = "Точное отображение поверхности Плувии."
+	icon_state = "globe_pluvia"
 
 /obj/item/newtons_pendulum
 	name = "newton's pendulum"
@@ -116,6 +181,52 @@
 
 		desc = "'Точное время в любое время'. Показывают: [worldtime2text()]"
 
+/obj/item/woodenclock
+	name = "wooden clock"
+	cases = list("настольные часы", "настольных часов", "настольным часам", "настольные часы", "настольными часами", "настольных часах")
+	desc = "Показывают время."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "wooden_clock"
+
+	var/image/hours_hand
+	var/image/minute_hand
+
+/obj/item/woodenclock/atom_init()
+	. = ..()
+
+	hours_hand = image('icons/obj/stationobjs.dmi', "clock_h_0")
+	hours_hand.pixel_y = -7
+	add_overlay(hours_hand)
+	minute_hand = image('icons/obj/stationobjs.dmi', "clock_m_0")
+	minute_hand.pixel_y = -7
+	add_overlay(minute_hand)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/woodenclock/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
+
+/obj/item/woodenclock/process()
+	var/timeChanged = FALSE
+	var/new_hours_state = "clock_h_[worldtime_hours() % 12]"
+	if(hours_hand.icon_state != new_hours_state)
+		cut_overlay(hours_hand)
+		hours_hand.icon_state = new_hours_state
+		add_overlay(hours_hand)
+		timeChanged = TRUE
+
+	var/new_minute_state = "clock_m_[(round(worldtime_minutes() / 5) % 12)]"
+
+	if(minute_hand.icon_state != new_minute_state)
+		cut_overlay(minute_hand)
+		minute_hand.icon_state = new_minute_state
+		add_overlay(minute_hand)
+		timeChanged = TRUE
+
+	if(timeChanged && istype(loc, /obj/structure/bookcase/shelf))
+		var/obj/structure/bookcase/shelf/Shelf = loc
+		Shelf.update_icon()
+
 /obj/item/wallclock
 	name = "wall clock"
 	desc = "Показывают время."
@@ -124,10 +235,19 @@
 
 	anchored = TRUE
 
+	var/image/hours_hand
+	var/image/minute_hand
+
 /obj/item/wallclock/atom_init(mapload)
 	. = ..()
 	if(!mapload)
 		anchored = FALSE
+
+	hours_hand = image('icons/obj/stationobjs.dmi', "clock_h_0")
+	add_overlay(hours_hand)
+	minute_hand = image('icons/obj/stationobjs.dmi', "clock_m_0")
+	add_overlay(minute_hand)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/wallclock/attack_hand(mob/user)
 	if(!Adjacent(usr) || usr.incapacitated())
@@ -138,6 +258,19 @@
 /obj/item/wallclock/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
+
+/obj/item/wallclock/process()
+	var/new_hours_state = "clock_h_[worldtime_hours() % 12]"
+	if(hours_hand.icon_state != new_hours_state)
+		cut_overlay(hours_hand)
+		hours_hand.icon_state = new_hours_state
+		add_overlay(hours_hand)
+
+	var/new_minute_state = "clock_m_[(round(worldtime_minutes() / 5) % 12)]"
+	if(minute_hand.icon_state != new_minute_state)
+		cut_overlay(minute_hand)
+		minute_hand.icon_state = new_minute_state
+		add_overlay(minute_hand)
 
 /obj/item/portrait
 	name = "portrait"
@@ -205,3 +338,22 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 			Portrait.icon_state = "portrait_empty"
 			Portrait.desc = newdesc
 			Portrait.add_overlay(Heads_photo)
+
+/obj/item/bust
+	name = "gypsum bust"
+	cases = list("гипсовый бюст", "гипсового бюста", "гипсовому бюсту", "гипсовый бюст", "гипсовым бюстом", "гипсомвом бюсте")
+	desc = "Гипсовый бюст должностного лица НаноТрейзен."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bust_1"
+
+/obj/item/bust/atom_init(mapload)
+	. = ..()
+	var/bust_number = rand(1, 3)
+	icon_state = "bust_[bust_number]"
+	switch(bust_number)
+		if(1)
+			desc = "Франклин Моррис - Главный представитель НаноТрейзен на территории СолГов."
+		if(2)
+			desc = "Эдвард Мунос - Начальник ОБОП НаноТрейзен."
+		if(3)
+			desc = "Маргарет Чейн - Директор отдела кооперации и связей с общественностью НаноТрейзен."

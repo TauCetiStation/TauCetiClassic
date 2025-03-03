@@ -39,10 +39,10 @@
 #define GAME_STATE_FINISHED		4
 
 //Security levels
-#define SEC_LEVEL_GREEN	0
-#define SEC_LEVEL_BLUE	1
-#define SEC_LEVEL_RED	2
-#define SEC_LEVEL_DELTA	3
+#define SEC_LEVEL_GREEN	1
+#define SEC_LEVEL_BLUE	2
+#define SEC_LEVEL_RED	3
+#define SEC_LEVEL_DELTA	4
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
@@ -233,6 +233,7 @@
 
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
+#define BRIDGE_JOIN_LINKS "Присоединиться: [BYOND_JOIN_LINK]"
 
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 
@@ -283,6 +284,8 @@
 #define REGION_COMMAND		7
 #define REGION_CENTCOMM		8
 
+// be wary this adds little overhead with additional proc calls
+// consider modifying existing atom_init/Destroy for atoms with numerous instances
 #define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
 	. = ..();\
 	global.##list += src;}\
@@ -331,6 +334,12 @@
 //       port smooth groups from tg/other sane server
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
+		/turf/unsimulated/wall/like_a_normal, \
+		/turf/unsimulated/wall/like_a_normal/yellow, \
+		/turf/unsimulated/wall/like_a_normal/red, \
+		/turf/unsimulated/wall/like_a_normal/purple, \
+		/turf/unsimulated/wall/like_a_normal/green, \
+		/turf/unsimulated/wall/like_a_normal/beige, \
 		/turf/simulated/wall, \
 		/turf/simulated/wall/yellow, \
 		/turf/simulated/wall/red, \
@@ -343,6 +352,7 @@
 		/turf/simulated/wall/r_wall/purple, \
 		/turf/simulated/wall/r_wall/green, \
 		/turf/simulated/wall/r_wall/beige, \
+		/turf/simulated/wall/heaven, \
 		/obj/structure/falsewall, \
 		/obj/structure/falsewall/yellow, \
 		/obj/structure/falsewall/red, \
@@ -402,9 +412,14 @@
 		/turf/simulated/wall = "wall", \
 		/obj/structure/falsewall = "wall", \
 		/obj/machinery/door/airlock = "wall", \
+		/turf/unsimulated/wall/like_a_normal = "wall", \
 )
 
 // wall don't need adapter with another wall
 #define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
 		/obj/machinery/door/airlock = "wall", \
 )
+
+#define QUOTA_NEUTRAL 0
+#define QUOTA_WANTED 1
+#define QUOTA_UNWANTED 2

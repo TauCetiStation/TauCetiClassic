@@ -15,19 +15,18 @@
 //Captain
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
-	desc = "Worn by a Captain to show their class."
+	desc = "Worn by a Captain to show their class. Also has some space for armor plate."
 	icon_state = "captunic"
 	item_state = "bio_suit"
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/captunic/capjacket
 	name = "captain's uniform jacket"
-	desc = "A less formal jacket for everyday captain use."
+	desc = "A less formal jacket for everyday captain use. Also has some space for armor plate."
 	icon_state = "capjacket"
-	item_state = "bio_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
@@ -289,37 +288,6 @@
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = 0
-
-//Recycler
-/obj/item/clothing/suit/recyclervest
-	name = "recycler vest"
-	desc = "This is Recycler vest."
-	icon = 'icons/obj/clothing/suits.dmi'
-	icon_state = "recycler_vest_open"
-	item_state = "recycler_vest"
-	blood_overlay_type = "coat" //it's the less thing that I can put here
-	body_parts_covered = 0
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_vest_buttons)
-
-/datum/action/item_action/hands_free/toggle_vest_buttons
-	name = "Toggle vest buttons"
-
-/datum/action/item_action/hands_free/toggle_vest_buttons/Activate()
-	var/obj/item/clothing/suit/recyclervest/S = target
-	S.toggle()
-
-/obj/item/clothing/suit/recyclervest/proc/toggle()
-    switch(icon_state)
-        if("recycler_vest_open")
-            src.icon_state = "recycler_vest"
-            to_chat(usr, "You button up the vest.")
-        if("recycler_vest")
-            src.icon_state = "recycler_vest_open"
-            to_chat(usr, "You unbutton the jacket.")
-        else
-            to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
-            return
-    update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/surgicalapron
 	name = "surgical apron"

@@ -31,6 +31,8 @@
   - [Сигналы, компоненты, элементы (hackmd)](https://hackmd.io/@tgstation/SignalsComponentsElements)
   - [Сборщик мусора, Destroy, Harddeletes](/.github/wiki/HARDDELETES.md)
   - [Переводы на русский](/.github/wiki/TRANSLATION.md)
+* **Игра:**
+  - [Разрушаемость](/.github/wiki/OBJ_DESTRUCTION.md)
 * **Карта:**
   - [F.A.Q. по работе с картой](/.github/wiki/WORK_WITH_MAP.md)
   - [Вводный курс (форум)](https://forum.taucetistation.org/t/gajd-na-maping-i-kak-etim-voobshhe-zanimatsya/32439)

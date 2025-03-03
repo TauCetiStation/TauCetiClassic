@@ -20,6 +20,7 @@
 	else
 		new /obj/item/weapon/gun/energy/gun/head(src)
 
+	new /obj/item/clothing/accessory/armor(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/suit/captunic/capjacket(src)
 	new /obj/item/clothing/head/helmet/cap(src)
@@ -35,7 +36,7 @@
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
 	new /obj/item/device/remote_device/captain(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/captain(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
@@ -65,7 +66,10 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/weapon/storage/briefcase/centcomm(src)
-	new /obj/item/device/radio/headset/headset_int(src)
+	for(var/i in 1 to 2)
+		new /obj/item/device/radio/headset/headset_int(src)
+		new /obj/item/clothing/glasses/sunglasses/big(src)
+		new /obj/item/device/flash(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
@@ -95,7 +99,7 @@
 
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/device/flash(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hop(src)
 
@@ -169,7 +173,7 @@
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hos(src)

@@ -16,6 +16,39 @@
 
 	..()
 
+/mob/living/carbon/human/proc/reborn()
+	var/target = pick_landmarked_location("Heaven")
+	var/mob/living/carbon/human/pluvian_spirit/P = new /mob/living/carbon/human/pluvian_spirit(target)
+	for(var/obj/effect/proc_holder/spell/S in spell_list)
+		if(!istype(S,/obj/effect/proc_holder/spell/create_bless_vote))
+			P.spells_to_remember.Add(S)
+	global.pluvia_religion.remove_member(src, HOLY_ROLE_PRIEST)
+	P.real_name = dna.real_name
+	P.dna = dna.Clone()
+	P.UpdateAppearance()
+	P.b_eyes = 200
+	P.g_eyes = 255
+	P.r_eyes = 255
+	P.regenerate_icons()
+	P.my_corpse = src
+	mind.transfer_to(P)
+	P.hud_used.set_parallax(PARALLAX_HEAVEN)
+	for(var/obj/item/I in contents)
+		I.remove_item_actions(P)
+	for(var/obj/effect/proc_holder/spell/S in P.spell_list)
+		P.RemoveSpell(S)
+	message_admins("Pluvian [key_name_admin(P)] went to heaven!")
+	log_admin("Pluvian [key_name(P)] went to heaven!")
+
+/mob/living/carbon/human/proc/pluvian_reborn_if_worthy()
+	if(iscultist(src) ||  ischangeling(src) || isshadowthrall(src) || isshadowling(src) || !mind)
+		return
+	if(mind.pluvian_blessed || mind.pluvian_social_credit >= global.pluvia_religion.social_credit_threshold)
+		reborn()
+	else
+		to_chat(src, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
+		playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 /mob/living/carbon/human/dust()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/human/burned(loc)
@@ -69,7 +102,6 @@
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
 	..(gibbed)
-
 	SSStatistics.add_death_stat(src)
 
 // Called right after we will lost our head
@@ -104,6 +136,8 @@
 			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 				crab.sting_action(src)
 			return
+	if(ispluvian(src))
+		pluvian_reborn_if_worthy()
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)

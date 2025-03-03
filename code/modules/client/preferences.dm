@@ -1,4 +1,4 @@
-var/global/list/preferences_datums = list()
+var/global/list/datum/preferences/preferences_datums = list()
 
 #define MAX_SAVE_SLOTS 10
 #define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
@@ -6,6 +6,10 @@ var/global/list/preferences_datums = list()
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
+
+// this datum keeps preferences and some random client things we need to keep persistent
+// because byond client object is too fickle https://www.byond.com/forum/post/2927086
+// todo: after moving preferences to new datumized system we should rename this to something like client_data
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -14,17 +18,19 @@ var/global/list/preferences_datums = list()
 	var/savefile_version = 0
 
 	//non-preference stuff
-	var/permamuted = 0
-	var/muted = 0
+	var/muted = MUTE_NONE // cache for chat bans, you should not touch it outside bans
 	var/last_ip
 	var/last_id
 	var/menu_type = "general"
 	var/submenu_type = "body"
 	var/list/ignore_question = list()		//For roles which getting player_saves with question system
 
+	var/list/admin_cooldowns
+
 	//account data
-	var/list/cid_list = list()
-	var/ignore_cid_warning = 0
+	var/cid_count = 0
+	var/admin_cid_request_cache
+	var/admin_ip_request_cache
 
 	//game-preferences
 	var/UI_style = null
@@ -181,8 +187,15 @@ var/global/list/preferences_datums = list()
 	var/chosen_ringtone = "Flip-Flap"
 	var/custom_melody = "E7,E7,E7"
 
+	var/datum/guard/guard = null
+
 /datum/preferences/New(client/C)
 	parent = C
+
+	guard = new(parent)
+	if(!parent.holder)
+		init_chat_bans()
+
 	UI_style = global.available_ui_styles[1]
 	custom_emote_panel = global.emotes_for_emote_panel
 	if(istype(C))
@@ -196,11 +209,34 @@ var/global/list/preferences_datums = list()
 	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
 
+// reattach existing datum to client if client was disconnected and connects again
+/datum/preferences/proc/reattach_to_client(client/client)
+	parent = client
+	guard.holder = client
+
+/datum/preferences/proc/init_chat_bans()
+	if(!config.sql_enabled)
+		return
+
+	if(!establish_db_connection("erro_ban"))
+		return
+
+	// todo: rename job column
+	var/DBQuery/query = dbcon.NewQuery("SELECT job FROM erro_ban WHERE ckey = '[ckey(parent.ckey)]' AND (bantype = 'CHAT_PERMABAN'  OR (bantype = 'CHAT_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	if(!query.Execute())
+		return
+	muted = MUTE_NONE
+	while(query.NextRow())
+		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
+		muted |= mute_ban_bitfield[query.item[1]]
+
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+	dat += "<meta http-equiv='X-UA-Compatible' content='IE=edge'>"
+	dat += "</head>"
 	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
@@ -224,7 +260,7 @@ var/global/list/preferences_datums = list()
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
 		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
 		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
-		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
+		dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."
@@ -379,17 +415,17 @@ var/global/list/preferences_datums = list()
 			if("Default")
 				var/obj/item/organ/external/head/robot/ipc/H = new(null)
 				H.insert_organ(character)
-			if("Alien")
-				var/obj/item/organ/external/head/robot/ipc/alien/H = new(null)
+			if("Cobalt")
+				var/obj/item/organ/external/head/robot/ipc/cobalt/H = new(null)
 				H.insert_organ(character)
-			if("Double")
-				var/obj/item/organ/external/head/robot/ipc/double/H = new(null)
+			if("Cathod")
+				var/obj/item/organ/external/head/robot/ipc/cathod/H = new(null)
 				H.insert_organ(character)
-			if("Pillar")
-				var/obj/item/organ/external/head/robot/ipc/pillar/H = new(null)
+			if("Thorax")
+				var/obj/item/organ/external/head/robot/ipc/thorax/H = new(null)
 				H.insert_organ(character)
-			if("Human")
-				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
+			if("Axon")
+				var/obj/item/organ/external/head/robot/ipc/axon/H = new(null)
 				H.insert_organ(character)
 		var/obj/item/organ/internal/eyes/ipc/IO = new(null)
 		IO.insert_organ(character)
@@ -515,7 +551,7 @@ var/global/list/preferences_datums = list()
 		if(user.client.jobbancache[rank]["rid"])
 			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
 
-		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+		if(user.client.jobbancache[rank]["bantype"] == BANTYPE_JOB_TEMP)
 			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
 			dat += "<hr>"
 			dat += "<br>"

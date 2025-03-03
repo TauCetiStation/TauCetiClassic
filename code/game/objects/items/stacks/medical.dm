@@ -403,7 +403,7 @@
 		// Suturing yourself brings much more pain.
 		var/pain_factor = H == user ? 40 : 20
 		if(H.stat == CONSCIOUS)
-			H.AdjustShockStage(pain_factor)
+			H.adjustHalLoss(pain_factor)
 		BP.status &= ~ORGAN_ARTERY_CUT
 		BP.strap()
 		user.visible_message(

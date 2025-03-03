@@ -65,7 +65,7 @@
 	head = /obj/item/clothing/head/helmet/laserproof/police
 	shoes = /obj/item/clothing/shoes/boots/combat
 	gloves = /obj/item/clothing/gloves/combat/police
-	suit_store = /obj/item/weapon/gun/projectile/automatic
+	suit_store = /obj/item/weapon/gun/projectile/automatic/saber
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/ammo_box/magazine/smg = 3,

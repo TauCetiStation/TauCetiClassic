@@ -723,7 +723,7 @@
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
-	randomize_human(H)
+	H.randomize_appearance()
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
@@ -763,13 +763,16 @@
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
 					H.emote("scream")
 			if(30)
-				if(H.set_species(SLIME))
+				if(H.set_species(H.species.slime_species))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
 					H.restore_blood()
+					H.h_style = "Bald"
+					H.f_style = "Shaved"
+					H.update_hair()
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)
 				M.adjustOxyLoss(-2 * REM)
@@ -930,3 +933,22 @@
 	if(!istype(M))
 		return
 	SEND_SIGNAL(M, COMSIG_IMPEDREZENE_DIGEST)
+
+/datum/reagent/laughbidiol
+	name = "Laughbidiol"
+	id = "laughbidiol"
+	description = "Extract from laughweed"
+	reagent_state = LIQUID
+	color = "#3d9e29"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/laughbidiol/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(2)
+	if(prob(25))
+		M.make_dizzy(10)
+		M.emote(pick("cough","laugh","giggle"))
+	if(prob(10))
+		M.Stuttering(1)

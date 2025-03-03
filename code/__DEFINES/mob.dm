@@ -77,6 +77,8 @@
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
 #define HUMAN          	 "Human"
+#define PLUVIAN        	 "Pluvian"
+#define PLUVIAN_SPIRIT 	 "Pluvian Spirit"
 #define UNATHI         	 "Unathi"
 #define TAJARAN        	 "Tajaran"
 #define SKRELL         	 "Skrell"
@@ -99,6 +101,10 @@
 #define ZOMBIE_SKRELL  	 "Zombie Skrell"
 #define ZOMBIE_UNATHI  	 "Zombie Unathi"
 #define SLIME          	 "Slime"
+#define SLIME_UNATHI   	 "Slime Unathi"
+#define SLIME_VOX      	 "Slime Vox"
+#define SLIME_TAJARAN  	 "Slime Tajaran"
+#define SLIME_SKRELL   	 "Slime Skrell"
 #define ABOMINATION    	 "disgusting abomination"
 #define SERPENTID        "Serpentid"
 #define MOTH		     "Moth"
@@ -161,13 +167,13 @@
 #define TK_MANA_PER_W_CLASS(cl) (2**cl)
 
 //Nutrition levels for humans.
-#define NUTRITION_LEVEL_FAT 600
+#define NUTRITION_LEVEL_FAT 660
 #define NUTRITION_LEVEL_FULL 550
-#define NUTRITION_LEVEL_WELL_FED 450
-#define NUTRITION_LEVEL_NORMAL 400
-#define NUTRITION_LEVEL_FED 350
-#define NUTRITION_LEVEL_HUNGRY 250
-#define NUTRITION_LEVEL_STARVING 150
+#define NUTRITION_LEVEL_WELL_FED 440
+#define NUTRITION_LEVEL_NORMAL 330
+#define NUTRITION_LEVEL_FED 220
+#define NUTRITION_LEVEL_HUNGRY 110
+#define NUTRITION_LEVEL_STARVING 50
 
 #define NUTRITION_PERCENT_MAX 120
 #define NUTRITION_PERCENT_ZERO 0
@@ -262,3 +268,11 @@
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
 #define LOGOUT_SWAP 4 // not so safe, check other things if available
+
+// traumatic shock levels
+#define TRAUMATIC_SHOCK_MINOR           10
+#define TRAUMATIC_SHOCK_SERIOUS         30
+#define TRAUMATIC_SHOCK_INTENSE         50
+#define TRAUMATIC_SHOCK_MIND_SHATTERING 80
+#define TRAUMATIC_SHOCK_CRITICAL        100
+

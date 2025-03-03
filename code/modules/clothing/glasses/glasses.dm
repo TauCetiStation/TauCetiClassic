@@ -39,18 +39,6 @@
 			H.update_sight()
 			update_item_actions()
 
-/obj/item/clothing/glasses/equipped(mob/user, slot)
-	. = ..()
-	if(slot == SLOT_GLASSES)
-		if(prescription)
-			user.clear_fullscreen("nearsighted")
-
-/obj/item/clothing/glasses/dropped(mob/user)
-	. = ..()
-	if(prescription)
-		if(HAS_TRAIT(user, TRAIT_NEARSIGHT))
-			user.overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
@@ -60,7 +48,7 @@
 	toggleable = TRUE
 	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
 /datum/action/item_action/hands_free/toggle_goggles
@@ -288,7 +276,7 @@
 	activation_sound = 'sound/effects/glasses_switch.ogg'
 	sightglassesmod  = "hos"
 	darkness_view = 7
-	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protection = FLASHES_AMPLIFIER
 	flash_protection_slots = list(SLOT_GLASSES)
 	item_action_types = list(/datum/action/item_action/switch_shades_mode)
@@ -457,3 +445,61 @@
 		return
 	active = !active
 	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")
+
+/datum/glasses_mode_type_state
+
+/datum/glasses_mode_type_state/proc/change_state(obj/item/clothing/glasses/glasses, state)
+	if(state)
+		on(glasses)
+	else
+		off(glasses)
+
+/datum/glasses_mode_type_state/proc/on(obj/item/clothing/glasses/glasses)
+	return
+
+/datum/glasses_mode_type_state/proc/off(obj/item/clothing/glasses/glasses)
+	return
+
+/datum/glasses_mode_type_state/thermal
+	var/sightglassesmod = "thermal"
+
+/datum/glasses_mode_type_state/thermal/sepia
+	sightglassesmod = "sepia"
+
+/datum/glasses_mode_type_state/thermal/on(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	glasses.sightglassesmod = sightglassesmod
+	glasses.vision_flags = SEE_MOBS
+
+/datum/glasses_mode_type_state/thermal/off(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = null
+	glasses.sightglassesmod = null
+	glasses.vision_flags = 0
+
+/datum/glasses_mode_type_state/night
+	var/sightglassesmod = "night"
+
+/datum/glasses_mode_type_state/night/nightsight
+	sightglassesmod = "nightsight"
+
+/datum/glasses_mode_type_state/night/on(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	glasses.sightglassesmod = sightglassesmod
+	glasses.darkness_view = 7
+
+/datum/glasses_mode_type_state/night/off(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = null
+	glasses.sightglassesmod = null
+	glasses.darkness_view = 0
+
+/datum/glasses_mode_type_state/thermal_advanced
+
+/datum/glasses_mode_type_state/thermal_advanced/on(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	glasses.darkness_view = 7
+	glasses.vision_flags = SEE_MOBS
+
+/datum/glasses_mode_type_state/thermal_advanced/off(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = null
+	glasses.darkness_view = 0
+	glasses.vision_flags = 0

@@ -50,6 +50,7 @@
 	spawn()
 		if(client)
 			animate(client, color = null, time = 0)
+			hud_used.set_parallax(current_parallax)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -341,21 +342,25 @@
 		return
 
 	face_atom(A)
+	looks_at_log(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(stat == CONSCIOUS)
+		last_examined = A.name
+
+/mob/proc/looks_at_log(atom/A)
 	if(!show_examine_log)
 		return
 	var/mob/living/carbon/human/H = src
 	if(ishuman(src))
-		if(H.head && H.head.flags_inv && HIDEEYES)
+		if(H.head && H.head.flags_inv & HIDEEYES)
 			return
-		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+		if(H.wear_mask && H.wear_mask.flags_inv & HIDEEYES)
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
-	if(stat == CONSCIOUS)
-		last_examined = A.name
+
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
@@ -411,7 +416,7 @@
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
-			to_chat(usr, "You must wait 30 minutes to respawn!")
+			to_chat(usr, "You must wait [config.deathtime_required / 600] minutes to respawn!")
 			return
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")
@@ -437,7 +442,6 @@
 
 	// New life, new quality.
 	client.prefs.selected_quality_name = null
-
 	M.key = key
 	M.name = M.key
 //	M.Login()	//wat
@@ -853,6 +857,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
 	updateDrugginesOverlay()
+	SEND_SIGNAL(src, COMSIG_HUMAN_ON_ADJUST_DRUGINESS, src)
 
 /mob/proc/setDrugginess(amount)
 	druggy = max(amount, 0)
@@ -881,13 +886,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(status_flags & GODMODE)
 		return
 	stuttering = max(amount, 0)
-
-//========== Shock Stage =========
-/mob/proc/AdjustShockStage(amount)
-	return
-
-/mob/proc/SetShockStage(amount)
-	return
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
@@ -971,7 +969,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.AdjustShockStage(20)
+		H.adjustHalLoss(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.

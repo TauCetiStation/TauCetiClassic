@@ -150,6 +150,12 @@
 	icon_state = "skrellkey1"
 	flags = HEAR_PASS_SAY
 
+/obj/item/weapon/holder/monkey/pluvia
+	name = "pluvian"
+	desc = "Оно никогда не существовало в дикой природе.."
+	icon_state = "pluvian"
+	flags = HEAR_PASS_SAY
+
 /obj/item/weapon/holder/monkey/punpun
 	name = "punpun"
 	icon_state = "punpun1"

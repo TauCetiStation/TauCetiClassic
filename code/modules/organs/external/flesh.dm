@@ -40,7 +40,7 @@
 	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
 	else
-		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.0005 * BP.pumped)
+		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.00015 * BP.pumped)
 
 	return BP.pumped - old_pumped
 
@@ -130,7 +130,7 @@
 	var/spillover = cur_damage + damage_amt + BP.burn_dam + burn - BP.max_damage // excess damage goes off into shock_stage, this var also can prevent dismemberment, if result is negative.
 
 	if(spillover > 0 && !BP.species.flags[IS_SYNTHETIC])
-		BP.owner.shock_stage += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
+		BP.owner.halloss += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
 
 	// sync the organ's damage with its wounds
 	BP.update_damages()

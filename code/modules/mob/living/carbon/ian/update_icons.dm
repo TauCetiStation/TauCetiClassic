@@ -169,7 +169,7 @@
 
 	apply_standing_overlay(LAYERIAN_MOUTH)
 
-/mob/living/carbon/ian/proc/update_inv_neck()
+/mob/living/carbon/ian/update_inv_neck()
 	//remove_standing_overlay(LAYERIAN_NECKCUFF) incase icons ever will be added.
 
 	if(!neck)

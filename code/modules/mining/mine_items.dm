@@ -121,7 +121,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
-	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
+	dat += "<b><A href='byond://?src=\ref[src];move=[1]'>Send</A></b></center>"
 
 	var/datum/browser/popup = new(user, "miningshuttle", "Mining Shuttle Control", 200, 150)
 	popup.set_content(dat)
@@ -270,6 +270,19 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
 		QUALITY_PRYING = 0.75
+	)
+
+/obj/item/weapon/shovel/experimental
+	name = "experimental shovel"
+	desc = "It's a damn cool shovel."
+	icon_state = "expshovel"
+	item_state = "expshovel"
+	item_state_world = "expshovel_world"
+	force = 10.0
+	toolspeed = 0.1
+	origin_tech = "materials=2;engineering=3"
+	qualities = list(
+		QUALITY_PRYING = 0.1
 	)
 
 /obj/item/weapon/shovel/spade
@@ -667,7 +680,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	damtype = BURN
 	hitsound = list('sound/weapons/sear.ogg')
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
-	fire_delay = 3
+	fire_delay = 0
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -697,16 +710,15 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if((iswallturf(target)) && (prob(destruction_chance)))
 		target.ex_act(EXPLODE_HEAVY)
 
-
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
+	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
 
 /obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
 	if(emagged)
 		return FALSE
 	ammo_type += new /obj/item/ammo_casing/energy/laser/cutter/emagged(src)
-	fire_delay = 5
 	origin_tech += ";syndicate=1"
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")

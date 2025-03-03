@@ -44,6 +44,10 @@
 	///Last world.time tick the contents of this paper was changed.
 	var/last_info_change = 0
 
+	var/windowWidth = 425
+	var/windowHeight = 600
+	var/windowTheme = CSS_THEME_LIGHT
+
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/atom_init()
@@ -58,9 +62,9 @@
 
 /obj/item/weapon/paper/update_icon()
 	if(info)
-		icon_state = "paper_words"
+		icon_state = "[initial(icon_state)]_words"
 		return
-	icon_state = "paper"
+	icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/paper/proc/update_space(new_text)
 	if(!new_text)
@@ -91,7 +95,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", 425, 600, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", windowWidth, windowHeight, ntheme = windowTheme)
 		popup.set_content(data)
 		popup.open()
 
@@ -241,10 +245,10 @@
 	info_links = info
 	var/i = 0
 	for(i = 1, i <= fields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i]'>write</A></font>", 1)
 	for(i = 1, i <= sfields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
-	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
+	info_links = info_links + " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -379,7 +383,7 @@
 
 		for(var/premade_form in predefined_forms_list[department]["content"])
 			var/datum/form/form = new premade_form
-			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<tr><th style='background-color:[color];'><A href='byond://?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
 			dat += "<th> [form.name]</th></tr>"
 		dat +="</tbody></table>"
 
@@ -588,6 +592,14 @@
 
 	else if(istype(I, /obj/item/weapon/lighter))
 		burnpaper(I, user)
+
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed))
+		var/obj/item/clothing/mask/cigarette/Cig = new(get_turf(src))
+		I.reagents.trans_to(Cig, 15)
+		qdel(I)
+		qdel(src)
 
 	else
 		return ..()
@@ -1069,3 +1081,64 @@ var/global/list/contributor_names
 	info += "Вновь переговоры могут быть начаты после знака отменительного (• • — •). <br>"
 	info += "Знак ожидания (• — • • •) делается в тех случаях, когда внезапно требуется на время прервать передачу или прием. <br>"
 	info += "Знак окончания (• — • — •) делается при окончании передачи, если не требуется ответа. <br>"
+
+/obj/item/weapon/paper/old_station_note_one
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_one/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_one/proc/write_info()
+	info = ""
+	info += "20.08.2221. Из-за аномалии, станция переместилась на неизвестные координаты. Связаться с ЦК невозможно.<br>"
+	info += "21.08.2221. Экипаж продолжает работать в штатном режиме. Учёные начинают проводить эксперименты над образцами ксеноморфов, которые были обнаружены на планете Лутиэн.<br>"
+	info += "25.08.2221. В инженерный отсек врезался небольшой метеор. Инженеры начали ремонт отсека.<br>"
+	info += "26.08.2221. Ремонт завершён.<br>"
+	info += "3.09.2221. На станцию попытался проникнуть разведчик Синдиката. Турели нейтрализовали врага, его снаряжение было передано научному персоналу.<br>"
+	info += "<i>Похоже, это был не самый ценный кадр, раз его послали почти без оружия и в древнем как мир скафандре.</i><br>"
+
+/obj/item/weapon/paper/old_station_note_two
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_two/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_two/proc/write_info()
+	info = ""
+	info += "10.09.2221. На станцию напал отряд подготовленных оперативников Синдиката. Атака была отбита.<br>"
+	info += "<i>Если на эту проклятую станцию попытались напасть, значит, о ней кто-то да знает. Эвакуация - это просто вопрос времени.</i> <br>"
+	info += "13.09.2221. Экипаж начинает замышлять что-то неладное. Некоторые считают, что всё, что произошло на этой станции за последние две недели - один большой эксперимент НТ.<br>"
+	info += "15.09.2221. Очередной метеор повредил обшивку в научном отделе.<br>"
+
+/obj/item/weapon/paper/old_station_note_three
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_three/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_three/proc/write_info()
+	info = ""
+	info += "16.09.2221. По окончанию ремонта обнаружилась пропажа нескольких образцов ксенофауны.<br>"
+	info += "17.09.2221. В дормиториях был найден д-р █████ со вспоротым брюхом, жуткое зрелище.<br>"
+	info += "20.09.2221. Эти ксенотвари обосновались в телекомах и успели схватить нескольких уч#<br>"
+
+/obj/item/weapon/paper/old_station_note_syndispacesuit
+	name = "Object #8123"
+	info = "Устаревшая модель боевого скафандра, который использовали \"Мародёры Горлекса\" в 2190-тых годах."
+
+/obj/item/weapon/paper/old_station_note_medhud
+	name = "Object #8124"
+	info = "Продвинутый медицинский интерфейс с встроенным прибором ночного видения."
+
+/obj/item/weapon/paper/old_station_note_egun
+	name = "Object #2921"
+	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."

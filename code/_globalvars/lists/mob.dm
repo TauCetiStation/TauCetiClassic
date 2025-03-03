@@ -4,6 +4,7 @@ var/global/list/all_languages[0]
 var/global/list/language_keys[0]					//table of say codes for all languages
 var/global/list/whitelisted_species = list(HUMAN)
 var/global/list/all_zombie_species_names = list(ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI)
+var/global/list/body_wing_accessory_by_name
 
 var/global/list/clients = list()							//list of all clients
 var/global/list/admins = list()							//list of all clients whom are admins
@@ -43,6 +44,6 @@ var/global/list/gods_list = list()
 
 //feel free to add shit to lists below
 var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine", "ambrosium", "jenkem")	//increase heart rate
-var/global/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
+var/global/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin", "tramadol", "oxycodone")			//decrease heart rate
 var/global/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
 var/global/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional

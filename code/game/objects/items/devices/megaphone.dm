@@ -18,7 +18,7 @@
 
 /obj/item/device/megaphone/attack_self(mob/living/user)
 	if (user.client)
-		if(user.client.prefs.muted & MUTE_IC)
+		if(user.client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(user.client, ADMIN_CD_IC))
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 	if(!ishuman(user))

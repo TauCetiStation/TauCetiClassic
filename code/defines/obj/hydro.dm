@@ -2,7 +2,8 @@
 
 /obj/item/device/plant_analyzer
 	name = "plant analyzer"
-	desc = "A hand-held scanner which reports condition of the plant."
+	cases = list("анализатор растений", "анализатора растений", "анализатору растений", "анализатор растений", "анализатором растений", "анализаторе растений")
+	desc = "Ручной сканер, который показывает состояние растений."
 	icon = 'icons/obj/device.dmi'
 	w_class = SIZE_MINUSCULE
 	m_amt = 200
@@ -22,9 +23,9 @@
 
 	output_to_chat = !output_to_chat
 	if(output_to_chat)
-		to_chat(usr, "The scanner now outputs data to chat.")
+		to_chat(usr, "Теперь сканер выводит данные в чат.")
 	else
-		to_chat(usr, "The scanner now outputs data in a seperate window.")
+		to_chat(usr, "Теперь сканер выводит данные в отдельном окне.")
 
 /obj/item/device/plant_analyzer/attack(mob/living/carbon/human/M, mob/living/user)
 	if(istype(M) && M.species.flags[IS_PLANT])
@@ -78,13 +79,38 @@
 		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
-/obj/item/seeds/gatfruit
-	name = "pack of gatfruit seeds"
-	desc = "These seeds grow into .357 revolvers."
-	icon_state = "seed-gatfruit"
-	species = "gatfruit"
-	plantname = "Gatfruit Tree"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+/obj/item/seeds/peashooter
+	name = "pack of peashooter seeds"
+	cases = list("семена Горохострела обыкновенного", "семян Горохострела обыкновенного", "семенам Горохострела обыкновенного", "семена Горохострела обыкновенного", "семенами Горохострела обыкновенного", "семенах Горохострела обыкновенного")
+	desc = "Эти семена вырастают в Горохострел"
+	icon_state = "seed-peashooter"
+	species = "peashooter"
+	plantname = "Peashooter Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
+	lifespan = 20
+	endurance = 20
+	maturation = 10
+	production = 10
+	yield = 2
+	potency = 60
+	growthstages = 2
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+
+/obj/item/seeds/peashooter/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/gibbingtons))
+		return
+	if(prob(holder.stage * 30))
+		mutatelist = list(/obj/item/seeds/peashooter/virus)
+		tray.mutatespecie()
+
+/obj/item/seeds/peashooter/virus
+	name = "pack of virus peashooter seeds"
+	cases = list("семена Горохострела Гиббингтонского", "семян Горохострела Гиббингтонского", "семенам Горохострела Гиббингтонского", "семена Горохострела Гиббингтонского", "семенами Горохострела Гиббингтонского", "семенах Горохострела Гиббингтонского")
+	desc = "Эти семена вырастают в Горохострел Гиббингтонский"
+	icon_state = "seed-peashooter_virus"
+	species = "peashooter_virus"
+	plantname = "Virus Peashooter Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
 	lifespan = 20
 	endurance = 20
 	maturation = 10
@@ -96,7 +122,8 @@
 
 /obj/item/seeds/blackpepper
 	name = "pack of piper nigrum seeds"
-	desc = "These seeds grow into black pepper plants. Spicy."
+	cases = list("семена черного перца", "семян черного перца", "семенам черного перца", "семена черного перец", "семенами черного перца", "семенах черного перца")
+	desc = "Из этих семян вырастает черный перец."
 	icon_state = "seed-blackpepper"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "blackpepper"
@@ -110,17 +137,19 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 5
+	mutatelist = list(/obj/item/seeds/peashooter)
 
 /obj/item/seeds/blackpepper/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
 	if(!istype(E, /datum/disease2/effect/gibbingtons))
 		return
-	if(prob(holder.stage * 10))
-		mutatelist = list(/obj/item/seeds/gatfruit)
+	if(prob(holder.stage * 25))
+		mutatelist = list(/obj/item/seeds/peashooter/virus)
 		tray.mutatespecie()
 
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"
-	desc = "These seeds grow into chili plants. HOT! HOT! HOT!"
+	cases = list("семена перца чили", "семян перца чили", "семенам перца чили", "семена перца чили", "семенами перца чили", "семенах перца чили")
+	desc = "Из этих семян вырастает перец чили. ОСТРО! ЖЖЕТ!"
 	icon_state = "seed-chili"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "chili"
@@ -138,7 +167,8 @@
 
 /obj/item/seeds/plastiseed
 	name = "pack of plastellium mycelium"
-	desc = "This mycelium grows into Plastellium."
+	cases = list("мицелий пластеллия", "мицелия пластеллия", "мицелию пластеллия", "мицелий пластеллия", "мицелием пластеллия", "мицелии пластеллия")
+	desc = "Из этого мицелия вырастает пластеллий."
 	icon_state = "mycelium-plast"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "plastellium"
@@ -156,7 +186,8 @@
 
 /obj/item/seeds/grapeseed
 	name = "pack of grape seeds"
-	desc = "These seeds grow into grape vines."
+	cases = list("семена винограда", "семян винограда", "семенам винограда", "семена винограда", "семенами винограда", "семенах винограда")
+	desc = "Из этих семян вырастают виноградные лозы."
 	icon_state = "seed-grapes"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "grape"
@@ -174,7 +205,8 @@
 
 /obj/item/seeds/greengrapeseed
 	name = "pack of green grape seeds"
-	desc = "These seeds grow into green-grape vines."
+	cases = list("семена зеленого винограда", "семян зеленого винограда", "семенам зеленого винограда", "семена зеленого винограда", "семенами зеленого винограда", "семенах зеленого винограда")
+	desc = "Из этих семян вырастают лозы зеленого винограда."
 	icon_state = "seed-greengrapes"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "greengrape"
@@ -191,7 +223,8 @@
 
 /obj/item/seeds/cabbageseed
 	name = "pack of cabbage seeds"
-	desc = "These seeds grow into cabbages."
+	cases = list("семена капусты", "семян капусты", "семенам капусты", "семена капусты", "семенами капусты", "семенах капусты")
+	desc = "Из этих семян вырастает капуста."
 	icon_state = "seed-cabbage"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "cabbage"
@@ -206,9 +239,28 @@
 	plant_type = 0
 	growthstages = 1
 
+/obj/item/seeds/cucumberseed
+	name = "pack of cucumber seeds"
+	cases = list("семена огурцов", "семян огурцов", "семенам огурцов", "семена огурцов", "семенами огурцов", "семенах огурцов")
+	desc = "Эти семена вырастают в огурцы."
+	icon_state = "seed-cucumber"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	species = "cucumber"
+	plantname = "Cucumbers"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	lifespan = 30
+	endurance = 20
+	maturation = 3
+	production = 4
+	yield = 4
+	potency = 4
+	plant_type = 0
+	growthstages = 4
+
 /obj/item/seeds/tobacco_space
 	name = "pack of space tobacco seeds"
-	desc = "These seeds grow into space tobacco plants."
+	cases = list("семена космического табака", "семян космического табака", "семенам космического табака", "семена космического табака", "семенами космического табака", "семенах космического табака")
+	desc = "Из этих семян вырастает космический табак."
 	icon_state = "seed-stobacco"
 	species = "stobacco"
 	plantname = "Space Tobacco Plant"
@@ -224,7 +276,8 @@
 
 /obj/item/seeds/tobacco
 	name = "pack of tobacco seeds"
-	desc = "These seeds grow into tobacco plants."
+	cases = list("семена табака", "семян табака", "семенам табака", "семена табака", "семенами табака", "семенах табака")
+	desc = "Из этих семян вырастает табак."
 	icon_state = "seed-tobacco"
 	species = "tobacco"
 	plantname = "Tobacco Plant"
@@ -246,7 +299,8 @@
 
 /obj/item/seeds/shandseed
 	name = "pack of s'rendarr's hand seeds"
-	desc = "These seeds grow into a helpful herb called S'Rendarr's Hand, native to Ahdomai."
+	cases = list("семена Длани С'рендарра", "семян Длани С'рендарра", "семенам Длани С'рендарра", "семена Длани С'рендарра", "семенами Длани С'рендарра", "семенах Длани С'рендарра")
+	desc = "Из этих семян вырастает полезная трава под названием «Длань С'рендара», произрастающая на Адомае."
 	icon_state = "seed-shand"
 	species = "shand"
 	plantname = "S'Rendarr's Hand"
@@ -268,7 +322,8 @@
 
 /obj/item/seeds/mtearseed
 	name = "pack of messa's tear seeds"
-	desc = "These seeds grow into a helpful herb called Messa's Tear, native to Ahdomai."
+	cases = list("семена Слезы Мессы", "семян Слезы Мессы", "семенам Слезы Мессы", "семена Слезы Мессы", "семенами Слезы Мессы", "семенах Слезы Мессы")
+	desc = "Из этих семян вырастает полезная трава под названием «Слеза Мессы», произрастающая на Адомае."
 	icon_state = "seed-mtear"
 	species = "mtear"
 	plantname = "Messa's Tear"
@@ -284,7 +339,8 @@
 
 /obj/item/seeds/berryseed
 	name = "pack of berry seeds"
-	desc = "These seeds grow into berry bushes."
+	cases = list("семена ягод", "семян ягод", "семенам ягод", "семена ягод", "семенами ягод", "семенах ягод")
+	desc = "Из этих семян вырастают кусты ягод."
 	icon_state = "seed-berry"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "berry"
@@ -302,7 +358,8 @@
 
 /obj/item/seeds/glowberryseed
 	name = "pack of glow-berry seeds"
-	desc = "These seeds grow into glow-berry bushes."
+	cases = list("семена светоягод", "семян светоягод", "семенам светоягод", "семена светоягод", "семенами светоягод", "семенах светоягод")
+	desc = "Из этих семян вырастают кусты светящихся ягод."
 	icon_state = "seed-glowberry"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "glowberry"
@@ -319,7 +376,8 @@
 
 /obj/item/seeds/bananaseed
 	name = "pack of banana seeds"
-	desc = "They're seeds that grow into banana trees."
+	cases = list("семена банана", "семян банана", "семенам банана", "семена банана", "семенами банана", "семенах банана")
+	desc = "Из этих семян вырастает банановое дерево."
 	icon_state = "seed-banana"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "banana"
@@ -334,9 +392,62 @@
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/honkyseed)
 
+/obj/item/seeds/laughweedseed
+	name = "pack of laughweed seeds"
+	cases = list("семена смехтравы", "семян смехтравы", "семенам смехтравы", "семена смехтравы", "семенами смехтравы", "семенах смехтравы")
+	desc = "Из этих семян вырастает смехтрава. Хи-хи."
+	icon_state = "seed-laughweed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "laughweed"
+	plantname = "Laughweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed
+	lifespan = 30
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 1
+	growthstages = 1
+	mutatelist = list(/obj/item/seeds/megaweedseed,/obj/item/seeds/blackweedseed)
+
+/obj/item/seeds/megaweedseed
+	name = "pack of megaweed seeds"
+	cases = list("семена мегатравки", "семян мегатравки", "семенам мегатравки", "семена мегатравки", "семенами мегатравки", "семенах мегатравки")
+	desc = "Из этих семян вырастает мегатравка. Хе-хе-хе."
+	icon_state = "seed-megaweed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "megaweed"
+	plantname = "Megaweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
+	lifespan = 30
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 1
+	growthstages = 1
+
+/obj/item/seeds/blackweedseed
+	name = "pack of deathweed seeds"
+	cases = list("семена смертьтравы", "семян смертьтравы", "семенам смертьтравы", "семена смертьтравы", "семенами смертьтравы", "семенах смертьтравы")
+	desc = "Из этих семян вырастает смертьтрава. ХА-ХА-КХ-Х-ХА..."
+	icon_state = "seed-blackweed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "blackweed"
+	plantname = "Deathweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
+	lifespan = 30
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 1
+	growthstages = 1
+
 /obj/item/seeds/honkyseed
 	name = "pack of honk-banana seeds"
-	desc = "They're seeds that grow into banana trees."
+	cases = list("семена клоунского банана", "семян клоунского банана", "семенам клоунского банана", "семена клоунского банана", "семенами клоунского банана", "семенах клоунского банана")
+	desc = "Из этих семян вырастает банановое дерево."
 	icon_state = "seed-banana-honk"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "honk"
@@ -352,7 +463,8 @@
 
 /obj/item/seeds/eggplantseed
 	name = "pack of eggplant seeds"
-	desc = "These seeds grow to produce berries that look nothing like eggs."
+	cases = list("семена баклажана", "семян баклажана", "семенам баклажана", "семена баклажана", "семенами баклажана", "семенах баклажана")
+	desc = "Из этих семян вырастают округлые плоды, похожие на большие яйца."
 	icon_state = "seed-eggplant"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "eggplant"
@@ -370,7 +482,8 @@
 
 /obj/item/seeds/eggyseed
 	name = "pack of eggplant seeds"
-	desc = "These seeds grow to produce berries that look a lot like eggs."
+	cases = list("семена баклажана", "семян баклажана", "семенам баклажана", "семена баклажана", "семенами баклажана", "семенах баклажана")
+	desc = "Из этих семян вырастают округлые плоды, похожие на большие яйца."
 	icon_state = "seed-eggy"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "eggy"
@@ -386,7 +499,8 @@
 
 /obj/item/seeds/bloodtomatoseed
 	name = "pack of blood-tomato seeds"
-	desc = "These seeds grow into blood-tomato plants."
+	cases = list("семена кровавого помидора", "семян кровавого помидора", "семенам кровавого помидора", "семена кровавого помидора", "семенами кровавого помидора", "семенах кровавого помидора")
+	desc = "Из этих семян вырастает кровавый помидор."
 	icon_state = "seed-bloodtomato"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "bloodtomato"
@@ -403,7 +517,8 @@
 
 /obj/item/seeds/tomatoseed
 	name = "pack of tomato seeds"
-	desc = "These seeds grow into tomato plants."
+	cases = list("семена помидора", "семян помидора", "семенам помидора", "семена помидора", "семенами помидора", "семенах помидора")
+	desc = "Из этих семян вырастает помидор."
 	icon_state = "seed-tomato"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "tomato"
@@ -421,7 +536,8 @@
 
 /obj/item/seeds/killertomatoseed
 	name = "pack of killer-tomato seeds"
-	desc = "These seeds grow into killer-tomato plants."
+	cases = list("семена помидора-убийцы", "семян помидора-убийцы", "семенам помидора-убийцы", "семена помидора-убийцы", "семенами помидора-убийцы", "семенах помидора-убийцы")
+	desc = "Из этих семян вырастает помидор-убийца."
 	icon_state = "seed-killertomato"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "killertomato"
@@ -439,7 +555,8 @@
 
 /obj/item/seeds/bluetomatoseed
 	name = "pack of blue-tomato seeds"
-	desc = "These seeds grow into blue-tomato plants."
+	cases = list("семена голубого помидора", "семян голубого помидора", "семенам голубого помидора", "семена голубого помидора", "семенами голубого помидора", "семенах голубого помидора")
+	desc = "Из этих семян вырастает голубой помидор."
 	icon_state = "seed-bluetomato"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "bluetomato"
@@ -457,7 +574,8 @@
 
 /obj/item/seeds/bluespacetomatoseed
 	name = "pack of bluespace tomato seeds"
-	desc = "These seeds grow into bluespace tomato plants."
+	cases = list("семена блюспейс помидора", "семян блюспейс помидора", "семенам блюспейс помидора", "семена блюспейс помидора", "семенами блюспейс помидора", "семенах блюспейс помидора")
+	desc = "Из этих семян вырастает блюспейс помидор."
 	icon_state = "seed-bluespacetomato"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "bluespacetomato"
@@ -474,7 +592,8 @@
 
 /obj/item/seeds/cornseed
 	name = "pack of corn seeds"
-	desc = "I don't mean to sound corny..."
+	cases = list("семена кукурузы", "семян кукурузы", "семенам кукурузы", "семена кукурузы", "семенами кукурузы", "семенах кукурузы")
+	desc = "Если есть сырой - может скукурузить!"
 	icon_state = "seed-corn"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "corn"
@@ -492,7 +611,8 @@
 
 /obj/item/seeds/fraxinella
 	name = "pack of fraxinella seeds"
-	desc = "These seeds grow into fraxinella."
+	cases = list("семена ясенца", "семян ясенца", "семенам ясенца", "семена ясенца", "семенами ясенца", "семенах ясенца")
+	desc = "Из этих семян вырастает ясенец."
 	icon_state = "seed-fraxinella"
 	species = "fraxinella"
 	plantname = "Fraxinella Plants"
@@ -508,7 +628,8 @@
 
 /obj/item/seeds/poppyseed
 	name = "pack of poppy seeds"
-	desc = "These seeds grow into poppies."
+	cases = list("семена мака", "семян мака", "семенам мака", "семена мака", "семенами мака", "семенах мака")
+	desc = "Из этих семян вырастает мак."
 	icon_state = "seed-poppy"
 	species = "poppy"
 	plantname = "Poppy Plants"
@@ -531,7 +652,8 @@
 
 /obj/item/seeds/potatoseed
 	name = "pack of potato seeds"
-	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
+	cases = list("семена картофеля", "семян картофеля", "семенам картофеля", "семена картофеля", "семенами картофеля", "семенах картофеля")
+	desc = "Вари! Толки! Туши! Но для начала посади в грядку."
 	icon_state = "seed-potato"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "potato"
@@ -549,7 +671,8 @@
 
 /obj/item/seeds/icepepperseed
 	name = "pack of ice-pepper seeds"
-	desc = "These seeds grow into ice-pepper plants."
+	cases = list("семена ледяного перца", "семян ледяного перца", "семенам ледяного перца", "семена ледяного перца", "семенами ледяного перца", "семенах ледяного перца")
+	desc = "Из этих семян вырастает ледяной перец."
 	icon_state = "seed-icepepper"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "chiliice"
@@ -566,7 +689,8 @@
 
 /obj/item/seeds/soyaseed
 	name = "pack of soybean seeds"
-	desc = "These seeds grow into soybean plants."
+	cases = list("семена соевых бобов", "семян соевых бобов", "семенам соевых бобов", "семена соевых бобов", "семенами соевых бобов", "семенах соевых бобов")
+	desc = "Из этих семян вырастают соевые бобы."
 	icon_state = "seed-soybean"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "soybean"
@@ -583,7 +707,8 @@
 
 /obj/item/seeds/meatwheat
 	name = "pack of meatwheat seeds"
-	desc = "If you ever wanted to drive a vegetarian to insanity, here's how."
+	cases = list("семена пшеничного мяса", "семян пшеничного мяса", "семенам пшеничного мяса", "семена пшеничного мяса", "семенами пшеничного мяса", "семенах пшеничного мяса")
+	desc = "Если вы когда-нибудь хотели свести вегетарианца с ума, то это отличный способ."
 	icon_state = "seed-meatwheat"
 	species = "meatwheat"
 	plantname = "Meatwheat"
@@ -600,7 +725,8 @@
 
 /obj/item/seeds/wheatseed
 	name = "pack of wheat seeds"
-	desc = "These may, or may not, grow into weed."
+	cases = list("семена пшеницы", "семян пшеницы", "семенам пшеницы", "семена пшеницы", "семенами пшеницы", "семенах пшеницы")
+	desc = "Они могут вырасти в сорняки, а могут и нет."
 	icon_state = "seed-wheat"
 	species = "wheat"
 	plantname = "Wheat Stalks"
@@ -624,7 +750,8 @@
 
 /obj/item/seeds/riceseed
 	name = "pack of rice seeds"
-	desc = "These seeds grow into rice stalks."
+	cases = list("семена риса", "семян риса", "семенам риса", "семена риса", "семенами риса", "семенах риса")
+	desc = "Из этих семян вырастает рисовый стебель."
 	icon_state = "seed-rice"
 	species = "rice"
 	plantname = "Rice Stalks"
@@ -641,7 +768,8 @@
 
 /obj/item/seeds/carrotseed
 	name = "pack of carrot seeds"
-	desc = "These seeds grow into carrots."
+	cases = list("семена моркови", "семян моркови", "семенам моркови", "семена моркови", "семенами моркови", "семенах моркови")
+	desc = "Из этих семян вырастает морковь."
 	icon_state = "seed-carrot"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "carrot"
@@ -659,7 +787,8 @@
 
 /obj/item/seeds/reishimycelium
 	name = "pack of reishi mycelium"
-	desc = "This mycelium grows into something relaxing."
+	cases = list("мицелий рейши", "мицелия рейши", "мицелию рейши", "мицелий рейши", "мицелием рейши", "мицелие рейши")
+	desc = "Из этого мицелия вырастает что-то расслабляющее."
 	icon_state = "mycelium-reishi"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "reishi"
@@ -677,7 +806,8 @@
 
 /obj/item/seeds/amanitamycelium
 	name = "pack of fly amanita mycelium"
-	desc = "This mycelium grows into something horrible."
+	cases = list("мицелий мухомора", "мицелия мухомора", "мицелию мухомора", "мицелий мухомора", "мицелием мухомора", "мицелие мухомора")
+	desc = "Из этого мицелия вырастает нечто ужасное."
 	icon_state = "mycelium-amanita"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "amanita"
@@ -696,7 +826,8 @@
 
 /obj/item/seeds/angelmycelium
 	name = "pack of destroying angel mycelium"
-	desc = "This mycelium grows into something devestating."
+	cases = list("мицелий бледной поганки", "мицелия бледной поганки", "мицелию бледной поганки", "мицелий бледной поганки", "мицелием бледной поганки", "мицелии бледной поганки")
+	desc = "Из этого мицелия вырастает что-то разрушительное."
 	icon_state = "mycelium-angel"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "angel"
@@ -714,7 +845,8 @@
 
 /obj/item/seeds/libertymycelium
 	name = "pack of liberty-cap mycelium"
-	desc = "This mycelium grows into liberty-cap mushrooms."
+	cases = list("мицелий грибов псилоцибе", "мицелия грибов псилоцибе", "мицелию грибов псилоцибе", "мицелий грибов псилоцибе", "мицелием грибов псилоцибе", "мицелии грибов псилоцибе")
+	desc = "Из этого мицелия вырастают грозди грибов псилоцибе."
 	icon_state = "mycelium-liberty"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "liberty"
@@ -732,7 +864,8 @@
 
 /obj/item/seeds/jupitercup
 	name = "pack of jupiter cup mycelium"
-	desc = "This mycelium grows into jupiter cups. Zeus would be envious at the power at your fingertips."
+	cases = list("мицелий юпитерской чашечки", "мицелия юпитерской чашечки", "мицелию юпитерской чашечки", "мицелий юпитерской чашечки", "мицелием юпитерской чашечки", "мицелии юпитерской чашечки")
+	desc = "Из этого мицелия вырастают юпитерские чашечки. Зевс бы позавидовал силе, которая у тебя под рукой."
 	icon_state = "mycelium-jupitercup"
 	species = "jupitercup"
 	plantname = "Jupiter Cups"
@@ -749,7 +882,8 @@
 
 /obj/item/seeds/chantermycelium
 	name = "pack of chanterelle mycelium"
-	desc = "This mycelium grows into chanterelle mushrooms."
+	cases = list("мицелий лисичек", "мицелия лисичек", "мицелию лисичек", "мицелий лисичек", "мицелием лисичек", "мицелие лисичек")
+	desc = "Из этого мицелия вырастают грибы-лисички."
 	icon_state = "mycelium-chanter"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "chanter"
@@ -774,7 +908,8 @@
 
 /obj/item/seeds/towermycelium
 	name = "pack of tower-cap mycelium"
-	desc = "This mycelium grows into tower-cap mushrooms."
+	cases = list("мицелий башенного гриба", "мицелия башенного гриба", "мицелию башенного гриба", "мицелий башенного гриба", "мицелием башенного гриба", "мицелие башенного гриба")
+	desc = "Из этого мицелия вырастают башенные грибы."
 	icon_state = "mycelium-tower"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "towercap"
@@ -792,7 +927,8 @@
 
 /obj/item/seeds/glowshroom
 	name = "pack of glowshroom mycelium"
-	desc = "This mycelium -glows- into mushrooms!"
+	cases = list("мицелий светогрибов", "мицелия светогрибов", "мицелию светогрибов", "мицелий светогрибов", "мицелием светогрибов", "мицелие светогрибов")
+	desc = "Из этого мицелия -просветают- особые грибы!"
 	icon_state = "mycelium-glowshroom"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "glowshroom"
@@ -810,7 +946,8 @@
 
 /obj/item/seeds/plumpmycelium
 	name = "pack of plump-helmet mycelium"
-	desc = "This mycelium grows into helmets... maybe."
+	cases = list("мицелий толстошлемника", "мицелия толстошлемника", "мицелию толстошлемника", "мицелий толстошлемника", "мицелием толстошлемника", "мицелие толстошлемника")
+	desc = "Из этого мицелия вырастают шлемы... вроде бы."
 	icon_state = "mycelium-plump"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "plump"
@@ -829,7 +966,8 @@
 
 /obj/item/seeds/walkingmushroommycelium
 	name = "pack of walking mushroom mycelium"
-	desc = "This mycelium will grow into huge stuff!"
+	cases = list("мицелий ходячего гриба", "мицелия ходячего гриба", "мицелию ходячего гриба", "мицелий ходячего гриба", "мицелием ходячего гриба", "мицелие ходячего гриба")
+	desc = "Этот мицелий вырастает таким большим, словно хорошо кушал кашку!"
 	icon_state = "mycelium-walkingmushroom"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "walkingmushroom"
@@ -847,7 +985,8 @@
 
 /obj/item/seeds/nettleseed
 	name = "pack of nettle seeds"
-	desc = "These seeds grow into nettles."
+	cases = list("семена крапивы", "семян крапивы", "семенам крапивы", "семена крапивы", "семенами крапивы", "семенах крапивы")
+	desc = "Из этих семян вырастает крапива."
 	icon_state = "seed-nettle"
 	species = "nettle"
 	plantname = "Nettles"
@@ -865,7 +1004,8 @@
 
 /obj/item/seeds/deathnettleseed
 	name = "pack of death-nettle seeds"
-	desc = "These seeds grow into death-nettles."
+	cases = list("семена смерто-крапивы", "семян смерто-крапивы", "семенам смерто-крапивы", "семена смерто-крапивы", "семенами смерто-крапивы", "семенах смерто-крапивы")
+	desc = "Из этих семян вырастает смерто-крапива."
 	icon_state = "seed-deathnettle"
 	species = "deathnettle"
 	plantname = "Death Nettles"
@@ -882,7 +1022,8 @@
 
 /obj/item/seeds/weeds
 	name = "pack of weed seeds"
-	desc = "Yo mang, want some weeds?"
+	cases = list("семена травки", "семян травки", "семенам травки", "семена травки", "семенами травки", "семенах травки")
+	desc = "Эй, ма бой, хочешь дунуть?"
 	icon_state = "seed"
 	species = "weeds"
 	plantname = "Starthistle"
@@ -899,7 +1040,8 @@
 
 /obj/item/seeds/harebell
 	name = "pack of harebell seeds"
-	desc = "These seeds grow into pretty little flowers."
+	cases = list("семена колокольчика", "семян колокольчика", "семенам колокольчика", "семена колокольчика", "семенами колокольчика", "семенах колокольчика")
+	desc = "Из этих семян вырастают милые маленькие цветочки."
 	icon_state = "seed-harebell"
 	species = "harebell"
 	plantname = "Harebells"
@@ -916,7 +1058,8 @@
 
 /obj/item/seeds/sunflowerseed
 	name = "pack of sunflower seeds"
-	desc = "These seeds grow into sunflowers."
+	cases = list("семена подсолнуха", "семян подсолнуха", "семенам подсолнуха", "семена подсолнуха", "семенами подсолнуха", "семенах подсолнуха")
+	desc = "Из этих семян вырастают подсолнухи."
 	icon_state = "seed-sunflower"
 	species = "sunflower"
 	plantname = "Sunflowers"
@@ -933,7 +1076,8 @@
 
 /obj/item/seeds/brownmold
 	name = "pack of brown mold"
-	desc = "Eww.. moldy."
+	cases = list("упаковка коричневой плесени", "упаковки коричневой плесени", "упаковке коричневой плесени", "упаковку коричневой плесени", "упаковкой коричневой плесени", "упаковке коричневой плесени")
+	desc = "Оу... заплесневело."
 	icon_state = "seed"
 	species = "mold"
 	plantname = "Brown Mold"
@@ -950,7 +1094,8 @@
 
 /obj/item/seeds/appleseed
 	name = "pack of apple seeds"
-	desc = "These seeds grow into apple trees."
+	cases = list("семена яблок", "семян яблок", "семенам яблок", "семена яблок", "семенами яблок", "семенах яблок")
+	desc = "Из этих семян вырастает яблоня."
 	icon_state = "seed-apple"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "apple"
@@ -968,7 +1113,8 @@
 
 /obj/item/seeds/poisonedappleseed
 	name = "pack of apple seeds"
-	desc = "These seeds grow into apple trees."
+	cases = list("семена яблок", "семян яблок", "семенам яблок", "семена яблок", "семенами яблок", "семенах яблок")
+	desc = "Из этих семян вырастает яблоня."
 	icon_state = "seed-apple"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "apple"
@@ -985,7 +1131,8 @@
 
 /obj/item/seeds/goldappleseed
 	name = "pack of golden apple seeds"
-	desc = "These seeds grow into golden apple trees. Good thing there are no firebirds in space."
+	cases = list("семена золотых яблок", "семян золотых яблок", "семенам золотых яблок", "семена золотых яблок", "семенами золотых яблок", "семенах золотых яблок")
+	desc = "Из этих семян вырастает золотая яблоня. Хорошо, что в космосе не водятся жар-птицы."
 	icon_state = "seed-goldapple"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "goldapple"
@@ -1020,7 +1167,8 @@
 
 /obj/item/seeds/tea_astra
 	name = "pack of tea astra seeds"
-	desc = "These seeds grow into tea plants."
+	cases = list("семена чайной астры", "семян чайной астры", "семенам чайной астры", "семена чайной астры", "семенами чайной астры", "семенах чайной астры")
+	desc = "Из этих семян вырастает чайная астра."
 	icon_state = "seed-teaastra"
 	species = "teaastra"
 	plantname = "Tea Astra Plant"
@@ -1034,7 +1182,8 @@
 
 /obj/item/seeds/tea
 	name = "pack of tea aspera seeds"
-	desc = "These seeds grow into tea plants."
+	cases = list("семена чая", "семян чая", "семенам чая", "семена чая", "семенами чая", "семенах чая")
+	desc = "Из этих семян вырастает чай."
 	icon_state = "seed-teaaspera"
 	species = "teaaspera"
 	plantname = "Tea Aspera Plant"
@@ -1049,7 +1198,8 @@
 
 /obj/item/seeds/ambrosiavulgarisseed
 	name = "pack of ambrosia vulgaris seeds"
-	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
+	cases = list("семена амброзии обыкновенной", "семян амброзии обыкновенной", "семенам амброзии обыкновенной", "семена амброзии обыкновенной", "семенами амброзии обыкновенной", "семенах амброзии обыкновенной")
+	desc = "Из этих семян вырастает амброзия обыкновенная — растение, выращиваемое исключительно в медицинских целях."
 	icon_state = "seed-ambrosiavulgaris"
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
@@ -1072,7 +1222,8 @@
 
 /obj/item/seeds/ambrosiadeusseed
 	name = "pack of ambrosia deus seeds"
-	desc = "These seeds grow into ambrosia deus. Could it be the food of the gods..?"
+	cases = list("семена амброзии божественной", "семян амброзии божественной", "семенам амброзии божественной", "семена амброзии божественной", "семенами амброзии божественной", "семенах амброзии божественной")
+	desc = "Из этих семян вырастает амброзия божественная. Может ли это быть пищей богов...?"
 	icon_state = "seed-ambrosiadeus"
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
@@ -1088,7 +1239,8 @@
 
 /obj/item/seeds/whitebeetseed
 	name = "pack of white-beet seeds"
-	desc = "These seeds grow into sugary beet producing plants."
+	cases = list("семена сахарной свеклы", "семян сахарной свеклы", "семенам сахарной свеклы", "семена сахарной свеклы", "семенами сахарной свеклы", "семенах сахарной свеклы")
+	desc = "Из этих семян вырастает сахарная свекла."
 	icon_state = "seed-whitebeet"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "whitebeet"
@@ -1106,7 +1258,8 @@
 
 /obj/item/seeds/sugarcaneseed
 	name = "pack of sugarcane seeds"
-	desc = "These seeds grow into sugarcane."
+	cases = list("семена сахарного тростника", "семян сахарного тростника", "семенам сахарного тростника", "семена сахарного тростника", "семенами сахарного тростника", "семенах сахарного тростника")
+	desc = "Из этих семян вырастает сахарный тростник."
 	icon_state = "seed-sugarcane"
 	species = "sugarcane"
 	plantname = "Sugarcane"
@@ -1122,7 +1275,8 @@
 
 /obj/item/seeds/watermelonseed
 	name = "pack of watermelon seeds"
-	desc = "These seeds grow into watermelon plants."
+	cases = list("семена арбуза", "семян арбуза", "семенам арбуза", "семена арбуза", "семенами арбуза", "семенах арбуза")
+	desc = "Из этих семян вырастает арбуз."
 	icon_state = "seed-watermelon"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "watermelon"
@@ -1140,7 +1294,8 @@
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
-	desc = "These seeds grow into pumpkin vines."
+	cases = list("семена тыквы", "семян тыквы", "семенам тыквы", "семена тыквы", "семенами тыквы", "семенах тыквы")
+	desc = "Из этих семян вырастают лозы тыквы."
 	icon_state = "seed-pumpkin"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "pumpkin"
@@ -1158,6 +1313,7 @@
 
 /obj/item/seeds/gourdseed
 	name = "pack of gourd seeds"
+	cases = list("семена тыквяка", "семян тыквяка", "семенам тыквяка", "семена тыквяка", "семенами тыквяка", "семенах тыквяка")
 	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
 	icon_state = "seed-gourd"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -1180,6 +1336,7 @@
 
 /obj/item/seeds/magicgourdseed
 	name = "pack of gourd seeds"
+	cases = list("семена тыквяка", "семян тыквяка", "семенам тыквяка", "семена тыквяка", "семенами тыквяка", "семенах тыквяка")
 	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
 	icon_state = "seed-gourd_magic"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -1202,7 +1359,8 @@
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"
-	desc = "These are very sour seeds."
+	cases = list("семена лайма", "семян лайма", "семенам лайма", "семена лайма", "семенами лайма", "семенах лайма")
+	desc = "Эти семена очень кислые."
 	icon_state = "seed-lime"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "lime"
@@ -1219,7 +1377,8 @@
 
 /obj/item/seeds/lemonseed
 	name = "pack of lemon seeds"
-	desc = "These are sour seeds."
+	cases = list("семена лимона", "семян лимона", "семенам лимона", "семена лимона", "семенами лимона", "семенах лимона")
+	desc = "Эти семена кислые."
 	icon_state = "seed-lemon"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "lemon"
@@ -1237,7 +1396,8 @@
 
 /obj/item/seeds/cashseed
 	name = "pack of money seeds"
-	desc = "When life gives you lemons, mutate them into cash."
+	cases = list("семена денежного дерева", "семян денежного дерева", "семенам денежного дерева", "семена денежного дерева", "семенами денежного дерева", "семенах денежного дерева")
+	desc = "Когда жизнь дает тебе лимоны, мутируй их в наличку."
 	icon_state = "seed-cash"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cashtree"
@@ -1254,7 +1414,8 @@
 
 /obj/item/seeds/orangeseed
 	name = "pack of orange seed"
-	desc = "Sour seeds."
+	cases = list("семена апельсина", "семян апельсина", "семенам апельсина", "семена апельсина", "семенами апельсина", "семенах апельсина")
+	desc = "Эти семена кислые."
 	icon_state = "seed-orange"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "orange"
@@ -1269,9 +1430,28 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/mandarinseed
+	name = "pack of mandarin seed"
+	cases = list("семена мандарина", "семян мандарина", "семенам мандарина", "семена мандарина", "семенами мандарина", "семенах мандарина")
+	desc = "Эти семена кислые."
+	icon_state = "seed-orange"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "orange"
+	plantname = "Mandarin Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mandarin
+	lifespan = 60
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 5
+	potency = 1
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/poisonberryseed
 	name = "pack of poison-berry seeds"
-	desc = "These seeds grow into poison-berry bushes."
+	cases = list("семена ядовитых ягод", "семян ядовитых ягод", "семенам ядовитых ягод", "семена ядовитых ягод", "семенами ядовитых ягод", "семенах ядовитых ягод")
+	desc = "Из этих семян вырастают кусты ядовитых ягод."
 	icon_state = "seed-poisonberry"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "poisonberry"
@@ -1289,7 +1469,8 @@
 
 /obj/item/seeds/deathberryseed
 	name = "pack of death-berry seeds"
-	desc = "These seeds grow into death berries."
+	cases = list("семена смертоягод", "семян смертоягод", "семенам смертоягод", "семена смертоягод", "семенами смертоягод", "семенах смертоягод")
+	desc = "Из этих семян вырастают смертоягоды."
 	icon_state = "seed-deathberry"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "deathberry"
@@ -1306,7 +1487,8 @@
 
 /obj/item/seeds/fairy_grass
 	name = "pack of fairygrass seeds"
-	desc = "These seeds grow into a more mystical grass."
+	cases = list("семена волшебной травы", "семян волшебной травы", "семенам волшебной травы", "семена волшебной травы", "семенами волшебной травы", "семенах волшебной травы")
+	desc = "Из этих семян вырастает мистическая трава."
 	icon_state = "seed-fairygrass"
 	species = "fairygrass"
 	plantname = "Fairygrass"
@@ -1328,7 +1510,8 @@
 
 /obj/item/seeds/grassseed
 	name = "pack of grass seeds"
-	desc = "These seeds grow into grass. Yummy!"
+	cases = list("семена газона", "семян газона", "семенам газона", "семена газона", "семенами газона", "семенах газона")
+	desc = "Из этих семян вырастает газон. Не топтаться!"
 	icon_state = "seed-grass"
 	species = "grass"
 	plantname = "Grass"
@@ -1353,7 +1536,8 @@
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
-	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The tress ARE spelled cacao.
+	cases = list("семена какао-бобов", "семян какао-бобов", "семенам какао-бобов", "семена какао-бобов", "семенами какао-бобов", "семенах какао-бобов")
+	desc = "Из этих семян вырастает дерево какао. Выглядит сладко."
 	icon_state = "seed-cocoapod"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cocoapod"
@@ -1370,7 +1554,8 @@
 
 /obj/item/seeds/cherryseed
 	name = "pack of cherry pits"
-	desc = "Careful not to crack a tooth on one... That'd be the pits."
+	cases = list("семена вишни", "семян вишни", "семенам вишни", "семена вишни", "семенами вишни", "семенах вишни")
+	desc = "Осторожно, не сломайте зуб... А, это и так косточки."
 	icon_state = "seed-cherry"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cherry"
@@ -1387,7 +1572,8 @@
 
 /obj/item/seeds/kudzuseed
 	name = "pack of kudzu seeds"
-	desc = "These seeds grow into a weed that grows incredibly fast."
+	cases = list("семена кудзу", "семян кудзу", "семенам кудзу", "семена кудзу", "семенами кудзу", "семенах кудзу")
+	desc = "Из этих семян вырастает сорняк, который невероятно быстро разрастается."
 	icon_state = "seed-kudzu"
 	species = "kudzu"
 	plantname = "Kudzu"
@@ -1411,7 +1597,8 @@
 
 /obj/item/seeds/durathread
 	name = "pack of durathread seeds"
-	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
+	cases = list("семена дюранити", "семян дюранити", "семенам дюранити", "семена дюранити", "семенами дюранити", "семенах дюранити")
+	desc = "Из этих семян вырастает чрезвычайно прочная нить, которая при правильном плетении может легко соперничать с пласталью."
 	icon_state = "seed-durathread"
 	species = "durathread"
 	plantname = "Durathread"
@@ -1454,7 +1641,8 @@
 
 /obj/item/weapon/grown/log
 	name = "tower-cap log"
-	desc = "It's better than bad, it's good!"
+	cases = list("бревно", "бревна", "бревну", "бревно", "бревном", "бревне")
+	desc = "Скорее хорошо, чем плохо!"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "logs"
 	force = 5
@@ -1480,7 +1668,8 @@
 
 /obj/item/weapon/grown/sunflower
 	name = "sunflower"
-	desc = "It's beautiful! A certain person might beat you to death if you trample these."
+	cases = list("подсолнух", "подсолнуха", "подсолнуху", "подсолнух", "подсолнухом", "подсолнухе")
+	desc = "Очень красивый! Кое-кто может забить тебя до смерти, если ты их растопчешь."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	damtype = BURN
@@ -1492,8 +1681,9 @@
 	plant_type = 1
 	seed_type = /obj/item/seeds/sunflowerseed
 
-/obj/item/weapon/grown/nettle
-	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
+/obj/item/weapon/grown/
+	cases = list("крапива", "крапивы", "крапиве", "крапиву", "крапивой", "крапиве")
+	desc = "Вероятно <B>НЕ</B> разумно трогать это голыми руками..."
 	icon = 'icons/obj/weapons.dmi'
 	name = "nettle"
 	icon_state = "nettle"
@@ -1515,7 +1705,8 @@
 		force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/deathnettle
-	desc = "The <span class='warning'>glowing</span> nettle incites <span class='warning'><B>rage</B></span> in you just from looking at it!"
+	cases = list("смерто-крапива", "смерто-крапивы", "смерто-крапиве", "смерто-крапиву", "смерто-крапивой", "смерто-крапиве")
+	desc = "Эта <span class='warning'>светящаяся</span> крапива пробуждает в вас <span class='warning'><B>ярость</B></span> от одного лишь взгляда!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
@@ -1539,14 +1730,15 @@
 		force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='warning'><b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] поедает [CASE(src, ACCUSATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
 	return (BRUTELOSS | TOXLOSS)
 
 /obj/item/weapon/grown/durathread
 	seed_type = /obj/item/seeds/durathread
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	name = "durathread bundle"
-	desc = "A tough bundle of durathread, good luck unraveling this."
+	cases = list("клубок дюраткани", "клубка дюраткани", "клубку дюраткани", "клубок дюраткани", "клубком дюраткани", "клубке дюраткани")
+	desc = "Крепкий клубок дюранити, удачи в его распутывании."
 	icon_state = "durathread"
 
 // *************************************
@@ -1555,6 +1747,7 @@
 
 /obj/item/pestkiller
 	name = "bottle of pestkiller"
+	cases = list("бутылка пестицида", "бутылки пестицида", "бутылке пестицида", "бутылка пестицида", "бутылкой пестицида", "бутылке пестицида")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	var/toxicity = 0
@@ -1567,6 +1760,7 @@
 
 /obj/item/pestkiller/carbaryl
 	name = "bottle of carbaryl"
+	cases = list("бутылка карбарила", "бутылки карбарила", "бутылке карбарила", "бутылка карбарила", "бутылкой карбарила", "бутылке карбарила")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	toxicity = 4
@@ -1574,6 +1768,7 @@
 
 /obj/item/pestkiller/lindane
 	name = "bottle of lindane"
+	cases = list("бутылка линдана", "бутылки линдана", "бутылке линдана", "бутылка линдана", "бутылкой линдана", "бутылке линдана")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
 	toxicity = 6
@@ -1581,6 +1776,7 @@
 
 /obj/item/pestkiller/phosmet
 	name = "bottle of phosmet"
+	cases = list("бутылка фосмета", "бутылки фосмета", "бутылке фосмета", "бутылка фосмета", "бутылкой фосмета", "бутылке фосмета")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 	toxicity = 8
@@ -1591,7 +1787,8 @@
 // *************************************
 
 /obj/item/weapon/weedspray
-	desc = "It's a toxic mixture, in spray form, to kill small weeds."
+	cases = list("спрей от сорняков", "спрея от сорняков", "спрею от сорняков", "спрей от сорняков", "спреем от сорняков", "спрее от сорняков")
+	desc = "Токсичная смесь в виде спрея для уничтожения мелких сорняков."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed-spray"
 	icon_state = "weedspray"
@@ -1610,7 +1807,8 @@
 	return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
-	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
+	cases = list("спрей от вредителей", "спрея от вредителей", "спрею от вредителей", "спрей от вредителей", "спреем от вредителей", "спрее от вредителей")
+	desc = "Спрей для уничтожения вредителей! <I>Не вдыхать!</I>"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
@@ -1625,12 +1823,13 @@
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='warning'><b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] вдыхает [CASE(src, ACCUSATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
 	name = "mini hoe"
-	desc = "It's used for removing weeds or scratching your back."
+	cases = list("мини мотыга", "мини мотыги", "мини мотыге", "мини мотыга", "мини мотыгой", "мини мотыге")
+	desc = "Используется, чтобы пропалывать сорняки или чесать спинку."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
@@ -1648,6 +1847,7 @@
 
 /obj/item/weedkiller
 	name = "bottle of weedkiller"
+	cases = list("бутылка средства от сорняков", "бутылки средства от сорняков", "бутылке средства от сорняков", "бутылку средства от сорняков", "бутылкой средства от сорняков", "бутылке средства от сорняков")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	var/toxicity = 0
@@ -1655,12 +1855,14 @@
 
 /obj/item/weedkiller/triclopyr
 	name = "bottle of glyphosate"
+	cases = list("бутылка глифосата", "бутылки глифосата", "бутылке глифосата", "бутылку глифосата", "бутылкой глифосата", "бутылке глифосата")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	toxicity = 4
 	WeedKillStr = 2
 
 /obj/item/weedkiller/lindane
+	cases = list("бутылка линдана", "бутылки линдана", "бутылке линдана", "бутылку линдана", "бутылкой линдана", "бутылке линдана")
 	name = "bottle of triclopyr"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
@@ -1668,6 +1870,7 @@
 	WeedKillStr = 4
 
 /obj/item/weedkiller/D24
+	cases = list("бутылка 2,4-D", "бутылки 2,4-D", "бутылке 2,4-D", "бутылку 2,4-D", "бутылкой 2,4-D", "бутылке 2,4-D")
 	name = "bottle of 2,4-D"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
@@ -1680,6 +1883,7 @@
 
 /obj/item/nutrient
 	name = "bottle of nutrient"
+	cases = list("бутылка удобрений", "бутылки удобрений", "бутылке удобрений", "бутылку удобрений", "бутылкой удобрений", "бутылке удобрений")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	w_class = SIZE_TINY
@@ -1693,6 +1897,7 @@
 
 /obj/item/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
+	cases = list("бутылка E-Z удобрений", "бутылки E-Z удобрений", "бутылке E-Z удобрений", "бутылку E-Z удобрений", "бутылкой E-Z удобрений", "бутылке E-Z удобрений")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	mutmod = 1
@@ -1700,6 +1905,7 @@
 
 /obj/item/nutrient/l4z
 	name = "bottle of Left 4 Zed"
+	cases = list("бутылка удобрений Left 4 Zed", "бутылки удобрений Left 4 Zed", "бутылке удобрений Left 4 Zed", "бутылку удобрений Left 4 Zed", "бутылкой удобрений Left 4 Zed", "бутылке удобрений Left 4 Zed")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
 	mutmod = 2
@@ -1707,6 +1913,7 @@
 
 /obj/item/nutrient/rh
 	name = "bottle of Robust Harvest"
+	cases = list("бутылка удобрений Robust Harvest", "бутылки удобрений Robust Harvest", "бутылке удобрений Robust Harvest", "бутылку удобрений Robust Harvest", "бутылкой удобрений Robust Harvest", "бутылке удобрений Robust Harvest")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 	mutmod = 0

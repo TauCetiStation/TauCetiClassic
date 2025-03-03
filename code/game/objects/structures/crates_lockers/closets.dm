@@ -87,7 +87,7 @@
 	for(var/obj/item/I in src.loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(!I.anchored)
+		if(!I.anchored && !istype(I, /obj/item/weapon/paper/sticker))
 			I.forceMove(src)
 			itemcount++
 
@@ -176,6 +176,9 @@
 		return
 
 	else if(istagger(W))
+		return
+
+	else if(istype(W, /obj/item/weapon/paper/sticker))
 		return
 
 	else

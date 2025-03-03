@@ -9,7 +9,7 @@
 	antag_hud_name = "hud_gangster"
 
 	/// The action used to spawn family induction packages.
-	var/datum/action/cooldown/spawn_induction_package/package_spawner
+	var/datum/action/innate/spawn_induction_package/package_spawner
 	skillset_type = /datum/skillset/gangster
 
 /datum/role/gangster/New(datum/mind/M, datum/faction/fac, override)
@@ -27,8 +27,8 @@
 
 /datum/role/gangster/OnPostSetup(laterole)
 	..()
-	package_spawner.Grant(antag.current)
 	package_spawner.my_gang_datum = faction
+	package_spawner.Grant(antag.current)
 
 /datum/role/gangster/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
@@ -51,7 +51,7 @@
 
 /datum/role/gangster/extraPanelButtons()
 	var/dat = ..()
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];gangster_equip=1'>(Give Extra Equipment)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];gangster_equip=1'>(Give Extra Equipment)</a>"
 	return dat
 
 /datum/role/gangster/RoleTopic(href, href_list, datum/mind/M, admin_auth)

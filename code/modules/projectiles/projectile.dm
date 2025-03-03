@@ -19,7 +19,7 @@
 	var/xo = null
 	var/current = null
 	var/obj/shot_from = null // the object which shot us
-	var/atom/original = null // the original target clicked
+	var/atom/original = null // the original target clicked, may not exist
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 
@@ -255,7 +255,7 @@
 
 	// plot the initial trajectory
 	trajectory = new()
-	trajectory.setup(starting, original, pixel_x, pixel_y, angle_offset=offset)
+	trajectory.setup(starting, original, pixel_x, pixel_y, offset, dir)
 
 	// generate this now since all visual effects the projectile makes can use it
 	effect_transform = new()

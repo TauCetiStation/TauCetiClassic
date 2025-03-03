@@ -457,12 +457,6 @@
 	icon_state = "skirt_cadet"
 	item_state = "skirt_cadet"
 
-/obj/item/clothing/under/rank/cargo_fem
-	name = "quartermaster's dress"
-	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
-	icon_state = "qm_f"
-	item_state = "qm_f"
-
 /obj/item/clothing/under/rank/head_of_security_fem
 	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's dress"
@@ -763,3 +757,14 @@
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.8
 	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/pluvia
+	name = "pluvia suit"
+	icon_state = "pluvia"
+	item_state = "pluvia"
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/pluvia_gold
+	name = "pluvia suit"
+	icon_state = "pluviaGold"
+	item_state = "pluviaGold"

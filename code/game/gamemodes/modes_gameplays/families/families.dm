@@ -1,23 +1,24 @@
-/datum/action/cooldown/spawn_induction_package
+/datum/action/innate/spawn_induction_package
 	name = "Создать Вступительный Набор"
 	check_flags = AB_CHECK_ALIVE
 	button_icon_state = "recruit"
-	cooldown_time = 300
+	cooldown = 30 SECONDS
 	/// The family antagonist datum of the "owner" of this action.
 	var/datum/faction/gang/my_gang_datum
 
-/datum/action/cooldown/spawn_induction_package/Trigger()
-	if(!IsAvailable() || !Checks())
-		return FALSE
+/datum/action/innate/spawn_induction_package/Grant(mob/T)
+	if(!(ishuman(T)))
+		qdel(src)
+		return
+	..()
+
+/datum/action/innate/spawn_induction_package/Checks()
+	. = ..()
 	if(!my_gang_datum)
 		return FALSE
-	if(!ishuman(owner))
-		return FALSE
-	var/mob/living/carbon/human/H = owner
-	if(H.stat != CONSCIOUS)
-		return FALSE
 
-	// we need some stuff to fall back on if we're handlerless
+/datum/action/innate/spawn_induction_package/Activate()
+	var/mob/living/carbon/human/H = owner
 	var/gang_balance_cap = my_gang_datum.gang_balance_cap
 	var/lowest_gang_count = my_gang_datum.members.len
 
@@ -41,4 +42,3 @@
 	GP.gang_to_use = my_gang_datum.type
 	GP.team_to_use = my_gang_datum
 	StartCooldown()
-	return TRUE

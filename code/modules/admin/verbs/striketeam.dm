@@ -106,13 +106,11 @@ var/global/sent_strike_team = FALSE
 	var/commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
 	var/commando_name = pick(last_names)
 
-	new_commando.gender = pick(MALE, FEMALE)
-
 	// Randomize appearance for the commando
-	var/datum/preferences/A = new
-	A.randomize_appearance_for(new_commando)
+	new_commando.randomize_appearance()
 
 	new_commando.real_name = "[is_leader ? commando_leader_rank : commando_rank] [commando_name]"
+	new_commando.name = new_commando.real_name
 	new_commando.age = is_leader ? rand(new_commando.species.min_age * 1.25, new_commando.species.min_age * 1.75) :  rand(new_commando.species.min_age, new_commando.species.min_age * 1.5)
 
 	new_commando.dna.ready_dna(new_commando)

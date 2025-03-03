@@ -339,11 +339,10 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
-	H.set_species(SLIME)
+	H.set_species(H.species.slime_species)
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
 	H.regenerate_icons()
-
 
 /datum/quality/quirkieish/very_special
 	name = "Very Special"
@@ -365,7 +364,7 @@
 	name = "Prisoner"
 	desc = "Ты загремел в каталажку за какое-то серьёзное преступление и, конечно, не собираешься исправляться."
 
-	requirement = "Подопытный."
+	requirement = "Подопытный. Включённая опция \"Быть предателем\"."
 
 /datum/quality/quirkieish/prisoner/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.role_alt_title == "Test Subject"
@@ -426,3 +425,21 @@
 	var/obj/item/weapon/stamp/centcomm/S = new
 	S.stamp_paper(P)
 	H.equip_or_collect(P, SLOT_L_HAND)
+
+/datum/quality/quirkieish/thief
+	name = "Thief"
+	desc = "Ты задумал кое-что украсть..."
+	requirement = "Все, кроме охраны и глав. Включённая опция \"Быть предателем\"."
+	var/list/restricted_jobs = list("Security Officer", "Security Cadet", "Head of Security", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel", "Blueshield Officer", "Research Director", "Chief Engineer", "Chief Medical Officer", "Internal Affairs Agent")
+
+/datum/quality/quirkieish/thief/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in restricted_jobs)
+
+/datum/quality/quirkieish/thief/add_effect(mob/living/carbon/human/H, latespawn)
+	if(jobban_isbanned(H, "Syndicate") || !(ROLE_TRAITOR in H.client.prefs.be_role))
+		return
+
+	create_and_setup_role(/datum/role/thief, H)
+
+	to_chat(H, "<span class='notice'>В твоей сумке лежат особые перчатки, они позволят тебе незаметно красть вещи у людей.</span>")
+	H.equip_or_collect(new /obj/item/clothing/gloves/black/strip(H), SLOT_IN_BACKPACK)
