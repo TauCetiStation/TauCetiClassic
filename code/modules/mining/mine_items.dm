@@ -444,7 +444,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
 	name = "mining explosives"
-	desc = "Used for mining."
+	desc = "Используется для шахтерских взрывных работ. Используя её не забывайте о технике безопастности"
 	gender = PLURAL
 	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
@@ -458,24 +458,24 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>Вы разбираетесь, как установить таймер на [src]...</span>"))
 		return
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
+	var/newtime = input(usr, "Укажите время до взрыва.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
-	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
+	to_chat(user, "<span class='notice'>Таймер установлен на </span>[timer]<span class='notice'> секунд.</span>")
 
 /obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
 		return
 	if (!istype(target, /turf/simulated/mineral))
-		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
+		to_chat(user, "<span class='notice'>Вы не можете прикрепить [src] к [target.name].</span>")
 		return
 	if(user.is_busy(src))
 		return
 
-	to_chat(user, "<span class='notice'>Planting explosives...</span>")
+	to_chat(user, "<span class='notice'>Вы устанавливаете взрывчатку...</span>")
 	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_MASTER, /datum/skill/engineering = SKILL_LEVEL_PRO), -0.1)
 	if(do_after(user, planting_time, target = target))
 		user.drop_item()
@@ -484,7 +484,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		var/location
 		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
-		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
+		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось </span>[timer] секунд.")
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
 				if(!M)	return
