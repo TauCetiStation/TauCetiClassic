@@ -45081,13 +45081,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "ktY" = (
-/obj/structure/closet/athletic_mixed,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Sauna";
-	dir = 8
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -74900,10 +74896,17 @@
 	name = "Operating Theatre"
 	})
 "rPR" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
+	},
+/obj/structure/closet/athletic_mixed,
+/obj/machinery/camera{
+	c_tag = "Sauna";
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"

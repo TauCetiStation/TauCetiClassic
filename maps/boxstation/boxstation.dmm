@@ -19202,8 +19202,8 @@
 "aHM" = (
 /obj/structure/table/woodentable,
 /obj/item/globe/adhomai{
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -24943,8 +24943,8 @@
 /obj/structure/table/woodentable,
 /obj/random/misc/book,
 /obj/item/bust{
-	pixel_y = 4;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -60759,8 +60759,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cnt" = (
-/obj/machinery/space_heater,
 /obj/item/weapon/screwdriver,
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
