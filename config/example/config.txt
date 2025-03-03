@@ -166,7 +166,7 @@ ALIEN_AVAILABLE_BY_TIME DIONA 40000
 #DEATHTIME_REQUIRED 18000
 
 ## Path to the python executable on the system. Leave blank for default.
-## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
+## Default is "python" on Windows, "/usr/bin/env python3" on UNIX.
 #PYTHON_PATH
 
 ## GitHub PAT with no scopes to increase rate limits of GitHub requests.
