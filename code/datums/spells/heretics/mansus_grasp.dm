@@ -18,7 +18,7 @@
 /obj/effect/proc_holder/spell/in_hand/mansus_grasp/is_valid_target(atom/cast_on)
 	return TRUE // This baby can hit anything
 
-/obj/effect/proc_holder/spell/in_hand/mansus_grasp/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/in_hand/mansus_grasp/perform(feedback = TRUE)
 	return ..() && (!!isheretic(owner) || !!islunatic(owner))
 
 /obj/effect/proc_holder/spell/in_hand/mansus_grasp/on_antimagic_triggered(obj/item/weapon/magic/hand, atom/victim, mob/living/carbon/caster)
@@ -47,8 +47,6 @@
 		carbon_hit.AdjustWeakened(0.5 SECONDS)
 		carbon_hit.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
 		carbon_hit.adjust_dizzy_up_to(1.5 SECONDS, 3 SECONDS)
-		ADD_TRAIT(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)) // We don't want this to be a good stunning tool, just minor disorientation
-		addtimer(TRAIT_CALLBACK_REMOVE(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)), 1 SECONDS)
 
 		var/old_color = carbon_hit.color
 		carbon_hit.color = COLOR_CULT_RED

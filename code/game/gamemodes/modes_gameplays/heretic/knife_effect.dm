@@ -10,7 +10,7 @@
 /obj/effect/floating_blade/atom_init()
 	. = ..()
 	AddElement(/datum/element/movetype_handler)
-	ADD_TRAIT(src, TRAIT_ARIBORN_FLYING, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
 	add_filter("dio_knife", 2, list("type" = "outline", "color" = glow_color, "size" = 1))
 
 /obj/effect/floating_blade/haunted

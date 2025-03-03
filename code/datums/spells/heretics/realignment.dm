@@ -52,16 +52,15 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 8 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/realignment
-	tick_interval = 0.2 SECONDS
+	tick_interval = 2
 	show_duration = TRUE
-	///Traits to add/remove
-	var/list/realignment_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_PACIFISM)
 
 /datum/status_effect/realignment/get_examine_text()
 	return span_notice("[owner.p_Theyre()] glowing a soft white.")
 
 /datum/status_effect/realignment/on_apply()
-	owner.add_traits(realignment_traits, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BATON_RESISTANCE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
 	owner.add_filter(id, 2, list("type" = "outline", "color" = "#d6e3e7", "size" = 2))
 	var/filter = owner.get_filter(id)
 	animate(filter, alpha = 127, time = 1 SECONDS, loop = -1)
@@ -69,7 +68,8 @@
 	return TRUE
 
 /datum/status_effect/realignment/on_remove()
-	owner.remove_traits(realignment_traits, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BATON_RESISTANCE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
 	owner.remove_filter(id)
 
 /datum/status_effect/realignment/tick(seconds_between_ticks)

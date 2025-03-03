@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/shadow_cloak/is_valid_target(atom/cast_on)
-	if(HAS_TRAIT(cast_on, TRAIT_HULK)) // Hulks are not stealthy. Need not apply
+	if ((HULK in cast_on.mutations)) // Hulks are not stealthy. Need not apply
 		cast_on.balloon_alert(cast_on, "cannot cast while hulk!")
 		return FALSE
 	return isliving(cast_on)
@@ -126,7 +126,7 @@
 /datum/status_effect/shadow_cloak
 	id = "shadow_cloak"
 	alert_type = null
-	tick_interval = STATUS_EFFECT_NO_TICK
+	tick_interval = 0
 	/// How much damage we've been hit with
 	var/damage_sustained = 0
 	/// How much damage we can be hit with before it starts rolling reveal chances
@@ -197,7 +197,7 @@
 	SIGNAL_HANDLER
 
 	// Stam damage is generally bursty, so we'll half it
-	if(damagetype == STAMINA)
+	if(damagetype == HALLOSS)
 		damage *= 0.5
 
 	// Add incoming damage to the total damage sustained

@@ -136,10 +136,6 @@
 	if(!length(result_atoms))
 		return FALSE
 
-	for(var/result in result_atoms)
-		var/atom/result_item = new result(loc)
-		if(isitem(result_item))
-			ADD_TRAIT(result_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 	return TRUE
 
 /**
@@ -529,7 +525,6 @@
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0
-	ADD_TRAIT(summoned, TRAIT_NO_TRANSFORM, REF(src))
 	summoned.move_resist = MOVE_FORCE_OVERPOWERING
 	animate(summoned, 10 SECONDS, alpha = 155)
 
@@ -543,7 +538,6 @@
 
 	// Ok let's make them an interactable mob now, since we got a ghost
 	summoned.alpha = 255
-	REMOVE_TRAIT(summoned, TRAIT_NO_TRANSFORM, REF(src))
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
@@ -723,8 +717,8 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		human_user.physiology.brute_mod *= 0.5
-		human_user.physiology.burn_mod *= 0.5
+		human_user.species.brute_mod *= 0.5
+		human_user.species.burn_mod *= 0.5
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_research_tree[type][HKT_ROUTE])
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")

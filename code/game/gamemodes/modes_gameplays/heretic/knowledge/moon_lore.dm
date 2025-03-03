@@ -175,7 +175,6 @@
 	. = ..()
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, type)
 	user.mind.add_antag_datum(/datum/role/lunatic/master)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	var/amount_of_lunatics = 0
 	var/list/lunatic_candidates = list()

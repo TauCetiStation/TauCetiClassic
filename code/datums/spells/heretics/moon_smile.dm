@@ -19,7 +19,7 @@
 
 	active_msg = "You prepare to let them see the true face..."
 
-/obj/effect/proc_holder/spell/pointed/moon_smile/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/pointed/moon_smile/perform(feedback = TRUE)
 	return ..() && isliving(owner)
 
 /obj/effect/proc_holder/spell/pointed/moon_smile/is_valid_target(atom/cast_on)

@@ -34,7 +34,7 @@
 		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
 
-	var/turf/open/our_turf = loc
+	var/turf/our_turf = loc
 	if(our_turf.GetTemperature() > T0C)
 		loc.balloon_alert(user, "ritual failed, not cold enough!")
 		return FALSE
@@ -76,16 +76,13 @@
 	research_tree_icon_path = 'icons/effects/effects.dmi'
 	research_tree_icon_state = "the_freezer"
 
-	/// Traits we apply to become immune to the environment
-	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
+/datum/heretic_knowledge/cold_snap/on_gain(mob/living/carbon/human/user, datum/role/heretic/our_heretic)
+	user.species.flags += NO_BREATHE
+	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
 
-/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/role/heretic/our_heretic)
-	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(check_environment))
-
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/role/heretic/our_heretic)
-	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
-	UnregisterSignal(user, COMSIG_LIVING_LIFE)
+/datum/heretic_knowledge/cold_snap/on_lose(mob/living/carbon/human/user, datum/role/heretic/our_heretic)
+	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
+	user.species.flags -= NO_BREATHE
 
 ///Checks if our traits should be active
 /datum/heretic_knowledge/cold_snap/proc/check_environment(mob/living/user)
@@ -96,9 +93,9 @@
 		var/affected_temperature = environment.return_temperature()
 		var/affected_pressure = environment.return_pressure()
 		if(affected_temperature <= T0C || affected_pressure < ONE_ATMOSPHERE)
-			user.add_traits(gain_traits, type)
+			ADD_TRAIT(user, TRAIT_NO_SLIP_SLIDE, type)
 		else
-			user.remove_traits(gain_traits, type)
+			REMOVE_TRAIT(user, TRAIT_NO_SLIP_SLIDE, type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
@@ -206,14 +203,14 @@
 
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(user, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	RegisterSignals(user, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(on_death))
 	heavy_storm = new(user, 10)
 	if(ishuman(user))
 		var/mob/living/carbon/human/ascended_human = user
-		var/obj/item/organ/internal/eyes/heretic_eyes = ascended_human.get_organ_slot(O_EYES)
-		heretic_eyes?.color_cutoffs = list(30, 30, 30)
+		ascended_human.r_eyes = 30
+		ascended_human.g_eyes = 30
+		ascended_human.b_eyes = 30
 		ascended_human.update_sight()
 
 /datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/role/heretic/our_heretic)
@@ -275,7 +272,7 @@
 		QDEL_NULL(storm)
 	if(heavy_storm)
 		QDEL_NULL(heavy_storm)
-	UnregisterSignal(source, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(source, list(COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
 
 ///Few checks to determine if we can deflect bullets
 /datum/heretic_knowledge/ultimate/void_final/proc/can_deflect(mob/living/ascended_heretic)

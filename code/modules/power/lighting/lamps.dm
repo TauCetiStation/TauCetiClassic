@@ -395,7 +395,8 @@
 		else
 			protected = 1
 
-		if(protected > 0 || (COLD_RESISTANCE in user.mutations) || H.species.flags[IS_SYNTHETIC])
+		if(protected > 0 || (COLD_RESISTANCE in user.mutations) || H.species.flags[IS_SYNTHETIC] || (HAS_TRAIT(user, TRAIT_RESISTCOLD))
+)
 			to_chat(user, "You remove the light [fitting]")
 		else if(TK in user.mutations)
 			to_chat(user, "You telekinetically remove the light [fitting].")

@@ -138,7 +138,7 @@
 	id = "Silver Knives"
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
-	tick_interval = STATUS_EFFECT_NO_TICK
+	tick_interval = 0
 	/// The number of blades we summon up to.
 	var/max_num_blades = 4
 	/// The radius of the blade's orbit.

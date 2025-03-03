@@ -103,7 +103,12 @@
 					adjustFireLoss(-1)
 				if(51 to 100)
 					adjustFireLoss(-5)
-
+		if(HAS_TRAIT(src, TRAIT_RESISTCOLD) || prob(50))
+			switch(getFireLoss())
+				if(50 to 100)
+					adjustFireLoss(-5)
+				if(1 to 50)
+					adjustFireLoss(-1)
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")

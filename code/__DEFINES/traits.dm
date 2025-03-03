@@ -206,6 +206,11 @@
 #define TRAIT_SLEEPIMMUNE         "sleep_immunity"
 #define TRAIT_STUNIMMUNE          "stun_immunity"
 #define TRAIT_BATON_RESISTANCE    "baton_resistance"
+#define TRAIT_IGNORESLOWDOWN      "ignoreslow"
+#define TRAIT_RESISTCOLD          "resist_cold"
+#define TRAIT_RESISTHEAT          "resist_heat"
+#define TRAIT_NOFIRE              "nonflammable"
+#define TRAIT_PACIFISM            "pacifism"
 
 /// The mob is holy and resistance to heretic magic
 #define TRAIT_HOLY "holy"

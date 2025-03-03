@@ -55,13 +55,13 @@
 	if(new_max_health)
 		if(new_max_health < human_target.maxHealth)
 			stamina_mod_applied = (new_max_health / human_target.maxHealth)
-			human_target.physiology.stamina_mod *= stamina_mod_applied
+			human_target.species.stamina_mod *= stamina_mod_applied
 		human_target.setMaxHealth(new_max_health)
 		human_target.health = new_max_health
 
 	on_made_callback?.Invoke(human_target)
 	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, STATUS_EFFECT_TRAIT)
-	human_target.become_husk(STATUS_EFFECT_TRAIT)
+	human_target.mutations.Remove(HUSK)
 	human_target.faction |= F_HERETICS
 
 	if(human_target.mind)
@@ -85,12 +85,12 @@
 
 	if(new_max_health)
 		if(isnum(stamina_mod_applied))
-			human_target.physiology.stamina_mod /= stamina_mod_applied
+			human_target.species.stamina_mod /= stamina_mod_applied
 		human_target.setMaxHealth(initial(human_target.maxHealth))
 
 	on_lost_callback?.Invoke(human_target)
 	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, STATUS_EFFECT_TRAIT)
-	human_target.cure_husk(STATUS_EFFECT_TRAIT)
+	human_target.mutations.Add(HUSK)
 	human_target.faction -= F_HERETICS
 	human_target.mind?.remove_antag_datum(/datum/role/heretic_monster)
 

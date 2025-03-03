@@ -55,7 +55,7 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/on_activation(mob/on_who)
+/obj/effect/proc_holder/spell/pointed/projectile/furious_steel/cast(mob/on_who)
 	. = ..()
 	if(!.)
 		return

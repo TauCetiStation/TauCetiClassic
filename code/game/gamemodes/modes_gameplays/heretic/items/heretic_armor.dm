@@ -42,12 +42,12 @@
 	icon_state = "void_cloak"
 	flags_inv = NONE
 	flags = NONE
+	canremove = FALSE
 	item_flags = EXAMINE_SKIP
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 15, bio = 0, rad = 0)
 
 /obj/item/clothing/head/culthood/void/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
@@ -81,12 +81,12 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/hide_item(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER
 	if(slot & ITEM_SLOT_SUITSTORE)
-		ADD_TRAIT(item, TRAIT_NO_STRIP, REF(src)) // i'd use examine hide but its a flag and yeah
+		item.canremove = FALSE
 	#warn Missmatched slots? ^^^
 
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/show_item(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(item, TRAIT_NO_STRIP, REF(src))
+	item.canremove = TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/examine(mob/user)
 	. = ..()
@@ -119,7 +119,7 @@
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	item_flags |= EXAMINE_SKIP
-	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+	canremove = FALSE
 	RemoveElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
@@ -130,7 +130,7 @@
 /// Makes our cloak "visible" again.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
 	item_flags &= ~EXAMINE_SKIP
-	REMOVE_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+	canremove = TRUE
 	AddElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))

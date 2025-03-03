@@ -217,7 +217,8 @@
 /datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/role/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
 	if(in_duelist_stance)
-		user.remove_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_BATON_RESISTANCE), type)
+		REMOVE_TRAIT(user, TRAIT_HARDLY_WOUNDED, type)
+		REMOVE_TRAIT(user, TRAIT_BATON_RESISTANCE, type)
 
 	UnregisterSignal(user, list(COMSIG_PARENT_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_HEALTH_UPDATE))
 
@@ -242,13 +243,15 @@
 	if(in_duelist_stance && source.health > source.maxHealth * 0.5)
 		source.balloon_alert(source, "exited duelist stance")
 		in_duelist_stance = FALSE
-		source.remove_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_BATON_RESISTANCE), type)
+		REMOVE_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
+		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 		return
 
 	if(!in_duelist_stance && source.health <= source.maxHealth * 0.5)
 		source.balloon_alert(source, "entered duelist stance")
 		in_duelist_stance = TRUE
-		source.add_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_BATON_RESISTANCE), type)
+		ADD_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
+		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 		return
 
 #undef BLOOD_FLOW_PER_SEVEIRTY
@@ -411,7 +414,7 @@
 	steel_spell?.charge_max /= 2
 
 	var/mob/living/carbon/human/heretic = user
-	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
+	heretic.species.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
 
 /datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/weapon/sickly_blade/blade)
 	SIGNAL_HANDLER

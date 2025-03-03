@@ -32,7 +32,7 @@
 /// Simple status effect for adding a ring of fire around a mob.
 /datum/status_effect/fire_ring
 	id = "fire_ring"
-	tick_interval = 0.2 SECONDS
+	tick_interval = 2
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	/// The radius of the ring around us.

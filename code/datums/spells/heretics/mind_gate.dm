@@ -18,7 +18,7 @@
 
 	active_msg = "You prepare to open your mind..."
 
-/obj/effect/proc_holder/spell/pointed/mind_gate/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/pointed/mind_gate/perform(feedback = TRUE)
 	return ..() && isliving(owner)
 
 /obj/effect/proc_holder/spell/pointed/mind_gate/is_valid_target(atom/cast_on)

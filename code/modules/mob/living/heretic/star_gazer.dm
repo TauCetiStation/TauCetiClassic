@@ -18,7 +18,7 @@
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, HALLOSS = 0, OXY = 0)
 	death_sound = 'sound/effects/cosmic_expansion.ogg'
 
 	move_force = MOVE_FORCE_OVERPOWERING
@@ -40,8 +40,7 @@
 	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	AddElement(/datum/element/ai_target_damagesource)
 	AddComponent(/datum/component/regenerator, outline_colour = "#b97a5d")
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
 	set_light(4, l_color = "#dcaa5b")
 
 // Star gazer attacks everything around itself applies a spooky mark

@@ -19,7 +19,7 @@
 	invocation_type = "none"
 
 	///List of traits that are added to the heretic while in space phase jaunt
-	var/static/list/jaunting_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD, TRAIT_NOBREATH)
+	var/static/list/jaunting_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/Grant(mob/grant_to)
 	. = ..()
@@ -29,7 +29,7 @@
 	. = ..()
 	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/can_cast_spell(feedback = TRUE)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/perform(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -41,7 +41,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/cast(mob/living/cast_on)
 	. = ..()
-	// Should always return something because we checked that in can_cast_spell before arriving here
+	// Should always return something because we checked that in perform before arriving here
 	var/turf/our_turf = get_turf(cast_on)
 	do_spacecrawl(our_turf, cast_on)
 
@@ -62,12 +62,10 @@
 /**
  * Attempts to enter the passed space or misc turfs.
  */
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_enter_jaunt(turf/our_turf, mob/living/jaunter)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_enter_jaunt(turf/our_turf, mob/living/carbon/human/jaunter)
 	// Begin the jaunt
-	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	var/obj/effect/dummy/phased_mob/holder = enter_jaunt(jaunter, our_turf)
 	if(isnull(holder))
-		REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 		return FALSE
 
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
@@ -75,7 +73,6 @@
 		jaunter.drop_all_held_items()
 		// Sanity check to ensure we didn't lose our focus as a result.
 		if(!HAS_TRAIT(jaunter, TRAIT_ALLOW_HERETIC_CASTING))
-			REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 			exit_jaunt(jaunter, our_turf)
 			return FALSE
 		// Give them some space hands to prevent them from doing things
@@ -87,6 +84,7 @@
 		jaunter.put_in_hands(right_hand)
 
 	jaunter.add_traits(jaunting_traits, SPACE_PHASING)
+	jaunter.species.flags += NO_BREATHE
 	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	playsound(our_turf, 'sound/effects/cosmic_energy.ogg', 50, TRUE, -1)
 	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
@@ -99,7 +97,7 @@
 /**
  * Attempts to Exit the passed space or misc turf.
  */
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_exit_jaunt(turf/our_turf, mob/living/jaunter, force = FALSE)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/space_crawl/proc/try_exit_jaunt(turf/our_turf, mob/living/carbon/human/jaunter, force = FALSE)
 	if(!force && HAS_TRAIT_FROM(jaunter, TRAIT_NO_TRANSFORM, REF(src)))
 		to_chat(jaunter, span_warning("You cannot exit yet!!"))
 		return FALSE
@@ -107,6 +105,7 @@
 	if(!exit_jaunt(jaunter, our_turf))
 		return FALSE
 	jaunter.remove_traits(jaunting_traits, SPACE_PHASING)
+	jaunter.species.flags -= NO_BREATHE
 	our_turf.visible_message(span_boldwarning("[jaunter] rises out of [our_turf]!"))
 	return TRUE
 
