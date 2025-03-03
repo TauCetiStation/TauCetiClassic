@@ -161,7 +161,6 @@ function find_tool_deps {
     need_cmd cat
     need_cmd find
     need_cmd md5sum
-    need_cmd python2
     need_cmd python3
 }
 
