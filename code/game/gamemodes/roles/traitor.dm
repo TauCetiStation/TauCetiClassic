@@ -150,3 +150,6 @@
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)
+
+/datum/role/traitor/syndcall/create_traitor_objectives()
+	AppendObjective(/datum/objective/nuclear)
