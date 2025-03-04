@@ -540,6 +540,7 @@
 	if(istype(O, /obj/item/weapon/paper))
 		user.drop_from_inventory(O, src)
 		user.SetNextMove(CLICK_CD_MELEE)
+		flick("binder1", src)
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		visible_message("[src] begins to hum as it warms up its printing drums.")
 		sleep(rand(200,400))

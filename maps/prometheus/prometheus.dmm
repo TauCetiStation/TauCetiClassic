@@ -26074,7 +26074,7 @@
 	},
 /area/station/security/execution)
 "fJv" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/item/stack/sheet/wood,
 /obj/machinery/newscaster{
 	pixel_x = -28
@@ -99753,7 +99753,7 @@
 /area/station/medical/cryo)
 "xXT" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/flora/pottedplant/crystal{
+/obj/item/weapon/flora/pottedplant/blueleaf{
 	pixel_y = 12
 	},
 /turf/simulated/floor{

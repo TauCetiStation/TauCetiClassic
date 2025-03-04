@@ -118,8 +118,8 @@
 	. = ..()
 	if(mapload)
 		var/atom/A = get_turf(src)
-		for(var/obj/item/weapon/folder in A.contents)
-			folder.forceMove(src)
+		for(var/obj/item/weapon/folder/Folder in A.contents)
+			Folder.forceMove(src)
 		update_icon()
 
 /obj/item/folder_holder/update_icon()
