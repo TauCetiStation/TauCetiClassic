@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(ticker)
 
 	msg_lobby = "Запускаем сверхточные атомные часы..."
 
-	var/const/restart_timeout = 600
+	var/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
 
 	var/datum/modesbundle/bundle = null
@@ -592,7 +592,9 @@ SUBSYSTEM_DEF(ticker)
 		for(var/mob/M as anything in global.player_list)
 			H.add_hud_to(M)
 
-	teleport_players_to_eorg_area()
+	if(config.deathmatch_arena)
+		if(load_arena())
+			teleport_players_to_eorg_area()
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()
@@ -609,11 +611,34 @@ SUBSYSTEM_DEF(ticker)
 	if(config.allow_drone_spawn)
 		create_spawner(/datum/spawner/drone)
 
+/datum/controller/subsystem/ticker/proc/load_arena()
+	var/online = global.player_list.len
+	restart_timeout *= 1 + sqrt(online / 50) // на отметке 50 онлайна время дезматча удвоится
+	var/turf/spawn_area = get_turf(locate("landmark*Arena Spawn"))
+	var/list/arenas = list()
+
+	for(var/i in subtypesof(/datum/map_template/post_round_arena))
+		var/datum/map_template/post_round_arena/A = i
+		if(A.spawners >= (online - 5) && A.spawners <= (online + 5))
+			arenas += A
+
+	var/datum/map_template/post_round_arena/arena = /datum/map_template/post_round_arena/four_biomes
+	if(arenas.len)
+		arena = pick(arenas)
+
+	arena = new arena
+
+	if(!spawn_area)
+		CRASH("No spawn area detected for Arena!")
+		return FALSE
+	if(!arena.load(spawn_area))
+		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
+		return FALSE
+	return TRUE
+
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
-	if(!config.deathmatch_arena)
-		return
-	for(var/mob/living/M in global.player_list)
-		if(!M.client.prefs.eorg_enabled)
+	for(var/mob/M in global.player_list)
+		if(!M.client.prefs.eorg_enabled || isnewplayer(M))
 			continue
 		spawn_gladiator(M)
 
