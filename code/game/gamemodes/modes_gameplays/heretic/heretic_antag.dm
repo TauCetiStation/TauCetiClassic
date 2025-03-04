@@ -246,7 +246,9 @@
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
 	return ..()
 
-/datum/role/heretic/on_removal()
+/datum/role/heretic/RemoveFromRole()
+	. = ..()
+
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(antag.current, src)

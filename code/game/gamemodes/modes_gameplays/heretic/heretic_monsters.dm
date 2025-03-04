@@ -3,7 +3,7 @@
 	name = "\improper Eldritch Horror"
 	roundend_category = "Heretics"
 	antagpanel_category = ANTAG_GROUP_HORRORS
-	antag_moodlet = /datum/mood_event/heretics
+	antag_moodlet = /datum/mood_event/heretic
 	job_rank = ROLE_HERETIC
 	antag_hud_name = "heretic_beast"
 	show_in_antagpanel = FALSE
@@ -11,7 +11,10 @@
 	/// Our master (a heretic)'s mind.
 	var/datum/mind/master
 
-/datum/role/heretic_monster/on_removal()
+/datum/role/heretic_monster/RemoveFromRole()
+	. = ..()
+
+	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "heretic")
 	if(!silent)
 		if(master?.current)
 			to_chat(master.current, span_warning("The essence of [owner], your servant, fades from your mind."))
