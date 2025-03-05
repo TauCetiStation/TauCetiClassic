@@ -123,7 +123,8 @@
 							/obj/random/plushie								= 1,
 							/obj/random/plushie								= 1,
 							/obj/random/plushie								= 1,
-							/obj/random/plushie								= 1
+							/obj/random/plushie								= 1,
+							/obj/item/toy/foamblade							= 1
 							)
 
 	light_color = "#00ff00"

@@ -116,6 +116,7 @@
 		/obj/random/plushie,
 		/obj/item/toy/eight_ball,
 		/obj/item/toy/eight_ball/conch,
+		/obj/item/toy/foamblade,
 		)
 
 	if(!ispath(gift_type, /obj/item))
