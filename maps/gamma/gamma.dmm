@@ -69187,6 +69187,7 @@
 	network = list("Research","Toxins                                                                Test                                                                Area","Robots","Anomaly                                                                Isolation");
 	pixel_y = 2
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkpurple"
@@ -106402,9 +106403,6 @@
 /obj/item/device/tagger/shop,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
-	},
-/obj/item/device/binary_decoder{
-	pixel_y = -8
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)

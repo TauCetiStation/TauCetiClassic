@@ -3,14 +3,10 @@
 	icon_state = "binary_decoder"
 	item_state_world = "binary_decoder_world"
 	item_state = "analyzer"
-	desc = "Инструмент для прямого чтения и редактирования прошивки электронных устройств."
+	desc = "Инструмент, содержащий коды для дешифрации информации о законах ИИ."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	throwforce = 3
 	w_class = SIZE_TINY
-	throw_speed = 4
-	throw_range = 10
-	origin_tech = "magnets=1;biotech=1"
 
 /obj/item/device/binary_decoder/proc/print_laws(mob/living/silicon/S)
 	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
@@ -30,10 +26,8 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
 
-	required_skills = list(/datum/skill/command = SKILL_LEVEL_NONE, /datum/skill/research = SKILL_LEVEL_PRO)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 	fumbling_time = 3 SECONDS
 	req_one_access = list(access_tox, access_heads)
 

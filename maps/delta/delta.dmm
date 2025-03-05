@@ -84337,7 +84337,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -91832,6 +91831,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
