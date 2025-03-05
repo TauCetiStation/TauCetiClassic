@@ -605,16 +605,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/mmi/posibrain
 	category = list("AI")
 
-/datum/design/binary_decoder
-	name = "Binary Decoder"
-	desc = "Allows for the construction of a binary decoder."
-	id = "binary_decoder"
-
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 250, MAT_GOLD = 250)
-	build_path = /obj/item/device/binary_decoder
-	category = list("AI")
-
 ///////////////////////////////////
 //////////Mecha Module Disks///////
 ///////////////////////////////////

@@ -76,7 +76,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.")
+		to_chat(target, "<font size='5'>[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.</font>")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -424,6 +424,21 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/syndicate/add_freeform_law(mob/living/silicon/ai/target)
 	target.add_ion_law(newFreeFormLaw)
+
+/obj/item/weapon/aiModule/freeform/syndicate/verb/toggle_report()
+	set name = "Toggle Report"
+	set category = "Object"
+	set src in view(1)
+
+	if(!ishuman(usr))  //Checking human and status
+		return
+	if(usr.incapacitated())
+		return
+	if(usr.is_busy())
+		return
+
+	report_AI = !report_AI
+	to_chat(usr, "<span class='notice'>ИИ [report_AI ? "" : "не"] будет передано ваше имя при загрузке закона.</span>")
 
 /******************** Robocop ********************/
 

@@ -35906,9 +35906,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/item/device/binary_decoder{
-	pixel_y = -10
-	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "blH" = (
@@ -45496,6 +45493,10 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/item/device/binary_decoder{
+	pixel_x = 10;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	dir = 5;

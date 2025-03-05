@@ -26,6 +26,7 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "comm_server"
 	name = "AI Laws Server"
+	desc = "Сервер, на котором хранятся законы ИИ."
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -34,7 +35,7 @@
 
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NONE, /datum/skill/research = SKILL_LEVEL_PRO)
 	fumbling_time = 3 SECONDS
-	req_access = list(access_rd)
+	req_one_access = list(access_tox, access_heads)
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 
