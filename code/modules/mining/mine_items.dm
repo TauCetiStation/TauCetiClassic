@@ -444,6 +444,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
 	name = "mining explosives"
+	cases = list("шахтерская взрывчатка","шахтерской взрывчатки","шахтерской взрывчатке","шахтерскую взрывчатку","шахтерской взрывчаткой","шахтерской взрывчатке")
 	desc = "Используется для шахтерских взрывных работ. Используя её, не забывайте о технике безопасности"
 	gender = PLURAL
 	icon = 'icons/obj/mining/explosives.dmi'
@@ -458,20 +459,20 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>Вы разбираетесь, как установить таймер на [src]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>Вы разбираетесь, как установить таймер на [CASE(src,PREPOSITIONAL_CASE)]...</span>"))
 		return
 	var/newtime = input(usr, "Укажите время до взрыва.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
-	to_chat(user, "<span class='notice'>Таймер установлен на </span>[timer]<span class='notice'> секунд.</span>")
+	to_chat(user, "<span class='notice'>Таймер установлен на </span>[timer]<span class='notice'> [pluralize_russian(timer, "секунду", "секунды", "секунд")].</span>")
 
 /obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
 		return
-	if (!istype(target, /turf/simulated/mineral))
-		to_chat(user, "<span class='notice'>Вы не можете прикрепить [src] к [target.name].</span>")
-		return
+	/*if (!istype(target, /turf/simulated/mineral))
+		to_chat(user, "<span class='notice'>Вы не можете прикрепить [CASE(src,ACCUSATIVE_CASE)] к [target.name].</span>")
+		return*/
 	if(user.is_busy(src))
 		return
 
