@@ -47,9 +47,19 @@
 			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации!</b></span>")
 			return
 		to_chat(current, "<span class='warning'><b>Кто-то пытается расшифровать ваши законы!</b></span>")
-		user.visible_message("<span class='notice'>\The [user] uses [binary_decoder] on [src].</span>", "<span class='notice'>Вы начинаете процесс дешифрации информации о законах ИИ.</span>")
+		user.visible_message(
+			"<span class='notice'>\The [user] uses [binary_decoder] on [src].</span>",
+			"<span class='notice'>Вы начинаете процесс дешифрации информации о законах ИИ.</span>")
 		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, required_skills, -0.2))
 			if(current)
+				if(!is_skill_competent(user, list(/datum/skill/research = SKILL_LEVEL_TRAINED)))
+					if(prob(50))
+						current.overload_ai_system()
+						user.visible_message(
+							"<span class='warning'>\The [user] does something wrong and the equipment starts beeping terribly.</span>",
+							"<span class='warning'>Вы делаете что-то не так и оборудование начинает страшно пищать.</span>")
+						playsound(src, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+						return
 				var/obj/item/device/binary_decoder/D = I
 				D.print_laws(current)
 				current.statelaws(forced = TRUE)
