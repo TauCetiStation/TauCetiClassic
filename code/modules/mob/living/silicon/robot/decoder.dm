@@ -1,9 +1,10 @@
 /obj/item/device/binary_decoder
 	name = "binary decoder"
+	cases = list("бинарный дешифратор", "бинарного дешифратора", "бинарному дешифратору", "бинарный дешифратор", "бинарным дешифратором", "бинарном дешифраторе")
+	desc = "Инструмент, содержащий коды для дешифрации информации о законах ИИ."
 	icon_state = "binary_decoder"
 	item_state_world = "binary_decoder_world"
 	item_state = "analyzer"
-	desc = "Инструмент, содержащий коды для дешифрации информации о законах ИИ."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = SIZE_TINY
@@ -19,10 +20,11 @@
 	usr.put_in_hands(P)
 
 /obj/machinery/ai_laws_server
+	name = "AI Laws Server"
+	cases = list("сервер законов ИИ", "сервера законов ИИ", "серверу законов ИИ", "сервер законов ИИ", "сервером законов ИИ", "сервере законов ИИ")
+	desc = "Сервер, на котором хранятся законы ИИ."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "comm_server"
-	name = "AI Laws Server"
-	desc = "Сервер, на котором хранятся законы ИИ."
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -45,6 +47,7 @@
 			to_chat(user, "<span class='warning'><b>Не выбран ИИ для дешифрации информации!</b></span>")
 			return
 		to_chat(current, "<span class='warning'><b>Кто-то пытается расшифровать ваши законы!</b></span>")
+		user.visible_message("<span class='notice'>\The [user] uses [binary_decoder] on [src].</span>", "<span class='notice'>Вы начинаете процесс дешифрации информации о законах ИИ.</span>")
 		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, required_skills, -0.2))
 			if(current)
 				var/obj/item/device/binary_decoder/D = I
