@@ -95,9 +95,9 @@
 
 	var/dat
 	if(inventory_mouth)
-		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];remove_inv=mouth'>Remove</a>"
+		dat = "<br><b>Mouth:</b><a href='byond://?src=\ref[src];remove_inv=mouth'>Remove</a>"
 	else
-		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];add_inv=mouth'>Nothing</a>"
+		dat = "<br><b>Mouth:</b><a href='byond://?src=\ref[src];add_inv=mouth'>Nothing</a>"
 
 	var/datum/browser/popup = new(user, "mob[type]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
@@ -140,7 +140,7 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 /mob/living/simple_animal/cat/dusty
 	name = "Dusty"
-	desc = "Его шерсть на вид и ощупь напоминает бархат."
+	desc = "Шерсть этого зверька на вид и ощупь напоминает бархат."
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"

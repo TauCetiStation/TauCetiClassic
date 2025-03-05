@@ -1066,6 +1066,25 @@
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 
+/obj/item/toy/figure/iaa
+	name = "Internal Affairs Agent action figure"
+	icon_state = "iaa"
+	toysay = "I'll make a report!"
+
+/obj/item/toy/figure/blueofficer
+	name = "Blueshield Officer"
+	icon_state = "blueofficer"
+	toysay = "On guard of the heads!"
+
+/obj/item/toy/figure/xenobio
+	name = "Xenobiologist"
+	icon_state = "xenobio"
+	toysay = "Ghost, come here, there's a rune for summoning a admantive golem!"
+
+/obj/item/toy/figure/xenoarcheolog
+	name = "Xenoarcheologist"
+	icon_state = "xenoarcheolog"
+	toysay = "Excavation, excavation, death!"
 /*
 Owl & Griffin toys
 */
@@ -1303,7 +1322,7 @@ Owl & Griffin toys
 /obj/item/toy/cardhand/interact(mob/user)
 	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
-		dat += "<A href='?src=\ref[src];pick=[t]'>A [t]</a><BR>"
+		dat += "<A href='byond://?src=\ref[src];pick=[t]'>A [t]</a><BR>"
 	dat += "Which card will you remove next?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
 	popup.set_content(dat)
@@ -1452,6 +1471,113 @@ Owl & Griffin toys
 	if(!ishuman(usr) || usr.incapacitated())
 		return
 	Flip()
+
+/obj/item/toy/singlecard/AltClick(mob/user)
+	if(!ishuman(usr) || usr.incapacitated())
+		return
+	Flip()
+
+/*
+ * Casino Caps
+ */
+/obj/item/toy/caps
+	name = "caps"
+	desc = "Маленькие разноцветные фишки."
+
+	icon = 'icons/obj/casino.dmi'
+	icon_state = "caps_2"
+
+	w_class = SIZE_MIDGET
+
+	var/capsAmount = 1
+
+/obj/item/toy/caps/atom_init(mapload, capsAmount = 1)
+	. = ..()
+
+	if(capsAmount <= 0)
+		capsAmount = 1
+	src.capsAmount = capsAmount
+	update_icon()
+
+/obj/item/toy/caps/update_icon()
+	switch(capsAmount)
+		if(1)
+			icon_state = "caps_1_[pick(list("r", "g", "y", "b"))]"
+		if(2 to 9)
+			icon_state = "caps_2"
+			w_class = SIZE_MINUSCULE
+		if(10 to 25)
+			icon_state = "caps_3"
+			w_class = SIZE_TINY
+		if(25 to 99)
+			icon_state = "caps_4"
+			w_class = SIZE_TINY
+		if(100 to 249)
+			icon_state = "caps_5"
+			w_class = SIZE_SMALL
+		else
+			icon_state = "caps_6"
+			w_class = SIZE_SMALL
+
+/obj/item/toy/caps/examine(mob/user)
+	..()
+	to_chat(user, "Фишек в стопке: [capsAmount].")
+
+/obj/item/toy/caps/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/caps))
+		var/obj/item/toy/caps/Caps = I
+
+		capsAmount += Caps.capsAmount
+		qdel(Caps)
+		update_icon()
+
+/obj/item/toy/caps/attack_hand(mob/user)
+	if(capsAmount == 1)
+		user.put_in_active_hand(src)
+		return
+
+	var/static/icon/radial_icons = 'icons/hud/radial.dmi'
+	var/static/radial_pickAll = image(icon = radial_icons, icon_state = "radial_pickup")
+	var/static/radial_pickFew = image(icon = radial_icons, icon_state = "radial_split")
+	var/list/options = list()
+
+	options["Взять всё"] = radial_pickAll
+	options["Взять часть"] = radial_pickFew
+
+	var/choice = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
+
+	if(choice == "Взять всё")
+		user.put_in_active_hand(src)
+		return
+
+	var/pickupAmount = text2num(input(user, "Сколько фишек взять?", "1") as text)
+	if(pickupAmount <= 0 || pickupAmount > capsAmount)
+		return
+
+	var/obj/item/toy/caps/Caps = new(get_turf(src), pickupAmount)
+	Caps.pickup(user)
+	user.put_in_active_hand(Caps)
+
+	user.visible_message("<span class='notice'>[user] берёт [pickupAmount] [pluralize_russian(pickupAmount, "фишку", "фишки", "фишек")] из стопки.</span>", "<span class='notice'>Вы берёте [pickupAmount] [pluralize_russian(pickupAmount, "фишку", "фишки", "фишек")] из стопки.</span>")
+
+	if(pickupAmount == capsAmount)
+		qdel(src)
+		return
+
+	capsAmount -= pickupAmount
+	update_icon()
+
+/obj/item/toy/caps/MouseDrop(atom/over_object)
+	. = ..()
+	var/mob/M = usr
+	if(over_object == M && iscarbon(usr) && !usr.incapacitated())
+		if(Adjacent(usr))
+			M.put_in_hands(src)
+		else
+			to_chat(usr, "<span class='notice'>Вы не можете дотянуться.</span>")
+
+	if(M.l_hand == src || M.r_hand == src)
+		to_chat(usr, "<span class='notice'>Вы берёте [capsAmount] [pluralize_russian(capsAmount, "фишку", "фишки", "фишек")].</span>")
 
 
 /*
@@ -1760,6 +1886,10 @@ Owl & Griffin toys
 							/obj/item/toy/figure/secofficer					= 1,
 							/obj/item/toy/figure/virologist					= 1,
 							/obj/item/toy/figure/warden						= 1,
+							/obj/item/toy/figure/iaa						= 1,
+							/obj/item/toy/figure/blueofficer				= 1,
+							/obj/item/toy/figure/xenobio					= 1,
+							/obj/item/toy/figure/xenoarcheolog				= 1,
 							/obj/item/toy/prize/poly/polyclassic			= 1,
 							/obj/item/toy/prize/poly/polypink				= 1,
 							/obj/item/toy/prize/poly/polydark				= 1,

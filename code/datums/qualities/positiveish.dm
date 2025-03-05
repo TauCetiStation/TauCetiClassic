@@ -334,7 +334,7 @@
 
 /datum/quality/positiveish/cqc
 	name = "CQC"
-	desc = "Вы прошли курсы единоборств и теперь знаете на несколько приёмов больше."
+	desc = "Ты прошёл курсы единоборств и теперь знаешь на несколько приёмов больше."
 	requirement = "Нет."
 
 /datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
@@ -413,6 +413,18 @@
 	else if(H.job == "Mime")
 		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
 		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
+
+/datum/quality/positiveish/bettercallsaul
+	name = "Better Call Saul"
+	desc = "У меня есть знакомый, у которого есть знакомый, который дал вам набор лучшего адвоката."
+	requirement = "Адвокат."
+
+	jobs_required = list("Lawyer")
+
+/datum/quality/positiveish/bettercallsaul/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Ты прихватил с собой ручку и штамп, способные подделывать подпись и печать.</span>")
+	H.equip_or_collect(new /obj/item/weapon/pen/chameleon(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/weapon/stamp/chameleon(H), SLOT_L_STORE)
 
 /datum/quality/positiveish/fastwalker
 	name = "Fast Walker"

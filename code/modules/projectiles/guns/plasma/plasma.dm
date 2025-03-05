@@ -16,11 +16,12 @@
 	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	fire_delay = 2
+	fire_delay = 0
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
+	var/fullauto = TRUE
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
@@ -40,6 +41,7 @@
 	icon_state = "plasma104_stg"
 	item_state = "plasma104_stg"
 	origin_tech = "combat=4;magnets=3"
+	fullauto = FALSE
 
 	overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_massive_shot.ogg'
 
@@ -55,6 +57,8 @@
 
 /obj/item/weapon/gun/plasma/atom_init()
 	. = ..()
+	if(fullauto)
+		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 	magazine = new initial_mag(src)
 	for(var/i in ammo_type)
 		var/path = ammo_type[i]
@@ -85,7 +89,7 @@
 		fire_sound = initial(fire_sound)
 	else
 		shot = ammo_type[PLASMAGUN_OVERCHARGE_TYPE]
-		fire_delay = 1
+		fire_delay = 0
 		fire_sound = overcharge_fire_sound
 		max_projectile_per_fire = 1
 

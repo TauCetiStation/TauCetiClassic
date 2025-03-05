@@ -440,6 +440,8 @@ Class Procs:
 	RefreshParts()
 
 /obj/machinery/proc/RefreshParts()
+	SHOULD_CALL_PARENT(TRUE)
+
 	var/caprat = 0
 	var/binrat = 0
 
@@ -459,9 +461,19 @@ Class Procs:
 	for(var/obj/item/weapon/stock_parts/scanning_module/C in component_parts)
 		scanrat += C.rating
 
-	idle_power_usage = initial(idle_power_usage) * caprat * CAPACITOR_POWER_MULTIPLIER * binrat * MATTERBIN_POWER_MULTIPLIER
-	active_power_usage = initial(active_power_usage) * manrat * MANIPULATOR_POWER_MULTIPLIER * lasrat * LASER_POWER_MULTIPLIER * scanrat * SCANER_POWER_MULTIPLIER
-	return
+	idle_power_usage = initial(idle_power_usage)
+	if(caprat)
+		idle_power_usage *= caprat * CAPACITOR_POWER_MULTIPLIER
+	if(binrat)
+		idle_power_usage *= binrat * MATTERBIN_POWER_MULTIPLIER
+
+	active_power_usage = initial(active_power_usage)
+	if(manrat)
+		active_power_usage *= manrat * MANIPULATOR_POWER_MULTIPLIER
+	if(lasrat)
+		active_power_usage *= lasrat * LASER_POWER_MULTIPLIER
+	if(scanrat)
+		active_power_usage *= scanrat * SCANER_POWER_MULTIPLIER
 
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid

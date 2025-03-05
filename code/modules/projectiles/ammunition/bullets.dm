@@ -27,6 +27,28 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 300
 
+/obj/item/ammo_casing/pea
+	name = "Pea bullet casing"
+	cases = list("гороховый патрон", "горохового патрона", "гороховому патрону", "гороховый патрон", "гороховым патроном", "гороховом патроне")
+	desc = "Гороховый патрон"
+	caliber = "Pea"
+	projectile_type = /obj/item/projectile/bullet/peabullet
+
+/obj/item/ammo_casing/pea/in_fire
+	name = "Burned pea bullet casing"
+	cases = list("обгоревший гороховый патрон", "обгоревшего горохового патрона", "обгоревшему гороховому патрону", "обгоревший гороховый патрон", "обгоревшим гороховым патроном", "обгоревшем гороховом патроне")
+	projectile_type = /obj/item/projectile/bullet/peabullet/in_fire
+
+/obj/item/ammo_casing/pea/virus
+	projectile_type = /obj/item/projectile/bullet/peabullet/virus
+
+/obj/item/ammo_casing/pea/virus/in_fire
+	name = "Burned pea bullet casing"
+	cases = list("обгоревший гороховый патрон", "обгоревшего горохового патрона", "обгоревшему гороховому патрону", "обгоревший гороховый патрон", "обгоревшим гороховым патроном", "обгоревшем гороховом патроне")
+	desc = "Гороховый патрон"
+	caliber = "Pea"
+	projectile_type = /obj/item/projectile/bullet/peabullet/virus/in_fire
+
 /obj/item/ammo_casing/c9mmr
 	desc = "Патрон от резиновой пули калибра 9мм."
 	icon_state = "casing_rubber"
@@ -68,7 +90,7 @@
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
-	desc = "Патрон от 12-го калибра типа пуля."
+	desc = "Патрон 12-го калибра типа \"пуля\"."
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/slug
@@ -76,21 +98,21 @@
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
-	desc = "Патрон от 12-го калибра типа картечь."
+	desc = "Патрон 12-го калибра типа \"картечь\"."
 	icon_state = "gshell"
 	pellets = 7
 	projectile_type = /obj/item/projectile/bullet/pellet
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
-	desc = "Патрон от 12-го калибра типа травматический."
+	desc = "Патрон 12-го калибра типа \"травмат\"."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/beanbag
 	m_amt = 300
 
 /obj/item/ammo_casing/shotgun/stunshot
 	name = "stun shell"
-	desc = "Патрон от 12-го калибра типа электрошок."
+	desc = "Патрон 12-го калибра типа \"электрошок\"."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
 	pellets = 5
@@ -98,14 +120,14 @@
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
-	desc = "Патрон от 12-го калибра типа зажигательный."
+	desc = "Патрон 12-го калибра типа \"зажигательный\"."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/buckshot
 	pellets = 12
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"
-	desc = "Патрон от 12-го калибра типа дротик."
+	desc = "Патрон 12 калибра типа \"флешетта\"."
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/energy/dart
 	m_amt = 2500
@@ -220,6 +242,11 @@
 	caliber = "5.56mm"
 	icon_state = "casing_incendiary"
 	projectile_type = /obj/item/projectile/bullet/incendiary
+
+/obj/item/ammo_casing/a556/nonlethal
+	desc = "Патрон для нелетальной пули калибра 5.56 мм."
+	icon_state = "casing_rubber"
+	projectile_type = /obj/item/projectile/bullet/weakbullet/nl_rifle
 
 /obj/item/ammo_casing/a74
 	desc = "Патрон от пули калибра 7.74мм."

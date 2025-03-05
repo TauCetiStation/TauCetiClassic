@@ -1,7 +1,8 @@
 // The communications computer
 /obj/machinery/computer/communications
 	name = "Communications Console"
-	desc = "This can be used for various important functions. Still under developement."
+	cases = list("консоль коммуникаций", "консоли коммуникаций", "консоли коммуникаций", "консоль коммуникаций", "консолью коммуникаций", "консоли коммуникаций")
+	desc = "Эта консоль обладает важным функционалом по управлению станцией."
 	icon_state = "comm"
 	light_color = "#0099ff"
 	req_access = list(access_heads)
@@ -97,7 +98,7 @@
 		return
 
 	if (!is_station_level(z))
-		to_chat(usr, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
+		to_chat(usr, "<span class='warning'><b>Невозможно установить соединение</b>:</span> Вы слишком далеко от станции!")
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
@@ -125,7 +126,7 @@
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
 			if(last_seclevel_change > world.time)
-				to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't change the security level that fast.</span>")
+				to_chat(usr, "<span class='warning'>Красный индикатор загорелся на консоли. Вероятно, вы не можете сменить код тревоги так быстро!</span>")
 				return
 			else
 				last_seclevel_change = world.time + 1 MINUTE
@@ -141,8 +142,8 @@
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
 						//Only notify the admins if an actual change happened
-						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. [ADMIN_JMP(usr)]")
+						log_game("[key_name(usr)] has changed the security level to [code_name_eng[security_level]].")
+						message_admins("[key_name_admin(usr)] has changed the security level to [code_name_eng[security_level]]. [ADMIN_JMP(usr)]")
 						switch(security_level)
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
@@ -150,20 +151,20 @@
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else
-					to_chat(usr, "You are not authorized to do this.")
+					to_chat(usr, "У вас недостаточно прав для выполнения этой операции!")
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
-				to_chat(usr, "You need to swipe your ID.")
+				to_chat(usr, "Проведите своей ID-картой.")
 
 		if("announce")
 			if(src.authenticated == 2)
 				if(last_announcement > world.time)
-					to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't make announcements that fast.</span>")
+					to_chat(usr, "<span class='warning'>На консоли мигает красный индикатор. Вероятно, вы не можете делать оповещения так быстро!</span>")
 					return
 				else
 					last_announcement = world.time + 1 MINUTE
-				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, extra = FALSE)
+				var/input = sanitize(input(usr, "Передайте оповещение, которое прозвучит на всю станцию.", "Приоритетное оповещение") as null|message, extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
 				announcement.play(input) //This should really tell who is, IE HoP, CE, HoS, RD, Captain
@@ -229,23 +230,23 @@
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = sanitize(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
+			stat_msg1 = sanitize(input("Линия 1", "Введите текст оповещения", stat_msg1) as text|null, MAX_LNAME_LEN)
 			updateDialog()
 		if("setmsg2")
-			stat_msg2 = sanitize(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
+			stat_msg2 = sanitize(input("Линия 2", "Введите текст оповещения", stat_msg2) as text|null, MAX_LNAME_LEN)
 			updateDialog()
 
 		// OMG CENTCOMM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldown)
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Рекалибровка систем связи. Пожалуйста, подождите.</span>")
 					return
-				var/input = sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
+				var/input = sanitize(input(usr, "Передайте оповещение Центкому через квантовую связь. Этот процесс является крайне затратным, потому злоупотребление им приведёт к вашему... увольнению. Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
+				to_chat(usr, "<span class='notice'>Сообщение отправлено.</span>")
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
 				CM.cooldown = 55
 
@@ -254,18 +255,18 @@
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.cooldown)
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Обработка информации. Ожидайте.</span>")
 					return
-				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
+				var/input = sanitize(input(usr, "Передайте оповещение \[НЕИЗВЕСТНЫМ\] через систему квантовой связи. Эта передача является крайне затратной, потому злоупотребление ею приведёт к... расторжению контракта. Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
+				to_chat(usr, "<span class='notice'>Сообщение отправлено!</span>")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.cooldown = 55 //about one minute
 
 		if("RestoreBackup")
-			to_chat(usr, "Backup routing data restored!")
+			to_chat(usr, "Резервные данные маршрутизации восстановлены!")
 			src.emagged = 0
 			updateDialog()
 
@@ -318,23 +319,23 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "You scramble the communication routing circuits!")
+	to_chat(user, "Вы шифруете схемы маршрутизации связи!")
 	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	if (!SSmapping.has_level(z))
-		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
+		to_chat(user, "<span class='warning'><b>Невозможно установить соединение</b>:</span> Вы слишком далеко от станции!")
 		return
 
 	var/dat = ""
 	if (SSshuttle.online && SSshuttle.location == 0)
-		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
+		dat += "<B>Аварийный шаттл</B>\n<BR>\nРасчетное время прибытия [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
-			var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
+			var/datum/browser/popup = new(user, "communications", "Коммуникационная консоль", 400, 500)
 			popup.set_content(dat)
 			popup.open()
 		return
@@ -342,76 +343,76 @@
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
-				dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Log Out</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=logout'>Выйти из системы</A>"
 				if (src.authenticated==2)
-					dat += "<BR><A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A>"
+					dat += "<BR><A href='byond://?src=\ref[src];operation=announce'>Сделать оповещение</A>"
 					if(src.emagged == 0)
-						dat += "<BR><A HREF='?src=\ref[src];operation=MessageCentcomm'>Send an emergency message to Centcomm</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=MessageCentcomm'>Отправить экстренное сообщение Центкому</A>"
 					else
-						dat += "<BR><A HREF='?src=\ref[src];operation=MessageSyndicate'>Send an emergency message to \[UNKNOWN\]</A>"
-						dat += "<BR><A HREF='?src=\ref[src];operation=RestoreBackup'>Restore Backup Routing Data</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=MessageSyndicate'>Отправить экстренное сообщение \[НЕИЗВЕСТНО\]</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=RestoreBackup'>Восстановить резервные данные маршрутизации</A>"
 
-				dat += "<BR><A HREF='?src=\ref[src];operation=changeseclevel'>Change alert level</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=changeseclevel'>Сменить код тревоги</A>"
 				if(SSshuttle.location==0)
 					if (SSshuttle.online)
-						dat += "<BR><A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=cancelshuttle'>Отменить вызов шаттла</A>"
 					else
-						dat += "<BR><A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=callshuttle'>Вызвать экстренный шаттл</A>"
 
-				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Set Status Display</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=status'>Установить статус дисплея</A>"
 			else
-				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Log In</A>"
-			dat += "<BR><A HREF='?src=\ref[src];operation=messagelist'>Message List</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=login'>Авторизоваться</A>"
+			dat += "<BR><A href='byond://?src=\ref[src];operation=messagelist'>Список сообщений</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Are you sure you want to call the shuttle? <A HREF='?src=\ref[src];operation=callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A>"
+			dat += "Вы уверены, что хотите вызвать шаттл? <A href='byond://?src=\ref[src];operation=callshuttle2'>ДА</A> | <A href='byond://?src=\ref[src];operation=main'>НЕТ</A>"
 		if(STATE_CANCELSHUTTLE)
-			dat += "Are you sure you want to cancel the shuttle? <A HREF='?src=\ref[src];operation=cancelshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A>"
+			dat += "Вы уверены, что хотите отозвать шаттл? <A href='byond://?src=\ref[src];operation=cancelshuttle2'>ДА</A> | <A href='byond://?src=\ref[src];operation=main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
-			dat += "Messages:"
+			dat += "Сообщения:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
-				dat += "<BR><A HREF='?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR><A HREF='?src=\ref[src];operation=delmessage'>Delete"
+					dat += "<BR><BR><A href='byond://?src=\ref[src];operation=delmessage'>Удалить"
 			else
 				src.state = STATE_MESSAGELIST
 				attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
-				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A>"
+				dat += "Вы уверены, что хотите удалить это сообщение? <A href='byond://?src=\ref[src];operation=delmessage2'>ДА</A> | <A href='byond://?src=\ref[src];operation=viewmessage'>НЕТ</A>"
 			else
 				src.state = STATE_MESSAGELIST
 				attack_hand(user)
 				return
 		if(STATE_STATUSDISPLAY)
-			dat += "Set Status Displays<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>Default</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A>"
-			dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
-			dat += "<li> Line 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += " Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A><BR><HR>"
+			dat += "Установить текст на дисплеях<BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=default'>По умолчанию</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=shuttle'>Расчетное время до прибытия шаттла</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=message'>Сообщение</A>"
+			dat += "<ul><li> Линия 1: <A href='byond://?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
+			dat += "<li> Линия 2: <A href='byond://?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
+			dat += " Alert: <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Карантин</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая угроза</A><BR><HR>"
 		if(STATE_ALERT_LEVEL)
-			dat += "Current alert level: [get_security_level()]<BR>"
+			dat += "Текущий код тревоги: [code_name_ru[security_level]]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
-				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
+				dat += "<font color='red'><b>Активирован механизм самоуничтожения. Деактивируйте механизм для снижения кода или эвакуируйтесь.</b></font>"
 			else
-				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
-				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
+				dat += "<A href='byond://?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Синий</A><BR>"
+				dat += "<A href='byond://?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Зелёный</A>"
 		if(STATE_CONFIRM_LEVEL)
-			dat += "Current alert level: [get_security_level()]<BR>"
-			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
+			dat += "Текущий код тревоги: [code_name_ru[security_level]]<BR>"
+			dat += "Подтвердить смену кода тревоги на: [code_name_ru[tmp_alertlevel]]<BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=swipeidseclevel'>Проведите ID-картой</A> для смены кода.<BR>"
 
-	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]"
+	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A href='byond://?src=\ref[src];operation=main'>Главное меню</A> | " : ""]"
 
-	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
+	var/datum/browser/popup = new(user, "communications", "Коммуникационная консоль", 400, 500)
 	popup.set_content(dat)
 	popup.open()
 
@@ -421,45 +422,46 @@
 	switch(src.aistate)
 		if(STATE_DEFAULT)
 			if(SSshuttle.location==0 && !SSshuttle.online)
-				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A>"
-			dat += "<BR><A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A>"
-			dat += "<BR><A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=ai-callshuttle'>Вызвать экстренный шаттл</A>"
+			dat += "<BR><A href='byond://?src=\ref[src];operation=ai-messagelist'>Список сообщений</A>"
+			dat += "<BR><A href='byond://?src=\ref[src];operation=ai-status'>Установить текст на дисплеях</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Are you sure you want to call the shuttle? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-main'>Cancel</A>"
+			dat += "Вы уверены, что хотите вызвать экстренный шаттл? <A href='byond://?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A href='byond://?src=\ref[src];operation=ai-main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
-				dat += "<BR><A HREF='?src=\ref[src];operation=ai-viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=ai-viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
 			if (src.aicurrmsg)
 				dat += "<B>[src.messagetitle[src.aicurrmsg]]</B><BR><BR>[src.messagetext[src.aicurrmsg]]"
-				dat += "<BR><BR><A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A>"
+				dat += "<BR><BR><A href='byond://?src=\ref[src];operation=ai-delmessage'>Удалить сообщение</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
 				attack_hand(user)
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
-				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A>"
+				dat += "Вы уверены, что хотите удалить это сообщение? <A href='byond://?src=\ref[src];operation=ai-delmessage2'>ДА</A> | <A href='byond://?src=\ref[src];operation=ai-viewmessage'>НЕТ</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
 				attack_hand(user)
 				return
 
 		if(STATE_STATUSDISPLAY)
-			dat += "Set Status Displays<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A>"
-			dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
-			dat += "<li> Line 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += "Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>None</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A><BR><HR>"
+			dat += "Установить текст на дисплеях<BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=default'>Прилёт шаттла</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=shuttle'>Время прибытия шаттла</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=message'>Режим передачи сообщений</A>"
+			dat += "<ul><li> Линия 1: <A href='byond://?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(пусто)"]</A>"
+			dat += "<li> Линия 2: <A href='byond://?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(пусто)"]</A></ul><br>"
+			dat += "Alert: <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>Стандартный режим</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Изоляция</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность</A><BR><HR>"
 
 
-	dat += "<BR>[(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]"
+	dat += "<BR>[(src.aistate != STATE_DEFAULT) ? "<A href='byond://?src=\ref[src];operation=ai-main'>Главное меню</A> | " : ""]"
 	return dat
 
 /proc/call_shuttle_proc(mob/user)
@@ -467,19 +469,20 @@
 		return
 
 	if(sent_strike_team == 1)
-		to_chat(user, "Centcom will not allow the shuttle to be called. Consider all contracts terminated.")
+		to_chat(user, "Центком отказал в запросе шаттла на станцию. Все контракты расторгнуты.")
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minutes before trying again.")
+		var/time_to_stay = round((6000-world.time)/600)
+		to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [time_to_stay] [pluralize_russian(time_to_stay, "минута", "минуты", "минут")] до повторного вызова.")
 		return
 
 	if(SSshuttle.direction == -1)
-		to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
+		to_chat(user, "Аварийный шаттл возвращается к отделению Центкома, вызов невозможен.")
 		return
 
 	if(SSshuttle.online)
-		to_chat(user, "The emergency shuttle is already on its way.")
+		to_chat(user, "Аварийный шаттл уже вызван.")
 		return
 
 	SSshuttle.incall()
@@ -492,29 +495,31 @@
 	return
 
 /proc/init_shift_change(mob/user, force = 0)
-	if ((!( SSticker ) || SSshuttle.location))
+	if((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(SSshuttle.direction == -1)
-		to_chat(user, "The shuttle may not be called while returning to CentCom.")
+		to_chat(user, "Шаттл возвращается к Центкому, вызов невозможен.")
 		return
 
 	if(SSshuttle.online)
-		to_chat(user, "The shuttle is already on its way.")
+		to_chat(user, "Шаттл уже вызван.")
 		return
 
 	// if force is 0, some things may stop the shuttle call
 	if(!force)
 		if(SSshuttle.deny_shuttle)
-			to_chat(user, "Centcom does not currently have a shuttle available in your sector. Please try again later.")
+			to_chat(user, "Центком не имеет доступного шаттла в этом секторе, пожалуйста, подождите.")
 			return
 
 		if(sent_strike_team == 1)
-			to_chat(user, "Centcom will not allow the shuttle to be called. Consider all contracts terminated.")
+			to_chat(user, "Центком отказал в запросе шаттла на станцию. Все контракты расторгнуты.")
 			return
 
+
 		if(world.time < 54000) // 30 minute grace period to let the game get going
-			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
+			var/time_to_stay = round((54000-world.time)/600)
+			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [time_to_stay] [PLUR_MINUTES_IN(time_to_stay)] до повторного вызова.")//may need to change "/600"
 			return
 
 	SSshuttle.shuttlealert(1)
@@ -527,10 +532,10 @@
 
 /proc/cancel_call_proc(mob/user)
 	if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
-		to_chat(user, "The console is not responding.")
+		to_chat(user, "Консоль не отвечает.")
 		return
 	if(SSshuttle.timeleft() < 300)
-		to_chat(user, "Shuttle is close and it's too late for cancellation.")
+		to_chat(user, "Шаттл близко. Отменять запрос уже поздно.")
 		return
 
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm

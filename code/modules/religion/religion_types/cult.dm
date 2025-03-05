@@ -35,7 +35,7 @@
 	area_type = /area/custom/cult
 	build_agent_type = /datum/building_agent/structure/cult
 	rune_agent_type = /datum/building_agent/rune/cult
-	tech_agent_type = /datum/building_agent/tech/cult
+	tech_agent_type = /datum/religion_tech/cult
 	wall_types = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
@@ -112,6 +112,22 @@
 
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
+
+/datum/religion/cult/gen_tech_agent_lists()
+	..()
+	var/list/aspect_types = subtypesof(/datum/aspect)
+	for(var/type in aspect_types)
+		var/datum/aspect/A = new type
+		if(!A.name)
+			qdel(A)
+			continue
+		var/datum/religion_tech/upgrade_aspect/tech = new
+		tech.id = A.name
+		tech.aspect_type = type
+		tech.info = new /datum/building_agent/tech/aspect(A.name, A.icon, A.icon_state)
+		tech.calculate_costs(src)
+		available_techs += tech
+		qdel(A)
 
 /datum/religion/cult/process()
 	adjust_favor(passive_favor_gain)
@@ -223,7 +239,7 @@
 	M.AddSpell(new type(src))
 
 /datum/religion/cult/can_convert(mob/M)
-	if(M.my_religion)
+	if(M.my_religion && !istype(M.my_religion, /datum/religion/pluvia))
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
@@ -231,7 +247,7 @@
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.flags[NO_BLOOD])
+		if(H.species.flags[NO_BLOOD] || H.mind.pluvian_blessed)
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE

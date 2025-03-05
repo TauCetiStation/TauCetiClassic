@@ -59,8 +59,6 @@
 	// Set on login.
 	var/datum/media_manager/media = null
 
-	var/datum/guard/guard = null
-
 	var/datum/tooltip/tooltips
 
 	var/list/datum/browser/browsers
@@ -77,6 +75,8 @@
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
 
+	///Time when the click was intercepted
+	var/click_intercept_time = 0
 
 	///Amount of keydowns in the last keysend checking interval
 	var/client_keysend_amount = 0
@@ -120,3 +120,5 @@
 	COOLDOWN_DECLARE(say_slowmode)
 
 	var/is_in_spawner = FALSE
+	///used to override the mouse cursor so it doesnt get reset
+	var/mouse_override_icon = null

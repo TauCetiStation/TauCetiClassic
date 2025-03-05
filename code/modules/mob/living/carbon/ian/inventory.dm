@@ -3,12 +3,12 @@
 	var/list/dat = list()
 
 	dat += "<table>"
-	dat += "<tr><td><B>Mouth:</B></td><td><A href='?src=\ref[src];item=[SLOT_MOUTH]'>[(mouth && !(mouth.flags & ABSTRACT)) ? mouth : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td><B>Mouth:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_MOUTH]'>[(mouth && !(mouth.flags & ABSTRACT)) ? mouth : "<font color=grey>Empty</font>"]</a></td></tr>"
 	dat += "<tr><td>&nbsp;</td></tr>"
 
-	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A></td></tr>"
-	dat += "<tr><td><B>Head:</B></td><td><A href='?src=\ref[src];item=[SLOT_HEAD]'>[(head && !(head.flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
-	dat += "<tr><td><B>Neck (ID):</B></td><td><A href='?src=\ref[src];item=[SLOT_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Back:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Head:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HEAD]'>[(head && !(head.flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Neck (ID):</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_IAN_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	dat += {"</table>
 	"}
@@ -56,7 +56,7 @@
 		if(SLOT_MOUTH)
 			mouth = W
 			W.equipped(src, slot)
-		if(SLOT_NECK)
+		if(SLOT_IAN_NECK)
 			if(istype(W, /obj/item/weapon/handcuffs))
 				handcuffed = W
 			neck = W

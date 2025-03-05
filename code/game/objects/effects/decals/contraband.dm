@@ -170,9 +170,9 @@
 	random_basetype = /obj/structure/sign/poster
 
 /obj/structure/sign/poster/calendar
-	name = "2224 calendar"
+	name = "2225 calendar"
 	icon_state = "calendar"
-	desc = "Brand new calendar for year 2224."
+	desc = "Brand new calendar for year 2225."
 
 /obj/structure/sign/poster/sivtsev
 	name = "sivtsev table"
@@ -665,7 +665,7 @@
 		to_chat(user, "<span class='bold warning'>You can't overcome the guilt to join the revolutionaries. (You are banned.)</span>")
 		return
 	else if(!isrevhead(user) && !isrev(user))
-		rev.convert_revolutionare(user)
+		rev.add_user_to_rev(user)
 
 /obj/structure/sign/poster/revolution/examine(mob/user)
 	. = ..()

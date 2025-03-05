@@ -5,15 +5,11 @@
 
 // partname is the name of a body part
 // amount is a num from 1 to 100
+
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
-	if(stat >= DEAD) return
-	if(reagents.has_reagent("paracetamol"))
+	if(stat >= DEAD)
 		return
-	if(reagents.has_reagent("tramadol"))
-		return
-	if(reagents.has_reagent("oxycodone"))
-		return
-	if(analgesic)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_MEDIUM)
 		return
 	if(world.time < next_pain_time && !force)
 		return
@@ -50,15 +46,9 @@
 /mob/living/carbon/human/proc/custom_pain(message, flash_strength)
 	if(stat != CONSCIOUS)
 		return
-
 	if(species && species.flags[NO_PAIN])
 		return
-
-	if(reagents.has_reagent("tramadol"))
-		return
-	if(reagents.has_reagent("oxycodone"))
-		return
-	if(analgesic)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
 	var/msg = "<span class='warning'><b>[message]</b></span>"
 	if(flash_strength >= 1)
@@ -72,17 +62,11 @@
 
 /mob/living/carbon/human/proc/handle_pain()
 	// not when sleeping
-
 	if(species && species.flags[NO_PAIN])
 		return
-
 	if(stat >= DEAD)
 		return
-	if(reagents.has_reagent("tramadol"))
-		return
-	if(reagents.has_reagent("oxycodone"))
-		return
-	if(analgesic)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
 	var/maxdam = 0
 	var/obj/item/organ/external/damaged_organ = null

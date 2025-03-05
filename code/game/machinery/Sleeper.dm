@@ -109,8 +109,8 @@
 	return
 
 /obj/machinery/sleeper/deconstruct(disassembled)
-	for(var/atom/movable/A as anything in src)
-		A.forceMove(loc)
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
 	..()
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
@@ -154,9 +154,9 @@
 		if(EXPLODE_LIGHT)
 			if(prob(75))
 				return
-	for(var/atom/movable/A as anything in src)
-		A.loc = src.loc
-		ex_act(severity)
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
 	qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
@@ -198,8 +198,8 @@
 	open_machine()
 
 /obj/machinery/sleeper/Destroy()
-	var/turf/T = loc
-	T.contents += contents
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
 	return ..()
 
 /obj/machinery/sleeper/verb/remove_beaker()
@@ -247,19 +247,19 @@
 
 	dat += "</div>"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
+	dat += "<A href='byond://?src=\ref[src];refresh=1'>Scan</A>"
 
-	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
+	dat += "<A href='byond://?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
 
 	dat += "<h3>Beaker</h3>"
 
 	if(src.beaker)
-		dat += "<A href='?src=\ref[src];removebeaker=1'>Remove Beaker</A>"
+		dat += "<A href='byond://?src=\ref[src];removebeaker=1'>Remove Beaker</A>"
 		if(filtering)
-			dat += "<A href='?src=\ref[src];togglefilter=1'>Stop Dialysis</A>"
+			dat += "<A href='byond://?src=\ref[src];togglefilter=1'>Stop Dialysis</A>"
 			dat += text("<BR>Output Beaker has [] units of free space remaining<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 		else
-			dat += "<A href='?src=\ref[src];togglefilter=1'>Start Dialysis</A>"
+			dat += "<A href='byond://?src=\ref[src];togglefilter=1'>Start Dialysis</A>"
 			dat += text("<BR>Output Beaker has [] units of free space remaining", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 	else
 		dat += "<BR>No Dialysis Output Beaker is present."
@@ -267,14 +267,14 @@
 	dat += "<h3>Injector</h3>"
 
 	if(src.occupant)
-		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
+		dat += "<A href='byond://?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
 	else
 		dat += "<span class='disabled'>Inject Inaprovaline</span>"
 	if(occupant && occupant.health > min_health)
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
-				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
 	else
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]

@@ -128,6 +128,8 @@
 			return gloves
 		if(SLOT_HEAD)
 			return head
+		if(SLOT_NECK)
+			return neck
 		if(SLOT_SHOES)
 			return shoes
 		if(SLOT_WEAR_SUIT)

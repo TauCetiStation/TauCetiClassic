@@ -326,6 +326,14 @@
 	color = "#104038" // rgb: 16, 64, 56
 	adj_temp = -5
 
+/datum/reagent/consumable/drink/kogelmogel
+	name = "Kogelmogel"
+	id = "kogelmogel"
+	description = "Новогодняя сладость."
+	adj_temp = 3
+	color = "#ffe58a"
+	taste_message = "sweet egg"
+
 /datum/reagent/consumable/drink/cold
 	name = "Cold drink"
 	adj_temp = -5
@@ -736,7 +744,7 @@
 		return
 
 	M.drowsyness = max(0, M.drowsyness + adj_drowsy)
-	M.SetSleeping(adj_sleepy)
+	M.AdjustSleeping(adj_sleepy)
 
 	var/drunkpwr = boozepwr
 

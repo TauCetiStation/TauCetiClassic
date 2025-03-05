@@ -35,6 +35,7 @@
 	message = "Тревога! Обнаружен огонь блюспейс артиллерии. Приготовиться к удару."
 	sound = "artillery"
 /datum/announcement/centcomm/bsa/play(area/A)
+	subtitle = "Сенсоры [station_name_ru()]"
 	if(A)
 		message = "Тревога! Обнаружен огонь блюспейс артиллерии по [CASE(A, DATIVE_CASE)]. Приготовиться к удару."
 	..()
@@ -265,3 +266,9 @@
 	name = "Event: Icarus Recovered"
 	subtitle = "Тревога. Сбойные дроны"
 	message = "Контроль дронов ВКН Икар разочарован в потере боевого крыла. Выжившие дроны будут восстановлены."
+
+/datum/announcement/centcomm/space_traders
+	name = "Event: Space Traders"
+	subtitle = "Космоторговцы."
+	message = "Мы получили и одобрили запрос на стыковку от группы космоторговцев. " + \
+			"У них кончаются припасы и есть товары для продажи. Ожидайте гостей."

@@ -117,6 +117,7 @@
 			icon_state = "health"
 		to_chat(user,"<span class='warning'>Успешное облучение [M].</span>")
 		M.log_combat(user, "irradiated with [name]")
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
@@ -131,18 +132,18 @@
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
 	user.set_machine(src)
 	var/cooldown = round(max(10, (intensity*5 - wavelength/4)))
-	var/dat = "Облучение: <A href='?src=\ref[src];rad=1'>[irradiate ? "Вкл" : "Выкл"]</A><br>"
+	var/dat = "Облучение: <A href='byond://?src=\ref[src];rad=1'>[irradiate ? "Вкл" : "Выкл"]</A><br>"
 
 	dat += {"
 	Интенсивность излучения:
-	<A href='?src=\ref[src];radint=-5'>-</A><A href='?src=\ref[src];radint=-1'>-</A>
+	<A href='byond://?src=\ref[src];radint=-5'>-</A><A href='byond://?src=\ref[src];radint=-1'>-</A>
 	[intensity]
-	<A href='?src=\ref[src];radint=1'>+</A><A href='?src=\ref[src];radint=5'>+</A><BR>
+	<A href='byond://?src=\ref[src];radint=1'>+</A><A href='byond://?src=\ref[src];radint=5'>+</A><BR>
 
 	Длина волны излучения:
-	<A href='?src=\ref[src];radwav=-5'>-</A><A href='?src=\ref[src];radwav=-1'>-</A>
+	<A href='byond://?src=\ref[src];radwav=-5'>-</A><A href='byond://?src=\ref[src];radwav=-1'>-</A>
 	[(wavelength+(intensity*4))]
-	<A href='?src=\ref[src];radwav=1'>+</A><A href='?src=\ref[src];radwav=5'>+</A><BR>
+	<A href='byond://?src=\ref[src];radwav=1'>+</A><A href='byond://?src=\ref[src];radwav=5'>+</A><BR>
 	Перезарядка лазера: [cooldown] секунд<BR>
 	"}
 

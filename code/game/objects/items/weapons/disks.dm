@@ -34,7 +34,7 @@
 	forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
 	message_admins("[src] has been destroyed in ([COORD(diskturf)] - [ADMIN_JMP(diskturf)]). Moving it to ([COORD(targetturf)] - [ADMIN_JMP(targetturf)]).")
 	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to [COORD(targetturf)].")
-
+	update_world_icon()
 	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
 
 #undef TIMER_MIN
@@ -143,6 +143,17 @@
 	m_amt = 30
 	g_amt = 10
 	var/datum/tech/stored
+	var/datum/technology/stored_technology
+
+/obj/item/weapon/disk/tech_disk/hud
+	name = "HUD tech disk"
+	desc = "That disk contains design of basic HUD upgrade and advanced HUD blueprint"
+	stored_technology = new /datum/technology/tier1_hud_upgrade()
+
+/obj/item/weapon/disk/tech_disk/spec_ops
+	name = "Spec Ops tech disk"
+	desc = "That disc contains designs and blueprints of Special Operation Forces equipment and ammunition"
+	stored_technology = new /datum/technology/healer_gun
 
 /obj/item/weapon/disk/tech_disk/atom_init()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)

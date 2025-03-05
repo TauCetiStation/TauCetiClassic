@@ -19,7 +19,7 @@
 	if(prev_gender != gender)
 		prev_gender = gender
 		if(gender in list(PLURAL, NEUTER))
-			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders. (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>)  (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?priv_msg=\ref[src]'>PM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>)")
+			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders. (<A href='byond://?_src_=holder;adminmoreinfo=\ref[src]'>?</A>)  (<A href='byond://?_src_=vars;Vars=\ref[src]'>VV</A>) (<A href='byond://?priv_msg=\ref[src]'>PM</A>) (<A href='byond://?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>)")
 	*/
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -114,6 +114,9 @@
 				var/pressure_loss = S.damage * 0.1
 				pressure_adjustment_coefficient = pressure_loss
 
+	if(HAS_TRAIT(src, TRAIT_AIRBAG_PROTECTION))
+		pressure_adjustment_coefficient = 0
+
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
 	pressure_adjustment_coefficient *= 1 - species.get_pressure_protection(src)
 
@@ -135,13 +138,15 @@ var/global/list/tourette_bad_words= list(
 				 "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
 				 "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
 	TAJARAN = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
- 				   "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
-	 			   "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
-	 			   "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+ 				 "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
+				 "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
+				 "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
 	UNATHI = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
 				  "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
 				  "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
-	 			  "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	 			  "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО",
+				  "ПЕРНАТЫЙ","ОБМУДОК","ЧУЖАК","РАБ","КОШАК","ЖАБА","МЯСЦО",
+				  "ЕБЛАН", "ЖИВОТНОЕ", "ЧМО", "ПИРАТ", "МЕРЗАВЕЦ", "ИМПОТЕНТ"),
 	VOX = list("ГОВНО", "СЕДАЛИЩЕ", "ЧКАЛ", "СПАРИВАЛ", "ТВАРЬ",
 	 		   "ГНИЛОЙ", "МРАЗЬ", "ХВОСТ", "НАХВОСТ", "ХВОСТОЛИЗ",
 			   "КЛОАКА", "СКРЯТЬ", "СКАРАПУШ", "САМКА", "СКРЯПЫШ")
@@ -155,6 +160,14 @@ var/global/list/tourette_bad_words= list(
 			spawn( 0 )
 				emote("cough")
 				return
+
+	if((disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT)) && eye_blurry <= 3)
+		if(glasses)
+			var/obj/item/clothing/glasses/G = glasses
+			if(G.prescription)
+				return
+		adjustBlurriness(3)
+
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
 			return
@@ -901,7 +914,11 @@ var/global/list/tourette_bad_words= list(
 				else
 					icon_num = 5
 
-			healthdoll.add_overlay(image('icons/hud/screen_gen.dmi',"[BP.body_zone][icon_num]"))
+			if(get_painkiller_effect() <= PAINKILLERS_EFFECT_VERY_HEAVY)
+				healthdoll.icon_state = "health_numb"
+				healthdoll.cut_overlays()
+			else
+				healthdoll.add_overlay(image('icons/hud/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 	if(!healths)
 		return
@@ -967,7 +984,7 @@ var/global/list/tourette_bad_words= list(
 			clear_fullscreen("oxy")
 
 		//Fire and Brute damage overlay (BSSR)
-		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+		var/hurtdamage = ((getBruteLoss() + getFireLoss() + damageoverlaytemp) * get_painkiller_effect())
 		damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 		if(hurtdamage)
 			var/severity = 0
@@ -1013,7 +1030,7 @@ var/global/list/tourette_bad_words= list(
 		var/obj/item/clothing/mask/gas/welding/O = wear_mask
 		if(!O.up && tinted_weldhelh)
 			impaired = 2
-	if(istype(glasses, /obj/item/clothing/glasses/welding) )
+	if(istype(glasses, /obj/item/clothing/glasses/welding) && !istype(glasses, /obj/item/clothing/glasses/welding/superior))
 		var/obj/item/clothing/glasses/welding/O = glasses
 		if(!O.up && tinted_weldhelh)
 			impaired = max(impaired, 2)
@@ -1087,6 +1104,11 @@ var/global/list/tourette_bad_words= list(
 	else
 		animate(client, color = null, time = 5)
 
+	if(painkiller_overlay_time)
+		animate(client, color = PAINKILLERS_FILTER, time = 5)
+	else
+		animate(client, color = null, time = 5)
+
 	return TRUE
 
 /mob/living/carbon/human/proc/handle_random_events()
@@ -1145,68 +1167,52 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_shock()
 	..()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return FALSE	//godmode
 	if(species && species.flags[NO_PAIN])
 		return
 	if(analgesic && !reagents.has_reagent("prismaline"))
 		return // analgesic avoids all traumatic shock temporarily
 
-	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
-		shock_stage = max(shock_stage, 61)
+	var/message
 
-	if(traumatic_shock >= 80)
-		shock_stage += 1
-	else if(health < config.health_threshold_softcrit)
-		shock_stage = max(shock_stage, 61)
-	else
-		shock_stage = min(shock_stage, 160)
-		shock_stage = max(shock_stage-1, 0)
-		return
+	if(traumatic_shock >= TRAUMATIC_SHOCK_MINOR)
+		message = "<span class='warning'>[pick("You feel slight pain.", "Ow... That hurts.")]</span>"
 
-	if(shock_stage == 10)
-		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
-
-	if(shock_stage >= 30)
-		if(shock_stage == 30) me_emote("is having trouble keeping their eyes open.")
+	if(traumatic_shock >= TRAUMATIC_SHOCK_SERIOUS)
+		message = "<span class='boldwarning'><B>[pick("Ughhh... When will it end?", "You're wincing in pain!", "You really need some painkillers!")]</B></span>"
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
-	if(shock_stage == 40)
-		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+	if(traumatic_shock >= TRAUMATIC_SHOCK_INTENSE)
+		message = "<span class='danger'>[pick("Stop this pain!", "This pain is unbearable!", "Your whole body is going numb!")]</span>"
 
-	if (shock_stage >= 60)
-		if(shock_stage == 60)
-			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
-		if (prob(2))
-			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
-			Stun(10)
-			Weaken(20)
+	if(traumatic_shock >= TRAUMATIC_SHOCK_MIND_SHATTERING)
+		message = "<span class='userdanger'><font size=5>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</font></span>"
+		if(prob(10) && !crawling)
+			Weaken(1)
 
-	if(shock_stage >= 80)
-		if (prob(5))
-			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
-			Stun(10)
-			Weaken(20)
-
-	if(shock_stage >= 120)
-		if (prob(2))
+	if(traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
+		if(!crawling)
+			addtimer(CALLBACK(src, PROC_REF(knockdown_by_pain)), 7.5 SECOND)
+		if(prob(10))
 			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
-			Paralyse(5)
+			AdjustSleeping(10)
 
-	if(shock_stage == 150)
-		me_emote("can no longer stand, collapsing!")
-		Stun(10)
-		Weaken(20)
+	if(prob(15) && message)
+		to_chat(src, message)
 
-	if(shock_stage >= 150)
-		Stun(10)
-		Weaken(20)
+/mob/living/carbon/human/proc/knockdown_by_pain()
+	if(crawling || traumatic_shock <= TRAUMATIC_SHOCK_CRITICAL)
+		return
+	SetCrawling(TRUE)
+	drop_from_inventory(l_hand)
+	drop_from_inventory(r_hand)
 
 /mob/living/carbon/human/proc/handle_heart_beat()
 
 	if(pulse == PULSE_NONE) return
 
-	if(pulse == PULSE_2FAST || shock_stage >= 10 || isspaceturf(get_turf(src)))
+	if(pulse == PULSE_2FAST || traumatic_shock >= TRAUMATIC_SHOCK_INTENSE || isspaceturf(get_turf(src)))
 
 		var/temp = (5 - pulse)/2
 
@@ -1269,7 +1275,7 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_nutrition()
 	. = ..()
-	if(nutrition > NUTRITION_LEVEL_WELL_FED)
+	if(nutrition > NUTRITION_LEVEL_FAT)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else

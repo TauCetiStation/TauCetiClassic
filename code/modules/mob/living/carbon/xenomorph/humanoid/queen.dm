@@ -21,7 +21,8 @@
 						/obj/effect/proc_holder/spell/no_target/resin,
 						/obj/effect/proc_holder/spell/no_target/lay_egg,
 						/obj/effect/proc_holder/spell/targeted/screech,
-						/obj/effect/proc_holder/spell/no_target/air_plant)
+						/obj/effect/proc_holder/spell/no_target/air_plant,
+						/obj/effect/proc_holder/spell/no_target/xeno_turret)
 
 
 /mob/living/carbon/xenomorph/humanoid/queen/atom_init()

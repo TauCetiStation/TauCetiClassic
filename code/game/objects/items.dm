@@ -476,6 +476,12 @@
 				if( !(slot_flags & SLOT_FLAGS_MASK) )
 					return 0
 				return 1
+			if(SLOT_NECK)
+				if(H.neck)
+					return FALSE
+				if(!(slot_flags & SLOT_FLAGS_NECK) )
+					return FALSE
+				return TRUE
 			if(SLOT_BACK)
 				if(H.back)
 					return 0
@@ -677,7 +683,7 @@
 				if(C.mouth)
 					return FALSE
 				return TRUE
-			if(SLOT_NECK)
+			if(SLOT_IAN_NECK)
 				if(C.neck)
 					return FALSE
 				if(istype(src, /obj/item/weapon/handcuffs))
@@ -846,6 +852,7 @@
 	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
 	M.log_combat(user, "eyestabbed with [name]")
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 
 	add_fingerprint(user)
 	if(M != user)
@@ -934,7 +941,7 @@
 	blood_overlay = blood
 
 /obj/item/proc/showoff(mob/user)
-	user.visible_message("[user] holds up [src]. <a HREF=?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
+	user.visible_message("[user] holds up [src]. <a href=byond://?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"

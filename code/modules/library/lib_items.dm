@@ -38,7 +38,7 @@
 		if(!newname)
 			return
 		else
-			name = ("bookcase ([sanitize(newname)])")
+			name = ("[initial(name)] ([sanitize(newname)])")
 	else
 		..()
 
@@ -86,6 +86,81 @@
 		icon_state = "book-[contents.len]"
 	else
 		icon_state = "book-5"
+
+/obj/structure/bookcase/shelf
+	name = "shelf"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shelf1-0"
+	anchored = TRUE
+	density = FALSE
+	opacity = 0
+
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
+	var/obj/item/placedItem
+	var/list/canBePlaced = list(
+		/obj/item/globe = list(5, -6),
+		/obj/item/newtons_pendulum = list(5, -8),
+		/obj/item/woodenclock = list(5, -5),
+		/obj/item/bust = list(4, -6)
+		)
+
+/obj/structure/bookcase/shelf/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/bookcase/shelf/atom_init_late()
+	var/turf/T = get_turf(src)
+	for(var/obj/item/I in T.contents)
+		if(is_type_in_list(I, canBePlaced))
+			I.forceMove(src)
+			placedItem = I
+			update_icon()
+			break
+
+/obj/structure/bookcase/shelf/attackby(obj/O, mob/user)
+	if(!placedItem && is_type_in_list(O, canBePlaced))
+		user.drop_from_inventory(O, src)
+		placedItem = O
+		update_icon()
+	else
+		..()
+
+/obj/structure/bookcase/shelf/attack_hand(mob/user)
+	if(contents.len)
+		var/obj/item/choice = input("Which item would you like to remove from the shelf?") in contents
+		if(choice)
+			if(usr.incapacitated() || !Adjacent(usr))
+				return
+			if(ishuman(user))
+				if(!user.get_active_hand())
+					user.put_in_hands(choice)
+			else
+				choice.loc = get_turf(src)
+
+			if(choice == placedItem)
+				placedItem = null
+			update_icon()
+
+/obj/structure/bookcase/shelf/update_icon()
+	cut_overlays()
+
+	var/shelficonstate = "shelf1"
+	if(placedItem)
+		shelficonstate = "shelf2"
+		placedItem.update_icon()
+
+		var/list/placedoffsets = canBePlaced[get_type_in_list(placedItem, canBePlaced)]
+		placedItem.pixel_x = placedoffsets[1]
+		placedItem.pixel_y = placedoffsets[2]
+
+		add_overlay(placedItem)
+
+	if((placedItem ? contents.len - 1 : contents.len) < 5)
+		icon_state = "[shelficonstate]-[placedItem ? contents.len - 1 : contents.len]"
+	else
+		icon_state = "[shelficonstate]-5"
 
 
 /obj/structure/bookcase/manuals/medical

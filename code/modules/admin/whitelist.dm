@@ -18,13 +18,13 @@
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
-<th text-align:center;'>CKEY <a class='small' href='?src=\ref[src];whitelist=add_user'>\[+\]</a></th>
+<th text-align:center;'>CKEY <a class='small' href='byond://?src=\ref[src];whitelist=add_user'>\[+\]</a></th>
 </tr>
 "}
 
 	for(var/user_ckey in role_whitelist)
 		output += "<tr>"
-		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];whitelist=showroles;ckey=[user_ckey]'>[user_ckey]</a></td>"
+		output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];whitelist=showroles;ckey=[user_ckey]'>[user_ckey]</a></td>"
 		output += "</tr>"
 
 	output += {"
@@ -55,7 +55,7 @@
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
 <th style='width:125px;text-align:center;'>[uppertext(user_ckey)]</th>
-<th style='width:125px;'>ROLE <a class='small' href='?src=\ref[src];whitelist=add_role;ckey=[user_ckey]'>\[+\]</a></th><th style='width:100%;'>REASON</th><th style='width:125px;'>ADDED BY</th><th style='width:125px;'>EDITED BY</th>
+<th style='width:125px;'>ROLE <a class='small' href='byond://?src=\ref[src];whitelist=add_role;ckey=[user_ckey]'>\[+\]</a></th><th style='width:100%;'>REASON</th><th style='width:125px;'>ADDED BY</th><th style='width:125px;'>EDITED BY</th>
 </tr>
 "}
 
@@ -63,11 +63,11 @@
 		output += "<tr>"
 
 		var/ban = role_whitelist[user_ckey][role]["ban"] ? "Banned" : "Available"
-		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_ban;ckey=[user_ckey];role=[role]'>[ban]</a></td>"
+		output += "<td><a class='small' href='byond://?src=\ref[src];whitelist=edit_ban;ckey=[user_ckey];role=[role]'>[ban]</a></td>"
 		output += "<td>[role]</td>"
 
 		var/reason = sanitize(role_whitelist[user_ckey][role]["reason"])
-		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_reason;ckey=[user_ckey];role=[role]'>(E)</a> [reason]</td>"
+		output += "<td><a class='small' href='byond://?src=\ref[src];whitelist=edit_reason;ckey=[user_ckey];role=[role]'>(E)</a> [reason]</td>"
 		var/addby = role_whitelist[user_ckey][role]["addby"]
 		var/addtm = role_whitelist[user_ckey][role]["addtm"]
 		output += "<td>[addby]<br>[addtm]</td>"
@@ -305,6 +305,9 @@
 	role = lowertext(role)
 
 	if(role == "human")
+		return TRUE
+
+	if(role == "pluvian")
 		return TRUE
 
 	switch(role) //We don't use separate whitelist for languages, lets transform lang name to their race name.
