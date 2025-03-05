@@ -1925,3 +1925,4 @@ Owl & Griffin toys
 	icon_state = "foamblade"
 	item_state = "arm_blade"
 	w_class = SIZE_TINY
+	var/cooldown = FALSE
