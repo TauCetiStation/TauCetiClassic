@@ -89,7 +89,9 @@
 		"WK.png" = 'icons/obj/chess/board_WK.png',
 		"WP.png" = 'icons/obj/chess/board_WP.png',
 		"CB.png" = 'icons/obj/chess/board_CB.png',
-		"CR.png" = 'icons/obj/chess/board_CR.png',
+		"CW.png" = 'icons/obj/chess/board_CW.png',
+		"KB.png" = 'icons/obj/chess/board_CB_king.png',
+		"KW.png" = 'icons/obj/chess/board_CW_king.png',
 		"none.png" = 'icons/obj/chess/board_none.png'
 	)
 
