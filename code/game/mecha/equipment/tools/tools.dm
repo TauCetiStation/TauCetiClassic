@@ -1208,7 +1208,6 @@
 			var/obj/mecha/M = loc
 			to_chat(M.occupant, "<span class='danger'>[src] is depleted and disintegrates!</span>")
 			playsound(M, 'sound/effects/sparks4.ogg', 50, 1)
-			playsound(get_turf(M), 'sound/effects/EMPShield.ogg', 50, 1)
 		qdel(src)
 	return 0 // Allow EMP effects if the module is depleted or inactive
 
