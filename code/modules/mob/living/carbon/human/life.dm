@@ -114,7 +114,7 @@
 				var/pressure_loss = S.damage * 0.1
 				pressure_adjustment_coefficient = pressure_loss
 
-	if(HAS_TRAIT(src, TRAIT_AIRBAG_PROTECTION))
+	if(HAS_TRAIT(src, TRAIT_RESISTLOWPRESSURE))
 		pressure_adjustment_coefficient = 0
 
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.

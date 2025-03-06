@@ -338,6 +338,7 @@
 	//Account for massive pressure differences
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
+			if(!HAS_TRAIT(src, TRAIT_RESISTHIGHPRESSURE))
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 			pressure_alert = 2
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
@@ -348,7 +349,7 @@
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 				pressure_alert = -2
-			if(HAS_TRAIT(src, TRAIT_RESISTCOLD))
+			if(!HAS_TRAIT(src, TRAIT_RESISTCOLD))
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 				pressure_alert = -2
 			else

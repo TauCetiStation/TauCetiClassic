@@ -198,7 +198,6 @@
 #define TRAIT_WILLPOWER_IMPLANT   "willpower_implant"
 #define TRAIT_CAN_LEAP            "can_leap"
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
-#define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_MANSUS_TOUCHED      "mansus_touched"
 #define TRAIT_HERETIC_SLURRING    "heretic_slurring"
@@ -210,6 +209,8 @@
 #define TRAIT_RESISTCOLD          "resist_cold"
 #define TRAIT_RESISTHEAT          "resist_heat"
 #define TRAIT_NOFIRE              "nonflammable"
+#define TRAIT_RESISTLOWPRESSURE   "lowpressure_protection"
+#define TRAIT_RESISTHIGHPRESSURE  "highpressure_protection"
 #define TRAIT_PACIFISM            "pacifism"
 
 /// The mob is holy and resistance to heretic magic
