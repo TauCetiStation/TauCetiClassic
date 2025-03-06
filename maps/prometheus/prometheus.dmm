@@ -47274,8 +47274,7 @@
 /obj/machinery/door/airlock/external{
 	dock_tag = "sci_dock";
 	locked = 1;
-	name = "Research Outpost Dock Airlock";
-	req_access = list(65)
+	name = "Research Mining Dock Airlock"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
