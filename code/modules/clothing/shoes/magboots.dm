@@ -45,5 +45,5 @@
 	desc = "Advanced magnetic boots designed for Chief Engineers. They do not slow down the user when activated."
 	icon_state = "advmag0"
 	magboot_state = "advmag"
-	slowdown_off = 0
+	slowdown_off = -1
 	origin_tech = "materials=5;magnets=5;engineering=5"
