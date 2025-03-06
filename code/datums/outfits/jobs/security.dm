@@ -63,7 +63,7 @@
 	suit = /obj/item/clothing/suit/storage/det_suit
 	belt = /obj/item/device/pda/detective
 	gloves = /obj/item/clothing/gloves/black
-	shoes = /obj/item/clothing/shoes/brown
+	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/det_hat
 	l_ear = /obj/item/device/radio/headset/headset_sec
 	glasses = /obj/item/clothing/glasses/sunglasses/noir

@@ -61,6 +61,7 @@
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "detective"
+	item_state_world = "detective_world"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
@@ -70,30 +71,22 @@
 	desc = "Style suit for those who want vengence."
 	icon_state = "max"
 	item_state = "max"
+	item_state_world = "max_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/det/black
 	name = "black hard-worn suit"
 	icon_state = "detective2"
 	item_state = "detective2"
+	item_state_world = "detective2_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/det/slob
-	name = "white hard-worn suit with grey pants"
+	name = "white hard-worn suit with black pants"
 	icon_state = "polsuit"
 	item_state = "polsuit"
+	item_state_world = "polsuit_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-
-/obj/item/clothing/under/det/slob/verb/rollup()
-	set name = "Roll suit sleeves"
-	set category = "Object"
-	set src in usr
-
-	if(usr.incapacitated())
-		return
-
-	item_state = item_state == "polsuit" ? "polsuit_rolled" : "polsuit"
-	update_inv_mob()
 
 //Forensics
 /obj/item/clothing/under/rank/forensic_technician
