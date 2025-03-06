@@ -39,3 +39,11 @@
 
 /obj/item/clothing/shoes/magboots/negates_gravity()
 	return flags & NOSLIP
+
+/obj/item/clothing/shoes/magboots/ce
+	name = "advanced magboots"
+	desc = "Advanced magnetic boots designed for Chief Engineers. They do not slow down the user when activated."
+	icon_state = "advmag0"
+	magboot_state = "advmag"
+	slowdown_off = 0
+	origin_tech = "materials=5;magnets=5;engineering=5"

@@ -209,12 +209,6 @@
 	icon_state = "advmag0"
 	magboot_state = "advmag"
 
-/obj/item/clothing/shoes/ce
-	name = "advanced magboots CE"
-	desc = "A pair of advanced magboots designed specifically for CE."
-	icon_state = "advmag1"
-	flags = NOSLIP | AIR_FLOW_PROTECT
-
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
