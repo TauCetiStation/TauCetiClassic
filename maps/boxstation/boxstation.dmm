@@ -80786,10 +80786,6 @@
 	},
 /area/station/medical/cmo)
 "oDy" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/simulated/floor/grass,
