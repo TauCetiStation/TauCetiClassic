@@ -34231,8 +34231,9 @@
 	},
 /area/station/hallway/primary/aft)
 "biA" = (
-/obj/item/weapon/bedsheet/psych,
-/obj/structure/stool/bed/psych,
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "biB" = (
@@ -55521,7 +55522,16 @@
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
-/turf/simulated/floor/carpet/green,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/fullgrass,
+/mob/living/carbon/monkey{
+	name = "Stas"
+	},
+/turf/simulated/floor/grass,
 /area/station/medical/psych)
 "bWt" = (
 /turf/simulated/floor/plating/airless/catwalk,
@@ -55993,13 +56003,9 @@
 	},
 /area/station/hallway/primary/central)
 "bXS" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/green,
+/obj/structure/window/thin/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+/turf/simulated/floor/grass,
 /area/station/medical/psych)
 "bXU" = (
 /obj/effect/decal/turf_decal{
@@ -67120,10 +67126,8 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cEm" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/item/weapon/flora/random,
+/obj/structure/stool/bed/psych,
+/obj/item/weapon/bedsheet/psych,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cEn" = (
@@ -68332,6 +68336,7 @@
 	name = "Danis"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/station/medical/psych)
 "cIG" = (
@@ -70392,8 +70397,8 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "dJV" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-/turf/simulated/floor/grass,
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/wood,
 /area/station/medical/psych)
 "dJZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -71393,21 +71398,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
-"eQy" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/psycho,
-/obj/item/toy/plushie/tuxedo_cat,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/syringe,
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
 "eQF" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -76463,11 +76453,16 @@
 	dir = 8;
 	network = list("SS13","Medical")
 	},
-/mob/living/carbon/monkey{
-	name = "Stas"
-	},
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/grass,
+/obj/structure/closet/secure_closet/psycho,
+/obj/item/weapon/reagent_containers/syringe,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/toy/plushie/tuxedo_cat,
+/turf/simulated/floor/wood,
 /area/station/medical/psych)
 "jYz" = (
 /obj/structure/window/fulltile{
@@ -80786,9 +80781,8 @@
 	},
 /area/station/medical/cmo)
 "oDy" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/grass,
+/obj/structure/closet,
+/turf/simulated/floor/wood,
 /area/station/medical/psych)
 "oEO" = (
 /obj/machinery/camera{
@@ -84336,13 +84330,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/medical/medbreak)
-"sBK" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/closet,
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
 "sCb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -129158,8 +129145,8 @@ aXy
 bJm
 bXS
 cEm
-sBK
-eQy
+bEi
+bEi
 bMF
 bBy
 cLu
