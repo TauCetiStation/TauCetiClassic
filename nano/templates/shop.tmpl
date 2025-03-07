@@ -6,20 +6,21 @@
         <div class="itemContent">
 			{{if data.mode != 1}} {{:helper.link('Return', 'arrowreturn-1-w', {'choice' : "Return"}, null, 'fixedLeft')}} {{/if}}
 		</div>
-		<div class="floatRight">
-			<span class="average">{{:data.stationTime}}&emsp;{{:data.securityLevel}}</span>
+		<div class="itemLabelNarrow">
+			<b>Station Time</b>:
+		</div>
+		<div class="itemContent">
+			<span class="average" style="display:flex">{{:data.stationTime}}&emsp;[ {{:data.securityLevel}} ]</span>
 		</div>
 	</div>
 	<br>
 	{{if data.mode == 1}} <!-- Online Shop -->
-        <div class="item">
-            <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
-			{{if data.no_cargonauts}}
-				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
-			{{/if}}
-			<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
-			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
-        </div>
+		<center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
+		{{if data.no_cargonauts}}
+			<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+		{{/if}}
+		<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
+		{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
 		<div class="item">
 			<table class="shop" style="width: 100%;"><tbody>
 			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
@@ -43,31 +44,27 @@
 			<tr><td><center><H4>Нет новинок</H4></center></td></tr>
         {{/for}}
 		</tbody></table></center>
+		<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
+		{{:helper.link('Добавить новый запрос', 'plusthick', {'choice' : "Shop_Add_Order_or_Offer"}, null, 'fixedLeftWider')}}<br>
 		<div class="item">
-			<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
-			{{:helper.link('Добавить новый запрос', 'plusthick', {'choice' : "Shop_Add_Order_or_Offer"}, null, 'fixedLeftWider')}}<br>
-			<div class="item">
-				{{for data.orders_and_offers}}
-					{{if value}}
-						<div class="fxdLft">
-						<table class="shop"><tbody>
-							<tr><th colspan="4" class="cargo"><B>Имя: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
-							<tr><td><SMALL><I>{{:value.description}} | {{:value.time}}</I></SMALL></td></tr>
-						</tbody></table>
-						</div>
-					{{/if}}
-				{{/for}}
-			</div>
-        </div>
+			{{for data.orders_and_offers}}
+				{{if value}}
+					<div class="fxdLft">
+					<table class="shop"><tbody>
+						<tr><th colspan="4" class="cargo"><B>Имя: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
+						<tr><td><SMALL><I>{{:value.description}} | {{:value.time}}</I></SMALL></td></tr>
+					</tbody></table>
+					</div>
+				{{/if}}
+			{{/for}}
+		</div>
 	{{else data.mode == 11}} <!-- Online Shop Item -->
-        <div class="item">
-            <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
-			{{if data.no_cargonauts}}
-				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
-			{{/if}}
-			<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
-			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
-        </div>
+        <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
+		{{if data.no_cargonauts}}
+			<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+		{{/if}}
+		<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
+		{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
 		<div class="item">
 			<table class="shop" style="width: 100%;"><tbody>
 			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
@@ -101,14 +98,12 @@
 		</tbody></table></center>
 
 	{{else data.mode == 12}} <!-- Online Shop Cart -->
-		<div class="item">
-            <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
-			{{if data.no_cargonauts}}
-				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
-			{{/if}}
-			<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
-			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
-        </div>
+        <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
+		{{if data.no_cargonauts}}
+			<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+		{{/if}}
+		<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
+		{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
 		<center><table class="shop" style="width: 100%;"><tbody>
 		<tr><th colspan="5" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
 		{{for data.shopping_cart}}
