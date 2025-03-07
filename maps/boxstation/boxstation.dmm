@@ -27968,20 +27968,27 @@
 /turf/environment/space,
 /area/station/rnd/mixing)
 "aXy" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 5;
+	pixel_x = -2
 	},
-/obj/structure/closet/secure_closet/psycho,
-/obj/item/toy/plushie/tuxedo_cat,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/syringe,
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac{
+	pixel_y = 2;
+	pixel_x = 9
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_y = -5
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_y = -5;
+	pixel_x = -10
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/cmo)
 "aXz" = (
 /obj/machinery/door_control{
 	id = "qm_warehouse";
@@ -55511,10 +55518,9 @@
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/medbay)
 "bWr" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
-/obj/structure/closet,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "bWt" = (
@@ -70385,6 +70391,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"dJV" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+/turf/simulated/floor/grass,
+/area/station/medical/psych)
 "dJZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -71383,6 +71393,21 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
+"eQy" = (
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/psycho,
+/obj/item/toy/plushie/tuxedo_cat,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/syringe,
+/turf/simulated/floor/carpet/green,
+/area/station/medical/psych)
 "eQF" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -71601,28 +71626,6 @@
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
-"fcP" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac{
-	pixel_y = 2;
-	pixel_x = 9
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_y = -5;
-	pixel_x = -10
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_y = -5
-	},
-/obj/item/weapon/storage/fancy/donut_box{
-	pixel_y = 5;
-	pixel_x = -2
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/station/medical/cmo)
 "fec" = (
 /obj/machinery/autolathe,
 /turf/simulated/floor{
@@ -72562,10 +72565,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"geN" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-/turf/simulated/floor/grass,
-/area/station/medical/psych)
 "gfa" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,3"
@@ -84344,6 +84343,13 @@
 	icon_state = "cafeteria"
 	},
 /area/station/medical/medbreak)
+"sBK" = (
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/closet,
+/turf/simulated/floor/carpet/green,
+/area/station/medical/psych)
 "sCb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -128900,7 +128906,7 @@ oCb
 oBb
 nhb
 bJm
-bEi
+bWr
 biA
 bEi
 cJn
@@ -129155,12 +129161,12 @@ pCb
 pBb
 pzb
 pyb
-bKW
+aXy
 bJm
 bXS
 cEm
-bWr
-aXy
+sBK
+eQy
 bMF
 bBy
 cLu
@@ -129412,10 +129418,10 @@ bJm
 bJm
 bJm
 bJm
-fcP
+bJm
 bJm
 cIF
-geN
+dJV
 oDy
 jYw
 bMF
