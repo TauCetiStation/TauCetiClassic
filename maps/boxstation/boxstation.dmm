@@ -55525,13 +55525,18 @@
 /obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/fullgrass,
-/mob/living/carbon/monkey{
-	name = "Semyon"
-	},
 /obj/machinery/door/window/southright{
 	name = "Bar Door";
 	req_one_access = list(64);
 	dir = 8
+	},
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
+/mob/living/carbon/monkey/punpun{
+	name = "Sigmund";
+	pet_monkey_names = list("Gregory","Friedrieh","Karl","Abraham","Gordon","Hans","William");
+	desc = "Над его именем думали больше, чем над концептом его вольера."
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/psych)
@@ -56006,7 +56011,8 @@
 /area/station/hallway/primary/central)
 "bXS" = (
 /obj/structure/window/thin/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+/obj/structure/stool/bed/psych,
+/obj/item/weapon/bedsheet/psych,
 /turf/simulated/floor/grass,
 /area/station/medical/psych)
 "bXU" = (
@@ -68334,11 +68340,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cIF" = (
-/mob/living/carbon/monkey{
-	name = "Gleb"
-	},
-/obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/thin/reinforced,
+/obj/effect/overlay/palmtree_r{
+	pixel_y = 8
+	},
+/obj/structure/flora/ausbushes/brflowers,
 /turf/simulated/floor/grass,
 /area/station/medical/psych)
 "cIG" = (
@@ -68435,6 +68441,7 @@
 	dir = 1
 	},
 /obj/machinery/light/smart,
+/obj/effect/overlay/palmtree_r,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cJo" = (
