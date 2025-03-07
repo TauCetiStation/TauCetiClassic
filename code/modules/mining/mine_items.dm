@@ -509,7 +509,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				var/datum/gas_mixture/blast_turf_environment = blast_turf.return_air()
 				var/pressure = blast_turf_environment.return_pressure()
 
-				if (pressure < 50)
+				if (pressure < 50 && istype(target, /turf/simulated/mineral))
 					explosion(location, 0, 10, 4)
 				else
 					explosion(location, 0, 0, 4)
