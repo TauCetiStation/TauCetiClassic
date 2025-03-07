@@ -81491,9 +81491,6 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/structure/stool/bed/chair/office/light{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
