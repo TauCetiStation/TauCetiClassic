@@ -54847,6 +54847,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bUz" = (
@@ -55132,7 +55135,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/carpet/green,
+/turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bVA" = (
 /obj/machinery/disposal,
@@ -55519,17 +55522,16 @@
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/medbay)
 "bWr" = (
-/obj/machinery/alarm{
-	pixel_y = 24
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/fullgrass,
 /mob/living/carbon/monkey{
-	name = "Stas"
+	name = "Semyon"
+	},
+/obj/machinery/door/window/southright{
+	name = "Bar Door";
+	req_one_access = list(64);
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/psych)
@@ -68333,7 +68335,7 @@
 /area/station/civilian/library)
 "cIF" = (
 /mob/living/carbon/monkey{
-	name = "Danis"
+	name = "Gleb"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/thin/reinforced,
