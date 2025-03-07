@@ -68441,7 +68441,6 @@
 	dir = 1
 	},
 /obj/machinery/light/smart,
-/obj/effect/overlay/palmtree_r,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cJo" = (
