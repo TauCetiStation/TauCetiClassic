@@ -680,7 +680,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	damtype = BURN
 	hitsound = list('sound/weapons/sear.ogg')
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
-	fire_delay = 0
+	fire_delay = 4
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -713,7 +713,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
-	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
 	if(emagged)
