@@ -482,7 +482,7 @@
 
 /obj/item/clothing/suit/space/rig/proc/enable_magpulse(mob/user)
 		flags |= NOSLIP | AIR_FLOW_PROTECT
-		slowdown += boots.slowdown_off
+		slowdown += 1
 		magpulse = TRUE
 		to_chat(user, "You enable \the [src] the mag-pulse traction system.")
 

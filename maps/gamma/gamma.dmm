@@ -12584,7 +12584,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/item/clothing/suit/space/rig/engineering/chief,
-/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots/ce,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor{
