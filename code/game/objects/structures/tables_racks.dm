@@ -479,14 +479,40 @@
 /obj/structure/table/woodentable/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
-	canSmoothWith = list(/obj/structure/table/woodentable/fancy, /obj/structure/table/woodentable/fancy/black)
+	icon = 'icons/obj/smooth_structures/fancy_table_red.dmi'
+	canSmoothWith = list(/obj/structure/table/woodentable/fancy,
+		/obj/structure/table/woodentable/fancy/black,
+		/obj/structure/table/woodentable/fancy/blue,
+		/obj/structure/table/woodentable/fancy/cyan,
+		/obj/structure/table/woodentable/fancy/green,
+		/obj/structure/table/woodentable/fancy/orange,
+		/obj/structure/table/woodentable/fancy/purple)
 	parts = /obj/item/weapon/table_parts/wood/fancy
 	flipable = FALSE
 
 /obj/structure/table/woodentable/fancy/black
 	icon = 'icons/obj/smooth_structures/fancy_black_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood/fancy/black
+
+/obj/structure/table/woodentable/fancy/blue
+	icon = 'icons/obj/smooth_structures/fancy_table_blue.dmi'
+	parts = /obj/item/weapon/table_parts/wood/fancy/blue
+
+/obj/structure/table/woodentable/fancy/cyan
+	icon = 'icons/obj/smooth_structures/fancy_table_cyan.dmi'
+	parts = /obj/item/weapon/table_parts/wood/fancy/cyan
+
+/obj/structure/table/woodentable/fancy/green
+	icon = 'icons/obj/smooth_structures/fancy_table_green.dmi'
+	parts = /obj/item/weapon/table_parts/wood/fancy/green
+
+/obj/structure/table/woodentable/fancy/orange
+	icon = 'icons/obj/smooth_structures/fancy_table_orange.dmi'
+	parts = /obj/item/weapon/table_parts/wood/fancy/orange
+
+/obj/structure/table/woodentable/fancy/purple
+	icon = 'icons/obj/smooth_structures/fancy_table_purple.dmi'
+	parts = /obj/item/weapon/table_parts/wood/fancy/purple
 
 /*
  * Reinforced tables
