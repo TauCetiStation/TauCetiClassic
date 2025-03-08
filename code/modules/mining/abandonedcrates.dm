@@ -56,7 +56,7 @@
 	return TRUE
 
 /obj/structure/closet/crate/secure/loot/proc/won()
-	var/loot_quality = 2 * Game.grid_mines/Game.grid_blanks
+	var/loot_quality = 2 * Game.get_difficulty()
 	if(prob(loot_quality * 100))
 		SpawnGoodLoot()
 	else

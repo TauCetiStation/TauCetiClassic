@@ -109,8 +109,8 @@
 	return
 
 /obj/machinery/sleeper/deconstruct(disassembled)
-	for(var/atom/movable/A as anything in src)
-		A.forceMove(loc)
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
 	..()
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
@@ -154,9 +154,9 @@
 		if(EXPLODE_LIGHT)
 			if(prob(75))
 				return
-	for(var/atom/movable/A as anything in src)
-		A.loc = src.loc
-		ex_act(severity)
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
 	qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
@@ -198,8 +198,8 @@
 	open_machine()
 
 /obj/machinery/sleeper/Destroy()
-	var/turf/T = loc
-	T.contents += contents
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
 	return ..()
 
 /obj/machinery/sleeper/verb/remove_beaker()
