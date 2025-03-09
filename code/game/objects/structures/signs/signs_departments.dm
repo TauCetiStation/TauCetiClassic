@@ -76,7 +76,7 @@
 /obj/structure/sign/departments/medbay/old
 	icon_state = "bluecross4"
 
-/obj/structure/sign/departments/medbay/lifestar //
+/obj/structure/sign/departments/medbay/lifestar
 	name = "LIFESTAR"
 	desc = "The Star of Life is a blue, six-pointed star, outlined with a white border which features the rod of Asclepius in the center"
 	icon_state = "lifestar"
