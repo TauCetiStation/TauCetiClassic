@@ -43657,6 +43657,10 @@
 	pixel_x = -10;
 	pixel_y = 6
 	},
+/obj/item/jar/candy{
+	pixel_x = 12;
+	pixel_y = 10
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bzo" = (
@@ -76740,7 +76744,12 @@
 	pixel_x = -27
 	},
 /obj/item/weapon/stickers{
-	pixel_y = 16
+	pixel_y = 16;
+	pixel_x = 5
+	},
+/obj/item/jar/cookie{
+	pixel_y = 18;
+	pixel_x = -7
 	},
 /turf/simulated/floor{
 	dir = 10;
