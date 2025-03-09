@@ -391,6 +391,8 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_SHOES
 
+	valid_accessory_slots = list("soles")
+
 /obj/item/clothing/shoes/play_unique_footstep_sound()
 	..()
 	if(wet)
