@@ -844,7 +844,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(species.gender_tail_icons && gender == FEMALE)
 				tail_gender_appendix = "_fem"
 
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
+			var/image/tail_s = image("icon" = 'icons/mob/human_races/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 			if(BP.status & ORGAN_DEAD)

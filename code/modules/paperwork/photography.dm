@@ -210,7 +210,7 @@
 			continue
 		var/icon/part = icon(BP.icon, BP.icon_state, A.dir)
 		if(H.species.flags[HAS_SKIN_COLOR])
-			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin/255, H.g_skin/255, H.b_skin/255)
+			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin, H.g_skin, H.b_skin)
 		else
 			var/datum/skin_tone/T = global.skin_tones_by_name[H.s_tone]
 			var/list/rgb_tone = rgb2num(T.hex)

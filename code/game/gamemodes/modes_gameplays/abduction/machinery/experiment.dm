@@ -66,7 +66,7 @@
 
 	//Tail
 	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/mob/species/tail.dmi', "icon_state" = H.species.tail)
+		temp = new/icon("icon" = 'icons/mob/human_races/tail.dmi', "icon_state" = H.species.tail)
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone

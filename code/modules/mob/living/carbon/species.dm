@@ -1999,7 +1999,7 @@
 
 /datum/species/homunculus/on_gain(mob/living/carbon/human/H)
 	..()
-	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
+	var/list/tail_list = icon_states('icons/mob/human_races/tail.dmi') - "vox_armalis"
 	tail_list += ""
 	H.random_tail_holder = pick(tail_list)
 
