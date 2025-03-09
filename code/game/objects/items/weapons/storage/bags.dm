@@ -167,7 +167,7 @@
 		UnregisterSignal(bounded, COMSIG_MOVABLE_MOVED)
 		bounded = null
 
-/obj/item/weapon/storage/bag/ore/proc/find_ore(var/turf/F)
+/obj/item/weapon/storage/bag/ore/proc/find_ore(turf/F)
 	for(var/obj/item/weapon/ore in F.contents)
 		return TRUE
 	return FALSE
@@ -187,8 +187,8 @@
 	if(B)
 		for(var/obj/item/weapon/ore/O in F.contents)
 			O.Move(B)
-		for(var/obj/item/weapon/ore/O in src.contents)
-			src.remove_from_storage(O, B)
+		for(var/obj/item/weapon/ore/O in contents)
+			remove_from_storage(O, B)
 		to_chat(user, "<span class='notice'>You put ore into the box.</span>")
 		playsound(B, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
 	else if(collection_mode)
@@ -294,7 +294,7 @@
 		UnregisterSignal(bounded, COMSIG_MOVABLE_MOVED)
 		bounded = null
 
-/obj/item/weapon/storage/bag/holding/proc/find_ore(var/turf/F)
+/obj/item/weapon/storage/bag/holding/proc/find_ore(turf/F)
 	for(var/obj/item/weapon/ore in F.contents)
 		return TRUE
 	return FALSE
@@ -314,8 +314,8 @@
 	if(B)
 		for(var/obj/item/weapon/ore/O in F.contents)
 			O.Move(B)
-		for(var/obj/item/weapon/ore/O in src.contents)
-			src.remove_from_storage(O, B)
+		for(var/obj/item/weapon/ore/O in contents)
+			remove_from_storage(O, B)
 		to_chat(user, "<span class='notice'>You put ore into the box.</span>")
 		playsound(B, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
 	else if(collection_mode)
