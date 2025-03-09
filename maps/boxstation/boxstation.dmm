@@ -43657,6 +43657,10 @@
 	pixel_x = -10;
 	pixel_y = 6
 	},
+/obj/item/jar/candy{
+	pixel_x = 12;
+	pixel_y = 10
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bzo" = (
@@ -60760,8 +60764,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cnt" = (
-/obj/machinery/space_heater,
 /obj/item/weapon/screwdriver,
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -76737,7 +76744,12 @@
 	pixel_x = -27
 	},
 /obj/item/weapon/stickers{
+	pixel_x = 5;
 	pixel_y = 16
+	},
+/obj/item/jar/cookie{
+	pixel_x = -7;
+	pixel_y = 18
 	},
 /turf/simulated/floor{
 	dir = 10;

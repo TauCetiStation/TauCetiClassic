@@ -175,7 +175,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/radio/uplink/atom_init()
 	. = ..()
 	hidden_uplink = new(src)
-	hidden_uplink.uplink_type = "nuclear"
+	hidden_uplink.uplink_type = UPLINK_TYPE_NUCLEAR
 
 	hidden_uplink.extra_purchasable += create_uplink_sales(rand(2,3), "Discounts", TRUE, get_uplink_items(hidden_uplink))
 

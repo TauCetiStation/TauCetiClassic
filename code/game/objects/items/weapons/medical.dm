@@ -4,6 +4,7 @@
 	amount_per_transfer_from_this = 10
 	icon = 'icons/obj/items.dmi'
 	icon_state = "combat_hypo"
+	item_state = "combat_hypo"
 	volume = 60
 	list_reagents = list("stimulants" = 5, "bicaridine" = 15, "oxycodone" = 15, "kelotane" = 15, "doctorsdelight" = 10)
 /obj/item/weapon/reagent_containers/hypospray/combat/atom_init()
@@ -184,7 +185,7 @@
 	icon_state = "pain_hypo"
 	volume = 100
 	list_reagents = list("tramadol" = 25, "paracetamol" = 25, "oxycodone" = 25, "inaprovaline" = 25)
-	
+
 /obj/item/weapon/reagent_containers/hypospray/combat/bone
 	name = "Bone-repair hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will mend the bones."
