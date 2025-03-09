@@ -139,7 +139,7 @@
 /obj/item/weapon/extraction_pack/dealer/atom_init(mapload, ...)
 	. = ..()
 	hidden_uplink = new(src)
-	hidden_uplink.uplink_type = "dealer"
+	hidden_uplink.uplink_type = UPLINK_TYPE_DEALER
 
 /obj/item/weapon/extraction_pack/dealer/attack_self(mob/user)
 	if(hidden_uplink)
