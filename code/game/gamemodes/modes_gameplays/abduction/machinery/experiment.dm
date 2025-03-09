@@ -38,7 +38,8 @@
 	if(state_open && !panel_open)
 		..(target)
 
-// todo: rewrite without blends, use organ/external/get_icon, currently it doesn't work properly
+// todo: rewrite without blends, use organ/external/get_icon
+// currently this doesn't work properly and can cause lags
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H) 
 	var/icon/preview_icon = null
 

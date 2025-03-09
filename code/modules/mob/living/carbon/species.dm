@@ -456,11 +456,13 @@
 
 /datum/species/unathi
 	name = UNATHI
-	icobase = 'icons/mob/human_races/r_lizard.dmi'
-	deform = 'icons/mob/human_races/r_def_lizard.dmi'
+	icobase = 'icons/mob/human_races/r_unathi.dmi'
+	deform = 'icons/mob/human_races/r_def_unathi.dmi'
 	gender_tail_icons = TRUE
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+	eyes_colorable_layer = "unathi_colorable"
+	eyes_static_layer = "unathi"
 	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws

@@ -171,11 +171,11 @@
 	if (HUSK in mutations)
 		icon = 'icons/mob/human_races/husk.dmi'
 		icon_state = body_zone
-	else if (status & ORGAN_MUTATED)
-		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 	else
-		icon = species.icobase
+		if ((status & ORGAN_MUTATED) && species.deform)
+			icon = species.deform
+		else
+			icon = species.icobase
 		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 
 	if(status & ORGAN_DEAD)
