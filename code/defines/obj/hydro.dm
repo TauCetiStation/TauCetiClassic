@@ -1700,22 +1700,16 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/bigtree/attack_self(mob/user)
-
 	if(!user)
 		return
 
 	to_chat(user, "<span class='notice'>Вы начинаете сажать бобы, чтобы вырастить огромное дерево...</span>")
 
 	if(do_after(user, 30, target = user))
-
 		new /obj/structure/flora/tree/jungle(user.loc)
-
 		qdel(src)
-
 		to_chat(user, "<span class='notice'>Вы посадили бобы, и из них выросло дерево!</span>")
-
 	else
-
 		to_chat(user, "<span class='warning'>Вы прервали посадку бобов.</span>")
 
 /obj/item/weapon/grown/sunflower
