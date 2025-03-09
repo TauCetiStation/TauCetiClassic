@@ -253,4 +253,4 @@
 				radius = 7,
 				hallucination_duration = 50 SECONDS
 			)
-			carbon_view.eye_blind(5 SECONDS)
+			carbon_view.eye_blind = (5 SECONDS)
