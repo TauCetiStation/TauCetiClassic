@@ -10,6 +10,7 @@
  *		Snap pops
  *		Water flower
  *		Plushies
+ *		Arm Blade
  */
 
 
@@ -2021,3 +2022,13 @@ Owl & Griffin toys
 		playsound(user, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	return ..()
+//////////////////////////////////////////////////////
+//				Foamblade							//
+//////////////////////////////////////////////////////
+/obj/item/toy/foamblade
+	name = "foam blade"
+	desc = "It says \"Sternside Changs #1 fan\" on it."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamblade"
+	item_state = "arm_blade"
+	w_class = SIZE_TINY

@@ -25,6 +25,7 @@
 						/obj/item/toy/spinningtoy						= 2,
 						/obj/random/randomfigure						= 30,
 						/obj/item/toy/eight_ball						= 2,
+						/obj/item/toy/foamblade							= 5,
 						/obj/item/toy/eight_ball/conch					= 2,
 						/obj/item/toy/carpplushie						= 8,
 						/obj/random/plushie								= 30,
