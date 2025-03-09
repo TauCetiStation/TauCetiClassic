@@ -112,6 +112,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	spawn(16)
 		if(stack.get_amount() >= amount)
 			to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
+			playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			for(var/M in loaded_materials)
 				if(stack.type == loaded_materials[M].sheet_type)
 					loaded_materials[M].amount += amount * stack.perunit
@@ -161,7 +162,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	busy = TRUE
-	flick("circuit_imprinter_ani", src)
 	use_power(power)
 
 	for(var/M in D.materials)
@@ -184,7 +184,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		var/obj/O = A
 		O.origin_tech = null
 	busy = FALSE
+	flick("circuit_imprinter_ani", src)
 	queue -= RNDD
+	playsound(src, 'sound/machines/circuit_imprinter.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	if(queue.len)
 		produce_design(queue[1])
@@ -201,3 +203,4 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			var/sheet_amount = min(available_num_sheets, amount)
 			sheet.set_amount(sheet_amount)
 			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_amount * loaded_materials[sheet_type].sheet_size)
+			playsound(src, 'sound/machines/material_eject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
