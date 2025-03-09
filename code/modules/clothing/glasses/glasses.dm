@@ -25,11 +25,13 @@
 			if(active)
 				active = FALSE
 				icon_state = off_state
+				item_state_world = "[off_state]_w"
 				vision_flags = 0
 				lighting_alpha = null
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
 				active = TRUE
+				item_state_world = initial(item_state_world)
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
 				lighting_alpha = initial(lighting_alpha)
@@ -44,6 +46,7 @@
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
 	item_state = "glasses"
+	item_state_world = "meson_w"
 	origin_tech = "magnets=2;engineering=2"
 	toggleable = TRUE
 	sightglassesmod = "meson"
@@ -63,6 +66,7 @@
 	name = "science goggles"
 	desc = "The goggles do nothing!"
 	icon_state = "purple"
+	item_state_world = "purple_w"
 	item_state = "glasses"
 	toggleable = TRUE
 	sightglassesmod = "sci"
@@ -183,6 +187,7 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
+	item_state_world = "welding-g_w"
 	flash_protection = FLASHES_FULL_PROTECTION
 	flash_protection_slots = list(SLOT_GLASSES)
 	var/up = 0
@@ -224,6 +229,7 @@
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
+	item_state_world = "rwelding-g_w"
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
@@ -377,8 +383,9 @@
 	darkness_view = 7
 	toggleable = TRUE
 	sightglassesmod = "nvg"
+	item_state_world = "meson_w"
 	active = TRUE
-	off_state = "healthhudnight"
+	off_state = "degoggles"
 	hud_types = list(DATA_HUD_MEDICAL_ADV)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
@@ -399,6 +406,7 @@
 /obj/item/clothing/glasses/meson/gar
 	name = "gar meson scanner"
 	icon_state = "garm"
+	item_state_world = "garm"
 	item_state = "garm"
 	toggleable = FALSE
 	item_action_types = null
