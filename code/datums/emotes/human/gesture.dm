@@ -96,6 +96,7 @@
 	message_type = SHOWMSG_VISUAL
 
 	sound = list('sound/misc/clap_1.ogg', 'sound/misc/clap_2.ogg', 'sound/misc/clap_3.ogg', 'sound/misc/clap_4.ogg')
+	soundless_for_mute = FALSE
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
@@ -129,6 +130,7 @@
 	message_type = SHOWMSG_VISUAL
 
 	sound = 'sound/misc/salute.ogg'
+	soundless_for_mute = FALSE
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
