@@ -432,8 +432,11 @@
 				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P, 30)
 		else
-			var/obj/item/weapon/reagent_containers/food/condiment/P = new(loc)
-			reagents.trans_to(P, 50)
+			if(text2num(href_list["bulk"]))
+				to_chat(usr, "Sorry! \"CondiMaster Neo\" DRM forbids mass production. Please contact our support to upgrade your license.")
+			else
+				var/obj/item/weapon/reagent_containers/food/condiment/P = new(loc)
+				reagents.trans_to(P, 50)
 
 	else if(href_list["changepill"])
 		var/dat = "<B>Choose pill colour</B><BR>"
@@ -676,7 +679,7 @@
 		else
 			dat += "<LI><span class='disabled'>Create pack</span> (10 units max)<BR>"
 	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1;bulk=0'>Create bottle</A> ([condi ? "50" : "30"] units max)"
-	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1;bulk=1'>Create multiple bottles</A> ([condi ? "50" : "30"] units max)"
+	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1;bulk=1'>Create multiple bottles</A> (30 units max)"
 	dat += "</UL>"
 
 	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
