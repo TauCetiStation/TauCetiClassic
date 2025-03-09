@@ -1349,6 +1349,22 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("odysseus_main", "odysseus_peri")
 
+/datum/technology/mech_clarke
+	name = "Clarke"
+	desc = "Clarke"
+	id = "mech_clarke"
+	tech_type = RESEARCH_ROBOTICS
+
+	x = 0.8
+	y = 0.3
+	icon = "clarke"
+
+	required_technologies = list("basic_robotics", "mech_odysseus", "mech_ripley")
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list("clarke_main", "clarke_peri")
+
 /datum/technology/advanced_robotics
 	name = "Advanced Robotics"
 	desc = "Advanced Robotics"

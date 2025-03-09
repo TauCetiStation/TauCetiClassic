@@ -10,6 +10,7 @@
 						prob(45);/obj/effect/decal/mecha_wreckage/ripley,\
 						prob(45);/obj/effect/decal/mecha_wreckage/ripley/firefighter,\
 						prob(45);/obj/effect/decal/mecha_wreckage/odysseus,\
+						prob(15);/obj/mecha/working/clarke,\
 						prob(7);/obj/effect/decal/mecha_wreckage/durand,\
 						prob(7);/obj/effect/decal/mecha_wreckage/gygax,\
 						prob(4);/obj/effect/decal/mecha_wreckage/durand/vindicator,\

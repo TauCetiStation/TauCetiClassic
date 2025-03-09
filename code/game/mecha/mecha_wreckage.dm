@@ -317,3 +317,29 @@
 			/obj/item/stack/sheet/plasteel
 			)
 		)
+/obj/effect/decal/mecha_wreckage/clarke
+	name = "Clarke wreckage"
+	icon_state = "clarke-broken"
+	salvage = list(
+		"welder" = list(
+			/obj/item/mecha_parts/part/clarke_torso,
+			/obj/item/mecha_parts/part/clarke_head,
+			/obj/item/mecha_parts/part/clarke_left_arm,
+			/obj/item/mecha_parts/part/clarke_right_arm,
+			/obj/item/mecha_parts/part/clarke_left_leg,
+			/obj/item/mecha_parts/part/clarke_right_leg,
+			/obj/item/stack/sheet/metal,
+			/obj/item/stack/sheet/plasteel
+			),
+		"wirecutter" = list(
+			/obj/item/stack/cable_coil,
+			/obj/item/weapon/circuitboard/mecha/clarke/peripherals,
+			/obj/item/weapon/circuitboard/mecha/clarke/main,
+			/obj/item/stack/rods
+			),
+		"crowbar" = list(
+			/obj/item/mecha_parts/chassis/clarke,
+			/obj/item/stack/sheet/metal,
+			/obj/item/stack/sheet/plasteel
+			)
+		)

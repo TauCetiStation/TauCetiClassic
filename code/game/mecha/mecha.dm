@@ -32,6 +32,8 @@
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
 	var/maxhealth = 300
+	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/turnsound = 'sound/mecha/mechturn.ogg'
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list(BRUTE=0.8,BURN=1.2,BULLET=0.9,LASER=1,ENERGY=1,BOMB=1)
@@ -300,7 +302,7 @@
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
 	use_power(step_energy_drain)
-	playsound(src, 'sound/mecha/Mech_Rotation.ogg', VOL_EFFECTS_MASTER, 40)
+	playsound(src, turnsound, VOL_EFFECTS_MASTER, 40)
 	return TRUE
 
 /obj/mecha/proc/mechstep(direction)
@@ -310,7 +312,7 @@
 	if(strafe)
 		set_dir(current_dir)
 	if(result)
-		playsound(src, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 40)
+		playsound(src, stepsound, VOL_EFFECTS_MASTER, 40)
 		use_power(step_energy_drain)
 		direction = get_dir(src, old_loc)
 		if(ISDIAGONALDIR(direction))
@@ -320,7 +322,7 @@
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
 	if(result)
-		playsound(src, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 40)
+		playsound(src, stepsound, VOL_EFFECTS_MASTER, 40)
 		use_power(step_energy_drain)
 	return result
 
