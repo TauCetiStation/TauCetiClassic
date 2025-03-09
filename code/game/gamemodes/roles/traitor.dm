@@ -19,7 +19,7 @@
 /datum/role/traitor/New()
 	..()
 	if(give_uplink)
-		AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
+		AddComponent(/datum/component/gamemode/syndicate, telecrystals, UPLINK_TYPE_TRAITOR)
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
