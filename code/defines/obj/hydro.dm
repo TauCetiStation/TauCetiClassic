@@ -924,6 +924,25 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	mutatelist = list(/obj/item/seeds/bigtree)
+
+/obj/item/seeds/bigtree
+	name = "pack big tree"
+	desc = "It's a damn huge tree."
+	icon_state = "seed-bungopit"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	species = "towercap"
+	plantname = "Big Tree"
+	product_type = /obj/item/weapon/grown/bigtree
+	lifespan = 80
+	endurance = 50
+	maturation = 15
+	production = 1
+	yield = 5
+	potency = 1
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
 
 /obj/item/seeds/glowshroom
 	name = "pack of glowshroom mycelium"
@@ -1665,6 +1684,33 @@
 		return FALSE
 	return ..()
 
+/obj/item/weapon/grown/bigtree
+	name = "seeds big tree"
+	desc = "Бобы для огромного дерева"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "bungopit"
+	force = 5
+	throwforce = 5
+	w_class = SIZE_SMALL
+	throw_speed = 3
+	throw_range = 3
+	plant_type = 2
+	origin_tech = "materials=1"
+	seed_type = /obj/item/seeds/bigtree
+	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+
+/obj/item/weapon/grown/bigtree/attack_self(mob/user)
+	if(!user)
+		return
+
+	to_chat(user, "<span class='notice'>Вы начинаете сажать бобы, чтобы вырастить огромное дерево...</span>")
+
+	if(do_after(user, 30, target = user))
+		new /obj/structure/flora/tree/jungle(user.loc)
+		qdel(src)
+		to_chat(user, "<span class='notice'>Вы посадили бобы, и из них выросло дерево!</span>")
+	else
+		to_chat(user, "<span class='warning'>Вы прервали посадку бобов.</span>")
 
 /obj/item/weapon/grown/sunflower
 	name = "sunflower"
