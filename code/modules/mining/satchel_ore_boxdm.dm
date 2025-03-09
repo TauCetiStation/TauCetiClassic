@@ -17,14 +17,11 @@
 
 	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
-		user.SetNextMove(CLICK_CD_INTERACT)
-
 		var/have_ore = FALSE
-		if(locate(/obj/item/weapon/ore) in S.contents)
-			have_ore = TRUE
-
+		user.SetNextMove(CLICK_CD_INTERACT)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
+			have_ore = TRUE
 		if(have_ore)
 			to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
 			playsound(src, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)

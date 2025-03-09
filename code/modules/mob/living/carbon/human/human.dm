@@ -2263,17 +2263,6 @@
 		update_inv_slot(SLOT_GLOVES)
 		germ_level = 0
 
-/mob/living/carbon/human/pickup_ore()
-	var/turf/simulated/floor/F = get_turf(src)
-	for(var/obj/item/weapon/storage/bag/B in list(l_store , r_store, l_hand, r_hand, belt, s_store))
-		if(istype(B, /obj/item/weapon/storage/bag/ore) || istype(B, /obj/item/weapon/storage/bag/holding))
-			if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
-				continue
-			F.attackby(B, src)
-			if(istype(pulling, /obj/structure/ore_box) && B.storage_space_used())
-				var/obj/structure/ore_box/O = pulling
-				O.attackby(B, src)
-			break
 
 /mob/living/carbon/human/proc/randomize_appearance()
 	gender = pick(MALE, FEMALE)

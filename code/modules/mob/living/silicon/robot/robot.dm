@@ -1199,15 +1199,3 @@
 /mob/living/silicon/robot/crawl()
 	toggle_all_components()
 	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
-
-/mob/living/silicon/robot/pickup_ore()
-	var/turf/simulated/floor/F = get_turf(src)
-	if(istype(module, /obj/item/weapon/robot_module/miner))
-		for(var/obj/item/weapon/storage/bag/ore/B in module.modules)
-			if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
-				continue
-			F.attackby(B, src)
-			if(istype(pulling, /obj/structure/ore_box) && B.storage_space_used())
-				var/obj/structure/ore_box/O = pulling
-				O.attackby(B, src)
-			break

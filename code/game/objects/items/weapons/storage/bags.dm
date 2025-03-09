@@ -145,7 +145,79 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
 	w_class = SIZE_SMALL
 	max_storage_space = 100
+	var/mob/bounded
 	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
+
+/obj/item/weapon/storage/bag/ore/equipped(mob/living/carbon/human/user)
+	. = ..()
+	if(bounded == user)
+		return
+	for(var/obj/item/weapon/storage/bag/holding/B in list(user.l_store , user.r_store, user.belt, user.s_store))
+		if(B.bounded)
+			UnregisterSignal(B.bounded, COMSIG_MOVABLE_MOVED)
+			break
+	if(bounded)
+		UnregisterSignal(bounded, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ore))
+	bounded = user
+
+/obj/item/weapon/storage/bag/ore/dropped()
+	. = ..()
+	if(bounded)
+		UnregisterSignal(bounded, COMSIG_MOVABLE_MOVED)
+		bounded = null
+
+/obj/item/weapon/storage/bag/ore/proc/find_ore(var/turf/F)
+	for(var/obj/item/weapon/ore in F.contents)
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/storage/bag/ore/proc/pickup_ore(mob/living/user)
+	SIGNAL_HANDLER
+
+	var/obj/structure/ore_box/B
+	var/turf/F = get_turf(user)
+
+	if(!isturf(F))
+		return
+	if(!find_ore(F))
+		return
+	if(istype(user.pulling, /obj/structure/ore_box))
+		B = user.pulling
+	if(B)
+		for(var/obj/item/weapon/ore/O in F.contents)
+			O.Move(B)
+		for(var/obj/item/weapon/ore/O in src.contents)
+			src.remove_from_storage(O, B)
+		to_chat(user, "<span class='notice'>You put ore into the box.</span>")
+		playsound(B, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
+	else if(collection_mode)
+		for(var/obj/item/weapon/ore/O in F.contents)
+			O.attackby(src, user)
+			return
+
+// -----------------------------
+//          Robot Mining Satchel
+// -----------------------------
+
+/obj/item/weapon/storage/bag/ore/borg
+	name = "Robot Mining Satchel"
+	desc = "This little bugger can be used to store and transport ores."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "satchel"
+	w_class = SIZE_SMALL
+	max_storage_space = 200
+	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
+
+/obj/item/weapon/storage/bag/ore/borg/atom_init()
+	. = ..()
+	RegisterSignal(usr, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ore))
+	bounded = usr
+
+/obj/item/weapon/storage/bag/ore/borg/Destroy()
+	. = ..()
+	if(bounded)
+		UnregisterSignal(bounded, COMSIG_MOVABLE_MOVED)
 
 // -----------------------------
 //          Plant bag
@@ -200,7 +272,56 @@
 	max_storage_space = 300
 	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
+	var/mob/bounded
 	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal, /obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/grown, /obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/food/snacks/monkeycube, /obj/item/organ, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill, /obj/item/weapon/storage/pill_bottle)
+
+/obj/item/weapon/storage/bag/holding/equipped(mob/living/carbon/human/user)
+	. = ..()
+	if(bounded == user)
+		return
+	for(var/obj/item/weapon/storage/bag/ore/B in list(user.l_store , user.r_store, user.belt, user.s_store))
+		if(B.bounded)
+			UnregisterSignal(B.bounded, COMSIG_MOVABLE_MOVED)
+			break
+	if(bounded)
+		UnregisterSignal(bounded, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ore))
+	bounded = user
+
+/obj/item/weapon/storage/bag/holding/dropped()
+	. = ..()
+	if(bounded)
+		UnregisterSignal(bounded, COMSIG_MOVABLE_MOVED)
+		bounded = null
+
+/obj/item/weapon/storage/bag/holding/proc/find_ore(var/turf/F)
+	for(var/obj/item/weapon/ore in F.contents)
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/storage/bag/holding/proc/pickup_ore(mob/living/user)
+	SIGNAL_HANDLER
+
+	var/obj/structure/ore_box/B
+	var/turf/F = get_turf(user)
+
+	if(!isturf(F))
+		return
+	if(!find_ore(F))
+		return
+	if(istype(user.pulling, /obj/structure/ore_box))
+		B = user.pulling
+	if(B)
+		for(var/obj/item/weapon/ore/O in F.contents)
+			O.Move(B)
+		for(var/obj/item/weapon/ore/O in src.contents)
+			src.remove_from_storage(O, B)
+		to_chat(user, "<span class='notice'>You put ore into the box.</span>")
+		playsound(B, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
+	else if(collection_mode)
+		for(var/obj/item/weapon/ore/O in F.contents)
+			O.attackby(src, user)
+			return
 
 // -----------------------------
 //        Sheet Snatcher
