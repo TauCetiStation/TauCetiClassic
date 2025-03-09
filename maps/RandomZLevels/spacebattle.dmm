@@ -5406,7 +5406,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "nY" = (
-/obj/structure/sign/departments/medbay{
+/obj/structure/sign/departments/medbay/lifestar{
 	pixel_x = 32
 	},
 /obj/effect/decal/turf_decal/orange{
