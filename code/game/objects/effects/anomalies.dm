@@ -223,6 +223,38 @@
 		T.ex_act(ex_act_force)
 	return
 
+/////////////////////
+
+/obj/effect/anomaly/gas
+    name = "gas anomaly"
+    icon_state = "pyro"
+    density = TRUE
+    var/boing = 0
+    var/list/gas_types = list(/obj/item/weapon/grenade/chem_grenade/teargas, /obj/item/weapon/grenade/chem_grenade/acid, /obj/item/weapon/grenade/chem_grenade/drugs)
+    var/selected_gas
+    var/release_interval = 5 SECONDS
+
+/obj/effect/anomaly/gas/atom_init()
+    . = ..()
+    select_gas_type()
+    START_PROCESSING(SSobj, src)
+
+/obj/effect/anomaly/gas/Destroy()
+    STOP_PROCESSING(SSobj, src)
+    return ..()
+
+/obj/effect/anomaly/gas/process()
+    if(!QDELETED(src))
+        release_gas()
+        sleep(release_interval)
+
+/obj/effect/anomaly/gas/proc/select_gas_type()
+    selected_gas = pick(gas_types)
+
+/obj/effect/anomaly/gas/proc/release_gas()
+    var/obj/item/weapon/grenade/gas_grenade = new selected_gas(src.loc)
+    gas_grenade.prime()
+
 /////// CULT ///////
 /obj/effect/anomaly/bluespace/cult_portal
 	name = "ужасающий портал"
