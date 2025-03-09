@@ -10,6 +10,7 @@
 	internal_damage_threshold = 35
 	deflect_chance = 15
 	step_energy_drain = 6
+	mech_type = MECH_TYPE_ODYSSEUS
 
 /obj/mecha/medical/odysseus/atom_init()
 	. = ..()
