@@ -99,7 +99,7 @@
 				playsound(src, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER)
 				melee_can_hit = FALSE
 				VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
-			else if(target.uses_integrity)
+			else if(target.uses_integrity && (target.resistance_flags & CAN_BE_HIT))
 				occupant_message("You hit [target].")
 				visible_message("<font color='red'><b>[name] hits [target]</b></font>")
 				do_attack_animation(target, null, TRUE, "smash")
