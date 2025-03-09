@@ -18,7 +18,7 @@
 
 /datum/role/operative/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, TC_num, "nuclear")
+	AddComponent(/datum/component/gamemode/syndicate, TC_num, UPLINK_TYPE_NUCLEAR)
 
 /datum/role/operative/proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)

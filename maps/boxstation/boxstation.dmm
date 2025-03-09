@@ -9161,6 +9161,7 @@
 "aoY" = (
 /obj/structure/table,
 /obj/item/weapon/dice/d20,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoZ" = (
@@ -9186,7 +9187,9 @@
 /area/station/security/detectives_office)
 "apc" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/machinery/computer/prison{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "apd" = (
@@ -60757,8 +60760,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cnt" = (
-/obj/machinery/space_heater,
 /obj/item/weapon/screwdriver,
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},

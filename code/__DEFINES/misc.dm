@@ -423,3 +423,8 @@
 #define QUOTA_NEUTRAL 0
 #define QUOTA_WANTED 1
 #define QUOTA_UNWANTED 2
+
+#define UPLINK_TYPE_TRAITOR     "uplink_traitor"
+#define UPLINK_TYPE_NUCLEAR     "uplink_nuclear"
+#define UPLINK_TYPE_DEALER      "uplink_dealer"
+#define UPLINK_TYPE_REVOLUTION  "uplink_revolution"
