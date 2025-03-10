@@ -25,7 +25,7 @@
 			if(active)
 				active = FALSE
 				icon_state = off_state
-				item_state_world = "[off_state]_w" //
+				item_state_world = "[off_state]_w"
 				vision_flags = 0
 				lighting_alpha = null
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
