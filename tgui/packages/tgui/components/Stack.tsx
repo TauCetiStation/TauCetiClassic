@@ -19,19 +19,25 @@ export const Stack = (props: StackProps) => {
       className={classes([
         'Stack',
         fill && 'Stack--fill',
-        vertical ? 'Stack--vertical' : 'Stack--horizontal',
+        vertical
+          ? 'Stack--vertical'
+          : 'Stack--horizontal',
         className,
       ])}
       direction={vertical ? 'column' : 'row'}
-      {...rest}
-    />
+      {...rest} />
   );
 };
 
 const StackItem = (props: FlexProps) => {
   const { className, ...rest } = props;
   return (
-    <Flex.Item className={classes(['Stack__item', className])} {...rest} />
+    <Flex.Item
+      className={classes([
+        'Stack__item',
+        className,
+      ])}
+      {...rest} />
   );
 };
 
@@ -51,8 +57,7 @@ const StackDivider = (props: StackDividerProps) => {
         hidden && 'Stack__divider--hidden',
         className,
       ])}
-      {...rest}
-    />
+      {...rest} />
   );
 };
 

@@ -137,9 +137,6 @@
 
 	message = accent_sounds(message, speaking)
 
-	if(HAS_TRAIT(src, TRAIT_DYSLALIA))
-		message = message_with_dyslalia(message)
-
 	if(!speaking)
 		switch(species.name)
 			if(PODMAN)

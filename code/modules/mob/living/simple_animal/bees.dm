@@ -1,3 +1,4 @@
+
 /mob/living/simple_animal/bee
 	name = "bees"
 	icon = 'icons/obj/apiary_bees_etc.dmi'
@@ -10,7 +11,7 @@
 	var/turf/target_turf
 	var/mob/target_mob
 	var/obj/machinery/apiary/parent
-	pass_flags = PASSMOB | PASSTABLE
+	pass_flags = PASSTABLE
 	turns_per_move = 6
 	w_class = SIZE_MINUSCULE
 	var/obj/machinery/hydroponics/my_hydrotray

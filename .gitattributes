@@ -8,5 +8,3 @@
 
 # line endings
 *.dm text eol=lf
-*.dmi merge=merge-dmi
-*.dmm merge=merge-dmm

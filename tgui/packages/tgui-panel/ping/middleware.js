@@ -4,10 +4,11 @@
  * @license MIT
  */
 
+import { sendMessage } from 'tgui/backend';
 import { pingFail, pingSuccess } from './actions';
 import { PING_INTERVAL, PING_QUEUE_SIZE, PING_TIMEOUT } from './constants';
 
-export const pingMiddleware = (store) => {
+export const pingMiddleware = store => {
   let initialized = false;
   let index = 0;
   let interval;
@@ -22,10 +23,13 @@ export const pingMiddleware = (store) => {
     }
     const ping = { index, sentAt: Date.now() };
     pings[index] = ping;
-    Byond.sendMessage('ping', { index });
+    sendMessage({
+      type: 'ping',
+      payload: { index },
+    });
     index = (index + 1) % PING_QUEUE_SIZE;
   };
-  return (next) => (action) => {
+  return next => action => {
     const { type, payload } = action;
     if (!initialized) {
       initialized = true;

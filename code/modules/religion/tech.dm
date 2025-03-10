@@ -72,14 +72,15 @@
 		var/datum/aspect/A = R.aspects[aspect_type::name]
 		A.power += 1
 	else
-		var/list/L = list()
-		L[aspect_type] = 1
-		R.add_aspects(L)
+		R.add_aspects(list(aspect_type = 1))
 
 	var/datum/religion_tech/upgrade_aspect/tech = new
 	tech.id = id + "+"
 	tech.aspect_type = aspect_type
-	tech.info = new /datum/building_agent/tech/aspect(info.name, info.icon, info.icon_state)
+	tech.info = new /datum/building_agent/tech/aspect
+	tech.info.name = info.name
+	tech.info.icon = info.icon
+	tech.info.icon_state = info.icon_state
 	tech.calculate_costs(R)
 	R.available_techs += tech
 

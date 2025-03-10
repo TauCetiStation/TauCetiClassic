@@ -54,18 +54,29 @@ const setupApp = () => {
   // Subscribe for state updates
   store.subscribe(renderApp);
 
-  // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  // Dispatch incoming messages
+  window.update = msg => store.dispatch(Byond.parseJson(msg));
+
+  // Process the early update queue
+  while (true) {
+    const msg = window.__updateQueue__.shift();
+    if (!msg) {
+      break;
+    }
+    window.update(msg);
+  }
 
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept(
-      ['./components', './debug', './layouts', './routes'],
-      () => {
-        renderApp();
-      }
-    );
+    module.hot.accept([
+      './components',
+      './debug',
+      './layouts',
+      './routes',
+    ], () => {
+      renderApp();
+    });
   }
 };
 

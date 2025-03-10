@@ -8,7 +8,6 @@
 	icon = 'icons/obj/hacktool.dmi'
 	name = "debugger"
 	icon_state = "hacktool-g"
-	item_state = "hacktool"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	flags = CONDUCT
 	force = 5.0

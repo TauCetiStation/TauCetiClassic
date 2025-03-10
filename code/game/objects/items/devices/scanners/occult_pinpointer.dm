@@ -42,8 +42,12 @@
 /obj/item/weapon/occult_pinpointer/process()
 	if(!active)
 		return
-	if(!target && length(pluvian_wisps))
-		target = pick(pluvian_wisps)
+	if(!target)
+		var/list/wisp_list = list()
+		for(var/mob/living/simple_animal/ancestor_wisp/W in living_list)
+			wisp_list += W
+		target = pick(wisp_list)
+		message_admins("[target]")
 	if(!target)
 		target = locate(target_type)
 	if(!target)

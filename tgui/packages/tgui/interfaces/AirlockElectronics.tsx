@@ -25,7 +25,9 @@ export const AirLockMainSection = (props, context) => {
 
   return (
     <Section title="Main">
-      <NoticeBox info>Last operator: {lastOperator}.</NoticeBox>
+      <NoticeBox info>
+        Last operator: {lastOperator}.
+      </NoticeBox>
       <LabeledList>
         <LabeledList.Item label="Access Required">
           <Button
@@ -42,8 +44,7 @@ export const AirLockMainSection = (props, context) => {
             onClick={() =>
               act('direc_set', {
                 unres_direction: '1',
-              })
-            }
+              })}
           />
           <Button
             icon={unres_direction & 2 ? 'check-square-o' : 'square-o'}
@@ -52,8 +53,7 @@ export const AirLockMainSection = (props, context) => {
             onClick={() =>
               act('direc_set', {
                 unres_direction: '2',
-              })
-            }
+              })}
           />
           <Button
             icon={unres_direction & 4 ? 'check-square-o' : 'square-o'}
@@ -62,8 +62,7 @@ export const AirLockMainSection = (props, context) => {
             onClick={() =>
               act('direc_set', {
                 unres_direction: '4',
-              })
-            }
+              })}
           />
           <Button
             icon={unres_direction & 8 ? 'check-square-o' : 'square-o'}
@@ -72,8 +71,7 @@ export const AirLockMainSection = (props, context) => {
             onClick={() =>
               act('direc_set', {
                 unres_direction: '8',
-              })
-            }
+              })}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Airlock Name">
@@ -84,8 +82,7 @@ export const AirLockMainSection = (props, context) => {
             onChange={(e, value) =>
               act('passedName', {
                 passedName: value,
-              })
-            }
+              })}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -95,21 +92,15 @@ export const AirLockMainSection = (props, context) => {
         accessMod={(ref) =>
           act('set', {
             access: ref,
-          })
-        }
+          })}
         grantAll={() => act('grant_all')}
         denyAll={() => act('clear_all')}
-        grantDep={(ref) =>
-          act('grant_region', {
-            region: ref,
-          })
-        }
-        denyDep={(ref) =>
-          act('deny_region', {
-            region: ref,
-          })
-        }
-      />
+        grantDep={ref => act('grant_region', {
+          region: ref,
+        })}
+        denyDep={ref => act('deny_region', {
+          region: ref,
+        })} />
     </Section>
   );
 };
@@ -117,7 +108,7 @@ export const AirLockMainSection = (props, context) => {
 export const AirlockElectronics = (props, context) => {
   return (
     <Window width={420} height={550}>
-      <Window.Content scrollable>
+      <Window.Content>
         <AirLockMainSection />
       </Window.Content>
     </Window>

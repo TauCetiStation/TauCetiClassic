@@ -44,7 +44,7 @@
 
 /datum/role/rev_leader/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 1, UPLINK_TYPE_REVOLUTION)
+	AddComponent(/datum/component/gamemode/syndicate, 1, "rev")
 
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()

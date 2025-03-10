@@ -1,30 +1,21 @@
 import { round } from 'common/math';
-import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Input,
-  Flex,
-  Icon,
-  LabeledList,
-  ProgressBar,
-  Section,
-  Collapsible,
-  Table,
-  Divider,
-} from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, Input, Flex, Icon, LabeledList, ProgressBar, Section, Collapsible, Table, Divider } from "../components";
+import { Window } from "../layouts";
 import { logger } from '../logging';
 
 export const Stack = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const { amount, recipes } = data;
+  const {
+    amount,
+    recipes,
+  } = data;
 
   return (
     <Window width={400} height={720}>
       <Window.Content scrollable>
-        <Section title={'Amount: ' + amount}>
+        <Section title={"Amount: " + amount}>
           <RecipeList recipes={recipes} />
         </Section>
       </Window.Content>
@@ -35,7 +26,9 @@ export const Stack = (props, context) => {
 const RecipeList = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const { recipes } = props;
+  const {
+    recipes,
+  } = props;
 
   let sortedKeys = Object.keys(recipes).sort();
 
@@ -51,7 +44,7 @@ const RecipeList = (props, context) => {
 
   // let newSortedKeys = nonCategories.concat(categories);
 
-  return sortedKeys.map((title, i) => {
+  return sortedKeys.map(title => {
     // if (title === "--DIVIDER--") {
     //   return (
     //     <Box mt={1} mb={1}>
@@ -62,14 +55,16 @@ const RecipeList = (props, context) => {
     let recipe = recipes[title];
     if (recipe.ref === undefined) {
       return (
-        <Collapsible key={i} ml={1} mb={-0.7} color="label" title={title}>
+        <Collapsible ml={1} mb={-0.7} color="label" title={title}>
           <Box ml={1}>
             <RecipeList recipes={recipe} />
           </Box>
         </Collapsible>
       );
     } else {
-      return <Recipe key={i} title={title} recipe={recipe} />;
+      return (
+        <Recipe title={title} recipe={recipe} />
+      );
     }
   });
 };
@@ -85,12 +80,13 @@ const buildMultiplier = (recipe, amount) => {
 const Multipliers = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const { recipe, maxMultiplier } = props;
-
-  let maxM = Math.min(
+  const {
+    recipe,
     maxMultiplier,
-    Math.floor(recipe.max_res_amount / recipe.res_amount)
-  );
+  } = props;
+
+  let maxM = Math.min(maxMultiplier,
+    Math.floor(recipe.max_res_amount / recipe.res_amount));
 
   let multipliers = [5, 10, 25];
 
@@ -98,32 +94,26 @@ const Multipliers = (props, context) => {
 
   for (let multiplier of multipliers) {
     if (maxM >= multiplier) {
-      finalResult.push(
+      finalResult.push((
         <Button
-          content={multiplier * recipe.res_amount + 'x'}
-          onClick={() =>
-            act('make', {
-              ref: recipe.ref,
-              multiplier: multiplier,
-            })
-          }
-        />
-      );
+          content={multiplier * recipe.res_amount + "x"}
+          onClick={() => act("make", {
+            ref: recipe.ref,
+            multiplier: multiplier,
+          })} />
+      ));
     }
   }
 
   if (multipliers.indexOf(maxM) === -1) {
-    finalResult.push(
+    finalResult.push((
       <Button
-        content={maxM * recipe.res_amount + 'x'}
-        onClick={() =>
-          act('make', {
-            ref: recipe.ref,
-            multiplier: maxM,
-          })
-        }
-      />
-    );
+        content={maxM * recipe.res_amount + "x"}
+        onClick={() => act("make", {
+          ref: recipe.ref,
+          multiplier: maxM,
+        })} />
+    ));
   }
 
   return finalResult;
@@ -132,20 +122,30 @@ const Multipliers = (props, context) => {
 const Recipe = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const { amount } = data;
+  const {
+    amount,
+  } = data;
 
-  const { recipe, title } = props;
+  const {
+    recipe,
+    title,
+  } = props;
 
-  const { res_amount, max_res_amount, req_amount, ref } = recipe;
+  const {
+    res_amount,
+    max_res_amount,
+    req_amount,
+    ref,
+  } = recipe;
 
   let buttonName = title;
-  buttonName += ' (';
-  buttonName += req_amount + ' ';
-  buttonName += 'sheet' + (req_amount > 1 ? 's' : '');
-  buttonName += ')';
+  buttonName += " (";
+  buttonName += req_amount + " ";
+  buttonName += ("sheet" + (req_amount > 1 ? "s" : ""));
+  buttonName += ")";
 
   if (res_amount > 1) {
-    buttonName = res_amount + 'x ' + buttonName;
+    buttonName = res_amount + "x " + buttonName;
   }
 
   let maxMultiplier = buildMultiplier(recipe, amount);
@@ -160,13 +160,10 @@ const Recipe = (props, context) => {
               disabled={!maxMultiplier}
               icon="wrench"
               content={buttonName}
-              onClick={() =>
-                act('make', {
-                  ref: recipe.ref,
-                  multiplier: 1,
-                })
-              }
-            />
+              onClick={() => act("make", {
+                ref: recipe.ref,
+                multiplier: 1,
+              })} />
           </Table.Cell>
           {max_res_amount > 1 && maxMultiplier > 1 && (
             <Table.Cell collapsing>

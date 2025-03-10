@@ -49,7 +49,6 @@
  * optional fancy bool If TRUE, will hide the window titlebar.
  */
 /datum/tgui_window/proc/initialize(
-		strict_mode = FALSE,
 		inline_assets = list(),
 		inline_html = "",
 		fancy = FALSE)
@@ -71,7 +70,6 @@
 		options += "titlebar=1;can_resize=1;"
 	// Generate page html
 	var/html = SStgui.basehtml
-	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 	// Inject inline assets
 	var/inline_assets_str = ""

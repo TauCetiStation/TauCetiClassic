@@ -1,11 +1,10 @@
-import { createPopper, OptionsGeneric } from '@popperjs/core';
-import { Component, findDOMFromVNode, InfernoNode, render } from 'inferno';
-import type * as CSS from 'csstype';
+import { createPopper, OptionsGeneric } from "@popperjs/core";
+import { Component, findDOMfromVNode, InfernoNode, render } from "inferno";
 
 type PopperProps = {
   popperContent: InfernoNode;
   options?: Partial<OptionsGeneric<unknown>>;
-  additionalStyles?: CSS.Properties;
+  additionalStyles?: CSSProperties,
 };
 
 export class Popper extends Component<PopperProps> {
@@ -21,9 +20,12 @@ export class Popper extends Component<PopperProps> {
   }
 
   componentDidMount() {
-    const { additionalStyles, options } = this.props;
+    const {
+      additionalStyles,
+      options,
+    } = this.props;
 
-    this.renderedContent = document.createElement('div');
+    this.renderedContent = document.createElement("div");
     if (additionalStyles) {
       for (const [attribute, value] of Object.entries(additionalStyles)) {
         this.renderedContent.style[attribute] = value;
@@ -43,9 +45,9 @@ export class Popper extends Component<PopperProps> {
         // This code is copied from `findDOMNode` in inferno-extras.
         // Because this component is written in TypeScript, we will know
         // immediately if this internal variable is removed.
-        findDOMFromVNode(this.$LI, true),
+        findDOMfromVNode(this.$LI, true),
         this.renderedContent,
-        options
+        options,
       );
     });
   }

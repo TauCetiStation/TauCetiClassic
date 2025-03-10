@@ -249,15 +249,6 @@
 	density = FALSE
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
-/obj/item/weapon/storage/secure/safe/try_open(mob/user)
-	if(locked)
-		if(user.in_interaction_vicinity(src))
-			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
-		return FALSE
-	else
-		return ..()
-
-
 /obj/item/weapon/storage/secure/safe/atom_init()
 	. = ..()
 	new /obj/item/weapon/paper(src)

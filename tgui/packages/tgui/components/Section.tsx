@@ -60,6 +60,7 @@ export class Section extends Component<SectionProps> {
       <div
         className={classes([
           'Section',
+          Byond.IS_LTE_IE8 && 'Section--iefix',
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',
@@ -69,8 +70,12 @@ export class Section extends Component<SectionProps> {
         {...computeBoxProps(rest)}>
         {hasTitle && (
           <div className="Section__title">
-            <span className="Section__titleText">{title}</span>
-            <div className="Section__buttons">{buttons}</div>
+            <span className="Section__titleText">
+              {title}
+            </span>
+            <div className="Section__buttons">
+              {buttons}
+            </div>
           </div>
         )}
         <div className="Section__rest">

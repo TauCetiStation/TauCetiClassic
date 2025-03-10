@@ -66,7 +66,6 @@
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	icon_state = "healthhud"
-	item_state_world = "healthud_w"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_MEDICAL)
 
@@ -82,7 +81,6 @@
 	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
-	item_state_world = "sechud_w"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_SECURITY)
 
@@ -91,7 +89,6 @@
 	desc = "You can see information about mechs and metal friends!"
 	icon_state = "diagnostichud"
 	item_state = "diagnostichud"
-	item_state_world = "diagnostichud_w"
 	origin_tech = "engineering=2;programming=2"
 	toggleable = 1
 	sightglassesmod = "yellow"

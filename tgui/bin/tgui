@@ -67,18 +67,13 @@ task-lint() {
   cd "${base_dir}"
   yarn run tsc
   echo "tgui: type check passed"
-  yarn run eslint packages "${@}"
+  yarn run eslint packages --ext .js,.cjs,.ts,.tsx "${@}"
   echo "tgui: eslint check passed"
 }
 
 task-test() {
   cd "${base_dir}"
   yarn run jest
-}
-
-task-prettier() {
-  cd "${base_dir}"
-  npx prettier --check packages "${@}"
 }
 
 ## Mr. Proper
@@ -163,17 +158,9 @@ fi
 if [[ ${1} == "--ci" ]]; then
   task-clean
   task-install
-  task-prettier
   task-lint
   task-webpack --mode=production
   task-validate-build
-  exit 0
-fi
-
-## Run prettier
-if [[ ${1} == '--prettier' ]]; then
-  shift 1
-  task-prettier --write "${@}"
   exit 0
 fi
 

@@ -195,8 +195,8 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /mob/living/carbon/human/airflow_hit(atom/A)
 	playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER, 25)
-	var/obj/item/clothing/neck/airbag/I = locate() in get_contents()
-	if(I && !I.deployed)
+	var/obj/item/airbag/I = locate() in get_contents()
+	if(I)
 		I.deploy(src)
 		return
 

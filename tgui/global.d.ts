@@ -22,33 +22,31 @@ declare global {
     export default content;
   }
 
-  type TguiMessage = {
-    type: string;
-    payload?: any;
-    [key: string]: any;
-  };
-
   type ByondType = {
-    /**
-     * ID of the Byond window this script is running on.
-     * Can be used as a parameter to winget/winset.
-     */
-    windowId: string;
-
     /**
      * True if javascript is running in BYOND.
      */
     IS_BYOND: boolean;
 
     /**
-     * Version of Trident engine of Internet Explorer. Null if N/A.
+     * True if browser is IE8 or lower.
      */
-    TRIDENT: number | null;
+    IS_LTE_IE8: boolean;
 
     /**
-     * Version of Blink engine of WebView2. Null if N/A.
+     * True if browser is IE9 or lower.
      */
-    BLINK: number | null;
+    IS_LTE_IE9: boolean;
+
+    /**
+     * True if browser is IE10 or lower.
+     */
+    IS_LTE_IE10: boolean;
+
+    /**
+     * True if browser is IE11 or lower.
+     */
+    IS_LTE_IE11: boolean;
 
     /**
      * Makes a BYOND call.
@@ -82,14 +80,14 @@ declare global {
      *
      * Returns a promise with a key-value object containing all properties.
      */
-    winget(id: string | null): Promise<object>;
+    winget(id: string): Promise<object>;
 
     /**
      * Retrieves all properties of the BYOND skin element.
      *
      * Returns a promise with a key-value object containing all properties.
      */
-    winget(id: string | null, propName: '*'): Promise<object>;
+    winget(id: string, propName: '*'): Promise<object>;
 
     /**
      * Retrieves an exactly one property of the BYOND skin element,
@@ -97,7 +95,7 @@ declare global {
      *
      * Returns a promise with the value of that property.
      */
-    winget(id: string | null, propName: string): Promise<any>;
+    winget(id: string, propName: string): Promise<any>;
 
     /**
      * Retrieves multiple properties of the BYOND skin element,
@@ -105,7 +103,7 @@ declare global {
      *
      * Returns a promise with a key-value object containing listed properties.
      */
-    winget(id: string | null, propNames: string[]): Promise<object>;
+    winget(id: string, propNames: string[]): Promise<object>;
 
     /**
      * Assigns properties to BYOND skin elements.
@@ -115,12 +113,12 @@ declare global {
     /**
      * Assigns properties to the BYOND skin element.
      */
-    winset(id: string | null, props: object): void;
+    winset(id: string, props: object): void;
 
     /**
      * Sets a property on the BYOND skin element to a certain value.
      */
-    winset(id: string | null, propName: string, propValue: any): void;
+    winset(id: string, propName: string, propValue: any): void;
 
     /**
      * Parses BYOND JSON.
@@ -128,23 +126,6 @@ declare global {
      * Uses a special encoding to preverse Infinity and NaN.
      */
     parseJson(text: string): any;
-
-    /**
-     * Sends a message to `/datum/tgui_window` which hosts this window instance.
-     */
-    sendMessage(type: string, payload?: any): void;
-    sendMessage(message: TguiMessage): void;
-
-    /**
-     * Subscribe to incoming messages that were sent from `/datum/tgui_window`.
-     */
-    subscribe(listener: (type: string, payload: any) => void): void;
-
-    /**
-     * Subscribe to incoming messages *of some specific type*
-     * that were sent from `/datum/tgui_window`.
-     */
-    subscribeTo(type: string, listener: (payload: any) => void): void;
 
     /**
      * Loads a stylesheet into the document.
@@ -168,19 +149,10 @@ declare global {
      * ID of the Byond window this script is running on.
      * Should be used as a parameter to winget/winset.
      */
+    __windowId__: string;
     Byond: ByondType;
-    __store__: Store<unknown, AnyAction>;
-    __augmentStack__: (store: Store) => StackAugmentor;
-
-    // IE IndexedDB stuff.
-    msIndexedDB: IDBFactory;
-    msIDBTransaction: IDBTransaction;
-
-    // 516 byondstorage API.
-    hubStorage: Storage;
-    domainStorage: Storage;
-    serverStorage: Storage;
   }
+
 }
 
 export {};

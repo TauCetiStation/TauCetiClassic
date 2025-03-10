@@ -29,7 +29,10 @@ export const configureStore = (options = {}) => {
     ...(options.middleware?.post || []),
   ];
   if (process.env.NODE_ENV !== 'production') {
-    middleware.unshift(loggingMiddleware, debugMiddleware, relayMiddleware);
+    middleware.unshift(
+      loggingMiddleware,
+      debugMiddleware,
+      relayMiddleware);
   }
   const enhancer = applyMiddleware(...middleware);
   const store = createStore(reducer, enhancer);
@@ -39,11 +42,12 @@ export const configureStore = (options = {}) => {
   return store;
 };
 
-const loggingMiddleware = (store) => (next) => (action) => {
+const loggingMiddleware = store => next => action => {
   const { type, payload } = action;
   if (type === 'update' || type === 'backend/update') {
     logger.debug('action', { type });
-  } else {
+  }
+  else {
     logger.debug('action', action);
   }
   return next(action);
@@ -53,11 +57,12 @@ const loggingMiddleware = (store) => (next) => (action) => {
  * Creates a function, which can be assigned to window.__augmentStack__
  * to augment reported stack traces with useful data for debugging.
  */
-const createStackAugmentor = (store) => (stack, error) => {
+const createStackAugmentor = store => (stack, error) => {
   if (!error) {
     error = new Error(stack.split('\n')[0]);
     error.stack = stack;
-  } else if (typeof error === 'object' && !error.stack) {
+  }
+  else if (typeof error === 'object' && !error.stack) {
     error.stack = stack;
   }
   logger.log('FatalError:', error);
@@ -65,13 +70,11 @@ const createStackAugmentor = (store) => (stack, error) => {
   const config = state?.backend?.config;
   let augmentedStack = stack;
   augmentedStack += '\nUser Agent: ' + navigator.userAgent;
-  augmentedStack +=
-    '\nState: ' +
-    JSON.stringify({
-      ckey: config?.client?.ckey,
-      interface: config?.interface,
-      window: config?.window,
-    });
+  augmentedStack += '\nState: ' + JSON.stringify({
+    ckey: config?.client?.ckey,
+    interface: config?.interface,
+    window: config?.window,
+  });
   return augmentedStack;
 };
 

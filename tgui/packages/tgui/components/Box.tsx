@@ -5,7 +5,7 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { createVNode, InfernoNode, Inferno } from 'inferno';
+import { createVNode, InfernoNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
 
@@ -65,12 +65,15 @@ export interface BoxProps {
 export const unit = (value: unknown): string | undefined => {
   if (typeof value === 'string') {
     // Transparently convert pixels into rem units
-    if (value.endsWith('px')) {
+    if (value.endsWith('px') && !Byond.IS_LTE_IE8) {
       return parseFloat(value) / 12 + 'rem';
     }
     return value;
   }
   if (typeof value === 'number') {
+    if (Byond.IS_LTE_IE8) {
+      return value * 12 + 'px';
+    }
     return value + 'rem';
   }
 };
@@ -95,7 +98,7 @@ const isColorClass = (str: unknown): boolean => {
   }
 };
 
-const mapRawPropTo = (attrName) => (style, value) => {
+const mapRawPropTo = attrName => (style, value) => {
   if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = value;
   }
@@ -121,7 +124,7 @@ const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
   }
 };
 
-const mapColorPropTo = (attrName) => (style, value) => {
+const mapColorPropTo = attrName => (style, value) => {
   if (isColorCode(value)) {
     style[attrName] = value;
   }
@@ -148,7 +151,8 @@ const styleMapperByPropName = {
   lineHeight: (style, value) => {
     if (typeof value === 'number') {
       style['line-height'] = value;
-    } else if (typeof value === 'string') {
+    }
+    else if (typeof value === 'string') {
       style['line-height'] = unit(value);
     }
   },
@@ -163,26 +167,28 @@ const styleMapperByPropName = {
   preserveWhitespace: mapBooleanPropTo('white-space', 'pre-wrap'),
   // Margins
   m: mapDirectionalUnitPropTo('margin', halfUnit, [
-    'top',
-    'bottom',
-    'left',
-    'right',
+    'top', 'bottom', 'left', 'right',
   ]),
-  mx: mapDirectionalUnitPropTo('margin', halfUnit, ['left', 'right']),
-  my: mapDirectionalUnitPropTo('margin', halfUnit, ['top', 'bottom']),
+  mx: mapDirectionalUnitPropTo('margin', halfUnit, [
+    'left', 'right',
+  ]),
+  my: mapDirectionalUnitPropTo('margin', halfUnit, [
+    'top', 'bottom',
+  ]),
   mt: mapUnitPropTo('margin-top', halfUnit),
   mb: mapUnitPropTo('margin-bottom', halfUnit),
   ml: mapUnitPropTo('margin-left', halfUnit),
   mr: mapUnitPropTo('margin-right', halfUnit),
   // Margins
   p: mapDirectionalUnitPropTo('padding', halfUnit, [
-    'top',
-    'bottom',
-    'left',
-    'right',
+    'top', 'bottom', 'left', 'right',
   ]),
-  px: mapDirectionalUnitPropTo('padding', halfUnit, ['left', 'right']),
-  py: mapDirectionalUnitPropTo('padding', halfUnit, ['top', 'bottom']),
+  px: mapDirectionalUnitPropTo('padding', halfUnit, [
+    'left', 'right',
+  ]),
+  py: mapDirectionalUnitPropTo('padding', halfUnit, [
+    'top', 'bottom',
+  ]),
   pt: mapUnitPropTo('padding-top', halfUnit),
   pb: mapUnitPropTo('padding-bottom', halfUnit),
   pl: mapUnitPropTo('padding-left', halfUnit),
@@ -204,7 +210,7 @@ const styleMapperByPropName = {
 };
 
 export const computeBoxProps = (props: BoxProps) => {
-  const computedProps: Inferno.HTMLAttributes<any> = {};
+  const computedProps: HTMLAttributes<any> = {};
   const computedStyles = {};
   // Compute props
   for (let propName of Object.keys(props)) {
@@ -212,11 +218,16 @@ export const computeBoxProps = (props: BoxProps) => {
       continue;
     }
     // IE8: onclick workaround
+    if (Byond.IS_LTE_IE8 && propName === 'onClick') {
+      computedProps.onclick = props[propName];
+      continue;
+    }
     const propValue = props[propName];
     const mapPropToStyle = styleMapperByPropName[propName];
     if (mapPropToStyle) {
       mapPropToStyle(computedStyles, propValue);
-    } else {
+    }
+    else {
       computedProps[propName] = propValue;
     }
   }
@@ -248,15 +259,19 @@ export const computeBoxClassName = (props: BoxProps) => {
 };
 
 export const Box = (props: BoxProps) => {
-  const { as = 'div', className, children, ...rest } = props;
+  const {
+    as = 'div',
+    className,
+    children,
+    ...rest
+  } = props;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
   }
-  const computedClassName =
-    typeof className === 'string'
-      ? className + ' ' + computeBoxClassName(rest)
-      : computeBoxClassName(rest);
+  const computedClassName = typeof className === 'string'
+    ? className + ' ' + computeBoxClassName(rest)
+    : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
   // Render a wrapper element
   return createVNode(
@@ -265,8 +280,7 @@ export const Box = (props: BoxProps) => {
     computedClassName,
     children,
     ChildFlags.UnknownChildren,
-    computedProps
-  );
+    computedProps);
 };
 
 Box.defaultHooks = pureComponentHooks;

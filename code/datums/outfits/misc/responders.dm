@@ -277,8 +277,7 @@
 		/obj/item/weapon/plastique,
 		/obj/item/weapon/grenade/empgrenade,
 		/obj/item/ammo_box/shotgun/beanbag,
-		/obj/item/weapon/extraction_pack/pirates,
-		/obj/item/clothing/shoes/magboots
+		/obj/item/weapon/extraction_pack/pirates
 	)
 
 	l_pocket = /obj/item/weapon/melee/energy/sword/pirate

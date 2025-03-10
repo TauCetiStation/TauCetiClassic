@@ -343,6 +343,7 @@
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
 	max_storage_space = DEFAULT_BACKPACK_STORAGE + 10
+	slowdown = 0.5
 
 /obj/item/weapon/storage/backpack/dufflebag/marinad
 	name = "marine dufflebag"
@@ -400,3 +401,4 @@
 /obj/item/weapon/storage/backpack/dufflebag/cops
 	name = "NanoTrasen bag"
 	desc = "A large duffel bag for holding extra NanoTrasen gear."
+	slowdown = 0

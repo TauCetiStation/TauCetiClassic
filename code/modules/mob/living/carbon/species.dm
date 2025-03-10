@@ -7,8 +7,6 @@
 
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
-	var/alpha_color_mask = FALSE
-
 	var/damage_mask = TRUE
 	var/eyes_icon = 'icons/mob/human_face.dmi'
 	var/eyes = "eyes"                                    // Icon for eyes.
@@ -16,7 +14,6 @@
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
-	var/list/avaible_wings = list()
 	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
 	var/hud_offset_y = 0                                 // As above, but specifically for the HUD indicator.
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
@@ -1078,8 +1075,6 @@
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
-	alpha_color_mask = TRUE
-
 	language = LANGUAGE_TRINARY
 	unarmed_type = /datum/unarmed_attack/punch
 	race_verbs = list(
@@ -1231,7 +1226,7 @@
 		H.b_hair = 15
 		H.set_light(0)
 		if(BP.ipc_head == "Default")
-			H.h_style = /datum/sprite_accessory/hair/ipc_screen_off::name
+			H.h_style = "IPC off screen"
 		H.update_hair()
 
 /datum/species/abductor
@@ -2207,7 +2202,7 @@
 	flesh_color = "00FF00"
 	icobase = 'icons/mob/human_races/r_moth.dmi'
 	deform = 'icons/mob/human_races/r_moth.dmi'
-	avaible_wings = list("Atlas Wings")
+	tail = "moth_wings"
 	flags = list(
 				NO_BREATHE = TRUE,
 				NO_BLOOD = TRUE,
@@ -2220,6 +2215,7 @@
 				NO_MINORCUTS = TRUE,
 				NO_VOMIT = TRUE,
 				NO_EMOTION = TRUE,
+				HAS_TAIL = TRUE,
 				NO_DNA = TRUE,
 				NO_PAIN = TRUE,
 				NO_GENDERS = TRUE,
@@ -2240,14 +2236,7 @@
 	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
 	H.name = H.real_name
 	RegisterSignal(H, COMSIG_PARENT_ATTACKBY, PROC_REF(try_eat_item))
-	randomise_wings(H)
-	. = ..()
-
-/datum/species/moth/proc/randomise_wings(mob/living/carbon/human/H)
-	if(SSholiday.holidays[NEW_YEAR])
-		H.wing_accessory_name = pick("Royal Wings", "Feathery Wings")
-		return
-	H.wing_accessory_name = pick(avaible_wings)
+	return ..()
 
 /datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_moth_digest(M)

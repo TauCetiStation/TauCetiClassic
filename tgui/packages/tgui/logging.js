@@ -19,24 +19,22 @@ const log = (level, ns, ...args) => {
   }
   // Send important logs to the backend
   if (level >= LEVEL_INFO) {
-    const logEntry =
-      [ns, ...args]
-        .map((value) => {
-          if (typeof value === 'string') {
-            return value;
-          }
-          if (value instanceof Error) {
-            return value.stack || String(value);
-          }
-          return JSON.stringify(value);
-        })
-        .filter((value) => value)
-        .join(' ') +
-      '\nUser Agent: ' +
-      navigator.userAgent;
+    const logEntry = [ns, ...args]
+      .map(value => {
+        if (typeof value === 'string') {
+          return value;
+        }
+        if (value instanceof Error) {
+          return value.stack || String(value);
+        }
+        return JSON.stringify(value);
+      })
+      .filter(value => value)
+      .join(' ')
+      + '\nUser Agent: ' + navigator.userAgent;
     Byond.topic({
       tgui: 1,
-      window_id: Byond.windowId,
+      window_id: window.__windowId__,
       type: 'log',
       ns,
       message: logEntry,
@@ -44,7 +42,7 @@ const log = (level, ns, ...args) => {
   }
 };
 
-export const createLogger = (ns) => {
+export const createLogger = ns => {
   return {
     debug: (...args) => log(LEVEL_DEBUG, ns, ...args),
     log: (...args) => log(LEVEL_LOG, ns, ...args),

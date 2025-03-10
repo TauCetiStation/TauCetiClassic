@@ -501,7 +501,6 @@
 	message_type = SHOWMSG_AUDIO
 
 	age_variations = TRUE
-	soundless_for_mute = FALSE
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS)

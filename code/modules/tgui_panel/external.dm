@@ -19,16 +19,19 @@
 	// Failed to fix, using tgalert as fallback
 	action = tgui_alert(src, "Did that work?",, list("Yes", "No, switch to old ui"))
 	if (action == "No, switch to old ui")
-		winset(src, "legacy_output_selector", "left=output_legacy")
+		winset(src, "output", "on-show=&is-disabled=0&is-visible=1")
+		winset(src, "browseroutput", "is-disabled=1;is-visible=0")
 		log_tgui(src, "Failed to fix.", context = "verb/fix_tgui_panel")
 
 /client/proc/nuke_chat()
 	// Catch all solution (kick the whole thing in the pants)
-	winset(src, "legacy_output_selector", "left=output_legacy")
+	winset(src, "output", "on-show=&is-disabled=0&is-visible=1")
+	winset(src, "browseroutput", "is-disabled=1;is-visible=0")
 	if(!tgui_panel || !istype(tgui_panel))
 		log_tgui(src, "tgui_panel datum is missing",
 			context = "verb/fix_tgui_panel")
 		tgui_panel = new(src)
 	tgui_panel.initialize(force = TRUE)
 	// Force show the panel to see if there are any errors
-	winset(src, "legacy_output_selector", "left=output_browser")
+	winset(src, "output", "is-disabled=1&is-visible=0")
+	winset(src, "browseroutput", "is-disabled=0;is-visible=1")

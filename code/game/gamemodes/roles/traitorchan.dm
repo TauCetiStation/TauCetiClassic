@@ -8,7 +8,7 @@
 
 /datum/role/changeling/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 20, UPLINK_TYPE_TRAITOR)
+	AddComponent(/datum/component/gamemode/syndicate, 20, "traitor")
 
 /datum/role/changeling/traitor/OnPostSetup(laterole)
 	. = ..()
