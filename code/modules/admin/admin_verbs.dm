@@ -229,7 +229,8 @@ var/global/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/admin_crew_salary,
 	/client/proc/event_manager_panel,
-	/client/proc/change_blobwincount
+	/client/proc/change_blobwincount,
+	/client/proc/load_deathmatch_arena
 	)
 
 //verbs which can be hidden - needs work
@@ -1252,3 +1253,24 @@ var/global/centcom_barriers_stat = 1
 /obj/structure/centcom_barrier/Destroy()
 	centcom_barrier_list -= src
 	return ..()
+
+/client/proc/load_deathmatch_arena()
+	set category = "Event"
+	set name = "Load Deathmatch Arena"
+
+	var/list/arenas = list()
+
+	for(var/i in subtypesof(/datum/map_template/post_round_arena))
+		var/datum/map_template/post_round_arena/A = i
+		arenas[A.name] = A
+
+	arenas += "--CANCEL--"
+
+	var/choice = input("Select a arena", , "CANCEL") in arenas
+	if(choice == "--CANCEL--") return
+
+	var/datum/map_template/post_round_arena/arena = arenas[choice]
+	SSticker.load_arena(arena)
+
+	log_admin("[key_name(src)] load arena map [arena.name] - [arena.mappath]")
+	message_admins("[key_name_admin(src)] load arena map [arena.name] - [arena.mappath]")
