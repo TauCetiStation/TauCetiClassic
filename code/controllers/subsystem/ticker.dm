@@ -614,7 +614,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/load_arena()
 	var/online = global.player_list.len
 	restart_timeout *= sqrt(1 + online / 15) // на отметке 45 онлайна время дезматча удвоится
-	var/turf/spawn_area = get_turf(locate("landmark*Arena Spawn"))
+	var/turf/spawn_area = pick_landmarked_location("Arena Spawn")
 	var/list/arenas = list()
 
 	for(var/i in subtypesof(/datum/map_template/post_round_arena))
