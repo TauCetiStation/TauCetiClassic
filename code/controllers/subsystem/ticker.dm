@@ -648,12 +648,10 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!spawn_area)
 		CRASH("No spawn area detected for Arena!")
-		return
-	if(!arena.load(spawn_area))
+	else if(!arena.load(spawn_area))
 		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
-		return
-
-	arena_loaded = TRUE
+	else
+		arena_loaded = TRUE
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
 	restart_timeout *= sqrt(1 + global.player_list.len / 15) // на отметке 45 онлайна время дезматча удвоится
