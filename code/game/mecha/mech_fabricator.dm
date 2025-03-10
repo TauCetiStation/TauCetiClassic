@@ -56,6 +56,10 @@
 	New_parts()
 	files = new /datum/research(src) //Setup the research data holder.
 
+/obj/machinery/mecha_part_fabricator/process()
+	if(being_built)
+		playsound(src, pick(FABRICATOR), VOL_EFFECTS_MASTER, vary = FALSE)
+
 /obj/machinery/mecha_part_fabricator/proc/New_parts()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
@@ -368,6 +372,9 @@
 	if(!.)
 		return
 
+	if(href_list)
+		playsound(src, 'sound/machines/select.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["part_set"])
 		var/tpart_set = F.getStr("part_set")
@@ -455,6 +462,7 @@
 			temp = "Not enough [material] to produce a sheet."
 		else
 			temp = "Ejected [removed] of [material]"
+			playsound(src, 'sound/machines/material_eject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		temp += "<br><a href='byond://?src=\ref[src];clear_temp=1'>Return</a>"
 
 	updateUsrDialog()
@@ -555,6 +563,7 @@
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
+			playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			sleep(10)
 			updateUsrDialog()
 			cut_overlay("fab-load-[material]") //No matter what the overlay shall still be deleted
