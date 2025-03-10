@@ -61,7 +61,7 @@ var/global/war_device_activation_forbidden
 
 	var/obj/item/device/radio/uplink/U = new(get_turf(user))
 	U.hidden_uplink.uses = CHALLENGE_TELECRYSTALS
-	U.hidden_uplink.uplink_type = "nuclear"
+	U.hidden_uplink.uplink_type = UPLINK_TYPE_NUCLEAR
 
 	message_admins("[key_name_admin(usr)] is declaring war on station.")
 	log_admin("[key_name(usr)] is declaring war on station.")
