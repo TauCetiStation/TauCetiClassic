@@ -48,7 +48,7 @@
 			return
 		to_chat(current, "<span class='warning'><b>Кто-то пытается расшифровать ваши законы!</b></span>")
 		user.visible_message(
-			"<span class='notice'>[user] использует [CASE(binary_decoder, ACCUSATIVE_CASE)] для подключения к [CASE(src, DATIVE_CASE)].</span>",
+			"<span class='notice'>[user] использует [CASE(I, ACCUSATIVE_CASE)] для подключения к [CASE(src, DATIVE_CASE)].</span>",
 			"<span class='notice'>Вы начинаете процесс дешифрации информации о законах ИИ.</span>")
 		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, required_skills, -0.2))
 			if(current)
