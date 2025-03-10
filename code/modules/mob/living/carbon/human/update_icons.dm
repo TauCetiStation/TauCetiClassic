@@ -119,13 +119,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
-	if(!("[t_state][icon_state_appendix]" in icon_states(icon_path)))
+	if(icon_path != def_icon_path && !icon_exists(icon_path, "[t_state][icon_state_appendix]"))
 		icon_path = def_icon_path
 
 	var/fem = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(t_state != null)
-			if("[t_state]_fem" in icon_states(def_icon_path))
+			if(icon_exists(icon_path, "[t_state]_fem"))
 				fem = "_fem"
 
 	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
@@ -448,7 +448,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				icon_path = A.icon_custom
 
 			if(gender == FEMALE && species.gender_limb_icons)
-				if("[t_state]_fem" in icon_states(icon_path))
+				if(icon_exists(icon_path, "[t_state]_fem"))
 					t_state += "_fem"
 
 			var/image/accessory
