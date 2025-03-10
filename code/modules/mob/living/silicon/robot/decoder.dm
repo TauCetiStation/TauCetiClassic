@@ -56,7 +56,7 @@
 					if(prob(50))
 						current.overload_ai_system()
 						user.visible_message(
-							"<span class='warning'>\The [user] does something wrong and the equipment starts beeping terribly.</span>",
+							"<span class='warning'>[user] делает что-то не так и оборудование начинает страшно пищать.</span>",
 							"<span class='warning'>Вы делаете что-то не так и оборудование начинает страшно пищать.</span>")
 						playsound(src, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 						return
