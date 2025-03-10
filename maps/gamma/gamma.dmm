@@ -81613,7 +81613,7 @@
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "pnC" = (
-/obj/structure/sign/departments/medbay/lifestar{
+/obj/structure/sign/departments/medbay{
 	pixel_x = 16
 	},
 /turf/simulated/wall,
