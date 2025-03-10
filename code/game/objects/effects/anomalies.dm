@@ -223,6 +223,63 @@
 		T.ex_act(ex_act_force)
 	return
 
+#define GAS_COOLDOWN release_cd
+
+/obj/effect/anomaly/gas
+	name = "gas anomaly"
+	icon_state = "pyro"
+	density = FALSE
+	anchored = FALSE
+
+	COOLDOWN_DECLARE(GAS_COOLDOWN)
+
+	var/list/gas_types = list(
+		list("condensedcapsaicin" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100),  // Teargas
+		list("sacid" = 50, "pacid" = 50, "potassium" = 100, "phosphorus" = 100, "sugar" = 100), // Acid
+		list("space_drugs" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100)           // Drugs
+	)
+	var/release_time = 50
+	var/move_chance = 70
+
+/obj/effect/anomaly/gas/atom_init()
+	. = ..()
+	COOLDOWN_START(src, GAS_COOLDOWN, release_time)
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/anomaly/gas/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/effect/anomaly/gas/process()
+	if(QDELETED(src)) return
+
+	if(COOLDOWN_FINISHED(src, GAS_COOLDOWN))
+		release_gas()
+		COOLDOWN_START(src, GAS_COOLDOWN, release_time)
+
+	if(prob(move_chance)) try_move()
+
+/obj/effect/anomaly/gas/proc/release_gas()
+	var/selected_gas = pick(gas_types)
+
+	var/datum/reagents/R = new/datum/reagents(400)
+	R.my_atom = src
+
+	for(var/reagent_id in selected_gas)
+		R.add_reagent(reagent_id, selected_gas[reagent_id])
+
+
+	for(var/atom/A in view(10, src))
+		R.reaction(A, 3, 5)
+
+	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
+
+/obj/effect/anomaly/gas/proc/try_move()
+	var/turf/T = get_step(src, pick(NORTH, SOUTH, EAST, WEST))
+
+	if(T)
+		forceMove(T)
+
 /////// CULT ///////
 /obj/effect/anomaly/bluespace/cult_portal
 	name = "ужасающий портал"
