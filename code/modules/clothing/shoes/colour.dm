@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/black
 	name = "black shoes"
-	icon_state = "black"
-	item_state = "bl_shoes"
+	icon_state = "black_shoes"
+	item_state = "black_shoes"
 	desc = "A pair of black shoes."
 
 	cold_protection = LEGS
@@ -12,33 +12,38 @@
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"
 	desc = "A pair of brown shoes."
-	icon_state = "brown"
+	icon_state = "brown_shoes"
+	item_state = "brown_shoes"
 
 /obj/item/clothing/shoes/blue
 	name = "blue shoes"
-	icon_state = "blue"
+	desc = "A pair of blue shoes."
+	icon_state = "blue_shoes"
 	item_state = "blue_shoes"
 
 /obj/item/clothing/shoes/green
 	name = "green shoes"
-	icon_state = "green"
-	item_state = "g_shoes"
+	desc = "A pair of green shoes."
+	icon_state = "green_shoes"
+	item_state = "green_shoes"
 
 /obj/item/clothing/shoes/yellow
 	name = "yellow shoes"
-	icon_state = "yellow"
-	item_state = "y_shoes"
+	desc = "A pair of yellow shoes."
+	icon_state = "yellow_shoes"
+	item_state = "yellow_shoes"
 
 /obj/item/clothing/shoes/purple
 	name = "purple shoes"
-	icon_state = "purple"
-	item_state = "p_shoes"
+	desc = "A pair of purple shoes."
+	icon_state = "purple_shoes"
+	item_state = "purple_shoes"
 
 /obj/item/clothing/shoes/red
 	name = "red shoes"
 	desc = "Stylish red shoes."
-	icon_state = "red"
-	item_state = "r_shoes"
+	icon_state = "red_shoes"
+	item_state = "red_shoes"
 
 /obj/item/clothing/shoes/red/wizard
 
@@ -48,9 +53,10 @@
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
-	icon_state = "white"
+	desc = "A pair of white shoes."
 	permeability_coefficient = 0.01
-	item_state = "w_shoes"
+	item_state = "white_shoes"
+	icon_state = "white_shoes"
 
 /obj/item/clothing/shoes/leather
 	name = "leather shoes"
@@ -65,8 +71,9 @@
 
 /obj/item/clothing/shoes/orange
 	name = "orange shoes"
-	icon_state = "orange"
-	item_state = "o_shoes"
+	desc = "A pair of orange shoes."
+	icon_state = "orange_shoes"
+	item_state = "orange_shoes"
 	var/obj/item/weapon/handcuffs/chained = null
 
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs, mob/user)
@@ -76,8 +83,8 @@
 	chained = cuffs
 	slowdown = 7
 	name = "shackles"
-	icon_state = "orange1"
-	item_state = "o_shoes1"
+	icon_state = "orange_shoes1"
+	item_state = "otange_shoes1"
 
 /obj/item/clothing/shoes/orange/proc/remove_cuffs()
 	if (!src.chained)
@@ -85,8 +92,8 @@
 	chained.loc = get_turf(src)
 	slowdown = initial(slowdown)
 	name = initial(name)
-	icon_state = "orange"
-	item_state = "o_shoes"
+	icon_state = "orange_shoes"
+	item_state = "orange_shoes"
 	chained = null
 
 /obj/item/clothing/shoes/orange/attack_self(mob/user)
@@ -118,5 +125,5 @@
 	chained = new /obj/item/weapon/handcuffs(src)
 	slowdown = 7
 	name = "shackles"
-	icon_state = "orange1"
-	item_state = "o_shoes1"
+	icon_state = "orange_shoes1"
+	item_state = "orange_shoes1"
