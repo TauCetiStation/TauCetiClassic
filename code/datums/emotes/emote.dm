@@ -33,6 +33,8 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 
 	// Sound produced. (HAHAHAHA)
 	var/sound
+	// Mutes shouldn't clap silently (but mimes should!)
+	var/soundless_for_mute = TRUE
 	// Whether sound pitch varies with age.
 	var/age_variations = FALSE
 
@@ -86,13 +88,13 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
 /datum/emote/proc/can_play_sound(mob/user, intentional)
-	if(HAS_TRAIT(user, TRAIT_MUTE))
+	if(HAS_TRAIT(user, TRAIT_MUTE) && soundless_for_mute)
 		return FALSE
-	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle) && soundless_for_mute)
 		return FALSE
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.silent)
+		if(L.silent && soundless_for_mute)
 			return FALSE
 	if(HAS_TRAIT(user, TRAIT_MIMING))
 		return FALSE

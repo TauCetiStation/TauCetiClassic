@@ -94,9 +94,9 @@
 		[beaker_contents]<hr>
 		"}
 	if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
-		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
+		dat += "<A href='byond://?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
-		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
+		dat += "<A href='byond://?src=\ref[src];action=detach'>Detach a beaker!<BR>"
 
 	var/datum/browser/popup = new(user, "juicer", "Juicer")
 	popup.set_content("<TT>[dat]</TT>")

@@ -12584,6 +12584,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/item/clothing/mask/breath,
@@ -36327,7 +36328,7 @@
 /area/station/bridge/captain_quarters)
 "gtk" = (
 /obj/structure/lattice,
-/obj/item/airbag,
+/obj/item/clothing/neck/airbag,
 /turf/environment/space,
 /area/space)
 "gtC" = (
@@ -49317,7 +49318,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "iRD" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -65526,7 +65527,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "mcB" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "mcD" = (
@@ -66762,15 +66763,15 @@
 	},
 /area/station/aisat)
 "mqc" = (
-/obj/item/airbag{
+/obj/item/clothing/neck/airbag{
 	pixel_x = -5;
 	pixel_y = -1
 	},
-/obj/item/airbag{
+/obj/item/clothing/neck/airbag{
 	pixel_x = 7;
 	pixel_y = -1
 	},
-/obj/item/airbag{
+/obj/item/clothing/neck/airbag{
 	pixel_x = 1;
 	pixel_y = 8
 	},
@@ -106494,7 +106495,7 @@
 /area/station/medical/cryo)
 "ufu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor,
 /area/station/maintenance/science)
@@ -115870,7 +115871,7 @@
 	},
 /area/station/cargo/recycleroffice)
 "vVT" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "dark"

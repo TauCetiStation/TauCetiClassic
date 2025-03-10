@@ -21,7 +21,7 @@
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
-<th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
+<th style='width:125px;text-align:right;'>CKEY <a class='small' href='byond://?src=\ref[src];editrights=add'>\[+\]</a></th>
 <th style='width:125px;'>RANK</th><th style='width:100%;'>PERMISSIONS</th>
 </tr>
 "}
@@ -36,14 +36,14 @@
 			rights = "*none*"
 
 		output += "<tr>"
-		output += "<td style='text-align:right;'>[adm_ckey] <a class='small' href='?src=\ref[src];editrights=remove_admin;ckey=[adm_ckey]'>\[-\]</a></td>"
-		output += "<td><a href='?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>"
-		output += "<td><a class='small' href='?src=\ref[src];editrights=get_new_rights;ckey=[adm_ckey]'>[rights]</a></td>"
+		output += "<td style='text-align:right;'>[adm_ckey] <a class='small' href='byond://?src=\ref[src];editrights=remove_admin;ckey=[adm_ckey]'>\[-\]</a></td>"
+		output += "<td><a href='byond://?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>"
+		output += "<td><a class='small' href='byond://?src=\ref[src];editrights=get_new_rights;ckey=[adm_ckey]'>[rights]</a></td>"
 		output += "</tr>"
 
 	for(var/ment_ckey in mentor_ckeys)
 		output += "<tr>"
-		output += "<td style='text-align:right;'>[ment_ckey] <a class='small' href='?src=\ref[src];editrights=remove_mentor;ckey=[ment_ckey]'>\[-\]</a></td>"
+		output += "<td style='text-align:right;'>[ment_ckey] <a class='small' href='byond://?src=\ref[src];editrights=remove_mentor;ckey=[ment_ckey]'>\[-\]</a></td>"
 		output += "<td>Mentor</td>"
 		output += "<td></td>"
 		output += "</tr>"
@@ -91,7 +91,7 @@
 
 		admin_datums -= adm_ckey
 		D.disassociate()
-		
+
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 

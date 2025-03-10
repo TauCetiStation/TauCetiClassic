@@ -29,10 +29,10 @@ var/global/list/frozen_items = list()
 	dat += "<div class='Section__title'>Cryogenic Oversight Control</div>"
 	dat += "<div class='Section'>"
 	dat += "<i>Welcome, [user.real_name].</i><br/><br/>"
-	dat += "<a href='?src=\ref[src];log=1'>View storage log</a><br>"
-	dat += "<a href='?src=\ref[src];item=1'>Recover object</a><br>"
-	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a><br>"
-	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a><br/>"
+	dat += "<a href='byond://?src=\ref[src];log=1'>View storage log</a><br>"
+	dat += "<a href='byond://?src=\ref[src];item=1'>Recover object</a><br>"
+	dat += "<a href='byond://?src=\ref[src];allitems=1'>Recover all objects</a><br>"
+	dat += "<a href='byond://?src=\ref[src];crew=1'>Revive crew</a><br/>"
 	dat += "</div>"
 
 	var/datum/browser/popup = new(user, "window=cryopod_console", src.name)
@@ -170,6 +170,19 @@ var/global/list/frozen_items = list()
 /obj/machinery/cryopod/Destroy()
 	. = ..()
 	QDEL_NULL(announce)
+
+/obj/machinery/cryopod/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
+	qdel(src)
 
 /obj/machinery/cryopod/proc/delete_objective(datum/objective/target/O)
 	if(!O)

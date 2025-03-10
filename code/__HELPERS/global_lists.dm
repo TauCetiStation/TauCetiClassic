@@ -299,6 +299,11 @@
 
 	init_washing_items_list()
 
+	global.body_wing_accessory_by_name = list()
+	for(var/A as anything in subtypesof(/datum/sprite_accessory/wing))
+		var/datum/sprite_accessory/wing/B = new A
+		global.body_wing_accessory_by_name[B.name] = B
+
 /proc/init_washing_items_list()
 	var/list/path_list = list(/obj/item/clothing/mask,
 							/obj/item/clothing/head,

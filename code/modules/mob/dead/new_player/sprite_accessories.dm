@@ -1051,29 +1051,29 @@
 	species_allowed = list(IPC)
 	ipc_head_compatible = "Default"
 
-/datum/sprite_accessory/hair/ipc_screen_alien
-	name = "alien IPC screen"
-	icon_state = "ipc_alien"
+/datum/sprite_accessory/hair/ipc_screen_cobalt
+	name = "cobalt IPC screen"
+	icon_state = "ipc_cobalt"
 	species_allowed = list(IPC)
-	ipc_head_compatible = "Alien"
+	ipc_head_compatible = "Cobalt"
 
-/datum/sprite_accessory/hair/ipc_screen_double
-	name = "double IPC screen"
-	icon_state = "ipc_double"
+/datum/sprite_accessory/hair/ipc_screen_cathod
+	name = "cathod IPC screen"
+	icon_state = "ipc_cathod"
 	species_allowed = list(IPC)
-	ipc_head_compatible = "Double"
+	ipc_head_compatible = "Cathod"
 
-/datum/sprite_accessory/hair/ipc_screen_pillar
-	name = "pillar IPC screen"
-	icon_state = "ipc_pillar"
+/datum/sprite_accessory/hair/ipc_screen_thorax
+	name = "thorax IPC screen"
+	icon_state = "ipc_thorax"
 	species_allowed = list(IPC)
-	ipc_head_compatible = "Pillar"
+	ipc_head_compatible = "Thorax"
 
-/datum/sprite_accessory/hair/ipc_screen_human
-	name = "human IPC screen"
-	icon_state = "ipc_human"
+/datum/sprite_accessory/hair/ipc_screen_axon
+	name = "axon IPC screen"
+	icon_state = "ipc_axon"
 	species_allowed = list(IPC)
-	ipc_head_compatible = "Human"
+	ipc_head_compatible = "Axon"
 
 /datum/sprite_accessory/hair/ipc_tamagotchi
 	name = "tamagotchi IPC screen"
@@ -1823,3 +1823,20 @@
 	icon_state = "dio_brush"
 	do_colouration = FALSE
 	species_allowed = list(DIONA, PODMAN)
+
+/datum/sprite_accessory/wing
+	icon = 'icons/mob/species/wings/wings.dmi'
+	name = "none"
+	icon_state = "none"
+
+/datum/sprite_accessory/wing/atlas
+	name = "Atlas Wings"
+	icon_state = "atlas"
+
+/datum/sprite_accessory/wing/royal
+	name = "Royal Wings"
+	icon_state = "royal"
+
+/datum/sprite_accessory/wing/feathery
+	name = "Feathery Wings"
+	icon_state = "feathery"

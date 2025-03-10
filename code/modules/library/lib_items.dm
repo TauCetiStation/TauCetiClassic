@@ -102,6 +102,7 @@
 	var/list/canBePlaced = list(
 		/obj/item/globe = list(5, -6),
 		/obj/item/newtons_pendulum = list(5, -8),
+		/obj/item/woodenclock = list(5, -5),
 		/obj/item/bust = list(4, -6)
 		)
 

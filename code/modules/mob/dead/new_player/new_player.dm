@@ -122,7 +122,7 @@
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
 			return
-		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
+		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait [config.deathtime_required / 600] minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return
 			spawn_as_observer()
@@ -393,11 +393,23 @@
 					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
 						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
 							active++
+				var/priority = 0
+				var/priorityMessage = ""
+				var/priority_color = "#ffffff"
+				switch(job.quota)
+					if(QUOTA_WANTED)
+						priority = "!+"
+						priority_color = "#83bf47"
+						priorityMessage = "Требуется"
+					if(QUOTA_UNWANTED)
+						priority = "¡-"
+						priority_color = "#ee0000"
+						priorityMessage = "Не требуется"
 				if(job.current_positions && active < job.current_positions)
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
 					number_of_extra_line_breaks++
 				else
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
 			dat += "</fieldset><br>"

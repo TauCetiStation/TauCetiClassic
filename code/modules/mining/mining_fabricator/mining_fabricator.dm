@@ -62,12 +62,12 @@
 		switch(screen)
 			if("main")
 				left_part = output_available_resources()+"<hr>"
-				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
+				left_part += "<a href='byond://?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
 				for(var/part_set in part_sets)
-					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
+					left_part += "<a href='byond://?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='byond://?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
 			if("parts")
 				left_part += output_parts_list(part_set)
-				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
+				left_part += "<hr><a href='byond://?src=\ref[src];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
 			  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>

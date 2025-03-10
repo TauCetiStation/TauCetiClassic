@@ -215,6 +215,7 @@
 	if(istype(I,/obj/item/weapon/melee/pluvia_gong_baton))
 		ring(user)
 
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/ancestor_wisp, pluvian_wisps)
 /mob/living/simple_animal/ancestor_wisp
 	name = "Wisp"
 	real_name = "Wisp"

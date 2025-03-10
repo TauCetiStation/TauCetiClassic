@@ -103,7 +103,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed_type = /obj/item/seeds/poppyseed
 	name = "poppy"
-	cases = list("мак", "мака", "маку", "мак", "маком", "маке")	
+	cases = list("мак", "мака", "маку", "мак", "маком", "маке")
 	desc = "Издавна использовался как символ покоя, мира и смерти."
 	icon_state = "poppy"
 	potency = 30
@@ -127,8 +127,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed_type = /obj/item/seeds/harebell
 	name = "harebell"
-	cases = list("колокольчик", "колокольчика", "колокольчику", "колокольчик", "колокольчиком", "колокольчике")	
-	desc = "\"Коль буду жив, Фиделе, я все лето печальную твою могилу стану цветами украшать. Увидишь ты подснежник белый, как твое лицо, и колокольчик, голубее жилок твоих; и розы, аромат которых не сладостней дыханья твоего. Их будут реполовы приносить тебе, к стыду наследников богатых, не ставящих надгробия отцам. Когда ж цветов не будет, я укрою могилу мхом от стужи.\"" 
+	cases = list("колокольчик", "колокольчика", "колокольчику", "колокольчик", "колокольчиком", "колокольчике")
+	desc = "\"Коль буду жив, Фиделе, я все лето печальную твою могилу стану цветами украшать. Увидишь ты подснежник белый, как твое лицо, и колокольчик, голубее жилок твоих; и розы, аромат которых не сладостней дыханья твоего. Их будут реполовы приносить тебе, к стыду наследников богатых, не ставящих надгробия отцам. Когда ж цветов не будет, я укрою могилу мхом от стужи.\""
 	icon_state = "harebell"
 	potency = 1
 	filling_color = "#d4b2c9"
@@ -142,7 +142,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	seed_type = /obj/item/seeds/potatoseed
 	name = "potato"
-	cases = list("картофель", "картофеля", "картофелю", "картофель", "картофелем", "картофеле")	
+	cases = list("картофель", "картофеля", "картофелю", "картофель", "картофелем", "картофеле")
 	desc = "Вари! Толки! Туши!"
 	icon_state = "potato"
 	potency = 25
@@ -170,7 +170,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper
 	seed_type = /obj/item/seeds/blackpepper
 	name = "black pepper"
-	cases = list("черный перец", "черного перца", "черному перцу", "черный перец", "черным перцем", "черном перце")	
+	cases = list("черный перец", "черного перца", "черному перцу", "черный перец", "черным перцем", "черном перце")
 	desc = "Остренький!"
 	icon_state = "blackpepper"
 	potency = 25
@@ -185,7 +185,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
 	seed_type = /obj/item/seeds/grapeseed
 	name = "bunch of grapes"
-	cases = list("виноград", "винограда", "винограду", "виноград", "виноградом", "винограде")	
+	cases = list("виноград", "винограда", "винограду", "виноград", "виноградом", "винограде")
 	desc = "Сладкий и крайне питательный. Из него традиционно делают красные вина Шардоне, Совиньон-блан и другие."
 	icon_state = "grapes"
 	filling_color = "#a332ad"
@@ -199,7 +199,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes
 	seed_type = /obj/item/seeds/greengrapeseed
 	name = "bunch of green grapes"
-	cases = list("зеленый виноград", "зеленого винограда", "зеленому винограду", "зеленый виноград", "зеленым виноградом", "зеленом винограде")	
+	cases = list("зеленый виноград", "зеленого винограда", "зеленому винограду", "зеленый виноград", "зеленым виноградом", "зеленом винограде")
 	desc = "Сладкий и крайне питательный. Из этого сорта винограда традиционно делают белые вина Винью-верде и другие."
 	icon_state = "greengrapes"
 	potency = 25
@@ -214,7 +214,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
 	seed_type = /obj/item/seeds/cabbageseed
 	name = "cabbage"
-	cases = list("кочан капусты", "кочана капусты", "кочану капусты", "кочан капусты", "кочаном капусты", "кочане капусты")	
+	cases = list("кочан капусты", "кочана капусты", "кочану капусты", "кочан капусты", "кочаном капусты", "кочане капусты")
 	desc = "Бывает, в ней находят детей."
 	icon_state = "cabbage"
 	potency = 25
@@ -243,7 +243,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed_type = /obj/item/seeds/berryseed
 	name = "bunch of berries"
-	cases = list("гроздь ягод", "грозди ягод", "грозди ягод", "гроздь ягод", "гроздью ягод", "грозди ягод")	
+	cases = list("гроздь ягод", "грозди ягод", "грозди ягод", "гроздь ягод", "гроздью ягод", "грозди ягод")
 	desc = "Гроздь кисленьких ягод."
 	icon_state = "berrypile"
 	filling_color = "#c2c9ff"
@@ -256,7 +256,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium
 	seed_type = /obj/item/seeds/plastiseed
 	name = "clump of plastellium"
-	cases = list("пластеллий", "пластеллия", "пластеллию", "пластеллий", "пластеллием", "пластеллие")	
+	cases = list("пластеллий", "пластеллия", "пластеллию", "пластеллий", "пластеллием", "пластеллие")
 	desc = "Хм, кажется, он нуждается в переработке."
 	icon_state = "plastellium"
 	filling_color = "#c4c4c4"
@@ -270,7 +270,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/shand
 	seed_type = /obj/item/seeds/shandseed
 	name = "S'rendarr's Hand leaf"
-	cases = list("лист Длани С'рендарра", "листа Длани С'рендарра", "листу Длани С'рендарра", "лист Длани С'рендарра", "листом Длани С'рендарра", "листе Длани С'рендарра")	
+	cases = list("лист Длани С'рендарра", "листа Длани С'рендарра", "листу Длани С'рендарра", "лист Длани С'рендарра", "листом Длани С'рендарра", "листе Длани С'рендарра")
 	desc = "Образец листа кустарника из низменных зарослей, в котором часто прячутся хищники и их добыча, чтобы заживить раны и скрыть запах. Это позволяет растению распространяться далеко по его родному Адомаю. Сильно пахнет воском."
 	icon_state = "shand"
 	filling_color = "#70c470"
@@ -283,7 +283,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear
 	seed_type = /obj/item/seeds/mtearseed
 	name = "sprig of Messa's Tear"
-	cases = list("ветвь Слезы Мессы", "ветви Слезы Мессы", "ветви Слезы Мессы", "ветвь Слезы Мессы", "ветвью Слезы Мессы", "ветви Слезы Мессы")	
+	cases = list("ветвь Слезы Мессы", "ветви Слезы Мессы", "ветви Слезы Мессы", "ветвь Слезы Мессы", "ветвью Слезы Мессы", "ветви Слезы Мессы")
 	desc = "Растение, произрастающее в горном климате, с мягкими, холодными синими цветками. Известное тем, что в его цветках содержится большое количество химических веществ, полезных для лечения ожогов. Вредно для людей, страдающих аллергией на пыльцу."
 	icon_state = "mtear"
 	filling_color = "#70c470"
@@ -318,7 +318,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
 	seed_type = /obj/item/seeds/glowberryseed
 	name = "bunch of glow-berries"
-	cases = list("гроздь светоягод", "грозди светоягод", "грозди светоягод", "гроздь светоягод", "гроздью светоягод", "грозди светоягод")	
+	cases = list("гроздь светоягод", "грозди светоягод", "грозди светоягод", "гроздь светоягод", "гроздью светоягод", "грозди светоягод")
 	desc = "Гроздь питательных ягод. Слабо светится в темноте."
 	var/light_on = 1
 	var/brightness_on = 2 //luminosity when on
@@ -349,7 +349,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed_type = /obj/item/seeds/cocoapodseed
 	name = "cocoa pod"
-	cases = list("стручок какао-бобов", "стручка какао-бобов", "стручку какао-бобов", "стручок какао-бобов", "стручком какао-бобов", "стручке какао-бобов")	
+	cases = list("стручок какао-бобов", "стручка какао-бобов", "стручку какао-бобов", "стручок какао-бобов", "стручком какао-бобов", "стручке какао-бобов")
 	desc = "От этого толстеют? Шок, но ладно." // "Chucklate" - непереводимая игра слов от chocolate/chucklate, адаптировал как шоколадно/шок, но ладно
 	icon_state = "cocoapod"
 	potency = 50
@@ -364,7 +364,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed_type = /obj/item/seeds/sugarcaneseed
 	name = "sugarcane"
-	cases = list("сахарный тростник", "сахарного тростника", "сахарному тростнику", "сахарный тростник", "сахарным тростником", "сахарном тростнике")	
+	cases = list("сахарный тростник", "сахарного тростника", "сахарному тростнику", "сахарный тростник", "сахарным тростником", "сахарном тростнике")
 	desc = "Приторно-сладкий."
 	icon_state = "sugarcane"
 	potency = 50
@@ -377,7 +377,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
 	seed_type = /obj/item/seeds/poisonberryseed
 	name = "bunch of poison-berries"
-	cases = list("гроздь ядовитых ягод", "грозди ядовитых ягод", "грозди ядовитых ягод", "гроздь ядовитых ягод", "гроздью ядовитых ягод", "грозди ядовитых ягод")	
+	cases = list("гроздь ядовитых ягод", "грозди ядовитых ягод", "грозди ядовитых ягод", "гроздь ядовитых ягод", "гроздью ядовитых ягод", "грозди ядовитых ягод")
 	desc = "Смертельно вкусные ягоды."
 	icon_state = "poisonberrypile"
 	gender = PLURAL
@@ -393,7 +393,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
 	seed_type = /obj/item/seeds/deathberryseed
 	name = "bunch of death-berries"
-	cases = list("гроздь смертоягод", "грозди смертоягод", "грозди смертоягод", "гроздь смертоягод", "гроздью смертоягод", "грозди смертоягод")	
+	cases = list("гроздь смертоягод", "грозди смертоягод", "грозди смертоягод", "гроздь смертоягод", "гроздью смертоягод", "грозди смертоягод")
 	desc = "После такой сладости хоть в могилу!"
 	icon_state = "deathberrypile"
 	gender = PLURAL
@@ -427,7 +427,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed
 	seed_type = /obj/item/seeds/laughweedseed
 	name = "laughweed"
-	cases = list("смехтрава", "смехтравы", "смехтраве", "смехтраву", "смехтравой", "смехтраве")	
+	cases = list("смехтрава", "смехтравы", "смехтраве", "смехтраву", "смехтравой", "смехтраве")
 	desc = "У нас было 2 пакетика травы..."
 	icon_state = "laughweed"
 	item_state_world = "laughweed_world"
@@ -444,7 +444,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
 	seed_type = /obj/item/seeds/megaweedseed
 	name = "megaweed"
-	cases = list("мегатравка", "мегатравки", "мегатравке", "мегатравку", "мегатравкой", "мегатравке")	
+	cases = list("мегатравка", "мегатравки", "мегатравке", "мегатравку", "мегатравкой", "мегатравке")
 	desc = "У нас было 2 пакетика мегатравы..."
 	icon_state = "megaweed"
 	item_state_world = "megaweed_world"
@@ -462,7 +462,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
 	seed_type = /obj/item/seeds/blackweedseed
 	name = "deathweed"
-	cases = list("смертьтрава", "смертьтравы", "смертьтраве", "смертьтраву", "смертьтравой", "смертьтраве")	
+	cases = list("смертьтрава", "смертьтравы", "смертьтраве", "смертьтраву", "смертьтравой", "смертьтраве")
 	desc = "Смешит до болезненных колик в животике."
 	icon_state = "blackweed"
 	item_state_world = "blackweed_world"
@@ -498,7 +498,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed_type = /obj/item/seeds/appleseed
 	name = "apple"
-	cases = list("яблоко", "яблока", "яблоку", "яблоко", "яблоком", "яблоке")	
+	cases = list("яблоко", "яблока", "яблоку", "яблоко", "яблоком", "яблоке")
 	desc = "Запретный плод Эдема."
 	icon_state = "apple"
 	potency = 15
@@ -513,7 +513,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
 	seed_type = /obj/item/seeds/poisonedappleseed
 	name = "apple"
-	cases = list("яблоко", "яблока", "яблоку", "яблоко", "яблоком", "яблоке")	
+	cases = list("яблоко", "яблока", "яблоку", "яблоко", "яблоком", "яблоке")
 	desc = "Запретный плод Эдема."
 	icon_state = "apple"
 	potency = 15
@@ -552,7 +552,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	seed_type = /obj/item/seeds/watermelonseed
 	name = "watermelon"
-	cases = list("арбуз", "арбуза", "арбузу", "арбуз", "арбузом", "арбузе")	
+	cases = list("арбуз", "арбуза", "арбузу", "арбуз", "арбузом", "арбузе")
 	desc = "И поел, и попил."
 	icon_state = "watermelon"
 	potency = 10
@@ -568,7 +568,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed_type = /obj/item/seeds/pumpkinseed
 	name = "pumpkin"
-	cases = list("тыква", "тыквы", "тыкве", "тыкву", "тыквой", "тыкве")	
+	cases = list("тыква", "тыквы", "тыкве", "тыкву", "тыквой", "тыкве")
 	desc = "Большая и страшная."
 	icon_state = "pumpkin"
 	potency = 10
@@ -596,7 +596,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
 	seed_type = /obj/item/seeds/limeseed
 	name = "lime"
-	cases = list("лайм", "лайма", "лайму", "лайм", "лаймом", "лайме")	
+	cases = list("лайм", "лайма", "лайму", "лайм", "лаймом", "лайме")
 	desc = "Настолько кислый, что скукожит твое лицо."
 	icon_state = "lime"
 	potency = 20
@@ -610,7 +610,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
 	seed_type = /obj/item/seeds/lemonseed
 	name = "lemon"
-	cases = list("лимон", "лимона", "лимону", "лимон", "лимоном", "лимоне")	
+	cases = list("лимон", "лимона", "лимону", "лимон", "лимоном", "лимоне")
 	desc = "Если жизнь дает тебе лимоны — не делай лимонад. Заставь жизнь забрать их обратно! Разозлись! «Мне не нужны твои проклятые лимоны! Что мне с ними делать?»."
 	icon_state = "lemon"
 	potency = 20
@@ -624,7 +624,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/orange
 	seed_type = /obj/item/seeds/orangeseed
 	name = "orange"
-	cases = list("апельсин", "апельсина", "апельсину", "апельсин", "апельсином", "апельсине")	
+	cases = list("апельсин", "апельсина", "апельсину", "апельсин", "апельсином", "апельсине")
 	desc = "Терпкий оранжевый фрукт."
 	icon_state = "orange"
 	potency = 20
@@ -635,10 +635,27 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mandarin
+	seed_type = /obj/item/seeds/mandarinseed
+	name = "mandarin"
+	cases = list("мандарин", "мандарина", "мандарину", "мандарин", "мандарином", "мандарине")
+	desc = "Сладкий оранжевый фрукт."
+	icon_state = "mandarin"
+	item_state_world = "mandarin_world"
+	potency = 20
+	filling_color = "#faad28"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/mandarinslice
+	slices_num = 13
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mandarin/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+	bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed_type = /obj/item/seeds/whitebeetseed
 	name = "white-beet"
-	cases = list("сахарная свекла", "сахарной свеклы", "сахарной свекле", "сахарную свеклу", "сахарной свеклой", "сахарной свекле")	
+	cases = list("сахарная свекла", "сахарной свеклы", "сахарной свекле", "сахарную свеклу", "сахарной свеклой", "сахарной свекле")
 	desc = "Не то чтобы сильно сладкая."
 	icon_state = "whitebeet"
 	potency = 15
@@ -653,7 +670,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed_type = /obj/item/seeds/bananaseed
 	name = "banana"
-	cases = list("банан", "банана", "банану", "банан", "бананом", "банане")	
+	cases = list("банан", "банана", "банану", "банан", "бананом", "банане")
 	desc = "Хороший реквизит для искрометных шуток."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
@@ -672,7 +689,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk
 	seed_type = /obj/item/seeds/honkyseed
 	name = "Clowny banana"
-	cases = list("клоунский банан", "клоунского банана", "клоунскому банану", "клоунский банан", "клоунским бананом", "клоунском банане")	
+	cases = list("клоунский банан", "клоунского банана", "клоунскому банану", "клоунский банан", "клоунским бананом", "клоунском банане")
 	desc = "Выглядит очень ярким и вкусным, клоун убьет за этот банан!"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "h-banana"
@@ -691,7 +708,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed_type = /obj/item/seeds/chiliseed
 	name = "chili"
-	cases = list("перец чили", "перца чили", "перцу чили", "перец чили", "перцем чили", "перце чили")	
+	cases = list("перец чили", "перца чили", "перцу чили", "перец чили", "перцем чили", "перце чили")
 	desc = "Безумно острый! Лучше запастись молоком!"
 	icon_state = "chilipepper"
 	filling_color = "#ff0000"
@@ -712,7 +729,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed_type = /obj/item/seeds/eggplantseed
 	name = "eggplant"
-	cases = list("баклажан", "баклажана", "баклажану", "баклажан", "баклажаном", "баклажане")	
+	cases = list("баклажан", "баклажана", "баклажану", "баклажан", "баклажаном", "баклажане")
 	desc = "Приложи к фотографии лучшего друга."
 	icon_state = "eggplant"
 	filling_color = "#550f5c"
@@ -725,7 +742,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed_type = /obj/item/seeds/soyaseed
 	name = "soybeans"
-	cases = list("соевые бобы", "соевых бобов", "соевым бобам", "соевые бобы", "соевыми бобами", "соевых бобах")	
+	cases = list("соевые бобы", "соевых бобов", "соевым бобам", "соевые бобы", "соевыми бобами", "соевых бобах")
 	desc = "Довольно пресные, но сколько открывают возможностей..."
 	gender = PLURAL
 	filling_color = "#e6e8b7"
@@ -739,7 +756,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	seed_type = /obj/item/seeds/tomatoseed
 	name = "tomato"
-	cases = list("помидор", "помидора", "помидору", "помидор", "помидором", "помидоре")	
+	cases = list("помидор", "помидора", "помидору", "помидор", "помидором", "помидоре")
 	desc = "Я говорю по-ми-до-ры, а ты говоришь то-ма-ты."
 	icon_state = "tomato"
 	filling_color = "#ff0000"
@@ -760,7 +777,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
 	seed_type = /obj/item/seeds/killertomatoseed
 	name = "killer-tomato"
-	cases = list("помидор-убийца", "помидора-убийцы", "помидору-убийце", "помидор-убийца", "помидором-убийцей", "помидоре-убийце")	
+	cases = list("помидор-убийца", "помидора-убийцы", "помидору-убийце", "помидор-убийца", "помидором-убийцей", "помидоре-убийце")
 	desc = "Я говорю по-ми-до-ры, а ты говоришь то-ма... ГОСПОДИ, ОНО ЕСТ МОИ НОГИ!!"
 	icon_state = "killertomato"
 	potency = 10
@@ -796,7 +813,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	seed_type = /obj/item/seeds/bloodtomatoseed
 	name = "blood-tomato"
-	cases = list("кровавый помидор", "кровавого помидора", "кровавому помидору", "кровавый помидор", "кровавым помидором", "кровавом помидоре")	
+	cases = list("кровавый помидор", "кровавого помидора", "кровавому помидору", "кровавый помидор", "кровавым помидором", "кровавом помидоре")
 	desc = "Очень кровавый...очень...ОЧЕЕНЬ...кровавый....АААААРГХ!!!!"
 	icon_state = "bloodtomato"
 	potency = 10
@@ -821,7 +838,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
 	seed_type = /obj/item/seeds/bluetomatoseed
 	name = "blue-tomato"
-	cases = list("голубой помидор", "голубого помидора", "голубому помидору", "голубой помидор", "голубым помидором", "голубом помидоре")	
+	cases = list("голубой помидор", "голубого помидора", "голубому помидору", "голубой помидор", "голубым помидором", "голубом помидоре")
 	desc = "Я говорю по-ми-дор, ты говоришь го-лу-бой."
 	icon_state = "bluetomato"
 	potency = 10
@@ -850,7 +867,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed
 	name = "wheat"
-	cases = list("пшеница", "пшеницы", "пшенице", "пшеницу", "пшеницей", "пшенице")	
+	cases = list("пшеница", "пшеницы", "пшенице", "пшеницу", "пшеницей", "пшенице")
 	desc = "Курочка будет благодарна."
 	gender = PLURAL
 	icon_state = "wheat"
@@ -864,7 +881,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk
 	seed_type = /obj/item/seeds/riceseed
 	name = "rice stalk"
-	cases = list("стебель риса", "стебля риса", "стеблю риса", "стебель риса", "стеблем риса", "стебле риса")	
+	cases = list("стебель риса", "стебля риса", "стеблю риса", "стебель риса", "стеблем риса", "стебле риса")
 	desc = "Добро пожаловать на рисовые поля!"
 	gender = PLURAL
 	icon_state = "ricestalk"
@@ -878,7 +895,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
 	seed_type = /obj/item/seeds/kudzuseed
 	name = "kudzu pod"
-	cases = list("стручок кудзу", "стручка кудзу", "стручку кудзу", "стручок кудзу", "стручком кудзу", "стручке кудзу")	
+	cases = list("стручок кудзу", "стручка кудзу", "стручку кудзу", "стручок кудзу", "стручком кудзу", "стручке кудзу")
 	desc = "<I>Пуэрария Вирусная</I>: Инвазивный вид лозы с лианами, которые быстро ползут и обвивают все, с чем соприкасаются."
 	icon_state = "kudzupod"
 	filling_color = "#59691b"
@@ -892,7 +909,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed_type = /obj/item/seeds/icepepperseed
 	name = "ice-pepper"
-	cases = list("ледяной перец", "ледяного перца", "ледяному перцу", "ледяной перец", "ледяным перцем", "ледяном перце")	
+	cases = list("ледяной перец", "ледяного перца", "ледяному перцу", "ледяной перец", "ледяным перцем", "ледяном перце")
 	desc = "Особая мутация перца чили."
 	icon_state = "icepepper"
 	potency = 20
@@ -914,7 +931,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	seed_type = /obj/item/seeds/carrotseed
 	name = "carrot"
-	cases = list("морковь", "моркови", "моркови", "морковь", "морковью", "моркови")	
+	cases = list("морковь", "моркови", "моркови", "морковь", "морковью", "моркови")
 	desc = "Полезно для зрения!"
 	icon_state = "carrot"
 	potency = 10
@@ -929,7 +946,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed_type = /obj/item/seeds/reishimycelium
 	name = "reishi"
-	cases = list("рейши", "рейши", "рейши", "рейши", "рейши", "рейши")	
+	cases = list("рейши", "рейши", "рейши", "рейши", "рейши", "рейши")
 	desc = "<I>Ганодерма люцидум</I>: Особый гриб, который, как полагают, помогает снять стресс»."
 	icon_state = "reishi"
 	potency = 10
@@ -953,7 +970,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed_type = /obj/item/seeds/amanitamycelium
 	name = "fly amanita"
-	cases = list("мухомор", "мухомора", "мухомору", "мухомор", "мухомором", "мухоморе")	
+	cases = list("мухомор", "мухомора", "мухомору", "мухомор", "мухомором", "мухоморе")
 	desc = "<I>Мухомор красный</I>: Выучите ядовитые грибы наизусть. Собирайте только те грибы, которые знаете."
 	icon_state = "amanita"
 	potency = 10
@@ -977,7 +994,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	seed_type = /obj/item/seeds/angelmycelium
 	name = "destroying angel"
-	cases = list("бледная поганка", "бледной поганки", "бледной поганке", "бледную поганку", "бледной поганкой", "бледной поганке")	
+	cases = list("бледная поганка", "бледной поганки", "бледной поганке", "бледную поганку", "бледной поганкой", "бледной поганке")
 	desc = "<I>Бледная поганка</I>: Смертельно ядовитый гриб-базидиомицет, содержащий альфа-аматоксины."
 	icon_state = "angel"
 	potency = 35
@@ -1121,7 +1138,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	seed_type = /obj/item/seeds/grassseed
 	name = "grass"
-	cases = list("газон", "газона", "газону", "газон", "газоном", "газоне")	
+	cases = list("газон", "газона", "газону", "газон", "газоном", "газоне")
 	desc = "Зеленый и пышный."
 	icon_state = "spawner"
 	potency = 20
@@ -1165,7 +1182,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	seed_type = /obj/item/seeds/bluespacetomatoseed
 	name = "bluespace tomato"
-	cases = list("блюспейс помидор", "блюспейс помидора", "блюспейс помидору", "блюспейс помидор", "блюспейс помидором", "блюспейс помидоре")	
+	cases = list("блюспейс помидор", "блюспейс помидора", "блюспейс помидору", "блюспейс помидор", "блюспейс помидором", "блюспейс помидоре")
 	desc = "Настолько маслянистый, что ты можешь проскользнуть сквозь пространство-время."
 	icon_state = "bluespacetomato"
 	potency = 20

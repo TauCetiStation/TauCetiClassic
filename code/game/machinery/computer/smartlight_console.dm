@@ -21,8 +21,8 @@
 	var/default_name = SLP.default_mode ? light_modes_by_type[SLP.default_mode].name : "Not Set"
 	var/nightshift_name = SLP.nightshift_mode ? light_modes_by_type[SLP.nightshift_mode].name : "Not Set"
 
-	html += "Default mode: <a href='?src=\ref[src];change_default=1'>[default_name]</a><br>"
-	html += "Night Shift mode: <a href='?src=\ref[src];change_nightshift=1'>[nightshift_name]</a><br>"
+	html += "Default mode: <a href='byond://?src=\ref[src];change_default=1'>[default_name]</a><br>"
+	html += "Night Shift mode: <a href='byond://?src=\ref[src];change_nightshift=1'>[nightshift_name]</a><br>"
 
 	html += "<br>Night Shift mode currently globally [SSsmartlight.nightshift_active ? "enabled" : "disabled"]."
 
@@ -33,9 +33,9 @@
 	for(var/path in SLP.available_modes)
 
 		if(path in SLP.disabled_modes)
-			html += "<a class='bad' href='?src=\ref[src];enable_mode=[path]'>Disabled</a>"
+			html += "<a class='bad' href='byond://?src=\ref[src];enable_mode=[path]'>Disabled</a>"
 		else
-			html += "<a class='good' href='?src=\ref[src];disable_mode=[path]'>Enabled</a>"
+			html += "<a class='good' href='byond://?src=\ref[src];disable_mode=[path]'>Enabled</a>"
 
 		html += " <b>[light_modes_by_type[path].name]</b>"
 
@@ -44,8 +44,8 @@
 	html += "</div>"
 
 	html += "<div class='Section'>"
-	html += "<a href='?src=\ref[src];sync_apc=1'>Sync all APC Settings</a>"
-	html += " <a href='?src=\ref[src];toggle_nightshift=1'>Toggle Night Shift</a>"
+	html += "<a href='byond://?src=\ref[src];sync_apc=1'>Sync all APC Settings</a>"
+	html += " <a href='byond://?src=\ref[src];toggle_nightshift=1'>Toggle Night Shift</a>"
 	html += "</div>"
 
 	var/datum/browser/popup = new(user, "smartlight_console", name, 400, 500)

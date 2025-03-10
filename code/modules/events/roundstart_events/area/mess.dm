@@ -6,6 +6,9 @@
 			new /obj/item/weapon/shard(B.loc)
 			qdel(B)
 
+		for(var/obj/machinery/vending/Vend in target_area)
+			Vend.take_damage(Vend.max_integrity * (1 - Vend.integrity_failure))
+
 		for(var/obj/structure/closet/C in target_area)
 			C.locked = FALSE
 			C.welded = FALSE

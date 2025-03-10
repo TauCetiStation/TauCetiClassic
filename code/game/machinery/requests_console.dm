@@ -136,10 +136,10 @@ var/global/list/departments_genitive = list()
 		departments.Add(dpt)
 		var/enc_dpt = url_encode(dpt)
 		if (dpt != department)
-			. += text("[dpt] <A href='?src=\ref[src];write=[enc_dpt]'>Сообщение</A> ")
-			. += text("<A href='?src=\ref[src];write=[enc_dpt];priority=2'>Приоритетое</A>")
+			. += text("[dpt] <A href='byond://?src=\ref[src];write=[enc_dpt]'>Сообщение</A> ")
+			. += text("<A href='byond://?src=\ref[src];write=[enc_dpt];priority=2'>Приоритетое</A>")
 			. += text("<BR>")
-	. += text("<BR><A href='?src=\ref[src];setScreen=0'>Назад</A><BR>")
+	. += text("<BR><A href='byond://?src=\ref[src];setScreen=0'>Назад</A><BR>")
 	departments.Cut()
 
 /obj/machinery/requests_console/ui_interact(user)
@@ -157,11 +157,11 @@ var/global/list/departments_genitive = list()
 
 			if(6)	//sent successfully
 				dat += text("<FONT COLOR='GREEN'>Сообщение отправлено</FONT><BR><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Продолжить</A><BR>")
+				dat += text("<A href='byond://?src=\ref[src];setScreen=0'>Продолжить</A><BR>")
 
 			if(7)	//unsuccessful; not sent
 				dat += text("<FONT COLOR='RED'>Произошла ошибка. </FONT><BR><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Продолжить</A><BR>")
+				dat += text("<A href='byond://?src=\ref[src];setScreen=0'>Продолжить</A><BR>")
 
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in requests_console_list)
@@ -173,7 +173,7 @@ var/global/list/departments_genitive = list()
 				icon_state = "req_comp0"
 				for(var/msg in messages)
 					dat += text("[msg]<BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Вернуться в главное меню</A><BR>")
+				dat += text("<A href='byond://?src=\ref[src];setScreen=0'>Вернуться в главное меню</A><BR>")
 
 			if(9)	//authentication before sending
 				dat += text("<B>Авторизация Сообщения</B><BR><BR>")
@@ -181,8 +181,8 @@ var/global/list/departments_genitive = list()
 				dat += text("Теперь вы можете авторизовать ваше сообщение, приложив ID или печать.<BR><BR>")
 				dat += text("Подтверждено: [msgVerified]<br>");
 				dat += text("Печать: [msgStamped]<br>");
-				dat += text("<A href='?src=\ref[src];department=[url_encode(to_dpt)]'>Отравить</A><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Назад</A><BR>")
+				dat += text("<A href='byond://?src=\ref[src];department=[url_encode(to_dpt)]'>Отравить</A><BR>");
+				dat += text("<BR><A href='byond://?src=\ref[src];setScreen=0'>Назад</A><BR>")
 
 			else	//main menu
 				screen = 0
@@ -190,15 +190,15 @@ var/global/list/departments_genitive = list()
 					dat += text("<FONT COLOR='RED'>Есть новые сообщения</FONT><BR>")
 				if (newmessagepriority == 2)
 					dat += text("<FONT COLOR='RED'><B>НОВОЕ ПРИОРИТЕТНОЕ СООБЩЕНИЕ</B></FONT><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=8'>Просмотр сообщений</A><BR><BR>")
+				dat += text("<A href='byond://?src=\ref[src];setScreen=8'>Просмотр сообщений</A><BR><BR>")
 
-				dat += text("<A href='?src=\ref[src];setScreen=1'>Запросить помощь</A><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=2'>Запросить поставку</A><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=3'>Передать информацию анонимно</A><BR><BR>")
+				dat += text("<A href='byond://?src=\ref[src];setScreen=1'>Запросить помощь</A><BR>")
+				dat += text("<A href='byond://?src=\ref[src];setScreen=2'>Запросить поставку</A><BR>")
+				dat += text("<A href='byond://?src=\ref[src];setScreen=3'>Передать информацию анонимно</A><BR><BR>")
 				if (silent)
-					dat += text("Звук <A href='?src=\ref[src];setSilent=0'>ВЫКЛ</A>")
+					dat += text("Звук <A href='byond://?src=\ref[src];setSilent=0'>ВЫКЛ</A>")
 				else
-					dat += text("Звук <A href='?src=\ref[src];setSilent=1'>ВКЛ</A>")
+					dat += text("Звук <A href='byond://?src=\ref[src];setSilent=1'>ВКЛ</A>")
 
 		var/datum/browser/popup = new(user, "window=request_console", src.name)
 		popup.set_content(dat)

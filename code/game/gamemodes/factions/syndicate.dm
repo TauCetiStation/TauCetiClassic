@@ -39,7 +39,7 @@
 		while(!istype(disk_loc, /turf))
 			if(istype(disk_loc, /mob))
 				var/mob/M = disk_loc
-				dat += "carried by <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> "
+				dat += "carried by <a href='byond://?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> "
 			if(istype(disk_loc, /obj))
 				var/obj/O = disk_loc
 				dat += "in \a [O.name] "

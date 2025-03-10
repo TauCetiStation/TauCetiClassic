@@ -342,21 +342,25 @@
 		return
 
 	face_atom(A)
+	looks_at_log(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(stat == CONSCIOUS)
+		last_examined = A.name
+
+/mob/proc/looks_at_log(atom/A)
 	if(!show_examine_log)
 		return
 	var/mob/living/carbon/human/H = src
 	if(ishuman(src))
-		if(H.head && H.head.flags_inv && HIDEEYES)
+		if(H.head && H.head.flags_inv & HIDEEYES)
 			return
-		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+		if(H.wear_mask && H.wear_mask.flags_inv & HIDEEYES)
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
-	if(stat == CONSCIOUS)
-		last_examined = A.name
+
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
@@ -412,7 +416,7 @@
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
-			to_chat(usr, "You must wait 30 minutes to respawn!")
+			to_chat(usr, "You must wait [config.deathtime_required / 600] minutes to respawn!")
 			return
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")

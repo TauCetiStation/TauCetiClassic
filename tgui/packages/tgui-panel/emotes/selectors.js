@@ -1,1 +1,1 @@
-export const selectEmotes = state => state.emotes;
+export const selectEmotes = (state) => state.emotes;

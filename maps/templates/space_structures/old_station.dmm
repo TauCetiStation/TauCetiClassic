@@ -3130,7 +3130,7 @@
 /turf/simulated/floor/glass/reinforced,
 /area/space_structures/old_station/central/brig)
 "ta" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -3697,7 +3697,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
 "wt" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkblue"
@@ -3923,7 +3923,7 @@
 "xx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -7161,7 +7161,7 @@
 /area/space_structures/old_station/central)
 "PW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -7264,7 +7264,7 @@
 	},
 /area/space_structures/old_station/satellite)
 "QP" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor/airless{
 	icon_state = "yellow";
 	dir = 8
