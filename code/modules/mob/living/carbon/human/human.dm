@@ -2312,3 +2312,28 @@
 	age = rand(S.min_age, S.max_age)
 
 	regenerate_icons()
+
+/mob/living/carbon/human/get_blood_datum()
+	if(HAS_TRAIT(src, TRAIT_SLIME))
+		return /datum/dirt_cover/blue_blood
+	
+	if(species.blood_datum_path)
+		return species.blood_datum_path
+
+	return /datum/dirt_cover/red_blood
+
+/mob/living/carbon/human/get_flesh_color()
+	if(HAS_TRAIT(src, TRAIT_SLIME))
+		return "#05fffb"
+
+	if(species.flesh_color)
+		return species.flesh_color
+
+	return "#ffffff"
+
+/mob/living/carbon/get_trail_state()
+	return "trails_1"
+
+/mob/living/carbon/human/get_trail_state()
+	if(blood_amount() > 0)
+		return ..()

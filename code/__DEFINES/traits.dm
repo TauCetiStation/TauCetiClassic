@@ -200,6 +200,7 @@
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
+#define TRAIT_SLIME               "slime"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

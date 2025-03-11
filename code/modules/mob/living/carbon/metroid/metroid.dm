@@ -327,7 +327,7 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-/mob/living/carbon/slime/getTrail()
+/mob/living/carbon/slime/get_trail_state()
 	return null
 
 /mob/living/carbon/slime/is_usable_head(targetzone = null)

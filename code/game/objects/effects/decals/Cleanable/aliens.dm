@@ -1,3 +1,4 @@
+
 /obj/effect/decal/cleanable/blood/xeno
 	name = "xeno blood"
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
@@ -5,6 +6,10 @@
 	basedatum = /datum/dirt_cover/xeno_blood
 
 	beauty = -250
+
+// todo: aliens still use colored states so blood mixing and other things not work
+/obj/effect/decal/cleanable/blood/xeno/update_icon()
+	return
 
 /obj/effect/decal/cleanable/blood/gibs/xeno
 	name = "xeno gibs"
@@ -16,7 +21,7 @@
 	beauty = -250
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/update_icon()
-	color = "#ffffff"
+	return
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/up
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")

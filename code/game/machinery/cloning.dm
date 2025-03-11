@@ -315,8 +315,8 @@
 		return
 
 	if (src.mess) //Clean that mess and dump those gibs!
-		src.mess = 0
-		gibs(src.loc)
+		src.mess = FALSE
+		new /obj/effect/gibspawner/generic(get_turf(loc))
 		src.icon_state = "pod_0"
 		return
 
@@ -339,7 +339,7 @@
 /obj/machinery/clonepod/proc/malfunction()
 	if(src.occupant)
 		connected_message("Критическая ошибка!")
-		src.mess = 1
+		src.mess = TRUE
 		src.icon_state = "pod_g"
 		occupant.ghostize()
 		spawn(5)

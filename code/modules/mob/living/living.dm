@@ -752,7 +752,7 @@
 	if(!lying || buckled || grabbed_by.len || !mob_has_gravity())
 		return FALSE
 	if(prob(getBruteLoss() / 2))
-		makeTrail(new_loc, old_loc, old_dir)
+		make_trail(new_loc, old_loc, old_dir)
 	if(pull_damage() && prob(25))
 		adjustBruteLoss(2)
 		visible_message("<span class='warning'>[src]'s wounds worsen terribly from being dragged!</span>")
@@ -763,17 +763,13 @@
 	if(..())
 		blood_remove(1)
 
-/mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
+/mob/living/proc/make_trail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
 		return
 
-	var/trail_type = getTrail()
+	var/trail_type = get_trail_state()
 	if(!trail_type)
 		return
-
-	var/blood_exists = 0
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in old_loc) //checks for blood splatter already on the floor
-		blood_exists = 1
 
 	var/newdir = turn(dir, 180)
 	if(newdir != old_dir)
@@ -785,44 +781,9 @@
 	if((newdir in global.cardinal) && (prob(50)))
 		newdir = turn(newdir, 180)
 
-	var/datum/dirt_cover/new_cover
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.species)
-			new_cover = new(H.species.blood_datum)
-	if(!new_cover)
-		new_cover = new/datum/dirt_cover/red_blood
-	if(!blood_exists)
-		var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(old_loc)
-		BL.basedatum = new_cover
-		BL.update_icon()
-	else
-		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
-			TH.basedatum.add_dirt(new_cover)
-			TH.update_icon()
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
-		if(!TH.amount)
-			STOP_PROCESSING(SSobj, TH)
-			TH.name = initial(TH.name)
-			TH.desc = initial(TH.desc)
-			TH.amount = initial(TH.amount)
-			TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
-			START_PROCESSING(SSobj, TH)
-		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-			TH.existing_dirs += newdir
-			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-		if(dna)
-			TH.blood_DNA[dna.unique_enzymes] = dna.b_type
-
-/mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
-	return null
-
-/mob/living/carbon/getTrail()
-	return "trails_1"
-
-/mob/living/carbon/human/getTrail()
-	if(blood_amount() > 0)
-		return ..()
+	// recreating new cleanable every time is not really smart but fuck it, blood decals can handle merge and updates
+	// and we don't need separate logic here like before
+	new /obj/effect/decal/cleanable/blood/trail_holder(old_loc, src, trail_type, newdir)
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -1568,3 +1529,12 @@
 /mob/living/reset_view(atom/A, force_remote_viewing)
 	..()
 	src.force_remote_viewing = force_remote_viewing
+
+/mob/living/proc/get_blood_datum()
+	return /datum/dirt_cover/red_blood
+
+/mob/living/proc/get_flesh_color()
+	return "#ffffff"
+
+/mob/living/proc/get_trail_state()
+	return null

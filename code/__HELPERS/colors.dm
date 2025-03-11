@@ -9,35 +9,22 @@
 /proc/random_color()
 	return "#" + random_string(6, global.hex_characters)
 
-/proc/normalize_color(inphex) //normalize hex color and convert hex2num and num2hex
 
-	var/rn_color
-	var/gn_color
-	var/bn_color
-	var/rh_color
-	var/gh_color
-	var/bh_color
-	var/final_hex
-	rn_color = hex2num(copytext(inphex, 2,4))
-	gn_color = hex2num(copytext(inphex, 4,6))
-	bn_color = hex2num(copytext(inphex, 6,8))
+// normalize hex color
+/proc/normalize_color(color) 
+	var/list/hexes = rgb2num(color)
 
-	//Normalize color when RGB color shade is not less than the sum 180
-	if((rn_color + gn_color + bn_color) < 180)
-		if(rn_color < 60)
-			rn_color += 60
-		if(gn_color < 60)
-			gn_color += 60
-		if(bn_color < 60)
-			bn_color += 60
+	// Normalize color when RGB color shade is not less than the sum 180
+	// todo: probably should be based on HUE, this is not good
+	if((hexes[1] + hexes[2] + hexes[3]) < 180)
+		if(hexes[1] < 60)
+			hexes[1] += 60
+		if(hexes[2] < 60)
+			hexes[2] += 60
+		if(hexes[3] < 60)
+			hexes[3] += 60
 
-	rh_color = num2hex(rn_color)
-	gh_color = num2hex(gn_color)
-	bh_color = num2hex(bn_color)
-
-	//Set complete normalize hex color
-	final_hex = "#" + rh_color + gh_color + bh_color
-	return final_hex
+	return rgb(hexes[1], hexes[2], hexes[3])
 
 /proc/adjust_brightness(color, value)
 	if (!color) return "#ffffff"

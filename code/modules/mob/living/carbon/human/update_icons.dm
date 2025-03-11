@@ -478,7 +478,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
-			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
 			bloodsies.color = hand_dirt_datum.color
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			bloodsies.pixel_x += species.offset_features[OFFSET_GLOVES][1]

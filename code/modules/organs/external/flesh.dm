@@ -586,7 +586,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.fracture()
 
 /datum/bodypart_controller/proc/damage_state_color()
-	return BP.species.blood_datum.color
+	var/datum/dirt_cover/blood_datum = BP.owner.get_blood_datum()
+	return blood_datum::color
 
 /datum/bodypart_controller/proc/sever_artery()
 	if(HAS_TRAIT(BP.owner, TRAIT_HEMOCOAGULATION))
