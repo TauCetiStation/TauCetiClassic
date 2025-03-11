@@ -10693,7 +10693,6 @@
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/space,
 /area/asteroid/mine/west_outpost{
 	name = "Mining Outpost"
 	})
