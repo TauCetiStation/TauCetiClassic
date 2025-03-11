@@ -45081,13 +45081,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "ktY" = (
-/obj/structure/closet/athletic_mixed,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Sauna";
-	dir = 8
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -57472,6 +57468,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/item/clothing/mask/breath,
@@ -74900,10 +74897,17 @@
 	name = "Operating Theatre"
 	})
 "rPR" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
+	},
+/obj/structure/closet/athletic_mixed,
+/obj/machinery/camera{
+	c_tag = "Sauna";
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"

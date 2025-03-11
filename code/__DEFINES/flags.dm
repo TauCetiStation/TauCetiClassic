@@ -146,7 +146,14 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define LAVA_PROOF (1<<0)
 /// 100% immune to fire damage (but not necessarily to lava or heat)
 #define FIRE_PROOF (1<<1)
+/* todo, not implemented yet, part of the fire refactoring
+
+// atom is flammable and can have the burning component
 #define FLAMMABLE (1<<2)
+/// currently burning
+#define ON_FIRE (1<<3)
+
+*/
 /// acid can't even appear on it, let alone melt it.
 #define UNACIDABLE (1<<4)
 /// acid stuck on it doesn't melt it.
@@ -155,8 +162,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE (1<<6)
 /// can't be deconstructed with instruments
 #define DECONSTRUCT_IMMUNE (1<<7)
-/// can be hit with melee (mb change to CANT_BE_HIT)
-#define CAN_BE_HIT (1<<8)
+/// can be hit with melee
+#define CAN_BE_HIT (1<<8) // todo: invert to CANT_BE_HIT or move from resistance_flags like on tg, or maybe rename resistance_flags to something like integrity_flags
 
 #define FULL_INDESTRUCTIBLE INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | DECONSTRUCT_IMMUNE
 

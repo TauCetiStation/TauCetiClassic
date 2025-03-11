@@ -473,7 +473,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("ordercomp", "supplycomp", "advmop", "holosign", "spraycan", "space_suit", "space_suit_helmet", "glowsticks_adv", "stimpack")
+	unlocks_designs = list("ordercomp", "supplycomp", "advmop", "holosign", "spraycan", "space_suit", "space_suit_helmet", "glowsticks_adv", "stimpack", "expshovel")
 
 /datum/technology/basic_mining
 	name = "Basic Mining"

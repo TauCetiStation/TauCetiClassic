@@ -117,13 +117,13 @@
 			if(prob(75))
 				return
 	for(var/atom/movable/A in src)
-		A.forceMove(loc)
-		ex_act(severity)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
 	qdel(src)
 
 /obj/machinery/bodyscanner/deconstruct(disassembled)
 	for(var/atom/movable/A in src)
-		A.forceMove(loc)
+		A.forceMove(get_turf(src))
 	..()
 
 /obj/machinery/body_scanconsole/power_change()

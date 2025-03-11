@@ -9,7 +9,7 @@
 	var/obj/item/stack/using_this = null
 	var/turf/over_this = null
 	var/busy = FALSE
-	var/build_direction = NORTH
+	var/build_direction = SOUTH
 	var/image/b_overlay = null
 	var/obj/effect/holo_build = null
 
