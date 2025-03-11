@@ -192,7 +192,7 @@
 
 /datum/reagent/space_cleaner/on_general_digest(mob/living/M)
 	..()
-	M.adjustToxLoss(0.2)
+	M.adjustToxLoss(1.5)
 
 	if(prob(10))
 		M.emote("hiccup")
