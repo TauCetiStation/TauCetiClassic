@@ -63131,6 +63131,7 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
