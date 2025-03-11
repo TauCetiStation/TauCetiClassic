@@ -347,7 +347,7 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Неизвестный")])"
+		return "(Некто) [get_id_name]"
 	return ""
 
 /*
@@ -413,11 +413,11 @@
 				message = turret_talk(message, get_species())
 		if(slurring)
 			message = slur(message)
-			verb = pick("запинается","заикается")
+			verb = pick("говорит запинаясь", "говорит заикаясь")
 			handled = 1
 		if (stuttering)
 			message = stutter(message)
-			verb = pick("запинается","заикается")
+			verb = pick("говорит запинаясь", "говорит заикаясь")
 			handled = 1
 
 		var/braindam = getBrainLoss()
