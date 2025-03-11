@@ -1176,8 +1176,7 @@
     cant_discount = TRUE
     uplink_types = list(UPLINK_TYPE_TRAITOR)
     var/crate_value = 40
-    var/crate_type = /obj/structure/closet/crate/surplus_crate // Значение по умолчанию
-
+    var/crate_type = /obj/structure/closet/crate/surplus_crate
 /datum/uplink_item/badass/surplus_crate/team
     name = "Syndicate Team Surplus Crate"
     desc = "A crate containing 80 telecrystals worth of random syndicate leftovers. Don't fight with your partner!"
@@ -1206,12 +1205,12 @@
         var/datum/uplink_item/I = pick(buyable_items)
         if(I.cost > remaining_TC)
             continue
-        if((I.item in bought_items) && prob(33)) //Чтобы не было слишком много одинаковых предметов
+        if((I.item in bought_items) && prob(33))
             continue
         bought_items += I.item
         remaining_TC -= I.cost
 
-    var/obj/structure/closet/crate/C = new crate_type(loc) // Создание ящика нужного типа
+    var/obj/structure/closet/crate/C = new crate_type(loc)
     for(var/item in bought_items)
         new item(C)
 
