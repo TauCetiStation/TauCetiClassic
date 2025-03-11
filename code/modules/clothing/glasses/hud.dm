@@ -74,7 +74,8 @@
 /obj/item/clothing/glasses/hud/health/vox
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
-	icon_state = "material"
+	icon_state = "healthhud"
+	item_state_world = "healthhud_w"
 	body_parts_covered = 0
 
 

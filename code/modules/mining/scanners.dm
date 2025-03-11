@@ -73,5 +73,6 @@
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_custom = 'icons/mob/eyes.dmi'
 	icon_state = "HUDmining"
-	item_state = "HUDmining"
+	item_state = "glasses"
+	item_state_world = "HUDmining_w"
 	vision_flags = SEE_MOBS
