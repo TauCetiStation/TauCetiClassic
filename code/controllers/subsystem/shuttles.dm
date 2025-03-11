@@ -335,9 +335,9 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.locked = 0
 				D.open()
-			for(var/obj/machinery/door/airlock/A in orange(1, DOOR))
-				if(A.dock_tag == door_tag)
-					A.unbolt()
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.unbolt()
 
 /datum/controller/subsystem/shuttle/proc/undock_act(shuttle_area, door_tag)
 	//todo post_signal? & doors with door_tag near shuttle zone
@@ -352,9 +352,9 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.close()
 				D.locked = 1
-			for(var/obj/machinery/door/airlock/A in orange(1, DOOR))
-				if(A.dock_tag == door_tag)
-					A.close_unsafe(TRUE)
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.close_unsafe(TRUE)
 
 /datum/controller/subsystem/shuttle/proc/send()
 	var/area/from
