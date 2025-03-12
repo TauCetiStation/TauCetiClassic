@@ -269,7 +269,7 @@
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.10
 	filter = list("phoron", "sleeping_agent", "oxygen", "fractol")
-	species_restricted = list(VOX , VOX_ARMALIS, SLIME_VOX)
+	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/mask/gas/German
 	name = "German Gas Mask"

@@ -178,7 +178,9 @@
 			icon = species.icobase
 		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 
-	if(status & ORGAN_DEAD)
+	if(owner && HAS_TRAIT(owner, TRAIT_SLIME))
+		color = SLIME_PEOPLE_COLOR // this sets alpha too
+	else if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
 	else if (HUSK in mutations)
 		color = null
@@ -573,9 +575,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(species && species.alpha_color_mask)
 		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
 		color_appearance.color = color
+		color_appearance.alpha = alpha
 		. += color_appearance
 	else
 		base_appearance.color = color
+		base_appearance.alpha = alpha
 
 /obj/item/organ/external/head/get_icon(icon_layer)
 	if (!owner)
@@ -588,9 +592,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(species && species.alpha_color_mask)
 		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
 		color_appearance.color = color
+		color_appearance.alpha = alpha
 		. += color_appearance
 	else
 		base_appearance.color = color
+		base_appearance.alpha = alpha
 
 	if(species)
 		var/list/eye_appearances = list()

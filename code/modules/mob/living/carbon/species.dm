@@ -504,7 +504,6 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_UNATHI
-	slime_species = SLIME_UNATHI
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD     = 'icons/mob/species/unathi/helmet.dmi',
@@ -580,7 +579,6 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_TAJARAN
-	slime_species = SLIME_TAJARAN
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD     = 'icons/mob/species/tajaran/helmet.dmi',
@@ -640,7 +638,6 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_SKRELL
-	slime_species = SLIME_SKRELL
 
 	sprite_sheets = list(
 		SPRITE_SHEET_HEAD = 'icons/mob/species/skrell/helmet.dmi',
@@ -738,7 +735,6 @@
 			)
 
 	skeleton_type = SKELETON_VOX
-	slime_species = SLIME_VOX
 
 	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
 
@@ -1739,45 +1735,6 @@
 	min_age = 25
 	max_age = 85
 
-/datum/species/slime
-	name = SLIME
-	icobase = 'icons/mob/human_races/r_human_slime.dmi'
-	deform = 'icons/mob/human_races/r_human_slime.dmi'
-
-	eyes_colorable_layer = /datum/species/human::eyes_colorable_layer
-	eyes_static_layer = /datum/species/human::eyes_static_layer
-
-	blood_datum_path = /datum/dirt_cover/blue_blood
-	flesh_color = "#05fffb"
-	unarmed_type = /datum/unarmed_attack/slime_glomp
-	has_gendered_icons = TRUE
-	gender_limb_icons = TRUE
-
-	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
-	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
-	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
-
-	darksight = 3
-
-	race_traits = list(
-		TRAIT_NO_BREATHE,
-		TRAIT_INCOMPATIBLE_DNA,
-		TRAIT_NO_PAIN,
-		TRAIT_RADIATION_IMMUNE,
-		TRAIT_VIRUS_IMMUNE,
-	)
-
-	flags = list(
-	,HAS_SKIN_COLOR = TRUE
-	,HAS_UNDERWEAR = TRUE
-	,IS_SOCIAL = TRUE
-	)
-
-	min_age = 1
-	max_age = 85
-
-	is_common = TRUE
-
 /datum/species/abomination
 	name = ABOMINATION
 	icobase = 'icons/mob/human_races/r_abomination.dmi'
@@ -1906,7 +1863,7 @@
 
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
-	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION)
 
 	var/datum/species/head = global.all_species[pick(keys - VOX)]
 

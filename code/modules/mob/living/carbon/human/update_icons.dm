@@ -832,6 +832,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_standing_overlay(WING_UNDERLIMBS_LAYER)
 	apply_standing_overlay(WING_LAYER)
 
+// pls make it organ
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_standing_overlay(TAIL_LAYER)
 
@@ -847,6 +848,9 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/tail_s = image("icon" = 'icons/mob/human_races/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
+
+			if(BP.owner && HAS_TRAIT(BP.owner, TRAIT_SLIME))
+				tail_s.color = SLIME_PEOPLE_COLOR // this sets alpha too
 			if(BP.status & ORGAN_DEAD)
 				tail_s.color = NECROSIS_COLOR_MOD
 			else if(HULK in mutations)

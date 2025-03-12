@@ -376,6 +376,8 @@
 #include "code\datums\elements\cult_halo.dm"
 #include "code\datums\elements\digitalcamo.dm"
 #include "code\datums\elements\undertile.dm"
+#include "code\datums\elements\mutations\_mutation.dm"
+#include "code\datums\elements\mutations\slime.dm"
 #include "code\datums\emotes\emote.dm"
 #include "code\datums\emotes\misc.dm"
 #include "code\datums\emotes\state_checks.dm"

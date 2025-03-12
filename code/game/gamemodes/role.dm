@@ -181,7 +181,7 @@
 				return FALSE
 
 		for(var/specie_trait in restricted_species_traits)
-			if(S.race_traits[specie_flag])
+			if(S.race_traits[specie_trait])
 				log_mode("[ckey_of_antag] his species \"[S.name]\" has restricted trait")
 				return FALSE
 

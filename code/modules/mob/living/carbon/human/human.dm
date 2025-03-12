@@ -159,9 +159,6 @@
 
 	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
 
-/mob/living/carbon/human/slime/atom_init(mapload)
-	. = ..(mapload, SLIME)
-
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
 
