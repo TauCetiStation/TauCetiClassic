@@ -373,17 +373,21 @@
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
+	if(halloss && (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_PAIN))
+		halloss = 0
 	return halloss
 
 /mob/living/proc/adjustHalLoss(amount)
-	if(status_flags & GODMODE)
+	if((status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_PAIN))
+		halloss = 0
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
 	halloss = clamp(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
-	if(status_flags & GODMODE)
+	if((status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_PAIN))
+		halloss = 0
 		return
 	if(amount - halloss > 0)
 		add_combo_value_all(amount - halloss)

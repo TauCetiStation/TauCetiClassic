@@ -90,7 +90,7 @@
 		O.adjustCloneLoss(getCloneLoss())
 		O.adjustFireLoss(getFireLoss())
 		O.adjustBrainLoss(getBrainLoss())
-		O.adjustHalLoss()
+		O.adjustHalLoss(getHalLoss())
 		O.updatehealth()
 		O.radiation = radiation
 
@@ -210,7 +210,7 @@
 		O.adjustCloneLoss(getCloneLoss())
 		O.adjustFireLoss(getFireLoss())
 		O.adjustBrainLoss(getBrainLoss())
-		O.adjustHalLoss()
+		O.adjustHalLoss(getHalLoss())
 		O.updatehealth()
 		O.radiation = radiation
 

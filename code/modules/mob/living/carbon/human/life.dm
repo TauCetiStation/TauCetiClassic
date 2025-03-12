@@ -1167,11 +1167,12 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_shock()
 	..()
-	if(status_flags & GODMODE)	return FALSE	//godmode
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
+
+	if(!traumatic_shock)
 		return
-	if(analgesic && !reagents.has_reagent("prismaline"))
-		return // analgesic avoids all traumatic shock temporarily
+
+	// do not add any toggleable debuffs below, if mob got his traumatic_shock disabled (TRAIT_NO_PAIN for example)
+	// we will newer reach this code again
 
 	var/message
 
@@ -1181,7 +1182,7 @@ var/global/list/tourette_bad_words= list(
 	if(traumatic_shock >= TRAUMATIC_SHOCK_SERIOUS)
 		message = "<span class='boldwarning'><B>[pick("Ughhh... When will it end?", "You're wincing in pain!", "You really need some painkillers!")]</B></span>"
 		blurEyes(2)
-		stuttering = max(stuttering, 5)
+		Stuttering(5)
 
 	if(traumatic_shock >= TRAUMATIC_SHOCK_INTENSE)
 		message = "<span class='danger'>[pick("Stop this pain!", "This pain is unbearable!", "Your whole body is going numb!")]</span>"
@@ -1285,7 +1286,7 @@ var/global/list/tourette_bad_words= list(
 	if(species.flags[REQUIRE_LIGHT])
 		if(nutrition < 200)
 			take_overall_damage(2,0)
-			traumatic_shock++
+			adjustHalLoss(1)
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes

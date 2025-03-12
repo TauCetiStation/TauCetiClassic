@@ -2,8 +2,14 @@
 	var/traumatic_shock = 0
 	var/painkiller_overlay_time = 0
 
-// proc to find out in how much pain the mob is at the moment
-/mob/living/carbon/proc/updateshock()
+/mob/living/carbon/proc/handle_shock()
+	if(painkiller_overlay_time > 0)
+		painkiller_overlay_time--
+
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN) || status_flags & GODMODE)
+		traumatic_shock = 0
+		return
+
 	traumatic_shock = 			\
 	0.5	* getToxLoss() + 		\
 	1.5	* getFireLoss() + 		\
@@ -26,20 +32,8 @@
 
 	if(traumatic_shock < 0)
 		traumatic_shock = 0
-	if(painkiller_overlay_time > 0)
-		painkiller_overlay_time--
 
 	play_pain_sound()
-
-	return traumatic_shock
-
-/mob/living/carbon/human/updateshock()
-	if (HAS_TRAIT(src, TRAIT_NO_PAIN]))
-		return
-	..()
-
-/mob/living/carbon/proc/handle_shock()
-	updateshock()
 
 /mob/living/carbon/proc/play_pain_sound()
 	return
