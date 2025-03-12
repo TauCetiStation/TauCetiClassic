@@ -421,10 +421,10 @@
 			var/name = sanitize_safe(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")) as text|null, MAX_NAME_LEN)
 			if(!name)
 				return FALSE
-			var/a = 1
+			var/amount = 1
 			if(text2num(href_list["bulk"]))
-				a = ceil(reagents.total_volume / 30)
-			for(var/i = 1 to a)
+				amount = ceil(reagents.total_volume / 30)
+			for(var/i in 1 to amount)
 				var/obj/item/weapon/reagent_containers/glass/bottle/P = new(loc)
 				P.name = "[name] bottle"
 				P.icon_state = "bottle[bottlesprite]"
