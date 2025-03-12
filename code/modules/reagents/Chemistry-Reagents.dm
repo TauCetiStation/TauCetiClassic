@@ -197,9 +197,6 @@
 /datum/reagent/proc/on_golem_digest(mob/living/M)
 	return FALSE
 
-/datum/reagent/proc/on_slime_digest(mob/living/M)
-	return TRUE
-
 /datum/reagent/proc/on_serpentid_digest(mob/living/M)
 	return FALSE
 
