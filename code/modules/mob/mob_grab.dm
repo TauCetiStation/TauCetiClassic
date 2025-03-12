@@ -507,7 +507,7 @@
 
 						if(ishuman(user))
 							var/mob/living/carbon/human/H_user = user
-							var/datum/unarmed_attack/attack = H_user.species.unarmed
+							var/datum/unarmed_attack/attack = H_user.species.unarmed // todo
 
 							var/damage = rand(1, 5)
 							damage += attack.damage
