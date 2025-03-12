@@ -83,9 +83,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 //Species flags.
 #define NO_BLOOD           "no_blood"
-#define NO_BREATHE         "no_breathe"
-#define NO_SCAN            "no_scan"
-#define NO_PAIN            "no_pain"
 #define NO_EMBED           "no_embed"
 #define NO_FAT             "no_fatness"
 #define HAS_SKIN_TONE      "has_skin_tone" // species use presets colors from /datum/skin_tone (humans only atm)
@@ -93,15 +90,13 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HAS_HAIR_COLOR     "has_hair_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
-#define HAS_TAIL           "has_tail"
+#define HAS_TAIL           "has_tail" // should be species organ, not trait
 #define IS_SOCIAL          "is_social"
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
 #define REQUIRE_LIGHT      "require_light"
 #define IS_SYNTHETIC       "is_synthetic"
-#define RAD_IMMUNE         "rad_immune"
-#define VIRUS_IMMUNE       "virus_immune"
 #define NO_VOMIT           "no_vomit"
 #define HAS_HAIR           "has_hair"
 #define NO_FINGERPRINT     "no_fingerprint"
@@ -115,6 +110,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_SLIP            "no_slip"
 #define NO_MED_HEALTH_SCAN "no_med_health_scan"
 #define NO_WILLPOWER       "no_willpower"
+// please do not add new species flags except for species-specific things like underwear or colors, use race_traits
+// most of current flags should be moved to traits too or replaced with species checks
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

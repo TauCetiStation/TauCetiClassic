@@ -165,7 +165,7 @@
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(!H.species.flags[NO_PAIN] && !HAS_TRAIT(H, TRAIT_IMMOBILIZED))
+				if(!HAS_TRAIT(H, TRAIT_NO_PAIN) && !HAS_TRAIT(H, TRAIT_IMMOBILIZED))
 					H.adjustHalLoss(25)
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")

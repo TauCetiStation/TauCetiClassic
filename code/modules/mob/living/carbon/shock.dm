@@ -34,7 +34,7 @@
 	return traumatic_shock
 
 /mob/living/carbon/human/updateshock()
-	if (species && species.flags[NO_PAIN])
+	if (HAS_TRAIT(src, TRAIT_NO_PAIN]))
 		return
 	..()
 
@@ -49,7 +49,7 @@
 		return
 	if(last_pain_emote_sound > world.time)
 		return
-	if(species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN) || species.flags[IS_SYNTHETIC])
 		return
 	if(time_of_last_damage + 15 SECONDS > world.time) // don't cry from the pain that just came
 		return

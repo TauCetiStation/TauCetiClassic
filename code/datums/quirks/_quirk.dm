@@ -16,6 +16,7 @@
 	var/list/incompatible_species
 	// A dict of /datum/species flags of kind flag = value. Checks if those values are upheld.
 	var/list/req_species_flags
+	var/list/blacklisted_species_traits // todo: checks only species, some quirks and qualities can add own traits at spawn and we currently ignore it
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
@@ -50,15 +51,18 @@
 	. = incompatible_species
 	LAZYINITLIST(.)
 
-	species_loop:
-		for(var/specie_name in all_species)
-			var/datum/species/S = all_species[specie_name]
+	for(var/specie_name in all_species)
+		var/datum/species/S = all_species[specie_name]
 
-			for(var/flag in req_species_flags)
-				var/has_flag = !!S.flags[flag]
-				if(has_flag != req_species_flags[flag])
-					. |= specie_name
-					continue species_loop
+		if(blacklisted_species_traits && length(S.race_traits | blacklisted_species_traits))
+			. |= specie_name
+			continue
+
+		for(var/flag in req_species_flags)
+			var/has_flag = !!S.flags[flag]
+			if(has_flag != req_species_flags[flag])
+				. |= specie_name
+				break
 
 /datum/quirk/proc/transfer_mob(mob/living/to_mob)
 	quirk_holder.roundstart_quirks -= src

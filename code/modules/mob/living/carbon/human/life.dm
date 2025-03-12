@@ -271,7 +271,7 @@ var/global/list/tourette_bad_words= list(
 		dna_inject_count--
 
 	if(radiation)
-		if(species.flags[RAD_IMMUNE])
+		if(HAS_TRAIT(src, TRAIT_RADIATION_IMMUNE))
 			return
 
 		if (radiation > 100)
@@ -444,7 +444,7 @@ var/global/list/tourette_bad_words= list(
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 			adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE] && isspaceturf(get_turf(src)))
+	else if(!species.flags[IS_SYNTHETIC] && !HAS_TRAIT(src, TRAIT_RADIATION_IMMUNE) && isspaceturf(get_turf(src)))
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
 		if(HAS_ROUND_ASPECT(ROUND_ASPECT_HIGH_SPACE_RADIATION))
@@ -931,7 +931,7 @@ var/global/list/tourette_bad_words= list(
 			healths.icon_state = "health7"
 			return
 
-	switch(100 - ((species && species.flags[NO_PAIN] && !species.flags[IS_SYNTHETIC]) ? 0 : traumatic_shock))
+	switch(100 - ((HAS_TRAIT(src, TRAIT_NO_PAIN) && !species.flags[IS_SYNTHETIC]) ? 0 : traumatic_shock))
 		if(100 to INFINITY)
 			healths.icon_state = "health0"
 		if(80 to 100)
@@ -1168,7 +1168,7 @@ var/global/list/tourette_bad_words= list(
 /mob/living/carbon/human/handle_shock()
 	..()
 	if(status_flags & GODMODE)	return FALSE	//godmode
-	if(species && species.flags[NO_PAIN])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	if(analgesic && !reagents.has_reagent("prismaline"))
 		return // analgesic avoids all traumatic shock temporarily

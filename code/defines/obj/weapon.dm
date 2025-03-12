@@ -204,7 +204,7 @@
 				if(BP.is_robotic())
 					return
 				BP.take_damage(5, 0)
-				if(!H.species.flags[NO_PAIN])
+				if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 					H.Stun(1)
 					H.Weaken(3)
 				H.updatehealth()

@@ -143,7 +143,7 @@
 			to_chat(U, "<span class='warning'>[T] is not compatible with our biology.</span>")
 			return FALSE
 
-		if(T.species.flags[NO_SCAN])
+		if(HAS_TRAIT(T, TRAIT_INCOMPATIBLE_DNA))
 			to_chat(src, "<span class='warning'>We do not know how to parse this creature's DNA!</span>")
 			return FALSE
 

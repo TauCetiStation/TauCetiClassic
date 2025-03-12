@@ -201,6 +201,11 @@
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_SLIME               "slime"
+#define TRAIT_NO_BREATHE          "no_breathe"
+#define TRAIT_INCOMPATIBLE_DNA    "incompatible_dna"
+#define TRAIT_NO_PAIN             "no_pain"
+#define TRAIT_RADIATION_IMMUNE    "radiation_immune"
+#define TRAIT_VIRUS_IMMUNE        "virus_immune"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -247,13 +252,13 @@
 // trait sources
 #define EYE_DAMAGE_TRAIT "eye_damage"
 #define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
-#define GENETIC_MUTATION_TRAIT "genetic"
+#define GENETIC_MUTATION_TRAIT "genetic_mutation_trait"
 #define QUIRK_TRAIT "quirk"
 #define VIRUS_TRAIT "virus"
 #define STATUS_EFFECT_TRAIT "status_effect"
 #define IMPLANT_TRAIT "implant"
 #define FAKE_IMPLANT_TRAIT "fake_implant"
-
+#define SPECIES_TRAIT      "species"
 
 // airborn trait surces
 #define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself

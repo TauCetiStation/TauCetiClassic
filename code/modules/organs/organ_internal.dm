@@ -226,7 +226,7 @@
 
 /obj/item/organ/internal/lungs/process()
 	..()
-	if (owner.species && owner.species.flags[NO_BREATHE])
+	if (HAS_TRAIT(owner, TRAIT_NO_BREATHE) || (NO_BREATH in owner.mutations))
 		return
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(!owner.reagents.has_reagent("dextromethorphan") && prob(5))

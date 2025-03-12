@@ -89,7 +89,7 @@
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 
-	var/list/flags = list()       // Various specific features.
+	var/list/flags = list()       // Various specific features. Please use race_traits.
 
 	var/specie_suffix_fire_icon = "human"
 	var/datum/dirt_cover/blood_datum_path = /datum/dirt_cover/red_blood //Red.
@@ -190,9 +190,9 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
-	// The type of skeleton/slime species they would be turned into. default is human
+	// The type of skeleton species they would be turned into. default is human
+	// slime people remover as species and replaced by trait, skeletons are next
 	var/skeleton_type = SKELETON
-	var/slime_species = SLIME
 
 	var/default_mood_event
 
@@ -294,7 +294,7 @@
 		A.Grant(H)
 	H.verbs += race_verbs
 	for(var/trait in race_traits)
-		ADD_TRAIT(H, trait, GENERIC_TRAIT)
+		ADD_TRAIT(H, trait, SPECIES_TRAIT)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
@@ -317,7 +317,7 @@
 		qdel(A)
 	H.verbs -= race_verbs
 	for(var/trait in race_traits)
-		REMOVE_TRAIT(H, trait, GENERIC_TRAIT)
+		REMOVE_TRAIT(H, trait, SPECIES_TRAIT)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
@@ -427,18 +427,20 @@
 	pluvian_social_credit = 0
 	eyes_static_layer = "pluvia"
 	eyes_glowing = TRUE
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_RADIATION_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
+	)
 	flags = list(
-	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_DNA = TRUE
-	,NO_SCAN = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_BLOOD_TRAILS = TRUE
-	,NO_PAIN = TRUE
-	,RAD_IMMUNE = TRUE
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
@@ -679,9 +681,12 @@
 	inhale_type = "nitrogen"
 	poison_type = "oxygen"
 
+	race_traits = list(
+		TRAIT_INCOMPATIBLE_DNA,
+	)
+
 	flags = list(
 		IS_WHITELISTED = TRUE
-		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
 		,HAS_TAIL = TRUE
 		,HAS_HAIR_COLOR = TRUE
@@ -801,11 +806,14 @@
 
 	is_common = TRUE
 
+	race_traits = list(
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+	)
+
 	flags = list(
-	 NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
-	,NO_PAIN = TRUE
 	,NO_FAT = TRUE
 	,IS_SOCIAL = TRUE
 	,NO_GENDERS = TRUE
@@ -865,14 +873,17 @@
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
 	bodypart_butcher_results = list(/obj/item/stack/sheet/wood = 1)
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+	)
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
-	,NO_BREATHE = TRUE
 	,REQUIRE_LIGHT = TRUE
-	,NO_SCAN = TRUE
 	,NO_EMOTION = TRUE
 	,NO_BLOOD = TRUE
-	,NO_PAIN = TRUE
 	,NO_FINGERPRINT = TRUE
 	,IS_PLANT = TRUE
 	,NO_VOMIT = TRUE
@@ -1030,13 +1041,16 @@
 	speed_mod = 2.7
 	speed_mod_no_shoes = -2
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+	)
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
-	,NO_BREATHE = TRUE
 	,REQUIRE_LIGHT = TRUE
-	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
-	,NO_PAIN = TRUE
 	,IS_PLANT = TRUE
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
@@ -1128,19 +1142,21 @@
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_VIRUS_IMMUNE,
+	)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
-	,NO_BREATHE = TRUE
-	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
 	,NO_DNA = TRUE
-	,NO_PAIN = TRUE
 	,NO_EMOTION = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
 	,HAS_SKIN_COLOR = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
@@ -1250,11 +1266,14 @@
 
 	flesh_color = "#808080"
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
-	,NO_SCAN = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,NO_VOMIT = TRUE
 	,NO_GENDERS = TRUE
 	)
@@ -1286,16 +1305,19 @@
 	butcher_drops = list()
 	bodypart_butcher_results = list()
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_RADIATION_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_DNA = TRUE
-	,NO_SCAN = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_BLOOD_TRAILS = TRUE
-	,NO_PAIN = TRUE
-	,RAD_IMMUNE = TRUE
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
@@ -1369,65 +1391,6 @@
 	.=..()
 	flags[HAS_TAIL]=TRUE
 
-//Species unarmed attacks
-
-/datum/unarmed_attack
-	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
-	var/damage = 0						// Extra empty hand attack damage.
-	var/damType = BRUTE
-	var/miss_sound = 'sound/effects/mob/hits/miss_1.ogg'
-	var/sharp = FALSE
-	var/edge = FALSE
-	var/list/attack_sound
-
-/datum/unarmed_attack/New()
-	attack_sound = SOUNDIN_PUNCH_MEDIUM
-
-/datum/unarmed_attack/proc/damage_flags()
-	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
-
-/datum/unarmed_attack/punch
-	attack_verb = list("punch")
-
-/datum/unarmed_attack/diona
-	attack_verb = list("lash", "bludgeon")
-	damage = 2
-
-/datum/unarmed_attack/diona/podman
-	damage = 1
-
-/datum/unarmed_attack/slime_glomp
-	attack_verb = list("glomp")
-	damage = 5
-	damType = CLONE
-
-/datum/unarmed_attack/slime_glomp/New()
-	attack_sound = list('sound/effects/attackblob.ogg')
-
-/datum/unarmed_attack/claws
-	attack_verb = list("scratch", "claw")
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	damage = 2
-	sharp = TRUE
-	edge = TRUE
-
-/datum/unarmed_attack/claws/New()
-	attack_sound = list('sound/weapons/slice.ogg')
-
-/datum/unarmed_attack/claws/armalis
-	attack_verb = list("slash", "claw")
-	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
-
-/datum/unarmed_attack/claws/abomination
-	attack_verb = list("slash", "claw", "lacerate")
-	damage = 35
-
-/datum/unarmed_attack/claws/serpentid
-	attack_verb = list("mauled", "slashed", "struck", "pierced")
-	damage = 6
-	sharp = 1
-	edge = 1
-
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
@@ -1467,14 +1430,17 @@
 
 	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_RADIATION_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_EMBED = TRUE
-	,RAD_IMMUNE = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
-	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
@@ -1535,15 +1501,18 @@
 
 	pluvian_social_credit = 0
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_RADIATION_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
 		NO_BLOOD = TRUE,
 		NO_DNA = TRUE,
-		NO_BREATHE = TRUE,
-		NO_SCAN = TRUE,
-		NO_PAIN = TRUE,
 		NO_EMBED = TRUE,
-		RAD_IMMUNE = TRUE,
-		VIRUS_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
@@ -1624,19 +1593,22 @@
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
 	has_gendered_icons = FALSE
-	race_traits = list(TRAIT_HEMOCOAGULATION)
 
 	eyes_colorable_layer = /datum/species/human::eyes_colorable_layer
 	eyes_static_layer = /datum/species/human::eyes_static_layer
 	eyes_glowing = TRUE
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_HEMOCOAGULATION,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	NO_BREATHE = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,NO_SCAN = TRUE
-	,NO_PAIN = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,NO_EMOTION = TRUE
 	,NO_EMBED = TRUE
 	)
@@ -1692,22 +1664,24 @@
 	brute_mod = 2
 	burn_mod = 1.2
 	speed_mod = -0.6
-	race_traits = list(TRAIT_HEMOCOAGULATION, TRAIT_NATURAL_AGILITY)
-
-
 
 	tail = "tajaran_zombie"
 
 	flesh_color = "#afa59e"
 	base_color = "#000000"
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_HEMOCOAGULATION,
+		TRAIT_NATURAL_AGILITY,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	NO_BREATHE = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,NO_SCAN = TRUE
-	,NO_PAIN = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
 	,NO_EMBED = TRUE
@@ -1747,13 +1721,16 @@
 	base_color = "#000000"
 	has_gendered_icons = FALSE
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	NO_BREATHE = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,NO_SCAN = TRUE
-	,NO_PAIN = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
 	,NO_EMBED = TRUE
@@ -1782,14 +1759,17 @@
 
 	darksight = 3
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_RADIATION_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	 NO_BREATHE = TRUE
-	,NO_SCAN = TRUE
-	,NO_PAIN = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_UNDERWEAR = TRUE
-	,RAD_IMMUNE = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,IS_SOCIAL = TRUE
 	)
 
@@ -1797,89 +1777,6 @@
 	max_age = 85
 
 	is_common = TRUE
-
-/datum/species/slime/unathi
-	name = SLIME_UNATHI
-	icobase = 'icons/mob/human_races/r_lizard_slime.dmi'
-	deform = 'icons/mob/human_races/r_lizard_slime.dmi'
-	gender_tail_icons = TRUE
-	tail = "unathi_slime"
-
-	flags = list(
-	NO_BREATHE = TRUE
-	,NO_SCAN = TRUE
-	,NO_PAIN = TRUE
-	,HAS_SKIN_COLOR = TRUE
-	,HAS_UNDERWEAR = TRUE
-	,RAD_IMMUNE = TRUE
-	,VIRUS_IMMUNE = TRUE
-	,IS_SOCIAL = TRUE
-	,HAS_TAIL = TRUE
-	)
-
-/datum/species/slime/vox
-	name = SLIME_VOX
-	icobase = 'icons/mob/human_races/r_vox_slime.dmi'
-	deform = 'icons/mob/human_races/r_vox_slime.dmi'
-	has_gendered_icons = FALSE
-	gender_limb_icons = FALSE
-	tail = "vox_slime"
-	eyes_colorable_layer = /datum/species/vox::eyes_colorable_layer
-
-	flags = list(
-	NO_BREATHE = TRUE
-	,NO_SCAN = TRUE
-	,NO_PAIN = TRUE
-	,HAS_SKIN_COLOR = TRUE
-	,RAD_IMMUNE = TRUE
-	,VIRUS_IMMUNE = TRUE
-	,IS_SOCIAL = TRUE
-	,HAS_TAIL = TRUE
-	)
-
-	sprite_sheets = list(
-		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
-		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
-		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
-		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
-		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
-		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
-		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
-		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
-		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi',
-		SPRITE_SHEET_BACK = 'icons/mob/species/vox/back.dmi'
-		)
-
-/datum/species/slime/tajaran
-	name = SLIME_TAJARAN
-	icobase = 'icons/mob/human_races/r_tajaran_slime.dmi'
-	deform = 'icons/mob/human_races/r_tajaran_slime.dmi'
-	gender_tail_icons = TRUE
-	tail = "tajaran_slime"
-
-	flags = list(
-	NO_BREATHE = TRUE
-	,NO_SCAN = TRUE
-	,NO_PAIN = TRUE
-	,HAS_SKIN_COLOR = TRUE
-	,HAS_UNDERWEAR = TRUE
-	,RAD_IMMUNE = TRUE
-	,VIRUS_IMMUNE = TRUE
-	,IS_SOCIAL = TRUE
-	,HAS_TAIL = TRUE
-	)
-
-/datum/species/slime/skrell
-	name = SLIME_SKRELL
-	icobase = 'icons/mob/human_races/r_skrell_slime.dmi'
-	deform = 'icons/mob/human_races/r_skrell_slime.dmi'
-	has_gendered_icons = FALSE
-	gender_limb_icons = FALSE
-	eyes_colorable_layer = /datum/species/skrell::eyes_colorable_layer
-
-
-/datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_slime_digest(M)
 
 /datum/species/abomination
 	name = ABOMINATION
@@ -1910,16 +1807,19 @@
 
 	restricted_inventory_slots = list(SLOT_BELT, SLOT_NECK, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES)
 
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_RADIATION_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-	 NO_BREATHE = TRUE
-	,RAD_IMMUNE = TRUE
-	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
-	,NO_SCAN = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
-	,NO_PAIN = TRUE
 	,NO_GENDERS = TRUE
 	)
 
@@ -1973,12 +1873,15 @@
 		,BP_R_LEG = /obj/item/organ/external/r_leg/homunculus
 		)
 
+	race_traits = list(
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
 		NO_DNA = TRUE,
-		NO_SCAN = TRUE,
-		NO_PAIN = TRUE,
 		RAD_ABSORB = TRUE,
-		VIRUS_IMMUNE = TRUE,
 		NO_EMOTION = TRUE,
 		HAS_TAIL = TRUE,
 		HAS_HAIR = TRUE,
@@ -2068,8 +1971,12 @@
 	oxy_mod = 0.5
 	speed_mod = -0.5
 	total_health = 200
+
+	race_traits = list(
+		TRAIT_INCOMPATIBLE_DNA,
+	)
+
 	flags = list(
-		NO_SCAN = TRUE,
 		NO_DNA = TRUE,
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
@@ -2225,20 +2132,24 @@
 	icobase = 'icons/mob/human_races/r_moth.dmi'
 	deform = 'icons/mob/human_races/r_moth.dmi'
 	avaible_wings = list("Atlas Wings")
+
+	race_traits = list(
+		TRAIT_NO_BREATHE,
+		TRAIT_INCOMPATIBLE_DNA,
+		TRAIT_NO_PAIN,
+		TRAIT_RADIATION_IMMUNE,
+		TRAIT_VIRUS_IMMUNE,
+	)
+
 	flags = list(
-				NO_BREATHE = TRUE,
 				NO_BLOOD = TRUE,
 				NO_EMBED = TRUE,
-				RAD_IMMUNE = TRUE,
-				VIRUS_IMMUNE = TRUE,
 				NO_FINGERPRINT = TRUE,
-				NO_SCAN = TRUE,
 				NO_MED_HEALTH_SCAN = TRUE,
 				NO_MINORCUTS = TRUE,
 				NO_VOMIT = TRUE,
 				NO_EMOTION = TRUE,
 				NO_DNA = TRUE,
-				NO_PAIN = TRUE,
 				NO_GENDERS = TRUE,
 				NO_FAT = TRUE,
 				)

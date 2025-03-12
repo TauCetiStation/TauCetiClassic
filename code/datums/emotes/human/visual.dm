@@ -24,7 +24,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_BREATHE),
 	)
 
 

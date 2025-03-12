@@ -915,10 +915,10 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 
-/datum/reagent/aqueous_foam/on_slime_digest(mob/living/M)
+/datum/reagent/aqueous_foam/on_general_digest(mob/living/M)
 	..()
-	M.adjustToxLoss(REM)
-	return FALSE
+	if(HAS_TRAIT(src, TRAIT_SLIME))
+		M.adjustToxLoss(REM)
 
 /datum/reagent/consumable/drink/liquidelectricity
 	name = "Liquid Electricity"

@@ -73,7 +73,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_PAIN),
 	)
 
 /datum/emote/human/grunt/get_impaired_msg(mob/user)
@@ -113,7 +113,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_PAIN),
 	)
 
 /datum/emote/human/groan/get_impaired_msg(mob/user)
@@ -159,7 +159,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_PAIN),
 	)
 
 /datum/emote/human/scream/get_impaired_msg(mob/user)
@@ -196,7 +196,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_BREATHE),
 	)
 
 /datum/emote/human/cough/get_impaired_msg(mob/user)
@@ -223,7 +223,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_BREATHE),
 	)
 
 /datum/emote/human/hiccup/get_impaired_msg(mob/user)
@@ -245,7 +245,7 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_BREATHE),
 	)
 
 	cloud = "cloud-gasp"
@@ -268,7 +268,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_BREATHE),
 	)
 
 /datum/emote/human/snore/get_impaired_msg(mob/user)
@@ -334,7 +334,7 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_BREATHE),
 	)
 
 	cloud = "cloud-gasp"

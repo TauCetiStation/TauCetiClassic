@@ -8,7 +8,7 @@
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
-		if(target.species.flags[NO_SCAN] || target.species.flags[IS_SYNTHETIC])
+		if(HAS_TRAIT(target, TRAIT_INCOMPATIBLE_DNA) || target.species.flags[IS_SYNTHETIC])
 			charge_counter = charge_max
 			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return

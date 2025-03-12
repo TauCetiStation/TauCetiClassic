@@ -375,20 +375,20 @@
 		regenerating_organ_time++
 		switch(regenerating_organ_time)
 			if(1)
-				visible_message("<span class='notice'>You see odd movement in [src]'s [regenerating_bodypart.name]...</span>","<span class='notice'> You [species && species.flags[NO_PAIN] ? "notice" : "feel"] strange vibration on tips of your [regenerating_bodypart.name]... </span>")
+				visible_message("<span class='notice'>You see odd movement in [src]'s [regenerating_bodypart.name]...</span>","<span class='notice'> You [HAS_TRAIT(src, TRAIT_NO_PAIN) ? "notice" : "feel"] strange vibration on tips of your [regenerating_bodypart.name]... </span>")
 			if(10)
 				visible_message("<span class='notice'>You hear sickening crunch In [src]'s [regenerating_bodypart.name]...</span>")
 			if(20)
 				visible_message("<span class='notice'>[src]'s [regenerating_bodypart.name] shortly bends...</span>")
 			if(30)
 				if(regenerating_capacity_penalty == regenerating_bodypart.regen_bodypart_penalty/2)
-					visible_message("<span class='notice'>[src] stirs his [regenerating_bodypart.name]...</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] freedom in moving your [regenerating_bodypart.name]</span>")
+					visible_message("<span class='notice'>[src] stirs his [regenerating_bodypart.name]...</span>","<span class='userdanger'>You [HAS_TRAIT(src, TRAIT_NO_PAIN) ? "notice" : "feel"] freedom in moving your [regenerating_bodypart.name]</span>")
 				else
 					visible_message("<span class='notice'>From [src]'s [parse_zone(regenerating_bodypart.body_zone)] grows a small meaty sprout...</span>")
 			if(50)
 				visible_message("<span class='notice'>You see something resembling [parse_zone(regenerating_bodypart.body_zone)] at [src]'s [regenerating_bodypart.parent.name]...</span>")
 			if(65)
-				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
+				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [HAS_TRAIT(src, TRAIT_NO_PAIN) ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
 		if(prob(50))
 			emote("scream")
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
@@ -659,7 +659,7 @@
 	if(.)
 		if(species && species.flags[IS_SYNTHETIC])
 			nutrition += . // Electrocute act returns it's shock_damage value.
-		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
+		if(HAS_TRAIT(src, TRAIT_NO_PAIN)) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
 			. = 0
 		electrocution_animation(40)
 
@@ -1415,9 +1415,6 @@
 
 	maxHealth = species.total_health
 
-	if(species.flags[NO_PAIN])
-		traumatic_shock = 0
-
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = HEX_VAL_RED(species.base_color)
@@ -1836,13 +1833,13 @@
 /mob/living/carbon/human/is_skip_breathe()
 	if(..())
 		return TRUE
-	if(NO_BREATH in src.mutations)
+	if(NO_BREATH in src.mutations) // need to move mutation to trait too
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_NO_BREATHE))
 		return TRUE
 	if(reagents.has_reagent("lexorin"))
 		return TRUE
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return TRUE
-	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
 		return TRUE
 	if(ismob(loc))
 		return TRUE

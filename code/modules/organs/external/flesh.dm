@@ -609,7 +609,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"<span class='warning'><b>Something feels like it shattered in your [BP.name]!</b></span>",
 		"You hear a sickening crack.")
 
-	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
+	if(!HAS_TRAIT(BP.owner, TRAIT_NO_PAIN))
 		BP.owner.emote("scream")
 
 	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)

@@ -6,8 +6,8 @@
 	gain_text = "<span class='danger'>Вы хотите показать свою силу. Вы попытаетесь игнорировать любую боль.</span>"
 	lose_text = "<span class='notice'>Вы устали превозмогать боль.</span>"
 
-	req_species_flags = list(
-		NO_PAIN = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
 	)
 
 
@@ -20,8 +20,8 @@
 	gain_text = "<span class='danger'>Вам страшно от одной лишь мысли о боли.</span>"
 	lose_text = "<span class='notice'>Вы больше не хотите выглядеть слабаком. Теперь вы пытаетесь терпеть боль.</span>"
 
-	req_species_flags = list(
-		NO_PAIN = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
 	)
 
 

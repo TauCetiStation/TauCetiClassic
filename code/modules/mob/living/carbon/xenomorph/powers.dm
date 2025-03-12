@@ -233,7 +233,7 @@
 			to_chat(H, "<span class='danger'>You feel strong vibrations and quiet noise...</span>")
 			H.Stun(2)
 			continue
-		if(H.species.flags[NO_BREATHE] || H.species.flags[NO_PAIN]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems and vox armalis get less debuffs
+		if(HAS_TRAIT(H, TRAIT_NO_BREATHE) || HAS_TRAIT(H, TRAIT_NO_PAIN)) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems and vox armalis get less debuffs
 			to_chat(H, "<span class='danger'>You feel strong vibrations and loud noise, but you're strong enough to stand it!</span>")
 			H.Stun(2)
 			continue
