@@ -40,7 +40,7 @@
 		if(is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED)))
 			to_chat(user, "This is [details].")
 		else
-			to_chat(user, "Вы не можете понять что это за плата.")
+			to_chat(user, "Вы не можете понять, что это за плата.")
 
 /obj/item/weapon/circuitboard/turbine_computer
 	details = "circuit board (Turbine Computer)"
