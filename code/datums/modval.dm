@@ -1,0 +1,145 @@
+/*
+ * Basically your stat from RPG with set of dynamic mods (buffs or debuffs) like +20% or *20%.
+ *
+ * Below is some examples of how it will be calculated.
+ *
+ * You can add a multiplicative mod of 0.20: 
+ * value * 0.20
+ * the final value becomes 20% of the original value.
+ *
+ * Or an additive mod of 0.20:
+ * value + value * 0.20
+ * the final value increases by 20% of the original value.
+ *
+ * You can stack them, for example it's how will be calculated two multiplicative mods of 0.20: 
+ * value * 0.20 * 0.20 = value * 0.04 
+ * so the value becomes 4% of the original, multiplicative mods are powerful!
+ *
+ * Or two additive:
+ * value + value * (0.20 + 0.20) = value + value * 0.40 = value * (1 + 0.40) 
+ * the final value becomes 140% of the original value.
+ * 
+ * You can combine multiple multiplicative and additive mods from different sources
+ * and even add another modval as a modificator (disclaimer: there is no built-in protection from loop dependencies)
+ * and you can add multiplicative with "0" value to overwrite all others.
+ *
+ * In the end it will be calculated like this:
+ * value = base_value * PRODUCT(multiplicatives) * (1 + SUM(additives))
+ */
+
+/datum/modval
+	VAR_PRIVATE/value = 0
+	VAR_PRIVATE/base_value = 0
+	VAR_PRIVATE/clamp_min
+	VAR_PRIVATE/clamp_max
+	VAR_PRIVATE/round_base
+	VAR_PRIVATE/list/multiplicatives
+	VAR_PRIVATE/list/additives
+
+/datum/modval/New(base_value, clamp_min, clamp_max, round_base)
+	src.base_value = base_value
+	src.clamp_min = clamp_min
+	src.clamp_max = clamp_max
+	src.round_base = round_base
+
+/datum/modval/proc/SetBaseValue(new_value)
+	PRIVATE_PROC(TRUE)
+
+	base_value = new_value
+	Recalculate()
+
+/datum/modval/proc/Get()
+	return value
+
+/datum/modval/proc/ModMultiplicative(multiplicative, source)
+	if(!source || isnull(multiplicative))
+		return
+
+	if(!multiplicatives)
+		multiplicatives = list()
+	else if(multiplicatives[source] == multiplicative)
+		return
+
+	if(istype(multiplicatives[source], /datum/modval))
+		UnregisterSignal(multiplicatives[source], COMSIG_MODVAL_UPDATE)
+
+	multiplicatives[source] = multiplicative
+	if(istype(multiplicatives[source], /datum/modval))
+		RegisterSignal(multiplicatives[source], COMSIG_MODVAL_UPDATE, PROC_REF(Recalculate))
+
+	Recalculate()
+
+/datum/modval/proc/ModAdditive(additive, source)
+	if(!source || isnull(additive))
+		return
+
+	if(!additives)
+		additives = list()
+	else if(additives[source] == multiplicative)
+		return
+
+	if(istype(additives[source], /datum/modval))
+		UnregisterSignal(additives[source], COMSIG_MODVAL_UPDATE)
+
+	additives[source] = additive
+	if(istype(additives[source], /datum/modval))
+		RegisterSignal(additives[source], COMSIG_MODVAL_UPDATE, PROC_REF(Recalculate))
+
+	Recalculate()
+
+/datum/modval/proc/RemoveModifiers(source)
+	if(multiplicatives[source] || additives[source])
+
+		multiplicatives -= source
+		if(!length(multiplicatives))
+			multiplicatives = null
+
+		additives -= source
+		if(!length(additives))
+			additives = null
+
+		Recalculate()
+
+/datum/modval/proc/Recalculate()
+	PRIVATE_PROC(TRUE)
+	SIGNAL_HANDLER
+
+	var/new_value = base_value
+
+	if(base_value) // don't need to calculate all mods if our base value is zero
+		var/multiplicative = 1
+		if(length(multiplicatives))
+			var/mod
+			for(var/source in multiplicatives)
+				if(istype(multiplicatives[source], /datum/modval))
+					var/datum/modval/V = multiplicatives[source]
+					mod = V.Get()
+				else
+					mod = multiplicatives[source]
+				multiplicative *= mod
+
+		var/additive = 0
+		if(length(additives))
+			var/mod
+			for(var/source in additives)
+				if(istype(additives[source], /datum/modval))
+					var/datum/modval/V = additives[source] 
+					mod = V.Get()
+				else
+					mod = additives[source]
+				additive += additives[source]
+
+		new_value = base_value * multiplicative * (1 + additive)
+
+	if(round_base)
+		new_value = round(new_value, round_base)
+
+	if(clamp_min && new_value < clamp_min)
+		new_value = clamp_min
+
+	if(clamp_min && new_value > clamp_max)
+		new_value = clamp_max
+
+	if(new_value != value)
+		value = new_value
+		SEND_SIGNAL(src, COMSIG_MODVAL_UPDATE, old_value)
