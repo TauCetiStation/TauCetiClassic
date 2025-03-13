@@ -714,7 +714,7 @@
 	return TRUE
 
 /atom/proc/check_sprite()
-	if(icon_state in icon_states(icon))
+	if(icon_exists(icon, icon_state))
 		return TRUE
 	return FALSE
 

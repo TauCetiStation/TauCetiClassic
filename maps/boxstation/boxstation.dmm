@@ -15710,6 +15710,7 @@
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/machinery/alarm{
@@ -19202,8 +19203,8 @@
 "aHM" = (
 /obj/structure/table/woodentable,
 /obj/item/globe/adhomai{
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -24943,8 +24944,8 @@
 /obj/structure/table/woodentable,
 /obj/random/misc/book,
 /obj/item/bust{
-	pixel_y = 4;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -43656,6 +43657,10 @@
 	pixel_x = -10;
 	pixel_y = 6
 	},
+/obj/item/jar/candy{
+	pixel_x = 12;
+	pixel_y = 10
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bzo" = (
@@ -60759,8 +60764,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cnt" = (
-/obj/machinery/space_heater,
 /obj/item/weapon/screwdriver,
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -76736,7 +76744,12 @@
 	pixel_x = -27
 	},
 /obj/item/weapon/stickers{
-	pixel_y = 16
+	pixel_y = 16;
+	pixel_x = 5
+	},
+/obj/item/jar/cookie{
+	pixel_y = 18;
+	pixel_x = -7
 	},
 /turf/simulated/floor{
 	dir = 10;

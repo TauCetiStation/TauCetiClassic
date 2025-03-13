@@ -631,7 +631,7 @@ BLIND     // can't see anything
 
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
-	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
+	if(icon_exists('icons/mob/uniform.dmi', "[basecolor]_d"))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		update_inv_mob()
 	else
