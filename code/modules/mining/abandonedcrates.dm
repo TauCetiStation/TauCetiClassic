@@ -131,7 +131,7 @@
 		if(1)
 			for(var/mob/living/carbon/C in viewers(src, 2))
 				C.flash_eyes()
-			new/mob/living/simple_animal/hostile/mimic/crate(get_turf(src))
+			new/mob/living/simple_animal/hostile/mimic/crate/loot(get_turf(src))
 		if(2)
 			explosion(src, -1, 2, 3, 4)
 	qdel(src)
