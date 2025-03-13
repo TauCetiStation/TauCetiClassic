@@ -63498,6 +63498,7 @@
 "oTW" = (
 /obj/machinery/door/airlock{
 	dir = 4;
+	id_tag = "brig_tolchok";
 	name = "Toilet"
 	},
 /turf/simulated/floor/plating,
@@ -73602,6 +73603,12 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door_control{
+	id = "brig_tolchok";
+	name = "Bolt Door";
+	pixel_y = 28;
+	specialfunctions = 4
+	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "ryA" = (
