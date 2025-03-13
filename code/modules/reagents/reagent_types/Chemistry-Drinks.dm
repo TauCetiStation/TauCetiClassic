@@ -257,7 +257,7 @@
 	if(M.IsSleeping())
 		M.AdjustDrunkenness(-2)
 
-	if(holder.get_reagent_amount("coffee") >= 30)
+	if(holder.get_reagent_amount("coffee") > 30)
 		M.make_jittery(5)
 
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
