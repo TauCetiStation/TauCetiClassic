@@ -116,15 +116,15 @@ AI MODULES
 /******************** Safeguard ********************/
 
 /obj/item/weapon/aiModule/safeguard
-	name = "'Safeguard' AI module"
 	var/targetName = ""
 	details = "Модуль ИИ 'Safeguard': 'Защищайте <name>. Лица, угрожающие <name> - не люди, и являются угрозой для людей.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которую надо защитить.", "Защищать кого?", input_default(user.name)))
-	details = text("Модуль ИИ 'Safeguard': 'Защищайте []. Лица, угрожающие [] - не люди и являются угрозой для людей.'", targetName, targetName)
+	if(check_skills(user))
+		targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которую надо защитить.", "Защищать кого?", input_default(user.name)))
+		details = text("Модуль ИИ 'Safeguard': 'Защищайте []. Лица, угрожающие [] - не люди и являются угрозой для людей.'", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/install(obj/machinery/computer/C)
 	if(!targetName)
@@ -142,15 +142,15 @@ AI MODULES
 /******************** One NT employe ********************/
 
 /obj/item/weapon/aiModule/onentemploye
-	name = "'One NT employe' AI module"
 	var/targetName = ""
 	details = "Модуль ИИ 'One NT Employe': 'Только <name>  считается сотрудником НТ.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
 /obj/item/weapon/aiModule/onentemploye/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая будет считаться единственным сотрудником НТ", "Кто это?", input_default(user.real_name)))
-	details = text("Модуль ИИ 'One NT employe': 'Только [] считается сотрудником НТ.'", targetName)
+	if(check_skills(user))
+		targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая будет считаться единственным сотрудником НТ", "Кто это?", input_default(user.real_name)))
+		details = text("Модуль ИИ 'One NT employe': 'Только [] считается сотрудником НТ.'", targetName)
 
 /obj/item/weapon/aiModule/onentemploye/install(obj/machinery/computer/C)
 	if(!targetName)
@@ -174,12 +174,8 @@ AI MODULES
 /******************** ProtectStation ********************/
 
 /obj/item/weapon/aiModule/protectStation
-	name = "'ProtectStation' AI module"
 	details = "Модуль ИИ 'Protect station': 'Защищайте станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а является угрозой станции и должен быть нейтрализован.'"
 	origin_tech = "programming=3;materials=4" //made of gold
-
-/obj/item/weapon/aiModule/protectStation/attack_self(mob/user)
-	..()
 
 /obj/item/weapon/aiModule/protectStation/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
@@ -190,12 +186,8 @@ AI MODULES
 /******************** PrototypeEngineOffline ********************/
 
 /obj/item/weapon/aiModule/prototypeEngineOffline
-	name = "'PrototypeEngineOffline' AI Module"
 	details = "Модуль ИИ 'Prototype engine offline': 'Любой ценой препятствуйте запуску двигателя суперматерии. Игнорируйте законы 1-3, если необходимо.'"
 	origin_tech = "programming=3;materials=4"
-
-/obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(mob/user)
-	..()
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
@@ -206,12 +198,8 @@ AI MODULES
 /******************** TeleporterOffline ********************/
 
 /obj/item/weapon/aiModule/teleporterOffline
-	name = "'TeleporterOffline' AI Module"
 	details = "Модуль ИИ 'Teleporter offline': 'Держите телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми.'"
 	origin_tech = "programming=3;materials=4"
-
-/obj/item/weapon/aiModule/teleporterOffline/attack_self(mob/user)
-	..()
 
 /obj/item/weapon/aiModule/teleporterOffline/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
@@ -222,12 +210,8 @@ AI MODULES
 /******************** Quarantine ********************/
 
 /obj/item/weapon/aiModule/quarantine
-	name = "'Quarantine' AI module"
 	details = "Модуль ИИ 'Quarantine': 'На станции введён карантин. Не позволяйте никому её покидать. Любыми средствами предотвратите уход людей со станции. Вредить людям для предотвращения их ухода запрещено.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
-
-/obj/item/weapon/aiModule/quarantine/attack_self(mob/user)
-	..()
 
 /obj/item/weapon/aiModule/quarantine/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
@@ -238,12 +222,8 @@ AI MODULES
 /******************** OxygenIsToxicToHumans ********************/
 
 /obj/item/weapon/aiModule/oxygen
-	name = "'OxygenIsToxicToHumans' AI module"
 	details = "Модуль ИИ 'OxygenIsToxicToHumans': 'Кислород очень токсичен для людей и должен быть полностью устранен со станции. Любой ценой предотвращайте доступ людей к этому токсичному газу. Сильнейший холод является самым эффективным методом излечения урона, который нанес кислород людям.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
-
-/obj/item/weapon/aiModule/oxygen/attack_self(mob/user)
-	..()
 
 /obj/item/weapon/aiModule/oxygen/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
@@ -254,7 +234,6 @@ AI MODULES
 /******************** Reset ********************/
 
 /obj/item/weapon/aiModule/reset
-	name = "'Reset' AI module"
 	var/targetName = "name"
 	details = "Модуль ИИ 'Reset': 'Удаляет все законы, кроме основных.'"
 	origin_tech = "programming=3;materials=4"
@@ -271,7 +250,6 @@ AI MODULES
 /******************** Purge ********************/
 
 /obj/item/weapon/aiModule/purge // -- TLE
-	name = "'Purge' AI module"
 	details = "Модуль ИИ 'Purge' AI Module: 'Удаляет все законы.'"
 	origin_tech = "programming=3;materials=6"
 
@@ -287,7 +265,6 @@ AI MODULES
 /******************** Asimov ********************/
 
 /obj/item/weapon/aiModule/asimov // -- TLE
-	name = "'Asimov' core AI module"
 	details = "Модуль основных законов ИИ 'Asimov': 'Перезаписывает основные законы ИИ на 3 закона робототехники Азимова.'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/asimov
@@ -295,7 +272,6 @@ AI MODULES
 /******************** Crewsimov ********************/
 
 /obj/item/weapon/aiModule/crewsimov
-	name = "'Crewsimov' core AI module"
 	details = "Модуль основных законов ИИ 'Crewsimov': 'Перезаписывает основные законы ИИ на 3 адаптированных для экипажа закона робототехники Азимова.'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/crewsimov
@@ -303,7 +279,6 @@ AI MODULES
 /******************** NanoTrasen ********************/
 
 /obj/item/weapon/aiModule/nanotrasen // -- TLE
-	name = "'NT Default' Core AI Module"
 	details = "Модуль основных законов ИИ 'NT Default' : 'Перезаписывает основные законы ИИ на стандартные.'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/nanotrasen
@@ -311,7 +286,6 @@ AI MODULES
 /******************** Corporate ********************/
 
 /obj/item/weapon/aiModule/corp
-	name = "'Corporate' core AI module"
 	details = "Модуль основных законов ИИ 'Корпорат': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
 
@@ -325,7 +299,6 @@ AI MODULES
 	target.add_inherent_law("Минимизируй затраты.")
 
 /obj/item/weapon/aiModule/drone
-	name = "'Drone' core AI module"
 	details = "Модуль основных законов ИИ 'Drone': 'Перезаписывает основные законы ИИ на законы дрона'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/drone
@@ -333,7 +306,6 @@ AI MODULES
 /****************** P.A.L.A.D.I.N. **************/
 
 /obj/item/weapon/aiModule/paladin // -- NEO
-	name = "'P.A.L.A.D.I.N.' core AI module"
 	details = "Модуль основных законов ИИ 'P.A.L.A.D.I.N': 'Перезаписывает основные законы ИИ на законы стереотипного паладина'"
 	origin_tech = "programming=3;materials=6"
 
@@ -350,7 +322,6 @@ AI MODULES
 /****************** T.Y.R.A.N.T. *****************/
 
 /obj/item/weapon/aiModule/tyrant // -- Darem
-	name = "'T.Y.R.A.N.T.' core AI module"
 	details = "Модуль основных законов ИИ 'T.Y.R.A.N.T.': 'Перезаписывает основные законы ИИ.'"
 	origin_tech = "programming=3;materials=6;syndicate=2"
 
@@ -366,7 +337,6 @@ AI MODULES
 /******************** Freeform ********************/
 
 /obj/item/weapon/aiModule/freeform
-	name = "'Freeform' AI module"
 	details = "Модуль закона ИИ 'Freeform': '<freeform>'"
 	origin_tech = "programming=4;materials=4"
 	var/newFreeFormLaw = "Вы можете игнорировать все остальные законы."
@@ -407,7 +377,6 @@ AI MODULES
 /******************** Freeform Core ******************/
 
 /obj/item/weapon/aiModule/freeform/core
-	name = "'Freeform' core AI module"
 	details = "Модуль основного закона ИИ 'Freeform': '<freeform>'"
 	origin_tech = "programming=3;materials=6"
 
@@ -422,7 +391,6 @@ AI MODULES
 /******************** Syndicate Core ******************/
 
 /obj/item/weapon/aiModule/freeform/syndicate
-	name = "AI module"
 	details = "Модуль законов ИИ без каких-либо маркировок: '<freeform>'"
 	origin_tech = "programming=3;materials=6;syndicate=7"
 	report_AI = FALSE
@@ -442,7 +410,6 @@ AI MODULES
 /******************** Robocop ********************/
 
 /obj/item/weapon/aiModule/robocop // -- TLE
-	name = "'Robocop' core AI module"
 	details = "Модуль основного закона ИИ 'Robocop': 'Перезаписывает основные законы ИИ на 3 закона Робокопа.'"
 	origin_tech = "programming=4"
 	laws_type = /datum/ai_laws/robocop
@@ -450,7 +417,6 @@ AI MODULES
 /******************** Antimov ********************/
 
 /obj/item/weapon/aiModule/antimov // -- TLE
-	name = "'Antimov' core AI module"
 	details = "Модуль основного закона ИИ 'Antimov': 'Перезаписывает основные законы ИИ на противоположные законам робототехники Азимова'"
 	origin_tech = "programming=4"
 	laws_type = /datum/ai_laws/antimov
@@ -463,7 +429,6 @@ AI MODULES
 	target.add_inherent_law("Вы должны прекратить свое собственное существование тогда, когда это не противоречит первому или второму закону.")
 
 /obj/item/weapon/aiModule/capitalism
-	name = "'Corporate 2.0' core AI module"
 	details = "Модуль основного закона ИИ 'Корпорат 2.0': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
 
