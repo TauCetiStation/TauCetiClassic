@@ -6,9 +6,9 @@
 		return OBJECTIVE_LOSS
 	if(isbrain(owner.current))
 		return OBJECTIVE_LOSS
-	if(SSshuttle.location<2)
+	if(SSshuttle.location < 2)
 		return OBJECTIVE_LOSS
-	if(!owner.current || owner.current.stat ==DEAD)
+	if(!owner.current || owner.current.stat == DEAD)
 		return OBJECTIVE_LOSS
 	var/turf/location = get_turf(owner.current.loc)
 	if(!location)
@@ -17,6 +17,8 @@
 	if(iscarbon(owner.current))
 		var/mob/living/carbon/C = owner.current
 		if(C.restrained())
+			return OBJECTIVE_LOSS
+		if(C.handcuffed)
 			return OBJECTIVE_LOSS
 
 	var/area/check_area = location.loc
