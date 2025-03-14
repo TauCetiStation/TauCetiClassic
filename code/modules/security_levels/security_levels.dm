@@ -6,12 +6,16 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 /proc/open_armory_poddoors()
 	for (var/obj/machinery/door/poddoor/D in world)
 		if (D.is_armory_door && D.density)
-			D.do_open()
+			var/area/A = get_area(D)
+			if(A && A.power_environ)
+				D.do_open()
 
 /proc/close_armory_poddoors()
 	for (var/obj/machinery/door/poddoor/D in world)
 		if (D.is_armory_door && !D.density)
-			D.do_close()
+			var/area/A = get_area(D)
+			if(A && A.power_environ)
+				D.do_close()
 
 /proc/set_security_level(level)
 	switch(level)
