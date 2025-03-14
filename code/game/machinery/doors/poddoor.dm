@@ -1,6 +1,5 @@
 /obj/machinery/door/poddoor
 	name = "Podlock"
-	var/is_armory_door = FALSE
 	desc = "Why it no open!!!"
 	icon = 'icons/obj/doors/blast_door.dmi'
 	icon_state = "pdoor1"
@@ -16,6 +15,14 @@
 	door_close_sound = 'sound/machines/blast_door.ogg'
 
 	resistance_flags = FULL_INDESTRUCTIBLE
+
+/obj/machinery/door/poddoor/New()
+	..()
+	global_poddoors += src
+
+/obj/machinery/door/poddoor/Destroy()
+	global_poddoors -= src
+	return ..()
 
 /obj/machinery/door/poddoor/cargo
 	icon = 'icons/locations/shuttles/cargo.dmi'

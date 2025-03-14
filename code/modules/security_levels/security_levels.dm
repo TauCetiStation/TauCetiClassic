@@ -2,20 +2,23 @@
 /var/delta_timer_id = 0
 var/global/list/code_name_eng = list("green", "blue", "red", "delta")
 var/global/list/code_name_ru = list("зелёный", "синий", "красный", "дельта")
+var/list/global_poddoors = list()
 
 /proc/open_armory_poddoors()
-	for (var/obj/machinery/door/poddoor/D in world)
-		if (D.is_armory_door && D.density)
+	for(var/obj/machinery/door/poddoor/D in global_poddoors)
+		if(D.id in list("Armoury", "Armoury0"))
 			var/area/A = get_area(D)
 			if(A && A.power_environ)
-				D.do_open()
+				if(D.density && !D.operating)
+					D.do_open()
 
 /proc/close_armory_poddoors()
-	for (var/obj/machinery/door/poddoor/D in world)
-		if (D.is_armory_door && !D.density)
+	for(var/obj/machinery/door/poddoor/D in global_poddoors)
+		if(D.id in list("Armoury", "Armoury0"))
 			var/area/A = get_area(D)
 			if(A && A.power_environ)
-				D.do_close()
+				if(!D.density && !D.operating)
+					D.do_close()
 
 /proc/set_security_level(level)
 	switch(level)
@@ -59,8 +62,6 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_blue"))
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
-
-				close_armory_poddoors()
 
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)

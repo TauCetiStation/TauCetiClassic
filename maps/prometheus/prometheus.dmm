@@ -3336,7 +3336,6 @@
 /obj/machinery/door/poddoor{
 	dir = 4;
 	id = "Armoury";
-	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /turf/simulated/floor{
@@ -5244,7 +5243,6 @@
 /obj/machinery/door/poddoor{
 	dir = 4;
 	id = "Armoury0";
-	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /turf/simulated/floor{
@@ -22067,7 +22065,6 @@
 /obj/machinery/door/poddoor{
 	dir = 4;
 	id = "Armoury";
-	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /turf/simulated/floor{
@@ -38535,7 +38532,6 @@
 /obj/machinery/door/poddoor{
 	dir = 4;
 	id = "Armoury0";
-	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /turf/simulated/floor{

@@ -6126,7 +6126,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	id = "Armoury0";
-	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /turf/simulated/floor{
@@ -6779,7 +6778,6 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "armouryaccess";
-	is_armory_door = TRUE
 	name = "Armoury Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6799,7 +6797,6 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "armouryaccess";
-	is_armory_door = TRUE
 	name = "Armoury Access"
 	},
 /obj/machinery/door/firedoor,
