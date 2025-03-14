@@ -16,14 +16,6 @@
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 
-/obj/machinery/door/poddoor/New()
-	..()
-	global_poddoors += src
-
-/obj/machinery/door/poddoor/Destroy()
-	global_poddoors -= src
-	return ..()
-
 /obj/machinery/door/poddoor/cargo
 	icon = 'icons/locations/shuttles/cargo.dmi'
 

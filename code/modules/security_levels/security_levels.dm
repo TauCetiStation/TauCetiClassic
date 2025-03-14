@@ -2,10 +2,9 @@
 /var/delta_timer_id = 0
 var/global/list/code_name_eng = list("green", "blue", "red", "delta")
 var/global/list/code_name_ru = list("зелёный", "синий", "красный", "дельта")
-var/list/global_poddoors = list()
 
 /proc/open_armory_poddoors()
-	for(var/obj/machinery/door/poddoor/D in global_poddoors)
+	for(var/obj/machinery/door/poddoor/D in poddoor_list)
 		if(D.id in list("Armoury", "Armoury0"))
 			var/area/A = get_area(D)
 			if(A && A.power_environ)
@@ -13,7 +12,7 @@ var/list/global_poddoors = list()
 					D.do_open()
 
 /proc/close_armory_poddoors()
-	for(var/obj/machinery/door/poddoor/D in global_poddoors)
+	for(var/obj/machinery/door/poddoor/D in poddoor_list)
 		if(D.id in list("Armoury", "Armoury0"))
 			var/area/A = get_area(D)
 			if(A && A.power_environ)
