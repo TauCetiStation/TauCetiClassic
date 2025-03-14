@@ -727,6 +727,17 @@
     H.randomize_appearance()
     H.dna.unique_enzymes = md5("[H.real_name][rand(0, 99999)]")
 
+/datum/reagent/slimetoxin
+	name = "Mutation Toxin"
+	id = "mutationtoxin"
+	description = "A corruptive toxin produced by slimes."
+	reagent_state = LIQUID
+	color = "#13bc5e" // rgb: 19, 188, 94
+	overdose = REAGENTS_OVERDOSE
+	custom_metabolism = 0.02
+
+	data = list()
+
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
