@@ -718,23 +718,17 @@
 	custom_metabolism = 1000
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
-	..()
-	if(!istype(H) || H.species.flags[NO_DNA])
-		return
-	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
-	H.visible_message("<b>[H]</b> suddenly transforms!")
-	H.randomize_appearance()
+    ..()
+    if(!istype(H) || H.species.flags[NO_DNA])
+        return
 
-/datum/reagent/slimetoxin
-	name = "Mutation Toxin"
-	id = "mutationtoxin"
-	description = "A corruptive toxin produced by slimes."
-	reagent_state = LIQUID
-	color = "#13bc5e" // rgb: 19, 188, 94
-	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.02
+    // Визуальные эффекты и рандомизация
+    to_chat(H, "<span class='warning'><b>Ваше тело мутирует, скрывая следы прежней личности!</b></span>")
+    H.visible_message("<b>[H]</b> резко меняется до неузнаваемости!")
+    H.randomize_appearance()
 
-	data = list()
+    // Генерация новых энзимов вручную
+    H.dna.unique_enzymes = md5("[H.real_name][rand(0, 99999)]")
 
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
