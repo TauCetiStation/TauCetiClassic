@@ -722,12 +722,9 @@
     if(!istype(H) || H.species.flags[NO_DNA])
         return
 
-    // Визуальные эффекты и рандомизация
     to_chat(H, "<span class='warning'><b>Ваше тело мутирует, скрывая следы прежней личности!</b></span>")
     H.visible_message("<b>[H]</b> резко меняется до неузнаваемости!")
     H.randomize_appearance()
-
-    // Генерация новых энзимов вручную
     H.dna.unique_enzymes = md5("[H.real_name][rand(0, 99999)]")
 
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
