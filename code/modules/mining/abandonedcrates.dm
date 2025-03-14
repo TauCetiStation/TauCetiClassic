@@ -76,7 +76,7 @@
 	add_overlay(greenlight)
 	SStgui.close_uis(src)
 
-/obj/structure/closet/crate/secure/loot/proc/SpawnGoodLoot(mob/user)
+/obj/structure/closet/crate/secure/loot/proc/SpawnGoodLoot()
 	playsound(src, 'sound/misc/mining_reward_3.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 	switch(rand(1, 5))
 		if(1)
@@ -133,7 +133,7 @@
 				C.flash_eyes()
 			new/mob/living/simple_animal/hostile/mimic/crate/loot(get_turf(src))
 		if(2)
-			explosion(src, -1, 2, 3, 4)
+			explosion(src, -1, 0, 2, 3)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)

@@ -411,13 +411,6 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
-/obj/structure/closet/crate/radiation
-	desc = "A crate with a radiation sign on it."
-	name = "Radioactive gear crate"
-	icon_state = "hydrosecurecrate"
-	icon_opened = "hydrosecurecrateopen"
-	icon_closed = "hydrosecurecrate"
-
 /obj/structure/closet/crate/secure/hydrosec
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	name = "secure hydroponics crate"
