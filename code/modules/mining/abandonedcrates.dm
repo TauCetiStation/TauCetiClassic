@@ -9,7 +9,6 @@
 	sparks = null
 	emag = null
 	locked = TRUE
-
 	var/datum/minigame/minesweeper/Game
 
 /obj/structure/closet/crate/secure/loot/atom_init()
