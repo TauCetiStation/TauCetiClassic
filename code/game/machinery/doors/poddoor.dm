@@ -1,5 +1,6 @@
 /obj/machinery/door/poddoor
 	name = "Podlock"
+	var/is_armory_door = FALSE
 	desc = "Why it no open!!!"
 	icon = 'icons/obj/doors/blast_door.dmi'
 	icon_state = "pdoor1"

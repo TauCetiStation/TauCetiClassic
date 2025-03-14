@@ -3342,6 +3342,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	id = "Armoury0";
+	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -63644,6 +63645,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
 	id = "Armoury0";
+	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -91861,6 +91863,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	id = "Armoury";
+	is_armory_door = TRUE
 	name = "Emergency Access"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
