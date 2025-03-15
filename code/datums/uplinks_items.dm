@@ -1177,6 +1177,7 @@
     uplink_types = list(UPLINK_TYPE_TRAITOR)
     var/crate_value = 40
     var/crate_type = /obj/structure/closet/crate/surplus_crate
+
 /datum/uplink_item/badass/surplus_crate/team
     name = "Syndicate Team Surplus Crate"
     desc = "A crate containing 80 telecrystals worth of random syndicate leftovers. Don't fight with your partner!"
@@ -1205,7 +1206,7 @@
         var/datum/uplink_item/I = pick(buyable_items)
         if(I.cost > remaining_TC)
             continue
-        if((I.item in bought_items) && prob(33))
+        if((I.item in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
             continue
         bought_items += I.item
         remaining_TC -= I.cost
