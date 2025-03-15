@@ -4,9 +4,10 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "swordred"
 
-/obj/item/weapon/melee/powerfist/with_tank/New()
-	..()
+/obj/item/weapon/melee/powerfist/with_tank/atom_init()
+	. = ..()
 	new /obj/item/weapon/tank/emergency_oxygen/double(get_turf(src))
+	return
 
 /obj/random/melee/item_to_spawn()
 	return pick(
@@ -36,4 +37,4 @@
 		prob(20);/obj/item/weapon/melee/energy/axe,
 		prob(20);/obj/item/weapon/melee/energy/blade,
 		prob(1);/obj/item/weapon/banhammer
-)
+	)
