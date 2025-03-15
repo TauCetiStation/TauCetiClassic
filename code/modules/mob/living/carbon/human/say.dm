@@ -102,7 +102,7 @@
 		return
 
 	if(!ignore_appearance && name != GetVoice())
-		alt_name = "(as [get_id_name("Unknown")])"
+		alt_name = "(некто [get_id_name("Unknown")])"
 
 	//parse the radio code and consume it
 	if (message_mode)
@@ -347,7 +347,7 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return "(Некто [get_id_name])"
+		return "(некто [get_id_name("Unknown")])"
 	return ""
 
 /*
