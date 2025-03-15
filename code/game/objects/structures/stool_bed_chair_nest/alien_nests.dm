@@ -19,7 +19,7 @@
 			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",
 			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",
 			"<span class='notice'>You hear squelching...</span>")
-
+		unbuckle_mob()
 	else
 		L.visible_message(
 			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",
@@ -49,8 +49,10 @@
 		"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",
 		"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",
 		"<span class='notice'>You hear squelching...</span>")
-	M.reagents.add_reagent("tricordrazine", 30)
-	M.reagents.add_reagent("doctorsdelight", 30)
+	if(M.reagents.get_reagent_amount("tricordrazine") + 30 < 60)
+		M.reagents.add_reagent("tricordrazine", 30)
+	if(M.reagents.get_reagent_amount("doctorsdelight") + 15 < 30)
+		M.reagents.add_reagent("doctorsdelight", 15)
 	M.pixel_y = 2
 	return TRUE
 
