@@ -15,8 +15,6 @@
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 	mob_metabolism_mod = new /datum/modval(base_value = base_metabolism, clamp_min = 0)
-	beauty = new /datum/modval(base_beauty_living)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
 
 	if(spawner_args)
 		spawner_args.Insert(1, /datum/component/logout_spawner)
@@ -30,7 +28,6 @@
 	QDEL_LIST(combos_saved)
 
 	qdel(mob_metabolism_mod)
-	qdel(beauty)
 
 	if(length(status_effects))
 		for(var/s in status_effects)
@@ -544,8 +541,6 @@
 
 	if(reagents)
 		reagents.clear_reagents()
-
-	beauty.AddModifier("stat", additive=beauty_living)
 
 	// shut down various types of badness
 	setToxLoss(0)
@@ -1419,18 +1414,10 @@
 	return
 
 /mob/living/death(gibbed)
-	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
 	if(wabbajacked)
 		unwabbajack()
 	return ..()
-
-/mob/living/proc/update_beauty(datum/source, old_value)
-	if(old_value != 0.0)
-		RemoveElement(/datum/element/beauty, old_value)
-	if(beauty.Get() == 0.0)
-		return
-	AddElement(/datum/element/beauty, beauty.Get())
 
 //Throwing stuff
 /mob/living/proc/toggle_throw_mode()

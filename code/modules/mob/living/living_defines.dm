@@ -67,11 +67,6 @@
 	VAR_PROTECTED/base_metabolism = 1
 	var/datum/modval/mob_metabolism_mod
 
-	VAR_PROTECTED/base_beauty_living = 0
-	VAR_PROTECTED/base_beauty_dead = -100
-	var/datum/modval/beauty
-
-
 	var/list/spawner_args = null
 
 	COOLDOWN_DECLARE(wc_use_cooldown)
