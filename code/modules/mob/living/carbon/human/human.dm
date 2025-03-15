@@ -359,6 +359,16 @@
 				return BP
 	return FALSE // In case we didn't find anything.
 
+/mob/living/carbon/human/proc/make_pumped()
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump || BP.parent && (BP.parent.is_stump))
+			continue
+
+		if(!BP.max_pumped)
+			continue
+
+		BP.adjust_pumped(BP.max_pumped)
+
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
 	if(regenerating_bodypart) // start fixing broken/destroyed limb
 		if(remove_blood_amount)

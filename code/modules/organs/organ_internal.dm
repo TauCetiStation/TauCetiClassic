@@ -141,11 +141,11 @@
 	var/datum/modval/heart_metabolism_mod
 
 /obj/item/organ/internal/heart/Destroy()
-	owner?.mob_metabolism_mod.RemoveModifiers(heart_metabolism_mod, src) // where is remove_organ()
+	owner?.mob_metabolism_mod.RemoveModifiers(src) // where is remove_organ()
 	QDEL_NULL(heart_metabolism_mod)
 	return ..()
 
-/obj/item/organ/internal/heart/insert_organ()
+/obj/item/organ/internal/heart/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 	// attach heart modval to our owner modval as multiplicative
 	// we should not add any heart-related mods directly to the owner, mod our heart modval

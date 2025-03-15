@@ -41,6 +41,7 @@
 	src.clamp_min = clamp_min
 	src.clamp_max = clamp_max
 	src.round_base = round_base
+	Recalculate()
 
 /datum/modval/Destroy()
 	multiplicatives = null
@@ -48,8 +49,6 @@
 	return ..()
 
 /datum/modval/proc/SetBaseValue(new_value)
-	PRIVATE_PROC(TRUE)
-
 	base_value = new_value
 	Recalculate()
 
@@ -93,16 +92,21 @@
 	Recalculate()
 
 /datum/modval/proc/RemoveModifiers(source)
-	if(multiplicatives[source] || additives[source])
+	var/need_to_recalculate = FALSE
 
+	if(source in multiplicatives)
 		multiplicatives -= source
+		need_to_recalculate = TRUE
 		if(!length(multiplicatives))
 			multiplicatives = null
 
+	if(source in additives)
 		additives -= source
+		need_to_recalculate = TRUE
 		if(!length(additives))
 			additives = null
 
+	if(need_to_recalculate)
 		Recalculate()
 
 /datum/modval/proc/Recalculate()
@@ -135,13 +139,13 @@
 
 		new_value = base_value * multiplicative * (1 + additive)
 
-	if(round_base)
+	if(isnum(round_base))
 		new_value = round(new_value, round_base)
 
-	if(clamp_min && new_value < clamp_min)
+	if(isnum(clamp_min) && new_value < clamp_min)
 		new_value = clamp_min
 
-	if(clamp_min && new_value > clamp_max)
+	if(isnum(clamp_max) && new_value > clamp_max)
 		new_value = clamp_max
 
 	if(new_value != value)
@@ -149,27 +153,36 @@
 		value = new_value
 		SEND_SIGNAL(src, COMSIG_MODVAL_UPDATE, old_value)
 
+#define PRINT_SIGN(num) (num < 0 ? "&minus;" : "&plus;")
+#define SIGNED_NUM(num) ("[PRINT_SIGN(num)] [abs(num)]")
+
 /datum/modval/proc/DebugPrint()
-	var/data = "Base value: [base_value]"
+	. = "<b>Base value</b>: [base_value]<br>"
 	var/mod
-	data += "Multiplicatives:"
+	var/multi = 1
+	var/addi = 0
 
+	. += "<b>Multiplicatives</b>:<br>"
+	for(var/source in multiplicatives)
+		if(istype(multiplicatives[source], /datum/modval))
+			var/datum/modval/V = multiplicatives[source] 
+			mod = V.Get()
+		else
+			mod = multiplicatives[source]
+		multi *= mod
+		. += "[ENTITY_TAB]* [mod] (source: <b>[source]</b>)<br>"
+
+	. += "<b>Additives</b>:<br>"
 	for(var/source in additives)
 		if(istype(additives[source], /datum/modval))
 			var/datum/modval/V = additives[source] 
 			mod = V.Get()
 		else
 			mod = additives[source]
-		data += "[ENTITY_TAB]*[mod] (Source: [source])"
+		addi += mod
+		. += "[ENTITY_TAB][SIGNED_NUM(mod)] (source: <b>[source]</b>)<br>"
 
-	data += "Additives:"
+	. += "<b>Final value</b>: [value] = [base_value] * [multi] * (1 [SIGNED_NUM(addi)])"
 
-	for(var/source in additives)
-		if(istype(additives[source], /datum/modval))
-			var/datum/modval/V = additives[source] 
-			mod = V.Get()
-		else
-			mod = additives[source]
-		data += "[ENTITY_TAB]+[mod] (Source: [source])"
-
-	data += "Final value: [value]"
+#undef PRINT_SIGN
+#undef SIGNED_NUM

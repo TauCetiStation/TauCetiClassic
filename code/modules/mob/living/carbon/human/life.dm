@@ -691,7 +691,7 @@ var/global/list/tourette_bad_words= list(
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	// todo: rewrite as element
 	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
-		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
+		if(!has_quirk(/datum/quirk/fatness) && overeatduration < OVEREATDURATION_SLIM)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			mob_metabolism_mod.RemoveModifiers("Fatness")
@@ -701,7 +701,7 @@ var/global/list/tourette_bad_words= list(
 			update_inv_wear_suit()
 			update_size_class()
 	else
-		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
+		if((has_quirk(/datum/quirk/fatness) || overeatduration >= OVEREATDURATION_FAT) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
@@ -725,7 +725,7 @@ var/global/list/tourette_bad_words= list(
 		handle_trace_chems()
 
 	if(nutrition > NUTRITION_LEVEL_FAT)
-		if(overeatduration < 600) //capped so people don't take forever to unfat
+		if(overeatduration < OVEREATDURATION_CAP) //capped so people don't take forever to unfat
 			overeatduration++
 	else
 		if(overeatduration > 1)

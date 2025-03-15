@@ -14,11 +14,23 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
-	mob_metabolism_mod = new /datum/modval(base_value = base_metabolism, clamp_min = 0)
-
 	if(spawner_args)
 		spawner_args.Insert(1, /datum/component/logout_spawner)
 		AddComponent(arglist(spawner_args))
+
+/mob/living/verb/metabolism_debug()
+	set name = "Debug Metabolism"
+	set category = "OOC"
+
+	var/print = "<hr>Debug metabolism data:<br><br>"
+	print += "<b>Nutrition</b>: [nutrition] ([PERCENT(nutrition/NUTRITION_LEVEL_FAT)]%)<br>"
+	print += "<b>Satiation</b>: [get_satiation()] (predicted nutrition)<br>"
+	print += "<b>Overeatduration</b>: [overeatduration] ([PERCENT(overeatduration/OVEREATDURATION_FAT)]%)<br>"
+	print += "<br><br>Metabolism speed:<br><br>"
+	print += mob_metabolism_mod.DebugPrint()
+	print += "<br><hr>"
+
+	to_chat(usr, print)
 
 /mob/living/Destroy()
 	allowed_combos = null
