@@ -387,6 +387,7 @@
 	icon_state = "syndicrate"
 	icon_opened = "syndicrateopen"
 	icon_closed = "syndicrate"
+	
 /obj/structure/closet/crate/surplus_crate_team
 	icon_state = "gorlexcrate"
 	icon_opened = "gorlexcrateopen"
