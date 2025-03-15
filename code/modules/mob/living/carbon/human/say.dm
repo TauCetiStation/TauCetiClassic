@@ -347,7 +347,7 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return "(Некто) [get_id_name]"
+		return "(Некто [get_id_name])"
 	return ""
 
 /*
