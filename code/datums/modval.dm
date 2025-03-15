@@ -42,6 +42,11 @@
 	src.clamp_max = clamp_max
 	src.round_base = round_base
 
+/datum/modval/Destroy()
+	multiplicatives = null
+	additives = null
+	return ..()
+
 /datum/modval/proc/SetBaseValue(new_value)
 	PRIVATE_PROC(TRUE)
 
@@ -51,37 +56,37 @@
 /datum/modval/proc/Get()
 	return value
 
-/datum/modval/proc/ModMultiplicative(multiplicative, source)
-	if(!source || isnull(multiplicative))
+/datum/modval/proc/ModMultiplicative(new_multiplicative, source)
+	if(!source || isnull(new_multiplicative))
 		return
 
 	if(!multiplicatives)
 		multiplicatives = list()
-	else if(multiplicatives[source] == multiplicative)
+	else if(multiplicatives[source] == new_multiplicative)
 		return
 
 	if(istype(multiplicatives[source], /datum/modval))
 		UnregisterSignal(multiplicatives[source], COMSIG_MODVAL_UPDATE)
 
-	multiplicatives[source] = multiplicative
+	multiplicatives[source] = new_multiplicative
 	if(istype(multiplicatives[source], /datum/modval))
 		RegisterSignal(multiplicatives[source], COMSIG_MODVAL_UPDATE, PROC_REF(Recalculate))
 
 	Recalculate()
 
-/datum/modval/proc/ModAdditive(additive, source)
-	if(!source || isnull(additive))
+/datum/modval/proc/ModAdditive(new_additive, source)
+	if(!source || isnull(new_additive))
 		return
 
 	if(!additives)
 		additives = list()
-	else if(additives[source] == multiplicative)
+	else if(additives[source] == new_additive)
 		return
 
 	if(istype(additives[source], /datum/modval))
 		UnregisterSignal(additives[source], COMSIG_MODVAL_UPDATE)
 
-	additives[source] = additive
+	additives[source] = new_additive
 	if(istype(additives[source], /datum/modval))
 		RegisterSignal(additives[source], COMSIG_MODVAL_UPDATE, PROC_REF(Recalculate))
 
@@ -108,8 +113,8 @@
 
 	if(base_value) // don't need to calculate all mods if our base value is zero
 		var/multiplicative = 1
+		var/mod
 		if(length(multiplicatives))
-			var/mod
 			for(var/source in multiplicatives)
 				if(istype(multiplicatives[source], /datum/modval))
 					var/datum/modval/V = multiplicatives[source]
@@ -120,14 +125,13 @@
 
 		var/additive = 0
 		if(length(additives))
-			var/mod
 			for(var/source in additives)
 				if(istype(additives[source], /datum/modval))
 					var/datum/modval/V = additives[source] 
 					mod = V.Get()
 				else
 					mod = additives[source]
-				additive += additives[source]
+				additive += mod
 
 		new_value = base_value * multiplicative * (1 + additive)
 
@@ -141,5 +145,31 @@
 		new_value = clamp_max
 
 	if(new_value != value)
+		var/old_value = value
 		value = new_value
 		SEND_SIGNAL(src, COMSIG_MODVAL_UPDATE, old_value)
+
+/datum/modval/proc/DebugPrint()
+	var/data = "Base value: [base_value]"
+	var/mod
+	data += "Multiplicatives:"
+
+	for(var/source in additives)
+		if(istype(additives[source], /datum/modval))
+			var/datum/modval/V = additives[source] 
+			mod = V.Get()
+		else
+			mod = additives[source]
+		data += "[ENTITY_TAB]*[mod] (Source: [source])"
+
+	data += "Additives:"
+
+	for(var/source in additives)
+		if(istype(additives[source], /datum/modval))
+			var/datum/modval/V = additives[source] 
+			mod = V.Get()
+		else
+			mod = additives[source]
+		data += "[ENTITY_TAB]+[mod] (Source: [source])"
+
+	data += "Final value: [value]"

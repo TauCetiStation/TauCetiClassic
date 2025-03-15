@@ -14,10 +14,9 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
-	beauty = new /datum/modval(0.0)
+	mob_metabolism_mod = new /datum/modval(base_value = base_metabolism, clamp_min = 0)
+	beauty = new /datum/modval(base_beauty_living)
 	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
-
-	beauty.AddModifier("stat", additive=beauty_living)
 
 	if(spawner_args)
 		spawner_args.Insert(1, /datum/component/logout_spawner)
@@ -29,6 +28,9 @@
 	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
+
+	qdel(mob_metabolism_mod)
+	qdel(beauty)
 
 	if(length(status_effects))
 		for(var/s in status_effects)
@@ -1310,9 +1312,6 @@
 	// food, so this proc is used in walk penalty, etc. But you don't see fat of a person if the person is just
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
-
-/mob/living/proc/get_metabolism_factor()
-	return METABOLISM_FACTOR
 
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE

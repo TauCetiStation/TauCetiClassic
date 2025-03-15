@@ -9,14 +9,13 @@
 	data = list()
 
 /datum/reagent/consumable/on_general_digest(mob/living/M)
-	..()
-	var/mob_met_factor = 1
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		mob_met_factor = C.get_metabolism_factor() * 0.25
+	. = ..()
+	if(!.)
+		return
+
 	if(volume > last_volume)
-		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
-		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
+		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * M.mob_metabolism_mod.Get()
+		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism) - to_add)
 		if(diet_flags & DIET_ALL)
 			M.reagents.add_reagent("nutriment", to_add)
 		else if(diet_flags & DIET_MEAT)
@@ -39,7 +38,10 @@
 	taste_message = "bland food"
 
 /datum/reagent/nutriment/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(istype(M))
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -59,7 +61,6 @@
 	taste_message = "meat"
 
 /datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M)
-	..()
 	M.adjustToxLoss(2 * FOOD_METABOLISM)
 	return FALSE
 
@@ -85,7 +86,10 @@
 	taste_message = "sweetness"
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
 		M.heal_bodypart_damage(1, 1)
 
@@ -96,12 +100,14 @@
 	color = "#ab7878" // rgb: 171, 120, 120
 
 /datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(ishuman(M) && M.mind && M.mind.special_role)
 		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M) // Is not as poisonous to skrell.
-	..()
 	M.adjustToxLoss(1 * FOOD_METABOLISM)
 	return FALSE
 
@@ -144,7 +150,10 @@
 	taste_message = "<span class='warning'>HOTNESS</span>"
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
@@ -226,7 +235,10 @@
 				victim.Weaken(5)
 
 /datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 
@@ -240,7 +252,10 @@
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(prob(1))
 		M.emote("shiver")
 	if(isslime(M))
@@ -294,7 +309,10 @@
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/psilocybin
@@ -304,10 +322,12 @@
 	color = "#e700e7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = FOOD_METABOLISM * 0.5
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustDrugginess(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
@@ -332,6 +352,9 @@
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++
+
+/datum/reagent/consumable/psilocybin/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/consumable/psilocybin/on_skrell_digest(mob/living/M)
 	M.adjustDrugginess(3)
@@ -381,7 +404,10 @@
 	taste_message = "dry ramen coated with what might just be your tears"
 
 /datum/reagent/consumable/dry_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 
 /datum/reagent/consumable/hot_ramen
@@ -394,7 +420,10 @@
 	taste_message = "ramen"
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
@@ -408,7 +437,10 @@
 	taste_message = "dry ramen with SPICY flavor"
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
@@ -422,7 +454,10 @@
 	taste_message = "SPICY ramen"
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
