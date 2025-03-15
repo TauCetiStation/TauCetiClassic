@@ -26,7 +26,7 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	if(!sword_overlay)
 		sword_overlay = image(icon, "syndie_android_sword", "layer" = 4.5)
-		sword_overlay.plane = sword_overlay.layer
+		sword_overlay.plane = GAME_PLANE
 
 /mob/living/silicon/robot/syndicate/updateicon()
 	..()
@@ -45,6 +45,7 @@
 	INVOKE_ASYNC(src, PROC_REF(recalculateChannels))
 
 /obj/item/weapon/melee/energy/sword/cyborg
+	blade_color = "blue"
 	var/hitcost = 500
 
 /obj/item/weapon/melee/energy/sword/cyborg/attack_self(mob/living/user)
