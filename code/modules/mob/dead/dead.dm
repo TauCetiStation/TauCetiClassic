@@ -10,8 +10,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/Logout()
 	..()
-	for(var/datum/spawner/S in registred_spawners)
-		S.cancel_registration(src)
+	remove_registration_for_spawners()
 
 /mob/dead/Destroy()
 	QDEL_NULL(spawners_menu)
