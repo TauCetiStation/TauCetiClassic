@@ -21,7 +21,7 @@
 
 	// assoc lists (TEAMNAME = reference)
 	var/list/datum/faction/factions = list()
-	var/list/datum/spawner/fort_team/spawners = list()
+	var/list/datum/spawner/multiple/fort_teams/spawner
 	var/list/obj/machinery/computer/fort_console/consoles = list()
 
 /datum/map_module/forts/New()
@@ -31,8 +31,7 @@
 	factions[TEAM_NAME_RED] = create_custom_faction(TEAM_NAME_RED, TEAM_NAME_RED, "red", objective)
 	factions[TEAM_NAME_BLUE] = create_custom_faction(TEAM_NAME_BLUE, TEAM_NAME_BLUE, "blue", objective)
 
-	spawners[TEAM_NAME_RED] = create_spawner(/datum/spawner/fort_team/red, src)
-	spawners[TEAM_NAME_BLUE] = create_spawner(/datum/spawner/fort_team/blue, src)
+	spawner = create_spawner(/datum/spawner/multiple/fort_teams, src)
 
 /datum/map_module/forts/stat_entry(mob/M)
 	if(M.client.holder)
@@ -86,7 +85,7 @@
 	teammate.AssignToRole(M.mind, msg_admins = FALSE)
 
 	if(rank == FORTS_ROLE_COMMANDER)
-		var/obj/item/weapon/card/id/captains_spare/card = new 
+		var/obj/item/weapon/card/id/captains_spare/card = new
 		card.assignment = FORTS_ROLE_COMMANDER
 		card.assign(M.real_name)
 		M.equip_to_appropriate_slot(card)
@@ -207,5 +206,5 @@ var/global/forts_points_multiplier = 1
 		MM.announce("Скорость получения очков вернулась в норму!")
 	else
 		MM.announce("Скорость получения очков увеличина в [forts_points_multiplier] [pluralize_russian(forts_points_multiplier, "раз", "раза", "раз")]!")
- 
+
 	message_admins("[key_name(src)] changed points multiplier to [forts_points_multiplier].")
