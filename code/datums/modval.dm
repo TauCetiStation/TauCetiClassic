@@ -184,5 +184,5 @@
 
 	. += "<b>Final value</b>: [value] = [base_value] * [multi] * (1 [SIGNED_NUM(addi)])"
 
-#undef PRINT_SIGN
 #undef SIGNED_NUM
+#undef PRINT_SIGN
