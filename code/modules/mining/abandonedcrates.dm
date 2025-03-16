@@ -132,7 +132,7 @@
 				C.flash_eyes()
 			new/mob/living/simple_animal/hostile/mimic/crate/loot(get_turf(src))
 		if(2)
-			explosion(src, -1, 0, 2, 3)
+			explosion(src, 0, 0, 2, 3)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
