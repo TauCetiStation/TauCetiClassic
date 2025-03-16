@@ -417,6 +417,8 @@ AI MODULES
 /obj/item/weapon/aiModule/freeform/syndicate/attack_self(mob/user)
 	newFreeFormLaw = sanitize(input(user, "Пожалуйста, введите новый закон для ИИ.", "Новый закон"))
 	desc = "Модуль законов ИИ без каких-либо маркировок: '[newFreeFormLaw]'"
+	report_AI = tgui_alert(user, "Плата может напрямую передать ИИ ваше имя при загрузке закона. Включить это?", "Уведомление ИИ", list("Да", "Нет")) == "Да"
+	to_chat(user, "<span class='notice'>ИИ [report_AI ? "" : "не"] будет передано ваше имя при загрузке закона.</span>")
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	to_chat(target, "<span class='warning'>БЗЗЗЗКХ   '[newFreeFormLaw]'</span>")
@@ -424,21 +426,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/syndicate/add_freeform_law(mob/living/silicon/ai/target)
 	target.add_ion_law(newFreeFormLaw)
-
-/obj/item/weapon/aiModule/freeform/syndicate/verb/toggle_report()
-	set name = "Toggle Report"
-	set category = "Object"
-	set src in view(1)
-
-	if(!ishuman(usr))  //Checking human and status
-		return
-	if(usr.incapacitated())
-		return
-	if(usr.is_busy())
-		return
-
-	report_AI = !report_AI
-	to_chat(usr, "<span class='notice'>ИИ [report_AI ? "" : "не"] будет передано ваше имя при загрузке закона.</span>")
 
 /******************** Robocop ********************/
 
