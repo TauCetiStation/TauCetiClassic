@@ -9012,7 +9012,8 @@
 /area/station/maintenance/auxsolarport)
 "aoM" = (
 /obj/machinery/door/airlock{
-	name = "Toilet"
+	name = "Toilet";
+	id_tag = "toilet115"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -16569,6 +16570,12 @@
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = 32
 	},
+/obj/machinery/door_control{
+	id = "toilet111";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_y = -26
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -20328,7 +20335,8 @@
 "aJQ" = (
 /obj/machinery/door/airlock{
 	dir = 4;
-	name = "Unit 2"
+	name = "toilet cabin";
+	id_tag = "toilet111"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -20503,6 +20511,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "toilet114";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = 26
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -56544,6 +56558,12 @@
 /area/station/construction/assembly_line)
 "bZH" = (
 /obj/machinery/light/small,
+/obj/machinery/door_control{
+	id = "toilet116";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = 26
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -67741,7 +67761,8 @@
 /area/station/aisat/antechamber_interior)
 "cGE" = (
 /obj/machinery/door/airlock{
-	name = "Toilet"
+	name = "Toilet";
+	id_tag = "toilet116"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -70365,6 +70386,12 @@
 "dFe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door_control{
+	id = "toilet115";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = 26
+	},
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
 "dHv" = (
@@ -76362,7 +76389,8 @@
 "jVb" = (
 /obj/machinery/door/airlock{
 	dir = 4;
-	name = "Private Restroom"
+	name = "Private Restroom";
+	id_tag = "toilet117"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -76474,6 +76502,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "toilet117";
+	name = "toilet lock";
+	pixel_x = 28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -78652,7 +78686,8 @@
 /area/station/engineering/engine)
 "mjb" = (
 /obj/machinery/door/airlock{
-	name = "Unit 2"
+	name = "Unit 2";
+	id_tag = "toilet113"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -78716,7 +78751,8 @@
 /area/station/civilian/chapel)
 "mmb" = (
 /obj/machinery/door/airlock{
-	name = "Unit 1"
+	name = "Unit 1";
+	id_tag = "toilet114"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -79520,6 +79556,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"nkE" = (
+/obj/machinery/door/airlock{
+	dir = 4;
+	name = "toilet cabin";
+	id_tag = "toilet112"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "nlb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -80139,6 +80185,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "toilet113";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = -26
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -87238,6 +87290,17 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
+"xFw" = (
+/obj/machinery/door_control{
+	id = "toilet112";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_y = 26
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "xGD" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -122407,7 +122470,7 @@ aEa
 rrN
 tkb
 aEa
-aJQ
+nkE
 aEa
 aJQ
 aEa
@@ -122664,7 +122727,7 @@ aEa
 thb
 aEa
 aEa
-thb
+xFw
 aEa
 aCD
 aEa
