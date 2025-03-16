@@ -353,3 +353,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/prophunt/med_hud_set_status()
 	return
+
+/mob/living/simple_animal/hostile/mimic/crate/loot
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "treasure"
+	icon_living = "treasure"
