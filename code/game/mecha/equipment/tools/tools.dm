@@ -1202,14 +1202,14 @@
 			to_chat(M.occupant, "<span class='warning'>[src] absorbs the EMP strike. [uses] charges remaining!</span>")
 			playsound(M, 'sound/effects/empulse.ogg', 50, 1)
 			M.visible_message("<span class='warning'>[M] shimmers as it absorbs the EMP strike!</span>")
-			return 1 // Block further EMP effects
+			return TRUE // Block further EMP effects
 	if (uses == 0)
 		if (istype(loc, /obj/mecha))
 			var/obj/mecha/M = loc
 			to_chat(M.occupant, "<span class='danger'>[src] is depleted and disintegrates!</span>")
 			playsound(M, 'sound/effects/sparks4.ogg', 50, 1)
 		qdel(src)
-	return 0 // Allow EMP effects if the module is depleted or inactive
+	return FALSE // Allow EMP effects if the module is depleted or inactive
 
 /obj/mecha/emp_act(severity)
 	for(var/obj/item/mecha_parts/mecha_equipment/defensive/emp_shield/S in equipment)
