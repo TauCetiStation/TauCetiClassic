@@ -3,6 +3,22 @@
 var/global/list/code_name_eng = list("green", "blue", "red", "delta")
 var/global/list/code_name_ru = list("зелёный", "синий", "красный", "дельта")
 
+/proc/open_armory_poddoors()
+	for(var/obj/machinery/door/poddoor/D in poddoor_list)
+		if(D.id in list("Armoury", "Armoury0"))
+			var/area/A = get_area(D)
+			if(A && A.power_environ)
+				if(D.density && !D.operating)
+					D.do_open()
+
+/proc/close_armory_poddoors()
+	for(var/obj/machinery/door/poddoor/D in poddoor_list)
+		if(D.id in list("Armoury", "Armoury0"))
+			var/area/A = get_area(D)
+			if(A && A.power_environ)
+				if(!D.density && !D.operating)
+					D.do_close()
+
 /proc/set_security_level(level)
 	switch(level)
 		if("green")
@@ -14,7 +30,6 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 		if("delta")
 			level = SEC_LEVEL_DELTA
 
-	//Will not be announced if you try to set to the same level as it already is
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != security_level)
 		var/datum/announcement/station/code/code_announce
 		switch(level)
@@ -23,13 +38,14 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 					SSsmartlight.reset_smartlight()
 				security_level = SEC_LEVEL_GREEN
 				code_announce = new /datum/announcement/station/code/downtogreen
-
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
+
+				close_armory_poddoors()
 
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
@@ -63,6 +79,9 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
 						FA.cut_overlays()
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_red"))
+
+				open_armory_poddoors()
+
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
 
@@ -76,8 +95,9 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 				if(!delta_timer_id)
 					delta_alarm()
 				SSsmartlight.update_mode(light_modes_by_name["Code Delta"], TRUE)
-			// commented in favor of deltacode above, also because we don't use NS actively atm. Need to revisit this
-			//SSsmartlight.check_nightshift() // Night shift mode turns off if security level is raised to red or above
+
+				open_armory_poddoors()
+
 		code_announce.play()
 	else
 		return
