@@ -3,9 +3,9 @@
 	name = "Gygax"
 	icon_state = "gygax"
 	initial_icon = "gygax"
-	step_in = 3
+	step_in = 2
 	dir_in = 1 //Facing North.
-	health = 300
+	health = 400
 	deflect_chance = 15
 	damage_absorption = list(BRUTE=0.75,BURN=1,BULLET=0.8,LASER=0.7,ENERGY=0.85,BOMB=1)
 	max_temperature = 25000
@@ -13,7 +13,7 @@
 	var/overload_coeff = 2
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax
 	internal_damage_threshold = 35
-	max_equip = 3
+	max_equip = 5
 	var/overload = FALSE
 
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
@@ -48,7 +48,7 @@
 	name = "Gygax Ultra"
 	icon_state = "ultra"
 	initial_icon = "ultra"
-	health = 350
+	health = 450
 	deflect_chance = 20
 	damage_absorption = list(BRUTE=0.65,BURN=0.9,BULLET=0.7,LASER=0.6,ENERGY=0.75,BOMB=0.9)
 	max_temperature = 30000
@@ -76,15 +76,15 @@
 	name = "Dark Gygax"
 	icon_state = "darkgygax"
 	initial_icon = "darkgygax"
-	health = 400
+	health = 500
 	deflect_chance = 25
 	damage_absorption = list(BRUTE=0.6,BURN=0.8,BULLET=0.6,LASER=0.5,ENERGY=0.65,BOMB=0.8)
 	max_temperature = 45000
 	overload_coeff = 1
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark
 	dna_lockable = TRUE
-	max_equip = 4
-	step_energy_drain = 5
+	max_equip = 6
+	step_energy_drain = 10
 
 /obj/mecha/combat/gygax/dark/atom_init()
 	. = ..()
@@ -95,6 +95,8 @@
 	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
+	ME.attach(src)
+    ME = new /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield(src)
 	ME.attach(src)
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
