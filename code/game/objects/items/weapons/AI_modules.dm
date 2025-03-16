@@ -76,7 +76,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "<font size='5'>[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.</font>")
+		to_chat(target, "<span class='large'>[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.</span>")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
