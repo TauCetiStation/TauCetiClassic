@@ -289,8 +289,8 @@
 	return pick_landmarked_location(landmark_name)
 
 /datum/spawner/multiple/proc/pick_landmark_name()
-	var landmark_name = ""
-	var n = INFINITY
+	var/landmark_name = ""
+	var/n = INFINITY
 
 	for(name in spawn_landmarks_names)
 		if(spawn_landmarks_names[name] < n)
