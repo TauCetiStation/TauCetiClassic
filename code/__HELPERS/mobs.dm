@@ -325,10 +325,11 @@
 		if(QDELETED(user) || !target_null && QDELETED(target))
 			. = FALSE
 			break
+
 		if(user.incapacitated(NONE))
 			. = FALSE
 			break
-		
+
 		if(Uloc && (user.loc != Uloc) || Tloc && (Tloc != target.loc))
 			. = FALSE
 			break
