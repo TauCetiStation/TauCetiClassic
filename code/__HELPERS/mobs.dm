@@ -280,7 +280,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, check_only_stun = FALSE, datum/callback/extra_checks)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -325,12 +325,7 @@
 		if(QDELETED(user) || !target_null && QDELETED(target))
 			. = FALSE
 			break
-
-		if(!check_only_stun && user.incapacitated(NONE))
-			. = FALSE
-			break
-
-		if (check_only_stun && user.stunned)
+		if(user.incapacitated(NONE))
 			. = FALSE
 			break
 		

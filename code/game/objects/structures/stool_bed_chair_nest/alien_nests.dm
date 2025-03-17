@@ -25,7 +25,7 @@
 			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",
 			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
 			"<span class='notice'>You hear squelching...</span>")
-		if(do_after(L, 5 MINUTES, FALSE, L, check_only_stun = TRUE))
+		if(do_after(L, 5 MINUTES, FALSE, L))
 			L.pixel_y = L.default_pixel_y
 			unbuckle_mob()
 			to_chat(L, "<span class='notice'>You successfly break free from the nest!</span>")
