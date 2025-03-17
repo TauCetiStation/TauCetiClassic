@@ -4881,7 +4881,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "aDj" = (
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
@@ -7032,7 +7031,6 @@
 /area/station/civilian/dormitories)
 "bhy" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -10676,7 +10674,6 @@
 /area/station/security/brig)
 "ccX" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -12980,7 +12977,6 @@
 /area/space)
 "cJM" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/item/clothing/gloves/latex,
@@ -17441,7 +17437,6 @@
 /area/station/civilian/garden)
 "dLk" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/sign/directions/supply{
@@ -18156,7 +18151,6 @@
 /area/station/rnd/hor)
 "dTl" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -20804,7 +20798,6 @@
 /area/station/medical/storage)
 "ezR" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -27294,7 +27287,6 @@
 /area/station/maintenance/science)
 "fXN" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/machinery/light/small,
@@ -42864,7 +42856,6 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "jNG" = (
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
@@ -44497,7 +44488,6 @@
 /area/station/maintenance/science)
 "kmT" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -54639,7 +54629,6 @@
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/storage/box/cups,
 /obj/item/toy/plushie/tuxedo_cat,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
@@ -55587,7 +55576,6 @@
 /area/station/maintenance/science)
 "mUn" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -63291,7 +63279,6 @@
 /area/station/rnd/tox_launch)
 "oRy" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/machinery/camera{
@@ -79918,7 +79905,6 @@
 /area/station/medical/medbreak)
 "tbc" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -83252,7 +83238,6 @@
 	pixel_x = 22
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor{
@@ -84468,7 +84453,6 @@
 /area/station/hallway/primary/aft)
 "ujW" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch{
@@ -86666,7 +86650,6 @@
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "uLR" = (
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
@@ -94105,7 +94088,6 @@
 /area/station/cargo/office)
 "wCk" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/random/misc/book,
@@ -97289,7 +97271,6 @@
 /area/station/maintenance/medbay)
 "xqH" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/extinguisher_cabinet{

@@ -7393,7 +7393,6 @@
 /area/station/civilian/locker)
 "anY" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart,
 /obj/item/device/radio/intercom{
 	dir = 1;
@@ -28173,7 +28172,6 @@
 	},
 /area/station/hallway/primary/central)
 "raj" = (
-/obj/item/weapon/storage/box/cups{
 	pixel_x = -7;
 	pixel_y = 4
 	},
