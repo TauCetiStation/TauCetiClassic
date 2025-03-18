@@ -1195,25 +1195,29 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield/emp_act(severity)
-	if (uses > 0)
-		uses--
-		if (istype(loc, /obj/mecha))
+	if (uses > 0) 
+		uses-- 
+		if (istype(loc, /obj/mecha)) 
 			var/obj/mecha/M = loc
 			to_chat(M.occupant, "<span class='warning'>[src] absorbs the EMP strike. [uses] charges remaining!</span>")
 			playsound(M, 'sound/effects/empulse.ogg', 50, 1)
 			M.visible_message("<span class='warning'>[M] shimmers as it absorbs the EMP strike!</span>")
-			return TRUE // Block further EMP effects
-	if (uses == 0)
-		if (istype(loc, /obj/mecha))
-			var/obj/mecha/M = loc
-			to_chat(M.occupant, "<span class='danger'>[src] is depleted and disintegrates!</span>")
-			playsound(M, 'sound/effects/sparks4.ogg', 50, 1)
-		qdel(src)
-	return FALSE // Allow EMP effects if the module is depleted or inactive
+
+			if (uses <= 0) 
+				to_chat(M.occupant, "<span class='danger'>[src] is depleted and disintegrates!</span>")
+				playsound(M, 'sound/effects/sparks4.ogg', 50, 1)
+				detach(M) 
+				M.equipment -= src 
+				src.loc = null 
+				return FALSE 
+			return TRUE 
+
+	
+	return FALSE
 
 /obj/mecha/emp_act(severity)
 	for(var/obj/item/mecha_parts/mecha_equipment/defensive/emp_shield/S in equipment)
 		if(S.uses > 0)
 			S.emp_act(severity)
-			return // Cancel EMP effects for the mech if the shield is active
-	..() // Continue standard EMP processing if there is no shield or it is depleted
+			return 
+	..() 
