@@ -18,10 +18,7 @@
 		spawner_args.Insert(1, /datum/component/logout_spawner)
 		AddComponent(arglist(spawner_args))
 
-/mob/living/verb/metabolism_debug()
-	set name = "Debug Metabolism"
-	set category = "OOC"
-
+/mob/living/proc/metabolism_debug()
 	var/print = "<hr>Debug metabolism data:<br><br>"
 	print += "<b>Nutrition</b>: [nutrition] ([PERCENT(nutrition/NUTRITION_LEVEL_FAT)]%)<br>"
 	print += "<b>Satiation</b>: [get_satiation()] (predicted nutrition)<br>"
