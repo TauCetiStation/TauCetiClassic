@@ -33,6 +33,7 @@
 	VAR_PRIVATE/clamp_min
 	VAR_PRIVATE/clamp_max
 	VAR_PRIVATE/round_base
+	VAR_PRIVATE/list/statics
 	VAR_PRIVATE/list/multiplicatives
 	VAR_PRIVATE/list/additives
 
@@ -54,6 +55,24 @@
 
 /datum/modval/proc/Get()
 	return value
+
+/datum/modval/proc/ModStatic(new_static, source)
+	if(!source || isnull(new_static))
+		return
+
+	if(!statics)
+		statics = list()
+	else if(statics[source] == new_static)
+		return
+
+	if(istype(statics[source], /datum/modval))
+		UnregisterSignal(statics[source], COMSIG_MODVAL_UPDATE)
+
+	statics[source] = new_static
+	if(istype(statics[source], /datum/modval))
+		RegisterSignal(statics[source], COMSIG_MODVAL_UPDATE, PROC_REF(Recalculate))
+
+	Recalculate()
 
 /datum/modval/proc/ModMultiplicative(new_multiplicative, source)
 	if(!source || isnull(new_multiplicative))
@@ -94,13 +113,19 @@
 /datum/modval/proc/RemoveModifiers(source)
 	var/need_to_recalculate = FALSE
 
-	if(source in multiplicatives)
+	if(length(statics) && (source in statics))
+		statics -= source
+		need_to_recalculate = TRUE
+		if(!length(statics))
+			statics = null
+
+	if(length(multiplicatives) && (source in multiplicatives))
 		multiplicatives -= source
 		need_to_recalculate = TRUE
 		if(!length(multiplicatives))
 			multiplicatives = null
 
-	if(source in additives)
+	if(length(additives) && (source in additives))
 		additives -= source
 		need_to_recalculate = TRUE
 		if(!length(additives))
@@ -115,29 +140,38 @@
 
 	var/new_value = base_value
 
-	if(base_value) // don't need to calculate all mods if our base value is zero
+	if(length(statics))
+		var/stat = 0
+		for(var/source in statics)
+			if(istype(statics[source], /datum/modval))
+				var/datum/modval/V = statics[source]
+				stat += V.Get()
+			else
+				stat += statics[source]
+
+		new_value += stat
+
+	if(new_value && length(multiplicatives)) // new_value could be 0 so we can skip future calculations
 		var/multiplicative = 1
-		var/mod
-		if(length(multiplicatives))
-			for(var/source in multiplicatives)
-				if(istype(multiplicatives[source], /datum/modval))
-					var/datum/modval/V = multiplicatives[source]
-					mod = V.Get()
-				else
-					mod = multiplicatives[source]
-				multiplicative *= mod
+		for(var/source in multiplicatives)
+			if(istype(multiplicatives[source], /datum/modval))
+				var/datum/modval/V = multiplicatives[source]
+				multiplicative *= V.Get()
+			else
+				multiplicative *= multiplicatives[source]
 
+		new_value *= multiplicative
+
+	if(new_value && length(additives))
 		var/additive = 0
-		if(length(additives))
-			for(var/source in additives)
-				if(istype(additives[source], /datum/modval))
-					var/datum/modval/V = additives[source] 
-					mod = V.Get()
-				else
-					mod = additives[source]
-				additive += mod
+		for(var/source in additives)
+			if(istype(additives[source], /datum/modval))
+				var/datum/modval/V = additives[source] 
+				additive += V.Get()
+			else
+				additive += additives[source]
 
-		new_value = base_value * multiplicative * (1 + additive)
+		new_value *= (1 + additive)
 
 	if(isnum(round_base))
 		new_value = round(new_value, round_base)
@@ -159,8 +193,19 @@
 /datum/modval/proc/DebugPrint()
 	. = "<b>Base value</b>: [base_value]<br>"
 	var/mod
+	var/stat = 0
 	var/multi = 1
 	var/addi = 0
+
+	. += "<b>Statics</b>:<br>"
+	for(var/source in statics)
+		if(istype(statics[source], /datum/modval))
+			var/datum/modval/V = statics[source] 
+			mod = V.Get()
+		else
+			mod = multiplicatives[source]
+		stat += mod
+		. += "[ENTITY_TAB][SIGNED_NUM(mod)] (source: <b>[source]</b>)<br>"
 
 	. += "<b>Multiplicatives</b>:<br>"
 	for(var/source in multiplicatives)
@@ -182,7 +227,9 @@
 		addi += mod
 		. += "[ENTITY_TAB][SIGNED_NUM(mod)] (source: <b>[source]</b>)<br>"
 
-	. += "<b>Final value</b>: [value] = [base_value] * [multi] * (1 [SIGNED_NUM(addi)])"
+	. += "<b>Final value</b>: [value] = ([base_value] [SIGNED_NUM(stat)]) * [multi] * (1 [SIGNED_NUM(addi)])"
+
+	return . // linter problems, https://github.com/SpaceManiac/SpacemanDMM/issues/423
 
 #undef SIGNED_NUM
 #undef PRINT_SIGN
