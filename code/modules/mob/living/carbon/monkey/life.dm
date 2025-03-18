@@ -43,9 +43,6 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
 		//Disabilities
 		handle_disabilities()
 
@@ -207,10 +204,10 @@
 
 	return internal.remove_air_volume(volume_needed)
 
-/mob/living/carbon/monkey/proc/handle_chemicals_in_body()
-
-	if(reagents && reagents.reagent_list.len)
-		reagents.metabolize(src)
+/mob/living/carbon/monkey/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if (drowsyness)
 		drowsyness--
@@ -226,8 +223,6 @@
 		dizziness = max(0, dizziness - 5)
 	else
 		dizziness = max(0, dizziness - 1)
-
-	return //TODO: DEFERRED
 
 /mob/living/carbon/monkey/proc/handle_regular_status_updates()
 
@@ -298,7 +293,6 @@
 
 		if(druggy)
 			adjustDrugginess(-1)
-	return 1
 
 /mob/living/carbon/monkey/handle_regular_hud_updates()
 	if(!client)

@@ -78,7 +78,7 @@
 	var/synth_temp_gain = 0					//IS_SYNTHETIC species will gain this much temperature every second
 	var/synth_temp_max = 0					//IS_SYNTHETIC will cap at this value
 
-	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
+	var/metabolism_mod = 1 // Multiplicative modificator of mob metabolism. Setting it to 0 disables species metabolism
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
@@ -322,11 +322,10 @@
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
 
-/datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
+// for unique species behavior like regen
+// called for not dead mob from humans/life()
+/datum/species/proc/on_mob_life(mob/living/carbon/human/H)
 	return
-
-/datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
-	return TRUE
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H, gibbed) //Handles any species-specific death events (such nymph spawns).
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
@@ -511,9 +510,6 @@
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
 
-/datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_unathi_digest(M)
-
 /datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
 
@@ -586,9 +582,6 @@
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
 
-/datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_tajaran_digest(M)
-
 /datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.tajaran_equip(H)
 
@@ -643,9 +636,6 @@
 		SPRITE_SHEET_HEAD = 'icons/mob/species/skrell/helmet.dmi',
 		SPRITE_SHEET_SUIT = 'icons/mob/species/skrell/suit.dmi'
 	)
-
-/datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_skrell_digest(M)
 
 /datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.skrell_equip(H)
@@ -744,9 +734,6 @@
 	if(H.wear_mask)
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-
-/datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_vox_digest(M)
 
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
@@ -959,7 +946,9 @@
 	H.remove_alt_appearance("DIONA_zombie")
 	..()
 
-/datum/species/diona/regen(mob/living/carbon/human/H)
+/datum/species/diona/on_mob_life(mob/living/carbon/human/H)
+	// todo: should this use mob metabolism modval?
+
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
@@ -992,9 +981,6 @@
 
 	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
 		H.adjustBruteLoss(-(light_amount * regen_mod))
-
-/datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_diona_digest(M)
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H, gibbed)
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
@@ -1110,6 +1096,8 @@
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
+
+	metabolism_mod = 0 // no metabolism for robots
 
 	cold_level_1 = 50
 	cold_level_2 = -1
@@ -1279,9 +1267,6 @@
 	min_age = 100
 	max_age = 500
 
-/datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_abductor_digest(M)
-
 /datum/species/skeleton
 	name = SKELETON
 
@@ -1297,6 +1282,8 @@
 	tox_mod = 0
 	clone_mod = 0
 	siemens_coefficient = 0
+
+	metabolism_mod = 0
 
 	butcher_drops = list()
 	bodypart_butcher_results = list()
@@ -1346,11 +1333,8 @@
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 	..()
 
-/datum/species/skeleton/regen(mob/living/carbon/human/H)
-	H.nutrition = NUTRITION_LEVEL_NORMAL
-
-/datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_skeleton_digest(M)
+/datum/species/skeleton/on_mob_life(mob/living/carbon/human/H)
+	H.nutrition = NUTRITION_LEVEL_NORMAL // todo: maybe we don't need it with disabled metabolism
 
 /datum/species/skeleton/unathi
 	name = SKELETON_UNATHI
@@ -1451,7 +1435,7 @@
 	min_age = 1
 	max_age = 10000
 
-/datum/species/shadowling/regen(mob/living/carbon/human/H)
+/datum/species/shadowling/on_mob_life(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
 
 	var/light_amount = 0
@@ -1473,9 +1457,6 @@
 		H.SetWeakened(0)
 		H.SetStunned(0)
 
-/datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_shadowling_digest(M)
-
 /datum/species/golem
 	name = GOLEM
 
@@ -1488,6 +1469,8 @@
 	tox_mod = 0
 	brain_mod = 0
 	speed_mod = 2
+
+	metabolism_mod = 0
 
 	blood_datum_path = /datum/dirt_cover/adamant_blood
 	flesh_color = "#137e8f"
@@ -1576,9 +1559,6 @@
 				qdel(x)
 
 	..()
-
-/datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_golem_digest(M)
 
 /datum/species/zombie
 	name = ZOMBIE
@@ -1746,6 +1726,8 @@
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
 
+	metabolism_mod = 0
+
 	cold_level_1 = 80
 	cold_level_2 = 50
 	cold_level_3 = 0
@@ -1807,9 +1789,6 @@
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
 	..()
 	H.remove_status_flags(CANSTUN|CANPARALYSE|CANWEAKEN)
-
-/datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
-	return
 
 /datum/species/homunculus
 	name = HOMUNCULUS
@@ -1977,9 +1956,6 @@
 		OFFSET_HAIR = list(0,9),
 	)
 
-/datum/species/serpentid/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_serpentid_digest(M)
-
 /datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
 	SIGNAL_HANDLER
 	if(!istype(I, /obj/item/weapon/holder))
@@ -2121,6 +2097,8 @@
 	darksight = 8
 	nighteyes = 1
 
+	metabolism_mod = 0
+
 /datum/species/moth/on_gain(mob/living/carbon/human/H)
 	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
 	H.name = H.real_name
@@ -2133,9 +2111,6 @@
 		H.wing_accessory_name = pick("Royal Wings", "Feathery Wings")
 		return
 	H.wing_accessory_name = pick(avaible_wings)
-
-/datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_moth_digest(M)
 
 /datum/species/moth/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
 	SIGNAL_HANDLER
