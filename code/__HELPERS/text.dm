@@ -22,7 +22,7 @@
  */
 
 // You need this for every user text input()
-/proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
+/proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE, strip_non_text = TRUE)
 	if(max_length)
 		input = copytext_char(input, 1, max_length)
 
@@ -35,6 +35,15 @@
 		// More: http://www.byond.com/docs/ref/info.html#/{notes}/Unicode
 		//       http://www.byond.com/forum/post/2520672
 		input = strip_non_ascii(input)
+	else if(strip_non_text)
+		// unicode is big and still get updates, so it's troublesome to keep blacklist for strange symbols, including emoji
+		// so instead we try to whitelist ranges we want to see
+		// currently allowed:
+		// * basic ascii set, including latin, except special characters
+		// * extended/supplement latin
+		// * cyrillic and extended/supplement cyrillic
+		var/static/regex/unicode_whitelisted_chars = regex(@"[^\u0020-\u007E\u00C0-\u00FF\u0400-\u052F\uA640-\uA69F]+", "g")
+		unicode_whitelisted_chars.Replace(input, "")
 	else
 		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
 		// codes from https://www.compart.com/en/unicode/category/
