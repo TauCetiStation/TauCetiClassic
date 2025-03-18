@@ -40,8 +40,8 @@
 	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.mob_metabolism_mod.RemoveModifiers(BP)
 	else
-		// gives us 0%-5% additive mod for metabolism per pumped bodypart
-		var/pump_mod = LERP(0, 0.05, BP.pumped / BP.max_pumped)
+		// gives us 0%-1% additive mod for metabolism per pumped bodypart, for every bodypart 6% total
+		var/pump_mod = LERP(0, 0.01, BP.pumped / BP.max_pumped)
 		BP.owner.mob_metabolism_mod.ModAdditive(pump_mod, BP)
 
 	return BP.pumped - old_pumped
