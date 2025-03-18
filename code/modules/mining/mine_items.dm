@@ -496,7 +496,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		target = target
 		loc = null
 		var/location
-		var/turf/blast_turf = get_turf(user)
 		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
 		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось </span>[timer] [pluralize_russian(timer, "секунду", "секунды", "секунд")].")
@@ -506,10 +505,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				if(!M)	return
 
 			if(target)
-				var/datum/gas_mixture/blast_turf_environment = blast_turf.return_air()
-				var/pressure = blast_turf_environment.return_pressure()
 
-				if (pressure < 50 && istype(target, /turf/simulated/mineral))
+				if ( istype(target, /turf/simulated/mineral))
 					explosion(location, 0, 10, 4)
 				else
 					explosion(location, 0, 0, 4)
