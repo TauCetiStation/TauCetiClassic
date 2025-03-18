@@ -768,3 +768,12 @@
 	name = "pluvia suit"
 	icon_state = "pluviaGold"
 	item_state = "pluviaGold"
+
+/obj/item/clothing/under/robot
+	name = "machine's exosuit"
+	icon = 'icons/effects/32x32.dmi'
+	icon_state = "blank"
+	item_state = "blank"
+	unacidable = 1
+	canremove = 0
+	flags = ABSTRACT | DROPDEL
