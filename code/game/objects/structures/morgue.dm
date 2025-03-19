@@ -405,11 +405,8 @@
 	return
 
 /obj/structure/crematorium/proc/cremate(atom/A, mob/user)
-//	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
-//		if(var/on == 1)
-//		return
 	if(cremating)
-		return //don't let you cremate something twice or w/e
+		return
 
 	if(contents.len <= 0)
 		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
@@ -425,30 +422,33 @@
 		cremating = 1
 		locked = 1
 
+		var/animation_active = TRUE
+		spawn()
+			while(animation_active && cremating)
+				flick("crema_active", src)
+				sleep(5)
+
 		for(var/mob/living/M in contents)
-			if (M.stat!=2)
+			if (M.stat != 2)
 				M.emote("scream")
 			M.log_combat(user, "cremated")
 			M.death(1)
 			M.ghostize(bancheck = TRUE)
 			qdel(M)
 
-		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+		for(var/obj/O in contents)
 			qdel(O)
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
+
+
 		cremating = 0
 		locked = 0
+		animation_active = FALSE
+
 		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
-
-/obj/structure/crematorium/deconstruct(disassembled)
-	move_contents(loc)
-	if(!(flags & NODECONSTRUCT))
-		new /obj/item/stack/sheet/metal(loc, 5)
-	..()
-
 /*
  * Crematorium tray
  */
