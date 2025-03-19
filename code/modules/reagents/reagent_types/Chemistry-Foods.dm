@@ -2,7 +2,7 @@
 	name = "Consumable"
 	id = "consumable"
 	custom_metabolism = FOOD_METABOLISM
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
@@ -14,8 +14,9 @@
 		return
 
 	if(volume > last_volume)
-		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * M.mob_metabolism_mod.Get()
-		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism) - to_add)
+		var/nutriment_value = nutriment_factor * custom_metabolism * M.mob_metabolism_mod.Get()
+		var/to_add = rand(0, volume - last_volume) * nutriment_value
+		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_value) - to_add)
 		if(diet_flags & DIET_ALL)
 			M.reagents.add_reagent("nutriment", to_add)
 		else if(diet_flags & DIET_MEAT)
@@ -116,7 +117,7 @@
 	id = "soysauce"
 	description = "A salty sauce made from the soy plant."
 	reagent_state = LIQUID
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
 	diet_flags = DIET_MEAT
@@ -126,7 +127,7 @@
 	id = "ketchup"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
 	reagent_state = LIQUID
-	nutriment_factor = 5
+	nutriment_factor = 1.25
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
 	diet_flags = DIET_PLANT
@@ -136,7 +137,7 @@
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
@@ -292,7 +293,7 @@
 	id = "coco"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 10
+	nutriment_factor = 2.5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
@@ -302,7 +303,7 @@
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
 	reagent_state = LIQUID
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
@@ -365,7 +366,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 40
+	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -398,7 +399,7 @@
 	id = "dry_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and chicken flavored chemicals that boil in contact with water."
 	reagent_state = SOLID
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
@@ -414,7 +415,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -431,7 +432,7 @@
 	id = "hell_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen with SPICY flavor"
 
@@ -448,7 +449,7 @@
 	id = "hot_hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
@@ -465,7 +466,7 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 8
+	nutriment_factor = 2
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
@@ -475,7 +476,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 8
+	nutriment_factor = 2
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
@@ -485,7 +486,7 @@
 	id = "egg"
 	description = "A runny and viscous mixture of clear and yellow fluids."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
@@ -495,7 +496,7 @@
 	id = "cheese"
 	description = "Some cheese. Pour it out to make it solid."
 	reagent_state = SOLID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
@@ -505,7 +506,7 @@
 	id = "beans"
 	description = "A dish made of mashed beans cooked with lard."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#684435"
 	taste_message = "burritos"
 	diet_flags = DIET_MEAT
@@ -515,7 +516,7 @@
 	id = "bread"
 	description = "Bread! Yep, bread."
 	reagent_state = SOLID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT

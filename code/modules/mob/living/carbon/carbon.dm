@@ -1338,7 +1338,7 @@
 		return FALSE
 
 	var/nutrition_to_remove = 0
-	nutrition_to_remove += 0.16
+	nutrition_to_remove += 0.16 // todo: magic number, would be better to change for mob_metabolism_mod and tweak nutrition & nutrition gains
 	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 		var/pain = getHalLoss()
 		if(pain > 0)

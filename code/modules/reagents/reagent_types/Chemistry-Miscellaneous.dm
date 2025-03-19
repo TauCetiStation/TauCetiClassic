@@ -949,7 +949,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	name = "Liquid Electricity"
 	description = "The blood of some aliens, and the stuff that keeps them going. It works like an energy drink."
 	id = "liquidelectricity"
-	nutriment_factor = 5
+	nutriment_factor = 1.25
 	taste_strength = 5
 	color = "#97ee63"
 	taste_message = "pure electricity"

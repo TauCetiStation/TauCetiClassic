@@ -169,7 +169,7 @@
 	name = "Potato Juice"
 	id = "potato"
 	description = "Juice of the potato. Bleh."
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "puke, you're pretty sure"
 
@@ -259,7 +259,7 @@
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	color = "#403010" // rgb: 64, 48, 16
 	adj_temp = 5
 	taste_message = "chocolate"
@@ -562,7 +562,7 @@
 	reagent_state = LIQUID
 	color = "#ff8cff" // rgb: 255, 140, 255
 	custom_metabolism = FOOD_METABOLISM
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	taste_message = "healthy dietary choices"
 
 /datum/reagent/consumable/doctor_delight/on_general_digest(mob/living/M)
@@ -589,7 +589,7 @@
 	description = "A golden yellow syrup, loaded with sugary sweetness."
 	reagent_state = LIQUID
 	color = "#feae00"
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 2.5
 	taste_message = "honey"
 
 /datum/reagent/consumable/honey/on_general_digest(mob/living/M)
@@ -601,7 +601,6 @@
 		var/mob/living/carbon/human/H = M
 		if(!holder)
 			return
-		H.nutrition += 15
 		if(H.getBruteLoss() && prob(60))
 			M.heal_bodypart_damage(2, 0)
 		if(H.getFireLoss() && prob(50))
@@ -874,7 +873,7 @@
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 	color = "#fbbf0d" // rgb: 251, 191, 13
 	boozepwr = 1
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	taste_message = "beer"
 
 /datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M)
@@ -892,7 +891,7 @@
 	description = "Тыквячье пиво. Красивое, но не очень вкусное."
 	color = "#6aa72d" // rgb: 106, 167, 45
 	boozepwr = 1.5
-	nutriment_factor = 1.5
+	nutriment_factor = 0.25
 	taste_message = "swampy beer"
 
 	toxin_absorption = 4.0
@@ -969,7 +968,7 @@
 	description = "A potent mixture of caffeine and alcohol."
 	color = "#102000" // rgb: 16, 32, 0
 	boozepwr = 2
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	taste_message = "party"
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M)
@@ -1002,7 +1001,7 @@
 	description = "This appears to be beer mixed with milk. Disgusting."
 	color = "#895c4c" // rgb: 137, 92, 76
 	boozepwr = 1
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	taste_message = "bilk"
 
 /datum/reagent/consumable/ethanol/threemileisland
@@ -1591,7 +1590,7 @@
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1.5
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/iced_beer
@@ -1698,7 +1697,7 @@
 	name = "Driest Martini"
 	id = "driestmartini"
 	description = "Only for the experienced. You think you see sand floating in the glass."
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 4
 	taste_message = "bitter alcohol"
@@ -1707,7 +1706,7 @@
 	name = "Banana Mama"
 	id = "bananahonk"
 	description = "A drink from Clown Heaven."
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	color = "#ffff91" // rgb: 255, 255, 140
 	boozepwr = 4
 	taste_message = "honks"
@@ -1716,7 +1715,7 @@
 	name = "Silencer"
 	id = "silencer"
 	description = "A drink from Mime Heaven."
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
 	taste_message = "mphhhh"
