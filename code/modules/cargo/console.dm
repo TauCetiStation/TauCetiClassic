@@ -210,10 +210,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
 					temp += "<BR><A href='byond://?src=\ref[src];viewrequests=1'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
-					if(prob(5))
-						playsound(src, 'sound/machines/megabuy.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-					else
-						playsound(src, 'sound/machines/buysound.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				else
 					temp = "Not enough credits.<BR>"
 					temp += "<BR><A href='byond://?src=\ref[src];viewrequests=1'>Back</A> <A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A>"
