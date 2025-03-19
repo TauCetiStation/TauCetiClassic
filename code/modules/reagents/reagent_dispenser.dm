@@ -248,16 +248,58 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "Water-Cooler"
-	desc = "A machine that dispenses water to drink."
+	desc = "A machine that dispenses water to drink. It also has a stack of cups for convenience."
 	amount_per_transfer_from_this = 5
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
 	anchored = TRUE
+	var/cups = 10
+	var/max_cups = 10
 
 /obj/structure/reagent_dispensers/water_cooler/atom_init()
 	. = ..()
-	reagents.add_reagent("water",500)
+	reagents.add_reagent("water", 500)
+	update_icon()
+
+/obj/structure/reagent_dispensers/water_cooler/update_icon()
+	cut_overlays()
+	switch(cups)
+		if(9 to 10)
+			add_overlay("cups-full")
+		if(7 to 8)
+			add_overlay("cups-medium2")
+		if(4 to 6)
+			add_overlay("cups-medium")
+		if(1 to 3)
+			add_overlay("cups-low")
+		if(0)
+			add_overlay("cups-empty")
+
+/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/user)
+	if(cups > 0)
+		var/obj/item/weapon/reagent_containers/food/drinks/sillycup/cup = new /obj/item/weapon/reagent_containers/food/drinks/sillycup(get_turf(src))
+		user.put_in_hands(cup)
+		to_chat(user, "<span class='notice'>You take a cup from [src].</span>")
+		cups--
+		update_icon()
+	else
+		to_chat(user, "<span class='warning'>There are no cups left in [src]!</span>")
+
+/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/reagent_containers/food/drinks))
+		var/obj/item/weapon/reagent_containers/food/drinks/drink = I
+		if(!drink.reagents.total_volume)
+			drink.reagents.add_reagent("water", min(drink.volume, amount_per_transfer_from_this))
+			to_chat(user, "<span class='notice'>You fill [drink] with water from [src].</span>")
+		else
+			to_chat(user, "<span class='warning'>[drink] is already full!</span>")
+		return
+	..()
+
+/obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>There are [cups] cups left in [src].</span>"
 
 
 /obj/structure/reagent_dispensers/beerkeg
