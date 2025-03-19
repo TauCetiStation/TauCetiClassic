@@ -328,6 +328,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 	SyncRDevices()
 	screen = "main"
 	nanomanager.update_uis(src)
+	playsound(src, 'sound/machines/connect_machines.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 /obj/machinery/computer/rdconsole/proc/sync_tech()
 	for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
@@ -351,6 +352,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 
 	screen = "main"
 	nanomanager.update_uis(src)
+	playsound(src, 'sound/machines/sync_network.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 /obj/machinery/computer/rdconsole/proc/get_protolathe_data()
 	var/list/protolathe_list = list(

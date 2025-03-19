@@ -282,6 +282,7 @@
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
+		playsound(src, 'sound/machines/use_card.ogg', VOL_EFFECTS_MASTER)
 		if(check_accounts)
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
@@ -391,6 +392,8 @@
 	if(!.)
 		return
 
+	if(href_list)
+		playsound(src, 'sound/machines/vendo_button.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	if(href_list["remove_coin"] && !issilicon(usr) && !isobserver(usr))
 		if(!coin)
 			to_chat(usr, "There is no coin in this machine.")
