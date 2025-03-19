@@ -449,6 +449,12 @@
 
 		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
+
+/obj/structure/crematorium/deconstruct(disassembled)
+	move_contents(loc)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+	..()
 /*
  * Crematorium tray
  */
