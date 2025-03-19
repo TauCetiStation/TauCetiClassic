@@ -28171,9 +28171,10 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"raj" = (
 /obj/structure/table/glass,
 /obj/item/weapon/flora/deskferntrim{
-	icon_state = "plant-34-alternative";
+	icon_state = "plant-34-alternative"
 	pixel_x = 8;
 	pixel_y = 10
 	},
