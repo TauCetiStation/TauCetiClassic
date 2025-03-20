@@ -5,12 +5,13 @@
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = TRUE
-	power_channel = STATIC_ENVIRON
+	power_channel = STATIC_ENVIRON //
 	frequency = 0
 	var/id
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 5
+	layer = GAS_METER_LAYER
 
 /obj/machinery/meter/atom_init()
 	. = ..()
