@@ -5,7 +5,7 @@
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = TRUE
-	power_channel = STATIC_ENVIRON //
+	power_channel = STATIC_ENVIRON
 	frequency = 0
 	var/id
 	use_power = IDLE_POWER_USE
