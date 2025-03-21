@@ -186,7 +186,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				else
 					C.reagents.add_reagent("nicotine", 0.2)
 
-				// Добавляем счётчик никотина
 				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					if(!H.nicotine_intake)
