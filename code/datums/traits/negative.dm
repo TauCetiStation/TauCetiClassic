@@ -282,7 +282,7 @@
 	if (!HAS_TRAIT(src, TRAIT_NICOTINE_ADDICTION))
 		return
 
-	if (src.reagents.has_reagent("nicotine"))
+	if (reagents.has_reagent("nicotine"))
 		last_smoke_time = world.time
 		return
 
