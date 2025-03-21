@@ -73,3 +73,8 @@
 	description = "<span class='warning'>Something stuck in my throat.</span>"
 	mood_change = -3
 	timeout = 3 MINUTE
+
+/datum/mood_event/nicotine_addiction
+	description = "<span class='warning'>Вы начинаете нервничать и испытывать абстиненцию. Нужно срочно покурить!</span>"
+	mood_change = -6
+	timeout = 1 MINUTES

@@ -252,3 +252,43 @@
 	req_species_flags = list(
 		NO_BLOOD = FALSE,
 	)
+
+/datum/quirk/nicotine_addiction
+	name = "Никотиновая зависимость"
+	desc = "Вы зависимы от никотина и нуждаетесь в регулярном курении, иначе столкнетесь с неприятными последствиями."
+	value = -1
+	mob_trait = TRAIT_NICOTINE_ADDICTION
+	gain_text = "<span class='danger'>Вы чувствуете сильное желание закурить.</span>"
+
+/datum/quirk/nicotine_addiction/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	if (H)
+		H.nicotine_addiction = TRUE
+		H.last_smoke_time = world.time
+
+/mob/living/carbon/human
+	var/nicotine_addiction = FALSE
+	var/last_smoke_time = 0
+
+/mob/living/carbon/human/Life()
+{
+	..()
+	if (nicotine_addiction)
+		check_nicotine_withdrawal()
+}
+
+/mob/living/carbon/human/proc/check_nicotine_withdrawal()
+{
+	if (!HAS_TRAIT(src, TRAIT_NICOTINE_ADDICTION))
+		return
+
+	if (src.reagents.has_reagent("nicotine"))
+		last_smoke_time = world.time
+		return
+
+	if (last_smoke_time && (world.time - last_smoke_time) > 7500)
+	{
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "nicotine_addiction", /datum/mood_event/nicotine_addiction)
+		src.make_jittery(5)
+	}
+}

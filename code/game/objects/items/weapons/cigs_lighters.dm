@@ -185,6 +185,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
 				else
 					C.reagents.add_reagent("nicotine", 0.2)
+
+				// Добавляем счётчик никотина
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					if(!H.nicotine_intake)
+						H.nicotine_intake = 0
+					H.nicotine_intake += nicotine_per_smoketime
+
+					if(H.nicotine_intake >= 1 && !HAS_TRAIT(H, TRAIT_NICOTINE_ADDICTION))
+						ADD_TRAIT(H, TRAIT_NICOTINE_ADDICTION, "nicotine_addiction")
+						to_chat(H, "<span class='danger'>Вы чувствуете, что больше не можете обходиться без сигарет. У вас развилась никотиновая зависимость!</span>")
+
 				if(reagents.total_volume)
 					if(prob(15)) // so it's not an instarape in case of acid
 						reagents.reaction(C, INGEST)
@@ -192,6 +204,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				return
 	if(reagents.total_volume)
 		reagents.remove_any(REAGENTS_METABOLISM)
+
+/mob/living/carbon/human
+	var/nicotine_intake = 0
+
+/mob/living/carbon/human/Life()
+{
+	..()
+
+	if(nicotine_intake > 0 && world.time % 6000 == 0)
+		nicotine_intake = max(nicotine_intake - 2, 0)
+}
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit == 1)
