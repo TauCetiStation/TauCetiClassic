@@ -286,7 +286,7 @@
 		last_smoke_time = world.time
 		return
 
-	if (last_smoke_time && (world.time - last_smoke_time) > 100)
+	if (last_smoke_time && (world.time - last_smoke_time) > 7500)
 	{
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "nicotine_addiction", /datum/mood_event/nicotine_addiction)
 		make_jittery(5)
