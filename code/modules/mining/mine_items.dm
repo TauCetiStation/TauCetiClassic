@@ -478,7 +478,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
-	to_chat(user, "<span class='notice'>Таймер установлен на </span>[timer]<span class='notice'> [pluralize_russian(timer, "секунду", "секунды", "секунд")].</span>")
+	to_chat(user, "<span class='notice'>Таймер установлен на [timer] [PLUR_SECONDS_IN(timer)].</span>")
 
 /obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
@@ -498,7 +498,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		var/location
 		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
-		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось </span>[timer] [pluralize_russian(timer, "секунду", "секунды", "секунд")].")
+		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось [timer] [PLUR_SECONDS_LEFT(timer)].</span>")
 		spawn(timer*10)
 
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
