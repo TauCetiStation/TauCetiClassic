@@ -130,30 +130,31 @@
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
 	icon_state = "amp"
 
-/obj/item/clothing/head/wizard/amp/shielded
-	name = "tiara of protection"
+/obj/item/clothing/head/helmet/wizard/amp/shielded
+	name = "tiara of protection" ///obj/item/clothing/head/helmet
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot. This one emanates protection aura."
+	icon_state = "amp"
 
-/obj/item/clothing/head/wizard/amp/shielded/atom_init()
+/obj/item/clothing/head/helmet/wizard/amp/shielded/atom_init()
 	. = ..()
 
 	var/obj/effect/effect/forcefield/F = new
 	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE, TRUE)
 
-/obj/item/clothing/head/wizard/amp/shielded/proc/activate(mob/living/user)
+/obj/item/clothing/head/helmet/wizard/amp/shielded/proc/activate(mob/living/user)
 	if(iswizard(user) || iswizardapprentice(user))
 		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
 
-/obj/item/clothing/head/wizard/amp/shielded/proc/deactivate(mob/living/user)
+/obj/item/clothing/head/helmet/wizard/amp/shielded/proc/deactivate(mob/living/user)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
 
-/obj/item/clothing/head/wizard/amp/shielded/equipped(mob/living/user, slot)
+/obj/item/clothing/head/helmet/wizard/amp/shielded/equipped(mob/living/user, slot)
 	. = ..()
 
 	if(slot == SLOT_HEAD)
 		activate(user)
 
-/obj/item/clothing/head/wizard/amp/shielded/dropped(mob/living/user)
+/obj/item/clothing/head/helmet/wizard/amp/shielded/dropped(mob/living/user)
 	. = ..()
 	if(slot_equipped == SLOT_HEAD)
 		deactivate(user)
