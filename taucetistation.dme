@@ -378,6 +378,7 @@
 #include "code\datums\elements\digitalcamo.dm"
 #include "code\datums\elements\undertile.dm"
 #include "code\datums\elements\mutations\_mutation.dm"
+#include "code\datums\elements\mutations\godmode.dm"
 #include "code\datums\elements\mutations\slime.dm"
 #include "code\datums\emotes\emote.dm"
 #include "code\datums\emotes\misc.dm"
