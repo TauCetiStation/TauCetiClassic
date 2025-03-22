@@ -307,94 +307,119 @@
 
 // ========== BRUTE ==========
 /mob/living/proc/getBruteLoss()
+	if(!mob_brute_mod.Get())
+		// resets possible accumulated damage if we became immune to it
+		bruteloss = 0
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0) // apply mod only for damage
+		amount *= mob_brute_mod.Get()
 	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
+	return amount
 
 // ========== OXY ==========
+// todo: TRAIT_NO_BREATHE (and mutation too)
 /mob/living/proc/getOxyLoss()
+	if(!mob_oxy_mod.Get())
+		oxyloss = 0
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_oxy_mod.Get()
 	oxyloss = clamp(oxyloss + amount, 0, maxHealth * 2)
+	return amount
 
 /mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	oxyloss = clamp(amount, 0, maxHealth * 2)
+	if(!mob_oxy_mod.Get())
+		oxyloss = 0
+	else
+		oxyloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== TOX ==========
 /mob/living/proc/getToxLoss()
+	if(!mob_tox_mod.Get())
+		toxloss = 0
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_tox_mod.Get()
 	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
+	return amount
 
 /mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	toxloss = clamp(amount, 0, maxHealth * 2)
+	if(!mob_tox_mod.Get())
+		toxloss = 0
+	else
+		toxloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== FIRE ==========
 /mob/living/proc/getFireLoss()
+	if(!mob_burn_mod.Get())
+		fireloss = 0
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_burn_mod.Get()
 	fireloss = clamp(fireloss + amount, 0, maxHealth * 2)
+	return amount
 
 // ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
+	if(!mob_clone_mod.Get())
+		cloneloss = 0
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_clone_mod.Get()
 	cloneloss = clamp(cloneloss + amount, 0, maxHealth * 2)
+	return amount
 
 /mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	cloneloss = clamp(amount, 0, maxHealth * 2)
+	if(!mob_clone_mod.Get())
+		cloneloss = 0
+	else
+		cloneloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
+	if(!mob_brain_mod.Get())
+		brainloss = 0
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_brain_mod.Get()
 	brainloss = clamp(brainloss + amount, 0, maxHealth * 2)
+	return amount
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	brainloss = clamp(amount, 0, maxHealth * 2)
+	if(!mob_brain_mod.Get())
+		brainloss = 0
+	else
+		brainloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
-	if(halloss && (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_PAIN))
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		halloss = 0
 	return halloss
 
 /mob/living/proc/adjustHalLoss(amount)
-	if((status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_PAIN))
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		halloss = 0
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
 	halloss = clamp(halloss + amount, 0, maxHealth * 2)
+	return amount
 
 /mob/living/proc/setHalLoss(amount)
-	if((status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_PAIN))
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		halloss = 0
 		return
 	if(amount - halloss > 0)

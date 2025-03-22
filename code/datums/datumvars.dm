@@ -1045,7 +1045,7 @@ body
 			if("brute")	L.adjustBruteLoss(amount)
 			if("fire")	L.adjustFireLoss(amount)
 			if("toxin")	L.adjustToxLoss(amount)
-			if("oxygen")L.adjustOxyLoss(amount)
+			if("oxygen") L.adjustOxyLoss(amount)
 			if("brain")	L.adjustBrainLoss(amount)
 			if("clone")	L.adjustCloneLoss(amount)
 			else

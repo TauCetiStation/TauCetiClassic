@@ -66,6 +66,14 @@
 
 	var/datum/modval/mob_metabolism_mod = new /datum/modval(base_value = 1, clamp_min = 0)
 
+	// damage coefficients
+	var/datum/modval/mob_brute_mod = new /datum/modval(base_value = 1)
+	var/datum/modval/mob_burn_mod = new /datum/modval(base_value = 1)
+	var/datum/modval/mob_oxy_mod = new /datum/modval(base_value = 1)
+	var/datum/modval/mob_tox_mod = new /datum/modval(base_value = 1)
+	var/datum/modval/mob_clone_mod = new /datum/modval(base_value = 1)
+	var/datum/modval/mob_brain_mod = new /datum/modval(base_value = 1)
+
 	var/list/spawner_args = null
 
 	COOLDOWN_DECLARE(wc_use_cooldown)

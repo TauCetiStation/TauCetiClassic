@@ -61,8 +61,8 @@
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
 /datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
-	brute = round(brute * BP.owner.species.brute_mod, 0.1)
-	burn = round(burn * BP.owner.species.burn_mod, 0.1)
+	brute = round(brute * BP.owner.mob_brute_mod.Get(), 0.1)
+	burn = round(burn * BP.owner.mob_burn_mod.Get(), 0.1)
 
 	if((brute <= 0) && (burn <= 0))
 		return 0

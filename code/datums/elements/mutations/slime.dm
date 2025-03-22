@@ -11,7 +11,7 @@
 		TRAIT_VIRUS_IMMUNE,
 	)
 
-/datum/element/mutation/on_gain(mob/living/carbon/human/H)
+/datum/element/mutation/slime/on_gain(mob/living/carbon/human/H)
 	if(istype(H))
 		H.f_style = "Shaved"
 		H.h_style = "Bald"

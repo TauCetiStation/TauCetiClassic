@@ -46,8 +46,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		mob_metabolism_mod.ModMultiplicative(species.metabolism_mod, species)
-		butcher_results = species.butcher_drops.Copy()
+		butcher_results = species.butcher_drops.Copy() // todo move to species on_gain/on_loose
 
 	dna.species = species.name
 	dna.b_type = random_blood_type()
@@ -2021,22 +2020,13 @@
 	tod = null
 	timeofdeath = 0
 	dead_mob_list -= src
+
+	if(deadtime > DEFIB_TIME_LOSS)
+		// damage for every second above DEFIB_TIME_LOSS till DEFIB_TIME_LIMIT
+		// 60 is often used as threshold for brainloss to trigger funny interactions
+		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS))) 
+
 	med_hud_set_health()
-	apply_brain_damage(deadtime)
-
-/mob/living/carbon/human/proc/apply_brain_damage(deadtime)
-	if(deadtime < DEFIB_TIME_LOSS)
-		return
-
-	if(!should_have_organ(O_BRAIN))
-		return //no brain
-
-	var/obj/item/organ/internal/brain/brain = organs_by_name[O_BRAIN]
-	if(!brain)
-		return //no brain
-
-	var/brain_damage = clamp((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
-	setBrainLoss(brain_damage)
 
 /mob/living/carbon/human/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
 	. = TRUE

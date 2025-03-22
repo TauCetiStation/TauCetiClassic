@@ -31,12 +31,15 @@
 	var/datum/action/innate/race/race_ability = null
 	var/list/race_verbs = list()
 	var/list/race_traits = list()
-	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
-	var/burn_mod = 1                                     // Burn damage multiplier.
-	var/oxy_mod = 1                                      // Oxyloss multiplier.
-	var/tox_mod = 1                                      // Toxloss multiplier.
+
+	// Multiplicative modificators of mob defenses. Setting it to 0 makes mob immune to damage
+	var/brute_mod = 1                                    // Physical damage multiplier
+	var/burn_mod = 1                                     // Burn damage multiplier
+	var/oxy_mod = 1                                      // Oxyloss multiplier
+	var/tox_mod = 1                                      // Toxloss multiplier
 	var/clone_mod = 1                                    // Cloneloss multiplier
-	var/brain_mod = 1                                    // Brainloss multiplier.
+	var/brain_mod = 1                                    // Brainloss multiplier
+
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/speed_mod_no_shoes = 0                           // Speed ​​modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
@@ -275,6 +278,15 @@
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
+	H.mob_brute_mod.ModMultiplicative(brute_mod, src)
+	H.mob_burn_mod.ModMultiplicative(burn_mod, src)
+	H.mob_oxy_mod.ModMultiplicative(oxy_mod, src)
+	H.mob_tox_mod.ModMultiplicative(tox_mod, src)
+	H.mob_clone_mod.ModMultiplicative(clone_mod, src)
+	H.mob_brain_mod.ModMultiplicative(brain_mod, src)
+
+	H.mob_metabolism_mod.ModMultiplicative(metabolism_mod, src)
+
 	if(flags[NO_GENDERS])
 		H.gender = NEUTER
 
@@ -303,6 +315,15 @@
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
+
+	H.mob_brute_mod.RemoveModifiers(src)
+	H.mob_burn_mod.RemoveModifiers(src)
+	H.mob_oxy_mod.RemoveModifiers(src)
+	H.mob_tox_mod.RemoveModifiers(src)
+	H.mob_clone_mod.RemoveModifiers(src)
+	H.mob_brain_mod.RemoveModifiers(src)
+
+	H.mob_metabolism_mod.RemoveModifiers(src)
 
 	if(!flags[IS_SOCIAL])
 		H.handle_socialization()

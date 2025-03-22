@@ -233,7 +233,6 @@
 // Defibrillation
 #define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
 #define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
-#define MAX_BRAIN_DAMAGE  80
 
 // Awareness about syndicate, it`s agents and equipment
 #define SYNDICATE_UNAWARE  0

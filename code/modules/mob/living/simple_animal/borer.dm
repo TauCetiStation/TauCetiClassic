@@ -252,7 +252,7 @@
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
 	assuming = TRUE
 
-	addtimer(CALLBACK(src, PROC_REF(take_control)), 300 + (host.brainloss * 5))
+	addtimer(CALLBACK(src, PROC_REF(take_control)), 300 + (host.getBrainLoss() * 5))
 
 /mob/living/simple_animal/borer/proc/take_control()
 	assuming = FALSE

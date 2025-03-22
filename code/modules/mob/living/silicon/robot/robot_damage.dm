@@ -24,15 +24,15 @@
 
 /mob/living/silicon/robot/adjustBruteLoss(amount)
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		return take_overall_damage(amount, 0)
 	else
-		heal_overall_damage(-amount, 0)
+		return heal_overall_damage(-amount, 0)
 
 /mob/living/silicon/robot/adjustFireLoss(amount)
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		return take_overall_damage(0, amount)
 	else
-		heal_overall_damage(0, -amount)
+		return heal_overall_damage(0, -amount)
 
 /mob/living/silicon/robot/proc/get_damaged_components(brute, burn, destroyed = 0)
 	var/list/datum/robot_component/parts = list()

@@ -25,18 +25,21 @@
 
 // =============================================
 
+// because of organ humans have two types of brain damage
+// this is too obscure and we need to do something about it
+
 /mob/living/carbon/human/getBrainLoss()
-	if(status_flags & GODMODE)
-		return 0
+	if(!should_have_organ(O_BRAIN))
+		brainloss = 0
+		return brainloss
 
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
-		return 0
-
-	var/res = brainloss
 	var/obj/item/organ/internal/brain/IO = organs_by_name[O_BRAIN]
 
 	if(!IO)
 		return maxHealth * 2
+
+	var/res = brainloss
+
 	if(IO.is_bruised())
 		res += 20
 	if(IO.is_broken())
@@ -47,17 +50,18 @@
 	return res
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
-	if(species.brain_mod == 0 || species.flags[IS_SYNTHETIC] || !should_have_organ(O_BRAIN))
+	if(!should_have_organ(O_BRAIN))
 		brainloss = 0
-	else
-		amount = amount * species.brain_mod
-		..(amount)
+		return
+
+	return ..()
 
 /mob/living/carbon/human/setBrainLoss(amount)
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+	if(!should_have_organ(O_BRAIN))
 		brainloss = 0
-	else
-		..()
+		return
+
+	..()
 
 // =============================================
 
@@ -72,9 +76,9 @@
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		return take_overall_damage(amount, 0)
 	else
-		heal_overall_damage(-amount, 0)
+		return heal_overall_damage(-amount, 0)
 
 // =============================================
 
@@ -90,68 +94,65 @@
 	if(amount > 0)
 		if(RESIST_HEAT in mutations)
 			return
-		take_overall_damage(0, amount)
+		return take_overall_damage(0, amount)
 	else
-		heal_overall_damage(0, -amount)
+		return heal_overall_damage(0, -amount)
 
 // =============================================
 
 /mob/living/carbon/human/getToxLoss()
-	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
+	if(species.flags[NO_BLOOD])
 		toxloss = 0
+		return toxloss
+
 	return ..()
 
 /mob/living/carbon/human/adjustToxLoss(amount)
-	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
+	if(species.flags[NO_BLOOD])
 		toxloss = 0
-	else
-		amount = amount * species.tox_mod
-		..(amount)
+		return
+
+	return ..()
 
 /mob/living/carbon/human/setToxLoss(amount)
-	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
+	if(species.flags[NO_BLOOD])
 		toxloss = 0
-	else
-		..()
+		return
+
+	..()
 
 // =============================================
 
 /mob/living/carbon/human/getOxyLoss()
-	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+	if(!should_have_organ(O_LUNGS))
 		oxyloss = 0
+		return oxyloss
+
 	return ..()
 
 /mob/living/carbon/human/adjustOxyLoss(amount)
-	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+	if(!should_have_organ(O_LUNGS))
 		oxyloss = 0
-	else
-		amount = amount * species.oxy_mod
-		..(amount)
+		return
+
+	return ..()
 
 /mob/living/carbon/human/setOxyLoss(amount)
-	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
+	if(!should_have_organ(O_LUNGS))
 		oxyloss = 0
-	else
-		..()
+		return
+
+	..()
 
 // =============================================
 
 /mob/living/carbon/human/adjustCloneLoss(amount)
-	if(species.clone_mod == 0)
-		cloneloss = 0
-		return
-	else
-		amount = amount * species.clone_mod
-		..(amount)
-
-	if(species.flags[IS_SYNTHETIC])
-		return
+	. = ..()
 
 	time_of_last_damage = world.time
 
-	var/heal_prob = max(0, 80 - getCloneLoss())
-	var/mut_prob = min(80, getCloneLoss()+10)
-	if (amount > 0)
+	if (. > 0)
+		var/mut_prob = min(80, getCloneLoss()+10)
 		if (prob(mut_prob))
 			var/list/candidates = list()
 			for (var/obj/item/organ/external/BP in bodyparts)
@@ -162,7 +163,8 @@
 				BP.mutate()
 				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
 				return
-	else
+	else if(. < 0)
+		var/heal_prob = max(0, 80 - getCloneLoss())
 		if (prob(heal_prob))
 			for (var/obj/item/organ/external/BP in bodyparts)
 				if (BP.status & ORGAN_MUTATED)
