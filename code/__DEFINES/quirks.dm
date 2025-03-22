@@ -18,6 +18,7 @@
 
 // negative quirks.
 #define QUIRK_BLIND "Слепота"
+#define TRAIT_NICOTINE_ADDICTION "Никотиновая зависимость"
 #define QUIRK_COUGHING "Кашель"
 #define QUIRK_DEAF "Глухота"
 #define QUIRK_SEIZURES "Эпилепсия"
