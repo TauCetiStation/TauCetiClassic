@@ -127,7 +127,7 @@
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.registred_spawner = null
+			M.registred_spawners -= src
 		registered_candidates = null
 
 	return ..()
@@ -157,6 +157,9 @@
 	if(!spectator.client || spectator.client.is_in_spawner)
 		return
 
+	if(!can_spawn(spectator))
+		return
+
 	if(!register_only)
 		if(positions < 1)
 			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
@@ -165,27 +168,19 @@
 			do_spawn(spectator)
 		return
 
-	// todo: registration for multiple spawners?
 	if(spectator in registered_candidates)
 		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
-	else if(spectator.registred_spawner)
-		to_chat(spectator, "<span class='notice'>Вы уже ждете роль \"[spectator.registred_spawner.name]\". Сначала отмените заявку.</span>")
-		return
-
-	if(!can_spawn(spectator))
-		return
-
 	registered_candidates += spectator
-	spectator.registred_spawner = src
+	spectator.registred_spawners += src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.registred_spawner = null
+	spectator.registred_spawners -= src
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
@@ -209,19 +204,16 @@
 	shuffle(filtered_candidates)
 
 	for(var/mob/dead/M in filtered_candidates)
-		if(positions > 0)
+		if(positions > 0 && can_spawn(M))
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
+			M.remove_registration_for_spawners()
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
-	if(!can_spawn(spectator))
-		positions++
-		return
-
 	var/client/C = spectator.client
 
 	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
@@ -275,6 +267,52 @@
 		to_chat(spectator, "<span class='notice'>У этой роли нет предустановленных локаций для спавна.</span>")
 		return
 	var/jump_to = pick(landmarks_list[spawn_landmark_name])
+	spectator.forceMove(get_turf(jump_to))
+
+/*
+ * Равномерно распределяет желающих по лэндмаркам из списка
+*/
+/datum/spawner/multiple
+	var/list/spawn_landmarks_names = list()
+
+/datum/spawner/multiple/New()
+	. = ..()
+	for(name in spawn_landmarks_names)
+		spawn_landmarks_names[name] = 0
+
+/datum/spawner/multiple/pick_spawn_location()
+	var/landmark_name = pick_landmark_name()
+
+	if(!length(landmarks_list[landmark_name]))
+		CRASH("[src.type] attempts to pick spawn location \"[landmark_name]\", but can't find one!")
+
+	return pick_landmarked_location(landmark_name)
+
+/datum/spawner/multiple/proc/pick_landmark_name()
+	var/landmark_name = ""
+	var/n = INFINITY
+
+	for(name in spawn_landmarks_names)
+		if(spawn_landmarks_names[name] < n)
+			n = spawn_landmarks_names[name]
+			landmark_name = name
+
+	spawn_landmarks_names[landmark_name] += 1
+
+	return landmark_name
+
+/datum/spawner/multiple/jump(mob/dead/spectator)
+	var/list/avaible_landmarks = list()
+
+	for(name in spawn_landmarks_names)
+		if(length(landmarks_list[name]))
+			avaible_landmarks += name
+
+	if(!length(avaible_landmarks))
+		to_chat(spectator, "<span class='notice'>У этой роли нет предустановленных локаций для спавна.</span>")
+		return
+
+	var/jump_to = pick(landmarks_list[pick(avaible_landmarks)])
 	spectator.forceMove(get_turf(jump_to))
 
 /*

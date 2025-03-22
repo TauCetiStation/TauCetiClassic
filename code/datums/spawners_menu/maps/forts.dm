@@ -1,4 +1,4 @@
-/datum/spawner/fort_team
+/datum/spawner/multiple/fort_teams
 	name = "Fort Team"
 	desc = "Отстраивайте и защищайте форт своей команды, уничтожьте форт команды противников!"
 	wiki_ref = "Forst"
@@ -6,43 +6,30 @@
 	lobby_spawner = TRUE
 	positions = INFINITY
 
-	cooldown_type = /datum/spawner/fort_team // will be shared between both teams
 	cooldown = 5 MINUTES
+	spawn_landmarks_names = list(TEAM_NAME_BLUE, TEAM_NAME_RED)
 
 	var/datum/map_module/forts/map_module
 
-	var/team_name
-	var/team_outfit
+	var/list/team_outfits = list(TEAM_NAME_BLUE = /datum/outfit/forts_team/blue, TEAM_NAME_RED = /datum/outfit/forts_team/red)
+	var/list/factions = list()
 
-/datum/spawner/fort_team/New(datum/map_module/forts/MM)
+/datum/spawner/multiple/fort_teams/New(datum/map_module/forts/MM)
 	. = ..()
 	map_module = MM
-	faction = MM.factions[team_name]
+	factions[TEAM_NAME_BLUE] = map_module.factions[TEAM_NAME_BLUE]
+	factions[TEAM_NAME_RED]  = map_module.factions[TEAM_NAME_RED]
 
-/datum/spawner/fort_team/spawn_body(mob/dead/spectator)
-	var/spawnloc = pick_spawn_location()
+/datum/spawner/multiple/fort_teams/spawn_body(mob/dead/spectator)
+	var/team_name = pick_landmark_name()
 
 	var/client/C = spectator.client
 
-	var/mob/living/carbon/human/H = new(spawnloc)
+	var/mob/living/carbon/human/H = new(pick_landmarked_location(team_name))
 	H.key = C.key
 
-	map_module.assign_to_team(H, faction)
-	H.equipOutfit(team_outfit)
+	H.equipOutfit(team_outfits[team_name])
+	map_module.assign_to_team(H, factions[team_name])
 
 	var/new_name = spectator.name
 	INVOKE_ASYNC(C, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
-
-/datum/spawner/fort_team/red
-	name = TEAM_NAME_RED
-	team_name = TEAM_NAME_RED
-	spawn_landmark_name = TEAM_NAME_RED // /obj/effect/landmark/red_team
-
-	team_outfit = /datum/outfit/forts_team/red
-
-/datum/spawner/fort_team/blue
-	name = TEAM_NAME_BLUE
-	team_name = TEAM_NAME_BLUE
-	spawn_landmark_name = TEAM_NAME_BLUE // /obj/effect/landmark/blue_team
-
-	team_outfit = /datum/outfit/forts_team/blue
