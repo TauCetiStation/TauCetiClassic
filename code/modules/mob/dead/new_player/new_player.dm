@@ -463,9 +463,13 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.UpdateSE()
 	new_character.dna.original_character_name = new_character.real_name
+
+	// little randomize hunger parameters
 	new_character.nutrition = rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_WELL_FED)
-	var/old_base_metabolism = new_character.get_metabolism_factor()
-	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
+	// random individual metabolism mod from -10% to +10%
+	// so people don't get hungry at the same time
+	// but it affects all metabolism including chemistry, so i don't know if we need it
+	new_character.mob_metabolism_mod.ModAdditive(rand(-10, 10) * 0.01, "Unique character mod")
 
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in

@@ -27,9 +27,6 @@
 
 	moveset_type = /datum/combat_moveset/human
 
-	beauty_living = 0
-	beauty_dead = -1500
-
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
@@ -49,8 +46,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor.Set(species.metabolism_mod)
-		metabolism_factor.AddModifier("NeedHeart", multiple=-1)
+		mob_metabolism_mod.ModMultiplicative(species.metabolism_mod, species)
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
@@ -362,6 +358,16 @@
 			else
 				return BP
 	return FALSE // In case we didn't find anything.
+
+/mob/living/carbon/human/proc/make_pumped()
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump || BP.parent && (BP.parent.is_stump))
+			continue
+
+		if(!BP.max_pumped)
+			continue
+
+		BP.adjust_pumped(BP.max_pumped)
 
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
 	if(regenerating_bodypart) // start fixing broken/destroyed limb

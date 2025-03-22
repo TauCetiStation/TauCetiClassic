@@ -236,7 +236,10 @@
 	toxpwr = 0.5
 
 /datum/reagent/toxin/spore/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.damageoverlaytemp = 60
 	M.blurEyes(15)
 

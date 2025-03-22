@@ -8,10 +8,12 @@
 	color = "#bf80bf"
 	custom_metabolism = 0.01
 	data = 0
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/antidepressant/methylphenidate/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(volume <= 0.1 && data != -1)
 		data = -1
 		to_chat(M, "<span class='warning'>You lose focus..</span>")
@@ -19,6 +21,9 @@
 		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 			data = world.time
 			to_chat(M, "<span class='notice'>Your mind feels focused and undivided.</span>")
+
+/datum/reagent/antidepressant/methylphenidate/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/chemical_reaction/methylphenidate
 	name = "Methylphenidate"
@@ -35,10 +40,12 @@
 	color = "#ff80ff"
 	custom_metabolism = 0.01
 	data = 0
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/antidepressant/citalopram/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(volume <= 0.1 && data != -1)
 		data = -1
 		to_chat(M, "<span class='warning'>Your mind feels a little less stable.</span>")
@@ -46,6 +53,9 @@
 		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 			data = world.time
 			to_chat(M, "<span class='notice'>Your mind feels stable.. a little stable.</span>")
+
+/datum/reagent/antidepressant/citalopram/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/chemical_reaction/citalopram
 	name = "Citalopram"
@@ -62,10 +72,12 @@
 	color = "#ff80bf"
 	custom_metabolism = 0.01
 	data = 0
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/antidepressant/paroxetine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(volume <= 0.1 && data != -1)
 		data = -1
 		to_chat(M, "<span class='warning'>Your mind feels much less stable.</span>")
@@ -77,6 +89,9 @@
 			else
 				to_chat(M, "<span class='warning'>Your mind breaks apart.</span>")
 				M.hallucination += 200
+
+/datum/reagent/antidepressant/paroxetine/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/chemical_reaction/paroxetine
 	name = "Paroxetine"

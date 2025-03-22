@@ -401,7 +401,6 @@
 			IO.heart_normalize()
 			H.reanimate_body(H)
 			H.stat = UNCONSCIOUS
-			H.beauty.AddModifier("stat", additive=H.beauty_living)
 			INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, return_to_body_dialog))
 		else
 			IO.heart_normalize()

@@ -178,6 +178,10 @@
 #define NUTRITION_PERCENT_MAX 120
 #define NUTRITION_PERCENT_ZERO 0
 
+#define OVEREATDURATION_SLIM 100
+#define OVEREATDURATION_FAT 500
+#define OVEREATDURATION_CAP 600
+
 // Drunknenness levels and their effects.
 #define DRUNKENNESS_SLUR 30
 #define DRUNKENNESS_CONFUSED 150
@@ -190,9 +194,6 @@
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
-
-// Factor of how fast mob nutrition decreases
-#define METABOLISM_FACTOR 1 // standart (for humans, other)
 
 // Taste sensitivity - the more the more reagents you'll taste
 #define TASTE_SENSITIVITY_NORMAL 1

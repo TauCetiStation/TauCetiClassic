@@ -107,7 +107,6 @@
 			location_as_object.handle_internal_lifeform(src, 0)
 
 		handle_mutations_and_radiation()
-		handle_chemicals_in_body()
 		handle_disabilities()
 		handle_virus_updates()
 
@@ -190,19 +189,20 @@
 					domutcheck(src,null)
 					emote("gasp")
 
-/mob/living/carbon/ian/proc/handle_chemicals_in_body()
-	if(reagents && reagents.reagent_list.len)
-		reagents.metabolize(src)
+/mob/living/carbon/ian/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
 
-		var/total_phoronloss = 0
-		for(var/obj/item/I in src)
-			if(I.contaminated)
-				total_phoronloss += vsc.plc.CONTAMINATION_LOSS
-		adjustToxLoss(total_phoronloss)
+	var/total_phoronloss = 0
+	for(var/obj/item/I in src)
+		if(I.contaminated)
+			total_phoronloss += vsc.plc.CONTAMINATION_LOSS
+	adjustToxLoss(total_phoronloss)
 
 	// nutrition decrease
 	if (nutrition > 0)
-		nutrition = max(0, nutrition - get_metabolism_factor() / 10)
+		nutrition = max(0, nutrition - mob_metabolism_mod.Get() / 10)
 
 	if (nutrition > 450)
 		if(overeatduration < 600)

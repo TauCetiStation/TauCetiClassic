@@ -64,10 +64,7 @@
 	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
 	var/logs_combat = TRUE
 
-	var/datum/modval/beauty
-
-	var/beauty_living = 0.0
-	var/beauty_dead = -100.0
+	var/datum/modval/mob_metabolism_mod = new /datum/modval(base_value = 1, clamp_min = 0)
 
 	var/list/spawner_args = null
 

@@ -10,9 +10,6 @@
 	..()
 
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
 		handle_targets()
 
 		if (!ckey)
@@ -184,15 +181,6 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/slime/proc/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src)
-
-	updatehealth()
-
-	return //TODO: DEFERRED
-
-
 /mob/living/carbon/slime/proc/handle_regular_status_updates()
 
 	if(isslimeadult(src))
@@ -274,7 +262,12 @@
 		Feedstop()
 	TargetAttack()
 	return
-/mob/living/carbon/slime/handle_nutrition()
+
+/mob/living/carbon/slime/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
+
 	if(prob(20))
 		if(isslimeadult(src)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
@@ -355,6 +348,7 @@
 				A.rabid = rabid
 				qdel(src)
 
+	updatehealth()
 
 /mob/living/carbon/slime/proc/handle_targets()
 	if(Tempstun)
