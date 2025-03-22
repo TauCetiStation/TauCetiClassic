@@ -307,6 +307,45 @@
 	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
-	item_state = "marisarobe"
+	item_state = "marisa"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/wizrobe/tape
+	name = "tape robe"
+	desc = "A fine robe made from magically attuned duct tape."
+	icon_state = "taperobe"
+	item_state = "taperobe"
+
+/obj/item/clothing/suit/wizrobe/black
+	name = "black wizard robe"
+	desc = "An unnerving black gem-lined robe that reeks of death and decay."
+	icon_state = "blackwizard"
+	item_state = "blackwizard"
+
+/obj/item/clothing/suit/wizrobe/yellow
+	name = "yellow wizard robe"
+	desc = "A magnificent yellow gem-lined robe that seems to radiate power."
+	icon_state = "yellowwizard"
+	item_state = "yellowwizard"
+
+/obj/item/clothing/head/wizard/tape
+	name = "tape hat"
+	desc = "A magically attuned hat made exclusively from duct tape. You can barely see."
+	icon_state = "tapehat"
+	item_state =  "tapehat"
+	flags = BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = FACE|EYES
+
+/obj/item/clothing/head/wizard/black
+	name = "black wizard hat"
+	desc = "Strange-looking black hat-wear that most certainly belongs to a real skeleton. Spooky."
+	icon_state = "blackwizard"
+	item_state = "blackwizard"
+
+/obj/item/clothing/head/wizard/yellow
+	name = "yellow wizard hat"
+	desc = "Strange-looking yellow hat-wear that most certainly belongs to a powerful magic user."
+	icon_state = "yellowwizard"
+	item_state = "yellowwizard"
