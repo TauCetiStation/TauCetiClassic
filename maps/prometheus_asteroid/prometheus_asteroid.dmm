@@ -2058,9 +2058,9 @@
 "hq" = (
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "Mecha Shutters";
-	name = "Mecha Shutters";
-	dir = 4
+	name = "Mecha Shutters"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal{
@@ -2760,7 +2760,7 @@
 "jR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "mine_dock";
+	dock_tag = "mining_shuttle";
 	locked = 1;
 	name = "Mining Shuttle Airlock";
 	req_one_access = list(48,65)
