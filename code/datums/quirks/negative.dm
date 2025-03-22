@@ -25,11 +25,9 @@
 	gain_text = "<span class='danger'>Вы не можете перестать кашлять!</span>"
 	lose_text = "<span class='notice'>Вы чувствуете облегчение, кашель больше вас не побеспокоит.</span>"
 
-	req_species_flags = list(
-		NO_BREATHE = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_NO_BREATHE,
 	)
-
-
 
 /datum/quirk/deafness
 	name = QUIRK_DEAF
@@ -137,8 +135,8 @@
 	gain_text = "<span class='danger'>Боль пробуждает ваш голод.</span>"
 	lose_text = "<span class='notice'>Вы перестали заедать боль.</span>"
 
-	req_species_flags = list(
-		NO_PAIN = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
 	)
 
 

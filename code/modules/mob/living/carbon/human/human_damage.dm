@@ -197,19 +197,19 @@
 // =============================================
 
 /mob/living/carbon/human/Stuttering()
-	if(species.flags[NO_PAIN])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		stuttering = 0
 	else
 		..()
 
 /mob/living/carbon/human/AdjustStuttering()
-	if(species.flags[NO_PAIN])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		stuttering = 0
 	else
 		..()
 
 /mob/living/carbon/human/setStuttering()
-	if(species.flags[NO_PAIN])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		stuttering = 0
 	else
 		..()
@@ -370,7 +370,7 @@ This function restores all bodyparts.
 	return bodyparts_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
-	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
+	if(damagetype == HALLOSS && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return FALSE
 
 	//Handle other types of damage or healing

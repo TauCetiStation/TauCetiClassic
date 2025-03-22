@@ -1,19 +1,4 @@
 #define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
-/mob/living/carbon/human/getHalLoss()
-	if(species.flags[NO_PAIN])
-		return 0
-	return ..()
-
-/mob/living/carbon/human/setHalLoss()
-	if(species.flags[NO_PAIN])
-		return
-	..()
-
-/mob/living/carbon/human/adjustHalLoss()
-	if(species.flags[NO_PAIN])
-		return
-	..()
-
 /mob/living/carbon/proc/can_catch_item()
 	if(!in_throw_mode)
 		return

@@ -1,6 +1,6 @@
 /mob/living/carbon/human/spawn_gibs()
 	if(!species.flags[NO_BLOOD_TRAILS])
-		hgibs(loc, dna, species.flesh_color, species.blood_datum)
+		new /obj/effect/gibspawner/human(get_turf(loc), src)
 
 /mob/living/carbon/human/gib()
 	if(!species.flags[NO_BLOOD_TRAILS])

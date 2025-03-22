@@ -90,6 +90,8 @@
 		name = text("[colour] adult slime ([number])")
 	real_name = name
 
+	ADD_TRAIT(src, TRAIT_SLIME, GENERIC_TRAIT) // i think it's not used for non-humans and useless here, but maybe someday
+
 	. = ..()
 
 	var/datum/action/innate/slime/E
@@ -327,7 +329,7 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-/mob/living/carbon/slime/getTrail()
+/mob/living/carbon/slime/get_trail_state()
 	return null
 
 /mob/living/carbon/slime/is_usable_head(targetzone = null)
@@ -341,9 +343,6 @@
 
 /mob/living/carbon/slime/can_pickup(obj/O)
 	return FALSE
-
-/mob/living/carbon/slime/get_species()
-	return SLIME
 
 /obj/item/slime_extract
 	name = "slime extract"

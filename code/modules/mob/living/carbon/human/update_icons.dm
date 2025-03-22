@@ -317,21 +317,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/underlay = image("icon"='icons/effects/genetics.dmi', "icon_state"=gene.OnDrawUnderlays(src,g,fat), "layer"=-MUTATIONS_LAYER)
 			if(underlay)
 				standing += underlay
-	for(var/mut in mutations)
-		switch(mut)
-			/*
-			if(HULK)
-				if(fat)
-					standing.underlays	+= "hulk_[fat]_s"
-				else
-					standing.underlays	+= "hulk_[g]_s"
-			if(COLD_RESISTANCE)
-				standing.underlays	+= "fire[fat]_s"
-			if(TK)
-				standing.underlays	+= "telekinesishead[fat]_s"
-			*/
-			if(LASEREYES)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		for(var/image/I in standing)
 			I = update_height(I)
@@ -493,7 +478,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
-			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
 			bloodsies.color = hand_dirt_datum.color
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			bloodsies.pixel_x += species.offset_features[OFFSET_GLOVES][1]
@@ -847,6 +832,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_standing_overlay(WING_UNDERLIMBS_LAYER)
 	apply_standing_overlay(WING_LAYER)
 
+// pls make it organ
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_standing_overlay(TAIL_LAYER)
 
@@ -859,18 +845,22 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(species.gender_tail_icons && gender == FEMALE)
 				tail_gender_appendix = "_fem"
 
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
+			var/image/tail_s = image("icon" = 'icons/mob/human_races/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
+
+			if(BP.owner && HAS_TRAIT(BP.owner, TRAIT_SLIME))
+				tail_s.color = SLIME_PEOPLE_COLOR // this sets alpha too
 			if(BP.status & ORGAN_DEAD)
 				tail_s.color = NECROSIS_COLOR_MOD
 			else if(HULK in mutations)
 				tail_s.color = HULK_SKIN_COLOR
 			else
 				if(species.flags[HAS_SKIN_COLOR])
-					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
-				else if(species.flags[HAS_SKIN_TONE])
-					tail_s.color = RGB_CONTRAST(s_tone, s_tone, s_tone)
+					tail_s.color = rgb(r_skin, g_skin, b_skin)
+				else if(species.flags[HAS_SKIN_TONE]) // any humans with tails?
+					var/datum/skin_tone/T = global.skin_tones_by_name[s_tone]
+					tail_s.color = T.hex
 
 			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 			standing = human_update_offset(standing, FALSE)

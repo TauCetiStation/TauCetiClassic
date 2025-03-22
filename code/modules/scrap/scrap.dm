@@ -221,7 +221,7 @@ var/global/list/scrap_base_cache = list()
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
-		if(victim.species.flags[NO_PAIN]) // So we still take damage, but actually dig through.
+		if(HAS_TRAIT(victim, TRAIT_NO_PAIN)) // So we still take damage, but actually dig through.
 			return FALSE
 		return TRUE
 	return FALSE

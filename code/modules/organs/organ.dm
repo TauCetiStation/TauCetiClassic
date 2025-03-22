@@ -202,7 +202,7 @@
 		return
 
 	if(!lying)
-		if(species && !species.flags[NO_PAIN])
+		if(!HAS_TRAIT(src, TRAIT_NO_PAIN))
 			emote("scream")
 		Weaken(2)
 

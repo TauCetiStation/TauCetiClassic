@@ -339,10 +339,7 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
-	H.set_species(H.species.slime_species)
-	H.f_style = "Shaved"
-	H.h_style = "Bald"
-	H.regenerate_icons()
+	AddElement(/datum/element/mutation/slime)
 
 /datum/quality/quirkieish/very_special
 	name = "Very Special"

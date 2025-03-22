@@ -281,7 +281,7 @@
 		gib()
 		return
 	if (stat == DEAD && !client)
-		gibs(loc)
+		new /obj/effect/gibspawner/generic(get_turf(loc), src)
 		qdel(src)
 		return
 

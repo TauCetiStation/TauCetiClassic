@@ -130,7 +130,7 @@
 	var/spillover = cur_damage + damage_amt + BP.burn_dam + burn - BP.max_damage // excess damage goes off into shock_stage, this var also can prevent dismemberment, if result is negative.
 
 	if(spillover > 0 && !BP.species.flags[IS_SYNTHETIC])
-		BP.owner.halloss += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
+		BP.owner.adjustHalLoss(spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER)
 
 	// sync the organ's damage with its wounds
 	BP.update_damages()
@@ -586,7 +586,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.fracture()
 
 /datum/bodypart_controller/proc/damage_state_color()
-	return BP.species.blood_datum.color
+	var/datum/dirt_cover/blood_datum = BP.owner.get_blood_datum()
+	return blood_datum::color
 
 /datum/bodypart_controller/proc/sever_artery()
 	if(HAS_TRAIT(BP.owner, TRAIT_HEMOCOAGULATION))
@@ -608,7 +609,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"<span class='warning'><b>Something feels like it shattered in your [BP.name]!</b></span>",
 		"You hear a sickening crack.")
 
-	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
+	if(!HAS_TRAIT(BP.owner, TRAIT_NO_PAIN))
 		BP.owner.emote("scream")
 
 	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)

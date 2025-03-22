@@ -333,7 +333,7 @@
 			light_amount = round((T.get_lumcount()*10)-5)
 
 		nutrition += light_amount
-		traumatic_shock -= light_amount
+		adjustHalLoss(-light_amount)
 
 		if(nutrition > NUTRITION_LEVEL_NORMAL)
 			nutrition = NUTRITION_LEVEL_NORMAL

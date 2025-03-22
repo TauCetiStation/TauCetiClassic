@@ -64,7 +64,7 @@
 		"Septenary", "Octonary", "Novenary", "Decenary", "Undenary", "Duodenary",
 		)
 
-	var/static/list/banned_species = list(IPC, GOLEM, SLIME, DIONA)
+	var/static/list/banned_species = list(IPC, GOLEM, DIONA)
 
 	var/dominate_cd = 0                        // Cooldown for dominate victim
 	var/assuming = FALSE
@@ -200,7 +200,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(3,src))
-		if(C.stat != DEAD && !(C.get_species() in banned_species))
+		if(C.stat != DEAD && !(C.get_species() in banned_species) && !HAS_TRAIT(C, TRAIT_SLIME))
 			choices += C
 
 	if(world.time - dominate_cd < 300)

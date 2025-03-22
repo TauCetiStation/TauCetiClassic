@@ -82,14 +82,12 @@
 	if(M.IsSleeping())
 		M.AdjustDrunkenness(-1)
 
+	if(HAS_TRAIT(src, TRAIT_SLIME))
+		M.adjustToxLoss(REM)
+
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()
 	M.nutrition += REM
-	return FALSE
-
-/datum/reagent/water/on_slime_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(REM)
 	return FALSE
 
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.

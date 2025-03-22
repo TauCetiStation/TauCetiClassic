@@ -139,9 +139,10 @@
 	if(!owner)
 		return
 	if (owner.species.flags[HAS_SKIN_COLOR])
-		original_color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
+		original_color = rgb(owner.r_skin, owner.g_skin, owner.b_skin)
 	else if(owner.species.flags[HAS_SKIN_TONE])
-		original_color = RGB_CONTRAST(owner.s_tone, owner.s_tone, owner.s_tone)
+		var/datum/skin_tone/tone = global.skin_tones_by_name[owner.s_tone]
+		original_color = tone.hex
 
 // Keep in mind that this proc should work even if owner = null
 /obj/item/organ/external/proc/update_sprite()
@@ -170,14 +171,16 @@
 	if (HUSK in mutations)
 		icon = 'icons/mob/human_races/husk.dmi'
 		icon_state = body_zone
-	else if (status & ORGAN_MUTATED)
-		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 	else
-		icon = species.icobase
+		if ((status & ORGAN_MUTATED) && species.deform)
+			icon = species.deform
+		else
+			icon = species.icobase
 		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 
-	if(status & ORGAN_DEAD)
+	if(owner && HAS_TRAIT(owner, TRAIT_SLIME))
+		color = SLIME_PEOPLE_COLOR // this sets alpha too
+	else if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
 	else if (HUSK in mutations)
 		color = null
@@ -391,10 +394,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(is_robotic())
 				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(owner))
 			else
-				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner))
-				gore.fleshcolor = owner.species.flesh_color
-				gore.basedatum =  new(owner.species.blood_datum)
-				gore.update_icon()
+				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner), owner)
 
 			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
@@ -575,9 +575,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(species && species.alpha_color_mask)
 		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
 		color_appearance.color = color
+		color_appearance.alpha = alpha
 		. += color_appearance
 	else
 		base_appearance.color = color
+		base_appearance.alpha = alpha
 
 /obj/item/organ/external/head/get_icon(icon_layer)
 	if (!owner)
@@ -590,24 +592,43 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(species && species.alpha_color_mask)
 		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
 		color_appearance.color = color
+		color_appearance.alpha = alpha
 		. += color_appearance
 	else
 		base_appearance.color = color
+		base_appearance.alpha = alpha
 
-	if(species && species.eyes)
-		var/mutable_appearance/eyes_appearance = mutable_appearance(species.eyes_icon, species.eyes, -icon_layer)
-		if(species.eyes_glowing)
-			eyes_appearance.plane = LIGHTING_LAMPS_PLANE
-			eyes_appearance.layer = ABOVE_LIGHTING_LAYER
+	if(species)
+		var/list/eye_appearances = list()
 
-		if(HULK in owner.mutations)
-			eyes_appearance.color = "#ff0000"
-		else if(species.name == SHADOWLING || iszombie(owner))
-			eyes_appearance.color = null
-		else
-			eyes_appearance.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+		if(species.eyes_static_layer)
+			var/mutable_appearance/eyes_static_layer = mutable_appearance(
+				species.eyes_icon, 
+				species.eyes_static_layer, 
+				-icon_layer
+			)
 
-		. += eyes_appearance
+			eye_appearances += eyes_static_layer
+
+		if(species.eyes_colorable_layer)
+			var/mutable_appearance/eyes_colorable_layer = mutable_appearance(
+				species.eyes_icon, 
+				species.eyes_colorable_layer, 
+				-icon_layer
+			)
+
+			if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner))
+				eyes_colorable_layer.color = "#ff0000"
+			else
+				eyes_colorable_layer.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+
+			if(species.eyes_glowing) // or we can cycle eye_appearances and set for all
+				eyes_colorable_layer.plane = LIGHTING_LAMPS_PLANE
+				eyes_colorable_layer.layer = ABOVE_LIGHTING_LAYER
+
+			eye_appearances += eyes_colorable_layer
+
+		. += eye_appearances
 
 	//Mouth	(lipstick!)
 	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.

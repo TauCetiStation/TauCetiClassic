@@ -1598,7 +1598,7 @@
 /datum/disease2/effect/headache/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.species && !H.species.flags[NO_PAIN])
+		if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 			if(prob(20) || holder.stage	== 1)
 				to_chat(H, "<span class = 'notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
 			else if(prob(20) || (holder.stage >= 2 && holder.stage <= 5))

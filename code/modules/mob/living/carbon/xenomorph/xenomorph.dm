@@ -282,9 +282,6 @@ Hit Procs
 /mob/living/carbon/xenomorph/show_inv(mob/user)
 	return
 
-/mob/living/carbon/xenomorph/getTrail()
-	return "xltrails"
-
 /mob/living/carbon/xenomorph/update_canmove()
 	..()
 
@@ -322,3 +319,12 @@ Hit Procs
 		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
 	else
 		return
+
+/mob/living/carbon/xenomorph/get_blood_datum()
+	return /datum/dirt_cover/xeno_blood
+
+/mob/living/carbon/xenomorph/get_flesh_color()
+	return "#ffffff"
+
+/mob/living/carbon/xenomorph/get_trail_state()
+	return "xtrails_1"

@@ -251,6 +251,7 @@
 		if(isliving(D))
 			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
+		body += "<option value='?_src_=vars;give_emutation=\ref[D]'>Give (element) Mutation</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 
@@ -546,6 +547,19 @@ body
 		if(params)
 			L.apply_status_effect(arglist(params))
 			href_list["datumrefresh"] = href_list["give_status_effect"]
+
+	else if(href_list["give_emutation"])
+		if(!check_rights(R_ADMIN|R_VAREDIT))
+			return
+
+		var/mob/living/L = locate(href_list["give_emutation"])
+		if(!isliving(L))
+			to_chat(usr, "This can only be used on instances of type /mob")
+			return
+
+		var/mutation_type = input("Select type:","Type") as null|anything in subtypesof(/datum/element/mutation)
+		if(mutation_type)
+			L.AddElement(mutation_type)
 
 	else if(href_list["ninja"])
 		if(!check_rights(R_SPAWN))

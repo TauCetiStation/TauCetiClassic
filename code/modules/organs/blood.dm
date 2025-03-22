@@ -256,7 +256,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	if(organs_by_name[O_HEART] && blood_remove(amt))
-		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
+		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = get_blood_datum())
 
 /proc/blood_splatter(target, datum/reagent/blood/source, large, spray_dir, basedatum)
 	var/obj/effect/decal/cleanable/blood/B
