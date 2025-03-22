@@ -131,7 +131,7 @@
 	icon_state = "amp"
 
 /obj/item/clothing/head/helmet/wizard/amp/shielded
-	name = "tiara of protection" ///obj/item/clothing/head/helmet
+	name = "tiara of protection"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot. This one emanates protection aura."
 	icon_state = "amp"
 
