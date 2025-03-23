@@ -160,7 +160,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	charge_counter = charge_max
 	if(!casting_clothes)
 		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard,
-		/obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
+		/obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard, /obj/item/clothing/head/helmet/wizard))
 	if(plasma_cost)
 		name += " ([plasma_cost])"
 

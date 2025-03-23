@@ -130,6 +130,10 @@
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
 	icon_state = "amp"
 
+/obj/item/clothing/head/helmet/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/head/helmet/wizard/amp/shielded
 	name = "tiara of protection"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot. This one emanates protection aura."
