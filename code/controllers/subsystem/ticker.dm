@@ -628,10 +628,12 @@ SUBSYSTEM_DEF(ticker)
 
 	return(arena)
 
-/datum/controller/subsystem/ticker/proc/clear_arena()
-	for(var/turf/T in locate(/area/custom/arena))
-		for(var/obj/O in T.contents)
-			qdel(O)
+/datum/controller/subsystem/ticker/proc/clear_arena(obj/effect/landmark/arena_spawn)
+	var/turf/center = locate(arena_spawn.x + 22, arena_spawn.y + 22, arena_spawn.z)
+	var/list/arena_content = range(22, center) - arena_spawn
+
+	for(var/obj/O in arena_content)
+		qdel(O)
 
 /datum/controller/subsystem/ticker/proc/load_arena(datum/map_template/post_round_arena/arena = null)
 	if(!arena)
@@ -640,24 +642,24 @@ SUBSYSTEM_DEF(ticker)
 		else
 			arena = pick_arena()
 
-	if(arena_loaded)
-		clear_arena()
+	var/obj/effect/landmark/arena_spawn = pick(landmarks_list["Arena Spawn"])
 
-	var/turf/spawn_area = pick_landmarked_location("Arena Spawn", FALSE)
+	if(arena_loaded)
+		clear_arena(arena_spawn)
+
 	arena = new arena
 
-	if(!spawn_area)
-		CRASH("No spawn area detected for Arena!")
-	else if(!arena.load(spawn_area))
+	if(!arena.load(get_turf(arena_spawn)))
 		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
 	else
 		arena_loaded = TRUE
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
-	restart_timeout *= sqrt(1 + global.player_list.len / 15) // на отметке 45 онлайна время дезматча удвоится
+	var/list/players = global.player_list + global.observer_list
+	restart_timeout *= sqrt(1 + players.len / 15) // на отметке 45 онлайна время дезматча удвоится
 
-	for(var/mob/M in global.player_list)
-		if(!M.client.prefs.eorg_enabled || isnewplayer(M))
+	for(var/mob/M in players)
+		if(!M.client || !M.client.prefs.eorg_enabled || isnewplayer(M))
 			continue
 		spawn_gladiator(M)
 

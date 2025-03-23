@@ -89,7 +89,7 @@
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
 "dX" = (
-/obj/structure/cult/statue{
+/obj/structure/cult{
 	icon_state = "gargoyle"
 	},
 /turf/unsimulated/floor/cult/lava,
@@ -103,7 +103,9 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "ey" = (
-/obj/structure/cult/statue,
+/obj/structure/cult{
+	icon_state = "shell"
+	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "ez" = (
@@ -372,7 +374,7 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "qj" = (
-/obj/structure/cult/statue{
+/obj/structure/cult{
 	icon_state = "jew"
 	},
 /turf/unsimulated/floor/cult/lava,

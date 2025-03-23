@@ -11,7 +11,7 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "m" = (
-/obj/structure/cult/statue{
+/obj/structure/cult{
 	icon_state = "gargoyle"
 	},
 /turf/unsimulated/floor/cult/lava,
@@ -34,7 +34,9 @@
 /turf/unsimulated/wall/cult/runed/anim,
 /area/custom/arena)
 "D" = (
-/obj/structure/cult/statue,
+/obj/structure/cult{
+	icon_state = "shell"
+	},
 /turf/unsimulated/floor/cult,
 /area/custom/arena)
 "E" = (
@@ -46,7 +48,9 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "O" = (
-/obj/structure/cult/statue,
+/obj/structure/cult{
+	icon_state = "shell"
+	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "U" = (
@@ -60,7 +64,7 @@
 /turf/unsimulated/floor/cult,
 /area/custom/arena)
 "Z" = (
-/obj/structure/cult/statue{
+/obj/structure/cult{
 	icon_state = "gargoyle"
 	},
 /turf/unsimulated/floor/cult,
