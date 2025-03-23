@@ -14,14 +14,20 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
-	beauty = new /datum/modval(0.0)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
-
-	beauty.AddModifier("stat", additive=beauty_living)
-
 	if(spawner_args)
 		spawner_args.Insert(1, /datum/component/logout_spawner)
 		AddComponent(arglist(spawner_args))
+
+/mob/living/proc/metabolism_debug()
+	var/print = "<hr>Debug metabolism data:<br><br>"
+	print += "<b>Nutrition</b>: [nutrition] ([PERCENT(nutrition/NUTRITION_LEVEL_FAT)]%)<br>"
+	print += "<b>Satiation</b>: [get_satiation()] (predicted nutrition)<br>"
+	print += "<b>Overeatduration</b>: [overeatduration] ([PERCENT(overeatduration/OVEREATDURATION_FAT)]%)<br>"
+	print += "<br><br>Metabolism speed:<br><br>"
+	print += mob_metabolism_mod.DebugPrint()
+	print += "<br><hr>"
+
+	to_chat(usr, print)
 
 /mob/living/Destroy()
 	allowed_combos = null
@@ -29,6 +35,8 @@
 	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
+
+	qdel(mob_metabolism_mod)
 
 	if(length(status_effects))
 		for(var/s in status_effects)
@@ -542,8 +550,6 @@
 
 	if(reagents)
 		reagents.clear_reagents()
-
-	beauty.AddModifier("stat", additive=beauty_living)
 
 	// shut down various types of badness
 	setToxLoss(0)
@@ -1311,9 +1317,6 @@
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
 
-/mob/living/proc/get_metabolism_factor()
-	return METABOLISM_FACTOR
-
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
 
@@ -1420,18 +1423,10 @@
 	return
 
 /mob/living/death(gibbed)
-	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
 	if(wabbajacked)
 		unwabbajack()
 	return ..()
-
-/mob/living/proc/update_beauty(datum/source, old_value)
-	if(old_value != 0.0)
-		RemoveElement(/datum/element/beauty, old_value)
-	if(beauty.Get() == 0.0)
-		return
-	AddElement(/datum/element/beauty, beauty.Get())
 
 //Throwing stuff
 /mob/living/proc/toggle_throw_mode()

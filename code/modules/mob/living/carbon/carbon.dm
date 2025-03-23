@@ -1031,13 +1031,6 @@
 					+ reagents.get_reagent_amount("dairy") \
 				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
-/mob/living/carbon/get_metabolism_factor()
-	var/met = metabolism_factor.Get()
-	if(met < 0)
-		met = 0
-	return met
-
-
 /mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
 	if(!ishuman(src) && !isIAN(src))
 		return
@@ -1356,15 +1349,16 @@
 
 	..(amount, min_temp, max_temp)
 
-/mob/living/carbon/handle_nutrition()
-	var/met_factor = get_metabolism_factor()
-	if(!met_factor)
-		return
+/mob/living/carbon/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/nutrition_to_remove = 0
-	nutrition_to_remove += 0.16
+	nutrition_to_remove += 0.16 // todo: magic number, would be better to change for mob_metabolism_mod and tweak nutrition & nutrition gains
 	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 		var/pain = getHalLoss()
 		if(pain > 0)
 			nutrition_to_remove += pain * 0.01
-	nutrition_to_remove *= met_factor
+	nutrition_to_remove *= mob_metabolism_mod.Get()
 	nutrition = max(0.0, nutrition - nutrition_to_remove)
