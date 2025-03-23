@@ -106,24 +106,26 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				user.say("Mmmf mrrfff!")
 			return FALSE
 
-	if(clothes_req) //clothes check
+	if(clothes_req)
 		if(!ishuman(user))
 			if(try_start)
 				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return FALSE
+
 		var/mob/living/carbon/human/H = user
-		if(!H.wear_suit?.GetComponent(/datum/component/magic_item/wizard))
-			if(try_start)
-				to_chat(user, "I don't feel strong enough without my robe.")
-			return FALSE
-		if(!H.shoes?.GetComponent(/datum/component/magic_item/wizard))
-			if(try_start)
-				to_chat(user, "I don't feel strong enough without my sandals.")
-			return FALSE
-		if(!H.head?.GetComponent(/datum/component/magic_item/wizard))
-			if(try_start)
-				to_chat(user, "I don't feel strong enough without my hat.")
-			return FALSE
+		if(!H.GetComponent(/datum/component/naked_casting))
+			if(!H.wear_suit?.GetComponent(/datum/component/magic_item/wizard))
+				if(try_start)
+					to_chat(user, "I don't feel strong enough without my robe.")
+				return FALSE
+			if(!H.shoes?.GetComponent(/datum/component/magic_item/wizard))
+				if(try_start)
+					to_chat(user, "I don't feel strong enough without my sandals.")
+				return FALSE
+			if(!H.head?.GetComponent(/datum/component/magic_item/wizard))
+				if(try_start)
+					to_chat(user, "I don't feel strong enough without my hat.")
+				return FALSE
 
 	if(try_start && !skipcharge)
 		switch(charge_type)

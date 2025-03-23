@@ -401,6 +401,14 @@
 	log_name = "TZ"
 	category = "Оборона"
 
+/datum/spellbook_entry/naked_casting
+	name = "Освобождение от Оков"
+	spell_type = /obj/effect/proc_holder/spell/targeted/naked_casting
+	desc = "Это заклинание позволяет вам использовать другие заклинания без необходимости носить одежду. Эффект действует бесконечно."
+	category = "Оборона"
+	log_name = "NC"
+	cost = 4
+
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"
 	desc = "Магический контракт, что связывает учителя и ученика."

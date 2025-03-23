@@ -170,6 +170,39 @@
 		new summon_path(get_step(user, NORTH), user)
 		new summon_path(get_step(user, SOUTH), user)
 
+/obj/effect/proc_holder/spell/targeted/naked_casting
+	name = "Освобождение от Оков"
+
+	school = "transmutation"
+	charge_max = 600
+	clothes_req = 0
+	invocation = "NUDUS MAGICUS"
+	invocation_type = "shout"
+	range = -1
+	include_user = 1
+	sound = 'sound/magic/Teleport_app.ogg'
+	action_icon_state = "spell_teleport"
+
+/obj/effect/proc_holder/spell/targeted/naked_casting/cast(list/targets, mob/user = usr)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.GetComponent(/datum/component/naked_casting))
+			to_chat(H, "<span class='warning'>Вы уже освобождены от ограничений одежды!</span>")
+			return
+		to_chat(H, "<span class='notice'>Вы чувствуете, как магическая энергия освобождает вас от ограничений одежды!</span>")
+		H.AddComponent(/datum/component/naked_casting)
+
+/datum/component/naked_casting
+
+/datum/component/naked_casting/atom()
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/naked_casting/Destroy()
+	var/mob/living/L = parent
+	to_chat(L, "<span class='warning'>Эффект освобождения от одежды исчезает.</span>")
+	return ..()
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Призыв Карпа"
 	desc = "Это заклинание призывает очень злого карпа."
@@ -183,7 +216,6 @@
 	range = 1
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp/wizard)
-
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Ремесленник"
