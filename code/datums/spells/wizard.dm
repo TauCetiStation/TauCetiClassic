@@ -194,7 +194,7 @@
 
 /datum/component/naked_casting
 
-/datum/component/naked_casting/atom()
+/datum/component/naked_casting/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
