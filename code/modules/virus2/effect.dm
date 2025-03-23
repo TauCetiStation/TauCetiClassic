@@ -337,7 +337,7 @@
 /datum/disease2/effect/metabolism/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(isliving(A))
 		var/mob/living/L = A
-		L.mob_metabolism_mod.RemoveModifiers(src)
+		L.mob_metabolism_mod.RemoveMods(src)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustSpeedmultiplier(holder.stage)
