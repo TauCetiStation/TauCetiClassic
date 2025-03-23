@@ -106,7 +106,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				user.say("Mmmf mrrfff!")
 			return FALSE
 
-	if(clothes_req)
+	if(clothes_req)  //clothes check
 		if(!ishuman(user))
 			if(try_start)
 				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
