@@ -614,7 +614,7 @@ SUBSYSTEM_DEF(ticker)
 		create_spawner(/datum/spawner/drone)
 
 /datum/controller/subsystem/ticker/proc/pick_arena()
-	var/online = global.player_list.len
+	var/online = global.clients.len
 	var/list/arenas = list()
 
 	for(var/i in subtypesof(/datum/map_template/post_round_arena))
