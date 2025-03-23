@@ -103,8 +103,9 @@
 /obj/machinery/computer/station_alert/process()
 	update_icon()
 	..()
-	if((icon_state == "atmos_alert_2") && !muted)
-		playsound(src, 'sound/machines/atmos_alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+// todo: rewrite it as repeated sound, also better to wait when playsound will be ready to support 516 sound atom
+//	if((icon_state == "atmos_alert_2") && !muted)
+//		playsound(src, 'sound/machines/atmos_alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	return
 
 /obj/machinery/computer/station_alert/update_icon()
