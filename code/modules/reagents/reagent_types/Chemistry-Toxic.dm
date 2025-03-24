@@ -723,7 +723,7 @@
 		return
 
 	to_chat(H, "<span class='warning'><b>Ваше тело мутирует, скрывая следы прежней личности!</b></span>")
-	H.visible_message("<b>[H]</b> резко меняется до неузнаваемости!")
+	H.visible_message("<b>[H]</b> suddenly transforms!")
 	H.randomize_appearance()
 	H.dna.unique_enzymes = md5("[H.real_name][world.ltime]")
 
