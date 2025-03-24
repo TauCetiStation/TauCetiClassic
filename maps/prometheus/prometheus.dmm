@@ -2679,6 +2679,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"aer" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "aes" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -2690,6 +2696,24 @@
 	icon_state = "darkred"
 	},
 /area/station/hallway/secondary/exit)
+"aet" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
+"aeu" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
+"aev" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "aey" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -114561,7 +114585,7 @@ iRy
 iRy
 iRy
 cJy
-gww
+aeu
 cJy
 uFh
 eRp
@@ -120674,7 +120698,7 @@ wAM
 iRy
 bFv
 bFv
-bFv
+aer
 bFv
 bFv
 iRy
@@ -145889,7 +145913,7 @@ ogS
 ogS
 ogS
 iqM
-yet
+aet
 cJy
 cJy
 iRy
@@ -145953,7 +145977,7 @@ iRy
 iRy
 rdY
 rdY
-rdY
+aev
 rdY
 cJy
 iRy
