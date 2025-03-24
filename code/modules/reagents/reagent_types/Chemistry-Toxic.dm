@@ -725,7 +725,7 @@
 	to_chat(H, "<span class='warning'><b>Ваше тело мутирует, скрывая следы прежней личности!</b></span>")
 	H.visible_message("<b>[H]</b> резко меняется до неузнаваемости!")
 	H.randomize_appearance()
-	H.dna.unique_enzymes = md5("[H.real_name][rand(0, 99999)]")
+	H.dna.unique_enzymes = md5("[H.real_name][world.ltime]")
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
