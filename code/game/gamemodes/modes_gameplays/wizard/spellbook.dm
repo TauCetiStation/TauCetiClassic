@@ -409,6 +409,14 @@
 	log_name = "NC"
 	cost = 4
 
+/datum/spellbook_entry/naked_casting/Buy(mob/living/carbon/human/H)
+	if(H.GetComponent(/datum/component/naked_casting))
+		to_chat(H, "<span class='notice'>Вы уже освобождены от оков!</span>")
+		return FALSE
+	. = ..()
+	if(.)
+		H.AddComponent(/datum/component/naked_casting)
+
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"
 	desc = "Магический контракт, что связывает учителя и ученика."
