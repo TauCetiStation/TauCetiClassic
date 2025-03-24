@@ -173,6 +173,7 @@
 /obj/effect/proc_holder/spell/targeted/naked_casting
 	name = "Освобождение от Оков"
 	school = "transmutation"
+	desc = "Это заклинание позволяет вам использовать другие заклинания без необходимости носить одежду. Эффект действует бесконечно."
 
 /datum/component/naked_casting
 
