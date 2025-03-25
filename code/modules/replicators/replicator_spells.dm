@@ -84,7 +84,7 @@
 
 	var/node_proximity = FALSE
 	for(var/obj/structure/forcefield_node/FN as anything in global.forcefield_nodes)
-		if(get_dist(FN, user) >= 2)
+		if(get_dist(FN, user) > 1)
 			continue
 		if(locate(/obj/machinery/power/replicator_generator) in FN.loc)
 			continue
