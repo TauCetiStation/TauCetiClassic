@@ -1,10 +1,10 @@
 /obj/item/weapon/circuitboard/fusion_core_control
-	name = "circuit board (fusion core controller)"
+	details = "circuit board (fusion core controller)"
 	build_path = /obj/machinery/computer/fusion_core_control
 	origin_tech = "programming=4;engineering=4"
 
 /obj/item/weapon/circuitboard/fusion_fuel_compressor
-	name = "circuit board (fusion fuel compressor)"
+	details = "circuit board (fusion fuel compressor)"
 	build_path = /obj/machinery/fusion_fuel_compressor
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=4;materials=4"
@@ -16,22 +16,22 @@
 							)
 
 /obj/item/weapon/circuitboard/fusion_fuel_control
-	name = "circuit board (fusion fuel controller)"
+	details = "circuit board (fusion fuel controller)"
 	build_path = /obj/machinery/computer/fusion_fuel_control
 	origin_tech = "programming=4;engineering=4"
 
 /obj/item/weapon/circuitboard/gyrotron_control
-	name = "circuit board (gyrotron controller)"
+	details = "circuit board (gyrotron controller)"
 	build_path = /obj/machinery/computer/gyrotron_control
 	origin_tech = "programming=4;engineering=4"
 
 /obj/item/weapon/circuitboard/emitter/gyrotron
-	name = "circuit board (gyrotron)"
+	details = "circuit board (gyrotron)"
 	build_path = /obj/machinery/power/emitter/gyrotron
 	origin_tech = "programming=5;powerstorage=6;engineering=6"
 
 /obj/item/weapon/circuitboard/fusion_core
-	name = "internal circuitry (fusion core)"
+	details = "internal circuitry (fusion core)"
 	build_path = /obj/machinery/power/fusion_core
 	board_type = "machine"
 	origin_tech = "bluespace=2;magnets=4;powerstorage=4"
@@ -44,7 +44,7 @@
 							)
 
 /obj/item/weapon/circuitboard/fusion_injector
-	name = "internal circuitry (fusion fuel injector)"
+	details = "internal circuitry (fusion fuel injector)"
 	build_path = /obj/machinery/fusion_fuel_injector
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=4;materials=4"
