@@ -500,7 +500,7 @@
 
 	var/on = FALSE
 
-/obj/effect/proc_holder/spell/no_target/toggle_light/cast(list/targets, mob/user = src)
+/obj/effect/proc_holder/spell/no_target/toggle_light/cast(list/targets, mob/user)
 	on = !on
 	if(on)
 		user.set_light(2)
