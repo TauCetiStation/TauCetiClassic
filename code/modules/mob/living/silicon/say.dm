@@ -61,7 +61,8 @@
 	//Must be concious to speak
 	if (stat != CONSCIOUS)
 		return
-
+	else
+		playsound(src, pick(SOUNDIN_SILICON_TALK), VOL_EFFECTS_MASTER, 45)
 	var/verb = say_quote(message)
 
 	//parse radio key and consume it
