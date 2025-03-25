@@ -24586,7 +24586,7 @@
 	},
 /area/station/medical/hallway)
 "aRD" = (
-/obj/structure/sign/departments/medbay/lifestar{
+/obj/structure/sign/departments/medbay{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
