@@ -14,7 +14,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	for(var/trait in traits)
-		ADD_TRAIT(target, trait, src)
+		ADD_TRAIT(target, trait, TRAIT_FROM_ELEMENT(src))
 
 	on_gain(target)
 
@@ -22,7 +22,7 @@
 	. = ..()
 
 	for(var/trait in traits)
-		REMOVE_TRAIT(target, trait, src)
+		REMOVE_TRAIT(target, trait, TRAIT_FROM_ELEMENT(src))
 
 	on_loose(target)
 

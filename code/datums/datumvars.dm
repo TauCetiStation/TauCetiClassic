@@ -577,9 +577,9 @@ body
 		if(!check_rights(R_REJUVINATE))
 			return
 
-		var/mob/M = locate(href_list["godmode"])
+		var/mob/living/M = locate(href_list["godmode"])
 		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob")
+			to_chat(usr, "This can only be used on instances of type /mob/living")
 			return
 
 		cmd_admin_godmode(M)

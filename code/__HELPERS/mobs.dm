@@ -368,9 +368,6 @@
 		return
 	return mind.assigned_job.head_position
 
-/mob/proc/IsShockproof()
-	return HAS_TRAIT(src, TRAIT_SHOCKIMMUNE)
-
 /mob/proc/IsClumsy()
 	return HAS_TRAIT(src, TRAIT_CLUMSY)
 
@@ -401,12 +398,12 @@
 	user.visible_message("<span class='notice'>[user] сканирует жизненные показатели [M].</span>","<span class='notice'>Вы просканировали жизненные показатели [M].</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
-	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
-	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
-	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
-	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
+	var/OX = "<span [M.getOxyLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getOxyLoss())]</span>"
+	var/TX = "<span [M.getToxLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getToxLoss())]</span>"
+	var/BU = "<span [M.getFireLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getFireLoss())]</span>"
+	var/BR = "<span [M.getBruteLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getBruteLoss())]</span>"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
+		OX = "<span [fake_oxy > 49 ? "class='bold'" : ""] >[ceil(fake_oxy)]</span>"
 		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: мёртв</span><br>"
 	else
 		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: [M.stat > 1 ? "мёртв" : "Здоровье: [M.health - M.halloss]%"]</span><br>"
@@ -435,12 +432,12 @@
 
 		return message
 
-	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Обнаружено сильное кислородное голодание</b></font>" : "Уровень кислорода в крови субъекта в норме"
-	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Обнаружено опасное количество токсинов</b></font>" : "Уровень токсинов в крови субъекта минимальный"
-	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Обнаружена серьезная ожоговая травма</b></font>" : "Термических травм не обнаружено"
-	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Обнаружена серьезная анатомическая травма</b></font>" : "Механических травм не обнаружено"
+	OX = M.getOxyLoss() > 49 ? "<font color='blue'><b>Обнаружено сильное кислородное голодание</b></font>" : "Уровень кислорода в крови субъекта в норме"
+	TX = M.getToxLoss() > 49 ? "<font color='green'><b>Обнаружено опасное количество токсинов</b></font>" : "Уровень токсинов в крови субъекта минимальный"
+	BU = M.getFireLoss() > 49 ? "<font color='#FFA500'><b>Обнаружена серьезная ожоговая травма</b></font>" : "Термических травм не обнаружено"
+	BR = M.getBruteLoss() > 49 ? "<font color='red'><b>Обнаружена серьезная анатомическая травма</b></font>" : "Механических травм не обнаружено"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"<span class='warning'>Обнаружено сильное кислородное голодание</span>" : "Уровень кислорода в крови субъекта в норме"
+		OX = fake_oxy > 49 ? 		"<span class='warning'>Обнаружено сильное кислородное голодание</span>" : "Уровень кислорода в крови субъекта в норме"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M

@@ -6,7 +6,7 @@
 	if(painkiller_overlay_time > 0)
 		painkiller_overlay_time--
 
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN) || status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		traumatic_shock = 0
 		return
 

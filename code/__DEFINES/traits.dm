@@ -9,6 +9,7 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
+			istype(trait, /datum/element) && target.AddElement(trait); \
 			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 		} else { \
 			_L = target.status_traits; \
@@ -16,6 +17,7 @@
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
+				istype(trait, /datum/element) && target.AddElement(trait); \
 				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 			} \
 		} \
@@ -37,6 +39,7 @@
 			};\
 			if (!length(_L[trait])) { \
 				_L -= trait; \
+				istype(trait, /datum/element) && target.RemoveElement(trait); \
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_L)) { \
@@ -61,6 +64,7 @@
 			};\
 			if (!length(_traits_list[trait])) { \
 				_traits_list -= trait; \
+				istype(trait, /datum/element) && target.RemoveElement(trait); \
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_traits_list)) { \
@@ -77,6 +81,7 @@
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
 					_L -= _T; \
+					istype(trait, /datum/element) && target.RemoveElement(trait); \
 					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T), _T); \
 					}; \
 				};\
@@ -100,6 +105,7 @@
 				_L[_T] -= _S;\
 				if (!length(_L[_T])) { \
 					_L -= _T; \
+					istype(trait, /datum/element) && target.RemoveElement(trait); \
 					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
 					}; \
 				};\
@@ -119,14 +125,13 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
-/// Trait applied by element
-#define ELEMENT_TRAIT(source) "element_trait_[source]"
-
 //mob traits
 /// Forces user to be unmovable
 #define TRAIT_ANCHORED "anchored"
 /// Prevents voluntary movement.
 #define TRAIT_IMMOBILIZED "immobilized"
+/// Prevents involuntary movement.
+#define TRAIT_IMMOVABLE "immovable"
 /// Prevents hands and legs usage
 #define TRAIT_INCAPACITATED "incapacitated"
 /// This mob overrides certian SSlag_switch measures with this special trait
@@ -176,7 +181,7 @@
 #define TRAIT_HEMOCOAGULATION     "hemocoagulation"
 #define TRAIT_CLUMSY              "clumsy"
 #define TRAIT_CLUMSY_IMMUNE       "clumsy_immune"
-#define TRAIT_SHOCKIMMUNE         "shockimmune"
+#define TRAIT_SHOCK_IMMUNE         "shockimmune"
 #define TRAIT_NATURAL_AGILITY     "natural_agility"
 #define TRAIT_BLUESPACE_MOVING    "bluespace_moving"
 #define TRAIT_STEEL_NERVES        "steel_nerves"
@@ -202,10 +207,24 @@
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_SLIME               "slime"
 #define TRAIT_NO_BREATHE          "no_breathe"
+/// Mod has DNA that is not compatible with station (genetics) machinery, prevents changeling victims from cloning
 #define TRAIT_INCOMPATIBLE_DNA    "incompatible_dna"
 #define TRAIT_NO_PAIN             "no_pain"
 #define TRAIT_RADIATION_IMMUNE    "radiation_immune"
 #define TRAIT_VIRUS_IMMUNE        "virus_immune"
+/// Prevents mob from unintentional transformation into another mob
+#define TRAIT_MORPH_IMMUNE        "morph_immune"
+
+/*
+ * Elements traits - these will attach trait and corresponding /datum/element 
+ * to the object, and detach element when no trait sources left
+ * useful for elements with multiple sources
+ * (similar to AddElementTrait() on tg, easier to manage but no support for arguments)
+ */
+
+/// makes mob immune to damage and some harmful effects, resets all accumulated damage
+/// ex GODMODE status
+#define ELEMENT_TRAIT_GODMODE /datum/element/mutation/godmode
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -250,6 +269,9 @@
 #define TRAIT_CONDUCT "conduct"
 
 // trait sources
+#define TRAIT_FROM_ELEMENT(source) "element_trait_[source]"
+#define INNATE_TRAIT "innate"
+#define ADMIN_TRAIT "admin"
 #define EYE_DAMAGE_TRAIT "eye_damage"
 #define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
 #define GENETIC_MUTATION_TRAIT "genetic_mutation_trait"

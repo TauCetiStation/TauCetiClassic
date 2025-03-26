@@ -451,8 +451,8 @@ var/global/list/tourette_bad_words= list(
 		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
 			irradiate_one_mob(src, 5)
 
-	if(status_flags & GODMODE)
-		return 1	//godmode
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
+		return
 
 	if(bodytemperature > species.heat_level_1)
 		//Body temperature is too hot.
@@ -677,9 +677,6 @@ var/global/list/tourette_bad_words= list(
 	if(!.)
 		return FALSE
 
-	if(status_flags & GODMODE)
-		return FALSE
-
 	if(!species.flags[IS_SYNTHETIC])
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
@@ -777,7 +774,7 @@ var/global/list/tourette_bad_words= list(
 
 			if(hallucination <= 2)
 				hallucination = 0
-				setHalLoss(0)
+				resetHalLoss()
 			else
 				hallucination -= 2
 
@@ -796,7 +793,7 @@ var/global/list/tourette_bad_words= list(
 					else
 						Stun(5)
 						Weaken(10)
-				setHalLoss(99)
+				adjustHalLoss(-1)
 
 		if(paralysis)
 			blinded = 1
@@ -1133,7 +1130,8 @@ var/global/list/tourette_bad_words= list(
 			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(HAS_TRAIT(src, TRAIT_VIRUS_IMMUNE))
+		return
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]

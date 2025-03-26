@@ -174,7 +174,7 @@
 	if(!organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
 	//zombie have NO_PAIN and can't adjust/sets halloss
-	setHalLoss(0)
+	resetHalLoss()
 	//remove all blind-blur effects
 	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
 	sdisabilities &= ~BLIND
@@ -189,8 +189,8 @@
 	for(var/obj/item/organ/external/limb in bad_bodyparts)
 		limb.rejuvenate()
 
-	setCloneLoss(0)
-	setBrainLoss(0)
+	resetCloneLoss()
+	resetBrainLoss()
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)

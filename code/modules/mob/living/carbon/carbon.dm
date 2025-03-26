@@ -94,7 +94,7 @@
 		clear_alert("blind")
 
 /mob/living/carbon/proc/is_skip_breathe()
-	return !loc || (flags & GODMODE)
+	return !loc
 
 /mob/living/carbon/proc/is_cant_breathe()
 	return handle_drowning() || health < 0
@@ -324,7 +324,7 @@
 	if(!on_fire)
 		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-	if(flags & GODMODE)
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE)) // probably need TRAIT_INGORE_ENVIRONMENT or something
 		return
 
 	switch(bodytemperature)
@@ -461,7 +461,8 @@
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
+		return 0
 
 	var/turf/T = get_turf(src)
 	var/obj/effect/fluid/F = locate() in T

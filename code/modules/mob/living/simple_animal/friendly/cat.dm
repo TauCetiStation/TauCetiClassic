@@ -168,7 +168,6 @@ var/global/cat_number = 0
 
 	a_intent = INTENT_HARM
 
-	status_flags = GODMODE // Bluespace cat
 	min_oxy = 0
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -185,6 +184,7 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/runtime/atom_init(mapload, runtime_line)
 	. = ..()
+	ADD_TRAIT(src, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
 	new /obj/effect/temp_visual/pulse(loc)
 	new /obj/effect/temp_visual/sparkles(loc)

@@ -171,7 +171,7 @@
 		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
-		target.setOxyLoss(0) //In case the shadowling was choking them out
+		target.resetOxyLoss() //In case the shadowling was choking them out
 		add_faction_member(faction, target)
 
 

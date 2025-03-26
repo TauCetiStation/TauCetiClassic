@@ -32,7 +32,7 @@
 			M.SetParalysis(0)
 			M.dizziness = 0
 			M.drowsyness = 0
-			M.setStuttering(0)
+			M.resetStuttering()
 			M.SetDrunkenness(0)
 			M.SetConfused(0)
 			M.jitteriness = 0
@@ -446,13 +446,13 @@
 		return
 
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM, 0, 1)
-	M.setCloneLoss(0)
-	M.setOxyLoss(0)
+	M.resetCloneLoss()
+	M.resetOxyLoss()
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5)
 	M.hallucination = 0
-	M.setBrainLoss(0)
+	M.resetBrainLoss()
 	M.disabilities = 0
 	M.sdisabilities = 0
 	M.setBlurriness(0)
@@ -463,7 +463,7 @@
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.setStuttering(0)
+	M.resetStuttering()
 	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0

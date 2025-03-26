@@ -65,6 +65,10 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/mob/living/last_pointed = null
 
+/mob/living/carbon/slime/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_PAIN, INNATE_TRAIT)
+
 /mob/living/carbon/slime/adult
 	name = "adult slime"
 	icon = 'icons/mob/slimes.dmi'
@@ -314,18 +318,11 @@
 	return
 
 /mob/living/carbon/slime/updatehealth()
-	if(status_flags & GODMODE)
-		if(isslimeadult(src))
-			health = 200
-		else
-			health = 150
-		stat = CONSCIOUS
+	// slimes can't suffocate unless they suicide. They are also not harmed by fire
+	if(isslimeadult(src))
+		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
-		// slimes can't suffocate unless they suicide. They are also not harmed by fire
-		if(isslimeadult(src))
-			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-		else
-			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	med_hud_set_health()
 	med_hud_set_status()
 

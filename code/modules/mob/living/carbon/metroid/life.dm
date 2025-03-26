@@ -229,9 +229,6 @@
 			src.lying = 0
 			src.stat = CONSCIOUS
 
-	if (src.stuttering > 0)
-		setStuttering(0)
-
 	if (src.eye_blind)
 		src.eye_blind = 0
 		src.blinded = 1

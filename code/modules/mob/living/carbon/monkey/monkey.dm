@@ -95,7 +95,7 @@
 	if(stat != DEAD) // lets put this shit somewhere here
 		stabilize_body_temperature()
 
-	if(!environment || (flags & GODMODE))
+	if(!environment || HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
 		return
 	handle_monkey_pressure(environment)
 	handle_monkey_temperature(environment)

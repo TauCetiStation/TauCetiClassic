@@ -210,10 +210,10 @@
 				stat("Unique Identity:", "[dna.unique_enzymes]")
 				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
 				stat("Nutrition Status:", "[nutrition]")
-				stat("Oxygen Loss:", "[getOxyLoss()]")
-				stat("Toxin Levels:", "[getToxLoss()]")
-				stat("Burn Severity:", "[getFireLoss()]")
-				stat("Brute Trauma:", "[getBruteLoss()]")
+				stat("Oxygen Loss:", "[ceil(getOxyLoss())]")
+				stat("Toxin Levels:", "[ceil(getToxLoss())]")
+				stat("Burn Severity:", "[ceil(getFireLoss())]")
+				stat("Brute Trauma:", "[ceil(getBruteLoss())]")
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
@@ -631,10 +631,8 @@
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
-	if(status_flags & GODMODE)
-		return 0	//godmode
-	if(IsShockproof())
-		return 0 //#Z2 no shock with that mutation.
+	if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
+		return 0
 
 	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
@@ -1832,12 +1830,13 @@
 	else
 		return 1
 
+// does not skip because of mob_oxy_mod as mod is only for damage
 /mob/living/carbon/human/is_skip_breathe()
 	if(..())
 		return TRUE
-	if(NO_BREATH in src.mutations) // need to move mutation to trait too
-		return TRUE
 	if(HAS_TRAIT(src, TRAIT_NO_BREATHE))
+		return TRUE
+	if(!should_have_organ(O_LUNGS))
 		return TRUE
 	if(reagents.has_reagent("lexorin"))
 		return TRUE

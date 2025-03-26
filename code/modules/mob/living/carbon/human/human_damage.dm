@@ -1,11 +1,6 @@
 //Updates the mob's health from bodyparts and mob damage variables
 // todo: for some reason mobs call it several times per life tick
 /mob/living/carbon/human/updatehealth()
-	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
-		return
-
 	var/total_burn = 0
 	var/total_brute = 0
 	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
@@ -50,35 +45,31 @@
 	return res
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
-	if(!should_have_organ(O_BRAIN))
-		brainloss = 0
+	if(amount > 0 && !should_have_organ(O_BRAIN))
 		return
 
 	return ..()
 
-/mob/living/carbon/human/setBrainLoss(amount)
-	if(!should_have_organ(O_BRAIN))
-		brainloss = 0
-		return
-
-	..()
-
 // =============================================
 
-//These procs fetch a cumulative total damage from all bodyparts
+// Humans don't use bruteloss or fireloss vars
+// These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
-	return round(amount, 0.01)
+	return amount
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
 	if(amount > 0)
 		return take_overall_damage(amount, 0)
 	else
 		return heal_overall_damage(-amount, 0)
+
+/mob/living/carbon/human/resetBruteLoss()
+	heal_overall_damage(getBruteLoss(), 0)
 
 // =============================================
 
@@ -88,61 +79,35 @@
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
-	return round(amount, 0.01)
+	return amount
 
 /mob/living/carbon/human/adjustFireLoss(amount)
+	if(amount > 0 && (RESIST_HEAT in mutations))
+		return
+
 	if(amount > 0)
-		if(RESIST_HEAT in mutations)
-			return
 		return take_overall_damage(0, amount)
 	else
 		return heal_overall_damage(0, -amount)
 
+/mob/living/carbon/human/resetFireLoss()
+	heal_overall_damage(0, getFireLoss())
+
 // =============================================
-
-/mob/living/carbon/human/getToxLoss()
-	if(species.flags[NO_BLOOD])
-		toxloss = 0
-		return toxloss
-
-	return ..()
 
 /mob/living/carbon/human/adjustToxLoss(amount)
-	if(species.flags[NO_BLOOD])
-		toxloss = 0
+	if(amount > 0 && species.flags[NO_BLOOD])
 		return
 
 	return ..()
-
-/mob/living/carbon/human/setToxLoss(amount)
-	if(species.flags[NO_BLOOD])
-		toxloss = 0
-		return
-
-	..()
 
 // =============================================
 
-/mob/living/carbon/human/getOxyLoss()
-	if(!should_have_organ(O_LUNGS))
-		oxyloss = 0
-		return oxyloss
-
-	return ..()
-
 /mob/living/carbon/human/adjustOxyLoss(amount)
-	if(!should_have_organ(O_LUNGS))
-		oxyloss = 0
+	if(amount > 0 && !should_have_organ(O_LUNGS))
 		return
 
 	return ..()
-
-/mob/living/carbon/human/setOxyLoss(amount)
-	if(!should_have_organ(O_LUNGS))
-		oxyloss = 0
-		return
-
-	..()
 
 // =============================================
 
@@ -196,26 +161,6 @@
 	if(HULK in mutations && !ignore_canstun)
 		return SetParalysis(0)
 	..()
-
-// =============================================
-
-/mob/living/carbon/human/Stuttering()
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
-		stuttering = 0
-	else
-		..()
-
-/mob/living/carbon/human/AdjustStuttering()
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
-		stuttering = 0
-	else
-		..()
-
-/mob/living/carbon/human/setStuttering()
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
-		stuttering = 0
-	else
-		..()
 
 ////////////////////////////////////////////
 
@@ -292,9 +237,8 @@
 
 
 // damage MANY external bodyparts, in random order
+// todo return value
 /mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
-	if(status_flags & GODMODE)
-		return // godmode
 
 	var/list/parts = get_damageable_bodyparts()
 	if(!parts.len)

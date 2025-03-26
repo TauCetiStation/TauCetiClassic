@@ -60,12 +60,16 @@
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
+
+	// todo: we need to rewrite them as status effects
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = 0	//Carbon
 	var/slurring = null		//Carbon
+
+
 	var/real_name = null
 	var/flavor_text = ""
 	var/med_record = ""

@@ -2,6 +2,13 @@
 	. = ..()
 	living_list += src
 
+	mob_brute_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_burn_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_oxy_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_tox_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_clone_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_brain_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+
 	default_transform = transform
 	default_pixel_x = pixel_x
 	default_pixel_y = pixel_y
@@ -37,6 +44,15 @@
 	QDEL_LIST(combos_saved)
 
 	qdel(mob_metabolism_mod)
+
+	qdel(mob_brute_mod)
+	qdel(mob_burn_mod)
+	qdel(mob_oxy_mod)
+	qdel(mob_tox_mod)
+	qdel(mob_clone_mod)
+	qdel(mob_brain_mod)
+
+	qdel(mob_general_damage_mod)
 
 	if(length(status_effects))
 		for(var/s in status_effects)
@@ -240,13 +256,9 @@
 		death()
 
 /mob/living/proc/updatehealth()
-	if(status_flags & GODMODE)
-		health = 100
-		stat = CONSCIOUS
-	else
-		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
-		med_hud_set_health()
-		med_hud_set_status()
+	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+	med_hud_set_health()
+	med_hud_set_status()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -259,7 +271,7 @@
 /mob/living/proc/burn_skin(burn_amount)
 	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if(IsShockproof()) //shockproof
+		if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
 			return 0
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
@@ -307,9 +319,6 @@
 
 // ========== BRUTE ==========
 /mob/living/proc/getBruteLoss()
-	if(!mob_brute_mod.Get())
-		// resets possible accumulated damage if we became immune to it
-		bruteloss = 0
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
@@ -318,29 +327,26 @@
 	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
 	return amount
 
+/mob/living/proc/resetBruteLoss()
+	bruteloss = 0
+
 // ========== OXY ==========
-// todo: TRAIT_NO_BREATHE (and mutation too)
 /mob/living/proc/getOxyLoss()
-	if(!mob_oxy_mod.Get())
-		oxyloss = 0
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_BREATHE))
+		return
 	if(amount > 0)
 		amount *= mob_oxy_mod.Get()
 	oxyloss = clamp(oxyloss + amount, 0, maxHealth * 2)
 	return amount
 
-/mob/living/proc/setOxyLoss(amount)
-	if(!mob_oxy_mod.Get())
-		oxyloss = 0
-	else
-		oxyloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetOxyLoss()
+	oxyloss = 0
 
 // ========== TOX ==========
 /mob/living/proc/getToxLoss()
-	if(!mob_tox_mod.Get())
-		toxloss = 0
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
@@ -349,11 +355,8 @@
 	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
 	return amount
 
-/mob/living/proc/setToxLoss(amount)
-	if(!mob_tox_mod.Get())
-		toxloss = 0
-	else
-		toxloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetToxLoss()
+	toxloss = 0
 
 // ========== FIRE ==========
 /mob/living/proc/getFireLoss()
@@ -367,10 +370,11 @@
 	fireloss = clamp(fireloss + amount, 0, maxHealth * 2)
 	return amount
 
+/mob/living/proc/resetFireLoss()
+	fireloss = 0
+
 // ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
-	if(!mob_clone_mod.Get())
-		cloneloss = 0
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
@@ -379,16 +383,11 @@
 	cloneloss = clamp(cloneloss + amount, 0, maxHealth * 2)
 	return amount
 
-/mob/living/proc/setCloneLoss(amount)
-	if(!mob_clone_mod.Get())
-		cloneloss = 0
-	else
-		cloneloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetCloneLoss()
+	cloneloss = 0
 
 // ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
-	if(!mob_brain_mod.Get())
-		brainloss = 0
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
@@ -397,34 +396,23 @@
 	brainloss = clamp(brainloss + amount, 0, maxHealth * 2)
 	return amount
 
-/mob/living/proc/setBrainLoss(amount)
-	if(!mob_brain_mod.Get())
-		brainloss = 0
-	else
-		brainloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetBrainLoss()
+	brainloss = 0
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
-		halloss = 0
 	return halloss
 
 /mob/living/proc/adjustHalLoss(amount)
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
-		halloss = 0
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
 	halloss = clamp(halloss + amount, 0, maxHealth * 2)
 	return amount
 
-/mob/living/proc/setHalLoss(amount)
-	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
-		halloss = 0
-		return
-	if(amount - halloss > 0)
-		add_combo_value_all(amount - halloss)
-	halloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetHalLoss()
+	halloss = 0
 
 // ========== BLUR ==========
 
@@ -536,23 +524,19 @@
 
 // damage ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute, burn)
-	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	updatehealth()
 
 // heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	updatehealth()
+	if(adjustBruteLoss(-brute) || adjustFireLoss(-burn))
+		updatehealth()
 
 // damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
-	if(status_flags & GODMODE)	return 0	//godmode
-	adjustBruteLoss(brute)
-	adjustFireLoss(burn)
-	updatehealth()
+	if(adjustBruteLoss(brute) || adjustFireLoss(burn))
+		updatehealth()
 
 /mob/living/proc/restore_all_bodyparts()
 	return
@@ -581,11 +565,11 @@
 		reagents.clear_reagents()
 
 	// shut down various types of badness
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
-	setBrainLoss(0)
-	setHalLoss(0)
+	resetToxLoss()
+	resetOxyLoss()
+	resetCloneLoss()
+	resetBrainLoss()
+	resetHalLoss()
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
