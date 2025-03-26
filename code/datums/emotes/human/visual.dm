@@ -201,3 +201,21 @@
 
 /datum/emote/human/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
 	return "seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."
+
+/datum/emote/human/flip
+	key = "flip"
+
+	message_1p = "You are doing a flip."
+	message_3p = "does flip."
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
+		EMOTE_STATE(is_present_bodypart, BP_R_LEG),
+		EMOTE_STATE(is_present_bodypart, BP_L_LEG),
+	)
+
+/datum/emote/human/flip/do_emote(mob/living/carbon/human/user)
+	. = ..()
+	user.SpinAnimation(5,1)
