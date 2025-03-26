@@ -182,6 +182,8 @@
 /datum/reagent/proc/on_vox_digest(mob/living/M)
 	return TRUE
 
+// huh, serpentids can digest only one reagent
+// we probably should move it somewhere else and disable species metabolism
 /datum/reagent/proc/on_serpentid_digest(mob/living/M)
 	return FALSE
 

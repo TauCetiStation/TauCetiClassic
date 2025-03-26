@@ -26,7 +26,7 @@
 
 		if(isliving(A))
 			var/mob/living/L = A
-			L.mob_general_damage_mod.RemoveModifiers(src)
+			L.mob_general_damage_mod.RemoveMods(src)
 
 /obj/item/weapon/pedalbag/attack()
 	return

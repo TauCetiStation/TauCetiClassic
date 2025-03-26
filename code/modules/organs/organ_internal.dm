@@ -141,7 +141,7 @@
 	var/datum/modval/heart_metabolism_mod
 
 /obj/item/organ/internal/heart/Destroy()
-	owner?.mob_metabolism_mod.RemoveModifiers(src) // where is remove_organ()
+	owner?.mob_metabolism_mod.RemoveMods(src) // where is remove_organ()
 	QDEL_NULL(heart_metabolism_mod)
 	return ..()
 
@@ -176,7 +176,7 @@
 	heart_status = HEART_NORMAL
 	deltimer(fibrillation_timer_id)
 	fibrillation_timer_id = null
-	heart_metabolism_mod.RemoveModifiers("Bad Heart")
+	heart_metabolism_mod.RemoveMods("Bad Heart")
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"

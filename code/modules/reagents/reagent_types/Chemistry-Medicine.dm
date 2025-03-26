@@ -162,6 +162,18 @@
 /datum/reagent/oxycodone/on_diona_digest(mob/living/M)
 	return FALSE
 
+/datum/reagent/endorphine
+	name = "Endorphine"
+	id = "endorphine"
+	description = "Naturally produced hormone that helps human body combat pain."
+	reagent_state = LIQUID
+	color = "#cb68fc"
+	overdose = 0
+	custom_metabolism = 0.025
+
+/datum/reagent/endorphine/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"

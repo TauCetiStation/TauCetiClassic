@@ -316,14 +316,14 @@
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
 
-	H.mob_brute_mod.RemoveModifiers(src)
-	H.mob_burn_mod.RemoveModifiers(src)
-	H.mob_oxy_mod.RemoveModifiers(src)
-	H.mob_tox_mod.RemoveModifiers(src)
-	H.mob_clone_mod.RemoveModifiers(src)
-	H.mob_brain_mod.RemoveModifiers(src)
+	H.mob_brute_mod.RemoveMods(src)
+	H.mob_burn_mod.RemoveMods(src)
+	H.mob_oxy_mod.RemoveMods(src)
+	H.mob_tox_mod.RemoveMods(src)
+	H.mob_clone_mod.RemoveMods(src)
+	H.mob_brain_mod.RemoveMods(src)
 
-	H.mob_metabolism_mod.RemoveModifiers(src)
+	H.mob_metabolism_mod.RemoveMods(src)
 
 	if(!flags[IS_SOCIAL])
 		H.handle_socialization()

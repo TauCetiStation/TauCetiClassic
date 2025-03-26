@@ -79,7 +79,7 @@
 		L.ExtinguishMob() // This spell can extinguish mob
 		L.mob_general_damage_mod.ModMultiplicative(0, src)
 	else
-		L.mob_general_damage_mod.RemoveModifiers(src)
+		L.mob_general_damage_mod.RemoveMods(src)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift
 	charge_max = 40 SECONDS

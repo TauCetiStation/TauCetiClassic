@@ -691,7 +691,7 @@ var/global/list/tourette_bad_words= list(
 		if(!has_quirk(/datum/quirk/fatness) && overeatduration < OVEREATDURATION_SLIM)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
-			mob_metabolism_mod.RemoveModifiers("Fatness")
+			mob_metabolism_mod.RemoveMods("Fatness")
 			update_body()
 			update_mutations()
 			update_inv_w_uniform()

@@ -22,5 +22,5 @@
 	L.rejuvenate()
 
 /datum/element/mutation/godmode/on_loose(mob/living/L)
-	L.mob_general_damage_mod.RemoveModifiers(src)
-	L.mob_metabolism_mod.RemoveModifiers(src)
+	L.mob_general_damage_mod.RemoveMods(src)
+	L.mob_metabolism_mod.RemoveMods(src)

@@ -172,7 +172,7 @@
 	..()
 	var/obj/item/organ/internal/heart/mob_heart = H.organs_by_name[O_HEART]
 	if(mob_heart)
-		mob_heart.heart_metabolism_mod.RemoveModifiers(src)
+		mob_heart.heart_metabolism_mod.RemoveMods(src)
 
 /obj/machinery/life_assist/external_cooling_device
 	name = "External Cooling Device"

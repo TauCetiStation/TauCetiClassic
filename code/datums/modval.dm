@@ -1,30 +1,12 @@
 /*
  * Basically your stat from RPG with set of dynamic mods (buffs or debuffs) like +20% or *20%.
- *
- * Below is some examples of how it will be calculated.
- *
- * You can add a multiplicative mod of 0.20: 
- * value * 0.20
- * the final value becomes 20% of the original value.
- *
- * Or an additive mod of 0.20:
- * value + value * 0.20
- * the final value increases by 20% of the original value.
- *
- * You can stack them, for example it's how will be calculated two multiplicative mods of 0.20: 
- * value * 0.20 * 0.20 = value * 0.04 
- * so the value becomes 4% of the original, multiplicative mods are powerful!
- *
- * Or two additive:
- * value + value * (0.20 + 0.20) = value + value * 0.40 = value * (1 + 0.40) 
- * the final value becomes 140% of the original value.
+ * Can be easily used as cumulative coefficient for calculations.
  * 
- * You can combine multiple multiplicative and additive mods from different sources
+ * You can combine multiple static, multiplicative and additive mods from different sources
  * and even add another modval as a modificator (disclaimer: there is no built-in protection from loop dependencies)
- * and you can add multiplicative with "0" value to overwrite all others.
  *
  * In the end it will be calculated like this:
- * value = base_value * PRODUCT(multiplicatives) * (1 + SUM(additives))
+ * value = (base_value + SUM(statics)) * PRODUCT(multiplicatives) * (1 + SUM(additives))
  */
 
 /datum/modval
@@ -45,6 +27,7 @@
 	Recalculate()
 
 /datum/modval/Destroy()
+	statics = null
 	multiplicatives = null
 	additives = null
 	return ..()
@@ -56,6 +39,8 @@
 /datum/modval/proc/Get()
 	return value
 
+// constant non-relative mod, like +5 or -5
+// other mods will mod on top of it
 /datum/modval/proc/ModStatic(new_static, source)
 	if(!source || isnull(new_static))
 		return
@@ -74,6 +59,8 @@
 
 	Recalculate()
 
+// multiplicative mod, like *2 or *0.5
+// multiplicative mods multiply each other so two mods 2 and 0.5 will give you 1
 /datum/modval/proc/ModMultiplicative(new_multiplicative, source)
 	if(!source || isnull(new_multiplicative))
 		return
@@ -92,6 +79,8 @@
 
 	Recalculate()
 
+// relative mod, +0.5 means to add 50%
+// relative mods stacks with each other, two +50% mods will give you +100%
 /datum/modval/proc/ModAdditive(new_additive, source)
 	if(!source || isnull(new_additive))
 		return
@@ -110,7 +99,7 @@
 
 	Recalculate()
 
-/datum/modval/proc/RemoveModifiers(source)
+/datum/modval/proc/RemoveMods(source)
 	var/need_to_recalculate = FALSE
 
 	if(length(statics) && (source in statics))
