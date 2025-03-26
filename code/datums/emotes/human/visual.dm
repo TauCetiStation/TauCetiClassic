@@ -205,9 +205,6 @@
 /datum/emote/human/flip
 	key = "flip"
 
-	message_1p = "You are doing a flip."
-	message_3p = "does flip."
-
 	message_type = SHOWMSG_VISUAL
 
 	state_checks = list(
