@@ -102,8 +102,8 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 		//if("ninjastart") // "ninja", not "ninjastart"
 		//	ninjastart += src
 		//	return INITIALIZE_HINT_QDEL
-		//if("eorgwarp")
-		//	eorgwarp += loc
+		//if("Gladiator")
+		//	Gladiator += loc
 		//	return INITIALIZE_HINT_QDEL
 		if("prisonerstart")
 			prisonerstart += loc
