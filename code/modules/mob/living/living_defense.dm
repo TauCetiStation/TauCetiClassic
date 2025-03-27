@@ -338,6 +338,8 @@
 	update_action_buttons()
 
 /mob/living/incapacitated(restrained_type = ARMS)
+	if(istype(buckled, /obj/structure/stool/bed/nest))
+		return stunned
 	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
