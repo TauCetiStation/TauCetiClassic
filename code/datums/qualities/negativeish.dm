@@ -236,7 +236,7 @@ var/global/list/allergen_reagents_list
 	requirement = "Нет."
 
 /datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
-	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
+	H.mob_metabolism_mod.ModAdditive(1, src) // +100%
 
 /datum/quality/negativeish/proudandwalking
 	name = "Proud and Walking"

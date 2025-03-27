@@ -82,7 +82,7 @@
 		owner.bad_bodyparts -= src
 	QDEL_LIST(bodypart_organs)
 	if(pumped)
-		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
+		owner.mob_metabolism_mod.RemoveMods(src)
 	return ..()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
@@ -436,7 +436,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				qdel(owner.shoes)
 	if(pumped)
-		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
+		owner.mob_metabolism_mod.RemoveMods(src)
 
 	owner.update_body()
 	if(body_zone == BP_HEAD)

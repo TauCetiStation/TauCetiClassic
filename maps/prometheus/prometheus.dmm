@@ -13350,7 +13350,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/hallway/primary/aft)
 "cPu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -47270,8 +47272,7 @@
 /obj/machinery/door/airlock/external{
 	dock_tag = "sci_dock";
 	locked = 1;
-	name = "Research Outpost Dock Airlock";
-	req_access = list(65)
+	name = "Research Mining Dock Airlock"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -83396,7 +83397,9 @@
 	},
 /area/station/security/secconfhall)
 "tUu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkbrown"
@@ -96247,7 +96250,9 @@
 	},
 /area/station/security/prison)
 "xdB" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/item/device/radio/intercom{
 	frequency = 1475;
 	name = "Station Intercom (Security)";

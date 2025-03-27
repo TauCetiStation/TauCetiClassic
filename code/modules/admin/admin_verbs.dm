@@ -73,6 +73,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
 	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
 	/client/proc/send_gods_message,
+	/client/proc/metabolism_debug,
 	)
 var/global/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
@@ -1274,3 +1275,13 @@ var/global/centcom_barriers_stat = 1
 
 	log_admin("[key_name(src)] load arena map [arena.name] - [arena.mappath]")
 	message_admins("[key_name_admin(src)] load arena map [arena.name] - [arena.mappath]")
+
+/client/proc/metabolism_debug()
+	set category = "Debug"
+	set name = "Debug Metabolism"
+
+	if(!isliving(mob))
+		return
+	
+	var/mob/living/L = mob
+	L.metabolism_debug()
