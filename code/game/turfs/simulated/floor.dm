@@ -265,21 +265,26 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 
 	// some turfs change icon_state, some turfs use overlay
 	if(is_plasteel_floor())
+		broken = TRUE
 		damage_state = "damaged_[pick(1,2,3,4)]"
 	else if(is_light_floor())
+		broken = TRUE
 		icon_state = "light_broken"
 	else if(is_plating())
+		broken = TRUE
 		damage_state = "damaged_[pick(1,2,3,4)]"
 	else if(is_wood_floor())
+		broken = TRUE
 		damage_state = "wood_damaged_[pick(1,2,3,4,5,6,7)]"
 	else if(is_carpet_floor())
+		broken = TRUE
 		damage_state = "carpet_damaged"
 	else if(istype(src, /turf/simulated/floor/glass))
+		broken = TRUE
 		damage_state = "glass_damaged_[pick("1","2","3")]"
 	else if(is_grass_floor())
+		broken = TRUE
 		src.icon_state = "ironsand[pick("1","2","3")]"
-
-	broken = TRUE
 
 	if(damage_state)
 		add_damaged_overlay(damage_state)
