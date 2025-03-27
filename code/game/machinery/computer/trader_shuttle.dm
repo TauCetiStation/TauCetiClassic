@@ -72,14 +72,12 @@
 	space_location.move_contents_to(station_location)
 	SSshuttle.shake_mobs_in_area(station_location, WEST)
 
-	SSshuttle.dock_act(/area/station/hallway/secondary/entry, "trader_shuttle")
 	SSshuttle.dock_act(station_location, "trader_shuttle")
 
 	if(src) docked = TRUE
 
 /obj/machinery/computer/trader_shuttle/proc/undock_to_station()
 	set waitfor = FALSE
-	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "trader_shuttle")
 	SSshuttle.undock_act(station_location, "trader_shuttle")
 	sleep(PARALLAX_LOOP_TIME)
 
