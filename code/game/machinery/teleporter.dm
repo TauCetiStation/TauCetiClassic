@@ -114,9 +114,11 @@
 	if(href_list["calibrate"])
 		if(!target)
 			to_chat(usr, "<span class='danger'>Error: No target set to calibrate to.</span>")
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			return FALSE
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
 			to_chat(usr, "<span class='warning'>Hub is already calibrated!</span>")
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			return FALSE
 		to_chat(usr, "<span class='notice'>Processing hub calibration to target...</span>")
 
@@ -126,8 +128,10 @@
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
 				to_chat(usr, "<span class='notice'>Calibration complete.</span>")
+				playsound(src, 'sound/machines/calibration_complete.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			else
 				to_chat(usr, "<span class='danger'>Error: Unable to detect hub.</span>")
+				playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	updateDialog()
 
