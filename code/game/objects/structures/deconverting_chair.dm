@@ -58,15 +58,16 @@
 		addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), 1 MINUTE, TIMER_UNIQUE)
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/del_imp(mob/user, mob/living/carbon/human/target)
-	for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
-		if(I.implanted)
-			qdel(I)
-		else
-	for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
-		if(I.implanted)
-			qdel(I)
-	target.sec_hud_set_implants()
-	to_chat(target, "<span class='notice'><Font size =3><B>Your restraining implants have been deactivated.</B></FONT></span>")
+	if(prob(50))
+		for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
+			if(I.implanted)
+				qdel(I)
+			else
+		for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
+			if(I.implanted)
+				qdel(I)
+		target.sec_hud_set_implants()
+		to_chat(target, "<span class='notice'><Font size =3><B>Your restraining implants have been deactivated.</B></FONT></span>")
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/reset_cooldown()
 	if(on_cooldown)
