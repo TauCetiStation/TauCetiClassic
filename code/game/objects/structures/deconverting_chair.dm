@@ -17,17 +17,24 @@
 	if(!user.Adjacent(src))
 		return
 	if(!buckled_mob)
+		to_chat(user, "<span class='warning'>Activation is not possible without a user in the chair.</span>")
+		return
+	if(buckled_mob == user)
+		to_chat(user, "<span class='warning'>You don't want to activate [src] while you're sitting on it..</span>")
+		return
+
+	if(do_after(usr, 30, target = user))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, get_turf(src))
 		s.start()
-		return
-
-	deconvert(user, buckled_mob)
+		deconvert(user, buckled_mob)
+		if(buckled_mob.isloyal() || buckled_mob.ismindshielded())
+			del_imp(user, buckled_mob)
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/deconvert(mob/user, mob/living/carbon/human/target)
 	if(!ishuman(target) || on_cooldown)
 		return
-	target.electrocute_act(50)
+	target.electrocute_act(50, src)
 	if(target.mind)
 		for(var/role in roles_to_deconvert)
 			var/datum/role/R = target.mind.GetRole(role)
@@ -49,6 +56,17 @@
 		playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 		on_cooldown = TRUE
 		addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), 1 MINUTE, TIMER_UNIQUE)
+
+/obj/structure/stool/bed/chair/electrotherapy/proc/del_imp(mob/user, mob/living/carbon/human/target)
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
+		if(I.implanted)
+			qdel(I)
+		else
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
+		if(I.implanted)
+			qdel(I)
+	target.sec_hud_set_implants()
+	to_chat(target, "<span class='notice'><Font size =3><B>Your restraining implants have been deactivated.</B></FONT></span>")
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/reset_cooldown()
 	if(on_cooldown)
