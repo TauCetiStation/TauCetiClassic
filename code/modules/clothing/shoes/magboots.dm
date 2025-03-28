@@ -10,6 +10,8 @@
 //	flags = NOSLIP //disabled by default
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_magboots)
 
+	restricted_accessory_slots = list("soles")
+
 /datum/action/item_action/hands_free/toggle_magboots
 	name = "Toggle Magboots"
 
