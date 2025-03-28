@@ -4684,7 +4684,6 @@
 /area/station/civilian/hydroponics)
 "asL" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood{
@@ -8708,7 +8707,6 @@
 /area/station/civilian/chapel/mass_driver)
 "bfI" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -10514,7 +10512,6 @@
 /area/station/maintenance/brig)
 "buk" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups{
 	pixel_x = 9;
 	pixel_y = 3
 	},
@@ -12080,7 +12077,6 @@
 /area/station/maintenance/brigright)
 "bLO" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
@@ -17116,7 +17112,6 @@
 	icon_state = "box_corners_white"
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -28040,7 +28035,6 @@
 "ePC" = (
 /obj/machinery/light/smart,
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39393,7 +39387,6 @@
 /area/station/maintenance/science)
 "gUJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -49129,7 +49122,6 @@
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -52940,7 +52932,6 @@
 	},
 /area/station/rnd/server)
 "jCm" = (
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/structure/table/woodentable,
@@ -77723,7 +77714,6 @@
 /area/station/medical/cryo)
 "oAR" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -79603,7 +79593,6 @@
 	},
 /area/station/rnd/hallway/florahall)
 "oSY" = (
-/obj/item/weapon/storage/box/cups,
 /obj/structure/sign/poster/contraband/space_up{
 	pixel_x = 32
 	},
@@ -90254,7 +90243,6 @@
 /area/station/maintenance/dormitory)
 "qYA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -91384,8 +91372,6 @@
 /area/station/cargo/office)
 "rjR" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
@@ -93028,7 +93014,6 @@
 /area/station/civilian/janitor)
 "rAK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -116636,7 +116621,6 @@
 	c_tag = "Engineering Break Room";
 	dir = 8
 	},
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/item/device/radio/intercom{
@@ -116996,7 +116980,6 @@
 /obj/item/weapon/storage/fancy/donut_box{
 	pixel_y = -7
 	},
-/obj/item/weapon/storage/box/cups{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -122398,7 +122381,6 @@
 /obj/item/tableclock{
 	pixel_y = 15
 	},
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 2
 	},
 /turf/simulated/floor{
