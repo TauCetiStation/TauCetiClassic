@@ -24,6 +24,8 @@
 	if (isskeleton(M))
 		to_chat(user, "<span class='warning'>Куда имплантировать-то?</span>")
 		return
+	if(!M.try_inject(user, TRUE))
+		return
 
 	user.visible_message("<span class ='userdanger'>[user] пытается имплантировать [M].</span>")
 
