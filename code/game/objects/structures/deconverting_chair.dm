@@ -62,7 +62,6 @@
 		for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
 			if(I.implanted)
 				qdel(I)
-			else
 		for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
 			if(I.implanted)
 				qdel(I)
