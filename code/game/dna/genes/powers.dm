@@ -9,6 +9,7 @@
 	activation_messages=list("You feel no need to breathe.")
 	mutation=NO_BREATH
 	activation_prob=50
+	trait_mutation = TRAIT_NO_BREATHE
 
 /datum/dna/gene/basic/nobreath/New()
 	block=NOBREATHBLOCK
@@ -165,7 +166,7 @@
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
 	activation_messages=list("Your skin feels electric.")
-	trait_mutation = TRAIT_SHOCKIMMUNE
+	trait_mutation = TRAIT_SHOCK_IMMUNE
 	activation_prob=50
 
 /datum/dna/gene/basic/noshock/New()
@@ -231,7 +232,7 @@
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
 	if(!mind)
 		return
-	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN)) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
 		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return
 	if(mind.hulkizing)

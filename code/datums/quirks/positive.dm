@@ -36,8 +36,8 @@
 	gain_text = "<span class='notice'>Вы чувствуете уверенность в своём разуме.</span>"
 	lose_text = "<span class='danger'>Вы чувствуете ненадёжность своего сознания.</span>"
 
-	req_species_flags = list(
-		NO_EMOTION = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_EMOTIONLESS,
 	)
 
 

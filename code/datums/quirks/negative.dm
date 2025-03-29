@@ -25,11 +25,9 @@
 	gain_text = "<span class='danger'>Вы не можете перестать кашлять!</span>"
 	lose_text = "<span class='notice'>Вы чувствуете облегчение, кашель больше вас не побеспокоит.</span>"
 
-	req_species_flags = list(
-		NO_BREATHE = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_NO_BREATHE,
 	)
-
-
 
 /datum/quirk/deafness
 	name = QUIRK_DEAF
@@ -50,8 +48,8 @@
 	gain_text = "<span class='danger'>Вы начинаете испытывать эпилептические припадки!</span>"
 	lose_text = "<span class='notice'>Вы чувствуете облегчение, припадки больше вас не побеспокоят.</span>"
 
-	req_species_flags = list(
-		NO_EMOTION = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_EMOTIONLESS,
 	)
 
 /datum/quirk/epileptic/on_spawn()
@@ -67,8 +65,9 @@
 	gain_text = "<span class='danger'>Вы чувствуете, что набрали несколько лишних килограмм.</span>"
 	lose_text = "<span class='notice'>Вы снова в форме!</span>"
 
+	blacklisted_species_traits = list(TRAIT_NEWER_FAT)
+
 	req_species_flags = list(
-		NO_FAT = FALSE,
 		IS_PLANT = FALSE,
 		IS_SYNTHETIC = FALSE,
 	)
@@ -92,10 +91,9 @@
 
 	incompatible_species = list(SKRELL, DIONA, IPC, ABDUCTOR)
 
-	req_species_flags = list(
-		NO_EMOTION = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_EMOTIONLESS,
 	)
-
 
 
 /datum/quirk/nearsighted
@@ -123,8 +121,8 @@
 	gain_text = "<span class='danger'>Вы весь на нервах.</span>"
 	lose_text = "<span class='notice'>Вы меньше нервничаете.</span>"
 
-	req_species_flags = list(
-		NO_EMOTION = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_EMOTIONLESS,
 	)
 
 
@@ -137,8 +135,8 @@
 	gain_text = "<span class='danger'>Боль пробуждает ваш голод.</span>"
 	lose_text = "<span class='notice'>Вы перестали заедать боль.</span>"
 
-	req_species_flags = list(
-		NO_PAIN = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
 	)
 
 
@@ -180,8 +178,8 @@
 	gain_text = "<span class='notice'>Даже сама мысль о том, что вы находитесь в темноте, заставляет вас дрожать.</span>"
 	lose_text = "<span class='notice'>Вы больше не боитесь темноты!</span>"
 
-	req_species_flags = list(
-		NO_EMOTION = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_EMOTIONLESS,
 	)
 
 	var/is_afraid = FALSE
@@ -249,6 +247,6 @@
 	gain_text = "<span class='danger'>Вы чувствуете, насколько жидка кровь в ваших венах.</span>"
 	lose_text = "<span class='notice'>Ваша кровь неожиданно густеет!</span>"
 
-	req_species_flags = list(
-		NO_BLOOD = FALSE,
+	blacklisted_species_traits = list(
+		TRAIT_NO_BLOOD,
 	)

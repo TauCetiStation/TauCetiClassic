@@ -31,6 +31,8 @@
 #define BP_R_LEG  "r_leg"
 #define BP_ACTIVE_ARM "active_arm"
 #define BP_INACTIVE_ARM "inactive_arm"
+#define BP_TAIL "tail"
+#define BP_WINGS "wings"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -100,11 +102,6 @@
 #define ZOMBIE_TAJARAN 	 "Zombie Tajaran"
 #define ZOMBIE_SKRELL  	 "Zombie Skrell"
 #define ZOMBIE_UNATHI  	 "Zombie Unathi"
-#define SLIME          	 "Slime"
-#define SLIME_UNATHI   	 "Slime Unathi"
-#define SLIME_VOX      	 "Slime Vox"
-#define SLIME_TAJARAN  	 "Slime Tajaran"
-#define SLIME_SKRELL   	 "Slime Skrell"
 #define ABOMINATION    	 "disgusting abomination"
 #define SERPENTID        "Serpentid"
 #define MOTH		     "Moth"
@@ -238,7 +235,6 @@
 // Defibrillation
 #define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
 #define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
-#define MAX_BRAIN_DAMAGE  80
 
 // Awareness about syndicate, it`s agents and equipment
 #define SYNDICATE_UNAWARE  0

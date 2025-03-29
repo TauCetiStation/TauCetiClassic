@@ -8,7 +8,7 @@
 	if(!M || !M.dna)
 		return
 	var/datum/species/S = all_species[M.get_species()]
-	if(S && S.flags[NO_DNA])
+	if(S && S.flags[NO_DNA] || HAS_TRAIT(M, TRAIT_NO_DNA_MUTATIONS))
 		return
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!gene.block)
@@ -56,7 +56,7 @@
 	if(block < 0)
 		return
 	var/datum/species/S = all_species[M.get_species()]
-	if(S && S.flags[NO_DNA])
+	if(S && S.flags[NO_DNA] || HAS_TRAIT(M, TRAIT_NO_DNA_MUTATIONS))
 		return
 
 	var/datum/dna/gene/gene = assigned_gene_blocks[block]

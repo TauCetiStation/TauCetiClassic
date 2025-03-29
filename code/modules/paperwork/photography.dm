@@ -210,9 +210,11 @@
 			continue
 		var/icon/part = icon(BP.icon, BP.icon_state, A.dir)
 		if(H.species.flags[HAS_SKIN_COLOR])
-			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin/255, H.g_skin/255, H.b_skin/255)
+			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin, H.g_skin, H.b_skin)
 		else
-			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.s_tone/255, H.s_tone/255, H.s_tone/255)
+			var/datum/skin_tone/T = global.skin_tones_by_name[H.s_tone]
+			var/list/rgb_tone = rgb2num(T.hex)
+			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, rgb_tone[1], rgb_tone[2], rgb_tone[3])
 		img.Blend(part, ICON_OVERLAY)
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]

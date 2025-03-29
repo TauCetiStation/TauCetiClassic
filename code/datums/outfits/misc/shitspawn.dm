@@ -555,9 +555,7 @@
 /datum/outfit/jolly_gravedigger/post_equip(mob/living/carbon/human/H)
 	H.real_name = pick("Tyler", "Tyrone", "Tom", "Timmy", "Takeuchi", "Timber", "Tyrell")
 
-	H.s_tone = max(min(round(rand(130, 170)), 220), 1)
-	H.s_tone = -H.s_tone + 35
-
+	H.s_tone = random_skin_tone()
 	H.apply_recolor()
 
 /datum/outfit/jolly_gravedigger/surpeme

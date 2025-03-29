@@ -81,7 +81,7 @@
 
 	if(href_list["choice"] == "Summon")
 		for(var/mob/living/simple_animal/shade/A in src)
-			A.remove_status_flags(GODMODE)
+			REMOVE_TRAIT(A, ELEMENT_TRAIT_GODMODE, REF(src))
 			A.canmove = TRUE
 			to_chat(A, "<b>Вы были освобождены из своей тюрьмы, но вы остаётесь привязанным к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой.</b>")
 			A.forceMove(user.loc)
@@ -131,7 +131,7 @@
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( H.loc )
 	S.my_religion = H.my_religion
 	S.forceMove(src)
-	S.add_status_flags(GODMODE) //So they won't die inside the stone somehow
+	ADD_TRAIT(S, ELEMENT_TRAIT_GODMODE, REF(src)) // So they won't die inside the stone somehow
 	S.canmove = FALSE //Can't move out of the soul stone
 	S.name = "Shade of [H.real_name]"
 	S.real_name = "Shade of [H.real_name]"
@@ -162,9 +162,8 @@
 		return
 
 	S.forceMove(src)
-	S.add_status_flags(GODMODE)
+	ADD_TRAIT(S, ELEMENT_TRAIT_GODMODE, REF(src))
 	S.canmove = FALSE
-	S.health = S.maxHealth
 	icon_state = "soulstone_glow_blink"
 	to_chat(S, "Ваша душа была снова захвачена в камень душ, тайная энергия опять связывает твою эфирную форму.")
 	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [S.name] была снова захвачен в камень душ.")

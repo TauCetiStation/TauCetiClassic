@@ -180,7 +180,7 @@
 		return ..()
 
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP) && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS))
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
@@ -193,9 +193,6 @@
 			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
 				return
 
-			if(H.species.flags[NO_MINORCUTS])
-				return
-
 			if(H.buckled)
 				return
 
@@ -204,7 +201,7 @@
 				if(BP.is_robotic())
 					return
 				BP.take_damage(5, 0)
-				if(!H.species.flags[NO_PAIN])
+				if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 					H.Stun(1)
 					H.Weaken(3)
 				H.updatehealth()
@@ -215,24 +212,22 @@
 						"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS)
 
-/obj/item/weapon/shard/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/shard/afterattack(atom/target, mob/living/user, proximity, params)
 	if(!proximity)
 		return
 	if(isturf(target))
 		return
+	if(HAS_TRAIT(user, TRAIT_NO_MINORCUTS))
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
+		if(!H.gloves)
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(force / 2, null, damage_flags())
-	else if(ismonkey(user))
-		var/mob/living/carbon/monkey/M = user
-		var/datum/species/S = all_species[M.get_species()]
-		if(S && S.flags[NO_MINORCUTS])
-			return
-		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
-		M.adjustBruteLoss(force / 2)
+	else if(istype(user))
+		to_chat(user, "<span class='warning'>[src] cuts into your hand!</span>")
+		user.adjustBruteLoss(force / 2)
 
 // phoron shard object
 /obj/item/weapon/shard/phoron

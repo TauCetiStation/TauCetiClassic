@@ -429,7 +429,7 @@
 			feedback_add_details("admin_secrets_fun_used","RET")
 			for(var/mob/living/carbon/human/H in player_list)
 				to_chat(H, "<span class='warning'><B>You suddenly feel stupid.</B></span>")
-				H.setBrainLoss(60)
+				H.adjustBrainLoss(60)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 		// Make all items look like guns
 		if("fakeguns")

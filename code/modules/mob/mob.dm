@@ -840,8 +840,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
-	if(add_flags & GODMODE)
-		stuttering = 0
 	if(add_flags & FAKEDEATH)
 		update_canmove()
 	status_flags |= add_flags
@@ -872,20 +870,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 		clear_alert("high")
 
 // ========== STUTTERING ==========
+// todo: move it to status effects
 /mob/proc/Stuttering(amount)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering, amount, 0)
 
 /mob/proc/AdjustStuttering(amount)
-	if(status_flags & GODMODE)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering + amount, 0)
 
-/mob/proc/setStuttering(amount)
-	if(status_flags & GODMODE)
-		return
-	stuttering = max(amount, 0)
+/mob/proc/resetStuttering(amount)
+	stuttering = 0
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)

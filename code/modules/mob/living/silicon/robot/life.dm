@@ -23,13 +23,9 @@
 	update_canmove()
 
 /mob/living/silicon/robot/proc/clamp_values()
-
-	SetParalysis(min(AmountParalyzed(), 30))
+	SetParalysis(min(AmountParalyzed(), 30)) // why?
+	//todo: add trait for immunity
 	SetSleeping(0)
-	adjustBruteLoss(0)
-	adjustToxLoss(0)
-	adjustOxyLoss(0)
-	adjustFireLoss(0)
 
 /mob/living/silicon/robot/proc/use_power()
 	// Debug only
