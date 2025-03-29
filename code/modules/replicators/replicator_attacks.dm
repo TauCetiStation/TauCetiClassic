@@ -74,7 +74,7 @@
 	if(istype(A, /obj/structure/forcefield_node))
 		if(locate(/obj/machinery/power/replicator_generator) in A.loc)
 			return
-		var/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicate_spell = locate() in src
+		var/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicate_spell = locate() in src.mind.spell_list
 		if(replicate_spell)
 			replicate_spell.Click()
 		return
