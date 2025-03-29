@@ -3914,6 +3914,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ahi" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "ahj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
@@ -4631,6 +4637,22 @@
 "aik" = (
 /turf/simulated/wall,
 /area/station/civilian/gym)
+"ail" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "aim" = (
 /obj/structure/closet/lasertag/red,
 /turf/simulated/floor{
@@ -4742,6 +4764,12 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"aiy" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "aiA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57635,7 +57663,7 @@ uIb
 gay
 dZx
 dZx
-dZx
+ahi
 dZx
 dZx
 crv
@@ -58474,7 +58502,7 @@ crv
 crv
 crv
 gay
-rIo
+aiy
 vAA
 uqq
 uqq
@@ -74084,7 +74112,7 @@ crv
 qws
 crv
 kGN
-mUe
+ail
 hPk
 kGN
 kqT
