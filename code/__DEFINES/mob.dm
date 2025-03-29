@@ -31,6 +31,8 @@
 #define BP_R_LEG  "r_leg"
 #define BP_ACTIVE_ARM "active_arm"
 #define BP_INACTIVE_ARM "inactive_arm"
+#define BP_TAIL "tail"
+#define BP_WINGS "wings"
 
 // Organ defines.
 #define O_MOUTH    "mouth"

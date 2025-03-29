@@ -405,7 +405,7 @@
 					if(L.get_species() == IPC) //Ignore IPC
 						continue
 
-					if(HAS_TRAIT(L, TRAIT_SLIME) || L.stat == DEAD) // Ignore other slimes and dead mobs
+					if(HAS_TRAIT(L, ELEMENT_TRAIT_SLIME) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
 					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())

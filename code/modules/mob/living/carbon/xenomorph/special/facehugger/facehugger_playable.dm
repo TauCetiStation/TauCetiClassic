@@ -69,8 +69,7 @@
 		return FALSE
 
 	var/mob/living/carbon/C = target
-	var/datum/species/S = all_species[C.get_species()]
-	if(S && S.flags[NO_BLOOD])
+	if(HAS_TRAIT(C, TRAIT_NO_BLOOD))
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
 		return FALSE

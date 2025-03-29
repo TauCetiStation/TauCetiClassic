@@ -1,9 +1,9 @@
 /mob/living/carbon/human/spawn_gibs()
-	if(!species.flags[NO_BLOOD_TRAILS])
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
 		new /obj/effect/gibspawner/human(get_turf(loc), src)
 
 /mob/living/carbon/human/gib()
-	if(!species.flags[NO_BLOOD_TRAILS])
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
 		var/atom/movable/overlay/animation = new (loc)
 		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
 		QDEL_IN(animation, 2 SECOND)

@@ -8,6 +8,9 @@
 /obj/effect/gibspawner/atom_init(mapload, mob/living/M)
 	..()
 
+	if(HAS_TRAIT(M, TRAIT_NO_MESSY_GIBS))
+		return INITIALIZE_HINT_QDEL
+
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 		stack_trace("Gib list length mismatch!")
 		return INITIALIZE_HINT_QDEL

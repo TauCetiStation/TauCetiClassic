@@ -161,7 +161,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(obj/item/organ/external/BP)
+	if(!BP.limb_layer) // some limbs don't have damage overlays
+		return
 	remove_damage_overlay(BP.limb_layer)
+	// todo: make set of pre-backed fulltile perlin noise masks and use SUBTRACT blending
+	// currently it's hard to keep masks up to date with all respites and new body parts
 	if(species.damage_mask && (BP in bodyparts))
 		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
 		standing.color = BP.damage_state_color()
@@ -181,7 +185,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump)
 			continue
-		standing += BP.get_icon(BODY_LAYER)
+		standing += BP.get_icon()
 	for(var/image/I in standing)
 		I = update_height(I)
 		I.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
@@ -238,8 +242,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			MA = update_height(MA, TRUE)
 			standing += MA
 
-	update_tail_showing()
-	update_wing_layer()
 	overlays_standing[BODY_LAYER] = standing
 	apply_standing_overlay(BODY_LAYER)
 
@@ -677,7 +679,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		update_inv_shoes()
 
 	update_inv_w_uniform()
-	update_tail_showing()
 	update_inv_neck()
 
 	apply_standing_overlay(SUIT_LAYER)
@@ -815,61 +816,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_l_hand()
 
 	apply_standing_overlay(L_HAND_LAYER)
-
-/mob/living/carbon/human/proc/update_wing_layer()
-	remove_standing_overlay(WING_UNDERLIMBS_LAYER)
-	remove_standing_overlay(WING_LAYER)
-	var/datum/sprite_accessory/wing/body_accessory = global.body_wing_accessory_by_name[wing_accessory_name]
-	if(!istype(body_accessory))
-		return
-
-	var/mutable_appearance/wings = mutable_appearance(body_accessory.icon, body_accessory.icon_state, layer = -WING_LAYER)
-	overlays_standing[WING_LAYER] = wings
-
-	var/mutable_appearance/under_wing = mutable_appearance(body_accessory.icon, "[body_accessory.icon_state]_BEHIND", layer = -WING_UNDERLIMBS_LAYER)
-	overlays_standing[WING_UNDERLIMBS_LAYER] = under_wing
-
-	apply_standing_overlay(WING_UNDERLIMBS_LAYER)
-	apply_standing_overlay(WING_LAYER)
-
-// pls make it organ
-/mob/living/carbon/human/proc/update_tail_showing()
-	remove_standing_overlay(TAIL_LAYER)
-
-	if((random_tail_holder || species.tail) && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
-		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/tail_state = species.tail
-			if(random_tail_holder)
-				tail_state = random_tail_holder
-			var/tail_gender_appendix = null
-			if(species.gender_tail_icons && gender == FEMALE)
-				tail_gender_appendix = "_fem"
-
-			var/image/tail_s = image("icon" = 'icons/mob/human_races/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
-
-			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
-
-			if(BP.owner && HAS_TRAIT(BP.owner, TRAIT_SLIME))
-				tail_s.color = SLIME_PEOPLE_COLOR // this sets alpha too
-			if(BP.status & ORGAN_DEAD)
-				tail_s.color = NECROSIS_COLOR_MOD
-			else if(HULK in mutations)
-				tail_s.color = HULK_SKIN_COLOR
-			else
-				if(species.flags[HAS_SKIN_COLOR])
-					tail_s.color = rgb(r_skin, g_skin, b_skin)
-				else if(species.flags[HAS_SKIN_TONE]) // any humans with tails?
-					var/datum/skin_tone/T = global.skin_tones_by_name[s_tone]
-					tail_s.color = T.hex
-
-			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
-			standing = human_update_offset(standing, FALSE)
-			standing.pixel_x += species.offset_features[OFFSET_BACK][1]
-			standing.pixel_y += species.offset_features[OFFSET_BACK][2]
-			overlays_standing[TAIL_LAYER] = standing
-
-	apply_standing_overlay(TAIL_LAYER)
-
 
 /mob/living/carbon/human/proc/update_surgery()
 	remove_standing_overlay(SURGERY_LAYER)

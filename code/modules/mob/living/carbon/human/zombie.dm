@@ -238,7 +238,7 @@
 	return ..()
 
 /mob/living/carbon/human/embed(obj/item/I)
-	if(species.flags[NO_EMBED])
+	if(HAS_TRAIT(src, TRAIT_NO_EMBED))
 		return
 	return ..()
 

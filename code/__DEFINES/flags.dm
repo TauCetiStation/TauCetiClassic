@@ -82,28 +82,19 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)
 
 //Species flags.
-#define NO_BLOOD           "no_blood"
-#define NO_EMBED           "no_embed"
-#define NO_FAT             "no_fatness"
 #define HAS_SKIN_TONE      "has_skin_tone" // species use presets colors from /datum/skin_tone (humans only atm)
 #define HAS_SKIN_COLOR     "has_skin_color" // species can colorpick any color
 #define HAS_HAIR_COLOR     "has_hair_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
-#define HAS_TAIL           "has_tail" // should be species organ, not trait
 #define IS_SOCIAL          "is_social"
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
 #define REQUIRE_LIGHT      "require_light"
 #define IS_SYNTHETIC       "is_synthetic"
-#define NO_VOMIT           "no_vomit"
 #define HAS_HAIR           "has_hair"
-#define NO_FINGERPRINT     "no_fingerprint"
-#define NO_MINORCUTS	   "no_minorcuts"
-#define NO_BLOOD_TRAILS    "no_blood_trails"
 #define FACEHUGGABLE       "facehuggable"
-#define NO_EMOTION         "no_emotion"
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"

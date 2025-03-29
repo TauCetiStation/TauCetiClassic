@@ -85,7 +85,7 @@
 	if(M.IsSleeping())
 		M.AdjustDrunkenness(-1)
 
-	if(HAS_TRAIT(src, TRAIT_SLIME))
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		M.adjustToxLoss(REM)
 
 /datum/reagent/water/on_diona_digest(mob/living/M)

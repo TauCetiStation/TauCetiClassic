@@ -29,7 +29,6 @@
 	damType = CLONE
 
 /datum/unarmed_attack/slime_glomp/New()
-	world.log << "slime glomp new"
 	attack_sound = list('sound/effects/attackblob.ogg')
 
 /datum/unarmed_attack/claws

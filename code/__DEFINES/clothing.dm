@@ -94,18 +94,18 @@
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts
-#define HEAD			1
-#define FACE			2
-#define EYES			4
-#define UPPER_TORSO		8
-#define LOWER_TORSO		16
-#define LEG_LEFT		32
-#define LEG_RIGHT		64
-#define LEGS			96
-#define ARM_LEFT		512
-#define ARM_RIGHT		1024
-#define ARMS			1536
-#define FULL_BODY		1663
+#define HEAD (1<<0)
+#define FACE (1<<1)
+#define EYES (1<<2)
+#define UPPER_TORSO (1<<3)
+#define LOWER_TORSO (1<<4)
+#define LEG_LEFT (1<<5)
+#define LEG_RIGHT (1<<6)
+#define LEGS (LEG_LEFT | LEG_RIGHT)
+#define ARM_LEFT (1<<7)
+#define ARM_RIGHT (1<<8)
+#define ARMS (ARM_LEFT | ARM_RIGHT)
+#define FULL_BODY ALL
 
 // How much coverage(in percents) of each clothing part covers our body(aproximately)
 #define HEAD_COVERAGE    5

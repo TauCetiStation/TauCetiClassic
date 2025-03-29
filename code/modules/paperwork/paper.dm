@@ -109,7 +109,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
@@ -124,7 +124,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!crumpled)

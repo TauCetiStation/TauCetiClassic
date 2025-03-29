@@ -31,6 +31,9 @@ var/global/list/image/splatter_cache=list()
 	..()
 
 	if(istype(M))
+		if(HAS_TRAIT(M, TRAIT_NO_MESSY_GIBS))
+			return INITIALIZE_HINT_QDEL
+
 		basedatum = M.get_blood_datum()
 		fleshcolor = M.get_flesh_color()
 

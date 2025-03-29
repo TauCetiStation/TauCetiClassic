@@ -825,7 +825,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(HAS_TRAIT(H, TRAIT_SLIME))
+		if(HAS_TRAIT(H, ELEMENT_TRAIT_SLIME))
 			return
 		if(!data["ticks"])
 			data["ticks"] = 1

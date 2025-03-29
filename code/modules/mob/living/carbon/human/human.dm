@@ -11,7 +11,6 @@
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
-	var/random_tail_holder = "" // overrides species.tail
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -970,7 +969,7 @@
 
 /mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
-	if(species.flags[NO_VOMIT])
+	if(HAS_TRAIT(src, TRAIT_NO_VOMIT))
 		return FALSE
 
 	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
@@ -1002,7 +1001,7 @@
 		visible_message("<span class='warning'>[src] put \his fingers into \his own mouth.</span>", "<span class='notice'>You put your fingers into your own mouth.</span>")
 		shoving_fingers = TRUE
 
-	if(H.species.flags[NO_VOMIT])
+	if(HAS_TRAIT(src, TRAIT_NO_VOMIT))
 		shoving_fingers = FALSE
 		return
 
@@ -1037,7 +1036,7 @@
 /mob/living/carbon/human/proc/invoke_vomit_async()
 	set waitfor = FALSE
 
-	if(species.flags[NO_VOMIT])
+	if(HAS_TRAIT(src, TRAIT_NO_VOMIT))
 		return // Machines, golems, shadowlings, skeletons, dionaea and abductors don't throw up.
 
 	if(!lastpuke)
@@ -1809,6 +1808,9 @@
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SKELETON))
+		return FALSE
+
 	var/obj/item/organ/external/BP
 	if(organ_check in list(O_HEART, O_LUNGS))
 		BP = bodyparts_by_name[BP_CHEST]
@@ -1900,7 +1902,7 @@
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
 
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
-	if(species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD)) // this checks for ipc/dionea/etc., but probably we should check for can_breathe and lungs
 		return
 
 	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
@@ -2303,7 +2305,7 @@
 	regenerate_icons()
 
 /mob/living/carbon/human/get_blood_datum()
-	if(HAS_TRAIT(src, TRAIT_SLIME))
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		return /datum/dirt_cover/blue_blood
 	
 	if(species.blood_datum_path)
@@ -2312,7 +2314,7 @@
 	return /datum/dirt_cover/red_blood
 
 /mob/living/carbon/human/get_flesh_color()
-	if(HAS_TRAIT(src, TRAIT_SLIME))
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		return "#05fffb"
 
 	if(species.flesh_color)

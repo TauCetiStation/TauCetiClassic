@@ -942,7 +942,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 /datum/reagent/aqueous_foam/on_general_digest(mob/living/M)
 	..()
-	if(HAS_TRAIT(src, TRAIT_SLIME))
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		M.adjustToxLoss(REM)
 
 /datum/reagent/consumable/drink/liquidelectricity

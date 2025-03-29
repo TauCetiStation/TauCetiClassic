@@ -4,6 +4,8 @@
 /obj/item/organ/external
 	name = "external"
 
+	icon = 'icons/mob/human_races/r_human.dmi' // default path in case if someone spawn organs, usually owner species should override it
+
 	// When measuring bodytemperature,
 	// multiply by this coeff.
 	var/temp_coeff = 1.0
@@ -22,8 +24,10 @@
 	var/datum/bodypart_controller/controller
 
 	// Appearance vars.
-	var/body_part = null              // Part flag
+	var/body_part = null              // Part flag, mostly used for clothing coverage
 	var/body_zone = null              // Unique identifier of this limb.
+	var/body_icon_layer = BODY_LAYER  // mob overlay layer
+	var/organ_suffix                  // suffix for organs with variations
 	var/datum/species/species
 	var/original_color
 	var/b_type = BLOOD_A_PLUS
@@ -65,7 +69,7 @@
 	// Will be removed, moved or refactored.
 	var/obj/item/hidden = null // relation with cavity
 	var/tmp/perma_injury = 0
-	var/limb_layer = 0
+	var/limb_layer = 0 // organ damage layer
 	var/damage_msg = "<span class='warning'>You feel an intense pain</span>"
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
@@ -148,37 +152,46 @@
 /obj/item/organ/external/proc/update_sprite()
 	var/gender = owner ? owner.gender : MALE
 	var/mutations = owner ? owner.mutations : list()
-	var/fat = null
-	var/g
-	var/pump
+	var/fat_suffix // fat icon state suffix
+	var/gender_suffix // gender icon state suffix
+	var/pump_suffix // muscles icon state suffix
 
 	if(owner && HAS_TRAIT(owner, TRAIT_FAT))
 		if(body_zone == BP_CHEST)
-			fat = "fat"
+			fat_suffix = "_fat"
 		else if(species.fat_limb_icons == TRUE && (body_zone in list(BP_GROIN, BP_HEAD, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
-			fat = "fat"
+			fat_suffix = "_fat"
 
-	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
-		g = (gender == FEMALE ? "f" : "m")
-	else if(species.gender_limb_icons == TRUE && (body_zone in list(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
-		g = (gender == FEMALE ? "f" : "m")
+	var/gender_icon = FALSE
+	switch(body_zone)
+		if(BP_CHEST, BP_GROIN, BP_HEAD)
+			gender_icon = species.gender_body_icons
+		if(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)
+			gender_icon = species.gender_limb_icons
+		if(BP_TAIL)
+			gender_icon = species.gender_tail_icons
+		if(BP_WINGS)
+			gender_icon = species.gender_wings_icons
 
-	if (!species.has_gendered_icons)
-		g = null
+	if(gender_icon)
+		gender_suffix = (gender == FEMALE ? "_f" : "_m")
 
-	pump = pumped > pumped_threshold ? "pumped" : null
+	if(!fat_suffix && pumped > pumped_threshold)
+		pump_suffix = "_pumped"
 
-	if (HUSK in mutations)
+	if (HUSK in mutations) // todo
 		icon = 'icons/mob/human_races/husk.dmi'
-		icon_state = body_zone
+		icon_state = "[body_zone][organ_suffix]"
 	else
-		if ((status & ORGAN_MUTATED) && species.deform)
+		if(owner && HAS_TRAIT(owner, ELEMENT_TRAIT_SKELETON))
+			icon = species.skeleton
+		else if ((status & ORGAN_MUTATED) && species.deform)
 			icon = species.deform
 		else
 			icon = species.icobase
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
+		icon_state = "[body_zone][organ_suffix][gender_suffix][fat_suffix][pump_suffix]"
 
-	if(owner && HAS_TRAIT(owner, TRAIT_SLIME))
+	if(owner && HAS_TRAIT(owner, ELEMENT_TRAIT_SLIME))
 		color = SLIME_PEOPLE_COLOR // this sets alpha too
 	else if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
@@ -564,16 +577,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
-/obj/item/organ/external/get_icon(icon_layer)
+// onmob icon
+/obj/item/organ/external/get_icon()
 	if (!owner)
 		return
 
 	update_sprite()
-	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -body_icon_layer)
 	. = list(base_appearance)
 
 	if(species && species.alpha_color_mask)
-		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
+		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -body_icon_layer)
 		color_appearance.color = color
 		color_appearance.alpha = alpha
 		. += color_appearance
@@ -581,16 +595,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 		base_appearance.color = color
 		base_appearance.alpha = alpha
 
-/obj/item/organ/external/head/get_icon(icon_layer)
+/obj/item/organ/external/head/get_icon()
 	if (!owner)
 		return
 
 	update_sprite()
-	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -body_icon_layer)
 	. = list(base_appearance)
 
 	if(species && species.alpha_color_mask)
-		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
+		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -body_icon_layer)
 		color_appearance.color = color
 		color_appearance.alpha = alpha
 		. += color_appearance
@@ -605,7 +619,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			var/mutable_appearance/eyes_static_layer = mutable_appearance(
 				species.eyes_icon, 
 				species.eyes_static_layer, 
-				-icon_layer
+				-body_icon_layer
 			)
 
 			eye_appearances += eyes_static_layer
@@ -614,7 +628,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			var/mutable_appearance/eyes_colorable_layer = mutable_appearance(
 				species.eyes_icon, 
 				species.eyes_colorable_layer, 
-				-icon_layer
+				-body_icon_layer
 			)
 
 			if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner))
@@ -632,7 +646,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	//Mouth	(lipstick!)
 	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
-		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -icon_layer)
+		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -body_icon_layer)
 		lips_appearance.color = owner.lip_color
 		. += lips_appearance
 
@@ -687,7 +701,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			qdel(spark_system)
 
 /obj/item/organ/external/proc/embed(obj/item/weapon/W, silent = 0, supplied_message, datum/wound/supplied_wound)
-	if(!owner || owner.species.flags[NO_EMBED])
+	if(!owner || HAS_TRAIT(owner, TRAIT_NO_EMBED))
 		return
 
 	if(!silent)
@@ -768,6 +782,51 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_NORMAL
 
+/obj/item/organ/external/tail
+	name = "tail"
+	cases = list("хвост", "хвоста", "хвосту", "хвост", "хвостом", "хвосте")
+
+	icon_state = "tail"
+	body_icon_layer = BODY_BEHIND_LAYER
+
+	// not in TARGET_ZONE_ALL so can't be targeted and damaged, i hope
+	body_zone = BP_TAIL
+	parent_bodypart = BP_GROIN
+
+	cannot_amputate = TRUE
+	leaves_stump = FALSE
+
+	max_pumped = 0
+
+	vital = FALSE
+
+/obj/item/organ/external/wings
+	name = "wings"
+	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
+
+	icon_state = "wings"
+	body_icon_layer = BODY_BEHIND_LAYER
+
+	body_zone = BP_WINGS
+	parent_bodypart = BP_CHEST
+
+	cannot_amputate = TRUE
+	leaves_stump = FALSE
+
+	max_pumped = 0
+
+	vital = FALSE
+
+// moth wings variations
+/obj/item/organ/external/wings/moth
+	species = /datum/species/moth // it does nothing, just for spawns
+	organ_suffix = "_atlas" // wings_atlas is the default state for moths
+
+/obj/item/organ/external/wings/moth/atom_init()
+	if(SSholiday.holidays[NEW_YEAR])
+		organ_suffix = pick("_royal", "_feathery")
+
+	icon_state += organ_suffix
 
 /obj/item/organ/external/head
 	name = "head"
@@ -777,7 +836,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	throwforce = 10
 	artery_name = "carotid artery"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "head_m"
 
 	temp_coeff = 1.05
@@ -968,7 +1026,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	desc = "Need a hand?"
 	force = 7
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "l_arm"
 
 	artery_name = "basilic vein"
@@ -1015,7 +1072,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 7
 	artery_name = "basilic vein"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "r_arm"
 
 	temp_coeff = 1.0
@@ -1060,7 +1116,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 9
 	artery_name = "femoral artery"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "l_leg"
 
 	temp_coeff = 0.75
@@ -1094,7 +1149,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	artery_name = "femoral artery"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "r_leg"
 
 	temp_coeff = 0.75

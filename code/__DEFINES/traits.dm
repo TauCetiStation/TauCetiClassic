@@ -9,7 +9,7 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
-			istype(trait, /datum/element) && target.AddElement(trait); \
+			ispath(trait, /datum/element) && target.AddElement(trait); \
 			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 		} else { \
 			_L = target.status_traits; \
@@ -17,7 +17,7 @@
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
-				istype(trait, /datum/element) && target.AddElement(trait); \
+				ispath(trait, /datum/element) && target.AddElement(trait); \
 				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 			} \
 		} \
@@ -39,7 +39,7 @@
 			};\
 			if (!length(_L[trait])) { \
 				_L -= trait; \
-				istype(trait, /datum/element) && target.RemoveElement(trait); \
+				ispath(trait, /datum/element) && target.RemoveElement(trait); \
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_L)) { \
@@ -64,7 +64,7 @@
 			};\
 			if (!length(_traits_list[trait])) { \
 				_traits_list -= trait; \
-				istype(trait, /datum/element) && target.RemoveElement(trait); \
+				ispath(trait, /datum/element) && target.RemoveElement(trait); \
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_traits_list)) { \
@@ -81,7 +81,7 @@
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
 					_L -= _T; \
-					istype(trait, /datum/element) && target.RemoveElement(trait); \
+					ispath(trait, /datum/element) && target.RemoveElement(trait); \
 					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T), _T); \
 					}; \
 				};\
@@ -105,7 +105,7 @@
 				_L[_T] -= _S;\
 				if (!length(_L[_T])) { \
 					_L -= _T; \
-					istype(trait, /datum/element) && target.RemoveElement(trait); \
+					ispath(trait, /datum/element) && target.RemoveElement(trait); \
 					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
 					}; \
 				};\
@@ -142,7 +142,12 @@
 #define TRAIT_COUGH               "cough"
 #define TRAIT_DEAF                "deaf"
 #define TRAIT_EPILEPSY            "epilepsy"
+/// mob is fat and should use fat icons if possible
 #define TRAIT_FAT                 "fatness"
+/// can't become fat, should prevent previous trait 
+/// note: you can screw things up if you give TRAIT_FAT 
+/// without checking TRAIT_NEWER_FAT first
+#define TRAIT_NEWER_FAT           "newer_fat"
 #define TRAIT_HIGH_PAIN_THRESHOLD "high_pain_threshold"
 #define TRAIT_LIGHT_DRINKER       "light_drinker"
 #define TRAIT_LOW_PAIN_THRESHOLD  "low_pain_threshold"
@@ -164,7 +169,6 @@
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_FRIENDLY            "friendly"
-#define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
 #define TRAIT_NO_SOUL             "no_soul"
@@ -205,15 +209,29 @@
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
-#define TRAIT_SLIME               "slime"
 #define TRAIT_NO_BREATHE          "no_breathe"
-/// Mod has DNA that is not compatible with station (genetics) machinery, prevents changeling victims from cloning
+/// Mod has DNA that is not compatible with station (genetics) machinery, also prevents changeling from targeting some mobs
 #define TRAIT_INCOMPATIBLE_DNA    "incompatible_dna"
+/// Character can't be cloned
+#define TRAIT_NO_CLONE            "no_clone"
+/// Character can't change his DNA, prevents new mutations
+#define TRAIT_NO_DNA_MUTATIONS    "no_dna_mutations"
 #define TRAIT_NO_PAIN             "no_pain"
 #define TRAIT_RADIATION_IMMUNE    "radiation_immune"
 #define TRAIT_VIRUS_IMMUNE        "virus_immune"
 /// Prevents mob from unintentional transformation into another mob
 #define TRAIT_MORPH_IMMUNE        "morph_immune"
+#define TRAIT_NO_FINGERPRINT      "no_fingerprint"
+/// Prevents things like axe or shrapnel from embedding mob (pls rename)
+#define TRAIT_NO_EMBED            "no_embed"
+#define TRAIT_NO_MINORCUTS        "no_minorcuts"
+#define TRAIT_EMOTIONLESS         "emotionless"
+#define TRAIT_NO_VOMIT            "no_vomit"
+/// mob doesn't have and doesn't need blood
+#define TRAIT_NO_BLOOD            "no_blood"
+/// prevents mob from spawning bloody mess when gibbed, they still drop limbs if they have them
+#define TRAIT_NO_MESSY_GIBS       "no_messy_gibs"
+
 
 /*
  * Elements traits - these will attach trait and corresponding /datum/element 
@@ -222,9 +240,10 @@
  * (similar to AddElementTrait() on tg, easier to manage but no support for arguments)
  */
 
-/// makes mob immune to damage and some harmful effects, resets all accumulated damage
-/// ex GODMODE status
-#define ELEMENT_TRAIT_GODMODE /datum/element/mutation/godmode
+/// makes mob immune to damage and some harmful effects, resets all accumulated damage (ex GODMODE status)
+#define ELEMENT_TRAIT_GODMODE     /datum/element/mutation/godmode
+#define ELEMENT_TRAIT_SKELETON    /datum/element/mutation/skeleton
+#define ELEMENT_TRAIT_SLIME       /datum/element/mutation/slime
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

@@ -422,8 +422,8 @@
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
 
-		if(H.species.flags[NO_FINGERPRINT]) // They don't leave readable fingerprints, but admins gotta know.
-			fingerprintshidden += "(Specie has no fingerprints) Real name: [H.real_name], Key: [H.key]"
+		if(!HAS_TRAIT(H, TRAIT_NO_FINGERPRINT)) // They don't leave readable fingerprints, but admins gotta know.
+			fingerprintshidden += "(Mob has no fingerprints) Real name: [H.real_name], Key: [H.key]"
 			fingerprintslast = H.key
 			return 0
 
@@ -539,7 +539,7 @@
 	if (!istype(M))
 		return FALSE
 
-	if(M.species.flags[NO_BLOOD_TRAILS])
+	if(HAS_TRAIT(M, TRAIT_NO_BLOOD))
 		return FALSE
 
 	if(M.reagents.has_reagent("metatrombine"))

@@ -2,7 +2,7 @@
 	var/obj/item/organ/external/BPHand = get_bodypart(hand ? BP_L_ARM : BP_R_ARM)
 	var/datum/unarmed_attack/attack = BPHand.species.unarmed
 
-	if(HAS_TRAIT(src, TRAIT_SLIME))
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		// slime people is not a species anymore and i need to store datum somewhere
 		var/static/datum/unarmed_attack/slime_glomp = new /datum/unarmed_attack/slime_glomp
 		attack = slime_glomp

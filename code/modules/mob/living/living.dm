@@ -350,7 +350,7 @@
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
-	if(amount > 0)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		amount *= mob_tox_mod.Get()
 	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
 	return amount

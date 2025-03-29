@@ -358,7 +358,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_EMOTIONLESS),
 	)
 
 /datum/emote/human/sigh/get_impaired_msg(mob/user)
@@ -382,7 +382,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_EMOTIONLESS),
 	)
 
 /datum/emote/human/mumble/get_impaired_msg(mob/user)

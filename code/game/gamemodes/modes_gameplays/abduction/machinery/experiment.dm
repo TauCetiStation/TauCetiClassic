@@ -64,11 +64,6 @@
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
-	//Tail
-	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/mob/human_races/tail.dmi', "icon_state" = H.species.tail)
-		preview_icon.Blend(temp, ICON_OVERLAY)
-
 	// Skin tone
 	if(H.species.flags[HAS_SKIN_TONE])
 		preview_icon.Blend(global.skin_tones_by_name[H.s_tone], ICON_ADD)

@@ -49,7 +49,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 //				B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = FALSE)
 
 /mob/living/carbon/human/proc/blood_amount(exact = FALSE)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return 0
 
 	var/volume = vessel.get_reagent_amount("blood")
@@ -59,7 +59,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	return volume
 
 /mob/living/carbon/human/proc/blood_add(amount, list/add_data = null)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return FALSE
 	if(amount < 0)
 		return FALSE
@@ -72,7 +72,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		fixblood(add_data == null)
 
 /mob/living/carbon/human/proc/blood_remove(amount)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return FALSE
 	if(amount < 0)
 		return FALSE
@@ -454,7 +454,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!istype(injected))
 		return
 
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		reagents.add_reagent("blood", amount, injected.data)
 		return
 

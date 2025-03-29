@@ -873,11 +873,10 @@
 		M.adjustFireLoss(-1)
 	/*if(M.nutrition < NUTRITION_LEVEL_WELL_FED) //we are making him WELL FED
 		M.nutrition += 30*/  //will remain commented until we can deal with fat
-	if(ishuman(M))
+	if(ishuman(M) && !HAS_TRAIT(M, TRAIT_NO_BLOOD)) // Do not restore blood on things with no blood by nature
 		var/mob/living/carbon/human/H = M
-		if(!(NO_BLOOD in H.species.flags)) // Do not restore blood on things with no blood by nature
-			if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
-				H.blood_add(0.5)
+		if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
+			H.blood_add(0.5)
 
 /datum/reagent/lipozine
 	name = "Lipozine" // The anti-nutriment.

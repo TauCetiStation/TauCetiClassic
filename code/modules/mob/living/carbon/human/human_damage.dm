@@ -95,14 +95,6 @@
 
 // =============================================
 
-/mob/living/carbon/human/adjustToxLoss(amount)
-	if(amount > 0 && species.flags[NO_BLOOD])
-		return
-
-	return ..()
-
-// =============================================
-
 /mob/living/carbon/human/adjustOxyLoss(amount)
 	if(amount > 0 && !should_have_organ(O_LUNGS))
 		return

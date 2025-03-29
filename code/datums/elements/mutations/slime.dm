@@ -1,9 +1,8 @@
 // ex-species - slime people, xenobio mutation of slimetoxin
-// most of unique mechanics handled with TRAIT_SLIME
+// most of unique mechanics handled with ELEMENT_TRAIT_SLIME
 
 /datum/element/mutation/slime
 	traits = list(
-		TRAIT_SLIME,
 		TRAIT_NO_BREATHE,
 		TRAIT_INCOMPATIBLE_DNA,
 		TRAIT_NO_PAIN,
@@ -15,4 +14,4 @@
 	if(istype(H))
 		H.f_style = "Shaved"
 		H.h_style = "Bald"
-		H.rejuvenate() // fixes slimetoxin damage and regenerates icons
+		H.rejuvenate() // fixes slimetoxin damage and also regenerates icons

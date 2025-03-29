@@ -94,7 +94,7 @@
 		name = text("[colour] adult slime ([number])")
 	real_name = name
 
-	ADD_TRAIT(src, TRAIT_SLIME, GENERIC_TRAIT) // i think it's not used for non-humans and useless here, but maybe someday
+	ADD_TRAIT(src, ELEMENT_TRAIT_SLIME, INNATE_TRAIT) // i think it's not used for non-humans and useless here, but maybe someday
 
 	. = ..()
 

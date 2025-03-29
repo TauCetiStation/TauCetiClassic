@@ -251,7 +251,7 @@
 		if(isliving(D))
 			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
-		body += "<option value='?_src_=vars;give_emutation=\ref[D]'>Give (element) Mutation</option>"
+		body += "<option value='?_src_=vars;toggle_emutation=\ref[D]'>Toggle (element) Mutation</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 
@@ -548,18 +548,28 @@ body
 			L.apply_status_effect(arglist(params))
 			href_list["datumrefresh"] = href_list["give_status_effect"]
 
-	else if(href_list["give_emutation"])
+	else if(href_list["toggle_emutation"])
 		if(!check_rights(R_ADMIN|R_VAREDIT))
 			return
 
-		var/mob/living/L = locate(href_list["give_emutation"])
-		if(!isliving(L))
-			to_chat(usr, "This can only be used on instances of type /mob")
+		var/mob/living/L = locate(href_list["toggle_emutation"])
+		if(!istype(L))
+			to_chat(usr, "This can only be used on instances of type /mob/living")
 			return
 
 		var/mutation_type = input("Select type:","Type") as null|anything in subtypesof(/datum/element/mutation)
-		if(mutation_type)
-			L.AddElement(mutation_type)
+
+		// cursed as it looks but we can use any element as trait now
+		var/has_element_trait = HAS_TRAIT_FROM(L, mutation_type, ADMIN_TRAIT)
+		if(has_element_trait)
+			REMOVE_TRAIT(L, mutation_type, ADMIN_TRAIT)
+		else
+			ADD_TRAIT(L, mutation_type, ADMIN_TRAIT)
+
+		has_element_trait = !has_element_trait
+
+		log_admin("[key_name(usr)] has toggled [key_name(L)]'s emutation [mutation_type] to [has_element_trait ? "On" : "Off"]")
+		message_admins("[key_name_admin(usr)] has toggled [key_name_admin(L)]'s emutation [mutation_type] to [has_element_trait ? "On" : "Off"]")
 
 	else if(href_list["ninja"])
 		if(!check_rights(R_SPAWN))

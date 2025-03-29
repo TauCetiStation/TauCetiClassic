@@ -200,7 +200,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(3,src))
-		if(C.stat != DEAD && !(C.get_species() in banned_species) && !HAS_TRAIT(C, TRAIT_SLIME))
+		if(C.stat != DEAD && !(C.get_species() in banned_species) && !HAS_TRAIT(C, ELEMENT_TRAIT_SLIME))
 			choices += C
 
 	if(world.time - dominate_cd < 300)

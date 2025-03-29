@@ -69,7 +69,7 @@
 			//This block was in handle_regular_status_updates under != DEAD
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
-			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
+			if(!HAS_TRAIT(src, TRAIT_NO_BLOOD) && bodytemperature >= 170)
 				handle_blood()
 
 			handle_drunkenness()
@@ -699,7 +699,7 @@ var/global/list/tourette_bad_words= list(
 			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= OVEREATDURATION_FAT) && isturf(loc))
-			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !HAS_TRAIT(src, TRAIT_NEWER_FAT))
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
 				update_body()
@@ -1235,7 +1235,7 @@ var/global/list/tourette_bad_words= list(
 	if(life_tick % 5)
 		return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
 
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return PULSE_NONE //No blood, no pulse.
 
 	if(HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))

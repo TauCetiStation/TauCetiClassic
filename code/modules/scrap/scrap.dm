@@ -141,14 +141,14 @@ var/global/list/scrap_base_cache = list()
 
 //stupid shard copypaste
 /obj/structure/scrap/Crossed(atom/movable/AM)
-	if(ismob(AM) &&  !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+	if(ismob(AM) &&  !HAS_TRAIT(AM, TRAIT_LIGHT_STEP) && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS))
 		var/mob/M = AM
 		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
 		if(ishuman(M) && !M.buckled)
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
-			if((!H.shoes && !H.species.flags[NO_MINORCUTS]) && (!H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS)))
+			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS)))
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.is_robotic())
 					return
@@ -214,7 +214,7 @@ var/global/list/scrap_base_cache = list()
 	var/mob/living/carbon/human/victim = user
 	var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 	var/obj/item/clothing/gloves/G = victim.gloves
-	if(!BP || BP.is_robotic() || victim.species.flags[NO_MINORCUTS]\
+	if(!BP || BP.is_robotic() || HAS_TRAIT(victim, TRAIT_NO_MINORCUTS)\
 		|| victim.species.flags[IS_SYNTHETIC] || (victim.gloves && G.protect_fingers))
 		return FALSE
 	else if(prob(50))
