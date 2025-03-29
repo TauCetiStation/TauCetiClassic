@@ -9,6 +9,7 @@ AI MODULES
 	name = "AI module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
+	item_state_world = "std_mod_w"
 	item_state = "electronic"
 	desc = "Модуль ИИ, содержащий зашифрованные законы для их загрузки в ядро."
 	flags = CONDUCT

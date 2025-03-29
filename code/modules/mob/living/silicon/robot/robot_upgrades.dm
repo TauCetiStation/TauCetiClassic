@@ -6,6 +6,7 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
+	item_state_world = "cyborg_upgrade_w"
 	var/locked = 0
 	var/require_module = FALSE
 	var/installed = 0
@@ -19,6 +20,7 @@
 	name = "Borg module reset board"
 	desc = "Used to reset a borg's module. Destroys any other upgrades applied to the borg."
 	icon_state = "cyborg_upgrade1"
+	item_state_world = "cyborg_upgrade1_w"
 	require_module = TRUE
 
 /obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
@@ -46,6 +48,7 @@
 	name = "Borg Flash-Supression"
 	desc = "A highly advanced, complicated system for supressing incoming flashes directed at the borg's optical processing system."
 	icon_state = "cyborg_upgrade4"
+	item_state_world = "cyborg_upgrade4_w"
 	require_module = TRUE
 
 
@@ -62,6 +65,7 @@
 	name = "Borg emergancy restart module"
 	desc = "Used to force a restart of a disabled-but-repaired borg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
+	item_state_world = "cyborg_upgrade1_w"
 
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
@@ -82,6 +86,7 @@
 	name = "Borg VTEC Module"
 	desc = "Used to kick in a borgs VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
+	item_state_world = "cyborg_upgrade2_w"
 	require_module = TRUE
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
@@ -96,6 +101,7 @@
 	name = "Borg Rapid Taser Cooling Module"
 	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate.."
 	icon_state = "cyborg_upgrade3"
+	item_state_world = "cyborg_upgrade3_w"
 	require_module = TRUE
 
 
@@ -127,6 +133,7 @@
 	name = "Borg Jetpack"
 	desc = "A carbon dioxide jetpack suitable for low-gravity operations."
 	icon_state = "cyborg_upgrade3"
+	item_state_world = "cyborg_upgrade3_w"
 	require_module = TRUE
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)

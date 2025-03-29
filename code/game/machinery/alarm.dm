@@ -915,7 +915,8 @@ Just a object used in constructing air alarms
 /obj/item/weapon/airalarm_electronics
 	name = "air alarm electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
-	icon_state = "door_electronics"
+	icon_state = "airalarm_electronics"
+	item_state_world = "airalarm_electronics_w"
 	desc = "Looks like a circuit. Probably is."
 	w_class = SIZE_TINY
 	m_amt = 50
@@ -1267,7 +1268,8 @@ Just a object used in constructing fire alarms
 /obj/item/weapon/firealarm_electronics
 	name = "fire alarm electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
-	icon_state = "door_electronics"
+	icon_state = "firealarm_electronics"
+	item_state_world = "firealarm_electronics_w"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
 	w_class = SIZE_TINY
 	m_amt = 50

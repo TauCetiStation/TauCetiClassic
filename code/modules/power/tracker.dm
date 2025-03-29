@@ -103,5 +103,6 @@
 
 	name = "tracker electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
-	icon_state = "door_electronics"
+	icon_state = "tracker_electronics"
+	item_state_world = "tracker_electronics_w"
 	w_class = SIZE_TINY

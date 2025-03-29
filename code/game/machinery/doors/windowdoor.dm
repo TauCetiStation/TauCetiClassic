@@ -88,6 +88,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		ae.unres_sides = unres_sides
 		if(operating == -1)
 			ae.icon_state = "door_electronics_smoked"
+			ae.item_state_world = "door_electronics_smoked_w"
 			ae.broken = TRUE
 			operating = 0
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
@@ -317,6 +318,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 						if(operating == -1)
 							ae.icon_state = "door_electronics_smoked"
+							ae.item_state_world = "door_electronics_smoked_w"
 							ae.broken = TRUE
 							operating = 0
 
