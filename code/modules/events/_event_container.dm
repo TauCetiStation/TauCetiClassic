@@ -229,6 +229,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Portal of Cult",          /datum/event/anomaly/cult_portal,       60,    list(ASSIGNMENT_SECURITY = 40), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Heist",                   /datum/event/heist,                     40,    list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_ENGINEER = 15), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Traders",           /datum/event/space_traders,             100,   list(), ONESHOT, 1, 20),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Replicator",              /datum/event/replicator,                0,     list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 		new /datum/event_meta/alien(EVENT_LEVEL_MODERATE, "Alien Infestation", /datum/event/alien_infestation,         0,     list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_MEDICAL = 15), ONESHOT, 1, 35),
 	)
 
@@ -249,7 +250,6 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Carp Migration",          /datum/event/carp_migration,    0, list(ASSIGNMENT_SECURITY = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",                    /datum/event/blob,              0, list(ASSIGNMENT_ENGINEER = 25), ONESHOT, 1, 25),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Wizard",          		/datum/event/wizard,   			0, list(ASSIGNMENT_SECURITY = 20), ONESHOT, 1, 20),
-		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Replicator",              /datum/event/replicator,        0, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Lone Syndicate Agent",    /datum/event/lone_op,         100, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Abduction",               /datum/event/abduction,         0, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
