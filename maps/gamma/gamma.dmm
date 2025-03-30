@@ -20387,7 +20387,9 @@
 	},
 /area/station/civilian/hydroponics)
 "dnu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
@@ -64212,7 +64214,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/outerlabs)
 "lQI" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable/yellow{
 	d1 = 4;

@@ -1010,7 +1010,9 @@
 /turf/simulated/floor/plating,
 /area/station/medical/surgeryobs)
 "abN" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -16084,7 +16086,9 @@
 	},
 /area/station/medical/sleeper)
 "gqx" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
