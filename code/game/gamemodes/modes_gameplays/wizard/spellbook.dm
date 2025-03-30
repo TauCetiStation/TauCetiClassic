@@ -164,12 +164,6 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
 	log_name = "BD"
 
-/datum/spellbook_entry/mindswap
-	name = "Обмен разумом"
-	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
-	log_name = "MT"
-	category = "Мобильность"
-
 /datum/spellbook_entry/forcewall
 	name = "Магическая стена"
 	spell_type = /obj/effect/proc_holder/spell/targeted/forcewall
