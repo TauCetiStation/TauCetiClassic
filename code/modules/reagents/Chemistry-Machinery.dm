@@ -488,11 +488,11 @@
 					dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
 					dat += "<B>Name:</B> [initial(R.name)]<BR><BR>"
 					dat += "<B>State:</B> "
-					if(initial(R.reagent_state) == 1)
+					if(initial(R.reagent_state) == SOLID)
 						dat += "Solid"
-					else if(initial(R.reagent_state) == 2)
+					else if(initial(R.reagent_state) == LIQUID)
 						dat += "Liquid"
-					else if(initial(R.reagent_state) == 3)
+					else if(initial(R.reagent_state) == GAS)
 						dat += "Gas"
 					else
 						dat += "Unknown"
