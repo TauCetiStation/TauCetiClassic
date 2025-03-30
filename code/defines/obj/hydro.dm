@@ -1689,13 +1689,6 @@
 	desc = "Бобы для огромного дерева"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "bungopit"
-	force = 5
-	throwforce = 5
-	w_class = SIZE_SMALL
-	throw_speed = 3
-	throw_range = 3
-	plant_type = 2
-	origin_tech = "materials=1"
 	seed_type = /obj/item/seeds/bigtree
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
