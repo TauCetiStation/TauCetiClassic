@@ -34968,6 +34968,7 @@
 	},
 /obj/item/weapon/pinpointer/advpinpointer,
 /obj/item/weapon/disk/nuclear,
+/obj/item/weapon/paper/safe_code,
 /obj/structure/bobross{
 	pixel_x = 32
 	},

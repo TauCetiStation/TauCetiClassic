@@ -1142,3 +1142,26 @@ var/global/list/contributor_names
 /obj/item/weapon/paper/old_station_note_egun
 	name = "Object #2921"
 	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."
+
+/obj/item/weapon/paper/safe_code
+	name = "Бумага с кодом от сейфа"
+	info = "Код от сейфа: "
+
+/obj/item/weapon/paper/safe_code/atom_init()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/safe_code/atom_init_late()
+	var/obj/structure/safe/found_safe
+	for(var/obj/structure/safe/S in world)
+		if(S.z == 2)
+			found_safe = S
+			break
+
+	if(found_safe)
+		info += found_safe.get_combination()
+	else
+		info += "не найден"
+
+	update_icon()
+	updateinfolinks()

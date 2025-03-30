@@ -22678,7 +22678,8 @@
 /area/station/maintenance/dormitory)
 "mzg" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/pinpointer/advpinpointer{
+/obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/paper/safe_code{
 	pixel_y = 12
 	},
 /obj/item/weapon/disk/nuclear,

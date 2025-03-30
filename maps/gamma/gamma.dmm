@@ -28931,6 +28931,7 @@
 "eYr" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/paper/safe_code,
 /obj/item/weapon/disk/nuclear{
 	pixel_x = -5
 	},
