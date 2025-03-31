@@ -1,0 +1,407 @@
+"aa" = (/mob/living/carbon/slime/adult/green,/obj/structure/window/thin/reinforced,/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/grass,/area/station/rnd/xenobiology)
+"ab" = (/mob/living/simple_animal/hostile/shade,/obj/effect/decal/cleanable/flour,/turf/simulated/floor,/area/station/medical/chemistry)
+"ad" = (/obj/machinery/door/airlock/silver{name = "2"},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"aM" = (/obj/structure/foamedmetal,/turf/environment/space,/area/station/medical/chemistry)
+"bc" = (/obj/structure/stool/bed/bench,/obj/structure/extinguisher_cabinet{pixel_x = -28},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"be" = (/obj/structure/stool/bed/chair/metal{dir = 8},/obj/structure/noticeboard{pixel_y = 32},/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"bi" = (/obj/item/weapon/storage/box/monkeycubes,/turf/simulated/floor,/area/station/rnd/xenobiology)
+"bz" = (/turf/simulated/floor,/area/station/medical/chemistry)
+"cb" = (/obj/machinery/light/smart{dir = 4},/obj/structure/stool/bed/bench{dir = 8},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"cc" = (/obj/machinery/chem_dispenser,/turf/simulated/floor,/area/station/medical/chemistry)
+"ct" = (/obj/structure/window/thin/reinforced,/obj/structure/window/thin/reinforced{dir = 8},/obj/structure/window/thin/reinforced{dir = 1},/obj/structure/rack,/obj/item/clothing/accessory/medal/conduct{name = "Chess medal"; desc = "3rd place"},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"cK" = (/obj/structure/window/fulltile/reinforced/indestructible,/turf/simulated/floor,/area/awaymission/challenge)
+"cL" = (/obj/structure/safe{pixel_x = 2},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"cX" = (/obj/structure/window/thin/reinforced{dir = 4},/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/grass,/area/station/medical/chemistry)
+"da" = (/obj/machinery/light/smart{dir = 1},/obj/machinery/photocopier,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"db" = (/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"dd" = (/obj/item/clothing/glasses/hud/security,/obj/item/clothing/under/det/velocity,/obj/item/clothing/head/det_hat/velocity,/obj/item/clothing/suit/storage/det_suit/velocity,/obj/item/clothing/shoes/laceup,/obj/structure/closet/crate/trashcart,/obj/structure/sign/poster/official/no_erp{pixel_y = 32},/obj/effect/decal/cleanable/blood/gibs,/obj/item/weapon/card/id/centcom/officer,/turf/simulated/floor,/area/awaymission/challenge)
+"df" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_r"; dir = 1},/turf/environment/space,/area/space)
+"dn" = (/obj/structure/curtain/open/bed{pixel_x = 32},/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"dz" = (/obj/item/device/flashlight/lamp/green,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"dO" = (/obj/item/weapon/paper/bloody_notes,/turf/simulated/floor,/area/station/medical/chemistry)
+"dU" = (/obj/structure/table/rglass,/obj/machinery/computer/med_data/laptop,/obj/machinery/light/smart{dir = 8},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"ed" = (/obj/structure/stool/bed/chair/metal{dir = 8},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"eD" = (/obj/structure/closet,/obj/item/clothing/under/dutch{armor = list(melee=44, bullet=44, laser=44, energy=44, bomb=44, bio=44, rad=44)},/obj/item/clothing/shoes/boots/nt_pmc_boots{armor = list(melee=44, bullet=44, laser=44, energy=44, bomb=44, bio=44, rad=44)},/obj/item/clothing/mask/balaclava/rasmus,/obj/item/clothing/mask/scarf/red,/obj/item/clothing/head/fedora/black{armor = list(melee=44, bullet=44, laser=44, energy=44, bomb=44, bio=44, rad=44)},/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,/obj/item/weapon/storage/toolbox/syndicate,/obj/item/weapon/storage/belt/military,/obj/item/clothing/suit/wizrobe/gentlecoat,/obj/item/weapon/storage/backpack/satchel/withwallet,/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"ff" = (/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"fl" = (/obj/structure/foamedmetal,/turf/simulated/floor,/area/station/medical/chemistry)
+"fp" = (/obj/effect/decal/cleanable/greenglow,/obj/structure/foamedmetal,/turf/simulated/floor,/area/station/medical/chemistry)
+"fs" = (/obj/structure/table,/obj/item/weapon/gun/energy,/obj/machinery/recharger,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"fB" = (/obj/structure/table/woodentable,/obj/item/weapon/folder/red,/obj/item/weapon/stamp/sec/hos,/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"gI" = (/obj/machinery/light/smart,/turf/simulated/floor/bluegrid,/area/awaymission/challenge)
+"gL" = (/obj/machinery/door/airlock/silver{name = "playground"; req_access = list(150)},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"gQ" = (/obj/structure/curtain/open/bed{pixel_x = -32},/turf/unsimulated/floor/carpet/red,/area/awaymission/challenge)
+"gW" = (/obj/structure/stool/bed/bench{icon_state = "bench_2"},/obj/item/weapon/storage/briefcase/inflatable,/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"hh" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"hi" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/vault,/obj/machinery/door/firedoor,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/turf/simulated/floor,/area/awaymission/challenge)
+"hv" = (/obj/machinery/door/airlock/silver{req_access = list(150)},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"hJ" = (/obj/structure/reagent_dispensers/water_cooler,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"hM" = (/obj/structure/stool/bed/chair/metal{dir = 1},/obj/item/ammo_casing,/obj/item/ammo_casing,/obj/item/ammo_casing,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"ic" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor,/area/station/medical/chemistry)
+"if" = (/obj/machinery/door/airlock/multi_tile/glass{name = "Command rooms"; dir = 4; req_access = list(150)},/turf/unsimulated/floor/carpet/red,/area/awaymission/challenge)
+"im" = (/obj/structure/curtain/open/bed{pixel_x = 32},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"ip" = (/obj/structure/rack,/obj/item/clothing/shoes/laceup,/obj/item/clothing/under/syndicate/combat,/obj/item/clothing/gloves/power,/obj/machinery/light/smart{dir = 1},/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,/obj/item/weapon/storage/backpack/satchel,/obj/item/clothing/suit/wizrobe/gentlecoat,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"is" = (/obj/machinery/door/airlock/multi_tile/glass{name = "Storage"; dir = 4; req_access = list(150)},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"iw" = (/obj/structure/table,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"iO" = (/obj/machinery/suit_storage_unit/standard_unit{req_access = list(150)},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"iP" = (/mob/living/simple_animal/hostile/russian,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"iX" = (/obj/item/weapon/flora/pottedplant,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"iY" = (/turf/simulated/wall/r_wall/red,/area/space)
+"jc" = (/obj/structure/extinguisher_cabinet{pixel_x = 27},/obj/effect/decal/turf_decal/set_damaged,/turf/simulated/floor,/area/station/rnd/xenobiology)
+"jd" = (/obj/structure/table/glass,/obj/random/misc/toy,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"jr" = (/obj/effect/decal/cleanable/blood/gibs,/turf/simulated/floor,/area/station/medical/chemistry)
+"jH" = (/obj/machinery/door/window/brigdoor/northright{req_access = list(150)},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"jJ" = (/obj/effect/decal/cleanable/gourd,/turf/simulated/floor,/area/station/medical/chemistry)
+"jO" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{pixel_x = 5; pixel_y = 12},/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"jS" = (/obj/structure/stool/bed/chair/metal,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"jZ" = (/obj/structure/table,/obj/item/tableclock{pixel_x = 4; pixel_y = 12},/obj/item/clothing/neck/golden_cross,/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"kf" = (/obj/structure/window/fulltile/reinforced/indestructible,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"ki" = (/obj/machinery/vending/sovietsoda,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"ko" = (/obj/structure/stool/bed/chair/metal,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"kr" = (/obj/item/weapon/flora/pottedplant/stoutbush,/obj/machinery/light/smart,/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"kx" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/vault,/turf/simulated/floor,/area/awaymission/challenge)
+"kA" = (/obj/structure/table/rglass,/obj/item/device/flashlight/lamp/small{pixel_x = -8; pixel_y = 16},/obj/item/clothing/glasses/monocle,/obj/item/clothing/head/beret/rosa,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"kB" = (/obj/structure/closet/crate/bin,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"kL" = (/obj/structure/stool/bed/chair/comfy/black{dir = 8},/obj/machinery/light/smart{dir = 4},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"kM" = (/obj/machinery/teleport/hub,/turf/simulated/floor/bluegrid{icon_state = "rcircuit"},/area/awaymission/challenge)
+"lf" = (/obj/structure/window/thin/reinforced{dir = 1},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"ll" = (/obj/structure/window/fulltile/reinforced/indestructible,/turf/environment/space,/area/awaymission/challenge)
+"ls" = (/obj/structure/table/woodentable,/obj/machinery/computer/security/bodycam,/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"lz" = (/obj/machinery/dna_scannernew,/turf/simulated/floor,/area/station/medical/chemistry)
+"lB" = (/mob/living/simple_animal/pig/shadowpig,/obj/structure/window/thin/reinforced{dir = 4},/turf/simulated/floor/grass,/area/station/medical/chemistry)
+"lQ" = (/obj/structure/table/glass,/obj/item/toy/katana,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"mW" = (/obj/item/weapon/reagent_containers/food/snacks/blin{name = "Cool blin"},/obj/item/clothing/glasses/sunglasses/big,/obj/item/clothing/head/hos_hat{pixel_x = -2; pixel_y = 6},/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"mX" = (/turf/simulated/wall/r_wall/green,/area/space)
+"nb" = (/obj/effect/decal/turf_decal/set_damaged,/turf/simulated/floor,/area/station/rnd/xenobiology)
+"nd" = (/obj/machinery/shieldwall,/turf/environment/space,/area/space)
+"nf" = (/obj/structure/window/thin/reinforced,/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/station/rnd/xenobiology)
+"ni" = (/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"nB" = (/obj/machinery/recharge_station,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"ob" = (/obj/effect/decal/turf_decal/alpha/blue{icon_state = "loadingarea"; dir = 8},/obj/machinery/light/smart{dir = 1},/turf/simulated/floor,/area/awaymission/challenge)
+"oc" = (/obj/machinery/vending/snack{name = "Hacked Getmore Chocolate Corp"; prices = list()},/obj/machinery/light/smart{dir = 8},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"ou" = (/obj/structure/stool/bed/bench,/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"oB" = (/obj/machinery/light/smart{dir = 1},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"oV" = (/obj/structure/closet/crate/bin,/obj/machinery/light/smart{dir = 8},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"po" = (/obj/effect/decal/cleanable/cellular,/obj/effect/decal/cleanable/blood,/turf/simulated/floor,/area/station/medical/chemistry)
+"pr" = (/obj/structure/window/fulltile/reinforced{icon_state = "gr_window_reinforced"; grilled = 1},/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"pC" = (/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"pP" = (/turf/simulated/floor/bluegrid,/area/awaymission/challenge)
+"qh" = (/obj/structure/window/thin/reinforced,/obj/structure/window/thin/reinforced{dir = 4},/obj/structure/window/thin/reinforced{dir = 1},/obj/structure/rack,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"qm" = (/obj/structure/stool/bed/bench{icon_state = "bench_2"; dir = 1},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"qC" = (/obj/structure/sink{dir = 4; pixel_x = 12},/obj/item/weapon/reagent_containers/food/snacks/monkeycube,/turf/simulated/floor,/area/station/rnd/xenobiology)
+"qO" = (/obj/item/weapon/paper{name = "Технические неполадки"; info = "Упс! Похоже случайная постройка пробила брешь в искажённо временном континиуме и теперь стабильность этого измерения находится под угрозой! Пожалуйста, не пытайтесь и дальше разорвать шаблон, проникнув внутрь барьера или пытаясь выйти за его пределы! Слуги белого короля уже рассматривают вопрос о уничтожении вашей вселенной, спасибо за внимание!"},/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"rs" = (/obj/machinery/door/airlock/silver{name = "Toilet"},/obj/machinery/door/firedoor,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"rC" = (/obj/machinery/shieldwall,/turf/simulated/wall,/area/awaymission/challenge)
+"rJ" = (/turf/simulated/floor,/area/station/rnd/xenobiology)
+"rK" = (/obj/machinery/computer,/turf/simulated/floor,/area/station/medical/chemistry)
+"sm" = (/obj/structure/stool/bed/chair/comfy/black{dir = 8},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"sq" = (/obj/structure/inflatable/door,/turf/simulated/floor/plating/airless/asteroid,/area/awaymission/challenge)
+"sy" = (/obj/machinery/door/airlock/silver{name = "1"},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"sF" = (/turf/unsimulated/floor/carpet/red,/area/awaymission/challenge)
+"sK" = (/obj/structure/table/reinforced/stall,/obj/item/weapon/paper{name = "Бегло оставленная записка"; info = "Не облажайтесь как в прошлый раз. Эта комната нужна для награждения победителей, а не для хранения наград. Порядок награждения 3-1-2, всем проигравшим выдавайте по купюре и конфете."},/turf/simulated/floor/grass,/area/awaymission/challenge)
+"sL" = (/obj/machinery/door/airlock/silver{name = "Final room"; req_access = list(150)},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"sV" = (/obj/structure/closet/emcloset,/obj/structure/sign/warning/smoking{pixel_x = 32},/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"sZ" = (/obj/structure/closet/crate/secure/woodseccrate{req_access = list(150)},/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/obj/item/weapon/reagent_containers/food/snacks/candy/lollipop,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"ts" = (/obj/machinery/door/airlock/multi_tile/glass{name = "Command rooms"; dir = 4; req_access = list(150)},/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"tw" = (/obj/machinery/light/smart,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"tA" = (/obj/structure/device/piano,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"tM" = (/obj/structure/dryer{dir = 8; pixel_x = 6},/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"tV" = (/obj/structure/stool/bed/bench{icon_state = "bench_2"},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"tW" = (/obj/machinery/door/firedoor{dir = 4},/obj/machinery/door/airlock/multi_tile/glass{name = "Enter"; dir = 4},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"ua" = (/obj/item/stack/sheet/animalhide/cat,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"uo" = (/obj/machinery/light/smart{dir = 1},/turf/simulated/floor/bluegrid{icon_state = "rcircuit"},/area/awaymission/challenge)
+"ux" = (/obj/item/weapon/bikehorn/dogtoy,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"uM" = (/obj/effect/decal/cleanable/blood/drip,/turf/environment/space,/area/space)
+"uZ" = (/obj/structure/window/fulltile/reinforced/indestructible,/turf/simulated/floor/bluegrid{name = "Server Walkway"; icon_state = "dark"; nitrogen = 500; oxygen = 0; temperature = 80},/area/awaymission/challenge)
+"vx" = (/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/grass,/area/station/medical/chemistry)
+"vW" = (/obj/effect/decal/droppod_wreckage,/obj/effect/decal/turf_decal/set_damaged,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"wa" = (/obj/machinery/light/smart,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"wn" = (/obj/structure/table,/obj/item/weapon/spellbook,/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm,/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"wp" = (/obj/structure/table/woodentable,/obj/item/device/microphone/hos{pixel_x = 7},/obj/item/clothing/head/beret/sec/hos,/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"ww" = (/obj/item/weapon/lighter/zippo/syndi,/turf/environment/space,/area/space)
+"wV" = (/obj/machinery/light/smart{dir = 1},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"wZ" = (/obj/effect/decal/turf_decal/set_damaged,/turf/simulated/floor,/area/station/medical/chemistry)
+"xo" = (/obj/machinery/door/airlock/uranium,/turf/simulated/floor,/area/station/rnd/xenobiology)
+"xB" = (/obj/structure/table/glass,/obj/structure/mirror{pixel_x = -30},/obj/item/weapon/storage/box/lipstick,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"xC" = (/obj/item/ammo_casing,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"xN" = (/obj/structure/table/glass,/obj/item/toy/gun/peacemaker,/obj/item/toy/ammo/gun,/obj/item/toy/ammo/gun,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"xU" = (/turf/simulated/wall/r_wall/green,/area/station/rnd/xenobiology)
+"xW" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"yr" = (/turf/simulated/floor,/area/awaymission/challenge)
+"yu" = (/obj/machinery/teleport/hub,/turf/simulated/floor/bluegrid,/area/awaymission/challenge)
+"za" = (/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"zb" = (/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"zf" = (/obj/structure/table,/obj/item/weapon/game_kit/blue,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"zv" = (/obj/structure/window/thin/reinforced{dir = 1},/obj/machinery/suit_storage_unit/standard_unit{req_access = list(150)},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"zB" = (/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"zF" = (/obj/item/weapon/storage/box/syndie_kit/rig,/obj/effect/rune,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"Ag" = (/obj/structure/sink{dir = 4; pixel_x = 12},/obj/structure/mirror{pixel_x = 28},/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"Aq" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{pixel_x = 6},/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"AD" = (/obj/effect/landmark/mobcorpse/clown,/obj/effect/decal/cleanable/blood,/turf/environment/space,/area/space)
+"AP" = (/obj/item/weapon/flora/pottedplant/minitree,/obj/machinery/light/smart{dir = 1},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"AU" = (/obj/machinery/vending/clothing{name = "Hacked ClothesMate"; prices = list()},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"AV" = (/obj/item/weapon/storage/briefcase/inflatable,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"Bi" = (/obj/machinery/light/smart{dir = 8},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Bq" = (/turf/simulated/floor/bluegrid{icon_state = "rcircuit"},/area/awaymission/challenge)
+"BA" = (/obj/structure/inflatable/door,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"BE" = (/obj/structure/stool/bed/bench{dir = 1},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"BF" = (/obj/item/stack/sheet/mineral/plastic{amount = 12},/obj/structure/curtain/open/bed{icon_state = "closed"; pixel_x = 32},/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"BH" = (/obj/structure/table/glass,/obj/item/weapon/storage/box/cups,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"BI" = (/obj/structure/window/fulltile/reinforced/indestructible,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"BJ" = (/obj/structure/table/glass,/obj/structure/bedsheetbin,/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"BP" = (/obj/structure/table/rglass,/obj/machinery/computer/skills,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"BS" = (/obj/structure/table/glass,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater,/obj/item/weapon/kitchen/utensil/spoon,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"Cf" = (/obj/structure/toilet{dir = 4},/obj/machinery/light/small{dir = 8},/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"Cl" = (/obj/item/weapon/switchblade,/obj/structure/window/thin/reinforced,/obj/machinery/door/window/brigdoor/northright{req_access = list(150)},/obj/structure/closet/crate/secure/woodseccrate{req_access = list(150)},/obj/item/weapon/syndcodebook/rowena,/obj/item/weapon/syndcodebook,/obj/item/weapon/storage/box/syndie_kit/merch,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"Cm" = (/obj/structure/stool/bed/bench{icon_state = "bench_2"; dir = 8},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"CT" = (/obj/effect/decal/turf_decal/alpha/blue{icon_state = "delivery"},/turf/simulated/floor,/area/awaymission/challenge)
+"CV" = (/obj/structure/table/reinforced/stall,/obj/machinery/door/window/brigdoor/westright,/obj/item/weapon/bell{pixel_y = 4},/turf/simulated/floor/bluegrid{name = "Server Walkway"; icon_state = "dark"; nitrogen = 500; oxygen = 0; temperature = 80},/area/awaymission/challenge)
+"Db" = (/obj/machinery/light/smart,/turf/simulated/floor/bluegrid{icon_state = "rcircuit"},/area/awaymission/challenge)
+"Dc" = (/obj/structure/temple_falsewall,/turf/simulated/floor,/area/awaymission/challenge)
+"Do" = (/obj/machinery/light/smart{dir = 1},/turf/simulated/floor/bluegrid,/area/awaymission/challenge)
+"Ds" = (/obj/structure/table,/obj/item/weapon/game_kit,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"DE" = (/obj/effect/decal/cleanable/vomit,/turf/simulated/floor,/area/station/medical/chemistry)
+"DH" = (/obj/structure/table/glass,/obj/item/toy/snappop,/obj/item/toy/snappop,/obj/item/toy/snappop,/obj/item/toy/snappop,/obj/item/toy/snappop,/obj/item/toy/snappop,/obj/item/toy/snappop,/obj/item/toy/snappop,/obj/item/toy/crossbow,/obj/item/toy/crossbow,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"DJ" = (/obj/machinery/light/smart{dir = 4},/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"DT" = (/obj/structure/stool/bed/chair/janitorialcart,/turf/environment/space,/area/space)
+"DU" = (/obj/structure/table,/obj/item/weapon/game_kit/chaplain,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Eu" = (/obj/structure/foamedmetal,/turf/environment/space,/area/space)
+"Ev" = (/turf/simulated/wall,/area/awaymission/challenge)
+"Ex" = (/obj/effect/decal/cleanable/flour,/turf/simulated/floor,/area/station/medical/chemistry)
+"Ey" = (/turf/simulated/wall/heaven,/area/awaymission/challenge)
+"Ez" = (/obj/structure/pit/closed/grave,/turf/simulated/floor/grass,/area/station/rnd/xenobiology)
+"EL" = (/obj/structure/window/thin/reinforced{dir = 8},/obj/structure/rack,/obj/structure/window/thin/reinforced{dir = 1},/obj/item/weapon/reagent_containers/food/drinks/golden_cup{desc = "Победитель шахматного турнира."},/obj/item/clothing/accessory/medal/gold{name = "Chess medal"; desc = "1st place."},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"Fm" = (/obj/structure/stool/bed/chair/metal,/obj/item/clothing/suit/space/sk,/obj/item/clothing/head/helmet/space/sk,/obj/effect/decal/cleanable/blood,/obj/effect/decal/remains/human,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"Fo" = (/obj/effect/decal/turf_decal/set_damaged,/obj/structure/foamedmetal,/turf/simulated/floor,/area/station/medical/chemistry)
+"Fp" = (/obj/item/clothing/gloves/black/hos,/obj/item/clothing/suit/armor/hos{desc = "Ого! Фальшивка сделанная из кучи картона и папье маше."; armor = list(melee=0, bullet=0, laser=0, energy=0, bomb=0, bio=0, rad=0)},/obj/item/clothing/accessory/armor/dermal{desc = "Ого! Фальшивка сделанная из кучи картона и папье маше."; armor = list(melee=0, bullet=0, laser=0, energy=0, bomb=0, bio=0, rad=0)},/obj/structure/rack,/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"Fq" = (/obj/structure/window/thin/reinforced{dir = 4},/obj/structure/window/thin/reinforced{dir = 1},/obj/mecha/combat/marauder/seraph,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"FD" = (/obj/structure/window/thin/reinforced,/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/grass,/area/station/rnd/xenobiology)
+"FJ" = (/obj/structure/stool/bed/chair/office/dark,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"FV" = (/obj/machinery/door/airlock/silver,/obj/machinery/door/firedoor,/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"Gg" = (/obj/item/stack/sheet/wood{pixel_x = 5; pixel_y = 8; amount = 20},/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"Gl" = (/turf/environment/space,/area/space)
+"Gy" = (/obj/structure/table/reinforced/stall,/obj/machinery/door/window/brigdoor/westleft,/turf/simulated/floor/bluegrid{name = "Server Walkway"; icon_state = "dark"; nitrogen = 500; oxygen = 0; temperature = 80},/area/awaymission/challenge)
+"GR" = (/obj/structure/window/fulltile/reinforced/indestructible,/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"GS" = (/obj/machinery/light/smart{dir = 8},/obj/machinery/suit_storage_unit/standard_unit{req_access = list(150)},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"GV" = (/turf/simulated/wall/r_wall,/area/awaymission/challenge)
+"GW" = (/obj/structure/mopbucket,/turf/environment/space,/area/space)
+"GX" = (/obj/structure/clown_stuff_spawner,/obj/structure/table/woodentable/fancy,/turf/simulated/floor,/area/awaymission/challenge)
+"Hc" = (/obj/machinery/bot/medbot/mysterious,/turf/simulated/floor,/area/awaymission/challenge)
+"Ho" = (/obj/structure/toilet{dir = 4},/obj/machinery/light/small{dir = 8},/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"Hy" = (/obj/machinery/door/firedoor{dir = 4},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"HD" = (/obj/machinery/shieldwall,/turf/environment/space,/area/awaymission/challenge)
+"HF" = (/obj/structure/table,/obj/machinery/faxmachine,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"Iu" = (/obj/structure/rack,/turf/simulated/floor/grass,/area/awaymission/challenge)
+"Iz" = (/obj/structure/flora/ausbushes/fernybush,/turf/simulated/floor/grass,/area/station/medical/chemistry)
+"IC" = (/turf/simulated/floor/wood,/area/awaymission/challenge)
+"IO" = (/turf/simulated/wall/r_wall/green,/area/station/medical/chemistry)
+"IQ" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/hos,/obj/item/weapon/shovel/spade/soviet,/obj/structure/curtain/open/bed,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"IY" = (/obj/structure/table/glass,/obj/structure/mirror{pixel_x = -30},/obj/item/clothing/glasses/aviator_mirror,/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/pumpkin,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"Jc" = (/obj/machinery/gibber,/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"Jf" = (/mob/living/carbon/slime/adult/adamantine,/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/station/rnd/xenobiology)
+"Jh" = (/obj/structure/table/glass,/obj/item/toy/sword,/obj/item/toy/sword,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"Jr" = (/obj/structure/stool/bed/chair/office/dark{dir = 4},/obj/structure/noticeboard{pixel_y = 32},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"JC" = (/obj/structure/stool/bed/pod,/obj/item/weapon/bedsheet/mime,/obj/machinery/light/smart{dir = 4},/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"JH" = (/obj/machinery/light/smart,/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"JZ" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -4; pixel_y = 5},/obj/item/pens_bin{pixel_x = 8; pixel_y = 16},/obj/item/weapon/paper{name = "Для начала"; info = "Добро пожаловать на вашу новую работу! Вы - ферзь, главная фигура от которой будет зависеть вся игра проводимая в нашем скромном измерении белого короля. Ваша память была стёрта, однако король решил оставить вам шанс вернуть часть ваших магических способностей, всё же кто как не вы пытались заключить с ним контракт? Вы в ответе за проведение грядущих шахматных баталий на вашем объекте, расставьте все фигуры по своим местам, осмотрите призы, все ли на месте, проведите инструктаж вашим сотрудникам, а после - при должном желании, можете отыскать новую станцию для проведения новых игр. Помните - вам нельзя погибать иначе на месте вашей гибели появится чёрная дыра, что в конечном итоге поглатит всю станцию и сведёт на нет наше дальнейшее сотрудничество. Не покидайте станцию и в случае вопросов - отправьте вашу молитву на имя белого короля, для получения дальнейших инструкций. Важное уточнение! Ваша одежда не является магической, вам нельзя снимать маску, а так же нельзя убивать участников турнира! Находите и придумывайте более интересные способы для развлечения себя и участников! Удачи, мудрая сова!"},/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"Kc" = (/obj/structure/stool/bed/bench{icon_state = "bench_2"; dir = 1},/turf/unsimulated/floor/carpet/orange,/area/awaymission/challenge)
+"KB" = (/obj/structure/table/rglass,/obj/item/weapon/storage/box/ids,/obj/item/weapon/card/id/syndicate{name = "White officer"},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"KK" = (/turf/simulated/mineral,/area/station/medical/chemistry)
+"KO" = (/obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"KR" = (/obj/effect/decal/turf_decal/set_damaged,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"Le" = (/turf/simulated/floor/grass,/area/awaymission/challenge)
+"Lz" = (/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,/turf/environment/space,/area/space)
+"LE" = (/obj/structure/window/thin/reinforced{dir = 1},/obj/machinery/door/window/brigdoor/southright{req_access = list(150)},/obj/item/weapon/katana,/obj/structure/closet/crate/secure/woodseccrate{req_access = list(150)},/obj/item/weapon/gun/energy/crossbow/largecrossbow,/obj/item/device/chameleon,/obj/item/device/debugger,/obj/item/weapon/storage/box/syndie_kit/chameleon,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"LH" = (/obj/structure/table,/obj/item/device/assembly/timer,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"LV" = (/obj/structure/snow,/obj/structure/snowman,/turf/simulated/floor,/area/awaymission/challenge)
+"Ma" = (/obj/machinery/door/airlock/silver{name = "Changing room"},/obj/machinery/door/firedoor,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"Me" = (/obj/machinery/shieldwall,/obj/machinery/door/airlock/vault,/turf/simulated/floor,/area/awaymission/challenge)
+"Mi" = (/obj/item/stack/sheet/animalhide/corgi,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"Mp" = (/obj/structure/table,/obj/item/weapon/game_kit/red,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Mt" = (/obj/structure/stool/bed/chair/metal{dir = 1},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Mz" = (/obj/structure/reagent_dispensers/kvasstank{dir = 8},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"MA" = (/obj/structure/table/glass,/obj/item/toy/sound_button/syndi,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"MW" = (/obj/structure/closet/crate/secure/woodseccrate{name = "confiscated items box"; req_access = list(150)},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"Nz" = (/obj/structure/window/thin/reinforced,/obj/structure/window/thin/reinforced{dir = 4},/obj/structure/window/thin/reinforced{dir = 1},/obj/structure/rack,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"NC" = (/obj/item/weapon/mop/advanced,/obj/structure/sign/poster/official/no_erp{pixel_y = 32},/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"NM" = (/obj/item/weapon/reagent_containers/food/snacks/hotdog{name = "hotIan"},/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"NQ" = (/obj/machinery/light/smart{dir = 1},/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"NX" = (/obj/effect/decal/turf_decal/alpha/blue{icon_state = "delivery"},/obj/machinery/light/smart,/turf/simulated/floor,/area/awaymission/challenge)
+"On" = (/obj/structure/grille,/turf/simulated/floor,/area/awaymission/challenge)
+"Ot" = (/obj/effect/decal/cleanable/blood/oil,/turf/simulated/floor,/area/station/medical/chemistry)
+"Oz" = (/obj/structure/stool/bed/bench{dir = 1},/obj/machinery/light/smart{dir = 4},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"OB" = (/obj/structure/stool/bed/chair/metal{dir = 4},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"OE" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"OK" = (/obj/machinery/chem_master,/turf/simulated/floor,/area/station/medical/chemistry)
+"OV" = (/obj/machinery/cryopod,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"Pi" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/grass,/area/station/medical/chemistry)
+"Pn" = (/turf/simulated/mineral,/area/space)
+"Pt" = (/obj/item/clothing/mask/cigarette,/turf/environment/space,/area/space)
+"Py" = (/turf/simulated/floor/garden,/area/awaymission/challenge)
+"Pz" = (/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"PL" = (/obj/item/stack/sheet/metal{amount = 32},/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"PP" = (/obj/structure/stool/bed/chair/comfy/black,/obj/machinery/power/apc{name = "3000k apc top"; dir = 1; pixel_y = 28; custom_smartlight_preset = "default 3000k"},/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"PQ" = (/obj/structure/holostool,/turf/simulated/floor/grass,/area/awaymission/challenge)
+"PY" = (/obj/structure/table,/obj/item/weapon/game_kit/orange,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"PZ" = (/obj/structure/stool/bed/pod,/obj/item/weapon/bedsheet/syndie,/obj/machinery/light/smart,/turf/unsimulated/floor/carpet/red,/area/awaymission/challenge)
+"Qc" = (/obj/structure/stool/bed/pod,/obj/item/weapon/bedsheet/wiz,/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"QA" = (/obj/machinery/light/smart,/turf/simulated/floor/grass,/area/awaymission/challenge)
+"QT" = (/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/station/medical/chemistry)
+"Ri" = (/obj/structure/table/glass,/obj/item/toy/cards,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"Rq" = (/obj/machinery/light/smart{dir = 1},/obj/structure/noticeboard{pixel_y = 32},/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/simulated/floor,/area/awaymission/challenge)
+"RD" = (/obj/structure/closet/crate/secure/woodseccrate{req_access = list(150)},/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c100,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"RW" = (/obj/structure/table/glass,/obj/structure/mirror/magic{pixel_x = -30},/obj/item/clothing/mask/gas/clown_hat,/turf/simulated/floor/wood,/area/awaymission/challenge)
+"RZ" = (/obj/structure/window/thin/reinforced{dir = 1},/obj/structure/closet/crate/secure/woodseccrate{req_access = list(150)},/obj/item/device/radio/uplink,/obj/item/weapon/card/id/admiral,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"Se" = (/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate,/turf/environment/space,/area/space)
+"Sr" = (/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"SM" = (/obj/structure/window/thin/reinforced,/obj/structure/window/thin/reinforced{dir = 8},/obj/structure/window/thin/reinforced{dir = 1},/obj/structure/rack,/obj/item/clothing/accessory/medal/silver{name = "Chess medal"; desc = "2nd place"},/turf/simulated/floor{icon_state = "sandstonevault"},/area/awaymission/challenge)
+"Tr" = (/obj/structure/table,/obj/item/weapon/game_kit/purple,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Tz" = (/turf/environment/space,/area/awaymission/challenge)
+"TJ" = (/obj/structure/stool/bed/chair/metal{dir = 1},/turf/simulated/floor/wood,/area/awaymission/challenge)
+"TZ" = (/obj/structure/stool/bed/bench{dir = 8},/obj/item/weapon/newspaper,/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Ua" = (/obj/structure/table,/obj/machinery/recharger,/obj/item/weapon/card/id/syndicate{name = "Captain Owl"},/turf/unsimulated/floor/carpet/purple,/area/awaymission/challenge)
+"Ui" = (/obj/machinery/light/smart,/turf/simulated/floor,/area/awaymission/challenge)
+"Um" = (/obj/effect/decal/turf_decal/set_damaged,/turf/simulated/floor,/area/space)
+"Ux" = (/obj/machinery/light/smart,/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"Uy" = (/obj/machinery/door/airlock/silver{name = "3"},/obj/machinery/door/firedoor,/turf/simulated/floor{icon_state = "freezerfloor"},/area/awaymission/challenge)
+"Va" = (/obj/machinery/door/airlock/command/glass,/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"Vn" = (/turf/simulated/wall/r_wall/red,/area/station/security/hos)
+"Vo" = (/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"Vs" = (/mob/living/carbon/slime/rainbow,/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/grass,/area/station/rnd/xenobiology)
+"VI" = (/obj/item/latexballon,/turf/simulated/floor,/area/station/rnd/xenobiology)
+"VJ" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/remains/human,/obj/item/clothing/shoes/heels/alternate,/obj/item/clothing/under/dress/maid,/obj/item/clothing/head/chep,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"VO" = (/obj/structure/stool/bed/pod,/obj/item/weapon/bedsheet/syndie,/obj/machinery/light/smart{dir = 1},/turf/unsimulated/floor/carpet/red,/area/awaymission/challenge)
+"Wa" = (/obj/structure/table,/obj/item/weapon/disk/research_points/rare,/obj/item/weapon/game_kit/chaplain,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"WV" = (/obj/structure/closet/gimmick/russian,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"Xa" = (/obj/structure/rack,/obj/item/weapon/gun/projectile/chameleon,/turf/simulated/floor{icon_state = "dark"},/area/station/security/hos)
+"Xi" = (/mob/living/simple_animal/cat/runtime/fake,/turf/unsimulated/floor/fakespace,/area/awaymission/challenge)
+"Xn" = (/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"Xw" = (/obj/machinery/atm{pixel_y = 32},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Ye" = (/obj/machinery/light/smart{dir = 4},/turf/simulated/floor{icon_state = "bar_floor"},/area/awaymission/challenge)
+"Yt" = (/obj/effect/decal/cleanable/vomit,/obj/structure/dresser,/obj/machinery/ai_status_display{pixel_x = -32},/turf/simulated/floor,/area/station/medical/chemistry)
+"Yv" = (/obj/effect/decal/cleanable/blood/gibs/body,/obj/effect/decal/cleanable/blood,/turf/simulated/floor,/area/station/medical/chemistry)
+"YC" = (/obj/item/clothing/shoes/rainbow{armor = list(melee=44, bullet=44, laser=44, energy=44, bomb=44, bio=44, rad=44)},/obj/item/clothing/under/rainbow{armor = list(melee=44, bullet=44, laser=44, energy=44, bomb=44, bio=44, rad=44)},/obj/item/clothing/gloves/rainbow{armor = list(melee=44, bullet=44, laser=44, energy=44, bomb=44, bio=44, rad=44)},/obj/item/clothing/head/soft/rainbow{armor = list(melee=44, bullet=44, laser=44, energy=44, bomb=44, bio=44, rad=44)},/obj/item/clothing/suit/poncho/rainbow,/obj/structure/sign/departments/security{pixel_x = -32},/obj/structure/rack,/obj/item/weapon/gun/energy/gun/nuclear,/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,/obj/item/ammo_box/c9mmr,/obj/item/ammo_box/c9mm,/obj/item/clothing/accessory/holster,/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,/obj/item/clothing/mask/gas/voice,/obj/item/weapon/storage/backpack/clown,/obj/item/weapon/card/id/syndicate,/obj/item/weapon/paper{name = "Башни"; info = "Добро пожаловать, агенты. Вас доставили прямиком сюда из штаба синдиката, в связи с вашими крайне заинтриговавшими нас навыками. В ваши обязанности входит обеспечение безопасности мероприятия. Следите за тем, чтобы никто не пронёс оружие и устраняйте незванных гостей. Следите за соблюдением правил, а также наказывайте тех, кто нарушает их. Помните, главное - веселье, а уже после наказание. Если вы сломаете кому-то ногу, то вряд-ли это будет весело, однако если заставите проигравшего следующие матчи сидеть без одежды или отжиматься каждый раз после хода, то это будет куда веселее. За подробностями обращайтесь к белому офицеру."},/turf/unsimulated/floor/carpet/red,/area/awaymission/challenge)
+"YD" = (/obj/item/weapon/paper_bin{pixel_x = -4; pixel_y = 5},/obj/structure/table/rglass,/obj/item/pens_bin{pixel_x = 8; pixel_y = 16},/obj/item/newtons_pendulum{pixel_x = -3; pixel_y = 19},/obj/item/weapon/pen,/obj/item/weapon/stamp/fakecentcomm,/obj/item/weapon/paper{name = "Белый офицер"; info = "Добро пожаловать, мистер бюрократ! Мы рады что вы не решили читать пользавательское соглашение и заключили контракт дарующий вам фактическое бессмертие в обмен на вечную работу белому королю! В ваши обязанности входит организация шахматного турнира, для кординации действий проведите беседу с белой совой - вашего руководителя. Составьте списки участников, проверим личные дела каждого, а так же выдав им соответвующие номерные билеты, утверждённые печатью. По ним в дальнейшем участники и будут участвовать в турнире. Участники имеют 2 попытки на игру, после окончания всех игр будут подводиться итоги. Проигравшие играют с проигравшими - победители с победителями и так пока не определится тройка финалистов. Система наказаний: Вы имеете право выдать команду нарушителям правил, которой игроки должны следовать до конца турнира. Обычно такие даются за поражение, но в вашем случае вы вольны в выборе, как сделать игру интереснее. Можете установить аспекты доски, те что действуют только игру, например убрать у всех участников все пешки, сменить игру на шашки или убрать королей, для особо долгих игр можете установить таймер (стоящий рядом), по истечению которого не важно как, но игру придётся закончить. Подобного рода санкции можете применять к нарушителям правил и в особых случаях... Мим и клоуны - получают преимущество в каждой игре. Вы обязаны выдать их противнику один штраф, сделав игру для актёров проще, ведь на месте их работы они и так сильно настрадались. Помогайте им победить, но в меру. Последние пункты - оружие, его вы собираете у участников вместе с сумками и слаживаете в ящик, находящийся у вас в комнате. Списки раставленных вами участников просьба разместить на доске входа в игровую, а так же сделать несколько других копий. Для отслеживания наказаний участников - можете положить листы игроков рядом, там указать какой игрок должен что-то делать. Спасибо за ознакомление!"},/turf/unsimulated/floor/carpet/blue,/area/awaymission/challenge)
+"YO" = (/obj/effect/decal/cleanable/blood/drip,/turf/simulated/floor/plating/airless/catwalk,/area/awaymission/challenge)
+"YW" = (/obj/machinery/clonepod,/turf/simulated/floor,/area/station/medical/chemistry)
+"Zb" = (/obj/structure/window/fulltile,/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+"Zl" = (/obj/effect/decal/cleanable/greenglow,/turf/simulated/floor,/area/station/medical/chemistry)
+"ZD" = (/obj/structure/window/thin/reinforced{dir = 4},/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/station/medical/chemistry)
+"ZT" = (/obj/item/stack/sheet/plasteel{amount = 10},/turf/simulated/floor/wood{icon_state = "wood10"},/area/awaymission/challenge)
+
+(1,1,1) = {"
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlndndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlPnGlPnGlPnGlGlPnGlPnGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlPnGlPnPnGlPnGlGlPnGlPnGlPnGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnGlGlGlPnGlPnPnPnGlPnGlGlGlPnGlPnGlPnGlPnPnPnPnGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlPnPnPnPnPnPnGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlPnGlPnGlPnGlPnGlGlGlPnGlPnGlPnGlPnPnPnPnGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlPnPnPnPnPnPnGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlPnPnPnPnPnPnGlGlndGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlPnPnPnPnPnGlGlGlPnGlPnGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlPnPnGlGlGlGlGlGlPnGlPnGlGlPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlPnPnPnPnGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlPnPnPnPnGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlPnPnPnPnPnGlndGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlPnPnPnPnGlGlGlPnPnPnGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlGlndGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlPnPnGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndndGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlndGlGlGlGlGlPnPnPnPnPnPnGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlndGlGlGlPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlndGlGlndGlGlGlPnPnPnPnPnPnPnPnGlPnPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndGlGlGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnndGlGlGlGlGlndGlGlGlPnPnPnPnPnGlGlPnPnPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnndGlGlGlGlGlndGlGlGlPnPnPnPnPnGlGlPnPnPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlPnPnPnGlGlPnPnPnPnndGlGlPnGlGlndGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGlGliYdfiYGlGlGliYdfiYGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlPnGlPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGlGlVnVnVnVnVnVnVnVnVnGlGlGlPnGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlPnPnPnGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGlGlVnXazbzbPPzbzbFpVnGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlPnGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGliYVnzbzbfBwplszbzbVniYGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlGlGlPnPnGlGlPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGlGlVnzbzbJHzbJHzbzbVnGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnKRvWPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlndGlGlPnGlGlndGlPnGlGlGlGlPnPnGlGlPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGlGlVnprprVnVaVnprprVnGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnKRKRPnPnGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlPnPnPnGlGlGlPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndGlGlGliYGlGlGlGlGlGlGliYGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlniKRPnPnGlGlGlGlGlPnPnEvEvEvPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlPnPnPnGlGlPnPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnGliYGlGlGlGlGlGlGliYGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnEvWVEvEvEvEvEvPnPnPnGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlPnPnPnPnGlPnPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlPnPnEvzBOEzBZTIQEvEvPnPnGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlPnGlGlPnPnPnPnPnPnPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlGlGlGlPnPnEvzBKOdziPOEzBEvEvPnPnPnGlGlGlGlGlGlndGlGlGlGlGlndGlPnGlGlPnPnPnPnPnPnPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnPnGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnEvzBPLuazFMizBKOEvPnPnPnGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnPnPnPnPnPnPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnPnGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlPnPnEvKOAqzBzBGgzBzBdnZbGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnPnPnPnPnPnPnPnPnGlGlPnGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnPnGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlPnPnEvsqEvEvEvKOjOzBBFZbGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnPnPnGlGlGlGlGlPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnPnGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlPnPnPnAVPnPnEvhhxWEvEvPnGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnPnPnGlGlGlGlGlPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlPnPnPnBAPnPnEvEvEvEvPnPnGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnPnPnGlGlGlGlGlPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlPnGlGlGlndPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlPnGlGlGlGlPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndTzGlGlGlGlndPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrSrSrSrSrSrSrSrSrSrSrSrmWSrSrSrSrSrSrSrSrSrSrSrSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlGlGlPnGlGlGlGlPnGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlSrGVGVGVGVGVSrGVGVuZuZuZSruZuZuZGVGVSrGVGVGVGVGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlSrGVELRZFqGVGVGVGVLeLeuZuZuZLeLeGVGVGVGVjZbeeDGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlSrGVzvjHlfSMLENzGVLePyPQsKIuPyLeGVYCVOGVJZdbdbGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlSrGVGSpCpCpCpCimpCLeLePyLePyLeLesFgQsFdbdbdbJCGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlSrGViOpCpCpCpCimisLePyLeLeLePyLeifgQsFtsdbdbdbGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlSrGVctClqhsZiwRDGVLeLeQALeQALeLeGVYCPZGVUawndbGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrGVGVGVGVGVGVGVGVGVGVGVsLGVGVGVGVGVGVGVGVGVGVGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlPnGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrSrSrGVPzoBXwPzXwPzXwoBPzBHhJGVCfUyzaNQsVGVSrSrSrGlGlGlGlPtGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlTzTzSrBIPzjSPzPzjSPzPzjSPzPzYeGVGVGVzazazakxYOTzTzSeGlGlGlGlGluMGlADPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlPnPnGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlTzTzSrBIPzDULHPzzfLHPzDsLHPzCmGVHoadzazaAgGVSrTzTzGluMGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlPnGlndGlGlGlPnPnGlGlGlPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlTzTzSrBIPzMtPzPzMtPzPzMtPzPzTZGVGVGVzazatMGVSrTzTzGlGlGlGlGlGlwwPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndPnPnPnPnPnGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlTzTzSrGVBiPzPzPzPzPzPzPzPzPzPzGVHosyzaUxBJGVSrTzTzGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlPnGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndPnPnPnPnPnGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlTzTzSrBIPzjSPzPzjSPzPzjSPzPzPzGVGVGVrsGVGVGVSrTzTzGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndPnPnPnPnPnPnGlGlGlPnxUxUxUxUxUPnPnGlGlGlTzTzSrBIPzMpLHPzPYLHPzTrLHPzCmGVIYwVICICOVGVSrTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlPnPnGlPnPnGlGlGlPnxUEzVsJfxUPnPnGlGlGlTzTzSrBIPzMtPzPzMtPzPzMtPzPzcbGVRWedICICAUGVSrTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlPnPnPnPnPnPnPnPnPnGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlPnPnxUaanfFDxUPnPnGlGlGlTzTzSrGVPztwPzPzPztwPzPzPzPzPzGVxBwaICICOVGVSrTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlPnPnPnPnGlGlGlGlPnGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlPnPnxUVIbiqCxUPnGlGlGlGlTzTzSrGVGVGVGVGVGVGVGVgLBIgLGVGVGVGVMaGVGVGVSrTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlPnGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlPnPnxUxoxUxUxUPnGlGlGlGlTzTzSrGVcLVodaVohvyrobyrHcyrRqGVockiICtAkLGVJcTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlndPnGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlPnGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlGlPnxUjcxUPnPnGlGlGlGlGlTzTzSrllnBVoFJVoGVyrcKyryryryrcKICICICICICkfNMTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlndPnGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlGlPnxUxoxUPnGlGlmXGlGlGlTzTzSrGVMzVoHFfsGVyrcKyryryryrcKICkoICkoedkfuxTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlndPnGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlGlGlGlGlGlGlrJnbrJGlUmGlGlGlGlGlTzTzSrGVGVhvGVGVGVyrcKyryryryrcKjdlQICJhBSkfSrTzTzGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlndPnGlGlGlGlndGlGlGlGlGlGlGlGlPnGlGlGlGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlPnGlGlGlGlmXGlrJnbGlGlPnGlGlGlGlTzTzSrGVdUVoYDJrGyyrcKyryryryrcKkoICICTJDJGVSrTzTzGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnGlGlGlPnGlGlGlGlGlPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlPnGlndGlGlGlGlPnGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlTzTzSrllBPVoVoVoCVyrcKyryryryrcKMARiICDHxNkfSrTzTzGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnGlGlGlPnGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlUmGlmXGlPnPnPnPnGlGlTzTzFmGVGVhvGVGVGVyrcKyryryryrcKOBICICICTJkfSrTzTzGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlTzTzWauZkAVoMWipGVyrNXyryryrUiCTICICICICICkfSrTzTzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnGlGlGlGlGlGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrxChMuZKBsmVoQcGVGVGVFVGRFVGVGVoVkBiXqmOzGVSrSrSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnGlGlGlGlGlGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlGlGlSrGVGVGVGVGVGVGVGVGVAPffffffAPGVGVGVGVGVGVGVGVGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlSrSrSrSrSrGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlSrGVpPpPDopPpPGVbctVffffffffffougWGVBqBquoBqBqGVSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrEyyrEySrGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlSruZpPpPpPpPpPHyffffffffffffffffffHyBqBqBqBqBquZSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrddGXyrSrGlGlGlGlPnGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlGlSruZpPpPyupPpPtWfffffffffffffffffftWBqBqkMBqBquZSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrEyyrEySrGlGlPnPnPnPnGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlSruZpPpPpPpPpPGVKcBEffffffffffKcBEGVBqBqBqBqBquZSrGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrSrSrSrSrGlGlPnPnPnPnGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlSrGVpPpPgIpPpPGVGVGVkrffffffkrGVGVGVBqBqDbBqBqGVSrGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlSrGVGVGVGVGVGVGVSrGVGVuZhiuZGVGVSrGVGVGVGVGVGVGVSrGWGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlGlUmGlGlGlGlGlPnGlGlGlGlSrSrSrSrSrSrSrSrSrSrSrSrSrYOSrSrYOSrSrSrSrYOSrNCVJGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlGlGlGlGlEuUmGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlLzGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlGlGlaMGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlDTGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnPnPnPnPnPnGlGlGlPnPnGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlPnPnwZaMIOGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlPnPnflFoIOGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlPnPnFoflIOIOGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlIOflflflFoPnPnGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlIOIOYtjJflflPnPnPnGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlIOvxZDExbzYvfpKKKKPnPnPnPnGlGlGlGlPnGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlIOPicXbzicbzbzIOKKPnPnPnPnGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlIOQTlBjrdODEOtccflPnPnPnGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlPnPnPnPnPnPnGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlIOIzcXZlbzbzicOKIOGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndPnGlGlGlGlGlIOPiZDrKbzabIOIOIOGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndPnPnPnGlGlGlGlIOIOIOpobzIOGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnndGlGlGlGlGlndGlGlPnGlGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlPnGlGlndPnPnPnGlGlGlGlGlGlIOYWlzIOGlGlGlGlGlGlGlPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlPnPnPnndGlPnGlGlGlndGlGlPnGlGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnPnPnGlGlGlGlGlIOIOIOIOGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnGlGlGlGlGlGlPnPnPnPnndGlPnGlGlGlndGlGlPnGlGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlqOGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlGlPnPnPnPnndGlPnGlGlGlndGlGlPnGlGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlEvSrSrXnSrSrEvGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnGlGlGlPnPnPnPnPnndGlGlGlGlGlndGlGlPnGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlGlndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndHDMerCMerCMerCndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndGlGlGlGlGlndGlGlPnGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlEvyrEvyrEvyrEvGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlGlndGlGlPnGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnGlEvyrEvyrEvyrEvGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlGlGlndGlGlPnGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlEvOnEvOnEvOnEvGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlndGlGlndGlGlPnndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndGlndGlGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlEvDcEvLVEvXiEvGlGlGlPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnPnGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndGlndGlGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlEvEvEvEvEvEvEvGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlndndGlndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndndGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+GlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGlGl
+"}
