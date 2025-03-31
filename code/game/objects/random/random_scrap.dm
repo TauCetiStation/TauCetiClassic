@@ -30,8 +30,8 @@
 						prob(20);/obj/structure/scrap/vehicle/large,\
 						prob(26);/obj/structure/scrap/cloth/large,\
 						prob(40);/obj/structure/scrap/food/large,\
-						prob(1);/obj/structure/scrap/syndie/large,\
-						prob(3);/obj/structure/scrap/guns/large\
+						prob(4);/obj/structure/scrap/syndie/large,\
+						prob(12);/obj/structure/scrap/guns/large\
 					)
 
 /obj/random/scrap/sparse_even
@@ -67,8 +67,8 @@
 					prob(18);/obj/structure/scrap/vehicle,\
 					prob(24);/obj/structure/scrap/cloth,\
 					prob(36);/obj/structure/scrap/food,\
-					prob(1);/obj/structure/scrap/syndie,\
-					prob(3);/obj/structure/scrap/guns\
+					prob(4);/obj/structure/scrap/syndie,\
+					prob(12);/obj/structure/scrap/guns\
 				)
 
 /obj/random/scrap/moderate_weighted

@@ -7550,7 +7550,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aou" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -7569,6 +7568,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/structure/stool/bed/chair/pedalgen{
+	anchored = 1;
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -32653,7 +32656,6 @@
 	},
 /area/station/hallway/primary/central)
 "vpA" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -32661,6 +32663,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/structure/stool/bed/chair/pedalgen{
+	anchored = 1;
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
