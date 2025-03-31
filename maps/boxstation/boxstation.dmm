@@ -65713,7 +65713,7 @@
 	id = "engiscrapleft"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "cAx" = (
 /obj/machinery/door/airlock/maintenance{
 	dir = 4;
@@ -66373,7 +66373,7 @@
 	id = "engiscrapleft"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "cCf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -66695,7 +66695,7 @@
 	id = "engiscrapright"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "cDf" = (
 /obj/structure/sign/warning/smoking{
 	pixel_x = 32
@@ -66957,7 +66957,7 @@
 	id = "engiscrapright"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "cDT" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -71342,7 +71342,7 @@
 	id = "engiscrapright"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "eRq" = (
 /obj/machinery/door/morgue{
 	name = "Dressing Room"
@@ -75310,7 +75310,7 @@
 	id = "engiscrapleft"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "iWb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/disposalpipe/segment{
@@ -75349,7 +75349,7 @@
 	id = "engiscrapleft"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "iYL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -75937,7 +75937,7 @@
 	},
 /obj/machinery/scrap/stacking_machine,
 /turf/simulated/floor/plating/airless,
-/area/station/engineering/singularity)
+/area/station/engineering/engine)
 "jCa" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -76830,7 +76830,7 @@
 	id = "engiscrapright"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engineering/engine)
 "kwb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -86921,7 +86921,7 @@
 	id = "engiscrapleft"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engineering/engine)
 "xOi" = (
 /obj/structure/sign/poster/calendar{
 	pixel_y = -32
