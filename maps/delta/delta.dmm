@@ -8087,7 +8087,8 @@
 /area/space)
 "anm" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -15372,7 +15373,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "azG" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -16687,6 +16690,24 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"aCe" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
+"aCf" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
+"aCg" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "aCh" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -16699,6 +16720,12 @@
 	icon_state = "graychoco"
 	},
 /area/station/engineering/engine)
+"aCi" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "aCD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -20432,7 +20459,8 @@
 /area/station/maintenance/engineering)
 "bvf" = (
 /obj/machinery/computer/station_alert{
-	dir = 1
+	dir = 1;
+	muted = 1
 	},
 /turf/simulated/floor{
 	icon_state = "red"
@@ -43192,7 +43220,8 @@
 /area/station/cargo/storage)
 "gRG" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -72068,7 +72097,8 @@
 /area/station/engineering/atmos/supermatter)
 "nGh" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_left"
@@ -135608,7 +135638,7 @@ hSk
 hSk
 hSk
 hSk
-hSk
+aCf
 hSk
 hSk
 hSk
@@ -140650,7 +140680,7 @@ tKY
 tKY
 tKY
 uIA
-tKY
+aCi
 tKY
 tKY
 tKY
@@ -161029,7 +161059,7 @@ eWK
 eWK
 eWK
 eWK
-eWK
+aCe
 eWK
 eWK
 dEn
@@ -171202,7 +171232,7 @@ gtW
 gtW
 gtW
 gtW
-gtW
+aCg
 gtW
 gtW
 iOa

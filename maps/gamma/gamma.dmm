@@ -1418,6 +1418,12 @@
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
+"acs" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "act" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/metal{
@@ -1443,6 +1449,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
+"acw" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "acx" = (
 /obj/structure/stool,
 /obj/effect/decal/turf_decal/wood{
@@ -1478,6 +1490,12 @@
 	icon_state = "medstairs_wide"
 	},
 /area/station/civilian/garden)
+"acB" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "acC" = (
 /obj/structure/table,
 /obj/random/misc/book,
@@ -1562,6 +1580,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"acK" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "acL" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -20363,7 +20387,9 @@
 	},
 /area/station/civilian/hydroponics)
 "dnu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
@@ -64188,7 +64214,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/outerlabs)
 "lQI" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -133743,7 +133771,7 @@ xut
 xut
 xut
 hoB
-uks
+acB
 wNJ
 gYe
 gYe
@@ -136213,7 +136241,7 @@ wEa
 wEa
 wEa
 uxa
-pFd
+acw
 kli
 heR
 heR
@@ -156728,7 +156756,7 @@ ewk
 ewk
 ewk
 ewk
-ewk
+acs
 ewk
 ewk
 ewk
@@ -176188,7 +176216,7 @@ aji
 aji
 aji
 aji
-aji
+acK
 aji
 aji
 aji
