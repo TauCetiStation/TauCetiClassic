@@ -59,7 +59,8 @@
 	laws.clear_supplied_laws()
 
 
-/mob/living/silicon/ai/proc/statelaws() // -- TLE
+/mob/living/silicon/ai/proc/statelaws(forced = FALSE) // -- TLE
+	set waitfor = FALSE
 //	set category = "AI Commands"
 //	set name = "State Laws"
 	var/prefix = ""
@@ -75,7 +76,10 @@
 		if("Holopad") prefix = ":h "
 		else prefix = ""
 
-	if(say("[prefix]Current Active Laws:") != 1)
+	if(forced)
+		prefix = ";"
+
+	if(say("[prefix]Текущие активные законы:") != 1)
 		return
 
 	//laws_sanity_check()
@@ -84,7 +88,7 @@
 	sleep(10)
 
 	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+		if (forced || src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
 			say("[prefix]0. [src.laws.zeroth]")
 			sleep(10)
 
@@ -92,7 +96,7 @@
 		var/law = src.laws.ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (src.ioncheck[index] == "Yes")
+			if (forced || src.ioncheck[index] == "Yes")
 				say("[prefix][num]. [law]")
 				sleep(10)
 
@@ -100,7 +104,7 @@
 		var/law = src.laws.inherent[index]
 
 		if (length(law) > 0)
-			if (src.lawcheck[index+1] == "Yes")
+			if (forced || src.lawcheck[index+1] == "Yes")
 				say("[prefix][number]. [law]")
 				sleep(10)
 			number++
@@ -110,7 +114,7 @@
 
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
-				if (src.lawcheck[number+1] == "Yes")
+				if (forced || src.lawcheck[number+1] == "Yes")
 					say("[prefix][number]. [law]")
 					sleep(10)
 				number++
