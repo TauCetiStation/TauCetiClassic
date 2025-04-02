@@ -152,3 +152,5 @@
 
 #define PLUR_MINUTES_LEFT(minutes) pluralize_russian(minutes, "минута", "минуты", "минут") // "Осталась 1 минута". Не путайте с нижним.
 #define PLUR_MINUTES_IN(minutes)   pluralize_russian(minutes, "минуту", "минуты", "минут") // "Через 1 минуту". Не путайте с верхним.
+
+#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "очко", "очка", "очков") // "20 очков" 
