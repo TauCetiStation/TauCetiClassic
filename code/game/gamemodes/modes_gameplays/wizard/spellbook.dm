@@ -397,7 +397,7 @@
 /datum/spellbook_entry/item/tiara
 	name = "Тиара защиты"
 	desc = "Дорогостоящая корона из драгоценного металла, инкрустированная магическими кристаллами. Излучает защитную ауру, используя силу РаЗуМа!"
-	item_path = /obj/item/clothing/head/wizard/amp/shielded
+	item_path = /obj/item/clothing/head/helmet/wizard/amp/shielded
 	log_name = "TZ"
 	category = "Оборона"
 
