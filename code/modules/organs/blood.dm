@@ -126,7 +126,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_volume *= 0.3
 
 	// Effects of bloodloss
-	if(!HAS_TRAIT(src, TRAIT_CPB))
+	if(!HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))
 		switch(blood_volume)
 			if(BLOOD_VOLUME_SAFE to 10000)
 				if(pale)

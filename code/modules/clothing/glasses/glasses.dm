@@ -25,11 +25,13 @@
 			if(active)
 				active = FALSE
 				icon_state = off_state
+				item_state_world = "[off_state]_w"
 				vision_flags = 0
 				lighting_alpha = null
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
 				active = TRUE
+				item_state_world = initial(item_state_world)
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
 				lighting_alpha = initial(lighting_alpha)
@@ -43,6 +45,7 @@
 	name = "optical meson scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
+	item_state_world = "meson_w"
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 	toggleable = TRUE
@@ -63,6 +66,7 @@
 	name = "science goggles"
 	desc = "The goggles do nothing!"
 	icon_state = "purple"
+	item_state_world = "purple_w"
 	item_state = "glasses"
 	toggleable = TRUE
 	sightglassesmod = "sci"
@@ -100,6 +104,7 @@
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
+	item_state_world = "monocle_w"
 	item_state = "headset" // lol
 	body_parts_covered = 0
 
@@ -107,6 +112,7 @@
 	name = "optical material scanner"
 	desc = "Very confusing glasses."
 	icon_state = "material"
+	item_state_world = "material_w"
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	toggleable = TRUE
@@ -120,32 +126,38 @@
 	name = "aviator glasses"
 	desc = "Stylish glasses with orange lenses"
 	icon_state = "aviators_orange"
+	item_state_world = "aviators_orange_w"
 
 /obj/item/clothing/glasses/aviator_black
 	name = "aviator glasses"
 	desc = "Stylish glasses with black lenses"
 	icon_state = "aviators_black"
+	item_state_world = "aviators_black_w"
 
 /obj/item/clothing/glasses/aviator_red
 	name = "aviator glasses"
 	desc = "Stylish glasses with red lenses"
 	icon_state = "aviators_red"
+	item_state_world = "aviators_red_w"
 
 /obj/item/clothing/glasses/aviator_mirror
 	name = "aviator glasses"
 	desc = "Stylish glasses with transparent lenses"
 	icon_state = "aviators_mirror"
+	item_state_world = "aviators_mirror_w"
 
 /obj/item/clothing/glasses/jerusalem
 	name = "Jerusalem glasses"
 	desc = "Here you can see a small inscription: I hate it here"
 	icon_state = "spider_jerusalem"
+	item_state_world = "spider_jerusalem_w"
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
+	item_state_world = "glasses_w"
 	prescription = 1
 	body_parts_covered = 0
 
@@ -154,12 +166,14 @@
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
+	item_state_world = "hipster_glasses_w"
 
 /obj/item/clothing/glasses/threedglasses
 	desc = "A long time ago, people used these glasses to makes images from screens threedimensional."
 	name = "3D glasses"
 	icon_state = "3d"
 	item_state = "3d"
+	item_state_world = "3d_w"
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/gglasses
@@ -167,6 +181,7 @@
 	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
 	icon_state = "gglasses"
 	item_state = "gglasses"
+	item_state_world = "gglasses_w"
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/sunglasses
@@ -174,6 +189,7 @@
 	name = "sunglasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
+	item_state_world = "sun_w"
 	darkness_view = -1
 	flash_protection = FLASHES_PARTIAL_PROTECTION
 	flash_protection_slots = list(SLOT_GLASSES)
@@ -183,6 +199,7 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
+	item_state_world = "welding-g_w"
 	flash_protection = FLASHES_FULL_PROTECTION
 	flash_protection_slots = list(SLOT_GLASSES)
 	var/up = 0
@@ -224,6 +241,7 @@
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
+	item_state_world = "rwelding-g_w"
 
 /obj/item/clothing/glasses/welding/superior/cheif_eng
 	name = "superior welding goggles"
@@ -264,11 +282,13 @@
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
+	item_state_world = "bigsunglasses_w"
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud
 	name = "HUDsunglasses"
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
+	item_state_world = "sunhud_w"
 	hud_types = list(DATA_HUD_SECURITY)
 
 /obj/item/clothing/glasses/hud/hos_aug
@@ -276,6 +296,7 @@
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "hos_shades_ngv"
 	item_state = "hos_shades"
+	item_state_world = "hos_shades_w"
 	off_state = "hos_shades"
 	hud_types = list(DATA_HUD_SECURITY)
 	toggleable = TRUE
@@ -302,12 +323,14 @@
 	name = "tactical HUD"
 	desc = "Flash-resistant goggles with inbuilt combat and security information."
 	icon_state = "swatgoggles"
+	item_state_world = "swatgoggles_w"
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
 	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
 	item_state = "glasses"
+	item_state_world = "thermal_w"
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
@@ -343,12 +366,14 @@
 	name = "optical meson scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
+	item_state_world = "meson_w"
 	origin_tech = "magnets=3;syndicate=4"
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
+	item_state_world = "thermoncle_w"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
 	toggleable = TRUE
@@ -381,6 +406,7 @@
 	name = "night vision health scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
+	item_state_world = "healthhudnight_w"
 	darkness_view = 7
 	toggleable = TRUE
 	sightglassesmod = "nvg"
@@ -397,16 +423,19 @@
 	name = "gar glasses"
 	icon_state = "gar"
 	item_state = "gar"
+	item_state_world = "gar_w"
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar sunglasses"
 	icon_state = "garb"
 	item_state = "garb"
+	item_state_world = "garb_w"
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar meson scanner"
 	icon_state = "garm"
 	item_state = "garm"
+	item_state_world = "garm_w"
 	toggleable = FALSE
 	item_action_types = null
 
@@ -414,21 +443,25 @@
 	name = "gar HUDsunglasses"
 	icon_state = "gars"
 	item_state = "gars"
+	item_state_world = "gars_w"
 
 /obj/item/clothing/glasses/sunglasses/gar/super
 	name = "supergar sunglasses"
 	icon_state = "supergarb"
 	item_state = "supergarb"
+	item_state_world = "supergarb_w"
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar/super
 	name = "supergar HUDSunglasses"
 	icon_state = "supergars"
 	item_state = "supergars"
+	item_state_world = "supergars_w"
 
 /obj/item/clothing/glasses/gar/super
 	name = "supergar glasses"
 	icon_state = "supergar"
 	item_state = "supergar"
+	item_state_world = "supergar_w"
 	toggleable = FALSE
 
 /obj/item/clothing/glasses/sunglasses/noir

@@ -1188,6 +1188,7 @@ var/global/list/airlock_overlays = list()
 
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
+		ae.item_state_world = "door_electronics_smoked_w"
 		ae.broken = TRUE
 		operating = 0
 	..()

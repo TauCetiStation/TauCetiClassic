@@ -116,20 +116,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	var/disintegrating = FALSE
 
-	var/list/replicator_spells = list(
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/trap,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/generator,
-		/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction,
-		/obj/effect/proc_holder/spell/no_target/transfer_to_idle,
-		/obj/effect/proc_holder/spell/no_target/transfer_to_area,
-		/obj/effect/proc_holder/spell/no_target/toggle_light,
-		/obj/effect/proc_holder/spell/no_target/set_mail_tag,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult,
-	)
-
 	var/datum/skills/skills
 
 	var/image/indicator
@@ -158,9 +144,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	real_name = name
 	chat_color_name = name
 	scatter_offset()
-
-	for(var/spell in replicator_spells)
-		AddSpell(new spell(src))
 
 	skills = new
 	skills.add_available_skillset(/datum/skillset/replicator)

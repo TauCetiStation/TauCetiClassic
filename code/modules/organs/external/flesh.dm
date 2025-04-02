@@ -38,9 +38,11 @@
 	BP.update_sprite()
 
 	if(BP.pumped <= 0 && old_pumped > 0)
-		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
+		BP.owner.mob_metabolism_mod.RemoveMods(BP)
 	else
-		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.00015 * BP.pumped)
+		// gives us 0%-1% additive mod for metabolism per pumped bodypart, for every bodypart 6% total
+		var/pump_mod = LERP(0, 0.01, BP.pumped / BP.max_pumped)
+		BP.owner.mob_metabolism_mod.ModAdditive(pump_mod, BP)
 
 	return BP.pumped - old_pumped
 
