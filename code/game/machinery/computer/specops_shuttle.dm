@@ -60,8 +60,7 @@ var/global/specops_shuttle_timeleft = 0
 	var/area/start_location = locate(/area/shuttle/specops/station)
 	var/area/end_location = locate(/area/shuttle/specops/centcom)
 
-	SSshuttle.undock_act(start_location)
-	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_specops")
+	SSshuttle.undock_act(start_location, "specops_shuttle")
 
 	sleep(10)
 
@@ -95,8 +94,7 @@ var/global/specops_shuttle_timeleft = 0
 		var/mob/M = locate(/mob) in T
 		to_chat(M, "<span class='warning'>Вы прибыли на станцию ЦентКом. Операция завершена!</span>")
 
-	SSshuttle.dock_act(end_location)
-	SSshuttle.dock_act(/area/centcom/living, "centcomm_specops")
+	SSshuttle.dock_act(end_location, "specops_shuttle")
 
 	specops_shuttle_at_station = 0
 
@@ -151,8 +149,7 @@ var/global/specops_shuttle_timeleft = 0
 	var/area/start_location = locate(/area/shuttle/specops/centcom)
 	var/area/end_location = locate(/area/shuttle/specops/station)
 
-	SSshuttle.undock_act(start_location)
-	SSshuttle.undock_act(/area/centcom/living, "centcomm_specops")
+	SSshuttle.undock_act(start_location, "specops_shuttle")
 
 	sleep(10)
 
@@ -176,8 +173,7 @@ var/global/specops_shuttle_timeleft = 0
 
 	start_location.move_contents_to(end_location)
 
-	SSshuttle.dock_act(end_location)
-	SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_specops")
+	SSshuttle.dock_act(end_location, "specops_shuttle")
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T

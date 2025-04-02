@@ -2,10 +2,10 @@
 #define ARRIVAL_SHUTTLE_COOLDOWN 650
 #define ARRIVAL_SHUTTLE_VELOCITY 0
 #define ARRIVAL_SHUTTLE_TRANSIT 1
-#define ARRIVAL_SHUTTLE_EXODUS 2
+#define ARRIVAL_SHUTTLE_STATION 2
 
 
-var/global/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
+var/global/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Velocity		1 - Transit		2 - Station
 var/global/moving = FALSE
 var/global/area/curr_location
 var/global/lastMove = 0
@@ -33,7 +33,7 @@ var/global/lastMove = 0
 			updateUsrDialog()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
-	if(moving || location != ARRIVAL_SHUTTLE_EXODUS || !SSshuttle)
+	if(moving || location != ARRIVAL_SHUTTLE_STATION || !SSshuttle)
 		return
 	var/myArea = get_area(src)
 	if(SSshuttle.forbidden_atoms_check(myArea))
@@ -62,8 +62,8 @@ var/global/lastMove = 0
 	if(location == ARRIVAL_SHUTTLE_VELOCITY)
 		fromArea = locate(/area/shuttle/arrival/velocity)
 		destArea = locate(/area/shuttle/arrival/station)
-		destLocation = ARRIVAL_SHUTTLE_EXODUS
-	else if(location == ARRIVAL_SHUTTLE_EXODUS)
+		destLocation = ARRIVAL_SHUTTLE_STATION
+	else if(location == ARRIVAL_SHUTTLE_STATION)
 		fromArea = locate(/area/shuttle/arrival/station)
 		destArea = locate(/area/shuttle/arrival/velocity)
 		destLocation = ARRIVAL_SHUTTLE_VELOCITY
@@ -107,10 +107,8 @@ var/global/lastMove = 0
 
 	fromArea.move_contents_to(toArea, null)
 
-	// Sending message only on EXODUS
-	if (destLocation == ARRIVAL_SHUTTLE_EXODUS)
-		if (!radio_message_via_ai(arrival_note))
-			radio.autosay(arrival_note, "Система оповещения")
+	if (destLocation == ARRIVAL_SHUTTLE_STATION && !radio_message_via_ai(arrival_note))
+		radio.autosay(arrival_note, "Система оповещения")
 
 	location = destLocation
 	play_flying_sound(toArea)
@@ -118,32 +116,21 @@ var/global/lastMove = 0
 
 	curr_location = destArea
 	moving = FALSE
-	open_doors(toArea, location)
+	open_doors(toArea)
 
-	if(location == ARRIVAL_SHUTTLE_EXODUS)
+	if(location == ARRIVAL_SHUTTLE_STATION)
 		addtimer(CALLBACK(src, PROC_REF(try_move_from_station)), 600)
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
-	SSshuttle.undock_act(/area/velocity/exit, "velocity_1")
-	SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
-	SSshuttle.undock_act(A)
-	// Sending message only on EXODUS
-	if(curr_location == locate(/area/shuttle/arrival/station))
-		SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
-		SSshuttle.undock_act(curr_location, "arrival_1")
-		if (!radio_message_via_ai(department_note))
-			radio.autosay(department_note, "Система оповещения")
+	SSshuttle.undock_act(A, "arrival_shuttle")
 
-/obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
-	switch(arrival)
-		if(0) //Velocity
-			SSshuttle.dock_act(/area/velocity/exit, "velocity_1")
-			SSshuttle.dock_act(A)
+	if(location == ARRIVAL_SHUTTLE_STATION && !radio_message_via_ai(department_note))
+		radio.autosay(department_note, "Система оповещения")
 
-		if(2) //Station
-			SSshuttle.dock_act(/area/station/hallway/secondary/arrival, "arrival_1")
-			SSshuttle.dock_act(A)
+/obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A)
+	SSshuttle.dock_act(A, "arrival_shuttle")
+
 
 /obj/machinery/computer/arrival_shuttle/proc/play_flying_sound(area/A)
 	for(var/mob/M in A)
@@ -198,7 +185,7 @@ var/global/lastMove = 0
 	if(href_list["back"])
 		if(!arrival_shuttle_ready_move())
 			to_chat(usr, "<span class='notice'>Шаттл ещё не готов к полёту.</span>")
-		else if(!moving && location == ARRIVAL_SHUTTLE_EXODUS)
+		else if(!moving && location == ARRIVAL_SHUTTLE_STATION)
 			to_chat(usr, "<span class='notice'>Шаттл получил запрос и будет отправлен в ближайшее время.</span>")
 			arrival_shuttle_move()
 		else
