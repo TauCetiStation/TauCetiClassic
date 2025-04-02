@@ -67985,8 +67985,7 @@
 	},
 /area/station/medical/genetics_cloning)
 "mBV" = (
-/obj/structure/table,
-/obj/item/weapon/aiModule/corp,
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "mCj" = (
@@ -69217,6 +69216,7 @@
 	network = list("Research","Toxins                                                                Test                                                                Area","Robots","Anomaly                                                                Isolation");
 	pixel_y = 2
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkpurple"
@@ -94531,9 +94531,9 @@
 	},
 /area/station/medical/hallway/outbranch)
 "rQV" = (
-/obj/structure/table,
-/obj/item/weapon/aiModule/asimov,
 /obj/machinery/light/smart,
+/obj/item/weapon/aiModule/corp,
+/obj/structure/table,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "rQZ" = (
