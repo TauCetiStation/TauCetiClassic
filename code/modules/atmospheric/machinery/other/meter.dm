@@ -11,6 +11,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 5
+	layer = GAS_METER_LAYER
 
 /obj/machinery/meter/atom_init()
 	. = ..()
