@@ -6484,6 +6484,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"akK" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "akL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -6619,6 +6625,12 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
+"akV" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "akW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -6831,6 +6843,12 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"alo" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "alp" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -6970,6 +6988,12 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
+"alC" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "alD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/alarm{
@@ -76749,12 +76773,12 @@
 	pixel_x = -27
 	},
 /obj/item/weapon/stickers{
-	pixel_y = 16;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 16
 	},
 /obj/item/jar/cookie{
-	pixel_y = 18;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 18
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -105009,7 +105033,7 @@ cmp
 cmp
 cmp
 cms
-csz
+alC
 coc
 cod
 cod
@@ -105676,7 +105700,7 @@ akE
 akE
 akE
 akE
-akE
+akK
 akE
 akE
 akE
@@ -137294,7 +137318,7 @@ ajI
 ajI
 ajI
 ajI
-ajI
+akV
 ajI
 ajI
 ajI
@@ -137895,7 +137919,7 @@ czD
 czD
 czD
 czD
-czD
+alo
 czD
 czD
 czD

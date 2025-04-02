@@ -16690,6 +16690,24 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"aCe" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
+"aCf" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
+"aCg" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "aCh" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -16702,6 +16720,12 @@
 	icon_state = "graychoco"
 	},
 /area/station/engineering/engine)
+"aCi" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "aCD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -135614,7 +135638,7 @@ hSk
 hSk
 hSk
 hSk
-hSk
+aCf
 hSk
 hSk
 hSk
@@ -140656,7 +140680,7 @@ tKY
 tKY
 tKY
 uIA
-tKY
+aCi
 tKY
 tKY
 tKY
@@ -161035,7 +161059,7 @@ eWK
 eWK
 eWK
 eWK
-eWK
+aCe
 eWK
 eWK
 dEn
@@ -171208,7 +171232,7 @@ gtW
 gtW
 gtW
 gtW
-gtW
+aCg
 gtW
 gtW
 iOa

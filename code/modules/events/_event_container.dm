@@ -229,6 +229,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Portal of Cult",          /datum/event/anomaly/cult_portal,       60,    list(ASSIGNMENT_SECURITY = 40), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Heist",                   /datum/event/heist,                     40,    list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_ENGINEER = 15), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Traders",           /datum/event/space_traders,             100,   list(), ONESHOT, 1, 20),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Replicator",              /datum/event/replicator,                0,     list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 		new /datum/event_meta/alien(EVENT_LEVEL_MODERATE, "Alien Infestation", /datum/event/alien_infestation,         0,     list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_MEDICAL = 15), ONESHOT, 1, 35),
 	)
 
