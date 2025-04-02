@@ -94,7 +94,7 @@ var/global/list/frozen_items = list()
 	updateUsrDialog()
 
 /obj/item/weapon/circuitboard/cryopodcontrol
-	name = "Circuit board (Cryogenic Oversight Console)"
+	details = "circuit board (Cryogenic Oversight Console)"
 	build_path = /obj/machinery/computer/cryopod
 	origin_tech = "programming=3"
 
