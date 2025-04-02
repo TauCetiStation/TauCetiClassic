@@ -799,7 +799,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_expander
 	name = "accelerator upgrade"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "card_mod"
+	icon_state = "accelerator_space"
+	item_state_world = "accelerator_space_w"
 	desc = "Расширение для кинетического ускорителя. Даёт место для дополнительного улучшения."
 
 ///////////////////////////////////////////
@@ -807,6 +808,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/resources
 	name = "accelerator upgrade(resources)"
 	icon_state = "accelerator_upg_resources"
+	item_state_world = "accelerator_upg_resources_w"
 	var/additional_coefficient = 0.25 // 25%
 
 /obj/item/kinetic_upgrade/resources/atom_init()
@@ -824,6 +826,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/range
 	name = "accelerator upgrade(range)"
 	icon_state = "accelerator_upg_range"
+	item_state_world = "accelerator_upg_range_w"
 	var/range_increase = 1
 
 /obj/item/kinetic_upgrade/range/atom_init()
@@ -841,6 +844,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/damage
 	name = "accelerator upgrade(damage)"
 	icon_state = "accelerator_upg_damage"
+	item_state_world = "accelerator_upg_damage_w"
 	var/damage_increase = 1.5
 
 /obj/item/kinetic_upgrade/damage/atom_init()
@@ -858,6 +862,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/speed
 	name = "accelerator upgrade(speed)"
 	icon_state = "accelerator_upg_speed"
+	item_state_world = "accelerator_upg_speed_w"
 	var/cooldown_reduction = 0.4 SECOND
 
 /obj/item/kinetic_upgrade/speed/atom_init()

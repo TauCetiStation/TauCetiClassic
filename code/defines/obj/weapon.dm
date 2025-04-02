@@ -448,11 +448,13 @@
 /obj/item/weapon/module/card_reader
 	name = "card reader module"
 	icon_state = "card_mod"
+	item_state_world = "card_mod_w"
 	desc = "An electronic module for reading data and ID cards."
 
 /obj/item/weapon/module/power_control
 	name = "power control module"
 	icon_state = "power_mod"
+	item_state_world = "power_mod_w"
 	desc = "Heavy-duty switching circuits for power control."
 	m_amt = 50
 	g_amt = 50
@@ -460,16 +462,19 @@
 /obj/item/weapon/module/id_auth
 	name = "ID authentication module"
 	icon_state = "id_mod"
+	item_state_world = "id_mod_w"
 	desc = "A module allowing secure authorization of ID cards."
 
 /obj/item/weapon/module/cell_power
 	name = "power cell regulator module"
 	icon_state = "power_mod"
+	item_state_world = "power_mod_w"
 	desc = "A converter and regulator allowing the use of power cells."
 
 /obj/item/weapon/module/cell_power
 	name = "power cell charger module"
 	icon_state = "power_mod"
+	item_state_world = "power_mod_w"
 	desc = "Charging circuits for power cells."
 
 /obj/item/weapon/syntiflesh
