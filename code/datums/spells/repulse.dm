@@ -23,7 +23,7 @@
 		if(AM == user || AM.anchored)
 			continue
 
-		if(ishuman(AM)) // AIR_FLOW_PROTECT defend a human from repulse
+		if(ishuman(AM)) // AIR_FLOW_PROTECT defends a human from repulse
 			var/mob/living/carbon/human/H = AM
 			if(H.shoes && (H.shoes.flags & AIR_FLOW_PROTECT))
 				continue
