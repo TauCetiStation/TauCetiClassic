@@ -270,17 +270,17 @@
 	spectator.forceMove(get_turf(jump_to))
 
 /*
- * Равномерно распределяет желающих по лэндмаркам из списка
+ * Evenly distributes to the landing marks from the list
 */
-/datum/spawner/multiple
+/datum/spawner/multiple_landmark
 	var/list/spawn_landmarks_names = list()
 
-/datum/spawner/multiple/New()
+/datum/spawner/multiple_landmark/New()
 	. = ..()
 	for(var/name in spawn_landmarks_names)
 		spawn_landmarks_names[name] = 0
 
-/datum/spawner/multiple/pick_spawn_location()
+/datum/spawner/multiple_landmark/pick_spawn_location()
 	var/landmark_name = pick_landmark_name()
 
 	if(!length(landmarks_list[landmark_name]))
@@ -288,7 +288,7 @@
 
 	return pick_landmarked_location(landmark_name)
 
-/datum/spawner/multiple/proc/pick_landmark_name()
+/datum/spawner/multiple_landmark/proc/pick_landmark_name()
 	var/landmark_name = ""
 	var/n = INFINITY
 
@@ -301,7 +301,7 @@
 
 	return landmark_name
 
-/datum/spawner/multiple/jump(mob/dead/spectator)
+/datum/spawner/multiple_landmark/jump(mob/dead/spectator)
 	var/list/avaible_landmarks = list()
 
 	for(var/name in spawn_landmarks_names)
