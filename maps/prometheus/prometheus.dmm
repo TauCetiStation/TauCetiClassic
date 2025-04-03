@@ -7111,6 +7111,7 @@
 "bhY" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/paper/safe_code,
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
