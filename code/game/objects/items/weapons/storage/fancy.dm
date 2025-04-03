@@ -372,10 +372,10 @@
 
 /obj/item/weapon/storage/fancy/vials
 	icon = 'icons/obj/vialbox.dmi'
-	icon_state = "vialbox6"
-	icon_type = "vial"
+	icon_state = "rackbox8"
+	icon_type = "rack"
 	name = "vial storage box"
-	storage_slots = 6
+	storage_slots = 8
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 
 
