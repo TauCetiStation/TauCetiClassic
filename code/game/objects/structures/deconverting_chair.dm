@@ -28,7 +28,7 @@
 		s.set_up(5, 1, get_turf(src))
 		s.start()
 		deconvert(user, buckled_mob)
-		if(buckled_mob.isloyal() || buckled_mob.ismindshielded())
+		if(buckled_mob.ismindprotect())
 			del_imp(user, buckled_mob)
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/deconvert(mob/user, mob/living/carbon/human/target)
