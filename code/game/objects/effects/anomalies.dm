@@ -277,7 +277,7 @@
 	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/anomaly/gas/proc/try_move()
-	var/turf/T = get_step(src, pick(NORTH, SOUTH, EAST, WEST))
+	var/turf/T = get_step(src, cardinal)
 
 	if(T)
 		forceMove(T)
