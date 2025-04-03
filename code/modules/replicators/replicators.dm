@@ -60,9 +60,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	pass_flags = PASSTABLE
 	ventcrawler = TRUE
-	can_enter_vent_with = list(
-		/obj/effect/proc_holder/spell,
-	)
 
 	maxHealth = 60
 	health = 60
