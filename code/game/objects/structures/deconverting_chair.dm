@@ -24,7 +24,7 @@
 		s.set_up(5, 1, get_turf(src))
 		s.start()
 		deconvert(user, buckled_mob)
-		if(prob(50))
+		if(prob(100))
 			if(buckled_mob.ismindprotect())
 				remove_protect_implants(user, buckled_mob)
 
@@ -61,11 +61,12 @@
 	for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
 		if(I.implanted)
 			qdel(I)
+			to_chat(target, "<span class='notice'>Your mindshield implant has been deactivated.</span>")
 	for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
 		if(I.implanted)
 			qdel(I)
+			to_chat(target, "<span class='notice'>Your loyality implant has been deactivated.</span>")
 		target.sec_hud_set_implants()
-		to_chat(target, "<span class='notice'><Your restraining implants have been deactivated.</span>")
 
 
 
