@@ -472,7 +472,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>Вы разбираетесь, как установить таймер на [CASE(src,PREPOSITIONAL_CASE)]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>Вы разбираетесь, как установить таймер на [CASE(src, PREPOSITIONAL_CASE)]...</span>"))
 		return
 	var/newtime = input(usr, "Укажите время до взрыва.", "Timer", 10) as num
 	if(newtime < 5)
