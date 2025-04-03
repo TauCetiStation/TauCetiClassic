@@ -258,7 +258,8 @@
 		release_gas()
 		COOLDOWN_START(src, GAS_COOLDOWN, release_time)
 
-	if(prob(move_chance)) try_move()
+	if(prob(move_chance))
+		try_move()
 
 /obj/effect/anomaly/gas/proc/release_gas()
 	var/selected_gas = pick(gas_types)
