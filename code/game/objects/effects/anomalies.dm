@@ -251,7 +251,8 @@
 	return ..()
 
 /obj/effect/anomaly/gas/process()
-	if(QDELETED(src)) return
+	if(QDELETED(src))
+		return
 
 	if(COOLDOWN_FINISHED(src, GAS_COOLDOWN))
 		release_gas()
