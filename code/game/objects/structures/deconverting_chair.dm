@@ -19,17 +19,14 @@
 	if(!buckled_mob)
 		to_chat(user, "<span class='warning'>Activation is not possible without a user in the chair.</span>")
 		return
-	if(buckled_mob == user)
-		to_chat(user, "<span class='warning'>You don't want to activate [src] while you're sitting on it..</span>")
-		return
-
 	if(do_after(usr, 30, target = user))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, get_turf(src))
 		s.start()
 		deconvert(user, buckled_mob)
-		if(buckled_mob.isloyal() || buckled_mob.ismindshielded())
-			del_imp(user, buckled_mob)
+		if(prob(50))
+			if(buckled_mob.ismindprotect())
+				remove_protect_implants(user, buckled_mob)
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/deconvert(mob/user, mob/living/carbon/human/target)
 	if(!ishuman(target) || on_cooldown)
@@ -57,16 +54,20 @@
 		on_cooldown = TRUE
 		addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), 1 MINUTE, TIMER_UNIQUE)
 
-/obj/structure/stool/bed/chair/electrotherapy/proc/del_imp(mob/user, mob/living/carbon/human/target)
-	if(prob(50))
-		for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
-			if(I.implanted)
-				qdel(I)
-		for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
-			if(I.implanted)
-				qdel(I)
+/obj/structure/stool/bed/chair/electrotherapy/proc/remove_protect_implants(mob/living/carbon/human/target)
+	if(!target.ismindprotect())
+		return
+
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
+		if(I.implanted)
+			qdel(I)
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
+		if(I.implanted)
+			qdel(I)
 		target.sec_hud_set_implants()
-		to_chat(target, "<span class='notice'><Font size =3><B>Your restraining implants have been deactivated.</B></FONT></span>")
+		to_chat(target, "<span class='notice'><Your restraining implants have been deactivated.</span>")
+
+
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/reset_cooldown()
 	if(on_cooldown)
