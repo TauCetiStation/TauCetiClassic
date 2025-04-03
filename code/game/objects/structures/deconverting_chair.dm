@@ -24,7 +24,7 @@
 		s.set_up(5, 1, get_turf(src))
 		s.start()
 		deconvert(user, buckled_mob)
-		if(prob(100))
+		if(prob(50))
 			if(buckled_mob.ismindprotect())
 				remove_protect_implants(user, buckled_mob)
 
