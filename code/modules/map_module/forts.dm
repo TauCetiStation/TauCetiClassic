@@ -21,7 +21,7 @@
 
 	// assoc lists (TEAMNAME = reference)
 	var/list/datum/faction/factions = list()
-	var/list/datum/spawner/multiple/fort_teams/spawner
+	var/list/datum/spawner/multiple_landmark/fort_teams/spawner
 	var/list/obj/machinery/computer/fort_console/consoles = list()
 
 /datum/map_module/forts/New()
@@ -31,7 +31,7 @@
 	factions[TEAM_NAME_RED] = create_custom_faction(TEAM_NAME_RED, TEAM_NAME_RED, "red", objective)
 	factions[TEAM_NAME_BLUE] = create_custom_faction(TEAM_NAME_BLUE, TEAM_NAME_BLUE, "blue", objective)
 
-	spawner = create_spawner(/datum/spawner/multiple/fort_teams, src)
+	spawner = create_spawner(/datum/spawner/multiple_landmark/fort_teams, src)
 
 /datum/map_module/forts/stat_entry(mob/M)
 	if(M.client.holder)
