@@ -277,7 +277,7 @@
 
 /datum/spawner/multiple/New()
 	. = ..()
-	for(name in spawn_landmarks_names)
+	for(var/name in spawn_landmarks_names)
 		spawn_landmarks_names[name] = 0
 
 /datum/spawner/multiple/pick_spawn_location()
@@ -292,7 +292,7 @@
 	var/landmark_name = ""
 	var/n = INFINITY
 
-	for(name in spawn_landmarks_names)
+	for(var/name in spawn_landmarks_names)
 		if(spawn_landmarks_names[name] < n)
 			n = spawn_landmarks_names[name]
 			landmark_name = name
@@ -304,7 +304,7 @@
 /datum/spawner/multiple/jump(mob/dead/spectator)
 	var/list/avaible_landmarks = list()
 
-	for(name in spawn_landmarks_names)
+	for(var/name in spawn_landmarks_names)
 		if(length(landmarks_list[name]))
 			avaible_landmarks += name
 
