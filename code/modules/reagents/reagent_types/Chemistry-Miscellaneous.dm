@@ -242,7 +242,7 @@
 			var/mob/living/carbon/human/H = M
 			if(H.lip_style)
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE) // should update only lips in the future
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)
@@ -386,7 +386,7 @@
 					species_facial_hair += i
 			if(species_facial_hair.len)
 				H.f_style = pick(species_facial_hair)
-		H.update_hair()
+		H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Chemlights ///////////////////////////////////////////////
@@ -716,10 +716,10 @@
 			H.lip_color = color
 			hair_changes_occured = TRUE
 			body_changes_occured = TRUE
-		if(hair_changes_occured)
-			H.update_hair()
 		if(body_changes_occured)
-			H.update_body()
+			H.update_body(update_preferences = TRUE)
+		else if (hair_changes_occured)
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/paint/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
@@ -755,7 +755,7 @@
 				H.facial_painted = FALSE
 				changes_occured = TRUE
 			if(changes_occured)
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/paint_remover/reaction_turf(turf/T, volume)
 	. = ..()
@@ -867,7 +867,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 				if(species_facial_hair.len)
 					H.f_style = pick(species_facial_hair)
-			H.update_hair()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/ectoplasm
 	name = "Ectoplasm"

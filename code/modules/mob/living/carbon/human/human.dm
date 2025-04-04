@@ -65,7 +65,6 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
-	regenerate_icons()
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
@@ -131,16 +130,15 @@
 	. = ..(mapload, GOLEM)
 
 /mob/living/carbon/human/shadowling/atom_init(mapload)
+	underwear = 0
+	undershirt = 0
 	. = ..(mapload, SHADOWLING)
 	var/newNameId = pick(possibleShadowlingNames)
 	possibleShadowlingNames.Remove(newNameId)
 	real_name = newNameId
 	name = real_name
 
-	underwear = 0
-	undershirt = 0
 	faction = "faithless"
-	regenerate_icons()
 
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
@@ -154,7 +152,9 @@
 	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
 
 /mob/living/carbon/human/skeleton/atom_init(mapload)
-	. = ..(mapload, SKELETON)
+	. = ..(mapload, pick(HUMAN, UNATHI, TAJARAN, SKRELL))
+
+	ADD_TRAIT(src, ELEMENT_TRAIT_SKELETON, ADMIN_TRAIT)
 
 /mob/living/carbon/human/serpentid/atom_init(mapload)
 	. = ..(mapload, SERPENTID)
@@ -397,8 +397,8 @@
 			regenerating_organ_time = 0
 			if(use_cost)
 				nutrition -= regenerating_capacity_penalty
+			update_body(regenerating_bodypart.body_zone)
 			regenerating_bodypart = null
-			update_body()
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
 	if ((check_type & ARMS) && handcuffed)
@@ -1120,7 +1120,7 @@
 			gender = MALE
 		else
 			gender = FEMALE
-	regenerate_icons()
+	regenerate_icons(update_body_preferences = TRUE)
 	check_dna()
 
 	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
@@ -1425,9 +1425,8 @@
 		b_skin = 0
 
 	if(force_organs || !bodyparts.len)
-		species.create_organs(src, TRUE)
-	else
-		apply_recolor()
+		species.create_organs(src, deleteOld = TRUE)
+	full_prosthetic = null
 
 	if(species.language)
 		add_language(species.language, LANGUAGE_NATIVE)
@@ -1444,8 +1443,7 @@
 		if(SSquirks.quirk_blacklist_species[Q.name] && (species.name in SSquirks.quirk_blacklist_species[Q.name]))
 			qdel(Q)
 
-	regenerate_icons()
-	full_prosthetic = null
+	regenerate_icons(update_body_preferences = TRUE)
 
 	if(species)
 		return TRUE
@@ -1453,6 +1451,8 @@
 		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
+// todo: why we need to support two set species procedures just because of abductors, 
+// merge it with the one above and add args to toggle behavior
 /mob/living/carbon/human/proc/set_species_soft(new_species)
 	if(species.name == new_species)
 		return
@@ -1464,7 +1464,7 @@
 
 	species.on_gain(src)
 
-	regenerate_icons()
+	regenerate_icons(update_body_preferences = TRUE)
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"
@@ -1772,6 +1772,7 @@
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
+// todo
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//TG...
 	//Handle mutant parts if possible
@@ -2302,7 +2303,7 @@
 	var/datum/species/S = all_species[species.name]
 	age = rand(S.min_age, S.max_age)
 
-	regenerate_icons()
+	regenerate_icons(update_body_preferences = TRUE) 
 
 /mob/living/carbon/human/get_blood_datum()
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))

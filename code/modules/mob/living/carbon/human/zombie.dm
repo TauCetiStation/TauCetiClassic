@@ -1,3 +1,5 @@
+// todo: need to cleanup and sort out this file
+
 /obj/item/weapon/melee/zombie_hand
 	name = "zombie claw"
 	desc = "A zombie's claw is its primary tool, capable of infecting \
@@ -136,7 +138,7 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
 	if(H.stat != DEAD && prob(10))
-		playsound(H, pick(spooks), VOL_EFFECTS_MASTER)
+		playsound(H, pick(SOUNDIN_GROWL), VOL_EFFECTS_MASTER)
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed) //Death of zombie
 	if(gibbed)
@@ -237,11 +239,6 @@
 		return
 	return ..()
 
-/mob/living/carbon/human/embed(obj/item/I)
-	if(HAS_TRAIT(src, TRAIT_NO_EMBED))
-		return
-	return ..()
-
 /mob/living/carbon/human/proc/infect_zombie_virus(target_zone = null, forced = FALSE, fast = FALSE)
 	if(!forced && !prob(get_bite_infection_chance(src, target_zone)))
 		return
@@ -273,18 +270,10 @@
 	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
 /mob/living/carbon/human/proc/zombify()
-	if(iszombie(src))
+	if(HAS_TRAIT_FROM(src, ELEMENT_TRAIT_ZOMBIE, INNATE_TRAIT))
 		return
 
-	switch(species.name)
-		if(TAJARAN)
-			set_species(ZOMBIE_TAJARAN, TRUE, TRUE)
-		if(SKRELL)
-			set_species(ZOMBIE_SKRELL, TRUE, TRUE)
-		if(UNATHI)
-			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
-		else
-			set_species(ZOMBIE, TRUE, TRUE)
+	ADD_TRAIT(src, ELEMENT_TRAIT_ZOMBIE, INNATE_TRAIT)
 
 	to_chat(src, "<span class='cult large'>Ты ГОЛОДЕН!</span><br>\
 	<span class='cult'>Теперь ты зомби! Не пытайся вылечиться, не вреди своим собратьям мёртвым, не помогай какому бы то ни было не-зомби. \

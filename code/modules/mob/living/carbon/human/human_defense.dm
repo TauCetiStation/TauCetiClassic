@@ -388,6 +388,9 @@
 	..(O, throw_damage, dtype, zone, armor)
 
 /mob/living/carbon/human/embed(obj/item/I, zone, created_wound)
+	if(HAS_TRAIT(src, TRAIT_NO_EMBED))
+		return
+
 	if(!zone)
 		return ..()
 

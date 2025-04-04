@@ -1,5 +1,5 @@
 // ex-species - slime people, xenobio mutation of slimetoxin
-// most of unique mechanics handled with ELEMENT_TRAIT_SLIME
+// ELEMENT_TRAIT_SLIME
 
 /datum/element/mutation/slime
 	traits = list(

@@ -163,7 +163,7 @@
 	// for some reason name is not set at this stage and if I don't do this the emote message will be nameless
 	H.name = H.real_name
 	H.emote("scream")
-	H.update_body()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), PROC_REF(battlecry))
 
@@ -319,7 +319,7 @@
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
 	H.flavor_text = ""
-	H.regenerate_icons()
+	H.regenerate_icons(update_body_preferences = TRUE)
 
 	// In case the golem is evil don't make him a loyal dog of NT.
 	if(isanyantag(H))

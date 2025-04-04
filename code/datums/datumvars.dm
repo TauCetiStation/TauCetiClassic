@@ -907,7 +907,6 @@ body
 
 		if(H.set_species(new_species))
 			to_chat(usr, "Set species of [H] to [H.species].")
-			H.regenerate_icons()
 		else
 			to_chat(usr, "Failed! Something went wrong.")
 

@@ -6,7 +6,6 @@
 	icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE

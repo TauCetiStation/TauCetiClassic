@@ -1,3 +1,9 @@
+// some thought on how to make it less complicated:
+// several modvals for different types of movement speed (walking, running, crawling, flying)
+// move to modvals more constant modificators like from races, traits, mutations, items slowdown
+// still need to keep dynamic modificators like slowdown from damage or hunger out of modvals and calculate it here
+// ... or check tg datum system
+
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 	var/nullify_debuffs = FALSE
@@ -13,6 +19,7 @@
 
 	if(iszombie(src))
 		nullify_debuffs = TRUE
+		tally += 0.5
 
 	tally += species.speed_mod
 

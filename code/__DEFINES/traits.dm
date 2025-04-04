@@ -231,6 +231,9 @@
 #define TRAIT_NO_BLOOD            "no_blood"
 /// prevents mob from spawning bloody mess when gibbed, they still drop limbs if they have them
 #define TRAIT_NO_MESSY_GIBS       "no_messy_gibs"
+#define TRAIT_GLOWING_EYES        "glowing_eyes"
+// todo: this enables night vision filter, but we also need to set see_in_dark for it to work in the dark, need to rework or rename this trait
+#define TRAIT_NIGHT_EYES          "night_eyes"
 
 
 /*
@@ -244,6 +247,7 @@
 #define ELEMENT_TRAIT_GODMODE     /datum/element/mutation/godmode
 #define ELEMENT_TRAIT_SKELETON    /datum/element/mutation/skeleton
 #define ELEMENT_TRAIT_SLIME       /datum/element/mutation/slime
+#define ELEMENT_TRAIT_ZOMBIE      /datum/element/mutation/zombie
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

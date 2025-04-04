@@ -11,7 +11,6 @@
 	health = 150
 	gender = NEUTER
 
-	update_icon = 0
 	nutrition = 700 // 1000 = max
 
 	see_in_dark = 8
@@ -78,7 +77,6 @@
 	health = 200
 	gender = NEUTER
 
-	update_icon = 0
 	nutrition = 800 // 1200 = max
 	w_class = SIZE_HUMAN
 

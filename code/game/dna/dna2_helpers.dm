@@ -185,7 +185,7 @@
 		if((0 < height) && (height <= heights_list.len))
 			H.height = heights_list[height]
 
-		H.regenerate_icons()
+		H.regenerate_icons(update_body_preferences = TRUE)
 
 // Used below, simple injection modifier.
 /proc/probinj(pr, inj)

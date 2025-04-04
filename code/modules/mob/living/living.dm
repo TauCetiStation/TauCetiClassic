@@ -635,7 +635,7 @@
 	if(istype(BP))
 		BP.disfigured = FALSE
 
-	for (var/obj/item/organ/external/head/H in organ_head_list) // damn son, where'd you get this?
+	for (var/obj/item/organ/external/head/H in lost_heads_list) // damn son, where'd you get this?
 		if(H.brainmob)
 			if(H.brainmob.real_name == real_name)
 				if(H.brainmob.mind)

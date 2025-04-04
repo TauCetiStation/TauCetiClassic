@@ -381,6 +381,7 @@
 #include "code\datums\elements\mutations\godmode.dm"
 #include "code\datums\elements\mutations\skeleton.dm"
 #include "code\datums\elements\mutations\slime.dm"
+#include "code\datums\elements\mutations\zombie.dm"
 #include "code\datums\emotes\emote.dm"
 #include "code\datums\emotes\misc.dm"
 #include "code\datums\emotes\state_checks.dm"

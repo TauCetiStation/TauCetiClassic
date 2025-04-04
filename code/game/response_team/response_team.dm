@@ -160,9 +160,7 @@ var/global/can_call_ert
 	if(new_fstyle)
 		H.f_style = new_fstyle
 
-	H.apply_recolor()
-	H.update_hair()
-	H.update_body()
+	H.update_body(update_preferences = TRUE)
 	H.check_dna(H)
 
 	if(!_name)

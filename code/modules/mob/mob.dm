@@ -226,7 +226,16 @@
 	return 0
 
 /mob/proc/Life()
+	// SHOULD_CALL_PARENT(TRUE) // need to do a pass at every life() call and see if adding ..() everywhere can break something
 	set waitfor = 0
+
+	// forces a full overlay update
+	// todo: this flag is not actively used at this moment, maybe we should remove it or replace some regenerate_icons()-calls with it
+	// for humans direct parts update is more preferable than full regeneration (ex. update_body())
+	if(regenerate_icons_next_tick)
+		regenerate_icons_next_tick = FALSE
+		regenerate_icons()
+
 	return
 
 /mob/proc/incapacitated(restrained_type = ARMS)
@@ -788,9 +797,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(!no_transform && lying != lying_prev)
 		update_transform()
-	if(update_icon)	//forces a full overlay update
-		update_icon = FALSE
-		regenerate_icons()
 
 
 /mob/proc/facedir(ndir)

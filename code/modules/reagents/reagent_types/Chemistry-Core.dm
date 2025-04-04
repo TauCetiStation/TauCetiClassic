@@ -34,9 +34,8 @@
 			if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 10)
 				H.lip_style = null
 				changes_occured = TRUE
-				H.update_body()
 			if(changes_occured)
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
 	. = ..()

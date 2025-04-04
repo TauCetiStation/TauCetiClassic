@@ -35,7 +35,12 @@
 
 	var/old_pumped = BP.pumped
 	BP.pumped = min(BP.pumped + value, cap)
-	BP.update_sprite()
+
+	// trigger body update only when we passed threshold in any direction
+	var/before_pumped = old_pumped > BP.pumped_threshold
+	var/after_pumped = BP.pumped > BP.pumped_threshold
+	if(before_pumped != after_pumped)
+		BP.owner.update_body(BP.body_zone)
 
 	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.mob_metabolism_mod.RemoveMods(BP)
@@ -496,7 +501,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (!(BP.status & ORGAN_DEAD))
 			BP.status |= ORGAN_DEAD
 			to_chat(BP.owner, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
-			BP.owner.update_body()
+			BP.owner.update_body(BP.body_zone)
 
 		BP.germ_level++
 		BP.owner.adjustToxLoss(1)
@@ -657,7 +662,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.germ_level >= INFECTION_LEVEL_THREE)
 		STOP_PROCESSING(SSobj, BP)
 		BP.status |= ORGAN_DEAD
-		BP.update_sprite()
+		BP.merge_appearance() // regenerate appearance with new color
 
 // Runs once when attached
 /datum/bodypart_controller/proc/check_rejection()

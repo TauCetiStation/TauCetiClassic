@@ -868,9 +868,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(new_fstyle)
 		M.f_style = new_fstyle
 
-	M.apply_recolor()
-	M.update_hair()
-	M.update_body()
+	M.update_body(update_preferences = TRUE)
 	M.check_dna(M)
 
 /client/proc/show_player_notes(key as text)

@@ -86,7 +86,7 @@
 
 	usr.remove_from_mob(BP)
 	BP.insert_organ(H)
-	H.update_body()
+	H.update_body(BP.body_zone)
 	H.updatehealth()
 	H.UpdateDamageIcon(BP)
 

@@ -35,6 +35,12 @@
 
 	return FALSE
 
+/proc/is_not_trait(trait, mob/M, intentional)
+	if(!HAS_TRAIT(M, trait))
+		return TRUE
+
+	return FALSE
+
 /proc/is_intentional_or_species_no_flag(flag, mob/M, intentional)
 	if(intentional)
 		return TRUE

@@ -1,4 +1,5 @@
 // ex-species - skeleton people
+// ELEMENT_TRAIT_SKELETON
 
 /datum/element/mutation/skeleton
 	traits = list(
@@ -30,7 +31,7 @@
 		BP_TAIL   = /obj/item/organ/external/tail/skeleton,
 	)
 
-#define SKELETON_MOOD_EVENT "undead"
+#define SKELETON_MOOD_EVENT "skeleton"
 
 /datum/element/mutation/skeleton/on_gain(mob/living/L)
 
@@ -75,7 +76,7 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			qdel(IO)
 
-		H.regenerate_icons()
+		H.regenerate_icons(update_body_preferences = TRUE)
 
 /datum/element/mutation/skeleton/on_loose(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, SKELETON_MOOD_EVENT)

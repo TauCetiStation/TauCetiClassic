@@ -325,7 +325,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -378,7 +377,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -409,7 +407,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -445,7 +442,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -476,7 +472,6 @@
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null

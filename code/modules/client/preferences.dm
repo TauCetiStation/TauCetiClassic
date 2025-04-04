@@ -377,7 +377,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -406,8 +406,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height
-
-	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
@@ -507,9 +505,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		else
 			continue
 
-	// Apply skin color
-	character.apply_recolor()
-
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
@@ -535,9 +530,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.backbag = backbag
 	character.use_skirt = use_skirt
 
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
+	character.regenerate_icons(update_body_preferences = TRUE)
 
 //for the 'occupation' and 'roles' panels
 /datum/preferences/proc/open_jobban_info(mob/user, rank)

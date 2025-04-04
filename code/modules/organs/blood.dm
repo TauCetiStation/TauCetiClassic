@@ -12,7 +12,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human
 	var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
-	var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
+	var/pale = FALSE
 
 
 // Initializes blood vessels
@@ -131,11 +131,9 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_SAFE to 10000)
 				if(pale)
 					pale = FALSE
-					update_body()
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(!pale)
 					pale = TRUE
-					update_body()
 					var/word = pick("dizzy", "woosey", "faint")
 					to_chat(src, "<span class='warning'>You feel [word]</span>")
 				if(prob(1))
@@ -146,7 +144,6 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = TRUE
-					update_body()
 				blurEyes(6)
 				if(oxyloss < 50)
 					oxyloss += 10

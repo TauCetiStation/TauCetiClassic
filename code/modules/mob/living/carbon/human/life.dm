@@ -308,7 +308,7 @@ var/global/list/tourette_bad_words= list(
 				if(prob(5) && species.flags[HAS_HAIR] && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
 					h_style = "Bald"
 					f_style = "Shaved"
-					update_hair()
+					update_body(BP_HEAD, update_preferences = TRUE)
 					to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
 				if(prob(5))
 					radiation -= 5
@@ -1076,6 +1076,8 @@ var/global/list/tourette_bad_words= list(
 		return FALSE
 
 	see_in_dark = species.darksight
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_ZOMBIE))
+		see_in_dark = max(see_in_dark, 8)
 
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G))
@@ -1091,7 +1093,7 @@ var/global/list/tourette_bad_words= list(
 	else
 		sightglassesmod = null
 
-	if(species.nighteyes)
+	if(HAS_TRAIT(src, TRAIT_NIGHT_EYES))
 		var/light_amount = 0
 		var/turf/T = get_turf(src)
 		light_amount = round(T.get_lumcount()*10)

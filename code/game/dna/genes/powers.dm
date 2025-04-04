@@ -195,7 +195,7 @@
 		H.ventcrawler = 1
 		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
-		H.regenerate_icons()
+		H.regenerate_icons() // updates height filters for SMALLSIZE
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
