@@ -458,7 +458,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/mining_charge
 	name = "mining explosives"
 	cases = list("шахтерская взрывчатка","шахтерской взрывчатки","шахтерской взрывчатке","шахтерскую взрывчатку","шахтерской взрывчаткой","шахтерской взрывчатке")
-	desc = "Используется для шахтерских взрывных работ. Используя её, не забывайте о технике безопасности"
+	desc = "Применяется для шахтерских взрывных работ. Используя её, не забывайте о технике безопасности"
 	gender = PLURAL
 	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
@@ -483,9 +483,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
 		return
-	/*if (!istype(target, /turf/simulated/mineral))
-		to_chat(user, "<span class='notice'>Вы не можете прикрепить [CASE(src,ACCUSATIVE_CASE)] к [target.name].</span>")
-		return*/
+
 	if(user.is_busy(src))
 		return
 
