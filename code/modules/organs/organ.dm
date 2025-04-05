@@ -30,12 +30,14 @@
 	owner = null
 	return ..()
 
-/obj/item/organ/proc/set_owner(mob/living/carbon/human/H, datum/species/S)
+/obj/item/organ/proc/set_owner(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
 	loc = null
 	owner = H
 
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
-	set_owner(H, S)
+	SHOULD_CALL_PARENT(TRUE)
+	set_owner(H)
 
 	STOP_PROCESSING(SSobj, src)
 
@@ -44,6 +46,9 @@
 
 /obj/item/organ/process()
 	return 0
+
+/obj/item/organ/proc/update_appearance()
+	return
 
 /obj/item/organ/proc/receive_chem(chemical)
 	return 0
@@ -202,7 +207,7 @@
 		return
 
 	if(!lying)
-		if(species && !species.flags[NO_PAIN])
+		if(!HAS_TRAIT(src, TRAIT_NO_PAIN))
 			emote("scream")
 		Weaken(2)
 

@@ -147,9 +147,9 @@
 			alive_mob_list += C
 		C.stat = CONSCIOUS
 		C.tod = null
-		C.setToxLoss(0)
-		C.setOxyLoss(0)
-		C.setCloneLoss(0)
+		C.resetToxLoss()
+		C.resetOxyLoss()
+		C.resetCloneLoss()
 		C.SetParalysis(0)
 		C.SetStunned(0)
 		C.SetWeakened(0)

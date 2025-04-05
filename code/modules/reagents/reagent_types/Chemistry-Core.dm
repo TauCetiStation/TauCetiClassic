@@ -34,9 +34,8 @@
 			if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 10)
 				H.lip_style = null
 				changes_occured = TRUE
-				H.update_body()
 			if(changes_occured)
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -85,12 +84,11 @@
 	if(M.IsSleeping())
 		M.AdjustDrunkenness(-1)
 
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
+		M.adjustToxLoss(REM)
+
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	M.nutrition += REM
-	return FALSE
-
-/datum/reagent/water/on_slime_digest(mob/living/M)
-	M.adjustToxLoss(REM)
 	return FALSE
 
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.

@@ -238,7 +238,7 @@
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
-	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled  && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+	if(!H.shoes && !H.buckled && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP) && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS))
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Stun(1)
@@ -248,7 +248,7 @@
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
-	if(!H.shoes && !H.species.flags[NO_MINORCUTS] && !H.buckled && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+	if(!H.shoes && !H.buckled && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP) && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS))
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Stun(1)

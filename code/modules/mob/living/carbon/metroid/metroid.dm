@@ -11,7 +11,6 @@
 	health = 150
 	gender = NEUTER
 
-	update_icon = 0
 	nutrition = 700 // 1000 = max
 
 	see_in_dark = 8
@@ -65,6 +64,10 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/mob/living/last_pointed = null
 
+/mob/living/carbon/slime/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_PAIN, INNATE_TRAIT)
+
 /mob/living/carbon/slime/adult
 	name = "adult slime"
 	icon = 'icons/mob/slimes.dmi'
@@ -74,7 +77,6 @@
 	health = 200
 	gender = NEUTER
 
-	update_icon = 0
 	nutrition = 800 // 1200 = max
 	w_class = SIZE_HUMAN
 
@@ -89,6 +91,8 @@
 	else
 		name = text("[colour] adult slime ([number])")
 	real_name = name
+
+	ADD_TRAIT(src, ELEMENT_TRAIT_SLIME, INNATE_TRAIT) // i think it's not used for non-humans and useless here, but maybe someday
 
 	. = ..()
 
@@ -312,22 +316,15 @@
 	return
 
 /mob/living/carbon/slime/updatehealth()
-	if(status_flags & GODMODE)
-		if(isslimeadult(src))
-			health = 200
-		else
-			health = 150
-		stat = CONSCIOUS
+	// slimes can't suffocate unless they suicide. They are also not harmed by fire
+	if(isslimeadult(src))
+		health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
-		// slimes can't suffocate unless they suicide. They are also not harmed by fire
-		if(isslimeadult(src))
-			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-		else
-			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+		health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	med_hud_set_health()
 	med_hud_set_status()
 
-/mob/living/carbon/slime/getTrail()
+/mob/living/carbon/slime/get_trail_state()
 	return null
 
 /mob/living/carbon/slime/is_usable_head(targetzone = null)
@@ -341,9 +338,6 @@
 
 /mob/living/carbon/slime/can_pickup(obj/O)
 	return FALSE
-
-/mob/living/carbon/slime/get_species()
-	return SLIME
 
 /obj/item/slime_extract
 	name = "slime extract"

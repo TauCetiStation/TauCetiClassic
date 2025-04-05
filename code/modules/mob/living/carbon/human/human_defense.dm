@@ -1,19 +1,4 @@
 #define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
-/mob/living/carbon/human/getHalLoss()
-	if(species.flags[NO_PAIN])
-		return 0
-	return ..()
-
-/mob/living/carbon/human/setHalLoss()
-	if(species.flags[NO_PAIN])
-		return
-	..()
-
-/mob/living/carbon/human/adjustHalLoss()
-	if(species.flags[NO_PAIN])
-		return
-	..()
-
 /mob/living/carbon/proc/can_catch_item()
 	if(!in_throw_mode)
 		return
@@ -148,7 +133,7 @@
 			else if(force <= 40)
 				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
-		if(!species.flags[NO_EMBED] && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
+		if(!HAS_TRAIT(src, TRAIT_NO_EMBED) && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			SP.name = "[P.name] shrapnel"
 			SP.desc = "[SP.desc] It looks like it was fired from [P.shot_from]."
@@ -403,6 +388,9 @@
 	..(O, throw_damage, dtype, zone, armor)
 
 /mob/living/carbon/human/embed(obj/item/I, zone, created_wound)
+	if(HAS_TRAIT(src, TRAIT_NO_EMBED))
+		return
+
 	if(!zone)
 		return ..()
 

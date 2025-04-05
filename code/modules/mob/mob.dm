@@ -226,7 +226,16 @@
 	return 0
 
 /mob/proc/Life()
+	// SHOULD_CALL_PARENT(TRUE) // need to do a pass at every life() call and see if adding ..() everywhere can break something
 	set waitfor = 0
+
+	// forces a full overlay update
+	// todo: this flag is not actively used at this moment, maybe we should remove it or replace some regenerate_icons()-calls with it
+	// for humans direct parts update is more preferable than full regeneration (ex. update_body())
+	if(regenerate_icons_next_tick)
+		regenerate_icons_next_tick = FALSE
+		regenerate_icons()
+
 	return
 
 /mob/proc/incapacitated(restrained_type = ARMS)
@@ -788,9 +797,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(!no_transform && lying != lying_prev)
 		update_transform()
-	if(update_icon)	//forces a full overlay update
-		update_icon = FALSE
-		regenerate_icons()
 
 
 /mob/proc/facedir(ndir)
@@ -840,8 +846,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
-	if(add_flags & GODMODE)
-		stuttering = 0
 	if(add_flags & FAKEDEATH)
 		update_canmove()
 	status_flags |= add_flags
@@ -872,20 +876,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 		clear_alert("high")
 
 // ========== STUTTERING ==========
+// todo: move it to status effects
 /mob/proc/Stuttering(amount)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering, amount, 0)
 
 /mob/proc/AdjustStuttering(amount)
-	if(status_flags & GODMODE)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering + amount, 0)
 
-/mob/proc/setStuttering(amount)
-	if(status_flags & GODMODE)
-		return
-	stuttering = max(amount, 0)
+/mob/proc/resetStuttering(amount)
+	stuttering = 0
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)

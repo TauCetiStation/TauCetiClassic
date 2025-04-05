@@ -31,22 +31,24 @@
 
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, halloss = 0, def_zone = null, blocked = 0)
-	if(blocked >= 100)	return 0
+	if(blocked >= 100)
+		return FALSE
 	if(brute)	apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)	apply_damage(burn, BURN, def_zone, blocked)
 	if(tox)		apply_damage(tox, TOX, def_zone, blocked)
 	if(oxy)		apply_damage(oxy, OXY, def_zone, blocked)
 	if(clone)	apply_damage(clone, CLONE, def_zone, blocked)
 	if(halloss) apply_damage(halloss, HALLOSS, def_zone, blocked)
-	return 1
+	return TRUE
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
-	if(status_flags & GODMODE)
-		return 0
+/mob/living/proc/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
+		return FALSE
 	blocked = (100-blocked)/100
-	if(!effect || (blocked <= 0))	return 0
+	if(!effect || (blocked <= 0))
+		return FALSE
 	switch(effecttype)
 		if(STUN)
 			Stun(effect * blocked)
@@ -66,7 +68,7 @@
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * blocked))
 	updatehealth()
-	return 1
+	return TRUE
 
 
 /mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, stutter = 0, eyeblur = 0, drowsy = 0, agony = 0, blocked = 0)

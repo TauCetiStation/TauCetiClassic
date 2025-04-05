@@ -1,27 +1,26 @@
 //Human Overlays Indexes/////////
-#define TOTAL_LAYERS          31
-#define WING_UNDERLIMBS_LAYER 31
+#define TOTAL_LAYERS          30
 #define FIRE_LOWER_LAYER      30
-#define BODY_LAYER            29
-#define EXTERNAL_APPEARANCE   28
-#define MUTATIONS_LAYER       27
-#define DAMAGE_LAYER          26
-#define SURGERY_LAYER         25 //bs12 specific.
-#define BANDAGE_LAYER         24
-#define UNIFORM_LAYER         23
-#define ID_LAYER              22
-#define SHOES_LAYER           21
-#define WING_LAYER            20
-#define TAIL_LAYER            19 //bs12 specific. this hack is probably gonna come back to haunt me
-#define GLOVES_LAYER          18
-#define R_EAR_LAYER           17
-#define L_EAR_LAYER           16
-#define SUIT_LAYER            15
-#define GLASSES_LAYER         14
-#define BELT_LAYER            13 //Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER      12
-#define BACK_LAYER            11
-#define HAIR_LAYER            10 //TODO: make part of head layer?
+#define BODY_BEHIND_LAYER     29 // north states for wings and (todo) tails
+#define BODY_LAYER            28
+#define UNDERWEAR_LAYER       27
+#define EXTERNAL_APPEARANCE   26
+#define MUTATIONS_LAYER       25
+#define DAMAGE_LAYER          24
+#define SURGERY_LAYER         23
+#define BANDAGE_LAYER         22
+#define UNIFORM_LAYER         21
+#define ID_LAYER              20
+#define SHOES_LAYER           19
+#define BODY_INFRONT_LAYER    18 // south states for wings and (todo) tails
+#define GLOVES_LAYER          17
+#define R_EAR_LAYER           16
+#define L_EAR_LAYER           15
+#define SUIT_LAYER            14
+#define GLASSES_LAYER         13
+#define BELT_LAYER            12 //Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER      11
+#define BACK_LAYER            10
 #define FACEMASK_LAYER        9
 #define HEAD_LAYER            8
 #define NECK_LAYER            7

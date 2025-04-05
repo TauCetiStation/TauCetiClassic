@@ -1,9 +1,9 @@
 /mob/living/carbon/human/spawn_gibs()
-	if(!species.flags[NO_BLOOD_TRAILS])
-		hgibs(loc, dna, species.flesh_color, species.blood_datum)
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
+		new /obj/effect/gibspawner/human(get_turf(loc), src)
 
 /mob/living/carbon/human/gib()
-	if(!species.flags[NO_BLOOD_TRAILS])
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
 		var/atom/movable/overlay/animation = new (loc)
 		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
 		QDEL_IN(animation, 2 SECOND)
@@ -29,7 +29,7 @@
 	P.b_eyes = 200
 	P.g_eyes = 255
 	P.r_eyes = 255
-	P.regenerate_icons()
+	P.regenerate_icons(update_body_preferences = TRUE)
 	P.my_corpse = src
 	mind.transfer_to(P)
 	P.hud_used.set_parallax(PARALLAX_HEAVEN)
@@ -128,7 +128,7 @@
 		verbs -= /mob/living/carbon/proc/release_control
 
 
-	organ_head_list += BP
+	lost_heads_list += BP
 
 	if(ischangeling(src))
 		var/datum/role/changeling/Host = mind.GetRoleByType(/datum/role/changeling)
@@ -164,20 +164,13 @@
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
-
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (isskeleton(src)))
+	if(HAS_TRAIT_FROM(src, ELEMENT_TRAIT_SKELETON, INNATE_TRAIT))
 		return
-	if(f_style)
-		f_style = "Shaved"
-	if(h_style)
-		h_style = "Bald"
-	set_species(species.skeleton_type)
-	add_status_flags(DISFIGURED)
-	regenerate_icons()
-	return
 
-/mob/living/carbon/human/proc/ChangeToHusk()
+	ADD_TRAIT(src, ELEMENT_TRAIT_SKELETON, INNATE_TRAIT)
+
+/mob/living/carbon/human/proc/ChangeToHusk() // todo
 	if(HUSK in mutations)
 		return
 	if(species.flags[HAS_HAIR])
@@ -192,7 +185,6 @@
 
 	mutations.Add(HUSK)
 	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
-	update_hair()
 	update_body()
 
 /mob/living/carbon/human/proc/Drain()

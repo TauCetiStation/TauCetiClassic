@@ -40,8 +40,6 @@
 		user.apply_effect(pain_amount, AGONY, 0)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
-	user.update_body()
-
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 	to_chat(user, "<span class='notice'>[finishmessage]</span>")
 
@@ -147,8 +145,6 @@
 		var/pain_amount = 12 * RA.adjust_pumped(1)
 		user.apply_effect(pain_amount, AGONY, 0)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
-
-	user.update_body()
 
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 	to_chat(user, "<span class='notice'>[finishmessage]</span>")
@@ -327,7 +323,6 @@
 	var/pain_amount = 3 * BP.adjust_pumped(mass, max_pumped)
 	H.apply_effect(pain_amount, AGONY, 0)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
-	H.update_body()
 
 	H.nutrition -= 2 * mass
 	H.overeatduration -= 2 * mass
