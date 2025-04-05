@@ -191,9 +191,7 @@
 /obj/machinery/clonepod/process()
 
 	if(stat & NOPOWER) //Kill if power is lost
-		if (occupant)
-			malfunction()
-		return
+		malfunction()
 
 	if((src.occupant) && (src.occupant.loc == src))
 
