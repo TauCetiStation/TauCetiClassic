@@ -43,7 +43,7 @@
 			O.max_damage = 1000
 
 		add_zombie(H)
-		H.regenerate_icons()
+		H.regenerate_icons(update_body_preferences = TRUE)
 
 /datum/element/mutation/zombie/on_loose(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, ZOMBIE_MOOD_EVENT)
@@ -68,6 +68,6 @@
 			O.max_damage = initial(O.max_damage)
 
 		remove_zombie(H)
-		H.regenerate_icons()
+		H.regenerate_icons(update_body_preferences = TRUE)
 
 #undef ZOMBIE_MOOD_EVENT

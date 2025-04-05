@@ -699,7 +699,7 @@ var/global/list/tourette_bad_words= list(
 			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= OVEREATDURATION_FAT) && isturf(loc))
-			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !HAS_TRAIT(src, TRAIT_NEWER_FAT))
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !HAS_TRAIT(src, TRAIT_NEVER_FAT))
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
 				update_body()

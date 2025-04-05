@@ -75,6 +75,8 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
+	var/zombie_overlay_pick // cache so holes in the zombie don't move with every appearance generation
+
 	// copy of owner prefs for cases of dismembering
 	var/owner_gender
 	var/r_skin
@@ -84,6 +86,9 @@
 	var/r_belly // second species color, we should rename it from the "belly"
 	var/g_belly
 	var/b_belly
+
+	var/is_slime
+	var/is_zombie
 
 // todo: currently it's impossible to spawn organs out of body 
 // as insert_organ() call with owner is required for proper init
@@ -135,6 +140,9 @@
 	g_belly = H.g_belly
 	b_belly = H.b_belly
 
+	is_slime = HAS_TRAIT(H, ELEMENT_TRAIT_SLIME)
+	is_zombie = HAS_TRAIT(H, ELEMENT_TRAIT_ZOMBIE)
+
 // mostly for homunculus
 /obj/item/organ/external/proc/randomize_preferences()
 	owner_gender = pick(MALE, FEMALE)
@@ -177,8 +185,10 @@
 		check_rejection()
 
 /obj/item/organ/external/proc/get_skin_color()
-	if(owner && HAS_TRAIT(owner, ELEMENT_TRAIT_SLIME))
+	if(is_slime)
 		return SLIME_PEOPLE_COLOR // this contains alpha too
+	else if(is_zombie)
+		return "#1b6f00"
 	else if(status & ORGAN_DEAD)
 		return NECROSIS_COLOR_MOD
 	else if(owner && (HUSK in owner.mutations)) // todo
@@ -193,7 +203,7 @@
 
 /obj/item/organ/external/proc/get_skin_second_color()
 	// todo: shift colors in case of mutations
-	if(owner && HAS_TRAIT(owner, ELEMENT_TRAIT_SLIME))
+	if(is_slime)
 		return SLIME_PEOPLE_COLOR
 	else if(status & ORGAN_DEAD)
 		return NECROSIS_COLOR_MOD
@@ -203,6 +213,19 @@
 		return HULK_SKIN_COLOR
 	else
 		return rgb(r_belly, g_belly, b_belly)
+
+/obj/item/organ/external/proc/get_blood_color()
+	var/datum/dirt_cover/blood_datum
+	if(owner)
+		blood_datum = owner.get_blood_datum()
+	else
+		if(is_slime)
+			blood_datum = /datum/dirt_cover/blue_blood
+		else if(species.blood_datum_path)
+			blood_datum = species.blood_datum_path
+		else
+			blood_datum = /datum/dirt_cover/red_blood
+	return blood_datum::color
 
 // updates icon and icon_state based on our current species/prefs/owner
 /obj/item/organ/external/proc/update_sprite()
@@ -259,23 +282,42 @@
 
 	update_sprite()
 
+	. = list()
+
+	// attach bones under base appearance for slimepeople (if we not skeleton already)
+	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
+		var/mutable_appearance/bones_appearance = mutable_appearance(species.skeleton, icon_state, -body_icon_layer)
+		. += bones_appearance
+
 	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -body_icon_layer)
-	. = list(base_appearance)
+	. += base_appearance
 
 	if(species.alpha_color_mask)
 		var/mutable_appearance/alpha_color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -body_icon_layer)
 		alpha_color_appearance.color = get_skin_color()
-		. += alpha_color_appearance
+		base_appearance.add_overlay(alpha_color_appearance)
 	else
 		base_appearance.color = get_skin_color()
 
 	if(species.second_color_mask && icon_exists(icon, "color_[icon_state]"))
 		var/mutable_appearance/second_color_appearance = mutable_appearance(icon, "color_[icon_state]", -body_icon_layer)
 		second_color_appearance.color = get_skin_second_color()
-		. += second_color_appearance
+		base_appearance.add_overlay(second_color_appearance)
+
+	// sometimes we can see the insides of zombies
+	if(is_zombie && species.skeleton)
+		if(!zombie_overlay_pick)
+			zombie_overlay_pick = "[pick(0, 0, 1, 1, 1, 2, 2, 3)][pick(0, 0, 1, 1, 1, 2, 2, 3)]"
+		if(icon_exists('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]"))
+			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, icon_state, -body_icon_layer)
+			zombie_bones_appearance.color = get_blood_color()
+			var/mutable_appearance/zombie_holes = mutable_appearance('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]", -body_icon_layer)
+			zombie_holes.blend_mode = BLEND_MULTIPLY
+			zombie_bones_appearance.add_overlay(zombie_holes)
+			. += zombie_bones_appearance
 
 // update how the organ looks for when it separated
-// no point to call it when organ is inside the body
+// no point to call it when organ is inside (attached to) the body
 /obj/item/organ/external/proc/merge_appearance()
 	cut_overlays()
 	icon_state = null

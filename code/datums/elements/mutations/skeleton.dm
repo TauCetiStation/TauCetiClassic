@@ -16,7 +16,7 @@
 		TRAIT_EMOTIONLESS,
 		TRAIT_NO_VOMIT,
 		TRAIT_NO_BLOOD,
-		TRAIT_NEWER_FAT,
+		TRAIT_NEVER_FAT,
 		TRAIT_NO_MESSY_GIBS,
 	)
 
@@ -95,6 +95,6 @@
 		var/mob/living/carbon/human/H = L
 		H.species.create_organs(H, deleteOld = TRUE)
 
-		H.regenerate_icons()
+		H.regenerate_icons(update_body_preferences = TRUE)
 
 #undef SKELETON_MOOD_EVENT

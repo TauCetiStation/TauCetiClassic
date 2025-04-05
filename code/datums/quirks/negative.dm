@@ -65,7 +65,7 @@
 	gain_text = "<span class='danger'>Вы чувствуете, что набрали несколько лишних килограмм.</span>"
 	lose_text = "<span class='notice'>Вы снова в форме!</span>"
 
-	blacklisted_species_traits = list(TRAIT_NEWER_FAT)
+	blacklisted_species_traits = list(TRAIT_NEVER_FAT)
 
 	req_species_flags = list(
 		IS_PLANT = FALSE,

@@ -147,7 +147,7 @@
 /// can't become fat, should prevent previous trait 
 /// note: you can screw things up if you give TRAIT_FAT 
 /// without checking TRAIT_NEWER_FAT first
-#define TRAIT_NEWER_FAT           "newer_fat"
+#define TRAIT_NEVER_FAT           "never_fat"
 #define TRAIT_HIGH_PAIN_THRESHOLD "high_pain_threshold"
 #define TRAIT_LIGHT_DRINKER       "light_drinker"
 #define TRAIT_LOW_PAIN_THRESHOLD  "low_pain_threshold"
