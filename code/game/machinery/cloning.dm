@@ -190,10 +190,9 @@
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
-	if(stat & NOPOWER) //Autoeject if power is lost
-		if (src.occupant)
-			src.locked = 0
-			go_out()
+	if(stat & NOPOWER) //Kill if power is lost
+		if (occupant)
+			malfunction()
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
