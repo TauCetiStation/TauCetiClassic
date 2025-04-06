@@ -18,6 +18,7 @@
 	var/list/autolinkers = list() // list of text/number values to link with
 	var/id = "NULL"             // identification string
 	var/network = "NULL"        // the network of the machinery
+	var/busy = FALSE	// Флаг занятости устройства
 
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
@@ -377,14 +378,23 @@
 	if(D.have_data == TRUE)
 		to_chat(user, "<span class='notice'>На дискету уже загружены данные.</span>")
 		return
-	add_fingerprint(user)
-	to_chat(user, "<span class='warning'>Вы начинаете перемещать данные на дискету...</span>")
-	if(!do_after(user, 1 MINUTE, target = src))
+	if(busy)
+		to_chat(user, "<span class='warning'>Устройство уже обрабатывает запрос!</span>")
 		return
+
+	add_fingerprint(user)
+	busy = TRUE
+	to_chat(user, "<span class='warning'>Вы начинаете перемещать данные на дискету...</span>")
+
+	if(!do_after(user, 1 MINUTE, target = src))
+		busy = FALSE
+		return
+
 	D.have_data = TRUE
 	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='nicegreen'>Готово!</span>")
 	addtimer(CALLBACK(src, PROC_REF(make_anomaly)), 20 SECONDS)
+	busy = FALSE
 
 /obj/machinery/telecomms/hub/proc/make_anomaly()
 	new /datum/event/communications_blackout/traitor
