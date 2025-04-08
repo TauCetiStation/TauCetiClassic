@@ -78,6 +78,12 @@
 		else
 			playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/blend_icon(obj/item/weapon/broken_bottle/bottle)
+	var/icon/I = new('icons/obj/drinks.dmi', icon_state)
+	I.Blend(bottle.broken_outline, ICON_OVERLAY, rand(5), 1)
+	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	bottle.icon = I
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
@@ -88,10 +94,7 @@
 		new/obj/item/weapon/shard(target.loc) // Create a glass shard at the target's location!
 	B.icon_state = src.icon_state
 
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
+	blend_icon(B)
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
@@ -194,10 +197,7 @@
 		return
 	if(is_glass)
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
-		var/icon/I = new('icons/obj/drinks.dmi', icon_state)
-		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
-		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-		BB.icon = I
+		blend_icon(BB)
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
 		reagents.standard_splash(loc)
@@ -217,10 +217,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/deconstruct()
 	var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
-	var/icon/I = new('icons/obj/drinks.dmi', icon_state)
-	I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	BB.icon = I
+	blend_icon(BB)
 	BB.pixel_x = rand(-5, 5)
 	BB.pixel_y = rand(-5, 5)
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
