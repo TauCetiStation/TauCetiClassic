@@ -378,7 +378,8 @@
 	if(D.have_data == TRUE)
 		to_chat(user, "<span class='notice'>На дискету уже загружены данные.</span>")
 		return
-	if(busy)
+	if(user.is_busy())
+		return
 		to_chat(user, "<span class='warning'>Устройство уже обрабатывает запрос!</span>")
 		return
 
