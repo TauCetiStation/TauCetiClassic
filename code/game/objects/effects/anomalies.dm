@@ -223,40 +223,42 @@
 		T.ex_act(ex_act_force)
 	return
 
-#define GAS_COOLDOWN release_cd
-
 /obj/effect/anomaly/gas
 	name = "gas anomaly"
-	icon_state = "pyro"
+	icon_state = "gas"
 	density = FALSE
 	anchored = FALSE
 
-	COOLDOWN_DECLARE(GAS_COOLDOWN)
+	COOLDOWN_DECLARE(release_cd)
 
 	var/list/gas_types = list(
 		list("condensedcapsaicin" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100),  // Teargas
 		list("sacid" = 50, "pacid" = 50, "potassium" = 100, "phosphorus" = 100, "sugar" = 100), // Acid
-		list("space_drugs" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100)           // Drugs
+		list("space_drugs" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100)        // Drugs
 	)
 	var/release_time = 50
 	var/move_chance = 70
+	var/datum/effect/effect/system/steam_spread/steam_system
 
 /obj/effect/anomaly/gas/atom_init()
 	. = ..()
-	COOLDOWN_START(src, GAS_COOLDOWN, release_time)
+	steam_system = new /datum/effect/effect/system/steam_spread()
+	steam_system.set_up(5, 0, loc)
+	COOLDOWN_START(src, release_cd, release_time)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/anomaly/gas/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(steam_system)
 	return ..()
 
 /obj/effect/anomaly/gas/process()
 	if(QDELETED(src))
 		return
 
-	if(COOLDOWN_FINISHED(src, GAS_COOLDOWN))
+	if(COOLDOWN_FINISHED(src, release_cd))
 		release_gas()
-		COOLDOWN_START(src, GAS_COOLDOWN, release_time)
+		COOLDOWN_START(src, release_cd, release_time)
 
 	if(prob(move_chance))
 		try_move()
@@ -270,9 +272,9 @@
 	for(var/reagent_id in selected_gas)
 		R.add_reagent(reagent_id, selected_gas[reagent_id])
 
-
-	for(var/atom/A in view(10, src))
-		R.reaction(A, 3, 5)
+	steam_system.location = loc
+	steam_system.set_up(5, 0, loc, R)
+	steam_system.start()
 
 	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
 
