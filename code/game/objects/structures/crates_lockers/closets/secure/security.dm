@@ -494,3 +494,4 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
+	new	/obj/item/clothing/gloves/latex/nitrile(src)
