@@ -62,13 +62,18 @@
 
 //must succeed in most cases
 /datum/teleport/proc/setTeleatom(atom/movable/ateleatom)
-	if(istype(ateleatom, /obj/effect) && !istype(ateleatom, /obj/effect/dummy/chameleon))
-		qdel(ateleatom)
-		return FALSE
+	if(istype(ateleatom, /obj/effect))
+		if(istype(ateleatom, /obj/effect/dummy/chameleon) || istype(ateleatom, /obj/effect/decal/mecha_wreckage))
+			teleatom = ateleatom
+			return TRUE
+		else
+			return FALSE
+
 	if(istype(ateleatom))
 		teleatom = ateleatom
 		return TRUE
 	return FALSE
+
 
 //custom effects must be properly set up first for instant-type teleports
 //optional

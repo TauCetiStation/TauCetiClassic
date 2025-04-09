@@ -37,29 +37,46 @@
 	INVOKE_ASYNC(src, PROC_REF(teleport), AM)
 
 /obj/effect/portal/proc/can_teleport(atom/movable/M)
-	if(istype(M, /obj/effect)) //sparks don't teleport
+	if(!M || !target || !isturf(target))
 		return FALSE
-	if(M.anchored && istype(M, /obj/mecha))
-		return FALSE
+
 	if(icon_state == "portal1")
 		return FALSE
+
+	if(M.anchored)
+		if(istype(M, /obj/mecha))
+			return FALSE
+		return FALSE
+
+	if(istype(M, /obj/effect/decal/mecha_wreckage))
+		return TRUE
+
+	if(istype(M, /obj/effect))
+		return FALSE
+
 	return TRUE
 
 /obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE, respect_entrydir = FALSE, use_forceMove = TRUE)
 	if(!can_teleport(M))
 		return FALSE
-	if(!target)
+
+	if(!target || !isturf(target))
 		qdel(src)
 		return FALSE
+
+	var/turf/destination_turf = get_turf(target)
+	if(!destination_turf)
+		return FALSE
+
 	density_check = portal_density_check
 	respect_entrydir = portal_respect_dir
 	use_forceMove = portal_use_forceMove
-	if(istype(M, /atom/movable))
-		if(prob(failchance)) //oh dear a problem, put em in deep space
-			src.icon_state = "portal1"
-			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
-		else
-			return do_teleport(M, target, 1, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
+
+	if(prob(failchance))
+		src.icon_state = "portal1"
+		return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
+	else
+		return do_teleport(M, destination_turf, 1, TRUE, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 
 //Telescience wormhole
 /obj/effect/portal/tsci_wormhole
