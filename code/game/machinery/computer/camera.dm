@@ -275,6 +275,13 @@
 	density = FALSE
 	circuit = /obj/item/weapon/circuitboard/security/telescreen
 
+/obj/machinery/computer/security/telescreen/update_icon()
+	icon_state = initial(icon_state)
+	if(stat & BROKEN)
+		icon_state += "b"
+		playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
+	return
+
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, why do they never have anything interesting on these things?"
