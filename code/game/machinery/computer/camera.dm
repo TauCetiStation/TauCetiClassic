@@ -361,6 +361,13 @@
 	circuit = /obj/item/weapon/circuitboard/security/abductor_ag
 	var/team
 
+/obj/machinery/computer/security/abductor_ag/attack_hand(mob/user)
+	if(network.len < 1)
+		to_chat(user, "<span class='notice'>Monitor network doesn't established. Activate helmet at first.</span>")
+		return
+	else
+		..()
+
 /obj/machinery/computer/security/abductor_hu
 	name = "human observation monitor"
 	desc = "Shows how subjects are living."
