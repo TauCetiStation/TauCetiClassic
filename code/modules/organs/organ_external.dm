@@ -198,10 +198,10 @@
 
 /obj/item/organ/external/proc/mod_skin_color(original_color)
 	// sorted in priority, maybe some day someone will experiment with colors mixing
-	if(is_skeleton)
-		return null
 	if(is_slime)
 		return rgb(5, 255, 251, 127) // #05fffb + alpha
+	else if(is_skeleton)
+		return null
 	else if(is_zombie)
 		return "#4a730c"
 	else if(is_burnt)
