@@ -5,9 +5,9 @@
 /datum/species
 	var/name                     // Species name.
 
-	var/icobase = 'icons/mob/human_races/r_human.dmi'      // Normal set
-	var/deformed = 'icons/mob/human_races/r_def_human.dmi' // Mutated set (todo: replace this set with some effect)
-	var/skeleton = 'icons/mob/human_races/r_skeleton.dmi'  // Skeleton set
+	var/icobase = 'icons/mob/human/human.dmi'      // Normal set
+	var/deformed = 'icons/mob/human/human_deformed.dmi' // Mutated set (todo: replace this set with some effect)
+	var/skeleton = 'icons/mob/human/human_skeleton.dmi'  // Skeleton set
 
 	var/alpha_color_mask = FALSE  // use "alpha_" bodypart overlays to apply main colors
 	var/second_color_mask = FALSE // use additional "color_" bodypart overlays for a second color set
@@ -16,7 +16,7 @@
 
 	// todo: move logic to the eyes organ (make it external?)
 	// after we can store icons with the rest of the species organs
-	var/eyes_icon = 'icons/mob/human_races/eyes.dmi'
+	var/eyes_icon = 'icons/mob/human/eyes.dmi'
 	var/eyes_colorable_layer = "default" // Part of the eye to which we apply a user color, for example colored human iris
 	var/eyes_static_layer // Part that uses own predefined color, for example white human sclera
 
@@ -197,7 +197,7 @@
 
 	var/default_mood_event
 
-	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
+	var/prothesis_icobase = 'icons/mob/human/robotic.dmi'
 
 	var/surgery_icobase = 'icons/mob/surgery.dmi'
 
@@ -375,9 +375,9 @@
 
 /datum/species/human
 	name = HUMAN
-	icobase = 'icons/mob/human_races/r_human.dmi'
-	deformed = 'icons/mob/human_races/r_def_human.dmi'
-	skeleton = 'icons/mob/human_races/r_skeleton.dmi'
+	icobase = 'icons/mob/human/human.dmi'
+	deformed = 'icons/mob/human/human_deformed.dmi'
+	skeleton = 'icons/mob/human/human_skeleton.dmi'
 	eyes_colorable_layer = "human_colorable"
 	eyes_static_layer = "human"
 	gender_limb_icons = TRUE
@@ -405,9 +405,9 @@
 
 /datum/species/pluvian
 	name = PLUVIAN
-	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	icobase = 'icons/mob/human/pluvian.dmi'
 	deformed = null
-	skeleton = 'icons/mob/human_races/r_skeleton.dmi'
+	skeleton = 'icons/mob/human/human_skeleton.dmi' // same skeleton as humans
 	eyes_colorable_layer = "pluvian_colorable"
 	eyes_static_layer = "pluvian"
 	gender_limb_icons = TRUE
@@ -445,7 +445,7 @@
 
 /datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT
-	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	icobase = 'icons/mob/human/pluvian.dmi'
 	deformed = null
 	skeleton = null
 	eyes_colorable_layer = null
@@ -492,9 +492,9 @@
 
 /datum/species/unathi
 	name = UNATHI
-	icobase = 'icons/mob/human_races/r_unathi.dmi'
-	deformed = 'icons/mob/human_races/r_def_unathi.dmi'
-	skeleton = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	icobase = 'icons/mob/human/unathi.dmi'
+	deformed = 'icons/mob/human/unathi_deformed.dmi'
+	skeleton = 'icons/mob/human/unathi_skeleton.dmi'
 	eyes_colorable_layer = "unathi_colorable"
 	eyes_static_layer = "unathi"
 	second_color_mask = TRUE
@@ -572,9 +572,9 @@
 
 /datum/species/tajaran
 	name = TAJARAN
-	icobase = 'icons/mob/human_races/r_tajaran.dmi'
-	deformed = 'icons/mob/human_races/r_def_tajaran.dmi'
-	skeleton = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	icobase = 'icons/mob/human/tajaran.dmi'
+	deformed = 'icons/mob/human/tajaran_deformed.dmi'
+	skeleton = 'icons/mob/human/tajaran_skeleton.dmi'
 	eyes_colorable_layer = "tajaran_colorable"
 	eyes_static_layer = "tajaran"
 	gender_limb_icons = TRUE
@@ -647,9 +647,9 @@
 
 /datum/species/skrell
 	name = SKRELL
-	icobase = 'icons/mob/human_races/r_skrell.dmi'
-	deformed = 'icons/mob/human_races/r_def_skrell.dmi'
-	skeleton = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+	icobase = 'icons/mob/human/skrell.dmi'
+	deformed = 'icons/mob/human/skrell_deformed.dmi'
+	skeleton = 'icons/mob/human/skrell_skeleton.dmi'
 	eyes_colorable_layer = null
 	eyes_static_layer = "skrell"
 	gender_body_icons = FALSE
@@ -706,9 +706,9 @@
 
 /datum/species/vox
 	name = VOX
-	icobase = 'icons/mob/human_races/r_vox.dmi'
-	deformed = 'icons/mob/human_races/r_def_vox.dmi'
-	skeleton = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	icobase = 'icons/mob/human/vox.dmi'
+	deformed = 'icons/mob/human/vox_deformed.dmi'
+	skeleton = 'icons/mob/human/vox_skeleton.dmi'
 	eyes_colorable_layer = "vox_colorable"
 	eyes_static_layer = null
 
@@ -789,7 +789,7 @@
 			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
 
-	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
+	prothesis_icobase = 'icons/mob/human/robotic_vox.dmi'
 
 /datum/species/vox/New()
 	. = ..()
@@ -823,8 +823,8 @@
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
-	icobase = 'icons/mob/human_races/r_armalis.dmi'
-	deformed = 'icons/mob/human_races/r_armalis.dmi'
+	icobase = 'icons/mob/human/armalis.dmi'
+	deformed = null
 	skeleton = null
 	eyes_colorable_layer = null // eyes part of the head sprite
 	eyes_static_layer = null
@@ -887,8 +887,8 @@
 
 /datum/species/diona
 	name = DIONA
-	icobase = 'icons/mob/human_races/r_diona.dmi'
-	deformed = 'icons/mob/human_races/r_def_plant.dmi'
+	icobase = 'icons/mob/human/diona.dmi'
+	deformed = 'icons/mob/human/diona_deformed.dmi'
 	skeleton = null
 	eyes_colorable_layer = "default"
 	eyes_static_layer = null
@@ -1078,8 +1078,8 @@
 
 /datum/species/diona/podman
 	name = PODMAN
-	icobase = 'icons/mob/human_races/r_podman.dmi'
-	deformed = 'icons/mob/human_races/r_def_plant.dmi'
+	icobase = 'icons/mob/human/podman.dmi'
+	deformed = 'icons/mob/human/diona_deformed.dmi'
 	skeleton = null
 	eyes_colorable_layer = "default"
 	eyes_static_layer = null
@@ -1152,7 +1152,7 @@
 
 /datum/species/machine
 	name = IPC
-	icobase = 'icons/mob/human_races/r_machine.dmi'
+	icobase = 'icons/mob/human/machine.dmi'
 	deformed = null
 	skeleton = null
 	alpha_color_mask = TRUE
@@ -1319,9 +1319,9 @@
 
 /datum/species/abductor
 	name = ABDUCTOR
-	icobase = 'icons/mob/human_races/r_abductor.dmi'
+	icobase = 'icons/mob/human/abductor.dmi'
 	deformed = null
-	skeleton = 'icons/mob/human_races/r_skeleton.dmi'
+	skeleton = 'icons/mob/human/human_skeleton.dmi'
 	eyes_colorable_layer = null // eyes are part of the head sprite
 	eyes_static_layer = null
 	gender_body_icons = FALSE
@@ -1350,7 +1350,7 @@
 
 /datum/species/shadowling
 	name = SHADOWLING
-	icobase = 'icons/mob/human_races/r_shadowling.dmi'
+	icobase = 'icons/mob/human/shadowling.dmi'
 	deformed = null
 	skeleton = null
 	eyes_colorable_layer = null
@@ -1438,7 +1438,7 @@
 
 /datum/species/golem
 	name = GOLEM
-	icobase = 'icons/mob/human_races/r_golem.dmi'
+	icobase = 'icons/mob/human/golem.dmi'
 	deformed = null
 	skeleton = null
 	eyes_colorable_layer = "default"
@@ -1544,7 +1544,7 @@
 
 /datum/species/abomination
 	name = ABOMINATION
-	icobase = 'icons/mob/human_races/r_abomination.dmi'
+	icobase = 'icons/mob/human/abomination.dmi'
 	deformed = null
 	skeleton = null
 	eyes_colorable_layer = "default"
@@ -1674,7 +1674,7 @@
 
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
-	keys -= list(PODMAN, IPC, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION)
+	keys -= list(PODMAN, IPC, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SERPENTID)
 
 	// todo: wings, tails (but need to rework tails and port more wings)
 
@@ -1691,6 +1691,12 @@
 	var/datum/species/groin = global.all_species[pick(keys)]
 	var/datum/species/l_leg = global.all_species[pick(keys)]
 	var/datum/species/r_leg = global.all_species[pick(keys)]
+
+	if(prob(10)) // serpentid legs looks good, almost like naga, but need to be paired with other parts
+		chest = global.all_species[SERPENTID]
+		groin = global.all_species[SERPENTID]
+		l_leg = global.all_species[SERPENTID]
+		r_leg = global.all_species[SERPENTID]
 
 	var/list/bodypart_species = list(
 		BP_HEAD  = head,
@@ -1722,10 +1728,10 @@
 
 /datum/species/serpentid
 	name = SERPENTID
-	icobase = 'icons/mob/human_races/r_serpentid_grey.dmi'
+	icobase = 'icons/mob/human/serpentid.dmi'
 	deformed = null
 	skeleton = null
-	eyes_icon = 'icons/mob/human_races/eyes_serpentid.dmi'
+	eyes_icon = 'icons/mob/human/eyes_serpentid.dmi'
 	eyes_colorable_layer = "serpentid_colorable"
 	eyes_static_layer = null
 	damage_mask = FALSE
@@ -1899,7 +1905,7 @@
 /datum/species/moth
 	name = MOTH
 	flesh_color = "00FF00"
-	icobase = 'icons/mob/human_races/r_moth.dmi'
+	icobase = 'icons/mob/human/moth.dmi'
 	deformed = null
 	skeleton = null
 	eyes_colorable_layer = null // eyes are part of the head sprite

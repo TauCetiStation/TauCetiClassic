@@ -6,7 +6,7 @@
 /obj/item/organ/external
 	name = "external"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
+	icon = 'icons/mob/human/human.dmi'
 
 	var/list/mutable_appearance/layers = list()
 
@@ -331,8 +331,8 @@
 		if(!zombie_overlay_pick)
 			zombie_overlay_pick = PICK_DAMAGE_STATE
 		// reuse of damage overlays here, feel free to create own overlays set for things like this
-		if(zombie_overlay_pick != "00" && icon_exists('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]"))
-			var/mutable_appearance/zombie_holes = mutable_appearance('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]", -body_icon_layer)
+		if(zombie_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]"))
+			var/mutable_appearance/zombie_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]", -body_icon_layer)
 			zombie_holes.color = get_blood_color()
 			zombie_holes.appearance_flags = KEEP_TOGETHER
 			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
@@ -343,8 +343,8 @@
 	if(is_burnt && species.skeleton)
 		if(!burnt_overlay_pick)
 			burnt_overlay_pick = PICK_DAMAGE_STATE
-		if(burnt_overlay_pick != "00" && icon_exists('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]"))
-			var/mutable_appearance/burnt_holes = mutable_appearance('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]", -body_icon_layer)
+		if(burnt_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]"))
+			var/mutable_appearance/burnt_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]", -body_icon_layer)
 			burnt_holes.color = "#cf7516"
 			burnt_holes.appearance_flags = KEEP_TOGETHER
 			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
@@ -355,8 +355,8 @@
 	if(is_husk)
 		if(!husk_overlay_pick)
 			husk_overlay_pick = PICK_DAMAGE_STATE
-		if(husk_overlay_pick != "00" && icon_exists('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]"))
-			var/mutable_appearance/husk_holes = mutable_appearance('icons/mob/human_races/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]", -body_icon_layer)
+		if(husk_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]"))
+			var/mutable_appearance/husk_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]", -body_icon_layer)
 			husk_holes.color = rgb(60, 60, 60, 127)
 			. += husk_holes
 
@@ -1154,7 +1154,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 						mycolor = RGB_CONTRAST(r_hair, g_hair, b_hair)
 					hair_appearance.color = mycolor
 				else // messy part, gradients
-					var/mutable_appearance/gradient = mutable_appearance('icons/mob/human_races/masks/hair_gradients.dmi', hair_gradients[grad_style])
+					var/mutable_appearance/gradient = mutable_appearance('icons/mob/human/masks/hair_gradients.dmi', hair_gradients[grad_style])
 					gradient.appearance_flags = KEEP_TOGETHER
 					gradient.blend_mode = BLEND_INSET_OVERLAY // i think we can cut additional hair overlay if we use BLEND_MULTIPLY here, but need to make hair sprites white and ditch RGB_CONTRAST
 					gradient.color = hair_painted ? RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair) : RGB_CONTRAST(r_grad, g_grad, b_grad)

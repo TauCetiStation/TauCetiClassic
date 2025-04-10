@@ -83,7 +83,7 @@
 	M.mind.pluvian_social_credit = 2
 	ADD_TRAIT(M, TRAIT_SEE_GHOSTS, QUALITY_TRAIT)
 	var/mutable_appearance/eyes = mutable_appearance(
-		'icons/mob/human_races/eyes.dmi', 
+		'icons/mob/human/eyes.dmi', 
 		"blessed_pluvian"
 	)
 	eyes.plane = LIGHTING_LAMPS_PLANE

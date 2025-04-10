@@ -169,7 +169,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	// todo: make set of pre-backed fulltile perlin noise masks and use SUBTRACT blending
 	// currently it's hard to keep masks up to date with all respites and new body parts
 	if(species.damage_mask && (BP in bodyparts))
-		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
+		var/image/standing = image("icon" = 'icons/mob/human/masks/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
 		standing.color = BP.damage_state_color()
 		standing = update_height(standing)
 		overlays_damage[BP.limb_layer] = standing

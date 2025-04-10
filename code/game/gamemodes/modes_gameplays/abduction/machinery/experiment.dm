@@ -73,7 +73,7 @@
 		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			preview_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
-	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_races/eyes.dmi', "icon_state" = H?.species?.eyes_colorable_layer || "default")
+	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human/eyes.dmi', "icon_state" = H?.species?.eyes_colorable_layer || "default")
 
 	eyes_s.Blend(rgb(H.r_eyes, H.g_eyes, H.b_eyes), ICON_ADD)
 

@@ -147,7 +147,7 @@
 		fake_body.add_remote_hearer(user)
 
 		var/mutable_appearance/eyes = mutable_appearance(
-			'icons/mob/human_races/eyes.dmi', 
+			'icons/mob/human/eyes.dmi', 
 			"blessed_pluvian"
 		)
 		eyes.plane = LIGHTING_LAMPS_PLANE
