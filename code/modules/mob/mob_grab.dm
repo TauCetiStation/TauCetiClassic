@@ -478,7 +478,7 @@
 					var/armor = H.run_armor_check(H, MELEE)
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
+						H.adjustHalLoss(clamp(0, 40 - H.getHalLoss(), 40)) //up to 40 halloss
 					return
 				if(INTENT_HARM)
 					if(hit_zone == O_EYES)

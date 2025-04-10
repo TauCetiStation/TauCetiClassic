@@ -65,7 +65,7 @@
 		to_chat(user, "You should get off the [user.buckled] first.")
 		return
 
-	if(gymnast.halloss > 80 || gymnast.traumatic_shock > 80)
+	if(gymnast.getHalLoss() > 80 || gymnast.traumatic_shock > 80)
 		to_chat(user, "You are too exausted.")
 		return
 
@@ -167,7 +167,7 @@
 	if(user.buckled && user.buckled != src)
 		to_chat(user, "You should get off the [user.buckled] first.")
 		return
-	if(user.halloss > 80 || user.traumatic_shock > 80)
+	if(user.getHalLoss() > 80 || user.traumatic_shock > 80)
 		to_chat(user, "You are too exausted.")
 		return
 

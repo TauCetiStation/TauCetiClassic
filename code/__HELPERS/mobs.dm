@@ -406,7 +406,7 @@
 		OX = "<span [fake_oxy > 49 ? "class='bold'" : ""] >[ceil(fake_oxy)]</span>"
 		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: мёртв</span><br>"
 	else
-		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: [M.stat > 1 ? "мёртв" : "Здоровье: [M.health - M.halloss]%"]</span><br>"
+		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: [M.stat > 1 ? "мёртв" : "Здоровье: [M.health - M.getHalLoss()]%"]</span><br>"
 	message += "&emsp; Типы: <font color='blue'>Асфиксия</font>/<font color='green'>Интоксикация</font>/<font color='#FFA500'>Термические</font>/<font color='red'>Механические</font><br>"
 	message += "&emsp; Специфика повреждений: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
 	message += "<span class='notice'>Температура тела: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"

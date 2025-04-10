@@ -257,7 +257,6 @@
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | DROPDEL
-	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	canremove = 0
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 2 // fleeesh!

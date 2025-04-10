@@ -494,7 +494,7 @@
 /mob/proc/pull_damage()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if((H.health - H.halloss) <= config.health_threshold_softcrit)
+		if((H.health - H.getHalLoss()) <= config.health_threshold_softcrit)
 			for(var/bodypart_name in H.bodyparts_by_name)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				if(H.lying)

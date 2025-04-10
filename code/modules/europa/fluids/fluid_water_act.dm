@@ -28,7 +28,7 @@
 /datum/species/skrell/water_act(mob/living/carbon/human/H, depth)
 	..()
 	if(depth >= 40)
-		if(H.halloss)
+		if(H.getHalLoss())
 			H.adjustHalLoss(-25) // Slightly more than being drunk because it fires less often (10 ticks as opposed to 4)
 		if(H.getBruteLoss() || H.getFireLoss())
 			H.adjustBruteLoss(-(rand(1, 3)))
