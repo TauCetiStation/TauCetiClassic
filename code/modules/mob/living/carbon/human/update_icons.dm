@@ -220,7 +220,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays_standing[BODY_LAYER] = standing
 	apply_standing_overlay(BODY_LAYER) 
 
-#define BODY_ICON(icon, fat_icon, icon_state) (!fat) ? mutable_appearance(icon, icon_state, -BODY_LAYER) : mutable_appearance(fat_icon, icon_state, -BODY_LAYER)
+#define BODY_ICON(icon, fat_icon, icon_state) (!fat) ? mutable_appearance(icon, icon_state, -UNDERWEAR_LAYER) : mutable_appearance(fat_icon, icon_state, -UNDERWEAR_LAYER)
 
 /mob/living/carbon/human/proc/update_underwear()
 	remove_standing_overlay(UNDERWEAR_LAYER)
@@ -231,7 +231,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing = list()
 
 	if(species.name == VOX)
-		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
+		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -UNDERWEAR_LAYER)
 		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
 		tatoo = update_height(tatoo)
 		tatoo.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
