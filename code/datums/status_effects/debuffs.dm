@@ -337,6 +337,7 @@
 	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))
 
 /// Causes a fake "zap" to the hallucinator.
+// todo: rewrite it to use get_skeleton_appearance() or /obj/effect/electrocute (and remove electrocute dmi states)
 /datum/hallucination/shock
 	var/electrocution_icon = 'icons/mob/human.dmi'
 	var/electrocution_icon_state = "electrocuted_base"

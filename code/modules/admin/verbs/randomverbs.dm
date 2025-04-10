@@ -656,9 +656,33 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at [COORD(O)]")
 		feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_burn(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
 		return
+
+	if(HAS_TRAIT(H, TRAIT_BURNT))
+		REMOVE_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
 	else
+		ADD_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
+
+	H.update_body()
+
+	log_admin("[key_name(usr)] toggled burn skin for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] toggled burn skin for [key_name_admin(H)]")
+
+/client/proc/cmd_admin_husk(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
 		return
+
+	if(HAS_TRAIT(H, TRAIT_HUSK))
+		REMOVE_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+	else
+		ADD_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+
+	H.update_body()
+
+	log_admin("[key_name(usr)] toggled husk skin for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] toggled husk skin for [key_name_admin(H)]")
 
 /client/proc/cmd_admin_gib(mob/M as mob in mob_list)
 	set category = "Special Verbs"

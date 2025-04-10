@@ -103,7 +103,7 @@
 	var/specie_shoe_blood_state = "shoeblood"
 	var/specie_hand_blood_state = "bloodyhands"
 	var/flesh_color = "#ffc896" //Pink.
-	var/base_color      //Used when setting species.
+	var/base_color // default skin color (r_skin, g_skin, b_skin)
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -276,6 +276,15 @@
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(base_color)
+		H.r_skin = HEX_VAL_RED(base_color)
+		H.g_skin = HEX_VAL_GREEN(base_color)
+		H.b_skin = HEX_VAL_BLUE(base_color)
+	else
+		H.r_belly = initial(H.r_belly)
+		H.g_belly = initial(H.g_belly)
+		H.b_belly = initial(H.b_belly)
+
 	H.mob_brute_mod.ModMultiplicative(brute_mod, src)
 	H.mob_burn_mod.ModMultiplicative(burn_mod, src)
 	H.mob_oxy_mod.ModMultiplicative(oxy_mod, src)
@@ -359,9 +368,6 @@
 /datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	return
 
-/datum/species/proc/on_life(mob/living/carbon/human/H)
-	return
-
 // For species who's skin acts as a spacesuit of sorts
 // Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
 /datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
@@ -369,15 +375,18 @@
 
 /datum/species/human
 	name = HUMAN
+	icobase = 'icons/mob/human_races/r_human.dmi'
+	deformed = 'icons/mob/human_races/r_def_human.dmi'
+	skeleton = 'icons/mob/human_races/r_skeleton.dmi'
+	eyes_colorable_layer = "human_colorable"
+	eyes_static_layer = "human"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
-
-	eyes_colorable_layer = "human_colorable"
-	eyes_static_layer = "human"
 
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
@@ -397,8 +406,13 @@
 /datum/species/pluvian
 	name = PLUVIAN
 	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	deformed = null
+	skeleton = 'icons/mob/human_races/r_skeleton.dmi'
+	eyes_colorable_layer = "pluvian_colorable"
+	eyes_static_layer = "pluvian"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey/pluvian
 	unarmed_type = /datum/unarmed_attack/punch
@@ -432,8 +446,13 @@
 /datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT
 	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	deformed = null
+	skeleton = null
+	eyes_colorable_layer = null
+	eyes_static_layer = "blessed_pluvian"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0
@@ -443,7 +462,6 @@
 	tox_mod = 0
 	clone_mod = 0
 	pluvian_social_credit = 0
-	eyes_static_layer = "pluvia"
 	race_traits = list(
 		TRAIT_NO_BREATHE,
 		TRAIT_INCOMPATIBLE_DNA,
@@ -477,13 +495,13 @@
 	icobase = 'icons/mob/human_races/r_unathi.dmi'
 	deformed = 'icons/mob/human_races/r_def_unathi.dmi'
 	skeleton = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	eyes_colorable_layer = "unathi_colorable"
+	eyes_static_layer = "unathi"
 	second_color_mask = TRUE
-
 	gender_tail_icons = TRUE
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
-	eyes_colorable_layer = "unathi_colorable"
-	eyes_static_layer = "unathi"
+
 	language = LANGUAGE_SINTAUNATHI
 	unarmed_type = /datum/unarmed_attack/claws
 	race_verbs = list(/mob/living/carbon/human/proc/air_sample)
@@ -519,7 +537,7 @@
 	)
 
 	flesh_color = "#34af10"
-	base_color = "#066000"
+	base_color = "#06aa00"
 
 	min_age = 25
 	max_age = 85
@@ -541,17 +559,28 @@
 
 /datum/species/unathi/on_gain(mob/living/carbon/human/H)
 	..()
-	H.r_belly = HEX_VAL_RED(base_color)
-	H.g_belly = HEX_VAL_GREEN(base_color)
-	H.b_belly = HEX_VAL_BLUE(base_color)
+
+	if(base_color) // move it to the parent on_gain() if there will be any other species with the second color set
+		var/second_color = color_shift_luminance(base_color, -5)
+		H.r_belly = HEX_VAL_RED(second_color)
+		H.g_belly = HEX_VAL_GREEN(second_color)
+		H.b_belly = HEX_VAL_BLUE(second_color)
+	else
+		H.r_belly = initial(H.r_belly)
+		H.g_belly = initial(H.g_belly)
+		H.b_belly = initial(H.b_belly)
 
 /datum/species/tajaran
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deformed = 'icons/mob/human_races/r_def_tajaran.dmi'
 	skeleton = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	eyes_colorable_layer = "tajaran_colorable"
+	eyes_static_layer = "tajaran"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+	gender_tail_icons = TRUE
+
 	language = LANGUAGE_SIIKMAAS
 	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	unarmed_type = /datum/unarmed_attack/claws
@@ -596,7 +625,7 @@
 	)
 
 	flesh_color = "#afa59e"
-	base_color = "#333333"
+	base_color = "#bbbbbb"
 
 	min_age = 25
 	max_age = 85
@@ -621,6 +650,10 @@
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deformed = 'icons/mob/human_races/r_def_skrell.dmi'
 	skeleton = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+	eyes_colorable_layer = null
+	eyes_static_layer = "skrell"
+	gender_body_icons = FALSE
+
 	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
@@ -628,7 +661,6 @@
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
-	gender_body_icons = FALSE
 
 	speed_mod = 1.5
 	speed_mod_no_shoes = -2.2
@@ -656,7 +688,6 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	eyes_colorable_layer = "skrell_colorable"
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 
@@ -678,6 +709,9 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deformed = 'icons/mob/human_races/r_def_vox.dmi'
 	skeleton = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	eyes_colorable_layer = "vox_colorable"
+	eyes_static_layer = null
+
 	language = LANGUAGE_VOXPIDGIN
 	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	gender_body_icons = FALSE
@@ -695,8 +729,6 @@
 	breath_cold_level_1 = 80
 	breath_cold_level_2 = 50
 	breath_cold_level_3 = 0
-
-	eyes_colorable_layer = "vox_colorable"
 
 	inhale_type = "nitrogen"
 	poison_type = "oxygen"
@@ -793,6 +825,10 @@
 	name = VOX_ARMALIS
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deformed = 'icons/mob/human_races/r_armalis.dmi'
+	skeleton = null
+	eyes_colorable_layer = null // eyes part of the head sprite
+	eyes_static_layer = null
+
 	damage_mask = FALSE
 	language = LANGUAGE_VOXPIDGIN
 	unarmed_type = /datum/unarmed_attack/claws/armalis
@@ -818,7 +854,6 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes_colorable_layer = null
 	inhale_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -854,6 +889,10 @@
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deformed = 'icons/mob/human_races/r_def_plant.dmi'
+	skeleton = null
+	eyes_colorable_layer = "default"
+	eyes_static_layer = null
+
 	language = LANGUAGE_ROOTSPEAK
 	unarmed_type = /datum/unarmed_attack/diona
 	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
@@ -1041,6 +1080,9 @@
 	name = PODMAN
 	icobase = 'icons/mob/human_races/r_podman.dmi'
 	deformed = 'icons/mob/human_races/r_def_plant.dmi'
+	skeleton = null
+	eyes_colorable_layer = "default"
+	eyes_static_layer = null
 
 	language = "Rootspeak"
 	unarmed_type = /datum/unarmed_attack/diona/podman
@@ -1111,8 +1153,11 @@
 /datum/species/machine
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
-	deformed = 'icons/mob/human_races/r_machine.dmi'
+	deformed = null
+	skeleton = null
 	alpha_color_mask = TRUE
+	eyes_colorable_layer = null
+	eyes_static_layer = null
 
 	language = LANGUAGE_TRINARY
 	unarmed_type = /datum/unarmed_attack/punch
@@ -1274,12 +1319,15 @@
 
 /datum/species/abductor
 	name = ABDUCTOR
+	icobase = 'icons/mob/human_races/r_abductor.dmi'
+	deformed = null
+	skeleton = 'icons/mob/human_races/r_skeleton.dmi'
+	eyes_colorable_layer = null // eyes are part of the head sprite
+	eyes_static_layer = null
+	gender_body_icons = FALSE
+
 	darksight = 3
 	dietflags = DIET_OMNI
-
-	icobase = 'icons/mob/human_races/r_abductor.dmi'
-	deformed = 'icons/mob/human_races/r_abductor.dmi'
-
 	flesh_color = "#808080"
 
 	race_traits = list(
@@ -1288,6 +1336,7 @@
 		TRAIT_VIRUS_IMMUNE,
 		TRAIT_NO_VOMIT,
 		TRAIT_NO_BLOOD,
+		TRAIT_NEVER_FAT,
 	)
 
 	flags = list(
@@ -1302,13 +1351,15 @@
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
-	deformed = 'icons/mob/human_races/r_shadowling.dmi'
+	deformed = null
+	skeleton = null
+	eyes_colorable_layer = null
+	eyes_static_layer = "shadowling"
+
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	flesh_color = "#ff0000"
-
-	eyes_static_layer = "shadowling"
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
@@ -1387,9 +1438,12 @@
 
 /datum/species/golem
 	name = GOLEM
-
 	icobase = 'icons/mob/human_races/r_golem.dmi'
-	deformed = 'icons/mob/human_races/r_golem.dmi'
+	deformed = null
+	skeleton = null
+	eyes_colorable_layer = "default"
+	eyes_static_layer = null
+
 	dietflags = 0 //this is ROCK
 
 	total_health = 100
@@ -1491,7 +1545,11 @@
 /datum/species/abomination
 	name = ABOMINATION
 	icobase = 'icons/mob/human_races/r_abomination.dmi'
-	deformed = 'icons/mob/human_races/r_abomination.dmi'
+	deformed = null
+	skeleton = null
+	eyes_colorable_layer = "default"
+	eyes_static_layer = null
+
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws/abomination
 	dietflags = DIET_OMNI
@@ -1565,6 +1623,13 @@
 
 /datum/species/homunculus
 	name = HOMUNCULUS
+	// homunculus is basically placeholder, we set species directly for our organs
+	icobase = null
+	deformed = null
+	skeleton = null
+	eyes_colorable_layer = null
+	eyes_static_layer = null
+
 	language = LANGUAGE_SOLCOMMON
 
 	brute_mod = 2
@@ -1607,16 +1672,15 @@
 
 	default_mood_event = /datum/mood_event/homunculus
 
-// todo
-///datum/species/homunculus/on_gain(mob/living/carbon/human/H)
-//	..()
-//	var/list/tail_list = icon_states('icons/mob/human_races/tail.dmi') - "vox_armalis"
-//	tail_list += ""
-//	H.random_tail_holder = pick(tail_list)
-
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
 	keys -= list(PODMAN, IPC, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION)
+
+	// todo: wings, tails (but need to rework tails and port more wings)
+
+	var/datum/species/eyes = global.all_species[pick(keys - VOX)]
+	eyes_colorable_layer = eyes::eyes_colorable_layer
+	eyes_static_layer = eyes::eyes_static_layer
 
 	var/datum/species/head = global.all_species[pick(keys - VOX)]
 
@@ -1659,12 +1723,13 @@
 /datum/species/serpentid
 	name = SERPENTID
 	icobase = 'icons/mob/human_races/r_serpentid_grey.dmi'
-	deformed = 'icons/mob/human_races/r_serpentid_grey.dmi'
-	damage_mask = FALSE
-	gender_body_icons = FALSE
-
+	deformed = null
+	skeleton = null
 	eyes_icon = 'icons/mob/human_races/eyes_serpentid.dmi'
 	eyes_colorable_layer = "serpentid_colorable"
+	eyes_static_layer = null
+	damage_mask = FALSE
+	gender_body_icons = FALSE
 
 	base_color = "#336600"
 	flesh_color = "#525252"
@@ -1767,7 +1832,7 @@
 	UnregisterSignal(H, list(COMSIG_PARENT_ATTACKBY, COMSIG_S_CLICK_GRAB))
 	return ..()
 
-/datum/species/serpentid/on_life(mob/living/carbon/human/H)
+/datum/species/serpentid/on_mob_life(mob/living/carbon/human/H)
 	if(!H.on_fire && H.fire_stacks < 2)
 		H.fire_stacks += 0.2
 
@@ -1835,7 +1900,10 @@
 	name = MOTH
 	flesh_color = "00FF00"
 	icobase = 'icons/mob/human_races/r_moth.dmi'
-	deformed = 'icons/mob/human_races/r_moth.dmi'
+	deformed = null
+	skeleton = null
+	eyes_colorable_layer = null // eyes are part of the head sprite
+	eyes_static_layer = null
 
 	race_traits = list(
 		TRAIT_NO_BREATHE,

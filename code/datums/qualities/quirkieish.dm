@@ -315,11 +315,10 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
-	H.set_species(GOLEM)
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
+	H.set_species(GOLEM)
 	H.flavor_text = ""
-	H.regenerate_icons(update_body_preferences = TRUE)
 
 	// In case the golem is evil don't make him a loyal dog of NT.
 	if(isanyantag(H))

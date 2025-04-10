@@ -34,9 +34,9 @@
 	var/s_tone = HUMAN_DEFAULT_SKIN_TONE
 
 	//Skin colour
-	var/r_skin = 0
-	var/g_skin = 0
-	var/b_skin = 0
+	var/r_skin = 255
+	var/g_skin = 255
+	var/b_skin = 255
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
@@ -56,9 +56,9 @@
 	var/personal_faction = ""
 	var/religion = ""
 	var/vox_rank = ""
-	var/r_belly = 0
-	var/g_belly = 0
-	var/b_belly = 0
+	var/r_belly = 255
+	var/g_belly = 255
+	var/b_belly = 255
 
 	//Equipment slots
 	var/obj/item/wear_suit = null

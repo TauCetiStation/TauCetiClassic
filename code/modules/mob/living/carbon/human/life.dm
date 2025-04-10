@@ -74,6 +74,9 @@
 
 			handle_drunkenness()
 
+		if(stat != DEAD && HAS_TRAIT(src, ELEMENT_TRAIT_ZOMBIE) && prob(10)) // signal? or maybe we can add something like handle_life_sounds
+			playsound(src, pick(SOUNDIN_GROWL), VOL_EFFECTS_MASTER)
+
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
 
@@ -89,10 +92,6 @@
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name() // why in life wtf
-
-	//Species-specific update.
-	if(species)
-		species.on_life(src)
 
 	pulse = handle_pulse()
 

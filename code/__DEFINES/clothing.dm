@@ -8,7 +8,15 @@
 #define HIDEEARS          (1<<5)	// (ears means headsets and such),
 #define HIDEEYES          (1<<6)	// whether eyes and glasses are hidden,
 #define HIDEFACE          (1<<7)	// whether we appear as unknown.
-#define HIDETAIL          (1<<8)	// Exterior suits - to hide tail when wearing space suit or something similar.
+
+// render_flags bitmask, affects render but not access
+// todo: move it to mob traits when Lummox allow us init list manipulations
+#define HIDE_TAIL         (1<<0)
+#define HIDE_WINGS        (1<<1)
+#define HIDE_UNIFORM      (1<<2)
+#define HIDE_TOP_HAIR     (1<<3) // replaced BLOCKHEADHAIR, stops hair from rendering
+#define HIDE_FACIAL_HAIR  (1<<4)
+#define HIDE_ALL_HAIR     (HIDE_TOP_HAIR | HIDE_FACIAL_HAIR) // replaced BLOCKHAIR
 
 //ITEM INVENTORY SLOT BITMASKS
 #define SLOT_FLAGS_OCLOTHING    (1<<0)

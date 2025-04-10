@@ -367,7 +367,7 @@
 		if(!H.species.flags[HAS_HAIR])
 			return
 		var/list/species_hair = list()
-		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+		if(!(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)
 				var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
 				if(i == "Bald")
@@ -689,7 +689,7 @@
 				hair_changes_occured = TRUE
 				body_changes_occured = TRUE
 		else if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
-			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+			if(!(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				if(!H.hair_painted)
 					H.dyed_r_hair = clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
 					H.dyed_g_hair = clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
@@ -742,7 +742,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/changes_occured = FALSE
-			if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+			if(H.hair_painted && !(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				H.dyed_r_hair = H.r_hair
 				H.dyed_g_hair = H.g_hair
 				H.dyed_b_hair = H.b_hair
@@ -838,7 +838,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name in data["allowed_races"])
-			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+			if(!(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))))
 				var/list/species_hair = list()
 				if(H.species)
 					for(var/i in hair_styles_list)

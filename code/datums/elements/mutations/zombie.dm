@@ -27,6 +27,7 @@
 	L.mob_oxy_mod.ModMultiplicative(0, src)
 	L.mob_tox_mod.ModMultiplicative(0, src)
 	L.mob_clone_mod.ModMultiplicative(0, src)
+	L.mob_brain_mod.ModMultiplicative(0, src)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -45,6 +46,8 @@
 		add_zombie(H)
 		H.regenerate_icons(update_body_preferences = TRUE)
 
+		RegisterSignal(H, COMSIG_MOB_DIED, PROC_REF(on_death))
+
 /datum/element/mutation/zombie/on_loose(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, ZOMBIE_MOOD_EVENT)
 
@@ -52,6 +55,7 @@
 	L.mob_oxy_mod.RemoveMods(src)
 	L.mob_tox_mod.RemoveMods(src)
 	L.mob_clone_mod.RemoveMods(src)
+	L.mob_brain_mod.RemoveMods(src)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -70,4 +74,12 @@
 		remove_zombie(H)
 		H.regenerate_icons(update_body_preferences = TRUE)
 
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+
 #undef ZOMBIE_MOOD_EVENT
+
+/datum/element/mutation/zombie/proc/on_death(datum/source, gibbed)
+	if(gibbed)
+		return
+	var/mob/living/carbon/human/H = source
+	H.preprerevive_zombie(rand(600,700))

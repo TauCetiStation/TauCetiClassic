@@ -52,10 +52,13 @@
 	if(H.disfigured)
 		H.disfigured = FALSE
 
-	if(HUSK in M.mutations)
-		M.mutations.Remove(HUSK)
-		M.update_mutations()
-		M.UpdateAppearance()
+	if(HAS_TRAIT_FROM(M, TRAIT_HUSK, GENERIC_TRAIT))
+		REMOVE_TRAIT(M, TRAIT_HUSK, GENERIC_TRAIT)
+		M.update_body()
+
+	if(HAS_TRAIT_FROM(M, TRAIT_BURNT, GENERIC_TRAIT))
+		REMOVE_TRAIT(M, TRAIT_BURNT, GENERIC_TRAIT)
+		M.update_body()
 
 	var/obj/item/organ/external/chest/BP = M.bodyparts_by_name[BP_CHEST]
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)

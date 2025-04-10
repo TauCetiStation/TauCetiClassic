@@ -92,7 +92,7 @@
 		my_master.my_golem = null
 		my_master = null
 
-	if(isshadowling(src))
+	if(isshadowling(src)) // todo: move it to shadowling code, listen to COMSIG_MOB_DIED
 		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		for(var/datum/role/thrall/T in faction.members)
 			if(!T.antag.current)
@@ -169,27 +169,3 @@
 		return
 
 	ADD_TRAIT(src, ELEMENT_TRAIT_SKELETON, INNATE_TRAIT)
-
-/mob/living/carbon/human/proc/ChangeToHusk() // todo
-	if(HUSK in mutations)
-		return
-	if(species.flags[HAS_HAIR])
-		if(f_style)
-			f_style = "Shaved" // we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-		if(h_style)
-			h_style = "Bald"
-	else if(species.name == SKRELL)
-		r_hair = 85
-		g_hair = 85 // grey
-		b_hair = 85
-
-	mutations.Add(HUSK)
-	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
-	update_body()
-
-/mob/living/carbon/human/proc/Drain()
-	if(fake_death)
-		fake_death = 0
-	ChangeToHusk()
-	mutations.Add(NOCLONE)
-	return

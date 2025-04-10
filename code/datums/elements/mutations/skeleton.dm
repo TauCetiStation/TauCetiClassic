@@ -53,7 +53,6 @@
 
 	// todo: replace with traits
 	L.remove_status_flags(CANSTUN|CANPARALYSE)
-	L.add_status_flags(DISFIGURED)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -88,7 +87,6 @@
 
 	L.mob_metabolism_mod.RemoveMods(src)
 
-	L.remove_status_flags(DISFIGURED)
 	L.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 
 	if(ishuman(L))

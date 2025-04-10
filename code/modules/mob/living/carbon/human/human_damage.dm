@@ -13,10 +13,10 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
-		ChangeToHusk()
-	return
+		if(!HAS_TRAIT(src, TRAIT_BURNT))
+			ADD_TRAIT(src, TRAIT_BURNT, GENERIC_TRAIT)
+			update_body()
 
 // =============================================
 

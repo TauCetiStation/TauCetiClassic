@@ -148,7 +148,7 @@
 			if(!H.species.flags[HAS_HAIR])
 				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return
-			if((H.head && (H.head.flags & BLOCKHAIR)) || (H.head && (H.head.flags & HIDEEARS)))
+			if((H.head && (H.head.render_flags & HIDE_ALL_HAIR)) || (H.head && (H.head.flags & HIDEEARS)))
 				to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 				return
 			if(H.h_style == "Bald" || H.h_style == "Balding Hair" || H.h_style == "Skinhead")
@@ -448,7 +448,7 @@
 				return
 
 			if(H.species.name in allowed_races)
-				if(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS)))
+				if(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS)))
 					to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 					return
 

@@ -252,10 +252,14 @@
 		return
 
 	M.heal_bodypart_damage(0,3 * REM)
-	if(volume >= overdose && (HUSK in M.mutations) && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.mutations.Remove(HUSK)
-		H.update_body()
+	var/mob/living/carbon/human/H = M
+	if(volume >= overdose && istype(H))
+		if(HAS_TRAIT_FROM(H, TRAIT_BURNT, GENERIC_TRAIT))
+			REMOVE_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
+			H.update_body()
+		if(HAS_TRAIT_FROM(H, TRAIT_HUSK, GENERIC_TRAIT)) // as husk is now a separate trait, we probably should move it from dermaline which is a burn medication
+			REMOVE_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+			H.update_body()
 
 /datum/reagent/dermaline/on_diona_digest(mob/living/M)
 	return FALSE

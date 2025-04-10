@@ -597,16 +597,24 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	if(!bodyparts_by_name[BP_HEAD])
+	if(!real_name || is_disfigured())
 		return "Unknown"
+
+	return real_name
+
+/mob/living/carbon/human/proc/is_disfigured()
+	if(!bodyparts_by_name[BP_HEAD])
+		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_BURNT))
+		return TRUE
 
 	if(istype(bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-		if( !BP || BP.disfigured || (BP.is_stump) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
-			return "Unknown"
-		return real_name
+		if(!BP || BP.disfigured || BP.is_stump)
+			return TRUE
 
-	return "Unknown"
+	return FALSE
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
@@ -660,7 +668,7 @@
 			nutrition += . // Electrocute act returns it's shock_damage value.
 		if(HAS_TRAIT(src, TRAIT_NO_PAIN)) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
 			. = 0
-		electrocution_animation(40)
+		electrocution_animation(4 SECONDS)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["skill"])
@@ -1414,16 +1422,6 @@
 
 	maxHealth = species.total_health
 
-	if(species.base_color && default_colour)
-		//Apply colour.
-		r_skin = HEX_VAL_RED(species.base_color)
-		g_skin = HEX_VAL_GREEN(species.base_color)
-		b_skin = HEX_VAL_BLUE(species.base_color)
-	else
-		r_skin = 0
-		g_skin = 0
-		b_skin = 0
-
 	if(force_organs || !bodyparts.len)
 		species.create_organs(src, deleteOld = TRUE)
 	full_prosthetic = null
@@ -1770,42 +1768,32 @@
 /mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
 	return ..()
 
-//Turns a mob black, flashes a skeleton overlay
-//Just like a cartoon!
-// todo
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
-	//TG...
-	//Handle mutant parts if possible
-	//if(species)
-	//	species.handle_mutant_bodyparts(src,"black")
-	//	species.handle_hair(src,"black")
-	//	species.update_color(src,"black")
-	//	add_overlay("electrocuted_base")
-	//	spawn(anim_duration)
-	//		if(src)
-	//			if(dna && dna.species)
-	//				dna.species.handle_mutant_bodyparts(src)
-	//				dna.species.handle_hair(src)
-	//				dna.species.update_color(src)
-	//			cut_overlay("electrocuted_base")
-	//else //or just do a generic animation
-	var/list/viewing = list()
-	for(var/mob/M in viewers(src))
-		if(M.client)
-			viewing += M.client
-	var/electrocuted_sprite = "electrocuted_generic"
-	switch(get_species())
-		if(UNATHI)
-			electrocuted_sprite += "_unathi"
-		if(TAJARAN)
-			electrocuted_sprite += "_tajaran"
-		if(SKRELL)
-			electrocuted_sprite += "_skrell"
-		if(VOX)
-			electrocuted_sprite += "_vox"
-	var/image/I = image(icon, src, electrocuted_sprite, MOB_ELECTROCUTION_LAYER)
-	I = update_height(I)
-	flick_overlay(I, viewing, anim_duration)
+	new /obj/effect/electrocute(null, src, anim_duration)
+
+/mob/living/carbon/human/proc/get_skeleton_appearance()
+	var/mutable_appearance/MA = new()
+	MA.appearance_flags = KEEP_TOGETHER
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
+			continue
+		var/skeleton_state = BP.get_icon_state(fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
+		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
+	MA = update_height(MA)
+	return MA
+
+/mob/living/carbon/human/proc/get_nude_appearance()
+	var/mutable_appearance/MA = new()
+	MA.appearance_flags = KEEP_TOGETHER
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump)
+			continue
+		// or we can use BP.generate_appearances() right away, but we need it with hairs?
+		var/mutable_appearance/nude_appearance = mutable_appearance(BP.icon, BP.get_icon_state())
+		nude_appearance.color = BP.get_skin_color()
+		MA.add_overlay(nude_appearance)
+	MA = update_height(MA)
+	return MA
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 

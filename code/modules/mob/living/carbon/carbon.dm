@@ -324,7 +324,7 @@
 	if(!on_fire)
 		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE)) // probably need TRAIT_INGORE_ENVIRONMENT or something
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE)) // probably we need to create TRAIT_INGORE_ENVIRONMENT or something
 		return
 
 	switch(bodytemperature)

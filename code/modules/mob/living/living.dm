@@ -622,8 +622,8 @@
 	stat = CONSCIOUS
 
 	// make the icons look correct
-	if(HUSK in mutations)
-		mutations.Remove(HUSK)
+	REMOVE_TRAIT(src, TRAIT_HUSK, GENERIC_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_BURNT, GENERIC_TRAIT)
 
 	regenerate_icons()
 

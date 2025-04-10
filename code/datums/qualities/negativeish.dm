@@ -219,7 +219,8 @@ var/global/list/allergen_reagents_list
 	return !H.species.flags[IS_SYNTHETIC]
 
 /datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
-	H.ChangeToHusk()
+	ADD_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT) // generic trait so we can heal it later
+	H.update_body()
 
 /datum/quality/negativeish/delicate
 	name = "Quality Food Enjoyer"

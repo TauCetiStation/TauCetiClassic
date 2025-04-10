@@ -116,47 +116,19 @@
 
 			H.infect_zombie_virus(target_zone)
 
-/datum/species/zombie/on_life(mob/living/carbon/human/H)
-	if(!H.life_tick % 3)
-		return
-	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
-	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
-	var/obj/item/organ/internal/eyes = H.bodyparts_by_name[O_EYES]
-	var/obj/item/organ/internal/brain = H.bodyparts_by_name[O_BRAIN]
-	if(eyes)
-		eyes.damage = 0
-	if(brain)
-		brain.damage = 0
-	H.setBlurriness(0)
-	H.eye_blind = 0
-
-	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
-		H.drop_l_hand()
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
-	if(RArm && !(RArm.is_stump) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
-		H.drop_r_hand()
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
-
-	if(H.stat != DEAD && prob(10))
-		playsound(H, pick(SOUNDIN_GROWL), VOL_EFFECTS_MASTER)
-
-/datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed) //Death of zombie
-	if(gibbed)
-		return
-	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), rand(600,700))
-	to_chat(H, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
-		Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
-		который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
-
-/mob/living/carbon/human/proc/can_zombified()
+/mob/living/carbon/human/proc/can_zombified() // todo: need to expand pull with new races, preferably automatically
     return species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)
 
 /mob/living/carbon/human/proc/handle_infected_death() //Death of human
-	if(can_zombified())
-		addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), 300)
-		to_chat(src, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
-			Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
-			который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
+	if(!can_zombified())
+		return
+	preprerevive_zombie(300)
+
+/mob/living/carbon/human/proc/preprerevive_zombie(delay)
+	addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), delay)
+	to_chat(src, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
+		Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
+		который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
 
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
@@ -201,9 +173,11 @@
 	radiation = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 	restore_blood()
+
 	// make the icons look correct
-	if(HUSK in mutations)
-		mutations.Remove(HUSK)
+	// i think we can pull burned/husked zombies, need to see how it works
+	//REMOVE_TRAIT(src, TRAIT_HUSK, GENERIC_TRAIT)
+	//REMOVE_TRAIT(src, TRAIT_BURNT, GENERIC_TRAIT)
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)

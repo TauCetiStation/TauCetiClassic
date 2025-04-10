@@ -194,42 +194,29 @@ Please contact me on #coderbus IRC. ~Carn x
 				continue
 			bodypart_overlays_standing[BP.body_zone] = BP.generate_appearances(update_preferences)
 
-	var/list/standing = list()
-	for(var/index in bodypart_overlays_standing)
-		standing += bodypart_overlays_standing[index]
-
-	for(var/mutable_appearance/MA as anything in standing)
-		MA = update_height(MA)
-		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
-		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
-
-/* todo: does not work as expected and idk why, filter just not works for overlays for some reason
 	// group overlays by layer so we can save on filters count
-	// current possible bodypart layers: BODY_BEHIND_LAYER, BODY_LAYER, BODY_INFRONT_LAYER
 
-	var/list/mutable_appearance/grouped_by_layer = list()
+	var/list/mutable_appearance/grouped_by_layer = list() // alist, some day
+	var/list/standing = list()
 
 	for(var/index in bodypart_overlays_standing)
 		for(var/mutable_appearance/overlay in bodypart_overlays_standing[index])
 			if(!grouped_by_layer["[overlay.layer]"])
 				grouped_by_layer["[overlay.layer]"] = list()
 			grouped_by_layer["[overlay.layer]"] += overlay
-			overlay.layer = initial(overlay.layer)
-
-	var/list/standing = list()
-	var/mutable_appearance/MA
 
 	for(var/layer in grouped_by_layer)
-		MA = new()
+		var/mutable_appearance/MA = new()
+		MA.appearance_flags = KEEP_TOGETHER // or height filters will ignore our overlays
 		MA.layer = text2num(layer)
-		MA.add_overlay(grouped_by_layer[layer])
+		MA.overlays = grouped_by_layer[layer]
 		MA = update_height(MA)
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 		standing += MA
-*/
 
 	// BODY_LAYER just used here as a cache index, keep in mind that it can contain overlays with any other layer
+	// current possible bodypart layers: BODY_BEHIND_LAYER, BODY_LAYER, BODY_INFRONT_LAYER
 	overlays_standing[BODY_LAYER] = standing
 	apply_standing_overlay(BODY_LAYER) 
 
@@ -386,7 +373,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
 		var/obj/item/clothing/under/U = w_uniform
-		if (wear_suit && (wear_suit.flags & BLOCKUNIFORM)) // Skip uniform overlay on suit full cover
+		if (wear_suit?.render_flags & HIDE_UNIFORM) // Skip uniform overlay on suit full cover
 			return
 
 		if(HAS_TRAIT(src, TRAIT_FAT))

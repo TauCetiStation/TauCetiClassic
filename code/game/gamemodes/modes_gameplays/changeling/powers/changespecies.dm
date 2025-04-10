@@ -23,7 +23,7 @@
 
 	domutcheck(user, null)
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
-	user.set_species(S,null,1) //Until someone moves body colour into DNA, they're going to have to use the default.
+	user.set_species(S,null)
 
 	user.changeling_update_languages(changeling.absorbed_languages)
 

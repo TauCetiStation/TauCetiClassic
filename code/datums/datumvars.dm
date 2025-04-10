@@ -282,6 +282,8 @@
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 			body += "<option value='?_src_=vars;makezombie=\ref[D]'>Make zombie</option>"
 		body += "<option value>---</option>"
+		body += "<option value='?_src_=vars;burn=\ref[D]'>Burn</option>"
+		body += "<option value='?_src_=vars;husk=\ref[D]'>Husk</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
@@ -594,6 +596,28 @@ body
 
 		cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
+
+	else if(href_list["burn"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["burn"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_burn(H)
+
+	else if(href_list["husk"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["husk"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_husk(H)
 
 	else if(href_list["gib"])
 		if(!check_rights(R_ADMIN|R_FUN))

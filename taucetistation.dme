@@ -1001,6 +1001,7 @@
 #include "code\game\objects\effects\chemsmoke.dm"
 #include "code\game\objects\effects\effect_defines.dm"
 #include "code\game\objects\effects\effect_system.dm"
+#include "code\game\objects\effects\electrocute.dm"
 #include "code\game\objects\effects\explosion_particles.dm"
 #include "code\game\objects\effects\foam.dm"
 #include "code\game\objects\effects\glowshroom.dm"

@@ -13,8 +13,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //FLAGS BITMASK
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
-#define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
-
 #define MASKINTERNALS          (1<<3)   // Mask allows internals.
 
 #define NOBLOODY               (1<<4)   // Used to items if they don't want to get a blood overlay. Doesn't work properly with shoes.
@@ -44,10 +42,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DROPDEL                (1<<13)  // When dropped, it calls qdel on itself
 
 #define NODROP                 (1<<14)  // User can't drop this item
-
-#define BLOCKHAIR              (1<<15)  // Clothing. Temporarily removes the user's hair, facial and otherwise.
-
-#define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
 
 #define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
 
