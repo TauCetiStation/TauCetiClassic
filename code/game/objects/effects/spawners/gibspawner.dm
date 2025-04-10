@@ -6,7 +6,7 @@
 	var/list/gibdirections = list() //of lists
 
 /obj/effect/gibspawner/atom_init(mapload, mob/living/M)
-	..()
+	. = ..()
 
 	if(HAS_TRAIT(M, TRAIT_NO_MESSY_GIBS))
 		return INITIALIZE_HINT_QDEL

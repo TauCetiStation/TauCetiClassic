@@ -204,7 +204,7 @@
 			connected_message("Клон отбракован: мёртв.")
 			return
 
-		else if(src.occupant.getCloneLoss() > (100 - src.heal_level))
+		else if(occupant.getCloneLoss() > (100 - src.heal_level))
 			occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
@@ -229,7 +229,7 @@
 			use_power(7500) //This might need tweaking.
 			return
 
-		else if((src.occupant.getCloneLoss() <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
+		else if((occupant.getCloneLoss() <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
 			connected_message("Процесс клонирования завершён.")
 			src.locked = 0
 			go_out()
