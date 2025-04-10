@@ -322,9 +322,9 @@
 		base_appearance.color = get_skin_color()
 
 	if(species.second_color_mask && icon_exists(icon, "color_[icon_state]"))
-		var/mutable_appearance/second_color_appearance = mutable_appearance(icon, "color_[icon_state]", -body_icon_layer)
+		var/mutable_appearance/second_color_appearance = mutable_appearance(icon, "color_[icon_state]", -BODY_FEATURES_LAYER)
 		second_color_appearance.color = get_skin_second_color()
-		base_appearance.add_overlay(second_color_appearance)
+		. += second_color_appearance
 
 	// sometimes we can see the insides of the mob
 	if(is_zombie && species.skeleton)
@@ -332,7 +332,7 @@
 			zombie_overlay_pick = PICK_DAMAGE_STATE
 		// reuse of damage overlays here, feel free to create own overlays set for things like this
 		if(zombie_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]"))
-			var/mutable_appearance/zombie_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]", -body_icon_layer)
+			var/mutable_appearance/zombie_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]", -BODY_FEATURES_LAYER)
 			zombie_holes.color = get_blood_color()
 			zombie_holes.appearance_flags = KEEP_TOGETHER
 			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
@@ -344,7 +344,7 @@
 		if(!burnt_overlay_pick)
 			burnt_overlay_pick = PICK_DAMAGE_STATE
 		if(burnt_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]"))
-			var/mutable_appearance/burnt_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]", -body_icon_layer)
+			var/mutable_appearance/burnt_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]", -BODY_FEATURES_LAYER)
 			burnt_holes.color = "#cf7516"
 			burnt_holes.appearance_flags = KEEP_TOGETHER
 			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
@@ -356,16 +356,14 @@
 		if(!husk_overlay_pick)
 			husk_overlay_pick = PICK_DAMAGE_STATE
 		if(husk_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]"))
-			var/mutable_appearance/husk_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]", -body_icon_layer)
+			var/mutable_appearance/husk_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]", -BODY_FEATURES_LAYER)
 			husk_holes.color = rgb(60, 60, 60, 127)
 			. += husk_holes
 
 // update how the organ looks for when it separated
 // no point to call it when organ is inside (attached to) the body
-/obj/item/organ/external/proc/merge_appearance()
-	cut_overlays()
-	icon_state = null
-	add_overlay(generate_appearances())
+/obj/item/organ/external/proc/apply_appearance()
+	appearance = generate_appearances()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
 	if(!locate(/obj/structure/table) in loc)
@@ -658,7 +656,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(!should_delete)
 		handle_cut()
-		merge_appearance()
+		apply_appearance()
 		owner = null
 	else
 		qdel(src)
@@ -1130,7 +1128,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(f_style && should_render_facial)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style)
-			var/mutable_appearance/facial_appearance = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -body_icon_layer)
+			var/mutable_appearance/facial_appearance = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
 				if(is_husk)
 					facial_appearance.color = RGB_CONTRAST(178, 178, 178)
@@ -1142,7 +1140,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(h_style && should_render_hair)
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
-			var/mutable_appearance/hair_appearance = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s", -body_icon_layer)
+			var/mutable_appearance/hair_appearance = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s", -HAIR_LAYER)
 			if(hair_style.do_colouration)
 				if(is_husk || grad_style == "none") // no gradients, just fill with color
 					var/mycolor

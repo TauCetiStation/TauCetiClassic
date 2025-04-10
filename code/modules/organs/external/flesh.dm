@@ -662,7 +662,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.germ_level >= INFECTION_LEVEL_THREE)
 		STOP_PROCESSING(SSobj, BP)
 		BP.status |= ORGAN_DEAD
-		BP.merge_appearance() // regenerate appearance with new color
+		BP.apply_appearance() // regenerate appearance with new color
 
 // Runs once when attached
 /datum/bodypart_controller/proc/check_rejection()
