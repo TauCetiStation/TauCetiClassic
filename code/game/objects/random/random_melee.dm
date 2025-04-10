@@ -4,11 +4,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "swordred"
 
-/obj/item/weapon/melee/powerfist/with_tank/atom_init()
-	. = ..()
-	var/obj/item/weapon/tank/emergency_oxygen/double/new_tank = new(src)
-	tank = new_tank
-
 /obj/random/melee/item_to_spawn()
 	return pick(
 		prob(40);/obj/item/weapon/kitchenknife/combat,
