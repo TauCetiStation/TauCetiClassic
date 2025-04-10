@@ -44229,21 +44229,7 @@
 	},
 /area/station/rnd/sppodconstr)
 "hVn" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/belt/champion,
+/obj/structure/closet/crate/secure/gold,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -83929,29 +83915,7 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "pNO" = (
-/obj/item/weapon/coin/silver{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 12;
-	pixel_y = 7
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 5;
-	pixel_y = -8
-	},
-/obj/structure/closet/crate{
-	name = "Silver Crate"
-	},
+/obj/structure/closet/crate/secure/silver,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -104095,7 +104059,7 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
 "tHI" = (
-/obj/structure/closet/secure_closet/freezer/money,
+/obj/structure/closet/crate/secure/money,
 /obj/effect/decal/cleanable/cobweb2,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -105556,6 +105520,17 @@
 /area/shuttle/escape_pod2/station)
 "tWZ" = (
 /obj/structure/safe,
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
 /obj/item/clothing/under/color/yellow,
 /obj/item/toy/katana,
 /obj/effect/decal/turf_decal/alpha/gray{

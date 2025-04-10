@@ -1547,7 +1547,7 @@
 	},
 /area/station/aisat/teleport)
 "acP" = (
-/obj/structure/closet/secure_closet/freezer/money,
+/obj/structure/closet/crate/secure/money,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -9041,18 +9041,7 @@
 	},
 /area/asteroid/mine/eva)
 "aqZ" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/belt/champion,
-/obj/item/stack/sheet/mineral/gold,
+/obj/structure/closet/crate/secure/gold,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -17717,6 +17706,17 @@
 /area/station/solar/auxport)
 "hYv" = (
 /obj/structure/safe,
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
 /obj/item/clothing/under/color/yellow,
 /obj/item/toy/katana,
 /obj/machinery/light/small{

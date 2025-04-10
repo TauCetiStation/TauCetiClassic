@@ -54041,10 +54041,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "mBi" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
-/obj/item/weapon/storage/belt/champion,
+/obj/structure/closet/crate/secure/gold,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -67632,7 +67629,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "pYq" = (
-/obj/structure/closet/secure_closet/freezer/money,
+/obj/structure/closet/crate/secure/money,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -32
@@ -92348,29 +92345,7 @@
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "weK" = (
-/obj/item/weapon/coin/silver{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 12;
-	pixel_y = 7
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 5;
-	pixel_y = -8
-	},
-/obj/structure/closet/crate{
-	name = "Silver Crate"
-	},
+/obj/structure/closet/crate/secure/silver,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22

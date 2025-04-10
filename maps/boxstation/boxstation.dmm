@@ -37168,7 +37168,7 @@
 	},
 /area/station/medical/reception)
 "bnT" = (
-/obj/structure/closet/secure_closet/freezer/money,
+/obj/structure/closet/crate/secure/money,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -38923,14 +38923,11 @@
 	c_tag = "Vault";
 	dir = 4
 	},
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
+/obj/structure/closet/crate/secure/gold,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/item/weapon/storage/belt/champion,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"
 	},
@@ -38942,29 +38939,7 @@
 /turf/simulated/wall,
 /area/station/cargo/miningoffice)
 "bre" = (
-/obj/item/weapon/coin/silver{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 12;
-	pixel_y = 7
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/weapon/coin/silver{
-	pixel_x = 5;
-	pixel_y = -8
-	},
-/obj/structure/closet/crate{
-	name = "Silver Crate"
-	},
+/obj/structure/closet/crate/secure/silver,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_left"
 	},
