@@ -424,4 +424,36 @@
 	desc = "Contains only water, malt and hops."
 	icon_state = "beer"
 	list_reagents = list("beer" = 100)
+	var/canopened = 0
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/atom_init()
+	. = ..()
+	if(!canopened)
+		flags &= ~OPENCONTAINER
+		verbs -= /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/attack_self(mob/user)
+	if (!canopened)
+		playsound(src, pick(SOUNDIN_CAN_OPEN), VOL_EFFECTS_MASTER, rand(10, 50))
+		to_chat(user, "<span class='notice'>You open the beer with an audible pop!</span>")
+		flags |= OPENCONTAINER
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
+		canopened = 1
+	else
+		return ..()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/attack(mob/living/M, mob/user, def_zone)
+	if(!CanEat(user, M, src, "drink")) return
+
+	if (!canopened)
+		to_chat(user, "<span class='notice'>You need to open the drink!</span>")
+		return
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity) return
+
+	if (!canopened)
+		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
+		return
+	return ..()
