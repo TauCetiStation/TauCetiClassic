@@ -457,8 +457,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
 	name = "mining explosives"
-	cases = list("шахтерская взрывчатка","шахтерской взрывчатки","шахтерской взрывчатке","шахтерскую взрывчатку","шахтерской взрывчаткой","шахтерской взрывчатке")
-	desc = "Используется для шахтерских взрывных работ. Используя её, не забывайте о технике безопасности"
+	desc = "Used for mining."
 	gender = PLURAL
 	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
@@ -472,54 +471,40 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>Вы разбираетесь, как установить таймер на [CASE(src,PREPOSITIONAL_CASE)]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
 		return
-	var/newtime = input(usr, "Укажите время до взрыва.", "Timer", 10) as num
+	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
-	to_chat(user, "<span class='notice'>Таймер установлен на </span>[timer]<span class='notice'> [pluralize_russian(timer, "секунду", "секунды", "секунд")].</span>")
+	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
 
 /obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
 		return
-	/*if (!istype(target, /turf/simulated/mineral))
-		to_chat(user, "<span class='notice'>Вы не можете прикрепить [CASE(src,ACCUSATIVE_CASE)] к [target.name].</span>")
-		return*/
+	if (!istype(target, /turf/simulated/mineral))
+		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
+		return
 	if(user.is_busy(src))
 		return
 
-	to_chat(user, "<span class='notice'>Вы устанавливаете взрывчатку...</span>")
+	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_MASTER, /datum/skill/engineering = SKILL_LEVEL_PRO), -0.1)
 	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target
 		loc = null
 		var/location
-		var/turf/blast_turf = get_turf(user)
 		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
-		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось </span>[timer] [pluralize_russian(timer, "секунду", "секунды", "секунд")].")
+		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
 		spawn(timer*10)
-
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
 				if(!M)	return
 
 			if(target)
-				var/datum/gas_mixture/blast_turf_environment = blast_turf.return_air()
-				var/pressure = blast_turf_environment.return_pressure()
-
-				if (pressure < 50 && istype(target, /turf/simulated/mineral))
-					explosion(location, 0, 10, 4)
-				else
-					explosion(location, 0, 0, 4)
-
-				if(iswallturf(target))
-					var/turf/simulated/wall/W = target
-					W.dismantle_wall(1)
-				else
-					target.ex_act(EXPLODE_DEVASTATE)
-
+				explosion(location, 0, 2, 4)
+				target.ex_act(EXPLODE_DEVASTATE)
 				if(src)
 					qdel(src)
 
