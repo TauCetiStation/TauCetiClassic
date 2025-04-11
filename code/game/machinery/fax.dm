@@ -15,14 +15,14 @@ var/global/list/alldepartments = list("Central Command")
 	allowed_checks = ALLOWED_CHECK_NONE
 	resistance_flags = FULL_INDESTRUCTIBLE
 
-	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 
-	var/obj/item/weapon/tofax = null
-	var/sendcooldown = 0
+	var/obj/item/weapon/tofax = null // what we're sending
+	var/sendcooldown = 0 // to avoid spamming fax messages
 
-	var/department = "Unknown"
-	var/dptdest = "Central Command"
+	var/department = "Unknown" // our department
+	var/dptdest = "Central Command"  // the department we're sending to
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/faxmachine/atom_init()
@@ -109,7 +109,7 @@ var/global/list/alldepartments = list("Central Command")
 
 			audible_message("Message transmitted successfully.")
 
-			spawn(sendcooldown)
+			spawn(sendcooldown)  // cooldown time
 				sendcooldown = 0
 
 	if(href_list["remove"])
