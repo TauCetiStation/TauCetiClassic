@@ -34,6 +34,7 @@
 	new /obj/item/weapon/storage/pouch/engineering_supply(src)
 	new /obj/item/weapon/gun/energy/pyrometer/ce(src)
 	new /obj/item/weapon/storage/pouch/medium_generic(src)
+	new /obj/item/weapon/storage/pouch/engineering_tools(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
