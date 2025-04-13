@@ -264,7 +264,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 	if(prob(20))
-		/obj/item/weapon/storage/pouch/ammo(src)
+		new /obj/item/weapon/storage/pouch/ammo(src)
 
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
 		new /obj/item/clothing/gloves/black(src)
