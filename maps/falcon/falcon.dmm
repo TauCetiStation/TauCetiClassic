@@ -9896,7 +9896,7 @@
 "ayN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_shuttle";
+	dock_tag = "arrival_1";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -12951,11 +12951,11 @@
 "dpV" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "escape_shuttle";
+	dock_tag = "arrival_escape";
 	locked = 1;
 	name = "Escape Airlock"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "dqs" = (
 /obj/structure/table/glass,
@@ -20345,7 +20345,7 @@
 	dir = 1
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky/cap,
+/obj/item/weapon/bikehorn/rubberducky,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -32659,12 +32659,12 @@
 "vob" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "escape_shuttle";
+	dock_tag = "arrival_escape";
 	locked = 1;
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor/plating,
 /area/station/security/checkpoint)
 "voe" = (
 /obj/effect/decal/cleanable/dirt,

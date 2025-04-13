@@ -8,8 +8,6 @@
 	volume = 25
 	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
 	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
-	resistance_flags = CAN_BE_HIT
-	max_integrity = 1 //glass is very fragile
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
@@ -17,25 +15,12 @@
 		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
 			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
-
-	return ..()
-
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
-	deconstruct()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/deconstruct(damage_flag)
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/shard/S = new(loc)
-	if(prob(75))
-		S.throw_at(get_step(src, pick(alldirs)), rand(1, 6), 2)
-	S.pixel_x = rand(-5, 5)
-	S.pixel_y = rand(-5, 5)
+	new /obj/item/weapon/shard(loc)
 	reagents.standard_splash(loc)
-	..()
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()

@@ -55,8 +55,6 @@ var/global/list/master_particle_info = list()
 /datum/particle_editor
 	var/atom/movable/target
 
-	var/obj/effect/abstract/particle_holder/particleHolder
-
 /datum/particle_editor/New(atom/target)
 	src.target = target
 
@@ -81,11 +79,7 @@ var/global/list/master_particle_info = list()
 	return data
 
 /datum/particle_editor/proc/getParticleVars()
-	if(!particleHolder)
-		for(var/obj/effect/abstract/particle_holder/Holder in target.vis_contents)
-			if(Holder.particles.type == /particles)
-				particleHolder = Holder
-	. = particleHolder ? particleHolder.particles.vars : null
+	. = target.particles ? target.particles.vars : null
 
 //expects an assoc list of name, type, value - type must be in this list
 /datum/particle_editor/proc/translate_value(list/L)
@@ -140,36 +134,38 @@ var/global/list/master_particle_info = list()
 
 	switch(action)
 		if("add_particle")
-			add_particle(target)
+			target.add_particle()
 			. = TRUE
 		if("remove_particle")
-			remove_particle()
+			target.remove_particle()
 			. = TRUE
 		if("modify_particle_value")
-			modify_particle_value(params["new_data"]["name"], translate_value(params["new_data"]))
+			target.modify_particle_value(params["new_data"]["name"], translate_value(params["new_data"]))
 			. = TRUE
 		if("modify_color_value")
 			var/new_color = input(usr, "Pick new particle color", "Particool Colors!") as color|null
 			if(new_color)
-				modify_particle_value("color",new_color)
+				target.modify_particle_value("color",new_color)
 				. = TRUE
 		if("modify_icon_value")
 			var/icon/new_icon = input("Pick icon:", "Icon") as null|icon
 			if(new_icon && target.particles)
-				modify_particle_value("icon", new_icon)
+				target.modify_particle_value("icon", new_icon)
 				. = TRUE
 
 
 //movable procs n stuff
 
-/datum/particle_editor/proc/add_particle(atom/target)
-	particleHolder = new /obj/effect/abstract/particle_holder(target, /particles)
+/atom/movable/proc/add_particle()
+	particles = new /particles
 
-/datum/particle_editor/proc/remove_particle()
-	qdel(particleHolder)
+/atom/movable/proc/remove_particle()
+	particles = null
 
-/datum/particle_editor/proc/modify_particle_value(varName, varVal)
-	if(!particleHolder)
+/atom/movable/proc/modify_particle_value(varName, varVal)
+	if(!particles)
 		return
-
-	particleHolder.modify_particles_value(varName, varVal)
+	if(isnull(varVal))
+		particles.vars[varName] = initial(particles.vars[varName])
+	else
+		particles.vars[varName] = varVal

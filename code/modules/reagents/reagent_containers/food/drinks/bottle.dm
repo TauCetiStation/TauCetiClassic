@@ -18,8 +18,6 @@
 
 	var/molotov_state = IS_NOT_MOLOTOV
 	var/lit_time = null
-	resistance_flags = CAN_BE_HIT
-	max_integrity = 1 //glass is very fragile
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
 	. = ..()
@@ -78,12 +76,6 @@
 		else
 			playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/blend_icon(obj/item/weapon/broken_bottle/bottle)
-	var/icon/I = new('icons/obj/drinks.dmi', icon_state)
-	I.Blend(bottle.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	bottle.icon = I
-
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
@@ -94,7 +86,10 @@
 		new/obj/item/weapon/shard(target.loc) // Create a glass shard at the target's location!
 	B.icon_state = src.icon_state
 
-	blend_icon(B)
+	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
+	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	B.icon = I
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
@@ -197,7 +192,10 @@
 		return
 	if(is_glass)
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
-		blend_icon(BB)
+		var/icon/I = new('icons/obj/drinks.dmi', icon_state)
+		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
+		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
 		reagents.standard_splash(loc)
@@ -208,26 +206,6 @@
 				var/mob/living/L = hit_atom
 				L.IgniteMob()
 		qdel(src)
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
-
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/deconstruct()
-	var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
-	blend_icon(BB)
-	BB.pixel_x = rand(-5, 5)
-	BB.pixel_y = rand(-5, 5)
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/shard/S = new(loc)
-	if(prob(75))
-		S.throw_at(get_step(src, pick(alldirs)), rand(1, 6), 2)
-	S.pixel_x = rand(-5, 5)
-	S.pixel_y = rand(-5, 5)
-	reagents.standard_splash(loc)
-	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/sheet/cloth) && is_glass && molotov_state == IS_NOT_MOLOTOV)
@@ -275,31 +253,15 @@
 	sharp = 1
 	edge = 0
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
-	resistance_flags = CAN_BE_HIT
-	max_integrity = 1 //glass is very fragile
 
 /obj/item/weapon/broken_bottle/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	return ..()
-
 /obj/item/weapon/broken_bottle/after_throw(datum/callback/callback)
 	..()
-	deconstruct()
-
-/obj/item/weapon/broken_bottle/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
-
-	return ..()
-
-/obj/item/weapon/broken_bottle/deconstruct()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/shard/S = new(loc)
-	if(prob(75))
-		S.throw_at(get_step(src, pick(alldirs)), rand(1, 6), 2)
-	S.pixel_x = rand(-5, 5)
-	S.pixel_y = rand(-5, 5)
-	..()
+	new /obj/item/weapon/shard(loc)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
