@@ -11,9 +11,6 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(loc)
 		environment = loc.return_air()
@@ -70,9 +67,10 @@
 				adjustToxLoss(3)
 				updatehealth()
 
-/mob/living/carbon/brain/proc/handle_chemicals_in_body()
-
-	if(reagents) reagents.metabolize(src)
+/mob/living/carbon/brain/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
@@ -83,9 +81,6 @@
 		dizziness = max(0, dizziness - 1)
 
 	updatehealth()
-
-	return //TODO: DEFERRED
-
 
 /mob/living/carbon/brain/proc/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
 	updatehealth()
