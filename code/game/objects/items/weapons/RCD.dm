@@ -83,7 +83,7 @@ RCD
 	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED)))
 		return
 
-	if(!prob(reliability))
+	if(!prob(reliability)) // low-quality rcd from rcd works with malfunction
 		spark_system.start()
 		to_chat(user, "<span class='warning'>SYSTEM ERROR!</span>")
 		return
