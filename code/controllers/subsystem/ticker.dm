@@ -614,7 +614,7 @@ SUBSYSTEM_DEF(ticker)
 		create_spawner(/datum/spawner/drone)
 
 /datum/controller/subsystem/ticker/proc/pick_arena()
-	var/online = global.clients.len
+	var/online = global.player_list.len
 	var/list/arenas = list()
 
 	for(var/i in subtypesof(/datum/map_template/post_round_arena))
@@ -655,13 +655,15 @@ SUBSYSTEM_DEF(ticker)
 		arena_loaded = TRUE
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
-	var/list/players = global.player_list + global.observer_list
-	restart_timeout *= sqrt(1 + players.len / 15) // на отметке 45 онлайна время дезматча удвоится
+	restart_timeout *= sqrt(1 + global.player_list.len / 15) // на отметке 45 онлайна время дезматча удвоится
 
-	for(var/mob/M in players)
-		if(!M.client || !M.client.prefs.eorg_enabled || isnewplayer(M))
+	for(var/mob/M in global.player_list)
+		if(!M.client || !M.client.prefs.eorg_enabled)
 			continue
-		spawn_gladiator(M)
+		if(M.mind)
+			spawn_gladiator(M)
+		else
+			spawn_gladiator(M, FALSE)
 
 /datum/controller/subsystem/ticker/proc/spawn_gladiator(mob/M, transfer_mind = TRUE)
 	var/mob/living/carbon/human/L = new(pick_landmarked_location("Gladiator"))

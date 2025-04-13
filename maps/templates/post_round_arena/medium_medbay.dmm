@@ -590,7 +590,6 @@
 	},
 /area/custom/arena)
 "zd" = (
-/mob/living/carbon/monkey/pluvian,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
@@ -645,9 +644,6 @@
 /turf/unsimulated/floor,
 /area/custom/arena)
 "Bb" = (
-/mob/living/carbon/monkey{
-	name = "Stanley"
-	},
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
@@ -862,15 +858,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
-	},
-/area/custom/arena)
-"HS" = (
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/mob/living/carbon/monkey/skrell,
-/turf/unsimulated/floor{
-	icon_state = "grass1"
 	},
 /area/custom/arena)
 "Id" = (
@@ -2102,7 +2089,7 @@ lj
 Bb
 RY
 Xm
-HS
+az
 lj
 Wh
 Bc
