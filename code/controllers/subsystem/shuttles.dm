@@ -135,8 +135,7 @@ SUBSYSTEM_DEF(shuttle)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					shake_mobs_in_area(end_location, SOUTH)
 
-					dock_act(end_location, "shuttle_escape")
-					dock_act(/area/centcom/evac, "shuttle_escape")
+					dock_act(end_location, "escape_shuttle")
 
 
 							//pods
@@ -180,8 +179,7 @@ SUBSYSTEM_DEF(shuttle)
 
 				start_location.move_contents_to(end_location)
 
-				dock_act(end_location, "shuttle_escape")
-				dock_act(/area/station/hallway/secondary/exit, "arrival_escape")
+				dock_act(end_location, "escape_shuttle")
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
@@ -205,8 +203,7 @@ SUBSYSTEM_DEF(shuttle)
 			if(!station_doors_bolted && timeleft < 10)
 				station_doors_bolted = TRUE
 
-				undock_act(/area/shuttle/escape/station, "shuttle_escape")
-				undock_act(/area/station/hallway/secondary/exit, "arrival_escape")
+				undock_act(/area/shuttle/escape/station, "escape_shuttle")
 
 			if(timeleft > 0)
 				if(timeleft == 13)
@@ -252,12 +249,6 @@ SUBSYSTEM_DEF(shuttle)
 				try_launch_pod(/area/shuttle/escape_pod5/station, /area/shuttle/escape_pod5/transit, NORTH, SOUTH, "pod5")
 				try_launch_pod(/area/shuttle/escape_pod6/station, /area/shuttle/escape_pod6/transit, NORTH, SOUTH, "pod6")
 				if(alert == 0)
-					undock_act(/area/station/maintenance/chapel || /area/station/maintenance/bridge, "pod1")
-					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/maintenance/dormitory, "pod2")
-					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig, "pod3")
-					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
-					undock_act(/area/station/hallway/secondary/entry, "pod5")
-					undock_act(/area/station/hallway/secondary/entry, "pod6")
 					announce_emer_left.play()
 				else
 					announce_crew_left.play()
@@ -331,9 +322,9 @@ SUBSYSTEM_DEF(shuttle)
 					step(L, fall_direction)
 		CHECK_TICK
 
-/datum/controller/subsystem/shuttle/proc/dock_act(area_type, door_tag)
+/datum/controller/subsystem/shuttle/proc/dock_act(shuttle_area, door_tag)
 	//todo post_signal? & doors with door_tag near shuttle zone
-	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+	var/area/A = ispath(shuttle_area) ? locate(shuttle_area) : shuttle_area
 
 	for(var/obj/machinery/door/DOOR in A)
 		if(DOOR.dock_tag == door_tag)
@@ -344,10 +335,13 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.locked = 0
 				D.open()
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.unbolt()
 
-/datum/controller/subsystem/shuttle/proc/undock_act(area_type, door_tag)
+/datum/controller/subsystem/shuttle/proc/undock_act(shuttle_area, door_tag)
 	//todo post_signal? & doors with door_tag near shuttle zone
-	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+	var/area/A = ispath(shuttle_area) ? locate(shuttle_area) : shuttle_area
 
 	for(var/obj/machinery/door/DOOR in A)
 		if(DOOR.dock_tag == door_tag)
@@ -358,6 +352,9 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.close()
 				D.locked = 1
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.close_unsafe(TRUE)
 
 /datum/controller/subsystem/shuttle/proc/send()
 	var/area/from
@@ -366,19 +363,17 @@ SUBSYSTEM_DEF(shuttle)
 		if(1)
 			from = locate(SUPPLY_STATION_AREATYPE)
 			dest = locate(SUPPLY_DOCK_AREATYPE)
-			undock_act(/area/station/cargo/storage, "supply_dock")
-			dock_act(/area/velocity, "velocity_dock")
 			at_station = 0
 		if(0)
 			from = locate(SUPPLY_DOCK_AREATYPE)
 			dest = locate(SUPPLY_STATION_AREATYPE)
-			dock_act(/area/station/cargo/storage, "supply_dock")
-			undock_act(/area/velocity, "velocity_dock")
 			at_station = 1
 	moving = 0
 
+	undock_act(from, "supply_dock")
 	clean_arriving_area(dest)
 	from.move_contents_to(dest)
+	dock_act(dest, "supply_dock")
 
 //Check whether the shuttle is allowed to move
 /datum/controller/subsystem/shuttle/proc/can_move()
@@ -606,7 +601,6 @@ SUBSYSTEM_DEF(shuttle)
 	if(prob(5) || check_emag(transit)) // 5% that they survive
 		transit.move_contents_to(centcom, null, NORTH)
 		dock_act(centcom, loc_name)
-		dock_act(/area/centcom/evac, loc_name)
 	shake_mobs_in_area(centcom, EAST)
 
 

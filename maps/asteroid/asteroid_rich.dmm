@@ -9183,7 +9183,7 @@
 /area/asteroid/research_outpost/hallway)
 "At" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "mine_dock";
+	dock_tag = "mining_shuttle";
 	locked = 1;
 	name = "Mining Shuttle Airlock";
 	req_access = list(48)
@@ -13394,7 +13394,7 @@
 "SB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "sci_dock";
+	dock_tag = "mining_shuttle";
 	locked = 1;
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
