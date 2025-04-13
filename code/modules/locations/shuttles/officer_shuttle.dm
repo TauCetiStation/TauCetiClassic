@@ -36,16 +36,9 @@
 	moving = 1
 	lastMove = world.time
 
+	SSshuttle.undock_act(curr_location, "velocity_officer_shuttle")
 	if(curr_location == locate(/area/shuttle/officer/station))
-		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_officer")
-		SSshuttle.undock_act(curr_location, "arrival_officer")
 		radio.autosay(department_note, "Система оповещения")
-	else if(curr_location == locate(/area/shuttle/officer/velocity))
-		SSshuttle.undock_act(/area/velocity, "velocity_officer")
-		SSshuttle.undock_act(curr_location, "arrival_officer")
-	else if(curr_location == locate(/area/shuttle/officer/centcom))
-		SSshuttle.undock_act(/area/centcom/evac, "centcomm_officer")
-		SSshuttle.undock_act(curr_location, "arrival_officer")
 
 	var/area/transit_location = locate(/area/shuttle/officer/transit)
 	transit_location.parallax_movedir = WEST
@@ -69,16 +62,9 @@
 	curr_location.move_contents_to(dest_location)
 	SSshuttle.shake_mobs_in_area(dest_location, WEST)
 
+	SSshuttle.dock_act(dest_location, "velocity_officer_shuttle")
 	if(dest_location == locate(/area/shuttle/officer/station))
-		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_officer")
-		SSshuttle.dock_act(dest_location, "arrival_officer")
 		radio.autosay(arrival_note, "Система оповещения")
-	else if(dest_location == locate(/area/shuttle/officer/velocity))
-		SSshuttle.dock_act(/area/velocity, "velocity_officer")
-		SSshuttle.dock_act(dest_location, "arrival_officer")
-	else if(dest_location == locate(/area/shuttle/officer/centcom))
-		SSshuttle.dock_act(/area/centcom/evac, "centcomm_officer")
-		SSshuttle.dock_act(dest_location, "arrival_officer")
 
 	curr_location = dest_location
 

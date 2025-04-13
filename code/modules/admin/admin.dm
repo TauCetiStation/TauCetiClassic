@@ -1159,27 +1159,23 @@ var/global/ferry_location = 0 // 0 = centcom , 1 = station
 		fromArea = locate(/area/shuttle/transport1/station)
 		toArea = locate(/area/shuttle/transport1/centcom)
 
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_ferry")
+		SSshuttle.undock_act(fromArea, "ferry_shuttle")
 	else
 		fromArea = locate(/area/shuttle/transport1/centcom)
 		toArea = locate(/area/shuttle/transport1/station)
 
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/centcom/evac, "centcomm_ferry")
+		SSshuttle.undock_act(fromArea, "ferry_shuttle")
 
 	fromArea.move_contents_to(toArea)
 
 	if (ferry_location)
 		ferry_location = 0
 
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/centcom/evac, "centcomm_ferry")
+		SSshuttle.dock_act(toArea, "ferry_shuttle")
 	else
 		ferry_location = 1
 
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_ferry")
+		SSshuttle.dock_act(toArea, "ferry_shuttle")
 
 	moving = FALSE
 
