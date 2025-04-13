@@ -5,7 +5,7 @@
 	base_icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	basedatum = /datum/dirt_cover/oil
-	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 
 	beauty = -50
 
@@ -36,10 +36,10 @@
 	random_icon_states = list("gibarm", "gibleg")
 
 /obj/effect/decal/cleanable/blood/gibs/robot/up
-	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibup1","gibup1") //2:7 is close enough to 1:4
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gibup1","gibup1") //2:7 is close enough to 1:4
 
 /obj/effect/decal/cleanable/blood/gibs/robot/down
-	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibdown1","gibdown1") //2:7 is close enough to 1:4
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gibdown1","gibdown1") //2:7 is close enough to 1:4
 
 /obj/effect/decal/cleanable/blood/oil
 	name = "motor oil"

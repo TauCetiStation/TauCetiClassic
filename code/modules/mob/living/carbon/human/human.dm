@@ -1788,7 +1788,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump)
 			continue
-		// or we can use BP.generate_appearances() right away, but we need it with hairs?
+		// or we can use BP.generate_appearances() right away, but it will generate hairs too
 		var/mutable_appearance/nude_appearance = mutable_appearance(BP.icon, BP.get_icon_state())
 		nude_appearance.color = BP.get_skin_color()
 		MA.add_overlay(nude_appearance)
