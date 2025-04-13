@@ -633,7 +633,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("exwelder", "jawsoflife", "handdrill")
+	unlocks_designs = list("exwelder", "jawsoflife", "handdrill", "advrcd")
 
 // Biotech
 

@@ -63,7 +63,7 @@
 /datum/outfit/responders/nanotrasen_ert/leader/ect
 	name = "Responders: NT ERT Leader (ECT)"
 	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/pinpointer/advpinpointer, /obj/item/device/aicard, /obj/item/device/remote_device/ERT, /obj/item/weapon/storage/box/r4046/rubber, /obj/item/weapon/storage/box/r4046/teargas,\
-								/obj/item/weapon/rcd/ert, /obj/item/weapon/storage/belt/utility/cool)
+								/obj/item/weapon/rcd/advanced, /obj/item/weapon/storage/belt/utility/cool)
 
 	assignment = "Engineering Corps Team Leader"
 
@@ -84,7 +84,7 @@
 
 	suit_store = /obj/item/weapon/gun/energy/ionrifle
 
-	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/rcd/ert, /obj/item/device/multitool)
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/rcd/advanced, /obj/item/device/multitool)
 
 	l_hand = /obj/item/weapon/storage/lockbox/anti_singulo
 
@@ -100,7 +100,7 @@
 	l_hand = null
 	suit_store = /obj/item/weapon/storage/lockbox/anti_singulo
 
-	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/rcd/ert, /obj/item/device/multitool, /obj/item/stack/sheet/metal/fifty, /obj/item/stack/sheet/glass/fifty)
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/rcd/advanced, /obj/item/device/multitool, /obj/item/stack/sheet/metal/fifty, /obj/item/stack/sheet/glass/fifty)
 
 	assignment = "Engineering Corps Team Engineer"
 
@@ -609,11 +609,6 @@
 	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(hold)
 	new /obj/item/ammo_box/magazine/glock/extended(hold)
 	new /obj/item/ammo_box/magazine/glock/extended(hold)
-
-/obj/item/weapon/rcd/ert
-	name = "advanced RCD"
-	matter = 100
-	max_matter = 100
 
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
