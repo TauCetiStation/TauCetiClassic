@@ -9982,7 +9982,7 @@
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /obj/structure/drain{
 	drainage = 2
 	},
