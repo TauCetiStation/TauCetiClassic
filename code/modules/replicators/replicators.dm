@@ -211,7 +211,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	for(var/A in T)
 		if(istype(A, /obj/effect/overlay/replicator))
-			return
+			continue
 
 		if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
 			qdel(A)
