@@ -678,7 +678,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/item/weapon/bikehorn/rubberducky/cap
 	name = "captain rubber ducky"
-	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
+	desc = "Captain Duck! Yellow rubber friend!"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "caprubberducky"
 	item_state = "rubberducky"
