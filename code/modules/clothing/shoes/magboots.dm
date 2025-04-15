@@ -14,7 +14,7 @@
 	name = "Toggle Magboots"
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
-	if(!do_after(user, 0.8 SECONDS, target = src))
+	if(user.is_busy() || !do_after(user, 0.8 SECONDS, target = src))
 		return
 	if(magpulse)
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
