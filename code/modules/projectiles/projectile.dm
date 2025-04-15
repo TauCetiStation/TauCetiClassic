@@ -184,6 +184,10 @@
 	bumped = TRUE
 	var/forcedodge = A.bullet_act(src, def_zone) // try to shot something
 
+	if(forcedodge == PROJECTILE_WEAKENED)
+		damage = damage / 2
+		forcedodge = PROJECTILE_FORCE_MISS
+
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		forceMove(A_loc)
 		bumped = FALSE // reset bumped variable!
