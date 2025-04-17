@@ -82,6 +82,8 @@
 		message += "\n [position]: [key] - [L[key]] яиц. "
 		if(position == 1)
 			message += "Победитель!"
+		else if(position == 10)
+			break
 
 /client/proc/start_egg_hunt()
 	set category = "Fun"
