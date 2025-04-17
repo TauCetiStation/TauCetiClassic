@@ -415,6 +415,7 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
+	w_class = SIZE_MINUSCULE
 	filling_color = "#fdffd1"
 	list_reagents = list("nutriment" = 1, "egg" = 5)
 	cookingThreshold = 10
@@ -2036,6 +2037,21 @@
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
 	filling_color = "#f7ffe0"
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/kulich
+	name = "Kulich"
+	desc = "A big cylinder-shaped festive cupcake."
+	icon_state = "kulich"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/kulich
+	filling_color = "#ede5ad"
+	list_reagents = list("sugar" = 10, "nutriment" = 25)
+
+/obj/item/weapon/reagent_containers/food/snacks/breadslice/kulich
+	name = "Kulich slice"
+	desc = "A slice of delicious kulich."
+	icon_state = "kulichslice"
+	item_state = "kulich"
+	filling_color = "#ede5ad"
 
 // === CAKE ===
 
