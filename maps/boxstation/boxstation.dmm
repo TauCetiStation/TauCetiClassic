@@ -13882,7 +13882,6 @@
 /area/station/rnd/telesci)
 "axB" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
@@ -15553,7 +15552,6 @@
 /obj/structure/window/thin/reinforced,
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aAI" = (
@@ -18377,7 +18375,6 @@
 /area/station/ai_monitored/eva)
 "aGc" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood,
@@ -19965,7 +19962,6 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/structure/bookcase/shelf{
 	pixel_y = 32
 	},
@@ -22030,7 +22026,6 @@
 	icon_state = "0-8"
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "apc right";
@@ -26012,7 +26007,6 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
-/obj/item/weapon/storage/box/cups{
 	pixel_x = -8
 	},
 /turf/simulated/floor{
@@ -28297,7 +28291,6 @@
 /area/station/rnd/misc_lab)
 "aYb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "aYc" = (
@@ -29439,7 +29432,6 @@
 /area/station/bridge/ai_upload)
 "aZX" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurple"
@@ -36574,7 +36566,6 @@
 /obj/item/weapon/storage/fancy/cigarettes{
 	pixel_x = -8
 	},
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 8
 	},
 /turf/simulated/floor{
@@ -38783,7 +38774,6 @@
 	pixel_x = -28
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_y = 4
 	},
 /obj/effect/decal/turf_decal{
@@ -52681,7 +52671,6 @@
 	pixel_x = 28
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
 	pixel_x = -8
 	},
 /obj/item/weapon/storage/box/donkpockets{
@@ -64050,7 +64039,6 @@
 /area/station/cargo/recycler)
 "cvb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -86353,7 +86341,6 @@
 /area/station/civilian/hydroponics)
 "vVm" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
