@@ -45,7 +45,7 @@
 	// Name of spawner, wow
 	var/name
 
-	// Priority of spawner, affects position in menu and roll order for lobby spawners
+	// Priority of spawner, affects position in menu and roll order for lobby spawners (lesser means higher priority/order)
 	var/priority = 100
 
 	// In interface: "Описание: "

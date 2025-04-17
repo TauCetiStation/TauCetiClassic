@@ -64,15 +64,17 @@
 			radial_chooses = list()
 			for(var/P in typesof(/obj/item/device/pda)-blocked)
 				var/obj/item/device/pda/D = new P
-				radial_chooses[D] = image(icon = D.icon, icon_state = D.icon_state)
+				radial_chooses[D] = image(icon = D.icon, icon_state = initial(D.icon_state))
 
 		var/obj/item/device/pda/P = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 		if(!P)
 			return
 
 		storedpda.icon = 'icons/obj/pda.dmi'
-		storedpda.icon_state = P.icon_state
+		storedpda.item_state_inventory = initial(P.icon_state)
+		storedpda.item_state_world = P.item_state_world
 		storedpda.desc = P.desc
+		storedpda.update_world_icon()
 
 	else
 		to_chat(user, "<span class='notice'>The [src] is empty.</span>")
