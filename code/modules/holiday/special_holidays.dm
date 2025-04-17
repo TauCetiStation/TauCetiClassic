@@ -67,7 +67,7 @@
 	sound = "commandreport"
 
 /datum/announcement/centcomm/egghunt/start/New()
-	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 5 минут объявим победителей "
+	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 7 минут объявим победителей "
 
 /datum/announcement/centcomm/egghunt/finish
 	name = "Egg Hunt Ends!"
@@ -101,7 +101,7 @@
 	var/datum/announcement/centcomm/egghunt/pre/announcement = new
 	announcement.play()
 
-	addtimer(CALLBACK(src, PROC_REF(egg_hunt_begin)), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(egg_hunt_begin)), 60 SECONDS)
 
 /datum/holiday/easter/proc/egg_hunt_begin()
 	var/datum/announcement/centcomm/egghunt/start/announcement = new
@@ -121,7 +121,7 @@
 		if(prob(5))
 			new /obj/random/foods/egg(C)
 
-	addtimer(CALLBACK(src, PROC_REF(egg_hunt_finish)), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(egg_hunt_finish)), 420 SECONDS)
 
 /datum/holiday/easter/proc/egg_hunt_finish()
 	var/list/winners_list = list()
