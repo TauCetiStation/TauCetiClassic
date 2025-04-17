@@ -59,7 +59,7 @@
 /datum/announcement/centcomm/egghunt/pre/New()
 	message = "Исход! В рамках программы по повышению стрессоустойчивости персонала мы проводим пасхальную охоту за яйцами! " + \
 			"Подготовьтесь, через минуту вам потребуется искать цветные яйца, которые мы спрятали по станции, и класть их к себе в рюкзак. " + \
-			"Спустя еще 5 минут таймер подойдет к концу и будут объявлены победители!"
+			"Спустя еще 7 минут таймер подойдет к концу и будут объявлены победители!"
 
 /datum/announcement/centcomm/egghunt/start
 	name = "Egg Hunt Starts!"
@@ -75,11 +75,11 @@
 	sound = "commandreport"
 
 /datum/announcement/centcomm/egghunt/finish/New(list/L)
-	message = "Объявляем победителей охоты за яйцами! \n"
+	message = "Объявляем победителей охоты за яйцами! <br>"
 	var/position = 0
 	for(var/key in L)
 		position++
-		message += "\n [position]: [key] - [L[key]] яиц. "
+		message += "<br> [position]: [key] - [L[key]] яиц. "
 		if(position == 1)
 			message += "Победитель!"
 		else if(position == 10)
@@ -91,7 +91,7 @@
 	if(!check_rights(R_FUN))	return
 	if(!SSholiday.holidays[EASTER])	return
 
-	if(tgui_alert(usr, "Are you sure?",, list("Yes", "No")) == "No")
+	if(tgui_alert(usr, "Are you sure?","Confirm Egg Hunt", list("Yes", "No")) == "No")
 		return
 
 	message_admins("[key_name_admin(src)] started the Egg Hunt!")
@@ -109,7 +109,7 @@
 	var/datum/announcement/centcomm/egghunt/start/announcement = new
 	announcement.play()
 
-	// 5 eggs per each station area
+	// 4 eggs per each station area
 	for(var/A in global.the_station_areas)
 		var/area/R = get_area_by_type(A)
 		var/max_eggs_per_area = 4
@@ -130,10 +130,10 @@
 	for(var/mob/living/carbon/human/H in player_list)
 		var/egg_amount = 0
 		if(is_station_level(H.z))
-			for(var/obj/item/weapon/storage/backpack/BACKP in H)
-				for(var/obj/O in BACKP)
-					if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/egg))
-						egg_amount++
+			var/list/items_to_check = H.GetAllContents()
+			for(var/A in items_to_check)
+				if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/egg))
+					egg_amount++
 		winners_list[H.name] = egg_amount
 
 	sortTim(winners_list, GLOBAL_PROC_REF(cmp_numeric_dsc), associative=TRUE)
