@@ -2042,6 +2042,7 @@
 	name = "Kulich"
 	desc = "A big cylinder-shaped festive cupcake."
 	icon_state = "kulich"
+	item_state_world = "kulich_world"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/kulich
 	filling_color = "#ede5ad"
 	list_reagents = list("sugar" = 10, "nutriment" = 25)
@@ -2050,6 +2051,7 @@
 	name = "Kulich slice"
 	desc = "A slice of delicious kulich."
 	icon_state = "kulichslice"
+	item_state_world = "kulichslice_world"
 	item_state = "kulich"
 	filling_color = "#ede5ad"
 
