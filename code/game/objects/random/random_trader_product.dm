@@ -99,7 +99,7 @@
 	/obj/item/weapon/storage/part_replacer = 1,
 	/obj/item/stack/sheet/metal/fifty = 3,
 	/obj/item/stack/sheet/glass/fifty = 3,
-	/obj/item/weapon/rcd/advanced = 3,
+	/obj/item/weapon/rcd/ert = 3,
 	/obj/item/weapon/rcd_ammo/bluespace = 3,
 	/obj/item/clothing/glasses/meson/gar = 3,
 	/obj/item/clothing/glasses/welding/superior = 5,

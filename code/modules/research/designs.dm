@@ -2647,15 +2647,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/multi/hand_drill
 	category = list("Tools")
 
-/datum/design/advanced_rcd
-	name = "Advanced RCD"
-	desc = "An advanced version of the RCD, with a more optimized operating mechanism and the ability to accommodate more matter."
-	id = "advrcd"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 20000, MAT_GLASS = 14000, MAT_GOLD = 2000, MAT_URANIUM = 2000)
-	build_path = /obj/item/weapon/rcd/advanced
-	category = list("Tools")
-
 /datum/design/magboots
 	name = "Magnetic Boots"
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."

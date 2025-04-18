@@ -1,4 +1,3 @@
-#define RCD_NORMAL_WORKSPEED 1
 /*
 CONTAINS:
 RCD
@@ -8,7 +7,6 @@ RCD
 	desc = "A device used to rapidly build walls/floor."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
-	item_state = "rcd"
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
@@ -30,14 +28,8 @@ RCD
 	var/list/available_modes = list(RCD_MODE_FLOOR_WALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT)
 	var/canRwall = 0
 	var/disabled = 0
-	var/work_speed = RCD_NORMAL_WORKSPEED
 
 	item_action_types = list(/datum/action/item_action/hands_free/switch_rcd)
-
-/obj/item/weapon/rcd/update_icon()
-	var/matter_perc = matter / max_matter
-	var/matter_state_indx = CEIL(LERP(0, 3, matter_perc))
-	icon_state = "[initial(icon_state)]_[matter_state_indx]"
 
 /datum/action/item_action/hands_free/switch_rcd
 	name = "Switch RCD"
@@ -49,7 +41,6 @@ RCD
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	update_icon()
 
 /obj/item/weapon/rcd/Destroy()
 	rcd_list -= src
@@ -67,7 +58,6 @@ RCD
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-		update_icon()
 		qdel(ammo)
 
 	else
@@ -81,11 +71,6 @@ RCD
 
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED)))
-		return
-
-	if(!prob(reliability))
-		spark_system.start()
-		to_chat(user, "<span class='warning'>SYSTEM ERROR!</span>")
 		return
 
 	var/static/radial_floor_wall = image(icon = 'icons/turf/floors.dmi', icon_state = "plating")
@@ -152,7 +137,7 @@ RCD
 					to_chat(user, "<span class='warning'>You can't build wall here.</span>")
 					return FALSE
 				to_chat(user, "<span class='notice'>Building Wall ...</span>")
-				if(!use_tool(target, user, 20 * work_speed, amount = 3))
+				if(!use_tool(target, user, 20, amount = 3))
 					return FALSE
 				activate()
 				F.ChangeTurf(/turf/simulated/wall)
@@ -165,7 +150,7 @@ RCD
 					return FALSE
 
 				to_chat(user, "<span class='notice'>Building Airlock...</span>")
-				if(!use_tool(target, user, 50 * work_speed, amount = 10))
+				if(!use_tool(target, user, 50, amount = 10))
 					return
 				activate()
 				new /obj/machinery/door/airlock(target)
@@ -177,7 +162,7 @@ RCD
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return FALSE
 				to_chat(user, "<span class='danger'>Deconstructing Wall...</span>")
-				if(!use_tool(target, user, 40 * work_speed, amount = 5))
+				if(!use_tool(target, user, 40, amount = 5))
 					return FALSE
 				activate()
 				W.ChangeTurf(/turf/simulated/floor/plating/airless)
@@ -186,7 +171,7 @@ RCD
 			if(isfloorturf(target))
 				var/turf/simulated/floor/F = target
 				to_chat(user, "<span class='danger'>Deconstructing Floor...</span>")
-				if(!use_tool(target, user, 50 * work_speed, amount = 5))
+				if(!use_tool(target, user, 50, amount = 5))
 					return FALSE
 				activate()
 				F.BreakToBase()
@@ -194,7 +179,7 @@ RCD
 
 			if(istype(target, /obj/machinery/door/airlock) && !user.is_busy())
 				to_chat(user, "<span class='danger'>Deconstructing Airlock...</span>")
-				if(!use_tool(target, user, 50 * work_speed, amount = 10))
+				if(!use_tool(target, user, 50, amount = 10))
 					return FALSE
 
 				activate()
@@ -230,7 +215,7 @@ RCD
 					return FALSE
 
 				to_chat(user, "<span class='notice'>Building Pipe...</span>")
-				if(!use_tool(target, user, 10 * work_speed, amount = 2, volume = 0))
+				if(!use_tool(target, user, 10, amount = 2, volume = 0))
 					return FALSE
 
 				activate()
@@ -249,7 +234,6 @@ RCD
 /obj/item/weapon/rcd/use(amount, mob/user)
 	if(matter < amount)
 		return FALSE
-	update_icon()
 	matter -= amount
 	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return TRUE
@@ -270,7 +254,7 @@ RCD
 /obj/item/weapon/rcd/borg/atom_init()
 	. = ..()
 	desc = "A device used to rapidly build walls/floor."
-	canRwall = TRUE
+	canRwall = 1
 
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
@@ -278,7 +262,6 @@ RCD
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd_ammo"
 	item_state = "rcdammo"
-	item_state_world = "rcd_ammo_w"
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
@@ -309,12 +292,3 @@ RCD
 	max_matter = 100
 	matter = 100
 	w_class = SIZE_TINY
-
-/obj/item/weapon/rcd/advanced
-	name = "advanced rapid-construction-device (A-RCD)"
-	desc = "An advanced version of the RCD, with a more optimized operating mechanism and the ability to accommodate more matter."
-	icon_state = "arcd"
-	item_state = "arcd"
-	max_matter = 60
-	canRwall = TRUE
-	work_speed = RCD_NORMAL_WORKSPEED * 0.5 //a twice faster than normal rcd
