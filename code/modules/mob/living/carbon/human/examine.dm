@@ -546,22 +546,6 @@
 		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
 			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
 
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(!skipface && mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
-				msg += "[t_He] appears to be depressed.\n"
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-				msg += "[t_He] appears to be very sad.\n"
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-				msg += "[t_He] appears to be a bit down.\n"
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-				msg += "[t_He] appears to be quite happy.\n"
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				msg += "[t_He] appears to be very happy.\n"
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				msg += "[t_He] appears to be ecstatic.\n"
-
 	if(w_class)
 		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
 
