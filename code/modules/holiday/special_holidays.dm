@@ -59,7 +59,7 @@
 /datum/announcement/centcomm/egghunt/pre/New()
 	message = "Исход! В рамках программы по повышению стрессоустойчивости персонала мы проводим пасхальную охоту за яйцами! " + \
 			"Подготовьтесь, через минуту вам потребуется искать цветные яйца, которые мы спрятали по станции, и класть их к себе в рюкзак. " + \
-			"Спустя еще 7 минут таймер подойдет к концу и будут объявлены победители!"
+			"Спустя еще 30 минут таймер подойдет к концу и будут объявлены победители!"
 
 /datum/announcement/centcomm/egghunt/start
 	name = "Egg Hunt Starts!"
@@ -67,7 +67,7 @@
 	sound = "commandreport"
 
 /datum/announcement/centcomm/egghunt/start/New()
-	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 7 минут объявим победителей "
+	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 30 минут объявим победителей "
 
 /datum/announcement/centcomm/egghunt/finish
 	name = "Egg Hunt Ends!"
@@ -123,7 +123,7 @@
 		if(prob(5))
 			new /obj/random/foods/egg(C)
 
-	addtimer(CALLBACK(src, PROC_REF(egg_hunt_finish)), 420 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(egg_hunt_finish)), 1800 SECONDS)
 
 /datum/holiday/easter/proc/egg_hunt_finish()
 	var/list/winners_list = list()
