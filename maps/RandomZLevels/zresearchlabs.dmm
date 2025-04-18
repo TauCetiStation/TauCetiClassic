@@ -6854,7 +6854,7 @@
 	},
 /area/awaymission/labs/command)
 "qn" = (
-/obj/structure/closet/secure_closet/freezer/money,
+/obj/structure/closet/crate/secure/money,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -7109,9 +7109,7 @@
 	c_tag = "Vault";
 	dir = 4
 	},
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
+/obj/structure/closet/crate/secure/gold,
 /obj/item/stack/sheet/mineral/gold{
 	pixel_x = -1;
 	pixel_y = 5
@@ -7123,7 +7121,6 @@
 	pixel_x = 1;
 	pixel_y = -2
 	},
-/obj/item/weapon/storage/belt/champion,
 /obj/item/weapon/stock_parts/cell/infinite,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"

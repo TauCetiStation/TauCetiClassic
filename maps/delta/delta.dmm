@@ -1077,9 +1077,7 @@
 	},
 /area/station/civilian/kitchen)
 "abH" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
+/obj/structure/closet/crate/secure/gold,
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -19370,9 +19368,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "biT" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
+/obj/structure/closet/crate/secure/gold,
 /obj/machinery/light/small{
 	dir = 1
 	},

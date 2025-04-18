@@ -590,3 +590,42 @@
 							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
 						else if(length(danger_reagents))
 							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)
+//vault
+/obj/structure/closet/crate/secure/money
+	name = "Money crate"
+	req_access = list(access_heads_vault)
+
+/obj/structure/closet/crate/secure/money/PopulateContents()
+
+	var/obj/item/weapon/storage/bag/cash/money_bag = new(src)
+
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/spacecash/c1000(money_bag)
+	for (var/i in 1 to 5)
+		new /obj/item/weapon/spacecash/c500(money_bag)
+	for (var/i in 1 to 6)
+		new /obj/item/weapon/spacecash/c200(money_bag)
+
+/obj/structure/closet/crate/secure/silver
+	name = "Silver crate"
+	req_access = list(access_heads_vault)
+
+/obj/structure/closet/crate/secure/silver/PopulateContents()
+
+	var/obj/item/weapon/storage/bag/cash/money_bag = new(src)
+
+	for (var/i in 1 to 15)
+		new /obj/item/weapon/coin/silver(money_bag)
+
+/obj/structure/closet/crate/secure/gold
+	name = "Gold crate"
+	req_access = list(access_heads_vault)
+
+/obj/structure/closet/crate/secure/gold/PopulateContents()
+
+	var/obj/item/weapon/storage/bag/cash/money_bag = new(src)
+
+	for (var/i in 1 to 15)
+		new /obj/item/weapon/coin/gold(money_bag)
+
+	new /obj/item/weapon/storage/belt/champion

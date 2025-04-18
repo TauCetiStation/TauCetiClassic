@@ -59,7 +59,8 @@
 					/obj/structure/closet/secure_closet/freezer/kitchen,\
 					/obj/structure/closet/secure_closet/freezer/meat,\
 					/obj/structure/closet/secure_closet/freezer/fridge,\
-					/obj/structure/closet/secure_closet/freezer/money\
+					/obj/structure/closet/crate/secure/money,\
+					/obj/structure/closet/crate/secure/silver,\
 				)
 
 /obj/random/structures/proffessions_crates
