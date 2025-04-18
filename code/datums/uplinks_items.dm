@@ -1176,27 +1176,32 @@
 	cant_discount = TRUE
 	uplink_types = list(UPLINK_TYPE_TRAITOR)
 	var/crate_value = 40
+	var/crate_type = /obj/structure/closet/crate/surplus_crate
 
 /datum/uplink_item/badass/surplus_crate/team
 	name = "Syndicate Team Surplus Crate"
 	desc = "A crate containing 80 telecrystals worth of random syndicate leftovers. Don't fight with your partner!"
 	cost = 30
 	crate_value = 80
+	crate_type = /obj/structure/closet/crate/surplus_crate_team
 
 /datum/uplink_item/badass/surplus_crate/super
 	name = "Syndicate Super Surplus Crate"
 	desc = "A crate containing 160 telecrystals worth of random syndicate leftovers. For badass coopers!"
 	cost = 50
 	crate_value = 160
+	crate_type = /obj/structure/closet/crate/surplus_crate_super
 
 /datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/temp_uplink_list = get_uplink_items(U)
 	var/list/buyable_items = list()
+
 	for(var/category in temp_uplink_list)
 		buyable_items += temp_uplink_list[category]
 
 	var/list/bought_items = list()
 	var/remaining_TC = crate_value
+
 	while(remaining_TC > 0)
 		var/datum/uplink_item/I = pick(buyable_items)
 		if(I.cost > remaining_TC)
@@ -1206,7 +1211,7 @@
 		bought_items += I.item
 		remaining_TC -= I.cost
 
-	var/obj/structure/closet/crate/C = new(loc)
+	var/obj/structure/closet/crate/C = new crate_type(loc)
 	for(var/item in bought_items)
 		new item(C)
 
