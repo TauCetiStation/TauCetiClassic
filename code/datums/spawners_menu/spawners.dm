@@ -45,7 +45,7 @@
 	// Name of spawner, wow
 	var/name
 
-	// Priority of spawner, affects position in menu and roll order for lobby spawners
+	// Priority of spawner, affects position in menu and roll order for lobby spawners (lesser means higher priority/order)
 	var/priority = 100
 
 	// In interface: "Описание: "
@@ -746,6 +746,25 @@
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE
 	setup_role(R, TRUE)
+
+/*
+ * Midround replicator
+*/
+/datum/spawner/replicator_event
+	name = "Репликатор"
+	desc = "Вы попали сюда через оставшийся блюспейс коридор. Потреблять. Потреблять."
+
+	ranks = list(ROLE_REPLICATOR, ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "replicator"
+
+/datum/spawner/replicator_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/mob/living/simple_animal/hostile/replicator/H = new(spawnloc)
+	H.key = spectator.client.key
 
 /*
  * SPACE TRADERS

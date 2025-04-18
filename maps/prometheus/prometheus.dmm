@@ -2679,6 +2679,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"aer" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "aes" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -2690,6 +2696,24 @@
 	icon_state = "darkred"
 	},
 /area/station/hallway/secondary/exit)
+"aet" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
+"aeu" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
+"aev" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "aey" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4589,7 +4613,9 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "azo" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "mining_shuttle"
+	},
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "5-5"
 	},
@@ -5765,7 +5791,7 @@
 /area/station/maintenance/starboardsolar)
 "aNy" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_ferry";
+	dock_tag = "ferry_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -13350,7 +13376,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/hallway/primary/aft)
 "cPu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -23409,7 +23437,7 @@
 	name = "Shower"
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /obj/structure/curtain/open/shower,
 /obj/structure/drain{
 	drainage = 2
@@ -24338,11 +24366,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "fpz" = (
-/obj/structure/table,
-/obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "largecell apc top";
@@ -24359,6 +24382,7 @@
 	c_tag = "Bridge AI Upload Chamber";
 	network = list("SS13","RD","AIUpload")
 	},
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -33541,7 +33565,7 @@
 "htI" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock"
 	},
@@ -35385,6 +35409,15 @@
 	temperature = 80
 	},
 /area/station/tcommsat/chamber)
+"hSX" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "escape_shuttle";
+	locked = 1;
+	name = "Escape Airlock"
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/hallway/secondary/exit)
 "hTj" = (
 /obj/random/foods/food_trash,
 /obj/effect/decal/cleanable/dirt,
@@ -37016,7 +37049,7 @@
 /area/station/bridge/nuke_storage)
 "inq" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "stat_dock";
+	dock_tag = "mining_shuttle";
 	name = "Arrival Airlock"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -47268,10 +47301,9 @@
 "kXc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "sci_dock";
+	dock_tag = "mining_shuttle";
 	locked = 1;
-	name = "Research Outpost Dock Airlock";
-	req_access = list(65)
+	name = "Research Mining Dock Airlock"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -49711,7 +49743,7 @@
 /area/station/hallway/primary/fore)
 "lzP" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -50997,7 +51029,7 @@
 /area/station/engineering/engine)
 "lPC" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -72071,12 +72103,12 @@
 "rec" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
 "rer" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -83396,7 +83428,9 @@
 	},
 /area/station/security/secconfhall)
 "tUu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkbrown"
@@ -84883,6 +84917,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/table,
+/obj/item/weapon/phone{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "upJ" = (
@@ -91476,7 +91515,7 @@
 "vVH" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_officer";
+	dock_tag = "velocity_officer_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -94750,7 +94789,7 @@
 "wKU" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -94974,6 +95013,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"
@@ -96247,7 +96287,9 @@
 	},
 /area/station/security/prison)
 "xdB" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/item/device/radio/intercom{
 	frequency = 1475;
 	name = "Station Intercom (Security)";
@@ -114562,7 +114604,7 @@ iRy
 iRy
 iRy
 cJy
-gww
+aeu
 cJy
 uFh
 eRp
@@ -115876,8 +115918,8 @@ rxe
 htI
 htI
 jeg
-htI
-htI
+hSX
+hSX
 bfr
 iRy
 bfr
@@ -120675,7 +120717,7 @@ wAM
 iRy
 bFv
 bFv
-bFv
+aer
 bFv
 bFv
 iRy
@@ -145890,7 +145932,7 @@ ogS
 ogS
 ogS
 iqM
-yet
+aet
 cJy
 cJy
 iRy
@@ -145954,7 +145996,7 @@ iRy
 iRy
 rdY
 rdY
-rdY
+aev
 rdY
 cJy
 iRy

@@ -3541,7 +3541,7 @@
 "hv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "sci_dock";
+	dock_tag = "mining_shuttle";
 	locked = 1;
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
@@ -4830,8 +4830,8 @@
 	icon_state = "delivery"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 6
+	dir = 6;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "jS" = (
@@ -5767,8 +5767,8 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 4
+	dir = 4;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "lC" = (
@@ -6046,8 +6046,8 @@
 /obj/structure/alien/weeds,
 /obj/structure/stool/bed/chair/metal/black,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 1
+	dir = 1;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "mg" = (
@@ -6407,8 +6407,8 @@
 /obj/effect/decal/remains/xeno,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 10
+	dir = 10;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "nd" = (
@@ -7281,8 +7281,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellowfull";
-	dir = 1
+	dir = 1;
+	icon_state = "darkyellowfull"
 	},
 /area/asteroid/mine/abandoned)
 "pb" = (
@@ -7528,16 +7528,16 @@
 /obj/item/weapon/table_parts,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 9
+	dir = 9;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "pA" = (
 /obj/effect/decal/turf_decal/set_burned,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 4
+	dir = 4;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "pB" = (
@@ -7553,8 +7553,8 @@
 	icon_state = "small"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 4
+	dir = 4;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "pC" = (
@@ -7658,8 +7658,8 @@
 	icon_state = "delivery"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 4
+	dir = 4;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "pQ" = (
@@ -8063,8 +8063,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurplefull";
-	dir = 1
+	dir = 1;
+	icon_state = "darkpurplefull"
 	},
 /area/asteroid/mine/abandoned)
 "qS" = (
@@ -8220,16 +8220,16 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 9
+	dir = 9;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "ri" = (
 /obj/machinery/floodlight,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 1
+	dir = 1;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "rj" = (
@@ -8252,8 +8252,8 @@
 "rl" = (
 /obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurplechecker";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurplechecker"
 	},
 /area/asteroid/mine/abandoned)
 "rm" = (
@@ -8261,8 +8261,8 @@
 	icon_state = "weeds2"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkpurplechecker";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurplechecker"
 	},
 /area/asteroid/mine/abandoned)
 "rn" = (
@@ -8328,8 +8328,8 @@
 /obj/item/clothing/gloves/latex,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 4
+	dir = 4;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "rx" = (
@@ -8350,8 +8350,8 @@
 "rA" = (
 /obj/structure/alien/weeds/node,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 10
+	dir = 10;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "rB" = (
@@ -8377,8 +8377,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/disk/research_points/rare,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 6
+	dir = 6;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "rF" = (
@@ -8432,8 +8432,8 @@
 	amount = 50
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 5
+	dir = 5;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "rM" = (
@@ -11120,8 +11120,8 @@
 	},
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 4
+	dir = 4;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "ym" = (
@@ -11208,8 +11208,8 @@
 "yD" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurplechecker";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurplechecker"
 	},
 /area/asteroid/mine/abandoned)
 "yM" = (
@@ -11902,7 +11902,7 @@
 /area/asteroid/research_outpost/hallway)
 "At" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "mine_dock";
+	dock_tag = "mining_shuttle";
 	locked = 1;
 	name = "Mining Shuttle Airlock";
 	req_access = list(48)
@@ -12214,8 +12214,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 9
+	dir = 9;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Bu" = (
@@ -12385,8 +12385,8 @@
 "CQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 4
+	dir = 4;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "Db" = (
@@ -12491,8 +12491,8 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 4
+	dir = 4;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "DT" = (
@@ -12584,8 +12584,8 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 5
+	dir = 5;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "ES" = (
@@ -12760,8 +12760,8 @@
 	},
 /obj/structure/ore_box,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 4
+	dir = 4;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "GT" = (
@@ -12829,8 +12829,8 @@
 	},
 /obj/effect/spawner/mob_spawn/alien/queen,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "HA" = (
@@ -13041,8 +13041,8 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "Jm" = (
@@ -13067,8 +13067,8 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 4
+	dir = 4;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Kb" = (
@@ -13162,15 +13162,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurplechecker";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurplechecker"
 	},
 /area/asteroid/mine/abandoned)
 "KO" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 1
+	dir = 1;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "KT" = (
@@ -13275,8 +13275,8 @@
 /obj/structure/table,
 /obj/item/weapon/crowbar/red,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 8
+	dir = 8;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Lz" = (
@@ -13389,8 +13389,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/paper/crumpled,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 9
+	dir = 9;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "MW" = (
@@ -13607,8 +13607,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 10
+	dir = 10;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Pb" = (
@@ -13665,8 +13665,8 @@
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 8
+	dir = 8;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Pr" = (
@@ -13721,8 +13721,8 @@
 "PY" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "Qb" = (
@@ -13783,23 +13783,23 @@
 "QG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellowcorners";
-	dir = 1
+	dir = 1;
+	icon_state = "darkyellowcorners"
 	},
 /area/asteroid/mine/abandoned)
 "QM" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 1
+	dir = 1;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "QP" = (
 /obj/effect/decal/turf_decal/set_burned,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellowfull";
-	dir = 1
+	dir = 1;
+	icon_state = "darkyellowfull"
 	},
 /area/asteroid/mine/abandoned)
 "Rb" = (
@@ -13927,8 +13927,8 @@
 /obj/effect/decal/cleanable/cobweb2,
 /obj/structure/closet/crate/freezer,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 5
+	dir = 5;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "St" = (
@@ -14007,8 +14007,8 @@
 /obj/structure/alien/weeds,
 /obj/structure/closet/crate/trashcart,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 6
+	dir = 6;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Tw" = (
@@ -14078,8 +14078,8 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 8
+	dir = 8;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Ut" = (
@@ -14172,8 +14172,8 @@
 /area/asteroid/mine/production)
 "VA" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkpurplefull";
-	dir = 1
+	dir = 1;
+	icon_state = "darkpurplefull"
 	},
 /area/asteroid/mine/abandoned)
 "VC" = (
@@ -14392,15 +14392,15 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 8
+	dir = 8;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "Xv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 1
+	dir = 1;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "Xx" = (
@@ -14416,8 +14416,8 @@
 "XA" = (
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/airless{
-	icon_state = "darkyellow";
-	dir = 8
+	dir = 8;
+	icon_state = "darkyellow"
 	},
 /area/asteroid/mine/abandoned)
 "XC" = (
@@ -14604,8 +14604,8 @@
 /obj/machinery/floodlight,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 1
+	dir = 1;
+	icon_state = "darkpurple"
 	},
 /area/asteroid/mine/abandoned)
 "Zn" = (

@@ -138,16 +138,29 @@
 	var/fibrillation_timer_id = null
 	var/failing_interval = 1 MINUTE
 
-/obj/item/organ/internal/heart/insert_organ()
+	var/datum/modval/heart_metabolism_mod
+
+/obj/item/organ/internal/heart/Destroy()
+	owner?.mob_metabolism_mod.RemoveMods(src) // where is remove_organ()
+	QDEL_NULL(heart_metabolism_mod)
+	return ..()
+
+/obj/item/organ/internal/heart/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
-	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
+	// attach heart modval to our owner modval as multiplicative
+	// we should not add any heart-related mods directly to the owner, mod our heart modval
+	heart_metabolism_mod = new(base_value = 1, clamp_min = 0, clamp_max = 1)
+	owner.mob_metabolism_mod.ModMultiplicative(heart_metabolism_mod, src)
 
 /obj/item/organ/internal/heart/proc/heart_stop()
 	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
 		heart_status = HEART_FAILURE
 		deltimer(fibrillation_timer_id)
 		fibrillation_timer_id = null
-		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
+		// modval it multiplicative for mob metabolism,
+		// so making it 0 disables mob metabolism
+		// can be balanced by life assist machinery
+		heart_metabolism_mod.ModAdditive(-1, "Bad Heart")
 	else
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
@@ -157,13 +170,13 @@
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
 	fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
-	owner.metabolism_factor.AddModifier("Heart", multiple = 0.5)
+	heart_metabolism_mod.ModAdditive(-0.5, "Bad Heart") // slows down metabolism, can be balanced by life assist machinery
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
 	heart_status = HEART_NORMAL
 	deltimer(fibrillation_timer_id)
 	fibrillation_timer_id = null
-	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
+	heart_metabolism_mod.RemoveMods("Bad Heart")
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
@@ -236,7 +249,7 @@
 		if(prob(2))
 			owner.emote("cough")
 			owner.drip(10)
-		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
+		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_EXTERNAL_VENTILATION))
 			owner.emote("gasp")
 			owner.losebreath += 15
 
@@ -258,7 +271,7 @@
 		if(refrigerant_spent > 0)
 			temp_gain -= refrigerant_spent
 
-	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
+	if(HAS_TRAIT(owner, TRAIT_EXTERNAL_COOLING) & owner.bodytemperature > 290)
 		owner.adjust_bodytemperature(-50)
 
 	if(temp_gain > 0)

@@ -24,7 +24,7 @@
 				return
 			if(!check_conditions(host, disease, src))
 				return
-			if(ismob(host))
+			if(isliving(host))
 				effect.activate_mob(host, src, disease)
 			if(istype(host, /obj/machinery/hydroponics))
 				effect.activate_plant(host, src, disease)
@@ -327,15 +327,17 @@
 	COOLDOWN_DECLARE(metabolicboost_message)
 
 /datum/disease2/effect/metabolism/activate_mob(mob/living/carbon/human/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(M.reagents)
-		M.reagents.metabolize(M) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	M.overeatduration = max(M.overeatduration - 2, 0)
-	var/lost_nutrition = 2
-	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
+	// i have no idea what is happening in diseases, this code is so old
+	M.mob_metabolism_mod.ModAdditive(1, src) // +100%
 	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
 		return
 	to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
+
+/datum/disease2/effect/metabolism/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(isliving(A))
+		var/mob/living/L = A
+		L.mob_metabolism_mod.RemoveMods(src)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustSpeedmultiplier(holder.stage)

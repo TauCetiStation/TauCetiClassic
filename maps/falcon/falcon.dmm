@@ -352,9 +352,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -1010,7 +1008,9 @@
 /turf/simulated/floor/plating,
 /area/station/medical/surgeryobs)
 "abN" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -1539,7 +1539,9 @@
 	name = "AI Satellite Antechamber";
 	pixel_x = -26
 	},
-/obj/machinery/space_heater,
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3912,6 +3914,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ahi" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "ahj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
@@ -4629,6 +4637,22 @@
 "aik" = (
 /turf/simulated/wall,
 /area/station/civilian/gym)
+"ail" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "aim" = (
 /obj/structure/closet/lasertag/red,
 /turf/simulated/floor{
@@ -4740,6 +4764,12 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"aiy" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "aiA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9866,7 +9896,7 @@
 "ayN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -12921,11 +12951,11 @@
 "dpV" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
 "dqs" = (
 /obj/structure/table/glass,
@@ -16056,7 +16086,9 @@
 	},
 /area/station/medical/sleeper)
 "gqx" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -20313,7 +20345,7 @@
 	dir = 1
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -32627,12 +32659,12 @@
 "vob" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/security/checkpoint)
 "voe" = (
 /obj/effect/decal/cleanable/dirt,
@@ -35823,6 +35855,7 @@
 	dir = 5;
 	icon_state = "warn"
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57631,7 +57664,7 @@ uIb
 gay
 dZx
 dZx
-dZx
+ahi
 dZx
 dZx
 crv
@@ -58470,7 +58503,7 @@ crv
 crv
 crv
 gay
-rIo
+aiy
 vAA
 uqq
 uqq
@@ -74080,7 +74113,7 @@ crv
 qws
 crv
 kGN
-mUe
+ail
 hPk
 kGN
 kqT

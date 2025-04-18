@@ -45,6 +45,8 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
+		species?.on_mob_life(src)
+
 		if(stat != DEAD) // incase if anyone wonder why - mob can die while any of those procs run, so we recheck stat where needed.
 			//Mutations and radiation
 			handle_mutations_and_radiation()
@@ -74,9 +76,6 @@
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
-
-	//Chemicals in the body
-	handle_chemicals_in_body()
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)		//Optimized a good bit.
@@ -335,7 +334,7 @@ var/global/list/tourette_bad_words= list(
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/is_cant_breathe()
-	return (handle_drowning() || health < config.health_threshold_crit) && !(reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_AV))
+	return (handle_drowning() || health < config.health_threshold_crit) && !(reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_EXTERNAL_VENTILATION))
 
 /mob/living/carbon/human/handle_external_pre_breathing(datum/gas_mixture/breath)
 	..()
@@ -361,7 +360,7 @@ var/global/list/tourette_bad_words= list(
 	if(!internal)
 		return null
 
-	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
+	if(!(HAS_TRAIT(src, TRAIT_EXTERNAL_VENTILATION) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
 		internal = null
 		return null
 
@@ -433,6 +432,7 @@ var/global/list/tourette_bad_words= list(
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
+	var/is_in_space = isspaceturf(get_turf(src))
 
 	if(environment.total_moles) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
@@ -504,6 +504,7 @@ var/global/list/tourette_bad_words= list(
 			pressure_alert = -1
 		else
 			pressure_alert = -2
+			apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 			take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
 	//Check for contaminants before anything else because we don't want to skip it.
@@ -673,39 +674,39 @@ var/global/list/tourette_bad_words= list(
 
 	return min(1,thermal_protection)
 
-/mob/living/carbon/human/proc/handle_chemicals_in_body()
-	if(get_metabolism_factor() <= 0)
-		return
+/mob/living/carbon/human/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
 
-	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
-		reagents.metabolize(src)
+	if(status_flags & GODMODE)
+		return FALSE
 
+	if(!species.flags[IS_SYNTHETIC])
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
 			if(I.contaminated)
 				total_phoronloss += vsc.plc.CONTAMINATION_LOSS
-		if(!(status_flags & GODMODE)) adjustToxLoss(total_phoronloss)
 
-	if(status_flags & GODMODE)	return 0	//godmode
-
-	species.regen(src)
+		adjustToxLoss(total_phoronloss)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+	// todo: rewrite as element
 	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
-		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
+		if(!has_quirk(/datum/quirk/fatness) && overeatduration < OVEREATDURATION_SLIM)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
-			metabolism_factor.RemoveModifier("Fat")
+			mob_metabolism_mod.RemoveMods("Fatness")
 			update_body()
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 			update_size_class()
 	else
-		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
+		if((has_quirk(/datum/quirk/fatness) || overeatduration >= OVEREATDURATION_FAT) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
-				metabolism_factor.AddModifier("Fat", base_additive = -0.3)
+				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
 				update_body()
 				update_mutations()
 				update_inv_w_uniform()
@@ -725,9 +726,19 @@ var/global/list/tourette_bad_words= list(
 	if(!species.flags[IS_SYNTHETIC])
 		handle_trace_chems()
 
-	updatehealth()
+	if(nutrition > NUTRITION_LEVEL_FAT)
+		if(overeatduration < OVEREATDURATION_CAP) //capped so people don't take forever to unfat
+			overeatduration++
+	else
+		if(overeatduration > 1)
+			overeatduration -= 2 //doubled the unfat rate
 
-	return //TODO: DEFERRED
+	if(species.flags[REQUIRE_LIGHT])
+		if(nutrition < 200)
+			take_overall_damage(2,0)
+			traumatic_shock++
+
+	updatehealth() // idk why we call it here
 
 /mob/living/carbon/human/proc/handle_regular_status_updates()
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -1230,7 +1241,7 @@ var/global/list/tourette_bad_words= list(
 	if(species && species.flags[NO_BLOOD])
 		return PULSE_NONE //No blood, no pulse.
 
-	if(HAS_TRAIT(src, TRAIT_CPB))
+	if(HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))
 		return PULSE_NORM
 
 	if(stat == DEAD)
@@ -1272,26 +1283,6 @@ var/global/list/tourette_bad_words= list(
 				temp = PULSE_NONE
 
 	return temp
-
-/mob/living/carbon/human/handle_nutrition()
-	. = ..()
-	if(nutrition > NUTRITION_LEVEL_FAT)
-		if(overeatduration < 600) //capped so people don't take forever to unfat
-			overeatduration++
-	else
-		if(overeatduration > 1)
-			overeatduration -= 2 //doubled the unfat rate
-
-	if(species.flags[REQUIRE_LIGHT])
-		if(nutrition < 200)
-			take_overall_damage(2,0)
-			traumatic_shock++
-
-/*
-	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
-	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.
-
-*/
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

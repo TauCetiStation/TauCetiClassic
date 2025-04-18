@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(mapping)
 		CRASH("Can't setup global event \"[module_name]\"!")
 
 /datum/controller/subsystem/mapping/proc/get_map_module(module_name)
-	if(loaded_map_module && loaded_map_module.name == module_name)
+	if(loaded_map_module && (!module_name || loaded_map_module.name == module_name))
 		return loaded_map_module
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()

@@ -315,6 +315,12 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 
+/obj/structure/closet/crate/loot
+	desc = "Что же может оказаться внутри?"
+	name = "Abandoned crate"
+	icon_closed = "treasure"
+	icon_opened = "treasureopen"
+
 /obj/structure/closet/crate/rcd/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/rcd_ammo(src)
