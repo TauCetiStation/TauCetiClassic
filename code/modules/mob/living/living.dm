@@ -1373,7 +1373,6 @@
 				T.add_blood_floor(src)
 			else
 				T.add_vomit_floor(src, getToxLoss() > 0 ? VOMIT_TOXIC : vomit_type)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 	return TRUE
 
 /mob/living/get_targetzone()
