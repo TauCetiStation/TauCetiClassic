@@ -415,6 +415,7 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
+	item_state_world = "egg_world"
 	w_class = SIZE_MINUSCULE
 	filling_color = "#fdffd1"
 	list_reagents = list("nutriment" = 1, "egg" = 5)
@@ -449,27 +450,35 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
+	item_state_world = "egg-blue_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
+	item_state_world = "egg-green_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
+	item_state_world = "egg-mime_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
+	item_state_world = "egg-orange_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
+	item_state_world = "egg-purple_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
+	item_state_world = "egg-rainbow_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
+	item_state_world = "egg-red_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
+	item_state_world = "egg-yellow_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "Fried egg"
@@ -483,6 +492,7 @@
 	name = "Boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
+	item_state_world = "egg_world"
 	filling_color = "#ffffff"
 	list_reagents = list("nutriment" = 2, "vitamin" = 1, "egg" = 5)
 
