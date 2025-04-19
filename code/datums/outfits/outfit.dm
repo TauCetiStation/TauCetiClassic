@@ -18,6 +18,7 @@
 
 	var/uniform = null    /// Type path of item to go in uniform slot
 	var/uniform_f = null    /// Type path of item to go in uniform slot	(female)
+	var/robot_uniform = /obj/item/clothing/under/robot /// Type path of item to go in uniform slot (machine)
 	var/suit = null       /// Type path of item to go in suit slot
 	var/gloves = null     /// Type path of item to go in gloves slot
 	var/shoes = null      /// Type path of item to go in shoes slot
@@ -168,6 +169,8 @@
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform_f && H.use_skirt)
 		uniform = uniform_f
+	if(H.species.flags[IS_SYNTHETIC])
+		uniform = robot_uniform
 
 	var/list/slot2type = list(
 		"[SLOT_BACK]"        = back,
