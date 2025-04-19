@@ -534,6 +534,11 @@
 	if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
 		to_chat(user, "Консоль не отвечает.")
 		return
+
+	if (SSshuttle.alert == 1)
+		to_chat(user, "Отказано в доступе: невозможно отозвать шаттл транспортировки экипажа")
+		return
+
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Шаттл близко. Отменять запрос уже поздно.")
 		return
