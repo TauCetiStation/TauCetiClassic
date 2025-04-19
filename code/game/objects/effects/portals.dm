@@ -75,8 +75,7 @@
 	if(prob(failchance))
 		src.icon_state = "portal1"
 		return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, use_forceMove, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
-	else
-		return do_teleport(M, destination_turf, 1, TRUE, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
+	return do_teleport(M, destination_turf, 1, TRUE, arespect_entrydir = respect_entrydir, aentrydir = get_dir(M, src))
 
 //Telescience wormhole
 /obj/effect/portal/tsci_wormhole
