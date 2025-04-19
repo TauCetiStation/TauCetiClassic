@@ -407,24 +407,6 @@ var/global/list/tourette_bad_words= list(
 	else
 		adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
-/mob/living/carbon/human/handle_alerts()
-	if(inhale_alert)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
-
-	if(temp_alert > 0)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
-	else if(temp_alert < 0)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-
-	..()
-
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
