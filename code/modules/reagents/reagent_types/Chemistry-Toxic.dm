@@ -803,9 +803,14 @@
 
 	if(!istype(H) || H.species.flags[NO_DNA])
 		return
-	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
+
+	to_chat(H, "<span class='warning'><b>Ваше тело мутирует, скрывая следы прежней личности!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	H.randomize_appearance()
+
+	H.dna.ready_dna(H)
+	H.dna.UpdateSE()
+	H.dna.UpdateUI()
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
