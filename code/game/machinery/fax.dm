@@ -64,22 +64,16 @@ var/global/list/alldepartments = list("Central Command")
 
 			if(sendcooldown)
 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-
 			else
 				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
 				dat += "<b>Currently sending:</b> [tofax.name]<br>"
 				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
-
 		else
+			dat += "Please insert paper, photo or bundle to send via secure connection.<br><br>"
 			if(sendcooldown)
-				dat += "Please insert paper, photo or bundle to send via secure connection.<br><br>"
 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-			else
-				dat += "Please insert paper, photo or bundle to send via secure connection.<br><br>"
-
 	else
 		dat += "Proper authentication is required to use this device.<br><br>"
-
 		if(tofax)
 			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Item</a><br>"
 
@@ -108,7 +102,6 @@ var/global/list/alldepartments = list("Central Command")
 				send_fax(usr, tofax, dptdest)
 
 			audible_message("Message transmitted successfully.")
-
 			spawn(sendcooldown) // cooldown time
 				sendcooldown = 0
 
@@ -169,7 +162,6 @@ var/global/list/alldepartments = list("Central Command")
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
-
 	else if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
 		if(!scan)
@@ -179,32 +171,77 @@ var/global/list/alldepartments = list("Central Command")
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
-
 	else if(iswrenching(O))
 		default_unfasten_wrench(user, O)
 
-/proc/centcomm_fax(mob/sender, obj/item/weapon/P, obj/machinery/faxmachine/fax)
-	var/item_info = ""
-	if(istype(P, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/paper = P
-		item_info = paper.info
+/obj/item/proc/get_fax_info()
+	if(istype(src, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/paper = src
+		. = paper.info
 		if(paper.stamped && islist(paper.stamped))
-			item_info += "\nStamps: [jointext(paper.stamped, ", ")]"
-	else if(istype(P, /obj/item/weapon/photo))
-		var/obj/item/weapon/photo/photo = P
-		item_info = photo.desc
-	else if(istype(P, /obj/item/weapon/paper_bundle))
-		var/obj/item/weapon/paper_bundle/bundle = P
-		item_info = "This is a bundle containing [bundle.pages.len] items."
+			. += "\nStamps: [jointext(paper.stamped, ", ")]"
+	else if(istype(src, /obj/item/weapon/photo))
+		var/obj/item/weapon/photo/photo = src
+		. = photo.desc
+	else if(istype(src, /obj/item/weapon/paper_bundle))
+		var/obj/item/weapon/paper_bundle/bundle = src
+		. = "This is a bundle containing [bundle.pages.len] items."
 		for(var/page in bundle.pages)
 			if(istype(page, /obj/item/weapon/paper))
 				var/obj/item/weapon/paper/paper_page = page
-				item_info += "\nPaper: [paper_page.info]"
+				. += "\nPaper: [paper_page.info]"
 				if(paper_page.stamped && islist(paper_page.stamped))
-					item_info += "\nStamps: [jointext(paper_page.stamped, ", ")]"
+					. += "\nStamps: [jointext(paper_page.stamped, ", ")]"
 			else if(istype(page, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/photo_page = page
-				item_info += "\nPhoto: [photo_page.desc]"
+				. += "\nPhoto: [photo_page.desc]"
+
+/obj/item/proc/get_fax_copy(target_loc)
+	if(istype(src, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/original = src
+		var/obj/item/weapon/paper/copy = new /obj/item/weapon/paper(target_loc)
+		copy.info = original.info
+		copy.name = original.name
+		if(original.stamped && islist(original.stamped))
+			copy.stamped = original.stamped.Copy()
+		return copy
+	else if(istype(src, /obj/item/weapon/photo))
+		var/obj/item/weapon/photo/original = src
+		var/obj/item/weapon/photo/copy = new /obj/item/weapon/photo(target_loc)
+		copy.img = original.img
+		copy.desc = original.desc
+		if(original.scribble)
+			copy.scribble = original.scribble
+		copy.name = original.name
+		return copy
+	else if(istype(src, /obj/item/weapon/paper_bundle))
+		var/obj/item/weapon/paper_bundle/original = src
+		var/obj/item/weapon/paper_bundle/copy = new /obj/item/weapon/paper_bundle(target_loc)
+		for(var/page in original.pages)
+			if(istype(page, /obj/item/weapon/paper))
+				var/obj/item/weapon/paper/paper_page = page
+				var/obj/item/weapon/paper/copied_paper = new /obj/item/weapon/paper()
+				copied_paper.info = paper_page.info
+				copied_paper.name = paper_page.name
+				if(paper_page.stamped && islist(paper_page.stamped))
+					copied_paper.stamped = paper_page.stamped.Copy()
+				copied_paper.forceMove(copy)
+				copy.pages.Add(copied_paper)
+			else if(istype(page, /obj/item/weapon/photo))
+				var/obj/item/weapon/photo/photo_page = page
+				var/obj/item/weapon/photo/copied_photo = new /obj/item/weapon/photo()
+				copied_photo.img = photo_page.img
+				copied_photo.desc = photo_page.desc
+				if(photo_page.scribble)
+					copied_photo.scribble = photo_page.scribble
+				copied_photo.name = photo_page.name
+				copied_photo.forceMove(copy)
+				copy.pages.Add(copied_photo)
+		copy.update_icon()
+		return copy
+
+/proc/centcomm_fax(mob/sender, obj/item/weapon/P, obj/machinery/faxmachine/fax)
+	var/item_info = P.get_fax_info()
 
 	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Receiving '[P.name]' via secure connection ... []</span>",
 	"<font color='orange'>CENTCOMM FAX: </font>[key_name(sender, 1)]",
@@ -237,47 +274,8 @@ var/global/list/alldepartments = list("Central Command")
 /proc/send_fax(mob/sender, obj/item/weapon/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
-			if(istype(P, /obj/item/weapon/paper))
-				var/obj/item/weapon/paper/original = P
-				var/obj/item/weapon/paper/copy = new /obj/item/weapon/paper(F.loc)
-				copy.info = original.info
-				copy.name = original.name
-				if(original.stamped && islist(original.stamped))
-					copy.stamped = original.stamped.Copy()
-				F.print_fax(copy)
-			else if(istype(P, /obj/item/weapon/photo))
-				var/obj/item/weapon/photo/original = P
-				var/obj/item/weapon/photo/copy = new /obj/item/weapon/photo(F.loc)
-				copy.img = original.img
-				copy.desc = original.desc
-				if(original.scribble)
-					copy.scribble = original.scribble
-				copy.name = original.name
-				F.print_fax(copy)
-			else if(istype(P, /obj/item/weapon/paper_bundle))
-				var/obj/item/weapon/paper_bundle/original = P
-				var/obj/item/weapon/paper_bundle/copy = new /obj/item/weapon/paper_bundle(F.loc)
-				for(var/page in original.pages)
-					if(istype(page, /obj/item/weapon/paper))
-						var/obj/item/weapon/paper/paper_page = page
-						var/obj/item/weapon/paper/copied_paper = new /obj/item/weapon/paper()
-						copied_paper.info = paper_page.info
-						copied_paper.name = paper_page.name
-						if(paper_page.stamped && islist(paper_page.stamped))
-							copied_paper.stamped = paper_page.stamped.Copy()
-						copied_paper.forceMove(copy)
-						copy.pages.Add(copied_paper)
-					else if(istype(page, /obj/item/weapon/photo))
-						var/obj/item/weapon/photo/photo_page = page
-						var/obj/item/weapon/photo/copied_photo = new /obj/item/weapon/photo()
-						copied_photo.img = photo_page.img
-						copied_photo.desc = photo_page.desc
-						if(photo_page.scribble)
-							copied_photo.scribble = photo_page.scribble
-						copied_photo.name = photo_page.name
-						copied_photo.forceMove(copy)
-						copy.pages.Add(copied_photo)
-				copy.update_icon()
+			var/obj/item/copy = P.get_fax_copy(F.loc)
+			if(copy)
 				F.print_fax(copy)
 
 	if(istype(P, /obj/item/weapon/paper))
