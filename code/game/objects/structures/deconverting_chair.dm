@@ -1,7 +1,7 @@
 
 /obj/structure/stool/bed/chair/electrotherapy
 	name = "electrotherapy chair"
-	desc = "Latest development in the field of brainwashing. This thing is almost guaranteed to bring back loyalty to your crew!"
+	desc = "Latest development in the field of brainwashing. This thing is almost guaranteed to bring back loyalty to your crew! Or... No?"
 	icon_state = "echair0"
 	var/list/roles_to_deconvert = list(SHADOW_THRALL, CULTIST)
 	var/on_cooldown = FALSE
@@ -17,17 +17,21 @@
 	if(!user.Adjacent(src))
 		return
 	if(!buckled_mob)
+		to_chat(user, "<span class='warning'>Activation is not possible without a user in the chair.</span>")
+		return
+	if(do_after(usr, 30, target = user))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, get_turf(src))
 		s.start()
-		return
-
-	deconvert(user, buckled_mob)
+		deconvert(user, buckled_mob)
+		if(prob(50))
+			if(buckled_mob.ismindprotect())
+				remove_protect_implants(user, buckled_mob)
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/deconvert(mob/user, mob/living/carbon/human/target)
 	if(!ishuman(target) || on_cooldown)
 		return
-	target.electrocute_act(50)
+	target.electrocute_act(50, src)
 	if(target.mind)
 		for(var/role in roles_to_deconvert)
 			var/datum/role/R = target.mind.GetRole(role)
@@ -49,6 +53,22 @@
 		playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
 		on_cooldown = TRUE
 		addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), 1 MINUTE, TIMER_UNIQUE)
+
+/obj/structure/stool/bed/chair/electrotherapy/proc/remove_protect_implants(mob/living/carbon/human/target)
+	if(!target.ismindprotect())
+		return
+
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/I in target.contents)
+		if(I.implanted)
+			qdel(I)
+			to_chat(target, "<span class='notice'>Your mindshield implant has been deactivated.</span>")
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/I in target.contents)
+		if(I.implanted)
+			qdel(I)
+			to_chat(target, "<span class='notice'>Your loyality implant has been deactivated.</span>")
+		target.sec_hud_set_implants()
+
+
 
 /obj/structure/stool/bed/chair/electrotherapy/proc/reset_cooldown()
 	if(on_cooldown)
