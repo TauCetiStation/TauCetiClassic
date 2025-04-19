@@ -215,7 +215,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 	return ..()
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
