@@ -237,9 +237,10 @@
 	var/refrigerant_rate = 5
 	var/bruised_loss = 3
 
+// todo: how this correlates with /is_skip_breathe() and /breathe()
 /obj/item/organ/internal/lungs/process()
 	..()
-	if (owner.species && owner.species.flags[NO_BREATHE])
+	if (HAS_TRAIT(owner, TRAIT_NO_BREATHE))
 		return
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(!owner.reagents.has_reagent("dextromethorphan") && prob(5))

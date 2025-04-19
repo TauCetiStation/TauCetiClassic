@@ -162,14 +162,10 @@
 	regular_hud_updates()
 
 /mob/living/silicon/ai/updatehealth()
-	if(status_flags & GODMODE)
-		health = 100
-		stat = CONSCIOUS
+	if(fire_res_on_core)
+		health = 100 - getOxyLoss() - getToxLoss() - getBruteLoss()
 	else
-		if(fire_res_on_core)
-			health = 100 - getOxyLoss() - getToxLoss() - getBruteLoss()
-		else
-			health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
+		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	diag_hud_set_health()
 	diag_hud_set_status()
 

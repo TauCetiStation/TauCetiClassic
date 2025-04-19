@@ -320,7 +320,7 @@
 	to_chat(S.imp_in, "<span class='notice'>Вы чувствуете резкий прилив сил!</span>")
 	if(ishuman(S.imp_in))
 		var/mob/living/carbon/human/H = S.imp_in
-		H.setHalLoss(0)
+		H.resetHalLoss()
 	S.imp_in.stat = CONSCIOUS
 	S.imp_in.SetParalysis(0)
 	S.imp_in.SetStunned(0)

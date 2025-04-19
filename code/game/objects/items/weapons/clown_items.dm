@@ -123,7 +123,7 @@
 						var/washglasses = !((H.head.flags_inv & HIDEEYES) || (H.wear_mask && H.wear_mask.flags_inv & HIDEEYES))
 						if(!(washmask && H.wear_mask && H.wear_mask.clean_blood()))
 							H.lip_style = null
-							H.update_body()
+							H.update_body(BP_HEAD, update_preferences = TRUE)
 						if(H.glasses && washglasses)
 							H.glasses.clean_blood()
 						if(H.l_ear && washears)

@@ -2,8 +2,14 @@
 	var/traumatic_shock = 0
 	var/painkiller_overlay_time = 0
 
-// proc to find out in how much pain the mob is at the moment
-/mob/living/carbon/proc/updateshock()
+/mob/living/carbon/proc/handle_shock()
+	if(painkiller_overlay_time > 0)
+		painkiller_overlay_time--
+
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
+		traumatic_shock = 0
+		return
+
 	traumatic_shock = 			\
 	0.5	* getToxLoss() + 		\
 	1.5	* getFireLoss() + 		\
@@ -26,20 +32,8 @@
 
 	if(traumatic_shock < 0)
 		traumatic_shock = 0
-	if(painkiller_overlay_time > 0)
-		painkiller_overlay_time--
 
 	play_pain_sound()
-
-	return traumatic_shock
-
-/mob/living/carbon/human/updateshock()
-	if (species && species.flags[NO_PAIN])
-		return
-	..()
-
-/mob/living/carbon/proc/handle_shock()
-	updateshock()
 
 /mob/living/carbon/proc/play_pain_sound()
 	return
@@ -49,7 +43,7 @@
 		return
 	if(last_pain_emote_sound > world.time)
 		return
-	if(species.flags[NO_PAIN] || species.flags[IS_SYNTHETIC])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN) || species.flags[IS_SYNTHETIC])
 		return
 	if(time_of_last_damage + 15 SECONDS > world.time) // don't cry from the pain that just came
 		return

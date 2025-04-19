@@ -38,7 +38,9 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
+// todo: rewrite without blends, use organ/external/get_icon
+// currently this doesn't work properly and can cause lags
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H) 
 	var/icon/preview_icon = null
 
 	var/g = "m"
@@ -62,24 +64,16 @@
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
-	//Tail
-	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/mob/species/tail.dmi', "icon_state" = H.species.tail)
-		preview_icon.Blend(temp, ICON_OVERLAY)
-
 	// Skin tone
 	if(H.species.flags[HAS_SKIN_TONE])
-		if (H.s_tone >= 0)
-			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
-		else
-			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+		preview_icon.Blend(global.skin_tones_by_name[H.s_tone], ICON_ADD)
 
 	// Skin color
 	if(H.species.flags[HAS_SKIN_TONE])
 		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			preview_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
-	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = H.species ? H.species.eyes : "eyes_s")
+	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human/eyes.dmi', "icon_state" = H?.species?.eyes_colorable_layer || "default")
 
 	eyes_s.Blend(rgb(H.r_eyes, H.g_eyes, H.b_eyes), ICON_ADD)
 

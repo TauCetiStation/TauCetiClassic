@@ -1,12 +1,7 @@
 /mob/living/silicon/robot/updatehealth()
-	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
-		return
 	health = maxHealth - (getBruteLoss() + getFireLoss())
 	diag_hud_set_status()
 	diag_hud_set_health()
-	return
 
 /mob/living/silicon/robot/getBruteLoss()
 	var/amount = 0
@@ -24,15 +19,15 @@
 
 /mob/living/silicon/robot/adjustBruteLoss(amount)
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		return take_overall_damage(amount, 0)
 	else
-		heal_overall_damage(-amount, 0)
+		return heal_overall_damage(-amount, 0)
 
 /mob/living/silicon/robot/adjustFireLoss(amount)
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		return take_overall_damage(0, amount)
 	else
-		heal_overall_damage(0, -amount)
+		return heal_overall_damage(0, -amount)
 
 /mob/living/silicon/robot/proc/get_damaged_components(brute, burn, destroyed = 0)
 	var/list/datum/robot_component/parts = list()
@@ -113,7 +108,16 @@
 		parts -= picked
 
 /mob/living/silicon/robot/take_overall_damage(brute = 0, burn = 0, sharp = 0, used_weapon = null)
-	if(status_flags & GODMODE)	return	//godmode
+
+	// todo: should we move it to robot_component?
+	if(brute > 0)
+		brute *= mob_brute_mod.Get()
+	if(burn > 0)
+		burn *= mob_burn_mod.Get()
+
+	if(!brute && !burn)
+		return FALSE
+
 	var/list/datum/robot_component/parts = get_damageable_components()
 
 	 //Combat shielding absorbs a percentage of damage directly into the cell.

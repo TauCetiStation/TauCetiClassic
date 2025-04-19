@@ -695,7 +695,8 @@
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
 	icon_state = "henchmen"
 	item_state = "henchmen"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES
 

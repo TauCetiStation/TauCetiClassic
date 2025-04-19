@@ -566,7 +566,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
 			else
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 
 			if(H.head)
 				H.head.make_wet(1) //<= wet
@@ -740,7 +740,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		if (B.charges > 0 && B.status == 1)
 			flick("baton_active", src)
 			user.Stun(10)
-			user.setStuttering(10)
+			user.Stuttering(10)
 			user.Weaken(10)
 			if(isrobot(user))
 				var/mob/living/silicon/robot/R = user

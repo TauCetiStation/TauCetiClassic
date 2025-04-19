@@ -27,9 +27,11 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
-#define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
-
 #define ispluvian(A) (A.get_species() == PLUVIAN)
+
+#define isskeleton(A) HAS_TRAIT(A, ELEMENT_TRAIT_SKELETON) // replace with trait checks, zombie too
+
+#define iszombie(A) HAS_TRAIT(A, ELEMENT_TRAIT_ZOMBIE) // below is different macro to check for the role
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
@@ -224,8 +226,6 @@
 #define isERT(H) isrole(RESPONDER, H)
 
 #define isrolezombie(H) isrole(ZOMBIE, H)
-
-#define iszombie(H) (H.get_species() in global.all_zombie_species_names)
 
 #define isalien(H) isrole(XENOMORPH, H)
 

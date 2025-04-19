@@ -156,7 +156,7 @@
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return FALSE
-	if((HUSK in target.mutations) || (NOCLONE in target.mutations))
+	if(NOCLONE in target.mutations)
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return FALSE
 	return TRUE

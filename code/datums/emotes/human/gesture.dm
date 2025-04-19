@@ -78,7 +78,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 /datum/emote/human/surrender/do_emote(mob/living/carbon/human/user)
@@ -117,7 +117,7 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 
@@ -135,5 +135,5 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)

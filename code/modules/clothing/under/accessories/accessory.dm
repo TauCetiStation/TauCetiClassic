@@ -126,7 +126,7 @@
 						switch(target_zone)
 							if(BP_CHEST)
 								pulse_status = "pulse"
-								if(H.heart_status == HEART_NORMAL && M.oxyloss < 50)
+								if(H.heart_status == HEART_NORMAL && M.getOxyLoss() < 50)
 									pulse_strength = "hear a healthy"
 								else if(H.heart_status == HEART_FIBR)
 									pulse_strength = "hear an odd pulse"

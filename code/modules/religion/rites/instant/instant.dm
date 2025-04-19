@@ -295,7 +295,7 @@
 	var/list/hairs = get_valid_styles_from_cache(hairs_cache, E.species, gender)
 	if(hairs.len > 0)
 		h_style = pick(hairs)
-	update_hair()
+	update_body(BP_HEAD, update_preferences = TRUE)
 
 	ADD_TRAIT(src, TRAIT_SOULSTONE_IMMUNE, GENERIC_TRAIT)
 

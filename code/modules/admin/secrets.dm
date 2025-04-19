@@ -429,7 +429,7 @@
 			feedback_add_details("admin_secrets_fun_used","RET")
 			for(var/mob/living/carbon/human/H in player_list)
 				to_chat(H, "<span class='warning'><B>You suddenly feel stupid.</B></span>")
-				H.setBrainLoss(60)
+				H.adjustBrainLoss(60)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 		// Make all items look like guns
 		if("fakeguns")
@@ -466,7 +466,7 @@
 			feedback_add_details("admin_secrets_fun_used","DF")
 			for(var/mob/living/carbon/human/H as anything in human_list)
 				H.f_style = "Dwarf Beard"
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 		// Battle to the death (only one)
 		if("onlyone")
