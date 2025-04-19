@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(ticker)
 
 	msg_lobby = "Запускаем сверхточные атомные часы..."
 
-	var/const/restart_timeout = 600
+	var/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
 
 	var/datum/modesbundle/bundle = null
@@ -43,6 +43,7 @@ SUBSYSTEM_DEF(ticker)
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
 	var/is_lowpop = FALSE
+	var/arena_loaded = FALSE
 
 	var/force_end = FALSE // set TRUE to forse round end and show credits
 
@@ -116,6 +117,8 @@ SUBSYSTEM_DEF(ticker)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_end
 			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+
+				load_arena()
 
 				if(!SSrating.already_started)
 					start_rating_vote_if_unexpected_roundend()
@@ -602,7 +605,8 @@ SUBSYSTEM_DEF(ticker)
 		for(var/mob/M as anything in global.player_list)
 			H.add_hud_to(M)
 
-	teleport_players_to_eorg_area()
+	if(arena_loaded)
+		teleport_players_to_eorg_area()
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()
@@ -619,16 +623,60 @@ SUBSYSTEM_DEF(ticker)
 	if(config.allow_drone_spawn)
 		create_spawner(/datum/spawner/drone)
 
+/datum/controller/subsystem/ticker/proc/pick_arena()
+	var/online = global.player_list.len
+	var/list/arenas = list()
+
+	for(var/i in subtypesof(/datum/map_template/post_round_arena))
+		var/datum/map_template/post_round_arena/A = i
+		if(A.spawners && A.spawners >= (online - 5) && A.spawners <= (online + 5))
+			arenas += A
+
+	var/datum/map_template/post_round_arena/arena = /datum/map_template/post_round_arena/four_biomes
+	if(arenas.len)
+		arena = pick(arenas)
+
+	return(arena)
+
+/datum/controller/subsystem/ticker/proc/clear_arena(obj/effect/landmark/arena_spawn)
+	var/turf/center = locate(arena_spawn.x + 22, arena_spawn.y + 22, arena_spawn.z)
+	var/list/arena_content = range(22, center) - arena_spawn
+
+	for(var/obj/O in arena_content)
+		qdel(O)
+
+/datum/controller/subsystem/ticker/proc/load_arena(datum/map_template/post_round_arena/arena = null)
+	if(!arena)
+		if(arena_loaded || !config.deathmatch_arena)
+			return
+		else
+			arena = pick_arena()
+
+	var/obj/effect/landmark/arena_spawn = pick(landmarks_list["Arena Spawn"])
+
+	if(arena_loaded)
+		clear_arena(arena_spawn)
+
+	arena = new arena
+
+	if(!arena.load(get_turf(arena_spawn)))
+		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
+	else
+		arena_loaded = TRUE
+
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
-	if(!config.deathmatch_arena)
-		return
-	for(var/mob/living/M in global.player_list)
-		if(!M.client.prefs.eorg_enabled)
+	restart_timeout *= sqrt(1 + global.player_list.len / 15) // на отметке 45 онлайна время дезматча удвоится
+
+	for(var/mob/M in global.player_list)
+		if(!M.client || !M.client.prefs.eorg_enabled)
 			continue
-		spawn_gladiator(M)
+		if(M.mind)
+			spawn_gladiator(M)
+		else
+			spawn_gladiator(M, FALSE)
 
 /datum/controller/subsystem/ticker/proc/spawn_gladiator(mob/M, transfer_mind = TRUE)
-	var/mob/living/carbon/human/L = new(pick_landmarked_location("eorgwarp"))
+	var/mob/living/carbon/human/L = new(pick_landmarked_location("Gladiator"))
 	if(transfer_mind)
 		M.mind.transfer_to(L)
 	else
