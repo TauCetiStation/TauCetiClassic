@@ -45,6 +45,5 @@
 		W.update_inv_mob()
 
 	W.plane = ABOVE_HUD_PLANE
-	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
 	W.update_inv_mob()

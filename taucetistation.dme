@@ -211,6 +211,7 @@
 #include "code\_onclick\hud\rendering\planes\effects_planes.dm"
 #include "code\_onclick\hud\rendering\planes\lighting_planes.dm"
 #include "code\_onclick\hud\rendering\planes\parallax_planes.dm"
+#include "code\_onclick\hud\rendering\planes\UI.dm"
 #include "code\_onclick\hud\ui_screens\alien.dm"
 #include "code\_onclick\hud\ui_screens\basic.dm"
 #include "code\_onclick\hud\ui_screens\complex.dm"
