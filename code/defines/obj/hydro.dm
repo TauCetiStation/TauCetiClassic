@@ -1698,7 +1698,7 @@
 
 	to_chat(user, "<span class='notice'>Вы начинаете сажать бобы, чтобы вырастить огромное дерево...</span>")
 
-	if(do_after(user, 30, target = user))
+	if(!user.is_busy() && do_after(user, 3 SECONDS, target = user))
 		new /obj/structure/flora/tree/jungle(user.loc)
 		qdel(src)
 		to_chat(user, "<span class='notice'>Вы посадили бобы, и из них выросло дерево!</span>")
