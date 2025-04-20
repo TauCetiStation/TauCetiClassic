@@ -23,6 +23,13 @@
 		if(AM == user || AM.anchored)
 			continue
 
+		if(ishuman(AM)) // AIR_FLOW_PROTECT defends a human from repulse
+			var/mob/living/carbon/human/H = AM
+			if(H.shoes && (H.shoes.flags & AIR_FLOW_PROTECT))
+				continue
+			if(H.wear_suit && (H.wear_suit.flags & AIR_FLOW_PROTECT))
+				continue
+
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		if(distfromcaster == 0)
