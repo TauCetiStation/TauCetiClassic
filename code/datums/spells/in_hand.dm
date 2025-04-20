@@ -469,7 +469,7 @@
 			L.cure_all_viruses()
 			var/mob/living/carbon/human/M
 			for(var/obj/item/organ/external/E in M.bodyparts)
-					E.status &= ~ORGAN_ARTERY_CUT
+				E.status &= ~ORGAN_ARTERY_CUT
 		if(5)
 			hamt *= 0.10
 			L.remove_any_mutations()
