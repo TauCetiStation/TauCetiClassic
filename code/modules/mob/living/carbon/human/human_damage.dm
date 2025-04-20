@@ -1,4 +1,5 @@
 //Updates the mob's health from bodyparts and mob damage variables
+// todo: for some reason mobs call it several times per life tick
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth

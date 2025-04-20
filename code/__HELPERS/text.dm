@@ -36,11 +36,14 @@
 		//       http://www.byond.com/forum/post/2520672
 		input = strip_non_ascii(input)
 	else
-		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
-		// codes from https://www.compart.com/en/unicode/category/
-		//            https://en.wikipedia.org/wiki/Whitespace_character#Unicode
-		var/static/regex/unicode_control_chars = regex(@"[\u0001-\u0009\u000B\u000C\u000E-\u001F\u007F\u0080-\u009F\u00A0\u1680\u180E\u2000-\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]", "g")
-		input = unicode_control_chars.Replace(input, "")
+		// unicode is big and still get updates, so it's troublesome to keep blacklist for strange symbols, including emoji
+		// so instead we try to whitelist ranges we want to see
+		// currently allowed:
+		// * basic ascii set, including latin, except special characters
+		// * extended/supplement latin
+		// * cyrillic and extended/supplement cyrillic
+		var/static/regex/unicode_whitelisted_chars = regex(@"[^\u0020-\u007E\u00C0-\u00FF\u0400-\u052F\uA640-\uA69F]+", "g")
+		unicode_whitelisted_chars.Replace(input, "")
 
 	if(encode)
 		// In addition to processing html, html_encode removes byond formatting codes like "\red", "\i" and other.

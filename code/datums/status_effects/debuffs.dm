@@ -164,8 +164,13 @@
 	update_time_of_death()
 	handle_stasis_bag()
 
+/datum/status_effect/incapacitating/stasis_bag/on_apply()
+	owner.mob_metabolism_mod.ModMultiplicative(0, src) // stop any metabolism while in the bag
+	return ..()
+
 /datum/status_effect/incapacitating/stasis_bag/on_remove()
 	update_time_of_death()
+	owner.mob_metabolism_mod.RemoveMods(src)
 	return ..()
 
 /datum/status_effect/incapacitating/stasis_bag/be_replaced()
