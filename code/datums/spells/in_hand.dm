@@ -428,7 +428,7 @@
 		if(2 to 3)
 			to_chat(user, "<span class='notice'>[level_info] <b> просто лечит</b>.</span>")
 		if(4)
-			to_chat(user, "<span class='notice'>[level_info] <b>исцеляет</b> любой <b>вирус</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>исцеляет</b> любой <b>вирус</b> и <b>артериальное кровотечение</b>.</span>")
 		if(5)
 			to_chat(user, "<span class='notice'>[level_info] <b>очищает</b> любую <b>мутацию</b>.</span>")
 		if(6)
@@ -467,6 +467,9 @@
 		if(4)
 			hamt *= 0.15
 			L.cure_all_viruses()
+			var/mob/living/carbon/human/M
+			for(var/obj/item/organ/external/E in M.bodyparts)
+					E.status &= ~ORGAN_ARTERY_CUT
 		if(5)
 			hamt *= 0.10
 			L.remove_any_mutations()
