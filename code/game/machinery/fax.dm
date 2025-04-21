@@ -175,70 +175,61 @@ var/global/list/alldepartments = list("Central Command")
 		default_unfasten_wrench(user, O)
 
 /obj/item/proc/get_fax_info()
-	if(istype(src, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/paper = src
-		. = paper.info
-		if(paper.stamped && islist(paper.stamped))
-			. += "\nStamps: [jointext(paper.stamped, ", ")]"
-	else if(istype(src, /obj/item/weapon/photo))
-		var/obj/item/weapon/photo/photo = src
-		. = photo.desc
-	else if(istype(src, /obj/item/weapon/paper_bundle))
-		var/obj/item/weapon/paper_bundle/bundle = src
-		. = "This is a bundle containing [bundle.pages.len] items."
-		for(var/page in bundle.pages)
-			if(istype(page, /obj/item/weapon/paper))
-				var/obj/item/weapon/paper/paper_page = page
-				. += "\nPaper: [paper_page.info]"
-				if(paper_page.stamped && islist(paper_page.stamped))
-					. += "\nStamps: [jointext(paper_page.stamped, ", ")]"
-			else if(istype(page, /obj/item/weapon/photo))
-				var/obj/item/weapon/photo/photo_page = page
-				. += "\nPhoto: [photo_page.desc]"
+	return null
+
+/obj/item/weapon/paper/get_fax_info()
+	. = info
+	if(stamped && islist(stamped))
+		. += "\nStamps: [jointext(stamped, ", ")]"
+
+/obj/item/weapon/photo/get_fax_info()
+	return desc
+
+/obj/item/weapon/paper_bundle/get_fax_info()
+	. = "This is a bundle containing [pages.len] items."
+	for(var/page in pages)
+		if(istype(page, /obj/item/weapon/paper))
+			var/obj/item/weapon/paper/paper_page = page
+			. += "\nPaper: [paper_page.get_fax_info()]"
+		else if(istype(page, /obj/item/weapon/photo))
+			var/obj/item/weapon/photo/photo_page = page
+			. += "\nPhoto: [photo_page.get_fax_info()]"
 
 /obj/item/proc/get_fax_copy(target_loc)
-	if(istype(src, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/original = src
-		var/obj/item/weapon/paper/copy = new /obj/item/weapon/paper(target_loc)
-		copy.info = original.info
-		copy.name = original.name
-		if(original.stamped && islist(original.stamped))
-			copy.stamped = original.stamped.Copy()
-		return copy
-	else if(istype(src, /obj/item/weapon/photo))
-		var/obj/item/weapon/photo/original = src
-		var/obj/item/weapon/photo/copy = new /obj/item/weapon/photo(target_loc)
-		copy.img = original.img
-		copy.desc = original.desc
-		if(original.scribble)
-			copy.scribble = original.scribble
-		copy.name = original.name
-		return copy
-	else if(istype(src, /obj/item/weapon/paper_bundle))
-		var/obj/item/weapon/paper_bundle/original = src
-		var/obj/item/weapon/paper_bundle/copy = new /obj/item/weapon/paper_bundle(target_loc)
-		for(var/page in original.pages)
-			if(istype(page, /obj/item/weapon/paper))
-				var/obj/item/weapon/paper/paper_page = page
-				var/obj/item/weapon/paper/copied_paper = new /obj/item/weapon/paper()
-				copied_paper.info = paper_page.info
-				copied_paper.name = paper_page.name
-				if(paper_page.stamped && islist(paper_page.stamped))
-					copied_paper.stamped = paper_page.stamped.Copy()
-				copied_paper.forceMove(copy)
-				copy.pages.Add(copied_paper)
-			else if(istype(page, /obj/item/weapon/photo))
-				var/obj/item/weapon/photo/photo_page = page
-				var/obj/item/weapon/photo/copied_photo = new /obj/item/weapon/photo()
-				copied_photo.img = photo_page.img
-				copied_photo.desc = photo_page.desc
-				if(photo_page.scribble)
-					copied_photo.scribble = photo_page.scribble
-				copied_photo.name = photo_page.name
-				copied_photo.forceMove(copy)
-				copy.pages.Add(copied_photo)
-		copy.update_icon()
-		return copy
+	return null
+
+/obj/item/weapon/paper/get_fax_copy(target_loc)
+	var/obj/item/weapon/paper/copy = new /obj/item/weapon/paper(target_loc)
+	copy.info = info
+	copy.name = name
+	if(stamped && islist(stamped))
+		copy.stamped = stamped.Copy()
+	return copy
+
+/obj/item/weapon/photo/get_fax_copy(target_loc)
+	var/obj/item/weapon/photo/copy = new /obj/item/weapon/photo(target_loc)
+	copy.img = img
+	copy.desc = desc
+	if(scribble)
+		copy.scribble = scribble
+	copy.name = name
+	return copy
+
+/obj/item/weapon/paper_bundle/get_fax_copy(target_loc)
+	var/obj/item/weapon/paper_bundle/copy = new /obj/item/weapon/paper_bundle(target_loc)
+	for(var/page in pages)
+		if(istype(page, /obj/item/weapon/paper))
+			var/obj/item/weapon/paper/paper_page = page
+			var/obj/item/weapon/paper/copied_paper = paper_page.get_fax_copy()
+			copied_paper.forceMove(copy)
+			copy.pages.Add(copied_paper)
+		else if(istype(page, /obj/item/weapon/photo))
+			var/obj/item/weapon/photo/photo_page = page
+			var/obj/item/weapon/photo/copied_photo = photo_page.get_fax_copy()
+			copied_photo.forceMove(copy)
+			copy.pages.Add(copied_photo)
+	copy.update_icon()
+	return copy
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/P, obj/machinery/faxmachine/fax)
 	var/item_info = P.get_fax_info()
@@ -251,7 +242,7 @@ var/global/list/alldepartments = list("Central Command")
 	ADMIN_JMP(sender),
 	"(<a href='byond://?_src_=holder;secretsadmin=check_antagonist'>CA</a>)",
 	"(<a href='byond://?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department]'>RPLY</a>)",
-	"<a href='byond://?_src_=holder;CentcommFaxViewInfo=\ref[item_info]'>view message</a>")
+	"<a href='byond://?_src_=holder;CentcommFaxViewInfo=\ref[item_info]'>view message</a>") // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
 
 	for(var/client/C as anything in admins)
 		to_chat(C, msg)
@@ -278,14 +269,7 @@ var/global/list/alldepartments = list("Central Command")
 			if(copy)
 				F.print_fax(copy)
 
-	if(istype(P, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/paper = P
-		log_fax("[sender] sending [paper.name] to [department]: [paper.info]")
-	else if(istype(P, /obj/item/weapon/photo))
-		var/obj/item/weapon/photo/photo = P
-		log_fax("[sender] sending photo [photo.name] to [department]: [photo.desc]")
-	else if(istype(P, /obj/item/weapon/paper_bundle))
-		log_fax("[sender] sending paper bundle [P.name] to [department]")
+	log_fax("[sender] sending [P.name] to [department]: [P.get_fax_info()]")
 
 /obj/machinery/faxmachine/proc/print_fax(obj/item/weapon/P)
 	set waitfor = FALSE
