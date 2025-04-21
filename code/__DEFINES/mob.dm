@@ -156,10 +156,8 @@
 #define TK_LEVEL_NORMAL 1
 #define TK_LEVEL_SKRELL 2
 
-// Being drugged improves your telekinesis by a level.
-#define TK_BONUS_DRUGGED 1
-// Being very desperate/angry/upset improves your telekinesis by a level.
-#define TK_BONUS_UPSET 1
+// Being drugged improves your telekinesis by two levels.
+#define TK_BONUS_DRUGGED 2
 
 // How much resource should be wasted per tile of distance to target.
 #define TK_MANA_PER_TILE 1

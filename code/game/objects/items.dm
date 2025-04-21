@@ -780,6 +780,10 @@
 	if(amount && !use(amount, user))
 		return
 
+	if(user.mood_prob(25))
+		to_chat(user, "<span class='warning'>No luck. Need to try again.</span>")
+		return
+
 	// Play tool sound at the end of tool usage,
 	// but only if the delay between the beginning and the end is not too small
 	if(delay >= MIN_TOOL_SOUND_DELAY)

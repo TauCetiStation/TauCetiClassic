@@ -219,22 +219,16 @@
 	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 6
 		if(SPIRIT_LOW to SPIRIT_POOR)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 4
 		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
-			master.mood_multiplicative_actionspeed_modifier = 0.0
 			spirit_level = 3
 		if(SPIRIT_NEUTRAL + 1 to SPIRIT_HIGH + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 2
 		if(SPIRIT_HIGH + 1 to INFINITY)
-			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
 
@@ -365,3 +359,21 @@
 	SIGNAL_HANDLER
 
 	setSpirit(spirit + amount)
+
+// The chance that something bad will happen to the character when the mood is low. The lower mood - the higher chance.
+/mob/proc/mood_prob(value) //value - normal prob chance.
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
+	if(!mood)
+		return prob(value)
+	switch(mood.spirit)
+		if(SPIRIT_BAD to SPIRIT_LOW)
+			value *= 2
+		if(SPIRIT_LOW to SPIRIT_POOR)
+			value *= 1.5
+		if(SPIRIT_POOR to SPIRIT_DISTURBED)
+			value *= 1
+		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
+			value *= 0.5
+		if(SPIRIT_NEUTRAL to INFINITY)
+			value *= 0
+	return prob(value)

@@ -48,6 +48,11 @@
 	modifystate = 0
 	can_be_holstered = FALSE
 
+/obj/item/weapon/gun/energy/gun/nuclear/on_mood_failure(mob/M)
+	reliability -= 25
+	to_chat(src, "<span class='userdanger'>Failure! Energy gun breaks!</span>")
+	return
+
 /obj/item/weapon/gun/energy/gun/nuclear/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -60,20 +65,24 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/process()
 	charge_tick++
-	if(charge_tick < 4) return 0
+	if(charge_tick < 4)
+		return FALSE
 	charge_tick = 0
-	if(!power_supply) return 0
+	if(!power_supply)
+		return FALSE
 	if((power_supply.charge / power_supply.maxcharge) != 1)
-		if(!failcheck())	return 0
+		if(!failcheck())
+			return FALSE
 		power_supply.give(100)
 		update_icon()
-	return 1
+	return TRUE
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
 	lightfail = 0
-	if (prob(src.reliability)) return 1 //No failure
-	if (prob(src.reliability))
+	if (prob(reliability))
+		return TRUE //No failure
+	if (prob(reliability))
 		irradiate_in_dist(get_turf(src), rand(3, 120), 0)
 		lightfail = 1
 	else
@@ -81,7 +90,7 @@
 		crit_fail = 1 //break the gun so it stops recharging
 		STOP_PROCESSING(SSobj, src)
 		update_icon()
-	return 0
+	return FALSE
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_charge()
 	if (crit_fail)

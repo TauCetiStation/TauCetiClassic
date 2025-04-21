@@ -328,6 +328,10 @@
 	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override, skills_speed_bonus = skills_speed_bonus)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
+	if(user.mood_prob(5))
+		explosion(user.loc, 0, 0, 1, 1)
+		to_chat(user, "<span class='danger'>Welding tool malfunction and explode!</span>")
+		qdel(src)
 
 /obj/item/weapon/weldingtool/proc/start_welding(atom/target) // Process of welding something
 	var/datum/effect/effect/system/spark_spread/spark = new /datum/effect/effect/system/spark_spread()

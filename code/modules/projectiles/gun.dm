@@ -62,6 +62,11 @@
 	if(two_hand_weapon)
 		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
 
+/obj/item/weapon/gun/proc/on_mood_failure(mob/M) //small chance of weapon failure at low mood (karma)
+	explosion(M.loc, 0, 0, 1, 1)
+	qdel(src)
+	return
+
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
@@ -187,6 +192,9 @@
 					H.take_bodypart_damage(0, 20)
 					qdel(src)
 					return
+
+			if(H.mood_prob(25))
+				on_mood_failure(H)
 
 	add_fingerprint(user)
 

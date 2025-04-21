@@ -120,22 +120,6 @@
 #define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
 #define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)
 
-#define SADNESS_COLOR(amount) list( \
-	0.3 + 0.7 * (1.0 - amount), \
-	0.3 - 0.3 * (1.0 - amount), \
-	0.2 - 0.2 * (1.0 - amount), \
-	0.7 - 0.7 * (1.0 - amount), \
-	0.6 + 0.4 * (1.0 - amount), \
-	0.5 - 0.5 * (1.0 - amount), \
-	0.1 - 0.1 * (1.0 - amount), \
-	0.1 - 0.1 * (1.0 - amount), \
-	0.1 + 0.9 * (1.0 - amount), \
-	0.0, \
-	0.0, \
-	0.0 \
-)
-
-
 // FILTER EFFECTS
 /* #define EFFECT_FILTER 	list(1, 0, 0, 0, \
                                  0, 1, 0, 0, \
