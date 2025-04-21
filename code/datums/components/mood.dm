@@ -216,7 +216,6 @@
 
 	var/prev_spirit_level = spirit_level
 
-	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
 			spirit_level = 6
