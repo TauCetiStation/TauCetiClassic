@@ -68,8 +68,6 @@
 			to_chat(target, "<span class='notice'>Your loyality implant has been deactivated.</span>")
 		target.sec_hud_set_implants()
 
-
-
 /obj/structure/stool/bed/chair/electrotherapy/proc/reset_cooldown()
 	if(on_cooldown)
 		on_cooldown = FALSE
