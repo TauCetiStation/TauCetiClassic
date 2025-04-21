@@ -19,7 +19,7 @@
 	if(!buckled_mob)
 		to_chat(user, "<span class='warning'>Activation is not possible without a user in the chair.</span>")
 		return
-	if(do_after(usr, 30, target = user))
+	if(!user.is_busy() && do_after(usr, 3 SECONDS, target = user))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, get_turf(src))
 		s.start()
