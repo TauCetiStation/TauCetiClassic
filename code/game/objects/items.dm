@@ -780,7 +780,7 @@
 	if(amount && !use(amount, user))
 		return
 
-	if(user.mood_prob(25))
+	if(user.mood_prob(10))
 		to_chat(user, "<span class='warning'>No luck. Need to try again.</span>")
 		return
 
