@@ -193,7 +193,7 @@
 					qdel(src)
 					return
 
-			if(H.mood_prob(25))
+			if(H.mood_prob(10))
 				on_mood_failure(H)
 
 	add_fingerprint(user)
