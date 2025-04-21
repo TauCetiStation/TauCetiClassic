@@ -56,7 +56,7 @@
 		icon_state = "morgue0"
 	else if (contents.len && !emagged)
 		if (has_clonable_bodies())
-			icon_state = "morgue3"
+			icon_state = "morgue4"
 		else
 			icon_state = "morgue2"
 	else
@@ -412,49 +412,60 @@
 		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
 		return
 
-	else
-		if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
-			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
-			return
+	if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
+		to_chat(user, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
+		return
 
-		audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
+	audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
-		cremating = 1
-		locked = 1
+	cremating = 1
+	locked = 1
 
-		var/animation_active = TRUE
-		spawn()
-			while(animation_active && cremating)
-				flick("crema_active", src)
-				sleep(5)
+	start_cremation_animation()
 
-		for(var/mob/living/M in contents)
-			if (M.stat != 2)
-				M.emote("scream")
-			M.log_combat(user, "cremated")
-			M.death(1)
-			M.ghostize(bancheck = TRUE)
-			qdel(M)
+	for(var/mob/living/M in contents)
+		if (M.stat != DEAD)
+			M.emote("scream")
+		M.log_combat(user, "cremated")
+		M.death(1)
+		M.ghostize(bancheck = TRUE)
+		qdel(M)
 
-		for(var/obj/O in contents)
-			qdel(O)
+	for(var/obj/O in contents)
+		qdel(O)
 
-		new /obj/effect/decal/cleanable/ash(src)
-		sleep(30)
+	new /obj/effect/decal/cleanable/ash(src)
+	sleep(30)
 
+	cremating = 0
+	locked = 0
+	update_icon()
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 
-		cremating = 0
-		locked = 0
-		animation_active = FALSE
-
-		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
+
+/obj/structure/crematorium/proc/start_cremation_animation()
+	set waitfor = FALSE
+	while(cremating)
+		flick("crema_active", src)
+		sleep(5)
 
 /obj/structure/crematorium/deconstruct(disassembled)
 	move_contents(loc)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 5)
 	..()
+
+/obj/structure/crematorium/update_icon()
+	if(cremating)
+		icon_state = "crema_active"
+	else if(connected)
+		icon_state = "crema0"
+	else if(contents.len)
+		icon_state = "crema2"
+	else
+		icon_state = "crema1"
+
 /*
  * Crematorium tray
  */
