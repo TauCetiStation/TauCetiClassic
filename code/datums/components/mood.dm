@@ -371,7 +371,7 @@
 			value *= 1.5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
 			value *= 1
-		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
+		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL - 1) // the spirit must be BELOW average for misfortunes to happen.
 			value *= 0.5
 		if(SPIRIT_NEUTRAL to INFINITY)
 			value *= 0
