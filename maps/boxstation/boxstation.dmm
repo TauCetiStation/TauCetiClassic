@@ -6484,6 +6484,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"akK" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "akL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -6619,6 +6625,12 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
+"akV" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "akW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -6831,6 +6843,12 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"alo" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "alp" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -6970,6 +6988,12 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
+"alC" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "alD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/alarm{
@@ -9012,7 +9036,8 @@
 /area/station/maintenance/auxsolarport)
 "aoM" = (
 /obj/machinery/door/airlock{
-	name = "Toilet"
+	name = "Toilet";
+	id_tag = "toilet115"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -15735,7 +15760,7 @@
 "aBb" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock";
 	req_access = list(1)
@@ -16569,6 +16594,12 @@
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = 32
 	},
+/obj/machinery/door_control{
+	id = "toilet111";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_y = -26
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -17378,7 +17409,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -20328,7 +20361,8 @@
 "aJQ" = (
 /obj/machinery/door/airlock{
 	dir = 4;
-	name = "Unit 2"
+	name = "toilet cabin";
+	id_tag = "toilet111"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -20503,6 +20537,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "toilet114";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = 26
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -24586,7 +24626,7 @@
 	},
 /area/station/medical/hallway)
 "aRD" = (
-/obj/structure/sign/departments/medbay/lifestar{
+/obj/structure/sign/departments/medbay{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -25622,7 +25662,7 @@
 "aTy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -33769,11 +33809,11 @@
 /area/station/bridge/ai_upload)
 "bhF" = (
 /obj/structure/cable,
-/obj/machinery/computer/smartlight,
 /obj/machinery/power/apc{
 	name = "apc down";
 	pixel_y = -28
 	},
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "bhG" = (
@@ -34529,7 +34569,9 @@
 	},
 /area/station/bridge/meeting_room)
 "bjj" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "mining_shuttle"
+	},
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "5-5"
 	},
@@ -36925,7 +36967,9 @@
 	},
 /area/station/bridge)
 "bnv" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkbrown"
@@ -39399,7 +39443,7 @@
 	pixel_y = 20
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/recharge_station,
+/obj/machinery/computer/smartlight,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -44088,6 +44132,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"
 	},
+/obj/machinery/recharge_station,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -45500,6 +45545,10 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/item/device/binary_decoder{
+	pixel_x = 10;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -56499,7 +56548,7 @@
 "bZz" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_officer";
+	dock_tag = "velocity_officer_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -56544,6 +56593,12 @@
 /area/station/construction/assembly_line)
 "bZH" = (
 /obj/machinery/light/small,
+/obj/machinery/door_control{
+	id = "toilet116";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = 26
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -63681,7 +63736,8 @@
 /area/station/engineering/engine)
 "cue" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -67741,7 +67797,8 @@
 /area/station/aisat/antechamber_interior)
 "cGE" = (
 /obj/machinery/door/airlock{
-	name = "Toilet"
+	name = "Toilet";
+	id_tag = "toilet116"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -69908,7 +69965,7 @@
 "dhb" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock"
 	},
@@ -70344,7 +70401,7 @@
 /area/station/maintenance/disposal)
 "dEb" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_ferry";
+	dock_tag = "ferry_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -70365,6 +70422,12 @@
 "dFe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door_control{
+	id = "toilet115";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = 26
+	},
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
 "dHv" = (
@@ -71063,7 +71126,7 @@
 /area/station/cargo/office)
 "evb" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -71957,7 +72020,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "fAo" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
@@ -76362,7 +76427,8 @@
 "jVb" = (
 /obj/machinery/door/airlock{
 	dir = 4;
-	name = "Private Restroom"
+	name = "Private Restroom";
+	id_tag = "toilet117"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -76474,6 +76540,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "toilet117";
+	name = "toilet lock";
+	pixel_x = 28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -76744,12 +76816,12 @@
 	pixel_x = -27
 	},
 /obj/item/weapon/stickers{
-	pixel_y = 16;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 16
 	},
 /obj/item/jar/cookie{
-	pixel_y = 18;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 18
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -78652,7 +78724,8 @@
 /area/station/engineering/engine)
 "mjb" = (
 /obj/machinery/door/airlock{
-	name = "Unit 2"
+	name = "Unit 2";
+	id_tag = "toilet113"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -78716,7 +78789,8 @@
 /area/station/civilian/chapel)
 "mmb" = (
 /obj/machinery/door/airlock{
-	name = "Unit 1"
+	name = "Unit 1";
+	id_tag = "toilet114"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -79520,6 +79594,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"nkE" = (
+/obj/machinery/door/airlock{
+	dir = 4;
+	name = "toilet cabin";
+	id_tag = "toilet112"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "nlb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -80139,6 +80223,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "toilet113";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_x = -26
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -81484,7 +81574,9 @@
 	},
 /area/station/medical/cmo)
 "pCu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/machinery/door_control{
 	desc = "A remote control-switch for secure storage.";
 	id = "Secure Storage";
@@ -85046,7 +85138,7 @@
 	name = "Shower"
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /obj/structure/curtain/open/shower,
 /obj/machinery/shower{
 	dir = 1
@@ -85226,7 +85318,9 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "tHS" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
@@ -86989,7 +87083,7 @@
 "wYt" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -87238,6 +87332,17 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
+"xFw" = (
+/obj/machinery/door_control{
+	id = "toilet112";
+	name = "toilet lock";
+	specialfunctions = 4;
+	pixel_y = 26
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "xGD" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -105000,7 +105105,7 @@ cmp
 cmp
 cmp
 cms
-csz
+alC
 coc
 cod
 cod
@@ -105667,7 +105772,7 @@ akE
 akE
 akE
 akE
-akE
+akK
 akE
 akE
 akE
@@ -122407,7 +122512,7 @@ aEa
 rrN
 tkb
 aEa
-aJQ
+nkE
 aEa
 aJQ
 aEa
@@ -122664,7 +122769,7 @@ aEa
 thb
 aEa
 aEa
-thb
+xFw
 aEa
 aCD
 aEa
@@ -137285,7 +137390,7 @@ ajI
 ajI
 ajI
 ajI
-ajI
+akV
 ajI
 ajI
 ajI
@@ -137886,7 +137991,7 @@ czD
 czD
 czD
 czD
-czD
+alo
 czD
 czD
 czD

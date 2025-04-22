@@ -1418,6 +1418,12 @@
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
+"acs" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "act" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/metal{
@@ -1443,6 +1449,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
+"acw" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "acx" = (
 /obj/structure/stool,
 /obj/effect/decal/turf_decal/wood{
@@ -1478,6 +1490,12 @@
 	icon_state = "medstairs_wide"
 	},
 /area/station/civilian/garden)
+"acB" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "acC" = (
 /obj/structure/table,
 /obj/random/misc/book,
@@ -1562,6 +1580,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"acK" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "acL" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -2836,7 +2860,9 @@
 /turf/environment/space,
 /area/shuttle/mining/station)
 "afa" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "mining_shuttle"
+	},
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "5-5"
 	},
@@ -9956,7 +9982,7 @@
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /obj/structure/drain{
 	drainage = 2
 	},
@@ -16043,7 +16069,7 @@
 "cxI" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_officer";
+	dock_tag = "velocity_officer_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -20363,7 +20389,9 @@
 	},
 /area/station/civilian/hydroponics)
 "dnu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
@@ -27044,12 +27072,9 @@
 "eEf" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock"
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -35545,7 +35570,7 @@
 "gkb" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -36308,7 +36333,7 @@
 /area/station/maintenance/brig)
 "gsX" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_ferry";
+	dock_tag = "ferry_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -41964,7 +41989,7 @@
 /area/station/medical/sleeper)
 "hxu" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -43960,7 +43985,7 @@
 "hRU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -46775,13 +46800,10 @@
 "its" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock";
 	req_access = list(1)
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -64188,7 +64210,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/outerlabs)
 "lQI" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -67957,8 +67981,7 @@
 	},
 /area/station/medical/genetics_cloning)
 "mBV" = (
-/obj/structure/table,
-/obj/item/weapon/aiModule/corp,
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "mCj" = (
@@ -69189,6 +69212,7 @@
 	network = list("Research","Toxins                                                                Test                                                                Area","Robots","Anomaly                                                                Isolation");
 	pixel_y = 2
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkpurple"
@@ -81304,7 +81328,7 @@
 "pjT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "stat_dock";
+	dock_tag = "mining_shuttle";
 	name = "Arrival Airlock";
 	req_one_access = list(65,48)
 	},
@@ -81613,7 +81637,7 @@
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "pnC" = (
-/obj/structure/sign/departments/medbay/lifestar{
+/obj/structure/sign/departments/medbay{
 	pixel_x = 16
 	},
 /turf/simulated/wall,
@@ -94503,9 +94527,9 @@
 	},
 /area/station/medical/hallway/outbranch)
 "rQV" = (
-/obj/structure/table,
-/obj/item/weapon/aiModule/asimov,
 /obj/machinery/light/smart,
+/obj/item/weapon/aiModule/corp,
+/obj/structure/table,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "rQZ" = (
@@ -133743,7 +133767,7 @@ xut
 xut
 xut
 hoB
-uks
+acB
 wNJ
 gYe
 gYe
@@ -136213,7 +136237,7 @@ wEa
 wEa
 wEa
 uxa
-pFd
+acw
 kli
 heR
 heR
@@ -140351,7 +140375,7 @@ pOf
 eEf
 eEf
 pOf
-kHU
+plf
 pOf
 its
 cck
@@ -156728,7 +156752,7 @@ ewk
 ewk
 ewk
 ewk
-ewk
+acs
 ewk
 ewk
 ewk
@@ -176188,7 +176212,7 @@ aji
 aji
 aji
 aji
-aji
+acK
 aji
 aji
 aji

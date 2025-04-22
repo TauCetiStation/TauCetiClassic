@@ -9,6 +9,7 @@ AI MODULES
 	name = "AI module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
+	item_state_world = "std_mod_w"
 	item_state = "electronic"
 	desc = "Модуль ИИ, содержащий зашифрованные законы для их загрузки в ядро."
 	flags = CONDUCT
@@ -76,7 +77,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.")
+		to_chat(target, "<span class='large'>[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.</span>")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -417,6 +418,8 @@ AI MODULES
 /obj/item/weapon/aiModule/freeform/syndicate/attack_self(mob/user)
 	newFreeFormLaw = sanitize(input(user, "Пожалуйста, введите новый закон для ИИ.", "Новый закон"))
 	desc = "Модуль законов ИИ без каких-либо маркировок: '[newFreeFormLaw]'"
+	report_AI = tgui_alert(user, "Плата может напрямую передать ИИ ваше имя при загрузке закона. Включить это?", "Уведомление ИИ", list("Да", "Нет")) == "Да"
+	to_chat(user, "<span class='notice'>ИИ [report_AI ? "" : "не"] будет передано ваше имя при загрузке закона.</span>")
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	to_chat(target, "<span class='warning'>БЗЗЗЗКХ   '[newFreeFormLaw]'</span>")

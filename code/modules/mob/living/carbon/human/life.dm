@@ -406,24 +406,6 @@ var/global/list/tourette_bad_words= list(
 	else
 		adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
-/mob/living/carbon/human/handle_alerts()
-	if(inhale_alert)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
-
-	if(temp_alert > 0)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
-	else if(temp_alert < 0)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-
-	..()
-
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
@@ -431,6 +413,7 @@ var/global/list/tourette_bad_words= list(
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
+	var/is_in_space = isspaceturf(get_turf(src))
 
 	if(environment.total_moles) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
@@ -502,6 +485,7 @@ var/global/list/tourette_bad_words= list(
 			pressure_alert = -1
 		else
 			pressure_alert = -2
+			apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 			take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
 	//Check for contaminants before anything else because we don't want to skip it.

@@ -70,6 +70,7 @@
 	desc = "Covers the eyes, preventing sight. Altough, something wrong with this one..."
 	icon_state = "blindfold"
 	item_state = "blindfold"
+	item_state_world = "blindfold"
 	vision_flags = SEE_TURFS
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE

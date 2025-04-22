@@ -8087,7 +8087,8 @@
 /area/space)
 "anm" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -15372,7 +15373,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "azG" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -16687,6 +16690,24 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"aCe" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
+"aCf" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
+"aCg" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "aCh" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -16699,6 +16720,12 @@
 	icon_state = "graychoco"
 	},
 /area/station/engineering/engine)
+"aCi" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
 "aCD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -19336,7 +19363,7 @@
 "biH" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock"
 	},
@@ -20432,7 +20459,8 @@
 /area/station/maintenance/engineering)
 "bvf" = (
 /obj/machinery/computer/station_alert{
-	dir = 1
+	dir = 1;
+	muted = 1
 	},
 /turf/simulated/floor{
 	icon_state = "red"
@@ -20727,7 +20755,7 @@
 "byw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -22687,7 +22715,9 @@
 	},
 /area/station/cargo/office)
 "bTA" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "mining_shuttle"
+	},
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "5-5"
 	},
@@ -33050,8 +33080,8 @@
 	},
 /area/station/engineering/break_room)
 "evW" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/light/smart,
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -40554,7 +40584,7 @@
 "glU" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -43192,7 +43222,8 @@
 /area/station/cargo/storage)
 "gRG" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -60278,7 +60309,7 @@
 "kMt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "stat_dock";
+	dock_tag = "mining_shuttle";
 	name = "Arrival Airlock";
 	req_one_access = list(65,48)
 	},
@@ -62855,12 +62886,14 @@
 	},
 /area/station/cargo/qm)
 "lvz" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/machinery/computer/smartlight{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -72068,7 +72101,8 @@
 /area/station/engineering/atmos/supermatter)
 "nGh" = (
 /obj/machinery/computer/station_alert{
-	dir = 4
+	dir = 4;
+	muted = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_left"
@@ -81662,7 +81696,7 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -86578,7 +86612,6 @@
 "rmh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/computer/smartlight,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -91831,6 +91864,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
@@ -104982,7 +105016,7 @@
 "vTo" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock";
 	req_access = list(1)
@@ -135608,7 +135642,7 @@ hSk
 hSk
 hSk
 hSk
-hSk
+aCf
 hSk
 hSk
 hSk
@@ -140650,7 +140684,7 @@ tKY
 tKY
 tKY
 uIA
-tKY
+aCi
 tKY
 tKY
 tKY
@@ -154007,7 +154041,7 @@ sug
 biH
 biH
 sug
-kHU
+plf
 ujC
 vTo
 ujC
@@ -161029,7 +161063,7 @@ eWK
 eWK
 eWK
 eWK
-eWK
+aCe
 eWK
 eWK
 dEn
@@ -171202,7 +171236,7 @@ gtW
 gtW
 gtW
 gtW
-gtW
+aCg
 gtW
 gtW
 iOa
