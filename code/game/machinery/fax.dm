@@ -202,6 +202,7 @@ var/global/list/alldepartments = list("Central Command")
 	var/obj/item/weapon/paper/copy = new /obj/item/weapon/paper(target_loc)
 	copy.info = info
 	copy.name = name
+	copy.icon_state = icon_state
 	if(stamped && islist(stamped))
 		copy.stamped = stamped.Copy()
 	return copy
@@ -209,6 +210,7 @@ var/global/list/alldepartments = list("Central Command")
 /obj/item/weapon/photo/get_fax_copy(target_loc)
 	var/obj/item/weapon/photo/copy = new /obj/item/weapon/photo(target_loc)
 	copy.img = img
+	copy.icon_state = icon_state
 	copy.desc = desc
 	if(scribble)
 		copy.scribble = scribble
@@ -217,6 +219,9 @@ var/global/list/alldepartments = list("Central Command")
 
 /obj/item/weapon/paper_bundle/get_fax_copy(target_loc)
 	var/obj/item/weapon/paper_bundle/copy = new /obj/item/weapon/paper_bundle(target_loc)
+	copy.icon_state = icon_state
+	copy.overlays = overlays
+	copy.underlays = underlays
 	for(var/page in pages)
 		if(istype(page, /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/paper_page = page
