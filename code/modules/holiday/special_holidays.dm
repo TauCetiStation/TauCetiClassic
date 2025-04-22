@@ -23,30 +23,7 @@
 	return pick("Fluffy","Bunny","Easter","Egg")
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yyyy, ddd)
-	if(!begin_month)
-		/// Held variable to better calculate when certain holidays may fall on, like easter.
-		var/current_year = text2num(time2text(world.timeofday, "YYYY"))
-		var/list/easterResults = EasterDate(current_year)
-
-		begin_day = easterResults["day"]
-		begin_month = easterResults["month"]
-
-		end_day = begin_day + DAYS_EXTRA
-		end_month = begin_month
-		if(end_day >= 32 && end_month == MARCH) //begins in march, ends in april
-			end_day -= 31
-			end_month++
-		if(end_day >= 31 && end_month == APRIL) //begins in april, ends in june
-			end_day -= 30
-			end_month++
-
-		begin_day -= DAYS_EARLY
-		if(begin_day <= 0)
-			if(begin_month == APRIL)
-				begin_day += 31
-				begin_month-- //begins in march, ends in april
-
-	return ..()
+	return TRUE
 
 
 /* Egg Hunt */
