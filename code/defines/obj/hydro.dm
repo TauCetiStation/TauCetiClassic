@@ -1687,6 +1687,7 @@
 /obj/item/weapon/grown/bigtree
 	name = "seeds big tree"
 	desc = "Бобы для огромного дерева"
+	w_class = SIZE_NORMAL
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "bungopit"
 	seed_type = /obj/item/seeds/bigtree
@@ -1696,14 +1697,18 @@
 	if(!user)
 		return
 
-	to_chat(user, "<span class='notice'>Вы начинаете сажать бобы, чтобы вырастить огромное дерево...</span>")
+	var/turf/user_turf = get_turf(user)
+	var/valid_water = istype(user_turf, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in user_turf)
+	if(!valid_water)
+		to_chat(user, "<span class='warning'>Бобы нужно сажать на воду (лужу или мелкий водоём)! Иначе они не прорастут!</span>")
+		return
 
-	if(!user.is_busy() && do_after(user, 3 SECONDS, target = user))
+	to_chat(user, "<span class='notice'>Вы начинаете сажать бобы в воду, чтобы вырастить огромное дерево...</span>")
+
+	if(!user.is_busy() && do_after(user, 2 SECONDS, target = user))
 		new /obj/structure/flora/tree/jungle(user.loc)
 		qdel(src)
-		to_chat(user, "<span class='notice'>Вы посадили бобы, и из них выросло дерево!</span>")
-	else
-		to_chat(user, "<span class='warning'>Вы прервали посадку бобов.</span>")
+		to_chat(user, "<span class='notice'>Вы посадили бобы, и из них мгновенно выросло дерево!</span>")
 
 /obj/item/weapon/grown/sunflower
 	name = "sunflower"
