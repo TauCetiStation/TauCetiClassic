@@ -62,11 +62,6 @@
 	if(two_hand_weapon)
 		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
 
-/obj/item/weapon/gun/proc/on_mood_failure(mob/M) //small chance of weapon failure at low mood (karma)
-	explosion(M.loc, 0, 0, 1, 1)
-	qdel(src)
-	return
-
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
@@ -111,6 +106,10 @@
 				if(spread_increase)
 					spread = clamp(spread + spread_increase, 0, spread_max)
 					START_PROCESSING(SSfastprocess, src)
+		if(user.mood_and_skill_prob(20, -0.3, list(/datum/skill/firearms = SKILL_LEVEL_NOVICE))) //woops
+			to_chat(user, "<span class='danger'>You can't handle the recoil and the gun flies out of your hands!</span>")
+			user.drop_item()
+			throw_at(get_step(src, pick(alldirs)), rand(1, 6), 2)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -192,9 +191,6 @@
 					H.take_bodypart_damage(0, 20)
 					qdel(src)
 					return
-
-			if(H.mood_prob(10))
-				on_mood_failure(H)
 
 	add_fingerprint(user)
 

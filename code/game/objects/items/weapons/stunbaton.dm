@@ -58,7 +58,7 @@
 	if(!status && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
-	if(user.ClumsyProbabilityCheck(50) || user.mood_prob(20))
+	if(user.ClumsyProbabilityCheck(50) || user.mood_and_skill_prob(10, -0.3, list(/datum/skill/police = SKILL_LEVEL_NOVICE)))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()

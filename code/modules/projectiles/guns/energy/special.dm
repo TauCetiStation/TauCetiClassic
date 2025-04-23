@@ -17,11 +17,6 @@
 	else
 		return
 
-/obj/item/weapon/gun/energy/ionrifle/on_mood_failure(mob/M)
-	empulse(loc, 5, 2)
-	to_chat(src, "<span class='userdanger'>Failure! Rifle malfunctions and creates an EMP!</span>")
-	return
-
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "Оружие, которое за счет большого количества контролируемого излучения постепенно разрушает цель на составные элементы."

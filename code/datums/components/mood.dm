@@ -360,19 +360,16 @@
 	setSpirit(spirit + amount)
 
 // The chance that something bad will happen to the character when the mood is low. The lower mood - the higher chance.
-/mob/proc/mood_prob(value) //value - normal prob chance.
+/mob/proc/mood_and_skill_prob(value, skill_multiplier, required_skills) //value - normal prob chance.
+	var/new_value = value
+	if(required_skills) //Skills significantly reduce (or increase) the chance of failure.
+		new_value = apply_skill_bonus(src, value, required_skills, skill_multiplier)
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if(!mood)
-		return prob(value)
-	switch(mood.spirit)
-		if(SPIRIT_BAD to SPIRIT_LOW)
-			value *= 2
-		if(SPIRIT_LOW to SPIRIT_POOR)
-			value *= 1.5
-		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			value *= 1
-		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL - 1) // the spirit must be BELOW average for misfortunes to happen.
-			value *= 0.5
-		if(SPIRIT_NEUTRAL to INFINITY)
-			value *= 0
-	return prob(value)
+		return prob(new_value)
+	var/spirit_mod = LERP(-2, 2, mood.spirit_level / 6) // 6 - maximal level of spirit
+	if((spirit_mod < 0) || SSticker.is_lowpop)
+		new_value *= -spirit_mod
+	else // There is no chance of the action failing if the mood is above average.
+		new_value = 0
+	return prob(new_value)

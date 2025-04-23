@@ -48,11 +48,6 @@
 	modifystate = 0
 	can_be_holstered = FALSE
 
-/obj/item/weapon/gun/energy/gun/nuclear/on_mood_failure(mob/M)
-	reliability -= 25
-	to_chat(src, "<span class='userdanger'>Failure! Energy gun breaks!</span>")
-	return
-
 /obj/item/weapon/gun/energy/gun/nuclear/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)

@@ -71,6 +71,12 @@
 	fire_sound = shot.fire_sound
 	if (shot.select_name)
 		to_chat(user, "<span class='warning'>[src] is now set to [shot.select_name].</span>")
+		if(user.mood_and_skill_prob(5, -0.3, list(/datum/skill/firearms = SKILL_LEVEL_NOVICE))) //woops
+			explosion(user.loc, 0, 0, 1, 1)
+			to_chat(user, "<span class='danger'>[src] blows up in your face.</span>")
+			user.take_bodypart_damage(0, 20)
+			qdel(src)
+			return
 	update_icon()
 
 /obj/item/weapon/gun/energy/update_icon()
