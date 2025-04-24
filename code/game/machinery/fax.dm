@@ -204,6 +204,7 @@ var/global/list/alldepartments = list("Central Command")
 	copy.name = name
 	copy.icon_state = icon_state
 	if(stamped && islist(stamped))
+		copy.update_icon()
 		copy.stamped = stamped.Copy()
 	return copy
 
