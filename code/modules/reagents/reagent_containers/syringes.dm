@@ -59,7 +59,7 @@
 		to_chat(user, "<span class='warning'>This syringe is broken!</span>")
 		return
 
-	if ((user.a_intent == INTENT_HARM || user.mood_and_skill_prob(20, -0.3, list(/datum/skill/medical = SKILL_LEVEL_NOVICE))) && ismob(target))
+	if ((user.a_intent == INTENT_HARM))
 		if(user.ClumsyProbabilityCheck(50))
 			target = user
 		syringestab(target, user)

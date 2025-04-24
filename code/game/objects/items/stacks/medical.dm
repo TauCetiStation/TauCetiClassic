@@ -54,7 +54,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 		if(BP.open)
 			// Checks if mob is lying down on table for surgery
-			if(can_operate(H))
+			if(can_operate(H, user))
 				do_surgery(H, user, src)
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than [src]!</span>")

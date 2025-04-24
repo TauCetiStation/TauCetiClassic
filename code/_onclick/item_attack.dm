@@ -57,7 +57,7 @@
 		return
 
 	var/mob/messagesource = M
-	if (can_operate(M) && M.mood_and_skill_prob(20, -0.3, list(/datum/skill/surgery = SKILL_LEVEL_NOVICE)))  //Checks if mob is lying down on table for surgery
+	if (can_operate(M, user))  //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
 			return FALSE
 

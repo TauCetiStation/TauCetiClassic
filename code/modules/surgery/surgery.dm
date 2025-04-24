@@ -89,7 +89,7 @@
 /proc/checks_for_surgery(mob/living/carbon/M, mob/living/user, check_covering = TRUE)
 	if(!user.Adjacent(M))
 		return FALSE
-	if(!can_operate(M))
+	if(!can_operate(M, user))
 		return FALSE
 	if(!istype(M))
 		return FALSE
