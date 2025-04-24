@@ -906,14 +906,14 @@
 		mutatelist = list(/obj/item/seeds/jupitercup)
 		tray.mutatespecie()
 
-/obj/item/seeds/towermycelium
-	name = "pack of tower-cap mycelium"
+/obj/item/seeds/fungiwood
+	name = "pack of fungiwood"
 	cases = list("мицелий башенного гриба", "мицелия башенного гриба", "мицелию башенного гриба", "мицелий башенного гриба", "мицелием башенного гриба", "мицелие башенного гриба")
 	desc = "Из этого мицелия вырастают башенные грибы."
 	icon_state = "mycelium-tower"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "towercap"
-	plantname = "Tower Caps"
+	plantname = "fungi wood"
 	product_type = /obj/item/weapon/grown/log
 	lifespan = 80
 	endurance = 50
@@ -924,16 +924,16 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
-	mutatelist = list(/obj/item/seeds/bigtree)
+	mutatelist = list(/obj/item/seeds/towermycelium)
 
-/obj/item/seeds/bigtree
-	name = "pack big tree"
-	desc = "It's a damn huge tree."
+/obj/item/seeds/towermycelium
+	name = "pack of tower-cap mycelium"
+	desc = "Из этого мицелия вырастают ОГРОМНЫЕ башенные грибы."
 	icon_state = "seed-bungopit"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "towercap"
-	plantname = "Big Tree"
-	product_type = /obj/item/weapon/grown/bigtree
+	plantname = "Tower Caps"
+	product_type = /obj/item/weapon/grown/towermycelium
 	lifespan = 80
 	endurance = 50
 	maturation = 15
@@ -1659,7 +1659,7 @@
 	potency = newValue
 
 /obj/item/weapon/grown/log
-	name = "tower-cap log"
+	name = "fungi wood"
 	cases = list("бревно", "бревна", "бревну", "бревно", "бревном", "бревне")
 	desc = "Скорее хорошо, чем плохо!"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -1671,7 +1671,7 @@
 	throw_range = 3
 	plant_type = 2
 	origin_tech = "materials=1"
-	seed_type = /obj/item/seeds/towermycelium
+	seed_type = /obj/item/seeds/fungiwood
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/I, mob/user, params)
@@ -1684,31 +1684,41 @@
 		return FALSE
 	return ..()
 
-/obj/item/weapon/grown/bigtree
-	name = "seeds big tree"
-	desc = "Бобы для огромного дерева"
-	w_class = SIZE_NORMAL
-	icon = 'icons/obj/hydroponics/harvest.dmi'
-	icon_state = "bungopit"
-	seed_type = /obj/item/seeds/bigtree
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+/obj/item/weapon/grown/towermycelium
+    name = "seeds tower mycelium"
+    desc = "Боб для огромного гриба"
+    w_class = SIZE_NORMAL
+    icon = 'icons/obj/hydroponics/harvest.dmi'
+    icon_state = "bungopit"
+    seed_type = /obj/item/seeds/towermycelium
+    attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/bigtree/attack_self(mob/user)
-	if(!user)
-		return
+/obj/item/weapon/grown/towermycelium/attack_self(mob/user)
+    if(!user)
+        return
 
-	var/turf/user_turf = get_turf(user)
-	var/valid_water = istype(user_turf, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in user_turf)
-	if(!valid_water)
-		to_chat(user, "<span class='warning'>Бобы нужно сажать на воду (лужу или мелкий водоём)! Иначе они не прорастут!</span>")
-		return
+    var/turf/user_turf = get_turf(user)
+    var/valid_water = istype(user_turf, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in user_turf)
+    if(!valid_water)
+        to_chat(user, "<span class='warning'>Боб нужно сажать на воду (лужу или мелкий водоём)! Иначе они не прорастут!</span>")
+        return
 
-	to_chat(user, "<span class='notice'>Вы начинаете сажать бобы в воду, чтобы вырастить огромное дерево...</span>")
+    to_chat(user, "<span class='notice'>Вы начинаете сажать боб в воду, чтобы вырастить огромный гриб...</span>")
 
-	if(!user.is_busy() && do_after(user, 2 SECONDS, target = user))
-		new /obj/structure/flora/tree/jungle(user.loc)
-		qdel(src)
-		to_chat(user, "<span class='notice'>Вы посадили бобы, и из них мгновенно выросло дерево!</span>")
+    if(!user.is_busy() && do_after(user, 2 SECONDS, target = user))
+        grow_into_tree()
+
+/obj/item/weapon/grown/towermycelium/proc/grow_into_tree()
+    var/turf/T = get_turf(src)
+    if(T)
+        new /obj/structure/flora/tree/towermycelium(T)
+    qdel(src)
+
+/obj/item/weapon/grown/towermycelium/water_act(amount)
+    . = ..()
+    if(amount >= 5)
+        visible_message("<span class='notice'>[src] начинает пускать корни в воде...</span>")
+        addtimer(CALLBACK(src, .proc/grow_into_tree), 5 SECONDS)
 
 /obj/item/weapon/grown/sunflower
 	name = "sunflower"
