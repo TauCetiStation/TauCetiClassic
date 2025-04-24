@@ -366,6 +366,4 @@
 	if(!mood)
 		return prob(new_value)
 	new_value += value * force * (mood.spirit_level - mood_level) // 2 - "normal" character spirit
-	to_chat(world, new_value)
-	to_chat(world, value)
 	return prob(new_value)
