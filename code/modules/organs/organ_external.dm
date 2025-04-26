@@ -921,6 +921,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	. = ..()
 
+	var/mutable_appearance/base_appearance_behind = mutable_appearance(icon, "[icon_state]_BEHIND", -BODY_BEHIND_LAYER)
+	base_appearance_behind.color = get_skin_color()
+	. += base_appearance_behind
+
 /obj/item/organ/external/wings
 	name = "wings"
 	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
