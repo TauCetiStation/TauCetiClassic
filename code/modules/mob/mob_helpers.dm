@@ -211,7 +211,7 @@
 			if(5 to 9)
 				new_letter = uppertext(new_letter)
 			if(10)
-				new_letter += "'"
+				new_letter += html_decode("'")
 			if(11 to 15)
 				SWITCH_PASS
 
@@ -269,7 +269,7 @@
 				new_letter = ""
 
 			for(var/j = 1, j <= rand(0, 2), j++)
-				new_letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+				new_letter += html_decode(pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*"))
 
 		new_text += new_letter
 
@@ -288,7 +288,7 @@
 		new_letter = letter
 
 		for(var/j = 1, j <= rand(0, 2), j++)
-			new_letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+			new_letter += html_decode(pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*"))
 
 		new_text += new_letter
 
