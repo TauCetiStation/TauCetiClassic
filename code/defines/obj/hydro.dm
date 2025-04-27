@@ -908,7 +908,7 @@
 
 /obj/item/seeds/fungiwood
 	name = "pack of fungiwood"
-	cases = list("мицелий грибесины", "мицелия грибесины", "мицелию грибесины", "мицелий грибесины", "мицелием грибесины", "мицелие грибесины)
+	cases = list("мицелий грибесины", "мицелия грибесины", "мицелию грибесины", "мицелий грибесины", "мицелием грибесины", "мицелие грибесины")
 	desc = "Из этого мицелия вырастают башенные грибы."
 	icon_state = "mycelium-tower"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
