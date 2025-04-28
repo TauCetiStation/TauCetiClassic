@@ -1208,7 +1208,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/can_operate(mob/living/carbon/M, mob/user)
 	if(locate(/obj/machinery/optable, M.loc) && M.crawling)
 		return TRUE
-	if((M.buckled || M.incapacitated()) && user.mood_prob(get_surg_chance(M.loc), 0.2, 1))
+	if((M.buckled || M.incapacitated()) && user.mood_prob(get_surg_chance(M.loc), 0.2))
 		return TRUE
 	return FALSE
 
