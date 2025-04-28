@@ -360,7 +360,7 @@
 	setSpirit(spirit + amount)
 
 // The chance that something bad will happen to the character when the mood is low. The lower mood - the higher chance.
-/mob/proc/mood_prob(value, force) //value - normal prob chance.
+/mob/proc/mood_prob(value, force = 0.2) //value - normal prob chance.
 	if(value >= 100) // i think if the chance is 100% or more, it should't be modified. for example, there should't be a chance to fail a surgical operation on the operating table.
 		return prob(value)
 	var/new_value = value
