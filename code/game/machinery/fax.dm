@@ -199,20 +199,8 @@ var/global/list/alldepartments = list("Central Command")
 	return null
 
 /obj/item/weapon/paper/get_fax_copy(target_loc)
-	var/obj/item/weapon/paper/copy = new /obj/item/weapon/paper(target_loc)
-	copy.name = name
-	copy.info = info
-	copy.info_links = info_links
-	copy.stamp_text = stamp_text
-	copy.fields = fields
-	copy.sfields = sfields
-	copy.stamped = LAZYCOPY(stamped)
-	copy.ico = LAZYCOPY(ico)
-	copy.offset_x = LAZYCOPY(offset_x)
-	copy.offset_y = LAZYCOPY(offset_y)
-	copy.copy_overlays(src, TRUE)
-	copy.updateinfolinks()
-	copy.update_icon()
+	var/obj/item/weapon/paper/copy = create_self_copy()
+	copy.forceMove(target_loc)
 	return copy
 
 /obj/item/weapon/photo/get_fax_copy(target_loc)
