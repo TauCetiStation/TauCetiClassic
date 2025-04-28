@@ -445,6 +445,8 @@
 
 		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
 		icon_state = "egg-[clr]"
+		if(clr == "mime")
+			item_state = "egg"
 	else
 		return ..()
 
@@ -458,6 +460,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
+	item_state = "egg"
 	item_state_world = "egg-mime_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
@@ -2064,6 +2067,7 @@
 	item_state_world = "kulichslice_world"
 	item_state = "kulich"
 	filling_color = "#ede5ad"
+	trash = null
 
 // === CAKE ===
 
