@@ -236,7 +236,7 @@
 		list("sacid" = 50, "pacid" = 50, "potassium" = 100, "phosphorus" = 100, "sugar" = 100), // Acid
 		list("space_drugs" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100)        // Drugs
 	)
-	var/release_time = 50
+	var/release_time = 5 SECONDS
 	var/move_chance = 70
 	var/datum/effect/effect/system/steam_spread/steam_system
 
