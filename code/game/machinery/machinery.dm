@@ -241,6 +241,7 @@ Class Procs:
 		target.stop_pulling()
 		if(target.pulledby)
 			target.pulledby.stop_pulling()
+		target.StopGrabs()
 	updateUsrDialog()
 	update_icon()
 
