@@ -66,6 +66,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
+	var/tgui_scale = TRUE
 
 	//sound volume preferences
 	var/snd_music_vol = 100
