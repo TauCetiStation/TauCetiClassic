@@ -95,6 +95,7 @@
 	if(A)
 		message = "На [station_name_ru()] обнаружена гравитационная аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
+
 /datum/announcement/centcomm/anomaly/gas
 	name = "Anomaly: Gravitational"
 	message = "На станции обнаружена газовая аномалия. Ожидаемое местоположение: неизвестно."
