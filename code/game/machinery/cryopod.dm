@@ -335,6 +335,7 @@ var/global/list/frozen_items = list()
 		icon_state = "cryosleeper_[orient_right ? "right" : "left"]"
 
 /obj/machinery/cryopod/open_machine()
+	occupant = null
 	dropContents()
 	update_icon()
 
@@ -425,9 +426,7 @@ var/global/list/frozen_items = list()
 		add_fingerprint(user)
 
 /obj/machinery/cryopod/proc/go_out()
-	occupant.forceMove(get_turf(src))
 	set_med_status("Active")
-	occupant = null
 	open_machine()
 
 //Attacks/effects.
