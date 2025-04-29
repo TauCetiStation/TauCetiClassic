@@ -224,19 +224,20 @@
 	return
 
 /obj/effect/anomaly/gas
-	name = "gas anomaly"
+	name = "phasing gas anomaly"
 	icon_state = "gas"
 	density = FALSE
 	anchored = FALSE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 
 	COOLDOWN_DECLARE(release_cd)
 
 	var/list/gas_types = list(
-		list("condensedcapsaicin" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100),  // Teargas
-		list("sacid" = 50, "pacid" = 50, "potassium" = 100, "phosphorus" = 100, "sugar" = 100), // Acid
-		list("space_drugs" = 100, "potassium" = 100, "phosphorus" = 100, "sugar" = 100)        // Drugs
+		"condensedcapsaicin",
+		"pacid",
+		"space_drugs"
 	)
-	var/release_time = 5 SECONDS
+	var/release_time = 3 SECONDS
 	var/move_chance = 70
 	var/datum/effect/effect/system/steam_spread/steam_system
 
@@ -266,23 +267,22 @@
 /obj/effect/anomaly/gas/proc/release_gas()
 	var/selected_gas = pick(gas_types)
 
-	var/datum/reagents/R = new/datum/reagents(400)
+	var/datum/effect/effect/system/smoke_spread/chem/S = new()
+	var/datum/reagents/R = new/datum/reagents(900)
 	R.my_atom = src
-
-	for(var/reagent_id in selected_gas)
-		R.add_reagent(reagent_id, selected_gas[reagent_id])
-
-	steam_system.location = loc
-	steam_system.set_up(5, 0, loc)
-	steam_system.start()
+	R.add_reagent(selected_gas, 300)
+	S.set_up(R, 10, 0, loc, 20)
+	S.start()
 
 	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/anomaly/gas/proc/try_move()
-	var/turf/T = get_step(src, cardinal)
+	var/turf/target_turf = get_step(src, pick(alldirs))
 
-	if(T)
-		forceMove(T)
+	if(target_turf)
+		if(target_turf.density)
+			forceMove(target_turf)
+			playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 /////// CULT ///////
 /obj/effect/anomaly/bluespace/cult_portal
