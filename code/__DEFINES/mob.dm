@@ -143,6 +143,8 @@
 #define SPIRIT_LOW 25
 #define SPIRIT_BAD 0
 
+#define MOOD_PROB_MULTIPLIER 0.2
+
 //Telekinesis.
 #define TK_MAXRANGE 15
 
