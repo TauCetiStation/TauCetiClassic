@@ -31,9 +31,12 @@ export const setWindowKey = (key) => {
   windowKey = key;
 };
 
+// Hacky-wacky 516 window position hack uwu
+let windowPosition;
+
 export const getWindowPosition = () => [
-  window.screenLeft * pixelRatio,
-  window.screenTop * pixelRatio,
+  windowPosition ? windowPosition[0] : window.screenLeft * pixelRatio,
+  windowPosition ? windowPosition[1] : window.screenTop * pixelRatio,
 ];
 
 export const getWindowSize = () => [
@@ -42,6 +45,7 @@ export const getWindowSize = () => [
 ];
 
 export const setWindowPosition = (vec) => {
+  windowPosition = vec;
   const byondPos = vecAdd(vec, screenOffset);
   return Byond.winset(Byond.windowId, {
     pos: byondPos[0] + ',' + byondPos[1],
