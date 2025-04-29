@@ -195,16 +195,14 @@ var/global/list/alldepartments = list("Central Command")
 			var/obj/item/weapon/photo/photo_page = page
 			. += "\nPhoto: [photo_page.get_fax_info()]"
 
-/obj/item/proc/get_fax_copy(target_loc)
+/obj/item/proc/get_fax_copy()
 	return null
 
-/obj/item/weapon/paper/get_fax_copy(target_loc)
-	var/obj/item/weapon/paper/copy = create_self_copy()
-	copy.forceMove(target_loc)
-	return copy
+/obj/item/weapon/paper/get_fax_copy()
+	return create_self_copy()
 
-/obj/item/weapon/photo/get_fax_copy(target_loc)
-	var/obj/item/weapon/photo/copy = new /obj/item/weapon/photo(target_loc)
+/obj/item/weapon/photo/get_fax_copy()
+	var/obj/item/weapon/photo/copy = new()
 	copy.img = img
 	copy.icon_state = icon_state
 	copy.desc = desc
@@ -213,8 +211,8 @@ var/global/list/alldepartments = list("Central Command")
 	copy.name = name
 	return copy
 
-/obj/item/weapon/paper_bundle/get_fax_copy(target_loc)
-	var/obj/item/weapon/paper_bundle/copy = new /obj/item/weapon/paper_bundle(target_loc)
+/obj/item/weapon/paper_bundle/get_fax_copy()
+	var/obj/item/weapon/paper_bundle/copy = new()
 	copy.icon_state = icon_state
 	copy.overlays = overlays
 	copy.underlays = underlays
@@ -222,12 +220,12 @@ var/global/list/alldepartments = list("Central Command")
 		if(istype(page, /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/paper_page = page
 			var/obj/item/weapon/paper/copied_paper = paper_page.get_fax_copy()
-			copied_paper.forceMove(copy)
+			copied_paper.loc = copy
 			copy.pages.Add(copied_paper)
 		else if(istype(page, /obj/item/weapon/photo))
 			var/obj/item/weapon/photo/photo_page = page
 			var/obj/item/weapon/photo/copied_photo = photo_page.get_fax_copy()
-			copied_photo.forceMove(copy)
+			copied_photo.loc = copy
 			copy.pages.Add(copied_photo)
 	copy.update_icon()
 	return copy
@@ -266,8 +264,9 @@ var/global/list/alldepartments = list("Central Command")
 /proc/send_fax(mob/sender, obj/item/weapon/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
-			var/obj/item/copy = P.get_fax_copy(F.loc)
+			var/obj/item/copy = P.get_fax_copy()
 			if(copy)
+				copy.loc = F.loc
 				F.print_fax(copy)
 
 	log_fax("[sender] sending [P.name] to [department]: [P.get_fax_info()]")
