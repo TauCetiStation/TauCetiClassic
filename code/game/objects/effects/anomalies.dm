@@ -273,7 +273,7 @@
 		R.add_reagent(reagent_id, selected_gas[reagent_id])
 
 	steam_system.location = loc
-	steam_system.set_up(5, 0, loc, R)
+	steam_system.set_up(5, 0, loc)
 	steam_system.start()
 
 	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
