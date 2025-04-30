@@ -467,9 +467,10 @@
 		if(4)
 			hamt *= 0.15
 			L.cure_all_viruses()
-			var/mob/living/carbon/human/M = L
-			for(var/obj/item/organ/external/E in M.bodyparts)
-				E.status &= ~ORGAN_ARTERY_CUT
+			if(ishuman(L))
+				var/mob/living/carbon/human/M = L
+				for(var/obj/item/organ/external/E in M.bodyparts)
+					E.status &= ~ORGAN_ARTERY_CUT
 		if(5)
 			hamt *= 0.10
 			L.remove_any_mutations()
