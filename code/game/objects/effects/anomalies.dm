@@ -235,7 +235,13 @@
 	var/list/gas_types = list(
 		"condensedcapsaicin",
 		"pacid",
-		"space_drugs"
+		"space_drugs",
+		"zombiepowder",
+		"kyphotorin",
+		"lexorin",
+		"methylphenidate",
+		"impedrezene",
+		"adminordrazine"
 	)
 	var/release_time = 3 SECONDS
 	var/move_chance = 70
@@ -253,6 +259,11 @@
 	QDEL_NULL(steam_system)
 	return ..()
 
+/obj/effect/anomaly/gas/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(loc != old_loc)
+		playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+
 /obj/effect/anomaly/gas/process()
 	if(QDELETED(src))
 		return
@@ -268,21 +279,18 @@
 	var/selected_gas = pick(gas_types)
 
 	var/datum/effect/effect/system/smoke_spread/chem/S = new()
-	var/datum/reagents/R = new/datum/reagents(900)
+	var/datum/reagents/R = new/datum/reagents(2700)
 	R.my_atom = src
-	R.add_reagent(selected_gas, 300)
-	S.set_up(R, 10, 0, loc, 20)
+	R.add_reagent(selected_gas, 900)
+	S.set_up(R, 30, 0, loc, 60)
 	S.start()
 
 	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/anomaly/gas/proc/try_move()
-	var/turf/target_turf = get_step(src, pick(alldirs))
-
-	if(target_turf)
-		if(target_turf.density)
-			forceMove(target_turf)
-			playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+	var/turf/new_loc = get_step(src, pick(alldirs))
+	if(new_loc)
+		forceMove(new_loc)
 
 /////// CULT ///////
 /obj/effect/anomaly/bluespace/cult_portal
