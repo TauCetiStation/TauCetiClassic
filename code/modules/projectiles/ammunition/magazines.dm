@@ -478,6 +478,7 @@
 	name = "A28 magazine (.556NL)"
 	cases = list("магазин А28 (5.56мм НЛ)", "магазина А28 (5.56мм НЛ)", "магазину А28 (5.56мм НЛ)", "магазин А28 (5.56мм НЛ)", "магазином А28 (5.56мм НЛ)", "магазине А28 (5.56мм НЛ)")
 	icon_state = "a28_mag_nl"
+	overlay = "a28-mag-nl"
 	ammo_type = /obj/item/ammo_casing/a556/nonlethal
 
 /obj/item/ammo_box/magazine/a74
