@@ -499,6 +499,56 @@
 	filling_color = "#ffffff"
 	list_reagents = list("nutriment" = 2, "vitamin" = 1, "egg" = 5)
 
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/C = I
+		var/clr = C.colourName
+
+		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
+			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+			return
+
+		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
+		icon_state = "egg-[clr]"
+		if(clr == "mime")
+			item_state = "egg"
+	else
+		return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/blue
+	icon_state = "egg-blue"
+	item_state_world = "egg-blue_world"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/green
+	icon_state = "egg-green"
+	item_state_world = "egg-green_world"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/mime
+	icon_state = "egg-mime"
+	item_state = "egg"
+	item_state_world = "egg-mime_world"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/orange
+	icon_state = "egg-orange"
+	item_state_world = "egg-orange_world"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/purple
+	icon_state = "egg-purple"
+	item_state_world = "egg-purple_world"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/rainbow
+	icon_state = "egg-rainbow"
+	item_state_world = "egg-rainbow_world"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/red
+	icon_state = "egg-red"
+	item_state_world = "egg-red_world"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/yellow
+	icon_state = "egg-yellow"
+	item_state_world = "egg-yellow_world"
+
+
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
 	name = "appendix"

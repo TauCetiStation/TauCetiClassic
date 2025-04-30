@@ -22,6 +22,62 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 
+/datum/recipe/microwave/boiledegg/blue
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/blue
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/blue
+
+/datum/recipe/microwave/boiledegg/green
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/green
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/green
+
+/datum/recipe/microwave/boiledegg/mime
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/mime
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/mime
+
+/datum/recipe/microwave/boiledegg/orange
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/orange
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/orange
+
+/datum/recipe/microwave/boiledegg/purple
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/purple
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/purple
+
+/datum/recipe/microwave/boiledegg/rainbow
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/rainbow
+
+/datum/recipe/microwave/boiledegg/red
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/red
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/red
+
+/datum/recipe/microwave/boiledegg/red
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/yellow
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg/yellow
+
 /datum/recipe/microwave/dionaroast
 	reagents = list("pacid" = 5) //It dissolves the carapace. Still poisonous, though.
 	items = list(
