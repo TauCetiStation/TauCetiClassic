@@ -80,6 +80,13 @@
 	else
 		..()
 
+/mob/living/carbon/xenomorph/humanoid/AltClickOn(atom/A, params)
+	face_atom(A)
+	if(neurotoxin_on_click)
+		split_neurotoxin(A)
+	else
+		..()
+
 /mob/living/carbon/xenomorph/humanoid/proc/split_neurotoxin(atom/target)
 	if(neurotoxin_next_shot > world.time)
 		to_chat(src, "<span class='warning'>You are not ready.</span>")
