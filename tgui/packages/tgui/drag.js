@@ -44,8 +44,10 @@ export const getWindowSize = () => [
   window.innerHeight * pixelRatio,
 ];
 
-export const setWindowPosition = (vec) => {
-  windowPosition = vec;
+export const setWindowPosition = (vec, saveState = true) => {
+  if (saveState) {
+    windowPosition = vec;
+  }
   const byondPos = vecAdd(vec, screenOffset);
   return Byond.winset(Byond.windowId, {
     pos: byondPos[0] + ',' + byondPos[1],
@@ -148,7 +150,7 @@ export const recallWindowGeometry = async (options = {}) => {
     if (size && options.locked) {
       pos = constraintPosition(pos, size)[1];
     }
-    setWindowPosition(pos);
+    setWindowPosition(pos, options.fancy);
   }
   // Set window position at the center of the screen.
   else if (size) {
@@ -157,7 +159,7 @@ export const recallWindowGeometry = async (options = {}) => {
       vecScale(size, -0.5),
       vecScale(screenOffset, -1.0)
     );
-    setWindowPosition(pos);
+    setWindowPosition(pos, options.fancy);
   }
 };
 
