@@ -199,16 +199,7 @@ var/global/list/alldepartments = list("Central Command")
 	return null
 
 /obj/item/weapon/paper/get_fax_copy()
-	var/obj/item/weapon/paper/copy = new(loc)
-	copy.info = info
-	copy.name = name
-	copy.stamp_text = stamp_text
-	copy.stamped = stamped
-	copy.overlays = overlays
-	copy.underlays = underlays
-	copy.fields = fields
-	copy.updateinfolinks()
-	return copy
+	return create_self_copy()
 
 /obj/item/weapon/photo/get_fax_copy()
 	var/obj/item/weapon/photo/copy = new()
