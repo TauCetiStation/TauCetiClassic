@@ -84,13 +84,13 @@
 
 	// copy of owner prefs for cases of dismembering
 	var/owner_gender
-	var/r_skin
-	var/g_skin
-	var/b_skin
-	var/s_tone
-	var/r_belly // second species color, we should rename it from the "belly"
-	var/g_belly
-	var/b_belly
+	var/r_skin = /datum/preferences::r_skin
+	var/g_skin = /datum/preferences::g_skin
+	var/b_skin = /datum/preferences::b_skin
+	var/s_tone = /datum/preferences::s_tone
+	var/r_belly = /datum/preferences::r_belly // second species color, we should rename it from the "belly"
+	var/g_belly = /datum/preferences::g_belly
+	var/b_belly = /datum/preferences::b_belly
 
 	var/is_slime
 	var/is_zombie
@@ -363,7 +363,7 @@
 // update how the organ looks for when it separated
 // no point to call it when organ is inside (attached to) the body
 /obj/item/organ/external/proc/apply_appearance()
-	appearance = generate_appearances()
+	overlays = generate_appearances()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
 	if(!locate(/obj/structure/table) in loc)

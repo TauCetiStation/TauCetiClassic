@@ -479,6 +479,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			h_style = /datum/sprite_accessory/hair/ipc_screen_alert::name
 
 	if(current_version < 54)
+		// cap dark colors for old preferences, should be part of pref sanitize but better to wait for datumized preferences
+		var/new_hex = color_luminance_min(rgb(r_skin, g_skin, b_skin), 10)
+		r_skin = HEX_VAL_RED(new_hex)
+		g_skin = HEX_VAL_GREEN(new_hex)
+		b_skin = HEX_VAL_BLUE(new_hex)
+
+		new_hex = color_luminance_min(rgb(r_belly, g_belly, b_belly), 10)
+		r_belly = HEX_VAL_RED(new_hex)
+		g_belly = HEX_VAL_GREEN(new_hex)
+		b_belly = HEX_VAL_BLUE(new_hex)
+
+		// converts old skin tone to approximate datum
 		switch(clamp(35 - s_tone, 1, 220))
 			if(1 to 14)
 				s_tone = /datum/skin_tone/albino::name

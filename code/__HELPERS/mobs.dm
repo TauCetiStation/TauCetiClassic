@@ -139,9 +139,9 @@
 	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
 	switch(col)
 		if("black")
-			red = 0
-			green = 0
-			blue = 0
+			red = 50
+			green = 50
+			blue = 50
 		if("grey")
 			red = rand (100, 200)
 			green = red
