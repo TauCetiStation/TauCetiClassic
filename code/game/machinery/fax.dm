@@ -225,7 +225,7 @@ var/global/list/alldepartments = list("Central Command")
 		else if(istype(page, /obj/item/weapon/photo))
 			var/obj/item/weapon/photo/photo_page = page
 			var/obj/item/weapon/photo/copied_photo = photo_page.get_fax_copy()
-			copied_photo.loc = copy
+			copied_photo.forceMove(copy)
 			copy.pages.Add(copied_photo)
 	copy.update_icon()
 	return copy
