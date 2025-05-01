@@ -360,6 +360,7 @@
 	setSpirit(spirit + amount)
 
 // Modifying the prob according to the character's mood.
+// With force above 0 (default) should be used for success prob
 /mob/proc/mood_prob(value, force = MOOD_PROB_MULTIPLIER) // value - normal prob chance.
 	if(value >= 100) // i think if the chance is 100% or more, it should't be modified. for example, there should't be a chance to fail a surgical operation on the operating table.
 		return prob(value)
