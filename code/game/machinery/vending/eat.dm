@@ -5,40 +5,40 @@
 	icon_deny = "boozeomat-deny"
 	light_color = "#77beda"
 	products = list(
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 6,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/ale = 6,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 4,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 4,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 4,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/gin = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/whiskey = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/tequilla = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/rum = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/wine = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/cognac = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/kahlua = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/beer = 6,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/ale = 6,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/orangejuice = 4,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/tomatojuice = 4,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/limejuice = 4,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/cream = 4,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 8,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 8,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 8,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15,
 		/obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 2,
 		/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 2,
-		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,
+		/obj/item/weapon/reagent_containers/glass/drinkingglass = 30,
 		/obj/item/weapon/reagent_containers/food/drinks/ice = 9,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 2,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 2,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 2,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 5,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/melonliquor = 2,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/bluecuracao = 2,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/absinthe = 2,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/grenadine = 5,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/champagne = 5,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/drinks/tea = 10,
 	)
 	syndie = list (
-		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beepskysmash = 1,
+		/obj/item/weapon/reagent_containers/glass/drinkingglass/beepskysmash = 1,
 	)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
@@ -256,13 +256,13 @@
 	icon_state = "sovietsoda"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(
-		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda = 30,
+		/obj/item/weapon/reagent_containers/glass/drinkingglass/soda = 30,
 	)
 	contraband = list(
-		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola = 20,
+		/obj/item/weapon/reagent_containers/glass/drinkingglass/cola = 20,
 	)
 	syndie = list(
-		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass = 10,
+		/obj/item/weapon/reagent_containers/glass/drinkingglass/kvass = 10,
 	)
 	private = TRUE
 

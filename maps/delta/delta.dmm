@@ -26586,7 +26586,7 @@
 "cNz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cNE" = (
@@ -31126,7 +31126,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -39440,7 +39440,7 @@
 /area/station/bridge/hop_office)
 "fZD" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -64853,20 +64853,20 @@
 /area/station/security/checkpoint/escape)
 "lTn" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	pixel_x = -6
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	pixel_x = -6
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
@@ -70583,7 +70583,7 @@
 /area/station/engineering/atmos/atmos_office)
 "noh" = (
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "noq" = (
@@ -84845,7 +84845,7 @@
 "qOn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "qOq" = (
@@ -111684,7 +111684,7 @@
 /area/station/civilian/gym)
 "xAA" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6

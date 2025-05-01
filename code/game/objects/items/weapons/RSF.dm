@@ -98,7 +98,7 @@ RSF
 		if (istype(target, /obj/structure/table) && matter >= 1)
 			to_chat(user, "Dispensing Drinking Glass...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
-			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( target.loc )
+			new /obj/item/weapon/reagent_containers/glass/drinkingglass( target.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 50
@@ -112,7 +112,7 @@ RSF
 		if (isfloorturf(target) && matter >= 1)
 			to_chat(user, "Dispensing Drinking Glass...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
-			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( target )
+			new /obj/item/weapon/reagent_containers/glass/drinkingglass( target )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 50

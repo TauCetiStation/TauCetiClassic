@@ -11,11 +11,16 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50)
 	volume = 50
+	var/gulp_size = 5
+	max_integrity = 1 //glass is very fragile
+	var/fragile = FALSE // cant be destroyed by throw
 	flags = OPENCONTAINER
 	item_action_types = list(/datum/action/item_action/hands_free/switch_lid)
 	var/label_text = ""
-	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
-	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
+	var/pickup_empty_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
+	var/pickup_full_sound = 'sound/items/glass_containers/bottle_take-liquid.ogg'
+	var/dropped_empty_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
+	var/dropped_full_sound = 'sound/items/glass_containers/bottle_put-liquid.ogg'
 
 	//var/list/
 	can_be_placed_into = list(
@@ -49,9 +54,34 @@
 /datum/action/item_action/hands_free/switch_lid
 	name = "Switch Lid"
 
+/obj/item/weapon/reagent_containers/glass/on_reagent_change()
+	..()
+	if (gulp_size < 5)
+		gulp_size = 5
+	else
+		gulp_size = max(round(reagents.total_volume / 5), 5)
+
 /obj/item/weapon/reagent_containers/glass/atom_init()
 	. = ..()
 	base_name = name
+	if(is_open_container())
+		verbs += /obj/item/weapon/reagent_containers/glass/proc/gulp_whole
+
+/obj/item/weapon/reagent_containers/glass/pickup(mob/living/user)
+	. = ..()
+	animate(src, transform = null, time = 0) //Restore bottle to its original position
+	if(reagents.total_volume > 0)
+		playsound(user, pickup_full_sound, VOL_EFFECTS_MASTER)
+	else
+		playsound(user, pickup_empty_sound, VOL_EFFECTS_MASTER)
+
+/obj/item/weapon/reagent_containers/glass/dropped(mob/user)
+	. = ..()
+	if(isturf(loc) && (user.loc != loc))
+		if(reagents.total_volume > 0)
+			playsound(user, dropped_empty_sound, VOL_EFFECTS_MASTER)
+		else
+			playsound(user, dropped_full_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
@@ -70,7 +100,7 @@
 	update_item_actions()
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
-
+	var/fillevel = gulp_size
 	if (!is_open_container() || !proximity)
 		return
 
@@ -78,10 +108,56 @@
 		if(istype(target, type))
 			return
 
-	if(ismob(target) && target.reagents && reagents.total_volume)
-		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
-
+	if(ismob(target))
+		if(!reagents.total_volume)
+			to_chat(user, "<span class = 'rose'>В [CASE(src, PREPOSITIONAL_CASE)] ничего нет.</span>")
+			return
 		var/mob/living/M = target
+		if(!CanEat(user, M, src, "drink"))
+			return
+
+		if(M == user)
+			if(user.a_intent == INTENT_HARM)
+				reagents.standard_splash(target, user=user)
+				M.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
+				return
+			else if(user.a_intent != INTENT_HELP)
+				gulp_whole()
+				return
+			if(isliving(M))
+				var/mob/living/L = M
+				L.taste_reagents(reagents)
+			to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
+			if(reagents.total_volume)
+				reagents.trans_to_ingest(M, gulp_size)
+			playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+			update_icon()
+			return TRUE
+		else if(user.a_intent != INTENT_HARM)
+			M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+							"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
+			if(!do_mob(user, M))
+				return
+			M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+							"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
+
+			M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+
+			if(reagents.total_volume)
+				reagents.trans_to_ingest(M, gulp_size)
+
+			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+				var/mob/living/silicon/robot/bro = user
+				bro.cell.use(30)
+				var/refill = reagents.get_master_reagent_id()
+				addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, add_reagent), refill, fillevel), 600)
+
+			playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+			update_icon()
+			return TRUE
+
+		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(M, ACCUSATIVE_CASE)].</span>")
+
 		var/list/injected = list()
 		for(var/datum/reagent/R in src.reagents.reagent_list)
 			injected += R.name
@@ -108,9 +184,22 @@
 			to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))] [(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
 			return
 
+		var/datum/reagent/refill
+		var/datum/reagent/refillName
+		if(isrobot(user))
+			refill = reagents.get_master_reagent_id()
+			refillName = reagents.get_master_reagent_name()
+
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(target, ACCUSATIVE_CASE)].</span>")
 		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
+
+		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+			var/mob/living/silicon/robot/bro = user
+			var/chargeAmount = max(30,4*trans)
+			bro.cell.use(chargeAmount)
+			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
+			addtimer(CALLBACK(src, PROC_REF(refill_by_borg), user, refill, trans), 300)
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
@@ -172,10 +261,69 @@
 		return ..()
 
 /obj/item/weapon/reagent_containers/glass/proc/update_name_label()
-	if(src.label_text == "")
-		src.name = src.base_name
+	if(label_text == "")
+		name = base_name
 	else
-		src.name = "[src.base_name] ([src.label_text])"
+		name = "[base_name] (label_text])"
+
+/obj/item/weapon/reagent_containers/glass/bullet_act(obj/item/projectile/Proj, def_zone)
+	if(Proj.checkpass(PASSGLASS))
+		return PROJECTILE_FORCE_MISS
+
+	return ..()
+
+/obj/item/weapon/reagent_containers/glass/after_throw(datum/callback/callback)
+	..()
+	if(fragile)
+		deconstruct()
+
+/obj/item/weapon/reagent_containers/glass/deconstruct(damage_flag)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	var/obj/item/weapon/shard/S = new(loc)
+	if(prob(75))
+		S.throw_at(get_step(src, pick(alldirs)), rand(1, 6), 2)
+	S.pixel_x = rand(-5, 5)
+	S.pixel_y = rand(-5, 5)
+	reagents.standard_splash(loc)
+	..()
+
+/obj/item/weapon/reagent_containers/glass/proc/gulp_whole()
+	set category = "Object"
+	set name = "Gulp Down"
+	set src in view(1)
+
+	if(usr.incapacitated())
+		return
+
+	if(!is_open_container())
+		to_chat(usr, "<span class='notice'>You need to open [src]!</span>")
+		return
+
+	usr.visible_message("<span class='notice'>[usr] prepares to gulp down [src].</span>", "<span class='notice'>You prepare to gulp down [src].</span>")
+
+	if(!CanEat(usr, usr, src, eatverb="gulp"))
+		return
+
+	if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
+		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
+		reagents.standard_splash(loc, user=usr)
+		return
+
+	if(!CanEat(usr, usr, src, eatverb="gulp"))
+		return
+
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.taste_reagents(reagents)
+
+	usr.visible_message("<span class='notice'>[usr] gulped down the whole [src]!</span>", "<span class='notice'>You gulped down the whole [src]!</span>")
+	reagents.trans_to_ingest(usr, reagents.total_volume)
+	playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(15, 55))
+
+/obj/item/weapon/reagent_containers/glass/proc/refill_by_borg(user, refill, trans)
+	reagents.add_reagent(refill, trans)
+	to_chat(user, "Cyborg [src] refilled.")
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
@@ -190,6 +338,8 @@
 	volume = 60
 	var/list/filling_states = list()
 	possible_transfer_amounts = list(5,10,15,25,30,60)
+	resistance_flags = CAN_BE_HIT
+	fragile = TRUE
 
 /obj/item/weapon/reagent_containers/glass/beaker/atom_init()
 	. = ..()
@@ -265,6 +415,8 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
 	flags = OPENCONTAINER
+	resistance_flags = FULL_INDESTRUCTIBLE
+	fragile = FALSE
 
 
 /obj/item/weapon/reagent_containers/glass/beaker/vial
@@ -310,6 +462,8 @@
 	gender = MALE
 	icon_state = "teapot"
 	item_state = "teapot"
+	resistance_flags = FULL_INDESTRUCTIBLE
+	fragile = FALSE
 
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
@@ -333,6 +487,7 @@
 	reagents.add_reagent("slimejelly", 50)
 	update_icon()
 
+
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"
 	cases = list("ведро", "ведра", "ведру", "ведро", "ведром", "ведре")
@@ -352,8 +507,10 @@
 	slot_flags = SLOT_FLAGS_HEAD
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 	force = 5
-	pickup_sound = null
-	dropped_sound = null
+	pickup_empty_sound = null
+	pickup_full_sound = null
+	dropped_empty_sound = null
+	dropped_full_sound = null
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/item/I, mob/user, params)
 	if(isprox(I))

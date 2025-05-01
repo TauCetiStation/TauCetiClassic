@@ -195,7 +195,7 @@
 /area/awaymission/beach)
 "I" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},

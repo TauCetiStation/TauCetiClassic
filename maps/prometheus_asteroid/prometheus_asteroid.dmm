@@ -1019,16 +1019,16 @@
 /area/asteroid/mine/abandoned)
 "cn" = (
 /obj/structure/closet/cabinet,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
@@ -1267,7 +1267,7 @@
 "da" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/breadslice,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -1875,7 +1875,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "gr" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2025,8 +2025,8 @@
 "hi" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -3108,8 +3108,8 @@
 /area/asteroid/research_outpost/power)
 "lh" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22
@@ -4094,7 +4094,7 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "pl" = (
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
@@ -5963,7 +5963,7 @@
 /area/asteroid/mine/eva)
 "ym" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	volume = 35
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6798,10 +6798,10 @@
 /area/asteroid/mine/living_quarters)
 "BQ" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale{
 	volume = 65
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 8
@@ -7542,7 +7542,7 @@
 /area/asteroid/research_outpost/iso1)
 "FL" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka{
 	volume = 45
 	},
 /obj/machinery/light_construct/small{
@@ -7580,7 +7580,7 @@
 /area/asteroid/research_outpost/harvesting)
 "Gb" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
@@ -7926,10 +7926,10 @@
 /area/asteroid/mine/living_quarters)
 "HK" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	volume = 0
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
@@ -9696,7 +9696,7 @@
 /area/space)
 "Qx" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
 /obj/machinery/camera{
 	c_tag = "Mining Outpost North";
 	network = list("SS13","MINE")
@@ -10132,7 +10132,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 10
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
@@ -11326,7 +11326,7 @@
 	},
 /area/asteroid/research_outpost/med)
 "Yg" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	volume = 0
 	},
 /obj/effect/decal/cleanable/blood/oil,

@@ -8802,7 +8802,7 @@
 /area/asteroid/mine/west_outpost)
 "sR" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -10098,8 +10098,8 @@
 /area/asteroid/mine/explored)
 "vS" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /obj/machinery/light/smart{
 	dir = 8
 	},

@@ -35,7 +35,7 @@ var/global/list/trash_loot = list(
 		/obj/item/weapon/disk/data = 1,
 		/obj/item/stack/sheet/cardboard{amount = 5} = 1,
 		/obj/item/weapon/storage/box = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 1,
+		/obj/item/weapon/reagent_containers/glass/drinkingglass = 1,
 		/obj/item/weapon/coin/silver = 1,
 		/obj/effect/decal/cleanable/ash = 1,
 		/obj/item/weapon/cigbutt = 1,
@@ -116,7 +116,7 @@ var/global/list/common_loot = list(
 		) = 1,
 
 	list(
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 1,
+		/obj/item/weapon/reagent_containers/glass/drink_bottle/beer = 1,
 		/obj/item/weapon/reagent_containers/food/drinks/coffee = 1,
 		) = 1,
 
@@ -181,7 +181,7 @@ var/global/list/uncommon_loot = list(
 			/obj/item/weapon/reagent_containers/syringe/inaprovaline = 1,
 			) = 1,
 		list(
-			/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 1,
+			/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka = 1,
 			/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 1,
 			/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 1,
 			) = 1,

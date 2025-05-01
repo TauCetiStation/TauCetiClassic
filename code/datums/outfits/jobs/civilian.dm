@@ -113,7 +113,7 @@
 	belt = /obj/item/device/pda/mime
 
 	l_pocket_back = /obj/item/toy/crayon/mime
-	l_hand_back = /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
+	l_hand_back = /obj/item/weapon/reagent_containers/glass/drink_bottle/bottleofnothing
 
 	back_style = BACKPACK_STYLE_MIME
 

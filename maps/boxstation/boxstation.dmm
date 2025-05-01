@@ -22735,8 +22735,8 @@
 	pixel_x = 15;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -26361,7 +26361,7 @@
 /obj/item/weapon/nullrod{
 	pixel_x = -8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/item/newtons_pendulum{
 	pixel_x = 6;
 	pixel_y = -8
@@ -28115,7 +28115,7 @@
 /area/station/maintenance/chapel)
 "aXI" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -42874,7 +42874,7 @@
 "bxS" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "bxT" = (
@@ -68129,7 +68129,7 @@
 /area/station/engineering/engine)
 "cHG" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth,
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
 "cHJ" = (
@@ -68358,15 +68358,15 @@
 /area/station/maintenance/medbay)
 "cIB" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
 "cIC" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
@@ -69346,7 +69346,7 @@
 /area/station/maintenance/engineering)
 "cMj" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
@@ -69421,9 +69421,9 @@
 /area/station/engineering/engine)
 "cMu" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/rum,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/pwine,
 /obj/structure/grille{
 	destroyed = 1
 	},
@@ -81334,9 +81334,9 @@
 /area/station/medical/cmo)
 "prb" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
 	volume = 25
 	},
 /turf/simulated/floor/plating,
@@ -81824,7 +81824,7 @@
 	},
 /area/station/cargo/office)
 "pVE" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /obj/effect/decal/cleanable/vomit{
 	icon_state = "vomit_4"
 	},

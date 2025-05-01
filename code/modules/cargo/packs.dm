@@ -708,16 +708,16 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/storage/box/drinkingglasses,
 					/obj/item/weapon/reagent_containers/food/drinks/shaker,
 					/obj/item/weapon/reagent_containers/food/drinks/flask/barflask,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/patron,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/goldschlager,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/lipstick/random,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/beer)
 	additional_costs = 500
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Party equipment"
@@ -1918,7 +1918,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/pill_bottle/zoom,
 					/obj/item/weapon/storage/pill_bottle/happy,
 					/obj/item/weapon/poster/contraband,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine)
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/pwine)
 	name = "Contraband crate"
 	// Selling back contraband is quite hard. An illiquid asset.
 	overprice = 1.5

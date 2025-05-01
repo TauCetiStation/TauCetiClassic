@@ -3862,7 +3862,7 @@
 	pixel_y = -28
 	},
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
 	pixel_x = 6;
 	pixel_y = 18
 	},
@@ -3989,7 +3989,7 @@
 /area/space)
 "ahr" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -10021,16 +10021,16 @@
 "aFv" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass{
 	pixel_x = -8;
 	pixel_y = 12
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass{
 	pixel_x = -10;
 	pixel_y = 9
 	},
 /obj/item/clothing/head/ushanka/black_white,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka{
 	pixel_x = 7;
 	pixel_y = 10
 	},
@@ -15557,7 +15557,7 @@
 /area/station/maintenance/auxsolarport)
 "fSG" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/glass/drinkingglass,
 /obj/item/weapon/nullrod{
 	pixel_x = -8;
 	pixel_y = -7
@@ -18642,7 +18642,7 @@
 	pixel_x = -4;
 	pixel_y = 13
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka{
 	pixel_x = 5;
 	pixel_y = 4;
 	volume = 15
@@ -20815,7 +20815,7 @@
 /area/station/maintenance/dormitory)
 "kKO" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -23979,7 +23979,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -28486,7 +28486,7 @@
 	pixel_x = -8;
 	pixel_y = -1
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/tomatojuice{
 	pixel_x = 9;
 	pixel_y = 5
 	},
@@ -34101,7 +34101,7 @@
 	pixel_x = -13;
 	pixel_y = 12
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22

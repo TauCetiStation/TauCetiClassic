@@ -285,7 +285,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka{
 	pixel_x = 5;
 	pixel_y = 12
 	},
@@ -293,7 +293,7 @@
 	dir = 8
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/kahlua{
 	pixel_x = -6;
 	pixel_y = 3
 	},
@@ -672,7 +672,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -30
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass{
 	pixel_x = -6;
 	pixel_y = 13
 	},

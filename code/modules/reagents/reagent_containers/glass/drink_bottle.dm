@@ -6,7 +6,7 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now weaken and break when smashed on people's heads. - Giacom
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle
+/obj/item/weapon/reagent_containers/glass/drink_bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
@@ -15,18 +15,19 @@
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
 
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
+	icon = 'icons/obj/drinks.dmi'
 
 	var/molotov_state = IS_NOT_MOLOTOV
 	var/lit_time = null
 	resistance_flags = CAN_BE_HIT
 	max_integrity = 1 //glass is very fragile
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
+/obj/item/weapon/reagent_containers/glass/drink_bottle/atom_init()
 	. = ..()
 	if (!is_glass)
-		verbs -= /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
+		verbs -= /obj/item/weapon/reagent_containers/glass/drink_bottle/verb/spin_bottle
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle()
+/obj/item/weapon/reagent_containers/glass/drink_bottle/verb/spin_bottle()
 	set name = "Spin bottle"
 	set category = "Object"
 	set src in view(1)
@@ -62,29 +63,13 @@
 			sleep(sleep_not_stacking) //Not stacking
 			stop_spin_bottle = FALSE
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
-	. = ..()
-	animate(src, transform = null, time = 0) //Restore bottle to its original position
-	if(reagents.total_volume > 0)
-		playsound(user, 'sound/items/glass_containers/bottle_take-liquid.ogg', VOL_EFFECTS_MASTER)
-	else
-		playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/dropped(mob/user)
-	. = ..()
-	if(isturf(loc) && (user.loc != loc))
-		if(reagents.total_volume > 0)
-			playsound(user, 'sound/items/glass_containers/bottle_put-liquid.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/blend_icon(obj/item/weapon/broken_bottle/bottle)
+/obj/item/weapon/reagent_containers/glass/drink_bottle/proc/blend_icon(obj/item/weapon/broken_bottle/bottle)
 	var/icon/I = new('icons/obj/drinks.dmi', icon_state)
 	I.Blend(bottle.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	bottle.icon = I
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
+/obj/item/weapon/reagent_containers/glass/drink_bottle/proc/smash(mob/living/target, mob/living/user)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_item()
@@ -105,11 +90,11 @@
 
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/on_reagent_change()
+/obj/item/weapon/reagent_containers/glass/drink_bottle/on_reagent_change()
 	if(is_glass && is_transparent)
 		update_icon()
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
+/obj/item/weapon/reagent_containers/glass/drink_bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
 	cut_overlays()
 	if(molotov_state == IS_MOLOTOV)
@@ -117,10 +102,10 @@
 	if(molotov_state == IS_LIT)
 		add_overlay(image(icon, "molotov_lit"))
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/can_smash()
+/obj/item/weapon/reagent_containers/glass/drink_bottle/proc/can_smash()
 	return is_glass
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
+/obj/item/weapon/reagent_containers/glass/drink_bottle/attack(mob/living/target, mob/living/user, def_zone)
 	if(user.a_intent != INTENT_HARM || !can_smash())
 		return ..()
 
@@ -186,13 +171,13 @@
 	// We're smashing the bottle into mob's face. There's no need for an afterattack.
 	return TRUE
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/reagent_containers/glass/drink_bottle/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
 	if(target.is_open_container())
 		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
 			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/weapon/reagent_containers/glass/drink_bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
 		return
 	if(is_glass)
@@ -209,13 +194,7 @@
 				L.IgniteMob()
 		qdel(src)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
-
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/deconstruct()
+/obj/item/weapon/reagent_containers/glass/drink_bottle/deconstruct()
 	var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
 	blend_icon(BB)
 	BB.pixel_x = rand(-5, 5)
@@ -229,7 +208,7 @@
 	reagents.standard_splash(loc)
 	..()
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/reagent_containers/glass/drink_bottle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/sheet/cloth) && is_glass && molotov_state == IS_NOT_MOLOTOV)
 		var/obj/item/stack/sheet/cloth/C = I
 		C.use(1)
@@ -248,11 +227,11 @@
 
 	update_icon()
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/process()
+/obj/item/weapon/reagent_containers/glass/drink_bottle/process()
 	if(world.time >= lit_time)
 		throw_impact(loc)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/attack_self(mob/user)
+/obj/item/weapon/reagent_containers/glass/drink_bottle/attack_self(mob/user)
 	if(molotov_state == IS_MOLOTOV)
 		new /obj/item/stack/sheet/cloth(user.loc)
 		molotov_state = IS_NOT_MOLOTOV
@@ -301,116 +280,116 @@
 	S.pixel_y = rand(-5, 5)
 	..()
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/gin
+/obj/item/weapon/reagent_containers/glass/drink_bottle/gin
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
 	list_reagents = list("gin" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey
+/obj/item/weapon/reagent_containers/glass/drink_bottle/whiskey
 	name = "Uncle Git's Special Reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	list_reagents = list("whiskey" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka
 	name = "Tunguska Triple Distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
 	list_reagents = list("vodka" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
+/obj/item/weapon/reagent_containers/glass/drink_bottle/tequilla
 	name = "Caccavo Guaranteed Quality Tequilla"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequillabottle"
 	list_reagents = list("tequilla" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
+/obj/item/weapon/reagent_containers/glass/drink_bottle/bottleofnothing
 	name = "Bottle of Nothing"
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
 	list_reagents = list("nothing" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/patron
+/obj/item/weapon/reagent_containers/glass/drink_bottle/patron
 	name = "Wrapp Artiste Patron"
 	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
 	list_reagents = list("patron" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/rum
+/obj/item/weapon/reagent_containers/glass/drink_bottle/rum
 	name = "Captain Pete's Cuban Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
 	list_reagents = list("rum" = 100)
-/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne
+/obj/item/weapon/reagent_containers/glass/drink_bottle/champagne
 	name = "Duc de Paris Brut"
 	desc = "Boisson elegante. Servir froid."
 	icon_state = "chambottle"
 	list_reagents = list("champagne" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
+/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater
 	name = "Holy Flask"
 	desc = "A flask of the chaplain's water."
 	icon_state = "holyflask"
 	list_reagents = list("water" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
 	list_reagents = list("vermouth" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
+/obj/item/weapon/reagent_containers/glass/drink_bottle/kahlua
 	name = "Robert Robust's Coffee Liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
 	icon_state = "kahluabottle"
 	list_reagents = list("kahlua" = 100)
 	is_transparent = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager
+/obj/item/weapon/reagent_containers/glass/drink_bottle/goldschlager
 	name = "College Girl Goldschlager"
 	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
 	icon_state = "goldschlagerbottle"
 	list_reagents = list("goldschlager" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac
+/obj/item/weapon/reagent_containers/glass/drink_bottle/cognac
 	name = "Chateau De Baton Premium Cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
 	list_reagents = list("cognac" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine
 	name = "Doublebeard Bearded Special Wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
 	list_reagents = list("wine" = 100)
 	is_transparent = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
+/obj/item/weapon/reagent_containers/glass/drink_bottle/absinthe
 	name = "Jailbreaker Verte"
 	desc = "One sip of this and you just know you're gonna have a good time."
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor
+/obj/item/weapon/reagent_containers/glass/drink_bottle/melonliquor
 	name = "Emeraldine Melon Liquor"
 	desc = "A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light."
 	icon_state = "melonliquorbottle"
 	list_reagents = list("melonliquor" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao
+/obj/item/weapon/reagent_containers/glass/drink_bottle/bluecuracao
 	name = "Miss Blue Curacao"
 	desc = "A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic."
 	icon_state = "bluecuracaobottle"
 	list_reagents = list("bluecuracao" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
+/obj/item/weapon/reagent_containers/glass/drink_bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"
 	desc = "Sweet and tangy, a bar syrup used to add color or flavor to drinks."
 	icon_state = "grenadinebottle"
 	list_reagents = list("grenadine" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine
+/obj/item/weapon/reagent_containers/glass/drink_bottle/pwine
 	name = "Warlock's Velvet"
 	desc = "What a delightful packaging for a surely high quality wine! The vintage must be amazing!"
 	icon_state = "pwinebottle"
@@ -419,7 +398,7 @@
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice
+/obj/item/weapon/reagent_containers/glass/drink_bottle/orangejuice
 	name = "Orange Juice"
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
@@ -427,7 +406,7 @@
 	list_reagents = list("orangejuice" = 100)
 	is_glass = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/cream
+/obj/item/weapon/reagent_containers/glass/drink_bottle/cream
 	name = "Milk Cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
@@ -435,7 +414,7 @@
 	list_reagents = list("cream" = 100)
 	is_glass = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
+/obj/item/weapon/reagent_containers/glass/drink_bottle/tomatojuice
 	name = "Tomato Juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
@@ -443,7 +422,7 @@
 	list_reagents = list("tomatojuice" = 100)
 	is_glass = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
+/obj/item/weapon/reagent_containers/glass/drink_bottle/limejuice
 	name = "Lime Juice"
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
@@ -451,13 +430,13 @@
 	list_reagents = list("limejuice" = 100)
 	is_glass = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/ale
+/obj/item/weapon/reagent_containers/glass/drink_bottle/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
 	list_reagents = list("ale" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer
 	name = "Space Beer"
 	desc = "Contains only water, malt and hops."
 	icon_state = "beer"

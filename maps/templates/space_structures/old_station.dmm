@@ -7580,7 +7580,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/left)
 "St" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
 	pixel_x = 7
 	},
 /turf/simulated/floor/glass/reinforced,

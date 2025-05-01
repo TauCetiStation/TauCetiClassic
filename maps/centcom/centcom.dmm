@@ -1744,7 +1744,7 @@
 "aeB" = (
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
 /obj/structure/table,
 /obj/item/toy/plushie/space_whale{
 	name = "Plushie Oculus"
@@ -1854,7 +1854,7 @@
 "aeU" = (
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/friedbanana,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/whiskey,
 /obj/structure/table,
 /obj/machinery/light{
 	dir = 4
@@ -2038,7 +2038,7 @@
 "afz" = (
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/applepie,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -2249,7 +2249,7 @@
 "aga" = (
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
 /obj/structure/table,
 /obj/item/toy/plushie/white_cat{
 	name = "Plushie Scinia"
@@ -4826,14 +4826,14 @@
 /area/custom/syndicate_mothership)
 "alZ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass{
 	pixel_x = 3;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass{
 	pixel_x = 1
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass{
 	pixel_x = 9;
 	pixel_y = 5
 	},
@@ -12817,8 +12817,8 @@
 "aCx" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/thin/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/unsimulated/floor,
 /area/velocity)
 "aCy" = (
@@ -16215,8 +16215,8 @@
 /area/centcom/control)
 "aKZ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
 	pixel_x = -4
 	},
 /turf/unsimulated/floor/carpet/black,
@@ -17057,7 +17057,7 @@
 /area/centcom/control)
 "aMU" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -20220,13 +20220,13 @@
 /area/centcom/tdome)
 "aXz" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aXA" = (
@@ -20945,7 +20945,7 @@
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass/kvass{
 	pixel_x = 6;
 	pixel_y = 3
 	},
@@ -23022,9 +23022,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human{
 	name = "Josh Body Meat"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/glass/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/glass/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/glass/drinkingglass/blood,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "chb" = (
@@ -23759,9 +23759,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human{
 	name = "Victor Body Meat"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/glass/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/glass/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/glass/drinkingglass/blood,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dkb" = (
@@ -29192,9 +29192,9 @@
 /area/centcom/tdome/tdomeobserve)
 "mwb" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /obj/item/weapon/lighter/zippo,
 /obj/item/weapon/storage/fancy/cigarettes,
 /turf/unsimulated/floor{
@@ -29907,7 +29907,7 @@
 	},
 /obj/machinery/vending/boozeomat{
 	name = "Magic Booze-O-Mat";
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/ale=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne=10);
+	products = list(/obj/item/weapon/reagent_containers/glass/drink_bottle/gin=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/whiskey=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/tequilla=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/rum=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/wine=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/cognac=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/kahlua=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/beer=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/ale=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/orangejuice=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/limejuice=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/glass/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/glass/drink_bottle/melonliquor=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/absinthe=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/grenadine=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/champagne=10);
 	req_access = list()
 	},
 /turf/unsimulated/floor{
@@ -31593,7 +31593,7 @@
 "uEk" = (
 /obj/machinery/vending/boozeomat{
 	name = "Heaven Booze-O-Mat";
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/ale=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne=10);
+	products = list(/obj/item/weapon/reagent_containers/glass/drink_bottle/gin=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/whiskey=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/tequilla=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/rum=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/wine=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/cognac=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/kahlua=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/beer=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/ale=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/orangejuice=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/limejuice=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/glass/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/glass/drink_bottle/melonliquor=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/absinthe=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/grenadine=10,/obj/item/weapon/reagent_containers/glass/drink_bottle/champagne=10);
 	req_access = list();
 	use_power = 0
 	},

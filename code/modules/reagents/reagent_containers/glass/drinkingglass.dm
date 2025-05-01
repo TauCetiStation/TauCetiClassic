@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass
+/obj/item/weapon/reagent_containers/glass/drinkingglass
 	name = "glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
@@ -6,41 +6,15 @@
 	m_amt = 0
 	g_amt = 250
 	volume = 25
-	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
-	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
+	icon = 'icons/obj/drinks.dmi'
 	resistance_flags = CAN_BE_HIT
 	max_integrity = 1 //glass is very fragile
+	fragile = TRUE
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
-	if(target.is_open_container())
-		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
-			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
-
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
-	..()
-	deconstruct()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/deconstruct(damage_flag)
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/shard/S = new(loc)
-	if(prob(75))
-		S.throw_at(get_step(src, pick(alldirs)), rand(1, 6), 2)
-	S.pixel_x = rand(-5, 5)
-	S.pixel_y = rand(-5, 5)
-	reagents.standard_splash(loc)
-	..()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
+/obj/item/weapon/reagent_containers/glass/drinkingglass/dropped(mob/user)
 	. = ..()
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
+/obj/item/weapon/reagent_containers/glass/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
 		icon_state = "glass_brown"
 		name = "Glass of Hooch"
@@ -593,17 +567,7 @@
 		desc = "Your standard drinking glass"
 		return
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/target, mob/user, def_zone)
-	if(user.a_intent == INTENT_HARM)
-		if(ismob(target) && target.reagents && reagents.total_volume)
-			to_chat(user, "<span class='warning'>You splash your drink in the [target] face!</span>")
-			reagents.standard_splash(target, user=user)
-			user.visible_message("<span class='warning'>[target] has been splashed with [src] in the face by [user]!</span>")
-			return
-
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/O, mob/user)
+/obj/item/weapon/reagent_containers/glass/drinkingglass/attackby(obj/O, mob/user)
     if(istype(O, /obj/item/weapon/pen))
         var/newname = sanitize_safe(input(usr, "Как назвать ваш коктейль?"))
         if(newname)
@@ -612,18 +576,18 @@
     return ..()
 
 // for /obj/machinery/vending/sovietsoda
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
+/obj/item/weapon/reagent_containers/glass/drinkingglass/soda
 	list_reagents = list("sodawater" = 25)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
+/obj/item/weapon/reagent_containers/glass/drinkingglass/cola
 	list_reagents = list("cola" = 25)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass
+/obj/item/weapon/reagent_containers/glass/drinkingglass/kvass
 	list_reagents = list("kvass" = 25)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood
+/obj/item/weapon/reagent_containers/glass/drinkingglass/blood
 	list_reagents = list("blood" = 25)
 
 // for emaged /obj/machinery/vending/boozeomat
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beepskysmash
+/obj/item/weapon/reagent_containers/glass/drinkingglass/beepskysmash
 	list_reagents = list("beepskysmash" = 25)

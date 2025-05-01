@@ -196,7 +196,7 @@
 			/obj/item/kinetic_upgrade/range,
 			/obj/item/kinetic_expander,
 			/obj/item/weapon/reagent_containers/food/snacks/hotchili,
-			/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+			/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
 			/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 			/obj/item/clothing/mask/facehugger_toy,
 			/obj/item/weapon/card/mining_point_card,

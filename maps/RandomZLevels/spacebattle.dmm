@@ -7610,7 +7610,7 @@
 /area/awaymission/spacebattle/secret)
 "tu" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass{
+/obj/item/weapon/reagent_containers/glass/drinkingglass/kvass{
 	pixel_x = 6;
 	pixel_y = 3
 	},

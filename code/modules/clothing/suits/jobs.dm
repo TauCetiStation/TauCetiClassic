@@ -47,7 +47,7 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 	allowed = list (/obj/item/weapon/storage/bible,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
 					/obj/item/device/pda,
 					/obj/item/weapon/lighter,
 					/obj/item/weapon/storage/fancy/crayons,
@@ -64,7 +64,7 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 	allowed = list (/obj/item/weapon/storage/bible,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
 					/obj/item/device/pda,
 					/obj/item/weapon/lighter,
 					/obj/item/weapon/storage/fancy/crayons,

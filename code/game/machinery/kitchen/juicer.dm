@@ -38,7 +38,7 @@
 	if(default_unfasten_wrench(user, O))
 		return
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
-		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
+		istype(O,/obj/item/weapon/reagent_containers/glass/drinkingglass))
 		if (beaker)
 			return 1
 		else

@@ -532,7 +532,7 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "by" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "bz" = (
@@ -663,7 +663,7 @@
 /turf/simulated/wall,
 /area/space_structures/derelict/singularity_engine)
 "bY" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "bZ" = (
@@ -865,7 +865,7 @@
 /area/space_structures/derelict/bridge)
 "cL" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
