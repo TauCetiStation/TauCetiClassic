@@ -119,6 +119,8 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
+/// Trait applied by element
+#define ELEMENT_TRAIT(source) "element_trait_[source]"
 
 //mob traits
 /// Forces user to be unmovable
@@ -147,13 +149,13 @@
 #define TRAIT_NATURECHILD         "child_of_nature"
 #define TRAIT_MUTE                "mute"
 #define TRAIT_STRONGMIND          "strong_mind"
-#define TRAIT_AV                  "artifical_ventilation"
-#define TRAIT_CPB                 "cardiopulmonary_bypass"
+#define TRAIT_EXTERNAL_VENTILATION "external_ventilation"
+#define TRAIT_EXTERNAL_COOLING    "external_cooling"
+#define TRAIT_EXTERNAL_HEART      "external_heart"
 #define TRAIT_LIGHT_STEP          "light_step"
 #define TRAIT_FREERUNNING         "freerunning"
 #define TRAIT_AGEUSIA             "ageusia"
 #define TRAIT_DALTONISM           "daltonism"
-#define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_FRIENDLY            "friendly"
@@ -191,12 +193,20 @@
 #define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
 #define TRAIT_FAST_WALKER         "fast_walker"
+#define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
+#define TRAIT_MIMING              "miming"
+#define TRAIT_WILLPOWER_IMPLANT   "willpower_implant"
+#define TRAIT_CAN_LEAP            "can_leap"
+#define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
+#define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
+#define TRAIT_DYSLALIA            "dyslalia"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.
  */
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
+#define TRAIT_COOKING_AREA "cooking_area"
 
 /*
  * Used for items that have different behaviour when they are two-hand wielded
@@ -205,6 +215,9 @@
 
 // item trait
 #define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
+
+/// Visible on t-ray scanners if the atom is under tile
+#define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
@@ -226,6 +239,9 @@
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
+// Trait from being under the floor in some manner
+#define TRAIT_UNDERFLOOR "underfloor"
+#define TRAIT_CONDUCT "conduct"
 
 // trait sources
 #define EYE_DAMAGE_TRAIT "eye_damage"

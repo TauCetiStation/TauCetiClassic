@@ -34,7 +34,7 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/atom/movable/screen/zone_sel/zone_sel = null
-	var/atom/movable/screen/leap/leap_icon = null
+	var/atom/movable/screen/leap_icon = null
 	var/atom/movable/screen/neurotoxin_icon = null
 	var/atom/movable/screen/healthdoll = null
 	var/atom/movable/screen/nutrition_icon = null
@@ -50,6 +50,7 @@
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
 	var/last_examined = ""
+	var/last_z
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -146,18 +147,6 @@
 	var/voice_name = "unidentifiable voice"
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
-
-	// Determines how mood affects actionspeed.
-	// If ever used by anything else but mood, please
-	// port /datum/actionspeed_modifier system from /tg.
-	// The value is multiplicative.
-	var/mood_multiplicative_actionspeed_modifier = 0.0
-	// Determines how mood affects movespeed.
-	// used only in humans, because mood only is.
-	// If ever used by anything else but mood, please
-	// port /datum/movespeed_modifier system from /tg.
-	// The value is additive.
-	var/mood_additive_speed_modifier = 0.0
 
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null

@@ -113,8 +113,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"
 #define NO_SLIP            "no_slip"
-
 #define NO_MED_HEALTH_SCAN "no_med_health_scan"
+#define NO_WILLPOWER       "no_willpower"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -146,7 +146,14 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define LAVA_PROOF (1<<0)
 /// 100% immune to fire damage (but not necessarily to lava or heat)
 #define FIRE_PROOF (1<<1)
+/* todo, not implemented yet, part of the fire refactoring
+
+// atom is flammable and can have the burning component
 #define FLAMMABLE (1<<2)
+/// currently burning
+#define ON_FIRE (1<<3)
+
+*/
 /// acid can't even appear on it, let alone melt it.
 #define UNACIDABLE (1<<4)
 /// acid stuck on it doesn't melt it.
@@ -155,8 +162,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE (1<<6)
 /// can't be deconstructed with instruments
 #define DECONSTRUCT_IMMUNE (1<<7)
-/// can be hit with melee (mb change to CANT_BE_HIT)
-#define CAN_BE_HIT (1<<8)
+/// can be hit with melee
+#define CAN_BE_HIT (1<<8) // todo: invert to CANT_BE_HIT or move from resistance_flags like on tg, or maybe rename resistance_flags to something like integrity_flags
 
 #define FULL_INDESTRUCTIBLE INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | DECONSTRUCT_IMMUNE
 
@@ -191,7 +198,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define JOB_FLAG_NON_HUMAN 128
 #define JOB_FLAG_HEAD_OF_STAFF 256
 #define JOB_FLAG_BLUESHIELD_PROTEC 512
-#define JOB_FLAG_IMPOSTER_PRIORITIZE 1024
+#define JOB_FLAG_CENTCOMREPRESENTATIVE 1024
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
@@ -211,3 +218,5 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define ALCOHOL_TOLERANCE_EPILEPSY (1<<0)
 #define WATER_CHOKE_EPILEPSY (1<<1)
+
+#define STANDARD_PDA_RINGTONE (1<<0)

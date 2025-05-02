@@ -10,6 +10,9 @@
 	throwforce = 15
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	qualities = list(
+		QUALITY_CUTTING = 1
+	)
 
 /obj/item/weapon/spear/atom_init()
 	. = ..()
@@ -183,6 +186,7 @@
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
 		H.log_combat(user, "attacked with [name]")
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, H)
 
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
@@ -204,6 +208,7 @@
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
 
 		H.log_combat(user, "stunned with [name]")
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, H)
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	//	if(charges < 1)

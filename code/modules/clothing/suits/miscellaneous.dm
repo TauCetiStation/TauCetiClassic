@@ -403,7 +403,7 @@
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
@@ -523,6 +523,24 @@
 	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
+
+/obj/item/clothing/suit/pluvia_morality
+	name = "Path of Morality"
+	icon_state = "pluvia_morality"
+	item_state = "pluvia_morality"
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/suit/pluvia_trick
+	name = "Path of Trick"
+	icon_state = "pluvia_trick"
+	item_state = "pluvia_trick"
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/suit/pluvia_balance
+	name = "Path of Balance"
+	icon_state = "pluvia_balance"
+	item_state = "pluvia_balance"
+	flags = ONESIZEFITSALL
 
 //Mafia
 /obj/item/clothing/suit/browntrenchcoat

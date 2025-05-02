@@ -3,6 +3,8 @@
 //////////////////////////
 
 /proc/make_datum_references_lists()
+	global.default_plane_masters = init_paths(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate
+
 	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new path()
@@ -277,6 +279,10 @@
 	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
 		smartlight_presets[initial(type.name)] = type
 
+	global.lighting_effects = list()
+	for(var/datum/level_lighting_effect/type as anything in subtypesof(/datum/level_lighting_effect))
+		lighting_effects[initial(type.name)] = type
+
 	global.virus_types_by_pool = list()
 	for(var/e in subtypesof(/datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
@@ -286,6 +292,41 @@
 			continue
 		for(var/pool in L)
 			LAZYADD(virus_types_by_pool[pool], e)
+
+	global.ringtones_by_names = list()
+	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
+		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
+
+	init_washing_items_list()
+
+	global.body_wing_accessory_by_name = list()
+	for(var/A as anything in subtypesof(/datum/sprite_accessory/wing))
+		var/datum/sprite_accessory/wing/B = new A
+		global.body_wing_accessory_by_name[B.name] = B
+
+/proc/init_washing_items_list()
+	var/list/path_list = list(/obj/item/clothing/mask,
+							/obj/item/clothing/head,
+							/obj/item/clothing/gloves,
+							/obj/item/clothing/shoes,
+							/obj/item/clothing/suit,
+							/obj/item/weapon/bedsheet,
+							/obj/item/clothing/under)
+
+	global.washing_items_list = typecacheof(path_list, ignore_root_path = TRUE)
+
+	global.washing_items_list[/obj/item/stack/sheet/hairlesshide] = TRUE
+
+	global.washing_items_list -= /obj/item/clothing/suit/space
+	global.washing_items_list -= /obj/item/clothing/suit/syndicatefake
+	global.washing_items_list -= /obj/item/clothing/suit/cyborg_suit
+	global.washing_items_list -= /obj/item/clothing/suit/bomb_suit
+	global.washing_items_list -= /obj/item/clothing/suit/armor
+	global.washing_items_list -= /obj/item/clothing/mask/gas
+	global.washing_items_list -= /obj/item/clothing/mask/cigarette
+	global.washing_items_list -= /obj/item/clothing/head/syndicatefake
+	global.washing_items_list -= /obj/item/clothing/head/helmet
+	global.washing_items_list -= /obj/item/clothing/gloves/pipboy
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
@@ -319,11 +360,9 @@
 /proc/init_paths(prototype, list/L)
 	if(!istype(L))
 		L = list()
-		for(var/path in typesof(prototype))
-			if(path == prototype)
-				continue
-			L+= path
-		return L
+	for(var/path in subtypesof(prototype))
+		L+= path
+	return L
 
 /proc/gen_hex_by_color()
 	if(!hex_by_color)

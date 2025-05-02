@@ -40,7 +40,7 @@
 /mob/living/carbon/human/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	var/target_zone = attacker.get_targetzone()
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
-	if(health < (config.health_threshold_crit - 30) && target_zone == O_MOUTH)
+	if(health < (config.health_threshold_crit) && target_zone == O_MOUTH)
 		INVOKE_ASYNC(src, PROC_REF(perform_av), attacker)
 		return TRUE
 	if(Heart && Heart.parent_bodypart == target_zone && Heart.heart_status != HEART_NORMAL)

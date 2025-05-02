@@ -21,8 +21,8 @@
 	var/default_name = SLP.default_mode ? light_modes_by_type[SLP.default_mode].name : "Not Set"
 	var/nightshift_name = SLP.nightshift_mode ? light_modes_by_type[SLP.nightshift_mode].name : "Not Set"
 
-	html += "Default mode: <a href='?src=\ref[src];change_default=1'>[default_name]</a><br>"
-	html += "Night Shift mode: <a href='?src=\ref[src];change_nightshift=1'>[nightshift_name]</a><br>"
+	html += "Default mode: <a href='byond://?src=\ref[src];change_default=1'>[default_name]</a><br>"
+	html += "Night Shift mode: <a href='byond://?src=\ref[src];change_nightshift=1'>[nightshift_name]</a><br>"
 
 	html += "<br>Night Shift mode currently globally [SSsmartlight.nightshift_active ? "enabled" : "disabled"]."
 
@@ -33,9 +33,9 @@
 	for(var/path in SLP.available_modes)
 
 		if(path in SLP.disabled_modes)
-			html += "<a class='bad' href='?src=\ref[src];enable_mode=[path]'>Disabled</a>"
+			html += "<a class='bad' href='byond://?src=\ref[src];enable_mode=[path]'>Disabled</a>"
 		else
-			html += "<a class='good' href='?src=\ref[src];disable_mode=[path]'>Enabled</a>"
+			html += "<a class='good' href='byond://?src=\ref[src];disable_mode=[path]'>Enabled</a>"
 
 		html += " <b>[light_modes_by_type[path].name]</b>"
 
@@ -44,8 +44,8 @@
 	html += "</div>"
 
 	html += "<div class='Section'>"
-	html += "<a href='?src=\ref[src];sync_apc=1'>Sync all APC Settings</a>"
-	html += " <a href='?src=\ref[src];toggle_nightshift=1'>Toggle Night Shift</a>"
+	html += "<a href='byond://?src=\ref[src];sync_apc=1'>Sync all APC Settings</a>"
+	html += " <a href='byond://?src=\ref[src];toggle_nightshift=1'>Toggle Night Shift</a>"
 	html += "</div>"
 
 	var/datum/browser/popup = new(user, "smartlight_console", name, 400, 500)
@@ -145,60 +145,3 @@
 		qdel(D)
 	else
 		return ..()
-
-/* Programms */
-
-/obj/item/weapon/disk/smartlight_programm
-	name = "Smartlight upgrade programm"
-	desc = "Programm for expanding capabilities of Central Lighting Control Console"
-
-	icon = 'icons/obj/cloning.dmi' // wtf, why all disk icons in cloning.dmi?
-	icon_state = "datadisk0"
-	item_state = "card-id"
-	w_class = SIZE_TINY
-
-	var/light_mode = /datum/light_mode/default
-
-/obj/item/weapon/disk/smartlight_programm/atom_init()
-	var/datum/light_mode/LM = light_mode
-	desc += "\nIt contains next programm: \"[initial(LM.name)] lighting mode\""
-	return ..()
-
-/obj/item/weapon/disk/smartlight_programm/soft
-	light_mode = /datum/light_mode/soft
-
-/obj/item/weapon/disk/smartlight_programm/hard
-	light_mode = /datum/light_mode/hard
-
-/obj/item/weapon/disk/smartlight_programm/k3000
-	light_mode = /datum/light_mode/k3000
-
-/obj/item/weapon/disk/smartlight_programm/k4000
-	light_mode = /datum/light_mode/k4000
-
-/obj/item/weapon/disk/smartlight_programm/k5000
-	light_mode = /datum/light_mode/k5000
-
-/obj/item/weapon/disk/smartlight_programm/k6000
-	light_mode = /datum/light_mode/k6000
-
-/obj/item/weapon/disk/smartlight_programm/shadows_soft
-	light_mode = /datum/light_mode/shadows_soft
-
-/obj/item/weapon/disk/smartlight_programm/shadows_hard
-	light_mode = /datum/light_mode/shadows_hard
-
-/obj/item/weapon/disk/smartlight_programm/code_red
-	light_mode = /datum/light_mode/code_red
-
-/obj/item/weapon/disk/smartlight_programm/blue_night
-	light_mode = /datum/light_mode/blue_night
-
-/obj/item/weapon/disk/smartlight_programm/soft_blue
-	light_mode = /datum/light_mode/soft_blue
-
-/obj/item/weapon/disk/smartlight_programm/neon
-	light_mode = /datum/light_mode/neon
-
-/obj/item/weapon/disk/smartlight_programm/neon_dark
-	light_mode = /datum/light_mode/neon_dark

@@ -47,6 +47,132 @@
 	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
+/proc/random_eye_color()
+	var/red
+	var/green
+	var/blue
+
+	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
+	switch(col)
+		if("black")
+			red = 0
+			green = 0
+			blue = 0
+		if("grey")
+			red = rand (100, 200)
+			green = red
+			blue = red
+		if("brown")
+			red = 102
+			green = 51
+			blue = 0
+		if("chestnut")
+			red = 153
+			green = 102
+			blue = 0
+		if("blue")
+			red = 51
+			green = 102
+			blue = 204
+		if("lightblue")
+			red = 102
+			green = 204
+			blue = 255
+		if("green")
+			red = 0
+			green = 102
+			blue = 0
+		if("albino")
+			red = rand (200, 255)
+			green = rand (0, 150)
+			blue = rand (0, 150)
+
+	return list(red, green, blue)
+
+/proc/random_hair_color()
+	var/red
+	var/green
+	var/blue
+
+	var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
+	switch(col)
+		if("blonde")
+			red = 255
+			green = 255
+			blue = 0
+		if("black")
+			red = 0
+			green = 0
+			blue = 0
+		if("chestnut")
+			red = 153
+			green = 102
+			blue = 51
+		if("copper")
+			red = 255
+			green = 153
+			blue = 0
+		if("brown")
+			red = 102
+			green = 51
+			blue = 0
+		if("wheat")
+			red = 255
+			green = 255
+			blue = 153
+		if("old")
+			red = rand (100, 255)
+			green = red
+			blue = red
+		if("punk")
+			red = rand (0, 255)
+			green = rand (0, 255)
+			blue = rand (0, 255)
+
+	return list(red, green, blue)
+
+/proc/random_skin_color() // for species who has skin_color flag
+	var/red
+	var/green
+	var/blue
+
+	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
+	switch(col)
+		if("black")
+			red = 0
+			green = 0
+			blue = 0
+		if("grey")
+			red = rand (100, 200)
+			green = red
+			blue = red
+		if("brown")
+			red = 102
+			green = 51
+			blue = 0
+		if("chestnut")
+			red = 153
+			green = 102
+			blue = 0
+		if("blue")
+			red = 51
+			green = 102
+			blue = 204
+		if("lightblue")
+			red = 102
+			green = 204
+			blue = 255
+		if("green")
+			red = 0
+			green = 102
+			blue = 0
+		if("albino")
+			red = rand (200, 255)
+			green = rand (0, 150)
+			blue = rand (0, 150)
+
+	return list(red, green, blue)
+
 /proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10
@@ -88,8 +214,6 @@
 /proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return FALSE
-
-	time *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
@@ -157,8 +281,6 @@
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
 		return FALSE
-
-	delay *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
@@ -260,7 +382,7 @@
 		return TRUE
 	return FALSE
 
-/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE)
+/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE, advanced = FALSE)
 	var/message = ""
 	var/insurance_type
 
@@ -299,10 +421,14 @@
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		message += "<span class='notice'>Обнаруженные повреждения, Механические/Термические:</span><br>"
+		message += "<span class='notice'>Обнаруженные повреждения:</span><br>"
 		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
+				message += "<span class='notice'>&emsp; [capitalize(CASE(BP, NOMINATIVE_CASE))]: \
+					[(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0]\
+					[(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'> \[Кровотечение\]</span>" : "&emsp;"] - \
+					[(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]\
+					[BP.controller.bodypart_type == BODYPART_ROBOTIC ? " (Кибернетический)" : ""]</span><br>"
 		else
 			message += "<span class='notice'>&emsp; Конечности целы.</span><br>"
 
@@ -321,24 +447,31 @@
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
-			message += "<span class='warning'>Внимание: обнаружено неизвестное вещество в крови:</span><br>"
+		if(C.reagents.total_volume && advanced)
+			message += "<span class='warning'>Обнаруженные вещества в крови:</span><br>"
+			for(var/datum/reagent/R in C.reagents.reagent_list)
+				message += "&emsp; <span class='notice'>\
+					[R.overdose != 0 && R.volume >= R.overdose ? "<span class='bold warning'>OD: </span>" : ""]\
+					[round(R.volume, 1)]u [R.name]</span><br>"
 		if(C.virus2.len)
+			if(C.is_infected_with_zombie_virus() && advanced)
+				message += "<span class='warning'>Внимание: Обнаружена нетипичная активность патогена в крови!</span><br>"
 			for (var/ID in C.virus2)
 				if (ID in virusDB)
 					var/datum/data/record/V = virusDB[ID]
 					message += "<span class='warning'>Внимание: Обнаружен патоген [V.fields["name"]] в крови. Известный антиген: [V.fields["antigen"]]</span><br>"
-//			user.oldshow_message(text("<span class='warning'>Warning: Unknown pathogen detected in subject's blood.</span>"))
 		if(C.roundstart_quirks.len)
 			message += "\t<span class='info'>Объект имеет следующие физиологические особенности: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		to_chat(user, "<span class='warning'>Объект, по-видимому, был некачественно клонирован.</span>")
-	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		message += "<span class='notice'>Анализ крови обнаружил [M.reagents:get_reagent_amount("inaprovaline")] лечебных юнитов.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Объект страдает от аномальной активности мозга. Рекомендуется дополнительное сканирование.</span><br>"
-	else if(M.getBrainLoss() >= 100 || (ishuman(M) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
-		message += "<span class='warning'>Мозг субъекта мёртв.</span>"
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!H.has_brain() && H.should_have_organ(O_BRAIN))
+			message += "<span class='warning'>У субъекта отсутствует мозг.</span><br>"
+	else if(M.getBrainLoss() >= 100)
+		message += "<span class='warning'>Мозг субъекта мёртв.</span><br>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Обнаружено тяжелое повреждение головного мозга. Вероятна умственная отсталость.</span><br>"
 	else if(M.getBrainLoss() >= 10)
@@ -350,7 +483,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Обнаружен незафиксированный перелом в [BP.name]. При транспортировке рекомендуется наложение шины.</span><br>"
+					message += "<span class='warning'>Обнаружен незафиксированный перелом в [CASE(BP, PREPOSITIONAL_CASE)]. При транспортировке рекомендуется наложение шины.</span><br>"
 				if(!found_broken)
 					found_broken = TRUE
 
@@ -358,18 +491,18 @@
 				found_bleed = TRUE
 
 			if(BP.has_infected_wound())
-				message += "<span class='warning'>Обнаружена инфекция в [BP.name]. Рекомендуется дезинфекция.</span><br>"
+				message += "<span class='warning'>Обнаружена инфекция в [CASE(BP, PREPOSITIONAL_CASE)]. Рекомендуется дезинфекция.</span><br>"
 
 		if(found_bleed)
-			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется медицинский сканер.</span><br>"
 		if(found_broken)
-			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется медицинский сканер.</span><br>"
 
 		var/blood_volume = H.blood_amount()
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
 		var/blood_type = H.dna.b_type
 		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Внимание: Уровень крови НИЗКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови : [blood_type]</span><br>"
+			message += "<span class='warning bold'>Внимание: критический уровень крови: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови: [blood_type]</span><br>"
 		else if(blood_volume <= BLOOD_VOLUME_OKAY)
 			message += "<span class='warning bold'>Внимание: Уровень крови КРИТИЧЕСКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice bold'>Группа крови: [blood_type]</span><br>"
 		else
@@ -403,3 +536,21 @@
 		return pick(user.neuter_gender_voice == MALE ? male_sounds : female_sounds)
 
 	return pick(male_sounds)
+
+/proc/get_germ_level_name(germ_level)
+	switch(germ_level)
+		if(INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
+			return "Лёгкая инфекция"
+		if(INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+			return "Лёгкая инфекция+"
+		if(INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+			return "Лёгкая инфекция++"
+		if(INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
+			return "Острая инфекция"
+		if(INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+			return "Острая инфекция+"
+		if(INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+			return "Острая инфекция++"
+		if(INFECTION_LEVEL_THREE to INFINITY)
+			return "Сепсис"
+	return

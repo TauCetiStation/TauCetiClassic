@@ -41,6 +41,7 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 1
+	var/dna_lockable = FALSE
 	var/dna	//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
@@ -105,7 +106,7 @@
 	spark_system.attach(src)
 	add_cell()
 	START_PROCESSING(SSobj, src)
-	log_message("[src.name] created.")
+	log_message("[name] created.")
 	loc.Entered(src)
 	mechas_list += src //global mech list
 	maxhealth = health
@@ -165,17 +166,10 @@
 	radio.icon_state = icon_state
 
 
-/obj/mecha/proc/enter_after(delay, mob/user, numticks = 5)
-	var/delayfraction = delay/numticks
-
-	var/turf/T = user.loc
-
-	for(var/i = 0, i<numticks, i++)
-		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
-			return 0
-
-	return 1
+/obj/mecha/proc/enter_after(delay, mob/user)
+	if(do_after(usr, delay, target = src))
+		return TRUE
+	return FALSE
 
 /obj/mecha/examine(mob/user)
 	..()
@@ -205,7 +199,7 @@
 	return
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
-	if(!src.occupant || src.occupant != user ) return
+	if(!occupant || occupant != user ) return
 	if(user.stat != CONSCIOUS) return
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
@@ -213,7 +207,7 @@
 	if(!get_charge()) return
 	if(src == target) return
 	var/dir_to_target = get_dir(src,target)
-	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
+	if(dir_to_target && !(dir_to_target & dir))//wrong direction
 		return
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		target = safepick(view(3,target))
@@ -255,15 +249,15 @@
 	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
-	if(user != src.occupant) //While not "realistic", this piece is player friendly.
+	if(user != occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		to_chat(user, "You climb out from [src]")
-		return 0
+		return FALSE
 	if(connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("Unable to move while connected to the air system port")
 			last_message = world.time
-		return 0
+		return FALSE
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 		return
@@ -274,11 +268,11 @@
 
 /obj/mecha/proc/dyndomove(direction)
 	if(!can_move)
-		return 0
+		return FALSE
 	if(!Process_Spacemove(direction))
-		return 0
+		return FALSE
 	if(!has_charge(step_energy_drain))
-		return 0
+		return FALSE
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
@@ -297,8 +291,8 @@
 	if(move_result)
 		can_move = 0
 		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, speed_skills, -0.2) * move_result) // -20% to step_in for each level
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/check_fumbling(fumble_text)
 	return handle_fumbling(occupant, occupant, SKILL_TASK_VERY_EASY, interface_skills, fumble_text, can_move = TRUE, check_busy = FALSE)
@@ -307,7 +301,7 @@
 	set_dir(direction)
 	use_power(step_energy_drain)
 	playsound(src, 'sound/mecha/Mech_Rotation.ogg', VOL_EFFECTS_MASTER, 40)
-	return 1
+	return TRUE
 
 /obj/mecha/proc/mechstep(direction)
 	var/old_loc = loc
@@ -353,7 +347,7 @@
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage))
 		return
 	if(prob(20))
-		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
+		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -361,7 +355,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
+		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/destr = safepick(equipment)
 			if(destr)
 				qdel(destr)
@@ -414,7 +408,7 @@
 
 
 /obj/mecha/proc/update_health()
-	if(src.health > 0)
+	if(health > 0)
 		spark_system.start()
 		diag_hud_set_mechhealth()
 	else
@@ -426,12 +420,12 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if ((HULK in user.mutations) && !prob(src.deflect_chance))
+	if ((HULK in user.mutations) && !prob(deflect_chance))
 		take_damage(15)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		user.visible_message("<font color='red'><b>[user] hits [src.name], doing some damage.</b></font>", "<font color='red'><b>You hit [src.name] with all your might. The metal creaks and bends.</b></font>")
+		user.visible_message("<font color='red'><b>[user] hits [name], doing some damage.</b></font>", "<font color='red'><b>You hit [name] with all your might. The metal creaks and bends.</b></font>")
 	else
-		user.visible_message("<font color='red'><b>[user] hits [src.name]. Nothing happens</b></font>","<font color='red'><b>You hit [src.name] with no visible effect.</b></font>")
+		user.visible_message("<font color='red'><b>[user] hits [name]. Nothing happens</b></font>","<font color='red'><b>You hit [name] with no visible effect.</b></font>")
 		log_append_to_last("Armor saved.")
 	return
 
@@ -452,18 +446,18 @@
 	log_message("Attack by alien. Attacker - [user].",1)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(!prob(src.deflect_chance))
+	if(!prob(deflect_chance))
 		take_damage(40)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='warning'>You slash at the armored suit!</span>")
-		visible_message("<span class='warning'>The [user] slashes at [src.name]'s armor!</span>")
+		visible_message("<span class='warning'>The [user] slashes at [name]'s armor!</span>")
 	else
 		log_append_to_last("Armor saved.")
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>Your claws had no effect!</span>")
 		occupant_message("<span class='notice'>The [user]'s claws are stopped by the armor.</span>")
-		visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
+		visible_message("<span class='notice'>The [user] rebounds off [name]'s armor!</span>")
 	return
 
 
@@ -474,18 +468,18 @@
 	if(attacker.melee_damage == 0)
 		attacker.me_emote("[attacker.friendly] [src]")
 	else
-		if(!prob(src.deflect_chance))
+		if(!prob(deflect_chance))
 			var/damage = attacker.melee_damage
 			take_damage(damage)
 			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 			visible_message("<span class='warning'><B>[attacker]</B> [attacker.attacktext] [src]!</span>")
-			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>"
+			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [name]</font>"
 		else
 			log_append_to_last("Armor saved.")
 			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 			occupant_message("<span class='notice'>The [attacker]'s attack is stopped by the armor.</span>")
-			visible_message("<span class='notice'>The [attacker] rebounds off [src.name]'s armor!</span>")
-			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>"
+			visible_message("<span class='notice'>The [attacker] rebounds off [name]'s armor!</span>")
+			attacker.attack_log += "\[[time_stamp()]\] <font color='red'>attacked [name]</font>"
 
 /obj/mecha/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //wrapper
 	..()
@@ -498,9 +492,9 @@
 		AM.forceMove(src)
 		visible_message("The [AM] fastens firmly to [src].")
 		return
-	if(prob(src.deflect_chance) || ismob(AM))
+	if(prob(deflect_chance) || ismob(AM))
 		occupant_message("<span class='notice'>The [AM] bounces off the armor.</span>")
-		visible_message("The [AM] bounces off the [src.name] armor")
+		visible_message("The [AM] bounces off the [name] armor")
 		log_append_to_last("Armor saved.")
 		if(isliving(AM))
 			var/mob/living/M = AM
@@ -519,9 +513,9 @@
 	return ..()
 
 /obj/mecha/proc/dynbulletdamage(obj/item/projectile/Proj)
-	if(prob(src.deflect_chance))
+	if(prob(deflect_chance))
 		occupant_message("<span class='notice'>The armor deflects incoming projectile.</span>")
-		visible_message("The [src.name] armor deflects the projectile")
+		visible_message("The [name] armor deflects the projectile")
 		log_append_to_last("Armor saved.")
 		return
 	var/ignore_threshold
@@ -557,18 +551,18 @@
 
 /obj/mecha/ex_act(severity)
 	log_message("Affected by explosion of severity: [severity].",1)
-	if(prob(src.deflect_chance))
+	if(prob(deflect_chance))
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(70))
-				take_damage(initial(src.health)/2)
+				take_damage(initial(health)/2)
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 				return
 		if(EXPLODE_LIGHT)
 			if(prob(95))
-				take_damage(initial(src.health)/5)
+				take_damage(initial(health)/5)
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 				return
 	destroy()
@@ -588,7 +582,7 @@
 	return
 
 /obj/mecha/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature>src.max_temperature)
+	if(exposed_temperature>max_temperature)
 		log_message("Exposed to dangerous temperature.",1)
 		take_damage(5,BURN)
 		check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
@@ -597,8 +591,8 @@
 /obj/mecha/proc/dynattackby(obj/item/weapon/W, mob/user)
 	user.do_attack_animation(src)
 	log_message("Attacked by [W]. Attacker - [user]")
-	if(prob(src.deflect_chance))
-		to_chat(user, "<span class='warning'>\The [W] bounces off [src.name].</span>")
+	if(prob(deflect_chance))
+		to_chat(user, "<span class='warning'>\The [W] bounces off [name].</span>")
 		log_append_to_last("Armor saved.")
 	else
 		occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
@@ -675,24 +669,50 @@
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
-		else if(state==3 && src.cell)
-			cell.forceMove(src.loc)
-			src.cell = null
+		else if(state==3 && cell)
+			cell.forceMove(loc)
+			cell = null
 			state = 4
 			to_chat(user, "You unscrew and pry out the powercell.")
 			log_message("Powercell removed")
-		else if(state==4 && src.cell)
-			state=3
-			to_chat(user, "You screw the cell in place")
+		else if(state==4)
+			if(cell)
+				state=3
+				to_chat(user, "You screw the cell in place")
+			else
+				var/list/actions = list()
+				if(dna_lockable)
+					actions += "Exosuit DNA Scanner"
+				var/obj/item/mecha_parts/mecha_tracking/tracking = locate() in contents
+				if(tracking)
+					actions += "Exosuit Tracker"
+
+				if(actions.len > 0)
+					var/choice = tgui_input_list(user, "Pick what to unscrew.", "Unscrew part", actions, 5 SECONDS)
+					if(!choice || !Adjacent(user))
+						return
+					switch(choice)
+						if("Exosuit DNA Scanner")
+							if(dna_lockable)
+								to_chat(user, "You unscrew DNA scanner from [name]")
+								dna_lockable = FALSE
+								dna = null
+								new /obj/item/mecha_parts/dna_scanner(loc)
+						if("Exosuit Tracker")
+							if(tracking && tracking.loc == src)
+								to_chat(user, "You unscrew [tracking.name] from [name]")
+								tracking.forceMove(loc)
+
+
 		diag_hud_set_mechcell()
 		return
 
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
-			if(!src.cell)
+			if(!cell)
 				to_chat(user, "You install the powercell")
 				user.drop_from_inventory(W, src)
-				src.cell = W
+				cell = W
 				log_message("Powercell installed")
 			else
 				to_chat(user, "There's already a powercell installed.")
@@ -708,12 +728,12 @@
 				to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		else
 			return
-		if(src.health<initial(src.health))
-			to_chat(user, "<span class='notice'>You repair some damage to [src.name].</span>")
-			src.health += min(10, initial(src.health)-src.health)
+		if(health<initial(health))
+			to_chat(user, "<span class='notice'>You repair some damage to [name].</span>")
+			health += min(10, initial(health)-health)
 			update_health()
 		else
-			to_chat(user, "The [src.name] is at full integrity")
+			to_chat(user, "The [name] is at full integrity")
 		return
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
@@ -721,6 +741,14 @@
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
+	else if(istype(W, /obj/item/mecha_parts/dna_scanner))
+		if(dna_lockable)
+			to_chat(user, "The [name] already has DNA scanner installed.")
+			return
+
+		dna_lockable = TRUE
+		qdel(W)
+		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 
 	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
 		var/obj/item/weapon/melee/changeling_hammer/hammer = W
@@ -783,11 +811,11 @@
 /obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
-		return 0
+		return FALSE
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != src.loc)
-		return 0
+	if(new_port.loc != loc)
+		return FALSE
 
 	//Perform the connection
 	connected_port = new_port
@@ -799,11 +827,11 @@
 		P.other_airs += internal_tank.return_air()
 		P.update = 1
 	log_message("Connected to gas port.")
-	return 1
+	return TRUE
 
 /obj/mecha/proc/disconnect()
 	if(!connected_port)
-		return 0
+		return FALSE
 
 	var/datum/pipeline/P = connected_port.returnPipenet(src)
 	if(P)
@@ -812,7 +840,7 @@
 	connected_port.connected_device = null
 	connected_port = null
 	log_message("Disconnected from gas port.")
-	return 1
+	return TRUE
 
 
 /////////////////////////
@@ -821,10 +849,10 @@
 
 
 /obj/mecha/proc/connect_to_port()
-	if(!src.occupant)
+	if(!occupant)
 		return
 
-	if(usr != src.occupant)
+	if(usr != occupant)
 		return
 
 	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
@@ -840,8 +868,8 @@
 
 
 /obj/mecha/proc/disconnect_from_port()
-	if(!src.occupant) return
-	if(usr != src.occupant)
+	if(!occupant) return
+	if(usr != occupant)
 		return
 	if(disconnect())
 		occupant_message("<span class='notice'>[name] disconnects from the port.</span>")
@@ -867,7 +895,7 @@
 
 
 /obj/mecha/proc/toggle_internal_tank()
-	if(usr != src.occupant)
+	if(usr != occupant)
 		return
 	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle internal tank usage [!use_internal_tank?"on":"off"].</span>"))
 		return
@@ -890,14 +918,14 @@
 		if(C.handcuffed)
 			to_chat(usr, "<span class='warning'>Kinda hard to climb in while handcuffed don't you think?</span>")
 			return
-	if (src.occupant)
-		to_chat(usr, "<span class='notice'><B>The [src.name] is already occupied!</B></span>")
+	if (occupant)
+		to_chat(usr, "<span class='notice'><B>The [name] is already occupied!</B></span>")
 		log_append_to_last("Permission denied.")
 		return
 
 	var/passed
-	if(src.dna)
-		if(usr.dna.unique_enzymes==src.dna)
+	if(dna_lockable && dna)
+		if(usr.dna.unique_enzymes==dna)
 			passed = 1
 	else if(operation_allowed(usr))
 		passed = 1
@@ -910,13 +938,13 @@
 			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
 
-	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
+	visible_message("<span class='notice'>[usr] starts to climb into [name]</span>")
 
 	if(enter_after(MECHA_TIME_TO_ENTER, usr))
-		if(!src.occupant)
+		if(!occupant)
 			moved_inside(usr)
-		else if(src.occupant!=usr)
-			to_chat(usr, "[src.occupant] was faster. Try better next time, loser.")
+		else if(occupant!=usr)
+			to_chat(usr, "[occupant] was faster. Try better next time, loser.")
 	else
 		to_chat(usr, "You stop entering the exosuit.")
 	return
@@ -925,36 +953,36 @@
 	if(H && H.client && H.Adjacent(src))
 		H.reset_view(src)
 		H.forceMove(src)
-		src.occupant = H
+		occupant = H
 		add_fingerprint(H)
-		forceMove(src.loc)
+		forceMove(loc)
 		log_append_to_last("[H] moved in as pilot.")
-		log_admin("[key_name(H)] has moved in [src.type] with name [src.name]")
-		src.icon_state = reset_icon()
+		log_admin("[key_name(H)] has moved in [type] with name [name]")
+		icon_state = reset_icon()
 		set_dir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', VOL_EFFECTS_MASTER)
 		GrantActions(H, human_occupant = 1)
 		if(!hasInternalDamage())
 			occupant.playsound_local(null, 'sound/mecha/nominal.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		to_chat(user, "Consciousness matrix not detected.")
-		return 0
+		return FALSE
 	else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
 		to_chat(user, "Beta-rhythm below acceptable level.")
-		return 0
+		return FALSE
 	else if(occupant)
 		to_chat(user, "Occupant detected.")
-		return 0
+		return FALSE
 	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
 		to_chat(user, "Stop it!")
-		return 0
+		return FALSE
 
-	visible_message("<span class='notice'>[usr] starts to insert an MMI into [src.name]</span>")
+	visible_message("<span class='notice'>[usr] starts to insert an MMI into [name]</span>")
 
 	if(enter_after(MECHA_TIME_TO_ENTER, user))
 		if(!occupant)
@@ -963,16 +991,16 @@
 			to_chat(user, "Occupant detected.")
 	else
 		to_chat(user, "You stop inserting the MMI.")
-	return 0
+	return FALSE
 
 /obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(mmi_as_oc && (user in range(1)))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
-			return 0
+			return FALSE
 		else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
 			to_chat(user, "Beta-rhythm below acceptable level.")
-			return 0
+			return FALSE
 		user.drop_from_inventory(mmi_as_oc)
 		var/mob/brainmob = mmi_as_oc.brainmob
 		brainmob.reset_view(src)
@@ -981,28 +1009,28 @@
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
 		Entered(mmi_as_oc)
-		Move(src.loc)
-		src.icon_state = reset_icon()
+		Move(loc)
+		icon_state = reset_icon()
 		set_dir(dir_in)
 		GrantActions(brainmob)
 		log_message("[mmi_as_oc] moved in as pilot.")
-		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
+		log_admin("[key_name(mmi_as_oc)] has moved in [type] with name [name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
 			occupant.playsound_local(null, 'sound/mecha/nominal.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/mecha/proc/view_stats()
-	if(usr != src.occupant)
+	if(usr != occupant)
 		return
 	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to open exosuit stats.</span>"))
 		return
-	src.occupant << browse(get_stats_html(), "window=exosuit")
+	occupant << browse(get_stats_html(), "window=exosuit")
 	return
 
 /obj/mecha/proc/eject()
-	if(usr != src.occupant)
+	if(usr != occupant)
 		return
 	go_out()
 	add_fingerprint(usr)
@@ -1012,10 +1040,10 @@
 	go_out()
 
 /obj/mecha/proc/go_out()
-	if(!src.occupant) return
+	if(!occupant) return
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
-		mob_container = src.occupant
+		mob_container = occupant
 		RemoveActions(occupant, human_occupant = 1)
 	else if(isbrain(occupant))
 		var/mob/living/carbon/brain/brain = occupant
@@ -1023,26 +1051,25 @@
 		mob_container = brain.container
 	else
 		return
-	if(mob_container.forceMove(src.loc))//ejecting mob container
 
-		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
-		log_message("[mob_container] moved out.")
-		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
-		occupant.reset_view()
+	mob_container.forceMove(loc)
+	playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
+	log_message("[mob_container] moved out.")
+	log_admin("[key_name(mob_container)] has moved out of [type] with name [name]")
+	occupant.reset_view()
 
-		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud && !isMMI(mob_container))
-			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
+	occupant << browse(null, "window=exosuit")
+	if(occupant.hud_used && last_user_hud && !isMMI(mob_container))
+		occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
-		if(isMMI(mob_container))
-			var/obj/item/device/mmi/mmi = mob_container
-			if(mmi.brainmob)
-				occupant.loc = mmi
-			src.occupant.canmove = 0
-		src.occupant = null
-		src.icon_state = reset_icon()+"-open"
-		set_dir(dir_in)
-	return
+	if(isMMI(mob_container))
+		var/obj/item/device/mmi/mmi = mob_container
+		if(mmi.brainmob)
+			occupant.loc = mmi
+		occupant.canmove = 0
+	occupant = null
+	icon_state = reset_icon()+"-open"
+	set_dir(dir_in)
 
 /////////////////////////
 ////// Access stuff /////
@@ -1050,23 +1077,23 @@
 
 /obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
 	for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
-		if(check_access(ID,src.operation_req_access))
-			return 1
-	return 0
+		if(check_access(ID,operation_req_access))
+			return TRUE
+	return FALSE
 
 
 /obj/mecha/proc/internals_access_allowed(mob/living/carbon/human/H)
 	for(var/atom/ID in list(H.get_active_hand(), H.wear_id, H.belt))
-		if(check_access(ID,src.internals_req_access))
-			return 1
-	return 0
+		if(check_access(ID,internals_req_access))
+			return TRUE
+	return FALSE
 
 
 /obj/mecha/check_access(obj/item/weapon/card/id/I, list/access_list)
 	if(!istype(access_list))
-		return 1
+		return TRUE
 	if(!access_list.len) //no requirements
-		return 1
+		return TRUE
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
@@ -1074,16 +1101,16 @@
 		var/obj/item/weapon/storage/wallet/wallet = I
 		I = wallet.GetID()
 	if(!istype(I) || !I.access) //not ID or no access
-		return 0
-	if(access_list==src.operation_req_access)
+		return FALSE
+	if(access_list==operation_req_access)
 		for(var/req in access_list)
 			if(!(req in I.access)) //doesn't have this access
-				return 0
-	else if(access_list==src.internals_req_access)
+				return FALSE
+	else if(access_list==internals_req_access)
 		for(var/req in access_list)
 			if(req in I.access)
-				return 1
-	return 1
+				return TRUE
+	return TRUE
 
 
 ////////////////////////////////
@@ -1092,8 +1119,8 @@
 
 /obj/mecha/proc/occupant_message(message)
 	if(message)
-		if(src.occupant && src.occupant.client)
-			to_chat(src.occupant, "[bicon(src)] [message]")
+		if(occupant && occupant.client)
+			to_chat(occupant, "[bicon(src)] [message]")
 	return
 
 /obj/mecha/proc/log_message(message,red=null)
@@ -1102,7 +1129,7 @@
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message,red=null)
-	var/list/last_entry = src.log[src.log.len]
+	var/list/last_entry = log[log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 
@@ -1117,8 +1144,8 @@
 	return call((proc_res["dyngetcharge"]||src), "dyngetcharge")()
 
 /obj/mecha/proc/dyngetcharge()//returns null if no powercell, else returns cell.charge
-	if(!src.cell) return
-	return max(0, src.cell.charge)
+	if(!cell) return
+	return max(0, cell.charge)
 
 /obj/mecha/proc/use_power(amount)
 	return call((proc_res["dynusepower"]||src), "dynusepower")(amount)
@@ -1127,15 +1154,15 @@
 	if(get_charge())
 		cell.use(amount)
 		diag_hud_set_mechcell()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		diag_hud_set_mechcell()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/reset_icon()
 	if (initial_icon)

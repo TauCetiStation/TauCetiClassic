@@ -406,9 +406,12 @@
 			queue_smooth(T)
 
 //SSicon_smooth
-/proc/queue_smooth(atom/A)
+/proc/queue_smooth(atom/A, reset_icon = FALSE)
 	if(!(A.smooth || length(A.smooth_adapters)) || A.smooth & SMOOTH_QUEUED)
 		return
+
+	if(reset_icon) // in case if you need to do smoothing with new atom icon
+		A.smooth_icon_initial = null
 
 	SSicon_smooth.smooth_queue += A
 	SSicon_smooth.can_fire = TRUE

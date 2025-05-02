@@ -1,6 +1,7 @@
 /obj/item/weapon/implantpad
 	name = "implantpad"
-	desc = "Used to modify implants."
+	cases = list("анализатор имплантов", "анализатора имплантов", "анализатору имплантов", "анализатор имплантов", "анализатором имплантов", "анализаторе имплантов")
+	desc = "Используется для анализа имплантов."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantpad-0"
 	item_state = "electronic"
@@ -57,11 +58,11 @@
 					<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
 					<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
 		else
-			dat += "The implant casing is empty."
+			dat += "Футляр от импланта пуст."
 	else
-		dat += "Please insert an implant casing!"
+		dat += "Пожалуйста, вставьте футляр с имплантом внутри!"
 
-	var/datum/browser/popup = new(user, "implantpad", "Implant Mini-Computer")
+	var/datum/browser/popup = new(user, "implantpad", (C_CASE(src, NOMINATIVE_CASE)))
 	popup.set_content(dat)
 	popup.open()
 	return

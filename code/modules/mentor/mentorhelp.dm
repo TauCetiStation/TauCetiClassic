@@ -14,10 +14,10 @@
 		return
 
 	//handle muting and automuting
-	if(prefs.muted & MUTE_MENTORHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat(src, "<font color='red'>Error: Mentor-PM: You cannot send mentorhelps (Muted).</font>")
 		return
-	if(handle_spam_prevention(msg, MUTE_MENTORHELP))
+	if(handle_spam_prevention(msg, ADMIN_CD_PM))
 		return
 
 	msg = sanitize(msg)
@@ -37,7 +37,7 @@
 			if(X.is_afk())
 				admin_number_afk++
 			X.mob.playsound_local(null, X.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, MHELP_REPLY, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span></font>")
+			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, MHELP_REPLY, TRUE)][ai_found ? " (<A href='byond://?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span></font>")
 
 	var/mentor_number_afk = 0
 	var/jump = null
@@ -45,7 +45,7 @@
 		if(X.is_afk())
 			mentor_number_afk++
 		if(isobserver(X.mob))
-			jump = "(<A HREF='?src=\ref[X.mob];ghostplayerobservejump=[ref_mob]'>JMP</A>) "
+			jump = "(<A href='byond://?src=\ref[X.mob];ghostplayerobservejump=[ref_mob]'>JMP</A>) "
 		X.mob.playsound_local(null, X.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, MHELP_REPLY, TRUE)][jump]:</b> <span class='emojify linkify'>[msg]</span></font>")
 

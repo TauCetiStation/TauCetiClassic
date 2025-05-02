@@ -14,7 +14,25 @@
 
 	feedback_add_details("admin_verb","DG2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggle_profiler()
+	set category = "Debug"
+	set name = "Toggle Profiler"
 
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(tgui_alert(usr, "Be sure you know what you are doing. You want to [config.auto_profile ? "STOP": "START"] Byond Profiler?",, list("Yes","No")) != "Yes")
+		return
+
+	config.auto_profile = !config.auto_profile
+
+	if(config.auto_profile)
+		SSprofiler.StartProfiling()
+	else
+		SSprofiler.StopProfiling()
+
+	message_admins("[key_name(src)] toggled byond profiler [config.auto_profile ? "on" : "off"].")
+	log_admin("[key_name(src)] toggled byond profiler [config.auto_profile ? "on" : "off"].")
 
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
@@ -703,3 +721,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	T.burnt = 0
 	T.broken = 0
 	T.update_icon()
+
+/client/proc/allow_browser_inspect()
+	set category = "Debug"
+	set name = "Allow Browser Inspect"
+	set desc = "Allow browser debugging via inspect"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(byond_version < 516)
+		to_chat(src, "<span class='warning'>You can only use this on 516!</span>")
+		return
+
+	to_chat(src, "<span class='info'>You can now right click to use inspect on browsers.</span>")
+	winset(src, "", "browser-options=byondstorage,find,devtools,refresh")

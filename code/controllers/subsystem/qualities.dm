@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(qualities)
 
 		possible_qualities -= Q
 
-		if(Q.max_amount >= 0 && Q.amount > Q.max_amount)
+		if(Q.max_amount >= 0 && Q.amount >= Q.max_amount)
 			continue
 		if(!Q.satisfies_availability(C))
 			continue

@@ -10,9 +10,6 @@ Pipelines + Other Objects -> Pipe network
 
 */
 
-#define PIPE_VISIBLE_LEVEL   2
-#define PIPE_HIDDEN_LEVEL    1
-
 /obj/machinery/atmospherics
 	anchored = TRUE
 	idle_power_usage = 0
@@ -39,6 +36,9 @@ Pipelines + Other Objects -> Pipe network
 	var/atmos_initalized = FALSE
 	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)
 
+	// mostly for pipes and components, sets level we need to show them and attaches undertile component
+	var/undertile = FALSE // FALSE
+
 /obj/machinery/atmospherics/atom_init(mapload, process = TRUE)
 	nodes = new(device_type)
 
@@ -58,6 +58,10 @@ Pipelines + Other Objects -> Pipe network
 		SSair.atmos_machinery += src
 
 	SetInitDirections()
+
+	if(undertile)
+		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
+		RegisterSignal(src, COMSIG_OBJ_LEVELUPDATE, PROC_REF(update_underlays))
 
 /obj/machinery/atmospherics/Destroy()
 	if(SSair.stop_airnet_processing)
@@ -161,7 +165,7 @@ Pipelines + Other Objects -> Pipe network
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
-			if (level == 1 && isturf(T) && T.intact)
+			if (HAS_TRAIT(src, TRAIT_UNDERFLOOR) && isturf(T) && T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
 				return 1
 
@@ -231,9 +235,6 @@ Pipelines + Other Objects -> Pipe network
 	..()
 
 /obj/machinery/atmospherics/construction(pipe_type, obj_color)
-	var/turf/T = get_turf(src)
-	if(level == PIPE_HIDDEN_LEVEL) // so we only hide ones that are hideable.
-		level = !T.is_plating() ? PIPE_VISIBLE_LEVEL : PIPE_HIDDEN_LEVEL
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
@@ -252,7 +253,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/add_underlay(turf/T, obj/machinery/atmospherics/node, direction, icon_connect_type)
 	if(node)
-		if(!T.is_plating() && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && undertile && istype(node, /obj/machinery/atmospherics/pipe))
 			//underlays += icon_manager.get_atmos_icon("underlay_down", direction, color_cache_name(node))
 			underlays += icon_manager.get_atmos_icon("underlay", direction, color_cache_name(node), "down" + icon_connect_type)
 		else

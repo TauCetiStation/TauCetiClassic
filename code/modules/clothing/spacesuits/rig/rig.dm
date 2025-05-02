@@ -784,11 +784,13 @@
 			armor = combat_armor
 			canremove = FALSE
 			flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
+			flags_pressure &= ~STOPS_PRESSUREDMAGE
 			usr.visible_message("<span class='notice'>[usr] moves faceplate of their helmet into combat position, covering their visor and extending cameras.</span>")
 		else
 			armor = space_armor
 			canremove = TRUE
 			flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
+			flags_pressure |= STOPS_PRESSUREDMAGE
 			usr.visible_message("<span class='notice'>[usr] pulls up faceplate from helmet's visor, retracting cameras</span>")
 		checklight()
 		update_icon(usr)

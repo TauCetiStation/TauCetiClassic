@@ -14,14 +14,20 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
-	beauty = new /datum/modval(0.0)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
-
-	beauty.AddModifier("stat", additive=beauty_living)
-
 	if(spawner_args)
 		spawner_args.Insert(1, /datum/component/logout_spawner)
 		AddComponent(arglist(spawner_args))
+
+/mob/living/proc/metabolism_debug()
+	var/print = "<hr>Debug metabolism data:<br><br>"
+	print += "<b>Nutrition</b>: [nutrition] ([PERCENT(nutrition/NUTRITION_LEVEL_FAT)]%)<br>"
+	print += "<b>Satiation</b>: [get_satiation()] (predicted nutrition)<br>"
+	print += "<b>Overeatduration</b>: [overeatduration] ([PERCENT(overeatduration/OVEREATDURATION_FAT)]%)<br>"
+	print += "<br><br>Metabolism speed:<br><br>"
+	print += mob_metabolism_mod.DebugPrint()
+	print += "<br><hr>"
+
+	to_chat(usr, print)
 
 /mob/living/Destroy()
 	allowed_combos = null
@@ -29,6 +35,8 @@
 	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
+
+	qdel(mob_metabolism_mod)
 
 	if(length(status_effects))
 		for(var/s in status_effects)
@@ -396,44 +404,29 @@
  */
 /mob/proc/blurEyes(amount)
 	if(amount > 0)
-		eye_blurry = max(amount, eye_blurry)
-	update_eye_blur()
+		update_eye_blur(max(amount, eye_blurry))
 
 /**
  * Adjust the current blurriness of the mobs vision by amount
  */
 /mob/proc/adjustBlurriness(amount)
-	eye_blurry = max(eye_blurry + amount, 0)
-	update_eye_blur()
+	update_eye_blur(max(eye_blurry + amount, 0))
 
 /**
  * Set the mobs blurriness of vision to an amount
  */
 /mob/proc/setBlurriness(amount)
-	eye_blurry = max(amount, 0)
-	update_eye_blur()
+	update_eye_blur(max(amount, 0))
 
 /**
  * Apply the blurry overlays to a mobs clients screen
  */
-/mob/proc/update_eye_blur()
-	if(!client)
-		return
+/mob/proc/update_eye_blur(value)
+	if(eye_blurry != value)
+		eye_blurry = value
 
-	if(client.prefs.eye_blur_effect)
-		var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
-		if(eye_blurry)
-			PM.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
-			PM.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
-		else
-			PM.remove_filter("eye_blur_angular")
-			PM.remove_filter("eye_blur_gauss")
-
-	else
-		if(eye_blurry)
-			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
-		else
-			clear_fullscreen("blurry")
+		if(client)
+			client.update_plane_masters(/atom/movable/screen/plane_master/game_world)
 
 // ============================================================
 
@@ -558,8 +551,6 @@
 	if(reagents)
 		reagents.clear_reagents()
 
-	beauty.AddModifier("stat", additive=beauty_living)
-
 	// shut down various types of badness
 	setToxLoss(0)
 	setOxyLoss(0)
@@ -591,16 +582,12 @@
 
 	SetDrunkenness(0)
 
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage = 0
-
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			H.restore_blood()
-			H.full_prosthetic = null
-			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart?.heart_normalize()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.restore_blood()
+		H.full_prosthetic = null
+		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+		Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	restore_all_organs()
@@ -935,7 +922,7 @@
 			if (istype(C.buckled,/obj/structure/stool/bed/nest))
 				C.buckled.user_unbuckle_mob(C)
 				return
-			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
+			if(istype(C.buckled, /obj/machinery/optable/torture_table))
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
@@ -955,10 +942,9 @@
 			C.container_resist(L)
 
 	//breaking out of handcuffs and putting off fires
-	else if(iscarbon(L))
+	if(iscarbon(L))
 		var/mob/living/carbon/CM = L
-		if(CM.on_fire)
-			if(!CM.canmove && !CM.crawling)	return
+		if(CM.on_fire && CM.canmove && !(CM.lying || CM.crawling))
 			CM.fire_stacks -= 5
 			CM.Stun(5)
 			CM.Weaken(5)
@@ -991,7 +977,7 @@
 				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.handcuffed || CM.buckled)
+						if(!CM.handcuffed)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))
 							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
@@ -1076,6 +1062,11 @@
 		return
 
 	if(crawling)
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
+				to_chat(C, "<span class='danger'>I'm in so much pain! I can not get up!</span>")
+				return
 		crawl_getup = TRUE
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
@@ -1326,9 +1317,6 @@
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
 
-/mob/living/proc/get_metabolism_factor()
-	return METABOLISM_FACTOR
-
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
 
@@ -1360,7 +1348,7 @@
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
 							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
 			vomitsound = get_sound_by_voice(src, SOUNDIN_MRIGVOMIT, SOUNDIN_FRIGVOMIT)
-			eye_blurry = max(10, eye_blurry)
+			blurEyes(10)
 			losebreath += 20
 		else
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
@@ -1385,7 +1373,6 @@
 				T.add_blood_floor(src)
 			else
 				T.add_vomit_floor(src, getToxLoss() > 0 ? VOMIT_TOXIC : vomit_type)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 	return TRUE
 
 /mob/living/get_targetzone()
@@ -1435,16 +1422,10 @@
 	return
 
 /mob/living/death(gibbed)
-	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
+	if(wabbajacked)
+		unwabbajack()
 	return ..()
-
-/mob/living/proc/update_beauty(datum/source, old_value)
-	if(old_value != 0.0)
-		RemoveElement(/datum/element/beauty, old_value)
-	if(beauty.Get() == 0.0)
-		return
-	AddElement(/datum/element/beauty, beauty.Get())
 
 //Throwing stuff
 /mob/living/proc/toggle_throw_mode()
@@ -1476,6 +1457,7 @@
 	drunkenness = max(value, drunkenness)
 
 /mob/living/proc/handle_drunkenness()
+	var/heal_mod = 0.0
 	if(drunkenness <= 0)
 		drunkenness = 0
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
@@ -1485,6 +1467,7 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk_catharsis)
 	else if(drunkenness >= DRUNKENNESS_CONFUSED)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/very_drunk)
+		SEND_SIGNAL(src, COMSIG_HUMAN_ON_ADJUST_DRUGINESS, src)
 	else if(drunkenness >= DRUNKENNESS_SLUR)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 
@@ -1494,18 +1477,28 @@
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
+		heal_mod = 10.0
 		return
 
 	if(drunkenness >= DRUNKENNESS_BLUR)
-		eye_blurry = max(eye_blurry, 2)
+		blurEyes(2)
+		heal_mod = 8.0
 
 	if(drunkenness >= DRUNKENNESS_SLUR)
 		if(drowsyness)
 			drowsyness = max(drowsyness, 3)
 		slurring = max(slurring, 3)
+		heal_mod = 4.0
 
 	if(drunkenness >= DRUNKENNESS_CONFUSED)
 		MakeConfused(2)
+		heal_mod = 6.0
+
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HEALING_ALCOHOL))
+		adjustBruteLoss(-1.0 * heal_mod)
+		adjustFireLoss(-1.0 * heal_mod)
+		AdjustWeakened(-0.5 * heal_mod)
+		adjustHalLoss(-2.0 * heal_mod)
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()

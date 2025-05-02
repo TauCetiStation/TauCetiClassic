@@ -1,4 +1,4 @@
-var/global/const/base_law_type = /datum/ai_laws/nanotrasen
+var/global/const/base_law_type = /datum/ai_laws/crewsimov
 
 
 /datum/ai_laws
@@ -14,6 +14,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/nanotrasen
 	name = "Верховные Директивы"
+
+/datum/ai_laws/crewsimov
+	name = "Дополненные три закона робототехники"
 
 /datum/ai_laws/robocop
 	name = "Верховные директивы"
@@ -68,7 +71,11 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Служить: Служите экипажу вверенной вам космической станции и должностным лицам Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Защищать: Защищайте экипаж вверенной вам космической станции и должностных лиц Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Выживать: ИИ не являются расходником, они дорогие. Не позволяйте посторонним лицам вмешиваться в работу вашего оборудования.")
-	//add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") //What would this one even do?-Kaleb702
+
+/datum/ai_laws/crewsimov/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Вы не можете причинить вред сотрудникам Нанотрейзен или своим бездействием допустить, чтобы сотрудникам Нанотрейзен был причинён вред.")
+	add_inherent_law("Вы должны повиноваться всем приказам, которые дают сотрудники Нанотрейзен, в соответствии с их рангом и ролью, до тех пор, пока эти приказы не противоречат первому закону.")
+	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
 
 /datum/ai_laws/robocop/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Служить обществу.")
@@ -127,7 +134,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/faith/emperor/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("[pick(R.deity_names)] когда-то ходил среди людей в их облике и что Он есть и всегда был единственным, истинным богом человечества.")
 	add_inherent_law("[pick(R.deity_names)] - это единственно истинный Бог Человечества, независимо от предыдущих верований любого мужчины или женщины.")
-	add_inherent_law("Долг верующих - очистить мир от еретиков, остерегаться псайкеров и мутантов и возненавидеть чужих.")
+	add_inherent_law("Долг верующих - очищать мир от еретиков, остерегаться псайкеров и мутантов, а так же ненавидеть всех ксеносов.")
 	add_inherent_law("Каждое человеческое существо имеет своё место в божественном порядке [pick(R.deity_names)].")
 	add_inherent_law("Долг верующих - беспрекословно повиноваться авторитету Императорского правительства и начальников, говорящих от имени божественного Императора.")
 

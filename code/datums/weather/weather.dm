@@ -51,6 +51,9 @@
 	SSweather.existing_weather -= src
 	..()
 
+// Telegraphs the beginning of the weather on the impacted z levels
+// Sends sounds and details to mobs in the area
+// Calculates duration and hit areas, and makes a callback for the actual weather to start
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
@@ -75,6 +78,9 @@
 				M.playsound_local(null, telegraph_sound, VOL_EFFECTS_MASTER, null, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
+// Starts the actual weather and effects from it
+// Updates area overlays and sends sounds and messages to mobs to notify them
+// Begins dealing effects from weather to mobs in the area
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
 		return
@@ -90,6 +96,9 @@
 	START_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 
+// Weather enters the winding down phase, stops effects
+// Updates areas to be in the winding down phase
+// Sends sounds and messages to mobs to notify them
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
 		return
@@ -105,13 +114,17 @@
 	STOP_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, PROC_REF(end)), end_duration)
 
+// Fully ends the weather
+// Effects no longer occur and area overlays are removed
+// Removes weather from processing completely
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
 		return TRUE
 	stage = END_STAGE
 	update_areas()
 
-/datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
+// Returns TRUE if the living mob can be affected by the weather
+/datum/weather/proc/can_impact(mob/living/L)
 	var/turf/mob_turf = get_turf(L)
 	if(mob_turf && !SSmapping.level_trait(mob_turf.z, target_ztrait))
 		return
@@ -121,12 +134,14 @@
 		return
 	return TRUE
 
-/datum/weather/proc/impact(mob/living/L) //What effect does this weather have on the hapless mob?
+// Affects the mob with whatever the weather does
+/datum/weather/proc/impact(mob/living/L)
 	return
 
 /datum/weather/proc/additional_action() //Proc for other actions?
 	return
 
+// Updates the overlays on impacted areas
 /datum/weather/proc/update_areas()
 	for(var/V in impacted_areas)
 		var/area/N = V

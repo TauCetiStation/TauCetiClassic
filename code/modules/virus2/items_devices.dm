@@ -3,7 +3,7 @@
 /obj/item/device/antibody_scanner
 	name = "Antibody Scanner"
 	desc = "Scans living beings for antibodies in their blood."
-	icon_state = "health"
+	icon_state = "virus"
 	w_class = SIZE_TINY
 	item_state = "electronic"
 	flags = CONDUCT
@@ -62,7 +62,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
-		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(src)]")
+		message_admins("Virus dish shattered by [key_name_admin(user)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(src)]")
 		log_game("Virus dish shattered by [key_name(user)] in [COORD(src)]")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
@@ -97,7 +97,7 @@
 
 /obj/item/weapon/diseasedisk
 	name = "blank GNA disk"
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/disks.dmi'
 	icon_state = "datadisk0"
 	var/datum/disease2/effectholder/effect = null
 	var/list/species = null

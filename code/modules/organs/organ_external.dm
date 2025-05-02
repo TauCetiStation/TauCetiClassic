@@ -82,7 +82,7 @@
 		owner.bad_bodyparts -= src
 	QDEL_LIST(bodypart_organs)
 	if(pumped)
-		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
+		owner.mob_metabolism_mod.RemoveMods(src)
 	return ..()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
@@ -436,7 +436,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				qdel(owner.shoes)
 	if(pumped)
-		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
+		owner.mob_metabolism_mod.RemoveMods(src)
 
 	owner.update_body()
 	if(body_zone == BP_HEAD)
@@ -569,42 +569,51 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	update_sprite()
-	var/mutable_appearance/MA = mutable_appearance(icon, icon_state, -icon_layer)
-	MA.color = color
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
+	. = list(base_appearance)
 
-	return MA
+	if(species && species.alpha_color_mask)
+		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
+		color_appearance.color = color
+		. += color_appearance
+	else
+		base_appearance.color = color
 
 /obj/item/organ/external/head/get_icon(icon_layer)
 	if (!owner)
 		return
 
 	update_sprite()
-	var/mutable_appearance/MA = mutable_appearance(icon, icon_state, -icon_layer)
-	MA.color = color
-	. = list(MA)
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
+	. = list(base_appearance)
 
-	//Eyes
+	if(species && species.alpha_color_mask)
+		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
+		color_appearance.color = color
+		. += color_appearance
+	else
+		base_appearance.color = color
+
 	if(species && species.eyes)
-		var/eyes_layer = -icon_layer
-		var/mutable_appearance/img_eyes_s = mutable_appearance(species.eyes_icon, species.eyes, eyes_layer)
+		var/mutable_appearance/eyes_appearance = mutable_appearance(species.eyes_icon, species.eyes, -icon_layer)
 		if(species.eyes_glowing)
-			img_eyes_s.plane = LIGHTING_LAMPS_PLANE
-			img_eyes_s.layer = ABOVE_LIGHTING_LAYER
+			eyes_appearance.plane = LIGHTING_LAMPS_PLANE
+			eyes_appearance.layer = ABOVE_LIGHTING_LAYER
 
 		if(HULK in owner.mutations)
-			img_eyes_s.color = "#ff0000"
+			eyes_appearance.color = "#ff0000"
 		else if(species.name == SHADOWLING || iszombie(owner))
-			img_eyes_s.color = null
+			eyes_appearance.color = null
 		else
-			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+			eyes_appearance.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
 
-		. += img_eyes_s
+		. += eyes_appearance
 
 	//Mouth	(lipstick!)
 	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
-		var/mutable_appearance/lips = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -icon_layer)
-		lips.color = owner.lip_color
-		. += lips
+		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -icon_layer)
+		lips_appearance.color = owner.lip_color
+		. += lips_appearance
 
 // Runs once when attached
 /obj/item/organ/external/proc/check_rejection()
@@ -700,6 +709,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/chest
 	name = "chest"
+	cases = list("грудь", "груди", "груди", "грудь", "грудью", "груди")
 	artery_name = "aorta"
 
 	temp_coeff = 1.08
@@ -719,6 +729,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/groin
 	name = "groin"
+	cases = list("пах", "паха", "паху", "пах", "пахом", "пахе")
 	artery_name = "iliac artery"
 
 	temp_coeff = 1.06
@@ -739,6 +750,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head
 	name = "head"
+	cases = list("голова", "головы", "голове", "голову", "головой", "голове")
 	desc = "This one will be silent forever. Isn't it beautiful?"
 	force = 5
 	throwforce = 10
@@ -900,6 +912,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [I]!</span>")
 
 					brainmob.log_combat(user, "debrained with [I.name] (INTENT: [uppertext(user.a_intent)])")
+					SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, brainmob)
+
 
 					if(istype(src,/obj/item/organ/external/head/robot))
 						var/obj/item/device/mmi/posibrain/B = new(loc)
@@ -929,6 +943,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+	cases = list("левая рука", "левой руки", "левой руке", "левую руку", "левой рукой", "левой руке")
 	desc = "Need a hand?"
 	force = 7
 
@@ -965,6 +980,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm/diona
 	name = "left upper tendril"
+	cases = list("левый верхний отросток", "левого верхнего отростка", "левому верхнему отростку", "левый верхний отросток", "левым верхним отростком", "левом верхнем отростком")
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -973,6 +989,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
+	cases = list("правая рука", "правой руки", "правой руке", "правую руку", "правой рукой", "правой руке")
 	desc = "A right hand for the job."
 	force = 7
 	artery_name = "basilic vein"
@@ -1008,6 +1025,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm/diona
 	name = "right upper tendril"
+	cases = list("правый верхний отросток", "правого верхнего отростка", "правому верхнему отростку", "правый верхний отросток", "правым верхним отростком", "правым верхнем отростком")
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -1016,6 +1034,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg
 	name = "left leg"
+	cases = list("левая нога", "левой ноги", "левой ноге", "левую ногу", "левой ногой", "левой ноге")
 	desc = "Break a leg! Somebody else's leg. With this leg."
 	force = 9
 	artery_name = "femoral artery"
@@ -1039,6 +1058,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg/diona
 	name = "left lower tendril"
+	cases = list("левый нижний отросток", "левого нижнего отростка", "левому нижнему отростку", "левый нижний отросток", "левым нижним отростком", "левом нижнем отростком")
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -1047,6 +1067,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
+	cases = list("правая нога", "правой ноги", "правой ноге", "правую ногу", "правой ногой", "правой ноге")
 	desc = "The infamous third leg."
 	force = 9
 
@@ -1071,6 +1092,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg/diona
 	name = "right lower tendril"
+	cases = list("правый нижний отросток", "правого нижнего отростка", "правому нижнему отростку", "правый нижний отросток", "правым нижним отростком", "правым нижнем отростком")
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 

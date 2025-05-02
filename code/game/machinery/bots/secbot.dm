@@ -97,7 +97,7 @@
 		Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 		Maintenance panel panel is [open ? "opened" : "closed"]"},
 
-		"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
+		"<A href='byond://?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>
@@ -107,11 +107,11 @@
 			Report Arrests: []<BR>
 			Auto Patrol: []"},
 
-			"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-			"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-			"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-			"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+			"<A href='byond://?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+			"<A href='byond://?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+			"<A href='byond://?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+			"<A href='byond://?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
+			"<A href='byond://?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 	var/datum/browser/popup = new(user, "window=autosec", src.name)
 	popup.set_content(dat)
@@ -628,20 +628,6 @@
 		mode = SECBOT_HUNT
 
 //Secbot Construction
-
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
-		return ..()
-
-	var/obj/item/device/assembly/signaler/S = I
-	if(!S.secured)
-		return ..()
-
-	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
-	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add \the [S] to the helmet.</span>")
-	qdel(S)
-	qdel(src)
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	if(iswelding(I) && !build_step)

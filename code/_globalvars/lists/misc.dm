@@ -29,7 +29,6 @@ var/global/list/roles_ingame_minute_unlock = list(
 	ROLE_SHADOWLING = 4320,
 	ROLE_FAMILIES = 2160,
 	ROLE_REPLICATOR = 2880,
-	ROLE_IMPOSTER = 720,
 	ROLE_GHOSTLY = 360,
 )
 
@@ -127,6 +126,7 @@ var/global/static/list/radial_question = list(
 var/global/list/hex_by_color
 
 // Use /hex2color(hex) for find color
+// what palette are these colors from? why we need it?
 var/global/static/list/color_by_hex = list(
 	"black" = "#000000",
 	"navy_blue" = "#000080",
@@ -198,3 +198,5 @@ var/global/static/list/color_by_hex = list(
 var/global/list/deconverted_roles = list()
 
 var/global/list/reagents_list = typecacheof(/datum/reagent)
+
+var/global/list/virus_types_by_pool

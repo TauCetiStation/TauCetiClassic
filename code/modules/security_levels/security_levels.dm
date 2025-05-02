@@ -1,5 +1,7 @@
-/var/security_level = 0
+/var/security_level = SEC_LEVEL_GREEN
 /var/delta_timer_id = 0
+var/global/list/code_name_eng = list("green", "blue", "red", "delta")
+var/global/list/code_name_ru = list("зелёный", "синий", "красный", "дельта")
 
 /proc/set_security_level(level)
 	switch(level)
@@ -17,6 +19,8 @@
 		var/datum/announcement/station/code/code_announce
 		switch(level)
 			if(SEC_LEVEL_GREEN)
+				if(security_level == SEC_LEVEL_DELTA)
+					SSsmartlight.reset_smartlight()
 				security_level = SEC_LEVEL_GREEN
 				code_announce = new /datum/announcement/station/code/downtogreen
 
@@ -32,6 +36,8 @@
 					code_announce = new /datum/announcement/station/code/uptoblue
 				else
 					code_announce = new /datum/announcement/station/code/downtoblue
+				if(security_level == SEC_LEVEL_DELTA)
+					SSsmartlight.reset_smartlight()
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
@@ -45,6 +51,8 @@
 					code_announce = new /datum/announcement/station/code/uptored
 				else
 					code_announce = new /datum/announcement/station/code/downtored
+				if(security_level == SEC_LEVEL_DELTA)
+					SSsmartlight.reset_smartlight()
 				security_level = SEC_LEVEL_RED
 
 				var/obj/machinery/computer/communications/CC = locate() in communications_list
@@ -67,7 +75,9 @@
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
 				if(!delta_timer_id)
 					delta_alarm()
-		SSsmartlight.check_nightshift() // Night shift mode turns off if security level is raised to red or above
+				SSsmartlight.update_mode(light_modes_by_name["Code Delta"], TRUE)
+			// commented in favor of deltacode above, also because we don't use NS actively atm. Need to revisit this
+			//SSsmartlight.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 		code_announce.play()
 	else
 		return
@@ -85,36 +95,3 @@ var/global/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenanc
             else if (is_type_in_typecache(A, loud_alarm_areas))
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
     return
-
-/proc/get_security_level()
-	switch(security_level)
-		if(SEC_LEVEL_GREEN)
-			return "green"
-		if(SEC_LEVEL_BLUE)
-			return "blue"
-		if(SEC_LEVEL_RED)
-			return "red"
-		if(SEC_LEVEL_DELTA)
-			return "delta"
-
-/proc/num2seclevel(num)
-	switch(num)
-		if(SEC_LEVEL_GREEN)
-			return "green"
-		if(SEC_LEVEL_BLUE)
-			return "blue"
-		if(SEC_LEVEL_RED)
-			return "red"
-		if(SEC_LEVEL_DELTA)
-			return "delta"
-
-/proc/seclevel2num(seclevel)
-	switch( lowertext(seclevel) )
-		if("green")
-			return SEC_LEVEL_GREEN
-		if("blue")
-			return SEC_LEVEL_BLUE
-		if("red")
-			return SEC_LEVEL_RED
-		if("delta")
-			return SEC_LEVEL_DELTA

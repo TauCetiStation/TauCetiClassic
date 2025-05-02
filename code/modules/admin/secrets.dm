@@ -17,112 +17,112 @@
 
 	var/dat
 
-	dat += "<a href='?src=\ref[src];secretsmenu=tab;tab=0' [current_tab == 0 ? "class='selected'" : ""]>Debug</a>"
-	dat += "<a href='?src=\ref[src];secretsmenu=tab;tab=1' [current_tab == 1 ? "class='selected'" : ""]>IC Events</a>"
-	dat += "<a href='?src=\ref[src];secretsmenu=tab;tab=2' [current_tab == 2 ? "class='selected'" : ""]>OOC Events</a>"
+	dat += "<a href='byond://?src=\ref[src];secretsmenu=tab;tab=0' [current_tab == 0 ? "class='selected'" : ""]>Debug</a>"
+	dat += "<a href='byond://?src=\ref[src];secretsmenu=tab;tab=1' [current_tab == 1 ? "class='selected'" : ""]>IC Events</a>"
+	dat += "<a href='byond://?src=\ref[src];secretsmenu=tab;tab=2' [current_tab == 2 ? "class='selected'" : ""]>OOC Events</a>"
 
 	switch(current_tab)
 		if(0) // Debug
 			if(check_rights(R_ADMIN,0))
 				dat += {"
 					<h4>Game</h4>
-					<A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
-					<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
-					<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
-					<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
-					<A href='?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
-					<A href='?src=\ref[src];secretsadmin=smartlight_set'>Set Smart Light Mode</A><BR>
-					<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
-					<A href='?src=\ref[src];secretsadmin=restore_air'>Restore air in your zone</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=smartlight_set'>Set Smart Light Mode</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=restore_air'>Restore air in your zone</A><BR>
 					<h4>Bombs</h4>
-					[check_rights(R_SERVER,0) ? "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>" : "<BR>"]
+					[check_rights(R_SERVER,0) ? "<A href='byond://?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>" : "<BR>"]
 					<h4>Lists</h4>
-					<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
-					<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
-					<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
-					<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
-					<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR>
 					<h4>Power</h4>
-					<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
-					<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
-					<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
-					<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
-					<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
 					"}
 			else
 				if(check_rights(R_SERVER,0)) //only add this if admin secrets are unavailiable; otherwise, it's added inline
-					dat += "<b>Bomb cap: </b><A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
+					dat += "<b>Bomb cap: </b><A href='byond://?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
 					dat += "<BR>"
 
 			if(check_rights(R_DEBUG,0))
 				dat += {"
 					<h4>Security Level Elevated</h4>
-					<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
-					<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-					<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
+					<A href='byond://?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
+					<A href='byond://?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
+					<A href='byond://?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
 					<h4>Coder Secrets</h4>
-					<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-					<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
-					<A href='?src=\ref[src];secretscoder=topicspam'>Spam to Topic()</A><BR>
+					<A href='byond://?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
+					<A href='byond://?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+					<A href='byond://?src=\ref[src];secretscoder=topicspam'>Spam to Topic()</A><BR>
 					"}
 
 		if(1) // IC Events
 			if(check_rights((R_EVENT|R_FUN),0))
 				dat += {"
 					<h4>Teams</h4>
-					<A href='?src=\ref[src];secretsfun=syndstriketeam'>Send in a Syndicate Strike Team</A><BR>
-					<A href='?src=\ref[src];secretsfun=striketeam'>Send in a Deathsquad</A><BR>
-					<A href='?src=\ref[src];secretsfun=police'>Send in a Space Police</A><BR>
-					<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a Space Ninja</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=syndstriketeam'>Send in a Syndicate Strike Team</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=striketeam'>Send in a Deathsquad</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=police'>Send in a Space Police</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=spaceninja'>Send in a Space Ninja</A><BR>
 					<h4>Change Security Level</h4>
-					<A href='?src=\ref[src];secretsfun=securitylevel0'>Security Level - Green</A><BR>
-					<A href='?src=\ref[src];secretsfun=securitylevel1'>Security Level - Blue</A><BR>
-					<A href='?src=\ref[src];secretsfun=securitylevel2'>Security Level - Red</A><br>
-					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=securitylevel0'>Security Level - Green</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=securitylevel1'>Security Level - Blue</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=securitylevel2'>Security Level - Red</A><br>
+					<A href='byond://?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
 					<h4>Do something stupid</h4>
-					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
-					<A href='?src=\ref[src];secretsfun=forcedquality'>Force a \"Random\" Quality</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=forcedquality'>Force a \"Random\" Quality</A><BR>
 					"}
 
 		if(2) // OOC Events
 			if(check_rights((R_FUN|R_EVENT),0))
 				dat += {"
 					<h4>Clothing</h4>
-					<A href='?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
-					<A href='?src=\ref[src];secretsfun=sec_all_clothes'>Remove ALL clothing</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=sec_all_clothes'>Remove ALL clothing</A><BR>
 					<h4>TDM</h4>
-					<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
-					<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
 					<h4>Round-enders</h4>
-					<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
-					<A href='?src=\ref[src];secretsfun=corgi'>Turn all humans into corgi</A><BR>
-					<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
-					<A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
-					<A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
-					<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
-					<A href='?src=\ref[src];secretsfun=advanceddarkness'>Advanced darkness! (DANGEROUS: extremely dark)</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=corgi'>Turn all humans into corgi</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=advanceddarkness'>Advanced darkness! (DANGEROUS: extremely dark)</A><BR>
 					"}
 				if(check_rights(R_VAREDIT, 0))
-					dat += "<A href='?src=\ref[src];secretsadmin=mass_sleep'>Put everyone to sleep</A><BR>"
+					dat += "<A href='byond://?src=\ref[src];secretsadmin=mass_sleep'>Put everyone to sleep</A><BR>"
 				dat += {"
 					<h4>AI</h4>
-					<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
-					<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
 					<h4>Modes</h4>
-					<A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
-					<A href='?src=\ref[src];secretsfun=dorf'>Dorf Mode</A><BR>
-					<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
-					<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=dorf'>Dorf Mode</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
 					<h4>Shuttles</h4>
-					<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-					<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
-					<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 					<h4>Misc</h4>
-					<A href='?src=\ref[src];secretsfun=gravity'>Toggle Gravity</A><BR>
-					<A href='?src=\ref[src];secretsfun=frost'>!Freeze the station!</A><BR>
-					<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
-					<A href='?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
-					<A href='?src=\ref[src];secretsfun=global_sound_speed'>Set global sound speed modifier</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=gravity'>Toggle Gravity</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=frost'>!Freeze the station!</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
+					<A href='byond://?src=\ref[src];secretsfun=global_sound_speed'>Set global sound speed modifier</A><BR>
 					"}
 
 	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 812)
@@ -294,13 +294,6 @@
 
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ShM")
-		// Move Administration Shuttle
-		if("moveadminshuttle")
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShA")
-			move_admin_shuttle()
-			message_admins("<span class='notice'>[key_name_admin(usr)] moved the centcom administration shuttle</span>")
-			log_admin("[key_name(usr)] moved the centcom administration shuttle")
 		// Move Ferry
 		if("moveferry")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -483,16 +476,16 @@
 			message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 		// Security levels
 		if("securitylevel0")
-			set_security_level(0)
+			set_security_level(SEC_LEVEL_GREEN)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Green.</span>", 1)
 		if("securitylevel1")
-			set_security_level(1)
+			set_security_level(SEC_LEVEL_BLUE)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Blue.</span>", 1)
 		if("securitylevel2")
-			set_security_level(2)
+			set_security_level(SEC_LEVEL_RED)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Red.</span>", 1)
 		if("securitylevel3")
-			set_security_level(3)
+			set_security_level(SEC_LEVEL_DELTA)
 			message_admins("<span class='notice'>[key_name_admin(usr)] change security level to Delta.</span>", 1)
 		// Drop asteroid
 		if("drop_asteroid")
@@ -586,7 +579,7 @@
 				GM.temperature = 293
 				GM.update_values()
 
-				message_admins("[key_name_admin(usr)] has restored air in [COORD(T)] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
+				message_admins("[key_name_admin(usr)] has restored air in [COORD(T)] <a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 			else
 				to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 		// Bombing List

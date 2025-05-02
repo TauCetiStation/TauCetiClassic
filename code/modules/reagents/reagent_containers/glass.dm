@@ -78,7 +78,7 @@
 		if(istype(target, type))
 			return
 
-	if(ismob(target) && target.reagents && reagents.total_volume && user.a_intent == INTENT_HARM)
+	if(ismob(target) && target.reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
 
 		var/mob/living/M = target
@@ -141,7 +141,8 @@
 				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == INTENT_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
 				return
 
-	else if(reagents && reagents.total_volume && user.a_intent == INTENT_HARM)
+
+	else if(reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
 		reagents.standard_splash(target, user=user)
 		return

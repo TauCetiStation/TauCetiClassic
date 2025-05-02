@@ -34,17 +34,17 @@
 	icon_state = "[body_zone]_[ipc_head]"
 	color = original_color
 
-/obj/item/organ/external/head/robot/ipc/alien
-	ipc_head = "Alien"
+/obj/item/organ/external/head/robot/ipc/cobalt
+	ipc_head = "Cobalt"
 
-/obj/item/organ/external/head/robot/ipc/double
-	ipc_head = "Double"
+/obj/item/organ/external/head/robot/ipc/cathod
+	ipc_head = "Cathod"
 
-/obj/item/organ/external/head/robot/ipc/pillar
-	ipc_head = "Pillar"
+/obj/item/organ/external/head/robot/ipc/thorax
+	ipc_head = "Thorax"
 
-/obj/item/organ/external/head/robot/ipc/human
-	ipc_head = "Human"
+/obj/item/organ/external/head/robot/ipc/axon
+	ipc_head = "Axon"
 
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"

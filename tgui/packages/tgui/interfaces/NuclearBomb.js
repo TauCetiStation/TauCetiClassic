@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { Button, Box, Grid, LabeledList, Section, ProgressBar } from '../components';
+import {
+  Button,
+  Box,
+  Grid,
+  LabeledList,
+  Section,
+  ProgressBar,
+} from '../components';
 import { Window } from '../layouts';
 
 const NukeKeypad = (props, context) => {
@@ -9,19 +16,13 @@ const NukeKeypad = (props, context) => {
     ['2', '5', '8', '0'],
     ['3', '6', '9', 'E'],
   ];
-  const {
-    code,
-    hasDisk,
-    deployed,
-  } = data;
+  const { code, hasDisk, deployed } = data;
   return (
-    <Box
-      width="218px"
-      align="center">
+    <Box width="306px" align="center">
       <Grid width="35%">
-        {keypadKeys.map(keyColumn => (
+        {keypadKeys.map((keyColumn) => (
           <Grid.Column key={keyColumn[0]}>
-            {keyColumn.map(key => (
+            {keyColumn.map((key) => (
               <Button
                 fluid
                 bold
@@ -32,8 +33,11 @@ const NukeKeypad = (props, context) => {
                 fontSize="20px"
                 height="25px"
                 lineHeight={1.25}
-                disabled={code==="ERROR" && key!=="R" || !hasDisk || !deployed}
-                onClick={() => act('type', { digit: key })} />
+                disabled={
+                  (code === 'ERROR' && key !== 'R') || !hasDisk || !deployed
+                }
+                onClick={() => act('type', { digit: key })}
+              />
             ))}
           </Grid.Column>
         ))}
@@ -56,44 +60,53 @@ export const NuclearBomb = (props, context) => {
     timerMax,
   } = data;
   return (
-    <Window
-      width={237}
-      height={400}>
+    <Window width={326} height={400}>
       <Window.Content>
-        <Section title="Status" fill buttons={(
-          <Button
-            color={deployed ? "green" : "red"}
-            content={deployed ? "Deployed" : "Undeployed"}
-            icon={"power-off"}
-            disabled={!safety || timing}
-            onClick={() => act('deploy')}
-          />
-        )}>
-          <LabeledList>
-            <LabeledList.Item label="Authentication Disk">
+        <Section
+          title="Статус"
+          fill
+          buttons={
+            <Box textAlign="right">
               <Button
-                selected={hasDisk}
-                icon={"eject"}
-                content={hasDisk ? "Inserted" : "None"}
-                disabled={!deployed}
-                onClick={() => act(hasDisk ? 'ejectDisk' : 'insertDisk')}
+                color={deployed ? 'green' : 'red'}
+                content={deployed ? 'Развернута' : 'Не развернута'}
+                icon={'power-off'}
+                disabled={!safety || timing}
+                onClick={() => act('deploy')}
               />
+            </Box>
+          }>
+          <LabeledList>
+            <LabeledList.Item label="Диск аутентификации">
+              <Box textAlign="right">
+                <Button
+                  selected={hasDisk}
+                  icon={'eject'}
+                  content={hasDisk ? 'Вставлен' : 'Не вставлен'}
+                  disabled={!deployed}
+                  onClick={() => act(hasDisk ? 'ejectDisk' : 'insertDisk')}
+                />
+              </Box>
             </LabeledList.Item>
           </LabeledList>
           <br />
-          <Box
-            fontSize="25px"
-            textAlign="center"
-            position="center">
-            {code && (code) || (
-              <Box textColor={authorized ? "green" : "red"}>
-                {authorized ? "ALLOWED" : hasDisk ? "ENTER CODE" : deployed ? "INSERT DISK" : "DEPLOY"}
-              </Box>)}
+          <Box fontSize="25px" textAlign="center" position="center">
+            {(code && code) || (
+              <Box textColor={authorized ? 'green' : 'red'}>
+                {authorized
+                  ? 'ДОСТУП РАЗРЕШЁН'
+                  : hasDisk
+                    ? 'ВВЕДИТЕ КОД'
+                    : deployed
+                      ? 'ВСТАВЬТЕ ДИСК'
+                      : 'ДИСК НЕ ВСТАВЛЕН'}
+              </Box>
+            )}
           </Box>
           <NukeKeypad />
           <br />
           <LabeledList>
-            <LabeledList.Item label="Time Left">
+            <LabeledList.Item label="Осталось времени">
               <ProgressBar
                 value={timeLeft / timerMax}
                 ranges={{
@@ -101,10 +114,10 @@ export const NuclearBomb = (props, context) => {
                   average: [0.25, 0.65],
                   bad: [-Infinity, 0.25],
                 }}>
-                {timeLeft} seconds
+                {timeLeft} секунд
               </ProgressBar>
             </LabeledList.Item>
-            <LabeledList.Item label="Time Regulator">
+            <LabeledList.Item label="Регулятор таймера">
               <Button
                 icon="fast-backward"
                 disabled={!authorized || timeLeft <= timerMin}
@@ -130,21 +143,21 @@ export const NuclearBomb = (props, context) => {
                 onClick={() => act('adjustTimer', { time: timerMax })}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Safety">
+            <LabeledList.Item label="Предохранитель">
               <Button
                 selected={safety}
-                icon={safety ? "toggle-on" : "toggle-off"}
-                content={safety ? "Enabled" : "Disabled"}
-                disabled={!authorized || timing && !safety}
+                icon={safety ? 'toggle-on' : 'toggle-off'}
+                content={safety ? 'Включён' : 'Отключён'}
+                disabled={!authorized || (timing && !safety)}
                 onClick={() => act('toggleSafety')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Timer">
+            <LabeledList.Item label="Таймер">
               <Button
                 selected={timing}
-                icon={"power-off"}
+                icon={'power-off'}
                 disabled={!authorized || safety}
-                content={timing ? "Enabled" : "Disabled"}
+                content={timing ? 'Включён' : 'Отключён'}
                 onClick={() => act('bombSet')}
               />
             </LabeledList.Item>

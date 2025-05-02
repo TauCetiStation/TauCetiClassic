@@ -175,7 +175,7 @@
 	damage = 10
 
 /obj/item/projectile/missile/emp/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	empulse(target, 4, 10)
+	empulse(target, 4, 10, custom_effects = EMP_SEBB)
 	return 1
 
 /obj/item/projectile/anti_singulo
@@ -210,6 +210,13 @@
 	flag = BIO
 
 /obj/item/projectile/acid_special
+	name = "acid"
+	icon_state = "neurotoxin"
+	damage = 25
+	damage_type = TOX
+	flag = BULLET
+
+/obj/item/projectile/acid_special_spider
 	name = "acid"
 	icon_state = "neurotoxin"
 	damage = 25

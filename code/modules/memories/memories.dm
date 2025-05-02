@@ -31,7 +31,7 @@
 
 		output += "[key] as [memory]<BR>"
 
-	output += "<a href=?src=\ref[mind];add_key_memory=1>Add/Remove a Memory</a><BR>"
+	output += "<a href=byond://?src=\ref[mind];add_key_memory=1>Add/Remove a Memory</a><BR>"
 
 	var/datum/browser/popup = new(src, "window=key_memories")
 	popup.set_content(output)

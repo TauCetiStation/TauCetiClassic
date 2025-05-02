@@ -80,6 +80,8 @@
 			return has_bodypart(BP_CHEST)
 		if(SLOT_WEAR_MASK)
 			return has_bodypart(BP_HEAD)
+		if(SLOT_NECK)
+			return has_bodypart(BP_HEAD)
 		if(SLOT_HANDCUFFED)
 			return has_bodypart(BP_L_ARM) && has_bodypart(BP_R_ARM)
 		if(SLOT_LEGCUFFED)
@@ -158,6 +160,8 @@
 		if(internal)
 			internal = null
 		sec_hud_set_security_status()
+	else if (W == neck)
+		neck = null
 	else if (W == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
@@ -217,6 +221,9 @@
 			src.wear_mask = W
 			W.equipped(src, slot)
 			sec_hud_set_security_status()
+		if(SLOT_NECK)
+			neck = W
+			W.equipped(src, slot)
 		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 		if(SLOT_LEGCUFFED)
@@ -244,7 +251,6 @@
 				O.loc = src
 				src.r_ear = O
 				O.plane = ABOVE_HUD_PLANE
-				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 		if(SLOT_R_EAR)
 			src.r_ear = W
@@ -253,7 +259,6 @@
 				O.loc = src
 				src.l_ear = O
 				O.plane = ABOVE_HUD_PLANE
-				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 		if(SLOT_GLASSES)
 			src.glasses = W
@@ -306,7 +311,6 @@
 		W.update_inv_mob()
 
 	W.plane = ABOVE_HUD_PLANE
-	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
 	W.update_inv_mob()
 

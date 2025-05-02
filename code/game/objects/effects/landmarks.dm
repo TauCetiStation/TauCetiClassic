@@ -75,9 +75,9 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	switch(name)
 		if ("awaystart")
 			awaydestinations += src
-		if("Wizard")
+		/*if("Wizard")
 			wizardstart += loc
-			return INITIALIZE_HINT_QDEL
+			return INITIALIZE_HINT_QDEL*/
 		//prisoners
 		if("prisonwarp")
 			prisonwarp += loc
@@ -339,6 +339,9 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 // Roles
 /obj/effect/landmark/start/wizard
 	name = "Wizard"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "wiznerd_spawn"
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/velocity_officer
 	name = "Velocity Officer"

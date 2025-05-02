@@ -14,6 +14,8 @@
 	stat_type = /datum/stat/role/wizard
 
 	var/list/list_of_purchases = list()
+	///Used by midround wizard mainly for proper setup
+	var/rename = TRUE
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
@@ -74,7 +76,8 @@
 /datum/role/wizard/OnPostSetup(laterole)
 	. = ..()
 	equip_wizard(antag.current)
-	INVOKE_ASYNC(src, PROC_REF(name_wizard), antag.current)
+	if(rename)
+		INVOKE_ASYNC(src, PROC_REF(name_wizard), antag.current)
 
 /datum/role/wizard/forgeObjectives()
 	if(!..())
@@ -129,14 +132,14 @@
 
 /datum/role/wizard/extraPanelButtons()
 	var/dat = ..()
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_tp=1;'>(Tp to base)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_name=1'>(Choose name)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_equip=1'>(Equip)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_tp=1;'>(Tp to base)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_name=1'>(Choose name)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_equip=1'>(Equip)</a>"
 	return dat
 
 /datum/role/wizard/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	if(href_list["wiz_tp"])
-		M.current.forceMove(pick(wizardstart))
+		M.current.forceMove(pick_landmarked_location("Wizard"))
 
 	else if(href_list["wiz_name"])
 		INVOKE_ASYNC(src, PROC_REF(name_wizard), M.current)

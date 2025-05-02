@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { sendMessage } from 'tgui/backend';
 import { storage } from 'common/storage';
 import { createLogger } from 'tgui/logging';
 
@@ -14,12 +13,12 @@ const MAX_CONNECTIONS_STORED = 10;
 
 const decoder = decodeURIComponent || unescape;
 
-const getOldCookie = cname => {
-  let name = "tau-" + cname + '=';
+const getOldCookie = (cname) => {
+  let name = 'tau-' + cname + '=';
   let ca = document.cookie.split(';');
-  for (let i=0, c; i < ca.length; i++) {
+  for (let i = 0, c; i < ca.length; i++) {
     c = ca[i];
-    while (c.charAt(0)===' ') c = c.substring(1);
+    while (c.charAt(0) === ' ') c = c.substring(1);
     if (c.indexOf(name) === 0) {
       return decoder(c.substring(name.length, c.length));
     }
@@ -31,7 +30,7 @@ const getOldConnections = () => {
   let dataCookie = getOldCookie('connData');
   if (dataCookie) {
     try {
-      return JSON.parse(dataCookie).map(item => ({
+      return JSON.parse(dataCookie).map((item) => ({
         ckey: item.ckey,
         address: item.ip,
         computer_id: item.compid,
@@ -41,16 +40,15 @@ const getOldConnections = () => {
   return [];
 };
 
-const connectionsMatch = (a, b) => (
-  a.ckey === b.ckey
-    && a.address === b.address
-    && a.computer_id === b.computer_id
-);
+const connectionsMatch = (a, b) =>
+  a.ckey === b.ckey &&
+  a.address === b.address &&
+  a.computer_id === b.computer_id;
 
-export const telemetryMiddleware = store => {
+export const telemetryMiddleware = (store) => {
   let telemetry;
   let wasRequestedWithPayload;
-  return next => action => {
+  return (next) => (action) => {
     const { type, payload } = action;
     // Handle telemetry requests
     if (type === 'telemetry/request') {
@@ -64,10 +62,9 @@ export const telemetryMiddleware = store => {
       const limits = payload?.limits || {};
       // Trim connections according to the server limit
       const charset = document.defaultCharset;
-      const connections = telemetry.connections
-        .slice(0, limits.connections);
-      const localTime = (new Date()).getTimezoneOffset() * -60;
-      sendMessage({
+      const connections = telemetry.connections.slice(0, limits.connections);
+      const localTime = new Date().getTimezoneOffset() * -60;
+      Byond.sendMessage({
         type: 'telemetry',
         payload: {
           charset,
@@ -89,7 +86,7 @@ export const telemetryMiddleware = store => {
         }
         // Load telemetry
         if (!telemetry) {
-          telemetry = await storage.get('telemetry') || {};
+          telemetry = (await storage.get('telemetry')) || {};
           if (!telemetry.connections) {
             telemetry.connections = getOldConnections();
           }
@@ -97,8 +94,9 @@ export const telemetryMiddleware = store => {
         }
         // Append a connection record
         let telemetryMutated = false;
-        const duplicateConnection = telemetry.connections
-          .find(conn => connectionsMatch(conn, client));
+        const duplicateConnection = telemetry.connections.find((conn) =>
+          connectionsMatch(conn, client)
+        );
         if (!duplicateConnection) {
           telemetryMutated = true;
           telemetry.connections.unshift(client);

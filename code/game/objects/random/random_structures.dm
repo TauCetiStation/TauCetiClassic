@@ -204,6 +204,7 @@
 					prob(40);/obj/machinery/field_generator,\
 					prob(40);/obj/machinery/power/rad_collector,\
 					prob(40);/obj/machinery/iv_drip,\
+					prob(40);/obj/machinery/kitchen_machine/microwave,\
 					prob(30);/obj/machinery/power/emitter,\
 					prob(30);/obj/machinery/flasher/portable,\
 					prob(20);/obj/machinery/cell_charger,\

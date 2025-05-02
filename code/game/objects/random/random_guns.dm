@@ -57,10 +57,10 @@
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/colt1911,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/silenced,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
+						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/silenced/nonlethal,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/deagle,\
@@ -92,7 +92,7 @@
 		return pick(\
 						prob(15);/obj/item/weapon/gun/projectile/shotgun/bolt_action,\
 						prob(15);/obj/item/weapon/gun/projectile/shotgun/repeater,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/saber,\
 						prob(14);/obj/item/weapon/gun/projectile/automatic/c20r,\
 						prob(12);/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
 						prob(10);/obj/item/weapon/gun/projectile/automatic/bar,\
@@ -119,7 +119,7 @@
 	name = "Random Weapon"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 /obj/random/guns/weapon_item/item_to_spawn()
 		return pick(\
 						prob(100);/obj/random/guns/energy_weapon,\
@@ -148,7 +148,7 @@
 	name = "Random shotgun Weapon with ammunition"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 /obj/random/guns/set_shotgun/item_to_spawn()
 		return pick(\
 						prob(100);/obj/item/ammo_casing/shotgun/beanbag,\
@@ -164,7 +164,7 @@
 	name = "Random lethal Weapon with ammunition"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 /obj/random/guns/set_357/item_to_spawn()
 		return pick(\
 						prob(200);/obj/item/ammo_casing/a357,\
@@ -178,7 +178,7 @@
 	name = "Random lethal Weapon"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 
 /obj/random/guns/set_special/item_to_spawn()
 		return pick(\
@@ -188,7 +188,7 @@
 						/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off,\
 						/obj/item/weapon/gun/projectile/revolver,\
 						/obj/item/weapon/gun/projectile/revolver/detective,\
-						/obj/item/weapon/gun/projectile/automatic,\
+						/obj/item/weapon/gun/projectile/automatic/saber,\
 						/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
 						/obj/item/weapon/gun/projectile/automatic/c20r,\
 						/obj/item/weapon/gun/projectile/automatic/l13,\

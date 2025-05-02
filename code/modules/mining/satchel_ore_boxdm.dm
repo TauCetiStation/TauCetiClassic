@@ -35,7 +35,7 @@
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	for(var/obj/item/weapon/ore/O as anything in contents)
-		O.Move(loc)
+		O.forceMove(loc)
 
 /obj/structure/ore_box/deconstruct(disassembled)
 	dump_box_contents()
@@ -61,7 +61,7 @@
 		for(var/ore_type in stored_ore)
 			var/obj/item/weapon/ore/ore = ore_type
 			dat += {"<span class="orebox32x32 [replacetext(replacetext("[ore_type]", "[/obj/item]/", ""), "/", "-")]"></span><span style='position: relative; top: -10px;'><span class='orange'><B>x[stored_ore[ore_type]]</B></span> [initial(ore.name)]</span><br>"}
-		dat += "<br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
+		dat += "<br><A href='byond://?src=\ref[src];removeall=1'>Empty box</A>"
 	else
 		dat += "The box is empty"
 

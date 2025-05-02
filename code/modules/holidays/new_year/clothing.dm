@@ -52,7 +52,8 @@
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
 	hoodtype = /obj/item/clothing/head/wintercoat/captain
-	armor = list(melee = 35, bullet = 25, laser = 20, energy = 10, bomb = 15, bio = 0, rad = 0)
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/telebaton)
 
 /obj/item/clothing/head/wintercoat/captain
@@ -202,3 +203,41 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/head/pluvia
+	name = "pluvia non la"
+	desc = "Prepare to heavy rain"
+	icon_state = "pluvia_hat"
+	item_state = "pluvia_hat"
+	flags = HEADCOVERSEYES
+
+/obj/item/clothing/head/pluvia/white
+	icon_state = "wpluvia_hat"
+	item_state = "wpluvia_hat"
+
+/obj/item/clothing/head/ricehat
+	name = "non la"
+	desc = "welcome to the rice fields"
+	icon_state = "ricehat"
+	item_state = "ricehat"
+	flags = HEADCOVERSEYES
+
+
+/obj/item/clothing/head/rim_deer
+	name = "deer antlers"
+	desc = "Оленьи рожки"
+	icon_state = "rim_deer"
+	body_parts_covered = 0
+
+/obj/item/clothing/head/rim_rabbit
+	name = "rabbit ears"
+	desc = "Заячьи ушки"
+	icon_state = "rim_rabbit"
+	body_parts_covered = 0
+
+/obj/item/clothing/head/rim_fox
+	name = "fox ears"
+	desc = "Лисьи ушки"
+	icon_state = "rim_fox"
+	body_parts_covered = 0
+

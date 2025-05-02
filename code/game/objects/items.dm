@@ -2,8 +2,7 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_SMALL
-	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
-	var/abstract = 0
+	var/mutable_appearance/blood_overlay = null // current blood splatter overlay
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
@@ -98,6 +97,9 @@
 	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
+/**
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /obj/item/atom_init()
 	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
@@ -107,9 +109,14 @@
 	if(light_power && light_range)
 		update_light()
 
-	if(opacity && isturf(src.loc))
-		var/turf/T = src.loc
+	if(opacity && isturf(loc))
+		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(can_block_air && isturf(loc))
+		var/turf/T = loc
+		if(!T.can_block_air)
+			T.can_block_air = TRUE
 
 	if(uses_integrity)
 		if (!armor)
@@ -469,6 +476,12 @@
 				if( !(slot_flags & SLOT_FLAGS_MASK) )
 					return 0
 				return 1
+			if(SLOT_NECK)
+				if(H.neck)
+					return FALSE
+				if(!(slot_flags & SLOT_FLAGS_NECK) )
+					return FALSE
+				return TRUE
 			if(SLOT_BACK)
 				if(H.back)
 					return 0
@@ -670,7 +683,7 @@
 				if(C.mouth)
 					return FALSE
 				return TRUE
-			if(SLOT_NECK)
+			if(SLOT_IAN_NECK)
 				if(C.neck)
 					return FALSE
 				if(istype(src, /obj/item/weapon/handcuffs))
@@ -764,7 +777,7 @@
 			return
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
-	if(amount && !use(amount))
+	if(amount && !use(amount, user))
 		return
 
 	// Play tool sound at the end of tool usage,
@@ -839,6 +852,7 @@
 	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
 	M.log_combat(user, "eyestabbed with [name]")
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 
 	add_fingerprint(user)
 	if(M != user)
@@ -885,7 +899,7 @@
 		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+		G.dirt_transfers = 0
 	update_inv_mob()
 
 /obj/item/add_dirt_cover()
@@ -894,8 +908,9 @@
 		return
 	if(blood_overlay && blood_overlay.color == dirt_overlay.color)
 		return
-	generate_blood_overlay()
 	cut_overlay(blood_overlay)
+	blood_overlay = mutable_appearance('icons/effects/blood.dmi', "itemblood") // maybe need to move it to upper layer
+	blood_overlay.blend_mode = BLEND_INSET_OVERLAY
 	blood_overlay.color = dirt_overlay.color
 	add_overlay(blood_overlay)
 	update_inv_mob()
@@ -910,31 +925,15 @@
 	update_inv_mob() // if item on mob, update mob's icon too.
 	return 1 //we applied blood to the item
 
-/obj/item/proc/generate_blood_overlay()
-	var/static/list/items_blood_overlay_by_type = list()
-
-	if(blood_overlay)
-		return
-
-	if(items_blood_overlay_by_type[type])
-		blood_overlay = items_blood_overlay_by_type[type]
-		return
-
-	var/image/blood = image(icon = 'icons/effects/blood.dmi', icon_state = "itemblood") // Needs to be a new one each time since we're slicing it up with filters.
-	blood.filters += filter(type = "alpha", icon = icon(icon, icon_state)) // Same, this filter is unique for each blood overlay per type
-	items_blood_overlay_by_type[type] = blood
-
-	blood_overlay = blood
-
 /obj/item/proc/showoff(mob/user)
-	user.visible_message("[user] holds up [src]. <a HREF=?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
+	user.visible_message("[user] holds up [src]. <a href=byond://?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"
 	set category = "Object"
 
 	var/obj/item/I = get_active_hand()
-	if(I && !I.abstract)
+	if(I && !(I.flags & ABSTRACT))
 		I.showoff(src)
 
 /obj/item/proc/extinguish()

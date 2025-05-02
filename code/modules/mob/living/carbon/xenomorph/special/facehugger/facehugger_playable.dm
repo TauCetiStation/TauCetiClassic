@@ -87,8 +87,6 @@
 		return FALSE
 	if(incapacitated())
 		return FALSE
-	if(C.anchored)
-		return FALSE
 
 	return TRUE
 
@@ -178,7 +176,6 @@ This is chestburster mechanic for damaging
 	var/last_bite = 0
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 
@@ -248,7 +245,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
-			H.SetShockStage(20)
+			H.setHalLoss(20)
 			H.Stun(1)
 			H.Weaken(1)
 			H.emote("scream")
@@ -335,7 +332,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 	var/on_cooldown = FALSE
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 

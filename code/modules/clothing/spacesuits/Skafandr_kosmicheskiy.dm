@@ -19,6 +19,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	slowdown = 2
 	siemens_coefficient = 0.65
+	equip_time = 2 SECONDS
 
 /obj/item/clothing/suit/space/sk/atom_init()
 	. = ..()

@@ -3,7 +3,7 @@
 	icon_state = "intact"
 	pipe_icon = "hepipe"
 	color = "#404040"
-	level = PIPE_VISIBLE_LEVEL
+	undertile = TRUE
 	connect_types = CONNECT_TYPE_HE
 	var/icon_temperature = T20C //stop small changes in temperature causing an icon refresh
 

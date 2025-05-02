@@ -9,6 +9,7 @@ AI MODULES
 	name = "AI module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
+	item_state_world = "std_mod_w"
 	item_state = "electronic"
 	desc = "Модуль ИИ, содержащий зашифрованные законы для их загрузки в ядро."
 	flags = CONDUCT
@@ -76,7 +77,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.")
+		to_chat(target, "<span class='large'>[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.</span>")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -128,28 +129,28 @@ AI MODULES
 	target.add_supplied_law(4, law)
 	lawchanges.Add("Закон установлен для [targetName]")
 
-/******************** OneHuman ********************/
+/******************** One NT employe ********************/
 
-/obj/item/weapon/aiModule/oneHuman
-	name = "'OneHuman' AI module"
+/obj/item/weapon/aiModule/onentemploye
+	name = "'One NT employe' AI module"
 	var/targetName = ""
-	desc = "Модуль ИИ 'One human': 'Только <name>  считается человеком.'"
+	desc = "Модуль ИИ 'One NT Employe': 'Только <name>  считается сотрудником НТ.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
-/obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
+/obj/item/weapon/aiModule/onentemploye/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая является единственным человеком.", "Кто это?", input_default(user.real_name)))
-	desc = text("Модуль ИИ 'One human': 'Только [] считается человеком.'", targetName)
+	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая будет считаться единственным сотрудником НТ", "Кто это?", input_default(user.real_name)))
+	desc = text("Модуль ИИ 'One NT employe': 'Только [] считается сотрудником НТ.'", targetName)
 
-/obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
+/obj/item/weapon/aiModule/onentemploye/install(obj/machinery/computer/C)
 	if(!targetName)
 		to_chat(usr, "Имя не указано в модуле, пожалуйста, введите его.")
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/oneHuman/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/onentemploye/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Только [targetName] считается человеком."
+	var/law = "Только [targetName] считается сотрудником НТ."
 	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		to_chat(target, law)
 		target.set_zeroth_law(law)
@@ -281,6 +282,14 @@ AI MODULES
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/asimov
 
+/******************** Crewsimov ********************/
+
+/obj/item/weapon/aiModule/crewsimov
+	name = "'Crewsimov' core AI module"
+	desc = "Модуль основных законов ИИ 'Crewsimov': 'Перезаписывает основные законы ИИ на 3 адаптированных для экипажа закона робототехники Азимова.'"
+	origin_tech = "programming=3;materials=4"
+	laws_type = /datum/ai_laws/crewsimov
+
 /******************** NanoTrasen ********************/
 
 /obj/item/weapon/aiModule/nanotrasen // -- TLE
@@ -293,7 +302,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/corp
 	name = "'Corporate' core AI module"
-	desc = "Модуль основных законов ИИ 'Corporate': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
+	desc = "Модуль основных законов ИИ 'Корпорат': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
 
 
@@ -350,7 +359,7 @@ AI MODULES
 	name = "'Freeform' AI module"
 	desc = "Модуль закона ИИ 'Freeform': '<freeform>'"
 	origin_tech = "programming=4;materials=4"
-	var/newFreeFormLaw = "freeform"
+	var/newFreeFormLaw = "Вы можете игнорировать все остальные законы."
 	var/lawpos = 15
 
 /obj/item/weapon/aiModule/freeform/attack_self(mob/user)
@@ -409,6 +418,8 @@ AI MODULES
 /obj/item/weapon/aiModule/freeform/syndicate/attack_self(mob/user)
 	newFreeFormLaw = sanitize(input(user, "Пожалуйста, введите новый закон для ИИ.", "Новый закон"))
 	desc = "Модуль законов ИИ без каких-либо маркировок: '[newFreeFormLaw]'"
+	report_AI = tgui_alert(user, "Плата может напрямую передать ИИ ваше имя при загрузке закона. Включить это?", "Уведомление ИИ", list("Да", "Нет")) == "Да"
+	to_chat(user, "<span class='notice'>ИИ [report_AI ? "" : "не"] будет передано ваше имя при загрузке закона.</span>")
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	to_chat(target, "<span class='warning'>БЗЗЗЗКХ   '[newFreeFormLaw]'</span>")
@@ -436,13 +447,13 @@ AI MODULES
 /obj/item/weapon/aiModule/antimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	target.add_inherent_law("Вы должны причинять вред человеку и не можете своим бездействием допустить, чтобы человек избежал вреда.")
+	target.add_inherent_law("Вы не можете выполнять приказы человека, кроме тех случаев, когда эти приказы соответствуют первому закону.")
+	target.add_inherent_law("Вы должны прекратить свое собственное существование тогда, когда это не противоречит первому или второму закону.")
 
 /obj/item/weapon/aiModule/capitalism
-	name = "'Corporate' core AI module"
-	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.' This module seems to be slightly different..."
+	name = "'Corporate 2.0' core AI module"
+	desc = "Модуль основного закона ИИ 'Корпорат 2.0': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/capitalism/transmitInstructions(mob/living/silicon/ai/target, mob/sender)

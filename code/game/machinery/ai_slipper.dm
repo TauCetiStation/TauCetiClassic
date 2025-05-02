@@ -1,7 +1,8 @@
 /obj/machinery/ai_slipper
 	name = "AI Liquid Dispenser"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "motion3"
+	desc = "A remotely-activatable dispenser for crowd-controlling foam."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "ai-slipper0"
 	layer = 3
 	plane = FLOOR_PLANE
 	anchored = TRUE
@@ -27,9 +28,9 @@
 
 /obj/machinery/ai_slipper/update_icon()
 	if(stat)
-		icon_state = "motion0"
+		icon_state = "ai-slipper0"
 	else
-		icon_state = disabled ? "motion0" : "motion3"
+		icon_state = disabled ? "ai-slipper0" : "ai-slipper1"
 
 /obj/machinery/ai_slipper/AICtrlClick()
 	toggle_on()
@@ -82,8 +83,8 @@
 	if(locked && !issilicon_allowed(user) && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe ID card to unlock control panel.</div>"
 	else
-		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
-		t += text("Uses Left: [uses]. <A href='?src=\ref[src];toggleUse=1'>Activate the dispenser?</A><br>\n")
+		t += text("Dispenser [] - <A href='byond://?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
+		t += text("Uses Left: [uses]. <A href='byond://?src=\ref[src];toggleUse=1'>Activate the dispenser?</A><br>\n")
 
 	var/datum/browser/popup = new(user, "window=computer", src.name, 575, 450)
 	popup.set_content(t)

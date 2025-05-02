@@ -61,11 +61,6 @@
 	aux.volume = volume
 	aux.nodes.len = nodes.len
 
-/obj/machinery/atmospherics/mains_pipe/hide(i)
-	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
-
 /obj/machinery/atmospherics/mains_pipe/proc/burst()
 	..()
 	for(var/obj/machinery/atmospherics/pipe/mains_component/pipe in contents)
@@ -160,15 +155,14 @@
 	..() // initialize internal pipes
 
 	var/turf/T = src.loc			// hide if turf is not intact
-	if(level == 1 && !T.is_plating()) hide(1)
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/simple/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "intact-f"
 
 /obj/machinery/atmospherics/mains_pipe/simple/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "intact"
 
 /obj/machinery/atmospherics/mains_pipe/manifold
@@ -221,20 +215,17 @@
 
 	..() // initialize internal pipes
 
-	var/turf/T = src.loc			// hide if turf is not intact
-	if(level == 1 && !T.is_plating())
-		hide(1)
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/manifold/update_icon()
 	icon_state = "manifold[invisibility ? "-f" : "" ]"
 
 /obj/machinery/atmospherics/mains_pipe/manifold/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "manifold-f"
 
 /obj/machinery/atmospherics/mains_pipe/manifold/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "manifold"
 
 /obj/machinery/atmospherics/mains_pipe/manifold4w
@@ -270,20 +261,17 @@
 
 	..() // initialize internal pipes
 
-	var/turf/T = src.loc			// hide if turf is not intact
-	if(level == 1 && !T.is_plating())
-		hide(1)
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/manifold4w/update_icon()
 	icon_state = "manifold4w[invisibility ? "-f" : "" ]"
 
 /obj/machinery/atmospherics/mains_pipe/manifold4w/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "manifold4w-f"
 
 /obj/machinery/atmospherics/mains_pipe/manifold4w/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "manifold4w"
 
 /obj/machinery/atmospherics/mains_pipe/split
@@ -331,9 +319,6 @@
 		if(N1 && N2)
 			N1.merge(N2)
 
-	var/turf/T = src.loc			// hide if turf is not intact
-	if(level == 1 && !T.is_plating())
-		hide(1)
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/split/update_icon()
@@ -347,11 +332,11 @@
 	split_node = supply
 
 /obj/machinery/atmospherics/mains_pipe/split/supply/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "split-supply-f"
 
 /obj/machinery/atmospherics/mains_pipe/split/supply/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "split-supply"
 
 /obj/machinery/atmospherics/mains_pipe/split/scrubbers
@@ -362,11 +347,11 @@
 	split_node = scrubbers
 
 /obj/machinery/atmospherics/mains_pipe/split/scrubbers/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "split-scrubbers-f"
 
 /obj/machinery/atmospherics/mains_pipe/split/scrubbers/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "split-scrubbers"
 
 /obj/machinery/atmospherics/mains_pipe/split/aux
@@ -377,11 +362,11 @@
 	split_node = aux
 
 /obj/machinery/atmospherics/mains_pipe/split/aux/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "split-aux-f"
 
 /obj/machinery/atmospherics/mains_pipe/split/aux/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "split-aux"
 
 /obj/machinery/atmospherics/mains_pipe/split3
@@ -449,20 +434,17 @@
 		if(N1 && N2)
 			N1.merge(N2)
 
-	var/turf/T = src.loc			// hide if turf is not intact
-	if(level == 1 && !T.is_plating())
-		hide(1)
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/split3/update_icon()
 	icon_state = "split-t[invisibility ? "-f" : "" ]"
 
 /obj/machinery/atmospherics/mains_pipe/split3/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "split-t-f"
 
 /obj/machinery/atmospherics/mains_pipe/split3/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "split-t"
 
 /obj/machinery/atmospherics/mains_pipe/cap
@@ -495,11 +477,11 @@
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/cap/hidden
-	level = 1
+	undertile = TRUE
 	icon_state = "cap-f"
 
 /obj/machinery/atmospherics/mains_pipe/cap/visible
-	level = 2
+	undertile = FALSE
 	icon_state = "cap"
 
 //TODO: Get Mains valves working!

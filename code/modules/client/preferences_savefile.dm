@@ -3,11 +3,11 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 48
+#define SAVEFILE_VERSION_MAX 53
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
-#define SAVEFILE_VERSION_SPECIES_JOBS 48 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_SPECIES_JOBS 51 // job preferences after breaking changes to any /datum/job/
 #define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
 //breaking changes is when you remove any existing quirk/job or change their restrictions
 //Don't forget to bump SAVEFILE_VERSION_MAX too
@@ -264,6 +264,220 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 48)
 		S["b_type"] << null
+
+	if(current_version < 49)
+		if("Imposter" in be_role)
+			be_role -= "Imposter"
+			S["be_role"] << be_role
+
+	if(current_version < 50)
+
+		if(player_alt_titles && (player_alt_titles["Assistant"] in list("Reporter")))
+			player_alt_titles -= "Assistant"
+		if(player_alt_titles && (player_alt_titles["Librarian"] in list("Journalist")))
+			player_alt_titles -= "Librarian"
+
+	if(current_version < 52)
+		var/static/list/pre_52_hairstyles_to_modern_ones = list (
+			"Bald" = "Bald",
+			"Short Hair" = "Arnold - Short",
+			"Short Hair 2" = "Arnold - Short",
+			"Cut Hair" = "Crew Cut- Super Short",
+			"Shoulder-length Hair" = "Hime Cut - New Fashion",
+			"Long Hair" = "Emo - Long",
+			"Long Over Eye" = "Emo - Long",
+			"Very Long Hair" = "Emo - Long",
+			"Long Fringe" = "Longe Fringe Pirat - Movie",
+			"Longer Fringe" = "Longe Fringe Pirat - Movie",
+			"Gentle" = "Gentle - Short",
+			"Half-banged Hair" = "Lbang - Short",
+			"Half-banged Hair 2" = "Lbang - Short",
+			"Ponytail" = "Ponytail",
+			"Ponytail 2" = "Ponytail 2",
+			"Ponytail 3" = "Ponytail 3",
+			"Side Pony" = "Ponytail (f)",
+			"Side Pony 2" = "Ponytail (f)",
+			"Side Pony tail" = "Ponytail (f)",
+			"One Shoulder" = "Side Tail - New Fashion",
+			"Tress Shoulder" = "Side Tail - New Fashion",
+			"Parted" = "Parted - Short",
+			"Pompadour" = "Fastline Dandy - Movie",
+			"Big Pompadour" = "Fastline Dandy - Movie",
+			"Quiff" = "Quiff - Short",
+			"Bedhead" = "Bedhead",
+			"Bedhead 2" = "Bedhead 2",
+			"Bedhead 3" = "Bedhead 3",
+			"Messy" = "Messy - Short",
+			"Beehive" = "Beehive",
+			"Bobcurl" = "Bobcurl",
+			"Bob" = "Bobcut",
+			"Bowl" = "Bowlcut",
+			"Buzzcut" = "Buzz Cut",
+			"Crewcut" = "Crew Cut - Super Short",
+			"Cotton Hair" = "Side Tail - New Fashion",
+			"Braided Hair" = "African - Long",
+			"African Pigtails" = "African - Long",
+			"Square" = "Square - Short",
+			"Combover" = "Cowboy - Short",
+			"Devil Lock" = "Devil - Super Short",
+			"Dreadlocks" = "Dreads - Short",
+			"Curls" =  "Bobcurl",
+			"Afro" = "Afro 1 - Short",
+			"Afro 2" = "Afro 2 - Short",
+			"Big Afro" = "Afro 2 - Short",
+			"Flat Top" = "Flat top - Short",
+			"Emo" = "Demo - Short",
+			"Flow Hair" = "Feather 1 - Short",
+			"Feather" = "Feather 1 - Short",
+			"Hitop" = "Feather 1 - Short",
+			"Mohawk" = "Mohawk Randy - Movie",
+			"Jensen Hair" = "Feather 1 - Short",
+			"Gelled Back" = "Gelled - Super Short",
+			"Spiky" = "Spiky - Short",
+			"Spiky 2" = "Spiky - Short",
+			"Spiky 3" = "Spiky - Short",
+			"Slightly long" = "Slight Messy Tereza 1 - Movie",
+			"Kusanagi Hair" = "Gelled - Super Short",
+			"Kagami Hair" = "Gelled - Super Short",
+			"Pigtails" = "Side Tail - New Fashion",
+			"Pigtails 2" = "Side Tail - New Fashion",
+			"Hime Cut" = "Hime Cut - New Fashion",
+			"Ahoge" = "Bunstick",
+			"Low Braid" = "Braid - Long",
+			"High Braid" = "Braid - Long",
+			"Floorlength Braid" = "Bunstick",
+			"Odango" = "Bunstick",
+			"Ombre" = "Ombre - Short",
+			"Updo" = "Updo - Short",
+			"Skinhead" = "Skinhead - Super Short",
+			"Balding Hair" = "Skinhead - Super Short",
+			"Bun Head" = "Bun",
+			"Braided Tail" = "Braided Sanny - Movie",
+			"Drill Hair" = "Braided Sanny 2 - Movie",
+			"Keanu Hair" = "Braided Sanny 2 - Movie",
+			"Swept Back Hair 2" = "Braided Sanny - Movie",
+			"Business Hair 3" = "Business",
+			"Business Hair 4" = "Business 2",
+			"Hedgehog Hair" = "Spiky - Short",
+			"Bob Hair" = "Bobcut",
+			"Bob Hair 2" = "Bobcurl",
+			"Long Hair 1" = "Side Part - Long",
+			"Mega Eyebrows" = "Megabrows - Super Short",
+			"Flaired Hair" = "Braid - Long",
+			"Big tails" = "Wisp - Ponytail",
+			"Long bedhead" = "Bedhead - Long",
+			"Fluttershy" = "Fluttershy - Long",
+			"Judge" = "Judge - Long",
+			"Long braid" = "Braid - Long",
+			"Elize" = "Elize - Short",
+			"Elize2" = "Elize 2 - Short",
+			"Female undercut" = "Zorg - Short",
+			"Emo right" = "Zorg - Short",
+			"Applejack" = "Wisp - Ponytail",
+			"Rosa" = "Rosa - Short",
+			"Dave" =  "Dave - Short",
+			"Aradia" = "Aradia - Long",
+			"Nepeta" = "Nepeta - Short",
+			"Kanaya" = "Kanaya - Short",
+			"Terezi" = "Slight Messy Tereza 1 - Movie",
+			"Vriska" = "Vriska - New Fashion",
+			"Equius" = "Nepeta - Short",
+			"Gamzee" = "Gamzee - Short",
+			"Feferi" = "Gamzee - Short",
+			"Rose" = "Rose - New Fashion",
+			"Ramona" = "CIA - Short",
+			"Dirk" = "Dirk - Short",
+			"Jade" = "Dirk - Short",
+			"Roxy" = "Roxy - Short",
+			"Side tail 3" = "Side Tail - New Fashion",
+			"Big Flat Top" = "Flat top - Short",
+			"Dubs Hair " = "Dubs - Short",
+			"Swept Back Hair" = "Dubs - Short",
+			"Metal" = "Mentalist - Short",
+			"Mentalist" = "Mentalist - Short",
+			"fujisaki" = "Fujiyabash - New Fashion",
+			"Twin Buns" = "Double Bun",
+			"Fujiyabashi" = "Fujiyabash - New Fashion",
+			"Shinibu" =  "Double Bun",
+			"Combed Hair" = "Dad 2 - Short",
+			"Long Sideparts" = "Side Part - Long",
+			"Blunt Bangs" = "Bluntbangs - Long",
+			"Combed Bob" = "Dad 2 - Short",
+			"Long Half Shaved" = "Halfshaved - Long",
+			"Slightly Messed" = "Messy - Short",
+			"Long Gypsy" = "Gipsy - Long",
+			"Geisha" =  "Geisha - Short",
+			"Hair Over Eye" = "Over Eye - New Fashion",
+			"Chub" = "Chub - Short",
+			"Ponytail female" = "Ponytail (f)",
+			"Wisp" = "Wisp - Ponytail",
+			"Half-Shaved Emo" = "Emo - Long",
+			"Long Hair Alt 2" = "Wild - Long",
+			"Bun 4" = "Double Bun 2",
+			"Double-Bun" = "Double Bun 3",
+			"Rows" = "Rows - Gang",
+			"Rows 2" = "Rows 2 - Gang",
+			"Twintail" = "Nitori - New Fashion",
+			"Coffee House Cut" = "Hime Cut - New Fashion",
+			"Overeye Very Short" = "Over Eye - New Fashion",
+			"Oxton" = "Oxton - Short",
+			"Zieglertail" = "Ziegler - Ponytail",
+			"Emo Fringe" = "Emo - Long",
+			"Poofy2" = "Poofy - Short",
+			"Fringetail" = "Ponytail (f)",
+			"Bun 3" = "Bunstick",
+			"Overeye Very Short, Alternate" = "Ougi - Short",
+			"Undercut Swept Right" = "Blackswordcut",
+			"Spiky Ponytail" = "Brazeska - Ponytail",
+			"Grande Braid" = "Braid - Long",
+			"Row Bun" = "Row bun - Gang",
+			"Row Dual Braid" = "Row bun - Gang",
+			"Row Braid" = "Row bun - Gang",
+			"Regulation Mohawk" = "Mohawk Randy - Movie",
+			"Topknot" = "Chao Topknot - Gang",
+			"Ronin" = "Jensen - Short",
+			"Bowl 2" = "Bowlcut",
+			"Manbun" = "Small Beehive",
+			"Country" = "Ponytail (f)",
+			"Ougi" = "Ougi - Short",
+			"Half Zingertail" = "Half Ziegler - Ponytail",
+			"Lbangs 2" = "Lbang - Short",
+			"Slight Messy 2" = "Slight Messy Tereza 2 - Movie",
+			"Ragby" = "Rabby - Ponytail",
+			"Bun 5" = "Double Bun 3",
+			"Maya" = "Maya - Short",
+			"Dolly" = "Dolly - Short",
+			"Longside Partstraight 2" = "Side Part 2 - Long",
+			"Elly" = "Elly - Short",
+			"Wild 1" = "Wild - Long",
+			"Wild 2" = "Wild Princess - Movie",
+			"Millenium" = "Millenium - Short",
+			"Feather 2" = "Feathe 2 - Short",
+			"Braided Hair 2" = "Braided Sanny 2 - Movie",
+			"Fridge" = "Fridge - Short",
+			"Rabby" = "Rabby - Ponytail",
+			"Zoey" = "Zoe - Ponytail",
+			"Kitty" = "Kitty - Short",
+			"Star" = "Star - Movie",
+			"Pear" = "Pear - Short",
+			"Spicy" = "Spicy - Short",
+			"Piggy" = "Piggy - Short",
+		)
+		if (pre_52_hairstyles_to_modern_ones[h_style])
+			h_style = pre_52_hairstyles_to_modern_ones[h_style]
+
+	if(current_version < 53)
+		ipc_head = initial(ipc_head)
+		// fuck named hairstyles, we should just move it to indexes
+		var/static/list/ipc_hairstyles_reset = list(
+			"alien IPC screen", 
+			"double IPC screen", 
+			"pillar IPC screen", 
+			"human IPC screen"
+		)
+		if(h_style in ipc_hairstyles_reset)
+			h_style = /datum/sprite_accessory/hair/ipc_screen_alert::name
+
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -316,7 +530,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
 	There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences\n\
-	<a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
+	<a href='byond://?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, "<span class='userdanger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")
@@ -341,10 +555,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 
-	//Account data
-	S["cid_list"]			>> cid_list
-	S["ignore_cid_warning"]	>> ignore_cid_warning
-
 	//General preferences
 	S["ooccolor"]          >> ooccolor
 	S["aooccolor"]         >> aooccolor
@@ -358,8 +568,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]           >> toggles
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
-	S["permamuted"]        >> permamuted
-	S["permamuted"]        >> muted
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
 	S["glowlevel"]         >> glowlevel
@@ -433,9 +641,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
 	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
-	if(!cid_list)
-		cid_list = list()
-	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
 	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	snd_music_vol	= sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
@@ -474,10 +679,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["version"] << SAVEFILE_VERSION_MAX
 
-	//Account data
-	S["cid_list"]           << cid_list
-	S["ignore_cid_warning"] << ignore_cid_warning
-
 	//general preferences
 	S["ooccolor"]          << ooccolor
 	S["aooccolor"]         << aooccolor
@@ -491,7 +692,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]      << chat_toggles
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
-	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
 	S["ambientocclusion"]  << ambientocclusion
 	S["glowlevel"]         << glowlevel
@@ -579,6 +779,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
 	S["use_skirt"]         >> use_skirt
+	S["pda_ringtone"]      >> chosen_ringtone
+	S["pda_custom_melody"] >> custom_melody
 
 	//Load prefs
 	S["alternate_option"] >> alternate_option
@@ -661,6 +863,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
+	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
+	custom_melody = sanitize(custom_melody, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
@@ -773,6 +978,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt
+	S["pda_ringtone"]          << chosen_ringtone
+	S["pda_custom_melody"]     << custom_melody
 	//Write prefs
 	S["alternate_option"]      << alternate_option
 	S["job_preferences"]       << job_preferences

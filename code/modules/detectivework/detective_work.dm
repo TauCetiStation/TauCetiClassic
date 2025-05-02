@@ -3,16 +3,22 @@
 /atom/var/list/suit_fibers
 
 /atom/proc/add_fibers(mob/living/carbon/human/M)
-	if(M.gloves && istype(M.gloves,/obj/item/clothing))
+	if(M.gloves && istype(M.gloves, /obj/item/clothing/gloves)) //transfer dirt from gloves to touched objects
 		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
-			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
-				G.transfer_blood--
-	else if(M.bloody_hands)
-		//check qdeleted human, need rewrite for storing reference of blood, not a ref of human
-		if(!QDELETED(M.bloody_hands_mob))
-			if(add_blood(M.bloody_hands_mob))
-				M.bloody_hands--
+		if(G.dirt_transfers)
+			if(G.blood_DNA)
+				if(!blood_DNA)
+					blood_DNA = list()
+				blood_DNA |= G.blood_DNA.Copy()
+			add_dirt_cover(G.dirt_overlay)
+			G.dirt_transfers--
+	else if(M.dirty_hands_transfers) //transfer dirt from hands to touched objects
+		add_dirt_cover(M.hand_dirt_datum)
+		if(M.blood_DNA)
+			if(!blood_DNA)
+				blood_DNA = list()
+			blood_DNA |= M.blood_DNA.Copy()
+		M.dirty_hands_transfers--
 	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
 	var/item_multiplier = isitem(src)?1.2:1
@@ -104,6 +110,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			if(!authorization(user))
 				return ..()
 		ui_interact(user)
+		playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(istype(I, /obj/item/weapon/evidencebag))
 		if(!authenticated)
 			if(!authorization(user))
@@ -112,6 +119,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 		evidencebag_drop(E)
 		//prevent remove interactions that were not intended
 		attack_hand(user)
+		playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	else
 		return ..()
 
@@ -131,27 +139,27 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 		isai = 1
 	if(temp)
 		dat += "<tt>[temp]</tt><br><br>"
-		if(canclear) dat += "<a href='?src=\ref[src];operation=clear'>Clear Screen</a>"
+		if(canclear) dat += "<a href='byond://?src=\ref[src];operation=clear'>Clear Screen</a>"
 	else
 		if(!authenticated)
-			dat += "<a href='?src=\ref[src];operation=login'>Log In</a>"
+			dat += "<a href='byond://?src=\ref[src];operation=login'>Log In</a>"
 		else
-			dat += "<a href='?src=\ref[src];operation=logout'>Log Out</a><br><hr><br>"
+			dat += "<a href='byond://?src=\ref[src];operation=logout'>Log Out</a><br><hr><br>"
 			if(scanning)
 				if(scan_process)
 					dat += {"Scan Object: [scanning.name]<br>
-					<a href='?src=\ref[src];operation=cancel'>Cancel Scan</a> {Print}<br>"}
+					<a href='byond://?src=\ref[src];operation=cancel'>Cancel Scan</a> {Print}<br>"}
 				else
 					if(isai) dat += "Scan Object: {[scanning.name]}<br>"
-					else dat += "Scan Object: <a href='?src=\ref[src];operation=eject'>[scanning.name]</a><br>"
-					dat += "<a href='?src=\ref[src];operation=scan'>Scan</a> <a href='?src=\ref[src];operation=print'>Print</a><br>"
+					else dat += "Scan Object: <a href='byond://?src=\ref[src];operation=eject'>[scanning.name]</a><br>"
+					dat += "<a href='byond://?src=\ref[src];operation=scan'>Scan</a> <a href='byond://?src=\ref[src];operation=print'>Print</a><br>"
 			else
 				if(isai) dat += "{No Object Inserted}<br>"
-				else dat += "<a href='?src=\ref[src];operation=insert'>No Object Inserted</a><br>"
-				dat += "{Scan} <a href='?src=\ref[src];operation=print'>Print</a><br>"
-			dat += {"<a href='?src=\ref[src];operation=database'>Access Database</a><br><br><tt>[scan_data]</tt>"}
+				else dat += "<a href='byond://?src=\ref[src];operation=insert'>No Object Inserted</a><br>"
+				dat += "{Scan} <a href='byond://?src=\ref[src];operation=print'>Print</a><br>"
+			dat += {"<a href='byond://?src=\ref[src];operation=database'>Access Database</a><br><br><tt>[scan_data]</tt>"}
 			if(scan_data && !scan_process)
-				dat += "<br><a href='?src=\ref[src];operation=erase'>Erase Data</a>"
+				dat += "<br><a href='byond://?src=\ref[src];operation=erase'>Erase Data</a>"
 
 	var/datum/browser/popup = new(user, "scanner")
 	popup.set_content(dat)
@@ -174,12 +182,14 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			if(scanning)
 				scanning.forceMove(loc)
 				scanning = null
+				playsound(src, 'sound/machines/material_eject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			else
 				temp = "Eject Failed: No Object"
 		if("insert")
 			var/mob/M = usr
 			var/obj/item/I = M.get_active_hand()
 			if(I && istype(I))
+				playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				if(istype(I, /obj/item/weapon/evidencebag))
 					evidencebag_drop(I)
 				else
@@ -220,8 +230,8 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					temp += "Consolidated data points:<br>"
 					for(var/print in files)
 						var/list/file = files[print]
-						temp += "<a href='?src=\ref[src];operation=record;identifier=[print]'>[file[2]]</a><br>"
-					temp += "<br><a href='?src=\ref[src];operation=card'>Insert Finger Print Card (To complete a Dossier)</a><br><br><br>"
+						temp += "<a href='byond://?src=\ref[src];operation=record;identifier=[print]'>[file[2]]</a><br>"
+					temp += "<br><a href='byond://?src=\ref[src];operation=card'>Insert Finger Print Card (To complete a Dossier)</a><br><br><br>"
 				else
 					temp = ""
 				if(misc && misc.len)
@@ -229,7 +239,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					This is where anything without fingerprints goes.<br><br>"}
 					for(var/atom in misc)
 						var/list/data_entry = misc[atom]
-						temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[atom]'>[data_entry[3]]</a><br>"
+						temp += "<a href='byond://?src=\ref[src];operation=auxiliary;identifier=[atom]'>[data_entry[3]]</a><br>"
 		if("record") //Viewing a record from the "files" database.
 			canclear = 0
 			if(files)
@@ -274,12 +284,12 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 						temp += "&nbsp<b>Blood:</b><br>"
 						for(var/named in blood)
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
-				temp += "<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>Rename this Dossier</a>"
-				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>Delete this Dossier</a>"
-				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>Print</a>"
+				temp += "<br><a href='byond://?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>Rename this Dossier</a>"
+				temp += "<br><a href='byond://?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>Delete this Dossier</a>"
+				temp += "<br><a href='byond://?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>Print</a>"
 			else
 				temp = "ERROR.  Database not found!<br>"
-			temp += "<br><a href='?src=\ref[src];operation=database'>Return</a>"
+			temp += "<br><a href='byond://?src=\ref[src];operation=database'>Return</a>"
 		if("databaseprint") //Printing from the "files" database.
 			if(files)
 				var/obj/item/weapon/paper/P = new(loc)
@@ -351,11 +361,11 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					temp += "&nbsp<b>Blood:</b><br>"
 					for(var/named in blood)
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
-				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>Delete This Record</a>"
-				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>Print</a>"
+				temp += "<br><a href='byond://?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>Delete This Record</a>"
+				temp += "<br><a href='byond://?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>Print</a>"
 			else
 				temp = "ERROR.  Database not found!<br>"
-			temp += "<br><a href='?src=\ref[src];operation=database'>Return</a>"
+			temp += "<br><a href='byond://?src=\ref[src];operation=database'>Return</a>"
 		if("auxiliaryprint") //Printing from the "misc" database.
 			if(misc)
 				var/obj/item/weapon/paper/P = new(loc)
@@ -397,6 +407,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			else if(scanning)
 				scan_process = 3
 				scan_data = "Scanning [scanning]: 25% complete"
+				playsound(src, 'sound/machines/bzzi.ogg', VOL_EFFECTS_MASTER, vary = FALSE,  frequency = 1)
 				updateDialog()
 				sleep(50)
 				if(!scan_process)
@@ -404,6 +415,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					updateDialog()
 					return
 				scan_data = "Scanning [scanning]: 50% complete"
+				playsound(src, 'sound/machines/bzzi.ogg', VOL_EFFECTS_MASTER, vary = FALSE,  frequency = 1.2)
 				updateDialog()
 				scan_process = 2
 				sleep(50)
@@ -412,6 +424,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					updateDialog()
 					return
 				scan_data = "Scanning [scanning]: 75% complete"
+				playsound(src, 'sound/machines/bzzi.ogg', VOL_EFFECTS_MASTER, vary = FALSE,  frequency = 1.4)
 				updateDialog()
 				scan_process = 1
 				sleep(50)
@@ -420,6 +433,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					updateDialog()
 					return
 				if(scanning)
+					playsound(src, 'sound/machines/complete.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 					scan_process = 0
 					scan_name = scanning.name
 					scan_data = "<u>[scanning]</u><br><br>"
@@ -450,7 +464,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 							scan_data += "<br><b>Data transfered from \the [scanning] to Database.</b><br>"
 							add_data_scanner(scanning)
 					else if (!scanning.fingerprints)
-						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
+						scan_data += "<br><b><a href='byond://?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
 			else
 				temp = "Scan Failed: No Object"
 

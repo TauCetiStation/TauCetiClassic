@@ -112,10 +112,37 @@
 	data["science_jobs"] = format_jobs(science_positions)
 	data["security_jobs"] = format_jobs(security_positions)
 	data["civilian_jobs"] = format_jobs(civilian_positions)
+	data["representative_jobs"] = format_jobs(centcom_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
+
+	if(mode == 2)
+		var/list/jobsCategories = list(
+			list(title = "Command", jobs = command_positions, color = "#aac1ee"),
+			list(title = "NT Representatives", jobs = centcom_positions, color = "#6c7391"),
+			list(title = "Engineering", jobs = engineering_positions, color = "#ffd699"),
+			list(title = "Security", jobs = security_positions, color = "#ff9999"),
+			list(title = "Synthetic", jobs = nonhuman_positions, color = "#ccffcc"),
+			list(title = "Service", jobs = civilian_positions, color = "#cccccc"),
+			list(title = "Medical", jobs = medical_positions, color = "#99ffe6"),
+			list(title = "Science", jobs = science_positions, color = "#e6b3e6"),
+		)
+
+		for(var/jobCategory in jobsCategories)
+			var/list/jobsList = jobCategory["jobs"]
+			var/list/newJobsList = list()
+
+			for(var/jobTitle in jobsList)
+				var/datum/job/job = SSjob.name_occupations[jobTitle]
+				if(!job)
+					continue
+				newJobsList += list(list("name" = jobTitle, "quota" = job.quota))
+
+			jobCategory["jobs"] = newJobsList
+
+		data["all_jobs"] = jobsCategories
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
@@ -321,6 +348,24 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
+
+		if ("up_quota")
+			var/job_name = sanitize(href_list["quotajob_name"], 50)
+			var/datum/job/Job = SSjob.name_occupations[job_name]
+			if(Job)
+				if(Job.quota == QUOTA_WANTED)
+					Job.quota = QUOTA_NEUTRAL
+				else
+					Job.quota = QUOTA_WANTED
+
+		if ("down_quota")
+			var/job_name = sanitize(href_list["quotajob_name"], 50)
+			var/datum/job/Job = SSjob.name_occupations[job_name]
+			if(Job)
+				if(Job.quota == QUOTA_UNWANTED)
+					Job.quota = QUOTA_NEUTRAL
+				else
+					Job.quota = QUOTA_UNWANTED
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

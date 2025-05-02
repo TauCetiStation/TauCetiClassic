@@ -115,14 +115,18 @@ var/global/list/alldepartments = list("Central Command")
 
 	if(href_list["remove"])
 		if(tofax)
-			tofax.loc = usr.loc
-			usr.put_in_hands(tofax)
+			if(usr.Adjacent(loc))
+				tofax.loc = usr.loc
+				usr.put_in_hands(tofax)
+			else
+				tofax.forceMove(loc)
+
 			to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
 			tofax = null
 
 	if(href_list["scan"])
 		if (scan)
-			if(ishuman(usr))
+			if(ishuman(usr) && usr.Adjacent(loc))
 				scan.loc = usr.loc
 				if(!usr.get_active_hand())
 					usr.put_in_hands(scan)
@@ -185,13 +189,13 @@ var/global/list/alldepartments = list("Central Command")
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P, obj/machinery/faxmachine/fax)
 	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Receiving '[P.name]' via secure connection ... []</span>",
 	"<font color='orange'>CENTCOMM FAX: </font>[key_name(sender, 1)]",
-	"(<a href='?_src_=holder;adminplayeropts=\ref[sender]'>PP</a>)",
-	"(<a href='?_src_=vars;Vars=\ref[sender]'>VV</a>)",
-	"(<a href='?_src_=holder;subtlemessage=\ref[sender]'>SM</a>)",
+	"(<a href='byond://?_src_=holder;adminplayeropts=\ref[sender]'>PP</a>)",
+	"(<a href='byond://?_src_=vars;Vars=\ref[sender]'>VV</a>)",
+	"(<a href='byond://?_src_=holder;subtlemessage=\ref[sender]'>SM</a>)",
 	ADMIN_JMP(sender),
-	"(<a href='?_src_=holder;secretsadmin=check_antagonist'>CA</a>)",
-	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department]'>RPLY</a>)",
-	"<a href='?_src_=holder;CentcommFaxViewInfo=\ref[P.info];CentcommFaxViewStamps=\ref[P.stamp_text]'>view message</a>")  // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
+	"(<a href='byond://?_src_=holder;secretsadmin=check_antagonist'>CA</a>)",
+	"(<a href='byond://?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department]'>RPLY</a>)",
+	"<a href='byond://?_src_=holder;CentcommFaxViewInfo=\ref[P.info];CentcommFaxViewStamps=\ref[P.stamp_text]'>view message</a>")  // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
 
 	for(var/client/C as anything in admins)
 		to_chat(C, msg)

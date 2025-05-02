@@ -11,12 +11,13 @@
 	return istype(user) && ..()
 
 /obj/effect/proc_holder/spell/no_target/mime_speak/cast(list/targets, mob/living/carbon/human/user = usr)
-	user.miming = !user.miming
-	if(!user.miming)
+	if(!HAS_TRAIT(user, TRAIT_MIMING))
 		name = "Start miming"
+		ADD_TRAIT(user, TRAIT_MIMING, GENERIC_TRAIT)
 		to_chat(user, "<span class='warning'>You break your vow of silence.</span>")
 	else
 		name = "Stop miming"
+		REMOVE_TRAIT(user, TRAIT_MIMING, GENERIC_TRAIT)
 		to_chat(user, "<span class='notice'>You make a vow of silence.</span>")
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall
@@ -31,10 +32,10 @@
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall/can_cast(mob/living/carbon/human/user = usr)
-	return istype(user) && user.miming && ..()
+	return HAS_TRAIT(user, TRAIT_MIMING) && ..()
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall/perform(list/targets, recharge, mob/living/carbon/human/user = usr)
-	if(!user.miming)
+	if(!HAS_TRAIT(user, TRAIT_MIMING))
 		to_chat(user, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 		revert_cast(user)
 		return

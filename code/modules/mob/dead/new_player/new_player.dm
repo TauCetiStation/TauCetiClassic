@@ -108,7 +108,7 @@
 			P.selecting_quality = TRUE
 			if(tgui_alert(
 				src,
-				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Вы уверены, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
 				"Особенность",
 				list("ДА!!!", "Нет")) == "ДА!!!")
 				SSqualities.register_client(client)
@@ -122,7 +122,7 @@
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
 			return
-		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
+		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait [config.deathtime_required / 600] minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return
 			spawn_as_observer()
@@ -193,7 +193,7 @@
 	if(!job.is_species_permitted(client.prefs.species))
 		var/datum/quality/quality = SSqualities.qualities_by_name[client.prefs.selected_quality_name]
 		//skip check by quality
-		if(istype(quality, /datum/quality/unrestricted))
+		if(istype(quality, /datum/quality/quirkieish/unrestricted))
 			return TRUE
 		return FALSE
 	return TRUE
@@ -293,7 +293,7 @@
 	joined_player_list += character.ckey
 
 	if(character.client)
-		character.client.guard.time_velocity_spawn = world.timeofday
+		character.client.prefs.guard.time_velocity_spawn = world.timeofday
 
 	qdel(src)
 
@@ -343,6 +343,7 @@
 		dat += "<div class='clearBoth'>Choose from the following open positions:</div>"
 		var/list/categorizedJobs = list(
 			"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
+			"NT Representatives" = list(jobs = list(), titles = centcom_positions, color = "#6c7391"),
 			"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
 			"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
 			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
@@ -392,11 +393,23 @@
 					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
 						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
 							active++
+				var/priority = 0
+				var/priorityMessage = ""
+				var/priority_color = "#ffffff"
+				switch(job.quota)
+					if(QUOTA_WANTED)
+						priority = "!+"
+						priority_color = "#83bf47"
+						priorityMessage = "Требуется"
+					if(QUOTA_UNWANTED)
+						priority = "¡-"
+						priority_color = "#ee0000"
+						priorityMessage = "Не требуется"
 				if(job.current_positions && active < job.current_positions)
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
 					number_of_extra_line_breaks++
 				else
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
 			dat += "</fieldset><br>"
@@ -435,9 +448,7 @@
 		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
-		new_character.gender = pick(MALE, FEMALE)
-		client.prefs.real_name = random_name(new_character.gender)
-		client.prefs.randomize_appearance_for(new_character)
+		new_character.randomize_appearance()
 	else
 		client.prefs.copy_to(new_character)
 
@@ -452,9 +463,13 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.UpdateSE()
 	new_character.dna.original_character_name = new_character.real_name
-	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
-	var/old_base_metabolism = new_character.get_metabolism_factor()
-	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
+
+	// little randomize hunger parameters
+	new_character.nutrition = rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_WELL_FED)
+	// random individual metabolism mod from -10% to +10%
+	// so people don't get hungry at the same time
+	// but it affects all metabolism including chemistry, so i don't know if we need it
+	new_character.mob_metabolism_mod.ModAdditive(rand(-10, 10) * 0.01, "Unique character mod")
 
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in

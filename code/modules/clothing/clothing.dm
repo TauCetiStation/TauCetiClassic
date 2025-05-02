@@ -220,8 +220,6 @@
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
 
-	sprite_sheet_slot = SPRITE_SHEET_EARS
-
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
 
@@ -355,6 +353,14 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = SIZE_TINY
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
+
+//Neck
+/obj/item/clothing/neck
+	name = "neck"
+	icon = 'icons/obj/clothing/neck.dmi'
+	slot_flags = SLOT_FLAGS_NECK
+	w_class = SIZE_TINY
+	sprite_sheet_slot = SPRITE_SHEET_NECK
 
 //Mask
 /obj/item/clothing/mask
@@ -499,6 +505,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = SIZE_SMALL
+	flags = HEAR_TALK //for webbing vest contents
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
@@ -555,6 +562,11 @@ BLIND     // can't see anything
 			to_chat(user, "Its vital tracker appears to be enabled.")
 		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
+
+/obj/item/clothing/under/hear_talk(mob/M, text, verb, datum/language/speaking)
+	for(var/obj/item/clothing/accessory/A in accessories)
+		if(A.flags & (HEAR_TALK | HEAR_PASS_SAY | HEAR_TA_SAY))
+			A.hear_talk(M, text, verb, speaking)
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
@@ -619,7 +631,7 @@ BLIND     // can't see anything
 
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
-	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
+	if(icon_exists('icons/mob/uniform.dmi', "[basecolor]_d"))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		update_inv_mob()
 	else

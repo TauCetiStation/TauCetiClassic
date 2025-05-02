@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(mapping)
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
-	var/list/z_list
+	var/list/datum/space_level/z_list
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
 
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(mapping)
 		CRASH("Can't setup global event \"[module_name]\"!")
 
 /datum/controller/subsystem/mapping/proc/get_map_module(module_name)
-	if(loaded_map_module && loaded_map_module.name == module_name)
+	if(loaded_map_module && (!module_name || loaded_map_module.name == module_name))
 		return loaded_map_module
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
@@ -240,7 +240,8 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	if(global.config.load_mine)
 		if(config.minetype == "asteroid")
-			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+			var/asteroidmap = pick("asteroid_classic.dmm", "asteroid_rich.dmm")
+			LoadGroup(FailedZs, "Asteroid", "asteroid", asteroidmap, default_traits = ZTRAITS_ASTEROID)
 		else if(config.minetype == "prometheus_asteroid")
 			LoadGroup(FailedZs, "Asteroid", "prometheus_asteroid", "prometheus_asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
 		else if (!isnull(config.minetype))
@@ -266,12 +267,14 @@ SUBSYSTEM_DEF(mapping)
 
 	if(config.system_name)
 		if(areas_by_type[/area/shuttle/arrival/velocity])
-			areas_by_type[/area/shuttle/arrival/velocity].name = "[config.system_name] Transfer Station 13"
+			areas_by_type[/area/shuttle/arrival/velocity].name = "НТС Велосити, док 42"
 	if(config.station_name)
 		if(areas_by_type[/area/shuttle/arrival/station])
 			areas_by_type[/area/shuttle/arrival/station].name = config.station_name
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
+	if(areas_by_type[/area/velocity/monorailwagon])
+		areas_by_type[/area/velocity/monorailwagon].name = "НТС Велосити, остановка 42-й док"
 
 /datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
 	if(!VM.MakeNextMap())

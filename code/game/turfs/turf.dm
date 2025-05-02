@@ -1,10 +1,16 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+
+	// base turf luminosity, works against byond native darkness
+	// most likely you shouldn't touch it
+	// currently direcly used only by starlight/environment lighting
+	// dynamic lighting subsystem uses lighting_object's for luminosity
+	luminosity = 0
+
 	var/turf/basetype = /turf/environment/space
-	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
-	var/intact = 1
 	var/can_deconstruct = FALSE
+
+	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
 
 	//Properties for open tiles (/floor)
 	var/airless = FALSE
@@ -40,6 +46,19 @@
 
 	var/list/turf_decals
 
+	var/level_light_source = FALSE
+
+	var/tmp/lighting_corners_initialised = FALSE
+
+	///Our lighting object.
+	var/tmp/atom/movable/lighting_object/lighting_object
+	///Lighting Corner datums.
+	var/tmp/datum/lighting_corner/lighting_corner_NE
+	var/tmp/datum/lighting_corner/lighting_corner_SE
+	var/tmp/datum/lighting_corner/lighting_corner_SW
+	var/tmp/datum/lighting_corner/lighting_corner_NW
+
+	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
 
 /**
   * Turf Initialize
@@ -57,6 +76,9 @@
 
 	for(var/atom/movable/AM in src)
 		Entered(AM)
+
+	if(level_light_source)
+		LEVEL_LIGHTING_SOURCE(src)
 
 	if(light_power && light_range)
 		update_light()
@@ -116,7 +138,7 @@
 /proc/get_projectile_bump_target(turf/T, obj/item/projectile/mover)
 	// Obstacle to use if no preferred target is found
 	var/atom/rollback_obstacle
-	
+
 	// First check objects to block exit
 	rollback_obstacle = get_exit_bump_target(T, mover)
 
@@ -128,7 +150,7 @@
 	var/atom/priority_target = mover.original
 
 	// Then check priority target if it on the tile
-	if(!isturf(priority_target) && priority_target.loc == T)
+	if(priority_target && !isturf(priority_target) && priority_target.loc == T)
 		if(isliving(priority_target))
 			if(!mover.check_miss(priority_target))
 				alive_obstacle = priority_target
@@ -165,7 +187,7 @@
 /proc/get_bump_target(turf/T, atom/movable/mover as mob|obj)
 	// Obstacle to use if no preferred target is found
 	var/atom/rollback_obstacle
-	
+
 	// First check objects to block exit
 	rollback_obstacle = get_exit_bump_target(T, mover)
 
@@ -188,7 +210,7 @@
 	// Obstacle not on border or null
 	return rollback_obstacle
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/old_loc as mob|obj|turf)
+/proc/can_enter_turf(atom/movable/mover as mob|obj, turf/new_loc, turf/old_loc)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return FALSE
@@ -196,14 +218,22 @@
 	var/atom/bump_target
 
 	if(istype(mover, /obj/item/projectile))
-		bump_target = get_projectile_bump_target(src, mover)
+		bump_target = get_projectile_bump_target(new_loc, mover)
 	else
-		bump_target = get_bump_target(src, mover)
+		bump_target = get_bump_target(new_loc, mover)
 
 	if(bump_target)
 		mover.Bump(bump_target, TRUE)
 		return FALSE
 
+	return TRUE
+
+/turf/Exit(atom/movable/mover as mob|obj, atom/new_loc as mob|obj|turf)
+	if(!isturf(new_loc))
+		return TRUE
+	return can_enter_turf(mover, new_loc, src)
+
+/turf/Enter(atom/movable/mover as mob|obj, atom/old_loc as mob|obj|turf)
 	return TRUE
 
 /turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT
@@ -271,14 +301,25 @@
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(src.intact)
+		if(O.initialized)
+			SEND_SIGNAL(O, COMSIG_OBJ_LEVELUPDATE, underfloor_accessibility)
 
 // override for environment turfs, since they should never hide anything
 /turf/environment/levelupdate()
-	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(0)
+	return
+
+/turf/environment/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
@@ -322,11 +363,11 @@
 	// BYOND never deletes turfs, when you "delete" a turf, it actually morphs the turf into a new one.
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
-	var/old_dynamic_lighting = dynamic_lighting
-	var/old_force_lighting_update = force_lighting_update
-	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
-	var/old_corners = corners
+	var/old_lighting_corner_NE = lighting_corner_NE
+	var/old_lighting_corner_SE = lighting_corner_SE
+	var/old_lighting_corner_SW = lighting_corner_SW
+	var/old_lighting_corner_NW = lighting_corner_NW
 
 	var/old_basetype = basetype
 	var/old_flooded = flooded
@@ -403,22 +444,19 @@
 
 	queue_smooth_neighbors(W)
 
+	lighting_corner_NE = old_lighting_corner_NE
+	lighting_corner_SE = old_lighting_corner_SE
+	lighting_corner_SW = old_lighting_corner_SW
+	lighting_corner_NW = old_lighting_corner_NW
+
 	if(SSlighting.initialized)
 		recalc_atom_opacity()
 		lighting_object = old_lighting_object
-		affecting_lights = old_affecting_lights
-		corners = old_corners
-		if (force_lighting_update || old_force_lighting_update || old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+
+		if (old_opacity != opacity)
 			reconsider_lights()
 
-		if (dynamic_lighting != old_dynamic_lighting)
-			if (IS_DYNAMIC_LIGHTING(src))
-				lighting_build_overlay()
-			else
-				lighting_clear_overlay()
-
-		for(var/turf/environment/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			S.update_starlight()
+		recast_level_light()
 
 	if(F)
 		F.forceMove(src)
@@ -479,11 +517,9 @@
 ////////////////
 
 /turf/singularity_act(obj/singularity/S, current_size)
-	if(intact)
+	if(underfloor_accessibility == UNDERFLOOR_HIDDEN)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(O.level != 1)
-				continue
-			if(O.invisibility == 101)
+			if(HAS_TRAIT(O, TRAIT_UNDERFLOOR))
 				O.singularity_act(S, current_size)
 	ChangeTurf(/turf/environment/space)
 	return(2)

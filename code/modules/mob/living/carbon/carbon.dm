@@ -23,29 +23,75 @@
 	temp_alert = 0
 
 /mob/living/carbon/proc/handle_alerts()
-	if(inhale_alert)
+	if(inhale_alert && !IsSleeping())
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 	else
 		clear_alert("oxy")
 
-	if(poison_alert)
+	if(poison_alert && !IsSleeping())
 		throw_alert("tox", /atom/movable/screen/alert/tox_in_air)
 	else
 		clear_alert("tox")
 
-	if(temp_alert > 0)
+	if(temp_alert > 0 && !IsSleeping())
 		throw_alert("temp", /atom/movable/screen/alert/hot, temp_alert)
-	else if(temp_alert < 0)
+	else if(temp_alert < 0 && !IsSleeping())
 		throw_alert("temp", /atom/movable/screen/alert/cold, -temp_alert)
 	else
 		clear_alert("temp")
 
-	if(pressure_alert > 0)
+	if(pressure_alert > 0 && !IsSleeping())
 		throw_alert("pressure", /atom/movable/screen/alert/highpressure, pressure_alert)
-	else if(pressure_alert < 0)
+	else if(pressure_alert < 0 && !IsSleeping())
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, -pressure_alert)
 	else
 		clear_alert("pressure")
+
+	if(handcuffed && !IsSleeping())
+		throw_alert("handcuffed", /atom/movable/screen/alert/handcuffed)
+	else
+		clear_alert("handcuffed")
+	if(legcuffed && !IsSleeping())
+		throw_alert("legcuffed", /atom/movable/screen/alert/legcuffed)
+	else
+		clear_alert("legcuffed")
+
+	if(drunkenness >= DRUNKENNESS_SLUR && drunkenness < DRUNKENNESS_CONFUSED)
+		throw_alert("drunk_slur", /atom/movable/screen/alert/drunk/slur)
+	else
+		clear_alert("drunk_slur")
+	if(drunkenness >= DRUNKENNESS_CONFUSED && drunkenness < DRUNKENNESS_BLUR)
+		throw_alert("drunk_confused", /atom/movable/screen/alert/drunk/confused)
+	else
+		clear_alert("drunk_confused")
+	if(drunkenness >= DRUNKENNESS_BLUR && drunkenness < DRUNKENNESS_PASS_OUT)
+		throw_alert("drunk_blur", /atom/movable/screen/alert/drunk/blur)
+	else
+		clear_alert("drunk_blur")
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		throw_alert("drunk_pass_out", /atom/movable/screen/alert/drunk/pass_out)
+	else
+		clear_alert("drunk_pass_out")
+
+	if(stunned && !IsSleeping())
+		throw_alert("stunned", /atom/movable/screen/alert/stunned)
+	else
+		clear_alert("stunned")
+
+	if(paralysis && !IsSleeping() && !stunned)
+		throw_alert("paralysis", /atom/movable/screen/alert/paralysis)
+	else
+		clear_alert("paralysis")
+
+	if(weakened && !IsSleeping() && !stunned)
+		throw_alert("weaken", /atom/movable/screen/alert/weaken)
+	else
+		clear_alert("weaken")
+
+	if(blinded && !IsSleeping())
+		throw_alert("blind", /atom/movable/screen/alert/blind)
+	else
+		clear_alert("blind")
 
 /mob/living/carbon/proc/is_skip_breathe()
 	return !loc || (flags & GODMODE)
@@ -185,6 +231,7 @@
 			// Enough to make us sleep as well
 			if(SA_pp > SA_sleep_min)
 				Sleeping(10 SECONDS)
+				analgesic = clamp(analgesic + 5, 0, 10)
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 		else if(SA_pp > SA_giggle_min)
@@ -744,21 +791,21 @@
 	var/dat
 
 	dat += "<table>"
-	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
-	dat += "<tr><td><B>Right Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_R_HAND]'>[(r_hand && !(r_hand.flags & ABSTRACT)) ? r_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td><B>Left Hand:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td><B>Right Hand:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_R_HAND]'>[(r_hand && !(r_hand.flags & ABSTRACT)) ? r_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
 	dat += "<tr><td>&nbsp;</td></tr>"
 
-	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
+	dat += "<tr><td><B>Back:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
-		dat += "&nbsp;<A href='?src=\ref[src];internal=[SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+		dat += "&nbsp;<A href='byond://?src=\ref[src];internal=[SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 	dat += "</td></tr>"
 
-	dat += "<tr><td><B>Mask:</B></td><td><A href='?src=\ref[src];item=[SLOT_WEAR_MASK]'>[(wear_mask && !(wear_mask.flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Mask:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_WEAR_MASK]'>[(wear_mask && !(wear_mask.flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	if(handcuffed)
-		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
+		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
 	if(legcuffed)
-		dat += "<tr><td><B>Legcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_LEGCUFFED]'>Remove</A></td></tr>"
+		dat += "<tr><td><B>Legcuffed:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_LEGCUFFED]'>Remove</A></td></tr>"
 
 	dat += "</table>"
 
@@ -794,6 +841,9 @@
 
 	if(IsSleeping())
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
+		return
+	if(traumatic_shock >= TRAUMATIC_SHOCK_SERIOUS)
+		to_chat(src, "<span class='danger'>The pain keeps you from sleeping.</span>")
 		return
 	if(tgui_alert(src, "You sure you want to sleep for a while?","Sleep", list("Yes","No")) == "Yes")
 		SetSleeping(40 SECONDS) //Short nap
@@ -981,13 +1031,6 @@
 					+ reagents.get_reagent_amount("dairy") \
 				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
-/mob/living/carbon/get_metabolism_factor()
-	var/met = metabolism_factor.Get()
-	if(met < 0)
-		met = 0
-	return met
-
-
 /mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
 	if(!ishuman(src) && !isIAN(src))
 		return
@@ -1139,7 +1182,7 @@
 		return FALSE
 
 	sight = initial(sight)
-	lighting_alpha = initial(lighting_alpha)
+	var/new_lighting_alpha = initial(lighting_alpha)
 
 	var/datum/species/S = all_species[get_species()]
 	if(S)
@@ -1150,7 +1193,7 @@
 	if(changeling_aug)
 		sight |= SEE_MOBS
 		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 	if(XRAY in mutations)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -1164,22 +1207,25 @@
 			if(0)
 				O.togge_huds()
 				if(!druggy)
-					lighting_alpha = initial(lighting_alpha)
+					new_lighting_alpha = initial(lighting_alpha)
 					see_invisible = SEE_INVISIBLE_LIVING
 			if(1)
 				see_in_dark = 8
 				if(!druggy)
-					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+					new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			if(2)
 				sight |= SEE_MOBS
 				see_in_dark = initial(see_in_dark)
 				if(!druggy)
-					lighting_alpha = initial(lighting_alpha)
+					new_lighting_alpha = initial(lighting_alpha)
 					see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			if(3)
 				sight |= SEE_TURFS
 				if(!druggy)
-					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+					new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(lighting_alpha != new_lighting_alpha) // i hate that we do sight update every tick
+		set_lighting_alpha(new_lighting_alpha)
 
 	return TRUE
 
@@ -1238,6 +1284,15 @@
 		txt = L.accentuate(txt, speaking)
 	return txt
 
+/mob/living/carbon/proc/message_with_dyslalia(txt)
+	var/list/defects = list(
+	"р" = "л",
+	"з" = "с",
+	"щ" = "шс",
+	"ж" = "ш",
+	"г" = "х",
+	)
+	return replace_characters(txt, defects)
 
 /**
  * Get the insulation that is appropriate to the temperature you're being exposed to.
@@ -1294,15 +1349,16 @@
 
 	..(amount, min_temp, max_temp)
 
-/mob/living/carbon/handle_nutrition()
-	var/met_factor = get_metabolism_factor()
-	if(!met_factor)
-		return
+/mob/living/carbon/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/nutrition_to_remove = 0
-	nutrition_to_remove += 0.16
+	nutrition_to_remove += 0.16 // todo: magic number, would be better to change for mob_metabolism_mod and tweak nutrition & nutrition gains
 	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 		var/pain = getHalLoss()
 		if(pain > 0)
 			nutrition_to_remove += pain * 0.01
-	nutrition_to_remove *= met_factor
+	nutrition_to_remove *= mob_metabolism_mod.Get()
 	nutrition = max(0.0, nutrition - nutrition_to_remove)

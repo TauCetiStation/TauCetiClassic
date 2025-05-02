@@ -4,6 +4,7 @@
 //TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
+	cases = list("оружейная гильза", "оружейной гильзы", "оружейной гильзе", "оружейную гильзу", "оружейной гильзой", "оружейной гильзе")
 	desc = "Гильза от пули."
 	icon = 'icons/obj/ammo/casings.dmi'
 	icon_state = "casing_normal"
@@ -158,7 +159,7 @@
 	if(A)
 		A.loc = get_turf(src.loc)
 		user.put_in_hands(A)
-		to_chat(user, "<span class='notice'>Вы снимаете оболочку с [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете патрон из [CASE(src,GENITIVE_CASE)]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()

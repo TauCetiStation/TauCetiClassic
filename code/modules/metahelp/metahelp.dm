@@ -9,7 +9,7 @@ var/global/metahelps
 
 	//todo: possible a way to add some metahelps ID's in personal ignore list
 
-	var/msg = "[help.greeting] <a href=?src=\ref[src];metahelp=[help.id]>(Читать)</a>"
+	var/msg = "[help.greeting] <a href=byond://?src=\ref[src];metahelp=[help.id]>(Читать)</a>"
 
 	to_chat(src, "<font color='purple'><span class='ooc'><span class='prefix'>OOC-INFO:</span> <span class='message'>[msg]</span></span></font>")
 

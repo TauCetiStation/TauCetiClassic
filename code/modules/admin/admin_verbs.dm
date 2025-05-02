@@ -73,6 +73,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
 	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
 	/client/proc/send_gods_message,
+	/client/proc/metabolism_debug,
 	)
 var/global/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
@@ -90,6 +91,7 @@ var/global/list/admin_verbs_variables = list(
 	/client/proc/mass_apply_status_effect,
 	/client/proc/add_smartlight_preset,
 	/client/proc/set_area_smartlight,
+	/client/proc/set_level_light,
 	/client/proc/debug_bloom,
 )
 var/global/list/admin_verbs_ban = list(
@@ -165,6 +167,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/generate_round_scoreboard,
 	/client/proc/save_statistics,
 	/client/proc/cmd_admin_list_open_jobs,
+	/client/proc/toggle_profiler,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
 	/client/proc/ZASSettings,
@@ -194,6 +197,7 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
 	/client/proc/generate_fulltile_window_placeholders,
+	/client/proc/allow_browser_inspect,
 #ifdef REFERENCE_TRACKING
 /client/proc/find_refs,
 /client/proc/qdel_then_find_references,
@@ -294,6 +298,7 @@ var/global/list/admin_verbs_hideable = list(
 	/datum/admins/proc/adjump,
 	/client/proc/cmd_admin_list_open_jobs,
 //	/client/proc/callproc,
+	/client/proc/toggle_profiler,
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_make_powernets,
@@ -472,11 +477,13 @@ var/global/list/admin_verbs_hideable = list(
 /client/proc/unban_panel()
 	set name = "Unban Panel"
 	set category = "Admin"
-	if(holder)
-		if(config.ban_legacy_system)
-			holder.unbanpanel()
-		else
-			holder.DB_ban_panel()
+	if(!holder)
+		return
+	if(!config.sql_enabled)
+		to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+		return
+
+	holder.DB_ban_panel()
 	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -546,7 +553,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!warned_ckey || !reason)
 		return
 
-	notes_add(warned_ckey, "ADMINWARN: " + reason, src, secret = 0)
+	notes_add(warned_ckey, "ADMINWARN: " + reason, admin_key = src.ckey, secret = 0)
 
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)
@@ -697,7 +704,7 @@ var/global/list/admin_verbs_hideable = list(
 		for (var/mob/V in hearers(O))
 			V.show_messageold(message, 2)
 		log_admin("[key_name(usr)] made [O] at [COORD(O)]. make a sound")
-		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 
@@ -929,20 +936,18 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_ATTACKLOGS
-	if (prefs.chat_toggles & CHAT_ATTACKLOGS)
-		to_chat(usr, "You now will get attack log messages")
-	else
-		to_chat(usr, "You now won't get attack log messages")
+	prefs.save_preferences()
+	to_chat(src, "You now [(prefs.chat_toggles & CHAT_ATTACKLOGS) ? "will" : "won't"] get attack log messages.")
+	feedback_add_details("admin_verb","TALM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_noclient_attacklogs()
 	set name = "Toggle No Client Attack Log Messages"
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_NOCLIENT_ATTACK
-	if (prefs.chat_toggles & CHAT_NOCLIENT_ATTACK)
-		to_chat(usr, "You now will get attack log messages for mobs that don't have a client")
-	else
-		to_chat(usr, "You now won't get attack log messages for mobs that don't have a client")
+	prefs.save_preferences()
+	to_chat(src, "You now [(prefs.chat_toggles & CHAT_NOCLIENT_ATTACK) ? "will" : "won't"] get attack log messages for mobs that don't have a client.")
+	feedback_add_details("admin_verb","TNCALM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggleghostwriters()
 	set name = "Toggle ghost writers"
@@ -977,11 +982,9 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_DEBUGLOGS
-	if (prefs.chat_toggles & CHAT_DEBUGLOGS)
-		to_chat(usr, "You now will get debug log messages")
-	else
-		to_chat(usr, "You now won't get debug log messages")
-
+	prefs.save_preferences()
+	to_chat(src, "You now [(prefs.chat_toggles & CHAT_DEBUGLOGS) ? "will" : "won't"] get debug log messages.")
+	feedback_add_details("admin_verb","TDLM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/man_up(mob/T as mob in player_list)
 	set category = "Fun"
@@ -1227,16 +1230,13 @@ var/global/centcom_barriers_stat = 1
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"
-	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
 	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
 	var/active = 1
-	var/lchannel = 999
 
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(iscarbon(M))
-		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
+	to_chat(usr, "<span class='notice'><b><font size=3>Never gonna give you up.</font></b></span>")
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
@@ -1253,3 +1253,13 @@ var/global/centcom_barriers_stat = 1
 /obj/structure/centcom_barrier/Destroy()
 	centcom_barrier_list -= src
 	return ..()
+
+/client/proc/metabolism_debug()
+	set category = "Debug"
+	set name = "Debug Metabolism"
+
+	if(!isliving(mob))
+		return
+	
+	var/mob/living/L = mob
+	L.metabolism_debug()

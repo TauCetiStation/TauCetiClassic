@@ -35,9 +35,6 @@ var/global/list/available_ui_styles = list(
 
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
-	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
-	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
-	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
 	// subtypes can override this to force a specific UI style
 	var/ui_style
@@ -51,15 +48,6 @@ var/global/list/available_ui_styles = list(
 		// will fall back to the default if any of these are null
 		ui_style = ui_style2icon(mymob.client?.prefs?.UI_style)
 
-	for(var/mytype in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/plane_master/instance = new mytype()
-		plane_masters["[instance.plane]"] = instance
-		instance.backdrop(mymob)
-
-	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
-		var/atom/movable/plane_master_controller/controller_instance = new mytype(null, src)
-		plane_master_controllers[controller_instance.name] = controller_instance
-
 	instantiate()
 
 /datum/hud/Destroy()
@@ -69,8 +57,6 @@ var/global/list/available_ui_styles = list(
 	complex = null
 	hide_actions_toggle = null
 	mymob = null
-	QDEL_LIST_ASSOC_VAL(plane_masters)
-	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
 	return ..()
 
 /datum/hud/proc/hidden_inventory_update()
@@ -90,6 +76,7 @@ var/global/list/available_ui_styles = list(
 			H.w_uniform?.screen_loc = ui_iclothing
 			H.wear_suit?.screen_loc = ui_oclothing
 			H.wear_mask?.screen_loc = ui_mask
+			H.neck?.screen_loc = ui_neck
 			H.head?.screen_loc = ui_head
 		else
 			H.shoes?.screen_loc = null
@@ -100,6 +87,7 @@ var/global/list/available_ui_styles = list(
 			H.w_uniform?.screen_loc = null
 			H.wear_suit?.screen_loc = null
 			H.wear_mask?.screen_loc = null
+			H.neck?.screen_loc = null
 			H.head?.screen_loc = null
 
 
@@ -190,19 +178,11 @@ var/global/list/available_ui_styles = list(
 
 	mymob.update_action_buttons()
 	reorganize_alerts()
-	create_parallax()
-	plane_masters_update()
+	set_parallax(mymob.current_parallax) // todo: why we recreate parallax every time we change mob or press f12
 	hidden_inventory_update()
 	persistant_inventory_update()
 
 	hud_version = version
-
-/datum/hud/proc/plane_masters_update()
-	// Plane masters are always shown to OUR mob, never to observers
-	for(var/thing in plane_masters)
-		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
-		PM.backdrop(mymob)
-		mymob.client.screen += PM
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()

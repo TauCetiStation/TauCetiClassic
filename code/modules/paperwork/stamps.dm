@@ -233,7 +233,7 @@
 
 /obj/item/weapon/stamp/velocity
 	name = "velocity rubber stamp"
-	stamp_message = "NTS Velocity"
+	stamp_message = "НТС Велосити"
 	stamp_color = "#a8a8a8"
 	stamp_border_color = "#4572e3"
 	stamp_paper_overlay = "paper_stamp-circle"

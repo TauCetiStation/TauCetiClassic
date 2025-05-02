@@ -11,7 +11,7 @@
 	name = "grab"
 	icon = 'icons/hud/screen1.dmi'
 	icon_state = "reinforce"
-	flags = DROPDEL|NOBLUDGEON
+	flags = ABSTRACT|DROPDEL|NOBLUDGEON
 	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
@@ -23,7 +23,6 @@
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 
@@ -59,6 +58,10 @@
 
 	if(SEND_SIGNAL(target, COMSIG_MOVABLE_TRY_GRAB, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
 		return FALSE
+
+	var/area/A = get_area(target)
+	if(force_state <= GRAB_NECK && HAS_TRAIT(src, TRAIT_BORK_SKILLCHIP) && HAS_TRAIT(A, TRAIT_COOKING_AREA))
+		force_state = GRAB_NECK
 
 	Grab(target, force_state, show_warnings)
 	return TRUE
@@ -194,6 +197,7 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
+
 		//disallow upgrading if we're grabbing more than one person
 		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
 			var/obj/item/weapon/grab/G = assailant.l_hand
@@ -256,7 +260,6 @@
 				qdel(src)
 				return PROCESS_KILL
 			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
-		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
 			if(assailant.get_targetzone() == O_MOUTH)
@@ -268,7 +271,7 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.Stun(5)
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
-
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 	adjust_position()
 
 
@@ -384,6 +387,7 @@
 		assailant.set_dir(get_dir(assailant, affecting))
 
 		affecting.log_combat(assailant, "neck-grabbed")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
@@ -398,6 +402,7 @@
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 
 		affecting.log_combat(assailant, "strangled")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
@@ -490,6 +495,7 @@
 						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
 
 						affecting.log_combat(assailant, "finger-pressed into the eyes")
+						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
@@ -543,6 +549,7 @@
 						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 
 						affecting.log_combat(assailant, "headbutted")
+						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 						assailant.drop_from_inventory(src)
 						src.loc = null

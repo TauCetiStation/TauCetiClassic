@@ -1,4 +1,5 @@
 //Updates the mob's health from bodyparts and mob damage variables
+// todo: for some reason mobs call it several times per life tick
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth
@@ -213,18 +214,6 @@
 		stuttering = 0
 	else
 		..()
-
-
-//========== Shock Stage =========
-/mob/living/carbon/human/SetShockStage(amount)
-	if(species.flags[NO_PAIN])
-		return
-	shock_stage = max(amount, 0)
-
-/mob/living/carbon/human/AdjustShockStage(amount)
-	if(species.flags[NO_PAIN])
-		return
-	shock_stage = max(shock_stage + amount, 0)
 
 ////////////////////////////////////////////
 

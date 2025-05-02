@@ -89,8 +89,6 @@
 	H.dyed_b_facial = dirt_b
 	H.facial_painted = TRUE
 
-	H.apply_recolor()
-	H.update_body()
 	H.regenerate_icons()
 
 
@@ -238,7 +236,7 @@ var/global/list/allergen_reagents_list
 	requirement = "Нет."
 
 /datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
-	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
+	H.mob_metabolism_mod.ModAdditive(1, src) // +100%
 
 /datum/quality/negativeish/proudandwalking
 	name = "Proud and Walking"
@@ -267,3 +265,11 @@ var/global/list/allergen_reagents_list
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
 		return
 	H.adjustBrainLoss(60)
+
+/datum/quality/negativeish/dyslalia
+	name = "Dyslalia"
+	desc = "Слая судьба подалила тебе мношество дефектов лечи."
+	requirement = "Нет."
+
+/datum/quality/negativeish/dyslalia/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_DYSLALIA, QUALITY_TRAIT)

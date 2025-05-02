@@ -71,6 +71,7 @@
 /var/const/access_engineering_lobby = 71
 /var/const/access_medbay_storage = 72
 /var/const/access_oldstation = 73
+/var/const/access_space_traders = 74
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -250,7 +251,7 @@
 		if(6) //station general
 			return list(access_kitchen,access_bar, access_hydroponics, access_barber, access_janitor, access_chapel_office, access_crematorium, access_library, access_lawyer, access_theatre)
 		if(7) //supply
-			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_recycler, access_qm)
+			return list(access_mailsorting, access_cargoshop, access_mining, access_mining_station, access_cargo, access_recycler, access_qm)
 
 /proc/get_region_accesses_name(code)
 	switch(code)
@@ -281,7 +282,7 @@
 		if(access_detective)
 			return "Detective"
 		if(access_cargoshop)
-			return "Cargo Delivery"
+			return "Cargo Delivery/Supply Console"
 		if(access_security)
 			return "Security"
 		if(access_blueshield)
@@ -468,7 +469,6 @@
 		"Emergency Response Team",
 		"Emergency Response Team Leader",
 		"Organized Crimes Department",
-		"NanoTrasen Representative",
 		)
 
 /proc/get_all_velocity_jobs()
@@ -553,7 +553,10 @@
 /proc/get_all_misc_job_icons() //Use for all misc and custom job hud icons if you ever need one!
 	return list("Prisoner",
 				"Marine",
-				"Marine Squad Leader")
+				"Marine Squad Leader",
+				"Senior Engineer",
+				"Senior Medic",
+				"Space Trader")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))

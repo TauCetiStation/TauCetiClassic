@@ -5,7 +5,6 @@
 	icon_state = "idpainter"
 	density = TRUE
 	anchored = TRUE
-	//ghost_must_be_admin = TRUE
 	var/obj/item/weapon/card/id/storedcard = null
 	var/list/radial_chooses
 
