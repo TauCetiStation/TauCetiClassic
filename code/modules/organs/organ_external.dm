@@ -214,7 +214,9 @@
 		return original_color
 
 /obj/item/organ/external/proc/get_skin_color()
-	if(species.flags[HAS_SKIN_COLOR])
+	if(is_robotic())
+		return null
+	else if(species.flags[HAS_SKIN_COLOR])
 		. = rgb(r_skin, g_skin, b_skin)
 	else if(species.flags[HAS_SKIN_TONE])
 		var/datum/skin_tone/tone = global.skin_tones_by_name[s_tone]
@@ -223,6 +225,9 @@
 	. = mod_skin_color(.)
 
 /obj/item/organ/external/proc/get_skin_second_color()
+	if(is_robotic())
+		return null
+
 	var/original_color = rgb(r_belly, g_belly, b_belly)
 	. = mod_skin_color(original_color)
 
