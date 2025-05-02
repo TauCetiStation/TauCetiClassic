@@ -848,7 +848,7 @@
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
 					H.emote("scream")
 			if(30)
-				AddElement(/datum/element/mutation/slime)
+				ADD_TRAIT(H, ELEMENT_TRAIT_SLIME, INNATE_TRAIT)
 				to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
 
 /datum/reagent/aslimetoxin

@@ -338,7 +338,7 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
-	AddElement(/datum/element/mutation/slime)
+	ADD_TRAIT(H, ELEMENT_TRAIT_SLIME, TRAIT_INNATE)
 
 /datum/quality/quirkieish/very_special
 	name = "Very Special"
