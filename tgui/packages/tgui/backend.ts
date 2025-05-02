@@ -166,6 +166,7 @@ export const backendMiddleware = (store) => {
       else if (fancyState !== fancy) {
         logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
+        setupDrag(fancy);
         Byond.winset(Byond.windowId, {
           titlebar: !fancy,
           'can-resize': !fancy,
