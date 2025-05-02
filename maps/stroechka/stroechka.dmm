@@ -6689,7 +6689,7 @@
 /area/station/rnd/chargebay)
 "Fw" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
