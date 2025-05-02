@@ -216,25 +216,18 @@
 
 	var/prev_spirit_level = spirit_level
 
-	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 6
 		if(SPIRIT_LOW to SPIRIT_POOR)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 4
 		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
-			master.mood_multiplicative_actionspeed_modifier = 0.0
 			spirit_level = 3
 		if(SPIRIT_NEUTRAL + 1 to SPIRIT_HIGH + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 2
 		if(SPIRIT_HIGH + 1 to INFINITY)
-			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
 
@@ -365,3 +358,15 @@
 	SIGNAL_HANDLER
 
 	setSpirit(spirit + amount)
+
+// Modifying the prob according to the character's mood.
+// With force above 0 (default) should be used for success prob
+/mob/proc/mood_prob(value, force = MOOD_PROB_MULTIPLIER) // value - normal prob chance.
+	if(value >= 100) // i think if the chance is 100% or more, it should't be modified. for example, there should't be a chance to fail a surgical operation on the operating table.
+		return prob(value)
+	var/new_value = value
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
+	if(!mood)
+		return prob(new_value)
+	new_value += value * LERP(-1 * force, 1 * force, mood.spirit / SPIRIT_MAXIMUM)
+	return prob(new_value)
