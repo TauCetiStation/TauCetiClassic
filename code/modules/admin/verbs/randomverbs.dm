@@ -684,6 +684,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] toggled husk skin for [key_name(H)]")
 	message_admins("[key_name_admin(usr)] toggled husk skin for [key_name_admin(H)]")
 
+/client/proc/cmd_admin_electrocute(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/duration = input("Choice duration for electrocute animation (seconds).", "Electrocute duration") as null|num
+
+	if(!duration)
+		return
+
+	H.electrocution_animation(duration SECONDS)
+
+	log_admin("[key_name(usr)] added [duration] seconds electrocute animation for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] added [duration] seconds electrocute animation for [key_name_admin(H)]")
+
 /client/proc/cmd_admin_gib(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Gib"

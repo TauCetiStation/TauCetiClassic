@@ -103,7 +103,8 @@
 	var/specie_shoe_blood_state = "shoeblood"
 	var/specie_hand_blood_state = "bloodyhands"
 	var/flesh_color = "#ffc896" //Pink.
-	var/base_color // default skin color (r_skin, g_skin, b_skin)
+	var/default_skin_color // default skin color (r_skin, g_skin, b_skin)
+	var/default_eyes_color
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -276,14 +277,19 @@
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(base_color)
-		H.r_skin = HEX_VAL_RED(base_color)
-		H.g_skin = HEX_VAL_GREEN(base_color)
-		H.b_skin = HEX_VAL_BLUE(base_color)
+	if(default_skin_color)
+		H.r_skin = HEX_VAL_RED(default_skin_color)
+		H.g_skin = HEX_VAL_GREEN(default_skin_color)
+		H.b_skin = HEX_VAL_BLUE(default_skin_color)
 	else
-		H.r_belly = initial(H.r_belly)
-		H.g_belly = initial(H.g_belly)
-		H.b_belly = initial(H.b_belly)
+		H.r_skin = initial(H.r_belly)
+		H.g_skin = initial(H.g_belly)
+		H.b_skin = initial(H.b_belly)
+
+	if(default_eyes_color)
+		H.r_eyes = HEX_VAL_RED(default_eyes_color)
+		H.g_eyes = HEX_VAL_GREEN(default_eyes_color)
+		H.b_eyes = HEX_VAL_BLUE(default_eyes_color)
 
 	H.mob_brute_mod.ModMultiplicative(brute_mod, src)
 	H.mob_burn_mod.ModMultiplicative(burn_mod, src)
@@ -537,7 +543,8 @@
 	)
 
 	flesh_color = "#34af10"
-	base_color = "#06aa00"
+	default_skin_color = "#06aa00"
+	default_eyes_color = "#ffc800"
 
 	min_age = 25
 	max_age = 85
@@ -560,8 +567,8 @@
 /datum/species/unathi/on_gain(mob/living/carbon/human/H)
 	..()
 
-	if(base_color) // move it to the parent on_gain() if there will be any other species with the second color set
-		var/second_color = color_shift_luminance(base_color, -5)
+	if(default_skin_color) // move it to the parent on_gain() if there will be any other species with the second color set
+		var/second_color = color_shift_luminance(default_skin_color, -5)
 		H.r_belly = HEX_VAL_RED(second_color)
 		H.g_belly = HEX_VAL_GREEN(second_color)
 		H.b_belly = HEX_VAL_BLUE(second_color)
@@ -625,7 +632,8 @@
 	)
 
 	flesh_color = "#afa59e"
-	base_color = "#bbbbbb"
+	default_skin_color = "#bbbbbb"
+	default_eyes_color = "#1ec81e" 
 
 	min_age = 25
 	max_age = 85
@@ -1737,7 +1745,7 @@
 	damage_mask = FALSE
 	gender_body_icons = FALSE
 
-	base_color = "#336600"
+	default_skin_color = "#336600"
 	flesh_color = "#525252"
 	blood_datum_path = /datum/dirt_cover/hemolymph
 	specie_shoe_blood_state = "snakeshoeblood"

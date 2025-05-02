@@ -4,7 +4,9 @@
 #define BODY_BEHIND_LAYER     31 // north states for wings and (todo) tails
 #define BODY_LAYER            30
 #define BODY_FEATURES_LAYER   29
-#define UNDERWEAR_LAYER       28
+#define BODY_UPPER_LAYER      28
+#define UNDERWEAR_LAYER       BODY_UPPER_LAYER
+#define EYES_LAYER            BODY_UPPER_LAYER
 #define EXTERNAL_APPEARANCE   27
 #define MUTATIONS_LAYER       26
 #define DAMAGE_LAYER          25

@@ -284,6 +284,7 @@
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;burn=\ref[D]'>Burn</option>"
 		body += "<option value='?_src_=vars;husk=\ref[D]'>Husk</option>"
+		body += "<option value='?_src_=vars;electrocute=\ref[D]'>Electrocute</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
@@ -607,6 +608,7 @@ body
 			return
 
 		cmd_admin_burn(H)
+		return
 
 	else if(href_list["husk"])
 		if(!check_rights(R_ADMIN))
@@ -618,6 +620,19 @@ body
 			return
 
 		cmd_admin_husk(H)
+		return
+
+	else if(href_list["electrocute"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["electrocute"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_electrocute(H)
+		return
 
 	else if(href_list["gib"])
 		if(!check_rights(R_ADMIN|R_FUN))

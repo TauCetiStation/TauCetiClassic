@@ -306,11 +306,6 @@
 
 	. = list()
 
-	// attach bones under base appearance for slimepeople (if we not skeleton already)
-	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
-		var/mutable_appearance/bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE), -body_icon_layer)
-		. += bones_appearance
-
 	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -body_icon_layer)
 	. += base_appearance
 
@@ -322,9 +317,20 @@
 		base_appearance.color = get_skin_color()
 
 	if(species.second_color_mask && icon_exists(icon, "color_[icon_state]"))
-		var/mutable_appearance/second_color_appearance = mutable_appearance(icon, "color_[icon_state]", -BODY_FEATURES_LAYER)
+		var/mutable_appearance/second_color_appearance = mutable_appearance(icon, "color_[icon_state]")
+		second_color_appearance.appearance_flags = RESET_COLOR | RESET_ALPHA
 		second_color_appearance.color = get_skin_second_color()
-		. += second_color_appearance
+		base_appearance.add_overlay(second_color_appearance)
+
+	// attach bones to base appearance for slimepeople (if we not skeleton already)
+	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
+		var/mutable_appearance/bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
+		bones_appearance.appearance_flags = RESET_COLOR | RESET_ALPHA
+		bones_appearance.blend_mode = BLEND_INSET_OVERLAY // inset fixes some clipping issues
+		// because we can't combine inset with underlays (or other blend modes) we need to add alpha to make it appear "under" skin
+		// unfortunately it makes skeleton unnecessarily transparent
+		bones_appearance.alpha = 175
+		base_appearance.add_overlay(bones_appearance)
 
 	// sometimes we can see the insides of the mob
 	if(is_zombie && species.skeleton)
@@ -553,30 +559,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
-			var/obj/bodypart = src // Dropped limb object
 			add_blood(owner)
-			bodypart.forceMove(owner.loc)
-
-			if(bodypart)
-				//Robotic limbs explode if sabotaged.
-				if(is_robotic() && !no_explode && sabotaged)
-					explosion(get_turf(owner), 0, 0, 2, 3)
-					var/datum/effect/effect/system/spark_spread/spark_system = new
-					spark_system.set_up(5, 0, owner)
-					spark_system.attach(owner)
-					spark_system.start()
-					spawn(10)
-						qdel(spark_system)
-
-				var/matrix/M = matrix()
-				M.Turn(rand(180))
-				bodypart.transform = M
-
-				if(!clean)
-					// Throw limb around.
-					if(isturf(bodypart.loc))
-						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
-					set_dir(2)
+			//Robotic limbs explode if sabotaged.
+			if(is_robotic() && !no_explode && sabotaged)
+				explosion(get_turf(owner), 0, 0, 2, 3)
+				var/datum/effect/effect/system/spark_spread/spark_system = new
+				spark_system.set_up(5, 0, owner)
+				spark_system.attach(owner)
+				spark_system.start()
+				spawn(10)
+					qdel(spark_system)
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
@@ -655,9 +647,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.update_body(body_zone)
 
 	if(!should_delete)
-		handle_cut()
-		apply_appearance()
+		forceMove(owner.loc)
 		owner = null
+		apply_appearance()
+
+		var/matrix/M = matrix()
+		transform = M.Turn(rand(180))
+
+		if(!clean)
+			// Throw limb around.
+			if(isturf(loc))
+				throw_at(get_edge_target_turf(loc, pick(alldirs)), rand(1, 3), throw_speed)
+		handle_cut()
 	else
 		qdel(src)
 
@@ -921,9 +922,21 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	. = ..()
 
+	// some shitty copypaste for second BEHIND base appearance
+	// skipping alpha_color_mask/second_color_mask/damage holes for this as currently it's useless for tails
+	// one day when we rewrite body rendering with cut masks based on coverage and merge tails (and wings) in one layer we can remove this
+
 	var/mutable_appearance/base_appearance_behind = mutable_appearance(icon, "[icon_state]_BEHIND", -BODY_BEHIND_LAYER)
 	base_appearance_behind.color = get_skin_color()
 	. += base_appearance_behind
+
+	// attach bones to base appearance for slimepeople (if we not skeleton already)
+	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
+		var/mutable_appearance/bones_appearance_behind = mutable_appearance(species.skeleton, "[get_icon_state(fat_state = FALSE, pump_state = FALSE)]_BEHIND")
+		bones_appearance_behind.appearance_flags = RESET_COLOR | RESET_ALPHA
+		bones_appearance_behind.blend_mode = BLEND_INSET_OVERLAY
+		bones_appearance_behind.alpha = 175
+		base_appearance_behind.add_overlay(bones_appearance_behind)
 
 /obj/item/organ/external/wings
 	name = "wings"
@@ -1086,7 +1099,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/mutable_appearance/eyes_static_layer = mutable_appearance(
 			species.eyes_icon, 
 			species.eyes_static_layer, 
-			-body_icon_layer
+			-EYES_LAYER
 		)
 
 		. += eyes_static_layer
@@ -1095,7 +1108,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/mutable_appearance/eyes_colorable_layer = mutable_appearance(
 			species.eyes_icon, 
 			species.eyes_colorable_layer, 
-			-body_icon_layer
+			-EYES_LAYER
 		)
 
 		eyes_colorable_layer.color = rgb(r_eyes, g_eyes, b_eyes)
@@ -1168,7 +1181,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					main_color.color = hair_painted ? RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair) : RGB_CONTRAST(r_hair, g_hair, b_hair)
 
 					hair_appearance.appearance_flags = KEEP_TOGETHER
-					hair_appearance.overlays = list(main_color, gradient)
+					hair_appearance.add_overlay(list(main_color, gradient))
 
 			. += hair_appearance
 
