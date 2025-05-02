@@ -641,6 +641,7 @@
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
 	item_state = "brainburger"
+	item_state_world = "brainburger_world"
 	filling_color = "#f2b6ea"
 	bitesize = 2
 	list_reagents = list("nutriment" = 2, "protein" = 4, "alkysine" = 6)
@@ -652,6 +653,7 @@
 	desc = "Spooky! It doesn't look very filling."
 	icon_state = "ghostburger"
 	item_state = "ghostburger"
+	item_state_world = "ghostburger_world"
 	filling_color = "#fff2ff"
 	bitesize = 2
 	list_reagents = list("nutriment" = 6, "ectoplasm" = 1)
@@ -668,6 +670,7 @@
 	desc = "A bloody burger."
 	icon_state = "hburger"
 	item_state = "hburger"
+	item_state_world = "hburger_world"
 	bitesize = 2
 	list_reagents = list("nutriment" = 2, "protein" = 4, "vitamin" = 2)
 
@@ -676,12 +679,14 @@
 	desc = "The cheese adds a good flavor."
 	icon_state = "cheeseburger"
 	item_state = "cheeseburger"
+	item_state_world = "cheeseburger_world"
 	list_reagents = list("nutriment" = 8, "cheese" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
+	item_state_world = "hburger_world"
 	item_state = "hburger"
 	filling_color = "#d63c3c"
 	bitesize = 2
@@ -691,6 +696,8 @@
 	name = "Fillet -o- Carp Sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
+	item_state_world = "fishburger_world"
+	item_state = "fishburger"
 	filling_color = "#ffdefe"
 	bitesize = 3
 	list_reagents = list("protein" = 6, "carpotoxin" = 3)
@@ -700,6 +707,7 @@
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
 	item_state = "tofuburger"
+	item_state_world = "tofuburger_world"
 	filling_color = "#fffee0"
 	bitesize = 2
 	list_reagents = list("plantmatter" = 6, "vitamin" = 1)
@@ -709,6 +717,7 @@
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
 	item_state = "roburger"
+	item_state_world = "roburger_world"
 	filling_color = "#cccccc"
 	bitesize = 2
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
@@ -718,6 +727,7 @@
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
 	item_state = "xburger"
+	item_state_world = "xburger_world"
 	filling_color = "#43de18"
 	bitesize = 2
 	list_reagents = list("protein" = 6, "vitamin" = 1, "xenojelly_un" = 5)
@@ -729,6 +739,7 @@
 	desc = "This tastes funny... And HONKS!"
 	icon_state = "clownburger"
 	item_state = "clownburger"
+	item_state_world = "clownburger_world"
 	filling_color = "#ff00ff"
 	bitesize = 2
 	var/cooldown = FALSE
@@ -748,6 +759,7 @@
 	desc = "Its taste defies language."
 	icon_state = "mimeburger"
 	item_state = "mimeburger"
+	item_state_world = "mimeburger_world"
 	filling_color = "#ffffff"
 	bitesize = 2
 	list_reagents = list("nutriment" = 6)
@@ -1505,6 +1517,7 @@
 	desc = "This is absolutely Ei Nath."
 	icon_state = "spellburger"
 	item_state = "spellburger"
+	item_state_world = "spellburger_world"
 	filling_color = "#d505ff"
 	bitesize = 2
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
@@ -1516,6 +1529,7 @@
 	desc = "Forget the Big Mac. THIS is the future!"
 	icon_state = "bigbiteburger"
 	item_state = "bigbiteburger"
+	item_state_world = "bigbiteburger_world"
 	filling_color = "#e3d681"
 	bitesize = 3
 	list_reagents = list("nutriment" = 4, "protein" = 10, "vitamin" = 2)
@@ -1622,6 +1636,7 @@
 	desc = "Culinary delight..?"
 	icon_state = "jellyburger"
 	item_state = "jellyburger"
+	item_state_world = "jellyburger_world"
 	filling_color = "#b572ab"
 	bitesize = 2
 	list_reagents = list("nutriment" = 5)
@@ -1725,6 +1740,7 @@
 	desc = "This is a mountain of a burger. FOOD!"
 	icon_state = "superbiteburger"
 	item_state = "superbiteburger"
+	item_state_world = "superbiteburger_world"
 	filling_color = "#cca26a"
 	bitesize = 10
 	list_reagents = list("nutriment" = 32, "cheese" = 4, "protein" = 16, "vitamin" = 5)
