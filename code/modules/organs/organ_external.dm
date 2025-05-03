@@ -214,7 +214,9 @@
 		return original_color
 
 /obj/item/organ/external/proc/get_skin_color()
-	if(is_robotic())
+	// should allow color for IPC, but not for protheses
+	// todo: protheses should have own color and we should not rewrite it with preferences
+	if(controller_type == /datum/bodypart_controller/robot)
 		return null
 	else if(species.flags[HAS_SKIN_COLOR])
 		. = rgb(r_skin, g_skin, b_skin)
@@ -225,7 +227,7 @@
 	. = mod_skin_color(.)
 
 /obj/item/organ/external/proc/get_skin_second_color()
-	if(is_robotic())
+	if(controller_type == /datum/bodypart_controller/robot)
 		return null
 
 	var/original_color = rgb(r_belly, g_belly, b_belly)
@@ -315,7 +317,7 @@
 	. += base_appearance
 
 	if(species.alpha_color_mask)
-		var/mutable_appearance/alpha_color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -body_icon_layer)
+		var/mutable_appearance/alpha_color_appearance = mutable_appearance(icon, "alpha_[icon_state]")
 		alpha_color_appearance.color = get_skin_color()
 		base_appearance.add_overlay(alpha_color_appearance)
 	else

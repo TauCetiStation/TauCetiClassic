@@ -223,13 +223,15 @@ Please contact me on #coderbus IRC. ~Carn x
 		MA.appearance_flags = KEEP_TOGETHER // or height filters will ignore our overlays
 		MA.layer = text2num(layer)
 		MA.overlays = grouped_by_layer[layer]
+
+		//if(MA.layer == -BODY_INFRONT_LAYER || MA.layer == -BODY_BEHIND_LAYER)
+		//	MA = human_update_offset(MA)
 		MA = update_height(MA)
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 		standing += MA
 
 	// BODY_LAYER just used here as a cache index, keep in mind that it can contain overlays with any other layer
-	// current possible bodypart layers: BODY_BEHIND_LAYER, BODY_LAYER, BODY_INFRONT_LAYER
 	overlays_standing[BODY_LAYER] = standing
 	apply_standing_overlay(BODY_LAYER) 
 
