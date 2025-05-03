@@ -168,6 +168,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_damage_overlay(BP.limb_layer)
 	// todo: make set of pre-backed fulltile perlin noise masks and use SUBTRACT blending
 	// currently it's hard to keep masks up to date with all respites and new body parts
+	if(BP.damage_state == "00") // don't add empty overlays for damage
+		return
 	if(species.damage_mask && (BP in bodyparts))
 		var/image/standing = image("icon" = 'icons/mob/human/masks/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
 		standing.color = BP.damage_state_color()
