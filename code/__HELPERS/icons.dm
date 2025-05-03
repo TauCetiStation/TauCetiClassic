@@ -641,6 +641,8 @@ The _flatIcons list is a cache for generated icon files.
 		return flat
 	if(A.alpha <= 0)
 		return flat
+	if(A.plane >= LIGHTING_PLANE && A.plane < ABOVE_LIGHTING_PLANE) // can't blend it because filters
+		return flat
 	var/noIcon = FALSE
 
 	var/curicon
@@ -755,22 +757,28 @@ The _flatIcons list is a cache for generated icon files.
 	var/addY1
 	var/addY2
 
-	for(var/I in layers)
+	for(var/mutable_appearance/I as anything in layers)
 
-		if(I:alpha == 0)
+		if(I.alpha == 0)
+			continue
+
+		if(curblend == BLEND_INSET_OVERLAY) // we need several blends and getFlatIcon rewrite to make it work
+			continue                        // not worth it, better to ditch getFlatIcon
+
+		if(I.plane >= LIGHTING_PLANE && I.plane < ABOVE_LIGHTING_PLANE) // can't blend it because filters
 			continue
 
 		if(I == copy) // 'I' is an /image based on the object being flattened.
 			curblend = BLEND_OVERLAY
-			add = icon(I:icon, I:icon_state, I:dir)
+			add = icon(I.icon, I.icon_state, I.dir)
 		else // 'I' is an appearance object.
 			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
-		addX1 = min(flatX1, I:pixel_x+1)
-		addX2 = max(flatX2, I:pixel_x+add.Width())
-		addY1 = min(flatY1, I:pixel_y+1)
-		addY2 = max(flatY2, I:pixel_y+add.Height())
+		addX1 = min(flatX1, I.pixel_x+1)
+		addX2 = max(flatX2, I.pixel_x+add.Width())
+		addY1 = min(flatY1, I.pixel_y+1)
+		addY2 = max(flatY2, I.pixel_y+add.Height())
 
 		if(addX1!=flatX1 || addX2!=flatX2 || addY1!=flatY1 || addY2!=flatY2)
 			// Resize the flattened icon so the new icon fits
@@ -873,7 +881,7 @@ The _flatIcons list is a cache for generated icon files.
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs, dummy_key, showDirs = cardinal)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = cardinal)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key, prefs?.species)
 
