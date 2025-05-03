@@ -49,7 +49,7 @@
 	icon_state = "medium_generic"
 	item_state = "medium_generic"
 	storage_slots = null //Uses generic capacity
-	max_storage_space = SIZE_MINUSCULE * 16
+	max_storage_space = SIZE_MINUSCULE * 14
 	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/pouch/large_generic

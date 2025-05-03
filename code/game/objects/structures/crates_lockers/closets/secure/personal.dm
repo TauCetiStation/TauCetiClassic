@@ -10,14 +10,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/norm(src)
 	new /obj/item/device/radio/headset(src)
-	if(prob(90))
-		var/P = new /obj/item/weapon/storage/pouch/small_generic(src)
-		if(prob(45))
-			qdel (P)
-			P = new /obj/item/weapon/storage/pouch/medium_generic(src)
-			if(prob(40))
-				qdel (P)
-				new /obj/item/weapon/storage/pouch/large_generic(src)
+
 
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
