@@ -178,6 +178,17 @@ Please contact me on #coderbus IRC. ~Carn x
 		apply_damage_overlay(BP.limb_layer)
 
 
+
+/mob/living/carbon/human/proc/update_render_flags(render_flags)
+	if(render_flags & HIDE_TAIL)
+		update_body(BP_TAIL)
+	if(render_flags & HIDE_WINGS)
+		update_body(BP_WINGS)
+	if(render_flags & (HIDE_TOP_HAIR | HIDE_FACIAL_HAIR))
+		update_body(BP_HEAD)
+	//if(render_flags & HIDE_UNIFORM) // update_inv_w_uniform should be called by equip anyway
+	//	update_inv_w_uniform()
+
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body(bodypart_index, update_preferences = FALSE)
 	remove_standing_overlay(BODY_LAYER)
