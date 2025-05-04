@@ -4044,10 +4044,10 @@
 "agS" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/paper/brig_arsenal,
 /obj/item/toy/cards{
 	layer = 4.1
 	},
+/obj/item/weapon/paper/brig_arsenal,
 /obj/item/device/megaphone,
 /obj/item/weapon/storage/box/handcuffs{
 	pixel_y = 3
@@ -4063,6 +4063,10 @@
 	dir = 1;
 	name = "Brig dark top APC";
 	pixel_y = 27
+	},
+/obj/item/weapon/paper/armoryWeaponList{
+	pixel_x = -8;
+	pixel_y = -3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

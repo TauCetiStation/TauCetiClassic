@@ -97,6 +97,11 @@
 	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
+
+	var/weaponHaveSerialNumber = FALSE
+	var/serialNumber
+	var/global/list/weaponWithSerialNumber = list()
+
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]
   */
@@ -133,7 +138,27 @@
 		var/datum/action/B = new path (src)
 		item_actions += B
 
+	if(weaponHaveSerialNumber)
+		setSerialNumber()
+		weaponWithSerialNumber += src
+
 	return INITIALIZE_HINT_NORMAL
+
+/obj/item/proc/setSerialNumber(weaponWithSerialNumber)
+	var/list/activeSerialNumber = list()
+
+	for(var/obj/item/I in weaponWithSerialNumber)
+		activeSerialNumber += I.serialNumber
+
+	var/processNumber
+	do
+		processNumber = "[rand(0, 999999)]"
+		while(length(processNumber) < 6)
+			processNumber = "0" + processNumber
+
+	while(processNumber in activeSerialNumber)
+
+	serialNumber = processNumber
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -207,6 +232,9 @@
 
 /obj/item/examine(mob/user)
 	. = ..()
+
+	if(serialNumber)
+		to_chat(user, "Серийный номер: [serialNumber]")
 
 	if(w_class || wet)
 

@@ -7,6 +7,7 @@
 	m_amt = 1000
 	fire_delay = 4
 	recoil = 1
+	weaponHaveSerialNumber = TRUE
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/initial_mag = /obj/item/ammo_box/magazine/stechkin
 	var/list/suitable_mags = list()
