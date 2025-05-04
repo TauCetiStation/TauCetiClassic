@@ -237,8 +237,7 @@ Class Procs:
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		occupant = target
-		target.forceMove(src)
-		target.StopGrabs()
+		target.forceMove(src, keep_grabs = FALSE)
 	updateUsrDialog()
 	update_icon()
 

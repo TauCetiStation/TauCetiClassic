@@ -163,7 +163,7 @@
 	if(A && non_native_bump)
 		A.Bumped(src)
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE, keep_grabs = TRUE)
 	if(!destination)
 		return
 	if(pulledby && !keep_pulling)
@@ -192,9 +192,11 @@
 			AM.Crossed(src, oldloc)
 	Moved(oldloc, 0)
 
-/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE, keep_grabs = TRUE)
 	if(!keep_pulling)
 		stop_pulling()
+	if(!keep_grabs)
+		StopGrabs()
 	if(buckled && !keep_buckled)
 		buckled.unbuckle_mob()
 	. = ..()
@@ -203,7 +205,7 @@
 		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled, keep_moving_diagonally, keep_grabs)
 	if(destination)
 		if(loc)
 			loc.Exited(src)

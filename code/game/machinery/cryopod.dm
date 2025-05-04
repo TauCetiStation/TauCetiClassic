@@ -340,8 +340,7 @@ var/global/list/frozen_items = list()
 	update_icon()
 
 /obj/machinery/cryopod/proc/insert(mob/M)
-	M.StopGrabs()
-	M.forceMove(src)
+	M.forceMove(src, keep_grabs = FALSE)
 	to_chat(M, "<span class='notice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
 	to_chat(M, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
 	occupant = M
