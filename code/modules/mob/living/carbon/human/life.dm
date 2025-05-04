@@ -676,6 +676,7 @@ var/global/list/tourette_bad_words= list(
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			mob_metabolism_mod.RemoveMods("Fatness")
 			update_body()
+			update_underwear()
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
@@ -686,6 +687,7 @@ var/global/list/tourette_bad_words= list(
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
 				update_body()
+				update_underwear()
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
