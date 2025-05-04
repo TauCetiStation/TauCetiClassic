@@ -1145,7 +1145,7 @@ var/global/list/contributor_names
 
 /obj/item/weapon/paper/armoryWeaponList
 	name = "Опись серийные номера оружия"
-	info
+	icon_state = ""
 
 /obj/item/weapon/paper/armoryWeaponList/atom_init()
 	. = ..()
