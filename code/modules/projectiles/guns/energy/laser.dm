@@ -119,7 +119,7 @@
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = FALSE
 	can_be_holstered = TRUE
-	weaponHaveSerialNumber = FALSE
+	haveSerialNumber = FALSE
 
 	var/lasertag_color = "none"
 

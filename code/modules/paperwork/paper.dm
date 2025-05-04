@@ -1145,7 +1145,7 @@ var/global/list/contributor_names
 
 /obj/item/weapon/paper/armoryWeaponList
 	name = "Опись серийные номера оружия"
-	icon_state = ""
+	info = "<h1>Опись:</h1><br>"
 
 /obj/item/weapon/paper/armoryWeaponList/atom_init()
 	. = ..()
@@ -1153,13 +1153,8 @@ var/global/list/contributor_names
 	write_info()
 
 /obj/item/weapon/paper/armoryWeaponList/proc/write_info()
-	for(var/area/station/security/armoury/A in world)
-		for(var/obj/structure/closet/C in A)
-			for(var/obj/item/weapon/gun/G in C)
-				info += "<hr><b>[G.name]</b><br>[G.serialNumber ? "<u>Серийный номер: [G.serialNumber]</u>" : "<Без серийного номера"]<br>"
-
-		for(var/obj/item/I in A)
+	for(var/obj/item/I in global.withSerialNumber)
+		if(istype(get_area(I), /area/station/security/armoury))
 			if( istype(I,  /obj/item/weapon/gun) || \
-				istype(I,  /obj/item/weapon/kitchenknife/combat)
-			)
+				istype(I,  /obj/item/weapon/kitchenknife/combat))
 				info += "<hr><b>[I.name]</b><br>[I.serialNumber ? "<u>Серийный номер: [I.serialNumber]</u>" : "Без серийного номера"]<br>"

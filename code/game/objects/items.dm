@@ -98,9 +98,8 @@
 	var/can_get_wet = TRUE
 
 
-	var/weaponHaveSerialNumber = FALSE
+	var/haveSerialNumber = FALSE
 	var/serialNumber
-	var/global/list/weaponWithSerialNumber = list()
 
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]
@@ -138,16 +137,16 @@
 		var/datum/action/B = new path (src)
 		item_actions += B
 
-	if(weaponHaveSerialNumber)
+	if(haveSerialNumber)
 		setSerialNumber()
-		weaponWithSerialNumber += src
+		global.withSerialNumber += src
 
 	return INITIALIZE_HINT_NORMAL
 
-/obj/item/proc/setSerialNumber(weaponWithSerialNumber)
+/obj/item/proc/setSerialNumber()
 	var/list/activeSerialNumber = list()
 
-	for(var/obj/item/I in weaponWithSerialNumber)
+	for(var/obj/item/I in global.withSerialNumber)
 		activeSerialNumber += I.serialNumber
 
 	var/processNumber
