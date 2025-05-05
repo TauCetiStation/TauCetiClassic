@@ -492,7 +492,7 @@
 		slowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
-		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
+		playsound(src, 'sound/effects/magb4.ogg', VOL_EFFECTS_MASTER, 100)
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
 	return flags & NOSLIP

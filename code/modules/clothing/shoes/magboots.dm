@@ -19,7 +19,7 @@
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		slowdown = SHOES_SLOWDOWN
 		magpulse = 0
-		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
+		playsound(src, 'sound/effects/magb4.ogg', VOL_EFFECTS_MASTER, 100)
 		icon_state = "[magboot_state]0"
 		item_state_world = "[magboot_state]0_w"
 		item_state_inventory = "[magboot_state]0"
