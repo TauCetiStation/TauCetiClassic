@@ -485,14 +485,14 @@
 		slowdown += boots.slowdown_off
 		magpulse = TRUE
 		to_chat(user, "You enable \the [src] the mag-pulse traction system.")
-		playsound(src, pick(MAGBOOTS), VOL_EFFECTS_MASTER, 100)
+		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		slowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
-		playsound(src, pick(MAGBOOTS), VOL_EFFECTS_MASTER, 100)
+		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
 	return flags & NOSLIP

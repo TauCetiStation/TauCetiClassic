@@ -19,7 +19,7 @@
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		slowdown = SHOES_SLOWDOWN
 		magpulse = 0
-		playsound(src, pick(MAGBOOTS), VOL_EFFECTS_MASTER, 100)
+		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
 		icon_state = "[magboot_state]0"
 		item_state_world = "[magboot_state]0_w"
 		item_state_inventory = "[magboot_state]0"
@@ -28,7 +28,7 @@
 		flags |= NOSLIP | AIR_FLOW_PROTECT
 		slowdown = slowdown_off
 		magpulse = 1
-		playsound(src, pick(MAGBOOTS), VOL_EFFECTS_MASTER, 100)
+		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
 		icon_state = "[magboot_state]1"
 		item_state_world = "[magboot_state]1_w"
 		item_state_inventory = "[magboot_state]1"
