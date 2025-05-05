@@ -26,6 +26,7 @@
 				active = FALSE
 				icon_state = off_state
 				item_state_world = "[off_state]_w"
+				item_state_inventory = "[off_state]"
 				vision_flags = 0
 				lighting_alpha = null
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
@@ -33,6 +34,7 @@
 				active = TRUE
 				item_state_world = initial(item_state_world)
 				icon_state = initial(icon_state)
+				item_state_inventory = initial(item_state_inventory)
 				vision_flags = initial(vision_flags)
 				lighting_alpha = initial(lighting_alpha)
 				to_chat(usr, "You activate the optical matrix on the [src].")
@@ -40,6 +42,7 @@
 			update_inv_mob()
 			H.update_sight()
 			update_item_actions()
+			update_world_icon()
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
@@ -210,7 +213,6 @@
 
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
-
 
 /obj/item/clothing/glasses/welding/verb/toggle()
 	set category = "Object"
