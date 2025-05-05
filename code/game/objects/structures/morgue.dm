@@ -369,7 +369,7 @@
 			qdel(src.connected)
 			src.connected = null
 	add_fingerprint(user)
-	update()
+	update_icon()
 
 /obj/structure/crematorium/attackby(P, mob/user)
 	if(istype(P, /obj/item/weapon/pen))
@@ -418,10 +418,8 @@
 
 	audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
-	cremating = 1
-	locked = 1
-
-	start_cremation_animation()
+	set_cremating(TRUE)
+	locked = TRUE
 
 	for(var/mob/living/M in contents)
 		if (M.stat != DEAD)
@@ -435,20 +433,16 @@
 		qdel(O)
 
 	new /obj/effect/decal/cleanable/ash(src)
-	sleep(30)
+	addtimer(CALLBACK(src, .proc/finish_cremation), 10 SECONDS)
 
-	cremating = 0
-	locked = 0
+/obj/structure/crematorium/proc/set_cremating(value)
+	cremating = value
 	update_icon()
+
+/obj/structure/crematorium/proc/finish_cremation()
+	set_cremating(FALSE)
+	locked = FALSE
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
-
-	return
-
-/obj/structure/crematorium/proc/start_cremation_animation()
-	set waitfor = FALSE
-	while(cremating)
-		flick("crema_active", src)
-		sleep(5)
 
 /obj/structure/crematorium/deconstruct(disassembled)
 	move_contents(loc)
