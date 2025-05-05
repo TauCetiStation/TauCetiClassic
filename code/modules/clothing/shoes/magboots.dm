@@ -36,7 +36,6 @@
 
 	update_inv_mob()
 	update_item_actions()
-	update_world_icon()
 	user.update_gravity(user.mob_has_gravity())
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
