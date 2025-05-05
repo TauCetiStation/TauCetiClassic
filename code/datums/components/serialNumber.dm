@@ -1,7 +1,7 @@
 /datum/component/serialNumber
 	var/serialNumber
 
-/datum/component/serialNumber/Initialize(var/obj/item/I)
+/datum/component/serialNumber/Initialize(obj/item/I)
 	I.serialNumber = generateSerialNumber()
 	global.withSerialNumber += I 	//Need to add this object in global list
 	updateDescription(I)
@@ -23,13 +23,13 @@
 
 	return serialNumber
 
-/datum/component/serialNumber/proc/updateDescription(var/obj/item/I)
+/datum/component/serialNumber/proc/updateDescription(obj/item/I)
 	I.desc += "\nСерийный номер: [serialNumber]"
 
-/datum/component/serialNumber/Destroy(var/obj/item/I)
+/datum/component/serialNumber/Destroy(obj/item/I)
 	. = ..()
 
 	withSerialNumber -= I
 
-/datum/component/serialNumber/proc/onAdd(var/obj/item/I)
+/datum/component/serialNumber/proc/onAdd(obj/item/I)
 	Initialize(I)
