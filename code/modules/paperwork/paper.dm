@@ -1155,6 +1155,4 @@ var/global/list/contributor_names
 /obj/item/weapon/paper/armoryWeaponList/proc/write_info()
 	for(var/obj/item/I in global.withSerialNumber)
 		if(istype(get_area(I), /area/station/security/armoury))
-			if( istype(I,  /obj/item/weapon/gun) || \
-				istype(I,  /obj/item/weapon/kitchenknife/combat))
-				info += "<hr><b>[I.name]</b><br>[I.serialNumber ? "<u>Серийный номер: [I.serialNumber]</u>" : "Без серийного номера"]<br>"
+			info += "<hr><b>[I.name]</b><br>[I.serialNumber ? "<u>Серийный номер: [I.serialNumber]</u>" : "Без серийного номера"]<br>"
