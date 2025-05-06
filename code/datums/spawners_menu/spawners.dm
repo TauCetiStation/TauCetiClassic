@@ -73,6 +73,9 @@
 	// Flag if it's awaylable only for applications first, and will be rolled for spawn later
 	var/register_only = FALSE
 
+	// Flag if it's supports multiple selection
+	var/multiple = FALSE
+
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
 
@@ -127,7 +130,7 @@
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.registred_spawners -= src
+			M.registered_spawners -= src
 		registered_candidates = null
 
 	return ..()
@@ -173,14 +176,18 @@
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
+	// multiple and non-multiple spawners cannot be together
+	if(!multiple || (spectator.registered_spawners.len && !spectator.registered_spawners[0].multiple))
+		spectator.clear_spawner_registration()
+
 	registered_candidates += spectator
-	spectator.registred_spawners += src
+	spectator.registered_spawners += src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.registred_spawners -= src
+	spectator.registered_spawners -= src
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
@@ -208,7 +215,7 @@
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
-			M.remove_registration_for_spawners()
+			M.clear_spawner_registration()
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
@@ -267,52 +274,6 @@
 		to_chat(spectator, "<span class='notice'>У этой роли нет предустановленных локаций для спавна.</span>")
 		return
 	var/jump_to = pick(landmarks_list[spawn_landmark_name])
-	spectator.forceMove(get_turf(jump_to))
-
-/*
- * Evenly distributes to the landing marks from the list
-*/
-/datum/spawner/multiple_landmark
-	var/list/spawn_landmarks_names = list()
-
-/datum/spawner/multiple_landmark/New()
-	. = ..()
-	for(var/name in spawn_landmarks_names)
-		spawn_landmarks_names[name] = 0
-
-/datum/spawner/multiple_landmark/pick_spawn_location()
-	var/landmark_name = pick_landmark_name()
-
-	if(!length(landmarks_list[landmark_name]))
-		CRASH("[src.type] attempts to pick spawn location \"[landmark_name]\", but can't find one!")
-
-	return pick_landmarked_location(landmark_name)
-
-/datum/spawner/multiple_landmark/proc/pick_landmark_name()
-	var/landmark_name = ""
-	var/n = INFINITY
-
-	for(var/name in spawn_landmarks_names)
-		if(spawn_landmarks_names[name] < n)
-			n = spawn_landmarks_names[name]
-			landmark_name = name
-
-	spawn_landmarks_names[landmark_name] += 1
-
-	return landmark_name
-
-/datum/spawner/multiple_landmark/jump(mob/dead/spectator)
-	var/list/avaible_landmarks = list()
-
-	for(var/name in spawn_landmarks_names)
-		if(length(landmarks_list[name]))
-			avaible_landmarks += name
-
-	if(!length(avaible_landmarks))
-		to_chat(spectator, "<span class='notice'>У этой роли нет предустановленных локаций для спавна.</span>")
-		return
-
-	var/jump_to = pick(landmarks_list[pick(avaible_landmarks)])
 	spectator.forceMove(get_turf(jump_to))
 
 /*

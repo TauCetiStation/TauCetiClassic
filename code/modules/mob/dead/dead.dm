@@ -6,11 +6,11 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 	var/datum/spawners_menu/spawners_menu
-	var/list/registred_spawners = list()
+	var/list/registered_spawners = list()
 
 /mob/dead/Logout()
 	..()
-	remove_registration_for_spawners()
+	clear_spawner_registration()
 
 /mob/dead/Destroy()
 	QDEL_NULL(spawners_menu)
@@ -43,6 +43,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
 	to_chat(src, "<span class='notice'>You can not emote.</span>")
 
-/mob/dead/proc/remove_registration_for_spawners()
-	for(var/datum/spawner/S in registred_spawners)
+/mob/dead/proc/clear_spawner_registration()
+	for(var/datum/spawner/S in registered_spawners)
 		S.cancel_registration(src)
