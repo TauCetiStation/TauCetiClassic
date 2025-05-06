@@ -177,8 +177,12 @@
 		return
 
 	// multiple and non-multiple spawners cannot be together
-	if(!multiple || (spectator.registered_spawners.len && !spectator.registered_spawners[0].multiple))
+	if(!multiple)
 		spectator.clear_spawner_registration()
+	else if(spectator.registered_spawners.len)
+		var/datum/spawner/S = spectator.registered_spawners[0]
+		if(!S.multiple)
+			spectator.clear_spawner_registration()
 
 	registered_candidates += spectator
 	spectator.registered_spawners += src
