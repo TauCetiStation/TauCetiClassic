@@ -174,6 +174,7 @@
 					if (length(code) > 5)
 						code = "ERROR"
 	add_fingerprint(usr)
+	update_icon()
 	return TRUE
 
 
@@ -216,9 +217,6 @@
 				close(M)
 	add_fingerprint(user)
 
-/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	update_icon()
 
 /obj/item/weapon/storage/secure/briefcase/update_icon()
 	if(!locked || emagged)
