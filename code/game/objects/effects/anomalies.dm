@@ -245,18 +245,14 @@
 	)
 	var/release_time = 3 SECONDS
 	var/move_chance = 70
-	var/datum/effect/effect/system/steam_spread/steam_system
 
 /obj/effect/anomaly/gas/atom_init()
 	. = ..()
-	steam_system = new /datum/effect/effect/system/steam_spread()
-	steam_system.set_up(5, 0, loc)
 	COOLDOWN_START(src, release_cd, release_time)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/anomaly/gas/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(steam_system)
 	return ..()
 
 /obj/effect/anomaly/gas/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
