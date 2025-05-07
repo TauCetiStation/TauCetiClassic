@@ -403,18 +403,35 @@
 
 /datum/spellbook_entry/naked_casting
 	name = "Освобождение от Оков"
-	spell_type = /obj/effect/proc_holder/spell/targeted/naked_casting
+	desc = "Позволяет использовать заклинания без необходимости носить магическую одежду. Эффект перманентный и не требует поддежки."
 	category = "Оборона"
 	log_name = "NC"
 	cost = 4
+	spell_type = null
 
-/datum/spellbook_entry/naked_casting/Buy(mob/living/carbon/human/H)
-	if(H.GetComponent(/datum/component/naked_casting))
-		to_chat(H, "<span class='notice'>Вы уже освобождены от оков!</span>")
+/datum/spellbook_entry/naked_casting/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(!user?.mind)
 		return FALSE
-	. = ..()
-	if(.)
-		H.AddComponent(/datum/component/naked_casting)
+	if(HAS_TRAIT(user.mind, TRAIT_NAKED_CASTING))
+		return FALSE
+	return ..()
+
+/datum/spellbook_entry/naked_casting/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(!user?.mind)
+		to_chat(user, "<span class='warning'>Заклинание не сработало!</span>")
+		return FALSE
+
+	if(HAS_TRAIT(user.mind, TRAIT_NAKED_CASTING))
+		to_chat(user, "<span class='notice'>Вы уже освобождены от магических оков!</span>")
+		return FALSE
+
+	ADD_TRAIT(user.mind, TRAIT_NAKED_CASTING, GENETIC_MUTATION_TRAIT)
+	to_chat(user, "<span class='notice'>Вы чувствуете, как магические ограничения одежды исчезают!</span>")
+	playsound(user, 'sound/magic/mutate.ogg', 50, TRUE)
+	feedback_add_details("wizard_spell_learned", log_name)
+	return TRUE
+
+
 
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"

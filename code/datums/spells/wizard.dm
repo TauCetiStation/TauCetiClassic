@@ -170,25 +170,6 @@
 		new summon_path(get_step(user, NORTH), user)
 		new summon_path(get_step(user, SOUTH), user)
 
-/obj/effect/proc_holder/spell/targeted/naked_casting
-	name = "Освобождение от Оков"
-	school = "transmutation"
-	desc = "Это заклинание позволяет вам использовать другие заклинания без необходимости носить одежду. Эффект действует бесконечно."
-	clothes_req = 0
-
-/datum/component/naked_casting
-
-/datum/component/naked_casting/Initialize()
-	if(!isliving(parent))
-		return COMPONENT_INCOMPATIBLE
-	to_chat(parent, "<span class='notice'>Вы чувствуете, как магическая энергия освобождает вас от ограничений одежды!</span>")
-	return ..()
-
-/datum/component/naked_casting/Destroy()
-	var/mob/living/L = parent
-	to_chat(L, "<span class='warning'>Эффект освобождения от одежды исчезает.</span>")
-	return ..()
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Призыв Карпа"
 	desc = "Это заклинание призывает очень злого карпа."

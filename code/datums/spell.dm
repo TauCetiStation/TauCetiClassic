@@ -113,7 +113,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 			return FALSE
 
 		var/mob/living/carbon/human/H = user
-		if(!H.GetComponent(/datum/component/naked_casting))
+		if(!HAS_TRAIT(H.mind, TRAIT_NAKED_CASTING))
 			if(!H.wear_suit?.GetComponent(/datum/component/magic_item/wizard))
 				if(try_start)
 					to_chat(user, "I don't feel strong enough without my robe.")
