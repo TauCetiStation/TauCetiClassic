@@ -281,9 +281,9 @@
 	density = TRUE
 	var/obj/structure/c_tray/connected = null
 	anchored = TRUE
-	var/cremating = 0
+	var/cremating = FALSE
 	var/id = 1
-	var/locked = 0
+	var/locked = FALSE
 
 /obj/structure/crematorium/atom_init()
 	. = ..()
@@ -347,14 +347,14 @@
 	if (cremating)
 		to_chat(user, "<span class='rose'>It's locked.</span>")
 		return
-	if ((src.connected) && (src.locked == 0))
+	if ((src.connected) && (src.locked == FALSE))
 		for(var/atom/movable/A in src.connected.loc)
 			if(!A.anchored)
 				A.loc = src
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		qdel(src.connected)
 		src.connected = null
-	else if (src.locked == 0)
+	else if (src.locked == FALSE)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
@@ -440,6 +440,7 @@
 	update_icon()
 
 /obj/structure/crematorium/proc/finish_cremation()
+	if(QDELETED(src)) return
 	set_cremating(FALSE)
 	locked = FALSE
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
