@@ -31,6 +31,10 @@ export const setWindowKey = (key) => {
   windowKey = key;
 };
 
+export const getPixelRatio = () => {
+  return pixelRatio;
+};
+
 // Hacky-wacky 516 window position hack uwu
 let windowPosition;
 

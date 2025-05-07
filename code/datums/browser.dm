@@ -104,6 +104,8 @@
 	var/window_size
 	if(width && height)
 		window_size = get_browse_size_parameter(user, width, height)
+	else
+		window_size = get_browse_size_parameter(user, 400, 400)
 	var/datum/asset/error_handler_js = get_asset_datum(/datum/asset/simple/error_handler_js) // error_handler - same name as in other places, add_script do ckey with names.
 	error_handler_js.send(user)
 	if(length(stylesheets))
