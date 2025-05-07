@@ -1685,40 +1685,40 @@
 	return ..()
 
 /obj/item/weapon/grown/towermycelium
-    name = "seeds tower mycelium"
-    desc = "Боб для огромного гриба"
-    w_class = SIZE_NORMAL
-    icon = 'icons/obj/hydroponics/harvest.dmi'
-    icon_state = "bungopit"
-    seed_type = /obj/item/seeds/towermycelium
-    attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	name = "seeds tower mycelium"
+	desc = "Боб для огромного гриба"
+	w_class = SIZE_SMALL
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "bungopit"
+	seed_type = /obj/item/seeds/towermycelium
+	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/towermycelium/attack_self(mob/user)
-    if(!user)
-        return
+	if(!user)
+		return
 
-    var/turf/user_turf = get_turf(user)
-    var/valid_water = istype(user_turf, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in user_turf)
-    if(!valid_water)
-        to_chat(user, "<span class='warning'>Боб нужно сажать на воду (лужу или мелкий водоём)! Иначе они не прорастут!</span>")
-        return
+	var/turf/user_turf = get_turf(user)
+	var/valid_water = istype(user_turf, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in user_turf)
+	if(!valid_water)
+		to_chat(user, "<span class='warning'>Боб нужно сажать на воду (лужу или мелкий водоём)! Иначе они не прорастут!</span>")
+		return
 
-    to_chat(user, "<span class='notice'>Вы начинаете сажать боб в воду, чтобы вырастить огромный гриб...</span>")
+	to_chat(user, "<span class='notice'>Вы начинаете сажать боб в воду, чтобы вырастить огромный гриб...</span>")
 
-    if(!user.is_busy() && do_after(user, 2 SECONDS, target = user))
-        grow_into_tree()
+	if(!user.is_busy() && do_after(user, 2 SECONDS, target = user))
+		grow_into_tree()
 
 /obj/item/weapon/grown/towermycelium/proc/grow_into_tree()
-    var/turf/T = get_turf(src)
-    if(T)
-        new /obj/structure/flora/tree/towermycelium(T)
-    qdel(src)
+	var/turf/T = get_turf(src)
+	if(T)
+		new /obj/structure/flora/tree/towermycelium(T)
+	qdel(src)
 
 /obj/item/weapon/grown/towermycelium/water_act(amount)
-    . = ..()
-    if(amount >= 5)
-        visible_message("<span class='notice'>[src] начинает пускать корни в воде...</span>")
-        addtimer(CALLBACK(src, .proc/grow_into_tree), 5 SECONDS)
+	. = ..()
+	if(amount >= 5)
+		visible_message("<span class='notice'>[src] начинает пускать корни в воде...</span>")
+		addtimer(CALLBACK(src, .proc/grow_into_tree), 5 SECONDS)
 
 /obj/item/weapon/grown/sunflower
 	name = "sunflower"
