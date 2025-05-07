@@ -157,6 +157,7 @@
 					overlays += image('icons/obj/storage.dmi', icon_opened)
 					code = null
 					playsound(src, 'sound/machines/bolts_up.ogg', VOL_EFFECTS_MASTER)
+					update_icon()
 				else
 					code = "ERROR"
 					playsound(src, 'sound/machines/buzz-two.ogg',  VOL_EFFECTS_MASTER)
@@ -167,6 +168,7 @@
 					overlays = null
 					code = null
 					close(usr)
+					update_icon()
 				else
 					if(length(code) < 5 && digit != "ERROR")
 						playsound(src, 'sound/machines/button_beep.ogg',  VOL_EFFECTS_MASTER)
@@ -174,7 +176,7 @@
 					if (length(code) > 5)
 						code = "ERROR"
 	add_fingerprint(usr)
-	update_icon()
+
 	return TRUE
 
 
