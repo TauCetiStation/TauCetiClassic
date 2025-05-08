@@ -760,6 +760,7 @@
 	ranks = list(ROLE_GHOSTLY)
 
 	register_only = TRUE
+	multiple = TRUE
 	time_for_registration = 0.5 MINUTES
 
 	time_while_available = 4 MINUTES
