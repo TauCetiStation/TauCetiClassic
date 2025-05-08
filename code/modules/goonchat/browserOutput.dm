@@ -26,14 +26,14 @@ var/global/list/bicon_cache = list()
 	var/base64 = copytext(almost_partial[1], 3, -2)
 	return replacetext(base64, "\n", "")
 
-/proc/bicon(obj, css = "class='icon'", time_stamp = -1) // if you don't want any styling just pass null to css
+/proc/bicon(obj, css = {"class="icon""}, time_stamp = -1) // if you don't want any styling just pass null to css
 	if (!obj)
 		return
 
 	if(SSlag_switch.measures[DISABLE_BICON] && usr && !HAS_TRAIT(usr, TRAIT_BYPASS_MEASURES)) // todo: bypass for round end stat
 		return
 
-	return "<img [css] src='data:image/png;base64,[bicon_raw(obj, time_stamp)]'>"
+	return {"<img [css] src="data:image/png;base64,[bicon_raw(obj, time_stamp)]">"}
 
 /proc/timestamp_cache_add(key, element)
 	global.bicon_cache[key] = list(element, world.time)
