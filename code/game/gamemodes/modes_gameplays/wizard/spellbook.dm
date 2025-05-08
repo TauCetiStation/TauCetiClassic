@@ -410,7 +410,7 @@
 	spell_type = null
 
 /datum/spellbook_entry/naked_casting/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	if(!user?.mind)
+	if(!user.mind)
 		return FALSE
 	if(HAS_TRAIT(user.mind, TRAIT_NAKED_CASTING))
 		return FALSE
