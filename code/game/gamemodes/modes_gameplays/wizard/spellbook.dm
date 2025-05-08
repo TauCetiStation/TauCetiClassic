@@ -417,7 +417,7 @@
 	return ..()
 
 /datum/spellbook_entry/naked_casting/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	if(!user?.mind)
+	if(!user.mind)
 		to_chat(user, "<span class='warning'>Заклинание не сработало!</span>")
 		return FALSE
 
