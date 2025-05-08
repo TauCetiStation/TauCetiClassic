@@ -325,6 +325,12 @@
 /obj/structure/flora/tree/jungle/small/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_TWO
 
+/obj/structure/flora/tree/towermycelium
+	name = "tower mycelium"
+	icon = 'icons/obj/flora/towermycelium.dmi'
+	icon_state = "towermycelium"
+	pixel_x = -30
+	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium)
 // grass
 
 /obj/structure/flora/grass
