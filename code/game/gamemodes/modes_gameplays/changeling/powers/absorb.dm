@@ -118,6 +118,7 @@
 	ADD_TRAIT(target, TRAIT_HUSK, GENERIC_TRAIT)
 	target.mutations.Add(NOCLONE) // todo: need to merge mutation with TRAIT_NO_CLONE
 	target.fake_death = 0
+	target.update_body()
 
 	changeling.handle_absorbing()
 	return TRUE
