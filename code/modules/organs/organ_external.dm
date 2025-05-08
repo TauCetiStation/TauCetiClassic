@@ -313,8 +313,6 @@
 
 	. = list()
 
-	is_slime = TRUE
-
 	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -default_icon_layer)
 	. += base_appearance
 
