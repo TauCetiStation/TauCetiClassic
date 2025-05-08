@@ -395,13 +395,13 @@
 	dietflags = DIET_OMNI
 
 	flags = list(
-		HAS_SKIN_TONE,
-		HAS_LIPS,
-		HAS_UNDERWEAR,
-		HAS_HAIR,
-		FACEHUGGABLE,
-		HAS_HAIR_COLOR,
-		IS_SOCIAL,
+	 HAS_SKIN_TONE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	min_age = 25
@@ -426,13 +426,13 @@
 	pluvian_social_credit = 0
 
 	flags = list(
-		IS_WHITELISTED,
-		HAS_LIPS,
-		HAS_UNDERWEAR,
-		HAS_HAIR,
-		FACEHUGGABLE,
-		HAS_HAIR_COLOR,
-		IS_SOCIAL,
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	min_age = 25
@@ -449,7 +449,6 @@
 	..()
 	H.pluvian_reborn_if_worthy()
 
-// todo: should not be a race, better to make it a mob
 /datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT
 	icobase = 'icons/mob/human/pluvian.dmi'
@@ -486,10 +485,10 @@
 		TRAIT_GLOWING_EYES,
 	)
 	flags = list(
-		NO_DNA,
-		HAS_SKIN_COLOR,
-		HAS_HAIR_COLOR,
-		HAS_UNDERWEAR,
+	,NO_DNA = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,HAS_UNDERWEAR = TRUE
 	)
 	min_age = 25
 	max_age = 85
@@ -533,13 +532,14 @@
 	)
 
 	flags = list(
-		IS_WHITELISTED,
-		HAS_LIPS,
-		HAS_UNDERWEAR,
-		HAS_SKIN_COLOR,
-		HAS_HAIR_COLOR,
-		FACEHUGGABLE,
-		IS_SOCIAL,
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_TAIL = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	flesh_color = "#34af10"
@@ -619,15 +619,16 @@
 	)
 
 	flags = list(
-		IS_WHITELISTED,
-		HAS_LIPS,
-		HAS_UNDERWEAR,
-		HAS_SKIN_COLOR,
-		HAS_HAIR_COLOR,
-		HAS_HAIR,
-		FACEHUGGABLE,
-		IS_SOCIAL,
-		FUR,
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_TAIL = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
+	,FUR = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -677,13 +678,13 @@
 	)
 
 	flags = list(
-		IS_WHITELISTED,
-		HAS_LIPS,
-		HAS_UNDERWEAR,
-		HAS_SKIN_COLOR,
-		FACEHUGGABLE,
-		HAS_HAIR_COLOR,
-		IS_SOCIAL,
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_organ = list(
@@ -746,11 +747,12 @@
 	)
 
 	flags = list(
-		IS_WHITELISTED,
-		FACEHUGGABLE,
-		HAS_HAIR_COLOR,
-		IS_SOCIAL,
-		NO_GENDERS,
+		IS_WHITELISTED = TRUE
+		,FACEHUGGABLE = TRUE
+		,HAS_TAIL = TRUE
+		,HAS_HAIR_COLOR = TRUE
+		,IS_SOCIAL = TRUE
+		,NO_GENDERS = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -873,8 +875,9 @@
 	)
 
 	flags = list(
-		IS_SOCIAL,
-		NO_GENDERS,
+	,HAS_TAIL = TRUE
+	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -943,12 +946,12 @@
 	)
 
 	flags = list(
-		IS_WHITELISTED,
-		REQUIRE_LIGHT,
-		IS_PLANT,
-		RAD_ABSORB,
-		IS_SOCIAL,
-		NO_GENDERS,
+	 IS_WHITELISTED = TRUE
+	,REQUIRE_LIGHT = TRUE
+	,IS_PLANT = TRUE
+	,RAD_ABSORB = TRUE
+	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1111,14 +1114,14 @@
 	)
 
 	flags = list(
-		IS_WHITELISTED,
-		REQUIRE_LIGHT,
-		IS_PLANT,
-		RAD_ABSORB,
-		HAS_LIPS,
-		HAS_HAIR,
-		IS_SOCIAL,
-		NO_GENDERS,
+	 IS_WHITELISTED = TRUE
+	,REQUIRE_LIGHT = TRUE
+	,IS_PLANT = TRUE
+	,RAD_ABSORB = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_HAIR = TRUE
+	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1221,14 +1224,14 @@
 	)
 
 	flags = list(
-		IS_WHITELISTED,
-		NO_DNA,
-		HAS_HAIR_COLOR,
-		IS_SYNTHETIC,
-		HAS_SKIN_COLOR,
-		IS_SOCIAL,
-		NO_GENDERS,
-		NO_WILLPOWER,
+	 IS_WHITELISTED = TRUE
+	,NO_DNA = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,IS_SYNTHETIC = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
+	,NO_WILLPOWER = TRUE
 	)
 
 	has_bodypart = list(
@@ -1345,7 +1348,7 @@
 	)
 
 	flags = list(
-		NO_GENDERS,
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
@@ -1408,7 +1411,7 @@
 	)
 
 	flags = list(
-		NO_GENDERS,
+	,NO_GENDERS = TRUE
 	)
 
 	burn_mod = 2
@@ -1483,11 +1486,11 @@
 	)
 
 	flags = list(
-		NO_DNA,
-		IS_SOCIAL,
-		NO_GENDERS,
-		NO_WILLPOWER,
-	)
+		NO_DNA = TRUE,
+		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
+		NO_WILLPOWER = TRUE
+		)
 
 	has_organ = list(
 		O_BRAIN = /obj/item/organ/internal/brain
@@ -1595,7 +1598,7 @@
 	)
 
 	flags = list(
-		NO_GENDERS,
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1660,12 +1663,13 @@
 	)
 
 	flags = list(
-		NO_DNA,
-		RAD_ABSORB,
-		HAS_HAIR,
-		HAS_HAIR_COLOR,
-		NO_WILLPOWER,
-	)
+		NO_DNA = TRUE,
+		RAD_ABSORB = TRUE,
+		HAS_TAIL = TRUE,
+		HAS_HAIR = TRUE,
+		HAS_HAIR_COLOR = TRUE,
+		NO_WILLPOWER = TRUE
+		)
 
 	gender_body_icons = FALSE
 
@@ -1763,13 +1767,13 @@
 	)
 
 	flags = list(
-		NO_DNA,
-		IS_SOCIAL,
-		NO_GENDERS,
-		NO_SLIP,
-		NO_MED_HEALTH_SCAN,
-		HAS_SKIN_COLOR,
-	)
+		NO_DNA = TRUE,
+		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
+		NO_SLIP = TRUE,
+		NO_MED_HEALTH_SCAN = TRUE,
+		HAS_SKIN_COLOR = TRUE,
+		)
 	has_organ = list(
 		 O_HEART   = /obj/item/organ/internal/heart
 		,O_BRAIN   = /obj/item/organ/internal/brain
@@ -1932,10 +1936,10 @@
 	)
 
 	flags = list(
-		NO_MED_HEALTH_SCAN,
-		NO_DNA,
-		NO_GENDERS,
-	)
+				NO_MED_HEALTH_SCAN = TRUE,
+				NO_DNA = TRUE,
+				NO_GENDERS = TRUE,
+				)
 	restricted_inventory_slots = list(SLOT_WEAR_ID, SLOT_BELT, SLOT_L_EAR, SLOT_R_EAR)
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI

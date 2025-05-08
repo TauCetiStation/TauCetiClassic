@@ -58,9 +58,11 @@
 			. |= specie_name
 			continue
 
-		if(req_species_flags && length(S.flags & req_species_flags))
-			. |= specie_name
-			continue
+		for(var/flag in req_species_flags)
+			var/has_flag = !!S.flags[flag]
+			if(has_flag != req_species_flags[flag])
+				. |= specie_name
+				break
 
 /datum/quirk/proc/transfer_mob(mob/living/to_mob)
 	quirk_holder.roundstart_quirks -= src
