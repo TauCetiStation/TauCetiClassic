@@ -56,7 +56,7 @@
 		icon_state = "morgue0"
 	else if (contents.len && !emagged)
 		if (has_clonable_bodies())
-			icon_state = "morgue3"
+			icon_state = "morgue4"
 		else
 			icon_state = "morgue2"
 	else
@@ -281,9 +281,9 @@
 	density = TRUE
 	var/obj/structure/c_tray/connected = null
 	anchored = TRUE
-	var/cremating = 0
+	var/cremating = FALSE
 	var/id = 1
-	var/locked = 0
+	var/locked = FALSE
 
 /obj/structure/crematorium/atom_init()
 	. = ..()
@@ -347,14 +347,14 @@
 	if (cremating)
 		to_chat(user, "<span class='rose'>It's locked.</span>")
 		return
-	if ((src.connected) && (src.locked == 0))
+	if ((src.connected) && (src.locked == FALSE))
 		for(var/atom/movable/A in src.connected.loc)
 			if(!A.anchored)
 				A.loc = src
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		qdel(src.connected)
 		src.connected = null
-	else if (src.locked == 0)
+	else if (src.locked == FALSE)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
@@ -369,7 +369,7 @@
 			qdel(src.connected)
 			src.connected = null
 	add_fingerprint(user)
-	update()
+	update_icon()
 
 /obj/structure/crematorium/attackby(P, mob/user)
 	if(istype(P, /obj/item/weapon/pen))
@@ -405,49 +405,61 @@
 	return
 
 /obj/structure/crematorium/proc/cremate(atom/A, mob/user)
-//	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
-//		if(var/on == 1)
-//		return
 	if(cremating)
-		return //don't let you cremate something twice or w/e
+		return
 
 	if(contents.len <= 0)
 		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
 		return
 
-	else
-		if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
-			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
-			return
+	if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
+		to_chat(user, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
+		return
 
-		audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
+	audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
-		cremating = 1
-		locked = 1
+	set_cremating(TRUE)
+	locked = TRUE
 
-		for(var/mob/living/M in contents)
-			if (M.stat!=2)
-				M.emote("scream")
-			M.log_combat(user, "cremated")
-			M.death(1)
-			M.ghostize(bancheck = TRUE)
-			qdel(M)
+	for(var/mob/living/M in contents)
+		if (M.stat != DEAD)
+			M.emote("scream")
+		M.log_combat(user, "cremated")
+		M.death(1)
+		M.ghostize(bancheck = TRUE)
+		qdel(M)
 
-		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
-			qdel(O)
+	for(var/obj/O in contents)
+		qdel(O)
 
-		new /obj/effect/decal/cleanable/ash(src)
-		sleep(30)
-		cremating = 0
-		locked = 0
-		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
-	return
+	new /obj/effect/decal/cleanable/ash(src)
+	addtimer(CALLBACK(src, .proc/finish_cremation), 10 SECONDS)
+
+/obj/structure/crematorium/proc/set_cremating(value)
+	cremating = value
+	update_icon()
+
+/obj/structure/crematorium/proc/finish_cremation()
+	if(QDELETED(src)) return
+	set_cremating(FALSE)
+	locked = FALSE
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/crematorium/deconstruct(disassembled)
 	move_contents(loc)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 5)
 	..()
+
+/obj/structure/crematorium/update_icon()
+	if(cremating)
+		icon_state = "crema_active"
+	else if(connected)
+		icon_state = "crema0"
+	else if(contents.len)
+		icon_state = "crema2"
+	else
+		icon_state = "crema1"
 
 /*
  * Crematorium tray
