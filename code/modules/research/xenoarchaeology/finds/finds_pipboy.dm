@@ -139,7 +139,8 @@
 	if(on)
 		if(profile_name)
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
-			var/dat = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'><body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
+			var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+			dat += "<body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
 					dat += "Hello, [profile_name]!<br>"
@@ -199,6 +200,7 @@
 					dat += "<br>"
 					dat += "<A href='byond://?src=\ref[src];menu=1'>Back to menu</A><br>"
 			dat += "</font></body>"
+			dat += "</html>"
 			user << browse(dat, "window=pipboy")
 			onclose(user, "pipboy")
 			return
