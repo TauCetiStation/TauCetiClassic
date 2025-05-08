@@ -467,7 +467,7 @@
 	cooldown = 0
 	positions = INFINITY
 
-	spawn_landmark_name = "eorgwarp"
+	spawn_landmark_name = "Gladiator"
 
 /datum/spawner/gladiator/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
