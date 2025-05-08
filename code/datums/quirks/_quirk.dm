@@ -54,7 +54,7 @@
 	for(var/specie_name in all_species)
 		var/datum/species/S = all_species[specie_name]
 
-		if(blacklisted_species_traits && length(S.race_traits | blacklisted_species_traits))
+		if(blacklisted_species_traits && length(S.race_traits & blacklisted_species_traits))
 			. |= specie_name
 			continue
 
