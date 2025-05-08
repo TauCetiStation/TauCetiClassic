@@ -126,8 +126,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	SetUIValueRange(DNA_UI_BELLY_G,   character.g_belly,   255,    1)
 	SetUIValueRange(DNA_UI_BELLY_B,   character.b_belly,   255,    1)
 
-
-	SetUIValueRange(DNA_UI_SKIN_TONE, 1, length(global.skin_tones),    1)
+	var/s_tone_index = global.skin_tones.find(character.s_tone)
+	SetUIValueRange(DNA_UI_SKIN_TONE, s_tone_index, length(global.skin_tones),    1)
 
 	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
 
