@@ -219,6 +219,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Grid Check",              /datum/event/grid_check,                0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Organ Failure",           /datum/event/organ_failure,             0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Pyro Anomaly",            /datum/event/anomaly/anomaly_pyro,      75,    list(ASSIGNMENT_ENGINEER = 60)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gas Anomaly",             /datum/event/anomaly/anomaly_gas,      75,    list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Vortex Anomaly",          /datum/event/anomaly/anomaly_vortex,    75,    list(ASSIGNMENT_ENGINEER = 25)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Bluespace Anomaly",       /datum/event/anomaly/anomaly_bluespace, 75,    list(ASSIGNMENT_ENGINEER = 25)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Flux Anomaly",            /datum/event/anomaly/anomaly_flux,      75,    list(ASSIGNMENT_ENGINEER = 50)),
