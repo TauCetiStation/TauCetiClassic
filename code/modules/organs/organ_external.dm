@@ -30,7 +30,7 @@
 	// Appearance vars.
 	var/body_part = null              // Part flag, mostly used for clothing coverage
 	var/body_zone = null              // Unique identifier of this limb.
-	var/body_icon_layer = BODY_LAYER  // mob overlay layer
+	var/default_icon_layer = BODY_LAYER  // mob overlay layer
 	var/organ_suffix                  // suffix for organs with variations
 	var/datum/species/species
 	var/b_type = BLOOD_A_PLUS
@@ -313,7 +313,7 @@
 
 	. = list()
 
-	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -body_icon_layer)
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -default_icon_layer)
 	. += base_appearance
 
 	if(species.alpha_color_mask)
@@ -905,7 +905,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	cases = list("хвост", "хвоста", "хвосту", "хвост", "хвостом", "хвосте")
 
 	icon_state = "tail"
-	body_icon_layer = BODY_INFRONT_LAYER // todo: we can make it two layers with BODY_BEHIND_LAYER like wings
+	default_icon_layer = BODY_INFRONT_LAYER // todo: we can make it two layers with BODY_BEHIND_LAYER like wings
 
 	// not in TARGET_ZONE_ALL so can't be targeted and damaged, i hope
 	body_zone = BP_TAIL
@@ -950,7 +950,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
 
 	icon_state = "wings"
-	body_icon_layer = BODY_INFRONT_LAYER
+	default_icon_layer = BODY_INFRONT_LAYER
 
 	body_zone = BP_WINGS
 	parent_bodypart = BP_CHEST
@@ -1131,8 +1131,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	// lips
 	if(lip_style && species.flags[HAS_LIPS])
-		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]_s", -body_icon_layer)
+		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]_s", -default_icon_layer)
 		lips_appearance.color = lip_color
+
+		lips_appearance.pixel_x = species.offset_features[OFFSET_FACE][1]
+		lips_appearance.pixel_y = species.offset_features[OFFSET_FACE][2]
+
 		. += lips_appearance
 
 	var/should_render_facial = TRUE
@@ -1153,6 +1157,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style)
 			var/mutable_appearance/facial_appearance = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
+
+			facial_appearance.pixel_x = species.offset_features[OFFSET_FACE][1]
+			facial_appearance.pixel_y = species.offset_features[OFFSET_FACE][2]
+
 			if(facial_hair_style.do_colouration)
 				if(is_husk)
 					facial_appearance.color = RGB_CONTRAST(178, 178, 178)
@@ -1189,6 +1197,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 					hair_appearance.appearance_flags = KEEP_TOGETHER
 					hair_appearance.add_overlay(list(main_color, gradient))
+
+			hair_appearance.pixel_x = species.offset_features[OFFSET_HAIR][1]
+			hair_appearance.pixel_y = species.offset_features[OFFSET_HAIR][2]
 
 			. += hair_appearance
 

@@ -224,11 +224,15 @@ Please contact me on #coderbus IRC. ~Carn x
 		MA.layer = text2num(layer)
 		MA.overlays = grouped_by_layer[layer]
 
-		//if(MA.layer == -BODY_INFRONT_LAYER || MA.layer == -BODY_BEHIND_LAYER)
-		//	MA = human_update_offset(MA)
-		MA = update_height(MA)
-		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
-		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
+		// update height offsets and filters
+		switch(MA.layer)
+			if(-HAIR_LAYER) // shift hair instead of filter
+				MA = human_update_offset(MA, TRUE)
+			//if(BODY_INFRONT_LAYER, BODY_BEHIND_LAYER) // todo: need to choice between filter and offset
+			//	MA = human_update_offset(MA)
+			else
+				MA = update_height(MA)
+
 		standing += MA
 
 	// BODY_LAYER just used here as a cache index, keep in mind that it can contain overlays with any other layer
@@ -841,11 +845,25 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/human_update_offset(image/I, head = TRUE)
 	var/list/L
 	if(head)//If your item is upper the torso - we want to shift it more.
-		L = list(HUMANHEIGHT_SHORTEST = -2, HUMANHEIGHT_SHORT = -1, HUMANHEIGHT_MEDIUM = 0, HUMANHEIGHT_TALL = 1, HUMANHEIGHT_TALLEST = 2, "gnome" = -5)
+		L = list(
+			HUMANHEIGHT_SHORTEST = -2, 
+			HUMANHEIGHT_SHORT = -1, 
+			HUMANHEIGHT_MEDIUM = 0, 
+			HUMANHEIGHT_TALL = 1, 
+			HUMANHEIGHT_TALLEST = 2, 
+			"gnome" = -5
+		)
 	else
-		L = list(HUMANHEIGHT_SHORTEST = -1, HUMANHEIGHT_SHORT = -1, HUMANHEIGHT_MEDIUM = 0, HUMANHEIGHT_TALL = 1, HUMANHEIGHT_TALLEST = 1, "gnome" = -3)
+		L = list(
+			HUMANHEIGHT_SHORTEST = -1, 
+			HUMANHEIGHT_SHORT = -1, 
+			HUMANHEIGHT_MEDIUM = 0, 
+			HUMANHEIGHT_TALL = 1, 
+			HUMANHEIGHT_TALLEST = 1, 
+			"gnome" = -3
+		)
 
-	I.pixel_y = L[height]
+	I.pixel_y += L[height]
 
 	if(SMALLSIZE in mutations) //Gnome-Guy
 		I.pixel_y += L["gnome"]

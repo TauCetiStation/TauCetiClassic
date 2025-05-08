@@ -150,7 +150,7 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
+	/// Wearing clothing (by slots) and body features (like hair) pixel_x/pixel_y offsets
 	var/list/offset_features = list(
 		OFFSET_UNIFORM = list(0,0),
 		OFFSET_ID = list(0,0),
