@@ -313,6 +313,8 @@
 
 	. = list()
 
+	is_slime = TRUE
+
 	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -default_icon_layer)
 	. += base_appearance
 
@@ -336,7 +338,7 @@
 		bones_appearance.blend_mode = BLEND_INSET_OVERLAY // inset fixes some clipping issues
 		// because we can't combine inset with underlays (or other blend modes) we need to add alpha to make it appear "under" skin
 		// unfortunately it makes skeleton unnecessarily transparent
-		bones_appearance.alpha = 175
+		bones_appearance.alpha = 127
 		base_appearance.add_overlay(bones_appearance)
 
 	// sometimes we can see the insides of the mob
