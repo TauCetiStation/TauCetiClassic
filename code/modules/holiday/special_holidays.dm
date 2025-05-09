@@ -23,109 +23,36 @@
 	return pick("Fluffy","Bunny","Easter","Egg")
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yyyy, ddd)
-	return TRUE
+	if(!begin_month)
+		/// Held variable to better calculate when certain holidays may fall on, like easter.
+		var/current_year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/easterResults = EasterDate(current_year)
 
+		begin_day = easterResults["day"]
+		begin_month = easterResults["month"]
 
-/* Egg Hunt */
+		end_day = begin_day + DAYS_EXTRA
+		end_month = begin_month
+		if(end_day >= 32 && end_month == MARCH) //begins in march, ends in april
+			end_day -= 31
+			end_month++
+		if(end_day >= 31 && end_month == APRIL) //begins in april, ends in june
+			end_day -= 30
+			end_month++
 
-/datum/announcement/centcomm/egghunt/pre
-	name = "Egg Hunt will Start soon!"
-	subtitle = "Ежегодная охота за яйцами"
-	sound = "commandreport"
+		begin_day -= DAYS_EARLY
+		if(begin_day <= 0)
+			if(begin_month == APRIL)
+				begin_day += 31
+				begin_month-- //begins in march, ends in april
 
-/datum/announcement/centcomm/egghunt/pre/New()
-	message = "Исход! В рамках программы по повышению стрессоустойчивости персонала мы проводим пасхальную охоту за яйцами! " + \
-			"Подготовьтесь, через минуту вам потребуется искать цветные яйца, которые мы спрятали по станции, и класть их к себе в рюкзак. " + \
-			"Спустя еще 30 минут таймер подойдет к концу и будут объявлены победители!"
-
-/datum/announcement/centcomm/egghunt/start
-	name = "Egg Hunt Starts!"
-	subtitle = "Ежегодная охота за яйцами"
-	sound = "commandreport"
-
-/datum/announcement/centcomm/egghunt/start/New()
-	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 30 минут объявим победителей "
-
-/datum/announcement/centcomm/egghunt/finish
-	name = "Egg Hunt Ends!"
-	subtitle = "Ежегодная охота за яйцами"
-	sound = "commandreport"
-
-/datum/announcement/centcomm/egghunt/finish/New(list/L)
-	message = "Объявляем победителей охоты за яйцами! <br>"
-	var/position = 0
-	for(var/key in L)
-		position++
-		message += "<br> [position]: [key] - [L[key]] яиц. "
-		if(position == 1)
-			message += "Победитель!"
-		else if(position == 10)
-			break
-
-/client/proc/start_egg_hunt()
-	set category = "Fun"
-	set name = "Start Egg Hunt"
-	if(!check_rights(R_FUN))	return
-	if(!SSholiday.holidays[EASTER])	return
-
-	if(tgui_alert(usr, "Are you sure?","Confirm Egg Hunt", list("Yes", "No")) == "No")
-		return
-
-	message_admins("[key_name_admin(src)] started the Egg Hunt!")
-
-	var/datum/holiday/easter/E = SSholiday.holidays[EASTER]
-	E.egg_hunt_announce()
-
-/datum/holiday/easter/proc/egg_hunt_announce()
-	var/datum/announcement/centcomm/egghunt/pre/announcement = new
-	announcement.play()
-
-	addtimer(CALLBACK(src, PROC_REF(egg_hunt_begin)), 60 SECONDS)
-
-/datum/holiday/easter/proc/egg_hunt_begin()
-	var/datum/announcement/centcomm/egghunt/start/announcement = new
-	announcement.play()
-
-	// 4 eggs per each station area
-	for(var/A in global.the_station_areas)
-		var/area/R = get_area_by_type(A)
-		var/max_eggs_per_area = 4
-		for(var/turf/simulated/floor/T in get_area_turfs(R))
-			if(max_eggs_per_area && prob(2))
-				new /obj/random/foods/egg(T)
-				max_eggs_per_area -= 1
-
-	// a chance to spawn an egg in each closet
-	for(var/obj/structure/closet/C in closet_list)
-		if(prob(5))
-			new /obj/random/foods/egg(C)
-
-	addtimer(CALLBACK(src, PROC_REF(egg_hunt_finish)), 1800 SECONDS)
-
-/datum/holiday/easter/proc/egg_hunt_finish()
-	var/list/winners_list = list()
-	for(var/mob/living/carbon/human/H in player_list)
-		var/egg_amount = 0
-		if(is_station_level(H.z))
-			var/list/items_to_check = H.GetAllContents()
-			for(var/A in items_to_check)
-				if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/egg))
-					egg_amount++
-		winners_list[H.name] = egg_amount
-
-	sortTim(winners_list, GLOBAL_PROC_REF(cmp_numeric_dsc), associative=TRUE)
-
-	var/datum/announcement/centcomm/egghunt/finish/announcement = new(winners_list)
-	announcement.play()
-
-
+	return ..()
 
 /datum/holiday/easter/celebrate()
 	. = ..()
-	admin_verbs_fun += /client/proc/start_egg_hunt
 	global.maintenance_loot += list(
 		list(
-			/obj/item/weapon/reagent_containers/food/snacks/egg = 15,
+			/obj/random/foods/boiledegg = 15,
 		) = maint_holiday_weight,
 	)
 

@@ -189,3 +189,19 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg/yellow,
 	)
 
+/obj/random/foods/boiledegg
+	name = "Random Boiled Colored Egg"
+	desc = "This is a random boiled colored egg."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "egg-rainbow"
+
+/obj/random/foods/boiledegg/item_to_spawn()
+	return pick(
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/blue,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/green,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/orange,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/purple,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/rainbow,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/red,
+		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/yellow,
+	)

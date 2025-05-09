@@ -439,14 +439,32 @@
 		var/obj/item/toy/crayon/C = I
 		var/clr = C.colourName
 
-		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
-			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+		if (!isturf(src.loc) || !(locate(/obj/structure/table) in src.loc))
+			to_chat(user, "<span class='rose'>You cannot paint [src] here! You need a table to do it.</span>")
 			return
+		switch(clr)
+			if("blue")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/blue(src.loc)
+			if("green")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/green(src.loc)
+			if("mime")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/mime(src.loc)
+			if("orange")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/orange(src.loc)
+			if("purple")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/purple(src.loc)
+			if("rainbow")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow(src.loc)
+			if("red")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/red(src.loc)
+			if("yellow")
+				new /obj/item/weapon/reagent_containers/food/snacks/egg/yellow(src.loc)
+			else
+				to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+				return
 
 		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
-		icon_state = "egg-[clr]"
-		if(clr == "mime")
-			item_state = "egg"
+		qdel(src)
 	else
 		return ..()
 
@@ -504,14 +522,32 @@
 		var/obj/item/toy/crayon/C = I
 		var/clr = C.colourName
 
-		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
-			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+		if (!isturf(src.loc) || !(locate(/obj/structure/table) in src.loc))
+			to_chat(user, "<span class='rose'>You cannot paint [src] here! You need a table to do it.</span>")
 			return
+		switch(clr)
+			if("blue")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/blue(src.loc)
+			if("green")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/green(src.loc)
+			if("mime")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/mime(src.loc)
+			if("orange")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/orange(src.loc)
+			if("purple")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/purple(src.loc)
+			if("rainbow")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/rainbow(src.loc)
+			if("red")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/red(src.loc)
+			if("yellow")
+				new /obj/item/weapon/reagent_containers/food/snacks/boiledegg/yellow(src.loc)
+			else
+				to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+				return
 
 		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
-		icon_state = "egg-[clr]"
-		if(clr == "mime")
-			item_state = "egg"
+		qdel(src)
 	else
 		return ..()
 
