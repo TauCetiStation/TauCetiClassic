@@ -86,10 +86,6 @@
 		else if(ear_damage < 25)
 			ear_damage = 0
 
-		//Other
-		if(stuttering > 0)
-			setStuttering(0)
-
 		if(silent)
 			silent = 0
 

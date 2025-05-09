@@ -174,7 +174,7 @@
 
 	user.remove_from_mob(tool)
 	BP.insert_organ(target, surgically = TRUE)
-	target.update_body()
+	target.update_body(BP.body_zone)
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
 	target.op_stage.bodyparts -= target_zone
@@ -205,7 +205,7 @@
 		target.g_grad = B.g_grad
 		target.b_grad = B.b_grad
 		target.hair_painted = B.hair_painted
-		target.update_hair()
+		target.update_body(BP_HEAD, update_preferences = TRUE)
 		target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
 		ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT) // so they cannot be cloned
 

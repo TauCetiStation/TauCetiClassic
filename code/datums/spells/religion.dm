@@ -368,9 +368,10 @@
 	S.start()
 
 	if(divine_power >= 1)
-		gibs(user.loc)
+		var/turf/T = get_turf(user.loc)
+		new /obj/effect/gibspawner(T)
 		if(divine_power >= 2)
-			hgibs(user.loc)
+			new /obj/effect/gibspawner/human(T)
 
 
 /obj/effect/proc_holder/spell/no_target/scribe_rune

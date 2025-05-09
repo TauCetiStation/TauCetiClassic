@@ -12,10 +12,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 
 /datum/emote/roar
@@ -31,12 +29,11 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/roar/get_impaired_msg(mob/user)
 	return "opens [P_THEIR(user)] mouth wide and scary!"
+
 
 /datum/emote/gasp
 	key = "gasp"
@@ -52,10 +49,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 	cloud = "cloud-gasp"
 
@@ -73,15 +68,14 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 	cloud = "cloud-gasp"
 
 /datum/emote/choke/get_impaired_msg(mob/user)
 	return "clutches [P_THEIR(user)] throat desperately!"
+
 
 /datum/emote/moan
 	key = "moan"
@@ -96,13 +90,12 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/moan/get_impaired_msg(mob/user)
 	return "opens [P_THEIR(user)] mouth wide"
+
 
 /datum/emote/cough
 	key = "cough"
@@ -115,10 +108,8 @@
 	message_miming = "acts out a cough."
 	message_muzzled = "appears to cough."
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/cough/get_impaired_msg(mob/user)
 	return "moves [P_THEIR(user)] face forward as [P_THEY(user)] open and close [P_THEIR(user)] mouth!"

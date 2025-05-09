@@ -424,7 +424,7 @@
 		var/obj/item/organ/external/BP = bm.bodyparts_by_name[BP_HEAD]
 		if(BP && !BP.is_stump)
 			if(bm.stat != DEAD)
-				if(!(NO_BREATH in bm.mutations))
+				if(!HAS_TRAIT(bm, TRAIT_NO_BREATHE))
 					bm.adjustOxyLoss(5)
 					if(prob(40))
 						bm.emote("gasp")

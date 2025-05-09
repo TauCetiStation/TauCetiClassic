@@ -9,35 +9,22 @@
 /proc/random_color()
 	return "#" + random_string(6, global.hex_characters)
 
-/proc/normalize_color(inphex) //normalize hex color and convert hex2num and num2hex
 
-	var/rn_color
-	var/gn_color
-	var/bn_color
-	var/rh_color
-	var/gh_color
-	var/bh_color
-	var/final_hex
-	rn_color = hex2num(copytext(inphex, 2,4))
-	gn_color = hex2num(copytext(inphex, 4,6))
-	bn_color = hex2num(copytext(inphex, 6,8))
+// normalize hex color
+/proc/normalize_color(color) 
+	var/list/hexes = rgb2num(color)
 
-	//Normalize color when RGB color shade is not less than the sum 180
-	if((rn_color + gn_color + bn_color) < 180)
-		if(rn_color < 60)
-			rn_color += 60
-		if(gn_color < 60)
-			gn_color += 60
-		if(bn_color < 60)
-			bn_color += 60
+	// Normalize color when RGB color shade is not less than the sum 180
+	// todo: probably should be based on HSL, this is not good
+	if((hexes[1] + hexes[2] + hexes[3]) < 180)
+		if(hexes[1] < 60)
+			hexes[1] += 60
+		if(hexes[2] < 60)
+			hexes[2] += 60
+		if(hexes[3] < 60)
+			hexes[3] += 60
 
-	rh_color = num2hex(rn_color)
-	gh_color = num2hex(gn_color)
-	bh_color = num2hex(bn_color)
-
-	//Set complete normalize hex color
-	final_hex = "#" + rh_color + gh_color + bh_color
-	return final_hex
+	return rgb(hexes[1], hexes[2], hexes[3])
 
 /proc/adjust_brightness(color, value)
 	if (!color) return "#ffffff"
@@ -50,7 +37,7 @@
 	return rgb(RGB[1],RGB[2],RGB[3])
 
 // make hex color brighter before one value is #ff
-// todo: replace with color_lightness_max
+// todo: replace with hsl procs
 /proc/adjust_to_white(color)
 	var/list/RGB[3]
 	RGB[1] = HEX_VAL_RED(color)
@@ -68,19 +55,33 @@
 
 	return rgb(RGB[1],RGB[2],RGB[3])
 
-/// Ensures that the lightness value of a color must be greater than the provided minimum.
-/proc/color_lightness_max(color, min_lightness)
-	var/list/rgb = rgb2num(color)
-	var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
-	hsl[3] = max(hsl[3], min_lightness)
-	var/list/transformed_rgb = hsl2rgb(hsl[1], hsl[2], hsl[3])
-	return rgb(transformed_rgb[1], transformed_rgb[2], transformed_rgb[3])
+/// Caps HSL luminance value of a HEX color to the provided minimum
+/proc/color_luminance_max(color, min_lightness)
+	var/list/hsl = rgb2num(color, COLORSPACE_HSL)
+	hsl[3] = clamp(max(hsl[3], min_lightness), 0, 100)
+	if(length(hsl) == 4) // check for alpha channel
+		return rgb(hsl[1], hsl[2], hsl[3], hsl[4], space = COLORSPACE_HSL)
+	else
+		// You NEED to use a named space argument for 4 parameters rgb(),
+		// otherwise colorspace will be parsed as alpha for the default RGB colorspace.
+		// Guess who spend an hour on this and almost filled a bug report!
+		// Although this is in the refs i still think that maybe lummox just hates us...
+		return rgb(hsl[1], hsl[2], hsl[3], space = COLORSPACE_HSL)
 
-/// Ensures that the lightness value of a color must be less than the provided maximum.
-/proc/color_lightness_min(color, max_lightness)
-	var/list/rgb = rgb2num(color)
-	var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
-	// Ensure high lightness (Minimum of 90%)
-	hsl[3] = min(hsl[3], max_lightness)
-	var/list/transformed_rgb = hsl2rgb(hsl[1], hsl[2], hsl[3])
-	return rgb(transformed_rgb[1], transformed_rgb[2], transformed_rgb[3])
+/// Caps HSL luminance value of a HEX color to the provided maximum
+/proc/color_luminance_min(color, max_lightness)
+	var/list/hsl = rgb2num(color, COLORSPACE_HSL)
+	hsl[3] = clamp(min(hsl[3], max_lightness), 0, 100)
+	if(length(hsl) == 4) // check for alpha channel
+		return rgb(hsl[1], hsl[2], hsl[3], hsl[4], space = COLORSPACE_HSL)
+	else
+		return rgb(hsl[1], hsl[2], hsl[3], space = COLORSPACE_HSL)
+
+/// Shifts HSL luminance of a HEX color by value
+/proc/color_shift_luminance(color, shift)
+	var/list/hsl = rgb2num(color, COLORSPACE_HSL)
+	hsl[3] = clamp(hsl[3] + shift, 0, 100)
+	if(length(hsl) == 4) // check for alpha channel
+		return rgb(hsl[1], hsl[2], hsl[3], hsl[4], space = COLORSPACE_HSL)
+	else
+		return rgb(hsl[1], hsl[2], hsl[3], space = COLORSPACE_HSL)

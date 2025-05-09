@@ -35,18 +35,18 @@
 				var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
 				if(new_underwear && Adjacent(user))
 					H.underwear = underwear_options.Find(new_underwear)
-					H.update_body()
+					H.update_underwear()
 			if("Undershirt")
 				var/list/undershirt_options
 				undershirt_options = undershirt_t
 				var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
 				if(new_undershirt && Adjacent(user))
 					H.undershirt = undershirt_options.Find(new_undershirt)
-					H.update_body()
+					H.update_underwear()
 			if("Socks")
 				var/list/socks_options
 				socks_options = socks_t
 				var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_options
 				if(new_socks && Adjacent(user))
 					H.socks = socks_options.Find(new_socks)
-					H.update_body()
+					H.update_underwear()

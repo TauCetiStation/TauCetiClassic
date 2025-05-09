@@ -10,7 +10,8 @@
 	item_state_world = "hazmat_white_w"
 	name = "hazmat suit"
 	desc = "White colored and from brand new collection. Unisex!"
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	render_flags = parent_type::render_flags | HIDE_TAIL
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|PHORONGUARD
 
 

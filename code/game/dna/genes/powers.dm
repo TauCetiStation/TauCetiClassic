@@ -9,6 +9,7 @@
 	activation_messages=list("You feel no need to breathe.")
 	mutation=NO_BREATH
 	activation_prob=50
+	trait_mutation = TRAIT_NO_BREATHE
 
 /datum/dna/gene/basic/nobreath/New()
 	block=NOBREATHBLOCK
@@ -51,10 +52,13 @@
 	if(H.disfigured)
 		H.disfigured = FALSE
 
-	if(HUSK in M.mutations)
-		M.mutations.Remove(HUSK)
-		M.update_mutations()
-		M.UpdateAppearance()
+	if(HAS_TRAIT_FROM(M, TRAIT_HUSK, GENERIC_TRAIT))
+		REMOVE_TRAIT(M, TRAIT_HUSK, GENERIC_TRAIT)
+		M.update_body()
+
+	if(HAS_TRAIT_FROM(M, TRAIT_BURNT, GENERIC_TRAIT))
+		REMOVE_TRAIT(M, TRAIT_BURNT, GENERIC_TRAIT)
+		M.update_body()
 
 	var/obj/item/organ/external/chest/BP = M.bodyparts_by_name[BP_CHEST]
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
@@ -165,7 +169,7 @@
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
 	activation_messages=list("Your skin feels electric.")
-	trait_mutation = TRAIT_SHOCKIMMUNE
+	trait_mutation = TRAIT_SHOCK_IMMUNE
 	activation_prob=50
 
 /datum/dna/gene/basic/noshock/New()
@@ -194,7 +198,7 @@
 		H.ventcrawler = 1
 		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
-		H.regenerate_icons()
+		H.regenerate_icons() // updates height filters for SMALLSIZE
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
@@ -231,7 +235,7 @@
 /mob/living/carbon/human/proc/try_mutate_to_hulk()
 	if(!mind)
 		return
-	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN)) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
 		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return
 	if(mind.hulkizing)

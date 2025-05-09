@@ -113,8 +113,7 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	flags = initial(flags)
-	flags |= (A.flags & (BLOCKHAIR | BLOCKHEADHAIR))
+	render_flags = A.render_flags
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()

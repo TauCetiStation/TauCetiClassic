@@ -1,7 +1,5 @@
 /datum/emote/slime/face
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 	var/mood
 
