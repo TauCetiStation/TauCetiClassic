@@ -584,6 +584,7 @@
 	icon_state = "egg-yellow"
 	item_state_world = "egg-yellow_world"
 
+
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
