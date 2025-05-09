@@ -166,6 +166,8 @@
 /mob/proc/StopGrabs()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
 		qdel(G)
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		qdel(G)
 
 /mob/proc/GetGrabs()
 	. = list()
