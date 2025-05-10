@@ -156,6 +156,8 @@
 			update_icon()
 			return TRUE
 
+		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(M, ACCUSATIVE_CASE)].</span>")
+
 		var/list/injected = list()
 		for(var/datum/reagent/R in src.reagents.reagent_list)
 			injected += R.name
