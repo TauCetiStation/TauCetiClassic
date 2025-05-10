@@ -82,10 +82,13 @@
 	M.mind.pluvian_blessed = 1
 	M.mind.pluvian_social_credit = 2
 	ADD_TRAIT(M, TRAIT_SEE_GHOSTS, QUALITY_TRAIT)
-	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
-	eye.plane = LIGHTING_LAMPS_PLANE
-	eye.layer = ABOVE_LIGHTING_LAYER
-	M.add_overlay(eye)
+	var/mutable_appearance/eyes = mutable_appearance(
+		'icons/mob/human/eyes.dmi', 
+		"blessed_pluvian"
+	)
+	eyes.plane = LIGHTING_LAMPS_PLANE
+	eyes.layer = ABOVE_LIGHTING_LAYER
+	M.add_overlay(eyes)
 
 /datum/religion/pluvia/proc/adjust_haram(mob/living/carbon/human/target, haram_amount, reason)
 	if(haram_amount == DEADLY_HARAM || ((target.mind.pluvian_haram_points + haram_amount) >= PLUVIAN_HARAM_THRESHOLD))

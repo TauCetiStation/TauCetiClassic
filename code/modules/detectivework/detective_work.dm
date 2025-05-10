@@ -27,13 +27,13 @@
 		if(prob(10*item_multiplier) && !(fibertext in suit_fibers))
 			//world.log << "Added fibertext: [fibertext]"
 			suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & 32))
+		if(!(M.wear_suit.body_parts_covered & UPPER_TORSO))
 			if(M.w_uniform)
 				fibertext = "Fibers from \a [M.w_uniform]."
 				if(prob(12*item_multiplier) && !(fibertext in suit_fibers)) //Wearing a suit means less of the uniform exposed.
 					//world.log << "Added fibertext: [fibertext]"
 					suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & 64))
+		if(!(M.wear_suit.body_parts_covered & ARMS))
 			if(M.gloves)
 				fibertext = "Material from a pair of [M.gloves.name]."
 				if(prob(20*item_multiplier) && !(fibertext in suit_fibers))

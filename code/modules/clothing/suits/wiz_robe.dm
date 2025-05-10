@@ -14,7 +14,8 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = HEADCOVERSEYES | BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	body_parts_covered = HEAD
 
 /obj/item/clothing/head/wizard/ushanka
@@ -80,7 +81,8 @@
 	name = "crusader topfhelm"
 	desc = "They may call you a buckethead but who'll laugh when crusade begins?"
 	icon_state = "crusader"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/wizard/black_hood
@@ -88,7 +90,8 @@
 	desc = "It's hood that covers the head."
 	icon_state = "necromancer"
 	item_state = "necromancer"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 
 /obj/item/clothing/head/wizard/nimb
 	name = "Nimb"
@@ -106,7 +109,7 @@
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 
 /obj/item/clothing/head/wizard/gnome_hat
 	name = "gnome hat"
@@ -334,8 +337,8 @@
 	desc = "A magically attuned hat made exclusively from duct tape. You can barely see."
 	icon_state = "tapehat"
 	item_state =  "tapehat"
-	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	body_parts_covered = FACE|EYES
 
 /obj/item/clothing/head/wizard/black

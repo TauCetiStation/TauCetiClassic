@@ -1,5 +1,4 @@
 // mob/var/list/mutations
-//"#49e46e
 #define STRUCDNASIZE 27
 #define UNIDNASIZE 	 13
 
@@ -9,8 +8,7 @@
 #define XRAY			3
 #define HULK			4
 #define CLUMSY			5
-#define HUSK			6
-#define NOCLONE			7
+#define NOCLONE			7 // todo: need to merge with TRAIT_NO_CLONE
 #define LASEREYES		8 	// harm intent - click anywhere to shoot lasers from eyes
 
 // Other Mutations:

@@ -36,10 +36,10 @@
 			<B>Blood Type:</B> [src.victim.dna.b_type]<BR>
 			<BR>
 			<B>Health:</B> [src.victim.health]<BR>
-			<B>Brute Damage:</B> [victim.getBruteLoss()]<BR>
-			<B>Toxins Damage:</B> [victim.getToxLoss()]<BR>
-			<B>Fire Damage:</B> [victim.getFireLoss()]<BR>
-			<B>Suffocation Damage:</B> [victim.getOxyLoss()]<BR>
+			<B>Brute Damage:</B> [ceil(victim.getBruteLoss())]<BR>
+			<B>Toxins Damage:</B> [ceil(victim.getToxLoss())]<BR>
+			<B>Fire Damage:</B> [ceil(victim.getFireLoss())]<BR>
+			<B>Suffocation Damage:</B> [ceil(victim.getOxyLoss())]<BR>
 			<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
 			<B>Heartbeat rate:</B> [victim.get_pulse(GETPULSE_TOOL)]<BR>
 			"}

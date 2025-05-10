@@ -368,7 +368,7 @@ A proc that does all the animations before mix()-ing.
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
 			H.lip_color = chosen_color
-			H.update_body()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 
 	if(emagged)
 		if(ishuman(user))

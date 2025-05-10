@@ -30,7 +30,8 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = HEADCOVERSEYES | BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	body_parts_covered = HEAD
 	force = 0
 	hitsound = list()
@@ -51,7 +52,8 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
-	flags = HEADCOVERSEYES | BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	force = 0
 	hitsound = list()
 

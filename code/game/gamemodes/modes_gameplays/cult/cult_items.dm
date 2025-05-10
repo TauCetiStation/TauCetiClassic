@@ -101,7 +101,8 @@
 	desc = "A hood worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES
-	body_parts_covered = HEAD|EYES|BLOCKHAIR
+	body_parts_covered = HEAD|EYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	armor = list(melee = 30, bullet = 20, laser = 30,energy = 25, bomb = 0, bio = 0, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
@@ -125,7 +126,8 @@
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	armor = list(melee = 30, bullet = 15, laser = 15,energy = 20, bomb = 0, bio = 0, rad = 0)
 	body_parts_covered = HEAD|FACE|EYES
 	siemens_coefficient = 0

@@ -25,7 +25,7 @@
 	return 0
 
 /mob/living/proc/is_impact_force_affected(impact_force, impact_dir)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_IMMOVABLE))
 		return FALSE
 	if(buckled || anchored)
 		return FALSE

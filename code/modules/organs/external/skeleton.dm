@@ -15,7 +15,7 @@
 /datum/bodypart_controller/skeleton/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
 	if(!BP.owner)
 		return
-	brute = round(brute * BP.owner.species.brute_mod, 0.1)
+	brute = round(brute * BP.owner.mob_brute_mod.Get(), 0.1)
 
 	if(brute <= 0)
 		return 0
@@ -86,7 +86,7 @@
 
 	usr.remove_from_mob(BP)
 	BP.insert_organ(H)
-	H.update_body()
+	H.update_body(BP.body_zone)
 	H.updatehealth()
 	H.UpdateDamageIcon(BP)
 
@@ -142,6 +142,17 @@
 	vital = FALSE
 
 /obj/item/organ/external/groin/skeleton/attack(mob/living/M, mob/living/user, def_zone)
+	if(!skeleton_insert_bodypart(M, src, def_zone))
+		. = ..()
+
+/obj/item/organ/external/tail/skeleton
+	name = "skeleton tail"
+	leaves_stump = FALSE
+	force = 8
+	min_broken_damage = 10
+	controller_type = /datum/bodypart_controller/skeleton
+
+/obj/item/organ/external/tail/skeleton/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
 

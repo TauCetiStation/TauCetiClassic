@@ -69,10 +69,13 @@
 			//This block was in handle_regular_status_updates under != DEAD
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
-			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
+			if(!HAS_TRAIT(src, TRAIT_NO_BLOOD) && bodytemperature >= 170)
 				handle_blood()
 
 			handle_drunkenness()
+
+		if(stat != DEAD && HAS_TRAIT(src, ELEMENT_TRAIT_ZOMBIE) && prob(10)) // signal? or maybe we can add something like handle_life_sounds
+			playsound(src, pick(SOUNDIN_GROWL), VOL_EFFECTS_MASTER)
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
@@ -89,10 +92,6 @@
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name() // why in life wtf
-
-	//Species-specific update.
-	if(species)
-		species.on_life(src)
 
 	pulse = handle_pulse()
 
@@ -270,7 +269,7 @@ var/global/list/tourette_bad_words= list(
 		dna_inject_count--
 
 	if(radiation)
-		if(species.flags[RAD_IMMUNE])
+		if(HAS_TRAIT(src, TRAIT_RADIATION_IMMUNE))
 			return
 
 		if (radiation > 100)
@@ -308,7 +307,7 @@ var/global/list/tourette_bad_words= list(
 				if(prob(5) && species.flags[HAS_HAIR] && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
 					h_style = "Bald"
 					f_style = "Shaved"
-					update_hair()
+					update_body(BP_HEAD, update_preferences = TRUE)
 					to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
 				if(prob(5))
 					radiation -= 5
@@ -426,7 +425,7 @@ var/global/list/tourette_bad_words= list(
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 			adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE] && isspaceturf(get_turf(src)))
+	else if(!species.flags[IS_SYNTHETIC] && !HAS_TRAIT(src, TRAIT_RADIATION_IMMUNE) && isspaceturf(get_turf(src)))
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
 		if(HAS_ROUND_ASPECT(ROUND_ASPECT_HIGH_SPACE_RADIATION))
@@ -434,8 +433,8 @@ var/global/list/tourette_bad_words= list(
 		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
 			irradiate_one_mob(src, 5)
 
-	if(status_flags & GODMODE)
-		return 1	//godmode
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
+		return
 
 	if(bodytemperature > species.heat_level_1)
 		//Body temperature is too hot.
@@ -661,9 +660,6 @@ var/global/list/tourette_bad_words= list(
 	if(!.)
 		return FALSE
 
-	if(status_flags & GODMODE)
-		return FALSE
-
 	if(!species.flags[IS_SYNTHETIC])
 		var/total_phoronloss = 0
 		for(var/obj/item/I in src)
@@ -680,16 +676,18 @@ var/global/list/tourette_bad_words= list(
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			mob_metabolism_mod.RemoveMods("Fatness")
 			update_body()
+			update_underwear()
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= OVEREATDURATION_FAT) && isturf(loc))
-			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
+			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !HAS_TRAIT(src, TRAIT_NEVER_FAT))
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
 				update_body()
+				update_underwear()
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
@@ -718,7 +716,7 @@ var/global/list/tourette_bad_words= list(
 	if(species.flags[REQUIRE_LIGHT])
 		if(nutrition < 200)
 			take_overall_damage(2,0)
-			traumatic_shock++
+			adjustHalLoss(1)
 
 	updatehealth() // idk why we call it here
 
@@ -761,7 +759,7 @@ var/global/list/tourette_bad_words= list(
 
 			if(hallucination <= 2)
 				hallucination = 0
-				setHalLoss(0)
+				resetHalLoss()
 			else
 				hallucination -= 2
 
@@ -780,7 +778,7 @@ var/global/list/tourette_bad_words= list(
 					else
 						Stun(5)
 						Weaken(10)
-				setHalLoss(99)
+				adjustHalLoss(-1)
 
 		if(paralysis)
 			blinded = 1
@@ -924,7 +922,7 @@ var/global/list/tourette_bad_words= list(
 			healths.icon_state = "health7"
 			return
 
-	switch(100 - ((species && species.flags[NO_PAIN] && !species.flags[IS_SYNTHETIC]) ? 0 : traumatic_shock))
+	switch(100 - ((HAS_TRAIT(src, TRAIT_NO_PAIN) && !species.flags[IS_SYNTHETIC]) ? 0 : traumatic_shock))
 		if(100 to INFINITY)
 			healths.icon_state = "health0"
 		if(80 to 100)
@@ -1063,6 +1061,8 @@ var/global/list/tourette_bad_words= list(
 		return FALSE
 
 	see_in_dark = species.darksight
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_ZOMBIE))
+		see_in_dark = max(see_in_dark, 8)
 
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G))
@@ -1078,7 +1078,7 @@ var/global/list/tourette_bad_words= list(
 	else
 		sightglassesmod = null
 
-	if(species.nighteyes)
+	if(HAS_TRAIT(src, TRAIT_NIGHT_EYES))
 		var/light_amount = 0
 		var/turf/T = get_turf(src)
 		light_amount = round(T.get_lumcount()*10)
@@ -1117,7 +1117,8 @@ var/global/list/tourette_bad_words= list(
 			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(HAS_TRAIT(src, TRAIT_VIRUS_IMMUNE))
+		return
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]
@@ -1160,11 +1161,12 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_shock()
 	..()
-	if(status_flags & GODMODE)	return FALSE	//godmode
-	if(species && species.flags[NO_PAIN])
+
+	if(!traumatic_shock)
 		return
-	if(analgesic && !reagents.has_reagent("prismaline"))
-		return // analgesic avoids all traumatic shock temporarily
+
+	// do not add any toggleable debuffs below, if mob got his traumatic_shock disabled (TRAIT_NO_PAIN for example)
+	// we will newer reach this code again
 
 	var/message
 
@@ -1174,7 +1176,7 @@ var/global/list/tourette_bad_words= list(
 	if(traumatic_shock >= TRAUMATIC_SHOCK_SERIOUS)
 		message = "<span class='boldwarning'><B>[pick("Ughhh... When will it end?", "You're wincing in pain!", "You really need some painkillers!")]</B></span>"
 		blurEyes(2)
-		stuttering = max(stuttering, 5)
+		Stuttering(5)
 
 	if(traumatic_shock >= TRAUMATIC_SHOCK_INTENSE)
 		message = "<span class='danger'>[pick("Stop this pain!", "This pain is unbearable!", "Your whole body is going numb!")]</span>"
@@ -1220,7 +1222,7 @@ var/global/list/tourette_bad_words= list(
 	if(life_tick % 5)
 		return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
 
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return PULSE_NONE //No blood, no pulse.
 
 	if(HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))

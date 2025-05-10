@@ -335,7 +335,7 @@
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
 			H.lip_color = colour
-			H.update_body()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 	else if(istype(target, /obj/machinery/nuclearbomb) && uses - 5 >= 0)
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")

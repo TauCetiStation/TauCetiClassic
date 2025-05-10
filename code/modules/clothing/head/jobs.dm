@@ -40,7 +40,8 @@
 	name = "chaplain's hood"
 	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|EYES
 
@@ -56,7 +57,7 @@
 	name = "nun hood"
 	desc = "A religious female hood commonly worn by monastery sisters."
 	icon_state = "nun_hood"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	siemens_coefficient = 0.9
 
 //HoS
@@ -87,7 +88,7 @@
 	name = "surgical cap"
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs."
 	icon_state = "surgcap_blue"
-	flags = BLOCKHEADHAIR
+	render_flags = parent_type::render_flags | HIDE_TOP_HAIR
 
 /obj/item/clothing/head/surgery/purple
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is deep purple."

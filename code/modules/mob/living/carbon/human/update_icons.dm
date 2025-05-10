@@ -1,8 +1,10 @@
-#define BODY_ICON(icon, fat_icon, icon_state) (!fat) ? mutable_appearance(icon, icon_state, -BODY_LAYER) : mutable_appearance(fat_icon, icon_state, -BODY_LAYER)
 	///////////////////////
 	//UPDATE_ICONS SYSTEM//
 	///////////////////////
 /*
+NOTE: no one updates these hidden guides, better to check code for more up to date information
+todo: remove this and add commentaries for procs
+
 Calling this  a system is perhaps a bit trumped up. It is essentially update_clothing dismantled into its
 core parts. The key difference is that when we generate overlays we do not generate either lying or standing
 versions. Instead, we generate both and store them in two fixed-length lists, both using the same list-index
@@ -161,71 +163,113 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(obj/item/organ/external/BP)
+	if(!BP.limb_layer) // some limbs don't have damage overlays
+		return
 	remove_damage_overlay(BP.limb_layer)
+	// todo: make set of pre-backed fulltile perlin noise masks and use SUBTRACT blending
+	// currently it's hard to keep masks up to date with all respites and new body parts
+	if(BP.damage_state == "00") // don't add empty overlays for damage
+		return
 	if(species.damage_mask && (BP in bodyparts))
-		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
+		var/image/standing = image("icon" = 'icons/mob/human/masks/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
 		standing.color = BP.damage_state_color()
 		standing = update_height(standing)
 		overlays_damage[BP.limb_layer] = standing
 		apply_damage_overlay(BP.limb_layer)
 
 
+
+/mob/living/carbon/human/proc/update_render_flags(render_flags)
+	if(render_flags & HIDE_TAIL)
+		update_body(BP_TAIL)
+	if(render_flags & HIDE_WINGS)
+		update_body(BP_WINGS)
+	if(render_flags & (HIDE_TOP_HAIR | HIDE_FACIAL_HAIR))
+		update_body(BP_HEAD)
+	//if(render_flags & HIDE_UNIFORM) // update_inv_w_uniform should be called by equip anyway
+	//	update_inv_w_uniform()
+
 //BASE MOB SPRITE
-/mob/living/carbon/human/proc/update_body()
+/mob/living/carbon/human/proc/update_body(bodypart_index, update_preferences = FALSE)
 	remove_standing_overlay(BODY_LAYER)
+
+	if(bodypart_index)
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_index]
+		if(BP && !BP.is_stump)
+			bodypart_overlays_standing[bodypart_index] = BP.generate_appearances(update_preferences)
+		else
+			bodypart_overlays_standing -= bodypart_index
+	else // regenerate all sprites
+		bodypart_overlays_standing = list()
+
+		for(var/obj/item/organ/external/BP in bodyparts)
+			if(BP.is_stump)
+				continue
+			bodypart_overlays_standing[BP.body_zone] = BP.generate_appearances(update_preferences)
+
+	// group overlays by layer so we can save on filters count
+
+	var/list/mutable_appearance/grouped_by_layer = list() // alist, some day
+	var/list/standing = list()
+
+	for(var/index in bodypart_overlays_standing)
+		for(var/mutable_appearance/overlay in bodypart_overlays_standing[index])
+			if(!grouped_by_layer["[overlay.layer]"])
+				grouped_by_layer["[overlay.layer]"] = list()
+			grouped_by_layer["[overlay.layer]"] += overlay
+
+	for(var/layer in grouped_by_layer)
+		var/mutable_appearance/MA = new()
+		MA.appearance_flags = KEEP_TOGETHER // or height filters will ignore our overlays
+		MA.layer = text2num(layer)
+		MA.overlays = grouped_by_layer[layer]
+
+		// update height offsets and filters
+		switch(MA.layer)
+			if(-HAIR_LAYER) // shift hair instead of filter
+				MA = human_update_offset(MA, TRUE)
+			//if(BODY_INFRONT_LAYER, BODY_BEHIND_LAYER) // todo: need to choice between filter and offset
+			//	MA = human_update_offset(MA)
+			else
+				MA = update_height(MA)
+
+		standing += MA
+
+	// BODY_LAYER just used here as a cache index, keep in mind that it can contain overlays with any other layer
+	overlays_standing[BODY_LAYER] = standing
+	apply_standing_overlay(BODY_LAYER) 
+
+#define BODY_ICON(icon, fat_icon, icon_state) (!fat) ? mutable_appearance(icon, icon_state, -UNDERWEAR_LAYER) : mutable_appearance(fat_icon, icon_state, -UNDERWEAR_LAYER)
+
+/mob/living/carbon/human/proc/update_underwear()
+	remove_standing_overlay(UNDERWEAR_LAYER)
 
 	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
 	var/g = (gender == FEMALE ? "f" : "m")
 
 	var/list/standing = list()
-	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_stump)
-			continue
-		standing += BP.get_icon(BODY_LAYER)
-	for(var/image/I in standing)
-		I = update_height(I)
-		I.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
-		I.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 
 	if(species.name == VOX)
-		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
+		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -UNDERWEAR_LAYER)
 		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
-		tatoo = update_height(tatoo, TRUE)
+		tatoo = update_height(tatoo)
 		tatoo.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		tatoo.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 		standing += tatoo
-
-	if(species.name == UNATHI && !(HUSK in mutations))
-		var/obj/item/organ/external/Chest = bodyparts_by_name[BP_CHEST]
-		var/mutable_appearance/belly = mutable_appearance('icons/mob/human.dmi', "[gender]_belly[fat ? "_fat" : ""][Chest.pumped > Chest.pumped_threshold && !fat ? "_pumped" : ""]", -BODY_LAYER)
-		belly.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
-		belly = update_height(belly, TRUE)
-		belly.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
-		belly.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
-		standing += belly
-
-		var/obj/item/organ/external/Head = bodyparts_by_name[BP_HEAD]
-		if(Head && !Head.is_stump)
-			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -BODY_LAYER)
-			jaw.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
-			jaw = update_height(jaw, TRUE)
-			jaw.pixel_x += species.offset_features[OFFSET_FACE][1]
-			jaw.pixel_y += species.offset_features[OFFSET_FACE][2]
-			standing += jaw
 
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_underwear.dmi', 'icons/mob/human_underwear_fat.dmi', "underwear[underwear]_[g]_s")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
-		MA = update_height(MA, TRUE)
+		MA = update_height(MA)
 		standing += MA
 
 	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_undershirt.dmi', 'icons/mob/human_undershirt_fat.dmi', "undershirt[undershirt]_s_[g]")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
-		MA = update_height(MA, TRUE)
+		MA = update_height(MA)
 		standing += MA
 
 	if(socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
@@ -235,73 +279,13 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/mutable_appearance/MA = BODY_ICON('icons/mob/human_socks.dmi', 'icons/mob/human_socks_fat.dmi', "socks[socks]_s_[g]")
 			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]
 			MA.pixel_y += species.offset_features[OFFSET_SHOES][2]
-			MA = update_height(MA, TRUE)
+			MA = update_height(MA)
 			standing += MA
 
-	update_tail_showing()
-	update_wing_layer()
-	overlays_standing[BODY_LAYER] = standing
-	apply_standing_overlay(BODY_LAYER)
+	overlays_standing[UNDERWEAR_LAYER] = standing
+	apply_standing_overlay(UNDERWEAR_LAYER)
 
-
-
-//HAIR OVERLAY
-/mob/living/carbon/human/proc/update_hair()
-	//Reset our hair
-	remove_standing_overlay(HAIR_LAYER)
-
-	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || (BP.is_stump))
-		return
-
-	//masks and helmets can obscure our hair.
-	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)) || (w_uniform && (w_uniform.flags & BLOCKHAIR)))
-		return
-
-	var/list/standing = list()
-
-	if(f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
-		if(facial_hair_style)
-			var/mutable_appearance/facial_s = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
-			if(facial_hair_style.do_colouration)
-				if(!facial_painted)
-					facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
-				else
-					facial_s.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
-					var/obj/item/organ/external/head = bodyparts_by_name[BP_HEAD]
-					head.recolor()
-			facial_s = human_update_offset(facial_s, TRUE)
-			facial_s.pixel_x += species.offset_features[OFFSET_FACE][1]
-			facial_s.pixel_y += species.offset_features[OFFSET_FACE][2]
-			standing += facial_s
-
-	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)) && !(wear_mask && (wear_mask.flags & BLOCKHEADHAIR)) && !(wear_suit && (wear_suit.flags & BLOCKHEADHAIR)) && !(w_uniform && (w_uniform.flags & BLOCKHEADHAIR)))
-		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
-		if(hair_style)
-			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
-			if(hair_style.do_colouration)
-				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
-				grad_s.Blend(hair_s, ICON_AND)
-				if(!hair_painted)
-					hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_AND)
-					grad_s.Blend(rgb(r_grad, g_grad, b_grad), ICON_AND)
-				else
-					hair_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
-					grad_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
-					var/obj/item/organ/external/head = bodyparts_by_name[BP_HEAD]
-					head.recolor()
-				hair_s.Blend(grad_s, ICON_OVERLAY)
-			var/mutable_appearance/MA = mutable_appearance(hair_s, "[hair_style.icon_state]_s", -HAIR_LAYER)
-			MA = human_update_offset(MA, TRUE)
-			MA.pixel_x += species.offset_features[OFFSET_HAIR][1]
-			MA.pixel_y += species.offset_features[OFFSET_HAIR][2]
-			standing += MA
-	if(standing.len)
-		overlays_standing[HAIR_LAYER] = standing
-
-	apply_standing_overlay(HAIR_LAYER)
-
+#undef BODY_ICON
 
 /mob/living/carbon/human/update_mutations()
 	remove_standing_overlay(MUTATIONS_LAYER)
@@ -317,21 +301,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/underlay = image("icon"='icons/effects/genetics.dmi', "icon_state"=gene.OnDrawUnderlays(src,g,fat), "layer"=-MUTATIONS_LAYER)
 			if(underlay)
 				standing += underlay
-	for(var/mut in mutations)
-		switch(mut)
-			/*
-			if(HULK)
-				if(fat)
-					standing.underlays	+= "hulk_[fat]_s"
-				else
-					standing.underlays	+= "hulk_[g]_s"
-			if(COLD_RESISTANCE)
-				standing.underlays	+= "fire[fat]_s"
-			if(TK)
-				standing.underlays	+= "telekinesishead[fat]_s"
-			*/
-			if(LASEREYES)
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		for(var/image/I in standing)
 			I = update_height(I)
@@ -370,14 +339,15 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /* --------------------------------------- */
 //For legacy support.
-/mob/living/carbon/human/regenerate_icons()
+// direct calls for update_* is more preferable, but currently there is no other methods to update height filters everywhere
+// update_body_preferences is for when you want bodyparts to pull new mob settings like hair or skin color (but it can break implanted bodyparts that keep old owner preferences)
+/mob/living/carbon/human/regenerate_icons(update_body_preferences = FALSE)
 	..()
 	if(notransform)
 		return
-	update_hair()
 	update_mutations()
-	apply_recolor()
-	update_body()
+	update_body(update_preferences = update_body_preferences)
+	update_underwear()
 	update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
@@ -422,7 +392,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += w_uniform				//Either way, add the item to the HUD
 
 		var/obj/item/clothing/under/U = w_uniform
-		if (wear_suit && (wear_suit.flags & BLOCKUNIFORM)) // Skip uniform overlay on suit full cover
+		if (wear_suit?.render_flags & HIDE_UNIFORM) // Skip uniform overlay on suit full cover
 			return
 
 		if(HAS_TRAIT(src, TRAIT_FAT))
@@ -493,7 +463,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
-			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
 			bloodsies.color = hand_dirt_datum.color
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			bloodsies.pixel_x += species.offset_features[OFFSET_GLOVES][1]
@@ -692,7 +662,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		update_inv_shoes()
 
 	update_inv_w_uniform()
-	update_tail_showing()
 	update_inv_neck()
 
 	apply_standing_overlay(SUIT_LAYER)
@@ -831,56 +800,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_standing_overlay(L_HAND_LAYER)
 
-/mob/living/carbon/human/proc/update_wing_layer()
-	remove_standing_overlay(WING_UNDERLIMBS_LAYER)
-	remove_standing_overlay(WING_LAYER)
-	var/datum/sprite_accessory/wing/body_accessory = global.body_wing_accessory_by_name[wing_accessory_name]
-	if(!istype(body_accessory))
-		return
-
-	var/mutable_appearance/wings = mutable_appearance(body_accessory.icon, body_accessory.icon_state, layer = -WING_LAYER)
-	overlays_standing[WING_LAYER] = wings
-
-	var/mutable_appearance/under_wing = mutable_appearance(body_accessory.icon, "[body_accessory.icon_state]_BEHIND", layer = -WING_UNDERLIMBS_LAYER)
-	overlays_standing[WING_UNDERLIMBS_LAYER] = under_wing
-
-	apply_standing_overlay(WING_UNDERLIMBS_LAYER)
-	apply_standing_overlay(WING_LAYER)
-
-/mob/living/carbon/human/proc/update_tail_showing()
-	remove_standing_overlay(TAIL_LAYER)
-
-	if((random_tail_holder || species.tail) && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
-		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/tail_state = species.tail
-			if(random_tail_holder)
-				tail_state = random_tail_holder
-			var/tail_gender_appendix = null
-			if(species.gender_tail_icons && gender == FEMALE)
-				tail_gender_appendix = "_fem"
-
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
-
-			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
-			if(BP.status & ORGAN_DEAD)
-				tail_s.color = NECROSIS_COLOR_MOD
-			else if(HULK in mutations)
-				tail_s.color = HULK_SKIN_COLOR
-			else
-				if(species.flags[HAS_SKIN_COLOR])
-					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
-				else if(species.flags[HAS_SKIN_TONE])
-					tail_s.color = RGB_CONTRAST(s_tone, s_tone, s_tone)
-
-			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
-			standing = human_update_offset(standing, FALSE)
-			standing.pixel_x += species.offset_features[OFFSET_BACK][1]
-			standing.pixel_y += species.offset_features[OFFSET_BACK][2]
-			overlays_standing[TAIL_LAYER] = standing
-
-	apply_standing_overlay(TAIL_LAYER)
-
-
 /mob/living/carbon/human/proc/update_surgery()
 	remove_standing_overlay(SURGERY_LAYER)
 
@@ -926,11 +845,25 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/human_update_offset(image/I, head = TRUE)
 	var/list/L
 	if(head)//If your item is upper the torso - we want to shift it more.
-		L = list(HUMANHEIGHT_SHORTEST = -2, HUMANHEIGHT_SHORT = -1, HUMANHEIGHT_MEDIUM = 0, HUMANHEIGHT_TALL = 1, HUMANHEIGHT_TALLEST = 2, "gnome" = -5)
+		L = list(
+			HUMANHEIGHT_SHORTEST = -2, 
+			HUMANHEIGHT_SHORT = -1, 
+			HUMANHEIGHT_MEDIUM = 0, 
+			HUMANHEIGHT_TALL = 1, 
+			HUMANHEIGHT_TALLEST = 2, 
+			"gnome" = -5
+		)
 	else
-		L = list(HUMANHEIGHT_SHORTEST = -1, HUMANHEIGHT_SHORT = -1, HUMANHEIGHT_MEDIUM = 0, HUMANHEIGHT_TALL = 1, HUMANHEIGHT_TALLEST = 1, "gnome" = -3)
+		L = list(
+			HUMANHEIGHT_SHORTEST = -1, 
+			HUMANHEIGHT_SHORT = -1, 
+			HUMANHEIGHT_MEDIUM = 0, 
+			HUMANHEIGHT_TALL = 1, 
+			HUMANHEIGHT_TALLEST = 1, 
+			"gnome" = -3
+		)
 
-	I.pixel_y = L[height]
+	I.pixel_y += L[height]
 
 	if(SMALLSIZE in mutations) //Gnome-Guy
 		I.pixel_y += L["gnome"]
@@ -959,5 +892,3 @@ Please contact me on #coderbus IRC. ~Carn x
 		I.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
 		I.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
 	return I
-
-#undef BODY_ICON

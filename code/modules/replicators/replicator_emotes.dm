@@ -10,7 +10,7 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE)
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE)
 	)
 
 	// to-do: (replicators) add a sound here. the sound should be pleasant and musical

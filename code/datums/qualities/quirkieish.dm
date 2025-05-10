@@ -163,7 +163,7 @@
 	// for some reason name is not set at this stage and if I don't do this the emote message will be nameless
 	H.name = H.real_name
 	H.emote("scream")
-	H.update_body()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), PROC_REF(battlecry))
 
@@ -315,11 +315,10 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
-	H.set_species(GOLEM)
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
+	H.set_species(GOLEM)
 	H.flavor_text = ""
-	H.regenerate_icons()
 
 	// In case the golem is evil don't make him a loyal dog of NT.
 	if(isanyantag(H))
@@ -339,10 +338,7 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
-	H.set_species(H.species.slime_species)
-	H.f_style = "Shaved"
-	H.h_style = "Bald"
-	H.regenerate_icons()
+	ADD_TRAIT(H, ELEMENT_TRAIT_SLIME, INNATE_TRAIT)
 
 /datum/quality/quirkieish/very_special
 	name = "Very Special"

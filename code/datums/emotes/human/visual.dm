@@ -8,7 +8,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 
@@ -24,7 +24,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
+		EMOTE_STATE(is_intentional_or_not_trait, TRAIT_NO_BREATHE),
 	)
 
 
@@ -53,7 +53,7 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 
@@ -137,7 +137,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 
@@ -152,7 +152,7 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 
@@ -166,7 +166,7 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 /datum/emote/human/shake/get_emote_message_3p(mob/living/carbon/human/user)

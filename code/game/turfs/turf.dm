@@ -560,22 +560,11 @@
 //returns 1 if made bloody, returns 0 otherwise
 /turf/add_blood(mob/living/carbon/human/M)
 	if (!..())
-		return 0
+		return FALSE
 
-	var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
+	new /obj/effect/decal/cleanable/blood(src, M)
 
-	//Species-specific blood.
-	if(M.species)
-		this.basedatum = new(M.species.blood_datum)
-	else
-		this.basedatum = new/datum/dirt_cover/red_blood()
-	this.update_icon()
-
-	this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	this.virus2 = virus_copylist(M.virus2)
-
-	return 1 //we bloodied the floor
-
+	return TRUE //we bloodied the floor
 
 // Only adds blood on the floor -- Skie
 /turf/proc/add_blood_floor(mob/living/carbon/M)
@@ -593,11 +582,10 @@
 		add_blood(M)
 
 	else if(isxeno(M))
-		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
-		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
+		new /obj/effect/decal/cleanable/blood/xeno(src, M)
 
 	else if(isrobot(M))
-		new /obj/effect/decal/cleanable/blood/oil(src)
+		new /obj/effect/decal/cleanable/blood/oil(src, M)
 
 /turf/proc/add_vomit_floor(mob/living/carbon/C, vomit_type = DEFAULT_VOMIT)
 	if(flags & NOBLOODY)
