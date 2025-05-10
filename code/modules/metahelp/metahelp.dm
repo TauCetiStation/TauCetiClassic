@@ -39,6 +39,7 @@ var/global/metahelps
 						display: none;
 					}
 				</style>
+				[get_browse_zoom_style(usr)]
 			</head>
 			<body>
 				<script type="text/javascript">
@@ -53,7 +54,7 @@ var/global/metahelps
 		</html>
 		"}
 
-	usr << browse("[popup_content]", "window=metahelp_[help.id];size=700x500")
+	usr << browse("[popup_content]", "window=metahelp_[help.id];[get_browse_size_parameter(usr, 700, 500)]")
 
 /datum/metahelp
 	var/id = "your_unique_id"

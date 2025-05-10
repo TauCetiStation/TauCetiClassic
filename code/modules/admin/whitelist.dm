@@ -14,6 +14,7 @@
 <title>Whitelist Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
@@ -33,7 +34,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist;size=600x500")
+	usr << browse(output,"window=whitelist;[get_browse_size_parameter(usr, 600, 500)]")
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
@@ -50,6 +51,7 @@
 <title>Whitelist Panel for [user_ckey]</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
@@ -83,7 +85,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist_user;size=750x500")
+	usr << browse(output,"window=whitelist_user;[get_browse_size_parameter(usr, 750, 500)]")
 
 /datum/admins/proc/whitelist_add_user()
 	if(!check_rights(R_WHITELIST))
