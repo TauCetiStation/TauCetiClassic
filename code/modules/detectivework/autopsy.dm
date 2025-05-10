@@ -183,7 +183,7 @@
 	usr.put_in_hands(P)
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
-	if(!istype(M) || !can_operate(M))
+	if(!istype(M) || !can_operate(M, user))
 		return
 
 	if(do_after(user,15,target = M))
