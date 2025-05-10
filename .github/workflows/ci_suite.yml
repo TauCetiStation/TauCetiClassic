@@ -21,7 +21,8 @@ jobs:
         with:
           path: ~/dreamchecker
           key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
-      - name: Try Install Dreamchecker
+      - name: Install Dreamchecker
+        if: steps.cache-dmm.outputs.cache-hit != 'true'
         run:  bash scripts/install-spaceman-dmm.sh dreamchecker
       - name: Run Dreamchecker
         run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
@@ -71,12 +72,6 @@ jobs:
       - name: Install BYOND
         if: steps.cache-byond.outputs.cache-hit != 'true'
         run:  bash scripts/install-byond.sh
-      - name: Save Cache
-        if: steps.cache-byond.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: Unit Tests
         env:
           TEST: UNIT
@@ -99,12 +94,6 @@ jobs:
       - name: Install BYOND
         if: steps.cache-byond.outputs.cache-hit != 'true'
         run:  bash scripts/install-byond.sh
-      - name: Save Cache
-        if: steps.cache-byond.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: "Compile Everything"
         env:
           TEST: COMPILE
