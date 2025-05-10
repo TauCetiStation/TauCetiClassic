@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ -f "~/$1" ];
+if [ -f "$HOME/$1" ];
 then
   echo "Using cached $1."
 else

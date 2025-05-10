@@ -21,7 +21,7 @@ jobs:
         with:
           path: ~/dreamchecker
           key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
-      - name: Install Dreamchecker
+      - name: Try Install Dreamchecker
         run:  bash scripts/install-spaceman-dmm.sh dreamchecker
       - name: Run Dreamchecker
         run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
