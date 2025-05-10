@@ -10,6 +10,8 @@ else
   echo "Installing DreamMaker to $PWD"
   curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip -A "TauCetiStation/1.0 Continuous Integration"
   unzip -o byond.zip
+  ls
+  ls -lrt -d -1 "$PWD"/{*,.*}
   cd byond
   make here
 fi
