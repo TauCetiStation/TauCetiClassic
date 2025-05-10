@@ -16,15 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Restore Cache
+        id: cache-dmm
         uses: actions/cache@v4
         with:
           path: ~/dreamchecker
           key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
       - name: Install Dreamchecker
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache-dmm.outputs.cache-hit != 'true'
         run:  bash scripts/install-spaceman-dmm.sh dreamchecker
       - name: Save Cache
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache-dmm.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: ~/dreamchecker
