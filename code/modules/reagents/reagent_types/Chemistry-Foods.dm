@@ -119,7 +119,7 @@
 	taste_message = "happiness"
 	color = "#9e1023" // rgb: 158, 16, 35
 
-/datum/reagent/consumable/liquidhappiness/on_general_digest(mob/living/M)
+/datum/reagent/consumable/strangejam/on_general_digest(mob/living/M)
 	. = ..()
 	if(!.)
 		return
