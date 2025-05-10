@@ -547,7 +547,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/space_villa)
 "tR" = (
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor/beach/sand,
 /area/space_structures/space_villa)
 "tX" = (

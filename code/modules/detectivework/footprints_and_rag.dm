@@ -39,7 +39,7 @@
 	if (!proximity || user.is_busy())
 		return
 
-	var/is_glass = istype(target, /obj/item/weapon/reagent_containers/glass/drinkingglass)
+	var/is_glass = istype(target, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass)
 
 	if (!is_glass && (target in user.client.screen))
 		to_chat(user, "<span class='notice'>You need to take that [target] off before cleaning it.</span>")

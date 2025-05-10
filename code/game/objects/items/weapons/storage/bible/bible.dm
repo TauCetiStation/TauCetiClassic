@@ -29,7 +29,7 @@
 /obj/item/weapon/storage/bible/booze/atom_init()
 	. = ..()
 	for(var/i in 1 to 2)
-		new /obj/item/weapon/reagent_containers/glass/drink_bottle/beer(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/spacecash(src)
 

@@ -1766,7 +1766,7 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -10792,11 +10792,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/nullrod{
 	pixel_x = -8
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = 9
 	},
 /turf/simulated/floor{
@@ -17199,13 +17199,13 @@
 /area/station/security/prison)
 "cHE" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = 10
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = 1
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -8
 	},
 /obj/structure/spider/stickyweb,
@@ -25553,7 +25553,7 @@
 	},
 /obj/random/misc/all,
 /obj/random/misc/all,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/champagne,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -28183,8 +28183,8 @@
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/medbay)
 "eQZ" = (
-/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /obj/structure/sign/poster/contraband/starkist{
 	pixel_y = 32
 	},
@@ -28697,7 +28697,7 @@
 	pixel_y = 32
 	},
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
 	pixel_y = 4
 	},
 /obj/machinery/light/smart{
@@ -30552,7 +30552,7 @@
 	},
 /area/station/aisat/antechamber)
 "foY" = (
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -13;
 	pixel_y = 18
 	},
@@ -35320,7 +35320,7 @@
 	name = "Advertisement";
 	pixel_y = 32
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/tomatojuice,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
@@ -37643,7 +37643,7 @@
 /area/station/rnd/mixing)
 "gFn" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "gFs" = (
@@ -46555,7 +46555,7 @@
 /area/station/maintenance/brig)
 "iqq" = (
 /obj/effect/decal/remains/human,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
 	pixel_x = 6
 	},
 /obj/item/weapon/storage/bag/plasticbag{
@@ -47458,7 +47458,7 @@
 /obj/structure/table/woodentable/poker,
 /obj/item/toy/cards,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 5;
 	pixel_y = 7
 	},
@@ -51801,7 +51801,7 @@
 "jtf" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/device/tagger/shop,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/orange{
@@ -52726,8 +52726,8 @@
 /area/station/engineering/engine)
 "jAm" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "jAr" = (
@@ -60649,7 +60649,7 @@
 "lem" = (
 /obj/structure/table,
 /obj/item/trash/chips,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/clothing/head/hardhat/orange,
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
@@ -62056,7 +62056,7 @@
 	pixel_y = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "lub" = (
@@ -68498,15 +68498,15 @@
 "mJh" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/rag,
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -1;
 	pixel_y = 12
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -9;
 	pixel_y = 12
 	},
@@ -68516,13 +68516,13 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -6
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73791,7 +73791,7 @@
 /obj/item/weapon/dice/d20{
 	layer = 5
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "nLl" = (
@@ -77572,12 +77572,12 @@
 	pixel_y = 15
 	},
 /obj/structure/table/woodentable/poker,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -8;
 	pixel_y = 7
 	},
@@ -81449,8 +81449,8 @@
 /area/station/maintenance/brigright)
 "plM" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/rum,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
@@ -83446,7 +83446,7 @@
 /area/station/medical/genetics)
 "pIX" = (
 /obj/structure/table/woodentable/poker,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "pJb" = (
@@ -84633,11 +84633,11 @@
 	name = "bar curtain";
 	pixel_x = -32
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "pUw" = (
@@ -85649,7 +85649,7 @@
 	pixel_y = 30
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor/wood{
 	icon_state = "wood6"
@@ -85979,7 +85979,7 @@
 	},
 /area/station/security/checkpoint)
 "qhQ" = (
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/effect/decal/cleanable/vomit{
 	icon_state = "vomit_4"
 	},
@@ -87731,7 +87731,7 @@
 /turf/simulated/wall,
 /area/station/civilian/kitchen)
 "qzd" = (
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 5;
 	pixel_y = 7
 	},
@@ -88680,7 +88680,7 @@
 /area/station/construction/assembly_line)
 "qJs" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redyellow"
@@ -90260,13 +90260,13 @@
 /area/station/security/lobby)
 "qYy" = (
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = 5
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -4
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -13
 	},
 /obj/structure/spider/stickyweb,
@@ -92865,11 +92865,11 @@
 	},
 /area/station/maintenance/dormitory)
 "ryL" = (
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -9;
 	pixel_y = 9
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 5;
 	pixel_y = 7
 	},
@@ -99251,7 +99251,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
@@ -105278,7 +105278,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -107479,14 +107479,14 @@
 /area/station/rnd/hallway/florahall)
 "unX" = (
 /obj/structure/table/woodentable/fancy/black,
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -7;
 	pixel_y = 12
 	},
 /obj/item/trash/candle/red{
 	pixel_y = 11
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 8;
 	pixel_y = 4
 	},
@@ -107693,7 +107693,7 @@
 /area/station/tcommsat/chamber)
 "upS" = (
 /obj/structure/closet/cabinet,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/pwine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine,
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance/four,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -114853,7 +114853,7 @@
 /area/station/rnd/xenobiology)
 "vNk" = (
 /obj/item/weapon/reagent_containers/food/drinks/sillycup,
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 5
 	},
 /obj/structure/sign/poster/official/high_class_martini{
@@ -119968,17 +119968,17 @@
 /area/station/rnd/mixing)
 "wNd" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "wNe" = (
 /obj/structure/table/woodentable/poker,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
-/obj/item/weapon/reagent_containers/glass/drinkingglass{
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -9;
 	pixel_y = 12
 	},
@@ -126530,7 +126530,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable/poker,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)

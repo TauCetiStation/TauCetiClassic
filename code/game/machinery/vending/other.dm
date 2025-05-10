@@ -199,7 +199,7 @@
 		/obj/item/weapon/storage/visuals/tray = 8,
 		/obj/item/weapon/kitchen/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
-		/obj/item/weapon/reagent_containers/glass/drinkingglass = 8,
+		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
 		/obj/item/clothing/suit/chef_classic = 2,
 		/obj/item/clothing/suit/chef = 1,
 		/obj/item/weapon/kitchen/mould/bear = 1,
@@ -395,7 +395,7 @@
 	product_slogans = "HolyVend: Select your Religion today"
 	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"
 	products = list(
-		/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater = 5,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 5,
 		/obj/item/weapon/storage/fancy/candle_box = 20,
 		/obj/item/weapon/storage/fancy/candle_box/red = 25,
 		/obj/item/clothing/accessory/metal_cross = 10,
@@ -408,7 +408,7 @@
 		/obj/item/weapon/nullrod = 1,
 	)
 	prices = list(
-		/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater = 40,
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 40,
 		/obj/item/weapon/storage/fancy/candle_box = 20,
 		/obj/item/weapon/storage/fancy/candle_box/red = 20,
 		/obj/item/weapon/nullrod = 400,

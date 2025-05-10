@@ -157,7 +157,7 @@
 /area/space)
 "as" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/camera{
 	c_tag = "Crew Area";
 	dir = 1;
@@ -2171,7 +2171,7 @@
 /area/asteroid/mine/west_outpost)
 "eQ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor/wood{
 	icon_state = "wood17"
 	},
@@ -5719,7 +5719,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
 	icon_state = "blueyellowfull"
 	},

@@ -170,7 +170,7 @@ var/global/gourd_name = null
 
 	COOLDOWN_DECLARE(last_maraca)
 
-	var/bottle_type = /obj/item/weapon/reagent_containers/glass/drink_bottle/gourd
+	var/bottle_type = /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd
 
 	var/gourd_event = /datum/mood_event/gourd
 	var/unathi_gourd_event = /datum/mood_event/unathi_gourd
@@ -194,7 +194,7 @@ var/global/gourd_name = null
 
 	restore_reagent = "gourdbeer"
 
-	bottle_type = /obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/magic
+	bottle_type = /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic
 
 	gourd_event = /datum/mood_event/magic_gourd
 	unathi_gourd_event = /datum/mood_event/unathi_magic_gourd
@@ -222,7 +222,7 @@ var/global/gourd_name = null
 			return ..()
 
 		user.drop_from_inventory(src)
-		var/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/G = new /obj/item/weapon/reagent_containers/glass/drink_bottle/gourd(T)
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/G = new /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd(T)
 		G.volume = reagents.maximum_volume * 3
 		G.reagents.maximum_volume = reagents.maximum_volume * 3
 
@@ -250,7 +250,7 @@ var/global/gourd_name = null
 
 #undef MARACA_COOLDOWN
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd
 	name = "bottle gourd bottle"
 	desc = "Бутылка из тыквяка. Бьёт дважды."
 	icon_state = "gourd_flask"
@@ -266,12 +266,12 @@ var/global/gourd_name = null
 
 	var/broken_type = /obj/item/weapon/broken_bottle/gourd
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/atom_init()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/atom_init()
 	. = ..()
 	name = "[get_gourd_name()] bottle"
-	verbs += /obj/item/weapon/reagent_containers/glass/drink_bottle/verb/spin_bottle
+	verbs += /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/magic
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic
 	icon_state = "gourd_magic_flask"
 	item_state = "gourd_magic_flask"
 
@@ -282,14 +282,14 @@ var/global/gourd_name = null
 	gourd_event = /datum/mood_event/magic_gourd
 	unathi_gourd_event = /datum/mood_event/unathi_magic_gourd
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/magic/atom_init()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic/atom_init()
 	. = ..()
 	name = "refreshing [get_gourd_name()] bottle"
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/can_smash()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/can_smash()
 	return TRUE
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/smash(mob/living/target, mob/living/user)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/smash(mob/living/target, mob/living/user)
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_from_inventory(src)
 
@@ -304,14 +304,14 @@ var/global/gourd_name = null
 
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/after_throw(datum/callback/callback)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/after_throw(datum/callback/callback)
 	..()
 	reagents.standard_splash(loc)
 	if(isturf(loc))
 		new /obj/effect/decal/cleanable/gourd(loc)
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/glass/drink_bottle/gourd/examine(mob/user)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/examine(mob/user)
 	. = ..()
 	if(user.get_species() == UNATHI)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", unathi_gourd_event)

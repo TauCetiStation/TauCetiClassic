@@ -466,7 +466,7 @@
 /area/station/hallway/primary/port)
 "aaI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/port)
 "aaJ" = (
@@ -3792,8 +3792,8 @@
 /area/station/rnd/xenobiology)
 "arH" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/cognac,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
 "arN" = (
@@ -11981,7 +11981,7 @@
 /area/station/medical/cmo)
 "cuL" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
 	pixel_y = 4
 	},
 /obj/machinery/alarm{
@@ -15426,7 +15426,7 @@
 /area/station/medical/sleeper)
 "dnW" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/nullrod{
 	pixel_x = -8
 	},
@@ -17343,11 +17343,11 @@
 /area/station/rnd/brainstorm_center)
 "dKz" = (
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
 	volume = 25
 	},
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/carpet/orange,
 /area/station/maintenance/medbay)
 "dKD" = (
@@ -25349,9 +25349,9 @@
 	})
 "fBk" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/ale,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/kahlua,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/ale,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
@@ -44510,7 +44510,7 @@
 /area/station/civilian/garden)
 "klZ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -53951,8 +53951,8 @@
 /area/station/maintenance/medbay)
 "mAC" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/champagne,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/rum,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
 "mAD" = (
@@ -57331,7 +57331,7 @@
 	desc = "No step back!";
 	name = "soviet marshal coat"
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /obj/structure/closet,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
@@ -76759,7 +76759,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
 "snZ" = (
@@ -79065,8 +79065,8 @@
 /area/space)
 "sQO" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/orangejuice,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice,
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
@@ -85403,7 +85403,7 @@
 /area/station/hallway/secondary/exit)
 "uuT" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/vermouth,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
@@ -85983,7 +85983,7 @@
 	dir = 8
 	},
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/holywater{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
 	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/black,
@@ -87633,8 +87633,8 @@
 	pixel_x = 15;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -94291,7 +94291,7 @@
 "wFi" = (
 /obj/structure/closet/cabinet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/pwine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /obj/item/weapon/reagent_containers/dropper,
 /obj/effect/spawner/lootdrop/maintenance/four,

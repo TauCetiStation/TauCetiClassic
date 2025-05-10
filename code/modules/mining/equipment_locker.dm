@@ -294,7 +294,7 @@
 	)
 	prize_list["Miscellaneous"] = list(
 		EQUIPMENT("Chili",							/obj/item/weapon/reagent_containers/food/snacks/hotchili,						150),
-		EQUIPMENT("Vodka",							/obj/item/weapon/reagent_containers/glass/drink_bottle/vodka,					200),
+		EQUIPMENT("Vodka",							/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,					200),
 		EQUIPMENT("Soap",							/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,				250),
 		EQUIPMENT("Alien toy",						/obj/item/clothing/mask/facehugger_toy,											300),
 		EQUIPMENT("Point card",						/obj/item/weapon/card/mining_point_card,										1000),

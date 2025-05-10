@@ -392,7 +392,7 @@
 /area/space_structures/ghostship)
 "bj" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "bk" = (
@@ -429,7 +429,7 @@
 "bq" = (
 /obj/structure/table/woodentable,
 /obj/structure/cellular_biomass/grass/meat,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "br" = (
@@ -439,13 +439,13 @@
 /area/space_structures/ghostship)
 "bs" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "bt" = (
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/goldschlager,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "bu" = (
@@ -496,7 +496,7 @@
 /area/space_structures/ghostship)
 "bC" = (
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/glass/drink_bottle/wine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /obj/structure/cellular_biomass/grass/meat,
 /obj/item/weapon/coin/gold,
 /turf/simulated/floor/wood,
@@ -508,7 +508,7 @@
 /area/space_structures/ghostship)
 "bE" = (
 /obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "bF" = (
@@ -899,7 +899,7 @@
 /area/space_structures/ghostship)
 "cH" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/glass/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/machinery/light/small{
 	dir = 1
 	},
