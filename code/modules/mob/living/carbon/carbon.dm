@@ -1,6 +1,5 @@
 /mob/living/carbon/atom_init()
 	. = ..()
-	sleep(100)
 	carbon_list += src
 
 /mob/living/carbon/Destroy()
