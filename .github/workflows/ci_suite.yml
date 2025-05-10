@@ -91,12 +91,12 @@ jobs:
         with:
           path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
           key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
-      - name: Debug: List installed BYOND contents123
+      - name: Debug List installed BYOND contents123
         run: ls -R $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR} || echo "Directory not found"
       - name: Install BYOND
         if: steps.cache-byond.outputs.cache-hit != 'true'
         run:  bash scripts/install-byond.sh
-      - name: Debug: List installed BYOND contents123321313
+      - name: Debug List installed BYOND contents123321313
         run: ls -R $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR} || echo "Directory not found"
       - name: "Compile Everything"
         env:
@@ -104,5 +104,5 @@ jobs:
         run: |
           source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
           bash test/run-test.sh
-      - name: Debug: List installed BYOND contents231321321312312321
+      - name: Debug List installed BYOND contents231321321312312321
         run: ls -R $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR} || echo "Directory not found"
