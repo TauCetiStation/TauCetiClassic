@@ -63,6 +63,8 @@ jobs:
             map_name: Stroecka Station
     steps:
       - uses: actions/checkout@v4
+      - name: Ensure BYOND cache path exists
+        run: mkdir -p $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
       - name: Restore Cache
         id: cache-byond
         uses: actions/cache@v4
@@ -85,6 +87,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - name: Ensure BYOND cache path exists
+        run: mkdir -p $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
       - name: Restore Cache
         id: cache-byond
         uses: actions/cache@v4
