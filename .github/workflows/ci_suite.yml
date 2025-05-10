@@ -78,7 +78,7 @@ jobs:
           MAP_META: ${{ matrix.map_meta }}
           MAP_NAME: ${{ matrix.map_name }}
         run: |
-          source ~/BYOND/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          source "$HOME/BYOND/byond/bin/byondsetup"
           bash test/run-test.sh
   compile_everything:
     name: Compile Everything
@@ -98,5 +98,5 @@ jobs:
         env:
           TEST: COMPILE
         run: |
-          source ~/BYOND/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          source "$HOME/BYOND/byond/bin/byondsetup"
           bash test/run-test.sh
