@@ -10,6 +10,7 @@ env:
   BYOND_MAJOR: 515
   BYOND_MINOR: 1637
   SPACEMAN_DMM_VERSION: suite-1.8
+  BYOND_DIR: ${{ env.HOME }}/BYOND-${{ env.BYOND_MAJOR }}.${{ env.BYOND_MINOR }}
 jobs:
   DreamChecker:
     runs-on: ubuntu-22.04
@@ -63,8 +64,6 @@ jobs:
             map_name: Stroecka Station
     steps:
       - uses: actions/checkout@v4
-      - name: Set BYOND_DIR env var
-        run: echo "BYOND_DIR=$HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}" >> $GITHUB_ENV
       - name: Restore Cache
         id: cache-byond
         uses: actions/cache@v4
@@ -87,8 +86,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Set BYOND_DIR env var
-        run: echo "BYOND_DIR=$HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}" >> $GITHUB_ENV
       - name: Restore Cache
         id: cache-byond
         uses: actions/cache@v4
