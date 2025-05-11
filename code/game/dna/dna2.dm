@@ -83,8 +83,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	for(var/i=1,i<=DNA_UI_LENGTH,i++)
 		switch(i)
 			if(DNA_UI_SKIN_TONE)
-				var/max = length(global.skin_tones)
-				SetUIValueRange(DNA_UI_SKIN_TONE,1,max,1) // Otherwise, it gets fucked
+				var/max = length(global.skin_tones_by_name)
+				SetUIValueRange(DNA_UI_SKIN_TONE,rand(1,max),max,1) // Otherwise, it gets fucked
 			else
 				UI[i]=rand(0,4095)
 	if(!defer)
@@ -126,14 +126,10 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	SetUIValueRange(DNA_UI_BELLY_G,   character.g_belly,   255,    1)
 	SetUIValueRange(DNA_UI_BELLY_B,   character.b_belly,   255,    1)
 
-	var/s_tone_index = global.skin_tones.Find(character.s_tone)
-	SetUIValueRange(DNA_UI_SKIN_TONE, s_tone_index, length(global.skin_tones),    1)
+	var/s_tone_index = global.skin_tones_by_name.Find(character.s_tone)
+	SetUIValueRange(DNA_UI_SKIN_TONE, s_tone_index, length(global.skin_tones_by_name),    1)
 
 	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
-
-	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       	1)
-	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,	1)
-	SetUIValueRange(DNA_UI_HEIGHT,    	height,heights_list.len,    		1)
 
 	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       	1)
 	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,	1)
