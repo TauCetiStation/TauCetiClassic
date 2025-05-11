@@ -6,7 +6,7 @@ import {
   LabeledControls,
   LabeledList,
   ProgressBar,
-  Section
+  Section,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -22,7 +22,7 @@ export const SpaceHeater = (props, context) => {
     targetTemp,
     minTemp,
     maxTemp,
-    currentTemp
+    currentTemp,
   } = data;
   return (
     <Window width={300} height={300}>
@@ -41,8 +41,10 @@ export const SpaceHeater = (props, context) => {
             {!!open && (
               <LabeledList.Item label="Powercell">
                 <Button
-                  content={powercellName ? powercellName : "-----"}
-                  tooltip={hasPowercell ? 'Eject powercell' : 'Insert powercell'}
+                  content={powercellName ? powercellName : '-----'}
+                  tooltip={
+                    hasPowercell ? 'Eject powercell' : 'Insert powercell'
+                  }
                   onClick={() => act('operateCell')}
                 />
               </LabeledList.Item>
@@ -65,13 +67,13 @@ export const SpaceHeater = (props, context) => {
           <LabeledControls>
             <LabeledControls.Item label="Current temperature">
               <AnimatedNumber value={currentTemp} />
-              {currentTemp!=="N/A" && '℃'}
+              {currentTemp !== 'N/A' && '℃'}
             </LabeledControls.Item>
             <LabeledControls.Item label="Target temperature">
               <Knob
                 size={2}
                 value={targetTemp}
-                unit={"℃"}
+                unit={'℃'}
                 minValue={minTemp}
                 maxValue={maxTemp}
                 onDrag={(e, value) =>
@@ -81,15 +83,12 @@ export const SpaceHeater = (props, context) => {
                 }
               />
               <Button
-                content={targetTemp.toString() + "℃"}
+                content={targetTemp.toString() + '℃'}
                 onClick={() => act('setTemp')}
               />
             </LabeledControls.Item>
             <LabeledControls.Item label="Operational mode">
-              <Button
-                content={mode}
-                onClick={() => act('mode')}
-              />
+              <Button content={mode} onClick={() => act('mode')} />
             </LabeledControls.Item>
           </LabeledControls>
         </Section>
