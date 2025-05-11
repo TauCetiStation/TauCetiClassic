@@ -120,16 +120,23 @@
 	else
 		..()
 
-/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat != CONSCIOUS) // this probably handled by nano itself, a check would be nice.
-		return
-	var/data[0]
+/obj/machinery/space_heater/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/space_heater/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SpaceHeater", name)
+		ui.open()
+
+/obj/machinery/space_heater/tgui_data()
+	var/data = list()
 	data["open"] = panel_open
 	data["on"] = on
-	data["mode"] = setMode
+	data["mode"] = capitalize(setMode)
 	data["hasPowercell"] = !!cell
-	if(cell)
-		data["powerLevel"] = round(cell.percent(), 1)
+	data["powercellName"] = isnull(cell) ? "" : cell.name
+	data["powerLevel"] = isnull(cell) ? 0 : round(cell.percent(), 1)
 	data["targetTemp"] = round(targetTemperature - T0C, 1)
 	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
 	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
@@ -147,71 +154,65 @@
 	else
 		data["currentTemp"] = round(curTemp - T0C, 1)
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
-	if(!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "space_heater.tmpl", name, 490, 350)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
-		ui.open()
-		// Auto update every Master Controller tick
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
+	return data
 
-/obj/machinery/space_heater/is_operational()
-	return !(stat & BROKEN)
-
-/obj/machinery/space_heater/Topic(href, href_list)
+/obj/machinery/space_heater/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	if(href_list["power"])
-		on = !!text2num(href_list["power"])
+	if(action == "power")
+		on = !on
 		mode = HEATER_MODE_STANDBY
 		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 		update_icon()
 
-	else if(href_list["mode"])
-		setMode = href_list["mode"]
+	if(!panel_open)
+		return
 
-	else if(href_list["temp"] && panel_open)
-		var/value
-		if(href_list["temp"] == "custom")
-			value = input("Please input the target temperature", name) as num|null
-			if(isnull(value) || !can_still_interact_with(usr))
-				return
-			value += T0C
-		else
-			value = targetTemperature + text2num(href_list["temp"])
-
-		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
-		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
-
-	else if(href_list["cellremove"] && panel_open)
-		if(cell)
-			if(usr.get_active_hand())
-				to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
-				return
-			cell.updateicon()
-			usr.put_in_hands(cell)
-			cell.add_fingerprint(usr)
-			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
-			cell = null
-
-	else if(href_list["cellinstall"] && panel_open)
-		if(!cell)
-			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
-			if(istype(C))
-				if(!usr.drop_from_inventory(C, src))
+	switch(action)
+		if("mode")
+			switch(setMode)
+				if("auto")
+					setMode = "heat"
+				if("heat")
+					setMode = "cool"
+				if("cool")
+					setMode = "auto"
+		if("operateCell")
+			if(cell)
+				if(usr.get_active_hand())
+					to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
 					return
-				cell = C
-				C.add_fingerprint(usr)
+				cell.updateicon()
+				usr.put_in_hands(cell)
+				cell.add_fingerprint(usr)
+				usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
+				cell = null
+			else
+				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
+				if(istype(C))
+					if(!usr.drop_from_inventory(C, src))
+						return
+					cell = C
+					C.add_fingerprint(usr)
+					usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
+		if("setTemp")
+			var/value
+			if(isnull(params["temperature"]))
+				value = input("Please input the target temperature", name) as num|null
+				if(isnull(value) || !can_still_interact_with(usr))
+					return
+			else
+				value = params["temperature"]
+			value += T0C
+			var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
+			var/maxTemp = settableTemperatureMedian + settableTemperatureRange
+			targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
 
-				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
+
+/obj/machinery/space_heater/is_operational()
+	return !(stat & BROKEN)
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))
