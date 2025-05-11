@@ -1,7 +1,7 @@
 #define HEATER_MODE_STANDBY	"standby"
 #define HEATER_MODE_HEAT	"heat"
 #define HEATER_MODE_COOL	"cool"
-
+#define HEATER_MODE_AUTO	"auto"
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -15,7 +15,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
-	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
+	var/setMode = HEATER_MODE_AUTO // Anything other than "heat" or "cool" is considered auto.
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
 	var/efficiency = 20000
@@ -169,12 +169,12 @@
 			update_icon()
 		if("mode")
 			switch(setMode)
-				if("auto")
-					setMode = "heat"
-				if("heat")
-					setMode = "cool"
-				if("cool")
-					setMode = "auto"
+				if(HEATER_MODE_AUTO)
+					setMode = HEATER_MODE_HEAT
+				if(HEATER_MODE_HEAT)
+					setMode = HEATER_MODE_COOL
+				if(HEATER_MODE_COOL)
+					setMode = HEATER_MODE_AUTO
 		if("setTemp")
 			var/value
 			if(isnull(params["temperature"]))
@@ -216,52 +216,55 @@
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))
 		return
-
-	if(powered() || cell && cell.charge > 0)
-		var/datum/gas_mixture/env = loc.return_air()
-		if(env && abs(env.temperature - targetTemperature) <= 0.1)
-			mode = HEATER_MODE_STANDBY
-		else
-			var/transfer_moles = 0.25 * env.total_moles
-			var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
-			if(removed)
-				var/heat_transfer = removed.get_thermal_energy_change(targetTemperature)
-				var/power_draw
-				if(heat_transfer > 0)	//heating air
-					heat_transfer = min( heat_transfer , heatingPower ) //limit by the power rating of the heater
-
-					removed.add_thermal_energy(heat_transfer)
-					power_draw = heat_transfer
-				else	//cooling air
-					heat_transfer = abs(heat_transfer)
-
-					//Assume the heat is being pumped into the hull which is fixed at 20 C
-					var/cop = removed.temperature / T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
-					heat_transfer = min(heat_transfer, cop * heatingPower)	//limit heat transfer by available power
-
-					heat_transfer = removed.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
-
-					power_draw = abs(heat_transfer) / cop
-				if(!powered())
-					cell.use(power_draw * CELLRATE)
-				else
-					use_power(power_draw TAUCETI_POWER_DRAW_MOD)
-
-				if(heat_transfer > 0)
-					mode = HEATER_MODE_HEAT
-				else if(heat_transfer < 0)
-					mode = HEATER_MODE_COOL
-				else
-					mode = HEATER_MODE_STANDBY
-
-			env.merge(removed)
-	else
+	if(!powered() && (isnull(cell) || cell.charge <= 0))
 		on = FALSE
 		mode = HEATER_MODE_STANDBY
 		power_change()
+		update_icon()
+
+	var/datum/gas_mixture/env = loc.return_air()
+	var/tempDif = isnull(env) ? 0 : (env.temperature - targetTemperature)
+	if(abs(tempDif) <= 0.1 || (tempDif > 0 && setMode == HEATER_MODE_HEAT) || (tempDif < 0 && setMode == HEATER_MODE_COOL)) //Standby if dif is too small or if restricted by target mode, e.g. env. temp. is higher than target temp. and mode is heating
+		mode = HEATER_MODE_STANDBY
+	else
+		var/transfer_moles = 0.25 * env.total_moles
+		var/datum/gas_mixture/removed = env.remove(transfer_moles)
+
+		if(removed)
+			var/heat_transfer = removed.get_thermal_energy_change(targetTemperature)
+			var/power_draw
+			if(heat_transfer > 0)	//heating air
+				heat_transfer = min( heat_transfer , heatingPower ) //limit by the power rating of the heater
+
+				removed.add_thermal_energy(heat_transfer)
+				power_draw = heat_transfer
+			else	//cooling air
+				heat_transfer = abs(heat_transfer)
+
+				//Assume the heat is being pumped into the hull which is fixed at 20 C
+				var/cop = removed.temperature / T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
+				heat_transfer = min(heat_transfer, cop * heatingPower)	//limit heat transfer by available power
+
+				heat_transfer = removed.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
+
+				power_draw = abs(heat_transfer) / cop
+			if(!powered())
+				cell.use(power_draw * CELLRATE)
+			else
+				use_power(power_draw TAUCETI_POWER_DRAW_MOD)
+
+			if(heat_transfer > 0)
+				mode = HEATER_MODE_HEAT
+			else if(heat_transfer < 0)
+				mode = HEATER_MODE_COOL
+			else
+				mode = HEATER_MODE_STANDBY
+
+		env.merge(removed)
+
 	update_icon()
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
 #undef HEATER_MODE_COOL
+#undef HEATER_MODE_AUTO
