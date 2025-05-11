@@ -184,7 +184,6 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp/wizard)
 
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Ремесленник"
 	desc = "Призывает конструкта, которым могут управлять тени."
