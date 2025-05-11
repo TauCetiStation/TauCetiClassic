@@ -161,16 +161,12 @@
 	if(.)
 		return
 
-	if(action == "power")
-		on = !on
-		mode = HEATER_MODE_STANDBY
-		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
-		update_icon()
-
-	if(!panel_open)
-		return
-
 	switch(action)
+		if("power")
+			on = !on
+			mode = HEATER_MODE_STANDBY
+			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
+			update_icon()
 		if("mode")
 			switch(setMode)
 				if("auto")
@@ -179,24 +175,6 @@
 					setMode = "cool"
 				if("cool")
 					setMode = "auto"
-		if("operateCell")
-			if(cell)
-				if(usr.get_active_hand())
-					to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
-					return
-				cell.updateicon()
-				usr.put_in_hands(cell)
-				cell.add_fingerprint(usr)
-				usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
-				cell = null
-			else
-				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
-				if(istype(C))
-					if(!usr.drop_from_inventory(C, src))
-						return
-					cell = C
-					C.add_fingerprint(usr)
-					usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
 		if("setTemp")
 			var/value
 			if(isnull(params["temperature"]))
@@ -209,6 +187,27 @@
 			var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 			var/maxTemp = settableTemperatureMedian + settableTemperatureRange
 			targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
+
+	if(!panel_open)
+		return
+	if(action == "operateCell")
+		if(cell)
+			if(usr.get_active_hand())
+				to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
+				return
+			cell.updateicon()
+			usr.put_in_hands(cell)
+			cell.add_fingerprint(usr)
+			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
+			cell = null
+		else
+			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
+			if(istype(C))
+				if(!usr.drop_from_inventory(C, src))
+					return
+				cell = C
+				C.add_fingerprint(usr)
+				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
 
 
 /obj/machinery/space_heater/is_operational()

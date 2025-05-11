@@ -68,7 +68,7 @@ export const SpaceHeater = (props, context) => {
               {currentTemp!=="N/A" && '℃'}
             </LabeledControls.Item>
             <LabeledControls.Item label="Target temperature">
-              {!!open && <Knob
+              <Knob
                 size={2}
                 value={targetTemp}
                 unit={"℃"}
@@ -79,17 +79,15 @@ export const SpaceHeater = (props, context) => {
                     temperature: value,
                   })
                 }
-              />}
+              />
               <Button
                 content={targetTemp.toString() + "℃"}
-                disabled={!open}
                 onClick={() => act('setTemp')}
               />
             </LabeledControls.Item>
             <LabeledControls.Item label="Operational mode">
               <Button
                 content={mode}
-                disabled={!open}
                 onClick={() => act('mode')}
               />
             </LabeledControls.Item>
