@@ -89,7 +89,7 @@
 /proc/checks_for_surgery(mob/living/carbon/M, mob/living/user, check_covering = TRUE)
 	if(!user.Adjacent(M))
 		return FALSE
-	if(!can_operate(M))
+	if(!can_operate(M, user))
 		return FALSE
 	if(!istype(M))
 		return FALSE
@@ -170,7 +170,7 @@
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
-			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if(user.mood_prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~

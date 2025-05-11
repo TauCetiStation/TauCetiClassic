@@ -13,11 +13,6 @@
 
 	var/permitted = FALSE
 
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(mood)
-		if(mood.spirit_level == 6 && mood.mood_level <= 3) // highest spirit level (worst) and mood level in the lower third
-			permitted = TRUE
-
 	if(!permitted)
 		var/static/list/allowed = list(NUKE_OP, TRAITOR, WIZARD, HEADREV, CULTIST, CHANGELING)
 		for(var/T in allowed)

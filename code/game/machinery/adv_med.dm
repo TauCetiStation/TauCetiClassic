@@ -73,7 +73,6 @@
 	add_fingerprint(user)
 	close_machine(G.affecting)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	qdel(G)
 
 /obj/machinery/bodyscanner/update_icon()
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
