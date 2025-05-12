@@ -221,6 +221,7 @@
 		mode = HEATER_MODE_STANDBY
 		power_change()
 		update_icon()
+		return
 
 	var/datum/gas_mixture/env = loc.return_air()
 	var/tempDif = isnull(env) ? 0 : (env.temperature - targetTemperature)
