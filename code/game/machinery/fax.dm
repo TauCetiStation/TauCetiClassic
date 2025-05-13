@@ -187,13 +187,11 @@ var/global/list/alldepartments = list("Central Command")
 
 /obj/item/weapon/paper_bundle/get_fax_info()
 	. = "This is a bundle containing [pages.len] items."
-	for(var/page in pages)
-		if(istype(page, /obj/item/weapon/paper))
-			var/obj/item/weapon/paper/paper_page = page
-			. += "\nPaper: [paper_page.get_fax_info()]"
-		else if(istype(page, /obj/item/weapon/photo))
-			var/obj/item/weapon/photo/photo_page = page
-			. += "\nPhoto: [photo_page.get_fax_info()]"
+	for(var/obj/item/page in pages)
+		if(istype(page, /obj/item/weapon/photo))
+			. += "\nPhoto: [page.get_fax_info()]"
+		else if(istype(page, /obj/item/weapon/paper))
+			. += "\nPaper: [page.get_fax_info()]"
 
 /obj/item/proc/get_fax_copy()
 	return null
@@ -233,17 +231,15 @@ var/global/list/alldepartments = list("Central Command")
 	copy.icon_state = icon_state
 	copy.overlays = overlays
 	copy.underlays = underlays
-	for(var/page in pages)
-		if(istype(page, /obj/item/weapon/paper))
-			var/obj/item/weapon/paper/paper_page = page
-			var/obj/item/weapon/paper/copied_paper = paper_page.get_fax_copy()
-			copied_paper.loc = copy
-			copy.pages.Add(copied_paper)
-		else if(istype(page, /obj/item/weapon/photo))
-			var/obj/item/weapon/photo/photo_page = page
-			var/obj/item/weapon/photo/copied_photo = photo_page.get_fax_copy()
-			copied_photo.forceMove(copy)
-			copy.pages.Add(copied_photo)
+	for(var/obj/item/page in pages)
+		var/obj/item/copied_page
+		if(istype(page, /obj/item/weapon/photo))
+			copied_page = page.get_fax_copy()
+		else if(istype(page, /obj/item/weapon/paper))
+			copied_page = page.get_fax_copy()
+		if(copied_page)
+			copied_page.forceMove(copy)
+			copy.pages.Add(copied_page)
 	copy.update_icon()
 	return copy
 
