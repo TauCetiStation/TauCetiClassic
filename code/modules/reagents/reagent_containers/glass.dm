@@ -148,12 +148,6 @@
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, gulp_size)
 
-			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-				var/mob/living/silicon/robot/bro = user
-				bro.cell.use(30)
-				var/refill = reagents.get_master_reagent_id()
-				addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, add_reagent), refill, fillevel), 600)
-
 			playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 			update_icon()
 			return TRUE
@@ -193,13 +187,6 @@
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(target, ACCUSATIVE_CASE)].</span>")
 		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
-
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-			var/mob/living/silicon/robot/bro = user
-			var/chargeAmount = max(30,4*trans)
-			bro.cell.use(chargeAmount)
-			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
-			addtimer(CALLBACK(src, PROC_REF(refill_by_borg), user, refill, trans), 300)
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
