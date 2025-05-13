@@ -100,7 +100,6 @@
 	update_item_actions()
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
-	var/fillevel = gulp_size
 	if (!is_open_container() || !proximity)
 		return
 
@@ -177,12 +176,6 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))] [(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
 			return
-
-		var/datum/reagent/refill
-		var/datum/reagent/refillName
-		if(isrobot(user))
-			refill = reagents.get_master_reagent_id()
-			refillName = reagents.get_master_reagent_name()
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(target, ACCUSATIVE_CASE)].</span>")
