@@ -354,7 +354,7 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		qdel(src.connected)
 		src.connected = null
-	else if (src.locked == FALSE)
+	else if (!locked)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
