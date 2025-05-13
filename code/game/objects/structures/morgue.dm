@@ -347,7 +347,7 @@
 	if (cremating)
 		to_chat(user, "<span class='rose'>It's locked.</span>")
 		return
-	if ((src.connected) && (src.locked == FALSE))
+	if (connected && !locked)
 		for(var/atom/movable/A in src.connected.loc)
 			if(!A.anchored)
 				A.loc = src
