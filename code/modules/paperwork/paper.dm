@@ -1155,4 +1155,5 @@ var/global/list/contributor_names
 /obj/item/weapon/paper/armoryWeaponList/proc/write_info()
 	for(var/obj/item/I in global.withSerialNumber)
 		if(istype(get_area(I), /area/station/security/armoury))
-			info += "<hr><b>[I.name]</b><br>[I.serialNumber ? "<u>Серийный номер: [I.serialNumber]</u>" : "Без серийного номера"]<br>"
+			var/datum/component/serialNumber/S = I.GetComponent(/datum/component/serialNumber)
+			info += "<hr><b>[I.name]</b><br><u>Серийный номер: [S.serialNumber]</u><br>"

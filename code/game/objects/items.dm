@@ -99,7 +99,6 @@
 
 
 	var/haveSerialNumber = FALSE
-	var/serialNumber
 
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]
