@@ -181,7 +181,6 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hos(src)
-	new /obj/item/weapon/storage/pouch/ammo(src)
 	new /obj/item/weapon/storage/pouch/medium_generic(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
@@ -263,8 +262,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 		new /obj/item/weapon/storage/backpack/security(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
-	if(prob(20))
-		new /obj/item/weapon/storage/pouch/ammo(src)
 
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
 		new /obj/item/clothing/gloves/black(src)
