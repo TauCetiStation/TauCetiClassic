@@ -124,7 +124,7 @@
 	if(!.)
 		return
 
-	if(prob(25))
+	if(prob(20))
 		to_chat(M, "<span class='notice'>The world seems... kinder.</span>")
 		M.heal_bodypart_damage(1, 1)
 
