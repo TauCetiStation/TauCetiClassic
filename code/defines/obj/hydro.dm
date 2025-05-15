@@ -1732,10 +1732,8 @@
 	if(!original_T)
 		return
 
-	// Проверяем наличие существующего гриба
 	var/obj/structure/flora/tree/towermycelium/existing_tree = locate() in original_T
 	if(existing_tree)
-		// Пытаемся найти свободное место вокруг
 		var/list/possible_turfs = list()
 		for(var/dir in cardinal)
 			var/turf/adjacent_T = get_step(original_T, dir)
@@ -1754,7 +1752,6 @@
 		growing = FALSE
 		return
 
-	// Проверяем, что на новом месте нет гриба (на случай если мы переместились)
 	if(locate(/obj/structure/flora/tree/towermycelium) in growth_T)
 		visible_message("<span class='warning'>[src] не может вырасти - место уже занято!</span>")
 		growing = FALSE
