@@ -52,6 +52,7 @@
 	name = "webbing"
 	desc = "Strudy mess of synthcotton belts and buckles, ready to share your burden."
 	icon_state = "webbing"
+	max_w_class = SIZE_SMALL
 
 /obj/item/clothing/accessory/storage/black_vest
 	name = "black webbing vest"
@@ -63,7 +64,7 @@
 	name = "brown webbing vest"
 	desc = "Worn brownish synthcotton vest with lots of pockets to unload your hands."
 	icon_state = "vest_brown"
-	slots = 5
+	slots = 6
 
 /obj/item/clothing/accessory/storage/syndi_vest
 	name = "suspicious webbing vest"
