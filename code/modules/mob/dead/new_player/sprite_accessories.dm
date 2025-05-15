@@ -674,6 +674,13 @@
 	name = "Chao Topknot - Gang"
 	icon_state = "hair_topknot"
 
+/datum/sprite_accessory/hair/wisp_old
+	name = "Wisp - Old Fashion"
+	icon_state = "hair_wisp_old"
+
+/datum/sprite_accessory/hair/shortspiky_old
+	name = "Spiky - Old Fashion"
+	icon_state = "hair_crono_old"
 //	name = "Modern"
 //	icon_state = "hair_modern"
 
