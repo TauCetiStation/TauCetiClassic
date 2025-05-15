@@ -329,7 +329,7 @@
 	name = "tower mycelium"
 	icon = 'icons/obj/flora/towermycelium.dmi'
 	icon_state = "towermycelium"
-	pixel_x = -30
+	pixel_x = -33
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium)
 // grass
 
