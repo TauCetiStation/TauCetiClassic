@@ -327,7 +327,7 @@
 	name = "EMP Grenades"
 	desc = "A box that contains an EMP grenades. Useful to disrupt communication and silicon lifeforms."
 	item = /obj/item/weapon/storage/box/emps
-	cost = 5
+	cost = 3
 	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/emp/New()
