@@ -17,7 +17,7 @@
 <title>Permissions Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
-[get_browse_zoom_style(usr)]
+[get_browse_zoom_style(usr.client)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
@@ -55,7 +55,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;[get_browse_size_parameter(usr, 600, 500)]")
+	usr << browse(output,"window=editrights;[get_browse_size_parameter(usr.client, 600, 500)]")
 
 /datum/admins/proc/add_admin()
 	if(!usr.client)
