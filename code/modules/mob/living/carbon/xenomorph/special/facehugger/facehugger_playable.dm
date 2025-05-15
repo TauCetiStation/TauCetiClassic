@@ -69,8 +69,7 @@
 		return FALSE
 
 	var/mob/living/carbon/C = target
-	var/datum/species/S = all_species[C.get_species()]
-	if(S && S.flags[NO_BLOOD])
+	if(HAS_TRAIT(C, TRAIT_NO_BLOOD))
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>[target] is incompatible.</span>")
 		return FALSE
@@ -245,7 +244,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
-			H.setHalLoss(20)
+			H.adjustHalLoss(20)
 			H.Stun(1)
 			H.Weaken(1)
 			H.emote("scream")

@@ -269,7 +269,7 @@
 			if(C.stat == DEAD)
 				continue
 
-			if(C.species.flags[NO_BLOOD])
+			if(HAS_TRAIT(C, TRAIT_NO_BLOOD))
 				continue
 
 			if((C == oldpatient) && (world.time < last_found + 100))

@@ -1,6 +1,17 @@
 var/global/list/hair_gradients = list(
 	"None" = "none",
-	"Fade (Up)" = "fadeup",
-	"Fade (Down)" = "fadedown",
-	"Vertical Split" = "vsplit"
+	"Fade Up" = "fadeup",
+	"Fade Down" = "fadedown",
+	"Vertical Split" = "vsplit",
+	"Horizontal Split" = "bottomflat",
+	"Reflected" = "reflected_high",
+	"Reflected Inverse" = "reflected_inverse_high",
+	"Wavy" = "wavy",
+	"Long Fade Up" = "long_fade_up",
+	"Long Fade Down" = "long_fade_down",
+	"Short Fade Up" = "short_fade_up",
+	"Short Fade Down" = "short_fade_down",
+	"Spiked Wavy" = "wavy_spiked",
+	"Striped" = "striped",
+	"Striped Vertical" = "striped_vertical",
 	)

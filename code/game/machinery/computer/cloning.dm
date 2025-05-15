@@ -342,13 +342,13 @@
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/subject)
 	if(ishuman(subject))
 		var/mob/living/carbon/human/Hsubject = subject
-		if(!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
+		if(!Hsubject.has_brain())
 			scantemp = "Ошибка: не обнаружено следов разума."
 			return
 	else if(!isbrain(subject))
 		scantemp = "Ошибка: структура тела пациента не поддерживается."
 		return
-	if(!subject.dna)
+	if(!subject.dna || HAS_TRAIT(subject, TRAIT_INCOMPATIBLE_DNA))
 		scantemp = "Ошибка: невозможно получить ДНК пациента."
 		return
 	if(subject.suiciding)

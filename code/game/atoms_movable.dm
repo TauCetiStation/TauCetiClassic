@@ -46,6 +46,9 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		on_area_sensitive_trait_loss()
+
 	. = ..()
 
 	loc = null
@@ -57,7 +60,10 @@
 			T.reconsider_lights()
 
 	vis_locs = null //clears this atom out of all viscontents
-	vis_contents.Cut()
+
+	// world from tg: checking length(vis_contents) before cutting has significant speed benefits
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -408,11 +414,6 @@
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVE(location.area_sensitive_contents, src)
-
-/atom/movable/Destroy()
-	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
-		on_area_sensitive_trait_loss()
-	return ..()
 
 /* Sizes stuff */
 
