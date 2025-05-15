@@ -71,9 +71,6 @@
 	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/simplewaffle = 3)
 
 /obj/item/weapon/storage/food/normal/simple_waffles/update_icon()
-	icon_state = "simple_waffles"
-	item_state_world ="simple_waffles_world"
-	update_world_icon()
 	return
 
 /obj/item/weapon/storage/food/normal/no_raisin
