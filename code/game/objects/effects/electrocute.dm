@@ -11,8 +11,12 @@
 
 	var/timer
 
+	var/datum/weakref/human_weakref
+
 /obj/effect/electrocute/atom_init(mapload, mob/living/carbon/human/H, duration)
 	. = ..()
+
+	human_weakref = WEAKREF(H)
 
 	appearance = H.get_skeleton_appearance()
 	vis_flags = initial(vis_flags) // setting appearance resets them
@@ -23,10 +27,12 @@
 	H.vis_contents += src
 
 	RegisterSignal(H, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(stop)) // quick and ugly fix to effect stacking
-	timer = addtimer(CALLBACK(src, PROC_REF(stop), H), duration)
+	timer = addtimer(CALLBACK(src, PROC_REF(stop)), duration)
 
-/obj/effect/electrocute/proc/stop(mob/living/carbon/human/H)
+/obj/effect/electrocute/proc/stop()
+	var/mob/living/carbon/human/H = human_weakref?.resolve()
+	if(H)
+		H.color = null
 	if(timer)
 		deltimer(timer)
-	H.color = null
 	qdel(src)
