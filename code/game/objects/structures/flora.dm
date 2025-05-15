@@ -340,15 +340,13 @@
 /obj/structure/flora/tree/towermycelium/proc/create_vines()
 	clear_vines()
 
-	// 1. Лианы ПОД грибом (на том же тайле)
 	if(!locate(/obj/structure/spacevine) in loc)
 		var/obj/structure/spacevine/SV_base = new(loc)
-		SV_base.icon_state = pick("Hvy1", "Hvy2", "Hvy3") // Плотные лианы прямо под грибом
+		SV_base.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		vines += SV_base
 
-	// 2. Лианы вокруг (радиус 1 тайл)
 	for(var/turf/T in range(1, src))
-		if(T == loc) continue // Пропускаем центральный тайл (уже обработали)
+		if(T == loc) continue
 		if(!T.density && !locate(/obj/structure/spacevine) in T)
 			var/obj/structure/spacevine/SV = new(T)
 			SV.icon_state = pick("Light1", "Light2", "Light3", "Med1", "Med2", "Med3")
