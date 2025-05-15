@@ -1692,6 +1692,25 @@
 	icon_state = "bungopit"
 	seed_type = /obj/item/seeds/towermycelium
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/growing = FALSE
+
+/obj/item/weapon/grown/towermycelium/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/grown/towermycelium/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/grown/towermycelium/process()
+	if(growing)
+		return
+
+	var/turf/T = get_turf(src)
+	if(istype(T, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in T))
+		growing = TRUE
+		visible_message("<span class='notice'>[src] начинает пускать корни в воде...</span>")
+		addtimer(CALLBACK(src, .proc/grow_into_tree), 5 SECONDS)
 
 /obj/item/weapon/grown/towermycelium/attack_self(mob/user)
 	if(!user)
@@ -1716,7 +1735,8 @@
 
 /obj/item/weapon/grown/towermycelium/water_act(amount)
 	. = ..()
-	if(amount >= 5)
+	if(amount >= 5 && !growing)
+		growing = TRUE
 		visible_message("<span class='notice'>[src] начинает пускать корни в воде...</span>")
 		addtimer(CALLBACK(src, .proc/grow_into_tree), 5 SECONDS)
 
