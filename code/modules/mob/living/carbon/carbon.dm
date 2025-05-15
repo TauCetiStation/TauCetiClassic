@@ -94,7 +94,7 @@
 		clear_alert("blind")
 
 /mob/living/carbon/proc/is_skip_breathe()
-	return !loc || (flags & GODMODE)
+	return !loc
 
 /mob/living/carbon/proc/is_cant_breathe()
 	return handle_drowning() || health < 0
@@ -324,7 +324,7 @@
 	if(!on_fire)
 		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-	if(flags & GODMODE)
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE)) // probably we need to create TRAIT_INGORE_ENVIRONMENT or something
 		return
 
 	switch(bodytemperature)
@@ -461,7 +461,8 @@
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
+		return 0
 
 	var/turf/T = get_turf(src)
 	var/obj/effect/fluid/F = locate() in T
@@ -1045,21 +1046,19 @@
 
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
-		if(user.species && user.species.flags[NO_BREATHE])
-			to_chat(user, "<span class='notice bold'>Your species can not perform AV!</span>")
+		if(HAS_TRAIT(user, TRAIT_NO_BREATHE))
+			to_chat(user, "<span class='notice bold'>You don't need to breathe, so you can't perform AV!</span>")
 			return
 		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
 			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
 			return
 
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(H.species && H.species.flags[NO_BREATHE])
-				to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
-				return
-			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
-				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
-				return
+		if(HAS_TRAIT(src, TRAIT_NO_BREATHE))
+			to_chat(user, "<span class='notice bold'>[src] doesn't need to breathe, so there is no point to try AV.</span>")
+			return
+		if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
+			to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
+			return
 
 		if(head && head.flags & HEADCOVERSMOUTH)
 			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
@@ -1236,21 +1235,6 @@
 	var/retVerb = "attacks"
 	var/retSound = null
 	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
-
-	var/specie = get_species()
-	var/datum/species/S = all_species[specie]
-	if(S)
-		var/datum/unarmed_attack/attack = S.unarmed
-
-		retDam = 2 + attack.damage
-		retDamType = attack.damType
-		retFlags = attack.damage_flags()
-		retVerb = pick(attack.attack_verb)
-
-		if(length(attack.attack_sound))
-			retSound = pick(attack.attack_sound)
-
-		retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

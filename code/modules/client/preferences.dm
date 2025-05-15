@@ -106,16 +106,16 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/r_facial = 0					//Face hair color
 	var/g_facial = 0					//Face hair color
 	var/b_facial = 0					//Face hair color
-	var/s_tone = 0						//Skin tone
-	var/r_skin = 0						//Skin color
-	var/g_skin = 0						//Skin color
-	var/b_skin = 0						//Skin color
+	var/s_tone = HUMAN_DEFAULT_SKIN_TONE //Skin tone
+	var/r_skin = 255					//Skin color
+	var/g_skin = 255					//Skin color
+	var/b_skin = 255					//Skin color
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
-	var/r_belly = 0
-	var/g_belly = 0
-	var/b_belly = 0
+	var/r_belly = 255
+	var/g_belly = 255
+	var/b_belly = 255
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
 	var/insurance = INSURANCE_NONE
@@ -377,7 +377,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -406,8 +406,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height
-
-	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
@@ -507,9 +505,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		else
 			continue
 
-	// Apply skin color
-	character.apply_recolor()
-
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
@@ -535,9 +530,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.backbag = backbag
 	character.use_skirt = use_skirt
 
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
+	character.regenerate_icons(update_body_preferences = TRUE)
 
 //for the 'occupation' and 'roles' panels
 /datum/preferences/proc/open_jobban_info(mob/user, rank)

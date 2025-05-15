@@ -31,6 +31,8 @@
 #define BP_R_LEG  "r_leg"
 #define BP_ACTIVE_ARM "active_arm"
 #define BP_INACTIVE_ARM "inactive_arm"
+#define BP_TAIL "tail"
+#define BP_WINGS "wings"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -76,38 +78,24 @@
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
-#define HUMAN          	 "Human"
-#define PLUVIAN        	 "Pluvian"
-#define PLUVIAN_SPIRIT 	 "Pluvian Spirit"
-#define UNATHI         	 "Unathi"
-#define TAJARAN        	 "Tajaran"
-#define SKRELL         	 "Skrell"
-#define DIONA          	 "Diona"
-#define PODMAN         	 "Podman"
-#define IPC            	 "Machine"
-#define VOX            	 "Vox"
-#define VOX_ARMALIS    	 "Vox Armalis"
-#define ABDUCTOR       	 "Abductor"
-#define SKELETON       	 "Skeleton"
-#define SKELETON_UNATHI	 "Skeleton Unathi"
-#define SKELETON_TAJARAN "Skeleton Tajaran"
-#define SKELETON_SKRELL	 "Skeleton Skrell"
-#define SKELETON_VOX	 "Skeleton Vox"
-#define SHADOWLING     	 "Shadowling"
-#define GOLEM          	 "Adamantine Golem"
-#define HOMUNCULUS     	 "Homunculus"
-#define ZOMBIE         	 "Zombie"
-#define ZOMBIE_TAJARAN 	 "Zombie Tajaran"
-#define ZOMBIE_SKRELL  	 "Zombie Skrell"
-#define ZOMBIE_UNATHI  	 "Zombie Unathi"
-#define SLIME          	 "Slime"
-#define SLIME_UNATHI   	 "Slime Unathi"
-#define SLIME_VOX      	 "Slime Vox"
-#define SLIME_TAJARAN  	 "Slime Tajaran"
-#define SLIME_SKRELL   	 "Slime Skrell"
-#define ABOMINATION    	 "disgusting abomination"
+#define HUMAN            "Human"
+#define PLUVIAN          "Pluvian"
+#define PLUVIAN_SPIRIT   "Pluvian Spirit"
+#define UNATHI           "Unathi"
+#define TAJARAN          "Tajaran"
+#define SKRELL           "Skrell"
+#define DIONA            "Diona"
+#define PODMAN           "Podman"
+#define IPC              "Machine"
+#define VOX              "Vox"
+#define VOX_ARMALIS      "Vox Armalis"
+#define ABDUCTOR         "Abductor"
+#define SHADOWLING       "Shadowling"
+#define GOLEM            "Adamantine Golem"
+#define HOMUNCULUS       "Homunculus"
+#define ABOMINATION      "Disgusting abomination"
 #define SERPENTID        "Serpentid"
-#define MOTH		     "Moth"
+#define MOTH             "Moth"
 
 
 #define MONKEY         	 "Monkey"
@@ -238,7 +226,6 @@
 // Defibrillation
 #define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
 #define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
-#define MAX_BRAIN_DAMAGE  80
 
 // Awareness about syndicate, it`s agents and equipment
 #define SYNDICATE_UNAWARE  0

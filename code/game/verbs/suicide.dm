@@ -221,9 +221,9 @@
 
 	if(confirm == "Yes")
 		suiciding = TRUE
-		setOxyLoss(100)
-		adjustBruteLoss(100 - getBruteLoss())
-		setToxLoss(100)
-		setCloneLoss(100)
+		adjustOxyLoss(100)
+		adjustBruteLoss(100)
+		adjustToxLoss(100)
+		adjustCloneLoss(100)
 
 		updatehealth()

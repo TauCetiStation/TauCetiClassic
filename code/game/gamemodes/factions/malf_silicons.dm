@@ -186,7 +186,7 @@
 			if(cur_AI.real_name != role.antag.name)
 				dat += " as [cur_AI.real_name]"
 		else
-			var/icon/sprotch = icon('icons/mob/robots.dmi', "gib7")
+			var/icon/sprotch = icon('icons/mob/robots.dmi', "gib6")
 			end_icons += sprotch
 			var/tempstate = end_icons.len
 			dat += {"<br><img src="logo_[tempstate].png"> <b>[role.antag.key]</b> was <b>[role.antag.name]</b> ("}

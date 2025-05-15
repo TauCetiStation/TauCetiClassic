@@ -245,10 +245,8 @@
 		return FALSE
 	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
 		return FALSE
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[NO_BLOOD] || H.mind.pluvian_blessed)
-			return FALSE
+	if(HAS_TRAIT(M, TRAIT_NO_BLOOD) || M?.mind?.pluvian_blessed)
+		return FALSE
 	if(M.ismindprotect())
 		return FALSE
 	return TRUE

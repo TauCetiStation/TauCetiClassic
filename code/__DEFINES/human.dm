@@ -22,3 +22,5 @@
 #define LIGHT_DAM_THRESHOLD 3
 #define LIGHT_HEAL_THRESHOLD 3
 #define LIGHT_DAMAGE_TAKEN 10
+
+#define HUMAN_DEFAULT_SKIN_TONE /datum/skin_tone/albino::name
