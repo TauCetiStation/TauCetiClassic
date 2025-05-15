@@ -331,6 +331,37 @@
 	icon_state = "towermycelium"
 	pixel_x = -33
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium)
+	var/list/vines = list()
+
+/obj/structure/flora/tree/towermycelium/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/create_vines), 5)
+
+/obj/structure/flora/tree/towermycelium/proc/create_vines()
+	clear_vines()
+
+	// 1. Лианы ПОД грибом (на том же тайле)
+	if(!locate(/obj/structure/spacevine) in loc)
+		var/obj/structure/spacevine/SV_base = new(loc)
+		SV_base.icon_state = pick("Hvy1", "Hvy2", "Hvy3") // Плотные лианы прямо под грибом
+		vines += SV_base
+
+	// 2. Лианы вокруг (радиус 1 тайл)
+	for(var/turf/T in range(1, src))
+		if(T == loc) continue // Пропускаем центральный тайл (уже обработали)
+		if(!T.density && !locate(/obj/structure/spacevine) in T)
+			var/obj/structure/spacevine/SV = new(T)
+			SV.icon_state = pick("Light1", "Light2", "Light3", "Med1", "Med2", "Med3")
+			vines += SV
+
+/obj/structure/flora/tree/towermycelium/proc/clear_vines()
+	for(var/obj/structure/spacevine/V in vines)
+		qdel(V)
+	vines.Cut()
+
+/obj/structure/flora/tree/towermycelium/Destroy()
+	clear_vines()
+	return ..()
 // grass
 
 /obj/structure/flora/grass
