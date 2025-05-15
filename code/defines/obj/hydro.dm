@@ -1728,9 +1728,39 @@
 		grow_into_tree()
 
 /obj/item/weapon/grown/towermycelium/proc/grow_into_tree()
-	var/turf/T = get_turf(src)
-	if(T)
-		new /obj/structure/flora/tree/towermycelium(T)
+	var/turf/original_T = get_turf(src)
+	if(!original_T)
+		return
+
+	// Проверяем наличие существующего гриба
+	var/obj/structure/flora/tree/towermycelium/existing_tree = locate() in original_T
+	if(existing_tree)
+		// Пытаемся найти свободное место вокруг
+		var/list/possible_turfs = list()
+		for(var/dir in cardinal)
+			var/turf/adjacent_T = get_step(original_T, dir)
+			if(adjacent_T && !(locate(/obj/structure/flora/tree/towermycelium) in adjacent_T) && (istype(adjacent_T, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in adjacent_T)))
+				possible_turfs += adjacent_T
+
+		if(possible_turfs.len)
+			forceMove(pick(possible_turfs))
+		else
+			visible_message("<span class='warning'>[src] не может найти свободного места для роста!</span>")
+			growing = FALSE
+			return
+
+	var/turf/growth_T = get_turf(src)
+	if(!growth_T)
+		growing = FALSE
+		return
+
+	// Проверяем, что на новом месте нет гриба (на случай если мы переместились)
+	if(locate(/obj/structure/flora/tree/towermycelium) in growth_T)
+		visible_message("<span class='warning'>[src] не может вырасти - место уже занято!</span>")
+		growing = FALSE
+		return
+
+	new /obj/structure/flora/tree/towermycelium(growth_T)
 	qdel(src)
 
 /obj/item/weapon/grown/towermycelium/water_act(amount)
