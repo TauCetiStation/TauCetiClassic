@@ -345,7 +345,7 @@
 		SV_base.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		vines += SV_base
 
-	for(var/turf/T in range(1, src))
+	for(var/turf/T in RANGE_TURFS(1, src))
 		if(T == loc) continue
 		if(!T.density && !locate(/obj/structure/spacevine) in T)
 			var/obj/structure/spacevine/SV = new(T)
