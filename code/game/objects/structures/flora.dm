@@ -332,6 +332,8 @@
 	pixel_x = -33
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium)
 	var/list/vines = list()
+	var/vine_spawn_chance = 75
+	var/max_vine_distance = 1
 
 /obj/structure/flora/tree/towermycelium/atom_init()
 	. = ..()
@@ -340,20 +342,23 @@
 /obj/structure/flora/tree/towermycelium/proc/create_vines()
 	clear_vines()
 
-	if(!locate(/obj/structure/spacevine) in loc)
-		var/obj/structure/spacevine/SV_base = new(loc)
-		SV_base.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
+	if(!locate(/obj/effect/biomass) in loc)
+		var/obj/effect/biomass/SV_base = new(loc)
+		SV_base.icon_state = "mist"
 		vines += SV_base
 
-	for(var/turf/T in RANGE_TURFS(1, src))
+	for(var/turf/T in RANGE_TURFS(max_vine_distance, src))
 		if(T == loc) continue
-		if(!T.density && !locate(/obj/structure/spacevine) in T)
-			var/obj/structure/spacevine/SV = new(T)
-			SV.icon_state = pick("Light1", "Light2", "Light3", "Med1", "Med2", "Med3")
-			vines += SV
+		if(prob(vine_spawn_chance) && !T.density && !locate(/obj/effect/biomass) in T)
+			var/obj/effect/biomass/SV = new(T)
+
+			var/vine_type = rand(1)
+			switch(vine_type)
+				if(1)
+					SV.icon_state = pick("stage1", "stage2", "stage3")
 
 /obj/structure/flora/tree/towermycelium/proc/clear_vines()
-	for(var/obj/structure/spacevine/V in vines)
+	for(var/obj/effect/biomass/V in vines)
 		qdel(V)
 	vines.Cut()
 
