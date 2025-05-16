@@ -327,44 +327,150 @@
 
 /obj/structure/flora/tree/towermycelium
 	name = "tower mycelium"
+	desc = "A towering fungal growth, pulsating with eerie energy. Each specimen is subtly different."
 	icon = 'icons/obj/flora/towermycelium.dmi'
 	icon_state = "towermycelium"
 	pixel_x = -33
-	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/grown/towermycelium, /obj/item/weapon/grown/towermycelium)
+	drop_on_destroy = list(
+		/obj/item/weapon/grown/log = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = 2
+	)
+
 	var/list/vines = list()
 	var/vine_spawn_chance = 75
 	var/max_vine_distance = 1
+	var/mycelium_type
+	var/has_glow = FALSE
+	var/has_pulse = FALSE
+	var/pulse_speed = 3 SECONDS
+	var/pulse_power = 1.15
+	var/min_pulse_time = 2 SECONDS
+	var/max_pulse_time = 6 SECONDS
+	var/shake_chance = 10
+	var/shake_power = 1.5
 
 /obj/structure/flora/tree/towermycelium/atom_init()
 	. = ..()
+	mycelium_type = pick(1, 2, 3)
+	has_glow = prob(30)
+	has_pulse = prob(40)
+
+	apply_random_variations()
 	addtimer(CALLBACK(src, .proc/create_vines), 5)
+
+	if(has_pulse)
+		pulse_speed = rand(min_pulse_time, max_pulse_time)
+		pulse_power = 1.10 + rand() * 0.10 // 1.10 - 1.20
+		start_pulse()
+
+/obj/structure/flora/tree/towermycelium/proc/start_pulse()
+	if(!has_pulse)
+		return
+
+	var/time_up = pulse_speed * 0.5 * (0.9 + rand() * 0.2)
+	var/time_down = pulse_speed * 0.5 * (0.9 + rand() * 0.2)
+
+	animate(
+		src,
+		transform = transform * pulse_power,
+		time = time_up,
+		easing = SINE_EASING | EASE_OUT,
+		flags = ANIMATION_PARALLEL
+	)
+	animate(
+		transform = transform * (1/pulse_power),
+		time = time_down,
+		easing = SINE_EASING | EASE_IN,
+		flags = ANIMATION_PARALLEL
+	)
+
+	if(prob(shake_chance))
+		addtimer(CALLBACK(src, .proc/do_shake), rand(0, pulse_speed))
+
+	addtimer(CALLBACK(src, .proc/start_pulse), pulse_speed + rand(-1 SECONDS, 1 SECONDS))
+
+/obj/structure/flora/tree/towermycelium/proc/do_shake()
+	var/matrix/M = transform
+	animate(
+		src,
+		transform = M.Turn(rand(-shake_power, shake_power)) * 1.01,
+		time = 0.2 SECONDS,
+		easing = ELASTIC_EASING
+	)
+	animate(
+		transform = M,
+		time = 0.3 SECONDS,
+		easing = BOUNCE_EASING
+	)
+
+/obj/structure/flora/tree/towermycelium/proc/apply_random_variations()
+	if(prob(50))
+		var/matrix/M = matrix()
+		M.Scale(-1, 1)
+		transform = M
+
+	var/scale_x = 0.9 + rand() * 0.2
+	var/scale_y = 0.9 + rand() * 0.2
+	transform = transform.Scale(scale_x, scale_y)
+
+	switch(mycelium_type)
+		if(1)
+			color = rgb(
+				200 + rand(-20, 20),
+				100 + rand(-30, 30),
+				200 + rand(-20, 20)
+			)
+		if(2)
+			color = rgb(
+				100 + rand(-20, 20),
+				200 + rand(-20, 20),
+				180 + rand(-20, 20)
+			)
+		if(3)
+			color = rgb(
+				120 + rand(-20, 20),
+				220 + rand(-20, 20),
+				100 + rand(-20, 20)
+			)
+
+	if(has_glow)
+		set_light(1.5, 1, color)
+
+	pixel_x += rand(-1, 1)
+	pixel_y += rand(-1, 1)
 
 /obj/structure/flora/tree/towermycelium/proc/create_vines()
 	clear_vines()
 
-	if(!locate(/obj/effect/biomass) in loc)
-		var/obj/effect/biomass/SV_base = new(loc)
+	if(!locate(/obj/structure/spacevine/biomass) in loc)
+		var/obj/structure/spacevine/biomass/SV_base = new(loc)
 		SV_base.icon_state = "mist"
+		SV_base.color = color
 		vines += SV_base
 
 	for(var/turf/T in RANGE_TURFS(max_vine_distance, src))
 		if(T == loc) continue
-		if(prob(vine_spawn_chance) && !T.density && !locate(/obj/effect/biomass) in T)
-			var/obj/effect/biomass/SV = new(T)
-
-			var/vine_type = rand(1)
-			switch(vine_type)
-				if(1)
-					SV.icon_state = pick("stage1", "stage2", "stage3")
+		if(prob(vine_spawn_chance) && !T.density && !locate(/obj/structure/spacevine/biomass) in T)
+			var/obj/structure/spacevine/biomass/SV = new(T)
+			SV.color = color
+			SV.icon_state = pick("stage1", "stage2", "stage3")
+			vines += SV
 
 /obj/structure/flora/tree/towermycelium/proc/clear_vines()
-	for(var/obj/effect/biomass/V in vines)
+	for(var/obj/structure/spacevine/biomass/V in vines)
 		qdel(V)
 	vines.Cut()
 
 /obj/structure/flora/tree/towermycelium/Destroy()
 	clear_vines()
 	return ..()
+
+/obj/structure/spacevine/biomass
+	name = "biomass"
+	desc = "Space barf from another dimension. It just keeps spreading!"
+	icon = 'icons/obj/biomass.dmi'
+	icon_state = "stage1"
+
 // grass
 
 /obj/structure/flora/grass
