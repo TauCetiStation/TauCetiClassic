@@ -180,9 +180,9 @@
 	if(!multiple)
 		spectator.clear_spawner_registration()
 	else if(spectator.registered_spawners.len)
-		var/datum/spawner/S = spectator.registered_spawners[0]
-		if(!S.multiple)
-			spectator.clear_spawner_registration()
+		for(var/datum/spawner/S as anything in spectator.registered_spawners)
+			if(!S.multiple)
+				S.cancel_registration(spectator)
 
 	registered_candidates += spectator
 	spectator.registered_spawners += src
