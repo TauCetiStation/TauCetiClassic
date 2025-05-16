@@ -160,9 +160,6 @@
 	if(!spectator.client || spectator.client.is_in_spawner)
 		return
 
-	if(!can_spawn(spectator))
-		return
-
 	if(!register_only)
 		if(positions < 1)
 			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
@@ -174,6 +171,9 @@
 	if(spectator in registered_candidates)
 		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
+		return
+
+	if(!can_spawn(spectator))
 		return
 
 	if(!multideclare)
