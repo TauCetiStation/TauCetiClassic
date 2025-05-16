@@ -77,7 +77,7 @@ export const IsolationCentrifuge = (props, context) => {
             <Box color="average">No vial detected.</Box>
           )
         ) : (
-          <NoticeBox warning>{busy}</NoticeBox>
+          <NoticeBox info>{busy}</NoticeBox>
         )}
       </Window.Content>
     </Window>
