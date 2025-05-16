@@ -74,7 +74,7 @@
 	var/register_only = FALSE
 
 	// Flag if it's supports multiple selection
-	var/multiple = FALSE
+	var/multideclare = FALSE
 
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
@@ -176,12 +176,11 @@
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
-	// multiple and non-multiple spawners cannot be together
-	if(!multiple)
+	if(!multideclare)
 		spectator.clear_spawner_registration()
 	else if(spectator.registered_spawners.len)
 		for(var/datum/spawner/S as anything in spectator.registered_spawners)
-			if(!S.multiple)
+			if(!S.multideclare)
 				S.cancel_registration(spectator)
 
 	registered_candidates += spectator
@@ -760,7 +759,7 @@
 	ranks = list(ROLE_GHOSTLY)
 
 	register_only = TRUE
-	multiple = TRUE
+	multideclare = TRUE
 	time_for_registration = 0.5 MINUTES
 
 	time_while_available = 4 MINUTES
