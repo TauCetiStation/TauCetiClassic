@@ -10,7 +10,4 @@
 
 	sound = 'sound/voice/xenomorph/death_1.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
-	)
-
+	required_intentional_stat = CONSCIOUS
