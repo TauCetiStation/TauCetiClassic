@@ -44,5 +44,5 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	to_chat(src, "<span class='notice'>You can not emote.</span>")
 
 /mob/dead/proc/clear_spawner_registration()
-	for(var/datum/spawner/S in registered_spawners)
+	for(var/datum/spawner/S as anything in registered_spawners)
 		S.cancel_registration(src)
