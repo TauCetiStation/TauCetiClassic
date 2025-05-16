@@ -201,6 +201,8 @@
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	slowdown_off = 1
+	item_state_world =  "syndiemag0_w"
+	item_state = "syndiemag"
 
 /obj/item/clothing/shoes/magboots/ert
 	name = "advanced magboots"
@@ -208,6 +210,8 @@
 	slowdown_off = 1
 	icon_state = "advmag0"
 	magboot_state = "advmag"
+	item_state_world =  "advmag0_w"
+	item_state = "advmag"
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
