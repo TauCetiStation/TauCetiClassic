@@ -26712,6 +26712,7 @@
 	name = "Brig down APC";
 	pixel_y = -27
 	},
+/obj/item/weapon/paper/armoryWeaponList,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

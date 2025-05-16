@@ -1142,3 +1142,18 @@ var/global/list/contributor_names
 /obj/item/weapon/paper/old_station_note_egun
 	name = "Object #2921"
 	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."
+
+/obj/item/weapon/paper/armoryWeaponList
+	name = "Опись серийные номера оружия"
+	info = "<h1>Опись:</h1><br>"
+
+/obj/item/weapon/paper/armoryWeaponList/atom_init()
+	. = ..()
+
+	write_info()
+
+/obj/item/weapon/paper/armoryWeaponList/proc/write_info()
+	for(var/obj/item/I in global.withSerialNumber)
+		if(istype(get_area(I), /area/station/security/armoury))
+			var/datum/component/serialNumber/S = I.GetComponent(/datum/component/serialNumber)
+			info += "<hr><b>[I.name]</b><br><u>Серийный номер: [S.serialNumber]</u><br>"

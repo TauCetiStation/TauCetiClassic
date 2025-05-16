@@ -12914,6 +12914,7 @@
 /obj/item/toy/cards{
 	layer = 4.1
 	},
+/obj/item/weapon/paper/armoryWeaponList,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
