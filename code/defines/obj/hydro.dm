@@ -1686,7 +1686,7 @@
 
 /obj/item/weapon/grown/towermycelium
 	name = "seeds tower mycelium"
-	desc = "Боб для огромного гриба"
+	desc = "Боб огромного гриба"
 	w_class = SIZE_SMALL
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "bungopit"
@@ -1743,7 +1743,6 @@
 		if(possible_turfs.len)
 			forceMove(pick(possible_turfs))
 		else
-			visible_message("<span class='warning'>[src] не может найти свободного места для роста!</span>")
 			growing = FALSE
 			return
 
@@ -1753,7 +1752,6 @@
 		return
 
 	if(locate(/obj/structure/flora/tree/towermycelium) in growth_T)
-		visible_message("<span class='warning'>[src] не может вырасти - место уже занято!</span>")
 		growing = FALSE
 		return
 
