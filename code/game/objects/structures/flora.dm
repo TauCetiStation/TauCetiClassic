@@ -325,6 +325,46 @@
 /obj/structure/flora/tree/jungle/small/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_TWO
 
+/obj/structure/flora/tree/towermycelium
+	name = "tower mycelium"
+	icon = 'icons/obj/flora/towermycelium.dmi'
+	icon_state = "towermycelium"
+	pixel_x = -33
+	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium, /obj/item/weapon/grown/towermycelium, /obj/item/weapon/grown/towermycelium)
+	var/list/vines = list()
+	var/vine_spawn_chance = 75
+	var/max_vine_distance = 1
+
+/obj/structure/flora/tree/towermycelium/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/create_vines), 5)
+
+/obj/structure/flora/tree/towermycelium/proc/create_vines()
+	clear_vines()
+
+	if(!locate(/obj/effect/biomass) in loc)
+		var/obj/effect/biomass/SV_base = new(loc)
+		SV_base.icon_state = "mist"
+		vines += SV_base
+
+	for(var/turf/T in RANGE_TURFS(max_vine_distance, src))
+		if(T == loc) continue
+		if(prob(vine_spawn_chance) && !T.density && !locate(/obj/effect/biomass) in T)
+			var/obj/effect/biomass/SV = new(T)
+
+			var/vine_type = rand(1)
+			switch(vine_type)
+				if(1)
+					SV.icon_state = pick("stage1", "stage2", "stage3")
+
+/obj/structure/flora/tree/towermycelium/proc/clear_vines()
+	for(var/obj/effect/biomass/V in vines)
+		qdel(V)
+	vines.Cut()
+
+/obj/structure/flora/tree/towermycelium/Destroy()
+	clear_vines()
+	return ..()
 // grass
 
 /obj/structure/flora/grass
