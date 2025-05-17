@@ -538,7 +538,15 @@
 			dat += "Для заклинаний: Число после названия заклинания это время перезарядки.<BR>"
 	return dat
 
-/obj/item/weapon/spellbook/proc/wrap(content)
+/obj/item/weapon/spellbook/attack_self(mob/user)
+	if(!owner)
+		to_chat(user, "<span class='notice'>Вы привязали книгу к себе.</span>")
+		owner = user.mind
+		return
+	if(user.mind != owner)
+		to_chat(user, "<span class='warning'>[name] не распознала вас как владельца и отказывается открываться!</span>")
+		return
+	user.set_machine(src)
 	var/dat = ""
 	dat +="<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Spellbook</title></head>"
 	dat += {"
@@ -553,21 +561,9 @@
       		div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
       		div.tabContent.hide { display: none; }
     	</style>
+		[get_browse_zoom_style(user.client)]
   	</head>
 	"}
-	dat += {"[content]</body></html>"}
-	return dat
-
-/obj/item/weapon/spellbook/attack_self(mob/user)
-	if(!owner)
-		to_chat(user, "<span class='notice'>Вы привязали книгу к себе.</span>")
-		owner = user.mind
-		return
-	if(user.mind != owner)
-		to_chat(user, "<span class='warning'>[name] не распознала вас как владельца и отказывается открываться!</span>")
-		return
-	user.set_machine(src)
-	var/dat = ""
 
 	dat += "<ul id=\"tabs\">"
 	var/list/cat_dat = list()
@@ -598,8 +594,9 @@
 		dat += GetCategoryHeader(category)
 		dat += cat_dat[category]
 		dat += "</div>"
+	dat += {"</body></html>"}
 
-	user << browse(wrap(dat), "window=spellbook;size=700x500")
+	user << browse(dat, "window=spellbook;[get_browse_size_parameter(user.client, 700, 500)]")
 	onclose(user, "spellbook")
 	return
 

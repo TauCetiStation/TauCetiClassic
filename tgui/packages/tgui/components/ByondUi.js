@@ -9,6 +9,7 @@ import { debounce } from 'common/timer';
 import { Component, createRef } from 'inferno';
 import { createLogger } from '../logging';
 import { computeBoxProps } from './Box';
+import { getPixelRatio } from '../drag';
 
 const logger = createLogger('ByondUi');
 
@@ -96,8 +97,8 @@ export class ByondUi extends Component {
     this.byondUiElement.render({
       parent: Byond.windowId,
       ...params,
-      pos: box.pos[0] + ',' + box.pos[1],
-      size: box.size[0] + 'x' + box.size[1],
+      pos: box.pos[0] * getPixelRatio() + ',' + box.pos[1] * getPixelRatio(),
+      size: box.size[0] * getPixelRatio() + 'x' + box.size[1] * getPixelRatio(),
     });
   }
 

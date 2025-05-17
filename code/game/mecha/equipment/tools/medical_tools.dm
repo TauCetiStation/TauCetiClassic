@@ -116,14 +116,14 @@
 	if(F.get("eject"))
 		go_out()
 	if(F.get("view_stats"))
-		chassis.occupant << browse(get_occupant_stats(),"window=msleeper")
+		chassis.occupant << browse(get_occupant_stats(chassis.occupant.client),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(F.get("inject"))
 		inject_reagent(F.getType("inject",/datum/reagent),F.getObj("source"))
 	return
 
-/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_stats()
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_stats(client/user)
 	if(!occupant)
 		return
 	return {"<html>
@@ -137,6 +137,7 @@
 				h3 {margin-bottom:2px;font-size:14px;}
 				#lossinfo, #reagents, #injectwith {padding-left:15px;}
 				</style>
+				[get_browse_zoom_style(user)]
 				</head>
 				<body>
 				<h3>Health statistics</h3>
@@ -531,7 +532,7 @@
 			log_message("Reagent processing started.")
 		return
 	if(F.get("show_reagents"))
-		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
+		chassis.occupant << browse(get_reagents_page(chassis.occupant.client),"window=msyringegun")
 	if(F.get("purge_reagent"))
 		var/reagent = F.get("purge_reagent")
 		if(reagent)
@@ -542,7 +543,7 @@
 		return
 	return
 
-/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_page()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_page(client/C)
 	var/output = {"<html>
 						<head>
 						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -556,6 +557,7 @@
 						form {width: 90%; margin:10px auto; border:1px dotted #999; padding:6px;}
 						#submit {margin-top:5px;}
 						</style>
+						[get_browse_zoom_style(C)]
 						</head>
 						<body>
 						<h3>Current reagents:</h3>
