@@ -329,7 +329,7 @@
 	name = "tower mycelium"
 	desc = "A towering fungal growth, pulsating with eerie energy. Each specimen is subtly different."
 	icon = 'icons/obj/flora/towermycelium.dmi'
-	icon_state = "towermycelium"
+	icon_state = "one"
 	pixel_x = -33
 	drop_on_destroy = list(
 		/obj/item/weapon/grown/log = 6,
@@ -405,9 +405,7 @@
 
 /obj/structure/flora/tree/towermycelium/proc/apply_random_variations()
 	if(prob(50))
-		var/matrix/M = matrix()
-		M.Scale(-1, 1)
-		transform = M
+		icon_state = "two"
 
 	var/scale_x = 0.9 + rand() * 0.2
 	var/scale_y = 0.9 + rand() * 0.2
@@ -444,7 +442,7 @@
 
 	if(!locate(/obj/structure/spacevine/biomass) in loc)
 		var/obj/structure/spacevine/biomass/SV_base = new(loc)
-		SV_base.icon_state = "mist"
+		SV_base.icon_state = pick("stage1", "stage2", "stage3", "mist")
 		SV_base.color = color
 		vines += SV_base
 
@@ -453,7 +451,7 @@
 		if(prob(vine_spawn_chance) && !T.density && !locate(/obj/structure/spacevine/biomass) in T)
 			var/obj/structure/spacevine/biomass/SV = new(T)
 			SV.color = color
-			SV.icon_state = pick("stage1", "stage2", "stage3")
+			SV.icon_state = pick("stage1", "stage2", "stage3", "mist")
 			vines += SV
 
 /obj/structure/flora/tree/towermycelium/proc/clear_vines()
