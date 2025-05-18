@@ -243,7 +243,7 @@
 		"impedrezene",
 		"adminordrazine"
 	)
-	var/release_time = 3 SECONDS
+	var/release_time = 15 SECONDS
 	var/move_chance = 70
 
 /obj/effect/anomaly/gas/atom_init()
@@ -278,7 +278,7 @@
 	var/datum/reagents/R = new/datum/reagents(2700)
 	R.my_atom = src
 	R.add_reagent(selected_gas, 900)
-	S.set_up(R, 30, 0, loc, 60)
+	S.set_up(R, 10, 0, loc, 60)
 	S.start()
 
 	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
