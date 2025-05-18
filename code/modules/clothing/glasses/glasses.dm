@@ -255,6 +255,7 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
+	item_state_world = "blindfold"
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white
@@ -262,6 +263,7 @@
 	desc = "Indicates that the wearer suffers from blindness."
 	icon_state = "blindfoldwhite"
 	item_state = "blindfoldwhite"
+	item_state_world = "blindfoldwhite"
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
