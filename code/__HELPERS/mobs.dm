@@ -380,7 +380,7 @@
 		insurance_type = get_insurance_type(M)
 
 	if(!output_to_chat)
-		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Результаты сканирования [M.name]</title></head><BODY>"
+		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>[get_browse_zoom_style(user.client)]<title>Результаты сканирования [M.name]</title></head><BODY>"
 
 	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
 		user.visible_message("<span class='warning'>[user] сканирует жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")

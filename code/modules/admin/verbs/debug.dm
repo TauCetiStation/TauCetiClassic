@@ -654,7 +654,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 
 /datum/debug_color_matrix/proc/edit(client/user)
 	var/static/editor = file2text('html/admin/color_matrix.html')
-	user << browse(editor, "window=colormatrix;size=410x500;")
+	user << browse(replacetext(editor, "/* custom style */", get_browse_zoom_style(user)), "window=colormatrix;[get_browse_size_parameter(user, 410, 500)];")
 	addtimer(CALLBACK(src, PROC_REF(callJsFunc), usr, "setRef", list("\ref[src]")), 10) //This is shit but without it, it calls the JS before the window is open and doesn't work.
 
 /datum/debug_color_matrix/Topic(href, href_list)

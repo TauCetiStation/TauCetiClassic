@@ -375,7 +375,7 @@
 	dat += "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>"
 	dat += haircutlist
 
-	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT, existing_container = "barber_window")
 	popup.set_content(dat)
 	popup.open()
 	return

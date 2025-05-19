@@ -343,6 +343,7 @@ body
 	font-size: 8pt;
 }
 </style>"}
+	html += get_browse_zoom_style(user.client)
 	html += "</head>"
 	html += body
 
@@ -355,7 +356,7 @@ body
 
 	html += "</body></html>"
 
-	user << browse(html, "window=variables\ref[D];size=475x650")
+	user << browse(html, "window=variables\ref[D];[get_browse_size_parameter(src, 475, 650)]")
 
 	return
 

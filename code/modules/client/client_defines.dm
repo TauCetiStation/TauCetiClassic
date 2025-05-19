@@ -122,3 +122,5 @@
 	var/is_in_spawner = FALSE
 	///used to override the mouse cursor so it doesnt get reset
 	var/mouse_override_icon = null
+
+	var/window_pixelratio
