@@ -73714,7 +73714,7 @@
 	pixel_x = 6;
 	pixel_y = -7
 	},
-/obj/item/weapon/paper/armoryWeaponList,
+/obj/item/weapon/paper/inventory/armoryWeaponList,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
