@@ -1143,17 +1143,27 @@ var/global/list/contributor_names
 	name = "Object #2921"
 	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."
 
-/obj/item/weapon/paper/armoryWeaponList
-	name = "Опись серийные номера оружия"
+/obj/item/weapon/paper/inventory
+	name = "Опись"
+
+/obj/item/weapon/paper/inventory/atom_init()
+	. = ..()
+	writeInfo()
+	update_icon()
+
+/obj/item/weapon/paper/inventory/proc/writeInfo()
+	if(!SSticker.current_state == GAME_STATE_SETTING_UP)
+		return
+
 	info = "<h1>Опись:</h1><br>"
 
-/obj/item/weapon/paper/armoryWeaponList/atom_init()
+/obj/item/weapon/paper/inventory/armoryWeaponList
+	name = "Опись: Серийные номера оружия"
+
+/obj/item/weapon/paper/inventory/armoryWeaponList/writeInfo()
 	. = ..()
 
-	write_info()
-
-/obj/item/weapon/paper/armoryWeaponList/proc/write_info()
-	for(var/obj/item/I in global.withSerialNumber)
-		if(istype(get_area(I), /area/station/security/armoury))
+	for(var/obj/item/I in get_area_by_type(/area/station/security/armoury))
+		if(I.GetComponent(/datum/component/serialNumber))
 			var/datum/component/serialNumber/S = I.GetComponent(/datum/component/serialNumber)
 			info += "<hr><b>[I.name]</b><br><u>Серийный номер: [S.serialNumber]</u><br>"

@@ -192,7 +192,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
-	haveSerialNumber = TRUE
+
+/obj/item/weapon/kitchenknife/combat/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/kitchenknife/throwing
 	name = "throwing knife"

@@ -12,7 +12,11 @@
 	m_amt = 2000
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
-	haveSerialNumber = TRUE
+
+/obj/item/weapon/gun/grenadelauncher/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/gun/grenadelauncher/attack_hand(mob/user)
 	if(loc == user)

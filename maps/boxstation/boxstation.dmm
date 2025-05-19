@@ -4064,9 +4064,9 @@
 	name = "Brig dark top APC";
 	pixel_y = 27
 	},
-/obj/item/weapon/paper/armoryWeaponList{
-	pixel_x = -8;
-	pixel_y = -3
+/obj/item/weapon/paper/inventory/armoryWeaponList{
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

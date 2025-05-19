@@ -3,8 +3,7 @@
 
 /datum/component/serialNumber/Initialize(atom/target)
 	serialNumber = generateSerialNumber()
-	global.withSerialNumber += target 	//Need to add this object in global list
-	updateDescription(target)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(onExamine))
 
 /datum/component/serialNumber/proc/generateSerialNumber()
 	serialNumber = "[rand(0, 999999)]"
@@ -13,10 +12,6 @@
 
 	return serialNumber
 
-/datum/component/serialNumber/proc/updateDescription(atom/target)
-	target.desc += "\nСерийный номер: [serialNumber]"
-
-/datum/component/serialNumber/Destroy(atom/target)
-	. = ..()
-
-	global.withSerialNumber -= target
+/datum/component/serialNumber/proc/onExamine(datum/source, mob/user)
+	SIGNAL_HANDLER
+	to_chat(user, "<span class = 'notice'>\nСерийный номер: [serialNumber]</span>")

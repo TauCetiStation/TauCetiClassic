@@ -21,7 +21,6 @@
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
-	haveSerialNumber = TRUE
 	var/fullauto = TRUE
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
@@ -64,6 +63,7 @@
 	for(var/i in ammo_type)
 		var/path = ammo_type[i]
 		ammo_type[i] = new path(src)
+	AddComponent(/datum/component/serialNumber, src)
 	update_icon()
 
 /obj/item/weapon/gun/plasma/Destroy()

@@ -181,6 +181,7 @@
 
 /obj/item/weapon/gun/tesla/atom_init()
 	. = ..()
+	AddComponent(/datum/component/serialNumber, src)
 	update_icon()
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
@@ -584,6 +585,7 @@
 /obj/item/weapon/gun/medbeam/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/gun/medbeam/Destroy()
 	LoseTarget()

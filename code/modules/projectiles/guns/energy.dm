@@ -3,7 +3,6 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	can_be_holstered = FALSE
-	haveSerialNumber = TRUE
 
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/cell_type = /obj/item/weapon/stock_parts/cell
@@ -29,6 +28,7 @@
 		ammo_type[i] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
+	AddComponent(/datum/component/serialNumber, src)
 	update_icon()
 
 /obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)

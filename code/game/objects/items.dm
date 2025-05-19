@@ -97,9 +97,6 @@
 	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
-
-	var/haveSerialNumber = FALSE
-
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]
   */
@@ -135,9 +132,6 @@
 	for(var/path in item_action_types)
 		var/datum/action/B = new path (src)
 		item_actions += B
-
-	if(haveSerialNumber)
-		AddComponent(/datum/component/serialNumber, src)
 
 	return INITIALIZE_HINT_NORMAL
 
