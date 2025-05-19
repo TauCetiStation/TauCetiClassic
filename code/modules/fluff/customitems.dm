@@ -1,12 +1,11 @@
 #define FLUFF_FILE_PATH "data/customItemsCache.sav"
 
-// not BLOCKHEADHAIR/BLOCKHAIR for savefile in case someone change them
-// feel free to rename if more flags needed
+// we don't use existing bitfields for savefile in case if someone changes them
 #define FLUFF_HAIR_HIDE_NONE 0
-#define FLUFF_HAIR_HIDE_HEAD 1 // BLOCKHEADHAIR
-#define FLUFF_HAIR_HIDE_ALL 2 // BLOCKHAIR
+#define FLUFF_HAIR_HIDE_HEAD 1 // HIDE_TOP_HAIR
+#define FLUFF_HAIR_HIDE_ALL 2 // HIDE_ALL_HAIR
 
-#define FLUFF_HAIR_HIDE_FLAG_TO_TEXT(flag) (flag == 1 && "Head Hair" || flag == 2 && "Head & Face Hair" || "None")
+#define FLUFF_HAIR_HIDE_FLAG_TO_TEXT(flag) (flag == FLUFF_HAIR_HIDE_HEAD && "Head Hair" || flag == FLUFF_HAIR_HIDE_ALL && "Head & Face Hair" || "None")
 
 // items
 #define FLUFF_TYPE_NORMAL "normal"
@@ -312,9 +311,9 @@
 
 		switch(custom_item_info.hair_flags)
 			if(FLUFF_HAIR_HIDE_HEAD)
-				item.flags |= BLOCKHEADHAIR
+				item.render_flags |= HIDE_TOP_HAIR
 			if(FLUFF_HAIR_HIDE_ALL)
-				item.flags |= BLOCKHAIR
+				item.render_flags |= HIDE_ALL_HAIR
 
 		if(custom_item_info.item_type == FLUFF_TYPE_SMALL)
 			item.w_class = SIZE_TINY

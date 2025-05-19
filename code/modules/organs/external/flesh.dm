@@ -35,7 +35,12 @@
 
 	var/old_pumped = BP.pumped
 	BP.pumped = min(BP.pumped + value, cap)
-	BP.update_sprite()
+
+	// trigger body update only when we passed threshold in any direction
+	var/before_pumped = old_pumped > BP.pumped_threshold
+	var/after_pumped = BP.pumped > BP.pumped_threshold
+	if(before_pumped != after_pumped)
+		BP.owner.update_body(BP.body_zone)
 
 	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.mob_metabolism_mod.RemoveMods(BP)
@@ -61,8 +66,8 @@
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
 /datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
-	brute = round(brute * BP.owner.species.brute_mod, 0.1)
-	burn = round(burn * BP.owner.species.burn_mod, 0.1)
+	brute = round(brute * BP.owner.mob_brute_mod.Get(), 0.1)
+	burn = round(burn * BP.owner.mob_burn_mod.Get(), 0.1)
 
 	if((brute <= 0) && (burn <= 0))
 		return 0
@@ -132,7 +137,7 @@
 	var/spillover = cur_damage + damage_amt + BP.burn_dam + burn - BP.max_damage // excess damage goes off into shock_stage, this var also can prevent dismemberment, if result is negative.
 
 	if(spillover > 0 && !BP.species.flags[IS_SYNTHETIC])
-		BP.owner.halloss += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
+		BP.owner.adjustHalLoss(spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER)
 
 	// sync the organ's damage with its wounds
 	BP.update_damages()
@@ -496,7 +501,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (!(BP.status & ORGAN_DEAD))
 			BP.status |= ORGAN_DEAD
 			to_chat(BP.owner, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
-			BP.owner.update_body()
+			BP.owner.update_body(BP.body_zone)
 
 		BP.germ_level++
 		BP.owner.adjustToxLoss(1)
@@ -588,7 +593,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.fracture()
 
 /datum/bodypart_controller/proc/damage_state_color()
-	return BP.species.blood_datum.color
+	var/datum/dirt_cover/blood_datum = BP.owner.get_blood_datum()
+	return blood_datum::color
 
 /datum/bodypart_controller/proc/sever_artery()
 	if(HAS_TRAIT(BP.owner, TRAIT_HEMOCOAGULATION))
@@ -610,7 +616,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"<span class='warning'><b>Something feels like it shattered in your [BP.name]!</b></span>",
 		"You hear a sickening crack.")
 
-	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
+	if(!HAS_TRAIT(BP.owner, TRAIT_NO_PAIN))
 		BP.owner.emote("scream")
 
 	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)
@@ -656,7 +662,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.germ_level >= INFECTION_LEVEL_THREE)
 		STOP_PROCESSING(SSobj, BP)
 		BP.status |= ORGAN_DEAD
-		BP.update_sprite()
+		BP.apply_appearance() // regenerate appearance with new color
 
 // Runs once when attached
 /datum/bodypart_controller/proc/check_rejection()

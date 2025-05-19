@@ -73,6 +73,9 @@
 	// Flag if it's awaylable only for applications first, and will be rolled for spawn later
 	var/register_only = FALSE
 
+	// Flag if it's supports multiple selection
+	var/multideclare = FALSE
+
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
 
@@ -127,7 +130,7 @@
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.registred_spawner = null
+			M.registered_spawners -= src
 		registered_candidates = null
 
 	return ..()
@@ -165,27 +168,29 @@
 			do_spawn(spectator)
 		return
 
-	// todo: registration for multiple spawners?
 	if(spectator in registered_candidates)
 		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
-	else if(spectator.registred_spawner)
-		to_chat(spectator, "<span class='notice'>Вы уже ждете роль \"[spectator.registred_spawner.name]\". Сначала отмените заявку.</span>")
-		return
-
 	if(!can_spawn(spectator))
 		return
 
+	if(!multideclare)
+		spectator.clear_spawner_registration()
+	else if(spectator.registered_spawners.len)
+		for(var/datum/spawner/S as anything in spectator.registered_spawners)
+			if(!S.multideclare)
+				S.cancel_registration(spectator)
+
 	registered_candidates += spectator
-	spectator.registred_spawner = src
+	spectator.registered_spawners += src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.registred_spawner = null
+	spectator.registered_spawners -= src
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
@@ -209,19 +214,16 @@
 	shuffle(filtered_candidates)
 
 	for(var/mob/dead/M in filtered_candidates)
-		if(positions > 0)
+		if(positions > 0 && can_spawn(M))
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
+			M.clear_spawner_registration()
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
-	if(!can_spawn(spectator))
-		positions++
-		return
-
 	var/client/C = spectator.client
 
 	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
@@ -596,6 +598,7 @@
 	for(var/i in 1 to sounds)
 		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
+	// todo: maybe we need to add a randomize argument for set_species
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	vox.age = rand(5, 15) // its fucking lore
@@ -611,7 +614,7 @@
 	I.inject(vox, BP_HEAD)
 
 	vox.equip_vox_raider()
-	vox.regenerate_icons()
+	vox.regenerate_icons(update_body_preferences = TRUE)
 
 	add_faction_member(faction, vox)
 
@@ -776,6 +779,7 @@
 	ranks = list(ROLE_GHOSTLY)
 
 	register_only = TRUE
+	multideclare = TRUE
 	time_for_registration = 0.5 MINUTES
 
 	time_while_available = 4 MINUTES

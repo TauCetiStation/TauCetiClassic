@@ -1,16 +1,15 @@
 /mob/living/carbon
 	var/list/overlays_standing
+	var/list/bodypart_overlays_standing = list()
 
 /mob/living/carbon/proc/apply_standing_overlay(cache_index)
-	var/image/I = overlays_standing[cache_index]
-	if(I)
-		add_overlay(I)
+	if(overlays_standing[cache_index])
+		add_overlay(overlays_standing[cache_index])
 
 /mob/living/carbon/proc/remove_standing_overlay(cache_index)
 	if(overlays_standing[cache_index])
 		cut_overlay(overlays_standing[cache_index])
 		overlays_standing[cache_index] = null
-
 
 /mob/living/carbon/update_transform()
 	var/matrix/ntransform = matrix(default_transform)

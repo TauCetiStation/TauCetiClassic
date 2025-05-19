@@ -166,6 +166,8 @@
 /mob/proc/StopGrabs()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
 		qdel(G)
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		qdel(G)
 
 /mob/proc/GetGrabs()
 	. = list()
@@ -478,7 +480,7 @@
 					var/armor = H.run_armor_check(H, MELEE)
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
+						H.adjustHalLoss(clamp(0, 40 - H.getHalLoss(), 40)) //up to 40 halloss
 					return
 				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
@@ -507,7 +509,7 @@
 
 						if(ishuman(user))
 							var/mob/living/carbon/human/H_user = user
-							var/datum/unarmed_attack/attack = H_user.species.unarmed
+							var/datum/unarmed_attack/attack = H_user.species.unarmed // todo: rewrite to use get_unarmed_attack() (and rewrite get_unarmed_attack too)
 
 							var/damage = rand(1, 5)
 							damage += attack.damage
