@@ -35,12 +35,9 @@ export const getPixelRatio = () => {
   return pixelRatio;
 };
 
-// Hacky-wacky 516 window position hack uwu
-let windowPosition;
-
 export const getWindowPosition = () => [
-  windowPosition ? windowPosition[0] : window.screenLeft * pixelRatio,
-  windowPosition ? windowPosition[1] : window.screenTop * pixelRatio,
+  window.screenLeft * pixelRatio,
+  window.screenTop * pixelRatio,
 ];
 
 export const getWindowSize = () => [
@@ -48,10 +45,7 @@ export const getWindowSize = () => [
   window.innerHeight * pixelRatio,
 ];
 
-export const setWindowPosition = (vec, saveState = true) => {
-  if (saveState) {
-    windowPosition = vec;
-  }
+export const setWindowPosition = (vec) => {
   const byondPos = vecAdd(vec, screenOffset);
   return Byond.winset(Byond.windowId, {
     pos: byondPos[0] + ',' + byondPos[1],
@@ -154,7 +148,7 @@ export const recallWindowGeometry = async (options = {}) => {
     if (size && options.locked) {
       pos = constraintPosition(pos, size)[1];
     }
-    setWindowPosition(pos, options.fancy);
+    setWindowPosition(pos);
   }
   // Set window position at the center of the screen.
   else if (size) {
@@ -163,7 +157,7 @@ export const recallWindowGeometry = async (options = {}) => {
       vecScale(size, -0.5),
       vecScale(screenOffset, -1.0)
     );
-    setWindowPosition(pos, options.fancy);
+    setWindowPosition(pos);
   }
 };
 
