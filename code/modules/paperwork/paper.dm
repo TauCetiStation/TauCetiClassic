@@ -604,6 +604,63 @@
 	else
 		return ..()
 
+/obj/item/weapon/paper/plane
+	name = "paper plane"
+	desc = "A simple folded paper airplane."
+	icon_state = "paper_plane"
+	throwforce = 0
+	throw_range = 7
+	throw_speed = 1
+	w_class = SIZE_MINUSCULE
+	attack_verb = list("glides past", "flutters near")
+
+/obj/item/weapon/paper/plane/atom_init()
+	. = ..()
+	pixel_x = rand(-9, 9)
+	pixel_y = rand(-8, 8)
+
+/obj/item/weapon/paper/plane/throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback)
+	return ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
+
+/obj/item/weapon/paper/plane/attack_self(mob/user)
+	user.visible_message(
+		"[user] unfolds [src] back into a sheet of paper.",
+		"You unfold [src] back into a sheet of paper."
+	)
+	var/obj/item/weapon/paper/P = new(user.loc)
+	P.info = info
+	P.name = name
+	P.stamp_text = stamp_text
+	user.put_in_hands(P)
+	qdel(src)
+
+/obj/item/weapon/paper/verb/make_plane()
+	set name = "Make Paper Plane"
+	set category = "Object"
+	set src in usr
+
+	if(crumpled)
+		to_chat(usr, "<span class='warning'>You can't make a plane from crumpled paper!</span>")
+		return
+
+	if(usr.incapacitated())
+		return
+
+	usr.visible_message(
+		"[usr] starts folding [src] into a paper plane.",
+		"You start folding [src] into a paper plane."
+	)
+
+	if(!do_after(usr, 3 SECOND, target = src))
+		return
+
+	var/obj/item/weapon/paper/plane/PP = new(usr.loc)
+	PP.info = info
+	PP.name = name
+	PP.stamp_text = stamp_text
+	usr.put_in_hands(PP)
+	qdel(src)
+
 /*
  * Premade paper
  */
