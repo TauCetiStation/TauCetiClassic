@@ -98007,6 +98007,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"xzG" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/obj/item/weapon/paper/inventory/armoryWeaponList{
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/armoury)
 "xzI" = (
 /obj/effect/landmark{
 	name = "xeno_spawn"
@@ -146734,7 +146746,7 @@ dHl
 wWk
 uOS
 kZX
-fVV
+xzG
 ucF
 wWk
 dgG

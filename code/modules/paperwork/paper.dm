@@ -1142,3 +1142,17 @@ var/global/list/contributor_names
 /obj/item/weapon/paper/old_station_note_egun
 	name = "Object #2921"
 	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."
+
+/obj/item/weapon/paper/inventory
+	name = "Опись"
+	info = "<h1>Опись:</h1><br>"
+
+/obj/item/weapon/paper/inventory/atom_init()
+	. = ..()
+	if(SSticker.current_state <= GAME_STATE_SETTING_UP)
+		var/area/A = get_area(src)
+		A.beacon = src
+		update_icon()
+
+/obj/item/weapon/paper/inventory/armoryWeaponList
+	name = "Опись: Серийные номера оружия"
