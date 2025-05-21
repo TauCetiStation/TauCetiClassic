@@ -188,6 +188,8 @@
 		return
 
 	W.update_inv_mob()
+	if(W.render_flags)
+		update_render_flags(W.render_flags)
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null
@@ -313,6 +315,8 @@
 	W.plane = ABOVE_HUD_PLANE
 	W.slot_equipped = slot
 	W.update_inv_mob()
+	if(W.render_flags)
+		update_render_flags(W.render_flags)
 
 /mob/living/carbon/human/put_in_l_hand(obj/item/W)
 	if(!has_bodypart(BP_L_ARM))

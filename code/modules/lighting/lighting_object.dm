@@ -145,7 +145,7 @@
 /atom/movable/lighting_object/Move()
 	return
 
-/atom/movable/lighting_object/forceMove(atom/destination, keep_pulling)
+/atom/movable/lighting_object/forceMove(atom/destination, keep_pulling, keep_buckled, keep_moving_diagonally, keep_grabs)
 	return
 
 /atom/movable/lighting_object/shake_act(severity, recursive = TRUE)

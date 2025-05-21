@@ -28,11 +28,12 @@ const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
   componentDidMount() {
-    const { suspended } = useBackend(this.context);
+    const { suspended, config } = useBackend(this.context);
     const { canClose = true } = this.props;
     if (suspended) {
       return;
     }
+    this.scale = config?.window?.scale;
     Byond.winset(Byond.windowId, {
       'can-close': Boolean(canClose),
     });
@@ -41,10 +42,14 @@ export class Window extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { config } = useBackend(this.context);
     const shouldUpdateGeometry =
       this.props.width !== prevProps.width ||
       this.props.height !== prevProps.height;
     if (shouldUpdateGeometry) {
+      this.updateGeometry();
+    } else if (this.scale !== config?.window?.scale) {
+      this.scale = config?.window?.scale;
       this.updateGeometry();
     }
   }

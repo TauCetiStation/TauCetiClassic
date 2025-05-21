@@ -1,3 +1,5 @@
+// oh god who decided these callbacks is a good idea
+
 /proc/is_stat(stat, mob/M, intentional)
 	if(M.stat > stat)
 		if(intentional)
@@ -23,6 +25,21 @@
 		return FALSE
 
 	return TRUE
+
+/proc/is_intentional_or_not_trait(trait, mob/M, intentional)
+	if(intentional)
+		return TRUE
+
+	if(!HAS_TRAIT(M, trait))
+		return TRUE
+
+	return FALSE
+
+/proc/is_not_trait(trait, mob/M, intentional)
+	if(!HAS_TRAIT(M, trait))
+		return TRUE
+
+	return FALSE
 
 /proc/is_intentional_or_species_no_flag(flag, mob/M, intentional)
 	if(intentional)

@@ -205,19 +205,20 @@
 				}
 
 				//Actually size, move and show the tooltip box
-				window.location = 'byond://winset?id='+tooltip.control+';size='+docWidth+'x'+docHeight+';pos='+posX+','+posY+';is-visible=true';
+				window.location = 'byond://winset?id='+tooltip.control+';size='+(docWidth * tooltip.pixelRatio)+'x'+(docHeight * tooltip.pixelRatio)+';pos='+posX+','+posY+';is-visible=true';
 
 				$content.on('mouseover', function() {
-					tooltip.hide();
+					// tooltip.hide();
 				});
 			},
-			update: function(params, clientView, text, theme, special) {
+			update: function(params, clientView, text, theme, special, pixelRatio) {
 				//Assign our global object
 				tooltip.params = $.parseJSON(params);
 				tooltip.clientView = parseInt(clientView);
 				tooltip.text = text;
 				tooltip.theme = theme;
 				tooltip.special = special;
+				tooltip.pixelRatio = pixelRatio;
 
 				//Go get the map details
 				window.location = 'byond://winget?callback=tooltip.updateCallback;id=mapwindow.map;property=size,view-size';

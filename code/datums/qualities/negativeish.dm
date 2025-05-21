@@ -53,7 +53,7 @@
 	H.r_facial = H.r_hair
 	H.g_facial = H.g_hair
 	H.b_facial = H.b_hair
-	H.regenerate_icons()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 
 /datum/quality/negativeish/dirty
@@ -89,8 +89,7 @@
 	H.dyed_b_facial = dirt_b
 	H.facial_painted = TRUE
 
-	H.regenerate_icons()
-
+	H.regenerate_icons(update_body_preferences = TRUE)
 
 /datum/quality/negativeish/non_comprende
 	name = "Non Comprende"
@@ -220,7 +219,8 @@ var/global/list/allergen_reagents_list
 	return !H.species.flags[IS_SYNTHETIC]
 
 /datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
-	H.ChangeToHusk()
+	ADD_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT) // generic trait so we can heal it later
+	H.update_body()
 
 /datum/quality/negativeish/delicate
 	name = "Quality Food Enjoyer"

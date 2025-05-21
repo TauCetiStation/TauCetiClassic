@@ -116,6 +116,9 @@ RCD
 	if(!(mode in available_modes))
 		to_chat(user, "<span class='warning'>Somehow you broke it. Please contact developers.</span>")
 		return
+	if(!matter)
+		to_chat(user, "<span class='warning'>No matter in casing.</span>")
+		return FALSE
 
 	switch(mode)
 		if(RCD_MODE_FLOOR_WALLS)

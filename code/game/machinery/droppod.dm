@@ -535,10 +535,10 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(get_stats_html(), "window=droppod")
+	intruder << browse(get_stats_html(intruder.client), "window=droppod")
 	return
 
-/obj/structure/droppod/proc/get_stats_html()
+/obj/structure/droppod/proc/get_stats_html(client/user)
 	var/output = {"<html>
 				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[name] data</title>
 				<style>
@@ -552,6 +552,7 @@
 				.visible {display: block;}
 				.hidden {display: none;}
 				</style>
+				[get_browse_zoom_style(user)]
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
 				[js_dropdowns]
