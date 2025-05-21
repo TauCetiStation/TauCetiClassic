@@ -153,12 +153,14 @@
 	sweep_step = 2
 
 /obj/item/weapon/kitchenknife/atom_init()
-	. = ..()
+	..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
+
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b></span>", \
@@ -193,9 +195,7 @@
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
 
-/obj/item/weapon/kitchenknife/combat/atom_init()
-	. = ..()
-
+/obj/item/weapon/kitchenknife/combat/atom_init_late()
 	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/kitchenknife/throwing

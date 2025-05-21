@@ -38,12 +38,16 @@
 		user.make_dizzy(120)
 
 /obj/item/weapon/shield/mirror
+	hitsound = list('sound/weapons/metal_shield_hit.ogg')
 	name = "mirror shield"
 	desc = "An infamous shield used by eldritch sects to confuse and disorient their enemies."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "mirror_shield"
 	flags = DROPDEL
+	w_class = SIZE_NORMAL
+	force = 5.0
 	slot_flags = FALSE
+	attack_verb = list("shoved", "bashed")
 	var/reflect_chance = 70
 
 /obj/item/weapon/shield/mirror/pickup(mob/living/user)

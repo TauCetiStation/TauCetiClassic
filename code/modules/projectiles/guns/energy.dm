@@ -16,7 +16,7 @@
 	..()
 
 /obj/item/weapon/gun/energy/atom_init()
-	. = ..()
+	..()
 	if(cell_type)
 		power_supply = new cell_type(src)
 		power_supply.give(power_supply.maxcharge)
@@ -28,8 +28,11 @@
 		ammo_type[i] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
-	AddComponent(/datum/component/serialNumber, src)
 	update_icon()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/gun/energy/atom_init_late()
+	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()

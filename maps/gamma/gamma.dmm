@@ -73714,7 +73714,6 @@
 	pixel_x = 6;
 	pixel_y = -7
 	},
-/obj/item/weapon/paper/inventory/armoryWeaponList,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -110274,6 +110273,9 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
+	},
+/obj/item/weapon/paper/inventory/armoryWeaponList{
+	pixel_y = -21
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

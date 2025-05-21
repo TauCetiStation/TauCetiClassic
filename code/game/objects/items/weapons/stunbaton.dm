@@ -17,15 +17,18 @@
 	origin_tech = "combat=2"
 
 /obj/item/weapon/melee/baton/atom_init()
-	. = ..()
+	..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
 
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
-	AddComponent(/datum/component/serialNumber, src)
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/melee/baton/atom_init_late()
+	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")

@@ -1145,25 +1145,14 @@ var/global/list/contributor_names
 
 /obj/item/weapon/paper/inventory
 	name = "Опись"
+	info = "<h1>Опись:</h1><br>"
 
 /obj/item/weapon/paper/inventory/atom_init()
 	. = ..()
-	writeInfo()
-	update_icon()
-
-/obj/item/weapon/paper/inventory/proc/writeInfo()
-	if(!SSticker.current_state == GAME_STATE_SETTING_UP)
-		return
-
-	info = "<h1>Опись:</h1><br>"
+	if(SSticker.current_state <= GAME_STATE_SETTING_UP)
+		var/area/A = get_area(src)
+		A.beacon = src
+		update_icon()
 
 /obj/item/weapon/paper/inventory/armoryWeaponList
 	name = "Опись: Серийные номера оружия"
-
-/obj/item/weapon/paper/inventory/armoryWeaponList/writeInfo()
-	. = ..()
-
-	for(var/obj/item/I in get_area_by_type(/area/station/security/armoury))
-		if(I.GetComponent(/datum/component/serialNumber))
-			var/datum/component/serialNumber/S = I.GetComponent(/datum/component/serialNumber)
-			info += "<hr><b>[I.name]</b><br><u>Серийный номер: [S.serialNumber]</u><br>"
