@@ -157,7 +157,7 @@ var/global/list/alldepartments = list("Central Command")
 		if(!tofax)
 			user.drop_from_inventory(O, src)
 			tofax = O
-			to_chat(user, "<span class='notice'>You insert the item into \the [src].</span>")
+			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
 			flick("faxsend", src)
 			updateUsrDialog()
 		else
