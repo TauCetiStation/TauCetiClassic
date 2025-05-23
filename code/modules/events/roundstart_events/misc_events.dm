@@ -224,7 +224,7 @@ var/global/list/firstaid_list = list()
 			log_game("RoundStart Event: [V] products reduced at [COORD(V)]")
 
 /datum/event/feature/random_graffiti/start()
-	var/list/possible_graffiti = list("ПОМОГИТЕ", "ЗДЕСЬ БЫЛ ВАСЯ", "NT = КЛОУНЫ", "ПРОВЕРЬТЕ ВОЗДУХ", "Они повсюду!")
+	var/list/possible_graffiti = list("ПОМОГИТЕ", "ЗДЕСЬ БЫЛ ВАСЯ", "NT = КЛОУНЫ", "ПРОВЕРЬТЕ ВОЗДУХ", "Они повсюду!", "Не ходите по темным тех тонелям!")
 	var/list/crayon_colors = list("#FF0000", "#0000FF", "#00FF00", "#FFFF00")
 
 	for(var/turf/simulated/wall/W in world)
