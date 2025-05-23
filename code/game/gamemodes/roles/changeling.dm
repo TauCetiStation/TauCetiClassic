@@ -7,7 +7,8 @@
 	antag_hud_name = "changeling"
 
 	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Head of Security", "Captain", "Blueshield Officer")
-	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC)
+	restricted_species_traits = list(TRAIT_INCOMPATIBLE_DNA)
 	logo_state = "change-logoa"
 
 	stat_type = /datum/stat/role/changeling

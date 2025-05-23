@@ -227,6 +227,16 @@
 		var/datum/metahelp/H = new help
 		global.metahelps[H.id] = H
 
+
+	global.skin_tones_by_ru_name = list()
+	global.skin_tones_by_name = list()
+	global.skin_tones = list()
+	for(var/tone in subtypesof(/datum/skin_tone))
+		var/datum/skin_tone/T = new tone
+		global.skin_tones_by_ru_name[T.cases[NOMINATIVE_CASE]] = T
+		global.skin_tones_by_name[T.name] = T
+		global.skin_tones += T
+
 	global.special_roles = get_list_of_primary_keys(special_roles_ignore_question)
 
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY
@@ -298,11 +308,6 @@
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
 	init_washing_items_list()
-
-	global.body_wing_accessory_by_name = list()
-	for(var/A as anything in subtypesof(/datum/sprite_accessory/wing))
-		var/datum/sprite_accessory/wing/B = new A
-		global.body_wing_accessory_by_name[B.name] = B
 
 /proc/init_washing_items_list()
 	var/list/path_list = list(/obj/item/clothing/mask,

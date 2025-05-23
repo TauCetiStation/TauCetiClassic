@@ -27,7 +27,7 @@
 
 	var/sqlbrute = text2num(H.getBruteLoss())
 	var/sqlfire = text2num(H.getFireLoss())
-	var/sqlbrain = text2num(H.brainloss)
+	var/sqlbrain = text2num(H.getBrainLoss())
 	var/sqloxy = text2num(H.getOxyLoss())
 
 	if(establish_db_connection("erro_death"))
@@ -63,7 +63,7 @@
 
 	var/sqlbrute = text2num(H.getBruteLoss())
 	var/sqlfire = text2num(H.getFireLoss())
-	var/sqlbrain = text2num(H.brainloss)
+	var/sqlbrain = text2num(H.getBrainLoss())
 	var/sqloxy = text2num(H.getOxyLoss())
 
 	if(establish_db_connection("erro_death"))

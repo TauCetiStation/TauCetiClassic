@@ -1183,6 +1183,15 @@
 	. = ..()
 	icon_state = "syndi_cakes-[pick("1", "2")]"
 
+/obj/item/weapon/reagent_containers/food/snacks/simplewaffle
+	name = "Simple Waffle"
+	icon_state = "simplewaffle"
+	item_state_world = "simplewaffle_world"
+	desc = "A single waffle. Smells like childhood!"
+	filling_color = "#9c5e25"
+	bitesize = 2
+	list_reagents = list("nutriment" = 4, "strangejam" = 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	name = "Loaded Baked Potato"
 	desc = "Totally baked."

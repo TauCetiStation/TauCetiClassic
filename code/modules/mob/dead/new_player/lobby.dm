@@ -55,19 +55,18 @@ var/global/lobby_screen = "lobby"
 
 				.container_nav {
 					position: absolute;
-					width: auto;
 					min-width: 100vmin;
-					min-height: 50vmin;
-					padding-left: 5vmin;
-					padding-top: 50vmin;
-					box-sizing: border-box;
+					min-height: 100vmin;
 					top: 50%;
 					left: 50%;
 					transform: translate(-50%, -50%);
 					z-index: 1;
 				}
 
-				body.lobby-default .container_nav_rot {
+				.container_nav_rot {
+					position: absolute;
+					left: 5vmin;
+					bottom: 10vmin;
 					transform: rotate3d(3, 5, 0, 25deg);
 					transform-origin: top center;
 				}
