@@ -1,4 +1,3 @@
-// Глобальные списки (объявлены один раз в начале файла)
 var/global/list/fueltank_list = list()
 var/global/list/watertank_list = list()
 var/global/list/cleaners_list = list()
