@@ -2,10 +2,7 @@
 	startWhen = 30
 	endWhen = 900
 
-	var/affecting_z = 2
-
 /datum/event/egg_hunt/setup()
-	affecting_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/datum/announcement/centcomm/egghunt/pre/announcement_pre = new
 	announcement_pre.play()
 
@@ -13,17 +10,17 @@
 	var/eggsspawned = 0
 	var/eggsmax = player_list.len * 8 // 8 eggs per player
 	for(var/i in 1 to 3000) // 3000 attempts
-		var/turf/candidate = locate(rand(1, world.maxx), rand(1, world.maxy), affecting_z)
+		var/turf/candidate = locate(rand(1, world.maxx), rand(1, world.maxy), pick(SSmapping.levels_by_trait(ZTRAIT_STATION)))
 		if(isfloorturf(candidate))
-			eggsspawned += 1
-			new /obj/random/foods/boiledegg(candidate)
+			var/hasCloset = FALSE;
+			for(var/obj/structure/closet/C in candidate)
+				new /obj/random/foods/boiledegg(C);
+				hasCloset = TRUE;
+			if(!hasCloset)
+				new /obj/random/foods/boiledegg(candidate);
+			eggsspawned += 1;
 		if(eggsspawned >= eggsmax)
 			break
-
-	// a chance to spawn an egg in each closet
-	for(var/obj/structure/closet/C in closet_list)
-		if(prob(5))
-			new /obj/random/foods/boiledegg(C)
 
 	var/datum/announcement/centcomm/egghunt/start/announcement_start = new
 	announcement_start.play()
@@ -32,13 +29,12 @@
 	var/list/winners_list = list()
 	for(var/mob/living/carbon/human/H in player_list)
 		var/egg_amount = 0
-		if(is_station_level(H.z))
-			var/list/items_to_check = H.GetAllContents()
-			for(var/A in items_to_check)
-				if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/egg))
-					egg_amount++
-				if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/boiledegg))
-					egg_amount++
+		var/list/items_to_check = H.GetAllContents()
+		for(var/A in items_to_check)
+			if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/egg))
+				egg_amount++
+			if(istype(A, /obj/item/weapon/reagent_containers/food/snacks/boiledegg))
+				egg_amount++
 		winners_list[H.name] = egg_amount
 	sortTim(winners_list, GLOBAL_PROC_REF(cmp_numeric_dsc), associative=TRUE)
 
