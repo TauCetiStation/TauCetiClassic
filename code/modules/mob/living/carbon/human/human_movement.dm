@@ -53,7 +53,7 @@
 	if(buckled) // so, if we buckled we have large debuff
 		if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 			moving_bodyparts = list(BP_L_ARM , BP_R_ARM)
-			tally += 0.25
+			tally -= 0.5
 		else
 			tally += 5.5
 
