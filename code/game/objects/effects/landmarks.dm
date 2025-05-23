@@ -568,3 +568,33 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 /obj/effect/landmark/red_team
 	name = "Red Team"
 	icon_state = "x"
+
+// robust event map landmarks
+/obj/effect/landmark/robust
+	name = "Robust Visitor"
+	icon = 'icons/mob/landmarks.dmi'
+	icon_state = "x"
+
+/obj/effect/landmark/robust/cook
+	name = "Robust Kitchen Chef"
+	icon_state = "Chef"
+
+/obj/effect/landmark/robust/bartender
+	name = "Robust Bartender"
+	icon_state = "Bartender"
+
+/obj/effect/landmark/robust/janitorborg
+	name = "Robust Janitor Borg"
+	icon_state = "Cyborg"
+
+/obj/effect/landmark/robust/security
+	name = "Robust Security"
+	icon_state = "Security Officer"
+
+/obj/effect/landmark/robust/engineer
+	name = "Robust Engineer"
+	icon_state = "Station Engineer"
+
+/obj/effect/landmark/robust/clown
+	name = "Robust Clown"
+	icon_state = "Clown"
