@@ -28,11 +28,7 @@ var/global/list/nightmares = list(
 /mob/living/carbon/proc/dream()
 	dreaming = IS_DREAMING
 	if(reagents.has_reagent("unholywater"))
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(!(H.species && H.species.flags[NO_BLOOD]))
-				dreaming = IS_NIGHTMARE
-		else
+		if(!HAS_TRAIT(src, TRAIT_NO_BLOOD)) // why blood
 			dreaming = IS_NIGHTMARE
 	for(var/obj/item/candle/ghost/CG in range(4, src))
 		if(CG.lit)

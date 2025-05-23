@@ -847,11 +847,9 @@ var/global/list/admin_verbs_hideable = list(
 		M.g_skin = hex2num(copytext(new_skin, 4, 6))
 		M.b_skin = hex2num(copytext(new_skin, 6, 8))
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
-
-	if (new_tone)
-		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-		M.s_tone =  -M.s_tone + 35
+	var/new_tone = input("Выберите цвет кожи", "Создание персонажа") in global.skin_tones_by_ru_name
+	var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+	M.s_tone = T.name
 
 	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
@@ -870,9 +868,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(new_fstyle)
 		M.f_style = new_fstyle
 
-	M.apply_recolor()
-	M.update_hair()
-	M.update_body()
+	M.update_body(update_preferences = TRUE)
 	M.check_dna(M)
 
 /client/proc/show_player_notes(key as text)

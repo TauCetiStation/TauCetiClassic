@@ -709,7 +709,7 @@
 	var/equipped_on_head = FALSE
 	var/rig_type = "syndie"
 	var/glowtype = "terror"
-	flags = BLOCKHAIR | PHORONGUARD
+	flags = PHORONGUARD
 	light_color = LIGHT_COLOR_NUKE_OPS
 
 /obj/item/clothing/head/helmet/space/rig/syndi/atom_init()

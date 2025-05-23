@@ -77,7 +77,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 
@@ -90,7 +90,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
+		EMOTE_STATE(is_not_trait, ELEMENT_TRAIT_ZOMBIE),
 	)
 
 /datum/emote/shake/get_emote_message_3p(mob/user)

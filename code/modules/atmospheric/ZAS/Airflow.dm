@@ -54,7 +54,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	return n >= vsc.airflow_dense_pressure
 
 /mob/check_airflow_movable(n)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_IMMOVABLE))
 		return FALSE
 	if(buckled || anchored)
 		return FALSE

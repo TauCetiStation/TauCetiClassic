@@ -1823,20 +1823,3 @@
 	icon_state = "dio_brush"
 	do_colouration = FALSE
 	species_allowed = list(DIONA, PODMAN)
-
-/datum/sprite_accessory/wing
-	icon = 'icons/mob/species/wings/wings.dmi'
-	name = "none"
-	icon_state = "none"
-
-/datum/sprite_accessory/wing/atlas
-	name = "Atlas Wings"
-	icon_state = "atlas"
-
-/datum/sprite_accessory/wing/royal
-	name = "Royal Wings"
-	icon_state = "royal"
-
-/datum/sprite_accessory/wing/feathery
-	name = "Feathery Wings"
-	icon_state = "feathery"

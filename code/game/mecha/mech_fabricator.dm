@@ -347,6 +347,7 @@
 				html, body {padding: 0px; margin: 0px;}
 				h1 {font-size: 18px; margin: 5px 0px;}
 				</style>
+				[get_browse_zoom_style(user.client)]
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
 				</script>
@@ -364,7 +365,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mecha_fabricator;size=1000x430")
+	user << browse(dat, "window=mecha_fabricator;[get_browse_size_parameter(user.client, 1000, 430)]")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
