@@ -175,6 +175,11 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Last Clown Jokes",        /datum/event/feature/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Chiefs Animals",          /datum/event/feature/head_animals,                            10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Nuke Journey",            /datum/event/feature/bomb_journey,                            10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Open Closets",            /datum/event/feature/open_closets,                            15, list(ASSIGNMENT_SECURITY = 10)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Empty Security Lockers",  /datum/event/feature/empty_sec_lockers,                       10, list(ASSIGNMENT_SECURITY = 5)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Disabled Cameras",        /datum/event/feature/disabled_cameras,                        10, list(ASSIGNMENT_SECURITY = 5)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Empty Vendors",           /datum/event/feature/empty_vendors,                           10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Random Graffiti",        /datum/event/feature/random_graffiti,                          50)
 	)
 
 /datum/event_container/mundane
