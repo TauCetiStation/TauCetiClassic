@@ -27675,6 +27675,7 @@
 /obj/item/weapon/tank/jetpack/oxygen,
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/clothing/suit/armor/captain,
+/obj/item/clothing/shoes/magboots/ert,
 /obj/item/clothing/head/helmet/space/capspace,
 /obj/structure/bobross{
 	pixel_x = 32
