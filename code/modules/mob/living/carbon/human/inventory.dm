@@ -122,7 +122,9 @@
 		if(SLOT_TIE)
 			return TRUE
 
-/mob/living/carbon/human/u_equip(obj/item/W)
+/mob/living/carbon/human/u_equip(obj/item/W, mob/human)
+	var/mob/living/carbon/human/h = human
+
 	if(!W)
 		return
 
@@ -131,16 +133,18 @@
 			drop_from_inventory(s_store)
 		wear_suit = null
 	else if (W == w_uniform)
-		if (r_store)
-			drop_from_inventory(r_store)
-		if (l_store)
-			drop_from_inventory(l_store)
-		if (wear_id)
-			drop_from_inventory(wear_id)
-		if (belt)
-			drop_from_inventory(belt)
 		w_uniform = null
 		update_suit_sensors()
+		if (!h.species.flags[IS_SYNTHETIC])
+			if (r_store)
+				drop_from_inventory(r_store)
+			if (l_store)
+				drop_from_inventory(l_store)
+			if (wear_id)
+				drop_from_inventory(wear_id)
+			if (belt)
+				drop_from_inventory(belt)
+
 	else if (W == gloves)
 		gloves = null
 	else if (W == glasses)
