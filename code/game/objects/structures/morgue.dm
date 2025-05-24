@@ -175,7 +175,6 @@
 
 /obj/structure/morgue/attackby(P, mob/user)
 	if(istype(P, /obj/item/weapon/pen))
-
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
@@ -416,6 +415,9 @@
 		to_chat(user, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 		return
 
+	start_cremation(user)
+
+/obj/structure/crematorium/proc/start_cremation(mob/user)
 	audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
 	set_cremating(TRUE)
@@ -433,6 +435,7 @@
 		qdel(O)
 
 	new /obj/effect/decal/cleanable/ash(src)
+
 	addtimer(CALLBACK(src, .proc/finish_cremation), 10 SECONDS)
 
 /obj/structure/crematorium/proc/set_cremating(value)
@@ -501,7 +504,6 @@
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
 				to_chat(B, text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src))
-			//Foreach goto(99)
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
@@ -515,4 +517,4 @@
 				for(var/mob/living/M in C.contents)
 					user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
 					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). [ADMIN_JMP(user)]")
-				C.cremate(user)
+				C.start_cremation(user)
