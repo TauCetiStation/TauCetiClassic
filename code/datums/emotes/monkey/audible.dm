@@ -8,6 +8,4 @@
 
 	sound = 'sound/misc/nymphchirp.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
