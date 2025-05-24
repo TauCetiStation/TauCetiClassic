@@ -14,6 +14,8 @@
 	var/filler_margin_y = 11
 	var/filler_height = 7
 	var/current_offset = -1
+	resistance_flags = CAN_BE_HIT
+	fragile = TRUE
 
 /obj/item/weapon/reagent_containers/glass/bottle/atom_init()
 	. = ..()
