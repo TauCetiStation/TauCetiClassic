@@ -6,6 +6,14 @@
 // Converts 255 RGB color values to float and returns that as matrix, where color applied into contrast row.
 #define RGB_CONTRAST(r, g, b) list(1,0,0, 0,1,0, 0,0,1, r/255, g/255, b/255)
 
+//Returns the hex value of a decimal number
+//len == length of returned string
+#define num2hex(X, len) num2text(X, len, 16)
+
+//Returns an integer given a hex input, supports negative values "-ff"
+//skips preceding invalid characters
+#define hex2num(X) text2num(X, 16)
+
 //"fancy" math for calculating time in ms from tick_usage percentage and the length of ticks
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)
 //collapsed to percent_of_tick_used * tick_lag

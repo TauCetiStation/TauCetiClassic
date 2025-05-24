@@ -195,7 +195,7 @@
 
 		var/list/bloodData = list()
 		bloodData["hasBlood"] = FALSE
-		if(!occupant.species.flags[NO_BLOOD])
+		if(!HAS_TRAIT(occupant, TRAIT_NO_BLOOD))
 			bloodData["hasBlood"] = TRUE
 			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
 			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)

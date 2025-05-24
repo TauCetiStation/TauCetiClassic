@@ -6,7 +6,7 @@
 	name = "black gloves"
 	desc = "Heaped gloves with a bunch of all sorts of electronics."
 	icon_state = "marinad"
-	item_state = "marinad"
+	item_state = "bgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	cold_protection = ARMS

@@ -1024,17 +1024,17 @@
 				to_chat(H, "<span class='warning'>Your chin itches.</span>")
 				if(H.f_style == "Shaved" && prob(30))
 					H.f_style = "Jensen Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(2)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard") && !(H.f_style == "Full Beard"))
 					to_chat(H, "<span class='warning'>You feel tough.</span>")
 					H.f_style = "Full Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(3)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard"))
 					to_chat(H, "<span class='warning'>You feel manly!</span>")
 					H.f_style = pick("Dwarf Beard", "Very Long Beard")
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/hallucinations
 	name = "Hallucinational Syndrome"
@@ -1458,7 +1458,7 @@
 			H.h_style = "Balding Hair"
 		else if(H.species.name == TAJARAN)
 			H.h_style = "Tajaran Ears"
-	H.update_hair()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/monitoring
 	name = "Monitoring"
@@ -1600,7 +1600,7 @@
 /datum/disease2/effect/headache/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.species && !H.species.flags[NO_PAIN])
+		if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 			if(prob(20) || holder.stage	== 1)
 				to_chat(H, "<span class = 'notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
 			else if(prob(20) || (holder.stage >= 2 && holder.stage <= 5))

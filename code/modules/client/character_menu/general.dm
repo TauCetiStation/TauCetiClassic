@@ -47,7 +47,8 @@
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
 			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
-				. += "<br>Skin Tone: <a href='byond://?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
+				var/datum/skin_tone/tone = global.skin_tones_by_name[s_tone]
+				. += "<br>Skin Tone: <a href='byond://?_src_=prefs;preference=s_tone;task=input'>[CASE(tone, NOMINATIVE_CASE)]</a>"
 
 		//Organs
 		if("organs")
@@ -443,9 +444,9 @@
 				if("s_tone")
 					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35 - s_tone ) as num|null
-					if(new_s_tone)
-						s_tone = 35 - max(min( round(new_s_tone), 220),1)
+					var/new_tone = input("Выберите цвет кожи", "Character Preference") in global.skin_tones_by_ru_name
+					var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+					s_tone = T.name
 
 				if("skin")
 					if(!specie_obj.flags[HAS_SKIN_COLOR])
