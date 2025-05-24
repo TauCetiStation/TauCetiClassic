@@ -323,9 +323,11 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia = 3,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donut/syndie = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia = 5,
 	)
 	premium = list(
 		/obj/item/weapon/storage/fancy/donut_box = 3,
