@@ -571,30 +571,58 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 // robust event map landmarks
 /obj/effect/landmark/robust
-	name = "Robust Visitor"
+	name = "Robust"
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 
-/obj/effect/landmark/robust/cook
-	name = "Robust Kitchen Chef"
+/obj/effect/landmark/robust/visitor
+	name = "Robust Visitor"
+	icon_state = "Assistant"
+
+/obj/effect/landmark/robust/visitor/big
+	name = "Robust Visitor Big Station"
+
+/obj/effect/landmark/robust/commentator
+	name = "Robust Commentator"
+	icon_state = "Blueshield Officer"
+
+/obj/effect/landmark/robust/commentator/big
+	name = "Robust Commentator Big Station"
+
+/obj/effect/landmark/robust/doctor
+	name = "Robust Doctor"
+	icon_state = "Medical Doctor"
+
+/obj/effect/landmark/robust/doctor/big
+	name = "Robust Doctor Big Station"
+
+/obj/effect/landmark/robust/cook/big
+	name = "Robust Kitchen Chef Big Station"
 	icon_state = "Chef"
 
-/obj/effect/landmark/robust/bartender
-	name = "Robust Bartender"
+/obj/effect/landmark/robust/bartender/big
+	name = "Robust Bartender Big Station"
 	icon_state = "Bartender"
 
-/obj/effect/landmark/robust/janitorborg
-	name = "Robust Janitor Borg"
+/obj/effect/landmark/robust/janitor
+	name = "Robust Janitor"
+	icon_state = "Janitor"
+
+/obj/effect/landmark/robust/janitor/big
+	name = "Robust Janitor Big Station"
+
+/obj/effect/landmark/robust/janitorborg/big
+	name = "Robust Janitor Borg Big Station"
 	icon_state = "Cyborg"
 
-/obj/effect/landmark/robust/security
-	name = "Robust Security"
+/obj/effect/landmark/robust/security/big
+	name = "Robust Security Big Station"
 	icon_state = "Security Officer"
 
-/obj/effect/landmark/robust/engineer
-	name = "Robust Engineer"
+/obj/effect/landmark/robust/engineer/big
+	name = "Robust Engineer Big Station"
 	icon_state = "Station Engineer"
 
-/obj/effect/landmark/robust/clown
-	name = "Robust Clown"
+/obj/effect/landmark/robust/clown/big
+	name = "Robust Clown Big Station"
 	icon_state = "Clown"
