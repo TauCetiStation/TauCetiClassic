@@ -378,6 +378,12 @@
 		A.forceMove(new_loc)
 
 /obj/structure/crematorium/attack_hand(mob/user)
+//	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
+//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
+//		//usr << "Uh-oh, that was a bad idea."
+//		src:loc:poison += 20000000
+//		src:loc:firelevel = src:loc:poison
+//		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if (cremating)
 		to_chat(user, "<span class='rose'>It's locked.</span>")
@@ -495,6 +501,7 @@
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
 				to_chat(B, text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src))
+			//Foreach goto(99)
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
