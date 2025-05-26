@@ -22,6 +22,11 @@
 
 /datum/map_module/robust/New()
 	..()
+	config.health_threshold_softcrit = -20 // 0 by default
+	config.health_threshold_crit = -70 // -50 by default
+	config.organ_health_multiplier = 1.25 // 1 by default
+	// show must go on!
+
 	spawners["Robust Visitor"] = create_spawner(/datum/spawner/robust, src)
 	spawners["Robust Janitor"] = create_spawner(/datum/spawner/robust/janitor, src)
 	spawners["Robust Doctor"] = create_spawners(/datum/spawner/robust/doctor, 2, src)
