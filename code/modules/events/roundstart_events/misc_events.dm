@@ -224,7 +224,7 @@ var/global/list/firstaid_list = list()
 
 /datum/event/feature/random_graffiti/start()
 	var/list/possible_graffiti = list("ПОМОГИТЕ", "ЗДЕСЬ БЫЛ ВАСЯ", "NT = КЛОУНЫ", "ПРОВЕРЬТЕ ВОЗДУХ", "Они повсюду!", "Не ходите по темным тех тонелям!")
-	var/list/crayon_colors = list("#FF0000", "#0000FF", "#00FF00", "#FFFF00")
+	var/list/crayon_colors = list("#ff0000", "#0000ff", "#00ff00", "#ffff00")
 
 	for(var/turf/simulated/wall/W in world)
 		if(prob(1) && is_station_level(W.z))
