@@ -305,6 +305,48 @@
 			src.icon_state = "crema1"
 	return
 
+/obj/structure/crematorium/proc/start_cremation(mob/user)
+	if(cremating)
+		return
+
+	if(contents.len <= 0)
+		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
+		return
+
+	if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
+		to_chat(user, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
+		return
+
+	audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
+
+	cremating = TRUE
+	locked = TRUE
+	update_icon()
+
+	for(var/mob/living/M in contents)
+		if (M.stat != DEAD)
+			M.emote("scream")
+		M.log_combat(user, "cremated")
+		M.death(1)
+		M.ghostize(bancheck = TRUE)
+		qdel(M)
+
+	for(var/obj/O in contents)
+		qdel(O)
+
+	new /obj/effect/decal/cleanable/ash(src)
+
+	addtimer(CALLBACK(src, .proc/finish_cremation), 10 SECONDS)
+
+/obj/structure/crematorium/proc/finish_cremation()
+	if(QDELETED(src))
+		return
+
+	cremating = FALSE
+	locked = FALSE
+	update_icon()
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
+
 /obj/structure/crematorium/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_HEAVY)
@@ -336,12 +378,6 @@
 		A.forceMove(new_loc)
 
 /obj/structure/crematorium/attack_hand(mob/user)
-//	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
-//		//usr << "Uh-oh, that was a bad idea."
-//		src:loc:poison += 20000000
-//		src:loc:firelevel = src:loc:poison
-//		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if (cremating)
 		to_chat(user, "<span class='rose'>It's locked.</span>")
@@ -402,51 +438,6 @@
 		qdel(src.connected)
 		src.connected = null
 	return
-
-/obj/structure/crematorium/proc/cremate(atom/A, mob/user)
-	if(cremating)
-		return
-
-	if(contents.len <= 0)
-		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
-		return
-
-	if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
-		to_chat(user, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
-		return
-
-	start_cremation(user)
-
-/obj/structure/crematorium/proc/start_cremation(mob/user)
-	audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
-
-	set_cremating(TRUE)
-	locked = TRUE
-
-	for(var/mob/living/M in contents)
-		if (M.stat != DEAD)
-			M.emote("scream")
-		M.log_combat(user, "cremated")
-		M.death(1)
-		M.ghostize(bancheck = TRUE)
-		qdel(M)
-
-	for(var/obj/O in contents)
-		qdel(O)
-
-	new /obj/effect/decal/cleanable/ash(src)
-
-	addtimer(CALLBACK(src, .proc/finish_cremation), 10 SECONDS)
-
-/obj/structure/crematorium/proc/set_cremating(value)
-	cremating = value
-	update_icon()
-
-/obj/structure/crematorium/proc/finish_cremation()
-	if(QDELETED(src)) return
-	set_cremating(FALSE)
-	locked = FALSE
-	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/crematorium/deconstruct(disassembled)
 	move_contents(loc)
