@@ -90,7 +90,7 @@
 		O.adjustCloneLoss(getCloneLoss())
 		O.adjustFireLoss(getFireLoss())
 		O.adjustBrainLoss(getBrainLoss())
-		O.adjustHalLoss()
+		O.adjustHalLoss(getHalLoss())
 		O.updatehealth()
 		O.radiation = radiation
 
@@ -210,7 +210,7 @@
 		O.adjustCloneLoss(getCloneLoss())
 		O.adjustFireLoss(getFireLoss())
 		O.adjustBrainLoss(getBrainLoss())
-		O.adjustHalLoss()
+		O.adjustHalLoss(getHalLoss())
 		O.updatehealth()
 		O.radiation = radiation
 
@@ -325,7 +325,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -378,7 +377,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -409,7 +407,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -445,7 +442,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -476,7 +472,6 @@
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null

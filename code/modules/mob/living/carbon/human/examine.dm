@@ -257,6 +257,9 @@
 		if(BP && BP.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.name]!</span>\n"
 
+	if(pale)
+		msg += "<span class='warning'>[t_He] looks pale.</span>\n"
+
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
@@ -484,8 +487,11 @@
 		if(istype(BP) && BP.disfigured)
 			msg += "<span class='warning'><b>[t_His] face is violently disfigured!</b></span>\n"
 
-	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
-		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
+	if((!skipface || !skipjumpsuit || !skipgloves))
+		if(HAS_TRAIT(src, TRAIT_BURNT))
+			msg += "<span class='warning'><b>[t_His] skin looks burnt!</b></span>\n"
+		else if(HAS_TRAIT(src, TRAIT_HUSK))
+			msg += "<span class='warning'><b>[t_His] skin looks drained!</b></span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]

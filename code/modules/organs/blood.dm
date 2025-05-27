@@ -12,7 +12,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human
 	var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
-	var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
+	var/pale = FALSE
 
 
 // Initializes blood vessels
@@ -49,7 +49,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 //				B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = FALSE)
 
 /mob/living/carbon/human/proc/blood_amount(exact = FALSE)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return 0
 
 	var/volume = vessel.get_reagent_amount("blood")
@@ -59,7 +59,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	return volume
 
 /mob/living/carbon/human/proc/blood_add(amount, list/add_data = null)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return FALSE
 	if(amount < 0)
 		return FALSE
@@ -72,7 +72,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		fixblood(add_data == null)
 
 /mob/living/carbon/human/proc/blood_remove(amount)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return FALSE
 	if(amount < 0)
 		return FALSE
@@ -131,11 +131,9 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_SAFE to 10000)
 				if(pale)
 					pale = FALSE
-					update_body()
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(!pale)
 					pale = TRUE
-					update_body()
 					var/word = pick("dizzy", "woosey", "faint")
 					to_chat(src, "<span class='warning'>You feel [word]</span>")
 				if(prob(1))
@@ -146,7 +144,6 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = TRUE
-					update_body()
 				blurEyes(6)
 				if(oxyloss < 50)
 					oxyloss += 10
@@ -256,7 +253,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	if(organs_by_name[O_HEART] && blood_remove(amt))
-		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
+		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = get_blood_datum())
 
 /proc/blood_splatter(target, datum/reagent/blood/source, large, spray_dir, basedatum)
 	var/obj/effect/decal/cleanable/blood/B
@@ -454,7 +451,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!istype(injected))
 		return
 
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		reagents.add_reagent("blood", amount, injected.data)
 		return
 

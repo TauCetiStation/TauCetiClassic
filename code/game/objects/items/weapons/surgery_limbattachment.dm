@@ -37,7 +37,7 @@
 				BP.take_damage(15)
 
 			BP.status = ORGAN_ROBOT // in this situtation, we can simply set exact flag.
-			H.update_body()
+			H.update_body(BP.body_zone)
 			M.updatehealth()
 			M.UpdateDamageIcon(BP)
 			qdel(src)
