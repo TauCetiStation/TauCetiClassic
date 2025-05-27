@@ -46,8 +46,8 @@
 		global.station_walls += src
 	return .
 
-/turf/simulated/wall/ChangeTurf()
-	if(istype(src, /turf/simulated/wall))
+/turf/simulated/wall/ChangeTurf(newtype)
+	if(iswallturf(src))
 		global.station_walls -= src
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
