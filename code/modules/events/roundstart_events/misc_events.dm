@@ -221,15 +221,30 @@ var/global/list/secure_closet_list = list()
 			log_game("RoundStart Event: Camera disabled at [COORD(C)]")
 
 /datum/event/feature/random_graffiti/start()
-	var/list/possible_graffiti = list("ПОМОГИТЕ", "ЗДЕСЬ БЫЛ ВАСЯ", "NT = КЛОУНЫ", "ПРОВЕРЬТЕ ВОЗДУХ", "Они повсюду!", "Не ходите по темным тех тоннелям!")
-	var/list/crayon_colors = list("#ff0000", "#0000ff", "#00ff00", "#ffff00")
+	var/list/possible_graffiti = list(
+		"ПОМОГИТЕ",
+		"ЗДЕСЬ БЫЛ ВАСЯ",
+		"NT = КЛОУНЫ",
+		"ПРОВЕРЬТЕ ВОЗДУХ",
+		"Они повсюду!",
+		"Не ходите по темным техтоннелям!"
+	)
+	var/list/crayon_colors = list(
+		COLOR_RED,
+		COLOR_BLUE,
+		COLOR_GREEN,
+		COLOR_YELLOW
+	)
 
+	var/list/eligible_walls = list()
 	for(var/turf/simulated/wall/W in global.station_walls)
-		if(prob(1) && is_station_level(W.z))
+		if(prob(10))
+			eligible_walls += W
+
+	for(var/turf/simulated/wall/W in eligible_walls)
+		if(prob(30))
 			var/chosen_color = pick(crayon_colors)
 			var/chosen_text = pick(possible_graffiti)
-
 			new /obj/effect/decal/cleanable/crayon(W, chosen_color, "#000000", "graffiti", chosen_text, 1)
-
 			message_admins("RoundStart Event: Graffiti added at [COORD(W)]")
-			log_game("RoundStart Event: Graffiti added at [COORD(W)]"))
+			log_game("RoundStart Event: Graffiti added at [COORD(W)]")
