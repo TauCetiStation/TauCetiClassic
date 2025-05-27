@@ -98012,7 +98012,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/obj/item/weapon/paper/inventory/armoryWeaponList{
+/obj/item/weapon/paper/inventory{
 	pixel_x = 24
 	},
 /turf/simulated/floor{

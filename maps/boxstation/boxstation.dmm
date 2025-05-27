@@ -3197,7 +3197,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/item/weapon/paper/inventory/armoryWeaponList,
+/obj/item/weapon/paper/inventory,
 /turf/simulated/floor,
 /area/station/security/armoury)
 "aft" = (

@@ -110274,7 +110274,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/weapon/paper/inventory/armoryWeaponList{
+/obj/item/weapon/paper/inventory{
 	pixel_y = -21
 	},
 /turf/simulated/floor{
