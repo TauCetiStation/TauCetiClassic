@@ -45,7 +45,7 @@
 				SSStatistics.score.richestname = E.real_name
 				SSStatistics.score.richestjob = E.job
 				SSStatistics.score.richestkey = E.key
-			dmgscore = E.bruteloss + E.fireloss + E.toxloss + E.oxyloss
+			dmgscore = E.getBruteLoss() + E.getFireLoss() + E.getToxLoss() + E.getOxyLoss()
 			if (dmgscore > SSStatistics.score.dmgestdamage)
 				SSStatistics.score.dmgestdamage = dmgscore
 				SSStatistics.score.dmgestname = E.real_name

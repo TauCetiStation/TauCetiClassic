@@ -88,7 +88,7 @@ var/global/ticket_machine_number = 0
 	addtimer(CALLBACK(src, PROC_REF(print), selection, user), 1 SECOND)
 
 /obj/machinery/ticket_machine/proc/print(obj/item/weapon/paper/paper, mob/user)
-	var/obj/item/weapon/paper/printed = paper.create_self_copy()
+	var/obj/item/weapon/paper/printed = paper.get_fax_copy()
 
 	if(Adjacent(user))
 		user.put_in_hands(printed)

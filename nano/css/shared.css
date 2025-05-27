@@ -636,20 +636,20 @@ th.cargo {
 
 .sciTechTreeIcon {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
     width: 32px;
     height: 32px;
     background-image: url(science.png);
     background-position: -0px -0px;
     background-repeat: no-repeat;
-    zoom: 1;
-    margin-left: -16px;
-	margin-bottom: -16px;
-    /*margin-bottom: -1px;*/
 }
 
 .sciTechTreeIconBox {
     width: 32px;
     height: 32px;
+    margin: 0;
 }
 
 .sciTechResearched {

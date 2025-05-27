@@ -17,6 +17,12 @@
 
 	var/sensor_mode = FALSE //Determines the current HUD.
 
+	// can't get damage except for burn and brute
+	mob_oxy_mod = new /datum/modval(base_value = 0)
+	mob_tox_mod = new /datum/modval(base_value = 0)
+	mob_clone_mod = new /datum/modval(base_value = 0)
+	mob_brain_mod = new /datum/modval(base_value = 0)
+
 /mob/living/silicon/atom_init()
 	. = ..()
 	silicon_list += src

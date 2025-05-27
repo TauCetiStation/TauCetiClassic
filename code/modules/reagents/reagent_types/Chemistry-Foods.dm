@@ -112,6 +112,22 @@
 	M.adjustToxLoss(1 * FOOD_METABOLISM)
 	return FALSE
 
+/datum/reagent/consumable/strangejam
+	name = "Strange Jam"
+	id = "strangejam"
+	description = "A shimmering substance extracted from happy tajaran children."
+	taste_message = "happiness"
+	color = "#9e1023" // rgb: 158, 16, 35
+
+/datum/reagent/consumable/strangejam/on_general_digest(mob/living/M)
+	. = ..()
+	if(!.)
+		return
+
+	if(prob(20))
+		to_chat(M, "<span class='notice'>The world seems... kinder.</span>")
+		M.heal_bodypart_damage(1, 1)
+
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	id = "soysauce"
@@ -185,8 +201,7 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
 		return
-	var/datum/species/S = all_species[M.get_species()]
-	if(S && S.flags[NO_PAIN])
+	if(HAS_TRAIT(M, TRAIT_NO_PAIN))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))

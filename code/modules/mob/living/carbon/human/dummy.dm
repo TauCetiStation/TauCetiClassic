@@ -1,9 +1,13 @@
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
 	var/in_use = FALSE
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/dummy/atom_init()
+	. = ..()
+
+	ADD_TRAIT(src, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 
 /mob/living/carbon/human/dummy/Destroy()
 	in_use = FALSE

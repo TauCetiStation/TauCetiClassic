@@ -545,7 +545,7 @@
 	if(!istype(C))
 		return
 	C.SetNextMove(CLICK_CD_MELEE)
-	C.StopGrabs()
+	victim.StopGrabs()
 
 	holding = !holding
 

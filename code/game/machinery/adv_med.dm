@@ -73,7 +73,6 @@
 	add_fingerprint(user)
 	close_machine(G.affecting)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	qdel(G)
 
 /obj/machinery/bodyscanner/update_icon()
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
@@ -196,7 +195,7 @@
 
 		var/list/bloodData = list()
 		bloodData["hasBlood"] = FALSE
-		if(!occupant.species.flags[NO_BLOOD])
+		if(!HAS_TRAIT(occupant, TRAIT_NO_BLOOD))
 			bloodData["hasBlood"] = TRUE
 			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
 			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
