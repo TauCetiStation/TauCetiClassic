@@ -29,6 +29,18 @@
 /obj/item/weapon/paper/virus_report
 	var/list/symptoms = list()
 
+/obj/item/weapon/paper/virus_report/get_tech_points_estimation()
+	var/points = 0
+	for(var/symptom in symptoms)
+		var/list/level_to_points = list(200,500,1000,2500,10000)
+		var/level = symptoms[symptom]
+		if(level_to_points[level])
+			points += level_to_points[level]
+	if(points)
+		return "<font color='info'>This could yield [points] tech points when scanned with science tool.</font>"
+	else
+		return "<font color='warning'>This will yield no tech points when scanned with science tool.</font>"
+
 /obj/machinery/disease2/diseaseanalyser/process()
 	if(stat & (NOPOWER|BROKEN))
 		return

@@ -59,6 +59,14 @@
 	var/artifact_first_effect
 	var/artifact_second_effect
 
+/obj/item/weapon/paper/artifact_info/get_tech_points_estimation()
+	if(artifact_type && artifact_first_effect)
+		var/points = 10000 //10000 points for main effect
+		if(artifact_second_effect != "")
+			points += 5000 //5000 points for secondary effect
+		return "<font color='info'>This could yield [points] tech points when scanned with science tool.</font>"
+	return "<font color='warning'>This does not have any useful data if scanned with science tool.</font>"
+
 /obj/machinery/artifact_analyser/process()
 	if(scan_in_progress && world.time > scan_completion_time)
 		// finish scanning

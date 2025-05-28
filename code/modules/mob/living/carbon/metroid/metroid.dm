@@ -353,6 +353,19 @@
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 // has it been enhanced before?
 
+/obj/item/slime_extract/get_tech_points_estimation()
+	var/points = 1000
+	switch(type)
+		if(/obj/item/slime_extract/gold)
+			points = 2000
+		if(/obj/item/slime_extract/adamantine)
+			points = 3000
+		if(/obj/item/slime_extract/bluespace)
+			points = 5000
+		if(/obj/item/slime_extract/rainbow)
+			points = 10000
+	return "<font color='info'>This could yield [points] tech points when scanned with science tool.</font>"
+
 /obj/item/slime_extract/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)

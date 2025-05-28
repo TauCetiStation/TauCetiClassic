@@ -182,6 +182,10 @@
 
 	stored_points = rand(1,10)*1000
 
+/obj/item/weapon/disk/research_points/get_tech_points_estimation()
+	var/message = "<font color='info'>[src] stores approximately [stored_points] research points and could be uploaded to the R&D Console.</font>"
+	return message
+
 /obj/item/weapon/disk/research_points/rare/atom_init()
 	. = ..()
 
