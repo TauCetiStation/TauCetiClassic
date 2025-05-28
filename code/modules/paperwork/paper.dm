@@ -604,6 +604,30 @@
 	else
 		return ..()
 
+/obj/item/weapon/paper/verb/make_plane()
+	set name = "Make Paper Plane"
+	set category = "Object"
+	set src in usr
+	if(crumpled)
+		to_chat(usr, "<span class='warning'>You can't make a plane from crumpled paper!</span>")
+		return
+	if(istype(src, /obj/item/weapon/paper/plane))
+		to_chat(usr, "<span class='warning'>You can't make a plane from a paper plane!</span>")
+		return
+	if(usr.incapacitated())
+		return
+	usr.visible_message(
+		"[usr] starts folding [src] into a paper plane.",
+		"You start folding [src] into a paper plane."
+	)
+	if(!do_after(usr, 3 SECOND, target = src))
+		return
+	var/obj/item/weapon/paper/plane/PP = new(usr.loc)
+	PP.original_paper = get_fax_copy()
+	PP.name = name
+	usr.put_in_hands(PP)
+	qdel(src)
+
 /obj/item/weapon/paper/plane
 	name = "paper plane"
 	desc = "A simple folded paper airplane."
@@ -613,6 +637,7 @@
 	throw_speed = 1
 	w_class = SIZE_MINUSCULE
 	attack_verb = list("glides past", "flutters near")
+	var/obj/item/weapon/paper/original_paper
 
 /obj/item/weapon/paper/plane/atom_init()
 	. = ..()
@@ -627,38 +652,10 @@
 		"[user] unfolds [src] back into a sheet of paper.",
 		"You unfold [src] back into a sheet of paper."
 	)
-	var/obj/item/weapon/paper/P = new(user.loc)
-	P.info = info
-	P.name = name
-	P.stamp_text = stamp_text
-	user.put_in_hands(P)
-	qdel(src)
-
-/obj/item/weapon/paper/verb/make_plane()
-	set name = "Make Paper Plane"
-	set category = "Object"
-	set src in usr
-
-	if(crumpled)
-		to_chat(usr, "<span class='warning'>You can't make a plane from crumpled paper!</span>")
-		return
-
-	if(usr.incapacitated())
-		return
-
-	usr.visible_message(
-		"[usr] starts folding [src] into a paper plane.",
-		"You start folding [src] into a paper plane."
-	)
-
-	if(!do_after(usr, 3 SECOND, target = src))
-		return
-
-	var/obj/item/weapon/paper/plane/PP = new(usr.loc)
-	PP.info = info
-	PP.name = name
-	PP.stamp_text = stamp_text
-	usr.put_in_hands(PP)
+	if(original_paper)
+		var/obj/item/weapon/paper/P = original_paper.get_fax_copy()
+		P.forceMove(user.loc)
+		user.put_in_hands(P)
 	qdel(src)
 
 /*
