@@ -250,7 +250,7 @@
 
 	item_tech_points = round(item_tech_points)
 	if(item_tech_points > 0)
-		return "<font color='info'>This could yield approximately [item_tech_points] tech points when scanned with science tool.</font>"
+		return "<font color='info'>This could yield approximately [item_tech_points] tech points in Destructive Analyzer.</font>"
 	else
 		return "<font color='warning'>This will yield no tech points when scanned with science tool.</font>"
 
