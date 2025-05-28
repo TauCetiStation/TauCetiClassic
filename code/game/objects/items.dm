@@ -252,7 +252,7 @@
 	if(item_tech_points > 0)
 		return "<font color='info'>This could yield approximately [item_tech_points] tech points in Destructive Analyzer.</font>"
 	else
-		return "<font color='warning'>This will yield no tech points when scanned with science tool.</font>"
+		return "<font color='warning'>This will yield no tech points in Destructive Analyzer.</font>"
 
 /obj/item/proc/mob_pickup(mob/user, hand_index=null)
 	if (!user || anchored)
