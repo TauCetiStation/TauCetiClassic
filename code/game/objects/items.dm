@@ -221,38 +221,11 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.sightglassesmod && H.sightglassesmod == "sci")
-			var/points_estimation_message = get_tech_points_estimation()
-			to_chat(H, "[points_estimation_message]")
-
-/obj/item/proc/get_tech_points_estimation()
-	var/list/tech_points = list(
-			"materials" = 200,
-			"engineering" = 250,
-			"phorontech" = 500,
-			"powerstorage" = 300,
-			"bluespace" = 1000,
-			"biotech" = 300,
-			"combat" = 500,
-			"magnets" = 350,
-			"programming" = 400,
-			"syndicate" = 5000,
-	)
-
-	var/list/temp_tech = params2list(origin_tech)
-	for(var/O in temp_tech)
-		temp_tech[O] = text2num(temp_tech[O])
-	var/item_tech_points = 0
-
-	for(var/T in temp_tech)
-		if(tech_points[T])
-			item_tech_points += temp_tech[T] * tech_points[T]
-
-	item_tech_points = round(item_tech_points)
-	if(item_tech_points > 0)
-		return "<font color='info'>This could yield approximately [item_tech_points] tech points in Destructive Analyzer.</font>"
-	else
-		return "<font color='warning'>This will yield no tech points in Destructive Analyzer.</font>"
+		if(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/science))
+			var/obj/item/clothing/glasses/science/SC = H.glasses
+			if(SC.active)
+				var/points_estimation_message = SC.get_tech_points_estimation(src)
+				to_chat(H, "[points_estimation_message]")
 
 /obj/item/proc/mob_pickup(mob/user, hand_index=null)
 	if (!user || anchored)

@@ -352,19 +352,7 @@
 	origin_tech = "biotech=6"
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 // has it been enhanced before?
-
-/obj/item/slime_extract/get_tech_points_estimation()
-	var/points = 1000
-	switch(type)
-		if(/obj/item/slime_extract/gold)
-			points = 2000
-		if(/obj/item/slime_extract/adamantine)
-			points = 3000
-		if(/obj/item/slime_extract/bluespace)
-			points = 5000
-		if(/obj/item/slime_extract/rainbow)
-			points = 10000
-	return "<font color='info'>This could yield [points] tech points when scanned with science tool.</font>"
+	var/tech_points = 1000 // how much points we are getting from scanning it with science tool
 
 /obj/item/slime_extract/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/slimesteroid2))
@@ -396,6 +384,7 @@
 	name = "gold slime extract"
 	icon_state = "gold slime extract"
 	origin_tech = "biotech=8"
+	tech_points = 2000
 
 /obj/item/slime_extract/silver
 	name = "silver slime extract"
@@ -471,12 +460,14 @@
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
 	origin_tech = "biotech=9;robotics=6;combat=6"
+	tech_points = 3000
 
 //Zve added
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
 	origin_tech = "biotech=9;bluespace=6"
+	tech_points = 5000
 
 /obj/item/slime_extract/pyrite
 	name = "pyrite slime extract"
@@ -497,6 +488,7 @@
 	name = "rainbow slime extract"
 	icon_state = "rainbow slime extract"
 	origin_tech = "biotech=9;bluespace=3"
+	tech_points = 10000
 
 ////Pet Slime Creation///
 

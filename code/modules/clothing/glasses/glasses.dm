@@ -65,19 +65,6 @@
 	desc = "Optical Meson Scanner with prescription lenses."
 	prescription = 1
 
-/obj/item/clothing/glasses/science
-	name = "science goggles"
-	desc = "The goggles do nothing!"
-	icon_state = "purple"
-	item_state_world = "purple_w"
-	item_state = "glasses"
-	toggleable = TRUE
-	sightglassesmod = "sci"
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
-
-/datum/action/item_action/hands_free/toggle_goggles
-	name = "Toggle Goggles"
-
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"

@@ -19,15 +19,6 @@
 /obj/item/weapon/paper/autopsy_report
 	var/list/autopsy_data
 
-/obj/item/weapon/paper/autopsy_report/get_tech_points_estimation()
-	var/message = "<font color='info'>This could yeild tech points if scanned with science tool.</font>"
-	var/list/scanned_autopsy_weapons = list()
-	for(var/datum/autopsy_data/W in autopsy_data)
-		scanned_autopsy_weapons += W.weapon
-	if(!scanned_autopsy_weapons.len)
-		message = "<font color='warning'>This will yield no tech points when scanned with science tool.</font>"
-	return message
-
 /datum/autopsy_data
 	var/weapon = null
 	var/pretend_weapon = null

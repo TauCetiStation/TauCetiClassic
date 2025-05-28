@@ -18,19 +18,6 @@
 	//Total points that can be earned equal highest score multiplied by this number
 	var/cap_coeff = 2
 
-	var/list/tech_points = list(
-		"materials" = 200,
-		"engineering" = 250,
-		"phorontech" = 500,
-		"powerstorage" = 300,
-		"bluespace" = 1000,
-		"biotech" = 300,
-		"combat" = 500,
-		"magnets" = 350,
-		"programming" = 400,
-		"syndicate" = 5000,
-	)
-
 	// How much likely this tech is already known from the start.
 	// In this list there is no "syndicate", since it shouldn't be known from the beggining.
 	var/list/tech_points_rarity = list(
@@ -75,15 +62,15 @@
 	var/is_board = istype(I, /obj/item/weapon/circuitboard)
 
 	for(var/T in temp_tech)
-		if(tech_points[T])
+		if(tech_points_types[T])
 			if(ignoreRepeat)
-				item_tech_points += temp_tech[T] * tech_points[T]
+				item_tech_points += temp_tech[T] * tech_points_types[T]
 			else
 				if(saved_tech_levels[T] && (temp_tech[T] in saved_tech_levels[T])) // You only get a fraction of points if you researched items with this level already
 					if(!is_board) // Boards are cheap to make so we don't give any points for repeats
-						item_tech_points += temp_tech[T] * tech_points[T] * 0.1
+						item_tech_points += temp_tech[T] * tech_points_types[T] * 0.1
 				else
-					item_tech_points += temp_tech[T] * tech_points[T]
+					item_tech_points += temp_tech[T] * tech_points_types[T]
 					has_new_tech = TRUE
 
 	if(!ignoreRepeat && !has_new_tech) // We are deconstucting the same items, cut the reward really hard
@@ -150,17 +137,9 @@
 	for(var/core in I.scanned_slimecores)
 		if(core in saved_slimecores)
 			continue
-
-		var/reward = 1000
-		switch(core)
-			if(/obj/item/slime_extract/gold)
-				reward = 2000
-			if(/obj/item/slime_extract/adamantine)
-				reward = 3000
-			if(/obj/item/slime_extract/bluespace)
-				reward = 5000
-			if(/obj/item/slime_extract/rainbow)
-				reward = 10000
+		var/obj/item/slime_extract/extract = new core
+		var/reward = extract.tech_points
+		qdel(extract)
 		points += reward
 		saved_slimecores += core
 
@@ -398,3 +377,68 @@
 	scanned_symptoms = list()
 	scanned_slimecores = list()
 	datablocks = 0
+
+/obj/item/clothing/glasses/science
+	name = "science goggles"
+	desc = "They are capable of estimating how much usefull data can be harvested from various sources, such as paper reports and slime cores."
+	icon_state = "purple"
+	item_state_world = "purple_w"
+	item_state = "glasses"
+	toggleable = TRUE
+	sightglassesmod = "sci"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
+
+/obj/item/clothing/glasses/science/proc/get_tech_points_estimation(obj/item/I)
+	if(istype(I, /obj/item/weapon/disk/research_points))
+		var/obj/item/weapon/disk/research_points/disk = I
+		return "<span class='info'>[disk] stores approximately [disk.stored_points] research points and could be uploaded to the R&D Console.</span>"
+	else if(istype(I, /obj/item/weapon/paper/autopsy_report))
+		var/obj/item/weapon/paper/autopsy_report/report = I
+		var/list/scanned_autopsy_weapons = list()
+		for(var/datum/autopsy_data/W in report.autopsy_data)
+			scanned_autopsy_weapons += W.weapon
+		if(!scanned_autopsy_weapons.len)
+			return "<span class='warning'>This will yield no tech points when scanned with a science tool.</span>"
+		else
+			return "<span class='info'>This could yeild tech points if scanned with a science tool.</span>"
+	else if(istype(I, /obj/item/slime_extract))
+		var/obj/item/slime_extract/extract = I
+		return "<span class='info'>This could yield [extract.tech_points] tech points when scanned with a science tool.</span>"
+	else if(istype(I, /obj/item/weapon/paper/artifact_info))
+		var/obj/item/weapon/paper/artifact_info/report = I
+		if(report.artifact_type && report.artifact_first_effect)
+			var/points = 10000
+			if(report.artifact_second_effect != "")
+				points += 5000
+			return "<span class='info'>This could yield [points] tech points when scanned with a science tool.</span>"
+		else
+			return "<span class='warning'>This does not have any useful data if scanned with a science tool.</span>"
+	else if(istype(I, /obj/item/weapon/paper/virus_report))
+		var/obj/item/weapon/paper/virus_report/report = I
+		var/points = 0
+		for(var/symptom in report.symptoms)
+			var/list/level_to_points = list(200,500,1000,2500,10000)
+			var/level = report.symptoms[symptom]
+			if(level_to_points[level])
+				points += level_to_points[level]
+		if(points)
+			return "<span class='info'>This could yield [points] tech points when scanned with science tool.</span>"
+		else
+			return "<span class='warning'>This will yield no tech points when scanned with science tool.</span>"
+	else
+		var/list/temp_tech = params2list(I.origin_tech)
+		var/item_tech_points = 0
+
+		for(var/O in temp_tech)
+			temp_tech[O] = text2num(temp_tech[O])
+		for(var/T in temp_tech)
+			if(tech_points_types[T])
+				item_tech_points += temp_tech[T] * tech_points_types[T]
+		item_tech_points = round(item_tech_points)
+		if(item_tech_points > 0)
+			return "<span class='info'>This could yield approximately [item_tech_points] tech points in Destructive Analyzer.</span>"
+		else
+			return "<span class='warning'>This will yield no tech points in Destructive Analyzer.</span>"
