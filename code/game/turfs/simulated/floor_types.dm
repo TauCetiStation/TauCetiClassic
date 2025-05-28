@@ -279,9 +279,9 @@
 /turf/simulated/floor/beach/water
 	name = "Water"
 	icon_state = "water"
-	light_color = "#00bfff"
-	light_power = 2
-	light_range = 2
+	light_color = null
+	light_power = 0
+	light_range = 0
 	footstep = FOOTSTEP_WATER_DEEP
 	barefootstep = FOOTSTEP_WATER_DEEP
 	clawfootstep = FOOTSTEP_WATER_DEEP
@@ -294,7 +294,6 @@
 /turf/simulated/floor/beach/water/waterpool/atom_init()
 	. = ..()
 	AddComponent(/datum/component/fishing, list(/obj/item/clothing/mask/snorkel = 10, /obj/item/clothing/shoes/swimmingfins = 10, /obj/item/weapon/bikehorn/rubberducky = 10, /obj/item/clothing/under/bathtowel = 10, /obj/item/weapon/reagent_containers/food/snacks/soap = 5, /mob/living/simple_animal/hostile/xenomorph = 1), 10 SECONDS, rand(1, 3) , 20)
-
 
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
