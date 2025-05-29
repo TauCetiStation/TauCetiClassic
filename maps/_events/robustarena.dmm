@@ -923,7 +923,7 @@
 /obj/effect/landmark/robust/visitor/big,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "greencorner"
+	icon_state = "neutral"
 	},
 /area/space/holospace)
 "bL" = (
@@ -1346,6 +1346,7 @@
 /area/space/holospace)
 "cy" = (
 /obj/structure/stool/bed/chair/wood/normal,
+/obj/effect/landmark/robust/visitor/big,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "blackchoco"
@@ -1850,13 +1851,8 @@
 	},
 /area/space/holospace)
 "ds" = (
-/obj/structure/stool/bed/chair/wood/normal{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "blackchoco"
-	},
+/obj/effect/landmark/robust/visitor/big,
+/turf/simulated/floor,
 /area/space/holospace)
 "dt" = (
 /obj/structure/sign/departments/custodian{
@@ -2973,6 +2969,22 @@
 	},
 /turf/simulated/floor{
 	icon_state = "red"
+	},
+/area/space/holospace)
+"fG" = (
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 1
+	},
+/obj/effect/landmark/robust/visitor/big,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "blackchoco"
+	},
+/area/space/holospace)
+"fH" = (
+/obj/effect/landmark/robust/visitor/big,
+/turf/simulated/floor{
+	icon_state = "neutral"
 	},
 /area/space/holospace)
 "gj" = (
@@ -28374,13 +28386,13 @@ ap
 ap
 ap
 cj
-cK
-as
-as
-as
-as
-as
-dq
+bK
+ds
+ds
+ds
+ds
+ds
+fH
 gj
 Hr
 Hr
@@ -44823,7 +44835,7 @@ WR
 nz
 cy
 da
-ds
+fG
 nz
 nz
 nz
@@ -46097,7 +46109,7 @@ Ek
 yC
 wV
 Ed
-Ed
+WT
 Ed
 WT
 Ed
@@ -46618,7 +46630,7 @@ Om
 PK
 aS
 PK
-Ed
+WT
 YD
 cA
 Up
@@ -46865,7 +46877,7 @@ AN
 Up
 En
 Ed
-Ed
+WT
 xd
 Xs
 JL
@@ -47647,7 +47659,7 @@ Hp
 aW
 bw
 bJ
-Ed
+WT
 Ed
 Ed
 Ed
@@ -47892,7 +47904,7 @@ PN
 ve
 FE
 FE
-Ed
+WT
 Fx
 Gn
 Ye
@@ -48149,7 +48161,7 @@ nz
 nz
 nz
 WC
-Ed
+WT
 Fx
 Fx
 iv
@@ -48160,8 +48172,8 @@ Hp
 pN
 aZ
 af
-bK
-Ed
+af
+WT
 cD
 nz
 WR
@@ -48417,7 +48429,7 @@ ad
 aD
 ba
 af
-Ed
+WT
 Ed
 cE
 Up
@@ -48922,7 +48934,7 @@ nz
 nz
 Vd
 Ed
-Ed
+WT
 Ed
 Fx
 Fx
@@ -49183,7 +49195,7 @@ FE
 Ed
 WT
 Ed
-Ed
+WT
 WT
 Ed
 Ed
@@ -50477,7 +50489,7 @@ WR
 nz
 cy
 db
-ds
+fG
 nz
 nz
 nz
