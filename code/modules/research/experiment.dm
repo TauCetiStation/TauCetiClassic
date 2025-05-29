@@ -137,9 +137,8 @@
 	for(var/core in I.scanned_slimecores)
 		if(core in saved_slimecores)
 			continue
-		var/obj/item/slime_extract/extract = new core
-		var/reward = extract.tech_points
-		qdel(extract)
+		var/obj/item/slime_extract/extract = core
+		var/reward = initial(extract.tech_points)
 		points += reward
 		saved_slimecores += core
 
