@@ -821,6 +821,10 @@
 /obj/effect/landmark{
 	name = "Observer-Start"
 	},
+/obj/machinery/light/spot{
+	invisibility = 101;
+	name = "invisible spotlight"
+	},
 /turf/simulated/floor,
 /area/space/holospace)
 "bp" = (
@@ -2115,14 +2119,6 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
-/obj/machinery/camera{
-	c_tag = "Arrival";
-	dir = 4;
-	network = list("robust_station")
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3147,6 +3143,22 @@
 	icon_state = "neutral"
 	},
 /area/space/holospace)
+"fI" = (
+/obj/machinery/cryopod/right{
+	storage = 0
+	},
+/obj/structure/sign/poster/random{
+	pixel_x = -32
+	},
+/obj/machinery/camera{
+	c_tag = "Arrival";
+	dir = 4;
+	network = list("robust_station")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space/holospace)
 "gj" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
 	icon_state = "gr_window_reinforced"
@@ -3210,7 +3222,7 @@
 /area/space/holospace)
 "jE" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -3227,15 +3239,14 @@
 	},
 /area/space/holospace)
 "lB" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/table/glass,
 /obj/item/weapon/strangetool/robust,
 /obj/machinery/camera{
 	c_tag = "Medbay";
-	dir = 4;
 	network = list("robust_station")
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -3324,8 +3335,8 @@
 	},
 /area/space/holospace)
 "oE" = (
-/obj/machinery/light/small,
 /obj/structure/stool/bed/roller,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -4819,9 +4830,9 @@
 /area/space/holospace)
 "Nb" = (
 /obj/item/weapon/caution/cone,
-/obj/machinery/light/small,
 /obj/item/weapon/caution/cone,
 /obj/item/weapon/caution/cone,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"
@@ -5995,11 +6006,11 @@
 /obj/item/weapon/storage/box/donkpockets{
 	pixel_y = 4
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/item/weapon/storage/box/donkpockets{
 	pixel_y = 4
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood7"
@@ -6011,7 +6022,7 @@
 	dir = 5;
 	icon_state = "siding_wood_line"
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/smart{
 	dir = 4
 	},
 /turf/simulated/floor/wood{
@@ -28033,11 +28044,11 @@ ap
 bT
 GH
 cI
-cI
-cI
 dD
 cI
+fI
 cI
+dD
 cI
 GH
 Hr
