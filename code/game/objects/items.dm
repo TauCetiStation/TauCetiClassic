@@ -221,7 +221,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/science))
+		if(istype(H.glasses, /obj/item/clothing/glasses/science))
 			var/obj/item/clothing/glasses/science/SC = H.glasses
 			if(SC.active)
 				var/points_estimation_message = SC.get_tech_points_estimation(src)
