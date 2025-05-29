@@ -89,6 +89,22 @@
 	name = "Chameleon glasses"
 	},
 /obj/item/clothing/under/color/white,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
+	},
+/obj/item/clothing/under/color/white,
 /obj/machinery/camera{
 	c_tag = "Team A quarters";
 	dir = 4;
@@ -128,6 +144,22 @@
 	name = "Chameleon glasses"
 	},
 /obj/item/clothing/under/color/green,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
+	},
+/obj/item/clothing/under/color/green,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "greenfull"
@@ -151,6 +183,22 @@
 	name = "Chameleon glasses"
 	},
 /obj/item/clothing/under/color/pink,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
+	},
+/obj/item/clothing/under/color/pink,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "purplefull"
@@ -172,6 +220,22 @@
 	},
 /obj/item/clothing/glasses/chameleon{
 	name = "Chameleon glasses"
+	},
+/obj/item/clothing/under/purple,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
 	},
 /obj/item/clothing/under/purple,
 /turf/unsimulated/floor{
@@ -258,6 +322,22 @@
 	name = "Chameleon glasses"
 	},
 /obj/item/clothing/under/color/white,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
+	},
+/obj/item/clothing/under/color/white,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "white"
@@ -286,6 +366,22 @@
 	dir = 8;
 	network = list("robust_station")
 	},
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
+	},
+/obj/item/clothing/under/purple,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "darkpurplefull"
@@ -977,6 +1073,22 @@
 	name = "Chameleon glasses"
 	},
 /obj/item/clothing/under/color/yellow,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
+	},
+/obj/item/clothing/under/color/yellow,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "yellowfull"
@@ -998,6 +1110,22 @@
 	},
 /obj/item/clothing/glasses/chameleon{
 	name = "Chameleon glasses"
+	},
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
 	},
 /obj/item/clothing/under/color/red,
 /turf/unsimulated/floor{
@@ -1023,6 +1151,22 @@
 	name = "Chameleon glasses"
 	},
 /obj/item/clothing/under/color/blue,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
+	},
+/obj/item/clothing/under/color/blue,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "darkbluefull"
@@ -1044,6 +1188,22 @@
 	},
 /obj/item/clothing/glasses/chameleon{
 	name = "Chameleon glasses"
+	},
+/obj/item/clothing/under/rainbow,
+/obj/item/clothing/head/chameleon{
+	name = "Chameleon cap"
+	},
+/obj/item/clothing/glasses/chameleon{
+	name = "Chameleon glasses"
+	},
+/obj/item/clothing/shoes/chameleon{
+	name = "Chameleon shoes"
+	},
+/obj/item/clothing/gloves/chameleon{
+	name = "Chameleon gloves"
+	},
+/obj/item/clothing/mask/chameleon{
+	name = "Chameleon mask"
 	},
 /obj/item/clothing/under/rainbow,
 /turf/unsimulated/floor{
