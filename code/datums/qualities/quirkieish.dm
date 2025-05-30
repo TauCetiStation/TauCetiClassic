@@ -174,8 +174,7 @@
 	requirement = "Нет."
 
 /datum/quality/quirkieish/kamikaze/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/implant/dexplosive/DE = new(H)
-	DE.stealth_inject(H)
+	new /obj/item/weapon/implant/dexplosive(H)
 
 
 /datum/quality/quirkieish/obedient
@@ -189,9 +188,7 @@
 	return !(H.mind.assigned_role in funpolice)
 
 /datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/implant/obedience/O = new(H)
-	O.stealth_inject(H)
-
+	new /obj/item/weapon/implant/obedience(H)
 
 
 /datum/quality/quirkieish/jack_of_all_trades
@@ -325,7 +322,7 @@
 		return
 	if(prob(10))
 		return
-	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new()
 	L.inject(H, BP_CHEST)
 
 
