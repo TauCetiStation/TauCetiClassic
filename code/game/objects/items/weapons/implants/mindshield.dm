@@ -51,6 +51,16 @@
 		"<span class='userdanger'>Внезапно ужасная боль пронзает ваше тело! Ваш разум в полном беспорядке! Кровь пульсирует и начинает гореть! Боль НЕВЫНОСИМА!!!</span>")
 		implanted_mob.adjustBrainLoss(80)
 
+	if(C.get_species() in list(VOX, VOX_ARMALIS))
+		addtimer(CALLBACK(src, PROC_REF(vox_mind_resistance)), rand(5, 15) MINUTES)
+
+/obj/item/weapon/implant/mind_protect/proc/vox_mind_resistance()
+	if(QDELING(src) || !implanted_mob)
+		return
+
+	to_chat(implanted_mob, "<span class='notice'>Ваша естественная ментальная стабильность нейтрализовала воздействие импланта, влияющего на разум.</span>")
+	meltdown(harmful = FALSE)
+
 /obj/item/weapon/implant/mind_protect/mindshield
 	name = "mindshield implant"
 	cases = list("имплант защиты разума", "импланта защиты разума", "импланту защиты разума", "имплант защиты разума", "имплантом защиты разума", "импланте защиты разума")
