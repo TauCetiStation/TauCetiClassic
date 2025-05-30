@@ -605,7 +605,7 @@
 		return ..()
 
 /obj/item/weapon/paper
-	var/plane_mode = FALSE // Добавляем эту переменную в начало определения класса бумаги
+	var/plane_mode = FALSE
 
 /obj/item/weapon/paper/verb/make_plane()
 	set name = "Make Paper Plane"
