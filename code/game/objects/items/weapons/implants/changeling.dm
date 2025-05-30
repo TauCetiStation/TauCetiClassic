@@ -6,6 +6,7 @@
 	desc = "Мы не знаем, что это такое."
 
 /obj/item/weapon/implant/fake/eject()
+	. = ..()
 	if(!QDELING(src))
 		qdel(src)
 

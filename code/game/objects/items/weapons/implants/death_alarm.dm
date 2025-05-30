@@ -23,16 +23,19 @@ var/global/list/death_alarm_stealth_areas = list(
 /obj/item/weapon/implant/death_alarm/inject(mob/living/carbon/C, def_zone)
 	. = ..()
 
-	RegisterSignal(implanted_mob, COMSIG_MOB_DIED, PROC_REF(activate))
+	RegisterSignal(implanted_mob, COMSIG_MOB_DIED, PROC_REF(on_death))
 
 /obj/item/weapon/implant/eject()
 	UnregisterSignal(implanted_mob, COMSIG_MOB_DIED)
 
 	. = ..()
 
-/obj/item/weapon/implant/death_alarm/activate(fake_alert = FALSE)
+/obj/item/weapon/implant/death_alarm/proc/on_death()
 	SIGNAL_HANDLER
 
+	activate()
+
+/obj/item/weapon/implant/death_alarm/activate(fake_alert = FALSE)
 	if(malfunction)
 		return
 
@@ -55,7 +58,7 @@ var/global/list/death_alarm_stealth_areas = list(
 	if(malfunction)
 		return
 
-	use_implant(fake_alert = TRUE) //let's shout that this dude is dead
+	use_implant(TRUE) //let's shout that this dude is dead
 	if(severity == 1)
 		meltdown(harmful = prob(60))
 	else

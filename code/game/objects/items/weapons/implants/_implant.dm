@@ -141,7 +141,7 @@
 
 // place your implant effects here, don't call it directly
 /obj/item/weapon/implant/proc/activate()
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	return TRUE
 
