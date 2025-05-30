@@ -1777,7 +1777,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
 			continue
-		var/skeleton_state = BP.get_icon_state(fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
+		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
 		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
 	MA = update_height(MA)
 	return MA
