@@ -168,7 +168,6 @@
 			newinvocation += pick("`", "'", "-")
 	newinvocation += "!!!"
 	invocation = newinvocation
-	playsound(src.loc, pick(SOUNDIN_FANATICS_CRY), 100, 1)
 
 /obj/effect/proc_holder/spell/no_target/fanatics_cry/cast(list/targets, mob/living/carbon/human/user = usr)
 	for(var/mob/living/carbon/human/fanatic in view(6, user))
@@ -183,6 +182,7 @@
 			fanatic.adjustFireLoss(-15)
 			fanatic.adjustHalLoss(-10)
 	user.chat_color = initial(user.chat_color)
+	playsound(user.loc, pick(SOUNDIN_FANATICS_CRY), VOL_EFFECTS_MASTER)
 	REMOVE_TRAIT(user, TRAIT_DISTORTED_INVOCATION, GENERIC_TRAIT)
 
 /obj/item/weapon/champion_cape
