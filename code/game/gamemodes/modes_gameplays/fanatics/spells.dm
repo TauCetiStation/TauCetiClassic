@@ -96,7 +96,7 @@
 			to_chat(user, "<span class='fanatics'>Здесь уже кто-то нарисовал руну.</span>")
 			revert_cast(user)
 			return
-		if(A.density && !istype(A, /mob/living/carbon/human))
+		if(A.density && !ishuman(A))
 			to_chat(user, "<span class='fanatics'>Преграда мешает рисовать.</span>")
 			revert_cast(user)
 			return
@@ -138,7 +138,7 @@
 			to_chat(user, "<span class='fanatics'>Здесь уже кто-то нарисовал руну.</span>")
 			revert_cast(user)
 			return
-		if(A.density && !istype(A, /mob/living/carbon/human))
+		if(A.density && !ishuman(A))
 			to_chat(user, "<span class='fanatics'>Преграда мешает рисовать</span>")
 			return
 
