@@ -87,7 +87,7 @@
 	var/mob/living/carbon/human/H = pick(candidates)
 	var/datum/faction/fanatics/F = find_faction_by_type(/datum/faction/fanatics)
 
-	if((F.sacrifice_target == H.mind) || (H.stat == DEAD) || jobban_isbanned(H, ROLE_FANATIC) || H.ismindprotect() || H.species.flags[NO_BLOOD])
+	if((F.sacrifice_target == H.mind) || (H.stat == DEAD) || jobban_isbanned(H, ROLE_FANATIC) || H.ismindprotect() || H.species.flags[TRAIT_NO_BLOOD])
 		for(var/datum/role/fanatic/fanatic in F.members)
 			var/mob/living/carbon/human/member = fanatic.antag.current
 			to_chat(member, "<span class='fanatics'>Душа [H.real_name] поглощена в Затимис.</span>")
@@ -114,7 +114,7 @@
 	var/list/heretics = list()
 	var/turf/center = get_turf(holder)
 	for(var/mob/living/carbon/human/C in range(7, center))
-		if(!isfanatic(C) && C.stat != DEAD && !C.species.flags[NO_BLOOD])
+		if(!isfanatic(C) && C.stat != DEAD && !C.species.flags[TRAIT_NO_BLOOD])
 			heretics += C
 
 	if(!length(heretics))

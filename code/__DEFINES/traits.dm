@@ -231,7 +231,7 @@
 #define TRAIT_EMOTIONLESS         "emotionless"
 #define TRAIT_NO_VOMIT            "no_vomit"
 /// mob doesn't have and doesn't need blood
-#define TRAIT_NO_BLOOD            "no_blood"
+#define TRAIT_NO_BLOOD            "TRAIT_NO_BLOOD"
 /// prevents mob from spawning bloody mess when gibbed, they still drop limbs if they have them
 #define TRAIT_NO_MESSY_GIBS       "no_messy_gibs"
 #define TRAIT_GLOWING_EYES        "glowing_eyes"

@@ -4,7 +4,7 @@
 
 	required_pref = ROLE_FANATIC
 	restricted_jobs = list("Security Cadet", "AI", "Cyborg", "Security Officer", "Warden", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
-	restricted_species_flags = list(NO_BLOOD)
+	restricted_species_flags = list(TRAIT_NO_BLOOD)
 
 	antag_hud_type = ANTAG_HUD_FANATIC
 	antag_hud_name = "hudfanatic"

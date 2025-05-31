@@ -528,7 +528,7 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100)
 	allowed = list(/obj/item/weapon/kitchenknife/ritual, /obj/item/weapon/claymore/fanatics)
-	flags_inv = HIDEJUMPSUIT|HIDEGLOVES|HIDESHOES|HIDEMASK|HIDEEARS|HIDEFACE|HIDETAIL|HIDEEYES
+	flags_inv = HIDEJUMPSUIT|HIDEGLOVES|HIDESHOES|HIDEMASK|HIDEEARS|HIDEFACE|HIDE_TAIL|HIDEEYES
 	siemens_coefficient = 0
 	unacidable = TRUE
 	canremove = FALSE

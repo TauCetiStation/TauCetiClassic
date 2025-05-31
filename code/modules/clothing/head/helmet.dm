@@ -348,5 +348,5 @@
 	icon_state = "fanaticshood"
 	armor = list(melee = 70, bullet = 60, laser = 60, energy = 50, bomb = 40, bio = 0, rad = 0)
 	siemens_coefficient = 0.3
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES|HIDE_ALL_HAIR
 	flags_inv = HIDEEARS|HIDEFACE|HIDEEYES
