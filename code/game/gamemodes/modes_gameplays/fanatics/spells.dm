@@ -168,6 +168,7 @@
 			newinvocation += pick("`", "'", "-")
 	newinvocation += "!!!"
 	invocation = newinvocation
+	playsound(src.loc, pick(SOUNDIN_FANATICS_CRY), 100, 1)
 
 /obj/effect/proc_holder/spell/no_target/fanatics_cry/cast(list/targets, mob/living/carbon/human/user = usr)
 	for(var/mob/living/carbon/human/fanatic in view(6, user))
