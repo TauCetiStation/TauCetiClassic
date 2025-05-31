@@ -90,7 +90,7 @@ var/global/list/SOUNDIN_BEEPSKY = list('sound/voice/beepsky/god.ogg', 'sound/voi
 // zombies
 var/global/list/SOUNDIN_GROWL = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 // fanatics
-var/gloval/list/SOUNDIN_FANATICS_CRY = list('sound/voice/fanatics/Cultiste message 1.ogg', 'sound/voice/fanatics/Cultiste message 2.ogg', 'sound/voice/fanatics/Cultiste message 3.ogg', 'sound/voice/fanatics/Cultiste message 4.ogg', 'sound/voice/fanatics/Cultiste message 5.ogg', 'sound/voice/fanatics/Cultiste message 6.ogg', 'sound/voice/fanatics/Cultiste message 7.ogg', 'sound/voice/fanatics/Cultiste message 8.ogg', 'sound/voice/fanatics/Cultiste message 9.ogg')
+var/global/list/SOUNDIN_FANATICS_CRY = list('sound/voice/fanatics/Cultiste message 1.ogg', 'sound/voice/fanatics/Cultiste message 2.ogg', 'sound/voice/fanatics/Cultiste message 3.ogg', 'sound/voice/fanatics/Cultiste message 4.ogg', 'sound/voice/fanatics/Cultiste message 5.ogg', 'sound/voice/fanatics/Cultiste message 6.ogg', 'sound/voice/fanatics/Cultiste message 7.ogg', 'sound/voice/fanatics/Cultiste message 8.ogg', 'sound/voice/fanatics/Cultiste message 9.ogg')
 
 // ----- Misc -----
 var/global/list/SOUNDIN_SCARYSOUNDS = list('sound/weapons/thudswoosh.ogg', 'sound/weapons/guns/gunpulse_Taser.ogg', 'sound/weapons/armbomb.ogg', 'sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg', 'sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg', 'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg', 'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg', 'sound/items/Welder2.ogg','sound/machines/airlock/toggle.ogg', 'sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
