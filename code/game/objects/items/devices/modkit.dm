@@ -6,6 +6,7 @@
 	name = "Human hardsuit modification kit"
 	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user."
 	icon_state = "modkit"
+	item_state_world = "modkit_w"
 	var/parts = MODKIT_FULL
 	var/target_species = HUMAN
 

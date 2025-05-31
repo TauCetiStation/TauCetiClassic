@@ -139,9 +139,9 @@
 	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
 	switch(col)
 		if("black")
-			red = 0
-			green = 0
-			blue = 0
+			red = 50
+			green = 50
+			blue = 50
 		if("grey")
 			red = rand (100, 200)
 			green = red
@@ -174,14 +174,7 @@
 	return list(red, green, blue)
 
 /proc/random_skin_tone()
-	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
-		if("caucasian")		. = -10
-		if("afroamerican")	. = -115
-		if("african")		. = -165
-		if("latino")		. = -55
-		if("albino")		. = 34
-		else				. = rand(-185,34)
-	return min(max( .+rand(-25, 25), -185),34)
+	return pick(global.skin_tones_by_name)
 
 /proc/skintone2racedescription(tone)
 	switch (tone)
@@ -214,8 +207,6 @@
 /proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return FALSE
-
-	time *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
@@ -283,8 +274,6 @@
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
 		return FALSE
-
-	delay *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
 	var/busy_hand = user.hand
 	user.become_busy(_hand = busy_hand)
@@ -375,9 +364,6 @@
 		return
 	return mind.assigned_job.head_position
 
-/mob/proc/IsShockproof()
-	return HAS_TRAIT(src, TRAIT_SHOCKIMMUNE)
-
 /mob/proc/IsClumsy()
 	return HAS_TRAIT(src, TRAIT_CLUMSY)
 
@@ -394,7 +380,7 @@
 		insurance_type = get_insurance_type(M)
 
 	if(!output_to_chat)
-		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Результаты сканирования [M.name]</title></head><BODY>"
+		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>[get_browse_zoom_style(user.client)]<title>Результаты сканирования [M.name]</title></head><BODY>"
 
 	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
 		user.visible_message("<span class='warning'>[user] сканирует жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")
@@ -408,15 +394,15 @@
 	user.visible_message("<span class='notice'>[user] сканирует жизненные показатели [M].</span>","<span class='notice'>Вы просканировали жизненные показатели [M].</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
-	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
-	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
-	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
-	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
+	var/OX = "<span [M.getOxyLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getOxyLoss())]</span>"
+	var/TX = "<span [M.getToxLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getToxLoss())]</span>"
+	var/BU = "<span [M.getFireLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getFireLoss())]</span>"
+	var/BR = "<span [M.getBruteLoss() > 49 ? "class='bold'" : ""] >[ceil(M.getBruteLoss())]</span>"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
+		OX = "<span [fake_oxy > 49 ? "class='bold'" : ""] >[ceil(fake_oxy)]</span>"
 		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: мёртв</span><br>"
 	else
-		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: [M.stat > 1 ? "мёртв" : "Здоровье: [M.health - M.halloss]%"]</span><br>"
+		message += "<span class='notice'>Результаты сканирования [M]:\n&emsp; Общее состояние: [M.stat > 1 ? "мёртв" : "Здоровье: [M.health - M.getHalLoss()]%"]</span><br>"
 	message += "&emsp; Типы: <font color='blue'>Асфиксия</font>/<font color='green'>Интоксикация</font>/<font color='#FFA500'>Термические</font>/<font color='red'>Механические</font><br>"
 	message += "&emsp; Специфика повреждений: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
 	message += "<span class='notice'>Температура тела: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
@@ -442,12 +428,12 @@
 
 		return message
 
-	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Обнаружено сильное кислородное голодание</b></font>" : "Уровень кислорода в крови субъекта в норме"
-	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Обнаружено опасное количество токсинов</b></font>" : "Уровень токсинов в крови субъекта минимальный"
-	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Обнаружена серьезная ожоговая травма</b></font>" : "Термических травм не обнаружено"
-	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Обнаружена серьезная анатомическая травма</b></font>" : "Механических травм не обнаружено"
+	OX = M.getOxyLoss() > 49 ? "<font color='blue'><b>Обнаружено сильное кислородное голодание</b></font>" : "Уровень кислорода в крови субъекта в норме"
+	TX = M.getToxLoss() > 49 ? "<font color='green'><b>Обнаружено опасное количество токсинов</b></font>" : "Уровень токсинов в крови субъекта минимальный"
+	BU = M.getFireLoss() > 49 ? "<font color='#FFA500'><b>Обнаружена серьезная ожоговая травма</b></font>" : "Термических травм не обнаружено"
+	BR = M.getBruteLoss() > 49 ? "<font color='red'><b>Обнаружена серьезная анатомическая травма</b></font>" : "Механических травм не обнаружено"
 	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"<span class='warning'>Обнаружено сильное кислородное голодание</span>" : "Уровень кислорода в крови субъекта в норме"
+		OX = fake_oxy > 49 ? 		"<span class='warning'>Обнаружено сильное кислородное голодание</span>" : "Уровень кислорода в крови субъекта в норме"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M

@@ -280,9 +280,8 @@
 				continue
 			if(L.reagents)
 				L.reagents.clear_reagents()
-			L.beauty.AddModifier("stat", additive=L.beauty_living)
-			L.setOxyLoss(0)
-			L.setHalLoss(0)
+			L.resetOxyLoss()
+			L.resetHalLoss()
 			L.SetParalysis(0)
 			L.SetStunned(0)
 			L.SetWeakened(0)

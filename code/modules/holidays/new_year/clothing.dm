@@ -7,7 +7,8 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = HEADCOVERSEYES | BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	body_parts_covered = HEAD
 
 /obj/item/clothing/suit/santa
@@ -45,7 +46,7 @@
 	name = "winter hood"
 	icon_state = "coatwinter_hood"
 	cold_protection = HEAD
-	flags = BLOCKHEADHAIR
+	render_flags = parent_type::render_flags | HIDE_TOP_HAIR
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
@@ -221,3 +222,23 @@
 	icon_state = "ricehat"
 	item_state = "ricehat"
 	flags = HEADCOVERSEYES
+
+
+/obj/item/clothing/head/rim_deer
+	name = "deer antlers"
+	desc = "Оленьи рожки"
+	icon_state = "rim_deer"
+	body_parts_covered = 0
+
+/obj/item/clothing/head/rim_rabbit
+	name = "rabbit ears"
+	desc = "Заячьи ушки"
+	icon_state = "rim_rabbit"
+	body_parts_covered = 0
+
+/obj/item/clothing/head/rim_fox
+	name = "fox ears"
+	desc = "Лисьи ушки"
+	icon_state = "rim_fox"
+	body_parts_covered = 0
+

@@ -202,6 +202,10 @@ var/global/list/blacklisted_builds = list(
 	//CONNECT//
 	///////////
 /client/New(TopicData)
+	// TODO: Remove with 516
+	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
+		winset(src, "", "browser-options=byondstorage,refresh,find")
+
 	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
@@ -300,6 +304,8 @@ var/global/list/blacklisted_builds = list(
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 
 	log_client_to_db(tdata)
+
+	acquire_dpi()
 
 	send_resources()
 
@@ -715,6 +721,15 @@ var/global/list/blacklisted_builds = list(
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(getFilesSlow), src, SSassets.preload, FALSE), 5 SECONDS)
+
+/client/proc/acquire_dpi()
+	set waitfor = FALSE
+
+	// TODO: Remove with 516
+	if(byond_version < 516)
+		return
+
+	window_pixelratio = text2num(winget(src, null, "dpi"))
 
 /client/proc/generate_clickcatcher()
 	if(!void)

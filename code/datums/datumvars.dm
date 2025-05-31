@@ -175,27 +175,27 @@
 	if(isatom(D))
 		var/atom/A = D
 		if(isliving(A))
-			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
+			body += "<a href='byond://?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
 			if(A.dir)
-				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+				body += "<br><font size='1'><a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
-			body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
+			body += "<br><font size='1'><a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 			body += {"
 			<br><font size='1'>
-			BRUTE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-			FIRE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-			TOXIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-			OXY:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-			CLONE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-			BRAIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			BRUTE:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+			FIRE:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+			TOXIN:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+			OXY:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+			CLONE:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+			BRAIN:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
 			</font>
 
 
 			"}
 		else
-			body += "<a href='?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
+			body += "<a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
 			if(A.dir)
-				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+				body += "<br><font size='1'><a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 	else
 		body += "<b>[D]</b>"
 
@@ -214,10 +214,10 @@
 
 	body += "</div></td>"
 
-	body += "<td width='50%'><div align='center'><a href='' onclick=\"this.href='?_src_=vars;datumrefresh=\ref[D];filter='+document.getElementById('filter').value\">Refresh</a>"
+	body += "<td width='50%'><div align='center'><a href='' onclick=\"this.href='byond://?_src_=vars;datumrefresh=\ref[D];filter='+document.getElementById('filter').value\">Refresh</a>"
 
 	//if(ismob(D))
-	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
+	//	body += "<br><a href='byond://?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
 
 	body += {"	<form>
 				<select name="file" size="1"
@@ -251,6 +251,7 @@
 		if(isliving(D))
 			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
+		body += "<option value='?_src_=vars;toggle_emutation=\ref[D]'>Toggle (element) Mutation</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
 		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 
@@ -281,6 +282,9 @@
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 			body += "<option value='?_src_=vars;makezombie=\ref[D]'>Make zombie</option>"
 		body += "<option value>---</option>"
+		body += "<option value='?_src_=vars;burn=\ref[D]'>Burn</option>"
+		body += "<option value='?_src_=vars;husk=\ref[D]'>Husk</option>"
+		body += "<option value='?_src_=vars;electrocute=\ref[D]'>Electrocute</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
@@ -339,6 +343,7 @@ body
 	font-size: 8pt;
 }
 </style>"}
+	html += get_browse_zoom_style(user.client)
 	html += "</head>"
 	html += body
 
@@ -351,7 +356,7 @@ body
 
 	html += "</body></html>"
 
-	user << browse(html, "window=variables\ref[D];size=475x650")
+	user << browse(html, "window=variables\ref[D];[get_browse_size_parameter(src, 475, 650)]")
 
 	return
 
@@ -359,7 +364,7 @@ body
 	var/html = ""
 
 	if(DA)
-		html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+		html += "<li style='backgroundColor:white'>(<a href='byond://?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='byond://?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='byond://?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 	else
 		html += "<li>"
 
@@ -378,9 +383,9 @@ body
 
 	else if (istype(value, /image))
 		#ifdef VARSICON
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, css = null)]"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, css = null)]"
 		#else
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
 		#endif
 
 	else if (isfile(value))
@@ -388,11 +393,11 @@ body
 
 	else if (istype(value, /datum))
 		var/datum/D = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
 	else if (isclient(value))
 		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
 	else if (istype(value, /list))
 		var/list/L = value
@@ -547,6 +552,29 @@ body
 			L.apply_status_effect(arglist(params))
 			href_list["datumrefresh"] = href_list["give_status_effect"]
 
+	else if(href_list["toggle_emutation"])
+		if(!check_rights(R_ADMIN|R_VAREDIT))
+			return
+
+		var/mob/living/L = locate(href_list["toggle_emutation"])
+		if(!istype(L))
+			to_chat(usr, "This can only be used on instances of type /mob/living")
+			return
+
+		var/mutation_type = input("Select type:","Type") as null|anything in subtypesof(/datum/element/mutation)
+
+		// cursed as it looks but we can use any element as trait now
+		var/has_element_trait = HAS_TRAIT_FROM(L, mutation_type, ADMIN_TRAIT)
+		if(has_element_trait)
+			REMOVE_TRAIT(L, mutation_type, ADMIN_TRAIT)
+		else
+			ADD_TRAIT(L, mutation_type, ADMIN_TRAIT)
+
+		has_element_trait = !has_element_trait
+
+		log_admin("[key_name(usr)] has toggled [key_name(L)]'s emutation [mutation_type] to [has_element_trait ? "On" : "Off"]")
+		message_admins("[key_name_admin(usr)] has toggled [key_name_admin(L)]'s emutation [mutation_type] to [has_element_trait ? "On" : "Off"]")
+
 	else if(href_list["ninja"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -563,13 +591,49 @@ body
 		if(!check_rights(R_REJUVINATE))
 			return
 
-		var/mob/M = locate(href_list["godmode"])
+		var/mob/living/M = locate(href_list["godmode"])
 		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob")
+			to_chat(usr, "This can only be used on instances of type /mob/living")
 			return
 
 		cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
+
+	else if(href_list["burn"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["burn"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_burn(H)
+		return
+
+	else if(href_list["husk"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["husk"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_husk(H)
+		return
+
+	else if(href_list["electrocute"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["electrocute"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_electrocute(H)
+		return
 
 	else if(href_list["gib"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -883,7 +947,6 @@ body
 
 		if(H.set_species(new_species))
 			to_chat(usr, "Set species of [H] to [H.species].")
-			H.regenerate_icons()
 		else
 			to_chat(usr, "Failed! Something went wrong.")
 
@@ -1031,7 +1094,7 @@ body
 			if("brute")	L.adjustBruteLoss(amount)
 			if("fire")	L.adjustFireLoss(amount)
 			if("toxin")	L.adjustToxLoss(amount)
-			if("oxygen")L.adjustOxyLoss(amount)
+			if("oxygen") L.adjustOxyLoss(amount)
 			if("brain")	L.adjustBrainLoss(amount)
 			if("clone")	L.adjustCloneLoss(amount)
 			else

@@ -45,7 +45,7 @@
 				SSStatistics.score.richestname = E.real_name
 				SSStatistics.score.richestjob = E.job
 				SSStatistics.score.richestkey = E.key
-			dmgscore = E.bruteloss + E.fireloss + E.toxloss + E.oxyloss
+			dmgscore = E.getBruteLoss() + E.getFireLoss() + E.getToxLoss() + E.getOxyLoss()
 			if (dmgscore > SSStatistics.score.dmgestdamage)
 				SSStatistics.score.dmgestdamage = dmgscore
 				SSStatistics.score.dmgestname = E.real_name
@@ -133,7 +133,6 @@
 			if(E.client)
 				E.scorestats(completions)
 
-#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очко", "[points] очка", "[points] очков")
 /datum/controller/subsystem/ticker/proc/scorestats(completions)
 	var/dat = completions
 	dat += {"<h2>Статистика и рейтинги раунда</h2><div class='Section'>"}
@@ -215,7 +214,6 @@
 	log_game(dat)
 
 	return dat
-#undef PLURALIZE_RUSSIAN_POINTS
 
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	// Show the score - might add "ranks" later

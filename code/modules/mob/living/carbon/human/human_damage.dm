@@ -1,10 +1,6 @@
 //Updates the mob's health from bodyparts and mob damage variables
+// todo: for some reason mobs call it several times per life tick
 /mob/living/carbon/human/updatehealth()
-	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
-		return
-
 	var/total_burn = 0
 	var/total_brute = 0
 	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
@@ -17,25 +13,28 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
-		ChangeToHusk()
-	return
+		if(!HAS_TRAIT(src, TRAIT_BURNT))
+			ADD_TRAIT(src, TRAIT_BURNT, GENERIC_TRAIT)
+			update_body()
 
 // =============================================
 
+// because of organ humans have two types of brain damage
+// this is too obscure and we need to do something about it
+
 /mob/living/carbon/human/getBrainLoss()
-	if(status_flags & GODMODE)
-		return 0
+	if(!should_have_organ(O_BRAIN))
+		brainloss = 0
+		return brainloss
 
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
-		return 0
-
-	var/res = brainloss
 	var/obj/item/organ/internal/brain/IO = organs_by_name[O_BRAIN]
 
 	if(!IO)
 		return maxHealth * 2
+
+	var/res = brainloss
+
 	if(IO.is_bruised())
 		res += 20
 	if(IO.is_broken())
@@ -46,34 +45,31 @@
 	return res
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
-	if(species.brain_mod == 0 || species.flags[IS_SYNTHETIC] || !should_have_organ(O_BRAIN))
-		brainloss = 0
-	else
-		amount = amount * species.brain_mod
-		..(amount)
+	if(amount > 0 && !should_have_organ(O_BRAIN))
+		return
 
-/mob/living/carbon/human/setBrainLoss(amount)
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
-		brainloss = 0
-	else
-		..()
+	return ..()
 
 // =============================================
 
-//These procs fetch a cumulative total damage from all bodyparts
+// Humans don't use bruteloss or fireloss vars
+// These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
-	return round(amount, 0.01)
+	return amount
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		return take_overall_damage(amount, 0)
 	else
-		heal_overall_damage(-amount, 0)
+		return heal_overall_damage(-amount, 0)
+
+/mob/living/carbon/human/resetBruteLoss()
+	heal_overall_damage(getBruteLoss(), 0)
 
 // =============================================
 
@@ -83,74 +79,37 @@
 		if(BP.is_robotic() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
-	return round(amount, 0.01)
+	return amount
 
 /mob/living/carbon/human/adjustFireLoss(amount)
+	if(amount > 0 && (RESIST_HEAT in mutations))
+		return
+
 	if(amount > 0)
-		if(RESIST_HEAT in mutations)
-			return
-		take_overall_damage(0, amount)
+		return take_overall_damage(0, amount)
 	else
-		heal_overall_damage(0, -amount)
+		return heal_overall_damage(0, -amount)
+
+/mob/living/carbon/human/resetFireLoss()
+	heal_overall_damage(0, getFireLoss())
 
 // =============================================
-
-/mob/living/carbon/human/getToxLoss()
-	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
-		toxloss = 0
-	return ..()
-
-/mob/living/carbon/human/adjustToxLoss(amount)
-	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
-		toxloss = 0
-	else
-		amount = amount * species.tox_mod
-		..(amount)
-
-/mob/living/carbon/human/setToxLoss(amount)
-	if(species.tox_mod == 0 || species.flags[NO_BLOOD])
-		toxloss = 0
-	else
-		..()
-
-// =============================================
-
-/mob/living/carbon/human/getOxyLoss()
-	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
-		oxyloss = 0
-	return ..()
 
 /mob/living/carbon/human/adjustOxyLoss(amount)
-	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
-		oxyloss = 0
-	else
-		amount = amount * species.oxy_mod
-		..(amount)
+	if(amount > 0 && !should_have_organ(O_LUNGS))
+		return
 
-/mob/living/carbon/human/setOxyLoss(amount)
-	if(species.oxy_mod == 0 || !should_have_organ(O_LUNGS))
-		oxyloss = 0
-	else
-		..()
+	return ..()
 
 // =============================================
 
 /mob/living/carbon/human/adjustCloneLoss(amount)
-	if(species.clone_mod == 0)
-		cloneloss = 0
-		return
-	else
-		amount = amount * species.clone_mod
-		..(amount)
-
-	if(species.flags[IS_SYNTHETIC])
-		return
+	. = ..()
 
 	time_of_last_damage = world.time
 
-	var/heal_prob = max(0, 80 - getCloneLoss())
-	var/mut_prob = min(80, getCloneLoss()+10)
-	if (amount > 0)
+	if (. > 0)
+		var/mut_prob = min(80, getCloneLoss()+10)
 		if (prob(mut_prob))
 			var/list/candidates = list()
 			for (var/obj/item/organ/external/BP in bodyparts)
@@ -161,7 +120,8 @@
 				BP.mutate()
 				to_chat(src, "<span class = 'notice'>Something is not right with your [BP.name]...</span>")
 				return
-	else
+	else if(. < 0)
+		var/heal_prob = max(0, 80 - getCloneLoss())
 		if (prob(heal_prob))
 			for (var/obj/item/organ/external/BP in bodyparts)
 				if (BP.status & ORGAN_MUTATED)
@@ -193,26 +153,6 @@
 	if(HULK in mutations && !ignore_canstun)
 		return SetParalysis(0)
 	..()
-
-// =============================================
-
-/mob/living/carbon/human/Stuttering()
-	if(species.flags[NO_PAIN])
-		stuttering = 0
-	else
-		..()
-
-/mob/living/carbon/human/AdjustStuttering()
-	if(species.flags[NO_PAIN])
-		stuttering = 0
-	else
-		..()
-
-/mob/living/carbon/human/setStuttering()
-	if(species.flags[NO_PAIN])
-		stuttering = 0
-	else
-		..()
 
 ////////////////////////////////////////////
 
@@ -289,9 +229,8 @@
 
 
 // damage MANY external bodyparts, in random order
+// todo return value
 /mob/living/carbon/human/take_overall_damage(brute, burn, sharp = 0, edge = 0, used_weapon = null)
-	if(status_flags & GODMODE)
-		return // godmode
 
 	var/list/parts = get_damageable_bodyparts()
 	if(!parts.len)
@@ -370,7 +309,7 @@ This function restores all bodyparts.
 	return bodyparts_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
-	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
+	if(damagetype == HALLOSS && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return FALSE
 
 	//Handle other types of damage or healing

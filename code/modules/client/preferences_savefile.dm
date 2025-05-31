@@ -459,13 +459,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (pre_52_hairstyles_to_modern_ones[h_style])
 			h_style = pre_52_hairstyles_to_modern_ones[h_style]
 
-	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 54)
-		if(ignore_question && ignore_question.len)
-			var/list/diff = ignore_question - global.full_ignore_question
-			if(diff.len)
-				S["ignore_question"] << ignore_question - diff
-
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -518,7 +511,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
 	There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences\n\
-	<a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
+	<a href='byond://?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, "<span class='userdanger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")
@@ -581,6 +574,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
 	S["tgui_lock"]		>> tgui_lock
+	S["window_scale"]	>> window_scale
 
 	//Sound preferences
 	S["snd_music_vol"]                      >> snd_music_vol
@@ -615,6 +609,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hotkeys 		= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
+	window_scale		= sanitize_integer(window_scale, 0, 1, initial(window_scale))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	glowlevel		= sanitize_integer(glowlevel, GLOW_HIGH, GLOW_DISABLE, initial(glowlevel))
@@ -705,6 +700,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
+	S["window_scale"]		<< window_scale
 
 	//Sound preferences
 	S["snd_music_vol"]                      << snd_music_vol
@@ -837,7 +833,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	r_facial		= sanitize_integer(r_facial, 0, 255, initial(r_facial))
 	g_facial		= sanitize_integer(g_facial, 0, 255, initial(g_facial))
 	b_facial		= sanitize_integer(b_facial, 0, 255, initial(b_facial))
-	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
+	s_tone			= sanitize_inlist(s_tone, global.skin_tones_by_name, initial(s_tone))
 	r_skin			= sanitize_integer(r_skin, 0, 255, initial(r_skin))
 	g_skin			= sanitize_integer(g_skin, 0, 255, initial(g_skin))
 	b_skin			= sanitize_integer(b_skin, 0, 255, initial(b_skin))

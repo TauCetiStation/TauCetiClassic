@@ -70,13 +70,13 @@
 	initial_mag = /obj/item/ammo_box/magazine/stechkin
 	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended)
 	can_be_silenced = TRUE
-	fire_delay = 0
+	fire_delay = 3
 	spread_increase = 0.5
 	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/pistol/stechkin/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/pistol/colt1911
 	desc = "Дешевая марсианская подделка Colt M1911. Использует менее смертоносные патроны 45-го калибра."

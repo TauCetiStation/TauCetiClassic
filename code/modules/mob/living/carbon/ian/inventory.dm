@@ -3,12 +3,12 @@
 	var/list/dat = list()
 
 	dat += "<table>"
-	dat += "<tr><td><B>Mouth:</B></td><td><A href='?src=\ref[src];item=[SLOT_MOUTH]'>[(mouth && !(mouth.flags & ABSTRACT)) ? mouth : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td><B>Mouth:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_MOUTH]'>[(mouth && !(mouth.flags & ABSTRACT)) ? mouth : "<font color=grey>Empty</font>"]</a></td></tr>"
 	dat += "<tr><td>&nbsp;</td></tr>"
 
-	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A></td></tr>"
-	dat += "<tr><td><B>Head:</B></td><td><A href='?src=\ref[src];item=[SLOT_HEAD]'>[(head && !(head.flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
-	dat += "<tr><td><B>Neck (ID):</B></td><td><A href='?src=\ref[src];item=[SLOT_IAN_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Back:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Head:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HEAD]'>[(head && !(head.flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Neck (ID):</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_IAN_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	dat += {"</table>
 	"}
@@ -69,7 +69,6 @@
 			return
 
 	W.plane = ABOVE_HUD_PLANE
-	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
 	W.update_inv_mob()
 
@@ -85,7 +84,6 @@
 		W.loc = src
 		mouth = W
 		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_MOUTH)
 		W.slot_equipped = SLOT_MOUTH
 		if(client)
@@ -117,7 +115,6 @@
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
 		W.slot_equipped = initial(W.slot_equipped)
 		return FALSE

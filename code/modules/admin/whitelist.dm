@@ -14,17 +14,18 @@
 <title>Whitelist Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
-<th text-align:center;'>CKEY <a class='small' href='?src=\ref[src];whitelist=add_user'>\[+\]</a></th>
+<th text-align:center;'>CKEY <a class='small' href='byond://?src=\ref[src];whitelist=add_user'>\[+\]</a></th>
 </tr>
 "}
 
 	for(var/user_ckey in role_whitelist)
 		output += "<tr>"
-		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];whitelist=showroles;ckey=[user_ckey]'>[user_ckey]</a></td>"
+		output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];whitelist=showroles;ckey=[user_ckey]'>[user_ckey]</a></td>"
 		output += "</tr>"
 
 	output += {"
@@ -33,7 +34,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist;size=600x500")
+	usr << browse(output,"window=whitelist;[get_browse_size_parameter(usr, 600, 500)]")
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
@@ -50,12 +51,13 @@
 <title>Whitelist Panel for [user_ckey]</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
 <th style='width:125px;text-align:center;'>[uppertext(user_ckey)]</th>
-<th style='width:125px;'>ROLE <a class='small' href='?src=\ref[src];whitelist=add_role;ckey=[user_ckey]'>\[+\]</a></th><th style='width:100%;'>REASON</th><th style='width:125px;'>ADDED BY</th><th style='width:125px;'>EDITED BY</th>
+<th style='width:125px;'>ROLE <a class='small' href='byond://?src=\ref[src];whitelist=add_role;ckey=[user_ckey]'>\[+\]</a></th><th style='width:100%;'>REASON</th><th style='width:125px;'>ADDED BY</th><th style='width:125px;'>EDITED BY</th>
 </tr>
 "}
 
@@ -63,11 +65,11 @@
 		output += "<tr>"
 
 		var/ban = role_whitelist[user_ckey][role]["ban"] ? "Banned" : "Available"
-		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_ban;ckey=[user_ckey];role=[role]'>[ban]</a></td>"
+		output += "<td><a class='small' href='byond://?src=\ref[src];whitelist=edit_ban;ckey=[user_ckey];role=[role]'>[ban]</a></td>"
 		output += "<td>[role]</td>"
 
 		var/reason = sanitize(role_whitelist[user_ckey][role]["reason"])
-		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_reason;ckey=[user_ckey];role=[role]'>(E)</a> [reason]</td>"
+		output += "<td><a class='small' href='byond://?src=\ref[src];whitelist=edit_reason;ckey=[user_ckey];role=[role]'>(E)</a> [reason]</td>"
 		var/addby = role_whitelist[user_ckey][role]["addby"]
 		var/addtm = role_whitelist[user_ckey][role]["addtm"]
 		output += "<td>[addby]<br>[addtm]</td>"
@@ -83,7 +85,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist_user;size=750x500")
+	usr << browse(output,"window=whitelist_user;[get_browse_size_parameter(usr, 750, 500)]")
 
 /datum/admins/proc/whitelist_add_user()
 	if(!check_rights(R_WHITELIST))

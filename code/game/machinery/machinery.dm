@@ -232,15 +232,12 @@ Class Procs:
 				continue
 			else
 				target = C
-	if(target && !target.buckled)
+	if(target && !target.buckled && Adjacent(target))
 		if(target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		occupant = target
-		target.loc = src
-		target.stop_pulling()
-		if(target.pulledby)
-			target.pulledby.stop_pulling()
+		target.forceMove(src, keep_grabs = FALSE)
 	updateUsrDialog()
 	update_icon()
 

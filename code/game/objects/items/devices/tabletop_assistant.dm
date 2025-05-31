@@ -54,26 +54,26 @@
 	icon_state = "[icon_temp]_[interaction_mode]"
 
 /obj/item/device/tabletop_assistant/proc/update()
-	var/dat = "<a href='?src=\ref[src];mode=1'>[mode]</a><HR>"
+	var/dat = "<a href='byond://?src=\ref[src];mode=1'>[mode]</a><HR>"
 	switch(mode)
 		if(CARD_MODE)
-			dat += "<a href='?src=\ref[src];cardpickup=1'>Card Pick Up Count</a><BR>"
-			dat += "<a href='?src=\ref[src];cardremovecasino=1'>Remove \"Casino\" Cards</a><BR>"
-			dat += "<a href='?src=\ref[src];cardsort=1'>Sort Card Deck</a><BR>"
-			dat += "<a href='?src=\ref[src];carddeductlost=1'>Lost Cards Deduction</a><BR>"
-			dat += "<a href='?src=\ref[src];cardtakecertain=1'>Take Certain Card</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];cardpickup=1'>Card Pick Up Count</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];cardremovecasino=1'>Remove \"Casino\" Cards</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];cardsort=1'>Sort Card Deck</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];carddeductlost=1'>Lost Cards Deduction</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];cardtakecertain=1'>Take Certain Card</a><BR>"
 			if(interaction_mode == CARD_PICKUP_MODE)
 				dat += "<HR>Card pick up amount: [interaction_number]"
 		if(GAMEKIT_MODE)
-			dat += "<a href='?src=\ref[src];gamekitselect=1'>Select Saved Layout</a><BR>"
-			dat += "<a href='?src=\ref[src];gamekitsave=1'>Save Gaming Kit Layout</a><BR>"
-			dat += "<a href='?src=\ref[src];gamekitoutput=1'>Output Gaming Kit Layout</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];gamekitselect=1'>Select Saved Layout</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];gamekitsave=1'>Save Gaming Kit Layout</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];gamekitoutput=1'>Output Gaming Kit Layout</a><BR>"
 		if(DICE_MODE)
-			dat += "<a href='?src=\ref[src];diceroll=1'>Set Dice Roll Number</a><BR>"
-			dat += "<a href='?src=\ref[src];diceoutputsum=1'>Output Dice Roll Result</a><BR>"
-			dat += "<a href='?src=\ref[src];diceclearsum=1'>Clear Dice Roll Result</a><BR>"
-			dat += "<a href='?src=\ref[src];diceoutputresult=1'>Output Dice Roll Result Log</a><BR>"
-			dat += "<a href='?src=\ref[src];diceclearresult=1'>Clear Dice Roll Result Log</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];diceroll=1'>Set Dice Roll Number</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];diceoutputsum=1'>Output Dice Roll Result</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];diceclearsum=1'>Clear Dice Roll Result</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];diceoutputresult=1'>Output Dice Roll Result Log</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];diceclearresult=1'>Clear Dice Roll Result Log</a><BR>"
 			if(dice_sum)
 				dat += "<HR>Dice saved result: [dice_sum]"
 			if(result_log)

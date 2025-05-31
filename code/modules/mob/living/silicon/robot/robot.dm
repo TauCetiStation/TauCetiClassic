@@ -621,6 +621,7 @@
 					C.electronics_damage = WC.burn
 
 				to_chat(usr, "<span class='notice'>You install the [W.name].</span>")
+				playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 				return
 
@@ -696,6 +697,7 @@
 				var/datum/robot_component/C = components[remove]
 				var/obj/item/robot_parts/robot_component/I = C.wrapped
 				to_chat(user, "You remove \the [I].")
+				playsound(src, 'sound/items/remove.ogg', VOL_EFFECTS_MASTER, 75)
 				if(istype(I))
 					I.brute = C.brute_damage
 					I.burn = C.electronics_damage
@@ -965,9 +967,9 @@
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
-	Module 1: [module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
-	Module 2: [module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
-	Module 3: [module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
+	Module 1: [module_state_1 ? "<A href=byond://?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
+	Module 2: [module_state_2 ? "<A href=byond://?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
+	Module 3: [module_state_3 ? "<A href=byond://?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
 	<BR>
 	<B>Installed Modules</B><BR><BR>"}
 
@@ -978,12 +980,12 @@
 		else if(activated(obj))
 			dat += text("[obj]: <B>Activated</B><BR>")
 		else
-			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
+			dat += text("[obj]: <A href=byond://?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
 	if (emagged)
 		if(activated(module.emag))
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
-			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
+			dat += text("[module.emag]: <A href=byond://?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
 
 	var/datum/browser/popup = new(src, "robotmod", "Modules")
 	popup.set_content(dat)

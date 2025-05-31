@@ -29,11 +29,11 @@
 		if(is_centcom_level(z))
 			dat += "<ul><li>Местоположение: <b>Космос</b></li>"
 			dat += "</ul>"
-			dat += "<a href='?src=\ref[src];station=1'>Пристыковаться к станции</a>"
+			dat += "<a href='byond://?src=\ref[src];station=1'>Пристыковаться к станции</a>"
 		else
 			dat += "<ul><li>Местоположение: <b>[station_name_ru()]</b></li>"
 			dat += "</ul>"
-			dat += "<a href='?src=\ref[src];space=1'>Начать процедуру отстыковки</a>"
+			dat += "<a href='byond://?src=\ref[src];space=1'>Начать процедуру отстыковки</a>"
 	else
 		if(is_centcom_level(z))
 			dat += "<ul><li>Местоположение: <b>Приближаемся к станции</b></li>"
@@ -72,14 +72,12 @@
 	space_location.move_contents_to(station_location)
 	SSshuttle.shake_mobs_in_area(station_location, WEST)
 
-	SSshuttle.dock_act(/area/station/hallway/secondary/entry, "trader_shuttle")
 	SSshuttle.dock_act(station_location, "trader_shuttle")
 
 	if(src) docked = TRUE
 
 /obj/machinery/computer/trader_shuttle/proc/undock_to_station()
 	set waitfor = FALSE
-	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "trader_shuttle")
 	SSshuttle.undock_act(station_location, "trader_shuttle")
 	sleep(PARALLAX_LOOP_TIME)
 

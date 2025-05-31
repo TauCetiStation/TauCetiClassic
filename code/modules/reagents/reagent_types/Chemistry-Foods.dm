@@ -2,21 +2,21 @@
 	name = "Consumable"
 	id = "consumable"
 	custom_metabolism = FOOD_METABOLISM
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
 	data = list()
 
 /datum/reagent/consumable/on_general_digest(mob/living/M)
-	..()
-	var/mob_met_factor = 1
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		mob_met_factor = C.get_metabolism_factor() * 0.25
+	. = ..()
+	if(!.)
+		return
+
 	if(volume > last_volume)
-		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
-		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
+		var/nutriment_value = nutriment_factor * custom_metabolism * M.mob_metabolism_mod.Get()
+		var/to_add = rand(0, volume - last_volume) * nutriment_value
+		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_value) - to_add)
 		if(diet_flags & DIET_ALL)
 			M.reagents.add_reagent("nutriment", to_add)
 		else if(diet_flags & DIET_MEAT)
@@ -39,7 +39,10 @@
 	taste_message = "bland food"
 
 /datum/reagent/nutriment/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(istype(M))
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -59,7 +62,6 @@
 	taste_message = "meat"
 
 /datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M)
-	..()
 	M.adjustToxLoss(2 * FOOD_METABOLISM)
 	return FALSE
 
@@ -85,7 +87,10 @@
 	taste_message = "sweetness"
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
 		M.heal_bodypart_damage(1, 1)
 
@@ -96,21 +101,39 @@
 	color = "#ab7878" // rgb: 171, 120, 120
 
 /datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(ishuman(M) && M.mind && M.mind.special_role)
 		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M) // Is not as poisonous to skrell.
-	..()
 	M.adjustToxLoss(1 * FOOD_METABOLISM)
 	return FALSE
+
+/datum/reagent/consumable/strangejam
+	name = "Strange Jam"
+	id = "strangejam"
+	description = "A shimmering substance extracted from happy tajaran children."
+	taste_message = "happiness"
+	color = "#9e1023" // rgb: 158, 16, 35
+
+/datum/reagent/consumable/strangejam/on_general_digest(mob/living/M)
+	. = ..()
+	if(!.)
+		return
+
+	if(prob(20))
+		to_chat(M, "<span class='notice'>The world seems... kinder.</span>")
+		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	id = "soysauce"
 	description = "A salty sauce made from the soy plant."
 	reagent_state = LIQUID
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
 	diet_flags = DIET_MEAT
@@ -120,7 +143,7 @@
 	id = "ketchup"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
 	reagent_state = LIQUID
-	nutriment_factor = 5
+	nutriment_factor = 1.25
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
 	diet_flags = DIET_PLANT
@@ -130,7 +153,7 @@
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
@@ -144,7 +167,10 @@
 	taste_message = "<span class='warning'>HOTNESS</span>"
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
@@ -175,8 +201,7 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
 		return
-	var/datum/species/S = all_species[M.get_species()]
-	if(S && S.flags[NO_PAIN])
+	if(HAS_TRAIT(M, TRAIT_NO_PAIN))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -226,7 +251,10 @@
 				victim.Weaken(5)
 
 /datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 
@@ -240,7 +268,10 @@
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(prob(1))
 		M.emote("shiver")
 	if(isslime(M))
@@ -278,7 +309,7 @@
 	id = "coco"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 10
+	nutriment_factor = 2.5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
@@ -288,13 +319,16 @@
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
 	reagent_state = LIQUID
-	nutriment_factor = 1
+	nutriment_factor = 0.25
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/psilocybin
@@ -304,10 +338,12 @@
 	color = "#e700e7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = FOOD_METABOLISM * 0.5
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustDrugginess(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
@@ -333,6 +369,9 @@
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++
 
+/datum/reagent/consumable/psilocybin/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/consumable/psilocybin/on_skrell_digest(mob/living/M)
 	M.adjustDrugginess(3)
 	M.nutrition += 10 * REM
@@ -343,7 +382,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 40
+	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -376,12 +415,15 @@
 	id = "dry_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and chicken flavored chemicals that boil in contact with water."
 	reagent_state = SOLID
-	nutriment_factor = 2
+	nutriment_factor = 0.5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
 /datum/reagent/consumable/dry_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 
 /datum/reagent/consumable/hot_ramen
@@ -389,12 +431,15 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
@@ -403,12 +448,15 @@
 	id = "hell_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen with SPICY flavor"
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
@@ -417,12 +465,15 @@
 	id = "hot_hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
@@ -431,7 +482,7 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 8
+	nutriment_factor = 2
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
@@ -441,7 +492,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 8
+	nutriment_factor = 2
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
@@ -451,7 +502,7 @@
 	id = "egg"
 	description = "A runny and viscous mixture of clear and yellow fluids."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
@@ -461,7 +512,7 @@
 	id = "cheese"
 	description = "Some cheese. Pour it out to make it solid."
 	reagent_state = SOLID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
@@ -471,7 +522,7 @@
 	id = "beans"
 	description = "A dish made of mashed beans cooked with lard."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#684435"
 	taste_message = "burritos"
 	diet_flags = DIET_MEAT
@@ -481,7 +532,7 @@
 	id = "bread"
 	description = "Bread! Yep, bread."
 	reagent_state = SOLID
-	nutriment_factor = 4
+	nutriment_factor = 1
 	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT

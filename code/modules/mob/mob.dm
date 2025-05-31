@@ -226,7 +226,16 @@
 	return 0
 
 /mob/proc/Life()
+	// SHOULD_CALL_PARENT(TRUE) // need to do a pass at every life() call and see if adding ..() everywhere can break something
 	set waitfor = 0
+
+	// forces a full overlay update
+	// todo: this flag is not actively used at this moment, maybe we should remove it or replace some regenerate_icons()-calls with it
+	// for humans direct parts update is more preferable than full regeneration (ex. update_body())
+	if(regenerate_icons_next_tick)
+		regenerate_icons_next_tick = FALSE
+		regenerate_icons()
+
 	return
 
 /mob/proc/incapacitated(restrained_type = ARMS)
@@ -342,21 +351,25 @@
 		return
 
 	face_atom(A)
+	looks_at_log(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(stat == CONSCIOUS)
+		last_examined = A.name
+
+/mob/proc/looks_at_log(atom/A)
 	if(!show_examine_log)
 		return
 	var/mob/living/carbon/human/H = src
 	if(ishuman(src))
-		if(H.head && H.head.flags_inv && HIDEEYES)
+		if(H.head && H.head.flags_inv & HIDEEYES)
 			return
-		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+		if(H.wear_mask && H.wear_mask.flags_inv & HIDEEYES)
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
-	if(stat == CONSCIOUS)
-		last_examined = A.name
+
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
@@ -412,7 +425,7 @@
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
-			to_chat(usr, "You must wait 30 minutes to respawn!")
+			to_chat(usr, "You must wait [config.deathtime_required / 600] minutes to respawn!")
 			return
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")
@@ -481,7 +494,7 @@
 /mob/proc/pull_damage()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if((H.health - H.halloss) <= config.health_threshold_softcrit)
+		if((H.health - H.getHalLoss()) <= config.health_threshold_softcrit)
 			for(var/bodypart_name in H.bodyparts_by_name)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				if(H.lying)
@@ -784,9 +797,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(!no_transform && lying != lying_prev)
 		update_transform()
-	if(update_icon)	//forces a full overlay update
-		update_icon = FALSE
-		regenerate_icons()
 
 
 /mob/proc/facedir(ndir)
@@ -836,8 +846,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
-	if(add_flags & GODMODE)
-		stuttering = 0
 	if(add_flags & FAKEDEATH)
 		update_canmove()
 	status_flags |= add_flags
@@ -868,20 +876,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 		clear_alert("high")
 
 // ========== STUTTERING ==========
+// todo: move it to status effects
 /mob/proc/Stuttering(amount)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering, amount, 0)
 
 /mob/proc/AdjustStuttering(amount)
-	if(status_flags & GODMODE)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering + amount, 0)
 
-/mob/proc/setStuttering(amount)
-	if(status_flags & GODMODE)
-		return
-	stuttering = max(amount, 0)
+/mob/proc/resetStuttering(amount)
+	stuttering = 0
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)

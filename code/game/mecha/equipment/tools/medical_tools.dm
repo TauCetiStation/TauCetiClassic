@@ -106,7 +106,7 @@
 	if(output)
 		var/temp = ""
 		if(occupant)
-			temp = "<br />\[Occupant: [occupant] (Health: [occupant.health]%)\]<br /><a href='?src=\ref[src];view_stats=1'>View stats</a>|<a href='?src=\ref[src];eject=1'>Eject</a>"
+			temp = "<br />\[Occupant: [occupant] (Health: [occupant.health]%)\]<br /><a href='byond://?src=\ref[src];view_stats=1'>View stats</a>|<a href='byond://?src=\ref[src];eject=1'>Eject</a>"
 		return "[output] [temp]"
 	return
 
@@ -116,14 +116,14 @@
 	if(F.get("eject"))
 		go_out()
 	if(F.get("view_stats"))
-		chassis.occupant << browse(get_occupant_stats(),"window=msleeper")
+		chassis.occupant << browse(get_occupant_stats(chassis.occupant.client),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(F.get("inject"))
 		inject_reagent(F.getType("inject",/datum/reagent),F.getObj("source"))
 	return
 
-/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_stats()
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_stats(client/user)
 	if(!occupant)
 		return
 	return {"<html>
@@ -137,6 +137,7 @@
 				h3 {margin-bottom:2px;font-size:14px;}
 				#lossinfo, #reagents, #injectwith {padding-left:15px;}
 				</style>
+				[get_browse_zoom_style(user)]
 				</head>
 				<body>
 				<h3>Health statistics</h3>
@@ -166,10 +167,10 @@
 			t1 = "Unknown"
 	return {"<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.health]% ([t1])</font><br />
 				<font color="[occupant.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [src.occupant.bodytemperature-T0C]&deg;C ([src.occupant.bodytemperature*1.8-459.67]&deg;F)</font><br />
-				<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [occupant.getBruteLoss()]%</font><br />
-				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
-				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
-				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
+				<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [ceil(occupant.getBruteLoss())]%</font><br />
+				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [ceil(occupant.getOxyLoss())]%</font><br />
+				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [ceil(occupant.getToxLoss())]%</font><br />
+				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [ceil(occupant.getFireLoss())]%</font><br />
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_reagents()
@@ -185,7 +186,7 @@
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
-				output += "<a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG]\">Inject [R.name]</a><br />"
+				output += "<a href=\"byond://?src=\ref[src];inject=\ref[R];source=\ref[SG]\">Inject [R.name]</a><br />"
 	return output
 
 
@@ -308,7 +309,7 @@
 /obj/item/mecha_parts/mecha_equipment/cable_layer/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>" : null]"
+		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='byond://?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='byond://?src=\ref[src];cut=1'>Cut</a>" : null]"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/load_cable(obj/item/stack/cable_coil/CC)
@@ -441,7 +442,7 @@
 /obj/item/mecha_parts/mecha_equipment/syringe_gun/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
+		return "[output] \[<a href=\"byond://?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='byond://?src=\ref[src];show_reagents=1'>Reagents list</a>"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/syringe_gun/action(atom/movable/target)
@@ -531,7 +532,7 @@
 			log_message("Reagent processing started.")
 		return
 	if(F.get("show_reagents"))
-		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
+		chassis.occupant << browse(get_reagents_page(chassis.occupant.client),"window=msyringegun")
 	if(F.get("purge_reagent"))
 		var/reagent = F.get("purge_reagent")
 		if(reagent)
@@ -542,7 +543,7 @@
 		return
 	return
 
-/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_page()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_page(client/C)
 	var/output = {"<html>
 						<head>
 						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -556,6 +557,7 @@
 						form {width: 90%; margin:10px auto; border:1px dotted #999; padding:6px;}
 						#submit {margin-top:5px;}
 						</style>
+						[get_browse_zoom_style(C)]
 						</head>
 						<body>
 						<h3>Current reagents:</h3>
@@ -597,9 +599,9 @@
 	var/output
 	for(var/datum/reagent/R in reagents.reagent_list)
 		if(R.volume > 0)
-			output += "[R]: [round(R.volume,0.001)] - <a href=\"?src=\ref[src];purge_reagent=[R.id]\">Purge Reagent</a><br />"
+			output += "[R]: [round(R.volume,0.001)] - <a href=\"byond://?src=\ref[src];purge_reagent=[R.id]\">Purge Reagent</a><br />"
 	if(output)
-		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=\ref[src];purge_all=1\">Purge All</a>"
+		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"byond://?src=\ref[src];purge_all=1\">Purge All</a>"
 	return output || "None"
 
 /obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/load_syringe(obj/item/weapon/reagent_containers/syringe/S)

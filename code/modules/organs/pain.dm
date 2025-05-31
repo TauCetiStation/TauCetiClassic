@@ -46,7 +46,7 @@
 /mob/living/carbon/human/proc/custom_pain(message, flash_strength)
 	if(stat != CONSCIOUS)
 		return
-	if(species && species.flags[NO_PAIN])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
@@ -62,7 +62,7 @@
 
 /mob/living/carbon/human/proc/handle_pain()
 	// not when sleeping
-	if(species && species.flags[NO_PAIN])
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	if(stat >= DEAD)
 		return

@@ -127,6 +127,7 @@
 /obj/effect/proc_holder/spell/no_target/ancestor_call/proc/mimic_message(datum/source, message)
 	fake_body.say(message)
 
+// todo: refactor holocalls, make this spell holocall
 /obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/carbon/human/user = usr)
 	if(!fake_body)
 		if(available_pluvia_gongs.len == 0)
@@ -144,10 +145,14 @@
 		RegisterSignal(user,COMSIG_HUMAN_SAY, PROC_REF(mimic_message))
 		user.reset_view(fake_body, TRUE)
 		fake_body.add_remote_hearer(user)
-		eye = image('icons/mob/human_face.dmi',"pluvia_ms_s")
-		eye.plane = LIGHTING_LAMPS_PLANE
-		eye.layer = ABOVE_LIGHTING_LAYER
-		user.add_overlay(eye)
+
+		var/mutable_appearance/eyes = mutable_appearance(
+			'icons/mob/human/eyes.dmi', 
+			"blessed_pluvian"
+		)
+		eyes.plane = LIGHTING_LAMPS_PLANE
+		eyes.layer = ABOVE_LIGHTING_LAYER
+		user.add_overlay(eyes)
 		user.hud_used.set_parallax(PARALLAX_HEAVEN)
 	else
 		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
@@ -215,6 +220,7 @@
 	if(istype(I,/obj/item/weapon/melee/pluvia_gong_baton))
 		ring(user)
 
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/ancestor_wisp, pluvian_wisps)
 /mob/living/simple_animal/ancestor_wisp
 	name = "Wisp"
 	real_name = "Wisp"

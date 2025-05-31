@@ -161,7 +161,8 @@
 		H.g_belly  = dna.GetUIValueRange(DNA_UI_BELLY_G,   255)
 		H.b_belly  = dna.GetUIValueRange(DNA_UI_BELLY_B,   255)
 
-		H.s_tone   = 35 - dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220) // Value can be negative.
+		var/s_tone_index = dna.GetUIValueRange(DNA_UI_SKIN_TONE, length(global.skin_tones_by_name))
+		H.s_tone = global.skin_tones_by_name[s_tone_index]
 
 		if (dna.GetUIState(DNA_UI_GENDER))
 			H.gender = FEMALE
@@ -183,7 +184,7 @@
 		if((0 < height) && (height <= heights_list.len))
 			H.height = heights_list[height]
 
-		H.regenerate_icons()
+		H.regenerate_icons(update_body_preferences = TRUE)
 
 // Used below, simple injection modifier.
 /proc/probinj(pr, inj)

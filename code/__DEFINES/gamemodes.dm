@@ -72,6 +72,7 @@
 #define PRISONER "Prisoner"
 #define SPACE_TRADER "Space Trader"
 #define THIEF "Thief"
+#define ZOMBIE "Zombie"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
