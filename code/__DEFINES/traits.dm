@@ -144,8 +144,8 @@
 #define TRAIT_EPILEPSY            "epilepsy"
 /// mob is fat and should use fat icons if possible
 #define TRAIT_FAT                 "fatness"
-/// can't become fat, should prevent previous trait
-/// note: you can screw things up if you give TRAIT_FAT
+/// can't become fat, should prevent previous trait 
+/// note: you can screw things up if you give TRAIT_FAT 
 /// without checking TRAIT_NEWER_FAT first
 #define TRAIT_NEVER_FAT           "never_fat"
 #define TRAIT_HIGH_PAIN_THRESHOLD "high_pain_threshold"
@@ -231,7 +231,7 @@
 #define TRAIT_EMOTIONLESS         "emotionless"
 #define TRAIT_NO_VOMIT            "no_vomit"
 /// mob doesn't have and doesn't need blood
-#define TRAIT_NO_BLOOD            "TRAIT_NO_BLOOD"
+#define TRAIT_NO_BLOOD            "no_blood"
 /// prevents mob from spawning bloody mess when gibbed, they still drop limbs if they have them
 #define TRAIT_NO_MESSY_GIBS       "no_messy_gibs"
 #define TRAIT_GLOWING_EYES        "glowing_eyes"
