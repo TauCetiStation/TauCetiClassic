@@ -401,7 +401,7 @@
 	user.mutations += RUN
 	user.update_sight()
 	ADD_TRAIT(user, TRAIT_FANATICS_CHAMPION, GENERIC_TRAIT)
-	user.playsound_local(null, 'sound/antag/champion_alert.ogg', VOL_AMBIENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	user.playsound_local(null, 'sound/antag/ascend_blade.ogg', VOL_AMBIENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			M.playsound_local(null, pick('sound/hallucinations/demons_1.ogg', 'sound/hallucinations/demons_2.ogg', 'sound/hallucinations/demons_3.ogg'), VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
