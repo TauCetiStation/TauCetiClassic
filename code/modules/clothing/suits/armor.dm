@@ -525,11 +525,11 @@
 		return
 
 	if(sleeves)
-		icon_state = "fanaticrobes_r"
+		icon_state = "fanaticsrobes_r"
 		to_chat(usr, "You roll up your sleeves.")
 		sleeves = FALSE
 	else
-		icon_state = "fanaticrobes"
+		icon_state = "fanaticsrobes"
 		to_chat(usr, "You let off your sleeves.")
 		sleeves = TRUE
 	update_inv_mob()
