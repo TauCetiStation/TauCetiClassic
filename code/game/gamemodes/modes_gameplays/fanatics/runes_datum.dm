@@ -44,7 +44,7 @@
 		H.chat_color = "#ff0000"
 		H.say(message)
 		H.chat_color = initial(H.chat_color)
-		playsound(H.loc, pick(SOUNDIN_FANATICS_CRY), VOL_EFFECTS_MASTER)
+		playsound(H.loc, pick(SOUNDIN_FANATICS_CRY), VOL_EFFECTS_MASTER, 45, vary = FALSE)
 		REMOVE_TRAIT(H, TRAIT_DISTORTED_INVOCATION, GENERIC_TRAIT)
 
 	return TRUE

@@ -182,7 +182,7 @@
 			fanatic.adjustFireLoss(-15)
 			fanatic.adjustHalLoss(-10)
 	user.chat_color = initial(user.chat_color)
-	playsound(user.loc, pick(SOUNDIN_FANATICS_CRY), VOL_EFFECTS_MASTER)
+	playsound(user.loc, pick(SOUNDIN_FANATICS_CRY), VOL_EFFECTS_MASTER, 45, vary = FALSE)
 	REMOVE_TRAIT(user, TRAIT_DISTORTED_INVOCATION, GENERIC_TRAIT)
 
 /obj/item/weapon/champion_cape
