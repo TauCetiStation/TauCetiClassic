@@ -508,13 +508,31 @@
 	desc = "Красная роба, поверх которой накинута кираса."
 	icon_state = "fanaticsrobes"
 	item_state = "fanaticsrobes"
-	icon_suit_up = "fanaticsrobes_t"
+	var/sleeves = TRUE
 	hoodtype = /obj/item/clothing/head/helmet/fanatics_hood
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/weapon/kitchenknife/ritual, /obj/item/weapon/claymore/fanatics)
 	armor = list(melee = 70, bullet = 60, laser = 60, energy = 50, bomb = 40, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.3
+
+/obj/item/clothing/suit/hooded/fanatics_robes/verb/adjust_sleeves()
+	set name = "Toggle Sleeves"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return
+
+	if(sleeves)
+		icon_state = "fanaticrobes_r"
+		to_chat(usr, "You roll up your sleeves.")
+		sleeves = FALSE
+	else
+		icon_state = "fanaticrobes"
+		to_chat(usr, "You let off your sleeves.")
+		sleeves = TRUE
+	update_inv_mob()
 
 /obj/item/clothing/suit/armor/champion_armor
 	name = "champion armor"
