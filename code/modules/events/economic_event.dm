@@ -1,4 +1,3 @@
-
 /datum/event/economic_event
 	endWhen = 50			//this will be set randomly, later
 	announceWhen = 15
@@ -26,14 +25,14 @@
 			if(INDUSTRIAL_ACCIDENT)
 				dearer_goods = list(EMERGENCY, BIOMEDICAL, ROBOTICS)
 			if(BIOHAZARD_OUTBREAK)
-				dearer_goods = list(BIOMEDICAL, VESPENE_GAS)
+				cheaper_goods = list(BIOMEDICAL, VESPENE_GAS)
 			if(PIRATES)
 				dearer_goods = list(SECURITY, MINERALS)
 			if(CORPORATE_ATTACK)
 				dearer_goods = list(SECURITY, MAINTENANCE)
 			if(ALIEN_RAIDERS)
-				dearer_goods = list(BIOMEDICAL, ANIMALS)
-				cheaper_goods = list(VESPENE_GAS, MINERALS)
+				cheaper_goods = list(BIOMEDICAL, ANIMALS)
+				dearer_goods = list(VESPENE_GAS, MINERALS)
 			if(AI_LIBERATION)
 				dearer_goods = list(EMERGENCY, VESPENE_GAS, MAINTENANCE)
 			if(MOURNING)
@@ -46,8 +45,10 @@
 				dearer_goods = list(ANIMALS)
 			if(FESTIVAL)
 				dearer_goods = list(FOOD, ANIMALS)
+
 		for(var/good_type in dearer_goods)
 			affected_dest.temp_price_change[good_type] = rand(1,100)
+
 		for(var/good_type in cheaper_goods)
 			affected_dest.temp_price_change[good_type] = rand(1,100) / 100
 
@@ -62,34 +63,34 @@
 	if(!newMsg.body)
 		switch(event_type)
 			if(RIOTS)
-				newMsg.body = "[pick("Riots have","Unrest has")] broken out on planet [affected_dest.name]. Authorities call for calm, as [pick("various parties","rebellious elements","peacekeeping forces","\'REDACTED\'")] begin stockpiling weaponry and armour. Meanwhile, food and mineral prices are dropping as local industries attempt empty their stocks in expectation of looting."
+				newMsg.body = "[pick("На планете","Вспыхнули беспорядки на")] [affected_dest.name]. Власти призывают к спокойствию, пока [pick("различные группировки","мятежные элементы","миротворческие силы","'ЗАЧЕРКНУТО'")] начинают запасаться оружием и броней. Тем временем цены на еду и минералы падают, так как местные производители пытаются распродать запасы в ожидании мародерства."
 			if(WILD_ANIMAL_ATTACK)
-				newMsg.body = "Local [pick("wildlife","animal life","fauna")] on planet [affected_dest.name] has been increasing in agression and raiding outlying settlements for food. Big game hunters have been called in to help alleviate the problem, but numerous injuries have already occurred."
+				newMsg.body = "Местная [pick("фауна","дикая природа","звери")] на планете [affected_dest.name] становятся все более агрессивной и совершают набеги на поселения в поисках пищи. Охотники вызваны для решения проблемы, но уже зафиксированы многочисленные ранения."
 			if(INDUSTRIAL_ACCIDENT)
-				newMsg.body = "[pick("An industrial accident","A smelting accident","A malfunction","A malfunctioning piece of machinery","Negligent maintenance","A cooleant leak","A ruptured conduit")] at a [pick("factory","installation","power plant","dockyards")] on [affected_dest.name] resulted in severe structural damage and numerous injuries. Repairs are ongoing."
+				newMsg.body = "[pick("Промышленная авария","Авария на плавильном заводе","Технический сбой","Неисправность оборудования","Халатное обслуживание","Утечка хладагента","Разрыв трубопровода")] на [pick("фабрике","установке","электростанции","верфях")] [affected_dest.name] привела к серьезным повреждениям и многочисленным травмам. Ремонтные работы продолжаются."
 			if(BIOHAZARD_OUTBREAK)
-				newMsg.body = "[pick("A \'REDACTED\'","A biohazard","An outbreak","A virus")] on [affected_dest.name] has resulted in quarantine, stopping much shipping in the area. Although the quarantine is now lifted, authorities are calling for deliveries of medical supplies to treat the infected, and gas to replace contaminated stocks."
+				newMsg.body = "[pick("'ЗАЧЕРКНУТО'","Биологическая угроза","Вспышка","Вирус")] на [affected_dest.name] привела к карантину, остановившему многие поставки в регионе. Хотя карантин уже снят, власти запрашивают поставки медицинского оборудования для лечения зараженных и газа для замены загрязненных запасов."
 			if(PIRATES)
-				newMsg.body = "[pick("Pirates","Criminal elements","A [pick("Syndicate","Donk Co.","Waffle Co.","\'REDACTED\'")] strike force")] have [pick("raided","blockaded","attempted to blackmail","attacked")] [affected_dest.name] today. Security has been tightened, but many valuable minerals were taken."
+				newMsg.body = "[pick("Пираты","Преступные элементы","Ударная группа [pick("Синдиката","Donk Co.","Waffle Co.","'ЗАЧЕРКНУТО'")]")] [pick("совершили набег","установили блокаду","попытались шантажировать","атаковали")] [affected_dest.name] сегодня. Безопасность усилена, но многие ценные минералы были похищены."
 			if(CORPORATE_ATTACK)
-				newMsg.body = "A small [pick("pirate","Cybersun Industries","Gorlex Marauders","Syndicate")] fleet has precise-jumped into proximity with [affected_dest.name], [pick("for a smash-and-grab operation","in a hit and run attack","in an overt display of hostilities")]. Much damage was done, and security has been tightened since the incident."
+				newMsg.body = "Небольшой флот [pick("пиратов","Cybersun Industries","Gorlex Marauders","Синдиката")] совершил точный прыжок вблизи [affected_dest.name], [pick("для операции 'налет-и-грабеж'","в атаке по принципу 'ударил-убежал'","в открытом проявлении враждебности")]. Причинен значительный ущерб, с момента инцидента безопасность усилена."
 			if(ALIEN_RAIDERS)
 				if(prob(20))
-					newMsg.body = "The Tiger Co-operative have raided [affected_dest.name] today, no doubt on orders from their enigmatic masters. Stealing wildlife, farm animals, medical research materials and kidnapping civilians. NanoTrasen authorities are standing by to counter attempts at bio-terrorism."
+					newMsg.body = "Кооператив Тигров совершил набег на [affected_dest.name] сегодня, несомненно по приказу своих загадочных хозяев. Похищены дикие животные, скот, медицинские исследовательские материалы и гражданские. Власти NanoTrasen готовы противостоять попыткам биотерроризма."
 				else
-					newMsg.body = "[pick("The alien species designated \'United Exolitics\'","The alien species designated \'REDACTED\'","An unknown alien species")] have raided [affected_dest.name] today, stealing wildlife, farm animals, medical research materials and kidnapping civilians. It seems they desire to learn more about us, so the Navy will be standing by to accomodate them next time they try."
+					newMsg.body = "[pick("Инопланетный вид, обозначенный как 'Объединенные Экзотики'","Инопланетный вид, обозначенный как 'ЗАЧЕРКНУТО'","Неизвестный инопланетный вид")] совершил набег на [affected_dest.name] сегодня, похитив диких животных, скот, медицинские исследовательские материалы и гражданских. Похоже, они хотят узнать о нас больше, поэтому Флот будет готов встретить их в следующий раз."
 			if(AI_LIBERATION)
-				newMsg.body = "A [pick("\'REDACTED\' was detected on","S.E.L.F operative infiltrated","malignant computer virus was detected on","rogue [pick("slicer","hacker")] was apprehended on")] [affected_dest.name] today, and managed to infect [pick("\'REDACTED\'","a sentient sub-system","a class one AI","a sentient defence installation")] before it could be stopped. Many lives were lost as it systematically begin murdering civilians, and considerable work must be done to repair the affected areas."
+				newMsg.body = "[pick("'ЗАЧЕРКНУТО' был обнаружен на","Агент S.E.L.F. проник на","Злокачественный компьютерный вирус был обнаружен на","Рейдер [pick("хакер","взломщик")] был задержан на")] [affected_dest.name] сегодня и успел заразить [pick("'ЗАЧЕРКНУТО'","разумную подсистему","ИИ первого класса","разумную оборонительную установку")] до того, как его остановили. Много жизней было потеряно, когда система начала методично убивать гражданских, потребуется значительная работа по восстановлению затронутых зон."
 			if(MOURNING)
-				newMsg.body = "[pick("The popular","The well-liked","The eminent","The well-known")] [pick("professor","entertainer","singer","researcher","public servant","administrator","ship captain","\'REDACTED\'")], [pick( random_name(pick(MALE,FEMALE)), 40; "\'REDACTED\'" )] has [pick("passed away","committed suicide","been murdered","died in a freakish accident")] on [affected_dest.name] today. The entire planet is in mourning, and prices have dropped for industrial goods as worker morale drops."
+				newMsg.body = "[pick("Популярный","Уважаемый","Выдающийся","Известный")] [pick("профессор","артист","певец","исследователь","госслужащий","руководитель","капитан корабля","'ЗАЧЕРКНУТО'")], [pick( random_name(pick(MALE,FEMALE)), 40; "'ЗАЧЕРКНУТО'" )] [pick("скончался","покончил с собой","был убит","погиб в странном несчастном случае")] на [affected_dest.name] сегодня. Вся планета в трауре, цены на промышленные товары упали из-за снижения морали рабочих."
 			if(CULT_CELL_REVEALED)
-				newMsg.body = "A [pick("dastardly","blood-thirsty","villanous","crazed")] cult of [pick("The Elder Gods","Nar'sie","an apocalyptic sect","\'REDACTED\'")] has [pick("been discovered","been revealed","revealed themselves","gone public")] on [affected_dest.name] earlier today. Public morale has been shaken due to [pick("certain","several","one or two")] [pick("high-profile","well known","popular")] individuals [pick("performing \'REDACTED\' acts","claiming allegiance to the cult","swearing loyalty to the cult leader","promising to aid to the cult")] before those involved could be brought to justice. The editor reminds all personnel that supernatural myths will not be tolerated on NanoTrasen facilities."
+				newMsg.body = "[pick("Коварный","Кровожадный","Злодейский","Безумный")] культ [pick("Древних Богов","Нар'Си","апокалиптической секты","'ЗАЧЕРКНУТО'")] [pick("был обнаружен","раскрыт","объявил о себе","вышел из тени")] на [affected_dest.name] ранее сегодня. Общественная мораль пошатнулась из-за того, что [pick("некоторые","разные","многие")] [pick("известные","популярные","видные")] личности [pick("совершали 'ЗАЧЕРКНУТО' действия","признали свою принадлежность к культу","поклялись в верности лидеру культа","пообещали помощь культу")] до того, как виновные были наказаны. Редакция напоминает всем сотрудникам, что сверхъестественные мифы недопустимы на объектах NanoTrasen."
 			if(SECURITY_BREACH)
-				newMsg.body = "There was [pick("a security breach in","an unauthorised access in","an attempted theft in","an anarchist attack in","violent sabotage of")] a [pick("high-security","restricted access","classified","\'REDACTED\'")] [pick("\'REDACTED\'","section","zone","area")] this morning. Security was tightened on [affected_dest.name] after the incident, and the editor reassures all NanoTrasen personnel that such lapses are rare."
+				newMsg.body = "Сегодня утром произошло [pick("нарушение безопасности","несанкционированное проникновение","попытка кражи","атака анархистов","насильственный саботаж")] в [pick("высокозащищенной","закрытой","классифицированной","'ЗАЧЕРКНУТО'")] [pick("'ЗАЧЕРКНУТО'","зоне","секторе","области")]. После инцидента безопасность на [affected_dest.name] была усилена, и редакция заверяет всех сотрудников NanoTrasen, что такие инциденты редки."
 			if(ANIMAL_RIGHTS_RAID)
-				newMsg.body = "[pick("Militant animal rights activists","Members of the terrorist group Animal Rights Consortium","Members of the terrorist group \'REDACTED\'")] have [pick("launched a campaign of terror","unleashed a swathe of destruction","raided farms and pastures","forced entry to \'REDACTED\'")] on [affected_dest.name] earlier today, freeing numerous [pick("farm animals","animals","\'REDACTED\'")]. Prices for tame and breeding animals have spiked as a result."
+				newMsg.body = "[pick("Милитантные защитники прав животных","Члены террористической группы Консорциума Защиты Прав Животных","Члены террористической группы 'ЗАЧЕРКНУТО'")] [pick("начали кампанию террора","учинили волну разрушений","совершили набег на фермы и пастбища","проникли в 'ЗАЧЕРКНУТО'")] на [affected_dest.name] ранее сегодня, освободив множество [pick("домашних животных","животных","'ЗАЧЕРКНУТО'")]. В результате цены на прирученных и диких животных резко выросли."
 			if(FESTIVAL)
-				newMsg.body = "A [pick("festival","week long celebration","day of revelry","planet-wide holiday")] has been declared on [affected_dest.name] by [pick("Governor","Commissioner","General","Commandant","Administrator")] [random_name(pick(MALE,FEMALE))] to celebrate [pick("the birth of their [pick("son","daughter")]","coming of age of their [pick("son","daughter")]","the pacification of rogue military cell","the apprehension of a violent criminal who had been terrorising the planet")]. Massive stocks of food and meat have been bought driving up prices across the planet."
+				newMsg.body = "[pick("Губернатор","Комиссар","Генерал","Комендант","Руководитель")] [random_name(pick(MALE))] объявил [pick("фестиваль","неделю празднеств","день веселья","планетарный праздник")] на [affected_dest.name] в честь [pick("рождения своего [pick("сына","дочери")]","совершеннолетия своего [pick("сына","дочери")]","усмирения мятежной военной ячейки","поимки опасного преступника, терроризировавшего планету")]. Огромные запасы еды и мяса были закуплены, что привело к росту цен по всей планете."
 
 	for(var/datum/feed_channel/FC in news_network.network_channels)
 		if(FC.channel_name == "[system_name()] Daily")

@@ -1,4 +1,3 @@
-
 /datum/event/mundane_news
 	endWhen = 10
 
@@ -11,118 +10,116 @@
 	if(!event_type)
 		return
 
-	//copy-pasted from the admin verbs to submit new newscaster messages
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = "[system_name()] Daily"
 	newMsg.is_admin_message = 1
 
-	//see if our location has custom event info for this event
 	newMsg.body = affected_dest.get_custom_eventstring()
 	if(!newMsg.body)
 		newMsg.body = ""
 		switch(event_type)
 			if(RESEARCH_BREAKTHROUGH)
-				newMsg.body = "A major breakthough in the field of [pick("phoron research","super-compressed materials","nano-augmentation","bluespace research","volatile power manipulation")] \
-				was announced [pick("yesterday","a few days ago","last week","earlier this month")] by a private firm on [affected_dest.name]. \
-				NanoTrasen declined to comment as to whether this could impinge on profits."
+				newMsg.body = "Крупный прорыв в области [pick("исследований фазона","сверхсжатых материалов","нано-аугментации","исследований блюспейса","управления волатильной энергией")] \
+				был объявлен [pick("вчера","несколько дней назад","на прошлой неделе","ранее в этом месяце")] частной фирмой на [affected_dest.name]. \
+				NanoTrasen отказались комментировать, может ли это повлиять на прибыли."
 
 			if(ELECTION)
-				newMsg.body = "The pre-selection of an additional candidates was announced for the upcoming [pick("supervisors council","advisory board","governership","board of inquisitors")] \
-				election on [affected_dest.name] was announced earlier today, \
-				[pick("media mogul","web celebrity", "industry titan", "superstar", "famed chef", "popular gardener", "ex-army officer", "multi-billionaire")] \
-				[random_name(pick(MALE,FEMALE))]. In a statement to the media they said '[pick("My only goal is to help the [pick("sick","poor","children")]",\
-				"I will maintain NanoTrasen's record profits","I believe in our future","We must return to our moral core","Just like... chill out dudes")]'."
+				newMsg.body = "Был объявлен дополнительный кандидат на предстоящие выборы [pick("совета надзирателей","консультативного совета","губернатора","коллегии инквизиторов")] \
+				на [affected_dest.name] сегодня ранее, \
+				[pick("медиа-магнат","веб-знаменитость", "промышленный титан", "суперзвезда", "знаменитый шеф-повар", "популярный садовод", "бывший офицер армии", "мультимиллиардер")] \
+				[random_name(pick(MALE,FEMALE))]. В заявлении для прессы кандидат сказал '[pick("Моя единственная цель - помочь [pick("больным","бедным","детям")]",\
+				"Я буду поддерживать рекордные прибыли NanoTrasen","Я верю в наше будущее","Мы должны вернуться к нашей моральной основе","Просто... расслабьтесь, ребята")]'."
 
 			if(RESIGNATION)
-				newMsg.body = "NanoTrasen regretfully announces the resignation of [pick("Sector Admiral","Division Admiral","Ship Admiral","Vice Admiral")] [random_name(pick(MALE,FEMALE))]."
+				newMsg.body = "NanoTrasen с сожалением объявляет об отставке [pick("Секторного Адмирала","Дивизионного Адмирала","Корабельного Адмирала","Вице-Адмирала")] [random_name(pick(MALE,FEMALE))]."
 				if(prob(25))
-					var/locstring = pick("Segunda","Salusa","Cepheus","Andromeda","Gruis","Corona","Aquila","Asellus") + " " + pick("I","II","III","IV","V","VI","VII","VIII")
-					newMsg.body += " In a ceremony on [affected_dest.name] this afternoon, they will be awarded the \
-					[pick("Red Star of Sacrifice","Purple Heart of Heroism","Blue Eagle of Loyalty","Green Lion of Ingenuity")] for "
+					var/locstring = pick("Сегунда","Салуса","Цефей","Андромеда","Груис","Корона","Аквила","Азеллус") + " " + pick("I","II","III","IV","V","VI","VII","VIII")
+					newMsg.body += " На церемонии в [affected_dest.name] сегодня днем им будет вручена \
+					[pick("Красная Звезда Жертвенности","Пурпурное Сердце Героизма","Синий Орел Верности","Зеленый Лев Изобретательности")] за "
 					if(prob(33))
-						newMsg.body += "their actions at the Battle of [pick(locstring,"REDACTED")]."
+						newMsg.body += "их действия в Битве при [pick(locstring,"ЗАЧЕРКНУТО")]."
 					else if(prob(50))
-						newMsg.body += "their contribution to the colony of [locstring]."
+						newMsg.body += "их вклад в колонию [locstring]."
 					else
-						newMsg.body += "their loyal service over the years."
+						newMsg.body += "их верную службу на протяжении многих лет."
 				else if(prob(33))
-					newMsg.body += " They are expected to settle down in [affected_dest.name], where they have been granted a handsome pension."
+					newMsg.body += " Ожидается, что они поселятся на [affected_dest.name], где им была назначена щедрая пенсия."
 				else if(prob(50))
-					newMsg.body += " The news was broken on [affected_dest.name] earlier today, where they cited reasons of '[pick("health","family","REDACTED")]'"
+					newMsg.body += " Новость была обнародована на [affected_dest.name] ранее сегодня, где они сослались на причины '[pick("здоровья","семьи","ЗАЧЕРКНУТО")]'"
 				else
-					newMsg.body += " Administration Aerospace wishes them the best of luck in their retirement ceremony on [affected_dest.name]."
+					newMsg.body += " Администрация Космоса желает им удачи на церемонии выхода на пенсию в [affected_dest.name]."
 
 			if(CELEBRITY_DEATH)
-				newMsg.body = "It is with regret today that we announce the sudden passing of the "
+				newMsg.body = "Сегодня мы с сожалением объявляем о внезапной кончине "
 				if(prob(33))
-					newMsg.body += "[pick("distinguished","decorated","veteran","highly respected")] \
-					[pick("Ship's Captain","Vice Admiral","Colonel","Lieutenant Colonel")] "
+					newMsg.body += "[pick("выдающегося","награжденного","ветерана","высокоуважаемого")] \
+					[pick("Капитана Корабля","Вице-Адмирала","Полковника","Подполковника")] "
 				else if(prob(50))
-					newMsg.body += "[pick("award-winning","popular","highly respected","trend-setting")] \
-					[pick("comedian","singer/songwright","artist","playwright","TV personality","model")] "
+					newMsg.body += "[pick("награжденного","популярного","высокоуважаемого","задающего тренды")] \
+					[pick("комика","певицы/автора песен","художника","драматурга","телеведущего","модели")] "
 				else
-					newMsg.body += "[pick("successful","highly respected","ingenious","esteemed")] \
-					[pick("academic","Professor","Doctor","Scientist")] "
+					newMsg.body += "[pick("успешного","высокоуважаемого","гениального","уважаемого")] \
+					[pick("ученого","Профессора","Доктора","Исследователя")] "
 
-				newMsg.body += "[random_name(pick(MALE,FEMALE))] on [affected_dest.name] [pick("last week","yesterday","this morning","two days ago","three days ago")]\
-				[pick(". Assassination is suspected, but the perpetrators have not yet been brought to justice",\
-				" due to Syndicate infiltrators (since captured)",\
-				" during an industrial accident",\
-				" due to [pick("heart failure","kidney failure","liver failure","brain hemorrhage")]")]"
+				newMsg.body += "[random_name(pick(MALE,FEMALE))] на [affected_dest.name] [pick("на прошлой неделе","вчера","сегодня утром","два дня назад","три дня назад")]\
+				[pick(". Подозревается убийство, но преступники еще не наказаны",\
+				" из-за агентов Синдиката (с тех пор пойманных)",\
+				" во время промышленной аварии",\
+				" из-за [pick("сердечной недостаточности","почечной недостаточности","печеночной недостаточности","кровоизлияния в мозг")]")]"
 
 			if(BARGAINS)
-				newMsg.body += "BARGAINS! BARGAINS! BARGAINS! Commerce Control on [affected_dest.name] wants you to know that everything must go! Across all retail centres, \
-				all goods are being slashed, and all retailors are onboard - so come on over for the \[shopping\] time of your life."
+				newMsg.body += "РАСПРОДАЖА! РАСПРОДАЖА! РАСПРОДАЖА! Коммерческий контроль на [affected_dest.name] сообщает, что все должно быть распродано! Во всех торговых центрах \
+				цены снижены, и все ритейлеры участвуют - так что приходите за покупками всей вашей жизни."
 
 			if(SONG_DEBUT)
-				newMsg.body += "[pick("Singer","Singer/songwriter","Saxophonist","Pianist","Guitarist","TV personality","Star")] [random_name(pick(MALE,FEMALE))] \
-				announced the debut of their new [pick("single","album","EP","label")] '[pick("Everyone's","Look at the","Baby don't eye those","All of those","Dirty nasty")] \
-				[pick("roses","three stars","starships","nanobots","cyborgs","Skrell","Sren'darr")] \
-				[pick("on Venus","on Reade","on Moghes","in my hand","slip through my fingers","die for you","sing your heart out","fly away")]' \
-				with [pick("pre-puchases available","a release tour","cover signings","a launch concert")] on [affected_dest.name]."
+				newMsg.body += "[pick("Певец","Певец/автор песен","Саксофонист","Пианист","Гитарист","Телеведущий","Звезда")] [random_name(pick(MALE))] \
+				объявил о дебюте своего нового [pick("сингла","альбома","мини-альбома","лейбла")] '[pick("Все","Посмотри на","Детка, не смотри на","Все эти","Грязные мерзкие")] \
+				[pick("розы","три звезды","звездолеты","нанороботы","киборги","Скреллы","Срен'дарр")] \
+				[pick("на Венере","на Риде","на Могезе","в моей руке","проскальзывают сквозь пальцы","умрут за тебя","пой от всего сердца","улетают")]' \
+				с [pick("предзаказами","туром","автограф-сессиями","концертом-презентацией")] на [affected_dest.name]."
 
 			if(MOVIE_RELEASE)
-				newMsg.body += "From the [pick("desk","home town","homeworld","mind")] of [pick("acclaimed","award-winning","popular","stellar")] \
-				[pick("playwright","author","director","actor","TV star")] [random_name(pick(MALE,FEMALE))] comes the latest sensation: '\
-				[pick("Deadly","The last","Lost","Dead")] [pick("Starships","Warriors","outcasts","Tajarans","Unathi","Skrell")] \
-				[pick("of","from","raid","go hunting on","visit","ravage","pillage","destroy")] \
-				[pick("Moghes","Earth","Biesel","Ahdomai","S'randarr","the Void","the Edge of Space")]'.\
-				. Own it on webcast today, or visit the galactic premier on [affected_dest.name]!"
+				newMsg.body += "От [pick("стола","родного города","родной планеты","ума")] [pick("признанного","награжденного","популярного","звездного")] \
+				[pick("драматурга","автора","режиссера","актера","телезвезды")] [random_name(pick(MALE,FEMALE))] выходит новая сенсация: '\
+				[pick("Смертельные","Последние","Потерянные","Мертвые")] [pick("Звездолеты","Воины","изгои","Тажараны","Унати","Скреллы")] \
+				[pick("из","с","совершают набег","охотятся на","посещают","опустошают","грабят","уничтожают")] \
+				[pick("Могез","Земли","Бизеля","Ахдомаи","С'рандарра","Пустоты","Края Космоса")]' \
+				. Смотрите в веб-трансляции сегодня или посетите галактическую премьеру на [affected_dest.name]!"
 
 			if(BIG_GAME_HUNTERS)
-				newMsg.body += "Game hunters on [affected_dest.name] "
+				newMsg.body += "Охотники на [affected_dest.name] "
 				if(prob(33))
-					newMsg.body += "were surprised when an unusual species experts have since identified as \
-					[pick("a subclass of mammal","a divergent abhuman species","an intelligent species of lemur","organic/cyborg hybrids")] turned up. Believed to have been brought in by \
-					[pick("alien smugglers","early colonists","syndicate raiders","unwitting tourists")], this is the first such specimen discovered in the wild."
+					newMsg.body += "были удивлены, когда обнаружили необычный вид, который эксперты позже идентифицировали как \
+					[pick("подкласс млекопитающих","отклоняющийся подвид людей","разумный вид лемуров","гибриды органики и киборгов")]. Считается, что они были завезены \
+					[pick("контрабандистами","ранними колонистами","рейдерами Синдиката","обычными туристами")], это первый подобный экземпляр, обнаруженный в дикой природе."
 				else if(prob(50))
-					newMsg.body += "were attacked by a vicious [pick("nas'r","diyaab","samak","predator which has not yet been identified")]\
-					. Officials urge caution, and locals are advised to stock up on armaments."
+					newMsg.body += "были атакованы свирепым [pick("нас'ром","дияабом","самаком","хищником, который еще не идентифицирован")]\
+					. Чиновники призывают к осторожности, и местным жителям рекомендуется запастись оружием."
 				else
-					newMsg.body += "brought in an unusually [pick("valuable","rare","large","vicious","intelligent")] [pick("mammal","predator","farwa","samak")] for inspection \
-					[pick("today","yesterday","last week")]. Speculators suggest they may be tipped to break several records."
+					newMsg.body += "привезли необычно [pick("ценного","редкого","крупного","свирепого","умного")] [pick("млекопитающего","хищника","фарву","самака")] для осмотра \
+					[pick("сегодня","вчера","на прошлой неделе")]. Спекулянты предполагают, что они могут побить несколько рекордов."
 
 			if(GOSSIP)
-				newMsg.body += "[pick("TV host","Webcast personality","Superstar","Model","Actor","Singer")] [random_name(pick(MALE,FEMALE))] "
+				newMsg.body += "[pick("Телеведущий","Веб-знаменитость","Суперзвезда","Модель","Актер","Певец")] [random_name(pick(MALE,FEMALE))] "
 				if(prob(33))
-					newMsg.body += "and their partner announced the birth of their [pick("first","second","third")] child on [affected_dest.name] early this morning. \
-					Doctors say the child is well, and the parents are considering "
+					newMsg.body += "и их партнер объявили о рождении их [pick("первого","второго","третьего")] ребенка на [affected_dest.name] сегодня рано утром. \
+					Врачи говорят, что ребенок здоров, и родители рассматривают "
 					if(prob(50))
 						newMsg.body += capitalize(pick(first_names_female))
 					else
 						newMsg.body += capitalize(pick(first_names_male))
-					newMsg.body += " for the name."
+					newMsg.body += " в качестве имени."
 				else if(prob(50))
-					newMsg.body += "announced their [pick("split","break up","marriage","engagement")] with [pick("TV host","webcast personality","superstar","model","actor","singer")] \
-					[random_name(pick(MALE,FEMALE))] at [pick("a society ball","a new opening","a launch","a club")] on [affected_dest.name] yesterday, pundits are shocked."
+					newMsg.body += "объявили о своем [pick("расставании","разрыве","браке","помолвке")] с [pick("телеведущим","веб-знаменитостью","суперзвездой","моделью","актером","певицей")] \
+					[random_name(pick(MALE,FEMALE))] на [pick("светском балу","совещании","презентации","в клубе")] на [affected_dest.name] вчера, эксперты шокированы."
 				else
-					newMsg.body += "is recovering from plastic surgery in a clinic on [affected_dest.name] for the [pick("second","third","fourth")] time, reportedly having made the decision in response to "
-					newMsg.body += pick("unkind comments by an ex.","rumours started by jealous friends.",\
-					"the decision to be dropped by a major sponsor.","a disasterous interview on [system_name()] Tonight.")
+					newMsg.body += "восстанавливается после пластической операции в клинике на [affected_dest.name] в [pick("второй","третий","четвертый")] раз, по сообщениям, приняв это решение в ответ на "
+					newMsg.body += pick("недобрые комментарии бывшего.","слухи, распущенные завистливыми друзьями.",\
+					"решение крупного спонсора отказаться от сотрудничества.","катастрофическое интервью на [system_name()] Сегодня.")
 			if(TOURISM)
-				newMsg.body += "Tourists are flocking to [affected_dest.name] after the surprise announcement of [pick("major shopping bargains by a wily retailer",\
-				"a huge new ARG by a popular entertainment company","a secret tour by popular artiste [random_name(pick(MALE,FEMALE))]")]. \
-				[system_name()] Daily is offering discount tickets for two to see [random_name(pick(MALE,FEMALE))] live in return for eyewitness reports and up to the minute coverage."
+				newMsg.body += "Туристы стекаются на [affected_dest.name] после неожиданного объявления о [pick("крупных скидках от хитроумного ритейлера",\
+				"огромной новой ARG от популярной развлекательной компании","секретном туре популярного артиста [random_name(pick(MALE,FEMALE))]")]. \
+				[system_name()] Daily предлагает скидочные билеты для двоих, чтобы увидеть [random_name(pick(MALE,FEMALE))] вживую в обмен на репортажи очевидцев и последние новости."
 
 	for(var/datum/feed_channel/FC in news_network.network_channels)
 		if(FC.channel_name == "[system_name()] Daily")
@@ -137,92 +134,92 @@
 /datum/event/trivial_news/announce()
 	//copy-pasted from the admin verbs to submit new newscaster messages
 	var/datum/feed_message/newMsg = new /datum/feed_message
-	newMsg.author = "Editor Mike Hammers"
 	//newMsg.is_admin_message = 1
+	newMsg.author = "Редактор Майк Хаммерс"
 	var/datum/trade_destination/affected_dest = pick(weighted_mundaneevent_locations)
 	newMsg.body = pick(
-	"Tree stuck in tajaran; firefighters baffled.",\
-	"Armadillos want aardvarks removed from dictionary claims 'here first'.",\
-	"Angel found dancing on pinhead ordered to stop; cited for public nuisance.",\
-	"Letters claim they are better than number; 'Always have been'.",\
-	"Pens proclaim pencils obsolete, 'lead is dead'.",\
-	"Rock and paper sues scissors for discrimination.",\
-	"Steak tell-all book reveals he never liked sitting by potato.",\
-	"Woodchuck stops counting how many times he's chucked 'Never again'.",\
-	"[affected_dest.name] clerk first person able to pronounce '@*$%!'.",\
-	"[affected_dest.name] delis serving boiled paperback dictionaries, 'Adjectives chewy' customers declare.",\
-	"[affected_dest.name] weather deemed 'boring'; meteors and rad storms to be imported.",\
-	"Most [affected_dest.name] security officers prefer cream over sugar.",\
-	"Palindrome speakers conference in [affected_dest.name]; 'Wow!' says Otto.",\
-	"Question mark worshipped as deity by ancient [affected_dest.name] dwellers.",\
-	"Spilled milk causes whole [affected_dest.name] populace to cry.",\
-	"World largest carp patty at display on [affected_dest.name].",\
-	"'Here kitty kitty' no longer preferred tajaran retrieval technique.",\
-	"Man travels 7000 light years to retrieve lost hankie, 'It was my favourite'.",\
-	"New bowling lane that shoots mini-meteors at bowlers very popular.",\
-	"[pick("Unathi","Spacer")] gets tattoo of [system_name()] on chest '[pick("CentComm","star","starship","asteroid")] tickles most'.",\
-	"Skrell marries computer; wedding attended by 100 modems.",\
-	"Chef reports successfully using harmonica as cheese grater.",\
-	"NanoTrasen invents handkerchief that says 'Bless you' after sneeze.",\
-	"Clone accused of posing for other clones's school photo.",\
-	"Clone accused of stealing other clones's employee of the month award.",\
-	"Woman robs station with hair dryer; crewmen love new style.",\
-	"This space for rent.",\
-	"[affected_dest.name] Baker Wins Pickled Crumpet Toss Three Years Running",\
-	"Skrell Scientist Discovers Abacus Can Be Used To Dry Towels",\
-	"Survey: 'Cheese Louise' Voted Best Pizza Restaurant In [system_name()]",\
-	"I Was Framed, jokes [affected_dest.name] artist",\
-	"Mysterious Loud Rumbling Noises In [affected_dest.name] Found To Be Mysterious Loud Rumblings",\
-	"Alien ambassador becomes lost on [affected_dest.name], refuses to ask for directions",\
-	"Swamp Gas Verified To Be Exhalations Of Stars--Movie Stars--Long Passed",\
-	"Tainted Broccoli Weapon Of Choice For Syndicate Assassins",\
-	"Chefs Find Broccoli Effective Tool For Cutting Cheese",\
-	"Broccoli Found To Cause Grumpiness In Monkeys",\
-	"Survey: 80% Of People on [affected_dest.name] Love Clog-Dancing",\
-	"Giant Hairball Has Perfect Grammar But Rolls rr's Too Much, Linguists Say",\
-	"[affected_dest.name] Phonebooks Print All Wrong Numbers; Results In 15 New Marriages",\
-	"Tajaran Burglar Spotted on [affected_dest.name], Mistaken For Dalmatian",\
-	"Gibson Gazette Updates Frequently Absurd, Poll Indicates",\
-	"Esoteric Verbosity Culminates In Communicative Ennui, [affected_dest.name] Academics Note",\
-	"Taj Demand Longer Breaks, Cleaner Litter, Slower Mice",\
-	"Survey: 3 Out Of 5 Skrell Loathe Modern Art",\
-	"Skrell Scientist Discovers Gravity While Falling Down Stairs",\
-	"Boy Saves Tajaran From Tree on [affected_dest.name], Thousands Cheer",\
-	"Shipment Of Apples Overturns, [affected_dest.name] Diner Offers Applesauce Special",\
-	"Spotted Owl Spotted on [affected_dest.name]",\
-	"Humans Everywhere Agree: Purring Tajarans Are Happy Tajarans",\
-	"From The Desk Of Wise Guy Sammy: One Word In This Gazette Is Sdrawkcab",\
-	"From The Desk Of Wise Guy Sammy: It's Hard To Have Too Much Shelf Space",\
-	"From The Desk Of Wise Guy Sammy: Wine And Friendships Get Better With Age",\
-	"From The Desk Of Wise Guy Sammy: The Insides Of Golf Balls Are Mostly Rubber Bands",\
-	"From The Desk Of Wise Guy Sammy: You Don't Have To Fool All The People, Just The Right Ones",\
-	"From The Desk Of Wise Guy Sammy: If You Made The Mess, You Clean It Up",\
-	"From The Desk Of Wise Guy Sammy: It Is Easier To Get Forgiveness Than Permission",\
-	"From The Desk Of Wise Guy Sammy: Check Your Facts Before Making A Fool Of Yourself",\
-	"From The Desk Of Wise Guy Sammy: You Can't Outwait A Bureaucracy",\
-	"From The Desk Of Wise Guy Sammy: It's Better To Yield Right Of Way Than To Demand It",\
-	"From The Desk Of Wise Guy Sammy: A Person Who Likes Cats Can't Be All Bad",\
-	"From The Desk Of Wise Guy Sammy: Help Is The Sunny Side Of Control",\
-	"From The Desk Of Wise Guy Sammy: Two Points Determine A Straight Line",\
-	"From The Desk Of Wise Guy Sammy: Reading Improves The Mind And Lifts The Spirit",\
-	"From The Desk Of Wise Guy Sammy: Better To Aim High And Miss Then To Aim Low And Hit",\
-	"From The Desk Of Wise Guy Sammy: Meteors Often Strike The Same Place More Than Once",\
-	"Tommy B. Saif Sez: Look Both Ways Before Boarding The Shuttle",\
-	"Tommy B. Saif Sez: Hold On; Sudden Stops Sometimes Necessary",\
-	"Tommy B. Saif Sez: Keep Fingers Away From Moving Panels",\
-	"Tommy B. Saif Sez: No Left Turn, Except Shuttles",\
-	"Tommy B. Saif Sez: Return Seats And Trays To Their Proper Upright Position",\
-	"Tommy B. Saif Sez: Eating And Drinking In Docking Bays Is Prohibited",\
-	"Tommy B. Saif Sez: Accept No Substitutes, And Don't Be Fooled By Imitations",\
-	"Tommy B. Saif Sez: Do Not Remove This Tag Under Penalty Of Law",\
-	"Tommy B. Saif Sez: Always Mix Thoroughly When So Instructed",\
-	"Tommy B. Saif Sez: Try To Keep Six Month's Expenses In Reserve",\
-	"Tommy B. Saif Sez: Change Not Given Without Purchase",\
-	"Tommy B. Saif Sez: If You Break It, You Buy It",\
-	"Tommy B. Saif Sez: Reservations Must Be Cancelled 48 Hours Prior To Event To Obtain Refund",\
-	"Doughnuts: Is There Anything They Can't Do",\
-	"If Tin Whistles Are Made Of Tin, What Do They Make Foghorns Out Of?",\
-	"Broccoli discovered to be colonies of tiny aliens with murder on their minds"\
+	"Дерево застряло в таджаране; пожарные в замешательстве.",
+	"Броненосцы требуют убрать трубкозубов из словаря, утверждая, что были первыми.",
+	"Ангела, танцующего на булавочной головке, заставили остановиться; оштрафовали за нарушение общественного порядка.",
+	"Буквы заявляют, что они лучше цифр; 'Так было всегда'.",
+	"Ручки объявляют карандаши устаревшими, 'свинец мертв'.",
+	"Камень и бумага подают в суд на ножницы за дискриминацию.",
+	"Стейк в откровенной книге признается, что никогда не любил сидеть рядом с картошкой.",
+	"Лесной сурок перестал считать, сколько раз он сурковал 'Больше никогда'.",
+	"Клерк на [affected_dest.name] стал первым, кто смог произнести '@*$%!'.",
+	"Закусочные на [affected_dest.name] подают вареные бумажные словари, 'Прилагательные жестковаты', заявляют клиенты.",
+	"Погода на [affected_dest.name] признана 'скучной'; будут импортированы метеоры и радиационные бури.",
+	"Большинство офицеров безопасности на [affected_dest.name] предпочитают сливки сахару.",
+	"Конференция палиндромистов на [affected_dest.name]; 'Вау!' - сказал Отто.",
+	"Знак вопроса почитался как божество древними жителями [affected_dest.name].",
+	"Пролитое молоко заставило все население [affected_dest.name] плакать.",
+	"Самая большая в мире котлета из карпа выставлена на [affected_dest.name].",
+	"'Кис-кис' больше не предпочтительный метод обращения к таджаранам.",
+	"Человек проделал 7000 световых лет, чтобы забрать потерянный платок, 'Он был моим любимым'.",
+	"Новая дорожка для боулинга, стреляющая мини-метеорами в игроков, стала очень популярной.",
+	"[pick("Унати","Космолетчик")] сделал татуировку [system_name()] на груди '[pick("ЦентКом","звезда","звездолет","астероид")] щекочет больше всего'.",
+	"Скрелл женился на компьютере; на свадьбе присутствовало 100 модемов.",
+	"Шеф-повар сообщает об успешном использовании губной гармошки как терки для сыра.",
+	"NanoTrasen изобрели платок, который говорит 'Будь здоров' после чихания.",
+	"Клон обвинен в том, что позировал для школьного фото другого клона.",
+	"Клон обвинен в краже награды 'Сотрудник месяца' другого клона.",
+	"Женщина ограбила станцию феном; экипажу понравился новый стиль.",
+	"Это место сдается в аренду.",
+	"Пекарь с [affected_dest.name] выигрывает метание маринованных булочек третий год подряд",
+	"Ученый-скрелл обнаружил, что счеты можно использовать для сушки полотенец",
+	"Опрос: 'Сырный Луи' признан лучшим рестораном пиццы в [system_name()]",
+	"Меня подставили, шутит художник с [affected_dest.name]",
+	"Таинственные громкие шумы на [affected_dest.name] оказались таинственными громкими шумами",
+	"Инопланетный посол заблудился на [affected_dest.name], отказывается спрашивать дорогу",
+	"Болотный газ оказался выдохами звезд - кинозвезд давно ушедших",
+	"Испорченная брокколи - оружие выбора синдикатских убийц",
+	"Шеф-повара обнаружили, что брокколи эффективна для нарезки сыра",
+	"Брокколи вызывает раздражение у обезьян",
+	"Опрос: 80% жителей [affected_dest.name] обожают клог-дансинг",
+	"Гигантский комок шерсти обладает идеальной грамматикой, но слишком сильно раскатывает буквы 'р', говорят лингвисты",
+	"Телефонные книги на [affected_dest.name] печатают неправильные номера; Результат - 15 новых браков",
+	"Таджаранского грабителя заметили на [affected_dest.name], приняли за далматинца",
+	"Газета Гибсона часто публикует абсурдные новости, показал опрос",
+	"Эзотерическая многословность приводит к коммуникативной апатии, отмечают академики с [affected_dest.name]",
+	"Таджараны требуют более длительных перерывов, чище лотки, медленнее мышей",
+	"Опрос: 3 из 5 скреллов презирают современное искусство",
+	"Ученый-скрелл открыл гравитацию, падая с лестницы",
+	"Мальчик спас таджарана с дерева на [affected_dest.name], тысячи ликуют",
+	"Груз яблок перевернулся, закусочная на [affected_dest.name] предлагает специальное яблочное пюре",
+	"Пятнистая сова замечена на [affected_dest.name]",
+	"Люди повсюду согласны: мурлыкающие таджараны - счастливые таджараны",
+	"Из кабинета Мудреца Сэмми: Одно слово в этой газете написано задом наперед",
+	"Из кабинета Мудреца Сэмми: Трудно иметь слишком много места на полке",
+	"Из кабинета Мудреца Сэмми: Вино и дружба становятся лучше с возрастом",
+	"Из кабинета Мудреца Сэмми: Внутри мячей для гольфа в основном резиновые ленты",
+	"Из кабинета Мудреца Сэмми: Не нужно обманывать всех людей, только нужных",
+	"Из кабинета Мудреца Сэмми: Если ты устроил беспорядок, ты его и убираешь",
+	"Из кабинета Мудреца Сэмми: Проще получить прощение, чем разрешение",
+	"Из кабинета Мудреца Сэмми: Проверяй факты, прежде чем выставить себя дураком",
+	"Из кабинета Мудреца Сэмми: Бюрократию нельзя переждать",
+	"Из кабинета Мудреца Сэмми: Лучше уступить дорогу, чем требовать ее",
+	"Из кабинета Мудреца Сэмми: Человек, который любит кошек, не может быть плохим",
+	"Из кабинета Мудреца Сэмми: Помощь - это солнечная сторона контроля",
+	"Из кабинета Мудреца Сэмми: Две точки определяют прямую линию",
+	"Из кабинета Мудреца Сэмми: Чтение улучшает разум и поднимает дух",
+	"Из кабинета Мудреца Сэмми: Лучше целиться высоко и промахнуться, чем целиться низко и попасть",
+	"Из кабинета Мудреца Сэмми: Метеоры часто бьют в одно и то же место более одного раза",
+	"Томми Б. Сайф говорит: Смотри в обе стороны перед посадкой на шаттл",
+	"Томми Б. Сайф говорит: Держись; Внезапные остановки иногда необходимы",
+	"Томми Б. Сайф говорит: Держи пальцы подальше от движущихся панелей",
+	"Томми Б. Сайф говорит: Поворот налево запрещен, кроме шаттлов",
+	"Томми Б. Сайф говорит: Верни сиденья и подносы в правильное положение",
+	"Томми Б. Сайф говорит: Еда и напитки в доках запрещены",
+	"Томми Б. Сайф говорит: Не принимай подделок и не дай себя обмануть имитациям",
+	"Томми Б. Сайф говорит: Не удаляй эту бирку под страхом закона",
+	"Томми Б. Сайф говорит: Всегда тщательно перемешивай, когда это указано",
+	"Томми Б. Сайф говорит: Старайся иметь шестимесячный запас средств",
+	"Томми Б. Сайф говорит: Сдача не выдается без покупки",
+	"Томми Б. Сайф говорит: Если ты это сломал, ты это купил",
+	"Томми Б. Сайф говорит: Бронирование должно быть отменено за 48 часов до события для получения возврата",
+	"Пончики: Есть ли что-то, что они не могут?",
+	"Если свистки сделаны из жести, то из чего делают туманные рога?",
+	"Брокколи оказалась колонией крошечных инопланетян с мыслями об убийстве"\
 	)
 
 	for(var/datum/feed_channel/FC in news_network.network_channels)
