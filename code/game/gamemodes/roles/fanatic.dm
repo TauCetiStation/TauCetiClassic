@@ -16,9 +16,9 @@
 	if(!..())
 		return FALSE
 	antag.current.playsound_local(null, 'sound/antag/fanatic_alert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	to_chat(antag.current, "<span class='fanatics'>Вы - последователь Ϻрα'αрχѣ, владыки Затимиса, совершенной реальности.</span>")
-	to_chat(antag.current, "<span class='fanatics'>Ϻрα'αрχѣ поработило ваш разум и теперь вы готовы сделать всё что Оно прикажет.</span>")
-	to_chat(antag.current, "<span class='fanatics'>Кроме того, Оно научило вас Чарами Крови, позволяющим связываться с Затимисом. Держа острый предмет в руке, вы можете рисовать кровавые руны с невероятными эффектами.</span>")
+	to_chat(antag.current, "<span class='fanatics'>Вы — последователь Ϻрα'αрχѣ, владыки Затимиса, совершенной реальности.</span>")
+	to_chat(antag.current, "<span class='fanatics'>Ϻрα'αрχѣ поработило ваш разум, и теперь вы готовы исполнить всё, что Оно прикажет.</span>")
+	to_chat(antag.current, "<span class='fanatics'>Кроме того, Оно научило вас Чарам Крови, позволяющим связываться с Затимисом. Держа острый предмет в руке, вы можете рисовать кровавые руны с невероятными эффектами.</span>")
 
 /datum/role/fanatic/proc/equip_fanatic(mob/living/carbon/human/mob)
 	if(!istype(mob))
