@@ -28,13 +28,12 @@
 								/datum/fanatics_rune/darkness,
 								/datum/fanatics_rune/madness,
 								)
-	var/list/fanatics_runes = subtypesof(
-								/datum/fanatics_rune
-								)
+	var/list/fanatics_runes = list()
 	var/darkness_ritual_complete = FALSE
 
 
 /datum/faction/fanatics/proc/add_new_rune()
+	fanatics_runes = subtypesof(/datum/fanatics_rune)
 	if((fanatics_runes.len - 1) <= known_runes.len)
 		return
 	var/datum/fanatics_rune/new_rune = pick(unknown_runes)
