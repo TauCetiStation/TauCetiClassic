@@ -1,5 +1,6 @@
 // map modules
 #define MAP_MODULE_FORTS "Forts Arena"
+#define MAP_MODULE_ROBUST "Robust Arena"
 
 // Common event stuff
 #define TEAM_NAME_RED "Red Team"
