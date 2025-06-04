@@ -12,7 +12,7 @@
 
 /obj/item/cardboard_cutout/atom_init()
 	. = ..()
-	AddComponent(/datum/component/tactical, null, TRUE)
+	AddComponent(/datum/component/tactical, null, FALSE)
 	var/datum/twohanded_component_builder/TCB = new
 	TCB.require_twohands = TRUE
 	TCB.force_wielded = 5
