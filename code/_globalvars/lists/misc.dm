@@ -201,5 +201,3 @@ var/global/list/deconverted_roles = list()
 var/global/list/reagents_list = typecacheof(/datum/reagent)
 
 var/global/list/virus_types_by_pool
-
-var/global/list/fanatics_runes = subtypesof(/datum/fanatics_rune)

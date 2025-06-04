@@ -255,6 +255,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role -= ROLE_ABDUCTOR
 		S["be_role"] << be_role
 
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 45)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
 	if(current_version < 48)
 		S["b_type"] << null
 
@@ -458,6 +465,67 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		)
 		if (pre_52_hairstyles_to_modern_ones[h_style])
 			h_style = pre_52_hairstyles_to_modern_ones[h_style]
+
+	if(current_version < 53)
+		ipc_head = initial(ipc_head)
+		// fuck named hairstyles, we should just move it to indexes
+		var/static/list/ipc_hairstyles_reset = list(
+			"alien IPC screen",
+			"double IPC screen",
+			"pillar IPC screen",
+			"human IPC screen"
+		)
+		if(h_style in ipc_hairstyles_reset)
+			h_style = /datum/sprite_accessory/hair/ipc_screen_alert::name
+
+	if(current_version < 54)
+		// cap dark colors for old preferences, should be part of pref sanitize but better to wait for datumized preferences
+		var/new_hex = color_luminance_min(rgb(r_skin, g_skin, b_skin), 10)
+		r_skin = HEX_VAL_RED(new_hex)
+		g_skin = HEX_VAL_GREEN(new_hex)
+		b_skin = HEX_VAL_BLUE(new_hex)
+
+		new_hex = color_luminance_min(rgb(r_belly, g_belly, b_belly), 10)
+		r_belly = HEX_VAL_RED(new_hex)
+		g_belly = HEX_VAL_GREEN(new_hex)
+		b_belly = HEX_VAL_BLUE(new_hex)
+
+		// converts old skin tone to approximate datum
+		switch(clamp(35 - s_tone, 1, 220))
+			if(1 to 14)
+				s_tone = /datum/skin_tone/albino::name
+			if(15 to 28)
+				s_tone = /datum/skin_tone/porcelain::name
+			if(29 to 41)
+				s_tone = /datum/skin_tone/ivory::name
+			if(42 to 55)
+				s_tone = /datum/skin_tone/light_peach::name
+			if(56 to 69)
+				s_tone = /datum/skin_tone/beige::name
+			if(70 to 83)
+				s_tone = /datum/skin_tone/light_brown::name
+			if(84 to 97)
+				s_tone = /datum/skin_tone/peach::name
+			if(98 to 110)
+				s_tone = /datum/skin_tone/light_beige::name
+			if(111 to 124)
+				s_tone = /datum/skin_tone/olive::name
+			if(125 to 138)
+				s_tone = /datum/skin_tone/chestnut::name
+			if(139 to 152)
+				s_tone = /datum/skin_tone/macadamia::name
+			if(153 to 165)
+				s_tone = /datum/skin_tone/walnut::name
+			if(166 to 179)
+				s_tone = /datum/skin_tone/coffee::name
+			if(180 to 193)
+				s_tone = /datum/skin_tone/brown::name
+			if(194 to 207)
+				s_tone = /datum/skin_tone/medium_brown::name
+			if(208 to 220)
+				s_tone = /datum/skin_tone/dark_brown::name
+			else
+				s_tone = initial(s_tone)
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)

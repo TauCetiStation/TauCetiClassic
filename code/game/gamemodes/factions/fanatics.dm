@@ -28,11 +28,14 @@
 								/datum/fanatics_rune/darkness,
 								/datum/fanatics_rune/madness,
 								)
+	var/list/fanatics_runes = subtypesof(
+								/datum/fanatics_rune
+								)
 	var/darkness_ritual_complete = FALSE
 
 
 /datum/faction/fanatics/proc/add_new_rune()
-	if((global.fanatics_runes.len - 1) <= known_runes.len)
+	if((fanatics_runes.len - 1) <= known_runes.len)
 		return
 	var/datum/fanatics_rune/new_rune = pick(unknown_runes)
 	LAZYADD(known_runes, new_rune)
