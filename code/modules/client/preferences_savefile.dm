@@ -255,13 +255,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role -= ROLE_ABDUCTOR
 		S["be_role"] << be_role
 
-	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 45)
-		if(ignore_question && ignore_question.len)
-			var/list/diff = ignore_question - global.full_ignore_question
-			if(diff.len)
-				S["ignore_question"] << ignore_question - diff
-
 	if(current_version < 48)
 		S["b_type"] << null
 
@@ -465,6 +458,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		)
 		if (pre_52_hairstyles_to_modern_ones[h_style])
 			h_style = pre_52_hairstyles_to_modern_ones[h_style]
+
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this codeAdd commentMore actions
+	if(current_version < 54)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
 
 	if(current_version < 53)
 		ipc_head = initial(ipc_head)
