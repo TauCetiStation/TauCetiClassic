@@ -24,8 +24,8 @@
 		to_chat(user,"<span class='fanatics'>Это же [bicon(src)] кровавая руна!</span>")
 		if(!power)
 			return
-		to_chat(user,"<span class='fanatics'>Именование чар: [power?.name]</span>.")
-		to_chat(user,"<span class='fanatics'>[power?.desc]</span>")
+		to_chat(user, "<span class='fanatics'>Именование чар: [power.name]</span>.")
+		to_chat(user, "<span class='fanatics'>[power.desc]</span>")
 		return
 	to_chat(user,"[bicon(src)] That's a [name].")
 
