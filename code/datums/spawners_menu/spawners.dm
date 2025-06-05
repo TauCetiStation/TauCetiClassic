@@ -610,8 +610,7 @@
 	vox.grad_style = "none"
 
 	//Now apply cortical stack.
-	var/obj/item/weapon/implant/cortical/I = new(vox)
-	I.inject(vox, BP_HEAD)
+	new /obj/item/weapon/implant/cortical(vox)
 
 	vox.equip_vox_raider()
 	vox.regenerate_icons(update_body_preferences = TRUE)

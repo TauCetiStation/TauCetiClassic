@@ -7,12 +7,13 @@
 	req_human = TRUE
 	can_be_used_in_abom_form = FALSE
 	genomecost = 0
-	var/list/topics_trait_keys = list(
-		"implant_m" = TRAIT_VISUAL_MINDSHIELD,
-		"implant_l" = TRAIT_VISUAL_LOYAL,
-		"implant_o" = TRAIT_VISUAL_OBEY,
-		"implant_c" = TRAIT_VISUAL_CHEM,
-		"implant_t" = TRAIT_VISUAL_TRACK
+
+	var/list/fake_implant_keys = list(
+		"implant_m" = /obj/item/weapon/implant/fake/mindshield,
+		"implant_l" = /obj/item/weapon/implant/fake/loyalty,
+		"implant_o" = /obj/item/weapon/implant/fake/obedience,
+		"implant_c" = /obj/item/weapon/implant/fake/chem,
+		"implant_t" = /obj/item/weapon/implant/fake/tracking,
 	)
 
 /obj/effect/proc_holder/changeling/implant_managment/Click()
@@ -36,23 +37,23 @@
 		text += "Not allowed in this form"
 		return text
 	var/mob/living/carbon/human/H = user
-	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_MINDSHIELD, FAKE_IMPLANT_TRAIT))
+	if(locate(/obj/item/weapon/implant/fake/mindshield) in H.implants)
 		text += "Mind Shield Implant:[setup_mimicry_active_text("implant_m")]"
 	else
 		text += "Mind Shield Implant:[setup_mimicry_unactive_text("implant_m")]"
-	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_LOYAL, FAKE_IMPLANT_TRAIT))
+	if(locate(/obj/item/weapon/implant/fake/loyalty) in H.implants)
 		text += "Loyalty Implant:[setup_mimicry_active_text("implant_l")]"
 	else
 		text += "Loyalty Implant:[setup_mimicry_unactive_text("implant_l")]"
-	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_OBEY, FAKE_IMPLANT_TRAIT))
+	if(locate(/obj/item/weapon/implant/fake/obedience) in H.implants)
 		text += "Obedience Implant:[setup_mimicry_active_text("implant_o")]"
 	else
 		text += "Obedience Implant:[setup_mimicry_unactive_text("implant_o")]"
-	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_CHEM, FAKE_IMPLANT_TRAIT))
+	if(locate(/obj/item/weapon/implant/fake/chem) in H.implants)
 		text += "Chemical Implant:[setup_mimicry_active_text("implant_c")]"
 	else
 		text += "Chemical Implant:[setup_mimicry_unactive_text("implant_c")]"
-	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_TRACK, FAKE_IMPLANT_TRAIT))
+	if(locate(/obj/item/weapon/implant/fake/tracking) in H.implants)
 		text += "Tracking Implant:[setup_mimicry_active_text("implant_t")]"
 	else
 		text += "Tracking Implant:[setup_mimicry_unactive_text("implant_t")]"
@@ -61,20 +62,22 @@
 /obj/effect/proc_holder/changeling/implant_managment/Topic(href, href_list)
 	..()
 
-	var/mob/M = usr
-	if(!istype(M))
+	var/mob/living/L = usr
+	if(!istype(L))
 		return
 	if(href_list["remove"])
-		if(HAS_TRAIT_FROM(M, topics_trait_keys[href_list["remove"]], FAKE_IMPLANT_TRAIT))
-			REMOVE_TRAIT(M, topics_trait_keys[href_list["remove"]], FAKE_IMPLANT_TRAIT)
+		var/type = fake_implant_keys[href_list["remove"]]
+		for(var/obj/item/weapon/implant/I as anything in L.implants)
+			if(istype(I, type))
+				qdel(I)
 	if(href_list["add"])
+		var/type = fake_implant_keys[href_list["add"]]
 		//validation preventing double-trait adding
-		if(!HAS_TRAIT_FROM(M, topics_trait_keys[href_list["add"]], FAKE_IMPLANT_TRAIT))
-			ADD_TRAIT(M, topics_trait_keys[href_list["add"]], FAKE_IMPLANT_TRAIT)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.sec_hud_set_implants()
-	setup_brows(M)
+		if(locate(type) in L.implants)
+			return
+		new type(L)
+
+	setup_brows(L)
 
 #undef setup_mimicry_active_text
 #undef setup_mimicry_unactive_text

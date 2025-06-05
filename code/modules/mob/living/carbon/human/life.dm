@@ -810,7 +810,7 @@ var/global/list/tourette_bad_words= list(
 			var/list/E
 			E = get_visible_implants(0)
 			if(!E.len)
-				embedded_flag = 0
+				embedded_flag = FALSE
 
 
 		//Eyes

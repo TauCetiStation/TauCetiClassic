@@ -110,11 +110,8 @@
 		return
 
 	//Handle brain slugs.
-	var/mob/living/simple_animal/borer/B
+	var/mob/living/simple_animal/borer/B = locate(/mob/living/simple_animal/borer) in BP.embedded_objects
 
-	for(var/I in BP.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
-			B = I
 	if(B)
 		if(!B.ckey && ckey && B.controlling)
 			B.ckey = ckey

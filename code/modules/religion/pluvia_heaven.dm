@@ -66,7 +66,7 @@
 			sign_place = H.name
 			H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 			H.mind.pluvian_social_credit -= 1
-			if(!owner.ismindshielded() && !owner.isloyal())
+			if(!ismindshielded(owner) && !isloyal(owner))
 				owner.mind.pluvian_social_credit += 1
 			sign = TRUE
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
