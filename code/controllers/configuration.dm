@@ -176,7 +176,6 @@ var/global/bridge_secret = null
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/check_randomizer = 0
 
 	var/guard_email = null
 	var/guard_enabled = FALSE
@@ -597,9 +596,6 @@ var/global/bridge_secret = null
 
 				if("chat_bridge")
 					config.chat_bridge = value
-
-				if("check_randomizer")
-					config.check_randomizer = value
 
 				if("guard_email")
 					config.guard_email = value
