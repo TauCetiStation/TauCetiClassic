@@ -8404,7 +8404,6 @@
 "bcu" = (
 /obj/machinery/light/smart,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -24
 	},
@@ -9598,7 +9597,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 24
 	},
@@ -24686,12 +24684,10 @@
 /area/station/rnd/hallway)
 "egK" = (
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 45
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 21
 	},
@@ -24700,7 +24696,6 @@
 	pixel_y = 29
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 37
 	},
@@ -53085,7 +53080,6 @@
 /area/station/medical/genetics)
 "jDy" = (
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -53094,7 +53088,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 40
 	},
@@ -82916,12 +82909,10 @@
 /area/station/hallway/primary/central)
 "pCt" = (
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 45
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 21
 	},
@@ -82930,7 +82921,6 @@
 	pixel_y = 29
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 37
 	},
@@ -92292,7 +92282,6 @@
 	name = "Central Access"
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 40
 	},
@@ -92301,7 +92290,6 @@
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -102761,7 +102749,6 @@
 /area/station/medical/surgerystorage)
 "tug" = (
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 21
 	},
@@ -102770,12 +102757,10 @@
 	pixel_y = 29
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 37
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 45
 	},
@@ -103426,7 +103411,6 @@
 /area/station/bridge/teleporter)
 "tBk" = (
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -110209,7 +110193,6 @@
 "uQp" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 30;
 	pixel_y = 5
@@ -110225,7 +110208,6 @@
 	pixel_y = -11
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 30;
 	pixel_y = 13
@@ -110873,7 +110855,6 @@
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -40
 	},
@@ -113334,7 +113315,6 @@
 /area/station/maintenance/brig)
 "vyh" = (
 /obj/structure/sign/barber{
-	buildable_sign = 0;
 	pixel_x = -13
 	},
 /turf/simulated/floor{
@@ -117564,7 +117544,6 @@
 /area/station/medical/patients_rooms)
 "wmD" = (
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 37
 	},
@@ -117577,7 +117556,6 @@
 	pixel_y = 45
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 21
 	},

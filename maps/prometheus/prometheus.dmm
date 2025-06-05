@@ -1382,7 +1382,6 @@
 "abX" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
@@ -8776,17 +8775,14 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 24
 	},
@@ -10159,16 +10155,13 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = -8
 	},
@@ -13337,7 +13330,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
@@ -15157,16 +15149,13 @@
 	name = "Arrival Access"
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = -8
 	},
@@ -17473,16 +17462,13 @@
 	pixel_y = 4
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = -32;
 	pixel_y = -8
@@ -17494,7 +17480,6 @@
 "dLl" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 1
 	},
 /obj/structure/window/fulltile{
@@ -17733,12 +17718,10 @@
 	name = "Cryogenic Storage"
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = -32
 	},
@@ -22397,12 +22380,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
@@ -27859,17 +27840,14 @@
 "gfB" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 24
 	},
@@ -44808,13 +44786,11 @@
 	name = "Arrival Access"
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
@@ -47406,7 +47382,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
@@ -56287,18 +56262,15 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = -8
@@ -61638,7 +61610,6 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8
 	},
 /obj/structure/window/fulltile{
@@ -63347,7 +63318,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = 8
@@ -66301,16 +66271,13 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = -40
 	},
@@ -71421,17 +71388,14 @@
 /obj/item/clothing/gloves/budget_insulated,
 /obj/random/tools/tool,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -74145,7 +74109,6 @@
 /area/station/engineering/monitoring)
 "rFM" = (
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
@@ -74154,11 +74117,9 @@
 	req_access = list(69)
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = -8
@@ -82835,7 +82796,6 @@
 	},
 /obj/machinery/light/small,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -24
 	},
@@ -82844,12 +82804,10 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -40
 	},
@@ -83323,16 +83281,13 @@
 	dir = 8
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = -32;
 	pixel_y = -8
@@ -84226,7 +84181,6 @@
 /area/station/security/lobby)
 "ugh" = (
 /obj/structure/sign/barber{
-	buildable_sign = 0;
 	pixel_x = -13
 	},
 /obj/structure/table/glass,
@@ -84415,7 +84369,6 @@
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/command{
@@ -88501,17 +88454,14 @@
 "viC" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -90213,17 +90163,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/flora/pottedplant/minitree,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -40
 	},
@@ -94618,7 +94565,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 32
 	},
@@ -98266,7 +98212,6 @@
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -32
 	},
