@@ -228,7 +228,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		return
 	muted = MUTE_NONE
 	while(query.NextRow())
-		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
 		muted |= mute_ban_bitfield[query.item[1]]
 
 /datum/preferences/proc/ShowChoices(mob/user)
