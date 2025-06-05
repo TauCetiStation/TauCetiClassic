@@ -2,8 +2,8 @@
 	name = COMBO_UPPERCUT
 	desc = "A move where you lunge your fist from below into opponent's chin, knocking their helmet off."
 	combo_icon_state = "uppercut"
-	cost = 60
-	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_HARM)
+	cost = 65
+	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_PUSH)
 
 	ignore_size = TRUE
 
