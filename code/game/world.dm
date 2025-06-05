@@ -240,9 +240,7 @@ var/global/shutdown_processed = FALSE
 	PreShutdown(end_state)
 
 	for(var/client/C in clients)
-		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C.tgui_panel?.send_roundrestart()
-		C << link(BYOND_JOIN_LINK)
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")
 	shutdown_processed = TRUE
