@@ -54,3 +54,27 @@
 	if(!.)
 		return
 	src.duration = world.time + duration
+
+/datum/status_effect/fanatic_inspiration
+	id = "fanatics_inspiration"
+	alert_type = /atom/movable/screen/alert/status_effect/fanatical_inspiration
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/fanatical_inspiration
+	name = "Воодушевление"
+	desc = "Взывания к высшим силам воодушевляют вас, позволяя терпеть боль."
+	icon_state = "fanatics"
+
+/datum/status_effect/fanatic_inspiration/on_apply()
+	ADD_TRAIT(owner, TRAIT_FANATIC_INSPIRATION, STATUS_EFFECT_TRAIT)
+	return isfanatic(owner)
+
+/datum/status_effect/fanatic_inspiration/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_FANATIC_INSPIRATION, STATUS_EFFECT_TRAIT)
+	return isfanatic(owner)
+
+/datum/status_effect/fanatic_inspiration/on_creation(mob/living/new_owner, duration)
+	. = ..()
+	if(!.)
+		return
+	src.duration = world.time + duration

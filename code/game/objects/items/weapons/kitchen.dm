@@ -180,9 +180,12 @@
 
 /obj/item/weapon/kitchenknife/ritual
 	name = "ritual knife"
-	desc = "The unearthly energies that once powered this blade are now dormant."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
+	desc = "The unearthly energies that once powered this blade are now dormant...<span class='fanatics'>Or not?</span>"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "ritual_blade"
+	force = 13
+	throwforce = 10
+	can_embed = 0
 
 /obj/item/weapon/kitchenknife/combat
 	name = "combat knife"

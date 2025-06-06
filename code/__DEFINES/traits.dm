@@ -210,6 +210,9 @@
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_NO_BREATHE          "no_breathe"
+#define TRAIT_FANATIC_INSPIRATION "fanatical_inspiration"
+#define TRAIT_FANATICS_CHAMPION   "fanatics_champion"
+#define TRAIT_DISTORTED_INVOCATION "distorted_invocation"
 /// Mod has DNA that is not compatible with station (genetics) machinery, also prevents changeling from targeting some mobs
 #define TRAIT_INCOMPATIBLE_DNA    "incompatible_dna"
 /// Character can't be cloned
@@ -242,7 +245,7 @@
 
 
 /*
- * Elements traits - these will attach trait and corresponding /datum/element 
+ * Elements traits - these will attach trait and corresponding /datum/element
  * to the object, and detach element when no trait sources left
  * useful for elements with multiple sources
  * (similar to AddElementTrait() on tg, easier to manage but no support for arguments)

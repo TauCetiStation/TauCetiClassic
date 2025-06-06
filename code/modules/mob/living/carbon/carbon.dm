@@ -1345,4 +1345,8 @@
 		if(pain > 0)
 			nutrition_to_remove += pain * 0.01
 	nutrition_to_remove *= mob_metabolism_mod.Get()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if((istype(H.gloves, /obj/item/clothing/gloves/fanatics) || istype(H.wear_suit, /obj/item/clothing/suit/hooded/fanatics_robes)) && !isfanatic(src))
+			nutrition_to_remove *= 8
 	nutrition = max(0.0, nutrition - nutrition_to_remove)

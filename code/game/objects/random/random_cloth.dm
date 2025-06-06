@@ -13,7 +13,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "cuirass"
 /obj/random/cloth/armor/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/suit/armor) - list(/obj/item/clothing/suit/armor/tdome, /obj/item/clothing/suit/armor/changeling))
+	return pick(subtypesof(/obj/item/clothing/suit/armor) - list(/obj/item/clothing/suit/armor/tdome, /obj/item/clothing/suit/armor/changeling, /obj/item/clothing/suit/armor/champion_armor))
 
 /obj/random/cloth/spacesuit
 	name = "random spacesuit"
@@ -87,7 +87,7 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "riot"
 /obj/random/cloth/helmet/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/head/helmet) - subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/changeling))
+	return pick(subtypesof(/obj/item/clothing/head/helmet) - subtypesof(/obj/item/clothing/head/helmet/space) - list(/obj/item/clothing/head/helmet/changeling, /obj/item/clothing/head/helmet/space/champion))
 
 /obj/random/cloth/head
 	name = "random head"
@@ -95,7 +95,7 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "santa"
 /obj/random/cloth/head/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/head) - list(/obj/item/clothing/head/shadowling, /obj/item/clothing/head/collectable/tophat/badmin_magic_hat, /obj/item/clothing/head/wizard/tophat) - (subtypesof(/obj/item/clothing/head/helmet) + subtypesof(/obj/item/clothing/head/helmet/space)))
+	return pick(subtypesof(/obj/item/clothing/head) - list(/obj/item/clothing/head/shadowling, /obj/item/clothing/head/collectable/tophat/badmin_magic_hat, /obj/item/clothing/head/wizard/tophat, /obj/item/clothing/head/helmet/space/champion) - (subtypesof(/obj/item/clothing/head/helmet) + subtypesof(/obj/item/clothing/head/helmet/space)))
 
 /obj/random/cloth/gloves
 	name = "random gloves"
@@ -119,7 +119,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	icon_state = "material"
 /obj/random/cloth/glasses/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling))
+	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling, /obj/item/clothing/glasses/champion))
 
 /obj/random/cloth/glasses_safe
 	name = "random glasses"
@@ -127,7 +127,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	icon_state = "material"
 /obj/random/cloth/glasses_safe/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling) - subtypesof(/obj/item/clothing/glasses/hud) - subtypesof(/obj/item/clothing/glasses/sunglasses/hud))
+	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling, /obj/item/clothing/glasses/champion) - subtypesof(/obj/item/clothing/glasses/hud) - subtypesof(/obj/item/clothing/glasses/sunglasses/hud))
 
 /obj/random/cloth/shoes
 	name = "random shoes"
@@ -135,7 +135,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "material"
 /obj/random/cloth/shoes/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/shoes/shadowling))
+	return pick(subtypesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/shoes/shadowling, /obj/item/clothing/shoes/champion))
 
 /obj/random/cloth/shoes_safe
 	name = "random shoes"
@@ -143,7 +143,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "material"
 /obj/random/cloth/shoes_safe/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/shoes/shadowling) -  subtypesof(/obj/item/clothing/shoes/boots))
+	return pick(subtypesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/shoes/shadowling, /obj/item/clothing/shoes/champion) -  subtypesof(/obj/item/clothing/shoes/boots))
 
 /obj/random/cloth/tie
 	name = "random tie"
