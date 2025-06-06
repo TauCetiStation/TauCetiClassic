@@ -316,8 +316,9 @@
 			break
 
 		if(user.incapacitated(NONE))
-			. = FALSE
-			break
+			if(!istype(user.buckled, /obj/structure/stool/bed/nest))
+				. = FALSE
+				break
 
 		if(Uloc && (user.loc != Uloc) || Tloc && (Tloc != target.loc))
 			. = FALSE
