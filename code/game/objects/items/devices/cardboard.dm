@@ -12,7 +12,7 @@
 
 /obj/item/cardboard_cutout/atom_init()
 	. = ..()
-	AddComponent(/datum/component/tactical, null, FALSE)
+	AddComponent(/datum/component/tactical, null, TRUE)
 	var/datum/twohanded_component_builder/TCB = new
 	TCB.require_twohands = TRUE
 	TCB.force_wielded = 5
@@ -34,6 +34,9 @@
 	icon_state = "cutout_pushed_over"
 	alpha = initial(alpha)
 	pushed_over = TRUE
+	var/datum/component/tactical/C = GetComponent(/datum/component/tactical)
+	if(C)
+		C.override = FALSE
 
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
@@ -43,6 +46,9 @@
 	icon = initial(icon)
 	icon_state = initial(icon_state)
 	pushed_over = FALSE
+	var/datum/component/tactical/C2 = GetComponent(/datum/component/tactical)
+	if(C2)
+		C2.override = TRUE
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/crayon))
