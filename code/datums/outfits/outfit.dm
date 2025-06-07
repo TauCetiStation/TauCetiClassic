@@ -283,9 +283,7 @@
 			H.internal = H.get_equipped_item(internals_slot)
 		if(implants)
 			for(var/implant_type in implants)
-				var/obj/item/weapon/implant/I = new implant_type(H)
-				I.inject(H, implants[implant_type])
-				START_PROCESSING(SSobj, I)
+				new implant_type(H)
 
 	if(istype(H.wear_id, /obj/item/weapon/card/id)) // check id card
 		var/obj/item/weapon/card/id/wear_id = H.wear_id

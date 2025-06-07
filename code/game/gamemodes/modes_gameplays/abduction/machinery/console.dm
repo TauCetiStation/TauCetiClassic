@@ -174,7 +174,7 @@
 			if("recall_implant")
 				var/obj/item/weapon/implanter/abductor/G = Dispense(/obj/item/weapon/implanter/abductor, 3)
 				if(G)
-					var/obj/item/weapon/implant/abductor/I = G.imp
+					var/obj/item/weapon/implant/abductor/I = G.implant
 					I.home = pad
 			if("silence_gloves")
 				Dispense(/obj/item/clothing/gloves/black/silence, 3)

@@ -127,7 +127,7 @@
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
-		if(target.ismindprotect())
+		if(ismindprotect(target))
 			to_chat(usr, "<span class='notice'>Their mind seems to be protected!</span>")
 			charge_counter = charge_max
 			return

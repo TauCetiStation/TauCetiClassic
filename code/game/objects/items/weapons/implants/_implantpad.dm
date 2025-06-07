@@ -48,15 +48,17 @@
 	user.set_machine(src)
 	var/dat = ""
 	if (src.case)
-		if(src.case.imp)
-			if(istype(src.case.imp, /obj/item/weapon/implant))
-				dat += case.imp.get_data()
-				if(istype(src.case.imp, /obj/item/weapon/implant/tracking))
+		if(src.case.implant)
+			if(istype(src.case.implant, /obj/item/weapon/implant))
+				dat += case.implant.implant_data
+				if(istype(src.case.implant, /obj/item/weapon/implant/tracking))
 					dat += {"ID (1-100):
-					<A href='byond://?src=\ref[src];tracking_id=-10'>-</A>
-					<A href='byond://?src=\ref[src];tracking_id=-1'>-</A> [case.imp:id]
-					<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
-					<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
+<A href='byond://?src=\ref[src];tracking_id=-10'>-</A>
+<A href='byond://?src=\ref[src];tracking_id=-1'>-</A>
+[case.implant:id]
+<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
+<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
+
 		else
 			dat += "Футляр от импланта пуст."
 	else
@@ -75,7 +77,7 @@
 	if (Adjacent(usr))
 		usr.set_machine(src)
 		if (href_list["tracking_id"])
-			var/obj/item/weapon/implant/tracking/T = src.case.imp
+			var/obj/item/weapon/implant/tracking/T = src.case.implant
 			T.id += text2num(href_list["tracking_id"])
 			T.id = min(100, T.id)
 			T.id = max(1, T.id)

@@ -256,3 +256,15 @@
 #define isblobshield(A) (istype(A, /obj/structure/blob/shield))
 
 #define isblobresource(A) (istype(A, /obj/structure/blob/resource))
+
+// IMPLANTS
+
+#define ismindshielded(L) (locate(/obj/item/weapon/implant/mind_protect/mindshield) in L.implants)
+
+#define isloyal(L) (locate(/obj/item/weapon/implant/mind_protect/loyalty) in L.implants)
+
+#define ismindprotect(L) (locate(/obj/item/weapon/implant/mind_protect) in L.implants)
+
+#define isimplantedobedience(L) (locate(/obj/item/weapon/implant/obedience) in L.implants)
+
+#define isimplantedblueshield(L) (locate(/obj/item/weapon/implant/blueshield) in L.implants)
