@@ -280,7 +280,7 @@
 /datum/action/innate/race/unath_tail/proc/punch_result(atom/target, punch_power)
 	var/mob/living/carbon/human/user = owner
 
-	if(istype(target, /mob/living))
+	if(isliving(target))
 		var/mob/living/victim = target
 
 		switch(punch_intent)
