@@ -211,7 +211,7 @@
 		var/mob/living/carbon/human/H = owner
 
 		punch_intent = H.a_intent
-		punch_animation(H)
+		punch_animation(H, target)
 
 /datum/action/innate/race/unath_tail/proc/can_punch()
 	var/mob/living/carbon/human/H = owner
@@ -233,10 +233,10 @@
 		return FALSE
 	return TRUE
 
-/datum/action/innate/race/unath_tail/proc/punch_animation(mob/living/carbon/human/user)
+/datum/action/innate/race/unath_tail/proc/punch_animation(mob/living/carbon/human/user, atom/target)
 	set waitfor = FALSE
 
-	var/attack_dir = user.dir
+	var/attack_dir = get_dir(user, target)
 	var/attack_side = -1 // right hand - right side
 	if(user.hand)
 		attack_side = 1  // left hand - left side
