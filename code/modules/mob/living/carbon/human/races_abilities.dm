@@ -185,11 +185,6 @@
 		return
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
-/obj/effect/effect/unath_tail
-	name = "Tail"
-	icon = 'icons/hud/actions.dmi'
-	icon_state = "unath_tail"
-
 /datum/action/innate/race/unath_tail
 	name = "Использовать хвост"
 	button_icon_state = "unath_tail"
@@ -216,7 +211,7 @@
 		var/mob/living/carbon/human/H = owner
 
 		punch_intent = H.a_intent
-		punch_animation()
+		punch_animation(H)
 
 /datum/action/innate/race/unath_tail/proc/can_punch()
 	var/mob/living/carbon/human/H = owner
@@ -241,39 +236,35 @@
 /datum/action/innate/race/unath_tail/proc/punch_animation(mob/living/carbon/human/user)
 	set waitfor = FALSE
 
-	var/mob/living/carbon/human/H = owner
-
 	var/attack_dir = user.dir
 	var/attack_side = -1 // right hand - right side
 	if(user.hand)
 		attack_side = 1  // left hand - left side
 
-	var/obj/effect/effect/unath_tail/tail = new
-	var/icon/tail_icon = new('icons/hud/actions.dmi', "unath_tail").Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
-	tail.icon = tail_icon
-
 	var/power = 0.2
 	var/animation_speed = 3
-	if(is_skill_competent(H, list(/datum/skill/police = SKILL_LEVEL_PRO)))
+	if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_PRO)))
 		animation_speed = 2 // attack animation is 1.5 times faster if you skilled
 		power = 0.4			// attack more efficient if you skilled
 
 	var/atom/interupt_atom
 	for(var/i = 2, i >= 0, i--)
-		tail.forceMove(get_step(H, turn(attack_dir, 45 * i * attack_side))) // start to 90 degree end to 0 degree
-		H.set_dir(turn(attack_dir, -180 + 45 * i * attack_side)) // start to 90 degree end to 180 degree
+		var/turf/current_turf = get_step(user, turn(attack_dir, 45 * i * attack_side))
+		user.do_attack_animation(current_turf, visual_effect_icon = ATTACK_EFFECT_SLASH)
+		// start to 90 degree end to 0 degree
+		user.set_dir(turn(attack_dir, -180 + 45 * i * attack_side))
+		// start to 90 degree end to 180 degree
 
-		var/turf/tail_turf = get_turf(tail)
-		if(tail_turf.density)
-			interupt_atom = tail_turf
+		if(current_turf.density)
+			interupt_atom = current_turf
 		else
-			for(var/atom/A in tail_turf.contents)
+			for(var/atom/A in current_turf.contents)
 				if(A.density)
 					interupt_atom = A
 					break
 
 		if(interupt_atom)
-			punch_result(interupt_atom, power)
+			punch_result(user, interupt_atom, power)
 			return
 
 		power += 0.4
@@ -282,9 +273,7 @@
 		if(!can_punch())
 			return
 
-/datum/action/innate/race/unath_tail/proc/punch_result(atom/target, punch_power)
-	var/mob/living/carbon/human/user = owner
-
+/datum/action/innate/race/unath_tail/proc/punch_result(mob/living/carbon/human/user, atom/target, punch_power)
 	if(isliving(target))
 		var/mob/living/victim = target
 
