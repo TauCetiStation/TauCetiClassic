@@ -42,7 +42,7 @@
 	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
-	QDEL_LIST(implants)
+	QDEL_LAZYLIST(implants)
 
 	qdel(mob_metabolism_mod)
 
