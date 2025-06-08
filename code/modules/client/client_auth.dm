@@ -1,5 +1,5 @@
 #define CLIENT_PASSWORD_VERSION 1
-#define CLIENT_PASSWORD_KEY_FILE "keys/auth_key_md5_v1.dm"
+#define CLIENT_PASSWORD_KEY_FILE "keys/auth_key_md5_v1.key"
 
 var/global/list/client_login_tokens = list()
 
@@ -26,7 +26,7 @@ var/global/list/client_login_tokens = list()
 
 	password = copytext_char(trim(password), 1, 1024)
 
-	if(!password || length(password) < 8 || isnum(password))
+	if(!password || length(password) < 8 || length(replacetext(password, regex(@"[0-9]", "g"), "")) == 0)
 		to_chat(src, "<span class='warning'>Ваш пароль слишком простой. Попоробуйте еще раз.</span>")
 		return
 
