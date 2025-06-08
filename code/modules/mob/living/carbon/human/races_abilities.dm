@@ -185,6 +185,165 @@
 		return
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
+/obj/effect/effect/unath_tail
+	name = "Tail"
+	icon = 'icons/hud/actions.dmi'
+	icon_state = "unath_tail"
+
+/datum/action/innate/race/unath_tail
+	name = "Использовать хвост"
+	button_icon_state = "unath_tail"
+	toggleable = TRUE
+	cooldown = 30 SECOND
+	var/punch_intent
+
+/datum/action/innate/race/unath_tail/Grant(mob/T)
+	..()
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(punch))
+
+/datum/action/innate/race/unath_tail/Destroy()
+	UnregisterSignal(owner, COMSIG_MOB_CLICK)
+	..()
+
+/datum/action/innate/race/unath_tail/proc/punch(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+
+	if(!can_punch())
+		return
+
+	if(active)
+		StartCooldown()
+		var/mob/living/carbon/human/H = owner
+
+		punch_intent = H.a_intent
+		punch_animation()
+
+/datum/action/innate/race/unath_tail/proc/can_punch()
+	var/mob/living/carbon/human/H = owner
+
+	if(!H) // what the fuck dude?
+		return FALSE
+	if(H.restrained())
+		if(H.pulledby)
+			to_chat(H, "<span class='warning'>Ваши руки связаны и вас насильно удерживают!</span>")
+			return FALSE
+	if(H.restrained(LEGS))
+		to_chat(H, "<span class='warning'>Движение ног сковано, вы не можете достаточно быстро двигать хвостом!</span>")
+		return FALSE
+	if(H.buckled)
+		to_chat(H, "<span class='warning'>Вы пристёгнуты и ваши движения скованы!</span>")
+		return FALSE
+	if(H.stat) // CONSCIOUS = 0
+		to_chat(H, "<span class='warning'>Вы не в состоянии делать это сейчас!</span>")
+		return FALSE
+	return TRUE
+
+/datum/action/innate/race/unath_tail/proc/punch_animation(mob/living/carbon/human/user)
+	var/attack_dir = user.dir
+	var/attack_side = -1 // right hand - right side
+	if(user.hand)
+		attack_side = 1  // left hand - left side
+
+	var/obj/tail = new /obj/effect/effect/unath_tail(get_step(src, turn(attack_dir, 90 * attack_side)))
+	tail.icon = new('icons/hud/actions.dmi', "unath_tail").Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
+
+	var/power = 0,2
+	var/animation_speed = 3
+	if(is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_PRO)))
+		animation_speed = 2 // attack animation is 1.5 times faster if you skilled
+		power = 0,4			// attack more efficient if you skilled
+
+	var/atom/interupt_atom
+	for(var/i = 2, i >= 0, i--)
+		tail.forceMove(get_step(src, turn(attack_dir, 45 * i * attack_side))) // start to 90 degree end to 0 degree
+		set_dir(turn(attack_dir, -180 + 45 * i * attack_side)) // start to 90 degree end to 180 degree
+
+		var/turf/tail_turf = get_turf(tail)
+		if(tail_turf.density)
+			interupt_atom = tail_turf
+		else
+			for(var/atom/A in tail_turf.contents)
+				if(A.density)
+					interupt_atom = A
+					break
+
+		if(interupt_atom)
+			punch_result(interupt_atom, power)
+			return
+
+		power += 0,4
+
+		sleep(animation_speed)
+		if(!can_tailpunch())
+			return
+
+/datum/action/innate/race/unath_tail/proc/punch_result(atom/target, punch_power)
+	var/mob/living/carbon/human/user = owner
+
+	if(istype(target, /mob/living))
+		var/mob/living/victim = target
+
+		switch(punch_intent)
+			if(INTENT_HELP)
+				if(victim.on_fire)
+					victim.visible_message("<span class='notice'>[user] put out the fire on [victim] with his tail!</span>",
+					"<span class='notice'>[user] put out the fire on you with his tail.</span>")
+					victim.ExtinguishMob()
+				victim.adjustHalLoss(-5)
+
+			if(INTENT_PUSH)
+				if(user.is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_TRAINED)))
+					victim.visible_message("<span class='danger'>\The [user] hooked a [victim] with his tail!</span>",
+					"<span class='userdanger'>[user] hacks you with his tail!</span>")
+					victim.Weaken(1 * punch_power)
+				else
+					victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
+					"<span class='userdanger'>[user] hits you with his tail!</span>")
+				victim.adjustHalLoss(10 * punch_power)
+
+			if(INTENT_GRAB)
+				victim.visible_message("<span class='danger'>\The [user] knocked the [victim] down by himself!</span>",
+				"<span class='userdanger'>[user] knocked you down by yourself!</span>")
+				victim.Weaken(2 * punch_power)
+				Weaken(1)
+
+			if(INTENT_HARM)
+				if(user.is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_MASTER)))
+					victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
+					"<span class='userdanger'>[user] hits you with his tail!</span>")
+					victim.apply_damage(12 * punch_power, BRUTE, BP_CHEST)
+					victim.throw_at(get_step(victim, get_dir(user, victim)), 2, 1, user, FALSE)
+					victim.Weaken(1 * punch_power)
+				else
+					victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
+					"<span class='userdanger'>[user] hits you with his tail!</span>")
+					victim.apply_damage(12 * punch_power, BRUTE, BP_GROIN)
+	else
+		if(istype(target, /atom/movable))
+			var/atom/movable/AM = target
+			if(!AM.anchored)
+				step_away(AM, get_turf(user))
+
+		if(target.uses_integrity)
+			target.take_damage(12 * punch_power, BRUTE)
+
+		if(iswallturf(target))
+			user.Stun(1)
+			user.Weaken(2)
+			user.apply_damage(4, BRUTE, BP_GROIN)
+
+		if(istype(target, /obj/fire))
+			var/obj/fire/F = target
+			if(F.firelevel < 2.5)
+				qdel(F)
+			else
+				user.fire_act()
+				user.adjust_fire_stacks(5)
+
+	if(!has_gravity(user))
+		step_away(user, get_turf(target))
+
+
 ///////////////////////////////////////////////////
 // 	MACHINE | IPC
 ///////////////////////////////////////////////////
