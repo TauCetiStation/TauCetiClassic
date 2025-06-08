@@ -22,7 +22,7 @@
 	//first implants
 	var/list/stored_implants
 
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(implants))
 		stored_implants = implants.Copy()
 		for(var/obj/item/weapon/implant/IMP as anything in implants)
 			IMP.eject()
@@ -134,7 +134,7 @@
 	//first implants
 	var/list/stored_implants
 
-	if (tr_flags & TR_KEEPIMPLANTS)
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(implants))
 		stored_implants = implants.Copy()
 		for(var/obj/item/weapon/implant/IMP as anything in implants)
 			IMP.eject()
