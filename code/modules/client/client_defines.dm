@@ -4,6 +4,10 @@
 		//////////////////////
 	parent_type = /datum
 
+	authenticate = BYOND_HUB_AUTHENTICATION
+	var/password_authenticated = FALSE
+	var/hub_authenticated = FALSE
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////

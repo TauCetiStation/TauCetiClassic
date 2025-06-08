@@ -348,6 +348,10 @@ var elements = document.getElementsByName('rights');
 	if(!target)
 		return
 
+	if(!target.hub_authenticated)
+		to_chat(usr, "<span class='alert'>Client is not authorized through the hub!</span>")
+		return
+
 	if(!target.holder)
 		var/confirm = tgui_alert(usr, "You want to grant permissions for [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
 		if (confirm != "Yes")

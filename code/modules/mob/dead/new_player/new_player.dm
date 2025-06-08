@@ -77,6 +77,11 @@
 		client.changes()
 		return
 
+	if(href_list["lobby_profile"])
+		var/datum/profile_settings/profile = new()
+		profile.tgui_interact(src)
+		return
+
 	if(href_list["lobby_setup"])
 		client << browse_rsc('html/prefs/dossier_empty.png')
 		client << browse_rsc('html/prefs/opacity7.png')

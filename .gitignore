@@ -10,5 +10,6 @@ Thumbs.db
 data/
 cache/
 cfg/
+keys/
 **/MapFXDrawer/*.png
 test_merge.txt
