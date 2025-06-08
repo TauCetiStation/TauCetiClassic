@@ -239,24 +239,26 @@
 	return TRUE
 
 /datum/action/innate/race/unath_tail/proc/punch_animation(mob/living/carbon/human/user)
+	var/mob/living/carbon/human/H = owner
+
 	var/attack_dir = user.dir
 	var/attack_side = -1 // right hand - right side
 	if(user.hand)
 		attack_side = 1  // left hand - left side
 
-	var/obj/tail = new /obj/effect/effect/unath_tail(get_step(src, turn(attack_dir, 90 * attack_side)))
+	var/obj/tail = new /obj/effect/effect/unath_tail(get_step(H, turn(attack_dir, 90 * attack_side)))
 	tail.icon = new('icons/hud/actions.dmi', "unath_tail").Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
 	var/power = 0.2
 	var/animation_speed = 3
-	if(is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_PRO)))
+	if(is_skill_competent(H, list(/datum/skill/police = SKILL_LEVEL_PRO)))
 		animation_speed = 2 // attack animation is 1.5 times faster if you skilled
 		power = 0.4			// attack more efficient if you skilled
 
 	var/atom/interupt_atom
 	for(var/i = 2, i >= 0, i--)
-		tail.forceMove(get_step(src, turn(attack_dir, 45 * i * attack_side))) // start to 90 degree end to 0 degree
-		set_dir(turn(attack_dir, -180 + 45 * i * attack_side)) // start to 90 degree end to 180 degree
+		tail.forceMove(get_step(H, turn(attack_dir, 45 * i * attack_side))) // start to 90 degree end to 0 degree
+		H.set_dir(turn(attack_dir, -180 + 45 * i * attack_side)) // start to 90 degree end to 180 degree
 
 		var/turf/tail_turf = get_turf(tail)
 		if(tail_turf.density)
@@ -274,7 +276,7 @@
 		power += 0.4
 
 		sleep(animation_speed)
-		if(!can_tailpunch())
+		if(!can_punch())
 			return
 
 /datum/action/innate/race/unath_tail/proc/punch_result(atom/target, punch_power)
@@ -292,7 +294,7 @@
 				victim.adjustHalLoss(-5)
 
 			if(INTENT_PUSH)
-				if(user.is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_TRAINED)))
+				if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_TRAINED)))
 					victim.visible_message("<span class='danger'>\The [user] hooked a [victim] with his tail!</span>",
 					"<span class='userdanger'>[user] hacks you with his tail!</span>")
 					victim.Weaken(1 * punch_power)
@@ -305,10 +307,10 @@
 				victim.visible_message("<span class='danger'>\The [user] knocked the [victim] down by himself!</span>",
 				"<span class='userdanger'>[user] knocked you down by yourself!</span>")
 				victim.Weaken(2 * punch_power)
-				Weaken(1)
+				user.Weaken(1)
 
 			if(INTENT_HARM)
-				if(user.is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_MASTER)))
+				if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_MASTER)))
 					victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
 					"<span class='userdanger'>[user] hits you with his tail!</span>")
 					victim.apply_damage(12 * punch_power, BRUTE, BP_CHEST)
