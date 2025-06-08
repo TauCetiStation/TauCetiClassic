@@ -33,7 +33,7 @@ var/global/list/death_alarm_stealth_areas = list(
 /obj/item/weapon/implant/death_alarm/proc/on_death()
 	SIGNAL_HANDLER
 
-	activate()
+	use_implant()
 
 /obj/item/weapon/implant/death_alarm/activate(fake_alert = FALSE)
 	if(malfunction)

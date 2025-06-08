@@ -26,7 +26,7 @@
 	//connect to a nearby scanner pad
 	owned_scanner = locate(/obj/machinery/artifact_scanpad) in get_step(src, dir)
 	if(!owned_scanner)
-		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
+		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(4, src)
 
 /obj/machinery/artifact_analyser/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN) || !Adjacent(user) && !issilicon(user) && !isobserver(user))
@@ -35,7 +35,7 @@
 	var/dat = "<B>Anomalous material analyser</B><BR>"
 	dat += "<HR>"
 	if(!owned_scanner)
-		owned_scanner = locate() in orange(1, src)
+		owned_scanner = locate() in orange(4, src)
 
 	if(!owned_scanner)
 		dat += "<b><font color=red>Unable to locate analysis pad.</font></b><br>"

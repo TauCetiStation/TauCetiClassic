@@ -206,8 +206,7 @@ var/global/list/blacklisted_builds = list(
 	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
 		winset(src, "", "browser-options=byondstorage,refresh,find")
 
-	var/tdata = TopicData //save this for later use
-	TopicData = null							//Prevent calls to client.Topic from connect
+	TopicData = null //Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
 		return null
@@ -303,7 +302,7 @@ var/global/list/blacklisted_builds = list(
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 
-	log_client_to_db(tdata)
+	log_client_to_db()
 
 	acquire_dpi()
 
@@ -430,7 +429,7 @@ var/global/list/blacklisted_builds = list(
 			return TRUE
 
 
-/client/proc/log_client_to_db(connectiontopic)
+/client/proc/log_client_to_db()
 
 	if ( IsGuestKey(src.key) )
 		return
@@ -479,8 +478,6 @@ var/global/list/blacklisted_builds = list(
 	var/admin_rank = "Player"
 	if (src.holder)
 		admin_rank = src.holder.rank
-	else if (config.check_randomizer && check_randomizer(connectiontopic))
-		return
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
@@ -582,92 +579,6 @@ var/global/list/blacklisted_builds = list(
 			ip_list[query_ip]["match"] = match_ckeys
 
 	return ip_list
-
-/client/proc/check_randomizer(topic)
-	. = FALSE
-	if (connection != "seeker")
-		return
-	topic = params2list(topic)
-	var/static/cidcheck = list()
-	var/static/tokens = list()
-	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
-	var/static/cidcheck_spoofckeys = list()
-
-	var/oldcid = cidcheck[ckey]
-
-	if (oldcid)
-		if (!topic || !topic["token"] || !tokens[ckey] || topic["token"] != tokens[ckey])
-			if (!cidcheck_spoofckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
-				cidcheck_spoofckeys[ckey] = TRUE
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
-
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			qdel(src)
-			return TRUE
-
-		if (oldcid != computer_id) //IT CHANGED!!!
-			cidcheck -= ckey //so they can try again after removing the cid randomizer.
-
-			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
-			to_chat(src, "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>")
-
-			if (!cidcheck_failedckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				world.send2bridge(
-					type = list(BRIDGE_ADMINLOG),
-					attachment_title = "Cid Randomizer",
-					attachment_msg = "**[key_name(src)]** has been detected as using a cid randomizer. Connection rejected.",
-					attachment_color = BRIDGE_COLOR_ADMINLOG,
-				)
-
-				cidcheck_failedckeys[ckey] = TRUE
-				notes_add(ckey, "Detected as using a cid randomizer.")
-
-			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
-
-			qdel(src)
-			return TRUE
-		else
-			if (cidcheck_failedckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				world.send2bridge(
-					type = list(BRIDGE_ADMINLOG),
-					attachment_title = "Cid Randomizer",
-					attachment_msg = "**[key_name(src)]** has been allowed to connect after showing they removed their cid randomizer",
-					attachment_color = BRIDGE_COLOR_ADMINLOG,
-				)
-				cidcheck_failedckeys -= ckey
-			if (cidcheck_spoofckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
-				cidcheck_spoofckeys -= ckey
-			cidcheck -= ckey
-	else
-		var/sql_ckey = ckey(ckey)
-		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
-		query_cidcheck.Execute()
-
-		var/lastcid
-		if (query_cidcheck.NextRow())
-			lastcid = query_cidcheck.item[1]
-
-		if (computer_id != lastcid)
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
-
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			qdel(src)
-			return TRUE
-
-/client/proc/cid_check_reconnect()
-	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
-	. = token
-	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
-	var/url = winget(src, null, "url")
-	//special javascript to make them reconnect under a new window.
-	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
 
 /client/proc/log_client_ingame_age_to_db()
 	if ( IsGuestKey(src.key) )
