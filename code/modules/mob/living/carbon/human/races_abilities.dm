@@ -239,6 +239,8 @@
 	return TRUE
 
 /datum/action/innate/race/unath_tail/proc/punch_animation(mob/living/carbon/human/user)
+	set waitfor = FALSE
+
 	var/mob/living/carbon/human/H = owner
 
 	var/attack_dir = user.dir
