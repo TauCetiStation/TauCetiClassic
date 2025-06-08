@@ -271,7 +271,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, canEscape = FALSE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -315,10 +315,9 @@
 			. = FALSE
 			break
 
-		if(user.incapacitated(NONE))
-			if(!istype(user.buckled, /obj/structure/stool/bed/nest))
-				. = FALSE
-				break
+		if(user.incapacitated(NONE) && !canEscape)
+			. = FALSE
+			break
 
 		if(Uloc && (user.loc != Uloc) || Tloc && (Tloc != target.loc))
 			. = FALSE
