@@ -246,7 +246,7 @@
 	if(user.hand)
 		attack_side = 1  // left hand - left side
 
-	var/obj/tail = new /obj/effect/effect/unath_tail(get_step(H, turn(attack_dir, 90 * attack_side)))
+	var/obj/effect/effect/unath_tail/tail = new(get_step(H, turn(attack_dir, 90 * attack_side)))
 	tail.icon = new('icons/hud/actions.dmi', "unath_tail").Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
 	var/power = 0.2
