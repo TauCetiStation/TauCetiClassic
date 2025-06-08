@@ -247,11 +247,11 @@
 	var/obj/tail = new /obj/effect/effect/unath_tail(get_step(src, turn(attack_dir, 90 * attack_side)))
 	tail.icon = new('icons/hud/actions.dmi', "unath_tail").Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
-	var/power = 0,2
+	var/power = 0.2
 	var/animation_speed = 3
 	if(is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_PRO)))
 		animation_speed = 2 // attack animation is 1.5 times faster if you skilled
-		power = 0,4			// attack more efficient if you skilled
+		power = 0.4			// attack more efficient if you skilled
 
 	var/atom/interupt_atom
 	for(var/i = 2, i >= 0, i--)
@@ -271,7 +271,7 @@
 			punch_result(interupt_atom, power)
 			return
 
-		power += 0,4
+		power += 0.4
 
 		sleep(animation_speed)
 		if(!can_tailpunch())
