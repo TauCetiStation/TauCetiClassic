@@ -1,7 +1,6 @@
 /datum/action/innate/race
 	name = "Расовое умение"
 	background_icon_state = "bg_race"
-	var/mob/living/carbon/human/owner
 
 /datum/action/innate/race/Grant(mob/T)
 	if(!(ishuman(T)))
