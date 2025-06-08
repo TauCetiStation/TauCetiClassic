@@ -30,15 +30,19 @@
 		if("login")
 			C.authenticate_with_password()
 		if("logout")
-			// this places token in logs, but anyway we now removing it
-			var/token = params["token"]
-			C.invalidate_access_tokens(token)
+			if(C.byond_version < 516)
+				winset(C, null, "command=.reconnect")
+			else
+				// this places token in logs, but anyway we now removing it
+				var/token = params["token"]
+				if(token)
+					C.invalidate_access_tokens(token)
 
-			if(tgui_alert(C, "Выйти со всех систем?", "Logout", list("Да", "Нет")) == "Да")
-				C.invalidate_access_tokens()
+				if(tgui_alert(C, "Выйти со всех систем?", "Logout", list("Да", "Нет")) == "Да")
+					C.invalidate_access_tokens()
 
-			C.handle_storage_access_token(remove_token = TRUE)
-			winset(C, null, "command=.reconnect")
+				C.handle_storage_access_token(remove_token = TRUE)
+				winset(C, null, "command=.reconnect")
 
 		if("changepassword")
 			C.set_password()
