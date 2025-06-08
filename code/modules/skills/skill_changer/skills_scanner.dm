@@ -67,10 +67,7 @@
 
 /obj/machinery/optable/skill_scanner/proc/inject_victim()
 	var/mob/living/carbon/human/H = victim
-	for(var/obj/item/weapon/implant/skill/S in H)
-		if(S.implanted)
-			S.meltdown()
-	var/obj/item/weapon/implant/skill/implant = new(H)
+	var/obj/item/weapon/implant/skill/implant = new()
 	implant.set_skills(cartridge.selected_buffs, cartridge.compatible_species)
 	implant.inject(H, BP_HEAD)
 	QDEL_NULL(cartridge)

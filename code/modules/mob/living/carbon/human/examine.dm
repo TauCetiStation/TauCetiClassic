@@ -572,8 +572,8 @@
 	//someone here, but who?
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
-			for(var/obj/item/weapon/implant/blueshield/B in H)
+		if(isimplantedblueshield(H) && mind && (mind.assigned_role in protected_by_blueshield_list))
+			for(var/obj/item/weapon/implant/blueshield/B in H.implants)
 				B.last_examined = world.time
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
 

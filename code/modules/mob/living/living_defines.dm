@@ -53,6 +53,8 @@
 	var/tesla_ignore = FALSE
 	var/list/butcher_results = null
 
+	var/list/implants // currently only carbons can get implants, declared here to avoid typecasting
+
 	var/list/recent_tastes = list()
 	var/lasttaste = 0 // Prevent tastes spam
 

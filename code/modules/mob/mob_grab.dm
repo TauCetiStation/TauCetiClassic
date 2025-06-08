@@ -610,7 +610,7 @@
 		if(length(BP.wounds))
 			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 			foundwound = TRUE
-		if(length(BP.implants))
+		if(length(BP.embedded_objects))
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
 			foundgerm = TRUE

@@ -228,7 +228,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		return
 	muted = MUTE_NONE
 	while(query.NextRow())
-		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
 		muted |= mute_ban_bitfield[query.item[1]]
 
 /datum/preferences/proc/ShowChoices(mob/user)
@@ -248,24 +247,28 @@ var/global/list/datum/preferences/preferences_datums = list()
 	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;background-attachment: fixed;background-size:cover}</style>"
 	dat += "<style>.main_menu{margin-left:150px;margin-top:135px;}</style>"
 
+	dat += "<div class='main_menu'>"
+
 	if(path)
-		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
 		dat += "[menu_type=="load_slot"?"<b>Load slot</b>":"<a href=\"byond://?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
 		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a><br>"
-		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
-		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
-		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
-		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
-		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
-		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
-		dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
-		dat += "</div>"
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
 	else
-		dat += "Please create an account to save your preferences."
+		dat += "<span color='#FF4444'>Please create an account if you want to save your preferences.</span>"
+
+	dat += "<br>"
+
+	dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
+	dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
+	dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
+	dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
+	dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
+	dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
+	dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
+	dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
+	dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
+	dat += "</div>"
 
 	dat += "</center><hr width='535'>"
 	switch(menu_type)
