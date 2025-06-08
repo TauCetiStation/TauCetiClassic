@@ -963,11 +963,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			if(selection in limb.implants)
+			if(selection in limb.embedded_objects)
 				BP = limb
 				break
 
-		BP.implants -= selection
+		BP.embedded_objects -= selection
 		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection

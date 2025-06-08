@@ -43,7 +43,7 @@
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
-	var/list/implants = list()        // Currently implanted objects.
+	var/list/embedded_objects = list() // Currently implanted objects. Includes embed objects, implants like mindshield, borers...
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
@@ -523,6 +523,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(cannot_amputate || !owner)
 		return
 
+	// todo: need to write better logic for dismembering and embedded_objects
+	for(var/obj/item/weapon/implant/implanted_object in embedded_objects)
+		qdel(implanted_object)
+		if(prob(25))
+			new /obj/item/weapon/implant/meltdown(owner.loc)
+
 	owner.bodyparts -= src
 	owner.bodyparts_by_name -= body_zone
 	owner.bad_bodyparts -= src
@@ -845,9 +851,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 
 	supplied_wound.embedded_objects += W
-	implants += W
+	embedded_objects += W
 	owner.sec_hud_set_implants()
-	owner.embedded_flag = 1
+	owner.embedded_flag = TRUE
 	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)
 	if(ismob(W.loc))
