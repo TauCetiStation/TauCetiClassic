@@ -510,6 +510,7 @@
 
 	language = LANGUAGE_SINTAUNATHI
 	unarmed_type = /datum/unarmed_attack/claws
+	race_ability = /datum/action/innate/race/unath_tail
 	race_verbs = list(/mob/living/carbon/human/proc/air_sample)
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
@@ -633,7 +634,7 @@
 
 	flesh_color = "#afa59e"
 	default_skin_color = "#bbbbbb"
-	default_eyes_color = "#1ec81e" 
+	default_eyes_color = "#1ec81e"
 
 	min_age = 25
 	max_age = 85
