@@ -223,9 +223,6 @@ REQ_CULT_GHOSTWRITER 6
 ## Your link to donat informations
 #DONATE_INFO_URL http://you-url
 
-## Uncomment this to enable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
-# CHECK_RANDOMIZER
-
 ##BYOND version restrictions
 ##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned
 ##by default will be used build RECOMMENDED_VERSION (latest compatible major version)

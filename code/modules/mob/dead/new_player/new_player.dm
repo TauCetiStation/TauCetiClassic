@@ -67,8 +67,7 @@
 			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
+			stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr || !client)

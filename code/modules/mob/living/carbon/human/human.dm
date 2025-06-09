@@ -1327,7 +1327,7 @@
 
 	var/list/visible_implants = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		for(var/obj/item/weapon/O in BP.implants)
+		for(var/obj/item/weapon/O in BP.embedded_objects)
 			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
 				visible_implants[O] = BP
 
@@ -1338,7 +1338,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
 			continue
-		for(var/obj/item/weapon/O in BP.implants)
+		for(var/obj/item/weapon/O in BP.embedded_objects)
 			if(!istype(O,/obj/item/weapon/implant) && prob(5)) //Moving with things stuck in you could be bad.
 				// All kinds of embedded objects cause bleeding.
 				var/msg = null
@@ -1777,7 +1777,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
 			continue
-		var/skeleton_state = BP.get_icon_state(fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
+		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
 		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
 	MA = update_height(MA)
 	return MA

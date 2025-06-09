@@ -43,7 +43,7 @@
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
-	var/list/implants = list()        // Currently implanted objects.
+	var/list/embedded_objects = list() // Currently implanted objects. Includes embed objects, implants like mindshield, borers...
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
@@ -253,7 +253,10 @@
 /obj/item/organ/external/proc/update_sprite()
 	if(is_skeleton && species.skeleton)
 		icon = species.skeleton
-	else if ((status & ORGAN_MUTATED) && species.deformed)
+		icon_state = get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE)
+		return
+
+	if ((status & ORGAN_MUTATED) && species.deformed) // todo: make it filters
 		icon = species.deformed
 	else
 		icon = species.icobase
@@ -331,7 +334,7 @@
 
 	// attach bones to base appearance for slimepeople (if we not skeleton already)
 	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
-		var/mutable_appearance/bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
+		var/mutable_appearance/bones_appearance = mutable_appearance(species.skeleton, get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))
 		bones_appearance.appearance_flags = RESET_COLOR | RESET_ALPHA
 		bones_appearance.blend_mode = BLEND_INSET_OVERLAY // inset fixes some clipping issues
 		// because we can't combine inset with underlays (or other blend modes) we need to add alpha to make it appear "under" skin
@@ -348,7 +351,7 @@
 			var/mutable_appearance/zombie_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]", -BODY_FEATURES_LAYER)
 			zombie_holes.color = get_blood_color()
 			zombie_holes.appearance_flags = KEEP_TOGETHER
-			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
+			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))
 			zombie_bones_appearance.blend_mode = BLEND_MULTIPLY
 			zombie_holes.add_overlay(zombie_bones_appearance)
 			. += zombie_holes
@@ -360,7 +363,7 @@
 			var/mutable_appearance/burnt_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]", -BODY_FEATURES_LAYER)
 			burnt_holes.color = "#cf7516"
 			burnt_holes.appearance_flags = KEEP_TOGETHER
-			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(fat_state = FALSE, pump_state = FALSE))
+			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))
 			zombie_bones_appearance.blend_mode = BLEND_MULTIPLY
 			burnt_holes.add_overlay(zombie_bones_appearance)
 			. += burnt_holes
@@ -519,6 +522,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
 	if(cannot_amputate || !owner)
 		return
+
+	// todo: need to write better logic for dismembering and embedded_objects
+	for(var/obj/item/weapon/implant/implanted_object in embedded_objects)
+		qdel(implanted_object)
+		if(prob(25))
+			new /obj/item/weapon/implant/meltdown(owner.loc)
 
 	owner.bodyparts -= src
 	owner.bodyparts_by_name -= body_zone
@@ -842,9 +851,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 
 	supplied_wound.embedded_objects += W
-	implants += W
+	embedded_objects += W
 	owner.sec_hud_set_implants()
-	owner.embedded_flag = 1
+	owner.embedded_flag = TRUE
 	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)
 	if(ismob(W.loc))
@@ -939,7 +948,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	// attach bones to base appearance for slimepeople (if we not skeleton already)
 	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
-		var/mutable_appearance/bones_appearance_behind = mutable_appearance(species.skeleton, "[get_icon_state(fat_state = FALSE, pump_state = FALSE)]_BEHIND")
+		var/mutable_appearance/bones_appearance_behind = mutable_appearance(species.skeleton, "[get_icon_state(get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))]_BEHIND")
 		bones_appearance_behind.appearance_flags = RESET_COLOR | RESET_ALPHA
 		bones_appearance_behind.blend_mode = BLEND_INSET_OVERLAY
 		bones_appearance_behind.alpha = 175
