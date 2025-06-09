@@ -1,8 +1,6 @@
 #define CLIENT_PASSWORD_VERSION 1
 #define CLIENT_PASSWORD_KEY_FILE "keys/auth_key_md5_v1.key"
 
-var/global/list/client_login_tokens = list()
-
 /client
 	var/bad_password_attempts = 0
 
