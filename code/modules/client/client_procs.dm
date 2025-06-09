@@ -356,6 +356,11 @@ var/global/list/blacklisted_builds = list(
 	else
 		winset(src, "mainwindow", "title='[world.name]'")
 
+	// .reconnect keeps skins settings, so there is a chance our lobby browser is stuck
+	// todo: rewrite lobby and move it to client code?
+	if(!istype(mob, /mob/dead/new_player))
+		winset(src, "lobbybrowser", "is-disabled=true;is-visible=false")
+
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold")
