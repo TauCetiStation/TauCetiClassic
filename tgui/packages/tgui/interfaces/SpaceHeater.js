@@ -25,7 +25,7 @@ export const SpaceHeater = (props, context) => {
     currentTemp,
   } = data;
   return (
-    <Window width={300} height={300}>
+    <Window width={420} height={270}>
       <Window.Content>
         <Section
           title="Power"
@@ -76,7 +76,7 @@ export const SpaceHeater = (props, context) => {
                 unit={'℃'}
                 minValue={minTemp}
                 maxValue={maxTemp}
-                onDrag={(e, value) =>
+                onChange={(e, value) =>
                   act('setTemp', {
                     temperature: value,
                   })
