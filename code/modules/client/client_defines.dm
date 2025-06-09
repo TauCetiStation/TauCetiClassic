@@ -8,6 +8,8 @@
 	var/password_authenticated = FALSE
 	var/hub_authenticated = FALSE
 
+	var/is_initialized = FALSE
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////

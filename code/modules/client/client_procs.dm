@@ -223,6 +223,10 @@ var/global/list/blacklisted_builds = list(
 			var/associated_ckey = verify_access_token(tdata["password_token"])
 			if(associated_ckey)
 				log_access("Authorization: [ckey] logged as [associated_ckey] using a password.")
+				// if there is already a mob in the world with given ckey,
+				// then assigning this ckey to client calls this mob.Login()
+				// since we are in the /client/New, it's equivalent to calling ..()
+				// but mob.Login() works only once, so another call to ..() below does no harm
 				ckey = associated_ckey
 				password_authenticated = TRUE
 			else
@@ -232,6 +236,10 @@ var/global/list/blacklisted_builds = list(
 		else
 			// checks byondstorage for token, reconnects with token data if found
 			handle_storage_access_token()
+
+	// calls mob.Login(), if it hasn't already been called by changing client ckey above
+	// if no mob is associated with client - creates default /world::mob first
+	. = ..()
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
@@ -291,13 +299,19 @@ var/global/list/blacklisted_builds = list(
 
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
-	. = ..()	//calls mob.Login()
+	mob.LateLogin()
 
 	if(SSinput.initialized)
 		set_macros()
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
+
+	tooltip = new /atom/movable/screen/tooltip()
+	if(prefs.tooltip)
+		tooltip.set_state(TRUE)
+
+	SSdemo.write_event_line("login [ckey]")
 
 	connection_time = world.time
 
@@ -365,6 +379,7 @@ var/global/list/blacklisted_builds = list(
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
 	handle_connect()
+	is_initialized = TRUE
 
 	spawn(50)//should wait for goonchat initialization for kick/redirect reasons
 		if(!handle_autokick_reasons())

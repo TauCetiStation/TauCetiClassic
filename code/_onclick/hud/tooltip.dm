@@ -21,12 +21,6 @@
 	state = _state
 	invisibility = state ? initial(invisibility) : INVISIBILITY_ABSTRACT
 
-/client/New(TopicData)
-	. = ..()
-	tooltip = new /atom/movable/screen/tooltip()
-	if(prefs.tooltip)
-		tooltip.set_state(TRUE)
-
 /client/MouseEntered(atom/hoverOn, location, control, params)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
