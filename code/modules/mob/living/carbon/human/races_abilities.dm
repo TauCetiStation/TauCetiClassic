@@ -273,9 +273,14 @@
 		if(!can_punch())
 			return
 
+	playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
+
 /datum/action/innate/race/unath_tail/proc/punch_result(mob/living/carbon/human/user, atom/target, punch_power)
 	if(isliving(target))
 		var/mob/living/victim = target
+
+		if(punch_intent != INTENT_HELP)
+			playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
 
 		switch(punch_intent)
 			if(INTENT_HELP)
@@ -286,10 +291,10 @@
 				victim.adjustHalLoss(-5)
 
 			if(INTENT_PUSH)
-				if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_TRAINED)))
+				if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_TRAINED)) && punch_power >= 1)
 					victim.visible_message("<span class='danger'>\The [user] hooked a [victim] with his tail!</span>",
 					"<span class='userdanger'>[user] hacks you with his tail!</span>")
-					victim.Weaken(1 * punch_power)
+					victim.Weaken(1)
 				else
 					victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
 					"<span class='userdanger'>[user] hits you with his tail!</span>")
@@ -299,19 +304,15 @@
 				victim.visible_message("<span class='danger'>\The [user] knocked the [victim] down by himself!</span>",
 				"<span class='userdanger'>[user] knocked you down by yourself!</span>")
 				victim.Weaken(2 * punch_power)
-				user.Weaken(1)
+				user.Weaken(1.2)
 
 			if(INTENT_HARM)
-				if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_MASTER)))
-					victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
-					"<span class='userdanger'>[user] hits you with his tail!</span>")
-					victim.apply_damage(12 * punch_power, BRUTE, BP_CHEST)
+				victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
+				"<span class='userdanger'>[user] hits you with his tail!</span>")
+				if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_MASTER)) && punch_power >= 1)
 					victim.throw_at(get_step(victim, get_dir(user, victim)), 2, 1, user, FALSE)
-					victim.Weaken(1 * punch_power)
-				else
-					victim.visible_message("<span class='danger'>\The [user] hit the [victim] with his tail!</span>",
-					"<span class='userdanger'>[user] hits you with his tail!</span>")
-					victim.apply_damage(12 * punch_power, BRUTE, BP_GROIN)
+					victim.Weaken(1)
+				victim.apply_damage(12 * punch_power, BRUTE, BP_GROIN)
 	else
 		if(istype(target, /atom/movable))
 			var/atom/movable/AM = target
@@ -320,6 +321,7 @@
 
 		if(target.uses_integrity)
 			target.take_damage(12 * punch_power, BRUTE)
+			playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
 
 		if(iswallturf(target))
 			user.Stun(1)
