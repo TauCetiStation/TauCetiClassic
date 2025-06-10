@@ -22,11 +22,7 @@
 			to_chat(src, "<font color=green>Communication circuit reinitialized. Speech and messaging functionality restored.</font>")
 
 /mob/living/silicon/pai/updatehealth()
-	if(status_flags & GODMODE)
-		health = 100
-		stat = CONSCIOUS
-	else
-		health = 100 - getBruteLoss() - getFireLoss()
+	health = 100 - getBruteLoss() - getFireLoss()
 
 /mob/living/silicon/pai/IgniteMob(mob/living/silicon/pai/P)
 	return FALSE //No we're not flammable

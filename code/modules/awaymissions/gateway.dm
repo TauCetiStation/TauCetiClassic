@@ -173,10 +173,10 @@
 		return
 
 	if(block_exile_implant && iscarbon(M))
-		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
-			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
-				to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
-				return
+		var/mob/living/carbon/C = M
+		if(locate(/obj/item/weapon/implant/exile) in C.implants)
+			to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
+			return
 
 	M.set_dir(SOUTH)
 	enter_to_transit(M, get_step(destination.loc, SOUTH))

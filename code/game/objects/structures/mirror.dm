@@ -148,13 +148,10 @@
 				H.mind.name = newname
 
 		if ("skin tone")
-			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as num
-			if(new_tone)
-				H.s_tone = max(min(round(new_tone), 220), 1)
-				H.s_tone =  -H.s_tone + 35
-			H.apply_recolor()
-			H.update_hair()
-			H.update_body()
+			var/new_tone = input("Выберите цвет кожи", "Skin tone") in global.skin_tones_by_ru_name
+			var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+			H.s_tone = T.name
+			H.update_body(update_preferences = TRUE)
 			H.check_dna(H)
 
 		if("xenos skin")
@@ -163,9 +160,7 @@
 				H.r_skin = hex2num(copytext(new_skin, 2, 4))
 				H.g_skin = hex2num(copytext(new_skin, 4, 6))
 				H.b_skin = hex2num(copytext(new_skin, 6, 8))
-			H.apply_recolor()
-			H.update_hair()
-			H.update_body()
+			H.update_body(update_preferences = TRUE)
 			H.check_dna(H)
 	/*	if("race")
 			var/newrace
@@ -196,7 +191,6 @@
 						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 
 			H.update_body()
-			H.update_hair()
 			H.update_mutcolor()
 			H.update_mutations_overlay() // no hulk lizard
 			*/
@@ -218,8 +212,7 @@
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
 					return
-			H.update_hair()
-			H.update_body()
+			H.update_body(update_preferences = TRUE)
 			H.check_dna(H)
 
 		if("hair")
@@ -240,7 +233,6 @@
 					return	//no tele-grooming
 				if(new_style)
 					H.h_style = new_style
-				H.update_hair()
 			else
 				var/new_hair = input(H, "Choose your hair color", "Hair Color") as null|color
 				if(new_hair)
@@ -254,8 +246,7 @@
 						H.r_facial = hex2num(copytext(new_facial, 2, 4))
 						H.g_facial = hex2num(copytext(new_facial, 4, 6))
 						H.b_facial = hex2num(copytext(new_facial, 6, 8))
-			H.update_hair()
-			H.update_body()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 			H.check_dna(H)
 
 		if("eyes")
@@ -264,15 +255,12 @@
 				H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
 				H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 				H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
-			H.update_hair()
-			H.update_body()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 			H.check_dna(H)
 		if("height")
 			var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
 			if(new_height)
 				H.height = new_height
-				H.update_hair()
-				H.update_body()
 				H.regenerate_icons()
 				H.check_dna(H)
 		if("belly")
@@ -281,6 +269,5 @@
 				H.r_belly = hex2num(copytext(new_belly, 2, 4))
 				H.g_belly = hex2num(copytext(new_belly, 4, 6))
 				H.b_belly = hex2num(copytext(new_belly, 6, 8))
-			H.update_hair()
-			H.update_body()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 			H.check_dna(H)

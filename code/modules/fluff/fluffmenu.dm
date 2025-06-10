@@ -27,7 +27,7 @@ var/global/list/editing_item_oldname_list = list()
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
 	var/editing_item_oldname = editing_item_oldname_list[user.client.ckey]
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>[get_browse_zoom_style(user.client)]</head><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-color: #F5ECDD}</style>"
@@ -129,7 +129,7 @@ var/global/list/editing_item_oldname_list = list()
 		dat += " <a class='small' href='byond://?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
-	user << browse(dat, "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(dat, "window=edit_custom_item;[get_browse_size_parameter(user.client, 400, 600)];can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link_fluff(mob/user, list/href_list)
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -384,6 +384,7 @@ var/global/list/editing_item_oldname_list = list()
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
@@ -405,7 +406,7 @@ var/global/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(output,"window=customitems;size=600x500")
+	usr << browse(output,"window=customitems;[get_browse_size_parameter(usr, 600, 500)]")
 
 /datum/admins/proc/customs_items_add(target_ckey = null)
 	if(!check_rights(R_PERMISSIONS))
@@ -446,6 +447,7 @@ var/global/list/editing_item_oldname_list = list()
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
@@ -473,7 +475,7 @@ var/global/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(output,"window=customitems_history;size=600x500")
+	usr << browse(output,"window=customitems_history;[get_browse_size_parameter(usr, 600, 500)]")
 
 /datum/admins/proc/customs_items_remove(target_ckey, index)
 	if(!check_rights(R_PERMISSIONS))
