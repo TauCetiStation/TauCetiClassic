@@ -12,3 +12,5 @@ cache/
 cfg/
 **/MapFXDrawer/*.png
 test_merge.txt
+#vscode stuff
+tools/midi2piano/midi2piano/obj/x86/Debug/
