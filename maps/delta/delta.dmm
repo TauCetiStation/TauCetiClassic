@@ -54949,7 +54949,7 @@
 	dir = 1
 	},
 /obj/item/weapon/pinpointer/advpinpointer,
-/obj/item/weapon/paper/safe_code,{
+/obj/item/weapon/paper/safe_code{
 	pixel_x = 5
 	},
 /obj/item/weapon/hand_tele{
