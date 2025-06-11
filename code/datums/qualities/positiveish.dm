@@ -447,3 +447,90 @@
 /datum/quality/positiveish/allchannels/add_effect(mob/living/carbon/human/H)
 	H.equip_or_collect(new /obj/item/device/encryptionkey/allchannels(H), SLOT_R_STORE)
 	to_chat(H, "<span class='notice'>Возможно, чтобы установить ключ шифрования, придётся расковырять наушник отверткой. Только не попадись охране!</span>")
+
+/datum/quality/positiveish/space_raider
+	name = "Space Raider"
+	desc = "Ты прихватил с собой пару полезных вещичек с прошлого рейда."
+	requirement = "Шахтер."
+
+	jobs_required = list("Shaft Miner")
+
+/datum/quality/positiveish/space_raider/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/mining_charge(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/kinetic_upgrade/damage(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/asteroid/goliath_hide(H), SLOT_IN_BACKPACK)
+
+/datum/quality/positiveish/cyber_surgeon
+	name = "Cyber Surgeon"
+	desc = "Ты привез с собой экспериментальные кибер-импланты связанные с Gilthari Exports"
+	requirement = "Роботехник."
+
+	jobs_required = list("Roboticist")
+
+/datum/quality/positiveish/cyber_surgeon/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/storage/box/expimplant(H), SLOT_IN_BACKPACK)
+	to_chat(H, "<span class='notice'>В твоем рюкзаке лежит набор экспериментальных имплантов. Используй их острожно!</span>")
+
+/datum/quality/positiveish/backup_plan
+	name = "Backup Plan"
+	desc = "Ты всегда готов к худшему. В кармане лежит запасной план."
+	requirement = "Нет."
+
+/datum/quality/positiveish/backup_plan/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/bluespace_crystal/artificial(H), SLOT_L_STORE)
+	to_chat(H, "<span class='notice'>Если всё пойдет наперекосяк, у тебя есть способ сбежать.</span>")
+
+/datum/quality/positiveish/chef_special
+	name = "Chef's Special"
+	desc = "Ты привез с собой редкие ингредиенты"
+	requirement = "Шеф-повар."
+
+	jobs_required = list("Chef")
+
+/datum/quality/positiveish/chef_special/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/honeycomb(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/honeycomb(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/spidereggs(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/robot_parts/head(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/clothing/head/wizard(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/brain(H), SLOT_IN_BACKPACK)
+	to_chat(H, "<span class='notice'>В твоем рюкзаке лежат редкие ингредиенты. Пора удивлять станцию!</span>")
+
+/datum/quality/positiveish/hacker_pro
+	name = "Hacker Pro"
+	desc = "Ты прихватил с собой полезную утилиту для взлома."
+	requirement = "Ассистент, Инженер."
+
+	jobs_required = list("Assistant", "Station Engineer")
+
+/datum/quality/positiveish/hacker_pro/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/device/debugger(H), SLOT_L_STORE)
+	to_chat(H, "<span class='notice'>Ты чувствуешь, что сегодня будет интересный день...</span>")
+
+/datum/quality/positiveish/space_explorer
+	name = "Space Explorer"
+	desc = "Ты привык к опасностям космоса и всегда носишь с собой аварийный набор."
+	requirement = "Нет."
+
+/datum/quality/positiveish/space_explorer/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/glowstick/regular/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/device/gps(H), SLOT_R_STORE)
+
+/datum/quality/positiveish/engineer_pro
+	name = "Engineer Pro"
+	desc = "Ты привез с собой экспериментальные инженерные инструменты."
+	requirement = "Инженер, Атмосферный техник."
+
+	jobs_required = list("Station Engineer", "Atmospheric Technician")
+
+/datum/quality/positiveish/engineer_pro/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/multi/hand_drill(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/multi/jaws_of_life(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/storage/part_replacer(H), SLOT_IN_BACKPACK)
+	to_chat(H, "<span class='notice'>С этими инструментами ты сможешь починить всё что угодно!</span>")
