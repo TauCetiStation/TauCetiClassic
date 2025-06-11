@@ -24,8 +24,14 @@
 
 /obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency)
 	. = ..()
-	if(my_new_frequency)
+
+	code = rand(1, 100)
+
+	if(!my_new_frequency)
+		frequency = rand(1200, 1600)
+	else
 		frequency = my_new_frequency
+
 	addtimer(CALLBACK(src, PROC_REF(set_frequency), frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
@@ -61,9 +67,9 @@
 <B>Frequency/Code</B> for signaler:<BR>
 Frequency:
 <A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A>
+<A href='byond://?src=\ref[src];freq=-1'>-</A>
 [format_frequency(src.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
+<A href='byond://?src=\ref[src];freq=1'>+</A>
 <A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
 Code:
@@ -141,7 +147,6 @@ Code:
 				spawn(0)
 					if(S)	S.pulse(0)
 		return 0*/
-
 
 /obj/item/device/assembly/signaler/pulse(radio = 0)
 	if(connected && wires)
