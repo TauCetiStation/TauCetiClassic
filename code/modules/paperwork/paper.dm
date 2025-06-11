@@ -1153,7 +1153,7 @@ var/global/list/contributor_names
 
 /obj/item/weapon/paper/safe_code/atom_init_late()
 	var/obj/structure/safe/found_safe
-	for(var/obj/structure/safe/S in world)
+	for(var/obj/structure/safe/S in global.safes)
 		if(S.z == 2)
 			found_safe = S
 			break
