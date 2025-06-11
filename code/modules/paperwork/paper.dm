@@ -1145,7 +1145,7 @@ var/global/list/contributor_names
 
 /obj/item/weapon/paper/safe_code
 	name = "Бумага с кодом от сейфа"
-	info = "Код от сейфа: "
+	info = "Код от сейфа в центральном хранилище: "
 
 /obj/item/weapon/paper/safe_code/atom_init()
 	. = ..()
