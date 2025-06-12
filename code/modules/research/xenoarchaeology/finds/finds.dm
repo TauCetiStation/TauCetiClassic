@@ -498,6 +498,10 @@
 			G.desc = "Though it is strange that the gourd's medicinal waters refill automatically, the seeds within may hold the secret to how it works."
 			G.restore_reagent = pick("paracetamol", "tricordrazine", "hyperzine")
 			new_item = G
+		if(39)
+			new_item = new /obj/item/clothing/suit/armor/ancient_laserproof(loc)
+		if(40)
+			new_item = new /obj/item/clothing/head/helmet/ancient_laserproof(loc)
 
 	var/decorations = ""
 	if(apply_material_decorations)

@@ -149,6 +149,38 @@
 	if(prob(hit_reflect_chance))
 		return TRUE
 
+/obj/item/clothing/head/helmet/ancient_laserproof
+	name = "Шлем Превосходства древней космической брони"
+	desc = "Древний шлем забытой цивилизации, созданный с использованием технологии квантового зеркального поля. Полностью отражает лазерные атаки и защищает от энергетического оружия."
+	icon_state = "knight_inq"
+	item_state = "knight_inq"
+	armor = list(
+		melee = 30,
+		bullet = 25,
+		energy = 100,
+		bomb = 20,
+		bio = 100,
+		rad = 100
+	)
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_inv = HIDEMASK | HIDEEARS | HIDEEYES | HIDEFACE
+	siemens_coefficient = 0
+	heat_protection = HEAD
+	var/hit_reflect_chance = 100
+
+/obj/item/clothing/head/helmet/ancient_laserproof/IsReflect(def_zone)
+	return prob(hit_reflect_chance)
+
+/obj/item/clothing/head/helmet/ancient_laserproof/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_HEAD)
+		to_chat(user, "<span class='notice'>Голографический дисплей шлема оживает, проецируя тактическую информацию прямо на вашу сетчатку.</span>")
+		playsound(user, 'sound/magic/charge.ogg', 100, 1)
+
+/obj/item/clothing/head/helmet/ancient_laserproof/dropped(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Голографический интерфейс шлема отключается с едва слышным писком.</span>")
+
 /obj/item/clothing/head/helmet/swat
 	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."

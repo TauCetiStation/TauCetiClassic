@@ -198,6 +198,44 @@
 	if (prob(hit_reflect_chance))
 		return 1
 
+/obj/item/clothing/suit/armor/ancient_laserproof
+	name = "Древняя космическая броня Превосходства"
+	cases = list("древняя космическая броня Превосходства", "древней космической брони Превосходства", "древней космической броне Превосходства", "древнюю космическую броню Превосходства", "древней космической бронёй Превосходства", "древней космической броне Превосходства")
+	desc = "Древний доспех забытой космической цивилизации, созданный в эпоху Войн Превосходства. Его покрытие полностью отражает любые лазерные атаки благодаря технологии квантового зеркального поля."
+	icon_state = "knight_inq"
+	item_state = "knight_inq"
+	blood_overlay_type = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(
+		melee = 30,
+		bullet = 25,
+		energy = 100,
+		bomb = 20,
+		bio = 100,
+		rad = 100
+	)
+	flags_inv = HIDEJUMPSUIT|HIDEGLOVES|HIDESHOES
+	siemens_coefficient = 0
+	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+	var/hit_reflect_chance = 100
+
+/obj/item/clothing/suit/armor/ancient_laserproof/IsReflect(def_zone)
+	if(!(def_zone in body_parts_covered))
+		return 0
+	return prob(hit_reflect_chance)
+
+/obj/item/clothing/suit/armor/ancient_laserproof/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_WEAR_SUIT)
+		to_chat(user, "<span class='notice'>Вы чувствуете, как древние технологии оживают вокруг вас, создавая защитное силовое поле.</span>")
+		playsound(user, 'sound/magic/charge.ogg', 100, 1)
+
+/obj/item/clothing/suit/armor/ancient_laserproof/dropped(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Защитное поле исчезает по мере того, как вы снимаете броню.</span>")
+
 /obj/item/clothing/suit/armor/laserproof/police
 	name = "police ablative armor"
 	cases = list("абляционный полицейский бронежилет", "абляционного полицейского бронежилета", "абляционному полицейскому бронежилету", "абляционный полицейский бронежилет", "абляционным полицейским бронежилетом", "абляционном полицейском бронежилете")
