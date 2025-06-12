@@ -500,7 +500,6 @@
 			new_item = G
 		if(39)
 			new_item = new /obj/item/clothing/suit/armor/ancient_laserproof(loc)
-		if(40)
 			new_item = new /obj/item/clothing/head/helmet/ancient_laserproof(loc)
 
 	var/decorations = ""
