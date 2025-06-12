@@ -150,7 +150,7 @@
 		return TRUE
 
 /obj/item/clothing/head/helmet/ancient_laserproof
-	name = "Шлем Превосходства древней космической брони"
+	name = "Ancient Supremacy Space Helmet"
 	desc = "Древний шлем забытой цивилизации, созданный с использованием технологии квантового зеркального поля. Полностью отражает лазерные атаки и защищает от энергетического оружия."
 	icon_state = "knight_inq"
 	item_state = "knight_inq"
