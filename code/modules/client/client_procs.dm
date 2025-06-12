@@ -202,7 +202,9 @@ var/global/list/blacklisted_builds = list(
 	//CONNECT//
 	///////////
 /client/New(TopicData)
+	log_access("Debug: Client created for [ckey].")
 	if(connection != "seeker") //Invalid connection type.
+		log_access("Debug: Client creation for [ckey] aborted because of wrong connection type [connection].")
 		return null
 
 	// TODO: Remove check with 516
@@ -385,6 +387,7 @@ var/global/list/blacklisted_builds = list(
 
 	handle_connect()
 	is_initialized = TRUE
+	log_access("Debug: Client for [ckey] initialized.")
 
 	spawn(50)//should wait for goonchat initialization for kick/redirect reasons
 		if(!handle_autokick_reasons())
@@ -819,6 +822,7 @@ var/global/list/disconnected_ckey_by_stat = list()
 	global.disconnected_ckey_by_stat[ckey] = stat
 
 /client/proc/force_disconnect(reason)
+	log_access("Debug: Client [ckey] force disconnected.")
 	to_chat(src, "<span class='userdanger'>[reason]</span>")
 	QDEL_IN(src, 2 SECONDS)
 
