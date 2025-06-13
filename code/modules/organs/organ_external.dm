@@ -661,6 +661,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	owner.updatehealth()
 	owner.update_body(body_zone)
+	owner.update_underwear()
 
 	if(!should_delete)
 		forceMove(owner.loc)
