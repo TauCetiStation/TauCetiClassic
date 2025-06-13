@@ -202,7 +202,6 @@ var/global/list/blacklisted_builds = list(
 	//CONNECT//
 	///////////
 /client/New(TopicData)
-	log_access("Debug: Client created for [ckey].")
 	if(connection != "seeker") //Invalid connection type.
 		log_access("Debug: Client creation for [ckey] aborted because of wrong connection type [connection].")
 		return null
@@ -387,7 +386,6 @@ var/global/list/blacklisted_builds = list(
 
 	handle_connect()
 	is_initialized = TRUE
-	log_access("Debug: Client for [ckey] initialized.")
 
 	spawn(50)//should wait for goonchat initialization for kick/redirect reasons
 		if(!handle_autokick_reasons())
