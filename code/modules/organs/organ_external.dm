@@ -1119,6 +1119,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			-EYES_LAYER
 		)
 
+		if(owner && HAS_TRAIT(owner, TRAIT_PLUVIAN_BLESSED))
+			eyes_static_layer.color = "#88ffff"
+
 		. += eyes_static_layer
 
 	if(species.eyes_colorable_layer)
@@ -1130,7 +1133,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		eyes_colorable_layer.color = rgb(r_eyes, g_eyes, b_eyes)
 		if(owner)
-			if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner) || HAS_TRAIT(owner, TRAIT_CULT_EYES)) // todo: red eyes trait
+			if(HAS_TRAIT(owner, TRAIT_PLUVIAN_BLESSED))
+				eyes_colorable_layer.color = "#00ffff"
+			else if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner) || HAS_TRAIT(owner, TRAIT_CULT_EYES)) // todo: red eyes trait
 				eyes_colorable_layer.color = "#ff0000"
 
 			if(HAS_TRAIT(owner, TRAIT_GLOWING_EYES))
