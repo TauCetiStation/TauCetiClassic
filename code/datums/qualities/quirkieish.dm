@@ -439,7 +439,7 @@
 
 /datum/quality/quirkieish/compulsive_counter
 	name = "Compulsive Counter"
-	desc = "Ты вынужден считать все вокруг. Плитки пола, лампочки, двери, окна, стулья - все должно быть подсчитано."
+	desc = "Ты вынужден считать всё вокруг. Плитки пола, лампочки, двери, окна, стулья - всё должно быть подсчитано."
 	requirement = "Квайтместер, Библиотекарь."
 	jobs_required = list("Quartermaster", "Librarian")
 
