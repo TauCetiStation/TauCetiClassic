@@ -448,7 +448,7 @@
 		counting_episode(H)
 
 /datum/quality/quirkieish/compulsive_counter/proc/counting_episode(mob/living/carbon/human/H)
-	if(!H || H.stat == DEAD)
+	if(!H || H.stat != CONSCIOUS)
 		return
 
 	var/turf/T = get_turf(H)
