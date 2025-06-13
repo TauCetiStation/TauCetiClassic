@@ -20,6 +20,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// set to null if you don't want to render plane on anything (for example, if you want to use it for filters)
 	// todo: make it associative list(PLANE = BLEND_MODE) if we ever need different blend_mode for different relays
 	var/list/render_relay_planes = list(RENDER_PLANE_GAME)
+	var/relay_loc = "1,1"
 
 	var/no_render_target = FALSE
 
@@ -32,6 +33,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		assigned_map = map_view
 		// don't use fixed size, it can break map_view scaling
 		screen_loc = "[map_view]:1,1"
+		relay_loc = "[map_view]:1,1"
 
 /atom/movable/screen/plane_master/proc/generate_relays()
 	. = list()
@@ -40,8 +42,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 			// here I assume that plane always exists with client and we don't need to destroy it,
 			// so there is no need to keep render_plane_relay referenced anywhere except for client.screen
 			// for outer maps we just cleanup it all at once based on assigned_map value
-			var/atom/movable/screen/render_plane_relay/relay = new(null, src, relay_plane)
-
+			var/atom/movable/screen/render_plane_relay/relay = new(null, src, relay_plane, relay_loc)
 			. += relay
 
 // Apply/update plane filters and other effects, can be called multiple times
@@ -75,3 +76,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		if(map_view && map_view != plane.assigned_map)
 			continue
 		plane.update_effects(src)
+
+// delete this with 516 release
+/client/proc/update_relays(relay_loc)
+	for(var/atom/movable/screen/render_plane_relay/relay in screen)
+		relay.screen_loc = relay_loc
