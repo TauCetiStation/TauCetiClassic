@@ -436,3 +436,84 @@
 
 	to_chat(H, "<span class='notice'>В твоей сумке лежат особые перчатки, они позволят тебе незаметно красть вещи у людей.</span>")
 	H.equip_or_collect(new /obj/item/clothing/gloves/black/strip(H), SLOT_IN_BACKPACK)
+
+/datum/quality/quirkieish/compulsive_counter
+	name = "Compulsive Counter"
+	desc = "Ты вынужден считать все вокруг. Плитки пола, лампочки, двери, окна, стулья - все должно быть подсчитано."
+	requirement = "Квайтместер, Библиотекарь."
+	jobs_required = list("Quartermaster", "Librarian")
+
+/datum/quality/quirkieish/compulsive_counter/add_effect(mob/living/carbon/human/H, latespawn)
+	spawn(rand(300, 600))
+		counting_episode(H)
+
+/datum/quality/quirkieish/compulsive_counter/proc/counting_episode(mob/living/carbon/human/H)
+	if(!H || H.stat == DEAD)
+		return
+
+	var/turf/T = get_turf(H)
+	var/counting_range = rand(2, 4)
+	var/what_counting = ""
+	var/real_count = 0
+
+	var/count_type = rand(1, 5)
+	switch(count_type)
+		if(1)
+			what_counting = "плитки пола"
+			for(var/turf/simulated/floor/F in range(counting_range, T))
+				real_count++
+
+		if(2)
+			what_counting = "лампочки"
+			for(var/obj/machinery/light/L in range(counting_range, T))
+				real_count++
+			for(var/obj/item/weapon/light/tube/LT in range(counting_range, T))
+				real_count++
+			for(var/obj/item/weapon/light/bulb/LB in range(counting_range, T))
+				real_count++
+
+		if(3)
+			what_counting = "двери"
+			for(var/obj/machinery/door/D in range(counting_range, T))
+				real_count++
+
+		if(4)
+			what_counting = "окна"
+			for(var/obj/structure/window/W in range(counting_range, T))
+				real_count++
+			for(var/obj/machinery/door/window/WD in range(counting_range, T))
+				real_count++
+
+		if(5)
+			what_counting = "стулья"
+			for(var/obj/structure/stool/S in range(counting_range, T))
+				real_count++
+
+	if(real_count == 0)
+		what_counting = "плитки пола"
+		for(var/turf/simulated/floor/F in range(counting_range, T))
+			real_count++
+
+	to_chat(H, "<span class='notice'>Ты чувствуешь непреодолимое желание посчитать [what_counting] вокруг...</span>")
+
+	for(var/i = 1 to real_count)
+		sleep(15)
+		H.say("[i]...")
+
+		if(prob(5) && i > 3)
+			sleep(10)
+			H.say("Стоп... Сколько уже было?")
+			sleep(20)
+			H.say("Начну сначала...")
+			i = 0
+			real_count = 0
+			continue
+
+	H.emote("sigh")
+
+	if(real_count > 10)
+		H.adjustBrainLoss(2)
+		to_chat(H, "<span class='warning'>Столько цифр... голова немного кружится.</span>")
+
+	spawn(rand(900, 1800))
+		counting_episode(H)
