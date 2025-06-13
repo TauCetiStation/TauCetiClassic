@@ -454,8 +454,8 @@
 	icobase = 'icons/mob/human/pluvian.dmi'
 	deformed = null
 	skeleton = null
-	eyes_colorable_layer = null
-	eyes_static_layer = "blessed_pluvian"
+	eyes_colorable_layer = "pluvian_colorable"
+	eyes_static_layer = "pluvian"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
 
@@ -483,6 +483,7 @@
 		TRAIT_NEVER_FAT,
 		TRAIT_NO_MESSY_GIBS,
 		TRAIT_GLOWING_EYES,
+		TRAIT_PLUVIAN_BLESSED,
 	)
 	flags = list(
 	,NO_DNA = TRUE
