@@ -136,7 +136,10 @@ var/global/lobby_screen = "lobby"
 
 	dat += {"<a class="menu_a" href='byond://?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 	dat += "<br><br>"
-	dat += {"<a class="menu_a" href='byond://?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
+	dat += {"
+		<a class="menu_a" href='byond://?src=\ref[src];lobby_profile=1'>PROFILE</a>
+		<a class="menu_a" href='byond://?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>
+	"}
 
 	dat += "</div></div>"
 

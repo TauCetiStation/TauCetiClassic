@@ -29,7 +29,7 @@
 		deltimer(rehost_timer_id)
 	return ..()
 
-/mob/living/parasite/essence/Login()
+/mob/living/parasite/essence/LateLogin()
 	..()
 	reload_fullscreen()
 	if(changeling)

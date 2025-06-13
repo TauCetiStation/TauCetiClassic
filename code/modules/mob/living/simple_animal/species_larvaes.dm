@@ -55,7 +55,7 @@
 	icon_dead = "larvae-serpentid_dead"
 	holder_type = /obj/item/weapon/holder/nabber
 
-/mob/living/simple_animal/grown_larvae/serpentid/Login()
+/mob/living/simple_animal/grown_larvae/serpentid/LateLogin()
 	. = ..()
 	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни, практикующая каннибализм, так как мясо вашего вида очень вкусное.</span>")
 
@@ -87,7 +87,7 @@
 	has_leg = FALSE
 	holder_type = /obj/item/weapon/holder/snake
 
-/mob/living/simple_animal/grown_larvae/snake/Login()
+/mob/living/simple_animal/grown_larvae/snake/LateLogin()
 	. = ..()
 	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни в стадии развития до взрослой особи. Ваша сила укуса растёт.</span>")
 
@@ -118,7 +118,7 @@
 	bodytemperature = 293
 	holder_type = /obj/item/weapon/holder/moth_small
 
-/mob/living/simple_animal/grown_larvae/small_moth/Login()
+/mob/living/simple_animal/grown_larvae/small_moth/LateLogin()
 	. = ..()
 	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни в стадии развития до взрослой особи. Помните, чем больше вы растёте, тем больше в вас мяса.</span>")
 
@@ -170,7 +170,7 @@
 	. = ..()
 	AddComponent(/datum/component/gnawing)
 
-/mob/living/simple_animal/grown_larvae/newborn_moth/Login()
+/mob/living/simple_animal/grown_larvae/newborn_moth/LateLogin()
 	. = ..()
 	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни, готовая съесть что угодно.</span>")
 
