@@ -19604,8 +19604,7 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -33987,8 +33986,7 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
+	pixel_y = -22
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
@@ -36475,7 +36473,8 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -63762,10 +63761,6 @@
 	})
 "oXw" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
-	},
 /obj/machinery/computer/guestpass{
 	dir = 8;
 	pixel_x = -28
@@ -63775,6 +63770,9 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/medical/cmo,
 /obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/secure/safe{
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -70806,15 +70804,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = -1
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73045,10 +73043,6 @@
 /area/station/security/checkpoint)
 "rsr" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 39;
-	pixel_y = 1
-	},
 /obj/structure/bobross{
 	pixel_x = 32
 	},
@@ -73058,6 +73052,10 @@
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/hand_tele,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "rst" = (
@@ -81094,11 +81092,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "tsa" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
-	},
 /obj/machinery/computer/security/engineering{
 	dir = 4
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -99607,12 +99606,12 @@
 /area/station/ai_monitored/eva)
 "xXj" = (
 /obj/machinery/disposal,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = -1
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
