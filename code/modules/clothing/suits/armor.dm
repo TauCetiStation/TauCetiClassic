@@ -202,8 +202,8 @@
 	name = "Ancient Supremacy Space Armor"
 	cases = list("древняя космическая броня Превосходства", "древней космической брони Превосходства", "древней космической броне Превосходства", "древнюю космическую броню Превосходства", "древней космической бронёй Превосходства", "древней космической броне Превосходства")
 	desc = "Древний доспех забытой космической цивилизации, созданный в эпоху Войн Превосходства. Его покрытие полностью отражает любые лазерные атаки благодаря технологии квантового зеркального поля."
-	icon_state = "knight_inq"
-	item_state = "knight_inq"
+	icon_state = "knight_cydonia"
+	item_state = "knight_cydonia"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -211,6 +211,7 @@
 		melee = 30,
 		bullet = 25,
 		energy = 100,
+		laser = 0,
 		bomb = 20,
 		bio = 100,
 		rad = 100
