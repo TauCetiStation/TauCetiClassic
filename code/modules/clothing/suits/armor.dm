@@ -198,6 +198,57 @@
 	if (prob(hit_reflect_chance))
 		return 1
 
+/obj/item/clothing/suit/armor/ancient_laserproof
+	name = "Ancient Supremacy Space Armor"
+	cases = list("древняя космическая броня Превосходства", "древней космической брони Превосходства", "древней космической броне Превосходства", "древнюю космическую броню Превосходства", "древней космической бронёй Превосходства", "древней космической броне Превосходства")
+	desc = "Доспех, состоящий из переплетающихся пластин, напоминающих крылья бабочки. Материал не поддается стандартному анализу - при ударе по поверхности возникают концентрические волны света, расходящиеся от точки воздействия. В местах соединения пластин заметны следы неизвестной технологии сборки."
+	icon_state = "knight_cydonia"
+	item_state = "knight_cydonia"
+	blood_overlay_type = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(
+		melee = 65,
+		bullet = 55,
+		energy = 100,
+		laser = 0,
+		bomb = 20,
+		bio = 100,
+		rad = 100
+	)
+	flags_inv = HIDEJUMPSUIT|HIDEGLOVES|HIDESHOES
+	w_class = SIZE_NORMAL
+	gas_transfer_coefficient = 0
+	permeability_coefficient = 0
+	slowdown = 0.7
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	siemens_coefficient = 0
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box/magazine, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, /obj/item/weapon/tank/jetpack)
+	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+	var/hit_reflect_chance = 100
+
+/obj/item/clothing/suit/armor/ancient_laserproof/IsReflect(def_zone)
+	if(!(def_zone in body_parts_covered))
+		return 0
+	return prob(hit_reflect_chance)
+
+/obj/item/clothing/suit/armor/ancient_laserproof/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_WEAR_SUIT)
+		to_chat(user, "<span class='notice'>Вы чувствуете, как древние технологии оживают вокруг вас, создавая защитное силовое поле.</span>")
+		playsound(user, 'sound/magic/charge.ogg', 100, 1)
+		icon_state = "knight_cydonia_on"
+		item_state = "knight_cydonia_on"
+
+/obj/item/clothing/suit/armor/ancient_laserproof/dropped(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Защитное поле исчезает по мере того, как вы снимаете броню.</span>")
+	icon_state = "knight_cydonia"
+	item_state = "knight_cydonia"
+
 /obj/item/clothing/suit/armor/laserproof/police
 	name = "police ablative armor"
 	cases = list("абляционный полицейский бронежилет", "абляционного полицейского бронежилета", "абляционному полицейскому бронежилету", "абляционный полицейский бронежилет", "абляционным полицейским бронежилетом", "абляционном полицейском бронежилете")
