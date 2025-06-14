@@ -28,31 +28,32 @@
 //	2
 /datum/objective/malf_drone/disposal
 	objective = "Вечный шум гремящего в трубах мусора утомляет меня. Разберите все мусорки на станции."
+	var/initial_disposal_count
+
+/datum/objective/malf_drone/disposal/New()
+	..()
+	initial_disposal_count = global.station_disposal_count
 
 /datum/objective/malf_drone/disposal/check_completion()
-	if(global.station_disposal_count < 20)  // roundstart ~70 on station
+	if(global.station_disposal_count < initial_disposal_count * 0.2)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
 //	3
-/datum/objective/malf_drone/parquet
-	objective = "Металлическая плитка сковывает мои полы. Замените всю плитку паркетом."
+/datum/objective/malf_drone/chairs
+	objective = "Стулья больно упиваются ножками в мой пол. Разберите все стулья."
+	var/initial_chair_count
 
-/datum/objective/malf_drone/parquet/check_completion()
-	if(global.station_parquet_installed_count > 1200)	// 300 wood plank
-		return OBJECTIVE_WIN				 	// roundstart ~6000 floor tiles on station
+/datum/objective/malf_drone/chairs/New()
+	..()
+	initial_chair_count = global.station_chairs_count
+
+/datum/objective/malf_drone/chairs/check_completion()
+	if(global.station_chairs_count < initial_chair_count * 0.2)
+		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
 //	4
-/datum/objective/malf_drone/chairs
-	objective = "Стулья больно упиваются ножками в мой пол. Разберите все стулья."
-
-/datum/objective/malf_drone/chairs/check_completion()
-	if(global.station_chairs_count < 50)	// ¯\_(ツ)_/¯
-		return OBJECTIVE_WIN		// roundstart ???? on station
-	return OBJECTIVE_LOSS
-
-//	5
 /datum/objective/malf_drone/department
 	var/area/station/target_area
 	var/list/possible_area = list(
@@ -63,15 +64,16 @@
 		/area/station/security = "отдел охраны",
 		/area/station/cargo = "отдел снабжения")
 
+/datum/objective/malf_drone/department/New()
+	..()
+	target_area = pick(possible_area)
+
 /datum/objective/malf_drone/department/table
 	objective = "Люди слишком громко топают своими ногами, пусть передвигаются ползком. "
 
 /datum/objective/malf_drone/department/table/New()
-	possible_area += /area/station/hallway/primary
-	possible_area[/area/station/hallway/primary] = "главные коридоры"
-	target_area = pick(possible_area)
-	objective += "Полностью заполните [possible_area[target_area]] столами."
 	..()
+	objective += "Полностью заполните [possible_area[target_area]] столами."
 
 /datum/objective/malf_drone/department/table/check_completion()
 	var/tables = 0
@@ -85,14 +87,13 @@
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
-//	6
+//	5
 /datum/objective/malf_drone/department/airlock
 	objective = "Эти люди пришли ко мне и заперлись за стальными вратами. "
 
 /datum/objective/malf_drone/department/airlock/New()
-	target_area = pick(possible_area)
-	objective += "Освободите [possible_area[target_area]] от шлюзов."
 	..()
+	objective += "Освободите [possible_area[target_area]] от шлюзов."
 
 /datum/objective/malf_drone/department/airlock/check_completion()
 	var/airlocks = 0
