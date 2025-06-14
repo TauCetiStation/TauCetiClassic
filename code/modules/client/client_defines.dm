@@ -4,6 +4,12 @@
 		//////////////////////
 	parent_type = /datum
 
+	authenticate = BYOND_HUB_AUTHENTICATION
+	var/password_authenticated = FALSE
+	var/hub_authenticated = FALSE
+
+	var/is_initialized = FALSE
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -122,3 +128,5 @@
 	var/is_in_spawner = FALSE
 	///used to override the mouse cursor so it doesnt get reset
 	var/mouse_override_icon = null
+
+	var/window_pixelratio

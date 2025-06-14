@@ -69,7 +69,7 @@
 	UnregisterSignal(M, list(COMSIG_HUMAN_ON_CARPET, COMSIG_PARENT_QDELETING))
 
 // todo: change to element like cult things
-/datum/religion/pluvia/proc/bless(mob/M)
+/datum/religion/pluvia/proc/bless(mob/living/carbon/human/M)
 	if(!ispluvian(M))
 		return
 
@@ -81,11 +81,10 @@
 	to_chat(M, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
 	M.mind.pluvian_blessed = 1
 	M.mind.pluvian_social_credit = 2
-	ADD_TRAIT(M, TRAIT_SEE_GHOSTS, QUALITY_TRAIT)
-	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
-	eye.plane = LIGHTING_LAMPS_PLANE
-	eye.layer = ABOVE_LIGHTING_LAYER
-	M.add_overlay(eye)
+	ADD_TRAIT(M, TRAIT_SEE_GHOSTS, RELIGION_TRAIT)
+	ADD_TRAIT(M, TRAIT_GLOWING_EYES, RELIGION_TRAIT)
+	ADD_TRAIT(M, TRAIT_PLUVIAN_BLESSED, RELIGION_TRAIT)
+	M.update_body(BP_HEAD)
 
 /datum/religion/pluvia/proc/adjust_haram(mob/living/carbon/human/target, haram_amount, reason)
 	if(haram_amount == DEADLY_HARAM || ((target.mind.pluvian_haram_points + haram_amount) >= PLUVIAN_HARAM_THRESHOLD))

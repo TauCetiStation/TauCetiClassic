@@ -41,8 +41,14 @@
 
 /datum/outfit/responders/nanotrasen_ert/security/post_equip(mob/living/carbon/human/H)
 	. = ..()
-	if(prob(20))
+	if(prob(75))
+		H.equip_to_slot(new /obj/item/weapon/gun/projectile/automatic/a28(H), SLOT_S_STORE)
+		H.equip_to_slot(new /obj/item/ammo_box/magazine/a28(H), SLOT_IN_BACKPACK)
+		H.equip_to_slot(new /obj/item/ammo_box/magazine/a28(H), SLOT_IN_BACKPACK)
+
+	else if(prob(20))
 		H.equip_to_slot(new /obj/item/weapon/gun/energy/sniperrifle(H), SLOT_S_STORE)
+
 	else
 		H.equip_to_slot(new /obj/item/weapon/gun/projectile/shotgun/combat(H), SLOT_S_STORE)
 		H.equip_to_slot(new /obj/item/ammo_box/shotgun(H), SLOT_IN_BACKPACK)
@@ -54,11 +60,24 @@
 	head = /obj/item/clothing/head/helmet/space/rig/ert/commander
 	back = /obj/item/weapon/storage/backpack/ert/commander
 	id = /obj/item/weapon/card/id/centcom/ert/leader
-	suit_store = /obj/item/weapon/gun/projectile/grenade_launcher/m79
 
-	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/pinpointer/advpinpointer, /obj/item/device/aicard, /obj/item/device/remote_device/ERT, /obj/item/weapon/storage/box/r4046/rubber, /obj/item/weapon/storage/box/r4046/teargas, /obj/item/weapon/storage/box/handcuffs)
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/pinpointer/advpinpointer, /obj/item/device/aicard, /obj/item/device/remote_device/ERT, /obj/item/weapon/storage/box/handcuffs)
 
 	assignment = "Emergency Response Team Leader"
+
+/datum/outfit/responders/nanotrasen_ert/leader/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(prob(50))
+		H.equip_to_slot(new /obj/item/weapon/gun/projectile/automatic/a28(H), SLOT_S_STORE)
+		H.equip_to_slot(new /obj/item/ammo_box/magazine/a28(H), SLOT_IN_BACKPACK)
+		H.equip_to_slot(new /obj/item/ammo_box/magazine/a28(H), SLOT_IN_BACKPACK)
+		H.equip_to_slot(new /obj/item/ammo_box/magazine/a28/incendiary(H), SLOT_IN_BACKPACK)
+
+	else
+		H.equip_to_slot(new /obj/item/weapon/gun/projectile/grenade_launcher/m79(H), SLOT_S_STORE)
+		H.equip_to_slot(new /obj/item/weapon/storage/box/r4046/rubber(H), SLOT_IN_BACKPACK)
+		H.equip_to_slot(new /obj/item/weapon/storage/box/r4046/teargas(H), SLOT_IN_BACKPACK)
+
 
 /datum/outfit/responders/nanotrasen_ert/leader/ect
 	name = "Responders: NT ERT Leader (ECT)"

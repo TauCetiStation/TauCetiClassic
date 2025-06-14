@@ -185,9 +185,11 @@
 
 	equip_slots(H, slot2type)
 
+	var/update_underwear = FALSE
+
 	if(outfit_undershirt)
 		H.undershirt = undershirt_t.Find(outfit_undershirt)
-		H.update_body()
+		update_underwear = TRUE
 
 	if(outfit_underwear_m || outfit_underwear_f)
 		var/list/underwear_options
@@ -199,7 +201,10 @@
 			underwear_options = underwear_f
 			outfit_underwear = outfit_underwear_f
 		H.underwear = underwear_options.Find(outfit_underwear)
-		H.update_body()
+		update_underwear = TRUE
+
+	if(update_underwear)
+		H.update_underwear()
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
@@ -278,9 +283,7 @@
 			H.internal = H.get_equipped_item(internals_slot)
 		if(implants)
 			for(var/implant_type in implants)
-				var/obj/item/weapon/implant/I = new implant_type(H)
-				I.inject(H, implants[implant_type])
-				START_PROCESSING(SSobj, I)
+				new implant_type(H)
 
 	if(istype(H.wear_id, /obj/item/weapon/card/id)) // check id card
 		var/obj/item/weapon/card/id/wear_id = H.wear_id
@@ -292,7 +295,6 @@
 			pda.assign(H.real_name)
 
 	H.sec_hud_set_ID()
-	H.update_body()
 	return TRUE
 
 // equip type in slot from slot2type list

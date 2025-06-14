@@ -103,7 +103,7 @@
 
 /obj/structure/window/fulltile/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS) && (!grilled || Proj.checkpass(PASSGRILLE)))
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 
 	if(grilled && Proj.checkpass(PASSGLASS)) // replics should be happy (im crying because of how awful this is)
 		if(prob((max_integrity - get_integrity()) * 100 / GRILLE_MAX_INTEGRITY))

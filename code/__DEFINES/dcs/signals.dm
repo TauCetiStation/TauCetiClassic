@@ -276,12 +276,14 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 // mob signals
-/// from base of mob/Login(): ()
+/// from base of mob/LateLogin(): ()
 #define COMSIG_LOGIN "mob_login"
 /// from base of mob/Logout(): (logout_reason)
 #define COMSIG_LOGOUT "mob_logout"
 
-/// from  base of mob/ClickOn(): (atom/target, params)
+///from base of /mob/living/emote(): (act, intentional)
+#define COMSIG_MOB_EMOTE "mob_emote"
+/// from base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
 // from base of mob/RegularClickOn(): (atom/target, params)
 #define COMSIG_MOB_REGULAR_CLICK "regular_click"

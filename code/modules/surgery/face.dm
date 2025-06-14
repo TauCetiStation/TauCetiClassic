@@ -184,7 +184,7 @@
 	user.visible_message("<span class='notice'>[user] has loosen bolts on [target]'s screen with \the [tool].</span>",
 	"<span class='notice'>You have unscrewed [target]'s screen with \the [tool].</span>")
 	target.op_stage.face = 1
-	target.update_hair()
+	// target.update_body(BP_HEAD) // commenting this out as at this moment head appearance does not changes based on op stage
 
 /datum/surgery_step/ipc/face/screw_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

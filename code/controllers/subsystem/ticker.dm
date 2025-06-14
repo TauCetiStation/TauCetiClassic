@@ -242,6 +242,16 @@ SUBSYSTEM_DEF(ticker)
 		SSjob.ResetOccupations()
 		return FALSE
 
+	var/datum/map_module/MM = SSmapping.get_map_module()
+	if (MM)
+		var/error_message = MM.prevent_start()
+		if(error_message)
+			to_chat(world, "<B>Unable to start map module [mode.name]:</B> [error_message]")
+			QDEL_NULL(mode)
+			current_state = GAME_STATE_PREGAME
+			SSjob.ResetOccupations()
+			return FALSE
+
 	//Configure mode and assign player to special mode stuff
 	SSjob.DivideOccupations() //Distribute jobs
 	var/can_continue = mode.Setup() //Setup special modes

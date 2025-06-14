@@ -1382,7 +1382,6 @@
 "abX" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
@@ -8776,17 +8775,14 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 24
 	},
@@ -10159,16 +10155,13 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = -8
 	},
@@ -13337,7 +13330,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
@@ -15157,16 +15149,13 @@
 	name = "Arrival Access"
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = -8
 	},
@@ -17473,16 +17462,13 @@
 	pixel_y = 4
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = -32;
 	pixel_y = -8
@@ -17494,7 +17480,6 @@
 "dLl" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 1
 	},
 /obj/structure/window/fulltile{
@@ -17733,12 +17718,10 @@
 	name = "Cryogenic Storage"
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = -32
 	},
@@ -19621,8 +19604,7 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -22397,12 +22379,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
@@ -23437,7 +23417,7 @@
 	name = "Shower"
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /obj/structure/curtain/open/shower,
 /obj/structure/drain{
 	drainage = 2
@@ -27859,17 +27839,14 @@
 "gfB" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 24
 	},
@@ -34009,8 +33986,7 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
+	pixel_y = -22
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
@@ -36497,7 +36473,8 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -44808,13 +44785,11 @@
 	name = "Arrival Access"
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
@@ -47406,7 +47381,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
@@ -56287,18 +56261,15 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = -8
@@ -61638,7 +61609,6 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8
 	},
 /obj/structure/window/fulltile{
@@ -63347,7 +63317,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = 8
@@ -63792,10 +63761,6 @@
 	})
 "oXw" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
-	},
 /obj/machinery/computer/guestpass{
 	dir = 8;
 	pixel_x = -28
@@ -63805,6 +63770,9 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/medical/cmo,
 /obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/secure/safe{
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -66301,16 +66269,13 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = -40
 	},
@@ -70839,15 +70804,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = -1
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -71421,17 +71386,14 @@
 /obj/item/clothing/gloves/budget_insulated,
 /obj/random/tools/tool,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -73081,10 +73043,6 @@
 /area/station/security/checkpoint)
 "rsr" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 39;
-	pixel_y = 1
-	},
 /obj/structure/bobross{
 	pixel_x = 32
 	},
@@ -73094,6 +73052,10 @@
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/hand_tele,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "rst" = (
@@ -74145,7 +74107,6 @@
 /area/station/engineering/monitoring)
 "rFM" = (
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
@@ -74154,11 +74115,9 @@
 	req_access = list(69)
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = -8
@@ -81133,11 +81092,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "tsa" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
-	},
 /obj/machinery/computer/security/engineering{
 	dir = 4
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -82835,7 +82795,6 @@
 	},
 /obj/machinery/light/small,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -24
 	},
@@ -82844,12 +82803,10 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -40
 	},
@@ -83323,16 +83280,13 @@
 	dir = 8
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = -32;
 	pixel_y = -8
@@ -84226,7 +84180,6 @@
 /area/station/security/lobby)
 "ugh" = (
 /obj/structure/sign/barber{
-	buildable_sign = 0;
 	pixel_x = -13
 	},
 /obj/structure/table/glass,
@@ -84415,7 +84368,6 @@
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/command{
@@ -88501,17 +88453,14 @@
 "viC" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -90213,17 +90162,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/flora/pottedplant/minitree,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -40
 	},
@@ -94618,7 +94564,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 32
 	},
@@ -98266,7 +98211,6 @@
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -32
 	},
@@ -99662,12 +99606,12 @@
 /area/station/ai_monitored/eva)
 "xXj" = (
 /obj/machinery/disposal,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = -1
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)

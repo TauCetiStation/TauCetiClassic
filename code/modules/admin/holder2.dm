@@ -29,7 +29,7 @@ var/global/list/admin_datums = list()
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
-	if(istype(C))
+	if(istype(C) && C.hub_authenticated)
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
@@ -44,7 +44,7 @@ var/global/list/admin_datums = list()
 		deadminned = TRUE
 
 /datum/admins/proc/reassociate()
-	if(owner)
+	if(owner && owner.hub_authenticated)
 		admins += owner
 		owner.holder = src
 		owner.deadmin_holder = null

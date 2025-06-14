@@ -21,7 +21,7 @@ RCD
 	usesound = 'sound/machines/click.ogg'
 
 	var/datum/effect/effect/system/spark_spread/spark_system
-	var/matter = 0
+	var/matter = 30
 	var/max_matter = 30
 	var/working = 0
 	var/mode = RCD_MODE_FLOOR_WALLS
@@ -116,6 +116,9 @@ RCD
 	if(!(mode in available_modes))
 		to_chat(user, "<span class='warning'>Somehow you broke it. Please contact developers.</span>")
 		return
+	if(!matter)
+		to_chat(user, "<span class='warning'>No matter in casing.</span>")
+		return FALSE
 
 	switch(mode)
 		if(RCD_MODE_FLOOR_WALLS)

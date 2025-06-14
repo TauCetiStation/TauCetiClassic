@@ -121,6 +121,7 @@
 		/obj/item/clothing/mask/balaclava/richard = 1,
 		/obj/item/clothing/mask/balaclava/don_juan = 1,
 		/obj/item/clothing/mask/balaclava/rasmus = 1,
+		/obj/item/toy/foamblade = 1,
 	)
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
