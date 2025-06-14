@@ -105,7 +105,7 @@
 			var/from_desc = sender
 			if(length(from))
 				from_desc = from
-			var/content = "<A href='?src=\ref[Console];write=[url_encode(sender)]'><B>[from_desc]</B></A>:<BR><DIV class='Section'>[message]</DIV>[auth]"
+			var/content = "<A href='byond://?src=\ref[Console];write=[url_encode(sender)]'><B>[from_desc]</B></A>:<BR><DIV class='Section'>[message]</DIV>[auth]"
 			switch(priority)
 				if(2)		//High priority
 					if(Console.newmessagepriority < 2)
@@ -242,7 +242,7 @@ var/global/obj/machinery/blackbox_recorder/blackbox
 
 /obj/machinery/blackbox_recorder/Destroy()
 	if(blackbox != src)
-		return ..() 
+		return ..()
 	var/centcom_z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
 	var/turf/T = locate(1,1, centcom_z)
 	if(T)

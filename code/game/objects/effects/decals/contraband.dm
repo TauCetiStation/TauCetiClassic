@@ -170,9 +170,9 @@
 	random_basetype = /obj/structure/sign/poster
 
 /obj/structure/sign/poster/calendar
-	name = "2224 calendar"
+	name = "2225 calendar"
 	icon_state = "calendar"
-	desc = "Brand new calendar for year 2224."
+	desc = "Brand new calendar for year 2225."
 
 /obj/structure/sign/poster/sivtsev
 	name = "sivtsev table"
@@ -653,19 +653,19 @@
 		if("Join Revolution")
 			ask_about_revolution(user)
 
-/obj/structure/sign/poster/revolution/proc/ask_about_revolution(mob/user)
+/obj/structure/sign/poster/revolution/proc/ask_about_revolution(mob/living/user)
 	var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
 	if(!rev)
 		to_chat(user, "<span class='bold warning'>The revolutionary minded society has collapsed.</span>")
 		return
-	if(user.ismindprotect())
+	if(ismindprotect(user))
 		to_chat(user, "<span class='bold warning'>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</span>")
 		return
 	else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
 		to_chat(user, "<span class='bold warning'>You can't overcome the guilt to join the revolutionaries. (You are banned.)</span>")
 		return
 	else if(!isrevhead(user) && !isrev(user))
-		rev.convert_revolutionare(user)
+		rev.add_user_to_rev(user)
 
 /obj/structure/sign/poster/revolution/examine(mob/user)
 	. = ..()

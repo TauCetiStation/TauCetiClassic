@@ -15,7 +15,7 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/blueshield
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC, PLUVIAN)
 	skillsets = list("Blueshield Officer" = /datum/skillset/blueshield)
 	/*
 		HEY YOU!
@@ -46,5 +46,5 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC, PLUVIAN)
 	flags = JOB_FLAG_CENTCOMREPRESENTATIVE|JOB_FLAG_BLUESHIELD_PROTEC

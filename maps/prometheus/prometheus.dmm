@@ -356,9 +356,7 @@
 	codes_txt = "patrol;next_patrol=Security";
 	location = "Garden"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "aaz" = (
 /obj/structure/cable{
@@ -1384,7 +1382,6 @@
 "abX" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
@@ -2681,6 +2678,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"aer" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "aes" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -2692,6 +2695,24 @@
 	icon_state = "darkred"
 	},
 /area/station/hallway/secondary/exit)
+"aet" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
+"aeu" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
+"aev" = (
+/obj/effect/landmark{
+	name = "replicator"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/starboard)
 "aey" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2893,8 +2914,8 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Captain_private";
-	dir = 4
+	dir = 4;
+	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -3088,7 +3109,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aiq" = (
-/obj/structure/mineral_door/wood,
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -3102,6 +3122,9 @@
 /obj/structure/barricade/wooden{
 	layer = 2.8;
 	name = "doorway barricade"
+	},
+/obj/structure/mineral_door/wood{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
@@ -3820,9 +3843,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "asn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4405,7 +4426,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/ignition_switch{
 	id = "mixingsparker";
-	layer = 3.3;
 	pixel_y = -28
 	},
 /obj/structure/closet/firecloset,
@@ -4592,7 +4612,9 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "azo" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "mining_shuttle"
+	},
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "5-5"
 	},
@@ -4912,7 +4934,6 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/door_control{
 	id = "xenobio7";
-	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = 28;
 	req_access = list(55)
@@ -5769,7 +5790,7 @@
 /area/station/maintenance/starboardsolar)
 "aNy" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_ferry";
+	dock_tag = "ferry_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -6616,9 +6637,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "aZY" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -6666,9 +6685,7 @@
 	},
 /area/station/medical/storage)
 "bbp" = (
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "bbz" = (
 /obj/machinery/door/airlock/external{
@@ -7635,9 +7652,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "boA" = (
 /obj/item/weapon/flora/random,
@@ -8760,17 +8775,14 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 24
 	},
@@ -8876,9 +8888,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "bDC" = (
@@ -10145,16 +10155,13 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = -8
 	},
@@ -12868,9 +12875,7 @@
 /obj/structure/computerframe{
 	dir = 1
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "cIc" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
@@ -13325,7 +13330,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
@@ -13364,7 +13368,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/hallway/primary/aft)
 "cPu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -13437,11 +13443,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "RD";
 	name = "RD Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -14705,9 +14711,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "dfI" = (
 /obj/machinery/door/firedoor,
@@ -14722,11 +14726,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "RD";
 	name = "RD Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -15145,16 +15149,13 @@
 	name = "Arrival Access"
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = -8
 	},
@@ -16134,6 +16135,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"dwK" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
 "dwL" = (
 /obj/effect/decal/turf_decal{
 	dir = 6;
@@ -16943,11 +16950,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Medical_Surgery";
 	name = "Surgery Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -17212,9 +17219,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
 /obj/item/weapon/table_parts,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "dJs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -17457,16 +17462,13 @@
 	pixel_y = 4
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = -32;
 	pixel_y = -8
@@ -17478,7 +17480,6 @@
 "dLl" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 1
 	},
 /obj/structure/window/fulltile{
@@ -17650,10 +17651,10 @@
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Security_private";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -17691,12 +17692,10 @@
 	},
 /area/shuttle/supply/station)
 "dNr" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_specops";
-	locked = 1;
 	name = "Arrival Airlock"
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "dNt" = (
@@ -17719,12 +17718,10 @@
 	name = "Cryogenic Storage"
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = -32
 	},
@@ -19069,9 +19066,7 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "egw" = (
 /obj/item/weapon/scrap_lump,
@@ -19324,9 +19319,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "eiI" = (
 /obj/machinery/firealarm{
@@ -19611,8 +19604,7 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -19933,6 +19925,17 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/miningoffice)
+"epM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/whitegreed,
+/area/station/bridge/ai_upload)
 "epO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
@@ -20414,11 +20417,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/sign/departments/chemistry,
 /obj/structure/window/fulltile/reinforced{
@@ -21940,9 +21943,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "eNI" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
@@ -22049,9 +22050,7 @@
 /area/station/security/warden)
 "ePi" = (
 /obj/random/scrap/safe_even,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "ePw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -22285,7 +22284,6 @@
 "eSa" = (
 /obj/machinery/door_control{
 	id = "xenobio6";
-	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = 28;
 	req_access = list(55)
@@ -22381,12 +22379,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
@@ -23421,7 +23417,7 @@
 	name = "Shower"
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /obj/structure/curtain/open/shower,
 /obj/structure/drain{
 	drainage = 2
@@ -24041,9 +24037,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/random/tools/tool,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "fmZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -24352,11 +24346,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "fpz" = (
-/obj/structure/table,
-/obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "largecell apc top";
@@ -24373,6 +24362,7 @@
 	c_tag = "Bridge AI Upload Chamber";
 	network = list("SS13","RD","AIUpload")
 	},
+/obj/machinery/ai_laws_server,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -25465,7 +25455,6 @@
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/door_control{
 	id = "xenobio1";
-	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = 28;
 	req_access = list(55)
@@ -25521,7 +25510,6 @@
 "fDl" = (
 /obj/machinery/door_control{
 	id = "xenobio2";
-	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_x = 28;
 	req_access = list(55)
@@ -25602,9 +25590,7 @@
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "fEb" = (
 /obj/structure/reagent_dispensers/water_cooler,
@@ -25765,7 +25751,7 @@
 /obj/item/weapon/coin/bananium{
 	pixel_x = -3
 	},
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
@@ -26092,7 +26078,7 @@
 	},
 /area/station/security/execution)
 "fJv" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /obj/item/stack/sheet/wood,
 /obj/machinery/newscaster{
 	pixel_x = -28
@@ -26245,9 +26231,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "fLZ" = (
 /obj/structure/table,
@@ -27353,9 +27337,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "fYg" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -27848,7 +27830,7 @@
 /area/station/security/prison)
 "gff" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_admin";
+	dock_tag = "trader_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -27857,17 +27839,14 @@
 "gfB" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 24
 	},
@@ -29217,9 +29196,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "guJ" = (
 /obj/machinery/recharge_station,
@@ -30063,9 +30040,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "gFj" = (
 /obj/machinery/atmospherics/components/binary/valve/digital,
@@ -32933,7 +32908,6 @@
 "hkP" = (
 /obj/machinery/door_control{
 	id = "xenobio5";
-	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_x = -28;
 	req_access = list(55)
@@ -33037,8 +33011,8 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Captain_private";
-	dir = 4
+	dir = 4;
+	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/sign/warning/electricshock,
@@ -33568,7 +33542,7 @@
 "htI" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock"
 	},
@@ -34012,8 +33986,7 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
+	pixel_y = -22
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
@@ -34097,7 +34070,6 @@
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/door_control{
 	id = "xenobio4";
-	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = -28;
 	req_access = list(55)
@@ -34179,11 +34151,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "CMO";
 	name = "CMO Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/airlock/command{
 	id_tag = "CMO_door";
@@ -35413,6 +35385,15 @@
 	temperature = 80
 	},
 /area/station/tcommsat/chamber)
+"hSX" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "escape_shuttle";
+	locked = 1;
+	name = "Escape Airlock"
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/hallway/secondary/exit)
 "hTj" = (
 /obj/random/foods/food_trash,
 /obj/effect/decal/cleanable/dirt,
@@ -36160,9 +36141,7 @@
 /area/station/security/brig)
 "icf" = (
 /obj/structure/window/thin/reinforced,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -36494,7 +36473,8 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -37046,7 +37026,7 @@
 /area/station/bridge/nuke_storage)
 "inq" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "stat_dock";
+	dock_tag = "mining_shuttle";
 	name = "Arrival Airlock"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -37834,11 +37814,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/item/weapon/bell{
 	pixel_y = 4
@@ -38128,10 +38108,6 @@
 	},
 /area/station/medical/virology)
 "iCe" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28;
@@ -38773,9 +38749,7 @@
 "iKF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "iKN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -40281,7 +40255,6 @@
 "jeG" = (
 /obj/machinery/door_control{
 	id = "xenobio3";
-	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = -28;
 	req_access = list(55)
@@ -44510,9 +44483,7 @@
 /area/station/maintenance/dormitory)
 "klJ" = (
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "klZ" = (
 /obj/structure/table/reinforced,
@@ -44523,9 +44494,7 @@
 	},
 /area/station/civilian/bar)
 "kmh" = (
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "kmF" = (
 /obj/effect/decal/turf_decal/set_burned,
@@ -44816,13 +44785,11 @@
 	name = "Arrival Access"
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
@@ -45122,13 +45089,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "ktY" = (
-/obj/structure/closet/athletic_mixed,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Sauna";
-	dir = 8
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -45192,9 +45155,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "kvK" = (
 /obj/machinery/kitchen_machine/grill,
@@ -46197,9 +46158,7 @@
 	},
 /area/station/medical/reception)
 "kIr" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "kIB" = (
@@ -47317,10 +47276,9 @@
 "kXc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "sci_dock";
+	dock_tag = "mining_shuttle";
 	locked = 1;
-	name = "Research Outpost Dock Airlock";
-	req_access = list(65)
+	name = "Research Mining Dock Airlock"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -47423,7 +47381,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
@@ -48143,11 +48100,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "CMO";
 	name = "CMO Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -49760,7 +49717,7 @@
 /area/station/hallway/primary/fore)
 "lzP" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -50231,6 +50188,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "lFP" = (
+/obj/machinery/ai_slipper,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -51045,7 +51003,7 @@
 /area/station/engineering/engine)
 "lPC" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -51806,10 +51764,10 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Security_private";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -52010,9 +51968,7 @@
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "mcK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -55094,9 +55050,7 @@
 "mMh" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/five,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "mMo" = (
 /turf/simulated/wall/r_wall,
@@ -56307,18 +56261,15 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = -8
@@ -57520,6 +57471,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/item/clothing/mask/breath,
@@ -59516,9 +59468,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "nUm" = (
 /obj/structure/cable{
@@ -61659,7 +61609,6 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8
 	},
 /obj/structure/window/fulltile{
@@ -63368,7 +63317,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = 8
@@ -63590,9 +63538,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "oVc" = (
 /obj/structure/window/thin/reinforced,
@@ -63815,10 +63761,6 @@
 	})
 "oXw" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = -28
-	},
 /obj/machinery/computer/guestpass{
 	dir = 8;
 	pixel_x = -28
@@ -63828,6 +63770,9 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/medical/cmo,
 /obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/secure/safe{
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -65948,11 +65893,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -66324,16 +66269,13 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = -40
 	},
@@ -66706,9 +66648,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "pLv" = (
 /obj/structure/window/fulltile/reinforced{
@@ -67106,11 +67046,11 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -68369,11 +68309,11 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "RD";
 	name = "RD Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -68711,10 +68651,10 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Security_private";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell{
@@ -68900,9 +68840,7 @@
 /area/station/security/prison)
 "qna" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "qnd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -70866,15 +70804,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = -1
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -70981,9 +70919,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing,
 /obj/item/clothing/suit/storage/hazardvest,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "qPA" = (
 /obj/structure/table/glass,
@@ -71450,17 +71386,14 @@
 /obj/item/clothing/gloves/budget_insulated,
 /obj/random/tools/tool,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -71874,7 +71807,7 @@
 /area/station/engineering/break_room)
 "rbr" = (
 /turf/environment/space,
-/area/shuttle/administration/station)
+/area/shuttle/trader/station)
 "rbv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -72132,12 +72065,12 @@
 "rec" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_escape";
+	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
 "rer" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -73110,10 +73043,6 @@
 /area/station/security/checkpoint)
 "rsr" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 39;
-	pixel_y = 1
-	},
 /obj/structure/bobross{
 	pixel_x = 32
 	},
@@ -73123,6 +73052,10 @@
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/hand_tele,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "rst" = (
@@ -74174,7 +74107,6 @@
 /area/station/engineering/monitoring)
 "rFM" = (
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = 8
 	},
@@ -74183,11 +74115,9 @@
 	req_access = list(69)
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = -8
@@ -74434,10 +74364,10 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Security_private";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -74958,10 +74888,17 @@
 	name = "Operating Theatre"
 	})
 "rPR" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
+	},
+/obj/structure/closet/athletic_mixed,
+/obj/machinery/camera{
+	c_tag = "Sauna";
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -76487,11 +76424,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -78685,9 +78622,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "sJt" = (
 /obj/random/scrap/safe_even,
@@ -80733,10 +80668,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "tkT" = (
@@ -81160,11 +81092,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "tsa" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
-	},
 /obj/machinery/computer/security/engineering{
 	dir = 4
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -82188,9 +82121,7 @@
 	layer = 2.8;
 	name = "doorway barricade"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "tGa" = (
 /obj/structure/table,
@@ -82500,10 +82431,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "tJu" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
@@ -82868,7 +82795,6 @@
 	},
 /obj/machinery/light/small,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -24
 	},
@@ -82877,12 +82803,10 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -40
 	},
@@ -83356,16 +83280,13 @@
 	dir = 8
 	},
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = -32;
 	pixel_y = -8
@@ -83461,7 +83382,9 @@
 	},
 /area/station/security/secconfhall)
 "tUu" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkbrown"
@@ -84257,7 +84180,6 @@
 /area/station/security/lobby)
 "ugh" = (
 /obj/structure/sign/barber{
-	buildable_sign = 0;
 	pixel_x = -13
 	},
 /obj/structure/table/glass,
@@ -84446,7 +84368,6 @@
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/command{
@@ -84948,6 +84869,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/table,
+/obj/item/weapon/phone{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "upJ" = (
@@ -85808,9 +85734,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "uAH" = (
 /obj/item/weapon/clipboard{
@@ -86379,9 +86303,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "uIq" = (
 /obj/machinery/airlock_sensor{
@@ -88531,17 +88453,14 @@
 "viC" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -89000,11 +88919,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "CMO";
 	name = "CMO Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -90243,17 +90162,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/flora/pottedplant/minitree,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -40
 	},
@@ -91545,7 +91461,7 @@
 "vVH" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_officer";
+	dock_tag = "velocity_officer_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -92089,9 +92005,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "wbU" = (
 /obj/machinery/door/airlock/command{
@@ -92169,9 +92083,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "wcN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -93505,9 +93417,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "wtx" = (
 /obj/structure/table/woodentable,
@@ -93835,9 +93745,7 @@
 	layer = 2.7
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "wxr" = (
 /obj/machinery/door/firedoor{
@@ -94656,7 +94564,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 32
 	},
@@ -94801,11 +94708,11 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "CMO";
 	name = "CMO Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -94827,7 +94734,7 @@
 "wKU" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "arrival_specops";
+	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -95051,6 +94958,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/device/binary_decoder,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"
@@ -96324,7 +96232,9 @@
 	},
 /area/station/security/prison)
 "xdB" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	muted = 1
+	},
 /obj/item/device/radio/intercom{
 	frequency = 1475;
 	name = "Station Intercom (Security)";
@@ -96637,8 +96547,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/mineral_door/wood,
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -98299,7 +98211,6 @@
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -32
 	},
@@ -98438,9 +98349,7 @@
 /area/station/civilian/bar)
 "xGU" = (
 /obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/maintenance/brig)
 "xGY" = (
 /obj/structure/table/glass,
@@ -99697,12 +99606,12 @@
 /area/station/ai_monitored/eva)
 "xXj" = (
 /obj/machinery/disposal,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = -1
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
@@ -99834,7 +99743,7 @@
 /area/station/medical/cryo)
 "xXT" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/flora/pottedplant/crystal{
+/obj/item/weapon/flora/pottedplant/blueleaf{
 	pixel_y = 12
 	},
 /turf/simulated/floor{
@@ -100122,9 +100031,7 @@
 /obj/structure/flora/ausbushes/ywflowers{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "ycm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -114641,7 +114548,7 @@ iRy
 iRy
 iRy
 cJy
-gww
+aeu
 cJy
 uFh
 eRp
@@ -115955,8 +115862,8 @@ rxe
 htI
 htI
 jeg
-htI
-htI
+hSX
+hSX
 bfr
 iRy
 bfr
@@ -116524,9 +116431,9 @@ cJy
 iRy
 iRy
 cJy
-iRy
-iRy
-iRy
+cJy
+cJy
+cJy
 iRy
 iRy
 iRy
@@ -116778,13 +116685,13 @@ xBl
 hGN
 cJy
 cJy
-iRy
+cJy
 iRy
 cJy
 iRy
 iRy
-iRy
-iRy
+cJy
+cJy
 iRy
 iRy
 iRy
@@ -117034,23 +116941,23 @@ xBl
 xBl
 hGN
 iRy
-cJy
-iRy
-iRy
+mgo
 cJy
 cJy
 cJy
+iRy
+iRy
+iRy
+cJy
+cJy
 cJy
 iRy
 iRy
 iRy
 iRy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
+cJy
+cJy
+cJy
 iRy
 iRy
 iRy
@@ -117291,26 +117198,26 @@ xBl
 xBl
 hGN
 cJy
+iRy
+cJy
+iRy
+cJy
+cJy
+cJy
+cJy
+cJy
+iRy
+cJy
+cJy
+cJy
+cJy
 cJy
 cJy
 iRy
 cJy
-iRy
-iRy
 cJy
 cJy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
-iRy
+cJy
 iRy
 iRy
 iRy
@@ -117548,27 +117455,27 @@ xBl
 xBl
 hGN
 cJy
-mgo
 cJy
-cJy
-cJy
+dYE
 iRy
-iRy
-iRy
-cJy
-cJy
 cJy
 iRy
 iRy
 iRy
+cJy
+iRy
+cJy
+sQN
+iRy
+cJy
+iRy
+iRy
+iRy
+cJy
+iRy
 iRy
 cJy
 cJy
-cJy
-iRy
-iRy
-iRy
-iRy
 iRy
 iRy
 iRy
@@ -117807,25 +117714,25 @@ hGN
 cJy
 iRy
 cJy
-iRy
-cJy
-cJy
-cJy
 cJy
 cJy
 iRy
 cJy
-cJy
-cJy
-cJy
-cJy
-cJy
+dYE
+dYE
+dYE
+dYE
+iRy
 iRy
 cJy
 cJy
 cJy
-cJy
+dYE
+dYE
+dYE
+mgo
 iRy
+cJy
 iRy
 iRy
 iRy
@@ -118062,17 +117969,10 @@ xBl
 iRy
 hGN
 cJy
-cJy
-dYE
-iRy
-cJy
 iRy
 iRy
 iRy
 cJy
-iRy
-cJy
-sQN
 iRy
 cJy
 iRy
@@ -118080,10 +117980,17 @@ iRy
 iRy
 cJy
 iRy
-iRy
 cJy
 cJy
 iRy
+cJy
+iRy
+iRy
+cJy
+cJy
+cJy
+cJy
+cJy
 iRy
 iRy
 iRy
@@ -118319,27 +118226,27 @@ fkk
 hGN
 hGN
 cJy
-iRy
-cJy
-cJy
 cJy
 iRy
 cJy
-dYE
-dYE
-dYE
-dYE
+cJy
+cJy
+cJy
 iRy
 iRy
 cJy
 cJy
 cJy
-dYE
-dYE
-dYE
-mgo
+cJy
+iRy
 iRy
 cJy
+cJy
+iRy
+cJy
+iRy
+iRy
+iRy
 iRy
 iRy
 iRy
@@ -118576,28 +118483,28 @@ fkk
 cJy
 hGN
 cJy
-iRy
-iRy
-iRy
-cJy
-iRy
-cJy
-iRy
-iRy
-iRy
-cJy
-iRy
-cJy
-cJy
-iRy
-cJy
-iRy
-iRy
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
 cJy
 cJy
 cJy
 cJy
 cJy
+cJy
+iRy
 cJy
 iRy
 iRy
@@ -118832,29 +118739,29 @@ xBl
 fkk
 cJy
 hGN
+hGN
+hGN
 cJy
 cJy
 iRy
-cJy
-cJy
-cJy
-cJy
+rbr
+rbr
+rbr
+iRy
+rbr
+rbr
+rbr
 iRy
 iRy
 cJy
-cJy
-cJy
-cJy
-iRy
-iRy
-cJy
+hGN
+hGN
 cJy
 iRy
+dYE
+iRy
 cJy
-iRy
-iRy
-iRy
-iRy
+cJy
 cJy
 iRy
 iRy
@@ -119089,29 +118996,29 @@ xBl
 fkk
 hGN
 hGN
-cJy
 hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-cJy
-cJy
-cJy
-cJy
-cJy
 cJy
 iRy
+rbr
+rbr
+rbr
+rbr
+rbr
+rbr
+rbr
+rbr
+rbr
+rbr
+rbr
+iRy
+cJy
+hGN
+cJy
+iRy
+dYE
+iRy
+qoe
+cJy
 cJy
 iRy
 iRy
@@ -119347,26 +119254,26 @@ cJy
 cJy
 hGN
 hGN
-hGN
-iRy
 iRy
 rbr
 rbr
 rbr
 rbr
-iRy
 rbr
 rbr
 rbr
 rbr
-iRy
-iRy
-hGN
+rbr
+rbr
+rbr
+rbr
+rbr
+cJy
 hGN
 cJy
 iRy
 dYE
-iRy
+cJy
 cJy
 cJy
 cJy
@@ -119605,7 +119512,6 @@ cJy
 cJy
 hGN
 iRy
-iRy
 rbr
 rbr
 rbr
@@ -119617,14 +119523,15 @@ rbr
 rbr
 rbr
 rbr
-iRy
+rbr
+rbr
 iRy
 hGN
 cJy
-iRy
+cJy
 dYE
 iRy
-qoe
+iRy
 cJy
 iRy
 iRy
@@ -119861,7 +119768,6 @@ iRy
 iRy
 cJy
 hGN
-iRy
 rbr
 rbr
 rbr
@@ -119875,11 +119781,12 @@ rbr
 rbr
 rbr
 rbr
-iRy
+rbr
+rbr
 hGN
 cJy
 iRy
-dYE
+cJy
 cJy
 cJy
 cJy
@@ -120134,12 +120041,12 @@ rbr
 rbr
 rbr
 hGN
-cJy
-cJy
-dYE
+iRy
+iRy
 iRy
 iRy
 cJy
+iRy
 iRy
 iRy
 iRy
@@ -120392,11 +120299,11 @@ rbr
 rbr
 hGN
 cJy
+cJy
+cJy
 iRy
 cJy
-cJy
-cJy
-cJy
+iRy
 iRy
 iRy
 iRy
@@ -120649,11 +120556,11 @@ rbr
 rbr
 hGN
 iRy
-iRy
-iRy
-iRy
+sQN
 cJy
-iRy
+cJy
+cJy
+cJy
 iRy
 iRy
 iRy
@@ -120754,7 +120661,7 @@ wAM
 iRy
 bFv
 bFv
-bFv
+aer
 bFv
 bFv
 iRy
@@ -120906,11 +120813,11 @@ rbr
 rbr
 hGN
 cJy
-cJy
-cJy
+iRy
+iRy
+dYE
 iRy
 cJy
-iRy
 iRy
 iRy
 iRy
@@ -121162,11 +121069,11 @@ rbr
 rbr
 rbr
 hGN
+cJy
+cJy
+cJy
+dYE
 iRy
-sQN
-cJy
-cJy
-cJy
 cJy
 iRy
 iRy
@@ -121421,7 +121328,7 @@ rbr
 hGN
 cJy
 iRy
-iRy
+hBE
 dYE
 iRy
 cJy
@@ -121676,11 +121583,11 @@ rbr
 rbr
 rbr
 hGN
-cJy
-cJy
+iRy
+iRy
 cJy
 dYE
-iRy
+cJy
 cJy
 iRy
 iRy
@@ -121935,10 +121842,10 @@ rbr
 hGN
 cJy
 iRy
-hBE
-dYE
+cJy
 iRy
 cJy
+iRy
 iRy
 iRy
 iRy
@@ -122180,9 +122087,9 @@ rbr
 rbr
 rbr
 rbr
-rbr
-rbr
-rbr
+iRy
+iRy
+iRy
 rbr
 rbr
 rbr
@@ -122190,12 +122097,12 @@ rbr
 rbr
 rbr
 hGN
+cJy
+cJy
+cJy
 iRy
+cJy
 iRy
-cJy
-dYE
-cJy
-cJy
 iRy
 iRy
 iRy
@@ -122431,23 +122338,23 @@ iRy
 iRy
 cJy
 hGN
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-rbr
-hGN
 cJy
+rbr
+rbr
+rbr
+rbr
+rbr
+iRy
+iRy
+iRy
+rbr
+rbr
+rbr
+rbr
+rbr
+iRy
+hGN
+iRy
 iRy
 cJy
 iRy
@@ -122688,7 +122595,7 @@ cJy
 iRy
 cJy
 hGN
-rbr
+iRy
 rbr
 rbr
 rbr
@@ -122702,12 +122609,12 @@ rbr
 rbr
 rbr
 rbr
-rbr
+cJy
 hGN
-cJy
-cJy
-cJy
 iRy
+cJy
+cJy
+cJy
 cJy
 iRy
 iRy
@@ -122945,7 +122852,7 @@ cJy
 cJy
 cJy
 hGN
-rbr
+iRy
 rbr
 rbr
 rbr
@@ -122959,13 +122866,13 @@ rbr
 rbr
 rbr
 rbr
-rbr
+cJy
 hGN
-iRy
-iRy
+cJy
 cJy
 iRy
 cJy
+iRy
 iRy
 iRy
 iRy
@@ -123202,28 +123109,28 @@ iRy
 iRy
 iRy
 hGN
+hGN
+cJy
+rbr
+rbr
+rbr
+rbr
+cJy
+cJy
 iRy
-rbr
-rbr
-rbr
-rbr
-rbr
-iRy
-iRy
-iRy
-rbr
 rbr
 rbr
 rbr
 rbr
 iRy
 hGN
+hGN
+cJy
+iRy
 iRy
 cJy
 cJy
 cJy
-cJy
-iRy
 iRy
 iRy
 iRy
@@ -123458,29 +123365,29 @@ cJy
 cJy
 cJy
 cJy
-hGN
-iRy
-rbr
-rbr
-rbr
-rbr
-rbr
-iRy
-iRy
-iRy
-rbr
-rbr
-rbr
-rbr
-rbr
 iRy
 hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
+cJy
+cJy
+cJy
 cJy
 cJy
 iRy
 cJy
-iRy
-iRy
 iRy
 iRy
 iRy
@@ -123715,28 +123622,28 @@ iRy
 iRy
 cJy
 cJy
-hGN
-hGN
-iRy
-rbr
-rbr
-rbr
-rbr
-iRy
-iRy
-iRy
-rbr
-rbr
-rbr
-rbr
-iRy
-hGN
-hGN
+cJy
 cJy
 iRy
 iRy
 cJy
 cJy
+iRy
+iRy
+cJy
+cJy
+cJy
+cJy
+iRy
+cJy
+cJy
+iRy
+cJy
+iRy
+cJy
+iRy
+iRy
+iRy
 cJy
 iRy
 iRy
@@ -123972,28 +123879,28 @@ iRy
 cJy
 cJy
 iRy
+iRy
 cJy
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-cJy
+iRy
+iRy
+iRy
 cJy
 cJy
 cJy
 cJy
 iRy
+cJy
+iRy
+sQN
+cJy
+iRy
+iRy
+cJy
+iRy
+cJy
+dYE
+iRy
+cJy
 cJy
 iRy
 iRy
@@ -124231,27 +124138,27 @@ cJy
 iRy
 cJy
 cJy
-iRy
-iRy
-cJy
-cJy
-iRy
-iRy
-cJy
-cJy
-cJy
-cJy
-iRy
-cJy
-cJy
-iRy
+dYE
+dYE
+dYE
 cJy
 iRy
 cJy
 iRy
 iRy
+cJy
+cJy
+cJy
+cJy
+cJy
 iRy
 cJy
+iRy
+iRy
+dYE
+iRy
+cJy
+iRy
 iRy
 iRy
 iRy
@@ -124487,28 +124394,28 @@ iRy
 cJy
 iRy
 iRy
-cJy
-iRy
-iRy
-iRy
-cJy
-cJy
-cJy
-cJy
-iRy
-cJy
-iRy
-sQN
-cJy
-iRy
 iRy
 cJy
 iRy
 cJy
+iRy
+iRy
+dYE
+dYE
+dYE
 dYE
 iRy
 cJy
+iRy
 cJy
+cJy
+cJy
+cJy
+dYE
+dYE
+cJy
+cJy
+iRy
 iRy
 iRy
 iRy
@@ -124744,16 +124651,9 @@ cJy
 cJy
 cJy
 cJy
-cJy
-dYE
-dYE
-dYE
-cJy
 iRy
 cJy
 iRy
-iRy
-cJy
 cJy
 cJy
 cJy
@@ -124762,8 +124662,15 @@ iRy
 cJy
 iRy
 iRy
-dYE
+cJy
 iRy
+iRy
+cJy
+iRy
+iRy
+cJy
+iRy
+sQN
 cJy
 iRy
 iRy
@@ -125000,26 +124907,26 @@ cJy
 iRy
 iRy
 cJy
+cJy
+sQN
+cJy
 iRy
 iRy
 cJy
 iRy
-cJy
 iRy
-iRy
-dYE
-dYE
-dYE
-dYE
-iRy
-cJy
 iRy
 cJy
 cJy
 cJy
 cJy
-dYE
-dYE
+cJy
+cJy
+cJy
+cJy
+iRy
+cJy
+cJy
 cJy
 cJy
 iRy
@@ -125258,27 +125165,27 @@ iRy
 cJy
 cJy
 cJy
-iRy
 cJy
-iRy
-cJy
-cJy
-cJy
-cJy
-iRy
 cJy
 iRy
 iRy
 cJy
+cJy
+cJy
+cJy
+cJy
+iRy
+ksO
+iRy
+iRy
 iRy
 iRy
 cJy
-iRy
-iRy
+cJy
 cJy
 iRy
-sQN
-cJy
+iRy
+iRy
 iRy
 iRy
 iRy
@@ -125514,28 +125421,28 @@ cJy
 cJy
 cJy
 iRy
-cJy
-sQN
-cJy
-iRy
 iRy
 cJy
 iRy
 iRy
+cJy
+cJy
+iRy
+iRy
 iRy
 cJy
 cJy
 cJy
-cJy
-cJy
-cJy
-cJy
-cJy
 iRy
-cJy
-cJy
-cJy
-cJy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
 iRy
 iRy
 iRy
@@ -125771,25 +125678,25 @@ cJy
 iRy
 dYE
 iRy
-cJy
-cJy
-cJy
-iRy
 iRy
 cJy
 cJy
 cJy
 cJy
-cJy
-iRy
-ksO
 iRy
 iRy
 iRy
 iRy
-cJy
-cJy
-cJy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
 iRy
 iRy
 iRy
@@ -126027,19 +125934,19 @@ cJy
 iRy
 iRy
 dYE
-iRy
-iRy
-cJy
-iRy
-iRy
-cJy
-cJy
-iRy
-iRy
-iRy
 cJy
 cJy
 cJy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
+iRy
 iRy
 iRy
 iRy
@@ -126286,10 +126193,10 @@ iRy
 dYE
 iRy
 iRy
-cJy
-cJy
-cJy
-cJy
+iRy
+iRy
+iRy
+iRy
 iRy
 iRy
 iRy
@@ -126542,8 +126449,8 @@ iRy
 cJy
 dYE
 cJy
-cJy
-cJy
+iRy
+iRy
 iRy
 iRy
 iRy
@@ -133656,7 +133563,7 @@ fpz
 eTw
 tkS
 upy
-uHZ
+epM
 uHZ
 pQf
 kSZ
@@ -145969,7 +145876,7 @@ ogS
 ogS
 ogS
 iqM
-yet
+aet
 cJy
 cJy
 iRy
@@ -146033,7 +145940,7 @@ iRy
 iRy
 rdY
 rdY
-rdY
+aev
 rdY
 cJy
 iRy
@@ -146320,7 +146227,7 @@ hiU
 hiU
 lFP
 tJu
-lFP
+dwK
 hiU
 hiU
 hiU
@@ -149404,7 +149311,7 @@ hiU
 hiU
 lFP
 iCe
-lFP
+dwK
 hiU
 hiU
 hiU

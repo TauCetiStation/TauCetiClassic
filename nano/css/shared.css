@@ -636,20 +636,20 @@ th.cargo {
 
 .sciTechTreeIcon {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
     width: 32px;
     height: 32px;
     background-image: url(science.png);
     background-position: -0px -0px;
     background-repeat: no-repeat;
-    zoom: 1;
-    margin-left: -16px;
-	margin-bottom: -16px;
-    /*margin-bottom: -1px;*/
 }
 
 .sciTechTreeIconBox {
     width: 32px;
     height: 32px;
+    margin: 0;
 }
 
 .sciTechResearched {
@@ -769,6 +769,18 @@ th.cargo {
 .sciTechTreeIcon.icon-voicechanger { background-position: -32px -320px; }
 .sciTechTreeIcon.icon-camerabug { background-position: -64px -320px; }
 .sciTechTreeIcon.icon-smuggler { background-position: -96px -320px; }
+
+.sciTechTreeIcon.icon-sechudadv { background-position: -128px -320px;}
+.sciTechTreeIcon.icon-mixhudadv { background-position: -160px -320px;}
+.sciTechTreeIcon.icon-nvghud { background-position: -192px -320px;}
+.sciTechTreeIcon.icon-thermalhud { background-position: -224px -320px;}
+.sciTechTreeIcon.icon-4thtier { background-position: -32px -352px;}
+
+.sciTechTreeIcon.icon-medigun {	background-position: -64px -352px;}
+.sciTechTreeIcon.icon-rigstealth { background-position: -96px -352px;}
+.sciTechTreeIcon.icon-sniperrifle { background-position: -128px -352px;}
+.sciTechTreeIcon.icon-pulserifle { background-position: -160px -352px;}
+.sciTechTreeIcon.icon-dsarmor { background-position: -192px -352px;}
 
 .sciMenuButton {
     width: 300px;

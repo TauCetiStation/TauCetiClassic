@@ -31,6 +31,7 @@
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
 
 	var/show_paper_cooldown = 0
+	var/list/client_computers = list()
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -78,6 +79,8 @@
 /obj/machinery/camera/update_icon()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
+	else if(client_computers.len)
+		icon_state = "[initial(icon_state)]_active"
 	else
 		icon_state = "[isXRay() ? "xray" : ""][initial(icon_state)]"
 
@@ -295,6 +298,9 @@
 	else
 		to_chat(user, "<span class='notice'>You can open its maintenance panel with a <b>screwdriver</b>.</span>")
 
+	if(client_computers.len)
+		to_chat(user, "<span class='warning'>Камера активна! Кто-то наблюдает за тобой!</span>")
+
 /obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
 	status = !status
 
@@ -463,3 +469,9 @@
 		deconstruct(FALSE)
 		return TRUE
 	return ..()
+
+/obj/machinery/camera/proc/set_active()
+	if(stat & BROKEN)
+		return
+	playsound(src, 'sound/machines/camera_activate.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
+	update_icon()

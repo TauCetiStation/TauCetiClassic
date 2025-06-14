@@ -26,6 +26,7 @@
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
 #define F_MALF_DRONES		 "Malf Drones"
+#define F_SPACE_TRADERS      "Space Traders"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -69,6 +70,9 @@
 #define PIRATE "Pirate"
 #define PRISONER "Prisoner"
 #define MALF_DRONE "Malf Drone"
+#define SPACE_TRADER "Space Trader"
+#define THIEF "Thief"
+#define ZOMBIE "Zombie"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

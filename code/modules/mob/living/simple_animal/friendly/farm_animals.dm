@@ -160,7 +160,7 @@
 	speak = list("Пии.","Пии?","Пи-пии.","Пиии!")
 	speak_emote = list("пищит")
 	emote_hear = list("пищит")
-	emote_see = list("клюёт пол","машет своими маленькими крылышками")
+	emote_see = list("клюёт пол","машет маленькими крылышками")
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
@@ -197,14 +197,15 @@ var/global/chicken_count = 0
 	icon_living = "chicken"
 	icon_dead = "chicken_dead"
 	icon_move = "chicken_move"
-	speak = list("Ко-ко!","КО! КО! КО!","Коооо коооо.")
+	speak = list("Ко-ко!","КО! КО! КО!","Куд-кудах!")
 	speak_emote = list("кудахчет")
 	emote_hear = list("кудахчет")
-	emote_see = list("клюёт пол","машет своими крыльями")
+	emote_see = list("клюёт пол","машет крыльями")
 	speak_chance = 2
 	turns_per_move = 3
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
 	health = 10
+	maxHealth = 10
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
@@ -248,6 +249,7 @@ var/global/chicken_count = 0
 		return
 	if(stat == CONSCIOUS && prob(3) && eggsleft > 0)
 		visible_message("[src] [pick("откладывает яйца.","поднимает шумиху.","начинает хрипло кудахтать.")]")
+		playsound(src, 'sound/voice/chiken_egg.ogg', VOL_EFFECTS_MASTER)
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
@@ -264,6 +266,8 @@ var/global/chicken_count = 0
 						if(loc == C.loc)
 							C.feed(src)
 							stop_automated_movement = FALSE
+	if(prob(15))
+		playsound(src, 'sound/voice/chiken_cluck.ogg', VOL_EFFECTS_MASTER, vary = TRUE, extrarange = -3)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()

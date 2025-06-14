@@ -67,8 +67,7 @@
 			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
+			stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr || !client)
@@ -76,6 +75,11 @@
 
 	if(href_list["lobby_changelog"])
 		client.changes()
+		return
+
+	if(href_list["lobby_profile"])
+		var/datum/profile_settings/profile = new()
+		profile.tgui_interact(src)
 		return
 
 	if(href_list["lobby_setup"])
@@ -122,7 +126,7 @@
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
 			return
-		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
+		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait [config.deathtime_required / 600] minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return
 			spawn_as_observer()
@@ -393,11 +397,23 @@
 					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
 						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
 							active++
+				var/priority = 0
+				var/priorityMessage = ""
+				var/priority_color = "#ffffff"
+				switch(job.quota)
+					if(QUOTA_WANTED)
+						priority = "!+"
+						priority_color = "#83bf47"
+						priorityMessage = "Требуется"
+					if(QUOTA_UNWANTED)
+						priority = "¡-"
+						priority_color = "#ee0000"
+						priorityMessage = "Не требуется"
 				if(job.current_positions && active < job.current_positions)
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
 					number_of_extra_line_breaks++
 				else
-					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
 			dat += "</fieldset><br>"
@@ -436,9 +452,7 @@
 		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
-		new_character.gender = pick(MALE, FEMALE)
-		client.prefs.real_name = random_name(new_character.gender)
-		client.prefs.randomize_appearance_for(new_character)
+		new_character.randomize_appearance()
 	else
 		client.prefs.copy_to(new_character)
 
@@ -453,9 +467,13 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.UpdateSE()
 	new_character.dna.original_character_name = new_character.real_name
+
+	// little randomize hunger parameters
 	new_character.nutrition = rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_WELL_FED)
-	var/old_base_metabolism = new_character.get_metabolism_factor()
-	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
+	// random individual metabolism mod from -10% to +10%
+	// so people don't get hungry at the same time
+	// but it affects all metabolism including chemistry, so i don't know if we need it
+	new_character.mob_metabolism_mod.ModAdditive(rand(-10, 10) * 0.01, "Unique character mod")
 
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in

@@ -65,7 +65,7 @@
 	head = /obj/item/clothing/head/helmet/laserproof/police
 	shoes = /obj/item/clothing/shoes/boots/combat
 	gloves = /obj/item/clothing/gloves/combat/police
-	suit_store = /obj/item/weapon/gun/projectile/automatic
+	suit_store = /obj/item/weapon/gun/projectile/automatic/saber
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/ammo_box/magazine/smg = 3,
@@ -80,13 +80,13 @@
 	belt = /obj/item/weapon/storage/belt/security/tactical/cops
 	gloves = /obj/item/clothing/gloves/combat/police
 	back = /obj/item/weapon/storage/backpack/satchel/sec/cops
+	suit_store = /obj/item/weapon/gun/projectile/automatic/a28
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/ammo_box/speedloader/a357 = 2,
 		/obj/item/weapon/gun/projectile/revolver/mateba = 1,
-		/obj/item/weapon/gun/projectile/automatic/a28 = 1,
 	)
 
 /datum/outfit/families_traitor

@@ -27,8 +27,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 /obj/structure/dispenser/update_icon()
 	cut_overlays()
 	switch(oxygentanks)
-		if(1 to 3)	add_overlay("oxygen-[oxygentanks]")
-		if(4 to INFINITY) add_overlay("oxygen-4")
+		if(1 to 4)	add_overlay("oxygen-[oxygentanks]")
+		if(5 to INFINITY) add_overlay("oxygen-5")
 	switch(phorontanks)
 		if(1 to 4)	add_overlay("phoron-[phorontanks]")
 		if(5 to INFINITY) add_overlay("phoron-5")
@@ -37,8 +37,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 /obj/structure/dispenser/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat
-	dat += "Oxygen tanks: [oxygentanks] - [oxygentanks ? "<A href='?src=\ref[src];oxygen=1'>Dispense</A>" : "empty"]<br>"
-	dat += "Phoron tanks: [phorontanks] - [phorontanks ? "<A href='?src=\ref[src];phoron=1'>Dispense</A>" : "empty"]"
+	dat += "Oxygen tanks: [oxygentanks] - [oxygentanks ? "<A href='byond://?src=\ref[src];oxygen=1'>Dispense</A>" : "empty"]<br>"
+	dat += "Phoron tanks: [phorontanks] - [phorontanks ? "<A href='byond://?src=\ref[src];phoron=1'>Dispense</A>" : "empty"]"
 	var/datum/browser/popup = new(user, "window=dispenser", "[src]")
 	popup.set_content(dat)
 	popup.open()

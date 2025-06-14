@@ -23,5 +23,4 @@
 #define LIGHT_HEAL_THRESHOLD 3
 #define LIGHT_DAMAGE_TAKEN 10
 
-#define LEAP_MODE_OFF 0
-#define LEAP_MODE_ON  1
+#define HUMAN_DEFAULT_SKIN_TONE /datum/skin_tone/albino::name

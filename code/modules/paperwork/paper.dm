@@ -44,6 +44,10 @@
 	///Last world.time tick the contents of this paper was changed.
 	var/last_info_change = 0
 
+	var/windowWidth = 425
+	var/windowHeight = 600
+	var/windowTheme = CSS_THEME_LIGHT
+
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/atom_init()
@@ -58,9 +62,9 @@
 
 /obj/item/weapon/paper/update_icon()
 	if(info)
-		icon_state = "paper_words"
+		icon_state = "[initial(icon_state)]_words"
 		return
-	icon_state = "paper"
+	icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/paper/proc/update_space(new_text)
 	if(!new_text)
@@ -91,7 +95,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", 425, 600, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", windowWidth, windowHeight, ntheme = windowTheme)
 		popup.set_content(data)
 		popup.open()
 
@@ -105,7 +109,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
@@ -120,7 +124,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!crumpled)
@@ -189,7 +193,7 @@
 			if(H == user)
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
@@ -197,7 +201,7 @@
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
-					H.update_body()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /obj/item/weapon/paper/proc/addtofield(id, text, links = 0, type = "paper")
 	var/locid = 0
@@ -241,10 +245,10 @@
 	info_links = info
 	var/i = 0
 	for(i = 1, i <= fields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i]'>write</A></font>", 1)
 	for(i = 1, i <= sfields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
-	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
+	info_links = info_links + " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -259,26 +263,6 @@
 	cut_overlays()
 	updateinfolinks()
 	update_icon()
-
-/obj/item/weapon/paper/proc/create_self_copy()
-	var/obj/item/weapon/paper/P = new
-
-	P.name       = name
-	P.info       = info
-	P.info_links = info_links
-	P.stamp_text = stamp_text
-	P.fields     = fields
-	P.sfields    = sfields
-	P.stamped    = LAZYCOPY(stamped)
-	P.ico        = LAZYCOPY(ico)
-	P.offset_x   = LAZYCOPY(offset_x)
-	P.offset_y   = LAZYCOPY(offset_y)
-	P.copy_overlays(src, TRUE)
-
-	P.updateinfolinks()
-	P.update_icon()
-
-	return P
 
 /obj/item/weapon/paper/proc/get_signature(obj/item/weapon/pen/P, mob/user)
 	if(P && istype(P, /obj/item/weapon/pen))
@@ -379,7 +363,7 @@
 
 		for(var/premade_form in predefined_forms_list[department]["content"])
 			var/datum/form/form = new premade_form
-			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<tr><th style='background-color:[color];'><A href='byond://?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
 			dat += "<th> [form.name]</th></tr>"
 		dat +="</tbody></table>"
 

@@ -166,9 +166,9 @@
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
-	Module 1: [module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
-	Module 2: [module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
-	Module 3: [module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
+	Module 1: [module_state_1 ? "<A href=byond://?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
+	Module 2: [module_state_2 ? "<A href=byond://?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
+	Module 3: [module_state_3 ? "<A href=byond://?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
 	<BR>
 	<B>Installed Modules</B><BR><BR>"}
 
@@ -185,7 +185,7 @@
 		else if(activated(O))
 			module_string += text("[O]: <B>Activated</B><BR>")
 		else
-			module_string += text("[O]: <A HREF=?src=\ref[src];act=\ref[O]>Activate</A><BR>")
+			module_string += text("[O]: <A href=byond://?src=\ref[src];act=\ref[O]>Activate</A><BR>")
 
 		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(iscoil(O)))
 			tools += module_string
@@ -200,7 +200,7 @@
 		else if(activated(module.emag))
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
-			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
+			dat += text("[module.emag]: <A href=byond://?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
 
 	dat += resources
 

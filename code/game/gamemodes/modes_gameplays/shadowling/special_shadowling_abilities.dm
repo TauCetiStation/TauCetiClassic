@@ -24,7 +24,6 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 	usr.Stun(34)
 	for(var/obj/item/I in usr) //drops all items
 		usr.drop_from_inventory(I)
-	usr.regenerate_icons()
 
 	sleep(50)
 	var/turf/simulated/floor/F
@@ -157,7 +156,7 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 			if(A.real_name)
 				A.real_name = usr.real_name
 			usr.invisibility = INVISIBILITY_OBSERVER //This is pretty bad, but is also necessary for the shuttle call to function properly
-			usr.flags |= GODMODE
+			ADD_TRAIT(usr, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 			usr.notransform = TRUE
 			sleep(50)
 			if(!faction.shadowling_ascended)

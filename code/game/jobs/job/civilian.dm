@@ -142,8 +142,7 @@
 
 /datum/job/chef/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		var/obj/item/weapon/implant/bork/B = new(H)
-		B.inject(H, BP_HEAD)
+		new /obj/item/weapon/implant/bork(H)
 	return ..()
 
 /datum/job/hydro
@@ -212,7 +211,6 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
 	salary = 40
-	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
 	skillsets = list("Librarian" = /datum/skillset/librarian)

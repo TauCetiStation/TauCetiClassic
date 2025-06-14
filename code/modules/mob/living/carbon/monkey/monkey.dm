@@ -6,7 +6,6 @@
 	icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE
@@ -95,7 +94,7 @@
 	if(stat != DEAD) // lets put this shit somewhere here
 		stabilize_body_temperature()
 
-	if(!environment || (flags & GODMODE))
+	if(!environment || HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
 		return
 	handle_monkey_pressure(environment)
 	handle_monkey_temperature(environment)
@@ -127,6 +126,15 @@
 	uni_append = list(0x044,0xC5D) // 044C5D
 	race = UNATHI
 	holder_type = /obj/item/weapon/holder/monkey/stok
+
+/mob/living/carbon/monkey/pluvian
+	name = "Pluv-key"
+	voice_name = "Pluv-key"
+	cases = list("Плувеныш", "Плувеныша", "Плувешыну", "Плувеныша", "Плувенышом", "Плувеныше")
+	speak_emote = list("chimpers")
+	icon_state = "pluvian"
+	race = PLUVIAN
+	holder_type = /obj/item/weapon/holder/monkey/pluvia
 
 /mob/living/carbon/monkey/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -189,6 +197,10 @@
 	. = ..()
 	greaterform = TAJARAN
 	add_language(LANGUAGE_SIIKTAJR)
+
+/mob/living/carbon/monkey/pluvian/atom_init()
+	. = ..()
+	greaterform = PLUVIAN
 
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = speed
@@ -268,7 +280,7 @@
 		gib()
 		return
 	if (stat == DEAD && !client)
-		gibs(loc)
+		new /obj/effect/gibspawner/generic(get_turf(loc), src)
 		qdel(src)
 		return
 

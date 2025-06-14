@@ -166,6 +166,8 @@
 /mob/proc/StopGrabs()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
 		qdel(G)
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		qdel(G)
 
 /mob/proc/GetGrabs()
 	. = list()
@@ -197,6 +199,7 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
+
 		//disallow upgrading if we're grabbing more than one person
 		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
 			var/obj/item/weapon/grab/G = assailant.l_hand
@@ -270,7 +273,7 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.Stun(5)
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
-
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 	adjust_position()
 
 
@@ -386,6 +389,7 @@
 		assailant.set_dir(get_dir(assailant, affecting))
 
 		affecting.log_combat(assailant, "neck-grabbed")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
@@ -400,6 +404,7 @@
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 
 		affecting.log_combat(assailant, "strangled")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
@@ -475,7 +480,7 @@
 					var/armor = H.run_armor_check(H, MELEE)
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
+						H.adjustHalLoss(clamp(0, 40 - H.getHalLoss(), 40)) //up to 40 halloss
 					return
 				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
@@ -492,6 +497,7 @@
 						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
 
 						affecting.log_combat(assailant, "finger-pressed into the eyes")
+						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
@@ -503,7 +509,7 @@
 
 						if(ishuman(user))
 							var/mob/living/carbon/human/H_user = user
-							var/datum/unarmed_attack/attack = H_user.species.unarmed
+							var/datum/unarmed_attack/attack = H_user.species.unarmed // todo: rewrite to use get_unarmed_attack() (and rewrite get_unarmed_attack too)
 
 							var/damage = rand(1, 5)
 							damage += attack.damage
@@ -545,6 +551,7 @@
 						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 
 						affecting.log_combat(assailant, "headbutted")
+						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 						assailant.drop_from_inventory(src)
 						src.loc = null
@@ -603,7 +610,7 @@
 		if(length(BP.wounds))
 			to_chat(user, "<span class='warning'>You find [BP.get_wounds_desc()]</span>")
 			foundwound = TRUE
-		if(length(BP.implants))
+		if(length(BP.embedded_objects))
 			to_chat(user, "<span class='notice'>You feel something solid under [BP.name]'s skin.</span>")
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
 			foundgerm = TRUE

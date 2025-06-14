@@ -174,4 +174,4 @@
 /datum/round_aspect/healing_alkohol
 	name = ROUND_ASPECT_HEALING_ALCOHOL
 	desc = "Алкоголь лечит физические повреждения."
-	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продливает жизнь.</span>"
+	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продлевает жизнь.</span>"

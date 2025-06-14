@@ -1542,6 +1542,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/miningdrill
 	category = list("Machine")
 
+/datum/design/expshovel
+	name = "Experimental shovel"
+	desc = "This is an experimental shovel that digs damn fast!"
+	id = "expshovel"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
+	build_path = /obj/item/weapon/shovel/experimental
+	category = list("Equipment")
+
 /datum/design/mining_drill_brace
 	name = "Machine Design (Mining Drill Brace)"
 	desc = "Brace for mining drill."
@@ -2083,7 +2092,7 @@ other types of metals and chemistry for reagents).
 	id = "smg"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/weapon/gun/projectile/automatic
+	build_path = /obj/item/weapon/gun/projectile/automatic/saber
 	category = list("Weapons")
 
 /datum/design/msmg9mm
@@ -2111,6 +2120,33 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_PHORON = 3000)
 	build_path = /obj/item/weapon/gun/energy/toxgun
+	category = list("Weapons")
+
+/datum/design/medigun
+	name = "Medigun"
+	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя их."
+	id = "medigun"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_PHORON = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_DIAMOND = 2000)
+	build_path = /obj/item/weapon/gun/medbeam
+	category = list("Weapons")
+
+/datum/design/sniperrifle
+	name = "Sniper rifle"
+	desc = "Снайперская винтовка W2500-E, разработанная компанией W&J, изготовлена из легких материалов и оснащена прицелом системы SMART."
+	id = "sniperrifle"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 7000, MAT_URANIUM = 5000, MAT_GOLD = 2500, MAT_SILVER = 2500, MAT_DIAMOND = 2000)
+	build_path = /obj/item/weapon/gun/energy/sniperrifle
+	category = list("Weapons")
+
+/datum/design/pulse_rifle
+	name = "Pulse rifle"
+	desc = "Сверхмощное, импульсно-энергетическое оружие, используемое военными."
+	id = "pulse_rifle"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 30000, MAT_GLASS = 15000, MAT_URANIUM = 12500, MAT_GOLD = 5000, MAT_SILVER = 5000, MAT_DIAMOND = 5000, MAT_PHORON = 20000)
+	build_path = /obj/item/weapon/gun/energy/pulse_rifle
 	category = list("Weapons")
 
 /////////////////////////////////////////
@@ -2314,6 +2350,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
 	build_path = /obj/item/device/hud_calibrator
+	category = list("Support")
+
+/datum/design/hud_advanced
+	name = "Advanced HUD"
+	desc = "An advanced HUD that can be flexibly modified"
+	id = "advanced_hud"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
+	build_path = /obj/item/clothing/glasses/sunglasses/hud/advanced
 	category = list("Support")
 
 /////////////////////////////////////////
@@ -2613,11 +2658,11 @@ other types of metals and chemistry for reagents).
 
 /datum/design/airbag
 	name = "Personal airbag"
-	desc = "One-use protection from high-speed collisions"
+	desc = "One-use protection from high-speed collisions and low pressure."
 	id = "airbag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_SILVER = 500)
-	build_path = /obj/item/airbag
+	build_path = /obj/item/clothing/neck/airbag
 	category = list("Support")
 
 /datum/design/universal_pyrometer
@@ -2879,3 +2924,82 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/rig_module/emp_shield
 	category = list("Rig Modules")
+/datum/design/rigstealth
+	name = "Hardsuit stealth system"
+	desc = "System that makes hardsuit invisible."
+	id = "rigstealth"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 5000, MAT_GOLD = 5000, MAT_DIAMOND = 10000, MAT_PHORON = 5000)
+	build_path = /obj/item/rig_module/stealth
+	category = list("Rig Modules")
+
+/////////////////////////////////////////
+////////////////Upgrades/////////////////
+/////////////////////////////////////////
+
+/datum/design/tier1_hud_upgrade
+	name = "Damage Scan Upgrade"
+	desc = "Allows HUD to show damage on person."
+	id = "tier1_hud_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/hud_upgrade/medscan
+	category = list("Special upgrades")
+
+/datum/design/tier2_hud_upgrade
+	name = "Basic Nightvision HUD upgrade"
+	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
+	id = "tier2_hud_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_URANIUM = 2000)
+	build_path = /obj/item/hud_upgrade/night
+	category = list("Special upgrades")
+
+/datum/design/tier3_hud_upgrade
+	name = "Thermal HUD upgrade"
+	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
+	id = "tier3_hud_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PHORON = 2500)
+	build_path = /obj/item/hud_upgrade/thermal
+	category = list("Special upgrades")
+
+/datum/design/tier4_hud_upgrade
+	name = "Advanced Thermal HUD upgrade"
+	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
+	id = "tier4_hud_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_GOLD = 1500, MAT_URANIUM = 3000, MAT_PHORON = 3500)
+	build_path = /obj/item/hud_upgrade/thermal_advanced
+	category = list("Special upgrades")
+
+/////////////////////////////////////////
+//////////////////Armor//////////////////
+/////////////////////////////////////////
+
+/datum/design/ds_helmet
+	name = "Deathsquad helmet"
+	desc = "That's not red paint. That's real blood."
+	id = "ds_helmet"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_GOLD = 2500, MAT_URANIUM = 4500, MAT_PHORON = 5000)
+	build_path = /obj/item/clothing/head/helmet/space/deathsquad
+	category = list("Armor")
+
+/datum/design/ds_armor
+	name = "SWAT Suit"
+	desc = "Тяжелый бронированный костюм, защищающий от умеренного количества повреждений. Используется в специальных операциях."
+	id = "ds_armor"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50000, MAT_GLASS = 25000, MAT_GOLD = 8000, MAT_URANIUM = 12500, MAT_PHORON = 15000)
+	build_path = /obj/item/clothing/suit/armor/swat
+	category = list("Armor")
+
+/datum/design/ds_boots
+	name = "SWAT shoes"
+	desc = "When you want to turn up the heat."
+	id = "ds_boots"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GOLD = 2000, MAT_PHORON = 4000)
+	build_path = /obj/item/clothing/shoes/boots/swat
+	category = list("Armor")

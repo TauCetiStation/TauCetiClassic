@@ -47,6 +47,9 @@
 	add_filter("singularity_2", 3, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_2, size = 400))
 	add_filter("singularity_3", 4, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_3, size = 700))
 
+	// If all other arguments besides the object are left out, the animation is stopped completely.
+	animate(src) // kinda cursed
+
 	animate(get_filter("singularity_0"), size = -20, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(size = -30, time = 10, easing = LINEAR_EASING, loop = -1)
 

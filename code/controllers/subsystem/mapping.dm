@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(mapping)
 		CRASH("Can't setup global event \"[module_name]\"!")
 
 /datum/controller/subsystem/mapping/proc/get_map_module(module_name)
-	if(loaded_map_module && loaded_map_module.name == module_name)
+	if(loaded_map_module && (!module_name || loaded_map_module.name == module_name))
 		return loaded_map_module
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
@@ -240,7 +240,8 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	if(global.config.load_mine)
 		if(config.minetype == "asteroid")
-			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+			var/asteroidmap = pick("asteroid_classic.dmm", "asteroid_rich.dmm")
+			LoadGroup(FailedZs, "Asteroid", "asteroid", asteroidmap, default_traits = ZTRAITS_ASTEROID)
 		else if(config.minetype == "prometheus_asteroid")
 			LoadGroup(FailedZs, "Asteroid", "prometheus_asteroid", "prometheus_asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
 		else if (!isnull(config.minetype))

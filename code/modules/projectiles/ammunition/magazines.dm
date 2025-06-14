@@ -275,6 +275,12 @@
 	overlay = "silenced_pistol-mag"
 	multiple_sprites = TWO_STATES
 
+/obj/item/ammo_box/magazine/silenced_pistol/nonlethal
+	name = "magazine (.45NL)"
+	cases = list("магазин (.45 НЛ)", "магазина (.45 НЛ)", "магазину (.45 НЛ)", "магазин (.45 НЛ)", "магазином (.45 НЛ)", "магазине (.45 НЛ)")
+	icon_state = "silenced_pistol_mag_nl"
+	ammo_type = /obj/item/ammo_casing/c45r
+
 /obj/item/ammo_box/magazine/colt
 	name = "magazine (.45)"
 	cases = list("магазин (.45)", "магазина (.45)", "магазину (.45)", "магазин (.45)", "магазином (.45)", "магазине (.45)")
@@ -331,11 +337,11 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a762
 	caliber = "a762"
-	max_ammo = 50
+	max_ammo = 100
 
 /obj/item/ammo_box/magazine/saw/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),20)]"
 
 /obj/item/ammo_box/magazine/chameleon
 	name = "magazine (.45)"
@@ -454,6 +460,8 @@
 	name = "A28 magazine (5.56mm)"
 	cases = list("магазин А28 (5.56мм)", "магазина А28 (5.56мм)", "магазину А28 (5.56мм)", "магазин А28 (5.56мм)", "магазином А28 (5.56мм)", "магазине А28 (5.56мм)")
 	icon_state = "a28_mag"
+	item_state_inventory = "a28_mag"
+	item_state_world = "a28_mag_w"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/a556
 	caliber = "5.56mm"
@@ -466,7 +474,18 @@
 	cases = list("магазин А28 (5.56мм Зажигательный)", "магазина А28 (5.56мм Зажигательный)", "магазину А28 (5.56мм Зажигательный)", "магазин А28 (5.56мм Зажигательный)", "магазином А28 (5.56мм Зажигательный)", "магазине А28 (5.56мм Зажигательный)")
 	ammo_type = /obj/item/ammo_casing/a556i
 	icon_state = "a28_mag_inc"
+	item_state_inventory = "a28_mag_inc"
+	item_state_world = "a28_mag_inc_w"
 	overlay = "a28-mag-i"
+
+/obj/item/ammo_box/magazine/a28/nonlethal
+	name = "A28 magazine (5.56mm NL)"
+	cases = list("магазин А28 (5.56мм НЛ)", "магазина А28 (5.56мм НЛ)", "магазину А28 (5.56мм НЛ)", "магазин А28 (5.56мм НЛ)", "магазином А28 (5.56мм НЛ)", "магазине А28 (5.56мм НЛ)")
+	icon_state = "a28_mag_nl"
+	item_state_inventory = "a28_mag_nl"
+	item_state_world = "a28_mag_nl_w"
+	overlay = "a28-mag-nl"
+	ammo_type = /obj/item/ammo_casing/a556/nonlethal
 
 /obj/item/ammo_box/magazine/a74
 	name = "A74 magazine (7.74mm)"
@@ -637,3 +656,21 @@
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c45r
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/pea
+	name = "pealoader"
+	cases = list("гороховый зарядник", "горохового зарядника", "гороховому заряднику", "гороховый зарядник", "гороховым зарядником", "гороховом заряднике")
+	desc = "Гороховый зарядник для горохового пистолета."
+	caliber = "Pea"
+	ammo_type = /obj/item/ammo_casing/pea
+	max_ammo = 6
+	origin_tech = "combat=2"
+
+/obj/item/ammo_box/magazine/pea/in_fire
+	ammo_type = /obj/item/ammo_casing/pea/in_fire
+
+/obj/item/ammo_box/magazine/pea/virus
+	ammo_type = /obj/item/ammo_casing/pea/virus
+
+/obj/item/ammo_box/magazine/pea/virus/in_fire
+	ammo_type = /obj/item/ammo_casing/pea/virus/in_fire

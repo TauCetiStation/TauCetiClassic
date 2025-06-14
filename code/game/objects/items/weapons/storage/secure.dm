@@ -105,6 +105,7 @@
 	if(!locked || src.emagged)
 		return FALSE
 	emagged = 1
+	playsound(src, 'sound/machines/sparks4.ogg',  VOL_EFFECTS_MASTER)
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 	sleep(6)
@@ -146,6 +147,7 @@
 		if("type")
 			var/digit = params["digit"]
 			if(digit == "E")
+				playsound(src, 'sound/machines/button_beep.ogg', VOL_EFFECTS_MASTER)
 				if ((l_set == 0) && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
 					l_code = code
 					l_set = 1
@@ -154,19 +156,27 @@
 					overlays = null
 					overlays += image('icons/obj/storage.dmi', icon_opened)
 					code = null
+					playsound(src, 'sound/machines/bolts_up.ogg', VOL_EFFECTS_MASTER)
+					update_icon()
 				else
 					code = "ERROR"
+					playsound(src, 'sound/machines/buzz-two.ogg',  VOL_EFFECTS_MASTER)
 			else
 				if ((digit == "R") && (emagged == 0) && (!l_setshort))
+					playsound(src, 'sound/machines/button_beep.ogg',  VOL_EFFECTS_MASTER)
 					locked = TRUE
 					overlays = null
 					code = null
 					close(usr)
+					update_icon()
 				else
+					if(length(code) < 5 && digit != "ERROR")
+						playsound(src, 'sound/machines/button_beep.ogg',  VOL_EFFECTS_MASTER)
 					code += text("[]", digit)
 					if (length(code) > 5)
 						code = "ERROR"
 	add_fingerprint(usr)
+
 	return TRUE
 
 
@@ -209,9 +219,6 @@
 				close(M)
 	add_fingerprint(user)
 
-/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	update_icon()
 
 /obj/item/weapon/storage/secure/briefcase/update_icon()
 	if(!locked || emagged)
@@ -248,6 +255,15 @@
 	anchored = TRUE
 	density = FALSE
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
+
+/obj/item/weapon/storage/secure/safe/try_open(mob/user)
+	if(locked)
+		if(user.in_interaction_vicinity(src))
+			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
+		return FALSE
+	else
+		return ..()
+
 
 /obj/item/weapon/storage/secure/safe/atom_init()
 	. = ..()

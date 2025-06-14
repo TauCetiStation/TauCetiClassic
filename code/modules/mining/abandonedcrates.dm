@@ -1,9 +1,13 @@
 /obj/structure/closet/crate/secure/loot
 	name = "Abandoned crate"
 	desc = "Что же может оказаться внутри?"
-	icon_state = "securecrate"
-	icon_opened = "securecrateopen"
-	icon_closed = "securecrate"
+	icon_state = "treasure"
+	icon_opened = "treasureopen"
+	icon_closed = "treasure"
+	redlight = null
+	greenlight = null
+	sparks = null
+	emag = null
 	locked = TRUE
 	var/datum/minigame/minesweeper/Game
 
@@ -56,7 +60,7 @@
 	return TRUE
 
 /obj/structure/closet/crate/secure/loot/proc/won()
-	var/loot_quality = 2 * Game.grid_mines/Game.grid_blanks
+	var/loot_quality = 2 * Game.get_difficulty()
 	if(prob(loot_quality * 100))
 		SpawnGoodLoot()
 	else
@@ -73,13 +77,19 @@
 
 /obj/structure/closet/crate/secure/loot/proc/SpawnGoodLoot()
 	playsound(src, 'sound/misc/mining_reward_3.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
-	switch(rand(1, 3))
+	switch(rand(1, 5))
 		if(1)
 			new/obj/item/weapon/melee/classic_baton(src)
 		if(2)
 			new/obj/item/weapon/sledgehammer(src)
 		if(3)
 			new/obj/item/weapon/gun/energy/xray(src)
+		if(4)
+			new/mob/living/simple_animal/hostile/mining_drone(src)
+		if(5)
+			new/obj/item/kinetic_upgrade/damage
+			new/obj/item/kinetic_upgrade/speed
+			new/obj/item/kinetic_upgrade/range
 
 /obj/structure/closet/crate/secure/loot/proc/SpawnMediumLoot()
 	playsound(src, 'sound/misc/mining_reward_2.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
@@ -116,9 +126,13 @@
 
 /obj/structure/closet/crate/secure/loot/proc/SpawnDeathLoot()
 	playsound(src, 'sound/misc/mining_reward_0.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
-	for(var/mob/living/carbon/C in viewers(src, 2))
-		C.flash_eyes()
-	new/mob/living/simple_animal/hostile/mimic/crate(loc)
+	switch(rand(1, 2))
+		if(1)
+			for(var/mob/living/carbon/C in viewers(src, 2))
+				C.flash_eyes()
+			new/mob/living/simple_animal/hostile/mimic/crate/loot(get_turf(src))
+		if(2)
+			explosion(src, 0, 0, 2, 3)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)

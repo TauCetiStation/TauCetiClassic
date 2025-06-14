@@ -4,6 +4,7 @@
 
 	icon_state = "faith_glasses"
 	item_state = "faith_glasses"
+	item_state_world = "faith_glasses_w"
 
 	var/next_assessment = 0
 	var/assessment_cooldown = 6 SECONDS

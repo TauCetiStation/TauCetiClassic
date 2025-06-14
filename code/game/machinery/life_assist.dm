@@ -4,7 +4,7 @@
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 
-	var/my_trait
+	var/assist_trait
 
 	var/icon_state_attached
 	var/icon_state_detached
@@ -46,11 +46,15 @@
 
 // Add the LIFE_ASSIST trait, etc.
 /obj/machinery/life_assist/proc/assist(mob/living/carbon/human/H)
-	ADD_TRAIT(H, my_trait, LIFE_ASSIST_MACHINES_TRAIT)
+	SHOULD_CALL_PARENT(TRUE)
+	if(assist_trait)
+		ADD_TRAIT(H, assist_trait, src)
 
 // Remove the LIFE_ASSIST trait, etc.
 /obj/machinery/life_assist/proc/deassist(mob/living/carbon/human/H)
-	REMOVE_TRAIT(H, my_trait, LIFE_ASSIST_MACHINES_TRAIT)
+	SHOULD_CALL_PARENT(TRUE)
+	if(assist_trait)
+		REMOVE_TRAIT(H, assist_trait, src)
 
 /obj/machinery/life_assist/MouseDrop(over_object, src_location, over_location)
 	..()
@@ -68,7 +72,7 @@
 			detach()
 		else if(ishuman(over_object))
 			var/mob/living/carbon/human/H = over_object
-			if(HAS_TRAIT(H, TRAIT_AV))
+			if(HAS_TRAIT(H, TRAIT_EXTERNAL_VENTILATION))
 				visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
 				return
 			attach(H)
@@ -94,7 +98,7 @@
 	icon_state_attached = "av_ventilating"
 	icon_state_detached = "av_idle"
 
-	my_trait = TRAIT_AV
+	assist_trait = TRAIT_EXTERNAL_VENTILATION
 
 	var/obj/item/weapon/tank/holding
 
@@ -144,14 +148,6 @@
 	else if(attached.internal == holding)
 		attached.internal = null
 
-/obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
-	..()
-	H.metabolism_factor.AddModifier("CPB", additive = 0.5)
-
-/obj/machinery/life_assist/cardiopulmonary_bypass/deassist(mob/living/carbon/human/H)
-	..()
-	H.metabolism_factor.RemoveModifier("CPB")
-
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
 	icon = 'icons/obj/iv_drip.dmi'
@@ -163,7 +159,20 @@
 	icon_state_attached = "cpb_pumping"
 	icon_state_detached = "cpb_idle"
 
-	my_trait = TRAIT_CPB
+	assist_trait = TRAIT_EXTERNAL_HEART
+
+/obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
+	..()
+	var/obj/item/organ/internal/heart/mob_heart = H.organs_by_name[O_HEART]
+	if(mob_heart)
+		// +50%, compensates possible heart problems. Modval is capped so there is no danger of overbuffing it
+		mob_heart.heart_metabolism_mod.ModAdditive(0.5, src)
+
+/obj/machinery/life_assist/cardiopulmonary_bypass/deassist(mob/living/carbon/human/H)
+	..()
+	var/obj/item/organ/internal/heart/mob_heart = H.organs_by_name[O_HEART]
+	if(mob_heart)
+		mob_heart.heart_metabolism_mod.RemoveMods(src)
 
 /obj/machinery/life_assist/external_cooling_device
 	name = "External Cooling Device"
@@ -176,4 +185,4 @@
 	icon_state_attached = "cooler_pumping"
 	icon_state_detached = "cooler_idle"
 
-	my_trait = TRAIT_COOLED
+	assist_trait = TRAIT_EXTERNAL_COOLING
