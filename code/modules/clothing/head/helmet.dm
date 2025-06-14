@@ -156,16 +156,19 @@
 	icon_state = "knight_cydonia"
 	item_state = "knight_cydonia"
 	armor = list(
-		melee = 30,
-		bullet = 25,
+		melee = 65,
+		bullet = 55,
 		energy = 100,
 		laser = 0,
 		bomb = 20,
 		bio = 100,
 		rad = 100
 	)
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
-	flags_inv = HIDEMASK | HIDEEARS | HIDEEYES | HIDEFACE
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | PHORONGUARD
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	permeability_coefficient = 0
 	siemens_coefficient = 0
 	heat_protection = HEAD
 	var/hit_reflect_chance = 100

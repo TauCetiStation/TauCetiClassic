@@ -208,8 +208,8 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(
-		melee = 30,
-		bullet = 25,
+		melee = 65,
+		bullet = 55,
 		energy = 100,
 		laser = 0,
 		bomb = 20,
@@ -217,7 +217,15 @@
 		rad = 100
 	)
 	flags_inv = HIDEJUMPSUIT|HIDEGLOVES|HIDESHOES
+	w_class = SIZE_NORMAL
+	gas_transfer_coefficient = 0
+	permeability_coefficient = 0
+	slowdown = 0.7
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box/magazine, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, /obj/item/weapon/tank/jetpack)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 	var/hit_reflect_chance = 100
