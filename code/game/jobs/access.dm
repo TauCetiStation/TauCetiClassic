@@ -156,6 +156,9 @@
 /mob/living/silicon/robot/drone/syndi/GetAccess()
 	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
 
+/mob/living/silicon/robot/drone/maintenance/malfuction/GetAccess()
+	return list(access_maint_tunnels)
+
 /obj/item/proc/GetID()
 	return null
 

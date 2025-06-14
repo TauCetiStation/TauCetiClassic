@@ -61,3 +61,6 @@ var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for sta
 var/global/playsound_frequency_admin = 0	// Admin var for shitspawn via Secrets panel
 
 var/global/nuclear_siren_cooldown = 0
+
+var/global/station_disposal_count = 0
+var/global/station_chairs_count = 0
