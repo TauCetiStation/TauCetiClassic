@@ -46,7 +46,7 @@
 /obj/item/weapon/circuitboard/get_name(mob/user)
 	. = ..()
 	if(details && . == name && check_skill(user))
-    	return details
+		return details
 
 /obj/item/weapon/circuitboard/proc/check_skill(mob/user)
 	return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED))
