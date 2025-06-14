@@ -293,7 +293,7 @@
 
 
 /obj/item/weapon/circuitboard/reconstitutor
-	name = "Circuit board (Flora Reconstitution Console)"
+	details = "circuit board (Flora Reconstitution Console)"
 	build_path = /obj/machinery/computer/reconstitutor
 	origin_tech = "programming=2;biotech=4;materials=6"
 	frame_desc = "Requires 2 Advanced Scanning Module, 1 Nano Manipulator, 1 Matter Bin and 1 Advanced Capacitor."
@@ -304,7 +304,7 @@
 							/obj/item/weapon/stock_parts/capacitor/adv = 1)
 
 /obj/item/weapon/circuitboard/reconstitutor/animal
-	name = "Circuit board (Fauna Reconstitution Console)"
+	details = "circuit board (Fauna Reconstitution Console)"
 	build_path = /obj/machinery/computer/reconstitutor/animal
 	origin_tech = "programming=2;biotech=4;materials=6"
 	frame_desc = "Requires 2 Advanced Scanning Module, 1 Nano Manipulator, 1 Matter Bin and 1 Advanced Capacitor."
