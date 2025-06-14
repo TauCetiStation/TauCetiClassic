@@ -240,10 +240,14 @@
 	if(slot == SLOT_WEAR_SUIT)
 		to_chat(user, "<span class='notice'>Вы чувствуете, как древние технологии оживают вокруг вас, создавая защитное силовое поле.</span>")
 		playsound(user, 'sound/magic/charge.ogg', 100, 1)
+		icon_state = "knight_cydonia_on"
+		item_state = "knight_cydonia_on"
 
 /obj/item/clothing/suit/armor/ancient_laserproof/dropped(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Защитное поле исчезает по мере того, как вы снимаете броню.</span>")
+	icon_state = "knight_cydonia"
+	item_state = "knight_cydonia"
 
 /obj/item/clothing/suit/armor/laserproof/police
 	name = "police ablative armor"
