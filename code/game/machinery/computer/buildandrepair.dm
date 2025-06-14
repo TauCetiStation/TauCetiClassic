@@ -38,7 +38,7 @@
 /obj/item/weapon/circuitboard/examine(mob/user)
 	..()
 	if(details)
-		if(is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED)))
+		if(check_skill(user))
 			to_chat(user, "This is [details].")
 		else
 			to_chat(user, "Вы не можете понять, что это за плата.")
