@@ -1,4 +1,3 @@
-
 var/global/list/weighted_randomevent_locations = list()
 var/global/list/weighted_mundaneevent_locations = list()
 
@@ -18,8 +17,8 @@ var/global/list/weighted_mundaneevent_locations = list()
 
 //distance is measured in AU and co-relates to travel time
 /datum/trade_destination/centcomm
-	name = "CentComm"
-	description = "NanoTrasen's administrative centre for Tau Ceti."
+	name = "ЦентКом"
+	description = "Административный центр NanoTrasen в системе Тау Кита."
 	distance = 1.2
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -27,8 +26,8 @@ var/global/list/weighted_mundaneevent_locations = list()
 	viable_mundane_events = list(ELECTION, RESIGNATION, CELEBRITY_DEATH)
 
 /datum/trade_destination/anansi
-	name = "NSS Anansi"
-	description = "Medical station ran by Second Red Cross (but owned by NT) for handling emergency cases from nearby colonies."
+	name = "КСА Ананси"
+	description = "Медицинская станция, управляемая организацией Второй Красный Крест (но принадлежащая NT), предназначенная для обработки экстренных случаев с ближайших колоний."
 	distance = 1.7
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -37,21 +36,21 @@ var/global/list/weighted_mundaneevent_locations = list()
 
 /datum/trade_destination/anansi/get_custom_eventstring(event_type)
 	if(event_type == RESEARCH_BREAKTHROUGH)
-		return "Thanks to research conducted on the NSS Anansi, Second Red Cross Society wishes to announce a major breakthough in the field of \
-		[pick("mind-machine interfacing","neuroscience","nano-augmentation","genetics")]. NanoTrasen is expected to announce a co-exploitation deal within the fortnight."
+		return "Благодаря исследованиям, проведённым на КСА Ананси, Второй Красный Крест объявляет о крупном прорыве в области \
+		[pick("интерфейсов мозг-машина","нейронауки","нано-аугментации","генетики")]. Ожидается, что NanoTrasen заключит соглашение о совместной эксплуатации в течение двух недель."
 	return null
 
 /datum/trade_destination/icarus
-	name = "NMV Icarus"
-	description = "Corvette assigned to patrol NSS Exodus local space."
+	name = "КМВ Икар"
+	description = "Корвет, патрулирующий локальное пространство вокруг КСН Эксодус."
 	distance = 0.1
 	willing_to_buy = list()
 	willing_to_sell = list()
 	viable_random_events = list(SECURITY_BREACH, AI_LIBERATION, PIRATES)
 
 /datum/trade_destination/redolant
-	name = "OAV Redolant"
-	description = "Osiris Atmospherics station in orbit around the only gas giant insystem. They retain tight control over shipping rights, and Osiris warships protecting their prize are not an uncommon sight in Tau Ceti."
+	name = "ОАВ Редолант"
+	description = "Атмосферная станция Osiris на орбите единственного газового гиганта в системе. Они жёстко контролируют права на перевозки, и корабли Osiris, защищающие их добычу, нередки в Тау Кита."
 	distance = 0.6
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -60,13 +59,13 @@ var/global/list/weighted_mundaneevent_locations = list()
 
 /datum/trade_destination/redolant/get_custom_eventstring(event_type)
 	if(event_type == RESEARCH_BREAKTHROUGH)
-		return "Thanks to research conducted on the OAV Redolant, Osiris Atmospherics wishes to announce a major breakthough in the field of \
-		[pick("phoron research","high energy flux capacitance","super-compressed materials","theoretical particle physics")]. NanoTrasen is expected to announce a co-exploitation deal within the fortnight."
+		return "Благодаря исследованиям, проведённым на ОАВ Редолант, Osiris Atmospherics объявляет о крупном прорыве в области \
+		[pick("исследования фазона","высокоэнергетической ёмкостной проводимости","сверхсжатых материалов","теоретической физики частиц")]. Ожидается, что NanoTrasen заключит соглашение о совместной эксплуатации в течение двух недель."
 	return null
 
 /datum/trade_destination/beltway
-	name = "Beltway mining chain"
-	description = "A co-operative effort between Beltway and NanoTrasen to exploit the rich outer asteroid belt of the Tau Ceti system."
+	name = "Шахтёрский пояс Белтвей"
+	description = "Совместный проект Белтвей и NanoTrasen по добыче ресурсов из богатого внешнего астероидного пояса системы Тау Кита."
 	distance = 7.5
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -74,8 +73,8 @@ var/global/list/weighted_mundaneevent_locations = list()
 	viable_mundane_events = list(TOURISM)
 
 /datum/trade_destination/biesel
-	name = "Biesel"
-	description = "Large ship yards, strong economy and a stable, well-educated populace, Biesel largely owes allegiance to Sol / Vessel Contracting and begrudgingly tolerates NT. Capital is Lowell City."
+	name = "Бизель"
+	description = "Крупные верфи, сильная экономика и стабильное, образованное население. Бизель в основном сохраняет верность Солнцу / Vessel Contracting и с неохотой терпит NT. Столица — Лоуэлл Сити."
 	distance = 2.3
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -83,8 +82,8 @@ var/global/list/weighted_mundaneevent_locations = list()
 	viable_mundane_events = list(BARGAINS, GOSSIP, SONG_DEBUT, MOVIE_RELEASE, ELECTION, TOURISM, RESIGNATION, CELEBRITY_DEATH)
 
 /datum/trade_destination/new_gibson
-	name = "New Gibson"
-	description = "Heavily industrialised rocky planet containing the majority of the planet-bound resources in the system, New Gibson is torn by unrest and has very little wealth to call it's own except in the hands of the corporations who jostle with NT for control."
+	name = "Нью-Гибсон"
+	description = "Сильно индустриализированная каменистая планета, содержащая большую часть планетарных ресурсов системы. Нью-Гибсон раздирается беспорядками, и его богатство сосредоточено в руках корпораций, конкурирующих с NT."
 	distance = 6.6
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -92,8 +91,8 @@ var/global/list/weighted_mundaneevent_locations = list()
 	viable_mundane_events = list(ELECTION, TOURISM, RESIGNATION)
 
 /datum/trade_destination/luthien
-	name = "Luthien"
-	description = "A small colony established on a feral, untamed world (largely jungle). Savages and wild beasts attack the outpost regularly, although NT maintains tight military control."
+	name = "Лютиэн"
+	description = "Небольшая колония, основанная на диком, необузданном мире (в основном джунгли). На поселение регулярно нападают дикари и дикие звери, хотя NT поддерживает жёсткий военный контроль."
 	distance = 8.9
 	willing_to_buy = list()
 	willing_to_sell = list()
@@ -101,8 +100,8 @@ var/global/list/weighted_mundaneevent_locations = list()
 	viable_mundane_events = list(ELECTION, TOURISM, BIG_GAME_HUNTERS, RESIGNATION)
 
 /datum/trade_destination/reade
-	name = "Reade"
-	description = "A cold, metal-deficient world, NT maintains large pastures in whatever available space in an attempt to salvage something from this profitless colony."
+	name = "Рийд"
+	description = "Холодный мир с дефицитом металлов. NT содержит обширные пастбища на доступных территориях, пытаясь извлечь хоть какую-то прибыль из этой бесперспективной колонии."
 	distance = 7.5
 	willing_to_buy = list()
 	willing_to_sell = list()
