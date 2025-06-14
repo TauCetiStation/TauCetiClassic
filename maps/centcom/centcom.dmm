@@ -24474,7 +24474,7 @@
 /area/shuttle/officer/velocity)
 "fbp" = (
 /obj/effect/landmark/post_round_dm/arena,
-/turf/unsimulated/wall/like_a_normal/red,
+/turf/environment/space,
 /area/custom/arena)
 "fcb" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
@@ -85795,7 +85795,7 @@ aaf
 aaf
 aaf
 aaf
-fbp
+aaf
 aaM
 aaM
 aaM
@@ -91427,7 +91427,7 @@ aai
 aai
 aai
 aai
-aai
+fbp
 aai
 aai
 aai

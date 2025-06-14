@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
+	var/datum/map_template/post_round_arena/arena = null
 	var/list/medal_list = list()
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
@@ -43,7 +44,6 @@ SUBSYSTEM_DEF(ticker)
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
 	var/is_lowpop = FALSE
-	var/arena_loaded = FALSE
 
 	var/force_end = FALSE // set TRUE to forse round end and show credits
 
@@ -632,40 +632,39 @@ SUBSYSTEM_DEF(ticker)
 		if(A.spawners && A.spawners >= (online - 5) && A.spawners <= (online + 5))
 			arenas += A
 
-	var/datum/map_template/post_round_arena/arena = /datum/map_template/post_round_arena/four_biomes
+	var/datum/map_template/post_round_arena/picked_arena = /datum/map_template/post_round_arena/four_biomes
 	if(arenas.len)
-		arena = pick(arenas)
+		picked_arena = pick(arenas)
 
-	return(arena)
+	return(picked_arena)
 
-/datum/controller/subsystem/ticker/proc/clear_arena(obj/effect/landmark/arena_spawn)
-	var/turf/center = locate(arena_spawn.x + 22, arena_spawn.y + 22, arena_spawn.z)
-	var/list/arena_content = range(22, center) - arena_spawn
+/datum/controller/subsystem/ticker/proc/load_arena()
+	if(arena || !config.deathmatch_arena)
+		return
 
-	for(var/obj/O in arena_content)
-		qdel(O)
+	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
+	arena = new pick_arena()
 
-/datum/controller/subsystem/ticker/proc/load_arena(datum/map_template/post_round_arena/arena = null)
-	if(!arena)
-		if(arena_loaded || !config.deathmatch_arena)
-			return
-		else
-			arena = pick_arena()
-
-	var/obj/effect/landmark/arena_spawn = pick(landmarks_list["Arena Spawn"])
-
-	if(arena_loaded)
-		clear_arena(arena_spawn)
-
-	arena = new arena
-
-	if(!arena.load(get_turf(arena_spawn)))
+	if(!arena.load(arena_location, centered = TRUE))
 		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
-	else
-		arena_loaded = TRUE
+
+/datum/controller/subsystem/ticker/proc/load_arena(datum/map_template/post_round_arena/new_arena)
+	if(!config.deathmatch_arena)
+		return
+
+	if(arena) // clear arena if it was previously loaded
+		for(var/obj/O in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+	                   		   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+			qdel(O)
+
+	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
+	arena = new new_arena
+
+	if(!arena.load(arena_location, centered = TRUE))
+		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
-	restart_timeout *= sqrt(1 + global.player_list.len / 15) // на отметке 45 онлайна время дезматча удвоится
+	restart_timeout *= sqrt(1 + global.player_list.len / 15) // at 45 online the deathmatch time will double
 
 	for(var/mob/M in global.player_list)
 		if(!M.client || !M.client.prefs.eorg_enabled)
