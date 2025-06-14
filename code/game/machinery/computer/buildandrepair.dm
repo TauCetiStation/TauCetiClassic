@@ -44,10 +44,9 @@
 			to_chat(user, "Вы не можете понять, что это за плата.")
 
 /obj/item/weapon/circuitboard/get_name(mob/user)
-	if(details && ..() == name) // for don't overlap alternate_appearances ¯\_(ツ)_/¯
-		if(is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED)))
-			return details
-	return name
+	. = ..()
+	if(details && . == name && is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED)))
+    	return details
 
 /obj/item/weapon/circuitboard/turbine_computer
 	details = "circuit board (Turbine Computer)"
