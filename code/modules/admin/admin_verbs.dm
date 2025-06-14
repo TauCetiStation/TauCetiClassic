@@ -1267,7 +1267,7 @@ var/global/centcom_barriers_stat = 1
 	if(choice == "--CANCEL--") return
 
 	var/datum/map_template/post_round_arena/arena = arenas[choice]
-	SSticker.load_arena(arena)
+	SSticker.load_arena_admin(arena)
 
 	log_admin("[key_name(src)] load arena map [arena.name] - [arena.mappath]")
 	message_admins("[key_name_admin(src)] load arena map [arena.name] - [arena.mappath]")
@@ -1278,6 +1278,6 @@ var/global/centcom_barriers_stat = 1
 
 	if(!isliving(mob))
 		return
-	
+
 	var/mob/living/L = mob
 	L.metabolism_debug()

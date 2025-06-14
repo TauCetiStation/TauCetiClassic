@@ -605,7 +605,7 @@ SUBSYSTEM_DEF(ticker)
 		for(var/mob/M as anything in global.player_list)
 			H.add_hud_to(M)
 
-	if(arena_loaded)
+	if(arena)
 		teleport_players_to_eorg_area()
 
 	if(SSjunkyard)
@@ -643,18 +643,19 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
-	arena = new pick_arena()
+	arena = pick_arena()
+	arena = new()
 
 	if(!arena.load(arena_location, centered = TRUE))
 		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
 
-/datum/controller/subsystem/ticker/proc/load_arena(datum/map_template/post_round_arena/new_arena)
+/datum/controller/subsystem/ticker/proc/load_arena_admin(datum/map_template/post_round_arena/new_arena)
 	if(!config.deathmatch_arena)
 		return
 
 	if(arena) // clear arena if it was previously loaded
-		for(var/obj/O in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-	                   		   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+		for(var/obj/O in block(locate(arena.bounds[MAP_MINX], arena.bounds[MAP_MINY], arena.bounds[MAP_MINZ]),
+	                   		   locate(arena.bounds[MAP_MAXX], arena.bounds[MAP_MAXY], arena.bounds[MAP_MAXZ])))
 			qdel(O)
 
 	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
