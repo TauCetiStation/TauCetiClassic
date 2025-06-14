@@ -159,6 +159,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("painting frame", /obj/item/painting_frame, 2, time = 15),
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, time = 2 SECONDS, max_per_turf = 1, build_outline = TRUE), \
 	new/datum/stack_recipe("painting easel", /obj/structure/easel, 4, time = 15, max_per_turf = 1, build_outline = TRUE),
+	new/datum/stack_recipe("grave marker", /obj/structure/gravemarker/cross, 2, time = 5, max_per_turf = 1, build_outline = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, max_per_turf = FALSE, build_outline = FALSE)
 	)
 

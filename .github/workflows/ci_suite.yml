@@ -8,19 +8,21 @@ on:
       - master
 env:
   BYOND_MAJOR: 515
-  BYOND_MINOR: 1637
+  BYOND_MINOR: 1647
   SPACEMAN_DMM_VERSION: suite-1.8
 jobs:
   DreamChecker:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Cache
+      - name: Restore Cache
+        id: cache-dmm
         uses: actions/cache@v4
         with:
-          path: $HOME/spaceman_dmm/$SPACEMAN_DMM_VERSION
+          path: ~/dreamchecker
           key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
       - name: Install Dreamchecker
+        if: steps.cache-dmm.outputs.cache-hit != 'true'
         run:  bash scripts/install-spaceman-dmm.sh dreamchecker
       - name: Run Dreamchecker
         run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
@@ -34,11 +36,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Cache
-        uses: actions/cache@v4
-        with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: Code and Map Linting
         env:
           TEST: LINTING
@@ -66,34 +63,40 @@ jobs:
             map_name: Stroecka Station
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Cache
+      - name: Restore Cache
+        id: cache-byond
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Install BYOND
+        if: steps.cache-byond.outputs.cache-hit != 'true'
+        run:  bash scripts/install-byond.sh
       - name: Unit Tests
         env:
           TEST: UNIT
           MAP_META: ${{ matrix.map_meta }}
           MAP_NAME: ${{ matrix.map_name }}
         run: |
-          bash scripts/install-byond.sh
-          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          source "$HOME/BYOND/byond/bin/byondsetup"
           bash test/run-test.sh
   compile_everything:
     name: Compile Everything
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Cache
+      - name: Restore Cache
+        id: cache-byond
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Install BYOND
+        if: steps.cache-byond.outputs.cache-hit != 'true'
+        run:  bash scripts/install-byond.sh
       - name: "Compile Everything"
         env:
           TEST: COMPILE
         run: |
-          bash scripts/install-byond.sh
-          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          source "$HOME/BYOND/byond/bin/byondsetup"
           bash test/run-test.sh

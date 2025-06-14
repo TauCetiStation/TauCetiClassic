@@ -5,15 +5,26 @@
 	var/health = 100 	//A mob's health
 
 
-	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
-	var/bruteloss = 0.0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
-	var/oxyloss = 0.0	//Oxygen depravation damage (no air in lungs)
-	var/toxloss = 0.0	//Toxic damage caused by being poisoned or radiated
-	var/fireloss = 0.0	//Burn damage caused by being way too hot, too cold or burnt.
-	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
-	var/halloss = 0		//Hallucination damage. 'Fake' damage obtained through hallucinating or the holodeck. Sleeping should cause it to wear off.
+	// Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
+	VAR_PROTECTED/bruteloss = 0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
+	VAR_PROTECTED/oxyloss = 0		//Oxygen depravation damage (no air in lungs)
+	VAR_PROTECTED/toxloss = 0		//Toxic damage caused by being poisoned or radiated
+	VAR_PROTECTED/fireloss = 0		//Burn damage caused by being way too hot, too cold or burnt.
+	VAR_PROTECTED/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
+	VAR_PROTECTED/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
+	VAR_PROTECTED/halloss = 0		//Hallucination damage. 'Fake' damage obtained through hallucinating or the holodeck. Sleeping should cause it to wear off.
 
+	// damage modificators per damage type
+	var/datum/modval/mob_brute_mod = new (base_value = 1)
+	var/datum/modval/mob_burn_mod = new (base_value = 1)
+	var/datum/modval/mob_oxy_mod = new (base_value = 1)
+	var/datum/modval/mob_tox_mod = new (base_value = 1)
+	var/datum/modval/mob_clone_mod = new (base_value = 1)
+	var/datum/modval/mob_brain_mod = new (base_value = 1)
+
+	// this used as multiplicative mod of every other damage modval
+	// change it if you want to affect all damage at once
+	var/datum/modval/mob_general_damage_mod = new (base_value = 1)
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
@@ -41,6 +52,8 @@
 
 	var/tesla_ignore = FALSE
 	var/list/butcher_results = null
+
+	var/list/implants // currently only carbons can get implants, declared here to avoid typecasting
 
 	var/list/recent_tastes = list()
 	var/lasttaste = 0 // Prevent tastes spam

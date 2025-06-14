@@ -47,7 +47,6 @@
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(M, "<span class='userdanger'>[user.real_name] your master now, assist them even if it costs you your new life!</span>")
 	equip_roman_skeleton(M)
-	M.regenerate_icons()
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
 /obj/item/device/necromantic_stone/proc/check_spooky()
@@ -127,7 +126,7 @@
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 
-	if(H.ismindprotect())
+	if(ismindprotect(H))
 		to_chat(H, "<span class='notice'>Something prevents you from becoming a magic girl that you've allways dreamed of</span>")
 		return
 

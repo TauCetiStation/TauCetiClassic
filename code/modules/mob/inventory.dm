@@ -186,7 +186,6 @@ var/global/list/slot_equipment_priority = list(
 
 		l_hand = W	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_L_HAND)
 		W.slot_equipped = SLOT_L_HAND
 //		l_hand.screen_loc = ui_lhand
@@ -215,7 +214,6 @@ var/global/list/slot_equipment_priority = list(
 
 		r_hand = W
 		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_R_HAND)
 		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
@@ -251,7 +249,6 @@ var/global/list/slot_equipment_priority = list(
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
 		W.slot_equipped = initial(W.slot_equipped)
 		return 0
@@ -339,7 +336,6 @@ var/global/list/slot_equipment_priority = list(
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
-	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 
 	if(isitem(O))

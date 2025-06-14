@@ -66,7 +66,7 @@
 	var/obj/structure/blob/factory/factory = null
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/Login()
+/mob/living/simple_animal/hostile/blob/LateLogin()
 	. = ..()
 	if(!client)
 		return
@@ -196,7 +196,7 @@
 	icon = H.icon
 	icon_state = "husk_s"
 	H.h_style = null
-	H.update_hair()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 	copy_overlays(H, TRUE)
 	add_overlay(image('icons/mob/blob.dmi', icon_state = "blob_head"))
 	H.loc = src
@@ -275,7 +275,7 @@
 		/atom/movable/screen/blob_power/blobbernaut,
 		))
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Login()
+/mob/living/simple_animal/hostile/blob/blobbernaut/LateLogin()
 	..()
 	update_hud()
 

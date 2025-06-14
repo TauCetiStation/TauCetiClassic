@@ -389,6 +389,21 @@
 	for(var/i in 1 to 4)
 		new /obj/item/clothing/head/radiation(src)
 
+/obj/structure/closet/crate/surplus_crate
+	icon_state = "syndicrate"
+	icon_opened = "syndicrateopen"
+	icon_closed = "syndicrate"
+	
+/obj/structure/closet/crate/surplus_crate_team
+	icon_state = "gorlexcrate"
+	icon_opened = "gorlexcrateopen"
+	icon_closed = "gorlexcrate"
+
+/obj/structure/closet/crate/surplus_crate_super
+	icon_state = "gorlex_weaponcrate"
+	icon_opened = "gorlex_weaponcrateopen"
+	icon_closed = "gorlex_weaponcrate"
+
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"

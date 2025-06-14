@@ -179,7 +179,7 @@
 				var/going_to_explode = 0
 				if(H.ClumsyProbabilityCheck(50))
 					going_to_explode = 1
-				if(chambered && chambered.crit_fail && prob(10))
+				if(chambered && chambered.crit_fail && !user.mood_prob(90))
 					going_to_explode = 1
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)

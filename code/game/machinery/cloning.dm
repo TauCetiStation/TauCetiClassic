@@ -81,24 +81,6 @@
 
 	return selected
 
-//Health Tracker Implant
-
-/obj/item/weapon/implant/health
-	name = "health implant"
-	cases = list("имплант здоровья", "импланта здоровья", "импланту здоровья", "имплант здоровья", "имплантом здоровья", "импланте здоровья")
-	var/healthstring = ""
-
-/obj/item/weapon/implant/health/proc/sensehealth()
-	if (!src.implanted)
-		return "ERROR"
-	else
-		if(isliving(src.implanted))
-			var/mob/living/L = src.implanted
-			src.healthstring = "[round(L.getOxyLoss())] - [round(L.getFireLoss())] - [round(L.getToxLoss())] - [round(L.getBruteLoss())]"
-		if (!src.healthstring)
-			src.healthstring = "ERROR"
-		return src.healthstring
-
 /obj/machinery/clonepod/examine(mob/user)
 	if(..(user, 3))
 		if ((isnull(occupant)) || (stat & NOPOWER))
@@ -190,11 +172,8 @@
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
-	if(stat & NOPOWER) //Autoeject if power is lost
-		if (src.occupant)
-			src.locked = 0
-			go_out()
-		return
+	if(stat & NOPOWER) //Kill if power is lost
+		malfunction()
 
 	if((src.occupant) && (src.occupant.loc == src))
 
@@ -204,7 +183,7 @@
 			connected_message("Клон отбракован: мёртв.")
 			return
 
-		else if(src.occupant.cloneloss > (100 - src.heal_level))
+		else if(occupant.getCloneLoss() > (100 - src.heal_level))
 			occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
@@ -229,7 +208,7 @@
 			use_power(7500) //This might need tweaking.
 			return
 
-		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
+		else if((occupant.getCloneLoss() <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
 			connected_message("Процесс клонирования завершён.")
 			src.locked = 0
 			go_out()
@@ -315,8 +294,8 @@
 		return
 
 	if (src.mess) //Clean that mess and dump those gibs!
-		src.mess = 0
-		gibs(src.loc)
+		src.mess = FALSE
+		new /obj/effect/gibspawner/generic(get_turf(loc))
 		src.icon_state = "pod_0"
 		return
 
@@ -339,7 +318,7 @@
 /obj/machinery/clonepod/proc/malfunction()
 	if(src.occupant)
 		connected_message("Критическая ошибка!")
-		src.mess = 1
+		src.mess = TRUE
 		src.icon_state = "pod_g"
 		occupant.ghostize()
 		spawn(5)

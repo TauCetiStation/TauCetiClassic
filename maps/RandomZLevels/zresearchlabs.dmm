@@ -1153,8 +1153,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "dl" = (
-/obj/structure/table,
-/obj/machinery/implantchair,
+/obj/structure/stool/bed/chair/electrotherapy,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1326,6 +1325,12 @@
 "dK" = (
 /obj/structure/table,
 /obj/item/pizzabox,
+/obj/item/weapon/paper{
+	icon_state = "paper_words";
+	info = "Study of the Soghun genome has proven successful. Using their blood as a base, we have managed to develop a series of nanoaugmentations that operate on a biological basis. With it, we can supply our commandos with implants that would give them the strength of at least ten Soghun, or the combat skills of many more. Further research is required to develop safer solutions, but the soldiers seem receptive to the current batch of test implants. They are to be kept under watch at all times in their quarters.";
+	name = "Research Notes";
+	text = "p"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -5354,7 +5359,7 @@
 "mO" = (
 /obj/machinery/atmospherics/pipe/simple{
 	color = "blue";
-	icon_state = "intact-b-f";
+	icon_state = "intact-b-f"
 	},
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/chefs_recipes,
@@ -8743,6 +8748,17 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
+"wI" = (
+/obj/item/weapon/paper{
+	icon_state = "paper_words";
+	info = "Study of the Soghun genome has proven successful. Using their blood as a base, we have managed to develop a series of nanoaugmentations that operate on a biological basis. With it, we can supply our commandos with implants that would give them the strength of at least ten Soghun, or the combat skills of many more. Further research is required to develop safer solutions, but the soldiers seem receptive to the current batch of test implants. They are to be kept under watch at all times in their quarters.";
+	name = "Research Notes";
+	text = "p"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/labs/researchdivision)
 "xl" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical";
@@ -33376,7 +33392,7 @@ bN
 bN
 bN
 bN
-bN
+wI
 bN
 dJ
 bG

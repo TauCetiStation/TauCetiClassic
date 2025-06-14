@@ -15,11 +15,9 @@
 	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/research = SKILL_LEVEL_NOVICE), text_target = src))
 		return
 	var/mob/living/carbon/C = M
-	if (ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.species && H.species.flags[NO_BLOOD])
-			report("Scan aborted: The target does not have blood.", user)
-			return
+	if (HAS_TRAIT(C, TRAIT_NO_BLOOD))
+		report("Scan aborted: The target does not have blood.", user)
+		return
 
 	if(!C.antibodies)
 		report("Scan Complete: No antibodies detected.", user)

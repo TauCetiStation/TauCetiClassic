@@ -3465,7 +3465,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8063,7 +8063,8 @@
 	dir = 4
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -9036,6 +9037,7 @@
 /area/station/maintenance/auxsolarport)
 "aoM" = (
 /obj/machinery/door/airlock{
+	id_tag = "toilet115";
 	name = "Toilet"
 	},
 /obj/machinery/door/firedoor,
@@ -15737,14 +15739,14 @@
 /obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -25
-	},
 /obj/machinery/camera{
 	c_tag = "Chief Engineer's Office";
 	dir = 4;
 	network = list("SS13","Engineering")
+	},
+/obj/machinery/windowtint{
+	id = "CE";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -16592,6 +16594,12 @@
 "aCD" = (
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = 32
+	},
+/obj/machinery/door_control{
+	id = "toilet111";
+	name = "toilet lock";
+	pixel_y = -26;
+	specialfunctions = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -18575,7 +18583,8 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -20354,7 +20363,8 @@
 "aJQ" = (
 /obj/machinery/door/airlock{
 	dir = 4;
-	name = "Unit 2"
+	id_tag = "toilet111";
+	name = "toilet cabin"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -20529,6 +20539,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "toilet114";
+	name = "toilet lock";
+	pixel_x = 26;
+	specialfunctions = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -24427,6 +24443,10 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -28;
+	pixel_y = 5
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -24500,10 +24520,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -25
-	},
 /obj/machinery/camera{
 	c_tag = "Toxins Lab South";
 	dir = 4;
@@ -24512,6 +24528,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6
 	},
 /turf/simulated/floor,
 /area/station/rnd/mixing)
@@ -24612,7 +24632,7 @@
 	},
 /area/station/medical/hallway)
 "aRD" = (
-/obj/structure/sign/departments/medbay/lifestar{
+/obj/structure/sign/departments/medbay{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -25279,8 +25299,9 @@
 /area/station/rnd/hor)
 "aSU" = (
 /obj/structure/closet/secure_closet/RD,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
+/obj/machinery/windowtint{
+	id = "RD";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -26854,8 +26875,7 @@
 	pixel_y = -30
 	},
 /obj/machinery/light_switch{
-	pixel_x = -23;
-	pixel_y = -6
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -27031,9 +27051,10 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "RD"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
@@ -29184,9 +29205,10 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "RD"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
@@ -29201,9 +29223,10 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "RD"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
@@ -29320,10 +29343,6 @@
 	},
 /area/station/cargo/qm)
 "aZO" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Research Director";
-	req_access = list(30)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 2;
@@ -29338,6 +29357,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/command{
+	name = "Research Director";
+	req_access = list(30)
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -30242,13 +30265,11 @@
 /area/station/bridge/meeting_room)
 "bbv" = (
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/sign/directions/supply{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 36
 	},
@@ -34988,10 +35009,6 @@
 /area/station/bridge/captain_quarters)
 "bkh" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 39;
-	pixel_y = 1
-	},
 /obj/item/weapon/pinpointer/advpinpointer,
 /obj/item/weapon/disk/nuclear,
 /obj/structure/bobross{
@@ -35000,6 +35017,10 @@
 /obj/machinery/camera{
 	c_tag = "Captain's Office";
 	dir = 8
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -35069,10 +35090,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "bkp" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -35082,6 +35099,11 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -43086,17 +43108,14 @@
 	icon_state = "4-8"
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
@@ -56579,6 +56598,12 @@
 /area/station/construction/assembly_line)
 "bZH" = (
 /obj/machinery/light/small,
+/obj/machinery/door_control{
+	id = "toilet116";
+	name = "toilet lock";
+	pixel_x = 26;
+	specialfunctions = 4
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -57420,7 +57445,6 @@
 /area/station/security/main)
 "cdi" = (
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -8
 	},
@@ -57994,14 +58018,15 @@
 	},
 /area/station/engineering/engine)
 "cfi" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -58013,14 +58038,15 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -65977,12 +66003,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/engineering)
 "cAX" = (
-/obj/machinery/door/airlock/command/glass{
-	dir = 4;
-	id_tag = "CMO_door";
-	name = "Chief Medical Officer";
-	req_access = list(40)
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
@@ -66004,6 +66024,12 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command{
+	dir = 4;
+	id_tag = "CMO_door";
+	name = "Chief Medical Officer";
+	req_access = list(40)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -67777,6 +67803,7 @@
 /area/station/aisat/antechamber_interior)
 "cGE" = (
 /obj/machinery/door/airlock{
+	id_tag = "toilet116";
 	name = "Toilet"
 	},
 /obj/machinery/door/firedoor,
@@ -70401,6 +70428,12 @@
 "dFe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door_control{
+	id = "toilet115";
+	name = "toilet lock";
+	pixel_x = 26;
+	specialfunctions = 4
+	},
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
 "dHv" = (
@@ -70474,9 +70507,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CMO"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
@@ -71527,9 +71561,10 @@
 	icon_state = "1-2"
 	},
 /obj/structure/cable,
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CMO"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
@@ -71718,9 +71753,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CMO"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
@@ -72202,10 +72238,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "fIV" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Chief Engineer";
-	req_access = list(56)
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -72229,6 +72261,10 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/command{
+	name = "Chief Engineer";
+	req_access = list(56)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -74412,15 +74448,12 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	pixel_y = 24
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 40
 	},
@@ -74445,17 +74478,14 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 40
 	},
@@ -75058,16 +75088,13 @@
 /area/station/hallway/primary/aft)
 "iEb" = (
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	pixel_y = -40
 	},
 /obj/machinery/door/firedoor{
@@ -75630,17 +75657,14 @@
 "jeb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_x = 32;
 	pixel_y = -8
@@ -76031,18 +76055,15 @@
 "jAb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_x = 32;
 	pixel_y = -8
@@ -76400,6 +76421,7 @@
 "jVb" = (
 /obj/machinery/door/airlock{
 	dir = 4;
+	id_tag = "toilet117";
 	name = "Private Restroom"
 	},
 /turf/simulated/floor{
@@ -76512,6 +76534,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "toilet117";
+	name = "toilet lock";
+	pixel_x = 28;
+	specialfunctions = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -77645,16 +77673,13 @@
 /area/space)
 "ljb" = (
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = -40
 	},
@@ -77668,17 +77693,14 @@
 /area/station/engineering/engine)
 "lkb" = (
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -24
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -32
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = -40
 	},
@@ -77774,10 +77796,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "lsD" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
@@ -77794,6 +77812,11 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -78555,10 +78578,6 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -78566,6 +78585,11 @@
 	},
 /obj/structure/cable{
 	dir = 8
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "RD"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
@@ -78653,23 +78677,27 @@
 	},
 /area/station/medical/reception)
 "mih" = (
-/obj/item/portrait/captain{
-	pixel_x = -32
-	},
 /obj/structure/filingcabinet/chestdrawer/black{
 	req_access = list(56)
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Engineering"
 	},
-/obj/structure/bookcase/shelf{
-	pixel_y = 32
-	},
 /obj/item/weapon/book/manual/wiki/possible_threats,
 /obj/item/globe,
 /obj/item/weapon/book/manual/wiki/engineering_singularity,
 /obj/item/weapon/book/manual/wiki/engineering_tesla,
 /obj/item/weapon/book/manual/wiki/atmospipes,
+/obj/item/portrait/captain{
+	pixel_y = 32
+	},
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -78690,6 +78718,7 @@
 /area/station/engineering/engine)
 "mjb" = (
 /obj/machinery/door/airlock{
+	id_tag = "toilet113";
 	name = "Unit 2"
 	},
 /turf/simulated/floor{
@@ -78754,6 +78783,7 @@
 /area/station/civilian/chapel)
 "mmb" = (
 /obj/machinery/door/airlock{
+	id_tag = "toilet114";
 	name = "Unit 1"
 	},
 /turf/simulated/floor{
@@ -79078,10 +79108,6 @@
 /area/station/medical/genetics)
 "mGx" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -79090,6 +79116,11 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "RD"
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
@@ -79558,6 +79589,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"nkE" = (
+/obj/machinery/door/airlock{
+	dir = 4;
+	id_tag = "toilet112";
+	name = "toilet cabin"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "nlb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -80177,6 +80218,12 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "toilet113";
+	name = "toilet lock";
+	pixel_x = -26;
+	specialfunctions = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -81275,6 +81322,10 @@
 	network = list("SS13","Medical")
 	},
 /obj/structure/closet/secure_closet/CMO,
+/obj/machinery/windowtint{
+	id = "CMO";
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -81420,11 +81471,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
-	},
 /obj/machinery/computer/crew{
 	dir = 8
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -81902,8 +81954,7 @@
 /obj/item/weapon/lighter/zippo,
 /obj/item/weapon/storage/fancy/cigarettes,
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 6;
-	pixel_y = 27
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -82266,16 +82317,17 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "qwt" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -85086,7 +85138,7 @@
 	name = "Shower"
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/bikehorn/rubberducky/cap,
 /obj/structure/curtain/open/shower,
 /obj/machinery/shower{
 	dir = 1
@@ -85496,7 +85548,6 @@
 /area/station/medical/genetics)
 "udd" = (
 /obj/structure/sign/barber{
-	buildable_sign = 0;
 	pixel_x = -13
 	},
 /turf/simulated/floor{
@@ -86927,13 +86978,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
-	},
 /obj/structure/disposalpipe/sortjunction{
 	dir = 2;
 	name = "HoP Office";
 	sortType = "HoP Office"
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -87280,6 +87332,17 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
+"xFw" = (
+/obj/machinery/door_control{
+	id = "toilet112";
+	name = "toilet lock";
+	pixel_y = 26;
+	specialfunctions = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "xGD" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -122449,7 +122512,7 @@ aEa
 rrN
 tkb
 aEa
-aJQ
+nkE
 aEa
 aJQ
 aEa
@@ -122706,7 +122769,7 @@ aEa
 thb
 aEa
 aEa
-thb
+xFw
 aEa
 aCD
 aEa
