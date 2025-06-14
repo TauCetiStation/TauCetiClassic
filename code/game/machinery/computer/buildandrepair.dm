@@ -45,8 +45,11 @@
 
 /obj/item/weapon/circuitboard/get_name(mob/user)
 	. = ..()
-	if(details && . == name && is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED)))
+	if(details && . == name && check_skill(user))
     	return details
+
+/obj/item/weapon/circuitboard/proc/check_skill(mob/user)
+	return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED))
 
 /obj/item/weapon/circuitboard/turbine_computer
 	details = "circuit board (Turbine Computer)"
