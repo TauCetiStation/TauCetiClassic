@@ -259,6 +259,24 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	. = ..()
 	reagents.add_reagent("water",500)
 
+/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W))
+		default_unfasten_wrench(user, W)
+		return
+	else if(isscrewing(W))
+		user.SetNextMove(CLICK_CD_RAPID)
+		if(reagents.total_volume > 0)
+			user.visible_message("[user] starts loosening the valve on [src] with [W].", \
+				"You start loosening the valve on [src] with [W], causing water to leak out.")
+			if(do_after(user, 30, target = src))
+				user.visible_message("<span class='notice'>[user] loosens the valve on [src], causing water to leak out.</span>", \
+					"<span class='notice'>You loosen the valve on [src], causing water to leak out.</span>")
+				leak(amount_per_transfer_from_this * 5)
+		else
+			to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		return
+	else
+		return ..()
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
