@@ -84,8 +84,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/atom_init()
 	. = ..()
-	flags |= NOREACT // so it doesn't react until you light it
-	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
+	flags |= NOREACT
+	create_reagents(chem_volume)
+	if(lit)
+		start_glow()
+
+/obj/item/clothing/mask/cigarette/proc/start_glow()
+	set_light(0.5, 3, LIGHT_COLOR_FIRE)
+
+/obj/item/clothing/mask/cigarette/proc/stop_glow()
+	set_light(0)
 
 /obj/item/clothing/mask/cigarette/get_current_temperature()
 	if(lit)
@@ -149,6 +157,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
+		start_glow()
 		START_PROCESSING(SSobj, src)
 
 
@@ -207,6 +216,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/mob/living/M = loc
 		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		M.remove_from_mob(src)	//un-equip it so the overlays can update
+	lit = 0
+	stop_glow()
 	STOP_PROCESSING(SSobj, src)
 	qdel(src)
 
