@@ -117,7 +117,7 @@
 	return ..()
 
 /obj/structure/reflector/proc/get_reflection(srcdir, pdir)
-	return 0
+	return FALSE
 
 /obj/structure/reflector/verb/rotate()
 	set name = "Rotate"
@@ -158,7 +158,7 @@
 			return (pdir == NORTH) ? EAST : (pdir == WEST) ? SOUTH : 0
 		if(WEST)
 			return (pdir == NORTH) ? WEST : (pdir == EAST) ? SOUTH : 0
-	return 0
+	return FALSE
 
 //DOUBLE
 /obj/structure/reflector/double
@@ -183,7 +183,7 @@
 				if(WEST) return SOUTH
 				if(SOUTH) return WEST
 				if(EAST) return NORTH
-	return 0
+	return FALSE
 
 //BOX
 /obj/structure/reflector/box
