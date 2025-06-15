@@ -44,7 +44,7 @@ Notes:
 		owner = C
 		var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/jquery)
 		stuff.send(owner)
-		owner << browse(file2text(file), "window=[control]")
+		owner << browse(file2text(file), "window=[control];size=1x1")
 	..()
 
 #define GET_RATIO(C) ((C.window_pixelratio != 1) ? C.window_pixelratio : (C.dpi != 1 ? C.dpi : 1))
