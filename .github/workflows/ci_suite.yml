@@ -8,7 +8,7 @@ on:
       - master
 env:
   BYOND_MAJOR: 516
-  BYOND_MINOR: 1664
+  BYOND_MINOR: 1663
   SPACEMAN_DMM_VERSION: suite-1.10
 jobs:
   DreamChecker:
