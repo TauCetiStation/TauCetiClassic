@@ -12,6 +12,7 @@ import {
   updateSettings,
 } from './actions';
 import { FONTS, SETTINGS_TABS } from './constants';
+import { storage } from 'common/storage';
 
 const initialState = {
   version: 1,
@@ -28,6 +29,8 @@ const initialState = {
     visible: false,
     activeTab: SETTINGS_TABS[0].id,
   },
+  // Chat persistence setting - default is false, but use stored value if available
+  chatSaving: storage.get('chat-saving-enabled') === true,
 };
 
 export const settingsReducer = (state = initialState, action) => {

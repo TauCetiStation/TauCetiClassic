@@ -65,7 +65,7 @@
 		PM.update_effects(client)
 
 		client.screen += PM
-		client.screen += PM.generate_relays()
+		client.screen += PM.generate_relays(assigned_map)
 
 /atom/movable/screen/map_view/proc/hide_from(client/client)
 	client.screen -= background
