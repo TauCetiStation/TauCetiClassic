@@ -9,7 +9,7 @@
 	desc = "A frame to create a reflector.\n<span class='notice'>Use <b>5</b> sheets of <b>glass</b> to create a 1 way reflector.\nUse <b>10</b> sheets of <b>reinforced glass</b> to create a 2 way reflector.\nUse <b>1 diamond</b> to create a reflector cube.</span>"
 	anchored = FALSE
 	density = TRUE
-	layer = 3
+	layer = BELOW_OBJ_LAYER
 	var/finished = FALSE
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
@@ -32,12 +32,10 @@
 		reflected.yo = reflect_turf.y - reflector_turf.y
 		reflected.xo = reflect_turf.x - reflector_turf.x
 		reflected.process()
-	else
-		visible_message("<span class='notice'>[src] поглощает [P]!</span>")
 
 	qdel(P)
 
-	return -1
+	return PROJECTILE_FORCE_MISS
 
 /obj/structure/reflector/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -45,53 +43,47 @@
 
 	//Finishing the frame
 	var/obj/item/stack/sheet/sheet = I
-	if(istype(sheet, /obj/item/stack/sheet/glass))
+	if(istype(sheet))
 		add_fingerprint(user)
 		if(finished)
 			to_chat(user, "<span class='warning'>The reflector is already completed!</span>")
 			return TRUE
-		if(!sheet.use(SINGLE_GLASS_COST))
-			to_chat(user, "<span class='warning'>You need at least [SINGLE_GLASS_COST] sheets of glass to create a reflector!</span>")
-			return TRUE
-		var/obj/structure/reflector/single/reflector = new(loc)
-		transfer_fingerprints_to(reflector)
-		reflector.add_fingerprint(user)
-		qdel(src)
-		return TRUE
 
-	if(istype(sheet, /obj/item/stack/sheet/rglass))
-		add_fingerprint(user)
-		if(finished)
-			to_chat(user, "<span class='warning'>The reflector is already completed!</span>")
+		if(istype(sheet, /obj/item/stack/sheet/glass))
+			if(!sheet.use(SINGLE_GLASS_COST))
+				to_chat(user, "<span class='warning'>You need at least [SINGLE_GLASS_COST] sheets of glass to create a reflector!</span>")
+				return TRUE
+			var/obj/structure/reflector/single/reflector = new(loc)
+			transfer_fingerprints_to(reflector)
+			reflector.add_fingerprint(user)
+			qdel(src)
 			return TRUE
-		if(!sheet.use(DOUBLE_GLASS_COST))
-			to_chat(user, "<span class='warning'>You need at least [DOUBLE_GLASS_COST] sheets of reinforced glass to create a double reflector!</span>")
-			return TRUE
-		var/obj/structure/reflector/double/reflector = new(loc)
-		transfer_fingerprints_to(reflector)
-		reflector.add_fingerprint(user)
-		qdel(src)
-		return TRUE
 
-	if(istype(sheet, /obj/item/stack/sheet/mineral/diamond))
-		add_fingerprint(user)
-		if(finished)
-			to_chat(user, "<span class='warning'>The reflector is already completed!</span>")
+		if(istype(sheet, /obj/item/stack/sheet/rglass))
+			if(!sheet.use(DOUBLE_GLASS_COST))
+				to_chat(user, "<span class='warning'>You need at least [DOUBLE_GLASS_COST] sheets of reinforced glass to create a double reflector!</span>")
+				return TRUE
+			var/obj/structure/reflector/double/reflector = new(loc)
+			transfer_fingerprints_to(reflector)
+			reflector.add_fingerprint(user)
+			qdel(src)
 			return TRUE
-		if(!sheet.use(BOX_DIAMOND_COST))
-			to_chat(user, "<span class='warning'>You need at least [BOX_DIAMOND_COST] diamond to create a reflector box!</span>")
+
+		if(istype(sheet, /obj/item/stack/sheet/mineral/diamond))
+			if(!sheet.use(BOX_DIAMOND_COST))
+				to_chat(user, "<span class='warning'>You need at least [BOX_DIAMOND_COST] diamond to create a reflector box!</span>")
+				return TRUE
+			var/obj/structure/reflector/box/reflector = new(loc)
+			transfer_fingerprints_to(reflector)
+			reflector.add_fingerprint(user)
+			qdel(src)
 			return TRUE
-		var/obj/structure/reflector/box/reflector = new(loc)
-		transfer_fingerprints_to(reflector)
-		reflector.add_fingerprint(user)
-		qdel(src)
-		return TRUE
 
 	if(iswrenching(I))
 		if(anchored)
 			to_chat(user, "Unweld [src] first!")
 			return TRUE
-		if(!I.use_tool(src, user, 80, volume = 50))
+		if(!I.use_tool(src, user, 8 SECONDS, volume = 50))
 			return TRUE
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
@@ -102,13 +94,13 @@
 	if(iswelding(I))
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start cutting [src] free from the floor...</span>")
-			if(!I.use_tool(src, user, 20, volume = 50))
+			if(!I.use_tool(src, user, 2 SECONDS, volume = 50))
 				return TRUE
 			to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
 			anchored = FALSE
 		else
 			to_chat(user, "<span class='notice'>You start welding [src] to the floor...</span>")
-			if(!I.use_tool(src, user, 20, volume = 50))
+			if(!I.use_tool(src, user, 2 SECONDS, volume = 50))
 				return TRUE
 			to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 			anchored = TRUE
@@ -148,7 +140,6 @@
 	finished = TRUE
 
 /obj/structure/reflector/single/get_reflection(srcdir, pdir)
-
 	switch(srcdir)
 		if(NORTH)
 			return (pdir == SOUTH) ? WEST : (pdir == EAST) ? NORTH : 0
@@ -169,7 +160,6 @@
 	finished = TRUE
 
 /obj/structure/reflector/double/get_reflection(srcdir, pdir)
-
 	switch(srcdir)
 		if(NORTH, SOUTH)
 			switch(pdir)
@@ -194,7 +184,6 @@
 	finished = TRUE
 
 /obj/structure/reflector/box/get_reflection(srcdir, pdir)
-
 	return srcdir
 
 #undef SINGLE_GLASS_COST
