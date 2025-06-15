@@ -1324,6 +1324,7 @@
 #include "code\game\objects\structures\windows\window_thin.dm"
 #include "code\game\objects\structures\windows\windowsill.dm"
 #include "code\game\objects\structures\windows\windowtint.dm"
+#include "code\game\objects\structures\reflector.dm"
 #include "code\game\response_team\response_team.dm"
 #include "code\game\response_team\teams.dm"
 #include "code\game\turfs\simulated.dm"
