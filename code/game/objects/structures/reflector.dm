@@ -95,7 +95,7 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(src.loc, 5)
+		new /obj/item/stack/sheet/metal(loc, 5)
 		qdel(src)
 		return TRUE
 
