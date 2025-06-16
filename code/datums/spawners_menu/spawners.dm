@@ -214,7 +214,7 @@
 	shuffle(filtered_candidates)
 
 	for(var/mob/dead/M in filtered_candidates)
-		if(positions > 0 && can_spawn(M))
+		if(positions > 0)
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
@@ -224,6 +224,9 @@
 
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
+	if(!can_spawn(spectator))
+		positions++
+		return
 	var/client/C = spectator.client
 
 	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners

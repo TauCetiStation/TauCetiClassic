@@ -15,6 +15,7 @@
 		"guest" = IsGuestKey(C.key),
 		"password_authenticated" = C.password_authenticated,
 		"hub_authenticated" = C.hub_authenticated,
+		"guest_lobby_warning" = config.guest_mode == GUEST_LOBBY,
 	)
 
 	return data
