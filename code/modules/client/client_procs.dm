@@ -345,11 +345,11 @@ var/global/list/blacklisted_builds = list(
 
 	log_client_to_db()
 
-	acquire_dpi()
-
 	send_resources()
 
 	generate_clickcatcher()
+
+	update_dpi()
 
 	// Set config based title for main window
 	if (config.server_name)
@@ -679,14 +679,13 @@ var/global/list/blacklisted_builds = list(
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(getFilesSlow), src, SSassets.preload, FALSE), 5 SECONDS)
 
-/client/proc/acquire_dpi()
+/client/proc/update_pixel_ratio(number)
+	window_pixelratio = number
+
+/client/proc/update_dpi()
 	set waitfor = FALSE
 
-	// TODO: Remove with 516
-	if(byond_version < 516)
-		return
-
-	window_pixelratio = text2num(winget(src, null, "dpi"))
+	dpi = text2num(winget(src, null, "dpi"))
 
 /client/proc/generate_clickcatcher()
 	if(!void)

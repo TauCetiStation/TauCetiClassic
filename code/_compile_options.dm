@@ -32,7 +32,7 @@
 #error You need version 514 or higher
 #endif
 
-#define RECOMMENDED_VERSION 514
+#define RECOMMENDED_VERSION 516
 
 
 // 515 split call for external libraries into call_ext
