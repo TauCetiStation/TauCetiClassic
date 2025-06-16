@@ -91,6 +91,8 @@
 	if(href_list["lobby_ready"])
 		if(config.alt_lobby_menu)
 			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
@@ -101,6 +103,8 @@
 
 	if(href_list["lobby_be_special"])
 		if(config.alt_lobby_menu)
+			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
 			return
 		if(client.prefs.selected_quality_name)
 			var/datum/quality/quality = SSqualities.qualities_by_type[SSqualities.registered_clients[client.ckey]]
@@ -120,6 +124,8 @@
 		return
 
 	if(href_list["lobby_observe"])
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
 			return
@@ -136,6 +142,8 @@
 	if(href_list["lobby_join"])
 		if(config.alt_lobby_menu)
 			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
@@ -150,6 +158,8 @@
 
 	if(href_list["event_join"])
 		if(!config.alt_lobby_menu)
+			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
 			return
 		if(!spawners_menu)
 			spawners_menu = new()
