@@ -40,6 +40,7 @@
 #include "code\__DEFINES\colors.dm"
 #include "code\__DEFINES\combat.dm"
 #include "code\__DEFINES\combos.dm"
+#include "code\__DEFINES\config.dm"
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\cooldowns.dm"
 #include "code\__DEFINES\damage_organs.dm"
