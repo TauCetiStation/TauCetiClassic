@@ -90,7 +90,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		start_glow()
 
 /obj/item/clothing/mask/cigarette/proc/start_glow()
-	set_light(0.5, 3, LIGHT_COLOR_FIRE)
+	set_light(1.23, 2, LIGHT_COLOR_FIRE)
 
 /obj/item/clothing/mask/cigarette/proc/stop_glow()
 	set_light(0)
