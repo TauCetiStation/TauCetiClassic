@@ -740,6 +740,12 @@
 	desc = "Экспериментальные кибер-импланты от Gilthari Exports"
 	startswith = list(/obj/item/gland/heals = 1, /obj/item/gland/pop = 1, /obj/item/gland/ventcrawling = 1, /obj/item/gland/egg = 1, /obj/item/gland/bodysnatch = 1)
 
+/obj/item/weapon/storage/box/expimplant/atom_init()
+	..()
+
+	for(var/obj/item/gland/G in contents)
+		G.Start()
+
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box
 	name = "syndie box"
