@@ -514,6 +514,11 @@ SUBSYSTEM_DEF(job)
 		for(var/obj/item/weapon/storage/backpack/BACKP in H)
 			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
 
+	// Kulich for everyone!
+	if(SSholiday.holidays[EASTER])
+		for(var/obj/item/weapon/storage/backpack/BACKP in H)
+			new /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/kulich(BACKP)
+
 	//Give custom items
 	give_custom_items(H, job)
 
