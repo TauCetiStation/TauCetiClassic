@@ -6,7 +6,7 @@
 	storedPlasma = 100
 	max_plasma = 150
 	speed = -1
-	icon_state = "alienh_s"	//default invisibility
+	icon_state = "hunter_walking"	//default invisibility
 	var/invisible = FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/atom_init()

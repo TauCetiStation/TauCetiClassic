@@ -1,7 +1,7 @@
 /mob/living/carbon/xenomorph
 	name = "alien"
 	voice_name = "alien"
-	icon = 'icons/mob/xenomorph.dmi'
+	icon = 'icons/mob/xenomorph_64x64.dmi'
 	gender = NEUTER
 	dna = null
 	faction = "alien"

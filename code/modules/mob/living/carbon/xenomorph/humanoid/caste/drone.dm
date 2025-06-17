@@ -3,7 +3,7 @@
 	caste = "d"
 	maxHealth = 160
 	health = 160
-	icon_state = "aliend_s"
+	icon_state = "drone_walking"
 	plasma_rate = 15
 	speed = 1
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
