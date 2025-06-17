@@ -84,59 +84,64 @@
 	)
 	return data
 
-/obj/item/device/transfer_valve/tgui_act(action, params)
+/obj/item/device/transfer_valve/tgui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
+		return
+
+	var/mob/user = ui.user
+	if(isnull(user))
 		return
 
 	switch(action)
 		if("rightTank")
 			if(isnull(tank_one))
-				var/obj/item/weapon/tank/I = usr.get_active_hand()
+				var/obj/item/weapon/tank/I = user.get_active_hand()
 				if(istype(I))
-					if(usr.drop_from_inventory(I, src))
+					if(user.drop_from_inventory(I, src))
 						tank_one = I
-						to_chat(usr, "<span class='notice'>You attach the tank to the transfer valve.</span>")
+						to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 				else
-					to_chat(usr, "<span class='warning'>You need a gas tank in you active hand to attach it to assembly.</span>")
+					to_chat(user, "<span class='warning'>You need a gas tank in you active hand to attach it to assembly.</span>")
 			else
 				split_gases()
 				valve_open = FALSE
-				tank_one.loc = get_turf(src)
+				tank_one.forceMove(get_turf(src))
 				tank_one = null
 			update_icon()
 		if("leftTank")
 			if(isnull(tank_two))
-				var/obj/item/weapon/tank/I = usr.get_active_hand()
+				var/obj/item/weapon/tank/I = user.get_active_hand()
 				if(istype(I))
-					if(usr.drop_from_inventory(I, src))
+					if(user.drop_from_inventory(I, src))
 						tank_two = I
-						to_chat(usr, "<span class='notice'>You attach the tank to the transfer valve.</span>")
+						to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 				else
-					to_chat(usr, "<span class='warning'>You need a gas tank in you active hand to attach it to assembly.</span>")
+					to_chat(user, "<span class='warning'>You need a gas tank in you active hand to attach it to assembly.</span>")
 			else
 				split_gases()
 				valve_open = FALSE
-				tank_two.loc = get_turf(src)
+				tank_two.forceMove(get_turf(src))
 				tank_two = null
 			update_icon()
 		if("open")
 			toggle_valve()
 		if("device")
 			if(isnull(attached_device))
-				var/obj/item/device/I = usr.get_active_hand()
+				var/obj/item/device/I = user.get_active_hand()
 				if(istype(I))
-					attackby(I, usr)
+					attackby(I, user)
 			else
-				attached_device.loc = get_turf(src)
-				attached_device:holder = null
+				var/obj/item/device/assembly/A = attached_device
 				attached_device = null
+				A.forceMove(get_turf(src))
+				A.holder = null
 			update_icon()
 		if("viewDevice")
 			if(isnull(attached_device))
 				return
-			attached_device.attack_self(usr)
-	add_fingerprint(usr)
+			attached_device.attack_self(user)
+	add_fingerprint(user)
 
 /obj/item/device/transfer_valve/process_activation(obj/item/device/D)
 	if(toggle)

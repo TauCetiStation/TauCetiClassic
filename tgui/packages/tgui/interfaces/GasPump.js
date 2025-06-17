@@ -43,7 +43,7 @@ export const GasPump = (props, context) => {
                 minValue={0}
                 maxValue={max_pressure}
                 value={pressure_set}
-                onDrag={(e, value) =>
+                onChange={(e, value) =>
                   act('set', {
                     rate: value,
                   })

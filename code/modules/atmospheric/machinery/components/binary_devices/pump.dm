@@ -138,9 +138,13 @@ Thus, the two variables affect pump operation are set in New():
 	)
 	return data
 
-/obj/machinery/atmospherics/components/binary/pump/tgui_act(action, params)
+/obj/machinery/atmospherics/components/binary/pump/tgui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
+		return
+
+	var/mob/user = ui.user
+	if(isnull(user))
 		return
 
 	switch(action)
@@ -151,11 +155,10 @@ Thus, the two variables affect pump operation are set in New():
 		if("max")
 			target_pressure = max_pressure_setting
 		if("set")
-			//var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)", "Pressure control", target_pressure) as num
 			target_pressure = between(0, params["rate"], max_pressure_setting)
 
-	usr.set_machine(src)
-	add_fingerprint(usr)
+	user.set_machine(src)
+	add_fingerprint(user)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
