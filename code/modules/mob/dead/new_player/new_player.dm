@@ -67,8 +67,7 @@
 			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
+			stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr || !client)
@@ -76,6 +75,11 @@
 
 	if(href_list["lobby_changelog"])
 		client.changes()
+		return
+
+	if(href_list["lobby_profile"])
+		var/datum/profile_settings/profile = new()
+		profile.tgui_interact(src)
 		return
 
 	if(href_list["lobby_setup"])
@@ -87,6 +91,8 @@
 	if(href_list["lobby_ready"])
 		if(config.alt_lobby_menu)
 			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
@@ -97,6 +103,8 @@
 
 	if(href_list["lobby_be_special"])
 		if(config.alt_lobby_menu)
+			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
 			return
 		if(client.prefs.selected_quality_name)
 			var/datum/quality/quality = SSqualities.qualities_by_type[SSqualities.registered_clients[client.ckey]]
@@ -116,6 +124,8 @@
 		return
 
 	if(href_list["lobby_observe"])
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
 			return
@@ -132,6 +142,8 @@
 	if(href_list["lobby_join"])
 		if(config.alt_lobby_menu)
 			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
@@ -146,6 +158,8 @@
 
 	if(href_list["event_join"])
 		if(!config.alt_lobby_menu)
+			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
 			return
 		if(!spawners_menu)
 			spawners_menu = new()
@@ -406,10 +420,10 @@
 						priority_color = "#ee0000"
 						priorityMessage = "Не требуется"
 				if(job.current_positions && active < job.current_positions)
-					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
 					number_of_extra_line_breaks++
 				else
-					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])</a>"
+					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])</a>"
 				categorizedJobs[jobcat]["jobs"] -= job
 
 			dat += "</fieldset><br>"

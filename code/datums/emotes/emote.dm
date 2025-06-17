@@ -50,7 +50,18 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 	// How long emote cloud will float above character.
 	var/cloud_duration = 3 SECONDS
 
-	var/list/state_checks
+	// If specified, requires a greater degree of consciousness than the stat specified.
+	var/required_stat = null
+	// If specified requires a greater degree of consciousness than the stat specified, when intentionally performing the emote.
+	var/required_intentional_stat = null
+	// If performing mob has the trait, the emote can't be performed.
+	var/list/blocklist_traits = null
+	// If unintentionally permorming mob has the trait, the emote can't be performed.
+	var/list/blocklist_unintentional_traits = null
+	// If the mob doesn't have a usable arm, the emote can't be performed.
+	var/require_usable_hand = FALSE
+	// If the mob doesn't have all bodyparts in the list, the emote can't be performed.
+	var/list/required_bodyparts = null
 
 /datum/emote/proc/get_emote_message_1p(mob/user)
 	return "<i>[message_1p]</i>"
@@ -121,20 +132,58 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 			to_chat(user, "<span class='notice'>You can't emote so much, give it a rest.</span>")
 		return FALSE
 
-	for(var/datum/callback/state as anything in state_checks)
-		if(!state.Invoke(user, intentional))
+	if(!isnull(required_stat) && user.stat > required_stat)
+		if(intentional)
+			to_chat(user, "<span class='notice'>You can't emote in this state.</span>")
+		return FALSE
+
+	if(!isnull(required_intentional_stat) && intentional && user.stat > required_stat)
+		to_chat(user, "<span class='notice'>You can't emote in this state.</span>")
+		return FALSE
+
+	if(blocklist_traits)
+		for(var/trait in blocklist_traits)
+			if(HAS_TRAIT(user, trait))
+				return FALSE
+
+	if(blocklist_unintentional_traits && !intentional)
+		for(var/trait in blocklist_unintentional_traits)
+			if(HAS_TRAIT(user, trait))
+				return FALSE
+
+	if(require_usable_hand)
+		if(user.restrained())
+			if(intentional)
+				to_chat(user, "<span class='notice'>You can't perform this emote while being restrained.</span>")
 			return FALSE
+
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+
+			var/obj/item/organ/external/l_arm = H.get_bodypart(BP_L_ARM)
+			var/obj/item/organ/external/r_arm = H.get_bodypart(BP_R_ARM)
+
+			var/l_arm_usable = l_arm && l_arm.is_usable()
+			var/r_arm_usable = r_arm && r_arm.is_usable()
+
+			if(!l_arm_usable && !r_arm_usable)
+				return FALSE
+
+	if(required_bodyparts && ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		for(var/zone in required_bodyparts)
+			var/obj/item/organ/external/BP = H.get_bodypart(zone)
+			if(!BP)
+				if(intentional)
+					to_chat(H, "<span class='notice'>You can't perform this emote without a [parse_zone(zone)]</span>")
+				return FALSE
 
 	return TRUE
 
 /datum/emote/proc/do_emote(mob/user, emote_key, intentional)
 	LAZYINITLIST(user.next_emote_use)
 	set_cooldown(user.next_emote_use, cooldown, intentional)
-
-	for(var/obj/item/weapon/implant/I in user)
-		if(!I.implanted)
-			continue
-		I.trigger(emote_key, user)
 
 	var/msg_1p = get_emote_message_1p(user)
 	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"

@@ -86,6 +86,7 @@
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 
@@ -124,4 +125,4 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=customitems_moderation;size=600x500")
+	usr << browse(output,"window=customitems_moderation;[get_browse_size_parameter(usr, 600, 500)]")

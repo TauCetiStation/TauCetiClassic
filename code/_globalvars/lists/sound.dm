@@ -9,6 +9,7 @@ var/global/list/SOUNDIN_SPARKS    = list('sound/effects/sparks1.ogg', 'sound/eff
 var/global/list/SOUNDIN_BODYFALL  = list('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
 var/global/list/SOUNDIN_PAGETURN  = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 var/global/list/SOUNDIN_CAN_OPEN  = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+var/global/list/SOUNDIN_MAGBOOTS_TOGGLE = list('sound/effects/magb1.ogg', 'sound/effects/magb2.ogg', 'sound/effects/magb3.ogg')
 var/global/list/SOUNDIN_BONEBREAK = list('sound/effects/bonebreak1.ogg', 'sound/effects/bonebreak2.ogg', 'sound/effects/bonebreak3.ogg', 'sound/effects/bonebreak4.ogg')
 var/global/list/SOUNDIN_RUSTLE    = list('sound/effects/rustle1.ogg', 'sound/effects/rustle2.ogg', 'sound/effects/rustle3.ogg', 'sound/effects/rustle4.ogg', 'sound/effects/rustle5.ogg')
 var/global/list/SOUNDIN_HORROR    = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/hallucinations/wail.ogg', 'sound/effects/screech.ogg', 'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/i_see_you_3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you_1.ogg', 'sound/hallucinations/i_see_you_2.ogg', 'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg', 'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg')
@@ -85,6 +86,8 @@ var/global/list/SOUNDIN_XENOMORPH_SPLITACID = list('sound/voice/xenomorph/spitac
 var/global/list/SOUNDIN_SILICON_PAIN = list('sound/voice/silicon/damage/borg_damage-1.ogg', 'sound/voice/silicon/damage/borg_damage-2.ogg', 'sound/voice/silicon/damage/borg_damage-3.ogg')
 // Beepsky
 var/global/list/SOUNDIN_BEEPSKY = list('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
+// zombies
+var/global/list/SOUNDIN_GROWL = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
 // ----- Misc -----
 var/global/list/SOUNDIN_SCARYSOUNDS = list('sound/weapons/thudswoosh.ogg', 'sound/weapons/guns/gunpulse_Taser.ogg', 'sound/weapons/armbomb.ogg', 'sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg', 'sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg', 'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg', 'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg', 'sound/items/Welder2.ogg','sound/machines/airlock/toggle.ogg', 'sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')

@@ -107,7 +107,7 @@ Class Procs:
 		if(ismob(AM) && differential > vsc.airflow_stun_pressure)
 			var/mob/M = AM
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, playsound_local), null, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
-			if(M.status_flags & GODMODE)
+			if(HAS_TRAIT(M, TRAIT_IMMOVABLE))
 				continue
 			M.airflow_stun()
 

@@ -16,7 +16,10 @@ var/global/it_is_a_snow_day = FALSE
 	it_is_a_snow_day = prob(50)
 
 	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
+		warning("Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
+
+	if(!(/client::authenticate))
+		warning("Byond hub authentication is disabled for clients.")
 
 	global.bridge_secret = world.params["bridge_secret"]
 	world.params = null
@@ -240,9 +243,7 @@ var/global/shutdown_processed = FALSE
 	PreShutdown(end_state)
 
 	for(var/client/C in clients)
-		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C.tgui_panel?.send_roundrestart()
-		C << link(BYOND_JOIN_LINK)
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")
 	shutdown_processed = TRUE
