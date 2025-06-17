@@ -61,6 +61,8 @@
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "Cent. Com. Status Summary"
 			intercept.info = intercepttext
+			var/obj/item/weapon/stamp/centcomm/S = new
+			S.stamp_paper(intercept)
 			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
