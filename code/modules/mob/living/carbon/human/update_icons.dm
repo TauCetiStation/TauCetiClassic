@@ -228,6 +228,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		switch(MA.layer)
 			if(-HAIR_LAYER) // shift hair instead of filter
 				MA = human_update_offset(MA, TRUE)
+			if(ABOVE_LIGHTING_LAYER) // glowing eyes. Fuck, this looks so bad.
+				MA = human_update_offset(MA, TRUE)
 			//if(BODY_INFRONT_LAYER, BODY_BEHIND_LAYER) // todo: need to choice between filter and offset
 			//	MA = human_update_offset(MA)
 			else

@@ -276,7 +276,7 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 // mob signals
-/// from base of mob/Login(): ()
+/// from base of mob/LateLogin(): ()
 #define COMSIG_LOGIN "mob_login"
 /// from base of mob/Logout(): (logout_reason)
 #define COMSIG_LOGOUT "mob_logout"
