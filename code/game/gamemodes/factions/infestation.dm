@@ -178,29 +178,25 @@
 	switch(xeno)
 		if(ALIEN_DRONE)
 			xeno_name = "трутней"
-			xeno_icon_state_live = "drone_walking"
-			xeno_icon_state_dead = "drone_dead"
+			xeno_icon_state_live = "aliend_walking"
+			xeno_icon_state_dead = "aliend_dead"
 		if(ALIEN_SENTINEL)
 			xeno_name = "стражей"
-			xeno_icon_state_live = "sentinel_walking"
-			xeno_icon_state_dead = "sentinel_dead"
+			xeno_icon_state_live = "aliens_walking"
+			xeno_icon_state_dead = "aliens_dead"
 		if(ALIEN_HUNTER)
 			xeno_name = "охотников"
-			xeno_icon_state_live = "hunter_walking"
-			xeno_icon_state_dead = "hunter_dead"
+			xeno_icon_state_live = "alienh_walking"
+			xeno_icon_state_dead = "alienh_dead"
 		if(ALIEN_LARVA)
 			xeno_name = "грудоломов"
 			xeno_icon_state_live = "larva0"
 			xeno_icon_state_dead = "larva0_dead"
-		if(ALIEN_MAID)
-			xeno_name = "горничных"
-			xeno_icon_state_live = "alienm_running"
-			xeno_icon_state_dead = "alienm_dead"
 
 	if(xeno_live)
-		I = icon('icons/mob/xenomorph.dmi', "[xeno_icon_state_live]", SOUTH)
+		I = icon('icons/mob/xenomorph_48x48.dmi', "[xeno_icon_state_live]", SOUTH)
 	else
-		I = icon('icons/mob/xenomorph.dmi', "[xeno_icon_state_dead]")
+		I = icon('icons/mob/xenomorph_48x48.dmi', "[xeno_icon_state_dead]")
 	end_icons += I
 	var/tempstate = end_icons.len
 	text += "<tr><td colspan='2'>Всего [xeno_name] было: [xeno_live + xeno_dead]</td></tr>"
