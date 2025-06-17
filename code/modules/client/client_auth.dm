@@ -115,11 +115,7 @@
 		var/token = query.item[1]
 
 		// give user new ckey after reconnect
-		if(byond_version < 516)
-			var/connection_address = winget(src, null, "url");
-			usr << link("byond://[connection_address]?password_token=[token]")
-		else
-			handle_storage_access_token(token)
+		handle_storage_access_token(token)
 
 	else
 		log_access("Authorization: [ckey] failed login attempt to [account_ckey] using a password.")
@@ -173,9 +169,6 @@
 	return !!query.Execute()
 
 /client/proc/handle_storage_access_token(new_token, remove_token = FALSE)
-
-	if(byond_version < 516)
-		return
 
 	if(!establish_db_connection("erro_password", "erro_auth_token"))
 		return
