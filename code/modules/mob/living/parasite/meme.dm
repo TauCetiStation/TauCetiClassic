@@ -21,7 +21,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 	var/mob/living/carbon/host // the host that this parasite occupies
 	show_examine_log = FALSE
 
-/mob/living/parasite/Login()
+/mob/living/parasite/LateLogin()
 	..()
 	if(host)
 		client.eye = host

@@ -18,6 +18,12 @@
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.
 
+#define BYOND_HUB_AUTHENTICATION 1 // sets client.authenticate, see refs
+
+#if BYOND_HUB_AUTHENTICATION < 1
+#warn Server is compiled with disabled authentication through byond hub.
+#endif
+
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 514
 #if DM_VERSION < MIN_COMPILER_VERSION
@@ -26,7 +32,7 @@
 #error You need version 514 or higher
 #endif
 
-#define RECOMMENDED_VERSION 514
+#define RECOMMENDED_VERSION 516
 
 
 // 515 split call for external libraries into call_ext

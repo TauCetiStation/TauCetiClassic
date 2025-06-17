@@ -209,7 +209,10 @@
 	if(!lying)
 		if(!HAS_TRAIT(src, TRAIT_NO_PAIN))
 			emote("scream")
-		Weaken(2)
+		if(crawl_can_use())
+			SetCrawling(TRUE)
+		else
+			Weaken(2)
 
 	if(iszombie(src)) // workaroud for zombie attack without stance
 		if(!crawling)
@@ -219,8 +222,6 @@
 				Stun(5)
 				Weaken(5)
 				return
-	else
-		Weaken(5) //can't emote while weakened, apparently.
 
 	if(lying)
 		var/has_arm = FALSE

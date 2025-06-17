@@ -16,7 +16,10 @@ var/global/it_is_a_snow_day = FALSE
 	it_is_a_snow_day = prob(50)
 
 	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
+		warning("Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
+
+	if(!(/client::authenticate))
+		warning("Byond hub authentication is disabled for clients.")
 
 	global.bridge_secret = world.params["bridge_secret"]
 	world.params = null

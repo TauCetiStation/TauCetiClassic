@@ -4,6 +4,12 @@
 		//////////////////////
 	parent_type = /datum
 
+	authenticate = BYOND_HUB_AUTHENTICATION
+	var/password_authenticated = FALSE
+	var/hub_authenticated = FALSE
+
+	var/is_initialized = FALSE
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -123,4 +129,6 @@
 	///used to override the mouse cursor so it doesnt get reset
 	var/mouse_override_icon = null
 
-	var/window_pixelratio
+	// scaling options
+	var/window_pixelratio = 1 // browser devicePixelRatio, depends on the system scaling settings and the monitor dpi
+	var/dpi = 1               // monitor dpi, probably we can remove it in favor of pixelratio
