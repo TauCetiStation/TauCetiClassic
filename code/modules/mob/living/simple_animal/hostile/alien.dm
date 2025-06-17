@@ -45,8 +45,8 @@
 /mob/living/simple_animal/hostile/xenomorph/drone
 	name = "alien drone"
 	desc = "Выглядит не так опасно, как её сёстры."
-	icon_state = "aliend_walking"
-	icon_living = "aliend_walking"
+	icon_state = "aliend_s"
+	icon_living = "aliend_s"
 	icon_dead = "aliend_dead"
 	health = 60
 	melee_damage = 15
@@ -54,8 +54,8 @@
 /mob/living/simple_animal/hostile/xenomorph/sentinel
 	name = "alien sentinel"
 	desc = "Из её пасти вытекает что-то зелёное..."
-	icon_state = "aliens_walking"
-	icon_living = "aliens_walking"
+	icon_state = "aliens_s"
+	icon_living = "aliens_s"
 	icon_dead = "aliens_dead"
 	health = 120
 	melee_damage = 15
