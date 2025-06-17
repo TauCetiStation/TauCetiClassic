@@ -82,10 +82,8 @@ export const SpaceHeater = (props, context) => {
                   })
                 }
               />
-              <Button
-                content={targetTemp.toString() + '℃'}
-                onClick={() => act('setTemp')}
-              />
+              <AnimatedNumber value={targetTemp} />
+              {targetTemp !== 'N/A' && '℃'}
             </LabeledControls.Item>
             <LabeledControls.Item label="Operational mode">
               <Button content={mode} onClick={() => act('mode')} />

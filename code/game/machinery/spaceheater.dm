@@ -138,7 +138,7 @@
 	data["powercellName"] = isnull(cell) ? "" : cell.name
 	data["powerLevel"] = isnull(cell) ? 0 : round(cell.percent(), 1)
 	data["targetTemp"] = round(targetTemperature - T0C, 1)
-	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
+	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB - T0C)
 	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
 
 	var/turf/simulated/L = get_turf(loc)
@@ -176,13 +176,9 @@
 				if(HEATER_MODE_COOL)
 					setMode = HEATER_MODE_AUTO
 		if("setTemp")
-			var/value
-			if(isnull(params["temperature"]))
-				value = input("Please input the target temperature", name) as num|null
-				if(isnull(value) || !can_still_interact_with(usr))
-					return
-			else
-				value = params["temperature"]
+			var/value = params["temperature"]
+			if(isnull(value))
+				return
 			value += T0C
 			var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 			var/maxTemp = settableTemperatureMedian + settableTemperatureRange
