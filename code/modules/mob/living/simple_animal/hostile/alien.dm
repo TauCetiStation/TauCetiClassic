@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/xenomorph
 	name = "alien hunter"
 	desc = "Хсссссс!"
-	icon = 'icons/mob/xenomorph_64x64.dmi'
-	icon_state = "hunter_walking"
-	icon_living = "hunter_walking"
-	icon_dead = "hunter_dead"
+	icon = 'icons/mob/xenomorph_48x48.dmi'
+	icon_state = "alienh_s"
+	icon_living = "alienh_s"
+	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	response_help = "pokes the"
 	response_disarm = "shoves the"
@@ -45,18 +45,18 @@
 /mob/living/simple_animal/hostile/xenomorph/drone
 	name = "alien drone"
 	desc = "Выглядит не так опасно, как её сёстры."
-	icon_state = "drone_walking"
-	icon_living = "drone_walking"
-	icon_dead = "drone_dead"
+	icon_state = "aliend_walking"
+	icon_living = "aliend_walking"
+	icon_dead = "aliend_dead"
 	health = 60
 	melee_damage = 15
 
 /mob/living/simple_animal/hostile/xenomorph/sentinel
 	name = "alien sentinel"
 	desc = "Из её пасти вытекает что-то зелёное..."
-	icon_state = "sentinel_walking"
-	icon_living = "sentinel_walking"
-	icon_dead = "sentinel_dead"
+	icon_state = "aliens_walking"
+	icon_living = "aliens_walking"
+	icon_dead = "aliens_dead"
 	health = 120
 	melee_damage = 15
 	ranged = TRUE

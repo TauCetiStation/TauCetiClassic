@@ -6,7 +6,7 @@
 	storedPlasma = 150
 	max_plasma = 300
 	speed = 1
-	icon_state = "sentinel_walking"
+	icon_state = "aliens_s"
 	plasma_rate = 10
 
 /mob/living/carbon/xenomorph/humanoid/sentinel/atom_init()

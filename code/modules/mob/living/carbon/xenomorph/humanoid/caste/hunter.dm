@@ -6,7 +6,7 @@
 	storedPlasma = 100
 	max_plasma = 150
 	speed = -1
-	icon_state = "hunter_walking"	//default invisibility
+	icon_state = "alienh_s"	//default invisibility
 	var/invisible = FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/atom_init()
@@ -17,6 +17,11 @@
 	real_name = name
 	alien_list[ALIEN_HUNTER] += src
 	. = ..()
+
+/mob/living/carbon/xenomorph/humanoid/hunter/update_icons()
+	. = ..()
+	if(m_intent == MOVE_INTENT_WALK)
+		icon_state = "alienh_walking"
 
 /mob/living/carbon/xenomorph/humanoid/hunter/Destroy()
 	alien_list[ALIEN_HUNTER] -= src

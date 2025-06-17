@@ -1,6 +1,6 @@
 /mob/living/carbon/xenomorph/humanoid
 	name = "alien"
-	icon = 'icons/mob/xenomorph_64x64.dmi'
+	icon = 'icons/mob/xenomorph_48x48.dmi'
 	icon_state = "drone_walking"
 
 	pass_flags = PASSTABLE
