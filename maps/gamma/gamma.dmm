@@ -3999,7 +3999,8 @@
 /area/station/maintenance/science)
 "alm" = (
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -23906,7 +23907,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/item/weapon/storage/secure/safe{
-	pixel_y = 30
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "wooden"
@@ -35725,7 +35726,8 @@
 "glZ" = (
 /obj/structure/closet/secure_closet/detective,
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 30
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
@@ -43721,13 +43723,14 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -24
-	},
 /obj/machinery/camera{
 	c_tag = "Chief Medical Officer";
 	dir = 4;
 	network = list("SS13","Medical")
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood4"
@@ -69120,12 +69123,11 @@
 	},
 /area/station/maintenance/outerlabs)
 "mPP" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = 27
-	},
 /obj/item/weapon/paper{
 	info = "Don't forget to tell me the new code (Sergeant)"
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -70834,13 +70836,13 @@
 	pixel_y = -10
 	},
 /obj/item/device/camera,
-/obj/item/weapon/storage/secure/safe{
-	pixel_y = 30
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/weapon/storage/secure/safe{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "nhd" = (
@@ -72829,9 +72831,6 @@
 /area/station/maintenance/science)
 "nCu" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
-	},
 /obj/item/weapon/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
@@ -72844,6 +72843,10 @@
 /obj/item/toy/figure/captain{
 	pixel_x = 11;
 	pixel_y = -1
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
@@ -84522,8 +84525,7 @@
 "pTU" = (
 /obj/structure/stool/bed/chair/metal/black,
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = 27
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -101302,12 +101304,13 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "thg" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
-	},
 /obj/structure/stool/bed/chair/comfy/brown,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -111944,10 +111947,6 @@
 /area/station/maintenance/bridge)
 "vik" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = 27
-	},
 /obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = 12;
 	pixel_y = 4
@@ -111959,6 +111958,9 @@
 /obj/item/weapon/pen,
 /obj/structure/sign/poster/calendar{
 	pixel_x = -32
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -121636,10 +121638,11 @@
 	},
 /area/station/hallway/primary/central)
 "xfc" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
-	},
 /obj/structure/stool/bed/chair/comfy/brown,
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/purple,
 /area/station/rnd/hor)
 "xfi" = (

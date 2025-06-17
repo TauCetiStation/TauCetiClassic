@@ -511,7 +511,7 @@
 			if(SLOT_BELT)
 				if(H.belt)
 					return 0
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
@@ -559,7 +559,7 @@
 			if(SLOT_WEAR_ID)
 				if(H.wear_id)
 					return 0
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
@@ -622,7 +622,7 @@
 						return 1
 				return 0
 			if(SLOT_TIE)
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE

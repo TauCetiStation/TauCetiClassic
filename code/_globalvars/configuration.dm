@@ -24,7 +24,6 @@ var/global/traitor_scaling = 1
 //var/goonsay_allowed = 0
 var/global/dna_ident = 1
 var/global/abandon_allowed = 1
-var/global/guests_allowed = 1
 var/global/shuttle_frozen = 0
 var/global/shuttle_left = 0
 var/global/tinted_weldhelh = 1
