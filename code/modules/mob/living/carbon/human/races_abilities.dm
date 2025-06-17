@@ -291,7 +291,7 @@
 				victim.adjustHalLoss(-5)
 
 			if(INTENT_PUSH)
-				if(is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_TRAINED)) && punch_power >= 1)
+				if(punch_power >= 1 && is_skill_competent(user, list(/datum/skill/police = SKILL_LEVEL_TRAINED)))
 					victim.visible_message("<span class='danger'>\The [user] hooked a [victim] with his tail!</span>",
 					"<span class='userdanger'>[user] hacks you with his tail!</span>")
 					victim.Weaken(1)
