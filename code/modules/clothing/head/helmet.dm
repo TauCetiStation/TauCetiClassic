@@ -149,6 +149,47 @@
 	if(prob(hit_reflect_chance))
 		return TRUE
 
+/obj/item/clothing/head/helmet/ancient_laserproof
+	name = "Ancient Supremacy Space Helmet"
+	desc = "Шлем из неизвестного металла, поверхность которого кажется одновременно матовой и бесконечно отражающей. При повороте под разными углами создается иллюзия, будто сквозь него видны звезды. На внутренней стороне выгравированы странные символы, пульсирующие слабым голубым свечением."
+	cases = list("древний космическая шлем Превосходства", "древний космической шлем Превосходства", "древнем космическом шлеме Превосходства", "древнюю космическую броню Превосходства", "древней космической бронёй Превосходства", "древней космической броне Превосходства")
+	icon_state = "knight_cydonia"
+	item_state = "knight_cydonia"
+	armor = list(
+		melee = 65,
+		bullet = 55,
+		energy = 100,
+		laser = 0,
+		bomb = 20,
+		bio = 100,
+		rad = 100
+	)
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | PHORONGUARD
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	permeability_coefficient = 0
+	siemens_coefficient = 0
+	heat_protection = HEAD
+	var/hit_reflect_chance = 100
+
+/obj/item/clothing/head/helmet/ancient_laserproof/IsReflect(def_zone)
+	return prob(hit_reflect_chance)
+
+/obj/item/clothing/head/helmet/ancient_laserproof/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_HEAD)
+		to_chat(user, "<span class='notice'>Вы чувствуете, как древние технологии оживают вокруг вас, создавая защитное силовое поле.</span>")
+		playsound(user, 'sound/magic/charge.ogg', 100, 1)
+		icon_state = "knight_cydonia_on"
+		item_state = "knight_cydonia_on"
+
+/obj/item/clothing/head/helmet/ancient_laserproof/dropped(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Защитное поле исчезает по мере того, как вы снимаете шлем.</span>")
+	icon_state = "knight_cydonia"
+	item_state = "knight_cydonia"
+
 /obj/item/clothing/head/helmet/swat
 	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
