@@ -151,7 +151,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/button_html = ""
 	for(var/ref in solar_coords)
 		button_html += {"
-		<a href='?src=\ref[src];[ref]=1'
+		<a href='byond://?src=\ref[src];[ref]=1'
 			style='position: absolute; top: [world.maxy-solar_coords[ref][2]]px; left: [solar_coords[ref][1]]px;'>
 			[X]
 		</a>"}
@@ -162,12 +162,12 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/dat = {"Маскировочное Поле Skipjack: [announce_vox_departure ? "<span style='color: #ff0000;font-weight: bold;'>Деактивировано!</span>" : "<span style='color: #aa00aa'>Активировано!</span>"]<br><br>
 		Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
 		Готов к полёту[time_to_move ? " через [time_seconds] [sec_word]" : ": Готово"]<br><br>
-		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
+		<a href='byond://?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
 		<div class="center_div" style="position: relative;" >
 			<img src="nanomap_[SSmapping.station_image]_1.png" width="[world.maxx]px" height="[world.maxy]px">
 			[button_html]
 		</div>
-		<a href='?src=\ref[src];mining=1' style='width:100%;text-align:center'>Шахтёрский астероид</a><br><br>"}
+		<a href='byond://?src=\ref[src];mining=1' style='width:100%;text-align:center'>Шахтёрский астероид</a><br><br>"}
 
 	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 500, 500)
 	popup.set_content(dat)

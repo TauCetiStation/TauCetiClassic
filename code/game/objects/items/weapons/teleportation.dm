@@ -37,7 +37,7 @@ Frequency:
 <A href='byond://?src=\ref[src];freq=2'>+</A>
 <A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
-<A href='?src=\ref[src];refresh=1'>Refresh</A>"}
+<A href='byond://?src=\ref[src];refresh=1'>Refresh</A>"}
 
 	var/datum/browser/popup = new(user, "radio", "Persistent Signal Locator")
 	popup.set_content(dat)
@@ -79,14 +79,14 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in implant_list)
-					if (!W.implanted || !(isbodypart(W.loc) || ismob(W.loc)))
+				for (var/obj/item/weapon/implant/tracking/W in global.implant_list)
+					if (!W.implanted_mob)
 						continue
-					else
-						var/mob/M = W.loc
-						if (M.stat == DEAD)
-							if (M.timeofdeath + 6000 < world.time)
-								continue
+
+					var/mob/M = W.implanted_mob
+					if (M.stat == DEAD)
+						if (M.timeofdeath + 6000 < world.time)
+							continue
 
 					var/turf/tr = get_turf(W)
 					if (tr.z == sr.z && tr)

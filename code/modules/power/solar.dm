@@ -404,19 +404,19 @@
 	t += "Tracking: "
 	switch(track)
 		if(0)
-			t += "<B>Off</B> <A href='?src=\ref[src];track=1'>Manual</A> <A href='?src=\ref[src];track=2'>Automatic</A><BR>"
+			t += "<B>Off</B> <A href='byond://?src=\ref[src];track=1'>Manual</A> <A href='byond://?src=\ref[src];track=2'>Automatic</A><BR>"
 		if(1)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <B>Manual</B> <A href='?src=\ref[src];track=2'>Automatic</A><BR>"
+			t += "<A href='byond://?src=\ref[src];track=0'>Off</A> <B>Manual</B> <A href='byond://?src=\ref[src];track=2'>Automatic</A><BR>"
 		if(2)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Manual</A> <B>Automatic</B><BR>"
+			t += "<A href='byond://?src=\ref[src];track=0'>Off</A> <A href='byond://?src=\ref[src];track=1'>Manual</A> <B>Automatic</B><BR>"
 
 	t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
 	t += "Manual Tracking Direction: "
 	switch(trackdir)
 		if(-1)
-			t += "<A href='?src=\ref[src];trackdir=1'>CW</A> <B>CCW</B><BR>"
+			t += "<A href='byond://?src=\ref[src];trackdir=1'>CW</A> <B>CCW</B><BR>"
 		if(1)
-			t += "<B>CW</B> <A href='?src=\ref[src];trackdir=-1'>CCW</A><BR>"
+			t += "<B>CW</B> <A href='byond://?src=\ref[src];trackdir=-1'>CCW</A><BR>"
 
 	var/datum/browser/popup = new(user, "solcon", "Solar Generator Control")
 	popup.set_content(t)

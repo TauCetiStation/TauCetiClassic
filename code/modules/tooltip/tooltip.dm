@@ -44,8 +44,10 @@ Notes:
 		owner = C
 		var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/jquery)
 		stuff.send(owner)
-		owner << browse(file2text(file), "window=[control]")
+		owner << browse(file2text(file), "window=[control];size=1x1")
 	..()
+
+#define GET_RATIO(C) ((C.window_pixelratio != 1) ? C.window_pixelratio : (C.dpi != 1 ? C.dpi : 1))
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
@@ -70,7 +72,7 @@ Notes:
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
 	//Send stuff to the tooltip
-	owner << output(list2params(list(params, owner.view, "[title][content]", theme, special)), "[control]:tooltip.update")
+	owner << output(list2params(list(params, owner.view, "[title][content]", theme, special, GET_RATIO(owner))), "[control]:tooltip.update")
 
 	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
 	showing = 0
@@ -79,6 +81,7 @@ Notes:
 
 	return 1
 
+#undef GET_RATIO
 
 /datum/tooltip/proc/hide()
 	if (queueHide)

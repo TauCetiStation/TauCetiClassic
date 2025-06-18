@@ -393,6 +393,12 @@
 		"<span class='userdanger'>[user == M ? "You tie" : "[user] ties"] \the [src] over your neck!</span>")
 	playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
 	message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
+
+	if(M == user)
+		SEND_SIGNAL(M, COMSIG_HUMAN_ON_SUICIDE, src)
+	else
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
+
 	for(var/alert in M.alerts)
 		var/atom/movable/screen/alert/A = M.alerts[alert]
 		if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
@@ -418,7 +424,7 @@
 		var/obj/item/organ/external/BP = bm.bodyparts_by_name[BP_HEAD]
 		if(BP && !BP.is_stump)
 			if(bm.stat != DEAD)
-				if(!(NO_BREATH in bm.mutations))
+				if(!HAS_TRAIT(bm, TRAIT_NO_BREATHE))
 					bm.adjustOxyLoss(5)
 					if(prob(40))
 						bm.emote("gasp")

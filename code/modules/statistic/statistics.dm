@@ -64,6 +64,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	// array of objects
 	var/list/datum/stat/achievement/achievements = list()
 	// array of objects
+	var/list/datum/stat/medal/medals = list()
+	// array of objects
 	var/list/datum/stat/communication_log/communication_logs = list()
 
 	// New data

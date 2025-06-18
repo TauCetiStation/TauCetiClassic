@@ -3,6 +3,7 @@
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
+	item_state_world = "door_electronics_w"
 	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50

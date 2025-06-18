@@ -83,11 +83,13 @@ var/global/bridge_secret = null
 	var/disable_player_mice = 0
 	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
-	var/deathtime_required = 18000	//30 minutes
+	var/deathtime_required = 6000	//10 minutes
 
 	var/usealienwhitelist = 0
 	var/use_alien_job_restriction = 0
 	var/list/whitelisted_species_by_time = list()
+
+	var/guest_mode = GUEST_FORBIDDEN
 
 	var/server
 	var/banappeals
@@ -114,11 +116,11 @@ var/global/bridge_secret = null
 	//game_options.txt configs
 
 	var/health_threshold_softcrit = 0
-	var/health_threshold_crit = 0
+	var/health_threshold_crit = -50
 	var/health_threshold_dead = -100
 
 	var/organ_health_multiplier = 1
-	var/organ_regeneration_multiplier = 1
+	var/organ_regeneration_multiplier = 0.75
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
@@ -171,12 +173,11 @@ var/global/bridge_secret = null
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
+	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python3" on unix
 	var/github_token = "" // todo: move this to globals for security
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/check_randomizer = 0
 
 	var/guard_email = null
 	var/guard_enabled = FALSE
@@ -195,7 +196,7 @@ var/global/bridge_secret = null
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
+	var/craft_recipes_visibility = TRUE // Show all recipes (TRUE) or only these that have all required components around (FALSE) in craft menu.
 	var/nightshift = FALSE
 
 	var/list/maplist = list()
@@ -410,8 +411,8 @@ var/global/bridge_secret = null
 				if ("forumurl")
 					config.forumurl = value
 
-				if ("guest_ban")
-					guests_allowed = 0
+				if ("guest_mode")
+					config.guest_mode = text2num(value)
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
@@ -533,7 +534,7 @@ var/global/bridge_secret = null
 						config.python_path = value
 					else
 						if(world.system_type == UNIX)
-							config.python_path = "/usr/bin/env python2"
+							config.python_path = "/usr/bin/env python3"
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
 
@@ -597,9 +598,6 @@ var/global/bridge_secret = null
 
 				if("chat_bridge")
 					config.chat_bridge = value
-
-				if("check_randomizer")
-					config.check_randomizer = value
 
 				if("guard_email")
 					config.guard_email = value

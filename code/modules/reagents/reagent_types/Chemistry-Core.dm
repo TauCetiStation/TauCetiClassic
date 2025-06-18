@@ -17,7 +17,7 @@
 			var/changes_occured = FALSE
 
 			if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
-				if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+				if(H.hair_painted && !(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 					H.dyed_r_hair = clamp(round(H.dyed_r_hair * volume_coefficient + ((H.r_hair * volume) / 10)), 0, 255)
 					H.dyed_g_hair = clamp(round(H.dyed_g_hair * volume_coefficient + ((H.g_hair * volume) / 10)), 0, 255)
 					H.dyed_b_hair = clamp(round(H.dyed_b_hair * volume_coefficient + ((H.b_hair * volume) / 10)), 0, 255)
@@ -34,9 +34,8 @@
 			if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 10)
 				H.lip_style = null
 				changes_occured = TRUE
-				H.update_body()
 			if(changes_occured)
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -78,18 +77,18 @@
 			C.color = null
 
 /datum/reagent/water/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.IsSleeping())
 		M.AdjustDrunkenness(-1)
 
-/datum/reagent/water/on_diona_digest(mob/living/M)
-	..()
-	M.nutrition += REM
-	return FALSE
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
+		M.adjustToxLoss(REM)
 
-/datum/reagent/water/on_slime_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(REM)
+/datum/reagent/water/on_diona_digest(mob/living/M)
+	M.nutrition += REM
 	return FALSE
 
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.
@@ -101,7 +100,10 @@
 	needed_aspects = list(ASPECT_RESCUE = 1)
 
 /datum/reagent/water/holywater/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
@@ -163,7 +165,10 @@
 	needed_aspects = list(ASPECT_OBSCURE = 1)
 
 /datum/reagent/water/unholywater/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	if(iscultist(M) && prob(10))
@@ -243,7 +248,6 @@
 	custom_metabolism = 0.01
 
 /datum/reagent/oxygen/on_vox_digest(mob/living/M)
-	..()
 	M.adjustToxLoss(REAGENTS_METABOLISM)
 	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
 	return FALSE
@@ -266,7 +270,6 @@
 	custom_metabolism = 0.01
 
 /datum/reagent/nitrogen/on_diona_digest(mob/living/M)
-	..()
 	M.adjustBruteLoss(-REM)
 	M.adjustOxyLoss(-REM)
 	M.adjustToxLoss(-REM)
@@ -275,7 +278,6 @@
 	return FALSE
 
 /datum/reagent/nitrogen/on_vox_digest(mob/living/M)
-	..()
 	M.adjustOxyLoss(-2 * REM)
 	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
 	return FALSE
@@ -306,15 +308,20 @@
 	color = "#484848" // rgb: 72, 72, 72
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "druggie poison"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
+
+/datum/reagent/mercury/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/sulfur
 	name = "Sulfur"
@@ -356,7 +363,10 @@
 	taste_message = "characteristic taste"
 
 /datum/reagent/chlorine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.take_bodypart_damage(1 * REM, 0)
 
 /datum/reagent/fluorine
@@ -391,7 +401,6 @@
 	custom_metabolism = 0.01
 
 /datum/reagent/phosphorus/on_diona_digest(mob/living/M)
-	..()
 	M.adjustBruteLoss(-REM)
 	M.adjustOxyLoss(-REM)
 	M.adjustToxLoss(-REM)
@@ -407,14 +416,19 @@
 	color = "#808080" // rgb: 128, 128, 128
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "happiness"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
+
+/datum/reagent/lithium/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/sugar
 	name = "Sugar"
@@ -428,11 +442,13 @@
 	needed_aspects = list(ASPECT_FOOD = 1)
 
 /datum/reagent/sugar/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.nutrition += 1
 
 /datum/reagent/sugar/on_vox_digest(mob/living/M)
-	..()
 	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5)
 	return FALSE
 
@@ -445,7 +461,10 @@
 	taste_message = "bonehurting juice"
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	irradiate_one_mob(M, 2 * REM)
 	// radium may increase your chances to cure a disease
 	if(iscarbon(M)) // make sure to only use it on carbon mobs
@@ -516,7 +535,10 @@
 	taste_message = "bonehurting juice"
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	irradiate_one_mob(M, 1)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)

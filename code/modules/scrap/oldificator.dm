@@ -138,7 +138,6 @@
 	if(prob(35))
 		contaminate()
 	if(prob(75))
-		generate_blood_overlay()
 		add_dirt_cover(pick(global.all_dirt_covers))
 	..()
 
@@ -242,3 +241,6 @@
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8
 	oldificated = TRUE
+
+/obj/machinery/kitchen_machine/microwave/make_old()
+	broken = 2

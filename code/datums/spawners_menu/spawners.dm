@@ -45,7 +45,7 @@
 	// Name of spawner, wow
 	var/name
 
-	// Priority of spawner, affects position in menu and roll order for lobby spawners
+	// Priority of spawner, affects position in menu and roll order for lobby spawners (lesser means higher priority/order)
 	var/priority = 100
 
 	// In interface: "Описание: "
@@ -72,6 +72,9 @@
 
 	// Flag if it's awaylable only for applications first, and will be rolled for spawn later
 	var/register_only = FALSE
+
+	// Flag if it's supports multiple selection
+	var/multideclare = FALSE
 
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
@@ -127,7 +130,7 @@
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.registred_spawner = null
+			M.registered_spawners -= src
 		registered_candidates = null
 
 	return ..()
@@ -165,27 +168,29 @@
 			do_spawn(spectator)
 		return
 
-	// todo: registration for multiple spawners?
 	if(spectator in registered_candidates)
 		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
-	else if(spectator.registred_spawner)
-		to_chat(spectator, "<span class='notice'>Вы уже ждете роль \"[spectator.registred_spawner.name]\". Сначала отмените заявку.</span>")
-		return
-
 	if(!can_spawn(spectator))
 		return
 
+	if(!multideclare)
+		spectator.clear_spawner_registration()
+	else if(spectator.registered_spawners.len)
+		for(var/datum/spawner/S as anything in spectator.registered_spawners)
+			if(!S.multideclare)
+				S.cancel_registration(spectator)
+
 	registered_candidates += spectator
-	spectator.registred_spawner = src
+	spectator.registered_spawners += src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.registred_spawner = null
+	spectator.registered_spawners -= src
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
@@ -213,6 +218,7 @@
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
+			M.clear_spawner_registration()
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
@@ -221,7 +227,6 @@
 	if(!can_spawn(spectator))
 		positions++
 		return
-
 	var/client/C = spectator.client
 
 	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
@@ -298,8 +303,8 @@
 	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
 
@@ -328,8 +333,8 @@
 	var/new_name = "[pick(prefixes)] [pick(last_names)]"
 	C.create_human_apperance(cop, new_name)
 
-	cop.loc = spawnloc
 	cop.key = C.key
+	cop.forceMove(spawnloc)
 
 	//Give antag datum
 	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
@@ -550,12 +555,12 @@
 
 	var/client/C = spectator.client
 
-	var/mob/living/carbon/human/H = new(null)
+	var/mob/living/carbon/human/H = new()
 	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 	H.equipOutfit(/datum/outfit/spy)
 	H.mind.skills.add_available_skillset(/datum/skillset/max)
 	H.mind.skills.maximize_active_skills()
@@ -586,15 +591,17 @@
 	var/spawnloc = pick_spawn_location()
 
 	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
-	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
+	var/mob/living/carbon/human/vox/event/vox = new()
 
 	vox.key = spectator.client.key
+	vox.forceMove(spawnloc)
 
 	var/sounds = rand(2, 8)
 	var/newname = ""
 	for(var/i in 1 to sounds)
 		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
+	// todo: maybe we need to add a randomize argument for set_species
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	vox.age = rand(5, 15) // its fucking lore
@@ -606,11 +613,10 @@
 	vox.grad_style = "none"
 
 	//Now apply cortical stack.
-	var/obj/item/weapon/implant/cortical/I = new(vox)
-	I.inject(vox, BP_HEAD)
+	new /obj/item/weapon/implant/cortical(vox)
 
 	vox.equip_vox_raider()
-	vox.regenerate_icons()
+	vox.regenerate_icons(update_body_preferences = TRUE)
 
 	add_faction_member(faction, vox)
 
@@ -668,8 +674,8 @@
 	var/mob/living/carbon/human/H = new(null)
 	C.create_human_apperance(H)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 	H.equipOutfit(outfit)
 	H.mind.skills.add_available_skillset(skillset)
 	H.mind.skills.maximize_active_skills()
@@ -710,8 +716,8 @@
 	var/new_name = "Gorlex Maradeurs Operative"
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)
 
@@ -739,9 +745,126 @@
 	var/new_name = "Wizard The Unbenannt"
 	INVOKE_ASYNC(spectator.client, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
 
-	H.loc = spawnloc
 	H.key = spectator.client.key
+	H.forceMove(spawnloc)
 
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE
 	setup_role(R, TRUE)
+
+/*
+ * Midround replicator
+*/
+/datum/spawner/replicator_event
+	name = "Репликатор"
+	desc = "Вы попали сюда через оставшийся блюспейс коридор. Потреблять. Потреблять."
+
+	ranks = list(ROLE_REPLICATOR, ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "replicator"
+
+/datum/spawner/replicator_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/mob/living/simple_animal/hostile/replicator/H = new(spawnloc)
+	H.key = spectator.client.key
+
+/*
+ * SPACE TRADERS
+*/
+/datum/spawner/space_trader
+	name = "Космический торговец"
+	desc = "Космический торговец."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	multideclare = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 4 MINUTES
+	var/money = 100
+	var/outfit
+	var/skillset
+
+/datum/spawner/space_trader/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new
+	C.create_human_apperance(H)
+	H.key = C.key
+	H.forceMove(spawnloc)
+	equip(H)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	add_faction_member(F, H, TRUE, TRUE)
+
+/datum/spawner/space_trader/proc/equip(mob/living/carbon/human/H)
+	H.equipOutfit(outfit)
+	H.mind.skills.add_available_skillset(skillset)
+	H.mind.skills.maximize_active_skills()
+
+	var/datum/money_account/MA = create_random_account_and_store_in_mind(H, money)
+	var/obj/item/weapon/card/id/cargo/C = new(H)
+	C.rank = "Space Trader"
+	C.assignment = C.rank
+	C.assign(H.real_name)
+	C.access = list(access_space_traders)
+	C.associated_account_number = MA.account_number
+	H.equip_or_collect(C, SLOT_WEAR_ID)
+
+	var/obj/item/device/pda/pda = new(H)
+	pda.assign(H.real_name)
+	pda.ownrank = C.rank
+	pda.owner_account = MA.account_number
+	pda.owner_fingerprints += C.fingerprint_hash
+	MA.owner_PDA = pda
+	H.equip_or_collect(pda, SLOT_R_STORE)
+
+/datum/spawner/space_trader/dealer
+	name = "Космоторговец барыга"
+	desc = "Барыга, владеющий торговым судном и товаром на нём. Заработайте столько денег, сколько сможете увезти!"
+	spawn_landmark_name = "Space Trader Dealer"
+	money = 200
+	outfit = /datum/outfit/space_trader/dealer
+	skillset = /datum/skillset/quartermaster
+
+/datum/spawner/space_trader/guard
+	name = "Космоторговец охранник"
+	desc = "ЧОПовец, нанятый барыгой для охраны судна и товара на нём от станционных воришек и космических пиратов."
+	spawn_landmark_name = "Space Trader Guard"
+	outfit = /datum/outfit/space_trader/guard
+	skillset = /datum/skillset/officer
+
+/datum/spawner/space_trader/porter
+	name = "Космоторговец посыльный"
+	desc = "Таяран грузчик, работающий на барыгу. Таскайте грузы, выставляйте товары на продажу, помогите барыге обогатиться и не забудьте спросить свою долю!"
+	spawn_landmark_name = "Space Trader Porter"
+	money = 20
+	outfit = /datum/outfit/space_trader/porter
+	skillset = /datum/skillset/cargotech
+
+/datum/spawner/space_trader/porter/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H
+	var/new_name
+
+	if(is_alien_whitelisted_banned(spectator, TAJARAN) || !is_alien_whitelisted(spectator, TAJARAN))
+		H = new
+	else
+		H = new(null, TAJARAN)
+		new_name = capitalize(pick(global.tajaran_male_first)) + " " + capitalize(pick(global.last_names))
+
+	C.create_human_apperance(H, new_name)
+	H.key = C.key
+	H.forceMove(spawnloc)
+	equip(H)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	add_faction_member(F, H, TRUE, TRUE)
+

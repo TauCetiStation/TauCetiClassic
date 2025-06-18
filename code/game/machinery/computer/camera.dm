@@ -97,10 +97,15 @@
 		return TRUE
 
 /obj/machinery/computer/security/proc/switch_to_camera(obj/machinery/camera/camera_to_switch)
+	if(active_camera)
+		active_camera.client_computers -= src
+		active_camera.update_icon()
 	active_camera = camera_to_switch
+	active_camera.client_computers += src
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 	update_active_camera_screen()
+	active_camera.set_active()
 
 //Camera control: moving.
 /obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
@@ -176,6 +181,9 @@
 
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		if(active_camera)
+			active_camera.client_computers -= src
+			active_camera.update_icon()
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
@@ -265,6 +273,7 @@
 	light_color = "#ffffbb"
 	network = list("thunder")
 	density = FALSE
+	circuit = /obj/item/weapon/circuitboard/security/telescreen
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -281,6 +290,7 @@
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#ea4444"
+	circuit = /obj/item/weapon/circuitboard/security/entertainment
 
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
@@ -289,6 +299,7 @@
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#3550b6"
+	circuit = /obj/item/weapon/circuitboard/security/wooden_tv
 
 /obj/machinery/computer/security/wooden_tv/miami
 	name = "security camera monitor"
@@ -297,12 +308,14 @@
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#f535aa"
+	circuit = /obj/item/weapon/circuitboard/security/wooden_tv/miami
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera monitor"
 	desc = "Used to access the various cameras on the outpost."
 	icon_state = "miningcameras"
 	network = list("MINE")
+	circuit = /obj/item/weapon/circuitboard/security/mining
 
 /obj/machinery/computer/security/engineering
 	name = "alarms monitoring cameras"
@@ -312,11 +325,13 @@
 	state_nopower_preset = "power0"
 	network = list("Power Alarms","Atmosphere Alarms","Fire Alarms")
 	light_color = "#b88b2e"
+	circuit = /obj/item/weapon/circuitboard/security/engineering
 
 /obj/machinery/computer/security/engineering/drone
 	name = "drone monitoring cameras"
 	desc = "Used to monitor drones and engineering borgs."
 	network = list("Engineering Robots")
+	circuit = /obj/item/weapon/circuitboard/security/engineering/drone
 
 /obj/machinery/computer/security/nuclear
 	name = "head mounted camera monitor"
@@ -326,11 +341,13 @@
 	state_nopower_preset = "tcboss0"
 	network = list("NUKE")
 	light_color = "#a91515"
+	circuit = /obj/item/weapon/circuitboard/security/nuclear
 
 /obj/machinery/computer/security/nuclear/shiv
 	name = "pilot camera monitor"
 	desc = "Console used by fighter pilot to monitor the battlefield."
 	network = list("shiv")
+	circuit = /obj/item/weapon/circuitboard/security/nuclear/shiv
 
 /obj/machinery/computer/security/abductor_ag
 	name = "agent observation monitor"
@@ -341,6 +358,7 @@
 	state_nopower_preset = null
 	light_color = "#642850"
 	network = list()
+	circuit = /obj/item/weapon/circuitboard/security/abductor_ag
 	var/team
 
 /obj/machinery/computer/security/abductor_ag/attack_hand(mob/user)
@@ -359,6 +377,7 @@
 	state_nopower_preset = null
 	network = list("SS13", "SECURITY UNIT")
 	light_color = "#642850"
+	circuit = /obj/item/weapon/circuitboard/security/abductor_hu
 
 /obj/machinery/computer/security/bodycam
 	name = "bodycam monitoring computer"
@@ -368,5 +387,6 @@
 	state_nopower_preset = "laptop0"
 	network = list("SECURITY UNIT")
 	req_one_access = list(access_hos)
+	circuit = /obj/item/weapon/circuitboard/security/bodycam
 
 #undef DEFAULT_MAP_SIZE

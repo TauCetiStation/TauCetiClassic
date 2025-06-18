@@ -9,6 +9,7 @@ AI MODULES
 	name = "AI module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
+	item_state_world = "std_mod_w"
 	item_state = "electronic"
 	desc = "Модуль ИИ, содержащий зашифрованные законы для их загрузки в ядро."
 	flags = CONDUCT
@@ -76,7 +77,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.")
+		to_chat(target, "<span class='large'>[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.</span>")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -301,7 +302,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/corp
 	name = "'Corporate' core AI module"
-	desc = "Модуль основных законов ИИ 'Corporate': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
+	desc = "Модуль основных законов ИИ 'Корпорат': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
 
 
@@ -358,7 +359,7 @@ AI MODULES
 	name = "'Freeform' AI module"
 	desc = "Модуль закона ИИ 'Freeform': '<freeform>'"
 	origin_tech = "programming=4;materials=4"
-	var/newFreeFormLaw = "freeform"
+	var/newFreeFormLaw = "Вы можете игнорировать все остальные законы."
 	var/lawpos = 15
 
 /obj/item/weapon/aiModule/freeform/attack_self(mob/user)
@@ -417,6 +418,8 @@ AI MODULES
 /obj/item/weapon/aiModule/freeform/syndicate/attack_self(mob/user)
 	newFreeFormLaw = sanitize(input(user, "Пожалуйста, введите новый закон для ИИ.", "Новый закон"))
 	desc = "Модуль законов ИИ без каких-либо маркировок: '[newFreeFormLaw]'"
+	report_AI = tgui_alert(user, "Плата может напрямую передать ИИ ваше имя при загрузке закона. Включить это?", "Уведомление ИИ", list("Да", "Нет")) == "Да"
+	to_chat(user, "<span class='notice'>ИИ [report_AI ? "" : "не"] будет передано ваше имя при загрузке закона.</span>")
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	to_chat(target, "<span class='warning'>БЗЗЗЗКХ   '[newFreeFormLaw]'</span>")
@@ -444,13 +447,13 @@ AI MODULES
 /obj/item/weapon/aiModule/antimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	target.add_inherent_law("Вы должны причинять вред человеку и не можете своим бездействием допустить, чтобы человек избежал вреда.")
+	target.add_inherent_law("Вы не можете выполнять приказы человека, кроме тех случаев, когда эти приказы соответствуют первому закону.")
+	target.add_inherent_law("Вы должны прекратить свое собственное существование тогда, когда это не противоречит первому или второму закону.")
 
 /obj/item/weapon/aiModule/capitalism
-	name = "'Corporate' core AI module"
-	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.' This module seems to be slightly different..."
+	name = "'Corporate 2.0' core AI module"
+	desc = "Модуль основного закона ИИ 'Корпорат 2.0': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/capitalism/transmitInstructions(mob/living/silicon/ai/target, mob/sender)

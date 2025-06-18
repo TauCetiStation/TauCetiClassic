@@ -8,6 +8,8 @@
 	list_reagents = list("protein" = 3)
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
+	cookingThreshold = 10
+	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchenknife))
@@ -39,6 +41,9 @@
 	name = "meat"
 	desc = "Tastes like... something korean..."
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian
+	desc = "Tastes like... an ID card..."
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/pug
 	name = "meat"
 	desc = "Tastes like... uhhhh..."
@@ -49,7 +54,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat
 	name = "meatwheat clump"
-	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
+	cases = list("комок мясной пшеницы", "комка мясной пшеницы", "комку мясной пшеницы", "комок мясной пшеницы", "комком мясной пшеницы", "комке мясной пшеницы")
+	desc = "Это не похоже на мясо, но ваши стандарты изначально <i>не очень-то</i> высоки."
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4

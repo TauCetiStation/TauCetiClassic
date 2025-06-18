@@ -6,6 +6,7 @@
 	light_color = "#e6ffff"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
+	var/muted = 0
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE, /datum/skill/command = SKILL_LEVEL_NONE)
 
 /obj/machinery/computer/station_alert/atom_init()
@@ -20,6 +21,9 @@
 	if(!do_skill_checks(user))
 		return
 	var/dat = ""
+	dat += text({"
+		<td>Mute Mode: </td><td>[]</td>
+		<A href='byond://?src=\ref[src];command=mute'>[muted ? "On" : "Off"]</A><BR><BR>"})
 	for (var/cat in src.alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = src.alarms[cat]
@@ -41,6 +45,17 @@
 	var/datum/browser/popup = new(user, "window=alerts", "Current Station Alerts")
 	popup.set_content(dat)
 	popup.open()
+
+/obj/machinery/computer/station_alert/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
+	if(href_list["command"])
+		switch(href_list["command"])
+			if("mute")
+				muted = !muted
+	updateUsrDialog()
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, alarmsource)
 	if(stat & (BROKEN))
@@ -88,6 +103,9 @@
 /obj/machinery/computer/station_alert/process()
 	update_icon()
 	..()
+// todo: rewrite it as repeated sound, also better to wait when playsound will be ready to support 516 sound atom
+//	if((icon_state == "atmos_alert_2") && !muted)
+//		playsound(src, 'sound/machines/atmos_alarm.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	return
 
 /obj/machinery/computer/station_alert/update_icon()

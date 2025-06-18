@@ -93,6 +93,9 @@ SUBSYSTEM_DEF(job)
 		player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 		unassigned -= player
 		job.current_positions++
+
+		if(job.quota == QUOTA_WANTED)
+			job.quota = QUOTA_NEUTRAL
 		return TRUE
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return FALSE
@@ -470,7 +473,8 @@ SUBSYSTEM_DEF(job)
 			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary + job.starting_money, job.department_stocks)	//starting funds = salary
+	var/startingMoney = max(round(job.salary * STARTING_MONEY_MULTIPLYER * (1 + rand(-STARTING_MONEY_VARIANCE, STARTING_MONEY_VARIANCE) / 100)) + job.starting_money, STARTING_MONEY_MINIMUM)
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, startingMoney, job.department_stocks)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -541,6 +545,11 @@ SUBSYSTEM_DEF(job)
 		to_chat(H, SSround_aspects.aspect.afterspawn_IC_announcement)
 
 	spawnId(H, rank, alt_title)
+
+	var/client/Cl = H.client
+	if(Cl && Cl.player_ingame_age && isnum(Cl.player_ingame_age) && Cl.player_ingame_age < 3000)
+		var/obj/item/clothing/accessory/newbiebadge/badge = new(H)
+		H.equip_or_collect(badge, SLOT_NECK)
 
 //		H.update_icons()
 

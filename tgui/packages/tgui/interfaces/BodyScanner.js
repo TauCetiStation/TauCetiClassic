@@ -54,14 +54,14 @@ const mapTwoByTwo = (a, c) => {
 const reduceOrganStatus = (A) => {
   return A.length > 0
     ? A.filter((s) => !!s).reduce(
-      (a, s) => (
-        <Fragment>
-          {a}
-          <Box key={s}>{s}</Box>
-        </Fragment>
-      ),
-      null
-    )
+        (a, s) => (
+          <Fragment>
+            {a}
+            <Box key={s}>{s}</Box>
+          </Fragment>
+        ),
+        null
+      )
     : null;
 };
 
@@ -110,8 +110,7 @@ const BodyScannerMainOccupant = (props, context) => {
             Извлечь
           </Button>
         </Fragment>
-      }
-    >
+      }>
       <LabeledList>
         <LabeledList.Item label="Имя">{occupant.name}</LabeledList.Item>
         <LabeledList.Item label="Здоровье">
@@ -137,22 +136,18 @@ const BodyScannerMainOccupant = (props, context) => {
                 average: [0.6, 0.8],
                 bad: [-Infinity, 0.6],
               }}>
-              <Box inline
+              <Box
+                inline
                 style={{
                   float: 'left',
                 }}>
                 {occupant.blood.pulse} уд/мин
               </Box>
-              <Box inline>
-                {occupant.blood.percent}%
-              </Box>
+              <Box inline>{occupant.blood.percent}%</Box>
             </ProgressBar>
           ) : (
-            <Box color="average">
-              Не обнаружена
-            </Box>
+            <Box color="average">Не обнаружена</Box>
           )}
-
         </LabeledList.Item>
         <LabeledList.Item label="Состояние" color={stats[occupant.stat][0]}>
           {stats[occupant.stat][1]}
@@ -172,10 +167,10 @@ const BodyScannerMainAbnormalities = (props) => {
   const { occupant } = props;
   if (
     !(
-      occupant.hasBorer
-      || occupant.blind
-      || occupant.nearsighted
-      || occupant.hasVirus
+      occupant.hasBorer ||
+      occupant.blind ||
+      occupant.nearsighted ||
+      occupant.hasVirus
     )
   ) {
     return (
@@ -237,8 +232,7 @@ const BodyScannerMainDamageBar = (props) => {
       value={props.value / 100}
       mt="0.5rem"
       mb={!!props.marginBottom && '0.5rem'}
-      ranges={damageRange}
-    >
+      ranges={damageRange}>
       {round(props.value, 0)}
     </ProgressBar>
   );
@@ -262,26 +256,26 @@ const BodyScannerMainOrgansExternal = (props) => {
           <Table.Cell textAlign="right">Дополнительные сведения</Table.Cell>
         </Table.Row>
         {props.organs.map((o, i) => (
-          <Table.Row key={i}
+          <Table.Row
+            key={i}
             textTransform="capitalize"
-            backgroundColor={(i % 2 !== 0) && "rgba(255, 255, 255, 0.05)"}>
+            backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}>
             <Table.Cell
               color={
-                ((!!o.status.dead
-                  || !!o.internalBleeding
-                  || !!o.stump
-                  || !!o.missing)
-                  && 'bad')
-                || ((!!o.lungRuptured
-                  || !!o.status.broken
-                  || !!o.open
-                  || !!o.germ_level
-                  || !!o.unknown_implant)
-                  && 'average')
-                || (!!o.status.robotic && 'label')
+                ((!!o.status.dead ||
+                  !!o.internalBleeding ||
+                  !!o.stump ||
+                  !!o.missing) &&
+                  'bad') ||
+                ((!!o.lungRuptured ||
+                  !!o.status.broken ||
+                  !!o.open ||
+                  !!o.germ_level ||
+                  !!o.unknown_implant) &&
+                  'average') ||
+                (!!o.status.robotic && 'label')
               }
-              width="33%"
-            >
+              width="33%">
               {o.name}
             </Table.Cell>
             <Table.Cell textAlign="center" q>
@@ -290,9 +284,9 @@ const BodyScannerMainOrgansExternal = (props) => {
                 max={o.maxHealth}
                 mt={i > 0 && '0.5rem'}
                 value={o.totalLoss / o.maxHealth}
-                ranges={damageRange}
-              >
-                <Box inline
+                ranges={damageRange}>
+                <Box
+                  inline
                   style={{
                     float: 'left',
                   }}>
@@ -316,8 +310,7 @@ const BodyScannerMainOrgansExternal = (props) => {
               textAlign="right"
               verticalAlign="top"
               width="33%"
-              pt={i > 0 && 'calc(0.5rem + 2px)'}
-            >
+              pt={i > 0 && 'calc(0.5rem + 2px)'}>
               <Box inline>
                 <Box color="bad" bold>
                   {reduceOrganStatus([
@@ -335,15 +328,17 @@ const BodyScannerMainOrgansExternal = (props) => {
                     !!o.open && 'Открытый разрез',
                   ])}
                 </Box>
-                {o.implant?.map((s) => (s.name ? (
-                  <Box color="good">
-                    {s.name}
-                  </Box>
-                ) : (
-                  <Box color="average">
-                    Инородный объект
-                  </Box>
-                )))}
+                {o.implant?.map((s, i) =>
+                  s.name ? (
+                    <Box key={i} color="good">
+                      {s.name}
+                    </Box>
+                  ) : (
+                    <Box key={i} color="average">
+                      Инородный объект
+                    </Box>
+                  )
+                )}
                 {reduceOrganStatus([
                   !!o.status.splinted && <Box color="good">Наложена шина</Box>,
                   !!o.status.robotic && <Box color="label">Протез</Box>,
@@ -375,17 +370,17 @@ const BodyScannerMainOrgansInternal = (props) => {
           <Table.Cell textAlign="right">Дополнительные сведения</Table.Cell>
         </Table.Row>
         {props.organs.map((o, i) => (
-          <Table.Row key={i}
+          <Table.Row
+            key={i}
             textTransform="capitalize"
-            backgroundColor={(i % 2 !== 0) && "rgba(255, 255, 255, 0.05)"}>
+            backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}>
             <Table.Cell
               color={
-                ((!!o.dead || !!o.broken) && 'bad')
-                || (!!o.robotic && 'label')
-                || ((!!o.germ_level || !!o.bruised) && 'average')
+                ((!!o.dead || !!o.broken) && 'bad') ||
+                (!!o.robotic && 'label') ||
+                ((!!o.germ_level || !!o.bruised) && 'average')
               }
-              width="33%"
-            >
+              width="33%">
               {o.name}
             </Table.Cell>
             <Table.Cell textAlign="center">
@@ -394,8 +389,7 @@ const BodyScannerMainOrgansInternal = (props) => {
                 max={o.maxHealth}
                 value={o.damage / o.maxHealth}
                 mt={i > 0 && '0.5rem'}
-                ranges={damageRange}
-              >
+                ranges={damageRange}>
                 {round(o.damage, 0)}
               </ProgressBar>
             </Table.Cell>
@@ -403,16 +397,21 @@ const BodyScannerMainOrgansInternal = (props) => {
               textAlign="right"
               verticalAlign="top"
               width="33%"
-              pt={i > 0 && 'calc(0.5rem + 2px)'}
-            >
+              pt={i > 0 && 'calc(0.5rem + 2px)'}>
               <Box inline>
                 <Box color="average">
                   {reduceOrganStatus([!!o.germ_level && o.germ_level])}
                 </Box>
                 {reduceOrganStatus([
                   !!o.robotic && <Box color="label">Протез</Box>,
-                  !!o.assisted && <Box color="label">Вспомогательный имплант</Box>,
-                  !!o.dead && <Box color="bad" bold>Отказ</Box>,
+                  !!o.assisted && (
+                    <Box color="label">Вспомогательный имплант</Box>
+                  ),
+                  !!o.dead && (
+                    <Box color="bad" bold>
+                      Отказ
+                    </Box>
+                  ),
                 ])}
               </Box>
             </Table.Cell>

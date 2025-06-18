@@ -53,7 +53,7 @@
 	H.r_facial = H.r_hair
 	H.g_facial = H.g_hair
 	H.b_facial = H.b_hair
-	H.regenerate_icons()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 
 /datum/quality/negativeish/dirty
@@ -89,10 +89,7 @@
 	H.dyed_b_facial = dirt_b
 	H.facial_painted = TRUE
 
-	H.apply_recolor()
-	H.update_body()
-	H.regenerate_icons()
-
+	H.regenerate_icons(update_body_preferences = TRUE)
 
 /datum/quality/negativeish/non_comprende
 	name = "Non Comprende"
@@ -222,7 +219,8 @@ var/global/list/allergen_reagents_list
 	return !H.species.flags[IS_SYNTHETIC]
 
 /datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
-	H.ChangeToHusk()
+	ADD_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT) // generic trait so we can heal it later
+	H.update_body()
 
 /datum/quality/negativeish/delicate
 	name = "Quality Food Enjoyer"
@@ -238,7 +236,7 @@ var/global/list/allergen_reagents_list
 	requirement = "Нет."
 
 /datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
-	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
+	H.mob_metabolism_mod.ModAdditive(1, src) // +100%
 
 /datum/quality/negativeish/proudandwalking
 	name = "Proud and Walking"
@@ -267,3 +265,11 @@ var/global/list/allergen_reagents_list
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
 		return
 	H.adjustBrainLoss(60)
+
+/datum/quality/negativeish/dyslalia
+	name = "Dyslalia"
+	desc = "Слая судьба подалила тебе мношество дефектов лечи."
+	requirement = "Нет."
+
+/datum/quality/negativeish/dyslalia/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_DYSLALIA, QUALITY_TRAIT)

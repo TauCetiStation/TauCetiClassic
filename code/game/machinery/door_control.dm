@@ -206,61 +206,61 @@
 /obj/machinery/door_control/proc/set_up_door_control(mob/user)
 	var/setup_menu = text("<b>Door Control Setup</b><hr>")
 	if(!accesses_showed)
-		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Show access restrictions setup</a></b><br>"
+		setup_menu += "<b><a href='byond://?src=\ref[src];show_accesses=1'>Show access restrictions setup</a></b><br>"
 	else
-		setup_menu += "<b><a href='?src=\ref[src];show_accesses=1'>Hide access restrictions setup</a></b><ul>"
+		setup_menu += "<b><a href='byond://?src=\ref[src];show_accesses=1'>Hide access restrictions setup</a></b><ul>"
 		if(!req_one_access.len)
-			setup_menu +="<li><b><a class='green' href='?src=\ref[src];none=1'>None</a></b></li>"
+			setup_menu +="<li><b><a class='green' href='byond://?src=\ref[src];none=1'>None</a></b></li>"
 		else
-			setup_menu +="<li><a href='?src=\ref[src];none=1'>None</a></li>"
+			setup_menu +="<li><a href='byond://?src=\ref[src];none=1'>None</a></li>"
 		var/list/accesses = get_all_accesses()
 		for (var/acc in accesses)
 			var/acc_desc = get_access_desc(acc)
 			if(acc_desc)
 				if(acc in req_one_access)
-					setup_menu += "<li><b><a class='green' href='?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
+					setup_menu += "<li><b><a class='green' href='byond://?src=\ref[src];access=[acc]'>[acc_desc]</a></b></li>"
 				else
-					setup_menu += "<li><a href='?src=\ref[src];access=[acc]'>[acc_desc]</a></li>"
+					setup_menu += "<li><a href='byond://?src=\ref[src];access=[acc]'>[acc_desc]</a></li>"
 		setup_menu += "</ul>"
 	if(!modes_showed)
-		setup_menu += "<b><a href='?src=\ref[src];show_modes=1'>Show airlock control mode setup</a></b><br>"
+		setup_menu += "<b><a href='byond://?src=\ref[src];show_modes=1'>Show airlock control mode setup</a></b><br>"
 	else
-		setup_menu += "<b><a href='?src=\ref[src];show_modes=1'>Hide airlock control mode setup</a></b><ul>"
+		setup_menu += "<b><a href='byond://?src=\ref[src];show_modes=1'>Hide airlock control mode setup</a></b><ul>"
 		if(specialfunctions == OPEN)
-			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[OPEN]'>Open</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='byond://?src=\ref[src];mode=[OPEN]'>Open</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN]'>Open</a></li>"
+			setup_menu += "<li><a href='byond://?src=\ref[src];mode=[OPEN]'>Open</a></li>"
 
 		if(specialfunctions == BOLTS)
-			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='byond://?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></li>"
+			setup_menu += "<li><a href='byond://?src=\ref[src];mode=[BOLTS]'>Toggle bolts</a></li>"
 
 		if(specialfunctions == SHOCK)
-			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='byond://?src=\ref[src];mode=[SHOCK]'>Electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[SHOCK]'>Electrify</a></li>"
+			setup_menu += "<li><a href='byond://?src=\ref[src];mode=[SHOCK]'>Electrify</a></li>"
 
 		if(specialfunctions == OPEN_BOLTS)
-			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='byond://?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></li>"
+			setup_menu += "<li><a href='byond://?src=\ref[src];mode=[OPEN_BOLTS]'>Open and toggle bolts</a></li>"
 
 		if(specialfunctions == BOLTS_SHOCK)
-			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='byond://?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></li>"
+			setup_menu += "<li><a href='byond://?src=\ref[src];mode=[BOLTS_SHOCK]'>Toggle bolts and electrify</a></li>"
 
 		if(specialfunctions == OPEN_BOLTS_SHOCK)
-			setup_menu += "<li><b><a class='green' href='?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></b></li>"
+			setup_menu += "<li><b><a class='green' href='byond://?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></b></li>"
 		else
-			setup_menu += "<li><a href='?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></li>"
+			setup_menu += "<li><a href='byond://?src=\ref[src];mode=[OPEN_BOLTS_SHOCK]'>Open, toggle bolts and electrify</a></li>"
 
 		setup_menu += "</ul>"
 
-	setup_menu += "<b><a href='?src=\ref[src];load=1'>Load data from the multitool</a></b><br>"
-	setup_menu += "<b><a href='?src=\ref[src];copy=1'>Copy data to the multitool</a></b><br>"
-	setup_menu += "<b><a href='?src=\ref[src];clear=1'>Clear data</a></b><br>"
+	setup_menu += "<b><a href='byond://?src=\ref[src];load=1'>Load data from the multitool</a></b><br>"
+	setup_menu += "<b><a href='byond://?src=\ref[src];copy=1'>Copy data to the multitool</a></b><br>"
+	setup_menu += "<b><a href='byond://?src=\ref[src];clear=1'>Clear data</a></b><br>"
 
 	var/datum/browser/popup = new(user, "window=door_control", src.name)
 	popup.set_content(setup_menu)

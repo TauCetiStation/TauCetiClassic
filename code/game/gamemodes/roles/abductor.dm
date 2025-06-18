@@ -45,7 +45,7 @@
 	H.flavor_text = ""
 	equip_common(H)
 	equip_class()
-	H.regenerate_icons()
+	H.regenerate_icons(update_body_preferences = TRUE)
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "abductor", /datum/mood_event/abductor)
 	return TRUE
 
@@ -107,9 +107,6 @@
 		return
 
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
-	beamplant.imp_in = scientist
-	beamplant.implanted = 1
-	beamplant.implanted(scientist)
 	for(var/obj/machinery/abductor/console/console in range(2, scientist))
 		console.gizmo = G
 		G.console = console

@@ -21,6 +21,7 @@
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
+	item_state_world = "id_mod_w"
 	item_state = "electronic"
 	origin_tech = "programming=2"
 	var/id = null
@@ -53,13 +54,78 @@
 	name = "circuit board (Slime management console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
 	origin_tech = "biotech=3;bluespace=3"
+
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
 	build_path = /obj/machinery/computer/security
-	var/network = list("SS13")
+	var/list/network = list("SS13")
 	req_access = list(access_security)
 	var/locked = 1
 	var/emagged = 0
+
+/obj/item/weapon/circuitboard/security/telescreen
+	name = "Circuit board (Telescreen)"
+	build_path = /obj/machinery/computer/security/telescreen
+	network = list("thunder")
+
+/obj/item/weapon/circuitboard/security/entertainment
+	name = "Circuit board (Entertainment Monitor)"
+	build_path = /obj/machinery/computer/security/telescreen/entertainment
+	network = list() // No cameras by default
+
+/obj/item/weapon/circuitboard/security/wooden_tv
+	name = "Circuit board (Wooden TV Monitor)"
+	build_path = /obj/machinery/computer/security/wooden_tv
+	network = list("SS13")
+
+/obj/item/weapon/circuitboard/security/wooden_tv/miami
+	name = "Circuit board (Miami Wooden TV Monitor)"
+	build_path = /obj/machinery/computer/security/wooden_tv/miami
+	network = list("SS13")
+
+/obj/item/weapon/circuitboard/security/mining
+	name = "Circuit board (Outpost Camera Monitor)"
+	build_path = /obj/machinery/computer/security/mining
+	network = list("MINE")
+
+/obj/item/weapon/circuitboard/security/engineering
+	name = "Circuit board (Engineering Camera Monitor)"
+	build_path = /obj/machinery/computer/security/engineering
+	network = list("Power Alarms","Atmosphere Alarms","Fire Alarms")
+	req_access = list(access_engine)
+
+/obj/item/weapon/circuitboard/security/engineering/drone
+	name = "Circuit board (Drone Monitoring Console)"
+	build_path = /obj/machinery/computer/security/engineering/drone
+	network = list("Engineering Robots")
+
+/obj/item/weapon/circuitboard/security/nuclear
+	name = "Circuit board (Head Mounted Camera Monitor)"
+	build_path = /obj/machinery/computer/security/nuclear
+	network = list("NUKE")
+	req_access = list(access_syndicate)
+
+/obj/item/weapon/circuitboard/security/nuclear/shiv
+	name = "Circuit board (Pilot Camera Monitor)"
+	build_path = /obj/machinery/computer/security/nuclear/shiv
+	network = list("shiv")
+
+/obj/item/weapon/circuitboard/security/abductor_ag
+	name = "Circuit board (Agent Observation Monitor)"
+	build_path = /obj/machinery/computer/security/abductor_ag
+	network = list()
+
+/obj/item/weapon/circuitboard/security/abductor_hu
+	name = "Circuit board (Human Observation Monitor)"
+	build_path = /obj/machinery/computer/security/abductor_hu
+	network = list("SS13", "SECURITY UNIT")
+
+/obj/item/weapon/circuitboard/security/bodycam
+	name = "Circuit board (Bodycam Monitoring Computer)"
+	build_path = /obj/machinery/computer/security/bodycam
+	network = list("SECURITY UNIT")
+	req_access = list(access_hos)
+
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
 	origin_tech = "programming=4;biotech=2"

@@ -46,7 +46,7 @@
 
 	var/t = "<TT>"
 
-	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
+	t += "<BR><HR><A href='byond://?src=\ref[src];update=1'>Refresh</A>"
 
 	if(!powernet)
 		t += "<span class='warning'>No connection</span>"

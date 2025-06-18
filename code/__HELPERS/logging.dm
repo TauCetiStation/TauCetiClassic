@@ -143,6 +143,9 @@
 /proc/log_sql(text)
 	world.log << "\[[time_stamp()]]SQL: [text][log_end]"
 	if(config.log_sql_error)
+		var/static/regex/sql_log_blacklist = regex("erro_password|erro_auth_token", "i")
+		if(sql_log_blacklist.Find(text))
+			text = "|Scrambled because blacklist worlds|"
 		global.sql_error_log << "\[[time_stamp()]]SQL: [text][log_end]"
 
 /proc/log_unit_test(text)

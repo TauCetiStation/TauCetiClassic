@@ -69,14 +69,14 @@
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat = {"Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
 	Готов к полёту[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
-	<a href='?src=\ref[src];syndicate=1'>Пространство Синдиката</a><br>
-	<a href='?src=\ref[src];station_nw=1'>Северо-запад от [station_name_ru()]</a> |
-	<a href='?src=\ref[src];station_n=1'>К северу от [station_name_ru()]</a> |
-	<a href='?src=\ref[src];station_ne=1'>Северо-восток от [station_name_ru()]</a><br>
-	<a href='?src=\ref[src];station_sw=1'>Юго-запад от [station_name_ru()]</a> |
-	<a href='?src=\ref[src];station_s=1'>К югу от [station_name_ru()]</a> |
-	<a href='?src=\ref[src];station_se=1'>Юго-восток от [station_name_ru()]</a><br>
-	<a href='?src=\ref[src];mining=1'>Северо-восток от шахтёрского астероида</a><br>"}
+	<a href='byond://?src=\ref[src];syndicate=1'>Пространство Синдиката</a><br>
+	<a href='byond://?src=\ref[src];station_nw=1'>Северо-запад от [station_name_ru()]</a> |
+	<a href='byond://?src=\ref[src];station_n=1'>К северу от [station_name_ru()]</a> |
+	<a href='byond://?src=\ref[src];station_ne=1'>Северо-восток от [station_name_ru()]</a><br>
+	<a href='byond://?src=\ref[src];station_sw=1'>Юго-запад от [station_name_ru()]</a> |
+	<a href='byond://?src=\ref[src];station_s=1'>К югу от [station_name_ru()]</a> |
+	<a href='byond://?src=\ref[src];station_se=1'>Юго-восток от [station_name_ru()]</a><br>
+	<a href='byond://?src=\ref[src];mining=1'>Северо-восток от шахтёрского астероида</a><br>"}
 
 	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)

@@ -1,6 +1,5 @@
 @use './chat-base.scss';
 
-
 a {
   color: #0000ff;
 }
@@ -12,8 +11,6 @@ a.visited {
 a:visited {
   color: #ff00ff;
 }
-
-
 
 /*****************************************
 *
@@ -72,15 +69,33 @@ a:visited {
 }
 
 /* OOC */
-.ooc            {color: #002eb8;}
-.looc           {color: #6699CC;}
-.antagooc       {color: #960018}
-.admin				  {color: #386aff;}
-.adminsay			  {color: #006666;}
-.adminnotice		{color: #0000ff;}
-.boldannounce		{color: #ff0000;}
-.success				{color: #00bf36;}
-.vote				    {color: purple;}
+.ooc {
+  color: #002eb8;
+}
+.looc {
+  color: #6699cc;
+}
+.antagooc {
+  color: #960018;
+}
+.admin {
+  color: #386aff;
+}
+.adminsay {
+  color: #006666;
+}
+.adminnotice {
+  color: #0000ff;
+}
+.boldannounce {
+  color: #ff0000;
+}
+.success {
+  color: #00bf36;
+}
+.vote {
+  color: purple;
+}
 
 /* Miscellaneous */
 .alert {
@@ -103,23 +118,53 @@ h2.alert {
 }
 
 /* Radio Channels */
-.comradio		{color: #193a7a;}
-.syndradio		{color: #6d3f40;}
-.voxradio		{color: #88900e;}
-.centradio		{color: #5c5c8a;}
-.airadio		{color: #ff00ff;}
-.secradio		{color: #a30000;}
-.engradio		{color: #a66300;}
-.medradio		{color: #008160;}
-.sciradio		{color: #993399;}
-.supradio		{color: #5f4519;}
+.comradio {
+  color: #193a7a;
+}
+.syndradio {
+  color: #6d3f40;
+}
+.voxradio {
+  color: #88900e;
+}
+.centradio {
+  color: #5c5c8a;
+}
+.airadio {
+  color: #ff00ff;
+}
+.secradio {
+  color: #a30000;
+}
+.engradio {
+  color: #a66300;
+}
+.medradio {
+  color: #008160;
+}
+.sciradio {
+  color: #993399;
+}
+.supradio {
+  color: #5f4519;
+}
 
 /* Radio: Misc */
-.radio			{color: #008000;}
-.deptradio		{color: #993399;}
-.deadsay		{color: #5c00e6;}
-.ghostalert		{color: #6600ff;}
-.newscaster		{color: #800000;}
+.radio {
+  color: #008000;
+}
+.deptradio {
+  color: #993399;
+}
+.deadsay {
+  color: #5c00e6;
+}
+.ghostalert {
+  color: #6600ff;
+}
+.newscaster {
+  color: #800000;
+}
 
 .binarysay {
   color: #20c20e;
@@ -134,34 +179,82 @@ h2.alert {
 }
 
 /* Game Messages */
-.userdanger			{color: #ff0000;}
-.danger				{color: #ff0000;}
-.warning			{color: #ff0000;}
-.boldwarning		{color: #ff0000;}
-.red				{color: #ff0000;}
-.rose				{color: #ff5050;}
-.info				{color: #0000cc;}
-.notice				{color: #000099;}
-.boldnotice			{color: #000099;}
-.nicegreen			{color: #14a833;}
-.boldnicegreen		{color: #14a833;}
+.userdanger {
+  color: #ff0000;
+}
+.danger {
+  color: #ff0000;
+}
+.warning {
+  color: #ff0000;
+}
+.boldwarning {
+  color: #ff0000;
+}
+.red {
+  color: #ff0000;
+}
+.rose {
+  color: #ff5050;
+}
+.info {
+  color: #0000cc;
+}
+.notice {
+  color: #000099;
+}
+.boldnotice {
+  color: #000099;
+}
+.nicegreen {
+  color: #14a833;
+}
+.boldnicegreen {
+  color: #14a833;
+}
 
-.wet				{color: #007fbf;}
+.wet {
+  color: #007fbf;
+}
 
 /* ANTAGS */
-.shadowling			{color: #3b2769;}
-.changeling			{color: #800080;}
-.abductor_team0		{color: #800080;}
-.abductor_team1		{color: #c00070;}
-.abductor_team2		{color: #406e6a;}
-.abductor_team3		{color: #6e4040;}
-.abductor_team4		{color: #800080;}
-.cult				{color: #800080;}
-.alien				{color: #6b286b;}
+.shadowling {
+  color: #3b2769;
+}
+.changeling {
+  color: #800080;
+}
+.abductor_team0 {
+  color: #800080;
+}
+.abductor_team1 {
+  color: #c00070;
+}
+.abductor_team2 {
+  color: #406e6a;
+}
+.abductor_team3 {
+  color: #6e4040;
+}
+.abductor_team4 {
+  color: #800080;
+}
+.cult {
+  color: #800080;
+}
+.alien {
+  color: #6b286b;
+}
 .hive,
-.hive_queen			{color: #420a81;}
-.noticealien		{color: #00c000;}
-.alertalien			{color: #00c000;}
+.hive_queen {
+  color: #420a81;
+}
+.noticealien {
+  color: #00c000;
+}
+.alertalien {
+  color: #00c000;
+}
 
 /* Admin: Channels */
 .admin_announce {
@@ -170,17 +263,33 @@ h2.alert {
 }
 
 /* Languages */
-.tajaran				{color: #803b56;}
-.tajaran_signlang		{color: #941c1c;}
-.skrell					{color: #00ced1;}
-.soghun					{color: #73a800;}
-.vox					{color: #aa00aa;}
-.ipc					{color: #505050;}
-.syndcode				{color: #c21b1b;}
-.replicator     {color: #30b2da;}
+.tajaran {
+  color: #803b56;
+}
+.tajaran_signlang {
+  color: #941c1c;
+}
+.skrell {
+  color: #00ced1;
+}
+.soghun {
+  color: #73a800;
+}
+.vox {
+  color: #aa00aa;
+}
+.ipc {
+  color: #505050;
+}
+.syndcode {
+  color: #c21b1b;
+}
+.replicator {
+  color: #30b2da;
+}
 
 .interface {
-	color: #330033;
+  color: #330033;
 }
 
 /* Popup windows */
@@ -196,18 +305,25 @@ table.staffwho {
 }
 
 table.staffwho th {
-	color: #807473;
+  color: #807473;
 }
-table.staffwho .Admins			{color: #e67e22;}
-table.staffwho .Mentors			{color: #e91e63;}
-table.staffwho .Developers		{color: #5e5ed1;}
-table.staffwho .Xenovisors		{color: #2ecc71;}
+table.staffwho .Admins {
+  color: #e67e22;
+}
+table.staffwho .Mentors {
+  color: #e91e63;
+}
+table.staffwho .Developers {
+  color: #5e5ed1;
+}
+table.staffwho .Xenovisors {
+  color: #2ecc71;
+}
 
 /* CLOWN */
 .clown {
   color: #ff70c1;
 }
-
 
 /* CONNECTION */
 .connectionClosed,

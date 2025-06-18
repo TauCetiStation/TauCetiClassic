@@ -73,7 +73,6 @@
 	add_fingerprint(user)
 	close_machine(G.affecting)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	qdel(G)
 
 /obj/machinery/bodyscanner/update_icon()
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
@@ -117,13 +116,13 @@
 			if(prob(75))
 				return
 	for(var/atom/movable/A in src)
-		A.forceMove(loc)
-		ex_act(severity)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
 	qdel(src)
 
 /obj/machinery/bodyscanner/deconstruct(disassembled)
 	for(var/atom/movable/A in src)
-		A.forceMove(loc)
+		A.forceMove(get_turf(src))
 	..()
 
 /obj/machinery/body_scanconsole/power_change()
@@ -141,7 +140,6 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal, /obj/item/weapon/implant/bork)
 	name = "Body Scanner Console"
 	cases = list("консоль медицинского сканера", "консоли медицинского сканера", "консоли медицинского сканера", "консоль медицинского сканера", "консолью медицинского сканера", "консоли медицинского сканера")
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -196,7 +194,7 @@
 
 		var/list/bloodData = list()
 		bloodData["hasBlood"] = FALSE
-		if(!occupant.species.flags[NO_BLOOD])
+		if(!HAS_TRAIT(occupant, TRAIT_NO_BLOOD))
 			bloodData["hasBlood"] = TRUE
 			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
 			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
@@ -223,11 +221,11 @@
 
 			var/list/implantData = list()
 			var/has_unknown_implant = FALSE
-			for(var/obj/I in E.implants)
+			for(var/obj/item/weapon/implant/I in E.embedded_objects)
 				var/list/implantSubData = list()
 				implantSubData["name"] = C_CASE(I, NOMINATIVE_CASE)
 
-				if(!is_type_in_list(I, known_implants))
+				if(!is_known_implant(I))
 					has_unknown_implant = TRUE
 					implantSubData["name"] = null
 
@@ -293,6 +291,9 @@
 	data["occupant"] = occupantData
 
 	return data
+
+/obj/machinery/body_scanconsole/proc/is_known_implant(obj/item/weapon/implant/I)
+	return I.legal
 
 /obj/machinery/body_scanconsole/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -408,8 +409,8 @@
 			infected = "[get_germ_level_name(BP.germ_level)]:"
 
 		var/unknown_body = 0
-		for(var/I in BP.implants)
-			if(is_type_in_list(I,known_implants))
+		for(var/obj/item/weapon/implant/I in BP.embedded_objects)
+			if(is_known_implant(I))
 				imp += "[I] имплантирован:"
 			else
 				unknown_body++
@@ -467,3 +468,6 @@
 		dat += "Обнаружено смещение сетчатки.<BR>"
 
 	return dat
+
+/obj/machinery/body_scanconsole/vox/is_known_implant(obj/item/weapon/implant/I)
+	return istype(I, /obj/item/weapon/implant/cortical)
