@@ -68,50 +68,14 @@
 	return data
 
 
-/obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	var/data[0]
+/obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user)
+	tgui_interact(user)
 
-	data = list(
-		"chamber_pressure" = round(program.memory["chamber_sensor_pressure"]),
-		"exterior_status" = program.memory["exterior_status"],
-		"interior_status" = program.memory["interior_status"],
-		"processing" = program.memory["processing"],
-	)
-
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-
-	if (!ui)
-		ui = new(user, src, ui_key, "simple_airlock_console.tmpl", name, 470, 290)
-
-		ui.set_initial_data(data)
-
+/obj/machinery/embedded_controller/radio/airlock_controller/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AirlockControllerInterface", name)
 		ui.open()
-
-		ui.set_auto_update(1)
-
-/obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-
-	var/clean = 0
-	switch(href_list["command"])	//anti-HTML-hacking checks
-		if("cycle_ext")
-			clean = 1
-		if("cycle_int")
-			clean = 1
-		if("force_ext")
-			clean = 1
-		if("force_int")
-			clean = 1
-		if("abort")
-			clean = 1
-
-	if(clean)
-		program.receive_user_command(href_list["command"])
-
-	return 1
-
 
 //Access controller for door control - used in virology and the like
 /obj/machinery/embedded_controller/radio/access_controller
