@@ -59,6 +59,15 @@
 	tag_secure = 1
 	layer = 3.3	//Above windows
 
+/obj/machinery/embedded_controller/radio/airlock_controller/tgui_data()
+	var/data = list()
+	data["chamber_pressure"] = round(program.memory["chamber_sensor_pressure"])
+	data["exterior_status"] = program.memory["exterior_status"]
+	data["interior_status"] = program.memory["interior_status"]
+	data["processing"] = program.memory["processing"]
+	return data
+
+
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
