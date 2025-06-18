@@ -45,9 +45,10 @@
 	name = "Heads: Chief Engineer"
 	sound = "se"
 
-/datum/announcement/station/command/department/play(department, message)
+/datum/announcement/station/command/department/play(department, message, mob/user)
 	if(department && message)
 		title = "Оповещение из [department]"
+	announcer = user?.GetVoice()
 	..(message)
 
 /datum/announcement/station/command/ai
@@ -66,7 +67,7 @@
 	sound = "nuke1"
 /datum/announcement/station/nuke/play(area/A)
 	if(A)
-		message = "Тревога! На станции была обнаружена активация ядерной боеголовки [initial(A.name)]!"
+		message = "Тревога! На станции была обнаружена активация ядерной боеголовки в [CASE(A, PREPOSITIONAL_CASE)]!"
 	..()
 
 /datum/announcement/station/nuke_teleport
@@ -76,7 +77,7 @@
 
 /datum/announcement/station/nuke_teleport/play(area/new_loc, area/old_loc)
 	if(new_loc && old_loc)
-		message = "Обнаружено подпространственное перемещение ядерной боеголовки из [initial(old_loc.name)] в [initial(new_loc.name)]. Требуется немедленное вмешательство!"
+		message = "Обнаружено подпространственное перемещение ядерной боеголовки из [CASE(old_loc, PREPOSITIONAL_CASE)] в [CASE(new_loc, PREPOSITIONAL_CASE)]. Требуется немедленное вмешательство!"
 	..()
 
 /datum/announcement/station/maint_revoke

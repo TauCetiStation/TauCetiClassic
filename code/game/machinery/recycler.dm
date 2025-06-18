@@ -29,6 +29,8 @@ var/global/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 /obj/machinery/recycler/RefreshParts()
+	..()
+
 	var/amt_made = 0
 	var/prob_mod = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)

@@ -17,11 +17,9 @@
 	return length(landmarks_list["ninja"]) > 0
 
 /datum/faction/ninja/OnPostSetup()
-	ninjastart = landmarks_list["ninja"].Copy()
 	for(var/datum/role/role in members)
-		var/obj/effect/landmark/start_point = pick(ninjastart)
-		ninjastart -= start_point
-		role.antag.current.forceMove(start_point.loc)
+		var/turf/start_point = pick_landmarked_location("ninja")
+		role.antag.current.forceMove(start_point)
 	return ..()
 
 /datum/faction/ninja/check_win()

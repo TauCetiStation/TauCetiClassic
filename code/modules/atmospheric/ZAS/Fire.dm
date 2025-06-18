@@ -129,6 +129,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	icon_state = "1"
 	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
+	plane = LIGHTING_LAMPS_PLANE
 	flags = ABSTRACT
 
 /obj/effect/firewave/atom_init(mapload, temperature = 1000)
@@ -175,6 +176,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	icon_state = "1"
 	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
+	plane = LIGHTING_LAMPS_PLANE
 	flags = ABSTRACT
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()

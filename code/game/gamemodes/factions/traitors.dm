@@ -16,10 +16,14 @@
 
 /datum/faction/traitor/can_setup(num_players)
 	. = ..()
-
-	if(config.traitor_scaling)
-		max_roles = max(1, round(num_players/traitor_scaling_coeff))
-	else
-		max_roles = max(1, min(num_players, traitors_possible))
-
+	limit_roles(num_players)
 	return TRUE
+
+/datum/faction/traitor/proc/calculate_traitor_scaling(count_players)
+	if(config.traitor_scaling)
+		return max(1, round(count_players / traitor_scaling_coeff))
+	return max(1, min(count_players, traitors_possible))
+
+/datum/faction/traitor/proc/limit_roles(num_players)
+	max_roles = calculate_traitor_scaling(num_players)
+	return max_roles

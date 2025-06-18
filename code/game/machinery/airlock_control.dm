@@ -111,6 +111,8 @@
 	if(radio_controller)
 		set_frequency(frequency)
 
+	queue_smooth_neighbors()
+
 /obj/machinery/door/airlock/Destroy()
 	if(frequency && radio_controller)
 		radio_controller.remove_object(src,frequency)

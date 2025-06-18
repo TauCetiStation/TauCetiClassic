@@ -7,6 +7,8 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/welded = FALSE //Used on pumps and scrubbers
 	var/showpipe = FALSE
 
+	plane = FLOOR_PLANE
+
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
 
@@ -19,16 +21,6 @@ On top of that, now people can add component-speciic procs/vars if they want!
 		var/datum/gas_mixture/A = new
 		A.volume = 200
 		AIR_I = A
-
-/obj/machinery/atmospherics/components/update_icon()
-	if(!isturf(loc))
-		return
-	var/turf/T = loc
-
-	if(level == 2 || !T.intact)
-		plane = GAME_PLANE
-	else
-		plane = FLOOR_PLANE
 
 /*
 	Pipenet stuff; housekeeping

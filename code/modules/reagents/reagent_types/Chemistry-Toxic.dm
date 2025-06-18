@@ -927,3 +927,6 @@
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
 		M.emote("drool")
+	if(!istype(M))
+		return
+	SEND_SIGNAL(M, COMSIG_IMPEDREZENE_DIGEST)

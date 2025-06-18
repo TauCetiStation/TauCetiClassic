@@ -49,6 +49,7 @@
 /datum/gear/briefcase
 	display_name = "Briefcase"
 	path = /obj/item/weapon/storage/briefcase
+	slot = SLOT_L_HAND
 
 /datum/gear/electriccig
 	display_name = "Electronic cigarette"

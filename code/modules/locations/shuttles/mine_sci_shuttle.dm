@@ -12,6 +12,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle
 	name = "Mine-Science Shuttle Console"
+	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	state_broken_preset = "commb"
@@ -26,23 +27,25 @@ var/global/area/asteroid/mine_sci_curr_location = null
 			updateUsrDialog()
 
 /obj/machinery/computer/mine_sci_shuttle/ui_interact(mob/user)
+	var/seconds = max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat
 	if(autopilot)
-		var/shuttle_location = station_name()
+		var/shuttle_location = station_name_ru()
 		if(istype(autopilot.mine_sci_curr_location, MINE_DOCK))
-			shuttle_location = "Mining Station"
+			shuttle_location = "Шахтёрский аванпост"
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
-			shuttle_location = "Research"
-		dat += "<ul><li>Location: [shuttle_location]</li>"
-		dat += {"<li>Ready to move[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]</li>"}
+			shuttle_location = "Научный аванпост"
+		dat += "<ul><li>Местоположение: <b>[shuttle_location]</b></li>"
+		dat += {"<li>Готов лететь[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]</li>"}
 		dat += "</ul>"
-		dat += "<a href='?src=\ref[src];mine=1'>Mining Station</a> |"
-		dat += "<a href='?src=\ref[src];station=1'>[station_name()]</a> |"
-		dat += "<a href='?src=\ref[src];sci=1'>Research</a><br>"
+		dat += "<a href='?src=\ref[src];mine=1'>Шахтёрский аванпост</a> | "
+		dat += "<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> | "
+		dat += "<a href='?src=\ref[src];sci=1'>Научный аванпост</a><br>"
 	else
-		dat = "Cannot find shuttle"
+		dat = "Невозможно найти шаттл"
 
-	var/datum/browser/popup = new(user, "flightcomputer", "[src.name]", 365, 200)
+	var/datum/browser/popup = new(user, "flightcomputer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 365, 200)
 	popup.set_content(dat)
 	popup.open()
 
@@ -53,10 +56,10 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		return
 
 	if(!autopilot)
-		to_chat(usr, "<span class='warning'>Shuttle not found!</span>")
+		to_chat(usr, "<span class='warning'>Шаттл не обнаружен!</span>")
 		return FALSE
 	if(autopilot.moving)
-		to_chat(usr, "<span class='notice'>Shuttle is already moving.</span>")
+		to_chat(usr, "<span class='notice'>Шаттл уже запущен.</span>")
 		return FALSE
 
 	var/result = FALSE
@@ -68,7 +71,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		result = autopilot.mine_sci_move_to(STATION_DOCK)
 	if(result)
 		lastMove = world.time
-		to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
+		to_chat(usr, "<span class='notice'>Шаттл получил запрос и будет отправлен в ближайшее время.</span>")
 
 	updateUsrDialog()
 
@@ -78,6 +81,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	name = "Shuttle Console"
+	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/locations/shuttles/computer_shuttle_mining.dmi'
 	state_broken_preset = null
 	state_nopower_preset = null

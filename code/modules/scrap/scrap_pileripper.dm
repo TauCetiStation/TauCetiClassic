@@ -64,6 +64,8 @@
 			cube.make_pile()
 
 /obj/machinery/pile_ripper/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
 

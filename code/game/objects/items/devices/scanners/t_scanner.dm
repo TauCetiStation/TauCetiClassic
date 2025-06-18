@@ -35,19 +35,16 @@
 	if(!on)
 		STOP_PROCESSING(SSobj, src)
 		return null
-	scan()
+	scan(loc)
 
-/obj/item/device/t_scanner/proc/scan()
+/obj/item/device/t_scanner/proc/scan(mob/viewer)
+	if(!ismob(viewer) || !viewer.client)
+		return
 
-	for(var/turf/T in range(3, src.loc) )
-
-		if(!T.intact)
+	for(var/turf/T in range(3, viewer))
+		if(T.underfloor_accessibility == UNDERFLOOR_VISIBLE) // we can see turf content already
 			continue
 
 		for(var/obj/O in T.contents)
-
-			if(O.level != 1)
-				continue
-
-			if(O.invisibility >= INVISIBILITY_MAXIMUM)
+			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				flick_sonar(O)

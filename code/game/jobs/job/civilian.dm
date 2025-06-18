@@ -21,10 +21,10 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
+	restricted_species = list(TAJARAN, VOX, DIONA)
 
 	department_stocks = list("Cargo" = 40)
-
+	flags = JOB_FLAG_CARGO
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"
@@ -44,7 +44,7 @@
 	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
 
 	department_stocks = list("Cargo" = 20)
-
+	flags = JOB_FLAG_CARGO
 
 /datum/job/mining
 	title = "Shaft Miner"
@@ -64,7 +64,7 @@
 	skillsets = list("Shaft Miner" = /datum/skillset/miner)
 
 	department_stocks = list("Cargo" = 10)
-
+	flags = JOB_FLAG_CARGO
 
 /datum/job/recycler
 	title = "Recycler"
@@ -88,10 +88,9 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA)
 
 	department_stocks = list("Cargo" = 10)
-
+	flags = JOB_FLAG_CARGO
 
 //Food
 /datum/job/bartender
@@ -115,8 +114,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(TAJARAN)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/chef
 	title = "Chef"
@@ -140,8 +138,13 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(TAJARAN)
+	flags = JOB_FLAG_CIVIL
 
+/datum/job/chef/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly)
+		var/obj/item/weapon/implant/bork/B = new(H)
+		B.inject(H, BP_HEAD)
+	return ..()
 
 /datum/job/hydro
 	title = "Botanist"
@@ -159,7 +162,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/hydro
 	skillsets = list("Botanist" = /datum/skillset/botanist)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/janitor
 	title = "Janitor"
@@ -176,7 +179,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
 	skillsets = list("Janitor" = /datum/skillset/janitor)
-
+	flags = JOB_FLAG_CIVIL
 
 //More or less assistants
 /datum/job/barber
@@ -195,7 +198,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
 	skillsets = list("Barber" = /datum/skillset/barber)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/librarian
 	title = "Librarian"
@@ -213,32 +216,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
 	skillsets = list("Librarian" = /datum/skillset/librarian)
-
-
-//var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
-/datum/job/lawyer
-	title = "Internal Affairs Agent"
-	flag = LAWYER
-	department_flag = CIVILIAN
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "The Central Command"
-	selection_color = "#dddddd"
-	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
-	salary = 200
-	minimal_player_ingame_minutes = 1560
-	outfit = /datum/outfit/job/lawyer
-	skillsets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
-		~Luduk
-	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/clown
 	title = "Clown"
@@ -255,6 +233,8 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
 	skillsets = list("Clown" = /datum/skillset/clown)
+	restricted_species = list(SKRELL)
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
@@ -276,11 +256,12 @@
 	salary = 20
 	outfit = /datum/outfit/job/mime
 	skillsets = list("Mime" = /datum/skillset/mime)
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
-		H.miming = TRUE
+		ADD_TRAIT(H, TRAIT_MIMING, GENERIC_TRAIT)
 	H.real_name = pick(mime_names)
 	H.rename_self("mime")

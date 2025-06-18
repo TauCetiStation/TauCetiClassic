@@ -21,18 +21,31 @@ var/global/bridge_ooc_colour = "#7b804f"
 		to_chat(src, "<span class='red'>You have OOC muted.</span>")
 		return
 
-	if(prefs.muted & MUTE_OOC)
+	if(prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(src, ADMIN_CD_OOC))
 		to_chat(src, "<span class='red'>You cannot use OOC (muted).</span>")
 		return
 
 	if(!holder)
+
 		if(!dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "<span class='red'>OOC for dead mobs has been turned off.</span>")
 			return
-		if(!ooc_allowed && !istype(mob, /mob/dead/new_player))
-			to_chat(src, "<span class='red'>OOC is globally muted.[config.ooc_round_only ? " Try again after round end." : ""]</span>")
+		if(!ooc_allowed) // can be disabled globally, or autodisabled for round only
+			var/user_message = "OOC is globally muted."
+
+			if(config.ooc_round_autotoggle && SSticker.current_state == GAME_STATE_PLAYING) //disabled for round only
+				user_message += " Try again after the round ends."
+
+			if(looc_allowed)
+				if(istype(mob, /mob/dead/new_player))
+					user_message += "<br>While in lobby, you can still use LOOC to chat with others people in lobby."
+				else
+					user_message += "<br>You can still use LOOC to chat with others people in view."
+
+			to_chat(src, "<span class='red'>[user_message]</span>")
 			return
-		if(handle_spam_prevention(msg,MUTE_OOC))
+
+		if(handle_spam_prevention(msg,ADMIN_CD_OOC))
 			return
 		if(findtext(msg, "byond://"))
 			to_chat(src, "<b>Advertising other servers is not allowed.</b>")
@@ -71,10 +84,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 	var/msg_end = "<span class='message emojify linkify'>[msg]</span></font></span>"
 
 	for(var/client/C in clients)
-		// Lobby people can only say in OOC to other lobby people.
-		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
-			continue
-
 		if(!display_name)
 			display_name = name
 
@@ -89,8 +98,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 					display_name = sender.holder.fakekey
 
 		if(C.prefs.chat_toggles & CHAT_OOC)
-			var/chat_suffix = C.holder && istype(sender, /mob/dead/new_player) && !ooc_allowed ? " (LOBBY)" : ""
-			to_chat(C, "[msg_start][chat_suffix]:</span> [display_name?"<EM>[display_name]:</EM> ":""][msg_end]")
+			to_chat(C, "[msg_start]:</span> [display_name?"<EM>[display_name]:</EM> ":""][msg_end]")
 
 /client/proc/set_global_ooc(newColor as color)
 	set name = "Set Global OOC Colour"
@@ -138,10 +146,10 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if(!dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "<span class='red'>OOC for dead mobs has been turned off.</span>")
 			return
-		if(prefs.muted & MUTE_OOC)
+		if(prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(src, ADMIN_CD_OOC))
 			to_chat(src, "<span class='red'>You cannot use OOC (muted).</span>")
 			return
-		if(handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg,ADMIN_CD_OOC))
 			return
 		if(findtext(msg, "byond://"))
 			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
@@ -161,7 +169,17 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	log_ooc("(LOCAL) [key_name(mob)] : [msg]")
 
-	var/list/heard = get_mobs_in_view(7, src.mob)
+	var/list/heard
+	var/prefix = "LOOC"
+
+	// mobs_in_view doesn't work for lobby mobs and i don't know why, already spend to much time on it
+	// so currently admins can't jump to lobby location for lobby looc
+	if(isnewplayer(mob))
+		heard = new_player_list
+		prefix = "(LOBBY)[prefix]"
+	else
+		heard = get_mobs_in_view(7, src.mob)
+
 	for(var/mob/M in heard)
 
 		if(!M.client)
@@ -173,17 +191,17 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			if(is_fake_key && C.holder)
 				display_name = "[holder.fakekey]/([key])"
-			to_chat(C, "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span>")
+			to_chat(C, "<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			var/track = ""
-			if(isobserver(C.mob))
+			if(isobserver(C.mob) && !isnewplayer(mob))
 				track = FOLLOW_LINK(C.mob, mob)
-			var/prefix = "(R)LOOC"
-			if (C.mob in heard)
-				prefix = "LOOC"
-			to_chat(C, "[track]<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
+			var/remote = ""
+			if (!(C.mob in heard))
+				remote = "(R)"
+			to_chat(C, "[track]<span class='looc'><span class='prefix'>[remote][prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 /client/verb/fix_ui()
 	set name = "Fix UI"
@@ -209,3 +227,24 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
 
+/client/verb/show_test_merges()
+	set name = "Show Test Merges"
+	set desc = "Shows a list of all test merges that are currently active"
+	set category = "OOC"
+
+	if(!test_merges)
+		to_chat(src, "<div class='test_merges'>No test merges are currently active</div>")
+		return
+
+	var/joined_text = "[EMBED_TIP("<b>Test merged PRs</b>", "Данные изменения временно залиты на сервер, для теста перед окончательным принятием изменений или сбора отзывов")]<b>:</b><br>"
+	var/is_loading = FALSE
+	for(var/pr in test_merges)
+		if(test_merges[pr])
+			joined_text += "[ENTITY_TAB]<a href='[config.repository_link]/pull/[pr]'>#[pr]</a>: [test_merges[pr]]<br>"
+			if(test_merges[pr] == TEST_MERGE_DEFAULT_TEXT)
+				is_loading = TRUE
+
+	if(is_loading)
+		joined_text += "<br><i>You can use OOC - Show Test Merges a bit later for more information about current test merges.</i>"
+
+	to_chat(src, "<div class='test_merges'>[joined_text]</div>")

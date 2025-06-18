@@ -8,3 +8,16 @@
 			return OBJECTIVE_WIN
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/target/assassinate_heads/format_explanation()
+	return "Assassinate Heads of Staff."
+
+/datum/objective/target/assassinate_heads/check_completion()
+	var/list/heads = get_living_heads()
+
+	for(var/datum/mind/head_mind in heads)
+		if(head_mind && head_mind.current)
+			if(((head_mind.current.stat == DEAD) && !head_mind.current.fake_death) || issilicon(head_mind.current) || isbrain(head_mind.current) || !SSmapping.has_level(head_mind.current.z) || !head_mind.current.ckey)
+				return OBJECTIVE_WIN
+			return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN

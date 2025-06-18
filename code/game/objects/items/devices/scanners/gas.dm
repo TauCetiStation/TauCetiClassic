@@ -21,14 +21,17 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
 
-	action_button_name = "Use Analyzer"
-
 	var/status
 	var/last_rad_signal = 0
 	var/last_distance = 0
 
 	var/advanced_mode = 0
 	COOLDOWN_DECLARE(sound_play_cd)
+
+	item_action_types = list(/datum/action/item_action/hands_free/use_analyzer)
+
+/datum/action/item_action/hands_free/use_analyzer
+	name = "Use Analyzer"
 
 /obj/item/device/analyzer/verb/verbosity(mob/user as mob)
 	set name = "Toggle Advanced Gas Analysis"
@@ -52,6 +55,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 		var/image/I = image(icon, icon_state = "atmos_overlay")
 		add_overlay(I)
 		to_chat(user, "<span class='notice'>You turn on [src].</span>")
+	update_item_actions()
 	playsound(user, 'sound/items/flashlight.ogg', VOL_EFFECTS_MASTER, 20)
 	return TRUE
 

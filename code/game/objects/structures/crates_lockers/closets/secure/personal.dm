@@ -19,24 +19,12 @@
 	new /obj/item/clothing/shoes/white(src)
 
 /obj/structure/closet/secure_closet/personal/cabinet
-	icon_state = "cabinetdetective_locked"
-	icon_closed = "cabinetdetective"
-	icon_locked = "cabinetdetective_locked"
-	icon_opened = "cabinetdetective_open"
-	icon_broken = "cabinetdetective_broken"
-	icon_off = "cabinetdetective_broken"
-
-/obj/structure/closet/secure_closet/personal/cabinet/update_icon()
-	if(broken)
-		icon_state = icon_broken
-	else
-		if(!opened)
-			if(locked)
-				icon_state = icon_locked
-			else
-				icon_state = icon_closed
-		else
-			icon_state = icon_opened
+	icon_state = "cabinetsecure"
+	icon_closed = "cabinetsecure"
+	icon_opened = "cabinetsecure_open"
+	overlay_locked = "cabinetsecure_locked"
+	overlay_unlocked = "cabinetsecure_unlocked"
+	overlay_welded = "cabinetsecure_welded"
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)
@@ -62,8 +50,7 @@
 		if(allowed(user) || !src.registered_name || (src.registered_name == user_registered_name))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
-			if(src.locked)	src.icon_state = src.icon_locked
-			else	src.icon_state = src.icon_closed
+			update_icon()
 
 			if(!src.registered_name && user_registered_name)
 				src.registered_name = user_registered_name
@@ -89,7 +76,7 @@
 	locked = 0
 	user.SetNextMove(CLICK_CD_MELEE)
 	desc = "It appears to be broken."
-	icon_state = src.icon_broken
+	update_icon()
 	return TRUE
 
 /obj/structure/closet/secure_closet/personal/verb/reset()
@@ -109,7 +96,7 @@
 				if(!close())
 					return
 			src.locked = 1
-			src.icon_state = src.icon_locked
 			src.registered_name = null
 			src.desc = "It's a secure locker for personnel. The first card swiped gains control."
+			update_icon()
 	return

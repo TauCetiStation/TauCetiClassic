@@ -2,6 +2,7 @@
 	name = "Adrenaline Overdose"
 	desc = "We evolve additional sacs of adrenaline throughout our body."
 	helptext = "Removes all stuns instantly and adds a short-term reduction in further stuns. Can be used while unconscious. Every use poisons the body."
+	button_icon_state = "adrenaline"
 	chemical_cost = 35
 	genomecost = 2
 	req_human = 1

@@ -2,6 +2,7 @@
 	name = "Augmented Eyesight"
 	desc = "Creates heat receptors in our eyes and dramatically increases light sensing ability."
 	helptext = "Grants us night vision and thermal vision. It may be toggled on or off."
+	button_icon_state = "augmented_eyesight"
 	chemical_cost = 0
 	genomecost = 3
 	var/active = 0 //Whether or not vision is enhanced

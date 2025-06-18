@@ -53,7 +53,7 @@
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "k" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /turf/simulated/floor/pod,

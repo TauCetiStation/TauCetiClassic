@@ -21,6 +21,7 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
+	var/leap_mode = LEAP_MODE_OFF
 	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
 	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
@@ -31,12 +32,17 @@
 	beauty_dead = -1500
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
+	COOLDOWN_DECLARE(leap_cooldown)
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 	AddComponent(/datum/component/mood)
 
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
+
+	var/datum/reagents/R = new/datum/reagents(1000)
+	reagents = R
+	R.my_atom = src
 
 	if(!species)
 		if(new_species)
@@ -50,10 +56,7 @@
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
-
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	dna.b_type = random_blood_type()
 
 	. = ..()
 
@@ -98,9 +101,6 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	r_belly = HEX_VAL_RED(species.base_color)
-	g_belly = HEX_VAL_GREEN(species.base_color)
-	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)
@@ -155,6 +155,12 @@
 
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
+
+/mob/living/carbon/human/serpentid/atom_init(mapload)
+	. = ..(mapload, SERPENTID)
+
+/mob/living/carbon/human/moth/atom_init(mapload)
+	. = ..(mapload, MOTH)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -390,8 +396,6 @@
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return TRUE
-	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return TRUE
 	return 0
 
@@ -924,13 +928,13 @@
 
 
 /mob/living/carbon/human/abiotic(full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
-		return 1
+	if(full_body && ((l_hand && !(l_hand.flags & ABSTRACT)) || (r_hand && !(r_hand.flags & ABSTRACT)) || (back || wear_mask || head || shoes || w_uniform || wear_suit || glasses || l_ear || r_ear || gloves)))
+		return TRUE
 
-	if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
-		return 1
+	if((l_hand && !(l_hand.flags & ABSTRACT)) || (r_hand && !(r_hand.flags & ABSTRACT)))
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 /mob/living/carbon/human/proc/check_dna()
@@ -1400,6 +1404,10 @@
 
 	maxHealth = species.total_health
 
+	if(species.flags[NO_PAIN])
+		shock_stage = 0
+		traumatic_shock = 0
+
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = HEX_VAL_RED(species.base_color)
@@ -1463,14 +1471,14 @@
 	if(usr != src)
 		return 0 //something is terribly wrong
 
-	if(!bloody_hands)
+	if(!dirty_hands_transfers)
 		verbs -= /mob/living/carbon/human/proc/bloody_doodle
 
 	if(src.gloves)
 		to_chat(src, "<span class='warning'>[src.gloves] мешают вам это сделать.</span>")
 		return
 
-	var/max_length = bloody_hands * 30 //tweeter style
+	var/max_length = dirty_hands_transfers * 30 //tweeter style
 	var/message = sanitize(input(src, "Напишите сообщение. Оно не должно быть более [max_length] символов.", "Писание кровью", ""))
 
 	if(message)
@@ -1487,7 +1495,7 @@
 			return
 
 		var/used_blood_amount = round(length(message) / 30, 1)
-		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
+		dirty_hands_transfers = max(0, dirty_hands_transfers - used_blood_amount) //use up some blood
 
 		if(length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
@@ -1575,7 +1583,7 @@
 		var/list/sliders_data = tables_data[category]
 
 		for(var/datum/skill/s as anything in sliders_data)
-			var/datum/skill/skill = all_skills[s]
+			var/datum/skill/skill = global.all_skills[s]
 			var/slider_id = skill.name
 			var/slider_value = mind.skills.get_value(s)
 			var/slider_min_value = SKILL_LEVEL_MIN
@@ -1715,7 +1723,7 @@
 			injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
 		else
 			//it is much easier to prick yourself than another person
-			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) 
+			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15)
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth && user != src)
@@ -1760,19 +1768,29 @@
 /atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/atom/movable/screen/leap/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.toggle_leap()
+/mob/living/carbon/human/proc/switch_leap()
+	if(!HAS_TRAIT(src, TRAIT_CAN_LEAP))
+		to_chat(src, "<span class='notice'>Вы не умеете прыгать!</span>")
+		return
+	switch(leap_mode)
+		if(LEAP_MODE_OFF)
+			to_chat(src, "<span class='notice'>Вы попытаетесь совершить прыжок.</span>")
+			leap_mode = LEAP_MODE_ON
+		else
+			to_chat(src, "<span class='notice'>Вы не будете пытаться совершить прыжок.</span>")
+			leap_mode = LEAP_MODE_OFF
 
-/mob/living/carbon/human/proc/toggle_leap(message = 1)
-	leap_icon.on = !leap_icon.on
-	leap_icon.update_icon()
-	if(message)
-		to_chat(src, "<span class='notice'>You will [leap_icon.on ? "now" : "no longer"] leap at enemies!</span>")
+/datum/action/leap
+	name = "Switch Leap"
+	button_icon_state = "leap"
+	action_type = AB_INNATE
+
+/datum/action/leap/Trigger()
+	var/mob/living/carbon/human/H = owner
+	H.switch_leap()
 
 /mob/living/carbon/human/ClickOn(atom/A, params)
-	if(leap_icon && leap_icon.on && A != src)
+	if(leap_mode == LEAP_MODE_ON)
 		leap_at(A)
 	else
 		..()
@@ -1780,7 +1798,7 @@
 #define MAX_LEAP_DIST 4
 
 /mob/living/carbon/human/proc/leap_at(atom/A)
-	if(leap_icon.time_used > world.time)
+	if(!COOLDOWN_FINISHED(src, leap_cooldown))
 		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
 		return
 
@@ -1795,8 +1813,8 @@
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
-	leap_icon.time_used = world.time + leap_icon.cooldown
 	add_status_flags(LEAPING)
+	COOLDOWN_START(src, leap_cooldown, 10 SECOND)
 	pass_flags |= PASSTABLE
 	stop_pulling()
 
@@ -1809,7 +1827,6 @@
 			if(V.on)
 				V.overload()
 
-	toggle_leap()
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, PROC_REF(leap_end), prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
@@ -2140,6 +2157,7 @@
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, jittery_process))
+	. = jitteriness
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
@@ -2208,7 +2226,7 @@
 			massages_done_right = 0
 			return_to_body_dialog()
 
-			if(health > config.health_threshold_dead)
+			if((health > config.health_threshold_dead) || (!suiciding))
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
@@ -2497,3 +2515,24 @@
 		return 0
 
 	return BP.pumped
+
+/mob/living/carbon/human/clean_blood()
+	. = ..()
+	if(gloves)
+		gloves.clean_blood()
+		gloves.germ_level = 0
+	else
+		dirty_hands_transfers = 0
+		QDEL_NULL(hand_dirt_datum)
+		update_inv_slot(SLOT_GLOVES)
+		germ_level = 0
+
+/mob/living/carbon/human/pickup_ore()
+	var/turf/simulated/floor/F = get_turf(src)
+	var/obj/item/weapon/storage/bag/ore/B
+	for(var/obj/item/weapon/storage/bag/ore/bag in list(l_store , r_store, l_hand, r_hand, belt, s_store))
+		B = bag
+		if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
+			continue
+		F.attackby(B, src)
+		break

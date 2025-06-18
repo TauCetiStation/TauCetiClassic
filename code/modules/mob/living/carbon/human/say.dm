@@ -75,7 +75,7 @@
 	var/sound/speech_sound
 	var/sound_vol
 	if(client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
@@ -97,7 +97,7 @@
 		return emote(copytext(message, 2), intentional = TRUE)
 
 	//check if we are miming
-	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
+	if (HAS_TRAIT(src, TRAIT_MIMING) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 

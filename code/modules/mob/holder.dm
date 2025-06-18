@@ -154,3 +154,31 @@
 	name = "punpun"
 	icon_state = "punpun1"
 	flags = HEAR_PASS_SAY
+
+/obj/item/weapon/holder/nabber
+	name = "larva"
+	desc = "It's a sugar larva."
+	icon_state = "nabber"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0
+
+/obj/item/weapon/holder/moth_small
+	name = "small moth"
+	desc = "It's a sugar moth."
+	icon_state = "moth_plushie"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0
+
+/obj/item/weapon/holder/mothroach
+	name = "mothroach"
+	desc = "It's a sugar mothroach."
+	icon_state = "mothroach"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0
+
+/obj/item/weapon/holder/snake
+	name = "snake"
+	desc = "It's a sugar larva."
+	icon_state = "snake"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0

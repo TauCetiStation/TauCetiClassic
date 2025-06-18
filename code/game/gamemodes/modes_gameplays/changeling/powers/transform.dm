@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/transform
 	name = "Transform"
 	desc = "We take on the appearance and voice of one we have absorbed."
+	button_icon_state = "transform"
 	chemical_cost = 5
 	genomecost = 0
 	req_dna = 1

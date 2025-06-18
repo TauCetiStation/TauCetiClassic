@@ -79,9 +79,6 @@
 
 		add_underlay(T, NODE3, dir)
 
-/obj/machinery/atmospherics/components/trinary/filter/hide(i)
-	update_underlays()
-
 /obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0

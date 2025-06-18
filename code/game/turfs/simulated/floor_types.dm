@@ -21,8 +21,13 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/light/atom_init_late()
+	..()
 	update_icon()
 	name = initial(name)
+
+/turf/simulated/floor/light/airless
+	icon_state = "light_on"
+	airless = TRUE
 
 /turf/simulated/floor/wood
 	name = "floor"
@@ -32,15 +37,82 @@
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 
+/turf/simulated/floor/wood/airless
+	icon_state = "wood"
+
 /turf/unsimulated/desert
 	name = "sand"
 	icon_state = "asteroid"
 
+/turf/simulated/floor/smoothtile
+	name = "smooth floor tile"
+	icon = 'icons/turf/floors/smooth/floortile.dmi'
+	icon_state = "center_8"
+	smooth = SMOOTH_TRUE
+
+/turf/simulated/floor/smoothtile/airless
+	icon = 'icons/turf/floors/smooth/floortile.dmi'
+	airless = TRUE
+
+/turf/simulated/floor/smoothtile/neutral
+	icon = 'icons/turf/floors/smooth/floortile_neutral.dmi'
+
+/turf/simulated/floor/smoothtile/neutral/airless
+	icon = 'icons/turf/floors/smooth/floortile_neutral.dmi'
+	airless = TRUE
+
+/turf/simulated/floor/smoothtile/white
+	icon = 'icons/turf/floors/smooth/floortile_white.dmi'
+
+/turf/simulated/floor/smoothtile/white/airless
+	icon = 'icons/turf/floors/smooth/floortile_white.dmi'
+	airless = TRUE
+
+/turf/simulated/floor/smoothtile/dark
+	icon = 'icons/turf/floors/smooth/floortile_dark.dmi'
+
+/turf/simulated/floor/smoothtile/dark/airless
+	icon = 'icons/turf/floors/smooth/floortile_dark.dmi'
+	airless = TRUE
+
 /turf/simulated/floor/engine
 	name = "reinforced floor"
-	icon_state = "engine"
+	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
+	icon_state = "center_8"
 	thermal_conductivity = 0.025
 	footstep = FOOTSTEP_PLATING
+	smooth = SMOOTH_TRUE
+
+/turf/simulated/floor/engine/airless
+	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
+	airless = TRUE
+
+/turf/simulated/floor/engine/type2
+	icon = 'icons/turf/floors/smooth/hardfloor_2.dmi'
+
+/turf/simulated/floor/engine/type2/airless
+	icon = 'icons/turf/floors/smooth/hardfloor_2.dmi'
+	airless = TRUE
+
+/turf/simulated/floor/engine/type3
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi'
+
+/turf/simulated/floor/engine/type3/airless
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi'
+	airless = TRUE
+
+/turf/simulated/floor/engine/type4
+	icon = 'icons/turf/floors/smooth/hardfloor_4.dmi'
+
+/turf/simulated/floor/engine/type4/airless
+	icon = 'icons/turf/floors/smooth/hardfloor_4.dmi'
+	airless = TRUE
+
+/turf/simulated/floor/engine/break_tile()
+	return
+
+/turf/simulated/floor/engine/burn_tile()
+	return
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrenching(C))
@@ -107,7 +179,7 @@
 	name = "plating"
 	icon_state = "plating"
 	floor_type = null
-	intact = 0
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/plating/airless
@@ -138,7 +210,6 @@
 	thermal_conductivity = 0.05
 	layer = 2
 
-
 /turf/simulated/shuttle/wall // It's not even a floor. What is this doing here?!
 	name = "wall"
 	icon_state = "wall1"
@@ -150,11 +221,16 @@
 
 /turf/simulated/shuttle/floor
 	name = "floor"
+	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/simulated/shuttle/floor/airless
+	icon_state = "floor"
+	airless = TRUE
 
 /turf/simulated/shuttle/plating
 	name = "plating"
@@ -166,6 +242,10 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	explosive_resistance = 1
+
+/turf/simulated/shuttle/plating/airless
+	icon = 'icons/turf/floors.dmi'
+	airless = TRUE
 
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
@@ -211,6 +291,11 @@
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"
 
+/turf/simulated/floor/beach/water/waterpool/atom_init()
+	. = ..()
+	AddComponent(/datum/component/fishing, list(/obj/item/clothing/mask/snorkel = 10, /obj/item/clothing/shoes/swimmingfins = 10, /obj/item/weapon/bikehorn/rubberducky = 10, /obj/item/clothing/under/bathtowel = 10, /obj/item/weapon/reagent_containers/food/snacks/soap = 5, /mob/living/simple_animal/hostile/xenomorph = 1), 10 SECONDS, rand(1, 3) , 20)
+
+
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
 	if(!istype(old_loc, /turf/simulated/floor/beach/water/waterpool))
@@ -225,6 +310,7 @@
 	return
 
 /mob/living/carbon/human/exited_water_turf()
+	SEND_SIGNAL(src, COMSIG_HUMAN_EXITED_WATER)
 	if(get_species() != SKRELL)
 		Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
@@ -241,6 +327,7 @@
 		playsound(src, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/entered_water_turf()
+	SEND_SIGNAL(src, COMSIG_HUMAN_ENTERED_WATER)
 	if(get_species() != SKRELL)
 		Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
@@ -300,11 +387,28 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/grass/atom_init_late()
+	..()
 	update_icon()
 	for(var/direction in cardinal)
 		if(istype(get_step(src,direction),/turf/simulated/floor))
 			var/turf/simulated/floor/FF = get_step(src,direction)
 			FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/fairy
+	name = "fairygrass patch"
+	desc = "Something about this grass makes you want to frolic. Or get high."
+	icon_state = "fairygrass1"
+	floor_type = /obj/item/stack/tile/fairygrass
+	light_range = 2
+	light_power = 0.80
+	light_color = COLOR_BLUE_LIGHT
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+
+/turf/simulated/floor/fairy/atom_init()
+	. = ..()
+	update_icon()
 
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
@@ -368,21 +472,26 @@
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = HEAT_CAPACITY_VACUUM
-	intact = 0
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_CATWALK
+
+	var/image/environment_underlay
+
+	level_light_source = TRUE
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
 
-	var/env_light_color = SSenvironment.turf_light_color[z]
-	if(env_light_color)
-		set_light(1.5, l_color = env_light_color)
+/turf/simulated/floor/plating/airless/catwalk/Destroy()
+	environment_underlay = null
+	return ..()
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
-	underlays.Cut()
-	var/image/I = SSenvironment.turf_image[z]
-	underlays += I
+	if(environment_underlay)
+		underlays -= environment_underlay
+	environment_underlay = SSenvironment.turf_image[z]
+	underlays |= environment_underlay
 
 	var/dirs = 0
 	for(var/direction in cardinal)

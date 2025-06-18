@@ -9,9 +9,10 @@
 	icon = 'icons/obj/machines/power/fusion.dmi'
 	icon_state = "emfield_s1"
 	alpha = 50
-	layer = 4
+	layer = MOB_LAYER // idk why
 	light_color = COLOR_BLUE
-
+	plane = LIGHTING_LAMPS_PLANE
+	anchored = TRUE
 	var/size = 1
 	var/energy = 0
 	var/plasma_temperature = 0

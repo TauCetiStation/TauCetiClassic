@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic energy-based gun with two settings: Stun and kill."
+	desc = "Стандартный энергетический пистолет с двумя режимами работы: оглушающим и летальным."
 	icon_state = "energytac"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
@@ -14,19 +14,19 @@
 	update_inv_mob()
 
 /obj/item/weapon/gun/energy/gun/head
-	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."
+	desc = "Основной энергетический пистолет с деревянной рукояткой и с двумя режимами работы: оглушающим и летальным."
 	icon_state = "energy"
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\"Revenant\" Energy Advanced Pistol"
-	desc = "Feat of weapon engineering, this pistol is able to fire taser bolts, lasers and EMP bursts. Only issued to high-ranking members of security teams."
+	desc = "Вершина оружейной инженерии, Этот пистолет способен поражать цели электрошоком, лазером или ЭМИ. Выдается только высокопоставленным офицерам службы безопасности."
 	icon_state = "hosgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
 	origin_tech = "combat=4;magnets=3"
 
 /obj/item/weapon/gun/energy/gun/adv
 	name = "Energy Gun Mark II"
-	desc = "The latest model of energy weapons. New, cutting edge design features improved cooling system and internal battery."
+	desc = "Новейшая модель энергетического оружия. Передовая конструкция отличается улучшенной системой охлаждения и внутренней батареей."
 	icon_state = "advgun"
 	origin_tech = "combat=6;magnets=5;powerstorage=2;syndicate=1"
 	fire_delay = 4
@@ -39,7 +39,7 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
+	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"

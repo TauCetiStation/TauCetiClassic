@@ -90,10 +90,18 @@
 	icon_state = "diagnostichud"
 	item_state = "diagnostichud"
 	origin_tech = "engineering=2;programming=2"
-	action_button_name = "Toggle Goggles"
 	toggleable = 1
-	sightglassesmod = "sepia"
+	sightglassesmod = "yellow"
 	hud_types = list(DATA_HUD_DIAGNOSTIC)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/obj/item/clothing/glasses/hud/diagnostic/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		to_chat(user, "<span class='info'>Вы можете получать очки исследований, проводя диагностику изобретений, связанных с роботами. Осматривайте объекты в этих очках.</span>")
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "augmented shades"

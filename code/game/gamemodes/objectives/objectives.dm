@@ -8,8 +8,11 @@
 	var/target_amount = 0					//If they are focused on a particular number. Steal objectives have their own counter.
 	var/auto_target = TRUE //Whether we pick a target automatically on PostAppend()
 	var/required_equipment = null
+	var/global_objective = FALSE
 
 /datum/objective/New(text, _auto_target = TRUE)
+	if(global_objective)
+		global_objectives += src
 	auto_target = _auto_target
 	if(text)
 		explanation_text = text

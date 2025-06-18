@@ -116,13 +116,7 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		var/datum/role/changeling/C = O.mind.GetRoleByType(/datum/role/changeling)
-		if(C)
-			C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-			O.changeling_update_languages(C.absorbed_languages)
-			for(var/mob/living/parasite/essence/M in src)
-				M.transfer(O)
-	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE, O)
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
@@ -244,19 +238,13 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C)
-			O.changeling_update_languages(C.absorbed_languages)
-			for(var/mob/living/parasite/essence/M in src)
-				M.transfer(O)
-
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
 	. = O
+	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE, O)
 	qdel(src)
-	SEND_SIGNAL(O, COMSIG_MONKEY_HUMANIZE)
 
 /mob/dead/new_player/AIize()
 	spawning = 1
@@ -332,7 +320,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/crewsimov, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)

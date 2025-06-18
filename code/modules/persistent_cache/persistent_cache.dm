@@ -8,8 +8,6 @@
 // 	I = do_generation()
 // 	save_persistent_cache(I, "filename.dmi", "icons/source.dmi", "icons/source2.dmi")
 
-#define PERSISTENT_CACHE_FOLDER "cache/persistent"
-
 // use wrapper try_access_persistent_cache()
 /proc/_try_access_persistent_cache(filename_key, list/key_files)
 	var/key_files_hash = key_files_hash(key_files)
@@ -53,5 +51,3 @@ var/global/list/md5_files_cache = list()
 		. += md5_files_cache[path]
 
 	. = md5(.) // just for short nice name
-
-#undef PERSISTENT_CACHE_FOLDER

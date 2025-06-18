@@ -5,7 +5,6 @@
 	hud.init_screens(list(
 		/atom/movable/screen/essence/voice,
 		/atom/movable/screen/essence/phantom,
-		/atom/movable/screen/internal,
 		/atom/movable/screen/health,
 		/atom/movable/screen/health_doll,
 		/atom/movable/screen/essence/ling_abilities,

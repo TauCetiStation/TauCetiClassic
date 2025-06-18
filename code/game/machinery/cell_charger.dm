@@ -21,6 +21,8 @@
 	RefreshParts()
 
 /obj/machinery/cell_charger/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 

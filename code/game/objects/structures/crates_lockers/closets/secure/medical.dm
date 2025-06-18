@@ -1,13 +1,10 @@
 /obj/structure/closet/secure_closet/medical1
 	name = "Medicine Closet"
 	desc = "Filled with medical junk."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medicaloff"
 	req_access = list(access_medical)
+	icon_state = "medical"
+	icon_closed = "medical"
+	icon_opened = "medical_open"
 
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	new /obj/item/weapon/storage/box/autoinjectors(src)
@@ -25,28 +22,22 @@
 /obj/structure/closet/secure_closet/medical2
 	name = "Anesthetic"
 	desc = "Used to knock people out."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medicaloff"
 	req_access = list(access_surgery)
+	icon_state = "medical"
+	icon_closed = "medical"
+	icon_opened = "medical_open"
 
 /obj/structure/closet/secure_closet/medical2/PopulateContents()
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/tank/anesthetic(src)
+	for (var/i in 1 to 4)
+		new /obj/item/weapon/tank/anesthetic/small(src)
 		new /obj/item/clothing/mask/breath/medical(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "Medical Doctor's Locker"
 	req_one_access = list(access_surgery, access_paramedic)
-	icon_state = "securemed1"
+	icon_state = "securemed"
 	icon_closed = "securemed"
-	icon_locked = "securemed1"
-	icon_opened = "securemedopen"
-	icon_broken = "securemedbroken"
-	icon_off = "securemedoff"
+	icon_opened = "securemed_open"
 
 /obj/structure/closet/secure_closet/medical3/PopulateContents()
 	if(prob(50))
@@ -85,12 +76,9 @@
 /obj/structure/closet/secure_closet/CMO
 	name = "Chief Medical Officer's Locker"
 	req_access = list(access_cmo)
-	icon_state = "cmosecure1"
+	icon_state = "cmosecure"
 	icon_closed = "cmosecure"
-	icon_locked = "cmosecure1"
-	icon_opened = "cmosecureopen"
-	icon_broken = "cmosecurebroken"
-	icon_off = "cmosecureoff"
+	icon_opened = "cmosecure_open"
 
 /obj/structure/closet/secure_closet/CMO/PopulateContents()
 	if(prob(50))
@@ -140,13 +128,10 @@
 /obj/structure/closet/secure_closet/chemical
 	name = "Chemical Closet"
 	desc = "Store dangerous chemicals in here."
-	icon_state = "chemical1"
-	icon_closed = "chemical"
-	icon_locked = "chemical1"
-	icon_opened = "medicalopen"
-	icon_broken = "chemicalbroken"
-	icon_off = "chemicaloff"
 	req_access = list(access_chemistry)
+	icon_state = "chemical"
+	icon_closed = "chemical"
+	icon_opened = "medical_open"
 
 /obj/structure/closet/secure_closet/chemical/PopulateContents()
 	for (var/i in 1 to 2)
@@ -156,25 +141,12 @@
 /obj/structure/closet/secure_closet/medical_wall
 	name = "First Aid Closet"
 	desc = "It's a secure wall-mounted storage unit for first aid supplies."
-	icon_state = "medical_wall_locked"
-	icon_closed = "medical_wall_unlocked"
-	icon_locked = "medical_wall_locked"
-	icon_opened = "medical_wall_open"
-	icon_broken = "medical_wall_spark"
-	icon_off = "medical_wall_off"
+	req_access = list(access_medical)
+	icon_state = "medicalwallsec"
+	icon_closed = "medicalwallsec"
+	icon_opened = "medicalwall_open"
+	overlay_locked = "medicalwall_locked"
+	overlay_unlocked = "medicalwall_unlocked"
 	anchored = TRUE
 	density = FALSE
 	wall_mounted = 1
-	req_access = list(access_medical)
-
-/obj/structure/closet/secure_closet/medical_wall/update_icon()
-	if(broken)
-		icon_state = icon_broken
-	else
-		if(!opened)
-			if(locked)
-				icon_state = icon_locked
-			else
-				icon_state = icon_closed
-		else
-			icon_state = icon_opened

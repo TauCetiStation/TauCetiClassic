@@ -1,43 +1,23 @@
-
 /obj/item/clothing/suit/bio_suit/particle_protection
-	name = "Particle protection suit"
-	desc = "A sealed bio suit that protects from unknown exotic particles."
+	name = "particle protection suit"
+	desc = "A suit designed for use in hazardous environment conditions. Not for space works!"
 	icon_state = "particle_protection"
 	item_state = "particle_protection"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
-	var/cooldown_sound = 0
-
-/obj/item/clothing/suit/bio_suit/particle_protection/equipped(mob/user, slot)
-	. = ..()
-	if(slot == SLOT_WEAR_SUIT && world.time > cooldown_sound)
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER)
-		cooldown_sound = world.time + 4
+	item_state_world = "particle_protection_w"
+	armor = list(melee = 25, bullet = 10, laser = 15, energy = 15, bomb = 25, bio = 100, rad = 100)
 
 /obj/item/clothing/head/bio_hood/particle_protection
-	name = "Particle protection hood"
-	desc = "A sealed bio hood that protects the head and face from unknown exotic particles."
-	icon_state = "particle_protection_hood"
-	item_state = "particle_protection_hood"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
+	name = "particle protection helmet"
+	desc = "A special helmet designed for use in hazardous environment conditions. Not for space works!!"
+	icon_state = "particle_protection_h"
+	item_state = "particle_protection_h"
+	item_state_world = "particle_protection_h_w"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	armor = list(melee = 25, bullet = 10, laser = 15, energy = 15, bomb = 25, bio = 100, rad = 100)
 	var/cooldown_sound = 0
 
 /obj/item/clothing/head/bio_hood/particle_protection/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_HEAD && world.time > cooldown_sound)
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER)
-		cooldown_sound = world.time + 4
-
- // The older version of Particle protection suit
-/obj/item/clothing/suit/bio_suit/anomaly
-	name = "Anomaly suit"
-	desc = "A sealed bio suit capable of insulating against exotic alien energies."
-	icon_state = "engspace_suit"
-	item_state = "engspace_suit"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
-
-/obj/item/clothing/head/bio_hood/anomaly
-	name = "Anomaly hood"
-	desc = "A sealed bio hood capable of insulating against exotic alien energies."
-	icon_state = "engspace_helmet"
-	item_state = "engspace_helmet"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
+		playsound(src, 'sound/rig/loudbeep.ogg', VOL_EFFECTS_MASTER)
+		cooldown_sound = world.time + 2 SECONDS

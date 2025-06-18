@@ -80,22 +80,15 @@
 /turf/simulated/floor,
 /area/space_structures/iss)
 "an" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ao" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ap" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/space)
-"aq" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ar" = (
 /obj/structure/filingcabinet/filingcabinet,
@@ -303,7 +296,8 @@
 /area/space_structures/iss)
 "aZ" = (
 /obj/machinery/door/airlock/hatch{
-	name = "E.V.A"
+	name = "E.V.A";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -344,21 +338,24 @@
 /area/space_structures/iss)
 "be" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Engineering"
+	name = "Engineering";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bf" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Dormitories"
+	name = "Dormitories";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bg" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Medbay"
+	name = "Medbay";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -375,6 +372,13 @@
 	name = "External Airlock"
 	},
 /turf/environment/space,
+/area/space_structures/iss)
+"EM" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
 /area/space_structures/iss)
 
 (1,1,1) = {"
@@ -447,7 +451,7 @@ ac
 ac
 ac
 an
-aq
+ao
 aa
 aa
 aa
@@ -966,7 +970,7 @@ aa
 aa
 aa
 ae
-aw
+EM
 ae
 aa
 aa
@@ -995,7 +999,7 @@ aa
 aa
 af
 ae
-aw
+EM
 ae
 aI
 aa
@@ -1042,7 +1046,7 @@ aa
 aa
 ad
 ae
-aw
+EM
 ae
 aH
 aa
@@ -1270,7 +1274,7 @@ aa
 aa
 af
 ae
-aw
+EM
 ae
 aI
 aa
@@ -1317,7 +1321,7 @@ aa
 aa
 ad
 ae
-aw
+EM
 ae
 aH
 aa
@@ -1346,7 +1350,7 @@ aa
 aa
 aa
 ae
-aw
+EM
 ae
 aa
 aa

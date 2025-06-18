@@ -60,6 +60,15 @@
 /obj/mafia_game_board,
 /turf/unsimulated/floor/snow,
 /area/mafia)
+"D" = (
+/obj/structure/mineral_door/silver{
+	dir = 4
+	},
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
 "H" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
@@ -253,9 +262,9 @@ i
 i
 b
 b
-j
+D
 b
-j
+D
 b
 b
 i
@@ -275,7 +284,7 @@ K
 i
 b
 b
-j
+D
 b
 I
 X
@@ -283,7 +292,7 @@ b
 X
 J
 b
-j
+D
 b
 b
 L
@@ -575,7 +584,7 @@ i
 i
 b
 b
-j
+D
 b
 P
 X
@@ -583,7 +592,7 @@ b
 X
 T
 b
-j
+D
 b
 b
 i
@@ -603,9 +612,9 @@ i
 L
 b
 b
-j
+D
 b
-j
+D
 b
 b
 i

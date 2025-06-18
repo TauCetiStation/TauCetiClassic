@@ -243,7 +243,6 @@ function run_code_tests {
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."
-    run_test "check playsound volume_channel argument" "python2 scripts/playsound-checker.py ."
 }
 
 function run_map_tests {

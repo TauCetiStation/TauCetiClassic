@@ -16,6 +16,8 @@
 	icon_state = "filingcabinet"
 	density = TRUE
 	anchored = TRUE
+	throwpass = TRUE//You can throw objects over this, despite it's density.")
+	climbable = TRUE
 
 	resistance_flags = CAN_BE_HIT
 
@@ -29,6 +31,18 @@
 
 /obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
+
+/obj/structure/filingcabinet/verb/rotate()
+	set name = "Rotate"
+	set category = "Object"
+	set src in oview(1)
+
+	if (usr.incapacitated())
+		return
+	if (anchored)
+		to_chat(usr,"<span class='notice'>It is fastened to the floor!</span>")
+		return
+	set_dir(turn(dir, 90))
 
 
 /obj/structure/filingcabinet/atom_init()
@@ -46,9 +60,7 @@
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/weapon/paper_bundle))
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		user.drop_from_inventory(P, src)
-		icon_state = "[initial(icon_state)]-open"
-		sleep(5)
-		icon_state = initial(icon_state)
+		flick("[initial(icon_state)]-open", src)
 		updateUsrDialog()
 
 	else if(iswrenching(P))
@@ -57,15 +69,20 @@
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
+	else if(isscrewing(P))
+		if(P.use_tool(src, user, 15))
+			deconstruct(TRUE)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
+		..()
 
 /obj/structure/filingcabinet/deconstruct(disassembled)
 	for(var/obj/item/I as anything in contents)
 		I.forceMove(loc)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	new /obj/item/stack/sheet/metal(loc, 2)
+	new /obj/item/stack/sheet/metal(loc, 4)
 	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
@@ -98,9 +115,7 @@
 		if(P && Adjacent(usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
-			icon_state = "[initial(icon_state)]-open"
-			sleep(5)
-			icon_state = initial(icon_state)
+			flick("[initial(icon_state)]-open", src)
 
 
 /*

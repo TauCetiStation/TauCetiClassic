@@ -242,11 +242,6 @@
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
-	else if(src.panel_open)
-		for(var/datum/data/vending_product/R in product_records)
-			if(istype(W, R.product_path))
-				stock(R, user)
-				qdel(W)
 	else
 		..()
 
@@ -416,15 +411,6 @@
 
 	else if (href_list["vend"] && vend_ready && !currently_vending)
 
-		if(isrobot(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return FALSE
-		else if(issilicon(usr))
-			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return FALSE
-
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 			flick(src.icon_deny, src)
@@ -493,13 +479,6 @@
 		src.vend_ready = 1
 		src.currently_vending = null
 		updateUsrDialog()
-
-/obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
-	if(src.panel_open)
-		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
-		R.amount++
-
-	updateUsrDialog()
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))

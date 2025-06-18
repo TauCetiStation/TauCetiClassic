@@ -14,9 +14,13 @@ var/global/const/CYBORG             =(1<<9)
 var/global/const/FORENSIC           =(1<<10)
 var/global/const/CADET              =(1<<11)
 var/global/const/TECHNICASSISTANT   =(1<<12)
-var/global/const/BLUESHIELD         =(1<<13)
 
-var/global/const/MEDSCI             =(1<<1)
+var/global/const/CENTCOMREPRESENT   =(1<<1)
+
+var/global/const/LAWYER             =(1<<0)
+var/global/const/BLUESHIELD  		=(1<<1)
+
+var/global/const/MEDSCI             =(1<<2)
 
 var/global/const/RD                 =(1<<0)
 var/global/const/SCIENTIST          =(1<<1)
@@ -33,7 +37,7 @@ var/global/const/XENOARCHAEOLOGIST  =(1<<11)
 var/global/const/INTERN             =(1<<12)
 var/global/const/RESEARCHASSISTANT  =(1<<13)
 
-var/global/const/CIVILIAN           =(1<<2)
+var/global/const/CIVILIAN           =(1<<3)
 
 var/global/const/HOP                =(1<<0)
 var/global/const/BARTENDER          =(1<<1)
@@ -44,13 +48,12 @@ var/global/const/LIBRARIAN          =(1<<5)
 var/global/const/QUARTERMASTER      =(1<<6)
 var/global/const/CARGOTECH          =(1<<7)
 var/global/const/MINER              =(1<<8)
-var/global/const/LAWYER             =(1<<9)
-var/global/const/CHAPLAIN           =(1<<10)
-var/global/const/CLOWN              =(1<<11)
-var/global/const/MIME               =(1<<12)
-var/global/const/ASSISTANT          =(1<<13)
-var/global/const/RECYCLER           =(1<<14)
-var/global/const/BARBER             =(1<<15)
+var/global/const/CHAPLAIN           =(1<<9)
+var/global/const/CLOWN              =(1<<10)
+var/global/const/MIME               =(1<<11)
+var/global/const/ASSISTANT          =(1<<12)
+var/global/const/RECYCLER           =(1<<13)
+var/global/const/BARBER             =(1<<14)
 
 
 var/global/list/assistant_occupations = list(
@@ -68,8 +71,12 @@ var/global/list/command_positions = list(
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
-	"Chief Medical Officer",
-	"Blueshield Officer"
+	"Chief Medical Officer"
+)
+
+var/global/list/centcom_positions = list(
+	"Blueshield Officer",
+	"Internal Affairs Agent"
 )
 
 var/global/list/security_positions = list(
@@ -111,7 +118,6 @@ var/global/list/science_positions = list(
 
 var/global/list/civilian_positions = list(
 	"Head of Personnel",
-	"Internal Affairs Agent",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",
@@ -125,7 +131,7 @@ var/global/list/civilian_positions = list(
 	"Janitor",
 	"Barber",
 	"Librarian",
-	"Test Subject"
+	"Assistant"
 )
 
 var/global/list/nonhuman_positions = list(
@@ -185,7 +191,7 @@ var/global/list/protected_by_blueshield_list = list(
 
 	switch(head_rank)	//What departments do we manage?
 		if("Admin")
-			own_department = list("heads", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
+			own_department = list("heads", "centcom", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
 		if("Captain")
 			own_department = list("sec", "eng", "med", "sci", "civ", "misc")	//exept "heads", repetitions we don't need
 		if("Head of Personnel")

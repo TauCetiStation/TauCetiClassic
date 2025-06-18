@@ -2,6 +2,7 @@
 	name = "Fleshmend"
 	desc = "Our flesh rapidly regenerates, healing our wounds."
 	helptext = "Heals a moderate amount of damage over a short period of time. Can be used while unconscious."
+	button_icon_state = "fleshmend"
 	chemical_cost = 25
 	genomecost = 4
 	req_stat = UNCONSCIOUS

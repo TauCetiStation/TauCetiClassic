@@ -1,37 +1,51 @@
-//A set of constants used to determine which type of mute an admin wishes to apply:
-//Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
-//Therefore there needs to be a gap between the flags for the automute flags
-#define MUTE_IC			1
-#define MUTE_OOC		2
-#define MUTE_PRAY		4
-#define MUTE_ADMINHELP	8
-#define MUTE_DEADCHAT	16
-#define MUTE_MENTORHELP	32
-#define MUTE_ALL		63
+// ban types
+#define BANTYPE_PERMA        "PERMABAN"
+#define BANTYPE_TEMP         "TEMPBAN"
+#define BANTYPE_JOB_PERMA    "JOB_PERMABAN"
+#define BANTYPE_JOB_TEMP     "JOB_TEMPBAN"
+#define BANTYPE_CHAT_PERMA   "CHAT_PERMABAN"
+#define BANTYPE_CHAT_TEMP    "CHAT_TEMPBAN"
 
-//Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
+var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_PERMA, BANTYPE_JOB_TEMP, BANTYPE_CHAT_PERMA, BANTYPE_CHAT_TEMP)
+
+// bitflags for client chat bans
+#define MUTE_NONE  0
+#define MUTE_IC    (1<<0) // say/me
+#define MUTE_OOC   (1<<1) // ooc/looc/ghostchat
+#define MUTE_PRAY  (1<<2) // pray
+#define MUTE_PM    (1<<3) // mentorhelp/adminhelp
+
+// text representation for ban database
+var/global/list/mute_ban_bitfield = list(
+	"IC" = MUTE_IC,
+	"OOC" = MUTE_OOC,
+	"PRAY" = MUTE_PRAY,
+	"PM" = MUTE_PM,
+)
+
+// number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
 #define SPAM_TRIGGER_WARNING  5
 #define SPAM_TRIGGER_AUTOMUTE 10
-
-//Some constants for DB_Ban
-#define BANTYPE_PERMA		1
-#define BANTYPE_TEMP		2
-#define BANTYPE_JOB_PERMA	3
-#define BANTYPE_JOB_TEMP	4
-#define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
-#define BANTYPE_ANY_JOB		9 //used to remove jobbans
-
-#define BANTYPE_PERMA_STR		"PERMABAN"
-#define BANTYPE_TEMP_STR		"TEMPBAN"
-#define BANTYPE_JOB_PERMA_STR	"JOB_PERMABAN"
-#define BANTYPE_JOB_TEMP_STR	"JOB_TEMPBAN"
-#define BANTYPE_ANY_FULLBAN_STR	"ANY"
-#define BANTYPE_ANY_JOB_STR		"ANYJOB"
 
 #define STICKYBAN_TABLENAME "erro_stickyban"
 #define STICKYBAN_CKEY_MATCHED_TABLENAME "erro_stickyban_matched_ckey"
 #define STICKYBAN_CID_MATCHED_TABLENAME "erro_stickyban_matched_cid"
 #define STICKYBAN_IP_MATCHED_TABLENAME "erro_stickyban_matched_ip"
+
+// admin cooldowns
+#define ADMIN_CD_IC    "IC"
+#define ADMIN_CD_OOC   "OOC"
+#define ADMIN_CD_PRAY  "PRAY"
+#define ADMIN_CD_PM    "PM"
+
+var/global/list/admin_cooldowns_list = list(
+	ADMIN_CD_IC,
+	ADMIN_CD_OOC,
+	ADMIN_CD_PRAY,
+	ADMIN_CD_PM,
+)
+
+#define IS_ON_ADMIN_CD(client, type) (LAZYACCESS(client.prefs.admin_cooldowns, type) > world.time)
 
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
@@ -77,7 +91,7 @@
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()
-	return T ? "[area_name ? "[get_area_name(T)] " : " "]([T.x],[T.y],[T.z])[admin_jump_ref ? " [ADMIN_JMP(T)]" : ""]" : "nonexistent location"
+	return T ? "[area_name ? "[get_area_name(T)] " : ""]([T.x],[T.y],[T.z])[admin_jump_ref ? " [ADMIN_JMP(T)]" : ""]" : "nonexistent location"
 
 // +- tg placeholder
 /atom/proc/Safe_COORD_Location()

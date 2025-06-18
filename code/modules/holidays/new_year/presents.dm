@@ -17,6 +17,7 @@
 						/obj/item/toy/blink								= 2,
 						/obj/item/clothing/under/syndicate/tacticool	= 1,
 						/obj/item/toy/sword								= 2,
+						/obj/item/toy/dualsword							= 2,
 						/obj/item/toy/gun								= 2,
 						/obj/item/toy/crossbow							= 2,
 						/obj/item/clothing/suit/syndicatefake			= 1,

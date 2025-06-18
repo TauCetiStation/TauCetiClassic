@@ -10,7 +10,6 @@
 	anchored = FALSE
 	density = FALSE
 	m_amt = 1850
-	level = 2
 	resistance_flags = CAN_BE_HIT
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
@@ -79,16 +78,6 @@
 		icon_state = "con[base_state]"
 	else
 		icon_state = base_state
-
-	if(invisibility)				// if invisible, fade icon
-		alpha = 128
-
-	// hide called by levelupdate if turf intact status changes
-	// change visibility status and force update of icon
-/obj/structure/disposalconstruct/hide(intact)
-	invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
-	update()
-
 
 	// flip and rotate verbs
 /obj/structure/disposalconstruct/verb/rotate()
@@ -163,7 +152,7 @@
 
 /obj/structure/disposalconstruct/attackby(obj/item/I, mob/user)
 	var/nicetype = "pipe"
-	var/ispipe = 0 // Indicates if we should change the level of this pipe
+	var/ispipe = 0 // Indicates if we should use undertile element
 	add_fingerprint(user)
 	switch(ptype)
 		if(6)
@@ -186,7 +175,7 @@
 			ispipe = 1
 
 	var/turf/T = src.loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		to_chat(user, "You can only attach the [nicetype] if the floor plating is removed.")
 		return
 
@@ -212,22 +201,19 @@
 
 
 	if(iswrenching(I))
+		anchored = !anchored
+
 		if(anchored)
-			anchored = FALSE
 			if(ispipe)
-				level = 2
 				density = FALSE
-			else
-				density = TRUE
-			to_chat(user, "You detach the [nicetype] from the underfloor.")
-		else
-			anchored = TRUE
-			if(ispipe)
-				level = 1 // We don't want disposal bins to disappear under the floors
-				density = FALSE
-			else
-				density = TRUE // We don't want disposal bins or outlets to go density 0
+				AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 			to_chat(user, "You attach the [nicetype] to the underfloor.")
+		else
+			if(ispipe)
+				density = TRUE
+				RemoveElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
+			to_chat(user, "You detach the [nicetype] from the underfloor.")
+
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		update()
 
@@ -245,10 +231,9 @@
 						var/pipetype = dpipetype()
 						var/obj/structure/disposalpipe/P = new pipetype(src.loc)
 						transfer_fingerprints_to(P)
-						P.base_icon_state = base_state
+						P.icon_state = base_state
 						P.set_dir(dir)
 						P.dpdir = dpdir
-						P.updateicon()
 
 						//Needs some special treatment ;)
 						if(ptype==9 || ptype==10)

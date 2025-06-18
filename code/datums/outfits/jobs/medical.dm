@@ -15,6 +15,11 @@
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
+/datum/outfit/job/cmo/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		implants += /obj/item/weapon/implant/obedience
+
+
 // DOCTOR OUTFIT
 /datum/outfit/job/doctor
 	name = OUTFIT_JOB_NAME("Medical Doctor")

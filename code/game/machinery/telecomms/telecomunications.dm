@@ -361,6 +361,33 @@
 			relay_information(signal, /obj/machinery/telecomms/relay, 1)
 			relay_information(signal, /obj/machinery/telecomms/broadcaster, 1) // Send it to a broadcaster.
 
+/obj/machinery/telecomms/hub/attackby(obj/item/weapon/D, mob/user)
+	..()
+	if(istype(D, /obj/item/weapon/disk/telecomms))
+		download(D, user)
+
+/obj/machinery/telecomms/hub/proc/download(obj/item/weapon/disk/telecomms/D, mob/user)
+	if(!user.Adjacent(src))
+		return
+	if(!isliving(user))
+		return
+	if(!isanyantag(user))
+		to_chat(user, "<span class='notice'>Вы не имеете ни малейшего понятия, как это использовать.</span>")
+		return
+	if(D.have_data == TRUE)
+		to_chat(user, "<span class='notice'>На дискету уже загружены данные.</span>")
+		return
+	add_fingerprint(user)
+	to_chat(user, "<span class='warning'>Вы начинаете перемещать данные на дискету...</span>")
+	if(!do_after(user, 1 MINUTE, target = src))
+		return
+	D.have_data = TRUE
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='nicegreen'>Готово!</span>")
+	addtimer(CALLBACK(src, PROC_REF(make_anomaly)), 20 SECONDS)
+
+/obj/machinery/telecomms/hub/proc/make_anomaly()
+	new /datum/event/communications_blackout/traitor
 
 /*
 	The relay idles until it receives information. It then passes on that information

@@ -157,7 +157,6 @@
 		wear_mask = null
 		if(internal)
 			internal = null
-			internals?.update_icon(src)
 		sec_hud_set_security_status()
 	else if (W == wear_id)
 		wear_id = null

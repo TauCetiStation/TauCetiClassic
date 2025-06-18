@@ -128,7 +128,7 @@
 	icon_state = "empmine"
 
 /obj/item/mine/emp/trigger_act(obj)
-	empulse(src, 2, 3)
+	empulse(src, 2, 3, custom_effects = EMP_SEBB)
 
 /obj/item/mine/emp/anchored
 	anchored = TRUE

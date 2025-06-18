@@ -5,13 +5,14 @@
 	flags = HEADCOVERSEYES
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
-
 	dyed_type = DYED_SOFTCAP
-
-	action_button_name = "Flip Cap"
+	item_action_types = list(/datum/action/item_action/hands_free/flip_cap)
 
 	var/flipped = FALSE
 	var/cap_color = "cargo"
+
+/datum/action/item_action/hands_free/flip_cap
+	name = "Flip Cap"
 
 /obj/item/clothing/head/soft/atom_init()
 	. = ..()
@@ -38,6 +39,7 @@
 		to_chat(user, "You flip the hat back in normal position.")
 
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

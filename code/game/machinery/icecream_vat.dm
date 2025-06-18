@@ -127,6 +127,7 @@ var/global/list/ingredients_source = list(
 					else
 						add(MUCK, current_reagent.volume / 5)
 				R.reagents.clear_reagents()
+		updateDialog()
 		return 1
 	else
 		..()
@@ -140,7 +141,7 @@ var/global/list/ingredients_source = list(
 	switch(make_type)
 		if(CONE_WAFFLE)
 			if(ingredients[INGR_FLOUR] > 0 && ingredients[INGR_SUGAR] > 0)
-				var/amount = max( min(ingredients[INGR_FLOUR], ingredients[INGR_SUGAR]), 5)
+				var/amount = min(ingredients[INGR_FLOUR], ingredients[INGR_SUGAR], 5)
 				ingredients[INGR_FLOUR] -= amount
 				ingredients[INGR_SUGAR] -= amount
 				ingredients[CONE_WAFFLE] += amount
@@ -149,7 +150,7 @@ var/global/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You require sugar and flour to make waffle cones.</span>")
 		if(CONE_CHOC)
 			if(ingredients[FLAVOUR_CHOCOLATE] > 0 && ingredients[CONE_WAFFLE] > 0)
-				var/amount = min(ingredients[CONE_WAFFLE], ingredients[FLAVOUR_CHOCOLATE])
+				var/amount = min(ingredients[CONE_WAFFLE], ingredients[FLAVOUR_CHOCOLATE], 5)
 				ingredients[CONE_WAFFLE] -= amount
 				ingredients[FLAVOUR_CHOCOLATE] -= amount
 				ingredients[CONE_CHOC] += amount
@@ -158,7 +159,7 @@ var/global/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You require waffle cones and chocolate flavouring to make chocolate cones.</span>")
 		if(ICECREAM_VANILLA)
 			if(ingredients[INGR_ICE] > 0 && ingredients[INGR_MILK] > 0)
-				var/amount = min(ingredients[INGR_ICE], ingredients[INGR_MILK])
+				var/amount = min(ingredients[INGR_ICE], ingredients[INGR_MILK], 5)
 				ingredients[INGR_ICE] -= amount
 				ingredients[INGR_MILK] -= amount
 				ingredients[ICECREAM_VANILLA] += amount
@@ -180,17 +181,16 @@ var/global/list/ingredients_source = list(
 		visible_message("<span class='notice'>[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.</span>")
 	else if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])
-		if(ingredients[dispense_cone] <= ingredients.len)
-			var/cone_name = get_icecream_flavour_string(dispense_cone)
-			if(ingredients[dispense_cone] >= 1)
-				ingredients[dispense_cone] -= 1
-				var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = new(src.loc)
-				I.cone_type = cone_name
-				I.icon_state = "icecream_cone_[cone_name]"
-				I.desc = "Delicious [cone_name] cone, but no ice cream."
-				visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
-			else
-				to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
+		var/cone_name = get_icecream_flavour_string(dispense_cone)
+		if(ingredients[dispense_cone] >= 1)
+			ingredients[dispense_cone] -= 1
+			var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = new(src.loc)
+			I.cone_type = cone_name
+			I.icon_state = "icecream_cone_[cone_name]"
+			I.desc = "Delicious [cone_name] cone, but no ice cream."
+			visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
+		else
+			to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
 	else if(href_list["make"])
 		make( usr, text2num(href_list["make"]) )
 	else if(href_list["eject"])

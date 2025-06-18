@@ -65,6 +65,8 @@
 		to_chat(user, "There is no power cell installed.")
 
 /obj/machinery/space_heater/RefreshParts()
+	..()
+
 	var/laser = 0
 	var/cap = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)

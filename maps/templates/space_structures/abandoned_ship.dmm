@@ -112,9 +112,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "as" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
@@ -159,9 +158,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "aA" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aB" = (
 /turf/simulated/floor{
@@ -196,9 +194,8 @@
 /area/space_structures/abandoned_ship)
 "aF" = (
 /obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aG" = (
 /obj/structure/stool/bed/chair/metal{
@@ -246,20 +243,17 @@
 /area/space_structures/abandoned_ship)
 "aM" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aN" = (
 /obj/machinery/light/small,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/abandoned_ship)
 "aO" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
@@ -446,7 +440,8 @@
 /area/space_structures/abandoned_ship)
 "bp" = (
 /obj/machinery/door/airlock/glass{
-	name = "Living Module"
+	name = "Living Module";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -703,9 +698,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "bX" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
@@ -730,7 +724,8 @@
 "ca" = (
 /obj/machinery/door/poddoor{
 	id = "oldship_gun";
-	name = "Pod Bay Door"
+	name = "Pod Bay Door";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -768,7 +763,8 @@
 /area/space_structures/abandoned_ship)
 "ce" = (
 /obj/machinery/door/airlock/glass{
-	name = "Pod Bay"
+	name = "Pod Bay";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -791,9 +787,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "cg" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
@@ -828,6 +823,14 @@
 /obj/machinery/light/small,
 /obj/machinery/constructable_frame/machine_frame,
 /obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"qs" = (
+/obj/machinery/door/airlock/glass{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -971,7 +974,7 @@ ah
 ah
 aT
 ar
-aU
+qs
 ao
 bF
 aa
@@ -1012,7 +1015,7 @@ aI
 aI
 aI
 aD
-aU
+qs
 aD
 aI
 aI

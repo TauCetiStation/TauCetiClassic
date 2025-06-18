@@ -493,9 +493,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
 		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
-		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
-		qdel(src)
-		return
+		if (tgui_alert(usr, "Шлем или Декор?", "Что вырезать?", list("Шлем", "Декор")) == "Шлем")
+			new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
+			qdel(src)
+			return
+		else
+			new /obj/item/weapon/carved_pumpkin (user.loc)
+			qdel(src)
+			return
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
@@ -724,6 +729,10 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 	reagents.add_reagent("lube", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
+	AddComponent(/datum/component/slippery, 8, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/proc/AfterSlip(mob/living/carbon/human/M)
+	M.Stun(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
@@ -734,23 +743,6 @@
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
-	. = ..()
-	if (iscarbon(AM))
-		var/mob/living/carbon/C = AM
-
-		if (ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if ((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
-				return
-
-		C.stop_pulling()
-		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-		if(!C.buckled)
-			C.Stun(8)
-			C.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed
@@ -770,7 +762,7 @@
 	name = "rice stalk"
 	desc = "Rice to see you."
 	gender = PLURAL
-	icon_state = "rice"
+	icon_state = "ricestalk"
 	filling_color = "#fff8db"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk/atom_init()
@@ -1124,13 +1116,114 @@
 	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='notice'>You hear a splat and a crackle.</span>")
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut
-	name = "Korta Nut"
-	icon_state = "kortanut"
-	desc = "A little nut of great importance. Has a peppery shell and a soft, pulpy interior. Or you can eat them whole, as a quick snack"
+/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
+	name = "Сhur'eech nut"
+	cases = list("орех Чур'их", "ореха Чур'их", "ореху Чур'их", "орех Чур'их", "орехом Чур'их", "орехе Чур'их")
+	icon_state = "chureechnut"
+	desc = "Огромный орех небесного цвета, который славится поистине сладким вкусом."
 	potency = 10
+	seed_type = /obj/item/seeds/chureech_nut
+	filling_color = "#91ebff"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 1 + round(potency / 5))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+	seed_type = /obj/item/seeds/gatfruit
+	name = "gatfruit"
+	desc = "It smells like burning."
+	icon_state = "gatfruit"
+	potency = 25
+	filling_color = "#020108"
+	trash = /obj/item/weapon/gun/projectile/revolver
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit/atom_init()
+	. = ..()
+	reagents.add_reagent("potassium", 1 + round(potency / 25, 1))
+	reagents.add_reagent("carbon", 1 + round(potency / 10, 1))
+	reagents.add_reagent("nitrogen", 1 + round(potency / 10, 1))
+	reagents.add_reagent("sulfur", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	seed_type = /obj/item/seeds/tobacco
+	name = "tobacco leaves"
+	desc = "Dry them out to make some smokes."
+	icon_state = "stobacco_leaves"
+	potency = 10
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
+	reagents.add_reagent("vitamin", 1 + round(potency / 10, 1))
+	reagents.add_reagent("nicotine", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalinp", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+	seed_type = /obj/item/seeds/tobacco
+	name = "tobacco leaves"
+	desc = "Dry them out to make some smokes."
+	icon_state = "tobacco_leaves"
+	potency = 10
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/atom_init()
+	. = ..()
+	reagents.add_reagent("nicotine", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalin", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella
+	seed_type = /obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella
+	name = "fraxinella"
+	desc = "A beautiful light pink flower."
+	icon_state = "fraxinella"
+	potency = 30
+	filling_color = "#cc6464"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
+	reagents.add_reagent("thermite", 1 + round((potency / 10), 1))
+	bitesize = 1 + round(reagents.total_volume / 3, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/jupitercup
+	seed_type = /obj/item/seeds/jupitercup
+	name = "Jupiter Cups"
+	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
+	icon_state = "jupitercup"
+	filling_color = "#97ee63"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/jupitercup/atom_init()
+	. = ..()
+	reagents.add_reagent("liquidelectricity", 1 + round((potency / 25), 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
+	seed_type = /obj/item/seeds/tea_astra
+	name = "Tea Astra tips"
+	icon_state = "tea_astra_leaves"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra/atom_init()
+	. = ..()
+	reagents.add_reagent("sodiumchloride", 1)
+	reagents.add_reagent("sugar", 1)
+	reagents.add_reagent("vitamin", 1 + round(potency / 10, 1))
+	reagents.add_reagent("tea", 1 + round(potency / 10, 1))
+	reagents.add_reagent("synaptizine", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea
+	seed_type = /obj/item/seeds/tea
+	name = "Tea Aspera tips"
+	desc = "These aromatic tips of the tea plant can be dried to make tea."
+	icon_state = "tea_aspera_leaves"
+	potency = 10
+	filling_color = "#125709"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea/atom_init()
+	. = ..()
+	reagents.add_reagent("tea", 1 + round(potency / 10, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)

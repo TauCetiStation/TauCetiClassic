@@ -67,6 +67,8 @@
 	RefreshParts()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
+	..()
+
 	var/T = 0
 
 	//maximum stocking amount (max 412000)

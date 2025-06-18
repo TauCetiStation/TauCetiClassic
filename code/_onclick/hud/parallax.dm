@@ -30,25 +30,14 @@
 
 	C.screen |= (C.parallax_layers)
 
-	var/atom/movable/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
-
-	PM.color = list(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		1, 1, 1, 1,
-		0, 0, 0, 0
-		)
+	C.update_plane_masters(/atom/movable/screen/plane_master/parallax_white)
 
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
 	C.screen -= (C.parallax_layers_cached)
-
-	var/atom/movable/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
-
-	PM.color = initial(PM.color)
-
 	C.parallax_layers = null
+
+	C.update_plane_masters(/atom/movable/screen/plane_master/parallax_white)
 
 /datum/hud/proc/apply_parallax_pref()
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(mymob, TRAIT_BYPASS_MEASURES))
@@ -246,9 +235,12 @@
 	if (!view)
 		view = world.view
 	var/list/new_overlays = list()
-	var/count = CEIL(view/(480/world.icon_size))+1
-	for(var/x in -count to count)
-		for(var/y in -count to count)
+	var/static/parallax_scaler = world.icon_size / 480
+	var/list/viewscales = getviewsize(view)
+	var/countx = CEIL((viewscales[1] / 2) * parallax_scaler) + 1
+	var/county = CEIL((viewscales[2] / 2) * parallax_scaler) + 1
+	for(var/x in -countx to countx)
+		for(var/y in -county to county)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)

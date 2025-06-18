@@ -9,20 +9,20 @@
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
 	g_amt = 20
-	action_button_name = "Toggle Flashlight"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_flashlight)
+	light_color = "#ffffff"
+	light_power = 1
 	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
 	var/last_button_sound = 0 // Prevents spamming for Object lights
 
+/datum/action/item_action/hands_free/toggle_flashlight
+	name = "Toggle Flashlight"
+
 /obj/item/device/flashlight/atom_init()
 	. = ..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		set_light(0)
+	update_brightness()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
@@ -31,6 +31,7 @@
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+	update_item_actions()
 
 /obj/item/device/flashlight/turn_light_off()
 	. = ..()
@@ -94,7 +95,11 @@
 
 		if(ishuman(M) || ismonkey(M))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
-				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
+				to_chat(user, "<span class='notice'>[M] pupils or screen does not react to the light!</span>")
+			else if(H.species.flags[IS_SYNTHETIC])
+				to_chat(user, "<span class='warning'>[M]'s robotic screen glances the flash back at you. You wonder whether that was wise.</span>")
+				user.flash_eyes()
+				M.flash_eyes() // attacker and machine get flashed
 			else if(XRAY in M.mutations)	//mob has X-RAY vision
 				M.flash_eyes() //Yes, you can still get flashed wit X-Ray.
 				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
@@ -159,6 +164,14 @@
 	item_state = "lampgreen"
 	brightness_on = 4
 
+/obj/item/device/flashlight/lamp/small
+	desc = "Маленькая лампа."
+	icon_state = "lampsmall"
+	brightness_on = 3
+	light_power = 0.6
+	light_color = "#ffb46b"
+
+	glow_icon_state = "lampsmall"
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
@@ -177,14 +190,15 @@
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
-	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
 	light_color = LIGHT_COLOR_FLARE
 	light_power = 2
-	action_button_name = "Toggle Flare"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_flare)
 
+/datum/action/item_action/hands_free/toggle_flare
+	name = "Toggle Flare"
 
 /obj/item/device/flashlight/flare/atom_init()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -217,6 +231,7 @@
 		icon_state = "[initial(icon_state)]-burned"
 		item_state = "[initial(item_state)]-burned"
 		update_inv_mob()
+		update_item_actions()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/turn_light_off()
@@ -305,7 +320,8 @@
 /obj/item/device/flashlight/emp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-
+	if(!on)
+		return
 	if(emp_cur_charges)
 		emp_cur_charges--
 

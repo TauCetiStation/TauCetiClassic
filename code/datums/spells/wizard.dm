@@ -250,10 +250,10 @@
 	invocation_type = "shout"
 	range = 3
 	summon_type = list(
-		/obj/structure/trap/stun,
-		/obj/structure/trap/fire,
-		/obj/structure/trap/chill,
-		/obj/structure/trap/damage,
+		/obj/structure/trap/wizard/stun,
+		/obj/structure/trap/wizard/fire,
+		/obj/structure/trap/wizard/chill,
+		/obj/structure/trap/wizard/damage,
 					)
 	summon_lifespan = 3000
 	summon_amt = 5

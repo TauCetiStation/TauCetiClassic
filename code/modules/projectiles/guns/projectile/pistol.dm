@@ -5,7 +5,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/silenced
 	name = "silenced pistol"
-	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
+	desc = "Небольшой, бесшумный, легко скрываемый пистолет. Использует патроны 45-го калибра."
 	icon_state = "silenced_pistol"
 	item_state = "gun"
 	silenced = 1
@@ -16,7 +16,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/glock
 	name = "G17"
-	desc = "Semi-automatic service pistol of 9x19mm cal. Designed for professionals."
+	desc = "Полуавтоматический служебный пистолет калибра 9х19 мм. Предназначен для профессионалов."
 	icon_state = "9mm_glock"
 	item_state = "9mm_glock"
 	origin_tech = "combat=2;materials=2"
@@ -33,7 +33,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle
 	name = "desert eagle"
-	desc = "A robust handgun that uses .50 AE ammo."
+	desc = "Надежный убойный пистолет, использующий патроны калибра .50 AE."
 	icon_state = "deagle"
 	item_state = "deagle"
 	force = 14.0
@@ -42,7 +42,7 @@
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold
-	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	desc = "Позолоченный пистолет, сделанный лучшими марсианскими оружейниками. Использует патроны калибра .50 AE."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
@@ -50,13 +50,13 @@
 	initial_mag = /obj/item/ammo_box/magazine/deagle/weakened
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened/gold
-	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	desc = "Позолоченный пистолет, сделанный лучшими марсианскими оружейниками. Использует патроны калибра .50 AE."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
 /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 	name = "Stechkin pistol"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	desc = "Небольшой, легко скрываемый пистолет. Использует патроны калибра 9 мм."
 	icon_state = "stechkin"
 	item_state = "9mm_glock"
 	w_class = SIZE_TINY
@@ -67,7 +67,7 @@
 	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/pistol/colt1911
-	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
+	desc = "Дешевая марсианская подделка Colt M1911. Использует менее смертоносные патроны 45-го калибра."
 	name = "Colt M1911"
 	icon_state = "colt"
 	item_state = "colt"
@@ -77,12 +77,12 @@
 	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/pistol/colt1911/dungeon
-	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
+	desc = "Полуавтоматический пистолет с магазином под патрон .45 ACP, работающий в автоматическом режиме с отдачей ствола."
 	initial_mag = /obj/item/ammo_box/magazine/colt
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
 	name = "Derringer"
-	desc = "A small pocket pistol and your best friend. Manufactured by Hephaestus Industries without much changes from the earliest designs. Chambered in .38."
+	desc = "Небольшой карманный пистолет и ваш лучший друг. Выпускается компанией Hephaestus Industries без особых изменений по сравнению с ранними образцами. Калибр .38."
 	icon_state = "derringer"
 	item_state = null
 	w_class = SIZE_TINY
@@ -99,7 +99,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
 	name = "Oppressor"
-	desc = "Issued to Syndicate agents who aren't really valuable to HQ. Atleast the name sounds badass. Chambered in .357 Magnum."
+	desc = "Выдается агентам Синдиката, не представляющим особой ценности для Командования. По крайней мере, название звучит круто. Калибр .357 Магнум."
 	icon_state = "synderringer"
 	force = 5
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
@@ -108,7 +108,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/wjpp
 	name = "W&J PP"
-	desc = "Double action semi-automatic 9mm pistol, popular with police and private security for being reliable, concealable and cheap."
+	desc = "Самозарядный 9-мм пистолет двойного действия, популярный среди полицейских и частных охранников благодаря своей надежности, скрытности и дешевизне."
 	icon_state = "wjpp"
 	item_state = "wjpp"
 	origin_tech = "combat=1;materials=1"

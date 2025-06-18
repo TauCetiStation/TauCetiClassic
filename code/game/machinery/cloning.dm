@@ -10,6 +10,7 @@
 /obj/machinery/clonepod
 	anchored = TRUE
 	name = "cloning pod"
+	cases = list("капсула клонирования", "капсулы клонирования", "капсуле клонирования", "капсулу клонирования", "капсулой клонирования", "капсуле клонирования" )
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
 	icon = 'icons/obj/cloning.dmi'
@@ -41,6 +42,8 @@
 	RefreshParts()
 
 /obj/machinery/clonepod/RefreshParts()
+	..()
+
 	speed_coeff = 0
 	efficiency = 0
 	for(var/obj/item/weapon/stock_parts/scanning_module/S in component_parts)
@@ -50,49 +53,6 @@
 	heal_level = (efficiency * 15) + 10
 	if(heal_level > 100)
 		heal_level = 100
-
-//The return of data disks?? Just for transferring between genetics machine/cloning machine.
-//TO-DO: Make the genetics machine accept them.
-/obj/item/weapon/disk/data
-	name = "Cloning Data Disk"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	item_state = "card-id"
-	w_class = SIZE_TINY
-	var/datum/dna2/record/buf=null
-	var/read_only = 0 //Well,it's still a floppy disk
-
-/obj/item/weapon/disk/data/proc/Initialize()
-	buf = new
-	buf.dna=new
-
-/obj/item/weapon/disk/data/demo
-	name = "data disk - 'God Emperor of Mankind'"
-	read_only = 1
-
-/obj/item/weapon/disk/data/demo/atom_init()
-	. = ..()
-	Initialize()
-	buf.types=DNA2_BUF_UE|DNA2_BUF_UI
-	buf.dna.real_name="God Emperor of Mankind"
-	buf.dna.unique_enzymes = md5(buf.dna.real_name)
-	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x000,0x000,0x000,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
-	buf.dna.UpdateUI()
-
-/obj/item/weapon/disk/data/monkey
-	name = "data disk - 'Mr. Muggles'"
-	read_only = 1
-
-/obj/item/weapon/disk/data/monkey/atom_init()
-	. = ..()
-	Initialize()
-	buf.types=DNA2_BUF_SE
-	var/list/new_SE=list(0x098,0x3E8,0x403,0x44C,0x39F,0x4B0,0x59D,0x514,0x5FC,0x578,0x5DC,0x640,0x6A4)
-	for(var/i=new_SE.len;i<=DNA_SE_LENGTH;i++)
-		new_SE += rand(1,1024)
-	buf.dna.SE=new_SE
-	buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
-
 
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(find_key)
@@ -121,24 +81,11 @@
 
 	return selected
 
-//Disk stuff.
-/obj/item/weapon/disk/data/atom_init()
-	. = ..()
-	var/diskcolor = pick(0,1,2)
-	src.icon_state = "datadisk[diskcolor]"
-
-/obj/item/weapon/disk/data/attack_self(mob/user)
-	src.read_only = !src.read_only
-	to_chat(user, "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].")
-
-/obj/item/weapon/disk/data/examine(mob/user)
-	..()
-	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
-
 //Health Tracker Implant
 
 /obj/item/weapon/implant/health
 	name = "health implant"
+	cases = list("имплант здоровья", "импланта здоровья", "импланту здоровья", "имплант здоровья", "имплантом здоровья", "импланте здоровья")
 	var/healthstring = ""
 
 /obj/item/weapon/implant/health/proc/sensehealth()
@@ -158,7 +105,7 @@
 			return
 		if ((!isnull(occupant)) && (occupant.stat != DEAD))
 			var/completion = (100 * ((occupant.health + 100) / (heal_level + 100)))
-			to_chat(user, "Current clone cycle is [round(completion)]% complete.")
+			to_chat(user, "Воссоздание клона завершено на [round(completion)]%.")
 
 //Clonepod
 
@@ -202,7 +149,7 @@
 
 	clonemind.transfer_to(H)
 	H.ckey = R.ckey
-	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
+	to_chat(H, "<span class='notice'><b>Разум медленно возвращается в ваше регенерирующее тело...</b><br><i>Так вот, как ощущается клонирование...</i></span>")
 
 	for(var/V in R.quirks)
 		new V(H)
@@ -254,7 +201,7 @@
 		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			go_out()
-			connected_message("Clone Rejected: Deceased.")
+			connected_message("Клон отбракован: мёртв.")
 			return
 
 		else if(src.occupant.cloneloss > (100 - src.heal_level))
@@ -283,7 +230,7 @@
 			return
 
 		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
-			connected_message("Cloning Process Complete.")
+			connected_message("Процесс клонирования завершён.")
 			src.locked = 0
 			go_out()
 			return
@@ -312,18 +259,18 @@
 
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!check_access(W))
-			to_chat(user, "<span class='danger'>Access Denied.</span>")
+			to_chat(user, "<span class='danger'>Отказано в доступе.</span>")
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != DEAD))
-			to_chat(user, "<span class='danger'>Access Refused.</span>")
+			to_chat(user, "<span class='danger'>Отказано в доступе.</span>")
 			return
 		else
 			src.locked = 0
-			to_chat(user, "System unlocked.")
+			to_chat(user, "Система разблокирована.")
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
+		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] обрабатывает [CASE(W, ACCUSATIVE_CASE)].</span>")
 		biomass += 50
 		qdel(W)
 		return
@@ -334,7 +281,7 @@
 	if(isnull(src.occupant))
 		return FALSE
 	user.SetNextMove(CLICK_CD_INTERACT)
-	to_chat(user, "You force an emergency ejection.")
+	to_chat(user, "Вы активировали экстренное извлечение.")
 	src.locked = 0
 	go_out()
 	return TRUE
@@ -391,7 +338,7 @@
 
 /obj/machinery/clonepod/proc/malfunction()
 	if(src.occupant)
-		connected_message("Critical Error!")
+		connected_message("Критическая ошибка!")
 		src.mess = 1
 		src.icon_state = "pod_g"
 		occupant.ghostize()
@@ -429,6 +376,7 @@
 
 /obj/item/weapon/storage/box/disks
 	name = "Diskette Box"
+	cases = list("коробка для дискет", "коробки для дискет", "коробке для дискет", "коробку для дискет", "коробкой для дискет", "коробке для дискет")
 	icon_state = "disk_box"
 
 /obj/item/weapon/storage/box/disks/atom_init()
@@ -442,26 +390,27 @@
 
 /obj/item/weapon/paper/Cloning
 	name = "H-87 Cloning Apparatus Manual"
-	info = {"<h4>Getting Started</h4>
-	Congratulations, your station has purchased the H-87 industrial cloning device!<br>
-	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
-	<b>That's all there is to it!</b><br>
-	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary HEALTH MONITOR IMPLANT into the subject, which may be viewed from each profile.
-	Profile Deletion has been restricted to \[Station Head\] level access.</p>
-	<h4>Cloning from a profile</h4>
-	Cloning is as simple as pressing the CLONE option at the bottom of the desired profile.<br>
-	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
+	cases = list("руководство по аппарату для клонирования H-87",  "руководства по аппарату для клонирования H-87", "руководству по аппарату для клонирования H-87", "руководство по аппарату для клонирования H-87", "руководством по аппарату для клонирования H-87", "руководстве по аппарату для клонирования H-87")
+	info = {"<h4>Подготовка</h4>
+	Поздравляем, ваша станция приобрела промышленный аппарат клонирования H-87!<br>
+	Использование H-87 такое же простое, как и нейрохирургия! Просто поместите гуманоида в капсулу, запустите сканирование и создайте новый профиль.<br>
+	<b>Это всё, что нужно сделать!</b><br>
+	<i>Важно отметить, что аппарат не умеет клонировать мартышек и прочих маленьких созданий, включая и неорганических. До такого мы пока не дошли. Гематомы могут привести к ошибкам в сканировании.</i><br>
+	<p>Профили для клонирования можно посмотреть в специальной вкладке. При сканировании в органика вживляется специальный имплант, информацию с которого можно получить в профиле органика.
+	Удаление генетического профиля возможно лишь с доступом \[глав станции\]</p>
+	<h4>Клонирование из профиля</h4>
+	Для клонирования, нужно нажать кнопку "Клонировать" рядом с выбранным профилем<br>
+	Мы соблюдаем соглашение о неразглашении конфиденциальной информации, поэтому клонирование живых членов экипажа аппаратом H-87 невозможно.<br>
 	<br>
-	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (With SPEEDCLONE technology) are roughly 90 seconds.
+	<p>Система капсулы для клонирования воспроизводит практически идеального клона пациента из профиля за 90 секунд.
 	The cloning pod may be unlocked early with any \[Medical Researcher\] ID after initial maturation is complete.</p><br>
-	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
-	<h4>Profile Management</h4>
-	<p>The H-87 (as well as your station's standard genetics machine) can accept STANDARD DATA DISKETTES.
-	These diskettes are used to transfer genetic information between machines and profiles.
-	A load/save dialog will become available in each profile if a disk is inserted.</p><br>
-	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
+	<i>Пожалуйста, учтите, что клоны могут обладать генетическими дефектами из-за резких перестановок ДНК.</i><br>
+	<h4>Управление профилями</h4>
+	<p>H-87 (а также стандартный аппарат для генетики) может принимать дискеты с генетической информацией.
+	Эти дискеты используются для передачи генетической информации между аппаратами.
+	Загрузка или отправка станет возможна, как вы вставите дискету в аппарат.</p><br>
+	<i>Хорошая дискета - один из методов противостоять вышеописанным перестановкам ДНК!</i><br>
 	<br>
-	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
+	<font size=1>Продукт лицензирован компанией Thinktronic Systems, LTD.</font>"}
 
 #undef CLONE_INITIAL_DAMAGE

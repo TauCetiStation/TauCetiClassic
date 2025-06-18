@@ -90,13 +90,9 @@
 /obj/structure/closet/secure_closet/velocity_security
 	name = "Velocity Security Officer's Locker"
 	req_access = list(101)
-	icon = 'icons/locations/centcomm/closet.dmi'
-	icon_state = "securevel1"
+	icon_state = "securevel"
 	icon_closed = "securevel"
-	icon_locked = "securevel1"
-	icon_opened = "securevelopen"
-	icon_broken = "securevelbroken"
-	icon_off = "secureveloff"
+	icon_opened = "securevel_open"
 
 /obj/structure/closet/secure_closet/velocity_security/full
 

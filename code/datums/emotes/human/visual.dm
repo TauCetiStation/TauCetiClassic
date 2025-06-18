@@ -170,7 +170,7 @@
 	)
 
 /datum/emote/human/shake/get_emote_message_3p(mob/living/carbon/human/user)
-	return "shakes [P_THEIR(user.gender)] head."
+	return "shakes [P_THEIR(user)] head."
 
 
 /datum/emote/human/twitch
@@ -200,4 +200,4 @@
 	)
 
 /datum/emote/human/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
-	return "seizes up and falls limp, [P_THEIR(user.gender)] eyes dead and lifeless..."
+	return "seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."

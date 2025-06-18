@@ -8,8 +8,12 @@
 	health = 200
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
 	var/list/cargo = new
-	var/cargo_capacity = 15
+	var/cargo_capacity = 27
 	var/hides = 0
+
+/obj/mecha/working/ripley/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1200, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/go_out()
 	..()
@@ -32,6 +36,24 @@
 		else
 			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open"))
 
+/obj/mecha/working/ripley/engi/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/rcd(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
+	ME.attach(src)
+
+/obj/mecha/working/ripley/mine/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster(src)
+	ME.attach(src)
+
 /obj/mecha/working/ripley/firefighter
 	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
 	name = "APLU \"Firefighter\""
@@ -42,6 +64,22 @@
 	lights_power = 8
 	damage_absorption = list(BURN=0.5,BULLET=0.8,BOMB=0.5)
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/firefighter
+
+/obj/mecha/working/ripley/firefighter/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1400, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
+/obj/mecha/working/ripley/firefighter/engi/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/rcd(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
+	ME.attach(src)
+
+/obj/mecha/working/ripley/firefighter/ert
+	dna_lockable = TRUE
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE!!!"
@@ -104,6 +142,16 @@
 /obj/mecha/working/ripley/mining/atom_init_late()
 	for(var/obj/item/mecha_parts/mecha_tracking/B in contents)//Deletes the beacon so it can't be found easily
 		qdel(B)
+
+/obj/mecha/working/ripley/recycle_ripley
+	name = "APLU \"Recycler\""
+	add_req_access = 0
+	maint_access = 0
+	operation_req_access = list(access_recycler)
+
+/obj/mecha/working/ripley/recycle_ripley/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 100, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)

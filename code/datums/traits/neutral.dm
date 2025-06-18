@@ -1,9 +1,9 @@
 /datum/quirk/high_pain_threshold
 	name = QUIRK_HIGH_PAIN_THRESHOLD
-	desc = "Вы легче переносите боль. Эта особенность влияет лишь на звуки, издаваемые вами."
+	desc = "Ваш болевой порог повышен. Влияет только на издаваемые вами звуки."
 	value = 0
 	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>Вы хотите показать, насколько вы сильны. Вы попытаетесь игнорировать любую боль.</span>"
+	gain_text = "<span class='danger'>Вы хотите показать свою силу. Вы попытаетесь игнорировать любую боль.</span>"
 	lose_text = "<span class='notice'>Вы устали превозмогать боль.</span>"
 
 	req_species_flags = list(
@@ -14,11 +14,11 @@
 
 /datum/quirk/low_pain_threshold
 	name = QUIRK_LOW_PAIN_THRESHOLD
-	desc = "Боль для вас более мучительна. Эта особенность влияет лишь на звуки, издаваемые вами. "
+	desc = "Ваш болевой порог понижен. Влияет только на издаваемые вами звуки. "
 	value = 0
 	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>От одной лишь мысли о боли вас начинает трясти от страха.</span>"
-	lose_text = "<span class='notice'>Вы больше не хотите казаться слизняком в глазах окружающих. Теперь вы будете пытаться игнорировать боль.</span>"
+	gain_text = "<span class='danger'>Вам страшно от одной лишь мысли о боли.</span>"
+	lose_text = "<span class='notice'>Вы больше не хотите выглядеть слабаком. Теперь вы пытаетесь терпеть боль.</span>"
 
 	req_species_flags = list(
 		NO_PAIN = FALSE,
@@ -31,8 +31,8 @@
 	desc = "Всё для вас одинаково пресно на вкус! Токсичная еда остаётся ядовитой для вас."
 	value = 0
 	mob_trait = TRAIT_AGEUSIA
-	gain_text = "<span class='notice'>Вы потеряли вкус!</span>"
-	lose_text = "<span class='notice'>Вы снова ощущаете вкус! </span>"
+	gain_text = "<span class='notice'>Вы не различаете вкуса еды!</span>"
+	lose_text = "<span class='notice'>Вы снова ощущаете вкус!</span>"
 
 /datum/quirk/no_taste/get_incompatible_species()
 	. = ..()
@@ -51,7 +51,7 @@
 	value = 0
 	mob_trait = TRAIT_DALTONISM
 	gain_text = "<span class='notice'>Вы перестали различать цвета!</span>"
-	lose_text = "<span class='notice'>Вы снова можете насладиться красками этого мира!</span>"
+	lose_text = "<span class='notice'>Вы снова различаете цвета!</span>"
 
 	var/current_type = "greyscale"
 
@@ -60,16 +60,16 @@
 	H.daltonism = TRUE
 
 	var/list/types = list(
-		"Серый"            = "greyscale",
-		"Красный"             = "thermal",
-		"Синий"            = "rbg_d",
+		"Серый"              = "greyscale",
+		"Красный"            = "thermal",
+		"Синий"              = "rbg_d",
 		"Тёмно зелёный"      = "nvg_military",
-		"Зелёный"           = "meson",
+		"Зелёный"            = "meson",
 		"Оранжевый"          = "sepia",
-		"Жёлтый-синий"     = "bgr_d",
-		"Фиолетовый-жёлтый"     = "brg_d",
+		"Жёлтый-синий"       = "bgr_d",
+		"Фиолетовый-жёлтый"  = "brg_d",
 		"Зелёный-синий"      = "gbr_d",
-		"Фиолетовый-красный"      = "grb_d",
+		"Фиолетовый-красный" = "grb_d",
 		)
 
 	var/choose = input(H, "Выберите тип дальтонизма", "Цвет") in types

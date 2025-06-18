@@ -265,6 +265,8 @@
 	return ..()
 
 /obj/machinery/teleport/hub/RefreshParts()
+	..()
+
 	var/A = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
@@ -378,6 +380,8 @@
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
+	..()
+
 	var/E
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		E += C.rating
@@ -407,15 +411,36 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(ispulsing(W) && !panel_open)
-		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-			if(linked_stations.len < efficiency)
-				linked_stations.Add(M.buffer)
-				M.buffer = null
-				to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
-			else
-				to_chat(user, "<span class='alert'>This station cant hold more information, try to use better parts.</span>")
+	if(ispulsing(W) && panel_open)
+		var/actions = list("Download data in buffer", "Load data from buffer", "Connect to nearby machinery")
+		var/choice = tgui_input_list(user, "Choose your action", "Action", actions)
+		if(!Adjacent(user))
+			return
+		switch(choice)
+			if("Download data in buffer")
+				var/obj/item/device/multitool/M = W
+				M.buffer = src
+				to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
+				return
+			if("Load data from buffer")
+				var/obj/item/device/multitool/M = W
+				if(istype(M))
+					if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
+						if(linked_stations.len < efficiency)
+							linked_stations.Add(M.buffer)
+							M.buffer = null
+							to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+						else
+							to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
+					else if(M.buffer == src)
+						to_chat(user, "<span class='alert'>You can't load information about the same station.</span>")
+					else
+						to_chat(user, "<span class='alert'>Something went wrong!</span>")
+			if("Connect to nearby machinery")
+				link_console_and_hub()
+				to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
+				return
+
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
@@ -424,17 +449,6 @@
 		return
 
 	default_deconstruction_crowbar(W)
-
-	if(panel_open)
-		if(ispulsing(W))
-			var/obj/item/device/multitool/M = W
-			M.buffer = src
-			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
-			return
-		if(iscutter(W))
-			link_console_and_hub()
-			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
-			return
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
 	. = ..()

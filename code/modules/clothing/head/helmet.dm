@@ -37,7 +37,7 @@
 		holochip.deactivate_holomap()
 	..()
 
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
+/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/holochip))
 		if(flags & ABSTRACT)
 			return    //You can't insert holochip in abstract item.
@@ -65,6 +65,20 @@
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
 
+	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
+		return ..()
+
+	var/obj/item/device/assembly/signaler/S = I
+	if(!S.secured)
+		to_chat(user, "<span class='notice'>The signaler not secured.</span>")
+		return ..()
+
+	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
+	user.put_in_hands(A)
+	to_chat(user, "<span class='notice'>You add \the [I] to the helmet.</span>")
+	qdel(I)
+	qdel(src)
+
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
@@ -78,18 +92,6 @@
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
 
-/obj/item/clothing/head/helmet/HoS
-	name = "head of security's hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoshat"
-	item_state = "hoshat"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags_inv = HIDEEARS
-	body_parts_covered = 0
-	siemens_coefficient = 0.8
-	force = 0
-	hitsound = list()
-
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
@@ -99,8 +101,11 @@
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.3
-	action_button_name = "Adjust helmet visor"
 	var/up = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_helmet_visor)
+
+/datum/action/item_action/hands_free/adjust_helmet_visor
+	name = "Adjust helmet visor"
 
 /obj/item/clothing/head/helmet/riot/attack_self()
 	toggle()
@@ -122,6 +127,7 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
 		update_inv_mob() //so our mob-overlays update
+		update_item_actions()
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -193,6 +199,10 @@
 	icon_state = "marinad"
 	item_state = "marinad_helmet"
 
+/obj/item/clothing/head/helmet/tactical/marinad/leader
+	name = "marine beret"
+	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
+	icon_state = "beret_marinad"
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
@@ -200,12 +210,16 @@
 	icon_state = "shitcuritron_0"
 	item_state = "helmet"
 	var/on = 0
-	action_button_name = "Toggle Helmet"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet)
+
+/datum/action/item_action/hands_free/toggle_helmet
+	name = "Toggle Helmet"
 
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
 	icon_state = "shitcuritron_[on]"
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
@@ -238,13 +252,6 @@
 	name = "M35 Helmet"
 	desc = "The Basic werhmacht army helmet."
 	icon_state = "M35_Helmet"
-	item_state = "helmet"
-
-/obj/item/clothing/head/helmet/Waffen_SS_Helmet
-	name = "Waffen SS Helmet"
-	desc = "A helmet from SS uniform set."
-
-	icon_state = "SS_Helmet"
 	item_state = "helmet"
 
 /obj/item/clothing/head/helmet/syndilight

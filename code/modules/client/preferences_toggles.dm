@@ -209,10 +209,61 @@
 	prefs.ambientocclusion = !prefs.ambientocclusion
 	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
-	if(screen && screen.len)
-		var/atom/movable/screen/plane_master/game_world/PM = locate() in screen
-		PM.backdrop(mob)
+	update_plane_masters(/atom/movable/screen/plane_master/game_world)
 	feedback_add_details("admin_verb","TAC")
+
+/client/verb/set_glow_level()
+	set name = "Lighting: Glow Level"
+	set category = "Preferences"
+
+	var/new_setting = input(src, "Set glow level of light sources:") as null|anything in list("Disable", "Low", "Medium (Default)", "High")
+	if(!new_setting)
+		return
+
+	switch(new_setting)
+		if("Disable")
+			prefs.glowlevel = GLOW_DISABLE
+		if("Low")
+			prefs.glowlevel = GLOW_LOW
+		if("Medium (Default)")
+			prefs.glowlevel = GLOW_MED
+		if("High")
+			prefs.glowlevel = GLOW_HIGH
+
+	to_chat(src, "Glow level: [new_setting].")
+	prefs.save_preferences()
+	update_plane_masters(/atom/movable/screen/plane_master/lamps_selfglow)
+	feedback_add_details("admin_verb","LGL")
+
+/client/verb/toggle_lamp_exposure()
+	set name = "Lighting: Lamp Exposure"
+	set category = "Preferences"
+
+	prefs.lampsexposure = !prefs.lampsexposure
+	to_chat(src, "Lamp exposure: [prefs.lampsexposure ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	update_plane_masters(/atom/movable/screen/plane_master/exposure)
+	feedback_add_details("admin_verb","LEXP")
+
+/client/verb/toggle_lamps_glare()
+	set name = "Lighting: Lamp Glare"
+	set category = "Preferences"
+
+	prefs.lampsglare = !prefs.lampsglare
+	to_chat(src, "Glare: [prefs.lampsglare ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	update_plane_masters(/atom/movable/screen/plane_master/lamps_glare)
+	feedback_add_details("admin_verb","GLR")
+
+/client/verb/eye_blur_effect()
+	set name = "Blur effect"
+	set category = "Preferences"
+
+	prefs.eye_blur_effect = !prefs.eye_blur_effect
+	to_chat(src, "Blur effect: [prefs.eye_blur_effect ? "Enabled" : "Old design"].")
+	prefs.save_preferences()
+	update_plane_masters(/atom/movable/screen/plane_master/game_world)
+	feedback_add_details("admin_verb","EBE")
 
 /client/verb/set_parallax_quality()
 	set name = "Set Parallax Quality"
@@ -372,3 +423,12 @@
 	else
 		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус останется на чате.")
 	feedback_add_details("admin_verb", "thm")
+
+/client/verb/edit_emote_panel()
+	set name = "Edit Emote Panel"
+	set category = "Preferences"
+
+	if(!emote_panel_editor)
+		emote_panel_editor = new /datum/emote_panel_editor(src)
+	emote_panel_editor.tgui_interact(usr)
+

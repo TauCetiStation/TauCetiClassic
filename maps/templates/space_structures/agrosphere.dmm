@@ -1461,6 +1461,19 @@
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
+"KY" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	id = "agro blast";
+	name = "Blast Doors";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
 "OZ" = (
 /obj/structure/sink{
 	dir = 4;
@@ -1505,9 +1518,9 @@ aa
 aa
 aa
 aE
-aA
-aA
-aA
+KY
+KY
+KY
 aD
 cn
 aa
@@ -1524,7 +1537,7 @@ aa
 aa
 aa
 aE
-aA
+KY
 aD
 bj
 da
@@ -1841,9 +1854,9 @@ aa
 aa
 aa
 aC
-aA
-aA
-aA
+KY
+KY
+KY
 aD
 cB
 aa

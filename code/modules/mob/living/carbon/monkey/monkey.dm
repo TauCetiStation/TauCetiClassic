@@ -27,6 +27,79 @@
 
 	moveset_type = /datum/combat_moveset/human
 
+/mob/living/carbon/monkey/proc/handle_monkey_pressure(datum/gas_mixture/environment)
+	var/pressure = environment.return_pressure()
+	//Returns how much pressure actually affects the mob.
+	var/adjusted_pressure = calculate_affecting_pressure(pressure)
+	//Account for massive pressure differences
+	var/warning_LOW_pressure = WARNING_LOW_PRESSURE
+	var/hazard_LOW_pressure = HAZARD_LOW_PRESSURE
+	var/warning_HIGH_pressure = WARNING_HIGH_PRESSURE
+	var/hazard_HIGH_pressure = HAZARD_HIGH_PRESSURE
+
+	var/datum/species/monk_specie = global.all_species[race]
+	if(monk_specie)
+		warning_LOW_pressure = monk_specie.warning_low_pressure
+		hazard_LOW_pressure = monk_specie.hazard_low_pressure
+		warning_HIGH_pressure = monk_specie.warning_high_pressure
+		hazard_HIGH_pressure = monk_specie.hazard_high_pressure
+
+	var/highpress_damage = MAX_HIGH_PRESSURE_DAMAGE
+	var/lowpress_damage = LOW_PRESSURE_DAMAGE
+
+	if(adjusted_pressure > warning_HIGH_pressure)
+		if(adjusted_pressure < hazard_HIGH_pressure)
+			pressure_alert = 1
+			return
+		if(RESIST_HEAT in mutations)
+			highpress_damage /= 3
+		adjustBruteLoss(min(((adjusted_pressure / hazard_HIGH_pressure) - 1) * PRESSURE_DAMAGE_COEFFICIENT, highpress_damage))
+		pressure_alert = 2
+	else if(adjusted_pressure < warning_LOW_pressure)
+		if(adjusted_pressure >= hazard_LOW_pressure)
+			pressure_alert = -1
+			return
+		if(COLD_RESISTANCE in mutations)
+			lowpress_damage /= 3
+		adjustBruteLoss(lowpress_damage)
+		pressure_alert = -2
+
+/mob/living/carbon/monkey/proc/handle_monkey_temperature(datum/gas_mixture/environment)
+	var/temperature = environment.temperature
+	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density()
+
+	if(!on_fire)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
+
+	var/heat_lvl_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	var/cold_lvl_1 = BODYTEMP_COLD_DAMAGE_LIMIT
+	var/datum/species/monk_specie = global.all_species[race]
+	if(monk_specie)
+		heat_lvl_1 = monk_specie.heat_level_1
+		cold_lvl_1 = monk_specie.cold_level_1
+
+	if(bodytemperature > heat_lvl_1)
+		if(RESIST_HEAT in mutations)
+			temp_alert = 1
+			return
+		temp_alert = 2
+		adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
+	else if(bodytemperature < cold_lvl_1)
+		if(COLD_RESISTANCE in mutations)
+			temp_alert = -1
+			return
+		temp_alert = -2
+		adjustFireLoss(COLD_DAMAGE_LEVEL_2)
+
+/mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
+	if(stat != DEAD) // lets put this shit somewhere here
+		stabilize_body_temperature()
+
+	if(!environment || (flags & GODMODE))
+		return
+	handle_monkey_pressure(environment)
+	handle_monkey_temperature(environment)
+
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"

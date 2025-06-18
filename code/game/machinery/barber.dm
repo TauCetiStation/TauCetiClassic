@@ -52,6 +52,8 @@
 	return ..()
 
 /obj/machinery/color_mixer/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		efficiency += M.rating
 

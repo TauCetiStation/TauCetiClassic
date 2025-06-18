@@ -39,6 +39,7 @@
 	name = "Organic Suit"
 	desc = "Go tell a coder if you see this."
 	helptext = "Yell at Miauw and/or Perakp"
+	button_icon_state = "organic_suit"
 	chemical_cost = 1000
 	genomecost = -1
 	genetic_damage = 1000
@@ -94,6 +95,7 @@
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "Cannot be used while in lesser form."
+	button_icon_state = "arm_blade"
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 10
@@ -158,6 +160,7 @@
 	name = "Organic Shield"
 	desc = "We reform one of our arms into hard shield."
 	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. The more genomes we absorb, the stronger it is.. Cannot be used while in lesser form."
+	button_icon_state = "shield"
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 12
@@ -209,6 +212,7 @@
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
+	button_icon_state = "organic_suit"
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 8
@@ -261,6 +265,7 @@
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
+	button_icon_state = "chitinous_armor"
 	chemical_cost = 25
 	genomecost = 2
 	genetic_damage = 10

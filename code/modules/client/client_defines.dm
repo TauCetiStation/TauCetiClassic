@@ -59,8 +59,6 @@
 	// Set on login.
 	var/datum/media_manager/media = null
 
-	var/datum/guard/guard = null
-
 	var/datum/tooltip/tooltips
 
 	var/list/datum/browser/browsers
@@ -108,14 +106,6 @@
 
 	var/bwoink_sound = 'sound/effects/adminhelp.ogg'
 
-	/**
-	 * Assoc list with all the active maps - when a screen obj is added to
-	 * a map, it's put in here as well.
-	 *
-	 * Format: list(<mapname> = list(/atom/movable/screen))
-	 */
-	var/list/screen_maps = list()
-
 	// Last world.time that the player tried to request their resources.
 	var/last_ui_resource_send = 0
 
@@ -126,3 +116,5 @@
 
 	///Tracks say() usage for ic/dchat while slowmode is enabled
 	COOLDOWN_DECLARE(say_slowmode)
+
+	var/is_in_spawner = FALSE

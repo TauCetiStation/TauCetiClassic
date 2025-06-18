@@ -5,7 +5,7 @@
 	origin_tech = "combat=2;materials=2"
 	w_class = SIZE_SMALL
 	m_amt = 1000
-	fire_delay = 0
+	fire_delay = 4
 	recoil = 1
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/initial_mag = /obj/item/ammo_box/magazine/stechkin
@@ -13,6 +13,7 @@
 	var/has_cover = FALSE //does this gun has cover
 	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
+	var/has_ammo_counter = FALSE
 
 /obj/item/weapon/gun/projectile/atom_init()
 	. = ..()
@@ -111,7 +112,7 @@
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	if(src in view(1, user))
+	if(src in view(1, user) && has_ammo_counter)
 		to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)

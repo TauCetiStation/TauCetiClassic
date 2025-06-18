@@ -8,8 +8,10 @@ SUBSYSTEM_DEF(holomaps)
 	var/list/processing = list()
 	var/list/currentrun = list()
 
+	var/list/image/holomaps = list()
+
 	var/list/holochips = list()
-	var/image/default_holomap = null
+
 	var/list/holomap_cache = list()
 	var/list/holomap_landmarks = list()    //List for shuttles and other stuff that might be useful
 
@@ -22,7 +24,7 @@ SUBSYSTEM_DEF(holomaps)
 
 /datum/controller/subsystem/holomaps/Initialize(timeofday)
 
-	default_holomap = image(generate_holo_map())
+	holomaps["default"] = image(generate_holo_map())
 	generate_holochip_encryption()
 
 	..()
@@ -43,7 +45,7 @@ SUBSYSTEM_DEF(holomaps)
 		if(QDELETED(thing))
 			processing -= thing
 		else
-			thing.process()
+			thing.process(wait * 0.1)
 
 		if (MC_TICK_CHECK)
 			return
@@ -52,6 +54,19 @@ SUBSYSTEM_DEF(holomaps)
 
 #define HOLOMAP_WALKABLE_TILE "#66666699"
 #define HOLOMAP_CONCRETE_TILE "#FFFFFFDD"
+
+/datum/controller/subsystem/holomaps/proc/get_default_holomap()
+	return get_custom_holomap("default")
+
+/datum/controller/subsystem/holomaps/proc/get_custom_holomap(key)
+	if(!holomaps[key])
+		holomaps[key] = image(generate_holo_map())
+
+	return holomaps[key]
+
+/datum/controller/subsystem/holomaps/proc/regenerate_custom_holomap(key)
+	holomaps[key] = image(generate_holo_map())
+	SEND_SIGNAL(SSholomaps, COMSIG_HOLOMAP_REGENERATED, key)
 
 /datum/controller/subsystem/holomaps/proc/generate_holo_map()
 	var/icon/holomap = icon('icons/holomaps/canvas.dmi', "blank")

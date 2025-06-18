@@ -3,12 +3,15 @@
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "degoggles"
 	item_state = "glasses"
-	action_button_name = "Toggle Goggles"
 	origin_tech = "biotech=2;programming=2;syndicate=1"
 	active = FALSE
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
 	var/mob/living/silicon/robot/drone/syndi/slave = null
 	var/mob/living/carbon/human/operator = null
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/syndidroneRC/Destroy()
 	if(slave)
@@ -43,7 +46,7 @@
 		if(loc == operator)
 			if((slot_equipped == SLOT_GLASSES) && (operator.stat == CONSCIOUS) && slave.key)
 				return
-	
+
 	if(slave.operator)
 		loose_control()
 	else

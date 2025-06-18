@@ -10,6 +10,7 @@
 
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
 
+	var/give_uplink = TRUE
 	var/telecrystals = 20
 	skillset_type = /datum/skillset/max
 	moveset_type = /datum/combat_moveset/cqc
@@ -17,16 +18,21 @@
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
+	if(give_uplink)
+		AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
 		if(1 to 20)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(21 to 40)
+		if(21 to 25)
 			AppendObjective(/datum/objective/target/harm, TRUE)
+		if(26 to 30)
+			AppendObjective(/datum/objective/bomb, FALSE)
+		if(31 to 40)
+			AppendObjective(/datum/objective/download_telecommunications_data, FALSE)
 		if(41 to 50)
-			AppendObjective(/datum/objective/research_sabotage, TRUE)
+			AppendObjective(/datum/objective/research_sabotage, FALSE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
@@ -35,6 +41,10 @@
 /datum/role/traitor/forgeObjectives()
 	if(!..())
 		return FALSE
+	create_traitor_objectives()
+	return TRUE
+
+/datum/role/traitor/proc/create_traitor_objectives()
 	if(issilicon(antag.current))
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
@@ -55,7 +65,6 @@
 				AppendObjective(/datum/objective/survive)
 			else
 				AppendObjective(/datum/objective/hijack)
-	return TRUE
 
 /datum/role/traitor/process()
 	// For objectives such as "Make an example of...", which require mid-game checks for completion
@@ -102,6 +111,9 @@
 	. = ..()
 	if(issilicon(antag.current))
 		add_law_zero(antag.current)
+		return
+	for(var/datum/objective/O in objectives.GetObjectives())
+		O.give_required_equipment()
 
 /datum/role/traitor/RemoveFromRole(datum/mind/M, msg_admins)
 	if(isAI(M.current))

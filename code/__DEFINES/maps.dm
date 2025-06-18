@@ -17,7 +17,7 @@
 #define ZTRAIT_SNOWSTORM "Snowstorm"
 
 // number - bombcap is multiplied by this before being applied to bombs
-#define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
+#define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier" // todo: not implemented
 
 // number - default gravity if there's no gravity generators or area overrides present
 #define ZTRAIT_GRAVITY "Gravity"
@@ -35,6 +35,8 @@
 #define ZTRAIT_ENV_TYPE "Environment Type"
     // ENV_TYPE_SPACE if absent - no environment generation
     #define ENV_TYPE_SPACE "Space"
+    // ENV_TYPE_HOLOSPACE like space, but with atmosphere. no environment generation
+    #define ENV_TYPE_HOLOSPACE "Holospace"
     // ENV_TYPE_SNOW - snow environment generation
     #define ENV_TYPE_SNOW "Snow"
 

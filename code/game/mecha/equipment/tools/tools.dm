@@ -58,11 +58,11 @@
 				occupant_message("<font color='red'>[target] is firmly secured.</font>")
 		else if(istype(target, /obj/structure/droppod))
 			var/obj/structure/droppod/Drop = target
-			if(Drop.flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
+			if(Drop.stat_flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
 				return
 			var/T = chassis.loc
 			if(do_after_cooldown(Drop) && T == chassis.loc && src == chassis.selected\
-			&& !Drop.intruder && !Drop.second_intruder && !(Drop.flags & STATE_DROPING) && !(Drop.flags & STATE_AIMING))
+			&& !Drop.intruder && !Drop.second_intruder && !(Drop.stat_flags & STATE_DROPING) && !(Drop.stat_flags & STATE_AIMING))
 				cargo_holder.cargo += Drop
 				Drop.loc = chassis
 				occupant_message("<font color='blue'>[target] succesfully loaded.</font>")

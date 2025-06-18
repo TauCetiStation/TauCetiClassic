@@ -1,4 +1,4 @@
-var/global/list/preferences_datums = list()
+var/global/list/datum/preferences/preferences_datums = list()
 
 #define MAX_SAVE_SLOTS 10
 #define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
@@ -6,6 +6,10 @@ var/global/list/preferences_datums = list()
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
+
+// this datum keeps preferences and some random client things we need to keep persistent
+// because byond client object is too fickle https://www.byond.com/forum/post/2927086
+// todo: after moving preferences to new datumized system we should rename this to something like client_data
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -14,17 +18,19 @@ var/global/list/preferences_datums = list()
 	var/savefile_version = 0
 
 	//non-preference stuff
-	var/permamuted = 0
-	var/muted = 0
+	var/muted = MUTE_NONE // cache for chat bans, you should not touch it outside bans
 	var/last_ip
 	var/last_id
 	var/menu_type = "general"
 	var/submenu_type = "body"
 	var/list/ignore_question = list()		//For roles which getting player_saves with question system
 
+	var/list/admin_cooldowns
+
 	//account data
-	var/list/cid_list = list()
-	var/ignore_cid_warning = 0
+	var/cid_count = 0
+	var/admin_cid_request_cache
+	var/admin_ip_request_cache
 
 	//game-preferences
 	var/UI_style = null
@@ -55,6 +61,8 @@ var/global/list/preferences_datums = list()
 
 	var/show_runechat = TRUE
 
+	var/list/custom_emote_panel = list()
+
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
@@ -78,9 +86,9 @@ var/global/list/preferences_datums = list()
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
+	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
-	var/height = HUMANHEIGHT_MEDIUM			//height of character
-	var/b_type = "A+"					//blood type (not-chooseable)
+	var/height = HUMANHEIGHT_MEDIUM		//height of character
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
@@ -164,16 +172,32 @@ var/global/list/preferences_datums = list()
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
 	var/lobbyanimation = FALSE
+	// lighting settings
+	var/glowlevel = GLOW_MED // or bloom
+	var/lampsexposure = TRUE // idk how we should name it
+	var/lampsglare = FALSE // aka lens flare
+	//Impacts performance clientside
+	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
 	var/list/custom_items = list()
 
+	var/chosen_ringtone = "Flip-Flap"
+	var/custom_melody = "E7,E7,E7"
+
+	var/datum/guard/guard = null
+
 /datum/preferences/New(client/C)
 	parent = C
+
+	guard = new(parent)
+	if(!parent.holder)
+		init_chat_bans()
+
 	UI_style = global.available_ui_styles[1]
-	b_type = random_blood_type()
+	custom_emote_panel = global.emotes_for_emote_panel
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -184,6 +208,26 @@ var/global/list/preferences_datums = list()
 	real_name = random_name(gender)
 	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
+
+// reattach existing datum to client if client was disconnected and connects again
+/datum/preferences/proc/reattach_to_client(client/client)
+	parent = client
+
+/datum/preferences/proc/init_chat_bans()
+	if(!config.sql_enabled)
+		return
+
+	if(!establish_db_connection("erro_ban"))
+		return
+
+	// todo: rename job column
+	var/DBQuery/query = dbcon.NewQuery("SELECT job FROM erro_ban WHERE ckey = '[ckey(parent.ckey)]' AND (bantype = 'CHAT_PERMABAN'  OR (bantype = 'CHAT_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	if(!query.Execute())
+		return
+	muted = MUTE_NONE
+	while(query.NextRow())
+		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
+		muted |= mute_ban_bitfield[query.item[1]]
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
@@ -356,9 +400,9 @@ var/global/list/preferences_datums = list()
 	character.gen_record = gen_record
 
 	character.gender = gender
+	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height
-	character.b_type = b_type
 
 	character.regenerate_icons()
 
@@ -380,6 +424,8 @@ var/global/list/preferences_datums = list()
 			if("Human")
 				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
 				H.insert_organ(character)
+		var/obj/item/organ/internal/eyes/ipc/IO = new(null)
+		IO.insert_organ(character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
@@ -479,19 +525,12 @@ var/global/list/preferences_datums = list()
 
 	if(socks > socks_t.len || socks < 1)
 		socks = 0
-
 	character.socks = socks
 
 	if(backbag > 5 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
 	character.use_skirt = use_skirt
-
-	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-	if(character.gender in list(PLURAL, NEUTER))
-		if(isliving(src)) //Ghosts get neuter by default
-			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			character.gender = MALE
 
 	if(icon_updates)
 		character.update_body()
@@ -509,7 +548,7 @@ var/global/list/preferences_datums = list()
 		if(user.client.jobbancache[rank]["rid"])
 			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
 
-		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+		if(user.client.jobbancache[rank]["bantype"] == BANTYPE_JOB_TEMP)
 			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
 			dat += "<hr>"
 			dat += "<br>"

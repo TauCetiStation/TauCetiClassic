@@ -204,3 +204,7 @@ var/global/online_shop_profits = 0
 	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
 	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
 	return TRUE
+
+/proc/add_order_and_offer(Name, Text)
+	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = Name, "description" = Text, "time" = worldtime2text())
+	global.orders_and_offers_number++

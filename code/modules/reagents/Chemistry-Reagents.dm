@@ -200,6 +200,12 @@
 /datum/reagent/proc/on_slime_digest(mob/living/M)
 	return TRUE
 
+/datum/reagent/proc/on_serpentid_digest(mob/living/M)
+	return FALSE
+
+/datum/reagent/proc/on_moth_digest(mob/living/M)
+	return FALSE
+
 // Handles holy reagents.
 /datum/reagent/proc/handle_religions()
 	if(!religion)

@@ -1,12 +1,18 @@
 
-//Bartender
+//Cook
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
-	icon_state = "chef"
+	icon_state = "chefhat"
 	item_state = "chefhat"
-	desc = "The commander in chef's head wear."
 	siemens_coefficient = 0.9
+
+//Cook-alt
+/obj/item/clothing/head/sushi_band
+	name = "sushi master headband"
+	desc = "Beautiful minimalistic headband."
+	icon_state = "sushiband"
+	item_state = "sushiband"
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/caphat
@@ -60,6 +66,17 @@
 	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG. Also has some space for special armor plate."
 	icon_state = "hos_peakedcap"
 	item_state = "hos_peakedcap"
+	w_class = SIZE_TINY
+	siemens_coefficient = 0.9
+	body_parts_covered = 0
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
+
+/obj/item/clothing/head/hos_hat
+	name = "head of security's hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
+	icon_state = "hoshat"
+	item_state = "hoshat"
 	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 	body_parts_covered = 0

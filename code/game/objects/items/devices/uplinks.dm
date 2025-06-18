@@ -198,6 +198,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	. = ..()
 	hidden_uplink.uses = 15
 
+/obj/item/device/radio/uplink/nukeop_leader/atom_init()
+	. = ..()
+	hidden_uplink.uses = 75
+
 /obj/item/device/multitool/uplink/atom_init()
 	. = ..()
 	hidden_uplink = new(src)

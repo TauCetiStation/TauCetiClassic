@@ -7,7 +7,7 @@
 /obj/structure/noticeboard/plastic/anomaly/atom_init()
 	. = ..()
 	//add some memos
-	var/obj/item/weapon/stamp/rd/S = new
+	var/obj/item/weapon/stamp/sci/rd/S = new
 
 	var/obj/item/weapon/paper/P = new
 	P.name = "Memo RE: proper analysis procedure"
@@ -65,12 +65,9 @@
 /obj/structure/closet/secure_closet/xenoarchaeologist
 	name = "Xenoarchaeologist Locker"
 	req_access = list(access_xenoarch)
-	icon_state = "securerexenoarch1"
+	icon_state = "securerexenoarch"
 	icon_closed = "securerexenoarch"
-	icon_locked = "securerexenoarch1"
-	icon_opened = "securerexenoarchopen"
-	icon_broken = "securerexenoarchbroken"
-	icon_off = "securerexenoarchoff"
+	icon_opened = "securerexenoarch_open"
 
 /obj/structure/closet/secure_closet/xenoarchaeologist/PopulateContents()
 	new /obj/item/clothing/under/rank/scientist(src)
@@ -84,12 +81,9 @@
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools
 	name = "Xenoarchaeologist Locker"
 	req_access = list(access_xenoarch)
-	icon_state = "securerexenoarch1"
+	icon_state = "securerexenoarch"
 	icon_closed = "securerexenoarch"
-	icon_locked = "securerexenoarch1"
-	icon_opened = "securerexenoarchopen"
-	icon_broken = "securerexenoarchbroken"
-	icon_off = "securerexenoarchoff"
+	icon_opened = "securerexenoarch_open"
 
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools/PopulateContents()
 	new /obj/item/weapon/storage/box/excavation(src)

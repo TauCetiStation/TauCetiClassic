@@ -6,23 +6,29 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
+	item_state_world = "waterbackpack_world"
 	flags = OPENCONTAINER
 	w_class = SIZE_NORMAL
-	action_button_name = "Toggle Mister"
 
 	var/obj/item/weapon/reagent_containers/spray/mister/noz
 	volume = 500
 
+	item_action_types = list(/datum/action/item_action/toggle_mister)
+	list_reagents = list("water" = 500)
+
+/datum/action/item_action/toggle_mister
+	name = "Toggle Mister"
+
+/datum/action/item_action/toggle_mister/Activate()
+	var/obj/item/weapon/reagent_containers/watertank_backpack/S = target
+	S.toggle_mister()
+
 /obj/item/weapon/reagent_containers/watertank_backpack/atom_init()
 	. = ..()
-	reagents.add_reagent("water", volume)
 	if(ispath(noz))
 		noz = new noz(src, src)
 	else
 		noz = new(src, src)
-
-/obj/item/weapon/reagent_containers/watertank_backpack/ui_action_click()
-	toggle_mister()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/verb/toggle_mister()
 	set name = "Toggle Mister"
@@ -70,7 +76,7 @@
 
 /obj/item/weapon/reagent_containers/watertank_backpack/attack_hand(mob/user)
 	if(loc == user)
-		ui_action_click()
+		toggle_mister()
 		return
 	..()
 
@@ -105,6 +111,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
+	item_state_world = "mister_world"
 	w_class = SIZE_NORMAL
 	throwforce = 0 //we shall not abuse
 	amount_per_transfer_from_this = 25
@@ -145,12 +152,9 @@
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
+	item_state_world = "waterbackpackjani_world"
 	noz = /obj/item/weapon/reagent_containers/spray/mister/janitor
-
-/obj/item/weapon/reagent_containers/watertank_backpack/janitor/atom_init()
-	. = ..()
-	reagents.clear_reagents()
-	reagents.add_reagent("cleaner", volume)
+	list_reagents = list("cleaner" = 500)
 
 /obj/item/weapon/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -158,6 +162,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
+	item_state_world = "misterjani_world"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10)
 	spray_size = 1
@@ -168,15 +173,31 @@
 	desc = "A W.A.R.C.R.I.M.E.S. brand chemical backpack with nozzle to cover bodies in fresh chemical burns."
 	icon_state = "waterbackpacknuke"
 	item_state = "waterbackpacknuke"
+	item_state_world = "waterbackpacknuke"
 	volume = 1600
 	noz = /obj/item/weapon/reagent_containers/spray/mister/syndie
 	list_reagents = list("lexorin" = 200, "mindbreaker" = 200, "alphaamanitin" = 200, "space_drugs" = 200, "pacid" = 200, "fuel" = 200, "condensedcapsaicin" = 200, "stoxin" = 200)
+	var/obj/item/weapon/storage/backpack/internal_storage
+	item_action_types = list(/datum/action/item_action/open_tank_storage)
+
+/obj/item/weapon/reagent_containers/watertank_backpack/syndie/atom_init()
+	. = ..()
+	internal_storage = new /obj/item/weapon/storage/backpack(src)
+	internal_storage.name = "chemical tank's storage"
+
+/datum/action/item_action/open_tank_storage
+	name = "Open Storage"
+
+/datum/action/item_action/open_tank_storage/Activate()
+	var/obj/item/weapon/reagent_containers/watertank_backpack/syndie/S = target
+	S.internal_storage.try_open(usr)
 
 /obj/item/weapon/reagent_containers/spray/mister/syndie
 	name = "chemical spray nozzle"
 	desc = "Breath of death."
 	icon_state = "misternuke"
 	item_state = "misternuke"
+	item_state_world = "misternuke"
 	triple_shot = TRUE
 	spray_size = 4
 	spray_sizes = list(2)
@@ -184,3 +205,8 @@
 	spray_cloud_move_delay = 2
 	spray_cloud_react_delay = 0
 	volume = 1600
+
+/obj/item/weapon/reagent_containers/spray/mister/syndie/Spray_at()
+	. = ..()
+	var/turf/T = get_step(usr, usr.dir)
+	T.hotspot_expose(1000, 500)

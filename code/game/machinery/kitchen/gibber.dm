@@ -57,6 +57,8 @@
 	RefreshParts()
 
 /obj/machinery/gibber/RefreshParts()
+	..()
+
 	var/gib_time = initial(gibtime)
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		meat_produced += 3 * B.rating

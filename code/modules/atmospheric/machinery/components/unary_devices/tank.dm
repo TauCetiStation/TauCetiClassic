@@ -45,9 +45,6 @@
 			return
 		add_underlay(T, NODE1, dir)
 
-/obj/machinery/atmospherics/components/unary/tank/hide()
-	update_underlays()
-
 /obj/machinery/atmospherics/components/unary/tank/air
 	name = "Pressure Tank (Air)"
 	icon_state = "air_map"

@@ -17,7 +17,6 @@
 	var/obj/machinery/camera/active_camera = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
-	var/mapping = 0//For the overview file, interesting bit of code.
 
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
@@ -26,9 +25,6 @@
 	// Stuff needed to render the map
 	var/map_name
 	var/atom/movable/screen/map_view/cam_screen
-	/// All the plane masters that need to be applied.
-	var/list/cam_plane_masters
-	var/atom/movable/screen/background/cam_background
 
 	var/camera_cache = null
 
@@ -38,24 +34,9 @@
 	// and definitely NOT with a square bracket or even a number.
 	// I wasted 6 hours on this. :agony:
 	map_name = "camera_console_\ref[src]_map"
-	// Initialize map objects
-	cam_screen = new
-	cam_screen.name = "screen"
-	cam_screen.assigned_map = map_name
-	cam_screen.del_on_map_removal = FALSE
-	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/instance = new plane()
-		if(instance.blend_mode_override)
-			instance.blend_mode = instance.blend_mode_override
-		instance.assigned_map = map_name
-		instance.del_on_map_removal = FALSE
-		instance.screen_loc = "[map_name]:CENTER"
-		cam_plane_masters += instance
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = FALSE
+
+	cam_screen = new(null, map_name, "clear", global.default_plane_masters.Copy())
+
 	var/obj/item/weapon/circuitboard/security/board = circuit
 	if(istype(C))
 		var/list/circuitboard_network = board.network
@@ -66,8 +47,6 @@
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
-	QDEL_LIST(cam_plane_masters)
-	qdel(cam_background)
 	return ..()
 
 /obj/machinery/computer/security/ui_interact(mob/user)
@@ -95,14 +74,10 @@
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 			use_power(active_power_usage)
-		// Register map objects
-		user.client.register_map_obj(cam_screen)
-		for(var/plane in cam_plane_masters)
-			user.client.register_map_obj(plane)
-		user.client.register_map_obj(cam_background)
-		// Open UI
+
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
+		cam_screen.show_to(user.client)
 
 /obj/machinery/computer/security/tgui_state(mob/user)
 	return global.machinery_state
@@ -185,8 +160,8 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_screen.set_background("clear")
+	cam_screen.update_size(size_x, size_y)
 
 /obj/machinery/computer/security/tgui_close(mob/user)
 	. = ..()
@@ -194,9 +169,11 @@
 	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
-	// Unregister map objects
+
+	// clean map objects from user
 	if(user.client)
-		user.client.clear_map(map_name)
+		cam_screen.hide_from(user.client)
+
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
@@ -206,8 +183,8 @@
 
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
-	cam_background.icon_state = "scanline2"
-	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+	cam_screen.set_background("scanline2")
+	cam_screen.update_size(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
 /obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
 	var/list/shared_networks = src.network & C.network

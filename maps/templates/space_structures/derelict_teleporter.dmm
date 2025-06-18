@@ -19,17 +19,15 @@
 /turf/simulated/floor/airless,
 /area/space_structures/teleporter)
 "g" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/teleporter)
 "h" = (
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
-/turf/simulated/floor/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
 /area/space_structures/teleporter)
 "i" = (
 /obj/machinery/computer/teleporter,
@@ -56,11 +54,6 @@
 	maxcharge = 15000
 	},
 /turf/simulated/floor/airless,
-/area/space_structures/teleporter)
-"n" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
 /area/space_structures/teleporter)
 "o" = (
 /obj/machinery/power/apc{
@@ -168,7 +161,7 @@ d
 e
 f
 f
-n
+g
 f
 d
 "}

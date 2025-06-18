@@ -103,7 +103,7 @@
 	repeating = TRUE
 	heal_brute = 1
 
-	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NONE)
 
 /obj/item/stack/medical/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -169,7 +169,7 @@
 	repeating = FALSE
 	heal_burn = 1
 
-	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NONE)
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()

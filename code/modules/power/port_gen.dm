@@ -83,6 +83,8 @@
 	return ..()
 
 /obj/machinery/power/port_gen/pacman/RefreshParts()
+	..()
+
 	var/temp_rating = 0
 	var/consumption_coeff = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)

@@ -21,7 +21,7 @@
 	force = 5.0
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
-	action_button_name = "Switch Gun"
+	item_action_types = list(/datum/action/item_action/hands_free/switch_gun)
 	can_be_holstered = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
@@ -43,11 +43,13 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
+/datum/action/item_action/hands_free/switch_gun
+	name = "Switch Gun"
+
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(two_hand_weapon)
 		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
-
 
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)

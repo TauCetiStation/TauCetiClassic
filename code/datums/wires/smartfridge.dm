@@ -27,7 +27,7 @@ var/global/const/SMARTFRIDGE_WIRE_IDSCAN    = 4
 	. += "The red light is [S.shoot_inventory ? "off" : "blinking"]."
 	. += "A [S.locked ? "purple" : "yellow"] light is on."
 
-/datum/wires/smartfridge/update_cut(index, mended)
+/datum/wires/smartfridge/update_cut(index, mended, mob/user)
 	var/obj/machinery/smartfridge/S = holder
 
 	switch(index)

@@ -439,8 +439,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = SLOT_FLAGS_BELT
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
+	light_color = LIGHT_COLOR_FIRE
 
-	action_button_name = "Toggle Lighter"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_lighter)
+
+/datum/action/item_action/hands_free/toggle_lighter
+	name = "Toggle Lighter"
 
 /obj/item/weapon/lighter/zippo
 	name = "Zippo lighter"
@@ -502,6 +506,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 			set_light(0)
 			STOP_PROCESSING(SSobj, src)
+		update_item_actions()
 	else
 		return ..()
 	return
@@ -528,3 +533,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(location)
 		location.hotspot_expose(700, 5, src)
 	return
+
+/obj/item/weapon/lighter/zippo/syndi
+	icon_state = "syndizippo"
+	item_state = "syndizippo"
+	icon_on = "syndizippoon"
+	icon_off = "syndizippo"
+	light_color = LIGHT_COLOR_NUKE_OPS

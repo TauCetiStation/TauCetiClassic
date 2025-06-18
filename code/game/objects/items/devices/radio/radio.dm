@@ -20,6 +20,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/broadcasting = 0
 	var/listening = 1
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
+	var/allow_settings = TRUE
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
@@ -80,7 +81,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		interact(user)
 
 /obj/item/device/radio/interact(mob/user)
-	if(!on)
+	if(!on || !allow_settings)
 		return
 
 	if(active_uplink_check(user))
@@ -118,7 +119,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on)
+	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on || !allow_settings)
 		return
 
 	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))
@@ -182,7 +183,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			updateDialog()
 	add_fingerprint(usr)
 
-/obj/item/device/radio/proc/autosay(message, from, channel, freq = 1459) //BS12 EDIT
+/obj/item/device/radio/proc/autosay(message, from, channel, freq = 1459, broadcast_mode = BROADCAST_MODE_NO_TRACK_AI) //BS12 EDIT
 	var/datum/radio_frequency/connection = null
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
@@ -190,19 +191,19 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			channel = channels[1]
 		connection = secure_radio_connections[channel]
 	else
+		set_frequency(freq)
 		connection = radio_connection
 		channel = null
 	if (!istype(connection))
 		return
 	if (!connection)
 		return
-
 	var/mob/autosay/A = new /mob/autosay(src)
 	A.real_name = from
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
-						4, 0, SSmapping.levels_by_trait(ZTRAIT_STATION), freq)
+						broadcast_mode, 0, SSmapping.levels_by_trait(ZTRAIT_STATION), freq)
 	qdel(A)
 	return
 
@@ -360,11 +361,11 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	  /* ###### Intercoms and station-bounced radios ###### */
 
-		var/filter_type = 2
+		var/broadcast_mode = BROADCAST_MODE_INTERCOMS_AND_RADIOS
 
 		/* --- Intercoms can only broadcast to other intercoms, but bounced radios can broadcast to bounced radios and intercoms --- */
 		if(istype(src, /obj/item/device/radio/intercom))
-			filter_type = 1
+			broadcast_mode = BROADCAST_MODE_INTERCOMS
 
 
 		var/datum/signal/signal = new
@@ -415,7 +416,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
+		                  broadcast_mode, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
 
 		return TRUE
 
@@ -751,32 +752,32 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return ..()
 
 /obj/item/device/radio/borg/proc/recalculateChannels()
-	src.channels = list()
-	src.syndie = 0
+	channels = list()
+	syndie = 0
 
 	var/mob/living/silicon/robot/D = src.loc
 	if(D.module)
 		for(var/ch_name in D.module.channels)
-			if(ch_name in src.channels)
+			if(ch_name in channels)
 				continue
-			src.channels += ch_name
-			src.channels[ch_name] += D.module.channels[ch_name]
+			channels += ch_name
+			channels[ch_name] += D.module.channels[ch_name]
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
-			if(ch_name in src.channels)
+			if(ch_name in channels)
 				continue
-			src.channels += ch_name
-			src.channels[ch_name] += keyslot.channels[ch_name]
+			channels += ch_name
+			channels[ch_name] += keyslot.channels[ch_name]
 
 		if(keyslot.syndie)
-			src.syndie = 1
+			syndie = 1
 
 
-	for (var/ch_name in src.channels)
+	for (var/ch_name in channels)
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
-			src.name = "broken radio"
+			name = "broken radio"
 			return
 
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
@@ -847,8 +848,9 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	icon_state = "radio_grid"
 
 /obj/item/device/radio_grid/proc/attach(obj/item/device/radio/radio)
-	radio.on = TRUE
-	radio.grid = TRUE
+	if(prob(reliability))
+		radio.on = TRUE
+		radio.grid = TRUE
 	qdel(src)
 
 /obj/item/device/radio_grid/proc/dettach(obj/item/device/radio/radio)

@@ -3,7 +3,7 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	hitsound = list('sound/items/misc/folder-slap.ogg')
-	icon_state = "folder"
+	icon_state = "folder_grey"
 	w_class = SIZE_TINY
 
 /obj/item/weapon/folder/blue
@@ -106,3 +106,56 @@
 		attack_self(usr)
 		update_icon()
 	return
+
+/obj/item/folder_holder
+	name = "folder holder"
+	desc = "Папка всех папок."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "folder_holder"
+	var/icon/foldersoverlay
+
+/obj/item/folder_holder/atom_init(mapload)
+	. = ..()
+	if(mapload)
+		var/atom/A = get_turf(src)
+		for(var/obj/item/weapon/folder in A.contents)
+			folder.forceMove(src)
+		update_icon()
+
+/obj/item/folder_holder/update_icon()
+	cut_overlay(foldersoverlay)
+	foldersoverlay = icon('icons/effects/32x32.dmi', "blank")
+	var/foldernumber = 0
+	for(var/obj/item/weapon/folder in contents)
+		var/icon/foldericon = icon('icons/obj/bureaucracy.dmi', "folder_holder_[folder.icon_state]")
+		if(folder.contents.len)
+			foldericon.Blend(icon('icons/obj/bureaucracy.dmi', "folder_holder_folder_paper"), ICON_OVERLAY, 1, 1)
+		foldersoverlay.Blend(foldericon, ICON_OVERLAY, foldernumber * 4 + 1, 1)
+		foldernumber++
+	icon_state = "folder_holder_[foldernumber]"
+	add_overlay(foldersoverlay)
+
+/obj/item/folder_holder/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/folder) && contents.len < 5)
+		user.drop_from_inventory(I, src)
+		to_chat(user, "<span class='notice'>You put the [I] into \the [src].</span>")
+		update_icon()
+	else
+		return ..()
+
+/obj/item/folder_holder/attack_hand(mob/user)
+	if(contents.len)
+		var/list/folders = list()
+		for(var/obj/item/weapon/folder in contents)
+			folders[folder] = image(icon = folder.icon, icon_state = folder.icon_state)
+
+		var/obj/item/weapon/folder/selection = show_radial_menu(user, src, folders, require_near = TRUE, tooltips = TRUE)
+
+		if(selection)
+			if(ishuman(user))
+				user.put_in_hands(selection)
+			else
+				selection.forceMove(get_turf(src))
+			update_icon()
+	else
+		..()

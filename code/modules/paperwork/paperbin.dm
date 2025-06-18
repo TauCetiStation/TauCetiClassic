@@ -1,13 +1,13 @@
 /obj/item/weapon/paper_bin
 	name = "paper bin"
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "paper_bin1"
+	icon_state = "paper_bin_5"
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = SIZE_SMALL
 	throw_speed = 3
 	throw_range = 7
-	var/amount = 30 // How much paper is in the bin.
+	var/amount = 15 // How much paper is in the bin.
 	var/list/papers = list() // List of papers put in the bin for reference.
 	var/static/list/paper_types
 
@@ -66,7 +66,11 @@
 			P = new /obj/item/weapon/paper/carbon
 
 
-	user.try_take(P, loc)
+	if(ishuman(user))
+		user.put_in_hands(P)
+	else
+		P.forceMove(get_turf(src))
+
 	amount--
 	to_chat(user, "<span class='notice'>You take [P] out of the [src].</span>")
 
@@ -75,6 +79,16 @@
 	update_icon()
 
 /obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper_refill))
+		if(amount >= 15)
+			to_chat(user, "<span class='notice'>Корзина для бумаг полна.</span>")
+			return ..()
+		amount = 15
+		qdel(I)
+		to_chat(user, "<span class='notice'>Корзина для бумаг пополнена.</span>")
+		update_icon()
+		return
+
 	if(!istype(I, /obj/item/weapon/paper))
 		return ..()
 
@@ -92,7 +106,11 @@
 			to_chat(user, "<span class='notice'>There are no papers in the bin.</span>")
 
 /obj/item/weapon/paper_bin/update_icon()
-	if(amount < 1)
-		icon_state = "paper_bin0"
-	else
-		icon_state = "paper_bin1"
+	var/icon_number = CEIL(amount/3)
+	icon_state = "paper_bin_[icon_number]"
+
+/obj/item/weapon/paper_refill
+	name = "paper refill pack"
+	desc = "Бумага только с завода Нового Гибсона!"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "paper_pack"

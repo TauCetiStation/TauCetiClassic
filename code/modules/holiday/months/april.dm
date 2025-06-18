@@ -6,16 +6,28 @@
 	staffwho_group_name = list(
 		SW_ADMINS     = "ClownAdmins",
 		SW_MENTORS    = "Mimes",
-		SW_XENOVISORS = "Clownvisors",
+		SW_XENOVISORS = "Honkovisors",
 		SW_DEVELOPERS = "Janitors",
 	)
 	staffwho_prefixs = list("Bored", "Boring", "Funny", "Not Funny", "Cute", "Ugly", "Evil", "Despot", "Sad", "Kind", "Smart", "Wise", "Stupid", "Dumb", "III", "Shit Spawner", "Confused", "Chaotic", "Toxic", "SSD", "Insane", "", "Golden", "Tiny", "Furry", "Holy", "Unholy", "Looser", "Foolish", "Red", "Blue", "ERP")
 	staffwho_no_staff = "No Clowns Online"
 
+/datum/holiday/april_fools/greet()
+	return "Your back is white"
+
 /datum/holiday/spess
 	name = "Cosmonautics Day"
 	begin_day = 12
 	begin_month = APRIL
+
+	staffwho_group_name = list(
+		SW_ADMINS     = "Astronauts",
+		SW_MENTORS    = "Cosmonauts",
+		SW_XENOVISORS = "Space-observers",
+		SW_DEVELOPERS = "Houstons",
+	)
+	staffwho_prefixs = list("Spaced", "Frozen", "Alien", "Comrade", "Dog", "Flying", "Galactical", "Puzzled", "Decompressed", "Amazed", "Ready", "Proud", "Space Erp", "Xenos", "Pilot", "Astronaut", "Cosmonavt")
+	staffwho_no_staff = "Space is empty"
 
 /datum/holiday/spess/greet()
 	return "On this day over [round(game_year - 1961, 100)] years ago, Comrade Yuri Gagarin first ventured into space!"

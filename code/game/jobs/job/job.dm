@@ -74,6 +74,8 @@
 	// Which department stocks this job has on arrival.
 	var/list/department_stocks
 
+	var/flags = 0
+
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 

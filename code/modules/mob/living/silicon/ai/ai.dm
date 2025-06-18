@@ -135,6 +135,9 @@ var/global/list/ai_verbs_default = list(
 
 	var/datum/announcement/station/command/ai/announcement = new
 
+	var/legs = FALSE //shitspawn only var
+	var/uses_legs = FALSE //shitspawn only var
+
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
 
@@ -293,7 +296,10 @@ var/global/list/ai_verbs_default = list(
 
 	gen_radial_cores()
 
-	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
+	var/mob/showing_to = eyeobj
+	if(uses_legs)
+		showing_to = src
+	var/state = show_radial_menu(usr, showing_to, chooses_ai_cores, radius = 50, tooltips = TRUE)
 	if(!state)
 		return
 	icon_state = name_by_state[state]
@@ -382,12 +388,12 @@ var/global/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = tgui_alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
+	var/confirm = tgui_alert(src, "Вы уверены, что хотите вызвать экстренный шаттл?", "Подтвердите вызов шаттла", list("Да", "Нет"))
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	if(confirm == "Yes")
+	if(confirm == "Да")
 		call_shuttle_proc(src)
 
 	// hack to display shuttle timer
@@ -579,7 +585,7 @@ var/global/list/ai_verbs_default = list(
 
 	updatehealth()
 
-/mob/living/silicon/ai/reset_view(atom/A)
+/mob/living/silicon/ai/reset_view(atom/A, force_remote_viewing)
 	if(camera)
 		camera.set_light(0)
 	if(istype(A,/obj/machinery/camera))
@@ -907,3 +913,38 @@ var/global/list/ai_verbs_default = list(
 					"Wipe Core", list("No", "Yes")) != "Yes")
 		return
 	perform_wipe_core()
+
+/mob/living/silicon/ai/proc/allow_walking()
+	legs = !legs
+	if(!legs)
+		verbs -= /mob/living/silicon/ai/proc/toggle_walking
+		to_chat(src, "M.O.V.E. protocol has been disabled.")
+		if(uses_legs)
+			toggle_walking()
+	else
+		verbs += /mob/living/silicon/ai/proc/toggle_walking
+		to_chat(src, "M.O.V.E. protocol has been enabled.")
+
+/mob/living/silicon/ai/proc/toggle_walking()
+	set name = "Toggle Moving"
+	set desc = "Deploy or conceal your hidden mobility threads."
+	set category = "AI Commands"
+
+	if(stat == DEAD)
+		return
+
+	view_core()
+	uses_legs = !uses_legs
+	canmove = !canmove
+	cut_overlays()
+	playsound(src, 'sound/misc/ai_threads.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
+
+	visible_message("<span class='notice'>[src] [uses_legs ? "engages" : "disengages"] it's mobility module!</span>")
+
+	if(uses_legs)
+		var/image/legs = image(icon, src, "threads", MOB_LAYER, pixel_y = -9)
+		legs.plane = plane
+		add_overlay(legs)
+		pixel_y = 8
+	else
+		pixel_y = 0

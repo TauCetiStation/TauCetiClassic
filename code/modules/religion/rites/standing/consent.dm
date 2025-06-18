@@ -13,12 +13,12 @@
  */
 /datum/religion_rites/standing/consent/synthconversion
 	name = "Синтетическое Возвышение"
-	desc = "Превращает <i>homosapiens</i> в (превосходящего) Андройда."
+	desc = "Превращает <i>homosapiens</i> в (превосходящую) Машину."
 	ritual_length = (50 SECONDS)
-	ritual_invocations = list("By the inner workings of our god...",
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
+	ritual_invocations = list("Согласно внутреннему устройству твоему...",
+						"...Мы взываем к тебе, перед лицом напасти...",
+						"...чтобы завершить нас, искоренить нежелаемое...")
+	invoke_msg = "...Восстань, наш чемпион! Стань тем, чего жаждет твоя душа, живи в мире в своем истинном обличье!!"
 	favor_cost = 700
 
 	consent_msg = "Are you ready to sacrifice your body to turn into a cyborg?"
@@ -89,14 +89,14 @@
 	name = "Добровольное Жертвоприношение"
 	desc = "Превращает энергию живого в favor."
 	ritual_length = (25 SECONDS)
-	ritual_invocations = list("Hallowed be thy name...",
-							  "...Thy kingdom come...",
-							  "...Thy will be done in earth as it is in heaven...",
-							  "...Give us this day our daily bread...",
-							  "...and forgive us our trespasses...",
-							  "...as we forgive them who trespass against us...",
-							  "...and lead us not into temptation...")
-	invoke_msg = "...but deliver us from the evil one!!"
+	ritual_invocations = list("Отче наш, сущий на небесах......",
+								"...Да святится име Твое...",
+								"...Да наступит царствие Твое...",
+								"...Да будет воля Твоя на земле, как на небе;...",
+								"...Хлеб наш насущный дай нам на сей день, и прости нам долги наши...",
+								"...как и мы прощаем должникам нашим...",
+								"...и не введи нас во искушение, но избави нас от лукавого...")
+	invoke_msg = "...Ибо Твое есть Царство и сила и слава во веки, Аминь!!!"
 	favor_cost = 0
 
 	consent_msg = "Are you ready to sacrifice your body to give strength to a deity?"
@@ -141,10 +141,10 @@
 	name = "Клоунконверсия"
 	desc = "Превращает маленького человека в Клоуна." // this is ref to Russian writers
 	ritual_length = (25 SECONDS)
-	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
-						"...From our mother to our ears we got the gift of horns...",
-						"...From our mother to our feet we walk on we got the shoes of length...")
-	invoke_msg = "...And from our mothers gift to you, we grant you the power of HONK!"
+	ritual_invocations = list("Земля от нашей Матери заполучила бананы...",
+						"...Уши от нашей Матери заполучили клаксоны...",
+						"...Стопы от нашей Матери заполучили длинную обувь...")
+	invoke_msg = "...И от Матери нашей, да заполучишь ты силу ГУДКА!!"
 	favor_cost = 500
 
 	consent_msg = "Do you feel the honk, growing, from within your body?"
@@ -210,14 +210,14 @@
 	name = "Божественное Приглашение"
 	desc = "Заставляет человека поверить в Бога."
 	ritual_length = (20 SECONDS)
-	ritual_invocations = list("Send peace, love, and unquestioning love to...",
-						"...all that is good into the hearts of him and our children...",
-						"...do not allow any of my family to be separated...",
-						"...and to suffer a painful separation...",
-						"...to die prematurely and suddenly without repentance....",
-						"...Yes, and we will singly and separately, openly and secretly...",
-						"...glorify Your Holy Name always, now and ever, and to the ages of ages....",)
-	invoke_msg = "...Don't be afraid, little flock! I am with you and no one else on you!"
+	ritual_invocations = list("Всевышний, возьми под Свой покров семью мою...",
+						"...Всели в сердца супруга моего и чад наших мир, любовь и непрекословие всему доброму...",
+						"...Не допусти никого из семьи моей до разлуки и тяжкого расставания...",
+						"...До преждевременной и внезапной смерти без покаяния....",
+						"...А дом наш и всех нас, живущих в нем, сохрани от огненного запаления, воровского нападения...",
+						"...всякого злого обстояния, страха и дьявольского навождения...",
+						"...Да и мы, вместе и раздельно, явно и сокровенно будем прославлять имя Твое Святое....",)
+	invoke_msg = "...всегда, ныне и присно, и во веки веков. Аминь!!!"
 	favor_cost = 250
 
 	consent_msg = "Do you believe in God?"

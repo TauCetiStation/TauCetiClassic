@@ -50,7 +50,7 @@
 				/obj/item/clothing/suit/unathi/robe ,\
 				/obj/item/clothing/suit/hooded/skhima,\
 				/obj/item/clothing/suit/hooded/nun,\
-				/obj/item/clothing/suit/chef/classic,\
+				/obj/item/clothing/suit/chef_classic,\
 				/obj/item/clothing/suit/suspenders,\
 				/obj/item/clothing/suit/pirate,\
 				/obj/item/clothing/suit/cyborg_suit,\

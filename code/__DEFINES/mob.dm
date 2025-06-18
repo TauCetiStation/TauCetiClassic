@@ -100,6 +100,9 @@
 #define ZOMBIE_UNATHI  	 "Zombie Unathi"
 #define SLIME          	 "Slime"
 #define ABOMINATION    	 "disgusting abomination"
+#define SERPENTID        "Serpentid"
+#define MOTH		     "Moth"
+
 
 #define MONKEY         	 "Monkey"
 

@@ -1,7 +1,7 @@
-/datum/event/space_ninja/setup()
-	//Here we pick a location and spawn the ninja.
-	if(ninjastart.len == 0)
-		ninjastart = landmarks_list["ninja"].Copy()
+/datum/event/space_ninja/start()
+	if(!length(landmarks_list["ninja"]))
+		kill()
+		return
 
 	create_spawner(/datum/spawner/ninja_event)
 
@@ -39,11 +39,12 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		ninja_key = candidate_mob.ckey
 
 	//Here we pick a location and spawn the ninja.
-	if(ninjastart.len == 0)
-		ninjastart = landmarks_list["ninja"].Copy()
+	var/turf/spawn_loc = pick_landmarked_location("ninja")
+	if(!spawn_loc)
+		spawn_loc = get_turf(latejoin)
 
 	//The ninja will be created on the right spawn point or at late join.
-	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(spawn_loc)
 	new_ninja.key = ninja_key
 
 	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)

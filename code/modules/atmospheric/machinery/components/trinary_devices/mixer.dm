@@ -60,9 +60,6 @@
 
 		add_underlay(T, NODE3, dir)
 
-/obj/machinery/atmospherics/components/trinary/mixer/hide(i)
-	update_underlays()
-
 /obj/machinery/atmospherics/components/trinary/mixer/atom_init()
 	. = ..()
 

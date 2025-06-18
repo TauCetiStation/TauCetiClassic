@@ -11,7 +11,6 @@
 	clamp_values()
 	handle_fire()
 	handle_regular_status_updates()
-	handle_actions()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -148,25 +147,28 @@
 		return TRUE
 
 	sight = initial(sight)
-	lighting_alpha = initial(lighting_alpha)
+	var/new_lighting_alpha = initial(lighting_alpha)
 	see_in_dark = 8
 	var/sight_modifier = null
 	if (sight_mode & BORGXRAY)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_invisible = SEE_INVISIBLE_OBSERVER
 	else if (sight_mode & BORGMESON)
 		sight_modifier = "meson"
 		sight |= SEE_TURFS
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (sight_mode & BORGNIGHT)
 		sight_modifier = "nvg"
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	else if (sight_mode & BORGTHERM)
 		sight_modifier = "thermal"
 		sight |= SEE_MOBS
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight_modifier = sight_mode & BORGIGNORESIGHT ? null : sight_modifier
 	set_EyesVision(sight_modifier)
+	if(lighting_alpha != new_lighting_alpha)
+		set_lighting_alpha(new_lighting_alpha)
 	return TRUE
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
@@ -247,7 +249,9 @@
 /mob/living/silicon/robot/update_fire()
 	if(on_fire)
 		underlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
-		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))
+		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay")
+		over.plane = LIGHTING_LAMPS_PLANE
+		add_overlay(over)
 	else
 		underlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
 		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))

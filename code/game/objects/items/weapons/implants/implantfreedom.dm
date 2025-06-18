@@ -1,48 +1,60 @@
 /obj/item/weapon/implant/freedom
 	name = "freedom implant"
-	desc = "Use this to escape from those evil Red Shirts."
+	cases = list("имплант свободы", "импланта свободы", "импланту свободы", "имплант свободы", "имплантом свободы", "импланте свободы")
+	desc = "Используйте это, чтоб удрать от злых Красных рубашек."
+	gender = MALE
 	var/activation_emote = "blink"
-	uses = 1.0
+	uses = 1
 
 	implant_type = "r"
 
 /obj/item/weapon/implant/freedom/atom_init()
-	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
-	uses = rand(1, 5)
+	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
+	if(prob(reliability))
+		uses = rand(3, 5)
 	. = ..()
 
 
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source)
 	if (uses < 1)
 		return 0
-	if (emote == activation_emote)
-		uses--
-		to_chat(source, "You feel a faint click.")
-		source.uncuff()
+	if (emote != activation_emote)
+		return
+	if (!source.handcuffed)
+		to_chat(source, "Имплант свободы не работает, пока вы не связаны.")
+		return
+	uses--
+	to_chat(source, "Вы слышите, как что-то легонько щёлкнуло.")
+	source.uncuff()
+	source.SetParalysis(0)
+	source.SetStunned(0)
+	source.SetWeakened(0)
+	source.reagents.add_reagent("oxycodone", 5)
+	source.reagents.add_reagent("stimulants", 5)
+	source.reagents.add_reagent("tramadol", 10)
+	source.reagents.add_reagent("paracetamol", 20)
 	return
 
 
 /obj/item/weapon/implant/freedom/implanted(mob/living/carbon/source)
-	source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
-	to_chat(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
+	source.mind.store_memory("Имплантат свободы можно активировать с помощью эмоции [src.activation_emote], <B>скажите *[src.activation_emote]</B> чтобы попытаться активировать его.", 0)
+	to_chat(source, "Имплантат свободы можно активировать с помощью эмоции [src.activation_emote], <B>скажите *[src.activation_emote]</B> чтобы попытаться активировать его.")
 	return 1
 
 
 /obj/item/weapon/implant/freedom/get_data()
 	var/dat = {"
-		<b>Implant Specifications:</b><BR>
-		<b>Name:</b> Freedom Beacon<BR>
-		<b>Life:</b> optimum 5 uses<BR>
-		<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+		<b>Характеристики импланта:</b><BR>
+		<b>Наименование: </b>Имплант свободы<BR>
+		<b>Срок годности: </b>оптимально до 5 применений<BR>
+		<b>Важные примечания: </b><font color='red'>Нелегален</font><BR>
 		<HR>
-		<b>Implant Details:</b> <BR>
-		<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-		mechanisms<BR>
-		<b>Special Features:</b><BR>
-		<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
-		<b>Integrity:</b> The battery is extremely weak and commonly after injection its
-		life can drive down to only 1 use.<HR>
-		No Implant Specifics"}
+		<b>Подробности:</b> <BR>
+		<b>Функционал:</b> Издаёт специализированный набор сигналов, призванных обойти замки в наручниках.<BR>
+		<b>Особенности:</b><BR>
+		<i>Нейросканирование</i>- Активируется от определённых теневых сигналов, подаваемых нервной системой носителя.<BR>
+		<b>Целостность:</b> Несовершенство технологии не позволяет установить более лучший аккумулятор, из-за чего имплант достаточно быстро выходит из строя.
+		применений лишь до одного использования.<HR>"}
 	return dat
 
 

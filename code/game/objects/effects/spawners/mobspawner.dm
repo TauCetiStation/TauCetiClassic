@@ -20,3 +20,7 @@
 
 /obj/effect/spawner/mob_spawn/alien/queen
 	mob_type = /mob/living/simple_animal/hostile/xenomorph/queen
+
+/obj/effect/spawner/mob_spawn/drone
+	mob_type = /mob/living/simple_animal/hostile/retaliate/malf_drone/dangerous
+	icon_state = "drone_spawn"

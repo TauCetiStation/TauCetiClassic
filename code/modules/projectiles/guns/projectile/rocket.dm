@@ -1,6 +1,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	name = "Goliath missile launcher"
-	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
+	cases = list("пусковая установка Голиаф","пусковой установки Голиаф","пусковой установке Голиаф","пусковую установку Голиаф","пусковой установкой Голиаф","пусковой установке Голиаф")
+	desc = "Голиаф - это однозарядная, многоцелевая переносная пусковая установка для ракет, стреляющая с плеча."
 	icon_state = "rocket"
 	item_state = "rocket"
 	w_class = SIZE_NORMAL
@@ -27,13 +28,14 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] missile\s from [src].</span>")
+		to_chat(user, "<span class = 'notice'>Вы разряжаете [num_unloaded] [pluralize_russian(num_unloaded, "снаряд", "снаряда", "снарядов")] из [CASE(src, GENITIVE_CASE)].</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] пуста.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
 	name = "XASL Mk.2 singularity buster"
-	desc = "Experimental Anti-Singularity Launcher. In case of extreme emergency you should point it at super-massive blackhole expanding towards you."
+	cases = list("разрушитель сингулярностей ЭАСУ МК 2", "разрушителя сингулярностей ЭАСУ МК 2", "разрушителю сингулярностей ЭАСУ МК 2", "разрушитель сингулярностей ЭАСУ МК 2", "разрушителем сингулярностей ЭАСУ МК 2", "разрушителе сингулярностей ЭАСУ МК 2")
+	desc = "Эксперементальная Анти-Сингулярная пусковая установка. В случае чрезвычайной ситуации вам следует направить ее на сверхмассивную чёрную дыру, приближающуюся к вам."
 	icon_state = "anti-singulo"
 	item_state = "anti-singulo"
 	slot_flags = SLOT_FLAGS_BACK
@@ -43,7 +45,8 @@
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando
 	name = "\'Commando\' rocket launcher"
-	desc = "Four-tube grenade launcher. When you don't really care about the integrity of the station."
+	cases = list("ракетная установка \'Commando\'","ракетной установки \'Commando\'","ракетной установке \'Commando\'","ракетную установку \'Commando\'","ракетной установкой \'Commando\'","ракетной установке \'Commando\'")
+	desc = "Четырёхзарядная ракетная установка. Это тот случай, когда тебя вообще не волнует целостность станции."
 	icon_state = "commando"
 	item_state = "commando"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/four

@@ -29,6 +29,8 @@
 	RefreshParts()
 
 /obj/machinery/biogenerator/RefreshParts()
+	..()
+
 	var/E = 0
 	var/P = 0
 	var/max_storage = 10
@@ -147,7 +149,9 @@
 			dat += "<h3>Leather:</h3>"
 			dat += "<div class='Section'>"
 			dat += "Wallet: <A href='?src=\ref[src];action=create;item=wallet'>Make</A> ([100/efficiency])<BR>"
-			//dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
+			dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
+			dat += "Bio bag: <A href='?src=\ref[src];action=create;item=bibag'>Make</A> ([200/efficiency])<BR>" // bio
+			dat += "Chemistry bag: <A href='?src=\ref[src];action=create;item=chbag'>Make</A> ([200/efficiency])<BR>" // chem
 			dat += "Plant bag: <A href='?src=\ref[src];action=create;item=ptbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Mining satchel: <A href='?src=\ref[src];action=create;item=mnbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
@@ -280,9 +284,15 @@
 		if("wallet")
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
-		//if("bkbag")
-		//	if (check_cost(200/efficiency)) return 0
-		//	else new/obj/item/weapon/storage/bag/books(src.loc)
+		if("bkbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/bookbag(src.loc)
+		if("bibag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/bio(src.loc)
+		if("chbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/chemistry(src.loc)
 		if("ptbag")
 			if (check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/plants(src.loc)

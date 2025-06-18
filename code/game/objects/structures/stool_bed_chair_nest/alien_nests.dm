@@ -26,11 +26,14 @@
 			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
 			"<span class='notice'>You hear squelching...</span>")
 
-		if(!(do_after(L, 5 MINUTES, target = L) && buckled_mob == L))
+		if(!(do_after(L, 3 MINUTES, target = L) && buckled_mob == L))
 			return
 
 	L.pixel_y = L.default_pixel_y
 	unbuckle_mob()
+	to_chat(L, "<span class='notice'>You successfly break free from the nest!</span>")
+	L.visible_message(
+			"<span class='warning'>[L.name] break free from the nest...</span>",)
 
 /obj/structure/stool/bed/nest/can_user_buckle(mob/living/M, mob/user)
 	if(isxeno(M) || !isxenoadult(user))
@@ -59,6 +62,6 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/bed/nest/post_buckle_mob(mob/living/buckling_mob)
+/obj/structure/stool/bed/nest/post_buckle_mob(mob/living/buckling_mob)
 	. = ..()
 	buckling_mob.reagents.add_reagent("xenojelly_n", 30)

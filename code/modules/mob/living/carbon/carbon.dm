@@ -23,29 +23,75 @@
 	temp_alert = 0
 
 /mob/living/carbon/proc/handle_alerts()
-	if(inhale_alert)
+	if(inhale_alert && !IsSleeping())
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 	else
 		clear_alert("oxy")
 
-	if(poison_alert)
+	if(poison_alert && !IsSleeping())
 		throw_alert("tox", /atom/movable/screen/alert/tox_in_air)
 	else
 		clear_alert("tox")
 
-	if(temp_alert > 0)
+	if(temp_alert > 0 && !IsSleeping())
 		throw_alert("temp", /atom/movable/screen/alert/hot, temp_alert)
-	else if(temp_alert < 0)
+	else if(temp_alert < 0 && !IsSleeping())
 		throw_alert("temp", /atom/movable/screen/alert/cold, -temp_alert)
 	else
 		clear_alert("temp")
 
-	if(pressure_alert > 0)
+	if(pressure_alert > 0 && !IsSleeping())
 		throw_alert("pressure", /atom/movable/screen/alert/highpressure, pressure_alert)
-	else if(pressure_alert < 0)
+	else if(pressure_alert < 0 && !IsSleeping())
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, -pressure_alert)
 	else
 		clear_alert("pressure")
+
+	if(handcuffed && !IsSleeping())
+		throw_alert("handcuffed", /atom/movable/screen/alert/handcuffed)
+	else
+		clear_alert("handcuffed")
+	if(legcuffed && !IsSleeping())
+		throw_alert("legcuffed", /atom/movable/screen/alert/legcuffed)
+	else
+		clear_alert("legcuffed")
+
+	if(drunkenness >= DRUNKENNESS_SLUR && drunkenness < DRUNKENNESS_CONFUSED)
+		throw_alert("drunk_slur", /atom/movable/screen/alert/drunk/slur)
+	else
+		clear_alert("drunk_slur")
+	if(drunkenness >= DRUNKENNESS_CONFUSED && drunkenness < DRUNKENNESS_BLUR)
+		throw_alert("drunk_confused", /atom/movable/screen/alert/drunk/confused)
+	else
+		clear_alert("drunk_confused")
+	if(drunkenness >= DRUNKENNESS_BLUR && drunkenness < DRUNKENNESS_PASS_OUT)
+		throw_alert("drunk_blur", /atom/movable/screen/alert/drunk/blur)
+	else
+		clear_alert("drunk_blur")
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		throw_alert("drunk_pass_out", /atom/movable/screen/alert/drunk/pass_out)
+	else
+		clear_alert("drunk_pass_out")
+
+	if(stunned && !IsSleeping())
+		throw_alert("stunned", /atom/movable/screen/alert/stunned)
+	else
+		clear_alert("stunned")
+
+	if(paralysis && !IsSleeping() && !stunned)
+		throw_alert("paralysis", /atom/movable/screen/alert/paralysis)
+	else
+		clear_alert("paralysis")
+
+	if(weakened && !IsSleeping() && !stunned)
+		throw_alert("weaken", /atom/movable/screen/alert/weaken)
+	else
+		clear_alert("weaken")
+
+	if(blinded && !IsSleeping())
+		throw_alert("blind", /atom/movable/screen/alert/blind)
+	else
+		clear_alert("blind")
 
 /mob/living/carbon/proc/is_skip_breathe()
 	return !loc || (flags & GODMODE)
@@ -642,19 +688,6 @@
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
-/mob/living/carbon/clean_blood()
-	. = ..()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.gloves)
-			H.gloves.clean_blood()
-			H.gloves.germ_level = 0
-		else
-			if(H.bloody_hands)
-				H.bloody_hands = 0
-				H.update_inv_slot(SLOT_GLOVES)
-			H.germ_level = 0
-
 //Throwing stuff
 /mob/living/carbon/throw_mode_off()
 	..()
@@ -1079,7 +1112,6 @@
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					internals?.update_icon(src)
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1089,7 +1121,6 @@
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					internals?.update_icon(src)
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1154,7 +1185,7 @@
 		return FALSE
 
 	sight = initial(sight)
-	lighting_alpha = initial(lighting_alpha)
+	var/new_lighting_alpha = initial(lighting_alpha)
 
 	var/datum/species/S = all_species[get_species()]
 	if(S)
@@ -1165,7 +1196,7 @@
 	if(changeling_aug)
 		sight |= SEE_MOBS
 		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 	if(XRAY in mutations)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -1179,22 +1210,25 @@
 			if(0)
 				O.togge_huds()
 				if(!druggy)
-					lighting_alpha = initial(lighting_alpha)
+					new_lighting_alpha = initial(lighting_alpha)
 					see_invisible = SEE_INVISIBLE_LIVING
 			if(1)
 				see_in_dark = 8
 				if(!druggy)
-					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+					new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			if(2)
 				sight |= SEE_MOBS
 				see_in_dark = initial(see_in_dark)
 				if(!druggy)
-					lighting_alpha = initial(lighting_alpha)
+					new_lighting_alpha = initial(lighting_alpha)
 					see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			if(3)
 				sight |= SEE_TURFS
 				if(!druggy)
-					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+					new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(lighting_alpha != new_lighting_alpha) // i hate that we do sight update every tick
+		set_lighting_alpha(new_lighting_alpha)
 
 	return TRUE
 

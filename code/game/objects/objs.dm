@@ -189,12 +189,6 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
-	return
-
-/obj/proc/hides_under_flooring()
-	return level == 1
-
 // haha we spam with empty lists recursively for every mob and object in view for each SAY call
 // todo: we don't need these listeners procs, replace with get_hearers_in_view
 /atom/movable/proc/get_listeners()

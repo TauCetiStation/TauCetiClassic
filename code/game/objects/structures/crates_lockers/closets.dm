@@ -189,7 +189,6 @@
 			return FALSE
 		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
 			if(opened)
-				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
 				deconstruct(TRUE)

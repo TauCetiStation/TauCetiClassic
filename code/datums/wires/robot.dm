@@ -21,7 +21,7 @@ var/global/const/BORG_WIRE_CAMERA      = 16
 	var/mob/living/silicon/robot/R = holder
 	return R.wiresexposed
 
-/datum/wires/robot/update_cut(index, mended)
+/datum/wires/robot/update_cut(index, mended, mob/user)
 	var/mob/living/silicon/robot/R = holder
 
 	switch(index)

@@ -13,6 +13,12 @@
 		"Gys14Segment.ttf" = 'html/custom-fonts/Gys14Segment.ttf',
 		"Gys14Segment.eot" = 'html/custom-fonts/Gys14Segment.eot',
 		"Gys14Segment.woff" = 'html/custom-fonts/Gys14Segment.woff',
+		"TINIESTONE.ttf" = 'html/custom-fonts/TINIESTONE.ttf',
+		"TINIESTONE.eot" = 'html/custom-fonts/TINIESTONE.eot',
+		"TINIESTONE.woff" = 'html/custom-fonts/TINIESTONE.woff',
+		"StatusDisplays.ttf" = 'html/custom-fonts/StatusDisplays.ttf',
+		"StatusDisplays.eot" = 'html/custom-fonts/StatusDisplays.eot',
+		"StatusDisplays.woff" = 'html/custom-fonts/StatusDisplays.woff',
 		"custom-fonts.css" = 'html/custom-fonts/custom-fonts.css'
 	)
 
@@ -217,6 +223,21 @@
 		items_to_clear += item
 		var/icon/I = getFlatIcon(item)
 		var/imgid = replacetext(replacetext("[r.result_type]", "[/obj/item]/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/orebox
+	name = "orebox"
+
+/datum/asset/spritesheet/orebox/register()
+	for(var/k in subtypesof(/obj/item/weapon/ore))
+		var/atom/item = k
+		if (!ispath(item, /atom))
+			continue
+		var/obj/product = new item
+		items_to_clear += product
+		var/icon/I = getFlatIcon(product)
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
 

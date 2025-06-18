@@ -193,6 +193,10 @@ steam.start() -- spawns the effect
 /obj/effect/effect/sparks/blue
 	icon_state = "shieldsparkles"
 
+/obj/effect/effect/sparks/electricity_spark
+	name = "electricity sparks"
+	icon_state = "electricity"
+
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
 // direct can be optinally added when set_up, to make the smoke always travel in one direction

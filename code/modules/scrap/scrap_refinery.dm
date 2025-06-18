@@ -33,6 +33,8 @@ var/global/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 /obj/machinery/recycler/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		chance_to_recycle = 25 * M.rating //% of materials salvaged
 	chance_to_recycle = min(100, chance_to_recycle)

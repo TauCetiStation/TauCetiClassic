@@ -18,7 +18,6 @@
 
 /obj/item/weapon/melee/chainofcommand/afterattack(atom/target, mob/user, proximity, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-
 	if(!user.isloyal())
 		to_chat(user, "<span class='danger'[bicon(src)] SPECIAL FUNCTION DISABLED. LOYALTY IMPLANT NOT FOUND.</span>")
 		return

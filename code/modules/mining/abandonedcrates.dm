@@ -1,5 +1,5 @@
 /obj/structure/closet/crate/secure/loot
-	name = "заброшенный ящик"
+	name = "Abandoned crate"
 	desc = "Что же может оказаться внутри?"
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
@@ -90,8 +90,7 @@
 			new/obj/item/clothing/suit/space(src)
 			new/obj/item/clothing/head/helmet/space(src)
 		if(2)
-			for (var/i in 1 to 3)
-				new/obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
+			new/obj/item/weapon/storage/bag/ore/holding(src)
 		if(3)
 			for (var/i in 1 to 9)
 				new/obj/item/bluespace_crystal(src)

@@ -36,7 +36,7 @@
 	)
 
 /datum/emote/roar/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth wide and scary!"
+	return "opens [P_THEIR(user)] mouth wide and scary!"
 
 /datum/emote/gasp
 	key = "gasp"
@@ -81,7 +81,7 @@
 	cloud = "cloud-gasp"
 
 /datum/emote/choke/get_impaired_msg(mob/user)
-	return "clutches [P_THEIR(user.gender)] throat desperately!"
+	return "clutches [P_THEIR(user)] throat desperately!"
 
 /datum/emote/moan
 	key = "moan"
@@ -102,7 +102,7 @@
 	)
 
 /datum/emote/moan/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth wide"
+	return "opens [P_THEIR(user)] mouth wide"
 
 /datum/emote/cough
 	key = "cough"
@@ -121,4 +121,4 @@
 	)
 
 /datum/emote/cough/get_impaired_msg(mob/user)
-	return "moves [P_THEIR(user.gender)] face forward as [P_THEY(user.gender)] open and close [P_THEIR(user.gender)] mouth!"
+	return "moves [P_THEIR(user)] face forward as [P_THEY(user)] open and close [P_THEIR(user)] mouth!"

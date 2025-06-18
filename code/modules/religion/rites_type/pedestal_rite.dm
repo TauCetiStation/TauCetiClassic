@@ -120,9 +120,8 @@
 			break
 
 		if(ritual_invocations && (item_stage % phrase_frequency == 1))
-			for(var/mob/M in AOG.mobs_around)
-				if(religion.is_member(M))
-					M.say(ritual_invocations[phrase_indx])
+			for(var/mob/M as anything in AOG.get_members_around())
+				M.say(ritual_invocations[phrase_indx])
 			phrase_indx += 1
 
 		P.lying_items -= item

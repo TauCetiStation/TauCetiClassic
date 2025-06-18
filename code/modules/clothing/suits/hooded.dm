@@ -1,9 +1,16 @@
 /obj/item/clothing/suit/hooded
-	action_button_name = "Hood"
+	item_action_types = list(/datum/action/item_action/hands_free/hood)
 	var/obj/item/clothing/head/hood
 	var/hoodtype = /obj/item/clothing/head //so the chaplain hoodie or other hoodies can override this
 	var/hooded = FALSE
 	var/icon_suit_up
+
+/datum/action/item_action/hands_free/hood
+	name = "Hood"
+
+/datum/action/item_action/hands_free/hood/Activate()
+	var/obj/item/clothing/suit/hooded/S = target
+	S.ToggleHood()
 
 /obj/item/clothing/suit/hooded/atom_init()
 	. = ..()
@@ -14,10 +21,6 @@
 /obj/item/clothing/suit/hooded/Destroy()
 	qdel(hood)
 	return ..()
-
-
-/obj/item/clothing/suit/hooded/ui_action_click()
-	ToggleHood()
 
 /obj/item/clothing/suit/hooded/equipped(mob/living/carbon/human/user, slot)
 	if(slot != user.wear_suit)

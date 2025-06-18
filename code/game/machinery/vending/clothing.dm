@@ -89,6 +89,7 @@
 		/obj/item/clothing/head/tacticool_hat = 4,
 		/obj/item/clothing/head/ushanka = 2,
 		/obj/item/clothing/under/soviet = 2,
+		/obj/item/clothing/mask/gas/fawkes = 6,
 	)
 
 	premium = list(

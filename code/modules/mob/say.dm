@@ -62,9 +62,17 @@
 			to_chat(src, "<span class='red'> Deadchat is globally muted.</span>")
 			return
 
-	if(client && !(client.prefs.chat_toggles & CHAT_DEAD))
-		to_chat(usr, "<span class='red'> You have deadchat muted.</span>")
-		return
+	if(client)
+		if (!(client.prefs.chat_toggles & CHAT_DEAD)) // User preference check
+			to_chat(src, "<span class='red'> You have deadchat muted.</span>")
+			return
+
+		if(client.prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(client, ADMIN_CD_OOC)) // Admin/autospam mute check
+			to_chat(src, "<span class='alert'>You cannot talk in deadchat (muted).</span>")
+			return
+
+		if (client.handle_spam_prevention(message, ADMIN_CD_OOC)) // Autospam
+			return
 
 	if(mind && mind.name)
 		name = "[mind.name]"

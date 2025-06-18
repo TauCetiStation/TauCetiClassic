@@ -59,7 +59,7 @@
 			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else
-				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE deletereason IS NULL AND"
+				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE deletereason IS NULL AND "
 				if(category == "Any")
 					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' LIMIT [page], [LIBRETURNLIMIT]"
 				else
@@ -423,6 +423,9 @@
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,10)]"
+				B.item_state_world = "[B.icon_state]_world"
+				B.item_state_inventory = B.icon_state
+				B.update_world_icon()
 				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 
@@ -545,6 +548,9 @@
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"
 		b.icon_state = "book[rand(1,10)]"
+		b.item_state_world = "[b.icon_state]_world"
+		b.item_state_inventory = b.icon_state
+		b.update_world_icon()
 		qdel(O)
 	else
 		..()

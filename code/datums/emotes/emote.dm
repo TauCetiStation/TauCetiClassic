@@ -1,4 +1,5 @@
 var/global/list/all_emotes
+var/global/list/emotes_for_emote_panel // for custom emote panel
 
 /*
  * Singleton emote datum.
@@ -57,13 +58,7 @@ var/global/list/all_emotes
 
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
-	var/miming = FALSE
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.miming)
-			miming = TRUE
-
-	if(message_miming && miming)
+	if(message_miming && HAS_TRAIT(src, TRAIT_MIMING))
 		msg = message_miming
 	else if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		msg = message_muzzled
@@ -99,10 +94,8 @@ var/global/list/all_emotes
 		var/mob/living/L = user
 		if(L.silent)
 			return FALSE
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.miming)
-			return FALSE
+	if(HAS_TRAIT(user, TRAIT_MIMING))
+		return FALSE
 	if(!check_cooldown(user.next_audio_emote_produce, intentional))
 		return FALSE
 	return TRUE

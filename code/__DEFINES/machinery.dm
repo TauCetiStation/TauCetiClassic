@@ -12,6 +12,13 @@
 #define IDLE_POWER_USE 1
 #define ACTIVE_POWER_USE 2
 
+//Components Power Multiplicators
+#define CAPACITOR_POWER_MULTIPLIER 1
+#define MATTERBIN_POWER_MULTIPLIER 0.5
+#define MANIPULATOR_POWER_MULTIPLIER 0.75
+#define LASER_POWER_MULTIPLIER 2
+#define SCANER_POWER_MULTIPLIER 1
+
 //used in design to specify which machine can build it
 #define IMPRINTER	1	//For circuits. Uses glass/chemicals.
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals

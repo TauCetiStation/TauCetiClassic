@@ -124,7 +124,9 @@ var/global/initial_station_money = 7500
 	// Enoguh stock to supply 2 medbay employees. See comment above.
 	SSeconomy.issue_founding_stock(global.department_accounts["Medical"], "Medical", 410)
 
-	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
+	var/MM = time2text(world.timeofday, "MM")
+	var/DD = time2text(world.timeofday, "DD")
+	current_date_string = "[DD].[MM].[game_year]"
 
 	economy_init = TRUE
 	return 1

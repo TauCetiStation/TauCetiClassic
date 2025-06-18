@@ -31,6 +31,8 @@
 	return ..()
 
 /obj/machinery/r_n_d/server/RefreshParts()
+	..()
+
 	var/tot_rating = 0
 	for(var/obj/item/weapon/stock_parts/SP in src)
 		tot_rating += SP.rating
@@ -328,11 +330,10 @@
 		for(var/i in 1 to s.files.researched_tech.len)
 			s.files.forget_random_technology()
 	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
-		explosion(c.loc, 0, 1, 3)
-	var/datum/faction/traitor/faction = find_faction_by_type(/datum/faction/traitor)
-	for(var/datum/role/traitor/T in faction.members)
-		for(var/datum/objective/research_sabotage/rs in T.objectives.objectives)
-			rs.already_completed = TRUE
+		if(c.sabotagable)
+			explosion(c.loc, 0, 1, 3)
+	for(var/datum/objective/research_sabotage/rs in global.global_objectives)
+		rs.already_completed = TRUE
 	add_fingerprint(user)
 	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='nicegreen'>Готово!</span>")
