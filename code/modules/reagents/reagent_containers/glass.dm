@@ -244,7 +244,7 @@
 	if(label_text == "")
 		name = base_name
 	else
-		name = "[base_name] (label_text])"
+		name = "[base_name] ([label_text])"
 
 /obj/item/weapon/reagent_containers/glass/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS))
