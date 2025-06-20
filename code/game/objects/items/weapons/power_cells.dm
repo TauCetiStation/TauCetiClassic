@@ -16,8 +16,24 @@
 	var/init_full = TRUE // initialize charge with maxcharge
 	m_amt = 700
 	g_amt = 50
-	var/rigged = 0		// true if rigged to explode
+	var/rigged = 0 // true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+	var/charge_efficiency = 0.033
+
+
+/obj/item/weapon/stock_parts/cell/proc/get_charge_efficiency()
+	var/base_efficiency = charge_efficiency
+
+
+	if(minor_fault)
+		base_efficiency *= 0.8
+
+
+	var/wear_factor = 1.0
+	if(reliability < 100)
+		wear_factor = 0.7 + (reliability / 150.0)
+
+	return base_efficiency * wear_factor
 
 /obj/item/weapon/stock_parts/cell/set_prototype_qualities(rel_val=100, mark=0)
 	..()
@@ -42,13 +58,15 @@
 	init_full = FALSE
 	g_amt = 40
 	rating = 2
+	charge_efficiency = 0.1
 
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
 	origin_tech = "powerstorage=1"
-	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	maxcharge = 600 //600 max charge / 100 charge per shot = six shots
 	g_amt = 40
 	rating = 2.5
+	charge_efficiency = 0.2
 
 /obj/item/weapon/stock_parts/cell/secborg/empty
 	init_full = FALSE
@@ -59,6 +77,7 @@
 	origin_tech = "powerstorage=1"
 	maxcharge = 500
 	g_amt = 40
+	charge_efficiency = 0.2
 
 /obj/item/weapon/stock_parts/cell/high
 	name = "high-capacity power cell"
@@ -67,6 +86,7 @@
 	maxcharge = 10000
 	g_amt = 60
 	rating = 3
+	charge_efficiency = 5
 
 /obj/item/weapon/stock_parts/cell/high/empty
 	init_full = FALSE
@@ -78,6 +98,7 @@
 	maxcharge = 20000
 	g_amt = 70
 	rating = 4
+	charge_efficiency = 13.33
 
 /obj/item/weapon/stock_parts/cell/super/empty
 	init_full = FALSE
@@ -89,6 +110,7 @@
 	maxcharge = 30000
 	g_amt = 80
 	rating = 5
+	charge_efficiency = 23
 
 /obj/item/weapon/stock_parts/cell/hyper/empty
 	init_full = FALSE
@@ -100,7 +122,7 @@
 	maxcharge = 40000
 	g_amt = 80
 	rating = 6
-	//chargerate = 4000
+	charge_efficiency = 46
 
 /obj/item/weapon/stock_parts/cell/bluespace/empty
 	init_full = FALSE
@@ -108,10 +130,11 @@
 /obj/item/weapon/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"
-	origin_tech =  null
+	origin_tech = null
 	maxcharge = 30000
 	g_amt = 80
 	rating = 6
+	charge_efficiency = 80
 
 /obj/item/weapon/stock_parts/cell/infinite/use()
 	return 1
@@ -120,14 +143,15 @@
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
 	origin_tech = "powerstorage=1"
-	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
-	icon_state = "potato_cell" //"potato_battery"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "potato_cell"
 	charge = 100
 	maxcharge = 300
 	m_amt = 0
 	g_amt = 0
 	minor_fault = 1
 	rating = 1
+	charge_efficiency = 0.1
 
 /obj/item/weapon/stock_parts/cell/slime
 	name = "charged slime core"
@@ -139,3 +163,4 @@
 	m_amt = 0
 	g_amt = 0
 	rating = 3
+	charge_efficiency = 23
