@@ -89,8 +89,7 @@
 
 	playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
 	occupant.forceMove(loc)
-	occupant.force_remote_viewing = FALSE
-	occupant.reset_view()
+	occupant.reset_view(null, force_remote_viewing = FALSE)
 	occupant.client.click_intercept = null
 	occupant.client.change_view(world.view)
 	eject_action.Remove(occupant)
