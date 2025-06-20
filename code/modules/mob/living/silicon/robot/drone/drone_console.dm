@@ -71,7 +71,9 @@
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["resync"])
 
-		if(D.stat != DEAD)
+		if(D.emagged || istype(D, /mob/living/silicon/robot/drone/maintenance/malfuction))
+			to_chat(usr, "<span class='notice'>Дрон не отвечает на запросы.</span>")
+		else if(D.stat != DEAD)
 			to_chat(usr, "<span class='warning'>You issue a law synchronization directive for the drone.</span>")
 			D.law_resync()
 
