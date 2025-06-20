@@ -14,7 +14,13 @@ import { Window } from '../layouts';
 export const ProfileSettings = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const { key, guest, password_authenticated, hub_authenticated } = data;
+  const {
+    key,
+    guest,
+    password_authenticated,
+    hub_authenticated,
+    guest_lobby_warning,
+  } = data;
 
   return (
     <Window title="Profile Settings" width={500} height={300}>
@@ -44,10 +50,18 @@ export const ProfileSettings = (props, context) => {
             </>
           }>
           {guest ? (
-            <NoticeBox warning>
-              Вы не верифицированы. Ввойдите в свой аккаунт в Byond Pager, или
-              авторизуйтесь через серверный пароль.
-            </NoticeBox>
+            <>
+              <NoticeBox warning>
+                Вы не верифицированы. Ввойдите в свой аккаунт в Byond Pager, или
+                авторизуйтесь через серверный пароль.
+              </NoticeBox>
+              {!!guest_lobby_warning && (
+                <NoticeBox danger>
+                  Игра для гостевых аккаунтов ограничена, вам доступно только
+                  лобби.
+                </NoticeBox>
+              )}
+            </>
           ) : (
             <>
               {!!hub_authenticated && (

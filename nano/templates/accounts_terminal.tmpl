@@ -22,7 +22,7 @@
   {{:helper.link('Home', 'home', {'choice' : 'view_accounts_list'}, !data.creating_new_account && !data.detailed_account_view ? 'disabled' : null, 'fixedLeft')}}
   {{:helper.link('New Account', 'gear', {'choice' : 'create_account'}, data.creating_new_account ? 'disabled' : null, 'fixedLeft')}}
   {{:helper.link('Print', 'print', {'choice' : 'print'}, data.creating_new_account ? 'disabled' : null, 'fixedLeft')}}
-  {{:helper.link('Export Tax%:', 'cart', {'choice' : 'change_export_tax'}, null, 'fixedLeft')}} {{:data.cargo_export_tax}}
+  {{:helper.link('Export Tax%: ' + data.cargo_export_tax, 'cart', {'choice' : 'change_export_tax'}, null, 'fixedLeftWide')}}
 
   {{if data.creating_new_account}}
     <div class='item'>

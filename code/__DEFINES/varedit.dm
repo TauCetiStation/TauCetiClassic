@@ -8,7 +8,7 @@
 
 /* protected types */
 
-#define VE_PROTECTED_TYPES (config.sandbox || !BYOND_HUB_AUTHENTICATION) ? VE_PROTECTED_TYPES_STAT + /client : VE_PROTECTED_TYPES_STAT
+#define VE_PROTECTED_TYPES config.sandbox ? VE_PROTECTED_TYPES_STAT + /client : VE_PROTECTED_TYPES_STAT
 
 #define VE_PROTECTED_TYPES_STAT list(\
 		/datum/admins,\

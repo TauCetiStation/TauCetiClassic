@@ -166,7 +166,7 @@
                 </td>
               </tr>
               <tr>
-                <th style="color: '#FFA500';">Engineering</th>
+                <th style="color: #FFA500;">Engineering</th>
                 <td>
                   {{for data.engineering_jobs}}
                     {{:helper.link(value.display_name, '', {'choice' : 'assign', 'assign_target' : value.job}, data.target_rank == value.job ? 'disabled' : null)}}
@@ -174,7 +174,7 @@
                 </td>
               </tr>
               <tr>
-                <th style="color: '#008000';">Medical</th>
+                <th style="color: #008000;">Medical</th>
                 <td>
                   {{for data.medical_jobs}}
                     {{:helper.link(value.display_name, '', {'choice' : 'assign', 'assign_target' : value.job}, data.target_rank == value.job ? 'disabled' : null)}}
@@ -182,7 +182,7 @@
                 </td>
               </tr>
               <tr>
-                <th style="color: '#800080';">Science</th>
+                <th style="color: #800080;">Science</th>
                 <td>
                   {{for data.science_jobs}}
                     {{:helper.link(value.display_name, '', {'choice' : 'assign', 'assign_target' : value.job}, data.target_rank == value.job ? 'disabled' : null)}}
@@ -190,7 +190,7 @@
                 </td>
               </tr>
               <tr>
-                <th style="color: '#DD0000';">Security</th>
+                <th style="color: #DD0000;">Security</th>
                 <td>
                   {{for data.security_jobs}}
                     {{:helper.link(value.display_name, '', {'choice' : 'assign', 'assign_target' : value.job}, data.target_rank == value.job ? 'disabled' : null)}}
@@ -198,7 +198,7 @@
                 </td>
               </tr>
               <tr>
-                <th style="color: '#808080';">Civilian</th>
+                <th style="color: #808080;">Civilian</th>
                 <td>
                   {{for data.civilian_jobs}}
                     {{if index && index % 6 === 0}}
@@ -210,7 +210,7 @@
               </tr>
               {{if data.centcom_access}}
                 <tr>
-                  <th style="color: '#A52A2A';">CentCom</th>
+                  <th style="color: #A52A2A;">CentCom</th>
                   <td>
                     {{for data.centcom_jobs}}
                       {{if index % 6 === 0}}
@@ -238,18 +238,16 @@
             {{/for}}
           </div>
         {{else}}
-          <div class='item'>
-            <h2>{{:data.station_name}}</h2>
-            {{if data.fast_full_access}}
-                  <h3 style='backgroundColor: #EEBC1D'>
-                    {{:helper.link('Grant full station access', '', {'choice' : 'access_full'}, null)}}
-                  </h3>
-              {{/if}}
-          </div>
+        <h2>{{:data.station_name}}</h2>
+        {{if data.fast_full_access}}
+              <h3 style='backgroundColor: #EEBC1D'>
+                {{:helper.link('Grant full station access', '', {'choice' : 'access_full'}, null)}}
+              </h3>
+          {{/if}}
           <div class='item' style='width: 100%'>
             {{for data.regions}}
               <div style='float: left; width: 180px; min-height: 270px'>
-                <div class='average'><b>{{:value.name}}</b>  
+                <div class='average'><b>{{:value.name}}</b>
                 {{if data.fast_modify_region}}
                   <span style='color: #EEBC1D'>
                     {{:helper.link('Full ' + value.name + ' access', '', {'choice' : 'access_region', 'region_id' : value.id, 'region_allowed': value.region_allowed}, null)}}
