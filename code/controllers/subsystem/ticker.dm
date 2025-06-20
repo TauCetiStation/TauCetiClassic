@@ -653,9 +653,11 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	if(arena) // clear arena if it was previously loaded
-		for(var/obj/O in block(locate(arena.bounds[MAP_MINX], arena.bounds[MAP_MINY], arena.bounds[MAP_MINZ]),
+		for(var/turf/T in block(locate(arena.bounds[MAP_MINX], arena.bounds[MAP_MINY], arena.bounds[MAP_MINZ]),
 	                   		   locate(arena.bounds[MAP_MAXX], arena.bounds[MAP_MAXY], arena.bounds[MAP_MAXZ])))
-			qdel(O)
+			for(var/obj/O in T)
+				if(!istype(O, /obj/effect/landmark/post_round_dm/arena))
+					qdel(O)
 
 	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
 	arena = new new_arena
