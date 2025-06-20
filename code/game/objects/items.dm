@@ -219,6 +219,14 @@
 
 		to_chat(user, stat_flavor)
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.glasses, /obj/item/clothing/glasses/science))
+			var/obj/item/clothing/glasses/science/SC = H.glasses
+			if(SC.active)
+				var/points_estimation_message = SC.get_tech_points_estimation(src)
+				to_chat(H, "[points_estimation_message]")
+
 /obj/item/proc/mob_pickup(mob/user, hand_index=null)
 	if (!user || anchored)
 		return

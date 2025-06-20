@@ -200,3 +200,17 @@ var/global/list/deconverted_roles = list()
 var/global/list/reagents_list = typecacheof(/datum/reagent)
 
 var/global/list/virus_types_by_pool
+
+// used for getting research points per type of tech
+var/global/list/tech_points_types = list(
+	"materials" = 200,
+	"engineering" = 250,
+	"phorontech" = 500,
+	"powerstorage" = 300,
+	"bluespace" = 1000,
+	"biotech" = 300,
+	"combat" = 500,
+	"magnets" = 350,
+	"programming" = 400,
+	"syndicate" = 5000,
+)
