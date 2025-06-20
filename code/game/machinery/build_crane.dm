@@ -37,6 +37,9 @@
 					"You hear ratchet.")
 				anchored = TRUE
 
+/obj/machinery/build_crane/check_eye(mob/user)
+	return TRUE
+
 /obj/machinery/build_crane/MouseDrop_T(mob/target, mob/user)
 	if(target != user || !can_move_inside(user))
 		return
