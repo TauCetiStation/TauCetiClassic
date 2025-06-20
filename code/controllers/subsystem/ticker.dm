@@ -325,7 +325,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(totalPlayersReady <= 10)
 		is_lowpop = TRUE
-		to_chat(world, "<span class='notice'>Система штрафов и бонусов от умений персонажа отключена.</span>")
+		to_chat(world, "<span class='notice'>Система штрафов от умений персонажа отключена.</span>")
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()

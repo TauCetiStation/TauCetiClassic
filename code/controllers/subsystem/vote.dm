@@ -89,6 +89,9 @@ SUBSYSTEM_DEF(vote)
 	if(..())
 		return
 
+	if(usr && IsGuestKey(usr.key))
+		return
+
 	switch(action)
 		if("putVote")
 			if(!active_poll)
@@ -168,5 +171,8 @@ SUBSYSTEM_DEF(vote)
 /mob/verb/vote()
 	set category = "OOC"
 	set name = "Vote"
+
+	if(IsGuestKey(key))
+		return
 
 	SSvote.tgui_interact(src)
