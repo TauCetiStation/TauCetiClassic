@@ -76,8 +76,7 @@
 		<------------------------------------------------------------></span>")
 	user.forceMove(src)
 	occupant = user
-	occupant.force_remote_viewing = TRUE
-	occupant.reset_view(src)
+	occupant.reset_view(src, force_remote_viewing = TRUE)
 	occupant.client.click_intercept = src
 	occupant.client.change_view(12)
 	eject_action.Grant(occupant, src)
