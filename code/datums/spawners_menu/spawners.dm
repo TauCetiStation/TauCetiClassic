@@ -882,6 +882,7 @@
 	. = ..()
 	fabricator = DF
 	RegisterSignal(fabricator, COMSIG_PARENT_QDELETING, PROC_REF(fabricator_deleting))
+	RegisterSignal(fabricator, "fabricator_repair", PROC_REF(fabricator_deleting))
 
 /datum/spawner/malf_drone/proc/fabricator_deleting()
 	qdel(src)
