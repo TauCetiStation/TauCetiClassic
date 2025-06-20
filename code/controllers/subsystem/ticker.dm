@@ -627,9 +627,8 @@ SUBSYSTEM_DEF(ticker)
 	var/online = global.player_list.len
 	var/list/arenas = list()
 
-	for(var/i in subtypesof(/datum/map_template/post_round_arena))
-		var/datum/map_template/post_round_arena/A = i
-		if(A.spawners && A.spawners >= (online - 5) && A.spawners <= (online + 5))
+	for(var/datum/map_template/post_round_arena/A as anything in subtypesof(/datum/map_template/post_round_arena))
+		if(A.spawners && (A.spawners >= (online - 5)) && (A.spawners <= (online + 5)))
 			arenas += A
 
 	var/datum/map_template/post_round_arena/picked_arena = /datum/map_template/post_round_arena/four_biomes
@@ -644,7 +643,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
 	arena = pick_arena()
-	arena = new()
+	arena = new arena
 
 	if(!arena.load(arena_location, centered = TRUE))
 		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
