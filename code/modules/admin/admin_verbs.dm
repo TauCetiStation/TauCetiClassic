@@ -1261,10 +1261,8 @@ var/global/centcom_barriers_stat = 1
 		var/datum/map_template/post_round_arena/A = i
 		arenas[A.name] = A
 
-	arenas += "--CANCEL--"
-
-	var/choice = input("Select a arena", , "CANCEL") in arenas
-	if(choice == "--CANCEL--") return
+	var/choice = input("Select the arena") as null|anything in arenas
+	if(!choice) return
 
 	var/datum/map_template/post_round_arena/arena = arenas[choice]
 	SSticker.load_arena_admin(arena)
