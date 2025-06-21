@@ -79,9 +79,9 @@
 	. = ..()
 	if(isturf(loc) && (user.loc != loc))
 		if(reagents.total_volume > 0)
-			playsound(user, dropped_empty_sound, VOL_EFFECTS_MASTER)
-		else
 			playsound(user, dropped_full_sound, VOL_EFFECTS_MASTER)
+		else
+			playsound(user, dropped_empty_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
