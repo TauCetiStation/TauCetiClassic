@@ -79,8 +79,6 @@ Notes:
 
 	return 1
 
-#undef GET_RATIO
-
 /datum/tooltip/proc/hide()
 	if (queueHide)
 		spawn(1)
