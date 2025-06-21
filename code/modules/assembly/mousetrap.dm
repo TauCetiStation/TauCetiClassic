@@ -42,6 +42,9 @@
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='warning'><b>SPLAT!</b></span>")
 		M.splat()
+	else if(istype(target, /mob/living/simple_animal/lizard))
+		target.take_damage(10)
+		visible_message("<span class='warning'><b>SPLAT!</b></span>")
 	playsound(target, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 	layer = MOB_LAYER - 0.2
 	armed = 0
@@ -80,7 +83,7 @@
 				triggered(H)
 				H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 								  "<span class='warning'>You accidentally step on [src]</span>")
-		if(ismouse(AM))
+		if(ismouse(AM) || istype(AM, /mob/living/simple_animal/lizard))
 			triggered(AM)
 	. = ..()
 

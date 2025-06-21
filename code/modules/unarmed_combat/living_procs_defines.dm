@@ -151,6 +151,11 @@
 		visible_message("<span class='warning bold'>[attacker] attempted to touch [src]!</span>")
 		return FALSE
 
+	if(istype(attacker, /mob/living/simple_animal/lizard))
+		attacker.do_attack_animation(src)
+		visible_message("<span class='warning bold'>[attacker] bites weakly [src]!</span>")
+		return FALSE
+
 	return TRUE
 
 /*
