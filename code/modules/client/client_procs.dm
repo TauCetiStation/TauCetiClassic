@@ -674,7 +674,7 @@ var/global/list/blacklisted_builds
 /client/proc/update_pixel_ratio(number)
 	window_pixelratio = number
 
-/client/proc/update_dpi()
+/client/proc/update_dpi() // todo: remove me some time after 516
 	set waitfor = FALSE
 
 	dpi = text2num(winget(src, null, "dpi"))
