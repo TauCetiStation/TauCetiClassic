@@ -882,6 +882,7 @@
 	. = ..()
 	fabricator = DF
 	RegisterSignal(fabricator, COMSIG_PARENT_QDELETING, PROC_REF(fabricator_deleting))
+	RegisterSignal(fabricator, "fabricator_repair", PROC_REF(fabricator_deleting))
 
 /datum/spawner/malf_drone/proc/fabricator_deleting()
 	qdel(src)
@@ -890,6 +891,10 @@
 	spectator.forceMove(get_turf(fabricator))
 
 /datum/spawner/malf_drone/spawn_body(mob/dead/spectator)
+	if(fabricator.stat & NOPOWER || !fabricator.produce_drones)
+		to_chat(spectator, "<span class='warning'>Фабрикатор обесточен и не может произвести нового дрона.</span>")
+		return
+
 	var/client/C = spectator.client
 
 	var/mob/living/silicon/robot/drone/maintenance/malfuction/D = new
