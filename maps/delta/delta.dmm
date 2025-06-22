@@ -17710,7 +17710,6 @@
 /area/station/civilian/library)
 "aPM" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/grenade/chem_grenade/cleaner,
 /obj/item/weapon/grenade/chem_grenade/cleaner,
 /obj/item/weapon/grenade/chem_grenade/cleaner,

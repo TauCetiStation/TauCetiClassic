@@ -83728,10 +83728,6 @@
 /area/station/maintenance/medbay)
 "tYj" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -6;
-	pixel_y = 8
-	},
 /obj/item/weapon/storage/box/mousetraps{
 	pixel_x = 3;
 	pixel_y = -7

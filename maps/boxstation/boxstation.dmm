@@ -45657,7 +45657,6 @@
 /obj/machinery/requests_console/janitorial{
 	pixel_y = -29
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bCS" = (
