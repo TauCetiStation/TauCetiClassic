@@ -48527,7 +48527,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/anesthetic,
 /obj/machinery/camera{
-	c_tag = "Medbay Surgery Observation";
+	c_tag = "Medbay Surgery Operating";
 	dir = 1;
 	network = list("SS13","Medical")
 	},
