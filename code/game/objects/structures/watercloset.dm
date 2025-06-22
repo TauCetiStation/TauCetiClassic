@@ -94,6 +94,24 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "toilet[lid_open][cistern_open]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/weapon/wirerod))
+
+		if(!lid_open)
+			to_chat(user, "<span class='warning'>You need to open the toilet lid first!</span>")
+			return
+
+		var/datum/component/fishing/fishing_comp = GetComponent(/datum/component/fishing)
+		if(fishing_comp)
+			if(!user.is_busy())
+				fishing_comp.start_fishing(I, user)
+				return
+			else
+				to_chat(user, "<span class='warning'>You are too busy to fish right now.</span>")
+				return
+		else
+			to_chat(user, "<span class='warning'>You can't fish here.</span>")
+			return
+
 	if(iswrenching(I))
 		if(broken)
 			to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
