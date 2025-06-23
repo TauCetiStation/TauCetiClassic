@@ -57,7 +57,6 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	var/list/song_lines    = list()
 	var/song_tempo         = DEFAULT_TEMPO
-	var/multiple_tempos    = FALSE
 
 	var/playing   = FALSE
 	var/show_help = FALSE
@@ -97,10 +96,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 		html += "<a href='byond://?src=\ref[src];import=1'>Import a Song</a><br><br>"
 
 		if(song_lines.len)
-			var/tempos_msg = "<a href='byond://?src=\ref[src];change_tempo=1'>Tempo: [song_tempo] BPM</a>"
-			if(multiple_tempos)
-				tempos_msg = "Tempo: [song_tempo] BPM (multiple tempos, edit BPM in the song text)"
-			html += "[tempos_msg]<br><br>"
+			html += "<a href='byond://?src=\ref[src];change_tempo=1'>Tempo: [song_tempo] BPM</a><br><br>"
 
 			html += "<table>"
 			for(var/line_num in 1 to song_lines.len)
@@ -305,8 +301,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	var/list/lines = splittext(song_text, "\n")
 
-	multiple_tempos = has_multiple_matches(song_text, "BPM:")
-	if(find_and_set_tempo(lines[1]) && !multiple_tempos)
+	if(find_and_set_tempo(lines[1]) && !has_multiple_matches(song_text, "BPM:"))
 		lines.Cut(1, 2)
 
 	for(var/line_num in 1 to lines.len)
