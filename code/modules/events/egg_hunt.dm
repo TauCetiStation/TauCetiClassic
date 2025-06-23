@@ -12,7 +12,6 @@
 	for(var/i in 1 to 3000) // 3000 attempts
 		var/turf/candidate = locate(rand(1, world.maxx), rand(1, world.maxy), pick(SSmapping.levels_by_trait(ZTRAIT_STATION)))
 		if(isfloorturf(candidate))
-```suggestion
 			var/obj/structure/closet/C = locate() in candidate
 			if(C)
 				new /obj/random/foods/boiledegg(C)
