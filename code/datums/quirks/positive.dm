@@ -10,6 +10,10 @@
 		TRAIT_NO_PAIN,
 	)
 
+/datum/quirk/high_pain_threshold/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.mob_halloss_mod.ModMultiplicative(0.7, src)
+
 
 /datum/quirk/multitasking
 	name = QUIRK_MULTITASKING

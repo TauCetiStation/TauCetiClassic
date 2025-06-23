@@ -21,6 +21,7 @@
 	var/datum/modval/mob_tox_mod = new (base_value = 1)
 	var/datum/modval/mob_clone_mod = new (base_value = 1)
 	var/datum/modval/mob_brain_mod = new (base_value = 1)
+	var/datum/modval/mob_halloss_mod = new (base_value = 1)
 
 	// this used as multiplicative mod of every other damage modval
 	// change it if you want to affect all damage at once

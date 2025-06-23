@@ -12,6 +12,10 @@
 		TRAIT_NO_PAIN,
 	)
 
+/datum/quirk/low_pain_threshold/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.mob_halloss_mod.ModMultiplicative(1.3, src)
+
 
 /datum/quirk/blindness
 	name = QUIRK_BLIND
