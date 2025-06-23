@@ -66,7 +66,7 @@
 	var/obj/structure/blob/factory/factory = null
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/Login()
+/mob/living/simple_animal/hostile/blob/LateLogin()
 	. = ..()
 	if(!client)
 		return
@@ -275,7 +275,7 @@
 		/atom/movable/screen/blob_power/blobbernaut,
 		))
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Login()
+/mob/living/simple_animal/hostile/blob/blobbernaut/LateLogin()
 	..()
 	update_hud()
 

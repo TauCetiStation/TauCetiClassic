@@ -3139,7 +3139,7 @@
 	dir = 1
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -4171,13 +4171,11 @@
 "ahG" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_x = -32;
 	pixel_y = -2
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = -8
 	},
@@ -4206,10 +4204,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "ahJ" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
@@ -4221,6 +4215,11 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -4413,7 +4412,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 30
 	},
@@ -9913,11 +9911,12 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "aAc" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
-	},
 /obj/machinery/account_database{
 	dir = 8
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -11321,7 +11320,7 @@
 	pixel_y = 17
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_y = -28
+	pixel_y = -22
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
@@ -14218,10 +14217,6 @@
 /turf/environment/space,
 /area/space)
 "ewk" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -25;
-	pixel_y = 4
-	},
 /obj/structure/table/glass,
 /obj/machinery/alarm{
 	pixel_y = 21
@@ -14231,6 +14226,10 @@
 	c_tag = "Medbay Chief Medical Office";
 	dir = 6;
 	network = list("SS13","Medical")
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -14786,10 +14785,6 @@
 	name = "Mining Outpost"
 	})
 "faC" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
@@ -14798,6 +14793,11 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -17025,6 +17025,7 @@
 /obj/item/weapon/defibrillator/compact/loaded,
 /obj/structure/cable,
 /obj/machinery/light_switch{
+	pixel_x = -4;
 	pixel_y = -24
 	},
 /obj/machinery/power/apc{
@@ -17032,6 +17033,11 @@
 	dir = 4;
 	name = "Medbay right APC";
 	pixel_x = 27
+	},
+/obj/machinery/windowtint{
+	id = "CMO";
+	pixel_x = 4;
+	pixel_y = -24
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -17675,12 +17681,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/teleport)
 "hXm" = (
-/obj/machinery/door/airlock/command/glass{
-	dir = 4;
-	id_tag = null;
-	name = "Chief Medical Officer";
-	req_access = list(40)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -17697,6 +17697,12 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-4"
+	},
+/obj/machinery/door/airlock/command{
+	dir = 4;
+	id_tag = null;
+	name = "Chief Medical Officer";
+	req_access = list(40)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -18054,17 +18060,14 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 24
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 30
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 36
 	},
@@ -18492,16 +18495,13 @@
 	dir = 6
 	},
 /obj/structure/sign/directions/command{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 30
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	pixel_y = 24
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_y = 36
 	},
 /turf/simulated/floor{
@@ -20064,9 +20064,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CMO"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
@@ -20076,14 +20077,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "kaE" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/structure/window/fulltile/reinforced/polarized{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
@@ -20779,6 +20781,12 @@
 	pixel_x = -22
 	},
 /obj/machinery/light_switch{
+	pixel_x = -4;
+	pixel_y = -28
+	},
+/obj/machinery/windowtint{
+	id = "CE";
+	pixel_x = 4;
 	pixel_y = -28
 	},
 /turf/simulated/floor{
@@ -22347,7 +22355,7 @@
 "mil" = (
 /obj/machinery/vending/security,
 /obj/item/weapon/storage/secure/safe{
-	pixel_y = 28
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -24308,9 +24316,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/polarized{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window_reinforced_polarized";
+	id = "CMO"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
@@ -27680,7 +27689,8 @@
 	pixel_x = 32
 	},
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 32
+	pixel_x = 28;
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -28350,13 +28360,11 @@
 /area/station/bridge/captain_quarters)
 "rlk" = (
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = -32;
 	pixel_y = -8
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	pixel_x = -32;
 	pixel_y = 4
 	},
@@ -28673,17 +28681,14 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 30
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 36
 	},
@@ -29496,7 +29501,6 @@
 "sqi" = (
 /obj/machinery/vending/barbervend,
 /obj/structure/sign/barber{
-	buildable_sign = 0;
 	pixel_x = -13
 	},
 /turf/simulated/floor{
@@ -30246,7 +30250,6 @@
 "teg" = (
 /obj/item/weapon/flora/random,
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_x = 32;
 	pixel_y = -8
 	},
@@ -30715,14 +30718,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "tFA" = (
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
 	id_tag = null;
 	name = "Chief Medical Officer";
 	req_access = list(40)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
@@ -35187,10 +35190,6 @@
 /turf/simulated/floor,
 /area/station/security/lobby)
 "xDn" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Chief Engineer";
-	req_access = list(56)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
@@ -35203,6 +35202,10 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/command{
+	name = "Chief Engineer";
+	req_access = list(56)
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -35224,12 +35227,13 @@
 /obj/item/weapon/paper/monitorkey{
 	pixel_y = -10
 	},
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -28
-	},
 /obj/item/device/microphone/rd{
 	pixel_x = 5;
 	pixel_y = 10
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -28;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -35480,7 +35484,6 @@
 	dir = 10
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = -24
 	},
@@ -35505,16 +35508,13 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 36
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	pixel_y = 24
 	},
 /obj/structure/sign/directions/evac{
-	buildable_sign = 0;
 	pixel_y = 30
 	},
 /turf/simulated/floor{

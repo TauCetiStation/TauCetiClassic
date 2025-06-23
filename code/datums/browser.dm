@@ -242,23 +242,22 @@
 	opentime = 0
 	close()
 
-
-
+// zoom browser based on user settings
 /proc/get_browse_zoom_style(client/C)
-	// if the user is on high-dpi but wants zoomed out interface
-	return !C || C.prefs.window_scale || !C.window_pixelratio ? "" : {"
-		<style>
-			body {
-				zoom: [100 / C.window_pixelratio]%;
-			}
-		</style>
-		"}
+	. = ""
+	if(C && !C.prefs.window_scale)
+		var/ratio = C.window_pixelratio
 
+		if(ratio != 1)
+			. = "<style>body { zoom: [100 / C.window_pixelratio]% }</style>"
+
+// resize browser based on zoom
 /proc/get_browse_size_parameter(client/C, width, height)
-	// if the user is on high-dpi and wants bigger windows
-	if(!C || !C.prefs.window_scale || !C.window_pixelratio)
-		return "size=[width]x[height];"
-	return "size=[width * C.window_pixelratio]x[height * C.window_pixelratio];"
+	var/ratio = 1
+	if(C && C.prefs.window_scale)
+		ratio = C.window_pixelratio
+
+	return "size=[width * ratio]x[height * ratio];"
 
 /proc/popup(user, message, title)
 	var/datum/browser/P = new(user, title, title)

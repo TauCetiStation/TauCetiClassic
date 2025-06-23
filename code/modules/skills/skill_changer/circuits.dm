@@ -1,5 +1,5 @@
 /obj/item/weapon/circuitboard/skill_scanner
-	name = "Circuit board (CMF table)"
+	details = "circuit board (CMF table)"
 	build_path = /obj/machinery/optable/skill_scanner
 	board_type = "machine"
 	origin_tech = "programming=2;biotech=2"
@@ -11,6 +11,6 @@
 							/obj/item/weapon/stock_parts/capacitor= 1)
 
 /obj/item/weapon/circuitboard/skills_console
-	name = "Circuit board (CMF Console)"
+	details = "circuit board (CMF Console)"
 	build_path = /obj/machinery/computer/skills_console
 	origin_tech = "programming=2;biotech=2"

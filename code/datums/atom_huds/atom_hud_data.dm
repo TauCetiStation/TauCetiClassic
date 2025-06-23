@@ -194,37 +194,13 @@
 		holder.icon_state = null
 		holder.pixel_x = species_offset_hud_X
 
-	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL) || HAS_TRAIT(src, TRAIT_FAKELOYAL_VISUAL))
-		holder = hud_list[IMPLOYAL_HUD]
-		holder.icon_state = "hud_imp_loyal"
-		holder.pixel_y = species_offset_hud_Y
-		holder.pixel_x = species_offset_hud_X
-		y += -5
-
-	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
-		holder = hud_list[IMPMINDS_HUD]
-		holder.icon_state = "hud_imp_mindshield"
-		holder.pixel_y = y + species_offset_hud_Y
-		holder.pixel_x = species_offset_hud_X
-		y += -5
-
-	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
-		holder = hud_list[IMPOBED_HUD]
-		holder.icon_state = "hud_imp_obedience"
-		holder.pixel_y = y + species_offset_hud_Y
-		holder.pixel_x = species_offset_hud_X
-		y += -5
-
-	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
-		holder = hud_list[IMPCHEM_HUD]
-		holder.icon_state = "hud_imp_chem"
-		holder.pixel_y = y + species_offset_hud_Y
-		holder.pixel_x = species_offset_hud_X
-		y += -5
-
-	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
-		holder = hud_list[IMPTRACK_HUD]
-		holder.icon_state = "hud_imp_tracking"
+	for(var/obj/item/weapon/implant/I in implants)
+		if(!I.hud_id || !I.hud_icon_state)
+			continue
+		holder = hud_list[I.hud_id]
+		if(holder.icon_state)
+			continue
+		holder.icon_state = I.hud_icon_state
 		holder.pixel_y = y + species_offset_hud_Y
 		holder.pixel_x = species_offset_hud_X
 		y += -5

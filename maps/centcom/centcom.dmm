@@ -3367,9 +3367,7 @@
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "aiQ" = (
-/obj/machinery/body_scanconsole{
-	known_implants = list(/obj/item/weapon/implant/cortical)
-	},
+/obj/machinery/body_scanconsole/vox,
 /obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)

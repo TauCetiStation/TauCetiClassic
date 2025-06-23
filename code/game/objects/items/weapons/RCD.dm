@@ -21,7 +21,7 @@ RCD
 	usesound = 'sound/machines/click.ogg'
 
 	var/datum/effect/effect/system/spark_spread/spark_system
-	var/matter = 0
+	var/matter = 30
 	var/max_matter = 30
 	var/working = 0
 	var/mode = RCD_MODE_FLOOR_WALLS

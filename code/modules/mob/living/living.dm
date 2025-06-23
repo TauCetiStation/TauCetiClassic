@@ -42,6 +42,7 @@
 	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
+	QDEL_LAZYLIST(implants)
 
 	qdel(mob_metabolism_mod)
 
@@ -1041,6 +1042,9 @@
 			if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
 				to_chat(C, "<span class='danger'>I'm in so much pain! I can not get up!</span>")
 				return
+		if(!has_bodypart(BP_L_LEG) && !has_bodypart(BP_L_LEG))
+			to_chat(src, "<span class='danger'>WAIT, where are the legs?</span>")
+			return
 		crawl_getup = TRUE
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
