@@ -527,7 +527,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			else
 				s_tone = initial(s_tone)
 
-
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -547,8 +546,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
 				ResetQuirks()
 				break
-			if(GetQuirkBalance < 0)
-				ResetQuirks()
+		if(GetQuirkBalance() < 0)
+			ResetQuirks()
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
