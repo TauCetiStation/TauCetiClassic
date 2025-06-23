@@ -8,7 +8,7 @@
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
 #define SAVEFILE_VERSION_SPECIES_JOBS 51 // job preferences after breaking changes to any /datum/job/
-#define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
+#define SAVEFILE_VERSION_QUIRKS 55 // quirks preferences after breaking changes to any /datum/quirk/
 //breaking changes is when you remove any existing quirk/job or change their restrictions
 //Don't forget to bump SAVEFILE_VERSION_MAX too
 
@@ -527,8 +527,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			else
 				s_tone = initial(s_tone)
 
-		if(current_version < 55)
-			ResetQuirks()
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
@@ -549,6 +547,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
 				ResetQuirks()
 				break
+			if(GetQuirkBalance < 0)
+				ResetQuirks()
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
