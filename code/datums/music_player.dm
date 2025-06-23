@@ -304,6 +304,9 @@ var/global/datum/notes_storage/note_cache_storage = new
 	if(find_and_set_tempo(lines[1]) && !has_multiple_matches(song_text, "BPM:"))
 		lines.Cut(1, 2)
 
+	if(lines.len > MAX_LINES_COUNT)
+		lines.Cut(MAX_LINES_COUNT + 1)
+
 	for(var/line_num in 1 to lines.len)
 		if(length(lines[line_num]) > MAX_LINE_SIZE)
 			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
