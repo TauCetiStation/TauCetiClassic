@@ -17,12 +17,6 @@
 	1.0	* getCloneLoss() + 		\
 	1.0	* halloss
 
-	if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD))
-		traumatic_shock *= 1.3
-
-	else if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD))
-		traumatic_shock *= 0.7
-
 	// broken or ripped off bodyparts will add quite a bit of pain
 	if(ishuman(src))
 		var/mob/living/carbon/human/M = src
@@ -116,5 +110,11 @@
 		painkiller_effect *= min((DRUNKENNESS_PASS_OUT - drunkenness) / 1000, 1)
 	if(analgesic && !reagents.has_reagent("prismaline"))
 		painkiller_effect = 0
+
+	if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD))
+		painkiller_effect *= 1.3
+
+	else if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD))
+		painkiller_effect *= 0.7
 
 	return painkiller_effect
