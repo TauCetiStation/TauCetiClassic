@@ -12,7 +12,7 @@ import { Window } from '../layouts';
 
 const VirusDish = (props, context) => {
   const { act, data } = useBackend(context);
-  const { analysed, infection_rate, effects, affected_species } = props;
+  const { affected_species, analysed, effects, infection_rate } = props;
 
   if (!analysed) {
     return (
@@ -58,26 +58,26 @@ const VirusDish = (props, context) => {
 export const DishIncubator = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    chemicals_inserted,
-    dish_inserted,
+    affected_species,
+    analysed,
     blood_already_infected,
     can_breed_virus,
+    chemical_volume,
+    chemicals_inserted,
+    dish_inserted,
+    effects,
     food_supply,
-    toxin_supply,
-    synaptizine_supply,
+    infection_rate,
+    max_chemical_volume,
     phoron_supply,
     sleeptoxin_supply,
-    system_in_use,
-    chemical_volume,
-    max_chemical_volume,
     supply_cap,
     symptomdesc,
     symptomname,
+    synaptizine_supply,
+    system_in_use,
+    toxin_supply,
     virus,
-    infection_rate,
-    analysed,
-    effects,
-    affected_species,
   } = data;
   if (system_in_use) {
     return (

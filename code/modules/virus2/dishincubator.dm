@@ -1,5 +1,6 @@
 #define DRAIN_RATE 5
 #define SUPPLY_CAP 100
+#define OPERATION_TIME 4
 
 /obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"
@@ -160,7 +161,7 @@
 			if (dish)
 				dish.virus2.radiate()
 
-			working = 4
+			working = OPERATION_TIME
 			icon_state = "incubator_on"
 			return TRUE
 
@@ -168,7 +169,7 @@
 			if (dish && foodsupply>0)
 				dish.virus2.reactfood()
 				foodsupply-=1
-			working = 4
+			working = OPERATION_TIME
 			icon_state = "incubator_on"
 			return TRUE
 
@@ -176,7 +177,7 @@
 			if (dish && toxinsupply>0)
 				dish.virus2.reacttoxin()
 				toxinsupply-=1
-			working = 4
+			working = OPERATION_TIME
 			icon_state = "incubator_on"
 			return TRUE
 
@@ -184,7 +185,7 @@
 			if (dish && sleeptoxinsupply>0)
 				dish.virus2.reactsleeptoxin()
 				sleeptoxinsupply-=1
-			working = 4
+			working = OPERATION_TIME
 			icon_state = "incubator_on"
 			return TRUE
 
@@ -192,7 +193,7 @@
 			if (dish && synaptizinesupply>0)
 				dish.virus2.reactsynaptizine()
 				synaptizinesupply-=1
-			working = 4
+			working = OPERATION_TIME
 			icon_state = "incubator_on"
 			return TRUE
 
@@ -200,7 +201,7 @@
 			if (dish && phoronsupply>0)
 				dish.virus2.reactphoron()
 				phoronsupply-=1
-			working = 4
+			working = OPERATION_TIME
 			icon_state = "incubator_on"
 			return TRUE
 
@@ -233,3 +234,4 @@
 
 #undef DRAIN_RATE
 #undef SUPPLY_CAP
+#undef OPERATION_TIME

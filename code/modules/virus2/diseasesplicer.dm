@@ -108,7 +108,7 @@
 
 		if ("eject")
 			if (dish)
-				dish.loc = src.loc
+				dish.forceMove(loc)
 				dish = null
 			return TRUE
 
@@ -151,7 +151,7 @@
 	if(burning)
 		burning -= 1
 		if(!burning)
-			var/obj/item/weapon/diseasedisk/d = new /obj/item/weapon/diseasedisk(src.loc)
+			var/obj/item/weapon/diseasedisk/d = new /obj/item/weapon/diseasedisk(loc)
 			d.analysed = analysed
 			if(analysed)
 				if (memorybank)

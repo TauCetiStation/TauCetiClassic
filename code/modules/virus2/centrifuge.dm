@@ -24,7 +24,7 @@
 		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
-		nanomanager.update_uis(src)
+		SStgui.update_uis(src)
 		return
 
 	attack_hand(user)
@@ -76,14 +76,18 @@
 				data["is_antibody_sample"] = 1
 	return data
 
-/obj/machinery/computer/centrifuge/tgui_act(action, params)
+/obj/machinery/computer/centrifuge/tgui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 
+	var/mob/user = ui.user
+	if(isnull(user))
+		return
+
 	switch(action)
 		if("print")
-			print(usr)
+			print(user)
 			return TRUE
 		if("isolate")
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
@@ -145,7 +149,7 @@
 	sample.reagents.remove_reagent("blood", amt)
 	sample.reagents.add_reagent("antibodies", amt, data)
 
-	nanomanager.update_uis(src)
+	SStgui.update_uis(src)
 	update_icon()
 	ping("\The [src] pings, \"Antibody isolated.\"")
 
@@ -155,7 +159,7 @@
 	dish.virus2 = virus2
 	virus2 = null
 
-	nanomanager.update_uis(src)
+	SStgui.update_uis(src)
 	update_icon()
 	ping("\The [src] pings, \"Pathogen isolated.\"")
 

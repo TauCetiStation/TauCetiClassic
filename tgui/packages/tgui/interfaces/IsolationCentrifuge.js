@@ -15,7 +15,7 @@ export const IsolationCentrifuge = (props, context) => {
   const pathogens = data.pathogens || {};
   const { antibodies, busy, is_antibody_sample, sample_inserted } = data;
   return (
-    <Window width={380} height={400}>
+    <Window width={380} height={210}>
       <Window.Content scrollable>
         {!busy ? (
           sample_inserted ? (
