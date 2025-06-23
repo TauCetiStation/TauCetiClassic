@@ -1,5 +1,6 @@
 /// Quirk names defines. To ease keeping track.
 // positive quirks.
+#define QUIRK_HIGH_PAIN_THRESHOLD "Высокий Болевой Порог"
 #define QUIRK_MULTITASKING "Многозадачность"
 #define QUIRK_CHILD_OF_NATURE "Дитя Природы"
 #define QUIRK_STRONG_MIND "Психологическая Устойчивость"
@@ -11,12 +12,11 @@
 #define QUIRK_HEMOPHILIAC "Гемофилия"
 
 // neutral quirks.
-#define QUIRK_HIGH_PAIN_THRESHOLD "Высокий Болевой Порог"
-#define QUIRK_LOW_PAIN_THRESHOLD "Низкий Болевой Порог"
 #define QUIRK_AGEUSIA "Агевзия"
 #define QUIRK_DALTONISM "Дальтонизм"
 
 // negative quirks.
+#define QUIRK_LOW_PAIN_THRESHOLD "Низкий Болевой Порог"
 #define QUIRK_BLIND "Слепота"
 #define QUIRK_COUGHING "Кашель"
 #define QUIRK_DEAF "Глухота"
