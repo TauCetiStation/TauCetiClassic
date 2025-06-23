@@ -1,31 +1,3 @@
-/datum/quirk/high_pain_threshold
-	name = QUIRK_HIGH_PAIN_THRESHOLD
-	desc = "Ваш болевой порог повышен. Влияет только на издаваемые вами звуки."
-	value = 0
-	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>Вы хотите показать свою силу. Вы попытаетесь игнорировать любую боль.</span>"
-	lose_text = "<span class='notice'>Вы устали превозмогать боль.</span>"
-
-	blacklisted_species_traits = list(
-		TRAIT_NO_PAIN,
-	)
-
-
-
-/datum/quirk/low_pain_threshold
-	name = QUIRK_LOW_PAIN_THRESHOLD
-	desc = "Ваш болевой порог понижен. Влияет только на издаваемые вами звуки. "
-	value = 0
-	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
-	gain_text = "<span class='danger'>Вам страшно от одной лишь мысли о боли.</span>"
-	lose_text = "<span class='notice'>Вы больше не хотите выглядеть слабаком. Теперь вы пытаетесь терпеть боль.</span>"
-
-	blacklisted_species_traits = list(
-		TRAIT_NO_PAIN,
-	)
-
-
-
 /datum/quirk/no_taste
 	name = QUIRK_AGEUSIA
 	desc = "Всё для вас одинаково пресно на вкус! Токсичная еда остаётся ядовитой для вас."

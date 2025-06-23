@@ -1,3 +1,16 @@
+/datum/quirk/high_pain_threshold
+	name = QUIRK_HIGH_PAIN_THRESHOLD
+	desc = "Вы менее чувствительны к боли."
+	value = 3
+	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
+	gain_text = "<span class='green'>Ваши болевые рецепторы притупились.</span>"
+	lose_text = "<span class='notice'>Ваши болевые рецепторы снова в норме.</span>"
+
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
+	)
+
+
 /datum/quirk/multitasking
 	name = QUIRK_MULTITASKING
 	desc = "Вы можете действовать обеими руками одновременно!"

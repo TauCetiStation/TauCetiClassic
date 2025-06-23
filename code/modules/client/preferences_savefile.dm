@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 54
+#define SAVEFILE_VERSION_MAX 55
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -470,9 +470,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ipc_head = initial(ipc_head)
 		// fuck named hairstyles, we should just move it to indexes
 		var/static/list/ipc_hairstyles_reset = list(
-			"alien IPC screen", 
-			"double IPC screen", 
-			"pillar IPC screen", 
+			"alien IPC screen",
+			"double IPC screen",
+			"pillar IPC screen",
 			"human IPC screen"
 		)
 		if(h_style in ipc_hairstyles_reset)
@@ -526,6 +526,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				s_tone = /datum/skin_tone/dark_brown::name
 			else
 				s_tone = initial(s_tone)
+
+		if(current_version < 55)
+			ResetQuirks()
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)

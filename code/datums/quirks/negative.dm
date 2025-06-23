@@ -1,5 +1,18 @@
 //predominantly negative traits
 
+/datum/quirk/low_pain_threshold
+	name = QUIRK_LOW_PAIN_THRESHOLD
+	desc = "Вы более чувствительны к боли."
+	value = -3
+	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
+	gain_text = "<span class='danger'>Даже небольшие царапины вызывают у вас сильную боль!</span>"
+	lose_text = "<span class='notice'>Ваши болевые рецепторы снова в норме.</span>"
+
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
+	)
+
+
 /datum/quirk/blindness
 	name = QUIRK_BLIND
 	desc = "Вы абсолютно слепы. Ничто не в силах это изменить."

@@ -409,6 +409,10 @@
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
+		if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD))
+			amount *= 1.3
+		else if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD))
+			amount *= 0.7
 	halloss = clamp(halloss + amount, 0, maxHealth * 2)
 	return amount
 
