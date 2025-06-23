@@ -471,3 +471,14 @@
 			return two
 		else
 			return five
+
+/proc/has_multiple_matches(haystack, needle)
+	var/count = 0
+	var/pos = 1
+
+	while(pos && count < 2)
+		pos = findtext(haystack, needle, pos)
+		if(pos)
+			count += 1
+			pos += 1
+	return count > 1
