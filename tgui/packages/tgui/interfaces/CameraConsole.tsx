@@ -263,6 +263,7 @@ export const CameraConsoleListContent = (props, context) => {
                 'Button--fluid',
                 'Button--color--transparent',
                 'Button--ellipsis',
+                !camera.status && 'Button--disabled',
                 activeCamera &&
                   camera.name === activeCamera.name &&
                   'Button--selected',
