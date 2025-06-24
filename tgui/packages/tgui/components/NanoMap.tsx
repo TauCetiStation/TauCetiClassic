@@ -247,6 +247,20 @@ export class NanoMap extends Component<Props, State> {
     });
   };
 
+  componentDidMount() {
+    window.addEventListener('wheel', this.handleScroll);
+  }
+
+  componentWillUnmount(): void {
+    window.removeEventListener('wheel', this.handleScroll);
+  }
+
+  handleScroll = (e: WheelEvent) => {
+    const newZoom = this.state.zoom - (e.deltaY / 200);  // One scroll up is -100
+    this.handleZoom(e, newZoom);
+    pauseEvent(e);
+  };
+
   getMapName = () => {
     if (
       this.props.mineMapName &&
