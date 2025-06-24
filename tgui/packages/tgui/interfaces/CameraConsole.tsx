@@ -3,7 +3,6 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { createRef } from 'inferno';
 import {
   Button,
   ByondUi,
@@ -100,7 +99,7 @@ export const CameraConsole = (_, context: any) => {
         <Stack fill>
           <Stack.Item>
             <Stack vertical fill>
-              <Stack.Item grow m={1}>
+              <Stack.Item grow>
                 <CameraConsoleContent
                   isMinimapShown={isMinimapShown}
                   setMinimapShown={setMinimapShown}
@@ -112,11 +111,9 @@ export const CameraConsole = (_, context: any) => {
             <Stack vertical fill>
               <Stack.Item>
                 <Stack fill>
-                  <Stack.Item grow>
-                    <div className="CameraConsole__toolbar">
-                      <b>Camera: </b>
-                      {(activeCamera && activeCamera.name) || '—'}
-                    </div>
+                  <Stack.Item grow mx="5px" mt="8px" mb="2px">
+                    <b>Camera: </b>
+                    {(activeCamera && activeCamera.name) || '—'}
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -142,10 +139,9 @@ export const CameraConsole = (_, context: any) => {
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
-              <Stack.Item grow m={1}>
+              <Stack.Item grow>
                 <ByondUi
                   updateProp={isMinimapShown} // For size updates
-                  className="CameraConsole__map"
                   position="relative"
                   height="100%"
                   params={{
@@ -163,36 +159,8 @@ export const CameraConsole = (_, context: any) => {
 };
 
 export const CameraConsoleContent = (props, context) => {
-  const { isMinimapShown, setMinimapShown } = props;
-
-  const tabUi = (minimapShown: boolean) => {
-    switch (minimapShown) {
-      case false:
-        return <CameraConsoleListContent />;
-      case true:
-        return <CameraMinimapContent />;
-    }
-  };
-
-  const toggleMode = () => {
-    setMinimapShown(!isMinimapShown);
-  };
-
-  return (
-    <Stack fill vertical>
-      <Stack.Item>
-        <Button onClick={() => toggleMode()}>
-          {isMinimapShown ? 'Switch to List' : 'Switch to Minimap'}
-        </Button>
-      </Stack.Item>
-      {tabUi(isMinimapShown)}
-    </Stack>
-  );
-};
-
-export const CameraMinimapContent = (props, context) => {
-  const { act, data, config } = useBackend<Data>(context);
-  const { activeCamera, stationMapName, mineMapName, mineZLevels } = data;
+  const { act, data } = useBackend<Data>(context);
+  const { stationMapName, mineMapName, mineZLevels } = data;
 
   const availableZLevels = flow([
     map((camera: CameraObject) => camera.z),
@@ -205,16 +173,37 @@ export const CameraMinimapContent = (props, context) => {
     'zLevel',
     availableZLevels.at(0)
   );
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
 
-  const cameras = selectCameras(data.cameras, undefined, zLevel);
-
-  const [prevCameraName, nextCameraName] = prevNextCamera(
-    cameras,
-    activeCamera
-  );
+  const cameras = selectCameras(data.cameras, searchText, zLevel);
 
   return (
-    <Box height="100%" mb="0.5rem" overflow="hidden">
+    <Stack fill vertical>
+      <Stack.Item grow>
+        <CameraConsoleListContent
+          setSearchText={setSearchText}
+          cameras={cameras}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <CameraMinimapContent
+          zLevel={zLevel}
+          setZLevel={setZLevel}
+          availableZLevels={availableZLevels}
+          cameras={cameras}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+export const CameraMinimapContent = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { activeCamera, stationMapName, mineMapName, mineZLevels } = data;
+  const { zLevel, setZLevel, availableZLevels, cameras } = props;
+
+  return (
+    <Box height="100%" overflow="hidden">
       <NanoMap
         zLevel={zLevel}
         setZLevel={setZLevel}
@@ -248,11 +237,10 @@ export const CameraMinimapContent = (props, context) => {
 
 export const CameraConsoleListContent = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const { setSearchText, cameras } = props;
   const { activeCamera } = data;
-  const cameras = selectCameras(data.cameras, searchText);
   return (
-    <Stack className="CameraConsole__list" vertical fill>
+    <Stack vertical fill>
       <Stack.Item>
         <Input
           autoFocus

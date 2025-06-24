@@ -1,14 +1,12 @@
-import { Component, Inferno } from 'inferno';
+import { Component } from 'inferno';
 import { Box, Button, Dropdown, Flex, Icon, Tooltip, Stack } from '.';
-import { useBackend } from '../backend';
 import { LabeledList } from './LabeledList';
 import { Slider } from './Slider';
 import { resolveAsset } from '../assets';
-import { stat } from 'fs';
 
-const MAP_SIZE = 510;
+const PIXELS_PER_TURF = 1;
+const MAP_SIZE = 255 * PIXELS_PER_TURF;
 /** At zoom = 1 */
-const PIXELS_PER_TURF = 2;
 
 const pauseEvent = (e: MouseEvent) => {
   if (e.stopPropagation) {
@@ -54,7 +52,7 @@ const NanoMapMarkerIcon = (props, context) => {
     map: { zoom },
   } = context;
   const { icon, color, ...rest } = props;
-  const markerSize = PIXELS_PER_TURF + 4;
+  const markerSize = PIXELS_PER_TURF / zoom + 2;
   return (
     <NanoMapMarker {...rest}>
       <Icon
@@ -74,26 +72,28 @@ const NanoMapMarkerIcon = (props, context) => {
 
 const NanoMapZoomer = (props, context) => {
   return (
-    <Box className="NanoMap__zoomer">
-      <Stack>
+    <Box
+      z-index={1000}
+      position="relative"
+      backgroundColor={'hsla(0, 0%, 0%, 0.33)'}>
+      <Stack align="baseline">
         <Stack.Item grow>
           <LabeledList>
             <LabeledList.Item label="Zoom">
               <Stack>
                 <Stack.Item grow>
                   <Slider
-                    minValue={1}
-                    maxValue={8}
+                    minValue={0.5}
+                    maxValue={16}
                     step={0.5}
                     stepPixelSize={10}
-                    format={(v) => v + 'x'}
+                    format={(v) => v.toFixed(1) + 'x'}
                     value={props.zoom}
                     onDrag={(e, v) => props.onZoom(e, v)}
                   />
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    ml="0.5em"
                     float="right"
                     icon="sync"
                     tooltip="Reset View"
@@ -104,17 +104,21 @@ const NanoMapZoomer = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
-        <Stack.Item>
-          <LabeledList>
-            <LabeledList.Item label="Z-Level">
-              <Dropdown
-                selected={props.zLevel}
-                options={props.availableZLevels}
-                onSelected={props.onZLevel}
-              />
-            </LabeledList.Item>
-          </LabeledList>
-        </Stack.Item>
+        {props.availableZLevels.length > 1 && (
+          <Stack.Item>
+            <LabeledList>
+              <LabeledList.Item label="Z-Level">
+                <Dropdown
+                  over
+                  selected={props.zLevel}
+                  options={props.availableZLevels}
+                  onSelected={props.onZLevel}
+                  width={'50px'}
+                />
+              </LabeledList.Item>
+            </LabeledList>
+          </Stack.Item>
+        )}
       </Stack>
     </Box>
   );
@@ -213,7 +217,7 @@ export class NanoMap extends Component<Props, State> {
   };
 
   handleZoom = (_e: MouseEvent, value: number) => {
-    const newZoom = Math.min(Math.max(value, 1), 8);
+    const newZoom = Math.min(Math.max(value, 0.5), 16);
     this.setState({ zoom: newZoom });
     this.props.onZoom?.(newZoom);
   };
@@ -247,14 +251,6 @@ export class NanoMap extends Component<Props, State> {
     });
   };
 
-  componentDidMount() {
-    window.addEventListener('wheel', this.handleScroll);
-  }
-
-  componentWillUnmount(): void {
-    window.removeEventListener('wheel', this.handleScroll);
-  }
-
   handleScroll = (e: WheelEvent) => {
     const newZoom = this.state.zoom - e.deltaY / 200; // One scroll up is -100
     this.handleZoom(e, newZoom);
@@ -277,26 +273,36 @@ export class NanoMap extends Component<Props, State> {
 
     const mapUrl = resolveAsset(this.getMapName());
     const mapSize = MAP_SIZE + 'px';
-    const newStyle = {
+    const mapStyle = {
       width: mapSize,
       height: mapSize,
       overflow: 'hidden',
       position: 'relative',
+      'object-fit': 'cover',
       'image-rendering': 'pixelated',
       'background-image': 'url(' + mapUrl + ')',
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'text-align': 'center',
       transform: `scale(${zoom}) translate(${offsetX}px,${offsetY}px)`,
+    };
+
+    const backgroundUrl = resolveAsset('nanomapBackground.png');
+
+    const backgroundStyle = {
+      overflow: 'hiddden',
+      width: '100%',
+      'z-index': 1,
+      'background-image': `url(${backgroundUrl})`,
       cursor: dragging ? 'move' : 'auto',
     };
 
     return (
-      <Box className="NanoMap__container" overflow="hidden">
-        <Box
-          style={newStyle}
-          textAlign="center"
-          onMouseDown={this.handleDragStart}>
+      <Box
+        style={backgroundStyle}
+        onWheel={this.handleScroll}
+        onMouseDown={this.handleDragStart}>
+        <Box style={mapStyle} textAlign="center">
           <Box>{children}</Box>
         </Box>
         <NanoMapZoomer
