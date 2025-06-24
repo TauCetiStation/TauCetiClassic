@@ -206,12 +206,11 @@
 	if(!can_punch())
 		return
 
-	if(active)
-		StartCooldown()
-		var/mob/living/carbon/human/H = owner
+	StartCooldown()
+	var/mob/living/carbon/human/H = owner
 
-		punch_intent = H.a_intent
-		punch_animation(H, target)
+	punch_intent = H.a_intent
+	punch_animation(H, target)
 
 /datum/action/innate/race/unath_tail/proc/can_punch()
 	var/mob/living/carbon/human/H = owner
