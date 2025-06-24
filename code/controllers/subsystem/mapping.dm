@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/datum/space_level/z_list
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
+	var/mine_image = ""
 
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
