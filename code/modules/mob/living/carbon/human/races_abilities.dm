@@ -192,13 +192,13 @@
 	cooldown = 30 SECOND
 	var/punch_intent
 
-/datum/action/innate/race/unath_tail/Grant(mob/T)
-	..()
+/datum/action/innate/race/unath_tail/Activate()
 	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(punch))
+	. = ..()
 
-/datum/action/innate/race/unath_tail/Destroy()
+/datum/action/innate/race/unath_tail/Deactivate()
 	UnregisterSignal(owner, COMSIG_MOB_CLICK)
-	..()
+	. = ..()
 
 /datum/action/innate/race/unath_tail/proc/punch(mob/user, atom/target, params)
 	SIGNAL_HANDLER
