@@ -3,6 +3,7 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
+import { createRef } from "inferno";
 import { Button, ByondUi, Flex, Input, Section, Box, NanoMap, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -53,9 +54,15 @@ export const selectCameras = (cameras, searchText = ''): [CameraObject] => {
 };
 
 export const CameraConsole = (_, context: any) => {
-  // Byond.winget('mapwindow.map', 'style').then((style) => {
-  //   Byond.winset(mapRef, 'style', style);
-  // });
+  Byond.winget('mapwindow.map', 'style').then((style) => {
+    Byond.winset(mapRef, 'style', style);
+  });
+
+  const [
+    isMinimapShown,
+    setMinimapShown,
+  ] = useLocalState(context, 'isMinimapShown', false);
+
   const { act, data } = useBackend<Data>(context);
   const { mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
@@ -63,62 +70,77 @@ export const CameraConsole = (_, context: any) => {
     cameras,
     activeCamera
   );
+
   return (
-    <Window>
+    <Window width={800} height={600} maxHeight={600}>
       <Window.Content>
-        <Stack vertical fill>
-          <Stack.Item grow m={1}>
-            <CameraMinimapContent />
+        <Stack fill>
+          <Stack.Item>
+            <Stack vertical fill>
+              <Stack.Item grow m={1}>
+                <CameraConsoleContent isMinimapShown={isMinimapShown} setMinimapShown={setMinimapShown} />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Stack vertical fill>
+              <Stack.Item>
+                <Stack fill>
+                  <Stack.Item grow>
+                    <div className="CameraConsole__toolbar">
+                      <b>Camera: </b>
+                      {(activeCamera && activeCamera.name) || '—'}
+                    </div>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="chevron-left"
+                      disabled={!prevCameraName}
+                      onClick={() =>
+                        act('switch_camera', {
+                          name: prevCameraName,
+                        })
+                      }
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="chevron-right"
+                      disabled={!nextCameraName}
+                      onClick={() =>
+                        act('switch_camera', {
+                          name: nextCameraName,
+                        })
+                      }
+                    />
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+              <Stack.Item grow m={1}>
+                <ByondUi
+                  updateProp={isMinimapShown} // For size updates
+                  className="CameraConsole__map"
+                  position="relative"
+                  height="100%"
+                  params={{
+                    id: mapRef,
+                    type: 'map',
+                  }}
+                />
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Window.Content>
-      {/* <div className="CameraConsole__left">
-        <Window.Content>
-          <CameraConsoleContent />
-        </Window.Content>
-      </div>
-      <div className="CameraConsole__right">
-        <div className="CameraConsole__toolbar">
-          <b>Camera: </b>
-          {(activeCamera && activeCamera.name) || '—'}
-        </div>
-        <div className="CameraConsole__toolbarRight">
-          <Button
-            icon="chevron-left"
-            disabled={!prevCameraName}
-            onClick={() =>
-              act('switch_camera', {
-                name: prevCameraName,
-              })
-            }
-          />
-          <Button
-            icon="chevron-right"
-            disabled={!nextCameraName}
-            onClick={() =>
-              act('switch_camera', {
-                name: nextCameraName,
-              })
-            }
-          />
-        </div>
-        <ByondUi
-          className="CameraConsole__map"
-          params={{
-            id: mapRef,
-            type: 'map',
-          }}
-        />
-      </div> */}
     </Window>
   );
 };
 
 export const CameraConsoleContent = (props, context) => {
-  const [
+  const {
     isMinimapShown,
     setMinimapShown,
-  ] = useLocalState(context, 'isMinimapShown', false);
+   } = props;
 
   const tabUi = (minimapShown: boolean) => {
     switch (minimapShown) {
@@ -134,16 +156,15 @@ export const CameraConsoleContent = (props, context) => {
   };
 
   return (
-    <Flex
-      direction={"column"}
-      height="100%">
-      <Button
-        onClick={() => toggleMode()}>
-        {isMinimapShown ? "Switch to List" : "Switch to Minimap"}
-      </Button>
-
+    <Stack fill vertical>
+      <Stack.Item>
+        <Button
+          onClick={() => toggleMode()}>
+          {isMinimapShown ? "Switch to List" : "Switch to Minimap"}
+        </Button>
+      </Stack.Item>
       {tabUi(isMinimapShown)}
-    </Flex>
+    </Stack>
   );
 };
 
@@ -160,28 +181,9 @@ export const CameraMinimapContent = (props, context) => {
   const [zoom, setZoom] = useLocalState(context, 'zoom', 1);
 
   return (
-    <Box height={NanoMap.mapSize + "px"} mb="0.5rem" overflow="hidden">
+    <Box height="100%" mb="0.5rem" overflow="hidden">
       <NanoMap onZoom={(v) => setZoom(v)}>
         {cameras.map((camera) => (
-          // <Button
-          //   key={camera.name}
-          //   title={camera.name}
-          //   className={classes([
-          //     'Button',
-          //     'Button--fluid',
-          //     'Button--color--transparent',
-          //     'Button--ellipsis',
-          //     activeCamera
-          //   && camera.name === activeCamera.name
-          //   && 'Button--selected',
-          //   ])}
-          //   onClick={() =>
-          //     act('switch_camera', {
-          //       name: camera.name,
-          //     })
-          //   }>
-          //   {camera.name}
-          // </Button>
           <NanoMap.MarkerIcon
             key={camera.name}
             x={camera.x}
@@ -203,8 +205,8 @@ export const CameraConsoleListContent = (props, context) => {
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
   return (
-    <Flex direction={'column'} height="100%">
-      <Flex.Item>
+    <Stack className="CameraConsole__list" vertical fill>
+      <Stack.Item>
         <Input
           autoFocus
           fluid
@@ -212,8 +214,8 @@ export const CameraConsoleListContent = (props, context) => {
           placeholder="Search for a camera"
           onInput={(e, value) => setSearchText(value)}
         />
-      </Flex.Item>
-      <Flex.Item height="100%">
+      </Stack.Item>
+      <Stack.Item grow>
         <Section fill scrollable>
           {cameras.map((camera) => (
             // We're not using the component here because performance
@@ -239,7 +241,7 @@ export const CameraConsoleListContent = (props, context) => {
             </div>
           ))}
         </Section>
-      </Flex.Item>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
 };

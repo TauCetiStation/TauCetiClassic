@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component, Inferno } from 'inferno';
 import { Box, Button, Flex, Icon, Tooltip } from '.';
 import { useBackend } from '../backend';
 import { LabeledList } from './LabeledList';
@@ -117,12 +117,10 @@ export class NanoMap extends Component {
     const { children } = this.props;
 
     const mapUrl = resolveAsset("nanomap_" + config.mapName + "_1.png");
-    const mapSize = MAP_SIZE * zoom + 'px';
+    const mapSize = MAP_SIZE + 'px';
     const newStyle = {
       width: mapSize,
       height: mapSize,
-      'margin-top': offsetY + 'px',
-      'margin-left': offsetX + 'px',
       overflow: 'hidden',
       position: 'relative',
       'image-rendering': 'pixelated',
@@ -130,6 +128,7 @@ export class NanoMap extends Component {
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'text-align': 'center',
+      transform: `scale(${zoom}) translate(${offsetX}px,${offsetY}px)`,
       cursor: dragging ? 'move' : 'auto',
     };
 
@@ -155,10 +154,9 @@ const NanoMapMarker = (props, context) => {
     map: { zoom },
   } = context;
   const { x, y, icon, tooltip, color, children, ...rest } = props;
-  const pixelsPerTurfAtZoom = PIXELS_PER_TURF * zoom;
   // For some reason the X and Y are offset by 1
-  const rx = (x - 1) * pixelsPerTurfAtZoom;
-  const ry = (y - 1) * pixelsPerTurfAtZoom;
+  const rx = (x - 1) * PIXELS_PER_TURF;
+  const ry = (y - 1) * PIXELS_PER_TURF;
   return (
     <div>
       <Tooltip content={tooltip}>
@@ -168,8 +166,8 @@ const NanoMapMarker = (props, context) => {
           lineHeight="0"
           bottom={ry + 'px'}
           left={rx + 'px'}
-          width={pixelsPerTurfAtZoom + 'px'}
-          height={pixelsPerTurfAtZoom + 'px'}
+          width={(PIXELS_PER_TURF / zoom) + 'px'}
+          height={(PIXELS_PER_TURF / zoom) + 'px'}
           {...rest}
         >
           {children}
@@ -186,7 +184,7 @@ const NanoMapMarkerIcon = (props, context) => {
     map: { zoom },
   } = context;
   const { icon, color, ...rest } = props;
-  const markerSize = PIXELS_PER_TURF * zoom + 4 / Math.ceil(zoom / 4);
+  const markerSize = PIXELS_PER_TURF + 4;
   return (
     <NanoMapMarker {...rest}>
       <Icon
