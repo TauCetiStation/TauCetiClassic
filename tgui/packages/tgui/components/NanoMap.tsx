@@ -298,11 +298,12 @@ export class NanoMap extends Component<Props, State> {
     };
 
     return (
-      <Box
-        style={backgroundStyle}
-        onWheel={this.handleScroll}
-        onMouseDown={this.handleDragStart}>
-        <Box style={mapStyle} textAlign="center">
+      <Box style={backgroundStyle}>
+        <Box
+          style={mapStyle}
+          textAlign="center"
+          onWheel={this.handleScroll}
+          onMouseDown={this.handleDragStart}>
           <Box>{children}</Box>
         </Box>
         <NanoMapZoomer
