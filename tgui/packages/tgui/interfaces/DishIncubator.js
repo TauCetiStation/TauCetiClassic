@@ -108,7 +108,7 @@ export const DishIncubator = (props, context) => {
         (chemicals_inserted ? 80 : 0) +
         (dish_inserted && analysed ? 240 : 0)
       }>
-      <Window.Content scrollable>
+      <Window.Content>
         <Box>
           <Section title="Environmental Conditions">
             <LabeledList>

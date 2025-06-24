@@ -79,8 +79,8 @@
 	data["chemical_volume"] = beaker ? beaker.reagents.total_volume : 0
 	data["max_chemical_volume"] = beaker ? beaker.volume : 1
 	data["virus"] = dish?.virus2
-	data["infection_rate"] = dish && dish.virus2 ? dish.virus2.infectionchance * 10 : 0
-	data["analysed"] = dish && dish.analysed
+	data["infection_rate"] = dish?.virus2 ? dish.virus2.infectionchance * 10 : 0
+	data["analysed"] = dish?.analysed
 	data["can_breed_virus"] = null
 	data["blood_already_infected"] = null
 	data["effects"] = null

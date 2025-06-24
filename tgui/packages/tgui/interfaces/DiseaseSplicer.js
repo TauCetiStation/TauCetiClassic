@@ -25,7 +25,7 @@ export const DiseaseSplicer = (props, context) => {
   return (
     <Window width={480} height={400}>
       {!busy ? (
-        <Window.Content scrollable>
+        <Window.Content>
           <Section
             title="Virus dish"
             buttons={

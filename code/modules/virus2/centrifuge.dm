@@ -73,7 +73,7 @@
 			else
 				var/datum/reagent/antibodies/A = locate(/datum/reagent/antibodies) in sample.reagents.reagent_list
 				data["antibodies"] = A && A.data["antibodies"] ? antigens2string(A.data["antibodies"]) : null
-				data["is_antibody_sample"] = 1
+				data["is_antibody_sample"] = TRUE
 	return data
 
 /obj/machinery/computer/centrifuge/tgui_act(action, list/params, datum/tgui/ui)
@@ -119,7 +119,7 @@
 			return TRUE
 		if("sample")
 			if(sample)
-				sample.loc = loc
+				sample.forceMove(loc)
 				sample = null
 			return TRUE
 
