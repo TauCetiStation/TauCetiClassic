@@ -252,7 +252,7 @@ export class NanoMap extends Component<Props, State> {
       this.props.mineMapName &&
       this.props.mineLevels.includes(this.state.zLevel)
     ) {
-      return `nanomap_${this.props.mineMapName}_${this.state.zLevel}.png`;
+      return `nanomap_${this.props.mineMapName}_1.png`;
     }
     return `nanomap_${this.props.stationMapName}_1.png`;
   };
