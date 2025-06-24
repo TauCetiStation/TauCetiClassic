@@ -32,6 +32,8 @@
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/atom_init()
 	..()
+	if(is_station_level(z))
+		global.station_disposal_count++
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/disposal/atom_init_late()
@@ -46,6 +48,8 @@
 	update()
 
 /obj/machinery/disposal/Destroy()
+	if(is_station_level(z))
+		global.station_disposal_count--
 	eject()
 	if(trunk)
 		trunk.linked = null

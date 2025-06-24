@@ -10,14 +10,8 @@
 
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 
-var/global/list/blacklisted_builds = list(
-	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
-	"1434" = "bug turf images weren't reapplied properly when moving around the map",
-	"1468" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems",
-	"1469" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems"
-	)
+// empty till new broken versions
+var/global/list/blacklisted_builds
 
 	/*
 	When somebody clicks a link in game, this Topic is called first.
@@ -206,9 +200,7 @@ var/global/list/blacklisted_builds = list(
 		log_access("Debug: Client creation for [ckey] aborted because of wrong connection type [connection].")
 		return null
 
-	// TODO: Remove check with 516
-	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, "", "browser-options=byondstorage,refresh,find")
+	winset(src, "", "browser-options=byondstorage,refresh,find")
 
 	var/tdata
 	if(length(TopicData))
@@ -466,7 +458,7 @@ var/global/list/blacklisted_builds = list(
 	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 		to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
 
-	if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || (num2text(byond_build) in blacklisted_builds))
+	if(num2text(byond_build) in blacklisted_builds)
 		to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
 		message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
@@ -682,7 +674,7 @@ var/global/list/blacklisted_builds = list(
 /client/proc/update_pixel_ratio(number)
 	window_pixelratio = number
 
-/client/proc/update_dpi()
+/client/proc/update_dpi() // todo: remove me some time after 516
 	set waitfor = FALSE
 
 	dpi = text2num(winget(src, null, "dpi"))
