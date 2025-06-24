@@ -39,7 +39,7 @@ var/global/list/bots_list = list()
 var/global/list/janitorialcart_list = list()
 var/global/list/portal_list = list()
 var/global/list/centcom_barrier_list = list()
-var/global/list/organ_head_list = list()
+var/global/list/lost_heads_list = list() // keep them for possible rejuv
 var/global/list/circuitboard_communications_list = list()
 var/global/list/status_display_list = list()
 var/global/list/ai_status_display_list = list()
@@ -71,6 +71,7 @@ var/global/list/all_supply_pack = list()
 var/global/list/all_command_microphones = list()
 var/global/list/global_objectives = list() //objectives that need to be completed by several factions or roles
 var/global/list/air_alarms = list()
+var/global/list/table_list = list() // obj/structure/table
 var/global/list/pluvian_wisps = list()
 
 var/global/list/spells_by_aspects = list()

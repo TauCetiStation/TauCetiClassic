@@ -1,8 +1,14 @@
+#define PICK_DAMAGE_STATE "[pick(0, 0, 1, 1, 1, 2, 2, 2, 3, 3)][pick(0, 0, 1, 1, 1, 2, 2, 2, 3, 3)]"
+
 /****************************************************
 				BODYPARTS
 ****************************************************/
 /obj/item/organ/external
 	name = "external"
+
+	icon = 'icons/mob/human/human.dmi'
+
+	var/list/mutable_appearance/layers = list()
 
 	// When measuring bodytemperature,
 	// multiply by this coeff.
@@ -22,10 +28,11 @@
 	var/datum/bodypart_controller/controller
 
 	// Appearance vars.
-	var/body_part = null              // Part flag
+	var/body_part = null              // Part flag, mostly used for clothing coverage
 	var/body_zone = null              // Unique identifier of this limb.
+	var/default_icon_layer = BODY_LAYER  // mob overlay layer
+	var/organ_suffix                  // suffix for organs with variations
 	var/datum/species/species
-	var/original_color
 	var/b_type = BLOOD_A_PLUS
 	var/is_rejecting = FALSE
 
@@ -36,7 +43,7 @@
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
-	var/list/implants = list()        // Currently implanted objects.
+	var/list/embedded_objects = list() // Currently implanted objects. Includes embed objects, implants like mindshield, borers...
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
@@ -65,10 +72,40 @@
 	// Will be removed, moved or refactored.
 	var/obj/item/hidden = null // relation with cavity
 	var/tmp/perma_injury = 0
-	var/limb_layer = 0
+	var/limb_layer = 0 // organ damage layer
 	var/damage_msg = "<span class='warning'>You feel an intense pain</span>"
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
+
+	// cache our holes so they don't move with every appearance generation
+	var/zombie_overlay_pick
+	var/burnt_overlay_pick
+	var/husk_overlay_pick
+
+	// copy of owner prefs for cases of dismembering
+	var/owner_gender
+	var/r_skin = /datum/preferences::r_skin
+	var/g_skin = /datum/preferences::g_skin
+	var/b_skin = /datum/preferences::b_skin
+	var/s_tone = /datum/preferences::s_tone
+	var/r_belly = /datum/preferences::r_belly // second species color, we should rename it from the "belly"
+	var/g_belly = /datum/preferences::g_belly
+	var/b_belly = /datum/preferences::b_belly
+
+	var/is_slime
+	var/is_zombie
+	var/is_skeleton
+	var/is_husk
+	var/is_burnt
+
+// todo: currently it's impossible to spawn organs out of body 
+// as insert_organ() call with owner is required for proper init
+/*
+/obj/item/organ/external/atom_init(mapload)
+	..()
+
+	controller = new controller_type(src)
+*/
 
 /obj/item/organ/external/Destroy()
 	if(parent)
@@ -84,6 +121,265 @@
 	if(pumped)
 		owner.mob_metabolism_mod.RemoveMods(src)
 	return ..()
+
+// owner can be optional
+/obj/item/organ/external/set_owner(mob/living/carbon/human/H)
+	..()
+
+	b_type = owner.dna.b_type
+
+// species for external organs must always exist, our icon depends on it
+/obj/item/organ/external/proc/set_species(datum/species/S)
+	SHOULD_CALL_PARENT(TRUE)
+	species = S
+
+// organs should keep a copy of owner preferences they need for appearance generation
+// at minimum we need skin colors and gender
+// todo: this should look better when we datumize prefs
+/obj/item/organ/external/proc/set_preferences(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
+	owner_gender = H.gender
+	r_skin = H.r_skin
+	g_skin = H.g_skin
+	b_skin = H.b_skin
+	s_tone = H.s_tone
+	r_belly = H.r_belly
+	g_belly = H.g_belly
+	b_belly = H.b_belly
+
+/obj/item/organ/external/proc/set_traits(mob/living/carbon/human/H)
+	is_slime = HAS_TRAIT(H, ELEMENT_TRAIT_SLIME)
+	is_zombie = HAS_TRAIT(H, ELEMENT_TRAIT_ZOMBIE)
+	is_skeleton = HAS_TRAIT(H, ELEMENT_TRAIT_SKELETON) // conflicts with that fact that skeleton limbs is already a separated object, we can move it to skeleton bodyparts, or remove skeleton bodyparts and do all our logic in common organs
+	is_husk = HAS_TRAIT(H, TRAIT_HUSK)
+	is_burnt = HAS_TRAIT(H, TRAIT_BURNT)
+
+// mostly for homunculus
+/obj/item/organ/external/proc/randomize_preferences()
+	owner_gender = pick(MALE, FEMALE)
+
+	// fuck why we still use 3 variables per color in preferences instead of hex
+	var/list/skin_color = rgb2num(pick(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))
+	r_skin = skin_color[1]
+	g_skin = skin_color[2]
+	b_skin = skin_color[3]
+
+	skin_color = rgb2num(pick(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))
+	r_belly = skin_color[1]
+	g_belly = skin_color[2]
+	b_belly = skin_color[3]
+
+	s_tone = random_skin_tone()
+
+/obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
+	..()
+
+	if (!surgically) // body creation, should set it all
+		if(!S)
+			S = H.species
+		set_species(S) // species should always be set, we use previous one if we surgically installed
+		set_preferences(H) // cache owner preferences, can be freely updated if needed
+
+	owner.bodyparts += src
+	owner.bodyparts_by_name[body_zone] = src
+
+	if(!controller)
+		controller = new controller_type(src)
+
+	for(var/obj/item/organ/internal/IO in bodypart_organs)
+		IO.insert_organ(owner)
+
+	if(parent)
+		parent.children += src
+
+	if(surgically)
+		check_rejection()
+
+/obj/item/organ/external/proc/mod_skin_color(original_color)
+	// sorted in priority, maybe some day someone will experiment with colors mixing
+	if(is_slime)
+		return rgb(5, 255, 251, 127) // #05fffb + alpha
+	else if(is_skeleton)
+		return null
+	else if(is_zombie)
+		return "#4a730c"
+	else if(is_burnt)
+		return "#333333"
+	else if(is_husk || status & ORGAN_DEAD)
+		return list(0.2,0.2,0.2, 0.36,0.36,0.36, 0.07,0.07,0.07) // grayscale matrix but darker
+	else if(owner && (HULK in owner.mutations))
+		return "#30e028"
+	else
+		return original_color
+
+/obj/item/organ/external/proc/get_skin_color()
+	// should allow color for IPC, but not for protheses
+	// todo: protheses should have own color and we should not rewrite it with preferences
+	if(controller_type == /datum/bodypart_controller/robot)
+		return null
+	else if(species.flags[HAS_SKIN_COLOR])
+		. = rgb(r_skin, g_skin, b_skin)
+	else if(species.flags[HAS_SKIN_TONE])
+		var/datum/skin_tone/tone = global.skin_tones_by_name[s_tone]
+		. = tone.hex
+
+	. = mod_skin_color(.)
+
+/obj/item/organ/external/proc/get_skin_second_color()
+	if(controller_type == /datum/bodypart_controller/robot)
+		return null
+
+	var/original_color = rgb(r_belly, g_belly, b_belly)
+	. = mod_skin_color(original_color)
+
+	if(. != original_color && istext(.)) // so we use mod color
+		. = color_shift_luminance(., -5) // just make it darker then
+
+/obj/item/organ/external/proc/get_blood_color()
+	var/datum/dirt_cover/blood_datum
+	if(owner)
+		blood_datum = owner.get_blood_datum()
+	else
+		if(is_slime)
+			blood_datum = /datum/dirt_cover/blue_blood
+		else if(species.blood_datum_path)
+			blood_datum = species.blood_datum_path
+		else
+			blood_datum = /datum/dirt_cover/red_blood
+	return blood_datum::color
+
+// updates icon and icon_state based on our current species/prefs/owner
+/obj/item/organ/external/proc/update_sprite()
+	if(is_skeleton && species.skeleton)
+		icon = species.skeleton
+		icon_state = get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE)
+		return
+
+	if ((status & ORGAN_MUTATED) && species.deformed) // todo: make it filters
+		icon = species.deformed
+	else
+		icon = species.icobase
+
+	icon_state = get_icon_state()
+
+/obj/item/organ/external/proc/get_icon_state(gender_state = TRUE, fat_state = TRUE, pump_state = TRUE)
+	var/gender_suffix
+	var/fat_suffix
+	var/pump_suffix
+
+	if(gender_state)
+		var/gender_icon = FALSE
+		switch(body_zone)
+			if(BP_CHEST, BP_GROIN, BP_HEAD)
+				gender_icon = species.gender_body_icons
+			if(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)
+				gender_icon = species.gender_limb_icons
+			if(BP_TAIL)
+				gender_icon = species.gender_tail_icons
+			if(BP_WINGS)
+				gender_icon = species.gender_wings_icons
+
+		if(gender_icon)
+			gender_suffix = (owner_gender == FEMALE ? "_f" : "_m")
+
+	if(fat_state && owner && HAS_TRAIT(owner, TRAIT_FAT))
+		if(body_zone == BP_CHEST)
+			fat_suffix = "_fat"
+		else if(species.fat_limb_icons == TRUE && (body_zone in list(BP_GROIN, BP_HEAD, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
+			fat_suffix = "_fat"
+
+	if(pump_state && !fat_suffix && pumped > pumped_threshold)
+		pump_suffix = "_pumped"
+
+	return "[body_zone][organ_suffix][gender_suffix][fat_suffix][pump_suffix]"
+
+// generates list of (mutable) appearances
+// should work even without owner
+// order is important if you place them on the same layer, later overlays usually higher
+/obj/item/organ/external/proc/generate_appearances(update_preferences = FALSE)
+	RETURN_TYPE(/list)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(is_stump)
+		return
+
+	// todo: it can rewrite things we don't want to rewrite
+	// in the future we can use list of datums for preferences we want to update
+	if(update_preferences && owner)
+		set_preferences(owner)
+
+	if(owner) // pull actual traits every time while owner is still attached
+		set_traits(owner)
+
+	update_sprite()
+
+	. = list()
+
+	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -default_icon_layer)
+	. += base_appearance
+
+	if(species.alpha_color_mask)
+		var/mutable_appearance/alpha_color_appearance = mutable_appearance(icon, "alpha_[icon_state]")
+		alpha_color_appearance.color = get_skin_color()
+		base_appearance.add_overlay(alpha_color_appearance)
+	else
+		base_appearance.color = get_skin_color()
+
+	if(species.second_color_mask && icon_exists(icon, "color_[icon_state]"))
+		var/mutable_appearance/second_color_appearance = mutable_appearance(icon, "color_[icon_state]")
+		second_color_appearance.appearance_flags = RESET_COLOR | RESET_ALPHA
+		second_color_appearance.color = get_skin_second_color()
+		base_appearance.add_overlay(second_color_appearance)
+
+	// attach bones to base appearance for slimepeople (if we not skeleton already)
+	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
+		var/mutable_appearance/bones_appearance = mutable_appearance(species.skeleton, get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))
+		bones_appearance.appearance_flags = RESET_COLOR | RESET_ALPHA
+		bones_appearance.blend_mode = BLEND_INSET_OVERLAY // inset fixes some clipping issues
+		// because we can't combine inset with underlays (or other blend modes) we need to add alpha to make it appear "under" skin
+		// unfortunately it makes skeleton unnecessarily transparent
+		bones_appearance.alpha = 127
+		base_appearance.add_overlay(bones_appearance)
+
+	// sometimes we can see the insides of the mob
+	if(is_zombie && species.skeleton)
+		if(!zombie_overlay_pick)
+			zombie_overlay_pick = PICK_DAMAGE_STATE
+		// reuse of damage overlays here, feel free to create own overlays set for things like this
+		if(zombie_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]"))
+			var/mutable_appearance/zombie_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[zombie_overlay_pick]", -BODY_FEATURES_LAYER)
+			zombie_holes.color = get_blood_color()
+			zombie_holes.appearance_flags = KEEP_TOGETHER
+			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))
+			zombie_bones_appearance.blend_mode = BLEND_MULTIPLY
+			zombie_holes.add_overlay(zombie_bones_appearance)
+			. += zombie_holes
+
+	if(is_burnt && species.skeleton)
+		if(!burnt_overlay_pick)
+			burnt_overlay_pick = PICK_DAMAGE_STATE
+		if(burnt_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]"))
+			var/mutable_appearance/burnt_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[burnt_overlay_pick]", -BODY_FEATURES_LAYER)
+			burnt_holes.color = "#cf7516"
+			burnt_holes.appearance_flags = KEEP_TOGETHER
+			var/mutable_appearance/zombie_bones_appearance = mutable_appearance(species.skeleton, get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))
+			zombie_bones_appearance.blend_mode = BLEND_MULTIPLY
+			burnt_holes.add_overlay(zombie_bones_appearance)
+			. += burnt_holes
+
+	if(is_husk)
+		if(!husk_overlay_pick)
+			husk_overlay_pick = PICK_DAMAGE_STATE
+		if(husk_overlay_pick != "00" && icon_exists('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]"))
+			var/mutable_appearance/husk_holes = mutable_appearance('icons/mob/human/masks/damage_overlays.dmi', "[body_zone]_[husk_overlay_pick]", -BODY_FEATURES_LAYER)
+			husk_holes.color = rgb(60, 60, 60, 127)
+			. += husk_holes
+
+// update how the organ looks for when it separated
+// no point to call it when organ is inside (attached to) the body
+/obj/item/organ/external/proc/apply_appearance()
+	overlays = generate_appearances()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
 	if(!locate(/obj/structure/table) in loc)
@@ -102,89 +398,6 @@
 		harvest(I, user)
 	else
 		return ..()
-
-/obj/item/organ/external/set_owner(mob/living/carbon/human/H, datum/species/S)
-	..()
-
-	if(!S)
-		S = H.species
-
-	controller = new controller_type(src)
-
-	if(H)
-		species = S
-		b_type = owner.dna.b_type
-	else // Bodypart was spawned outside of the body so we need to update its sprite
-		species = all_species[HUMAN]
-		update_sprite()
-
-	recolor()
-
-/obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
-	..()
-
-	owner.bodyparts += src
-	owner.bodyparts_by_name[body_zone] = src
-
-	for(var/obj/item/organ/internal/IO in bodypart_organs)
-		IO.insert_organ(owner)
-
-	if(parent)
-		parent.children += src
-
-	if(surgically)
-		check_rejection()
-
-/obj/item/organ/external/proc/recolor()
-	if(!owner)
-		return
-	if (owner.species.flags[HAS_SKIN_COLOR])
-		original_color = RGB_CONTRAST(owner.r_skin, owner.g_skin, owner.b_skin)
-	else if(owner.species.flags[HAS_SKIN_TONE])
-		original_color = RGB_CONTRAST(owner.s_tone, owner.s_tone, owner.s_tone)
-
-// Keep in mind that this proc should work even if owner = null
-/obj/item/organ/external/proc/update_sprite()
-	var/gender = owner ? owner.gender : MALE
-	var/mutations = owner ? owner.mutations : list()
-	var/fat = null
-	var/g
-	var/pump
-
-	if(owner && HAS_TRAIT(owner, TRAIT_FAT))
-		if(body_zone == BP_CHEST)
-			fat = "fat"
-		else if(species.fat_limb_icons == TRUE && (body_zone in list(BP_GROIN, BP_HEAD, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
-			fat = "fat"
-
-	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
-		g = (gender == FEMALE ? "f" : "m")
-	else if(species.gender_limb_icons == TRUE && (body_zone in list(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
-		g = (gender == FEMALE ? "f" : "m")
-
-	if (!species.has_gendered_icons)
-		g = null
-
-	pump = pumped > pumped_threshold ? "pumped" : null
-
-	if (HUSK in mutations)
-		icon = 'icons/mob/human_races/husk.dmi'
-		icon_state = body_zone
-	else if (status & ORGAN_MUTATED)
-		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
-	else
-		icon = species.icobase
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
-
-	if(status & ORGAN_DEAD)
-		color = NECROSIS_COLOR_MOD
-	else if (HUSK in mutations)
-		color = null
-	else if(HULK in mutations)
-		color = HULK_SKIN_COLOR
-	else
-		color = original_color
 
 /****************************************************
 			   DAMAGE PROCS
@@ -310,6 +523,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(cannot_amputate || !owner)
 		return
 
+	// todo: need to write better logic for dismembering and embedded_objects
+	for(var/obj/item/weapon/implant/implanted_object in embedded_objects)
+		qdel(implanted_object)
+		if(prob(25))
+			new /obj/item/weapon/implant/meltdown(owner.loc)
+
 	owner.bodyparts -= src
 	owner.bodyparts_by_name -= body_zone
 	owner.bad_bodyparts -= src
@@ -356,30 +575,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
-			var/obj/bodypart = src // Dropped limb object
 			add_blood(owner)
-			bodypart.forceMove(owner.loc)
-
-			if(bodypart)
-				//Robotic limbs explode if sabotaged.
-				if(is_robotic() && !no_explode && sabotaged)
-					explosion(get_turf(owner), 0, 0, 2, 3)
-					var/datum/effect/effect/system/spark_spread/spark_system = new
-					spark_system.set_up(5, 0, owner)
-					spark_system.attach(owner)
-					spark_system.start()
-					spawn(10)
-						qdel(spark_system)
-
-				var/matrix/M = matrix()
-				M.Turn(rand(180))
-				bodypart.transform = M
-
-				if(!clean)
-					// Throw limb around.
-					if(isturf(bodypart.loc))
-						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
-					set_dir(2)
+			//Robotic limbs explode if sabotaged.
+			if(is_robotic() && !no_explode && sabotaged)
+				explosion(get_turf(owner), 0, 0, 2, 3)
+				var/datum/effect/effect/system/spark_spread/spark_system = new
+				spark_system.set_up(5, 0, owner)
+				spark_system.attach(owner)
+				spark_system.start()
+				spawn(10)
+					qdel(spark_system)
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
@@ -391,10 +596,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(is_robotic())
 				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(owner))
 			else
-				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner))
-				gore.fleshcolor = owner.species.flesh_color
-				gore.basedatum =  new(owner.species.blood_datum)
-				gore.update_icon()
+				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner), owner)
 
 			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
@@ -438,9 +640,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(pumped)
 		owner.mob_metabolism_mod.RemoveMods(src)
 
-	owner.update_body()
 	if(body_zone == BP_HEAD)
-		owner.update_hair()
 		owner.handle_decapitation(src)
 	// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 	release_restraints()
@@ -458,11 +658,24 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/obj/item/organ/external/stump/S = new(null)
 		S.copy_original_limb(src)
 		S.insert_organ(owner, FALSE)
+
 	owner.updatehealth()
+	owner.update_body(body_zone)
+	owner.update_underwear()
 
 	if(!should_delete)
-		handle_cut()
+		forceMove(owner.loc)
 		owner = null
+		apply_appearance()
+
+		var/matrix/M = matrix()
+		transform = M.Turn(rand(180))
+
+		if(!clean)
+			// Throw limb around.
+			if(isturf(loc))
+				throw_at(get_edge_target_turf(loc, pick(alldirs)), rand(1, 3), throw_speed)
+		handle_cut()
 	else
 		qdel(src)
 
@@ -549,11 +762,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
-	owner.update_body()
+	owner.update_body(body_zone)
 
 /obj/item/organ/external/proc/unmutate()
 	src.status &= ~ORGAN_MUTATED
-	owner.update_body()
+	owner.update_body(body_zone)
 
 /obj/item/organ/external/proc/get_damage()	//returns total damage
 	return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?
@@ -563,57 +776,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(W.germ_level > INFECTION_LEVEL_ONE)
 			return 1
 	return 0
-
-/obj/item/organ/external/get_icon(icon_layer)
-	if (!owner)
-		return
-
-	update_sprite()
-	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
-	. = list(base_appearance)
-
-	if(species && species.alpha_color_mask)
-		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
-		color_appearance.color = color
-		. += color_appearance
-	else
-		base_appearance.color = color
-
-/obj/item/organ/external/head/get_icon(icon_layer)
-	if (!owner)
-		return
-
-	update_sprite()
-	var/mutable_appearance/base_appearance = mutable_appearance(icon, icon_state, -icon_layer)
-	. = list(base_appearance)
-
-	if(species && species.alpha_color_mask)
-		var/mutable_appearance/color_appearance = mutable_appearance(icon, "alpha_[icon_state]", -icon_layer)
-		color_appearance.color = color
-		. += color_appearance
-	else
-		base_appearance.color = color
-
-	if(species && species.eyes)
-		var/mutable_appearance/eyes_appearance = mutable_appearance(species.eyes_icon, species.eyes, -icon_layer)
-		if(species.eyes_glowing)
-			eyes_appearance.plane = LIGHTING_LAMPS_PLANE
-			eyes_appearance.layer = ABOVE_LIGHTING_LAYER
-
-		if(HULK in owner.mutations)
-			eyes_appearance.color = "#ff0000"
-		else if(species.name == SHADOWLING || iszombie(owner))
-			eyes_appearance.color = null
-		else
-			eyes_appearance.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
-
-		. += eyes_appearance
-
-	//Mouth	(lipstick!)
-	if(owner.lip_style && owner.species.flags[HAS_LIPS]) // skeletons are allowed to wear lipstick no matter what you think, agouri.
-		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[owner.lip_style]_s", -icon_layer)
-		lips_appearance.color = owner.lip_color
-		. += lips_appearance
 
 // Runs once when attached
 /obj/item/organ/external/proc/check_rejection()
@@ -666,7 +828,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			qdel(spark_system)
 
 /obj/item/organ/external/proc/embed(obj/item/weapon/W, silent = 0, supplied_message, datum/wound/supplied_wound)
-	if(!owner || owner.species.flags[NO_EMBED])
+	if(!owner || HAS_TRAIT(owner, TRAIT_NO_EMBED))
 		return
 
 	if(!silent)
@@ -690,9 +852,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 
 	supplied_wound.embedded_objects += W
-	implants += W
+	embedded_objects += W
 	owner.sec_hud_set_implants()
-	owner.embedded_flag = 1
+	owner.embedded_flag = TRUE
 	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)
 	if(ismob(W.loc))
@@ -726,6 +888,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
+/obj/item/organ/external/chest
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -747,6 +910,96 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_NORMAL
 
+/obj/item/organ/external/tail
+	name = "tail"
+	cases = list("хвост", "хвоста", "хвосту", "хвост", "хвостом", "хвосте")
+
+	icon_state = "tail"
+	default_icon_layer = BODY_INFRONT_LAYER // todo: we can make it two layers with BODY_BEHIND_LAYER like wings
+
+	// not in TARGET_ZONE_ALL so can't be targeted and damaged, i hope
+	body_zone = BP_TAIL
+	parent_bodypart = BP_GROIN
+
+	cannot_amputate = TRUE
+	leaves_stump = FALSE
+
+	max_pumped = 0
+
+	vital = FALSE
+
+/obj/item/organ/external/tail/generate_appearances()
+
+	var/render_flags = 0
+	if(owner)
+		render_flags = owner.wear_suit?.render_flags
+
+	if(render_flags & HIDE_TAIL)
+		return
+
+	. = ..()
+
+	// some shitty copypaste for second BEHIND base appearance
+	// skipping alpha_color_mask/second_color_mask/damage holes for this as currently it's useless for tails
+	// one day when we rewrite body rendering with cut masks based on coverage and merge tails (and wings) in one layer we can remove this
+
+	var/mutable_appearance/base_appearance_behind = mutable_appearance(icon, "[icon_state]_BEHIND", -BODY_BEHIND_LAYER)
+	base_appearance_behind.color = get_skin_color()
+	. += base_appearance_behind
+
+	// attach bones to base appearance for slimepeople (if we not skeleton already)
+	if(is_slime && species.skeleton && controller.bodypart_type != BODYPART_SKELETON)
+		var/mutable_appearance/bones_appearance_behind = mutable_appearance(species.skeleton, "[get_icon_state(get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE))]_BEHIND")
+		bones_appearance_behind.appearance_flags = RESET_COLOR | RESET_ALPHA
+		bones_appearance_behind.blend_mode = BLEND_INSET_OVERLAY
+		bones_appearance_behind.alpha = 175
+		base_appearance_behind.add_overlay(bones_appearance_behind)
+
+/obj/item/organ/external/wings
+	name = "wings"
+	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
+
+	icon_state = "wings"
+	default_icon_layer = BODY_INFRONT_LAYER
+
+	body_zone = BP_WINGS
+	parent_bodypart = BP_CHEST
+
+	cannot_amputate = TRUE
+	leaves_stump = FALSE
+
+	max_pumped = 0
+
+	vital = FALSE
+
+/obj/item/organ/external/wings/generate_appearances()
+	var/render_flags = 0
+	if(owner)
+		render_flags = owner.wear_suit?.render_flags
+
+	if(render_flags & HIDE_WINGS)
+		return
+
+	. = ..()
+
+	// todo: same cover problem as in https://github.com/TauCetiStation/TauCetiClassic/issues/8846
+	// we use hack from tg with second layer just for one dir
+	// need to find some universal solution for all these problems
+
+	var/mutable_appearance/base_appearance_behind = mutable_appearance(icon, "[icon_state]_BEHIND", -BODY_BEHIND_LAYER)
+	base_appearance_behind.color = get_skin_color()
+	. += base_appearance_behind
+
+// moth wings variations
+/obj/item/organ/external/wings/moth
+	species = /datum/species/moth // it does nothing, just for spawns
+	organ_suffix = "_atlas" // wings_atlas is the default state for moths
+
+/obj/item/organ/external/wings/moth/atom_init()
+	if(SSholiday.holidays[NEW_YEAR])
+		organ_suffix = pick("_royal", "_feathery")
+
+	icon_state += organ_suffix
 
 /obj/item/organ/external/head
 	name = "head"
@@ -756,7 +1009,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	throwforce = 10
 	artery_name = "carotid artery"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "head_m"
 
 	temp_coeff = 1.05
@@ -780,7 +1032,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
-	var/f_style // So we can put his haircut back when we attach the head
+
+	// cache hair prefs so that we can use it if our owner decides to part with his head
+	var/f_style
 	var/h_style
 	var/grad_style
 	var/r_facial
@@ -800,15 +1054,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/g_grad
 	var/b_grad
 	var/hair_painted
+	var/r_eyes
+	var/g_eyes
+	var/b_eyes
+	var/lip_style
+	var/lip_color
 
 /obj/item/organ/external/head/Destroy()
-	organ_head_list -= src
+	lost_heads_list -= src
 	QDEL_NULL(brainmob)
 	return ..()
-
-/obj/item/organ/external/head/set_owner(mob/living/carbon/human/H, datum/species/S)
-	..()
-	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
 	if(H.get_species() in list(IPC, DIONA, PODMAN))
@@ -816,61 +1071,152 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	return TRUE
 
-/obj/item/organ/external/head/recolor()
+/obj/item/organ/external/head/set_preferences(mob/living/carbon/human/H)
 	..()
-	if(!owner)
-		return
 
-	cut_overlays()
-	//Add (facial) hair.
-	if(owner.f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[owner.f_style]
+	// facial hair
+	f_style = H.f_style
+	r_facial = H.r_facial
+	g_facial = H.g_facial
+	b_facial = H.b_facial
+	dyed_r_facial = H.dyed_r_facial
+	dyed_g_facial = H.dyed_g_facial
+	dyed_b_facial = H.dyed_b_facial
+	facial_painted = H.facial_painted
+
+	// hair
+	h_style = H.h_style
+	grad_style = H.grad_style
+	r_hair = H.r_hair
+	g_hair = H.g_hair
+	b_hair = H.b_hair
+	dyed_r_hair = H.dyed_r_hair
+	dyed_g_hair = H.dyed_g_hair
+	dyed_b_hair = H.dyed_b_hair
+	r_grad = H.r_grad
+	g_grad = H.g_grad
+	b_grad = H.b_grad
+	hair_painted = H.hair_painted
+
+	// eyes
+	r_eyes = H.r_eyes
+	g_eyes = H.g_eyes
+	b_eyes = H.b_eyes
+
+	// lips
+	lip_style = H.lip_style
+	lip_color = H.lip_color
+
+/obj/item/organ/external/head/generate_appearances()
+	. = ..()
+
+	// eyes
+	// todo: should move it to own organ, make /eyes external
+	if(species.eyes_static_layer)
+		var/mutable_appearance/eyes_static_layer = mutable_appearance(
+			species.eyes_icon, 
+			species.eyes_static_layer, 
+			-EYES_LAYER
+		)
+
+		if(owner && HAS_TRAIT(owner, TRAIT_PLUVIAN_BLESSED))
+			eyes_static_layer.color = "#88ffff"
+
+		. += eyes_static_layer
+
+	if(species.eyes_colorable_layer)
+		var/mutable_appearance/eyes_colorable_layer = mutable_appearance(
+			species.eyes_icon, 
+			species.eyes_colorable_layer, 
+			-EYES_LAYER
+		)
+
+		eyes_colorable_layer.color = rgb(r_eyes, g_eyes, b_eyes)
+		if(owner)
+			if(HAS_TRAIT(owner, TRAIT_PLUVIAN_BLESSED))
+				eyes_colorable_layer.color = "#00ffff"
+			else if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner) || HAS_TRAIT(owner, TRAIT_CULT_EYES)) // todo: red eyes trait
+				eyes_colorable_layer.color = "#ff0000"
+
+			if(HAS_TRAIT(owner, TRAIT_GLOWING_EYES))
+				eyes_colorable_layer.plane = LIGHTING_LAMPS_PLANE
+				eyes_colorable_layer.layer = ABOVE_LIGHTING_LAYER
+
+		. += eyes_colorable_layer
+
+	// lips
+	if(lip_style && species.flags[HAS_LIPS])
+		var/mutable_appearance/lips_appearance = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]_s", -default_icon_layer)
+		lips_appearance.color = lip_color
+
+		lips_appearance.pixel_x = species.offset_features[OFFSET_FACE][1]
+		lips_appearance.pixel_y = species.offset_features[OFFSET_FACE][2]
+
+		. += lips_appearance
+
+	var/should_render_facial = TRUE
+	var/should_render_hair = TRUE
+
+	if(is_burnt)
+		should_render_facial = FALSE
+		should_render_hair = FALSE
+	else if(owner)
+		var/render_flags = owner.head?.render_flags || owner.wear_mask?.render_flags || owner.wear_suit?.render_flags || owner.w_uniform?.render_flags
+		if(render_flags & HIDE_FACIAL_HAIR)
+			should_render_facial = FALSE
+		if(render_flags & HIDE_TOP_HAIR)
+			should_render_hair = FALSE
+
+	// facial hair
+	if(f_style && should_render_facial)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style)
-			f_style = owner.f_style
-			r_facial = owner.r_facial
-			g_facial = owner.g_facial
-			b_facial = owner.b_facial
-			dyed_r_facial = owner.dyed_r_facial
-			dyed_g_facial = owner.dyed_g_facial
-			dyed_b_facial = owner.dyed_b_facial
-			facial_painted = owner.facial_painted
-			var/mutable_appearance/facial = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s")
+			var/mutable_appearance/facial_appearance = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
+
+			facial_appearance.pixel_x = species.offset_features[OFFSET_FACE][1]
+			facial_appearance.pixel_y = species.offset_features[OFFSET_FACE][2]
+
 			if(facial_hair_style.do_colouration)
-				if(!facial_painted)
-					facial.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+				if(is_husk)
+					facial_appearance.color = RGB_CONTRAST(178, 178, 178)
 				else
-					facial.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
+					facial_appearance.color = facial_painted ? RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial) : RGB_CONTRAST(r_facial, g_facial, b_facial)
+			. += facial_appearance
 
-			add_overlay(facial)
-
-	if(owner.h_style)
-		var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
+	// hair
+	if(h_style && should_render_hair)
+		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
-			h_style = owner.h_style
-			grad_style = owner.grad_style
-			r_hair = owner.r_hair
-			g_hair = owner.g_hair
-			b_hair = owner.b_hair
-			dyed_r_hair = owner.dyed_r_hair
-			dyed_g_hair = owner.dyed_g_hair
-			dyed_b_hair = owner.dyed_b_hair
-			r_grad = owner.r_grad
-			g_grad = owner.g_grad
-			b_grad = owner.b_grad
-			hair_painted = owner.hair_painted
-			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			var/mutable_appearance/hair_appearance = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s", -HAIR_LAYER)
 			if(hair_style.do_colouration)
-				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
-				grad_s.Blend(hair_s, ICON_AND)
-				if(!hair_painted)
-					hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_AND)
-					grad_s.Blend(rgb(r_grad, g_grad, b_grad), ICON_AND)
-				else
-					hair_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
-					grad_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
-				hair_s.Blend(grad_s, ICON_OVERLAY)
+				if(is_husk || grad_style == "none") // no gradients, just fill with color
+					var/mycolor
+					if(is_husk)
+						mycolor = RGB_CONTRAST(178, 178, 178)
+					else if (hair_painted)
+						mycolor = RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair)
+					else
+						mycolor = RGB_CONTRAST(r_hair, g_hair, b_hair)
+					hair_appearance.color = mycolor
+				else // messy part, gradients
+					var/mutable_appearance/gradient = mutable_appearance('icons/mob/human/masks/hair_gradients.dmi', hair_gradients[grad_style])
+					gradient.appearance_flags = KEEP_TOGETHER
+					gradient.blend_mode = BLEND_INSET_OVERLAY // i think we can cut additional hair overlay if we use BLEND_MULTIPLY here, but need to make hair sprites white and ditch RGB_CONTRAST
+					gradient.color = hair_painted ? RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair) : RGB_CONTRAST(r_grad, g_grad, b_grad)
+					var/mutable_appearance/hair_appearance2 = new(hair_appearance)
+					hair_appearance2.blend_mode = BLEND_INSET_OVERLAY
+					gradient.add_overlay(hair_appearance2)
 
-			add_overlay(mutable_appearance(hair_s, "[hair_style.icon_state]_s"))
+					var/mutable_appearance/main_color = new(hair_appearance)
+					main_color.color = hair_painted ? RGB_CONTRAST(dyed_r_hair, dyed_g_hair, dyed_b_hair) : RGB_CONTRAST(r_hair, g_hair, b_hair)
+
+					hair_appearance.appearance_flags = KEEP_TOGETHER
+					hair_appearance.add_overlay(list(main_color, gradient))
+
+			hair_appearance.pixel_x = species.offset_features[OFFSET_HAIR][1]
+			hair_appearance.pixel_y = species.offset_features[OFFSET_HAIR][2]
+
+			. += hair_appearance
 
 /obj/item/organ/external/head/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/scalpel) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/shard))
@@ -947,7 +1293,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	desc = "Need a hand?"
 	force = 7
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "l_arm"
 
 	artery_name = "basilic vein"
@@ -994,7 +1339,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 7
 	artery_name = "basilic vein"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "r_arm"
 
 	temp_coeff = 1.0
@@ -1039,7 +1383,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 9
 	artery_name = "femoral artery"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "l_leg"
 
 	temp_coeff = 0.75
@@ -1073,7 +1416,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	artery_name = "femoral artery"
 
-	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "r_leg"
 
 	temp_coeff = 0.75
@@ -1196,10 +1538,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 			missing += BP
 	return missing
 
-/mob/living/carbon/human/proc/apply_recolor()
-	for(var/obj/item/organ/external/BP in bodyparts)
-		BP.recolor()
-
 // lol yes
 /obj/item/organ/external/chest/homunculus
 /obj/item/organ/external/chest/homunculus/atom_init()
@@ -1236,3 +1574,4 @@ Note that amputating the affected organ does in fact remove the infection from t
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
+#undef PICK_DAMAGE_STATE

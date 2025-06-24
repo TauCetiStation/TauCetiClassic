@@ -17,6 +17,7 @@
 <title>Permissions Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr.client)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
@@ -54,7 +55,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=600x500")
+	usr << browse(output,"window=editrights;[get_browse_size_parameter(usr.client, 600, 500)]")
 
 /datum/admins/proc/add_admin()
 	if(!usr.client)
@@ -158,6 +159,7 @@ var elements = document.getElementsByName('rights');
 	window.location='?src=\ref[src];editrights=permissions;ckey=[adm_ckey];new_rights='+new_rights+';'
 }
 </script>
+[get_browse_zoom_style(usr)]
 </head>
 <fieldset>
 <legend>Check all needed flags.</legend>
@@ -173,7 +175,7 @@ var elements = document.getElementsByName('rights');
 <input type="button" value="Apply" onclick="send_rights()" />
 </html>
 "}
-	usr << browse(output,"window=change_permissions;size=250x380;")
+	usr << browse(output,"window=change_permissions;[get_browse_size_parameter(usr, 250, 380)];")
 
 
 /datum/admins/proc/change_permissions(adm_ckey, new_rights)
@@ -344,6 +346,10 @@ var elements = document.getElementsByName('rights');
 	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND] rank for the duration of the round.") as null|anything in clients
 
 	if(!target)
+		return
+
+	if(!target.hub_authenticated)
+		to_chat(usr, "<span class='alert'>Client is not authorized through the hub!</span>")
 		return
 
 	if(!target.holder)

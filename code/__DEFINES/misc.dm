@@ -197,7 +197,8 @@
 #define WORLD_ICON_SIZE 32
 #define PIXEL_MULTIPLIER WORLD_ICON_SIZE/32
 
-// (Bay12 = -2), but we don't have that projectile code, so...
+// bullet_act() return values
+#define PROJECTILE_WEAKENED -2
 #define PROJECTILE_FORCE_MISS -1
 #define PROJECTILE_ACTED 0
 #define PROJECTILE_ABSORBED 2

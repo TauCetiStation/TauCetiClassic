@@ -46,6 +46,9 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		on_area_sensitive_trait_loss()
+
 	. = ..()
 
 	loc = null
@@ -57,7 +60,10 @@
 			T.reconsider_lights()
 
 	vis_locs = null //clears this atom out of all viscontents
-	vis_contents.Cut()
+
+	// world from tg: checking length(vis_contents) before cutting has significant speed benefits
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -163,7 +169,7 @@
 	if(A && non_native_bump)
 		A.Bumped(src)
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE, keep_grabs = TRUE)
 	if(!destination)
 		return
 	if(pulledby && !keep_pulling)
@@ -192,9 +198,11 @@
 			AM.Crossed(src, oldloc)
 	Moved(oldloc, 0)
 
-/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE, keep_grabs = TRUE)
 	if(!keep_pulling)
 		stop_pulling()
+	if(!keep_grabs)
+		StopGrabs()
 	if(buckled && !keep_buckled)
 		buckled.unbuckle_mob()
 	. = ..()
@@ -203,7 +211,7 @@
 		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled, keep_moving_diagonally, keep_grabs)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -406,11 +414,6 @@
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVE(location.area_sensitive_contents, src)
-
-/atom/movable/Destroy()
-	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
-		on_area_sensitive_trait_loss()
-	return ..()
 
 /* Sizes stuff */
 

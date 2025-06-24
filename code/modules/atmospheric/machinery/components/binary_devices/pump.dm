@@ -119,31 +119,47 @@ Thus, the two variables affect pump operation are set in New():
 
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
-	if(stat & (BROKEN|NOPOWER))
-		return
+/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user)
+	tgui_interact(user)
 
-	// this is the data which will be sent to the ui
-	var/data[0]
+/obj/machinery/atmospherics/components/binary/pump/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "GasPump", name)
+		ui.open()
 
-	data = list(
+/obj/machinery/atmospherics/components/binary/pump/tgui_data(mob/user)
+	var/list/data = list(
 		"on" = use_power,
-		"pressure_set" = round(target_pressure * 100),	//Nano UI can't handle rounded non-integers, apparently.
+		"pressure_set" = target_pressure,
 		"max_pressure" = max_pressure_setting,
-		"last_flow_rate" = round(last_flow_rate * 10),
-		"last_power_draw" = round(last_power_draw),
+		"last_power_draw" = last_power_draw,
 		"max_power_draw" = power_rating,
 	)
+	return data
 
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "gas_pump.tmpl", name, 470, 290)
-		ui.set_initial_data(data)	// when the ui is first opened this is the data it will use
-		ui.open()					// open the new ui window
-		ui.set_auto_update(1)		// auto update every Master Controller tick
+/obj/machinery/atmospherics/components/binary/pump/tgui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user = ui.user
+	if(isnull(user))
+		return
+
+	switch(action)
+		if("power")
+			set_power_use(!use_power)
+		if("min")
+			target_pressure = 0
+		if("max")
+			target_pressure = max_pressure_setting
+		if("set")
+			target_pressure = between(0, params["rate"], max_pressure_setting)
+
+	user.set_machine(src)
+	add_fingerprint(user)
+	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"] != "command"))
@@ -170,26 +186,6 @@ Thus, the two variables affect pump operation are set in New():
 		return //do not update_icon
 
 	broadcast_status()
-	update_icon()
-
-/obj/machinery/atmospherics/components/binary/pump/Topic(href, href_list)
-	if(!..())
-		return FALSE
-
-	if(href_list["power"])
-		set_power_use(!use_power)
-
-	switch(href_list["set_press"])
-		if ("min")
-			target_pressure = 0
-		if ("max")
-			target_pressure = max_pressure_setting
-		if ("set")
-			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)", "Pressure control", target_pressure) as num
-			target_pressure = between(0, new_pressure, max_pressure_setting)
-
-	usr.set_machine(src)
-	add_fingerprint(usr)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)

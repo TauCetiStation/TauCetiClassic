@@ -69,7 +69,7 @@
 
 /datum/faction/traitor/auto/proc/sort_possible_traitors(list/sorting_list)
 	for(var/mob/living/player in sorting_list)
-		if(player.ismindprotect())
+		if(ismindprotect(player))
 			sorting_list -= player
 			continue
 		if(!player.mind || !player.client)

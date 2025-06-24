@@ -27,9 +27,11 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
-#define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
-
 #define ispluvian(A) (A.get_species() == PLUVIAN)
+
+#define isskeleton(A) HAS_TRAIT(A, ELEMENT_TRAIT_SKELETON) // replace with trait checks, zombie too
+
+#define iszombie(A) HAS_TRAIT(A, ELEMENT_TRAIT_ZOMBIE) // below is different macro to check for the role
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
@@ -225,8 +227,6 @@
 
 #define isrolezombie(H) isrole(ZOMBIE, H)
 
-#define iszombie(H) (H.get_species() in global.all_zombie_species_names)
-
 #define isalien(H) isrole(XENOMORPH, H)
 
 #define isgangster(H) isrole(GANGSTER, H)
@@ -256,3 +256,15 @@
 #define isblobshield(A) (istype(A, /obj/structure/blob/shield))
 
 #define isblobresource(A) (istype(A, /obj/structure/blob/resource))
+
+// IMPLANTS
+
+#define ismindshielded(L) (locate(/obj/item/weapon/implant/mind_protect/mindshield) in L.implants)
+
+#define isloyal(L) (locate(/obj/item/weapon/implant/mind_protect/loyalty) in L.implants)
+
+#define ismindprotect(L) (locate(/obj/item/weapon/implant/mind_protect) in L.implants)
+
+#define isimplantedobedience(L) (locate(/obj/item/weapon/implant/obedience) in L.implants)
+
+#define isimplantedblueshield(L) (locate(/obj/item/weapon/implant/blueshield) in L.implants)

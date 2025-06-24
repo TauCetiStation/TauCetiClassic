@@ -89,6 +89,21 @@
 	new /obj/item/stack/sheet/metal(loc, 5)
 	..()
 
+/obj/machinery/drone_fabricator/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+
+	emagged = TRUE
+
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+
+	create_uniq_faction(/datum/faction/malf_drones)
+	create_spawners(/datum/spawner/malf_drone, 3, src)
+
+	return TRUE
+
 /mob/proc/dronize()
 
 	for(var/obj/machinery/drone_fabricator/DF in machines)

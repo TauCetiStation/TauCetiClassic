@@ -66,7 +66,7 @@
 			sign_place = H.name
 			H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 			H.mind.pluvian_social_credit -= 1
-			if(!owner.ismindshielded() && !owner.isloyal())
+			if(!ismindshielded(owner) && !isloyal(owner))
 				owner.mind.pluvian_social_credit += 1
 			sign = TRUE
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
@@ -120,13 +120,13 @@
 	charge_max = 20
 	sound = 'sound/magic/heal.ogg'
 	var/mob/living/fake_body
-	var/image/eye
 	var/target_loc
 	var/obj/my_gong
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call/proc/mimic_message(datum/source, message)
 	fake_body.say(message)
 
+// todo: refactor holocalls, make this spell holocall
 /obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/carbon/human/user = usr)
 	if(!fake_body)
 		if(available_pluvia_gongs.len == 0)
@@ -144,10 +144,9 @@
 		RegisterSignal(user,COMSIG_HUMAN_SAY, PROC_REF(mimic_message))
 		user.reset_view(fake_body, TRUE)
 		fake_body.add_remote_hearer(user)
-		eye = image('icons/mob/human_face.dmi',"pluvia_ms_s")
-		eye.plane = LIGHTING_LAMPS_PLANE
-		eye.layer = ABOVE_LIGHTING_LAYER
-		user.add_overlay(eye)
+		ADD_TRAIT(user, TRAIT_GLOWING_EYES, REF(src))
+		ADD_TRAIT(user, TRAIT_PLUVIAN_BLESSED, REF(src))
+		user.update_body(BP_HEAD)
 		user.hud_used.set_parallax(PARALLAX_HEAVEN)
 	else
 		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
@@ -156,7 +155,9 @@
 		fake_body = null
 		target_loc = null
 		user.reset_view(null)
-		user.cut_overlay(eye)
+		REMOVE_TRAIT(user, TRAIT_GLOWING_EYES, REF(src))
+		REMOVE_TRAIT(user, TRAIT_PLUVIAN_BLESSED, REF(src))
+		user.update_body(BP_HEAD)
 		available_pluvia_gongs += my_gong
 		user.hud_used.set_parallax(PARALLAX_CLASSIC)
 	user.clear_alert("Звонок")

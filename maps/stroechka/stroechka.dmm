@@ -5311,14 +5311,14 @@
 	},
 /area/station/hallway/secondary/arrival)
 "vT" = (
-/obj/machinery/door/airlock/external{
-	dir = 4;
-	dock_tag = "arrival_escape";
-	locked = 1;
-	name = "Escape Airlock"
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "escape_shuttle";
+	locked = 1;
+	name = "Escape Airlock"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -6689,7 +6689,7 @@
 /area/station/rnd/chargebay)
 "Fw" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -8736,6 +8736,20 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/atmos)
+"US" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "escape_shuttle";
+	locked = 1;
+	name = "Escape Airlock"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal{
@@ -30665,7 +30679,7 @@ as
 as
 QW
 vT
-vT
+US
 XB
 vT
 vT

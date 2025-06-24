@@ -1271,7 +1271,9 @@
 	},
 /area/custom/syndicate_mothership)
 "adm" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "arrival_shuttle"
+	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
 "adn" = (
@@ -1633,7 +1635,7 @@
 "aem" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "shuttle_escape";
+	dock_tag = "escape_shuttle";
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor,
@@ -1763,7 +1765,7 @@
 /area/custom/ninjaspawn)
 "aeF" = (
 /obj/machinery/door/unpowered/shuttle/pod{
-	dock_tag = "shuttle_escape"
+	dock_tag = "escape_shuttle"
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
@@ -2581,7 +2583,9 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "agY" = (
-/obj/machinery/door/airlock/multi_tile/metal,
+/obj/machinery/door/airlock/multi_tile/metal{
+	dock_tag = "ferry_shuttle"
+	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
 "agZ" = (
@@ -3363,9 +3367,7 @@
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "aiQ" = (
-/obj/machinery/body_scanconsole{
-	known_implants = list(/obj/item/weapon/implant/cortical)
-	},
+/obj/machinery/body_scanconsole/vox,
 /obj/effect/decal/cleanable/blood/gibs/xeno/body,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -7580,7 +7582,7 @@
 /area/shuttle/escape/centcom)
 "arE" = (
 /obj/machinery/door/unpowered/shuttle/pod{
-	dock_tag = "shuttle_escape";
+	dock_tag = "escape_shuttle";
 	req_access = list(1)
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
@@ -11282,7 +11284,8 @@
 /area/centcom/specops)
 "azo" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "centcomm_specops"
+	dock_tag = "specops_shuttle";
+	name = "Specops Shuttle"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -21789,7 +21792,7 @@
 /area/custom/abductor_ship)
 "beb" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "velocity_1";
+	dock_tag = "arrival_shuttle";
 	name = "Arrival Airlock"
 	},
 /obj/machinery/door/firedoor,
@@ -21913,7 +21916,7 @@
 "bfb" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "velocity_officer";
+	dock_tag = "velocity_officer_shuttle";
 	name = "Velocity Shuttle Dock Airlock";
 	req_access = list(101)
 	},
@@ -22867,13 +22870,11 @@
 	},
 /area/velocity)
 "bZb" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "velocity_dock";
-	locked = 1;
 	name = "Supply Dock Airlock";
 	req_access = list(101)
 	},
-/obj/machinery/door/firedoor,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -25046,7 +25047,7 @@
 /area/shuttle/officer/velocity)
 "fjb" = (
 /obj/machinery/door/unpowered/shuttle/officer{
-	dock_tag = "arrival_officer"
+	dock_tag = "velocity_officer_shuttle"
 	},
 /turf/simulated/shuttle/floor/shuttle_new{
 	dir = 8;
@@ -25114,12 +25115,14 @@
 	},
 /area/velocity)
 "fqb" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
-	},
 /obj/machinery/door/poddoor{
 	id = "NTrasen";
 	name = "Outer Airlock"
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "specops_shuttle";
+	name = "Specops Shuttle"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace";
@@ -25542,13 +25545,16 @@
 	},
 /area/centcom/specops)
 "gab" = (
-/obj/machinery/door/airlock/external,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "NTrasen";
 	name = "Outer Airlock";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/external{
+	dock_tag = "specops_shuttle";
+	name = "Specops Shuttle"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
@@ -27518,7 +27524,7 @@
 "jxq" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "shuttle_escape";
+	dock_tag = "escape_shuttle";
 	name = "Arrival Airlock";
 	req_access = list(1)
 	},
@@ -29511,7 +29517,7 @@
 /area/centcom/tdome)
 "nfb" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "centcomm_ferry";
+	dock_tag = "ferry_shuttle";
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
@@ -30332,6 +30338,17 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oGQ" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/machinery/door/airlock/external{
+	dock_tag = "specops_shuttle";
+	name = "Specops Shuttle"
+	},
+/turf/unsimulated/floor,
+/area/centcom/specops)
 "oHb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "11,13"
@@ -30791,7 +30808,7 @@
 "pCb" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "shuttle_escape";
+	dock_tag = "escape_shuttle";
 	name = "Arrival Airlock";
 	req_access = list(1)
 	},
@@ -61979,7 +61996,7 @@ fLb
 gGb
 aqF
 gab
-azo
+oGQ
 aAE
 jsb
 aBQ

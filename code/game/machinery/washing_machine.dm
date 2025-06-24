@@ -219,9 +219,10 @@ var/global/list/dyed_item_types = list(
 	icon_state = "wm_[state][panel]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user)
-	/*if(isscrewing(W))
-		panel = !panel
-		to_chat(user, "<span class='notice'>you [panel ? </span>"open" : "close"] the [src]'s maintenance panel")*/
+	if(iswrenching(W))
+		default_unfasten_wrench(user, W)
+		return
+
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)

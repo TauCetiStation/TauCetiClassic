@@ -89,6 +89,8 @@ var/global/bridge_secret = null
 	var/use_alien_job_restriction = 0
 	var/list/whitelisted_species_by_time = list()
 
+	var/guest_mode = GUEST_FORBIDDEN
+
 	var/server
 	var/banappeals
 	var/siteurl
@@ -176,7 +178,6 @@ var/global/bridge_secret = null
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/check_randomizer = 0
 
 	var/guard_email = null
 	var/guard_enabled = FALSE
@@ -410,8 +411,8 @@ var/global/bridge_secret = null
 				if ("forumurl")
 					config.forumurl = value
 
-				if ("guest_ban")
-					guests_allowed = 0
+				if ("guest_mode")
+					config.guest_mode = text2num(value)
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
@@ -597,9 +598,6 @@ var/global/bridge_secret = null
 
 				if("chat_bridge")
 					config.chat_bridge = value
-
-				if("check_randomizer")
-					config.check_randomizer = value
 
 				if("guard_email")
 					config.guard_email = value
