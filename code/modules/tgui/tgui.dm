@@ -223,7 +223,6 @@
 			"locked" = user.client.prefs.tgui_lock,
 			"scale" = user.client?.prefs.window_scale,
 		),
-		"mapName" = SSmapping.station_image,
 		"client" = list(
 			"ckey" = user.client.ckey,
 			"address" = user.client.address,

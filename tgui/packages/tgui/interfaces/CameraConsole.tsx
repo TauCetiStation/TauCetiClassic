@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { filter, sortBy, map, uniqBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
@@ -7,30 +7,30 @@ import { createRef } from 'inferno';
 import {
   Button,
   ByondUi,
-  Flex,
   Input,
   Section,
   Box,
   NanoMap,
-  Icon,
   Stack,
 } from '../components';
 import { Window } from '../layouts';
 
-interface Data {
+type Data = {
   mapRef: string;
   activeCamera: CameraObject;
   cameras: CameraObject[];
-}
+  stationMapName: string;
+  mineMapName?: string;
+  mineZLevels: number[];
+};
 
-interface CameraObject {
+type CameraObject = {
   name: string;
-  z: number;
-  ref: string;
   x: number;
   y: number;
+  z: number;
   status: boolean;
-}
+};
 
 /**
  * Returns previous and next camera names relative to the currently
@@ -54,16 +54,22 @@ export const prevNextCamera = (
  *
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
-export const selectCameras = (cameras, searchText = ''): [CameraObject] => {
+export const selectCameras = (
+  cameras: CameraObject[],
+  searchText = '',
+  zLevel = undefined
+): [CameraObject] => {
   const testSearch = createSearch(
     searchText,
     (camera: CameraObject) => camera.name
   );
   return flow([
     // Null camera filter
-    filter((camera) => camera?.name),
+    filter((camera: CameraObject) => camera?.name),
     // Optional search term
     searchText && filter(testSearch),
+    // Optional zlevel filter
+    zLevel && filter((camera: CameraObject) => camera.z === zLevel),
     // Slightly expensive, but way better than sorting in BYOND
     sortBy((camera) => camera.name),
   ])(cameras);
@@ -186,19 +192,36 @@ export const CameraConsoleContent = (props, context) => {
 
 export const CameraMinimapContent = (props, context) => {
   const { act, data, config } = useBackend<Data>(context);
-  const { activeCamera } = data;
-  const cameras = selectCameras(data.cameras);
+  const { activeCamera, stationMapName, mineMapName, mineZLevels } = data;
+
+  const availableZLevels = flow([
+    map((camera: CameraObject) => camera.z),
+    uniqBy(),
+    sortBy(),
+  ])(data.cameras);
+
+  const [zLevel, setZLevel] = useLocalState<number>(
+    context,
+    'zLevel',
+    availableZLevels.at(0)
+  );
+
+  const cameras = selectCameras(data.cameras, undefined, zLevel);
 
   const [prevCameraName, nextCameraName] = prevNextCamera(
     cameras,
     activeCamera
   );
 
-  const [zoom, setZoom] = useLocalState(context, 'zoom', 1);
-
   return (
     <Box height="100%" mb="0.5rem" overflow="hidden">
-      <NanoMap onZoom={(v) => setZoom(v)}>
+      <NanoMap
+        zLevel={zLevel}
+        setZLevel={setZLevel}
+        stationMapName={stationMapName}
+        mineMapName={mineMapName}
+        mineLevels={mineZLevels}
+        availableZLevels={availableZLevels}>
         {cameras.map((camera) => (
           <NanoMap.MarkerIcon
             key={camera.name}
