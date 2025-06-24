@@ -116,7 +116,7 @@ export class NanoMap extends Component {
     const { dragging, offsetX, offsetY, zoom = 1 } = this.state;
     const { children } = this.props;
 
-    const mapUrl = resolveAsset("nanomap_" + config.mapName + "_1.png");
+    const mapUrl = resolveAsset('nanomap_' + config.mapName + '_1.png');
     const mapSize = MAP_SIZE + 'px';
     const newStyle = {
       width: mapSize,
@@ -137,8 +137,7 @@ export class NanoMap extends Component {
         <Box
           style={newStyle}
           textAlign="center"
-          onMouseDown={this.handleDragStart}
-        >
+          onMouseDown={this.handleDragStart}>
           <Box>{children}</Box>
         </Box>
         <NanoMapZoomer zoom={zoom} onZoom={this.handleZoom} />
@@ -166,10 +165,9 @@ const NanoMapMarker = (props, context) => {
           lineHeight="0"
           bottom={ry + 'px'}
           left={rx + 'px'}
-          width={(PIXELS_PER_TURF / zoom) + 'px'}
-          height={(PIXELS_PER_TURF / zoom) + 'px'}
-          {...rest}
-        >
+          width={PIXELS_PER_TURF / zoom + 'px'}
+          height={PIXELS_PER_TURF / zoom + 'px'}
+          {...rest}>
           {children}
         </Box>
       </Tooltip>
@@ -208,7 +206,9 @@ const NanoMapZoomer = (props, context) => {
   return (
     <Box className="NanoMap__zoomer">
       <LabeledList>
-        <LabeledList.Item label="Zoom" labelStyle={{ 'vertical-align': 'middle' }}>
+        <LabeledList.Item
+          label="Zoom"
+          labelStyle={{ 'vertical-align': 'middle' }}>
           <Flex direction="row">
             <Slider
               minValue={1}
@@ -218,7 +218,13 @@ const NanoMapZoomer = (props, context) => {
               value={props.zoom}
               onDrag={(e, v) => props.onZoom(e, v)}
             />
-            <Button ml="0.5em" float="right" icon="sync" tooltip="Reset View" onClick={(e) => props.onReset?.(e)} />
+            <Button
+              ml="0.5em"
+              float="right"
+              icon="sync"
+              tooltip="Reset View"
+              onClick={(e) => props.onReset?.(e)}
+            />
           </Flex>
         </LabeledList.Item>
       </LabeledList>

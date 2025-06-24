@@ -3,15 +3,25 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { createRef } from "inferno";
-import { Button, ByondUi, Flex, Input, Section, Box, NanoMap, Icon, Stack } from '../components';
+import { createRef } from 'inferno';
+import {
+  Button,
+  ByondUi,
+  Flex,
+  Input,
+  Section,
+  Box,
+  NanoMap,
+  Icon,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 interface Data {
   mapRef: string;
   activeCamera: CameraObject;
   cameras: CameraObject[];
-};
+}
 
 interface CameraObject {
   name: string;
@@ -20,13 +30,16 @@ interface CameraObject {
   x: number;
   y: number;
   status: boolean;
-};
+}
 
 /**
  * Returns previous and next camera names relative to the currently
  * active camera.
  */
-export const prevNextCamera = (cameras: [CameraObject], activeCamera: CameraObject) => {
+export const prevNextCamera = (
+  cameras: [CameraObject],
+  activeCamera: CameraObject
+) => {
   if (!activeCamera) {
     return [];
   }
@@ -42,7 +55,10 @@ export const prevNextCamera = (cameras: [CameraObject], activeCamera: CameraObje
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 export const selectCameras = (cameras, searchText = ''): [CameraObject] => {
-  const testSearch = createSearch(searchText, (camera: CameraObject) => camera.name);
+  const testSearch = createSearch(
+    searchText,
+    (camera: CameraObject) => camera.name
+  );
   return flow([
     // Null camera filter
     filter((camera) => camera?.name),
@@ -58,10 +74,11 @@ export const CameraConsole = (_, context: any) => {
     Byond.winset(mapRef, 'style', style);
   });
 
-  const [
-    isMinimapShown,
-    setMinimapShown,
-  ] = useLocalState(context, 'isMinimapShown', false);
+  const [isMinimapShown, setMinimapShown] = useLocalState(
+    context,
+    'isMinimapShown',
+    false
+  );
 
   const { act, data } = useBackend<Data>(context);
   const { mapRef, activeCamera } = data;
@@ -78,7 +95,10 @@ export const CameraConsole = (_, context: any) => {
           <Stack.Item>
             <Stack vertical fill>
               <Stack.Item grow m={1}>
-                <CameraConsoleContent isMinimapShown={isMinimapShown} setMinimapShown={setMinimapShown} />
+                <CameraConsoleContent
+                  isMinimapShown={isMinimapShown}
+                  setMinimapShown={setMinimapShown}
+                />
               </Stack.Item>
             </Stack>
           </Stack.Item>
@@ -137,10 +157,7 @@ export const CameraConsole = (_, context: any) => {
 };
 
 export const CameraConsoleContent = (props, context) => {
-  const {
-    isMinimapShown,
-    setMinimapShown,
-   } = props;
+  const { isMinimapShown, setMinimapShown } = props;
 
   const tabUi = (minimapShown: boolean) => {
     switch (minimapShown) {
@@ -158,9 +175,8 @@ export const CameraConsoleContent = (props, context) => {
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <Button
-          onClick={() => toggleMode()}>
-          {isMinimapShown ? "Switch to List" : "Switch to Minimap"}
+        <Button onClick={() => toggleMode()}>
+          {isMinimapShown ? 'Switch to List' : 'Switch to Minimap'}
         </Button>
       </Stack.Item>
       {tabUi(isMinimapShown)}
@@ -173,10 +189,10 @@ export const CameraMinimapContent = (props, context) => {
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras);
 
-  const [
-    prevCameraName,
-    nextCameraName,
-  ] = prevNextCamera(cameras, activeCamera);
+  const [prevCameraName, nextCameraName] = prevNextCamera(
+    cameras,
+    activeCamera
+  );
 
   const [zoom, setZoom] = useLocalState(context, 'zoom', 1);
 
@@ -190,8 +206,16 @@ export const CameraMinimapContent = (props, context) => {
             y={camera.y}
             icon="circle"
             tooltip={camera.name}
-            color={camera?.name === activeCamera?.name ? "green" : camera.status ? "blue" : "red"}
-            onClick={() => {act('switch_camera', {name: camera.name})}}
+            color={
+              camera?.name === activeCamera?.name
+                ? 'green'
+                : camera.status
+                  ? 'blue'
+                  : 'red'
+            }
+            onClick={() => {
+              act('switch_camera', { name: camera.name });
+            }}
           />
         ))}
       </NanoMap>
