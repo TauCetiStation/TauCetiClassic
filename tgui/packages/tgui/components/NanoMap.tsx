@@ -256,7 +256,7 @@ export class NanoMap extends Component<Props, State> {
   }
 
   handleScroll = (e: WheelEvent) => {
-    const newZoom = this.state.zoom - (e.deltaY / 200);  // One scroll up is -100
+    const newZoom = this.state.zoom - e.deltaY / 200; // One scroll up is -100
     this.handleZoom(e, newZoom);
     pauseEvent(e);
   };
