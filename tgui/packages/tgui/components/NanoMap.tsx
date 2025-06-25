@@ -89,7 +89,7 @@ const NanoMapZoomer = (props, context) => {
                     stepPixelSize={10}
                     format={(v) => v.toFixed(1) + 'x'}
                     value={props.zoom}
-                    onDrag={(e, v) => props.onZoom(e, v)}
+                    onDrag={(e, v) => props.onZoom(v)}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -97,7 +97,7 @@ const NanoMapZoomer = (props, context) => {
                     float="right"
                     icon="sync"
                     tooltip="Reset View"
-                    onClick={(e) => props.onReset?.(e)}
+                    onClick={(e) => props.onReset()}
                   />
                 </Stack.Item>
               </Stack>
