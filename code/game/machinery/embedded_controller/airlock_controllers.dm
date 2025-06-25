@@ -61,12 +61,33 @@
 
 /obj/machinery/embedded_controller/radio/airlock_controller/tgui_data()
 	var/data = list()
-	data["chamber_pressure"] = round(program.memory["chamber_sensor_pressure"])
-	data["exterior_status"] = program.memory["exterior_status"]
-	data["interior_status"] = program.memory["interior_status"]
+
+	data["chamberPressure"] = round(program.memory["chamber_sensor_pressure"])
+	data["exteriorStatus"] = program.memory["exterior_status"]
+	data["interiorStatus"] = program.memory["interior_status"]
 	data["processing"] = program.memory["processing"]
+
 	return data
 
+/obj/machinery/embedded_controller/radio/airlock_controller/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	var/list/command_map = list(
+		"cycleExterior" = "cycle_ext",
+		"cycleInterior" = "cycle_int",
+		"forceExterior" = "force_ext",
+		"forceInterior" = "force_int",
+		"abort" = "abort"
+	)
+
+	var/converted_command = command_map[action]
+
+	if(converted_command)
+		program.receive_user_command(converted_command)
+
+	return TRUE
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user)
 	tgui_interact(user)
@@ -74,7 +95,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AirlockControllerInterface", name)
+		ui = new(user, src, "AirlockController", name)
 		ui.open()
 
 //Access controller for door control - used in virology and the like
