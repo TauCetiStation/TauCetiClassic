@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component, RefObject, createRef } from 'inferno';
 import { Box, Button, Dropdown, Flex, Icon, Tooltip, Stack } from '.';
 import { LabeledList } from './LabeledList';
 import { Slider } from './Slider';
@@ -142,7 +142,7 @@ type Props = {
   zLevel: number;
   setZLevel: (zLevel: number) => void;
   onZoom?: (zoom: number) => void;
-  onOffsetChange?: (event: MouseEvent, state: State) => void;
+  onOffsetChange?: (offsetX: number, offsetY: number) => void;
 };
 
 export class NanoMap extends Component<Props, State> {
@@ -154,11 +154,11 @@ export class NanoMap extends Component<Props, State> {
 
   static MarkerIcon = NanoMapMarkerIcon;
 
-  ref: EventTarget;
+  ref?: RefObject<HTMLDivElement>;
 
   constructor(props: Props) {
     super(props);
-
+    this.ref = createRef();
     this.state = {
       offsetX: 0,
       offsetY: 0,
@@ -171,7 +171,6 @@ export class NanoMap extends Component<Props, State> {
   }
 
   handleDragStart = (e: MouseEvent) => {
-    this.ref = e.target;
     this.setState({
       dragging: false,
       originX: e.screenX,
@@ -190,7 +189,7 @@ export class NanoMap extends Component<Props, State> {
         originY: null,
       },
       () => {
-        this.props.onOffsetChange?.(e, this.state);
+        this.props.onOffsetChange?.(this.state.offsetX, this.state.offsetY);
       }
     );
     document.removeEventListener('mousemove', this.handleDragMove);
@@ -204,8 +203,8 @@ export class NanoMap extends Component<Props, State> {
       const newOffsetX = e.screenX - state.originX;
       const newOffsetY = e.screenY - state.originY;
       if (prevState.dragging) {
-        state.offsetX += newOffsetX / state.zoom;
-        state.offsetY += newOffsetY / state.zoom;
+        state.offsetX += newOffsetX;
+        state.offsetY += newOffsetY;
         state.originX = e.screenX;
         state.originY = e.screenY;
       } else {
@@ -216,25 +215,22 @@ export class NanoMap extends Component<Props, State> {
     pauseEvent(e);
   };
 
-  handleZoom = (_e: MouseEvent, value: number) => {
-    const newZoom = Math.min(Math.max(value, 0.5), 16);
-    this.setState({ zoom: newZoom });
-    this.props.onZoom?.(newZoom);
+  handleZoom = (value: number) => {
+    this.zoomToPoint(value);
   };
 
-  handleReset = (e: MouseEvent) => {
+  handleReset = () => {
     this.setState(
       {
         offsetX: 0,
         offsetY: 0,
         zoom: 1,
-        zLevel: this.props.availableZLevels.at(0),
       },
       () => {
-        this.props.onOffsetChange?.(e, this.state);
+        this.props.onOffsetChange?.(this.state.offsetX, this.state.offsetY);
+        this.props.onZoom?.(this.state.zoom);
       }
     );
-    this.handleZoom(e, 1);
   };
 
   getChildContext() {
@@ -251,9 +247,39 @@ export class NanoMap extends Component<Props, State> {
     });
   };
 
+  zoomToPoint = (zoom: number, toX?: number, toY?: number) => {
+    const newZoom = Math.min(16, Math.max(0.5, zoom));
+
+    this.setState(
+      (prevState) => {
+        const state = { ...prevState };
+        const x = (toX ?? MAP_SIZE / 2) - state.offsetX;
+        const y = (toY ?? MAP_SIZE / 2) - state.offsetY;
+        state.offsetX += x - (x / state.zoom) * newZoom;
+        state.offsetY += y - (y / state.zoom) * newZoom;
+        state.zoom = newZoom;
+        return state;
+      },
+      () => {
+        this.props.onOffsetChange?.(this.state.offsetX, this.state.offsetY);
+        this.props.onZoom?.(this.state.zoom);
+      }
+    );
+  };
+
   handleScroll = (e: WheelEvent) => {
-    const newZoom = this.state.zoom - e.deltaY / 200; // One scroll up is -100
-    this.handleZoom(e, newZoom);
+    let zoomChange = 0;
+    if (e.deltaY > 0) {
+      zoomChange = -0.5;
+    } else if (e.deltaY < 0) {
+      zoomChange = 0.5;
+    }
+    const boundingBox = this.ref.current.getBoundingClientRect();
+
+    const mouseX = e.clientX - boundingBox.x;
+    const mouseY = e.clientY - boundingBox.y;
+    this.zoomToPoint(this.state.zoom + zoomChange, mouseX, mouseY);
+
     pauseEvent(e);
   };
 
@@ -284,7 +310,10 @@ export class NanoMap extends Component<Props, State> {
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'text-align': 'center',
-      transform: `scale(${zoom}) translate(${offsetX}px,${offsetY}px)`,
+      transform: `translate(${offsetX}px,${offsetY}px) scale(${zoom})`,
+      'transform-origin': 'top left',
+      transition: `${this.state.dragging ? '0s' : '0.075s'} linear`,
+      cursor: dragging ? 'move' : 'auto',
     };
 
     const backgroundUrl = resolveAsset('nanomapBackground.png');
@@ -292,17 +321,15 @@ export class NanoMap extends Component<Props, State> {
     const backgroundStyle = {
       overflow: 'hiddden',
       width: '100%',
-      'z-index': 1,
+      'z-index': 0,
       'background-image': `url(${backgroundUrl})`,
-      cursor: dragging ? 'move' : 'auto',
     };
 
     return (
-      <Box style={backgroundStyle}>
+      <div style={backgroundStyle} onWheel={this.handleScroll} ref={this.ref}>
         <Box
           style={mapStyle}
           textAlign="center"
-          onWheel={this.handleScroll}
           onMouseDown={this.handleDragStart}>
           <Box>{children}</Box>
         </Box>
@@ -314,7 +341,7 @@ export class NanoMap extends Component<Props, State> {
           onZLevel={this.handleZLevel}
           onReset={this.handleReset}
         />
-      </Box>
+      </div>
     );
   }
 }

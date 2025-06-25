@@ -98,14 +98,10 @@ export const CameraConsole = (_, context: any) => {
       <Window.Content>
         <Stack fill>
           <Stack.Item>
-            <Stack vertical fill>
-              <Stack.Item grow>
-                <CameraConsoleContent
-                  isMinimapShown={isMinimapShown}
-                  setMinimapShown={setMinimapShown}
-                />
-              </Stack.Item>
-            </Stack>
+            <CameraConsoleContent
+              isMinimapShown={isMinimapShown}
+              setMinimapShown={setMinimapShown}
+            />
           </Stack.Item>
           <Stack.Item grow>
             <Stack vertical fill>
