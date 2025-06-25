@@ -20,25 +20,26 @@ const pauseEvent = (e: MouseEvent) => {
   return false;
 };
 
+const transformZoom = (value: number): number => {
+  return Math.exp((value - 1) * 0.5);
+};
+
 const NanoMapMarker = (props, context) => {
   const {
     map: { zoom },
   } = context;
   const { x, y, icon, tooltip, color, children, ...rest } = props;
   // For some reason the X and Y are offset by 1
-  const rx = (x - 1) * PIXELS_PER_TURF;
-  const ry = (y - 1) * PIXELS_PER_TURF;
+  const rx = (x - 2) * PIXELS_PER_TURF;
+  const ry = y * PIXELS_PER_TURF;
   return (
     <div>
       <Tooltip content={tooltip}>
         <Box
           position="absolute"
-          className="NanoMap__marker"
           lineHeight="0"
           bottom={ry + 'px'}
           left={rx + 'px'}
-          width={PIXELS_PER_TURF / zoom + 'px'}
-          height={PIXELS_PER_TURF / zoom + 'px'}
           {...rest}>
           {children}
         </Box>
@@ -52,7 +53,7 @@ const NanoMapMarkerIcon = (props, context) => {
     map: { zoom },
   } = context;
   const { icon, color, ...rest } = props;
-  const markerSize = PIXELS_PER_TURF / zoom + 2;
+  const markerSize = PIXELS_PER_TURF * 2;
   return (
     <NanoMapMarker {...rest}>
       <Icon
@@ -60,10 +61,7 @@ const NanoMapMarkerIcon = (props, context) => {
         color={color}
         fontSize={`${markerSize}px`}
         style={{
-          position: 'relative',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          position: 'absolute',
         }}
       />
     </NanoMapMarker>
@@ -255,8 +253,8 @@ export class NanoMap extends Component<Props, State> {
         const state = { ...prevState };
         const x = (toX ?? MAP_SIZE / 2) - state.offsetX;
         const y = (toY ?? MAP_SIZE / 2) - state.offsetY;
-        const exponentialOldZoom = this.transformZoom(state.zoom);
-        const exponentialNewZoom = this.transformZoom(newZoom);
+        const exponentialOldZoom = transformZoom(state.zoom);
+        const exponentialNewZoom = transformZoom(newZoom);
         state.offsetX += x - (x / exponentialOldZoom) * exponentialNewZoom;
         state.offsetY += y - (y / exponentialOldZoom) * exponentialNewZoom;
         state.zoom = newZoom;
@@ -295,15 +293,11 @@ export class NanoMap extends Component<Props, State> {
     return `nanomap_${this.props.stationMapName}_1.png`;
   };
 
-  transformZoom = (value: number): number => {
-    return Math.exp((value - 1) * 0.5);
-  };
-
   render() {
     const { dragging, offsetX, offsetY, zoom = 1 } = this.state;
     const { children } = this.props;
 
-    const exponentialZoom = this.transformZoom(zoom);
+    const exponentialZoom = transformZoom(zoom);
 
     const mapUrl = resolveAsset(this.getMapName());
     const mapSize = MAP_SIZE + 'px';
