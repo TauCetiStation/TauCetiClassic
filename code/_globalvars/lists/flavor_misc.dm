@@ -10,7 +10,7 @@ var/global/list/underwear_m = list("White", "Black", "Coyot", "Olive", "Navy", "
 var/global/list/underwear_f = list("White", "Black", "Coyot", "Olive", "Navy", "Pink", "None")
 	//undershirt
 var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Blue Tank top", "Red Tank top", "Yellow Tank top", "Green Tank top", "Pink Tank top", "Purple Tank top", "Olive Tank top", "Navy Tank top", "Coyot Tank top", "Black shirt", "White shirt", "Blue shirt", "Red shirt", "Yellow shirt", "Green shirt", "Pink shirt","Purple shirt","Olive shirt","Navy shirt","Coyot shirt","None")
-var/global/list/socks_t = list("White short", "White normal", "White long", "White knee", "Black short", "Black normal", "Black long", "Black knee", "Olive short", "Olive normal", "Olive long", "Olive knee", "Navy short", "Navy normal", "Navy long", "Navy knee", "Tights short", "Tights long", "Tights full", "None")
+var/global/list/socks_t = list("White short", "White normal", "White knee", "White long", "Black short", "Black normal", "Black knee", "Black long", "Olive short", "Olive normal", "Olive knee", "Olive long", "Navy short", "Navy normal", "Navy knee", "Navy long", "Tights short", "Tights long", "Tights full", "None")
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Sporty Backpack", "Satchel", "Satchel Alt")
 	//Heights
