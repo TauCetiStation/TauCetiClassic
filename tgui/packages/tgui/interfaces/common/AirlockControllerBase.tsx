@@ -83,10 +83,7 @@ export const AirlockControllerBase = (
                     />
                   )
                 }>
-                <Stack align="baseline" wrap>
-                  {children}
-                  {/*  */}
-                </Stack>
+                {children}
               </Section>
             </Stack.Item>
           )}
