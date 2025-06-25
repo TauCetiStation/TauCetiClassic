@@ -84,7 +84,7 @@ const NanoMapZoomer = (props, context) => {
                 <Stack.Item grow>
                   <Slider
                     minValue={0.5}
-                    maxValue={16}
+                    maxValue={6}
                     step={0.5}
                     stepPixelSize={10}
                     format={(v) => v.toFixed(1) + 'x'}
@@ -248,15 +248,17 @@ export class NanoMap extends Component<Props, State> {
   };
 
   zoomToPoint = (zoom: number, toX?: number, toY?: number) => {
-    const newZoom = Math.min(16, Math.max(0.5, zoom));
+    const newZoom = Math.min(6, Math.max(0.5, zoom));
 
     this.setState(
       (prevState) => {
         const state = { ...prevState };
         const x = (toX ?? MAP_SIZE / 2) - state.offsetX;
         const y = (toY ?? MAP_SIZE / 2) - state.offsetY;
-        state.offsetX += x - (x / state.zoom) * newZoom;
-        state.offsetY += y - (y / state.zoom) * newZoom;
+        const exponentialOldZoom = this.transformZoom(state.zoom);
+        const exponentialNewZoom = this.transformZoom(newZoom);
+        state.offsetX += x - (x / exponentialOldZoom) * exponentialNewZoom;
+        state.offsetY += y - (y / exponentialOldZoom) * exponentialNewZoom;
         state.zoom = newZoom;
         return state;
       },
@@ -293,9 +295,15 @@ export class NanoMap extends Component<Props, State> {
     return `nanomap_${this.props.stationMapName}_1.png`;
   };
 
+  transformZoom = (value: number): number => {
+    return Math.exp((value - 1) * 0.5);
+  };
+
   render() {
     const { dragging, offsetX, offsetY, zoom = 1 } = this.state;
     const { children } = this.props;
+
+    const exponentialZoom = this.transformZoom(zoom);
 
     const mapUrl = resolveAsset(this.getMapName());
     const mapSize = MAP_SIZE + 'px';
@@ -310,7 +318,7 @@ export class NanoMap extends Component<Props, State> {
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'text-align': 'center',
-      transform: `translate(${offsetX}px,${offsetY}px) scale(${zoom})`,
+      transform: `translate(${offsetX}px,${offsetY}px) scale(${exponentialZoom})`,
       'transform-origin': 'top left',
       transition: `${this.state.dragging ? '0s' : '0.075s'} linear`,
       cursor: dragging ? 'move' : 'auto',
