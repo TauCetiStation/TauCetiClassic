@@ -1,36 +1,55 @@
 import { useBackend } from '../backend';
 import {
   AirlockControllerBase,
-  DoorStatus,
-  DoorOpen,
   AirlockControllerPressureIndicator,
 } from './common/AirlockControllerBase';
 
 import { Button } from '../components';
 
 type Data = {
+  externalPressure: number;
+  internalPressure: number;
   chamberPressure: number;
-  exteriorStatus: DoorStatus;
-  interiorStatus: DoorStatus;
   processing: boolean;
+  purge: boolean;
+  secure: boolean;
 };
 
-export const AirlockController = (_, context) => {
+export const AdvancedAirlockController = (_, context) => {
   const { data, act } = useBackend<Data>(context);
 
-  const { processing, exteriorStatus, interiorStatus, chamberPressure } = data;
+  const {
+    processing,
+    externalPressure,
+    chamberPressure,
+    internalPressure,
+    secure,
+    purge,
+  } = data;
 
   return (
     <AirlockControllerBase
       width={350}
-      height={207}
+      height={279}
       hasAbort
       processing={processing}
       statusItems={[
         {
+          title: 'External pressure',
+          children: (
+            <AirlockControllerPressureIndicator value={externalPressure} />
+          ),
+        },
+        {
           title: 'Chamber pressure',
           children: (
             <AirlockControllerPressureIndicator value={chamberPressure} />
+          ),
+        },
+        {
+          title: 'Internal pressure',
+          children: (
+            <AirlockControllerPressureIndicator value={internalPressure} />
           ),
         },
       ]}>
@@ -50,26 +69,29 @@ export const AirlockController = (_, context) => {
       <Button
         icon="warning"
         content="Force exterior door"
-        color={
-          interiorStatus.state === DoorOpen.Open
-            ? 'red'
-            : processing
-              ? 'yellow'
-              : null
-        }
+        color={processing ? 'yellow' : null}
         onClick={() => act('forceExterior')}
       />
       <Button
         icon="warning"
         content="Force interior door"
-        color={
-          exteriorStatus.state === DoorOpen.Open
-            ? 'red'
-            : processing
-              ? 'yellow'
-              : null
-        }
+        color={processing ? 'yellow' : null}
         onClick={() => act('forceInterior')}
+      />
+      <br />
+      <Button
+        icon="refresh"
+        content="Purge"
+        disabled={processing}
+        color={purge && 'green'}
+        onClick={() => act('purge')}
+      />
+      <Button
+        icon={secure ? 'lock' : 'unlock'}
+        content="Secure"
+        disabled={processing}
+        color={secure && 'green'}
+        onClick={() => act('secure')}
       />
     </AirlockControllerBase>
   );
