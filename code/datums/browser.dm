@@ -242,14 +242,11 @@
 	opentime = 0
 	close()
 
-
-#define GET_RATIO(C) ((C.window_pixelratio != 1) ? C.window_pixelratio : (C.dpi != 1 ? C.dpi : 1))
-
 // zoom browser based on user settings
 /proc/get_browse_zoom_style(client/C)
 	. = ""
 	if(C && !C.prefs.window_scale)
-		var/ratio = GET_RATIO(C)
+		var/ratio = C.window_pixelratio
 
 		if(ratio != 1)
 			. = "<style>body { zoom: [100 / C.window_pixelratio]% }</style>"
@@ -258,11 +255,9 @@
 /proc/get_browse_size_parameter(client/C, width, height)
 	var/ratio = 1
 	if(C && C.prefs.window_scale)
-		ratio = GET_RATIO(C)
+		ratio = C.window_pixelratio
 
 	return "size=[width * ratio]x[height * ratio];"
-
-#undef GET_RATIO
 
 /proc/popup(user, message, title)
 	var/datum/browser/P = new(user, title, title)
