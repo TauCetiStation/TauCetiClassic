@@ -26,6 +26,8 @@
 	var/turf/monitor_turf = get_turf(src)
 	var/list/crewmembers = list()
 
+	var/list/available_z_levels = SSmapping.level_by_trait(ZTRAIT_STATION) + SSmapping.level_by_trait(ZTRAIT_MINING) + [monitor_turf.z]
+
 	for(var/tracked_atom in tracked)
 		var/mob/living/carbon/human/H = null
 		var/tracking_sensor = SUIT_SENSOR_TRACKING
@@ -42,7 +44,7 @@
 			H = tracked_atom
 		var/turf/atom_position = get_turf(H)
 		//nullspace? other z-level?
-		if(!atom_position || atom_position.z != monitor_turf.z)
+		if(!atom_position || !available_z_levels.Find(atom_position.z))
 			continue
 
 		var/list/crewmemberData = list("dead"=0, "oxy"=-1, "tox"=-1, "fire"=-1, "brute"=-1, "area"="", "x"=-1, "y"=-1)
