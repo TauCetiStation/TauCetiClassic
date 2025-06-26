@@ -418,7 +418,7 @@
 		set_light(1, 1, "#0c8801")
 
 	for(var/image/I in status_overlay)
-		I.plane = LIGHTING_LAMPS_PLANE
+		I.layer = GAME_PLANE
 		add_overlay(I)
 
 // timed process
