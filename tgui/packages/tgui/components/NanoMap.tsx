@@ -4,8 +4,7 @@ import { LabeledList } from './LabeledList';
 import { Slider } from './Slider';
 import { resolveAsset } from '../assets';
 
-const PIXELS_PER_TURF = 1;
-const MAP_SIZE = 255 * PIXELS_PER_TURF;
+const MAP_SIZE = 255;
 /** At zoom = 1 */
 
 const pauseEvent = (e: MouseEvent) => {
@@ -26,12 +25,12 @@ const transformZoom = (value: number): number => {
 
 const NanoMapMarker = (props, context) => {
   const {
-    map: { zoom },
+    map: { pixelsPerTurf },
   } = context;
   const { x, y, icon, tooltip, color, children, ...rest } = props;
   // For some reason the X and Y are offset by 1
-  const rx = (x - 2) * PIXELS_PER_TURF;
-  const ry = y * PIXELS_PER_TURF;
+  const rx = (x - 2) * pixelsPerTurf;
+  const ry = y * pixelsPerTurf;
   return (
     <div>
       <Tooltip content={tooltip}>
@@ -50,10 +49,10 @@ const NanoMapMarker = (props, context) => {
 
 const NanoMapMarkerIcon = (props, context) => {
   const {
-    map: { zoom },
+    map: { pixelsPerTurf },
   } = context;
   const { icon, color, ...rest } = props;
-  const markerSize = PIXELS_PER_TURF * 2;
+  const markerSize = pixelsPerTurf * 2;
   return (
     <NanoMapMarker {...rest}>
       <Icon
@@ -72,7 +71,9 @@ const NanoMapZoomer = (props, context) => {
   return (
     <Box
       z-index={1000}
+      style={{ 'z-index': 1000 }}
       position="relative"
+      p={0.5}
       backgroundColor={'hsla(0, 0%, 0%, 0.33)'}>
       <Stack align="baseline">
         <Stack.Item grow>
@@ -84,7 +85,7 @@ const NanoMapZoomer = (props, context) => {
                     minValue={0.5}
                     maxValue={6}
                     step={0.5}
-                    stepPixelSize={10}
+                    stepPixelSize={25}
                     format={(v) => v.toFixed(1) + 'x'}
                     value={props.zoom}
                     onDrag={(e, v) => props.onZoom(v)}
@@ -107,7 +108,7 @@ const NanoMapZoomer = (props, context) => {
             <LabeledList>
               <LabeledList.Item label="Z-Level">
                 <Dropdown
-                  over
+                  over={!props.controlsOnTop}
                   selected={props.zLevel}
                   options={props.availableZLevels}
                   onSelected={props.onZLevel}
@@ -123,8 +124,8 @@ const NanoMapZoomer = (props, context) => {
 };
 
 type State = {
-  offsetX: number;
-  offsetY: number;
+  centerX: number;
+  centerY: number;
   dragging: boolean;
   originX?: number;
   originY?: number;
@@ -135,16 +136,20 @@ type State = {
 type Props = {
   stationMapName: string;
   mineMapName?: string;
-  mineLevels: number[];
+  mineZLevels: number[];
   availableZLevels: number[];
   zLevel: number;
   setZLevel: (zLevel: number) => void;
   onZoom?: (zoom: number) => void;
-  onOffsetChange?: (offsetX: number, offsetY: number) => void;
+  onCenterChange?: (centerX: number, centerY: number) => void;
+  controlsOnTop?: boolean;
+  pixelsPerTurf?: number;
 };
 
 export class NanoMap extends Component<Props, State> {
   static mapSize = MAP_SIZE;
+
+  static defaultProps = { pixelsPerTurf: 1, controlsOnTop: false };
 
   static Marker = NanoMapMarker;
 
@@ -158,8 +163,8 @@ export class NanoMap extends Component<Props, State> {
     super(props);
     this.ref = createRef();
     this.state = {
-      offsetX: 0,
-      offsetY: 0,
+      centerX: MAP_SIZE / 2,
+      centerY: MAP_SIZE / 2,
       dragging: false,
       originX: null,
       originY: null,
@@ -187,7 +192,7 @@ export class NanoMap extends Component<Props, State> {
         originY: null,
       },
       () => {
-        this.props.onOffsetChange?.(this.state.offsetX, this.state.offsetY);
+        this.props.onCenterChange?.(this.state.centerX, this.state.centerY);
       }
     );
     document.removeEventListener('mousemove', this.handleDragMove);
@@ -198,11 +203,12 @@ export class NanoMap extends Component<Props, State> {
   handleDragMove = (e: MouseEvent) => {
     this.setState((prevState) => {
       const state = { ...prevState };
+      const pixelsPerTurf = this.props.pixelsPerTurf;
       const newOffsetX = e.screenX - state.originX;
       const newOffsetY = e.screenY - state.originY;
       if (prevState.dragging) {
-        state.offsetX += newOffsetX;
-        state.offsetY += newOffsetY;
+        state.centerX += newOffsetX / pixelsPerTurf;
+        state.centerY += newOffsetY / pixelsPerTurf;
         state.originX = e.screenX;
         state.originY = e.screenY;
       } else {
@@ -220,12 +226,12 @@ export class NanoMap extends Component<Props, State> {
   handleReset = () => {
     this.setState(
       {
-        offsetX: 0,
-        offsetY: 0,
+        centerX: MAP_SIZE / 2,
+        centerY: MAP_SIZE / 2,
         zoom: 1,
       },
       () => {
-        this.props.onOffsetChange?.(this.state.offsetX, this.state.offsetY);
+        this.props.onCenterChange?.(this.state.centerX, this.state.centerY);
         this.props.onZoom?.(this.state.zoom);
       }
     );
@@ -235,6 +241,8 @@ export class NanoMap extends Component<Props, State> {
     return {
       map: {
         zoom: this.state.zoom,
+        zoomConverted: transformZoom(this.state.zoom),
+        pixelsPerTurf: this.props.pixelsPerTurf,
       },
     };
   }
@@ -245,23 +253,28 @@ export class NanoMap extends Component<Props, State> {
     });
   };
 
-  zoomToPoint = (zoom: number, toX?: number, toY?: number) => {
+  zoomToPoint = (
+    // Works incorrectly cos doesnt count center pos but works for now
+    zoom: number,
+    toX: number = MAP_SIZE / 2,
+    toY: number = MAP_SIZE / 2
+  ) => {
     const newZoom = Math.min(6, Math.max(0.5, zoom));
 
     this.setState(
       (prevState) => {
         const state = { ...prevState };
-        const x = (toX ?? MAP_SIZE / 2) - state.offsetX;
-        const y = (toY ?? MAP_SIZE / 2) - state.offsetY;
+        const x = toX - state.centerX;
+        const y = toY - state.centerY;
         const exponentialOldZoom = transformZoom(state.zoom);
         const exponentialNewZoom = transformZoom(newZoom);
-        state.offsetX += x - (x / exponentialOldZoom) * exponentialNewZoom;
-        state.offsetY += y - (y / exponentialOldZoom) * exponentialNewZoom;
+        state.centerX += x - (x / exponentialOldZoom) * exponentialNewZoom;
+        state.centerY += y - (y / exponentialOldZoom) * exponentialNewZoom;
         state.zoom = newZoom;
         return state;
       },
       () => {
-        this.props.onOffsetChange?.(this.state.offsetX, this.state.offsetY);
+        this.props.onCenterChange?.(this.state.centerX, this.state.centerY);
         this.props.onZoom?.(this.state.zoom);
       }
     );
@@ -276,8 +289,11 @@ export class NanoMap extends Component<Props, State> {
     }
     const boundingBox = this.ref.current.getBoundingClientRect();
 
-    const mouseX = e.clientX - boundingBox.x;
-    const mouseY = e.clientY - boundingBox.y;
+    const pixelsPerTurf = this.props.pixelsPerTurf;
+
+    const mouseX = (e.clientX - boundingBox.x) / pixelsPerTurf;
+    const mouseY = (e.clientY - boundingBox.y) / pixelsPerTurf;
+
     this.zoomToPoint(this.state.zoom + zoomChange, mouseX, mouseY);
 
     pauseEvent(e);
@@ -286,7 +302,7 @@ export class NanoMap extends Component<Props, State> {
   getMapName = () => {
     if (
       this.props.mineMapName &&
-      this.props.mineLevels.includes(this.state.zLevel)
+      this.props.mineZLevels.includes(this.state.zLevel)
     ) {
       return `nanomap_${this.props.mineMapName}_1.png`;
     }
@@ -294,26 +310,28 @@ export class NanoMap extends Component<Props, State> {
   };
 
   render() {
-    const { dragging, offsetX, offsetY, zoom = 1 } = this.state;
+    const { dragging, centerX, centerY, zoom = 1 } = this.state;
     const { children } = this.props;
 
     const exponentialZoom = transformZoom(zoom);
 
     const mapUrl = resolveAsset(this.getMapName());
-    const mapSize = MAP_SIZE + 'px';
+    const pixelsPerTurf = this.props.pixelsPerTurf;
+    const mapSize = MAP_SIZE * this.props.pixelsPerTurf + 'px';
     const mapStyle = {
       width: mapSize,
       height: mapSize,
       overflow: 'hidden',
       position: 'relative',
+      'z-index': 0,
       'object-fit': 'cover',
       'image-rendering': 'pixelated',
       'background-image': 'url(' + mapUrl + ')',
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'text-align': 'center',
-      transform: `translate(${offsetX}px,${offsetY}px) scale(${exponentialZoom})`,
-      'transform-origin': 'top left',
+      transform: `translate(${(centerX - MAP_SIZE / 2) * pixelsPerTurf}px,${(centerY - MAP_SIZE / 2) * pixelsPerTurf}px) scale(${exponentialZoom})`,
+      'transform-origin': 'center',
       transition: `${this.state.dragging ? '0s' : '0.075s'} linear`,
       cursor: dragging ? 'move' : 'auto',
     };
@@ -322,28 +340,37 @@ export class NanoMap extends Component<Props, State> {
 
     const backgroundStyle = {
       overflow: 'hiddden',
+      position: 'relative',
       width: '100%',
-      'z-index': 0,
+      height: '100%',
       'background-image': `url(${backgroundUrl})`,
     };
 
+    const zoomer = (
+      <NanoMapZoomer
+        zoom={zoom}
+        onZoom={this.handleZoom}
+        zLevel={this.state.zLevel}
+        availableZLevels={this.props.availableZLevels}
+        onZLevel={this.handleZLevel}
+        onReset={this.handleReset}
+        controlsOnTop={this.props.controlsOnTop}
+      />
+    );
+
     return (
-      <div style={backgroundStyle} onWheel={this.handleScroll} ref={this.ref}>
-        <Box
-          style={mapStyle}
-          textAlign="center"
-          onMouseDown={this.handleDragStart}>
-          <Box>{children}</Box>
-        </Box>
-        <NanoMapZoomer
-          zoom={zoom}
-          onZoom={this.handleZoom}
-          zLevel={this.state.zLevel}
-          availableZLevels={this.props.availableZLevels}
-          onZLevel={this.handleZLevel}
-          onReset={this.handleReset}
-        />
-      </div>
+      <Box style={backgroundStyle} onWheel={this.handleScroll}>
+        {this.props.controlsOnTop && zoomer}
+        <div ref={this.ref}>
+          <Box
+            style={mapStyle}
+            textAlign="center"
+            onMouseDown={this.handleDragStart}>
+            <Box>{children}</Box>
+          </Box>
+        </div>
+        {!this.props.controlsOnTop && zoomer}
+      </Box>
     );
   }
 }
