@@ -1,5 +1,6 @@
 /obj/crew_monitor_module
 	name = "Crew monitor"
+	flags = ABSTRACT
 	var/list/tracked = new
 
 /obj/crew_monitor_module/tgui_host(mob/user)
