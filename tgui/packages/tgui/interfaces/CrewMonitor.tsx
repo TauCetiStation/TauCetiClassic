@@ -200,8 +200,9 @@ const CrewMonitorDataContent = (
               )}
             </Table.Cell>
             <Table.Cell>
-              {crewMember.position &&
-                `${crewMember.position.area} (${crewMember.position.x}, ${crewMember.position.y}, ${crewMember.position.z})`}
+              {crewMember.position
+                ? `${crewMember.position.area} (${crewMember.position.x}, ${crewMember.position.y}, ${crewMember.position.z})`
+                : 'Not Available'}
             </Table.Cell>
           </Table.Row>
         ))}
@@ -242,7 +243,7 @@ const CrewMonitorMapContent = (
   );
 
   return (
-    <Box height="100%" overflow="hidden">
+    <Box width="100%" height="100%" overflow="hidden">
       <NanoMap
         stationMapName={stationMapName}
         mineMapName={mineMapName}

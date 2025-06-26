@@ -333,7 +333,6 @@ export class NanoMap extends Component<Props, State> {
       transform: `translate(${(centerX - MAP_SIZE / 2) * pixelsPerTurf}px,${(centerY - MAP_SIZE / 2) * pixelsPerTurf}px) scale(${exponentialZoom})`,
       'transform-origin': 'center',
       transition: `${this.state.dragging ? '0s' : '0.075s'} linear`,
-      cursor: dragging ? 'move' : 'auto',
     };
 
     const backgroundUrl = resolveAsset('nanomapBackground.png');
@@ -344,6 +343,7 @@ export class NanoMap extends Component<Props, State> {
       width: '100%',
       height: '100%',
       'background-image': `url(${backgroundUrl})`,
+      cursor: dragging ? 'move' : 'auto',
     };
 
     const zoomer = (
@@ -361,11 +361,8 @@ export class NanoMap extends Component<Props, State> {
     return (
       <Box style={backgroundStyle} onWheel={this.handleScroll}>
         {this.props.controlsOnTop && zoomer}
-        <div ref={this.ref}>
-          <Box
-            style={mapStyle}
-            textAlign="center"
-            onMouseDown={this.handleDragStart}>
+        <div ref={this.ref} onMouseDown={this.handleDragStart}>
+          <Box style={mapStyle} textAlign="center">
             <Box>{children}</Box>
           </Box>
         </div>
