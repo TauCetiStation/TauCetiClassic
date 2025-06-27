@@ -502,7 +502,7 @@
 /atom/movable/screen/alert/buckled/Click()
 	if(!mob_viewer)
 		return
-	if(mob_viewer.restrained())
+	if(mob_viewer.restrained() && !istype(mob_viewer.buckled, /obj/structure/stool/bed/nest))
 		to_chat(mob_viewer, "Вы в наручниках! Сначала разберитесь с ними!")
 		return
 	if(mob_viewer.incapacitated() || mob_viewer.crawling || mob_viewer.is_busy())
