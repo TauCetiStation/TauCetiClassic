@@ -94,7 +94,7 @@ export const CameraConsole = (_, context: any) => {
   );
 
   return (
-    <Window width={800} height={600} maxHeight={600}>
+    <Window width={800} height={600}>
       <Window.Content>
         <Stack fill>
           <Stack.Item>
@@ -155,8 +155,7 @@ export const CameraConsole = (_, context: any) => {
 };
 
 export const CameraConsoleContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
-  const { stationMapName, mineMapName, mineZLevels } = data;
+  const { data } = useBackend<Data>(context);
 
   const availableZLevels = flow([
     map((camera: CameraObject) => camera.z),
@@ -205,9 +204,9 @@ export const CameraMinimapContent = (props, context) => {
         setZLevel={setZLevel}
         stationMapName={stationMapName}
         mineMapName={mineMapName}
-        mineLevels={mineZLevels}
+        mineZLevels={mineZLevels}
         availableZLevels={availableZLevels}>
-        {cameras.map((camera) => (
+        {cameras.map((camera: CameraObject) => (
           <NanoMap.MarkerIcon
             key={camera.name}
             x={camera.x}
