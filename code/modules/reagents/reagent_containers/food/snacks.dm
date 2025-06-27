@@ -450,7 +450,6 @@
 		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/update_icon()
-	cut_overlays()
 	item_state_inventory = "egg-[egg_color]"
 	item_state_world = "egg-[egg_color]_world"
 	icon_state = "egg-[egg_color]"
@@ -520,8 +519,10 @@
 		var/obj/item/toy/crayon/C = I
 		var/clr = C.colourName
 
-		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
+		var/static/list/valid_colors = list("blue","green","mime","orange","purple","rainbow","red","yellow")
+		if(!(clr in valid_colors))
 			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+			return
 
 		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
 		egg_color = clr
@@ -531,7 +532,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg/update_icon()
 	..()
-	cut_overlays()
 	item_state_inventory = "egg-[egg_color]"
 	item_state_world = "egg-[egg_color]_world"
 	icon_state = "egg-[egg_color]"

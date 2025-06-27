@@ -20,6 +20,7 @@
 			eggsspawned += 1
 		if(eggsspawned >= eggsmax)
 			break
+	CHECK_TICK
 
 	var/datum/announcement/centcomm/egghunt/start/announcement_start = new
 	announcement_start.play()
