@@ -677,10 +677,10 @@
 	verbs -= /obj/item/weapon/paper/verb/unfold_plane
 	verbs += /obj/item/weapon/paper/verb/make_plane
 
-/obj/item/weapon/paper/throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/weapon/paper/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	if(plane_mode)
 		spin = FALSE
-	return ..(target, range, speed, thrower, spin, diagonals_first, callback)
+	return ..()
 
 /*
  * Premade paper
