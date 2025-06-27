@@ -1688,6 +1688,7 @@
 #include "code\modules\events\cult_portals.dm"
 #include "code\modules\events\dust.dm"
 #include "code\modules\events\economic_event.dm"
+#include "code\modules\events\egg_hunt.dm"
 #include "code\modules\events\electrical_storm.dm"
 #include "code\modules\events\gravity.dm"
 #include "code\modules\events\grid_check.dm"
