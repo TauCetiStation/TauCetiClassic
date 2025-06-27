@@ -25,6 +25,7 @@
 	host = target
 	target.organs += src
 	src.loc = target
+	Start()
 
 /obj/item/gland/process()
 	if(!active)
