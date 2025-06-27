@@ -49,13 +49,15 @@
 		to_chat(user, "<BR><B>A drone is prepared. Select 'Spawners Menu' from the Ghost tab, and choose the Drone role to spawn as a maintenance drone.</B>")
 
 /obj/machinery/drone_fabricator/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
+	if(emagged && istype(W, /obj/item/device/multitool))
 		user.visible_message("<span class='notice'>[user] starts repairing [src].</span>",
 		"<span class='notice'>You are trying to fix [src].</span>")
 		if(do_after(user, 5 SECONDS, target = src))
-			SEND_SIGNAL(src, "fabricator_repair")
-			playsound(loc, 'sound/machines/calibration_complete.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
-			return
+			for(var/datum/spawner/malf_drone/S in SSrole_spawners.spawners)
+				if(S.fabricator == src)
+					qdel(S)
+					emagged = FALSE
+					break
 	..()
 
 /obj/machinery/drone_fabricator/proc/count_drones()
