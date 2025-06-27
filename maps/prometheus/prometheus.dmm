@@ -32667,6 +32667,7 @@
 /obj/item/weapon/storage/visuals/surgery/full{
 	pixel_y = 4
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -48524,8 +48525,12 @@
 	name = "Privacy Shutters";
 	pixel_y = -28
 	},
-/obj/machinery/light/smart,
 /obj/machinery/portable_atmospherics/canister/anesthetic,
+/obj/machinery/camera{
+	c_tag = "Medbay Surgery Operating";
+	dir = 1;
+	network = list("SS13","Medical")
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -75542,6 +75547,7 @@
 /obj/machinery/vending/wallmed2{
 	pixel_x = 28
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -87876,9 +87882,6 @@
 /obj/machinery/bodyscanner{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -93507,9 +93510,6 @@
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
-	},
-/obj/machinery/light/small{
-	dir = 4
 	},
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "MedBay";
