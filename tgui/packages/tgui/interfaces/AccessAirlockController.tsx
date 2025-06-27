@@ -4,7 +4,7 @@ import {
   DoorOpen,
 } from './common/AirlockControllerBase';
 
-import { Button } from '../components';
+import { Button, Table } from '../components';
 
 import { useBackend } from '../backend';
 
@@ -21,8 +21,7 @@ export const AccessAirlockController = (_, context) => {
   return (
     <AirlockControllerBase
       width={350}
-      height={202}
-      processing={processing}
+      height={200}
       statusItems={[
         {
           title: 'Exterior Door Status',
@@ -35,36 +34,48 @@ export const AccessAirlockController = (_, context) => {
             interiorStatus.state === DoorOpen.Closed ? 'Locked' : 'Open',
         },
       ]}>
-      {exteriorStatus.state === DoorOpen.Open ? (
-        <Button
-          icon="warning"
-          content="Lock Exterior Door"
-          disabled={processing}
-          onClick={() => act('forceExterior')}
-        />
-      ) : (
-        <Button
-          icon="step-backward"
-          content="Cycle to Exterior"
-          disabled={processing}
-          onClick={() => act('cycleExterior')}
-        />
-      )}
-      {interiorStatus.state === DoorOpen.Open ? (
-        <Button
-          icon="warning"
-          content="Lock Interior Door"
-          disabled={processing}
-          onClick={() => act('forceInterior')}
-        />
-      ) : (
-        <Button
-          icon="step-forward"
-          content="Cycle to Interior"
-          disabled={processing}
-          onClick={() => act('cycleInterior')}
-        />
-      )}
+      <Table>
+        <Table.Row>
+          <Table.Cell width="50%">
+            {exteriorStatus.state === DoorOpen.Open ? (
+              <Button
+                fluid
+                icon="warning"
+                content="Lock Exterior Door"
+                disabled={processing}
+                onClick={() => act('forceExterior')}
+              />
+            ) : (
+              <Button
+                fluid
+                icon="step-backward"
+                content="Cycle to Exterior"
+                disabled={processing}
+                onClick={() => act('cycleExterior')}
+              />
+            )}
+          </Table.Cell>
+          <Table.Cell>
+            {interiorStatus.state === DoorOpen.Open ? (
+              <Button
+                fluid
+                icon="warning"
+                content="Lock Interior Door"
+                disabled={processing}
+                onClick={() => act('forceInterior')}
+              />
+            ) : (
+              <Button
+                fluid
+                icon="step-forward"
+                content="Cycle to Interior"
+                disabled={processing}
+                onClick={() => act('cycleInterior')}
+              />
+            )}
+          </Table.Cell>
+        </Table.Row>
+      </Table>
     </AirlockControllerBase>
   );
 };

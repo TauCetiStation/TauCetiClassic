@@ -37,8 +37,7 @@ type AirlockControllerStatusItem = {
 type AirlockControllerBaseProps = {
   statusItems?: AirlockControllerStatusItem[];
   children?: InfernoNode;
-  processing?: BooleanLike;
-  hasAbort?: BooleanLike;
+  abortEnabled?: BooleanLike;
   width?: number | string;
   height?: number | string;
 };
@@ -48,7 +47,7 @@ export const AirlockControllerBase = (
   context
 ) => {
   const { act } = useBackend(context);
-  const { statusItems, children, processing, hasAbort, width, height } = props;
+  const { statusItems, children, abortEnabled, width, height } = props;
   return (
     <Window width={width} height={height}>
       <Window.Content>
@@ -71,13 +70,14 @@ export const AirlockControllerBase = (
           {children && (
             <Stack.Item grow>
               <Section
-                title="Actions"
+                title="Commands"
                 buttons={
-                  hasAbort && (
+                  // eslint-disable-next-line eqeqeq
+                  abortEnabled != null && (
                     <Button
                       icon="exclamation-circle"
                       content="Abort"
-                      disabled={!processing}
+                      disabled={!abortEnabled}
                       color="red"
                       onClick={() => act('abort')}
                     />
