@@ -8,7 +8,7 @@
 	use_power = NO_POWER_USE
 	light_power = 2
 	light_range = 3
-	layer = 9
+	layer = TALL_STRUCTURE
 	var/datum/action/innate/build_crane/eject/eject_action = new
 	var/list/work_sounds = list('sound/mecha/mechmove01.ogg', 'sound/mecha/mechmove03.ogg', 'sound/mecha/mechmove04.ogg')
 
