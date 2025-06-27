@@ -2183,6 +2183,7 @@
 #include "code\modules\paperwork\stickers.dm"
 #include "code\modules\paperwork\ticket_machine.dm"
 #include "code\modules\persistent_cache\persistent_cache.dm"
+#include "code\modules\post_round_arena\arenas.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cable_heavyduty.dm"
