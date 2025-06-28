@@ -226,6 +226,19 @@ RCD
 
 				return TRUE
 
+		if(RCD_MODE_FLOOR_FAN)
+			if(isfloorturf(target))
+				if(!canBuildOnTurf(target))
+					to_chat(user, "<span class='warning'>You can't build here.</span>")
+					return FALSE
+
+				to_chat(user, "<span class='notice'>Building Fan...</span>")
+				if(!use_tool(target, user, 50, amount = 10))
+					return
+				activate()
+				new /obj/structure/fans/tiny(target)
+				return TRUE
+
 	return FALSE
 
 /obj/item/weapon/rcd/proc/canBuildOnTurf(turf/target)
@@ -295,3 +308,10 @@ RCD
 	max_matter = 100
 	matter = 100
 	w_class = SIZE_TINY
+
+/obj/item/weapon/rcd/atmos
+	name = "Atmospheric-rapid-construction-device (A-RCD)"
+	desc = "A device used to rapidly build floor fans and heaters."
+	icon_state = "arcd"
+	mode = RCD_MODE_FLOOR_FAN
+	available_modes = list(RCD_MODE_FLOOR_FAN)

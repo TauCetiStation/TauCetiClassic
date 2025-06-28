@@ -21,15 +21,21 @@
 	var/efficiency = 20000
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
+	var/upgraded = FALSE
 
 /obj/machinery/space_heater/atom_init()
 	. = ..()
-	cell = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 3)
+	if(upgraded)
+		component_parts += new /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic(null)
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra(null)
+		cell = new /obj/item/weapon/stock_parts/cell/bluespace(src)
+	else
+		component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+		cell = new(src)
 	RefreshParts()
 	update_icon()
 
@@ -260,6 +266,9 @@
 		env.merge(removed)
 
 	update_icon()
+
+/obj/machinery/space_heater/upgraded
+	upgraded = TRUE
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
