@@ -26,6 +26,6 @@
 	. = ..()
 	tooltip.looking_at = "\ref[hoverOn]"
 	if(prefs.tooltip && tooltip?.state)
-		var/text_in_tooltip = hoverOn.get_name()
+		var/text_in_tooltip = hoverOn.get_name(mob)
 		screen |= tooltip
 		tooltip.SetMapText(text_in_tooltip, prefs.tooltip_font)

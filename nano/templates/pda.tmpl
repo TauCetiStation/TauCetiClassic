@@ -22,7 +22,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 			<b>Station Time</b>:
 		</div>
 		<div class="itemContent">
-			<span class="average">{{:data.stationTime}}&emsp;[{{:data.securityLevel}}]</span>
+			<span class="average" style="display:flex">{{:data.stationTime}}&emsp;[ {{:data.securityLevel}} ]</span>
 		</div>
 	</div>
     {{if data.shuttle_eta}}
@@ -308,160 +308,170 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 
 
 	{{else data.mode== 41}} <!-- Manifest uses cached data so we only use nanowriter when shit changes.-->
-	    <div class="item">
-            <center><table class="pmon"><tbody>
-                {{if data.cached.heads.length}}
-                    <tr><th colspan="4" class="command">Command</th></tr>
-                    {{for data.cached["heads"]}}
-                        {{if value.rank == "Captain"}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.centcom.length}}
-                    <tr><th colspan="4" class="centcom">CentCom representatives</th></tr>
-                    {{for data.cached["centcom"]}}
-                        {{if value.rank == "Internal Affairs Agent"}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.sec.length}}
-                    <tr><th colspan="4" class="sec">Security</th></tr>
-                    {{for data.cached["sec"]}}
-                        {{if value.rank == "Head of Security"}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.eng.length}}
-                    <tr><th colspan="4" class="eng">Engineering</th></tr>
-                    {{for data.cached["eng"]}}
-                        {{if value.rank == "Chief Engineer"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.med.length}}
-                    <tr><th colspan="4" class="med">Medical</th></tr>
-                    {{for data.cached["med"]}}
-                        {{if value.rank == "Chief Medical Officer"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.sci.length}}
-                    <tr><th colspan="4" class="sci">Science</th></tr>
-                    {{for data.cached["sci"]}}
-                        {{if value.rank == "Research Director"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.civ.length}}
-                    <tr><th colspan="4" class="civ">Civilian</th></tr>
-                    {{for data.cached["civ"]}}
-                        {{if value.rank == "Head of Personnel"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.misc.length}}
-                    <tr><th colspan="4" class="misc">Misc</th></tr>
-                    {{for data.cached["misc"]}}
+        <center><table class="pmon"><tbody>
+            {{if data.cached.heads.length}}
+                <tr><th colspan="4" class="command">Command</th></tr>
+                {{for data.cached["heads"]}}
+                    {{if value.rank == "Captain"}}
+						<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                    {{else}}
+						<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                    {{/if}}
+                {{/for}}
+            {{/if}}
+            {{if data.cached.centcom.length}}
+                <tr><th colspan="4" class="centcom">CentCom representatives</th></tr>
+                {{for data.cached["centcom"]}}
+                    {{if value.rank == "Internal Affairs Agent"}}
+						<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                    {{else}}
+						<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                    {{/if}}
+                {{/for}}
+            {{/if}}
+            {{if data.cached.sec.length}}
+                <tr><th colspan="4" class="sec">Security</th></tr>
+                {{for data.cached["sec"]}}
+                    {{if value.rank == "Head of Security"}}
+						<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                    {{else}}
+						<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                    {{/if}}
+                {{/for}}
+            {{/if}}
+            {{if data.cached.eng.length}}
+                <tr><th colspan="4" class="eng">Engineering</th></tr>
+                {{for data.cached["eng"]}}
+                    {{if value.rank == "Chief Engineer"}}
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                    {{else}}
                         <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                         <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                    {{/for}}
-                {{/if}}
-            </tbody></table></center>
-        </div>
+                    {{/if}}
+                {{/for}}
+            {{/if}}
+            {{if data.cached.med.length}}
+                <tr><th colspan="4" class="med">Medical</th></tr>
+                {{for data.cached["med"]}}
+                    {{if value.rank == "Chief Medical Officer"}}
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                    {{else}}
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                    {{/if}}
+                {{/for}}
+            {{/if}}
+            {{if data.cached.sci.length}}
+                <tr><th colspan="4" class="sci">Science</th></tr>
+                {{for data.cached["sci"]}}
+                    {{if value.rank == "Research Director"}}
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                    {{else}}
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                    {{/if}}
+                {{/for}}
+            {{/if}}
+            {{if data.cached.civ.length}}
+                <tr><th colspan="4" class="civ">Civilian</th></tr>
+                {{for data.cached["civ"]}}
+                    {{if value.rank == "Head of Personnel"}}
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                    {{else}}
+                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                        <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                    {{/if}}
+                {{/for}}
+            {{/if}}
+            {{if data.cached.misc.length}}
+                <tr><th colspan="4" class="misc">Misc</th></tr>
+                {{for data.cached["misc"]}}
+                    <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                    <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                {{/for}}
+            {{/if}}
+        </tbody></table></center>
 
 
 	{{else data.mode == 3}}
         <H2>Atmospheric Scan</H2>
         <div class="statusDisplay" style="height: 250px; overflow: auto;">
-            <div class="item">
-                {{if data.aircontents.reading == 1}}
-                    <div class="itemLabel">
-                        Pressure:
+            {{if data.aircontents.reading == 1}}
+                <div class="item">
+                    <div class="itemLabel">Pressure:</div>
+                    <div class="itemContent">
+                        {{:helper.string('<span class="{0}">{1} kPa</span>',
+                            data.aircontents.pressure < 80 || data.aircontents.pressure > 120 ? 'bad' :
+                            data.aircontents.pressure < 95 || data.aircontents.pressure > 110 ? 'average' : 'good' ,
+                            data.aircontents.pressure)}}
                     </div>
-                    <div class = "itemContent">
-				        {{:helper.string('<span class="{0}">{1} kPa</span>', data.aircontents.pressure < 80 || data.aircontents.pressure > 120 ? 'bad' : data.aircontents.pressure < 95 || data.aircontents.pressure > 110 ? 'average' : 'good' , data.aircontents.pressure)}}
+                </div>
+                <div class="item">
+                    <div class="itemLabel">Temperature:</div>
+                    <div class="itemContent">
+                        {{:helper.string('<span class="{0}">{1} &deg;C</span>',
+                            data.aircontents.temp < 5 || data.aircontents.temp > 35 ? 'bad' :
+                            data.aircontents.temp < 15 || data.aircontents.temp > 25 ? 'average' : 'good' ,
+                            data.aircontents.temp)}}
                     </div>
-                    <div class="itemLabel">
-                        Temperature:
+                </div>
+                <div class="item">
+                    <div class="itemLabel">Oxygen:</div>
+                    <div class="itemContent">
+                        {{:helper.string('<span class="{0}">{1}%</span>',
+                            data.aircontents.oxygen < 17 ? 'bad' :
+                            data.aircontents.oxygen < 19 ? 'average' : 'good' ,
+                            data.aircontents.oxygen)}}
                     </div>
-                    <div class = "itemContent">
-				        {{:helper.string('<span class="{0}">{1} &deg;C</span>', data.aircontents.temp < 5 || data.aircontents.temp > 35 ? 'bad' : data.aircontents.temp < 15 || data.aircontents.temp > 25 ? 'average' : 'good' , data.aircontents.temp)}}
+                </div>
+                <div class="item">
+                    <div class="itemLabel">Nitrogen:</div>
+                    <div class="itemContent">
+                        {{:helper.string('<span class="{0}">{1}%</span>',
+                            data.aircontents.nitrogen > 82 ? 'bad' :
+                            data.aircontents.nitrogen > 80 ? 'average' : 'good' ,
+                            data.aircontents.nitrogen)}}
                     </div>
-                    <br>
-                    <div class="itemLabel">
-                        Oxygen:
+                </div>
+                <div class="item">
+                    <div class="itemLabel">Carbon Dioxide:</div>
+                    <div class="itemContent">
+                        {{:helper.string('<span class="{0}">{1}%</span>',
+                            data.aircontents.carbon_dioxide > 5 ? 'bad' : 'good' ,
+                            data.aircontents.carbon_dioxide)}}
                     </div>
-                    <div class = "itemContent">
-                        {{:helper.string('<span class="{0}">{1}%</span>', data.aircontents.oxygen < 17 ? 'bad' : data.aircontents.oxygen < 19 ? 'average' : 'good' , data.aircontents.oxygen)}}
+                </div>
+                <div class="item">
+                    <div class="itemLabel">Phoron:</div>
+                    <div class="itemContent">
+                        {{:helper.string('<span class="{0}">{1}%</span>',
+                            data.aircontents.phoron  > 0 ? 'bad' : 'good' ,
+                            data.aircontents.phoron)}}
                     </div>
-                    <div class="itemLabel">
-                        Nitrogen:
-                    </div>
-                    <div class = "itemContent">
-                        {{:helper.string('<span class="{0}">{1}%</span>', data.aircontents.nitrogen > 82 ? 'bad' : data.aircontents.nitrogen > 80 ? 'average' : 'good' , data.aircontents.nitrogen)}}
-                    </div>
-                    <div class="itemLabel">
-                        Carbon Dioxide:
-                    </div>
-                    <div class = "itemContent">
-                        {{:helper.string('<span class="{0}">{1}%</span>', data.aircontents.carbon_dioxide > 5 ? 'bad' : 'good' , data.aircontents.carbon_dioxide)}}
-                    </div>
-                    <div class="itemLabel">
-                        Phoron:
-                    </div>
-                    <div class = "itemContent">
-                        {{:helper.string('<span class="{0}">{1}%</span>', data.aircontents.phoron  > 0 ? 'bad' : 'good' , data.aircontents.phoron)}}
-
-                    </div>
-                    {{if data.aircontents.other > 0}}
-                        <div class="itemLabel">
-                            Unknown:
-                        </div>
-                        <div class = "itemContent">
+                </div>
+                {{if data.aircontents.other > 0}}
+                    <div class="item">
+                        <div class="itemLabel">Unknown:</div>
+                        <div class="itemContent">
                             <span class="bad">{{:data.aircontents.other}}%</span>
                         </div>
-                    {{/if}}
-                {{else}}
-                    <div class="itemContent" style="width: 100%;">
-                        <span class="average"><b>Unable to get air reading</b></span>
                     </div>
                 {{/if}}
-            </div>
+            {{else}}
+                <div class="itemContent" style="width: 100%;">
+                    <span class="average"><b>Unable to get air reading</b></span>
+                </div>
+            {{/if}}
         </div>
 
 
@@ -931,45 +941,46 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 <span class="average"> {{:data.records.janitor.user_loc.x}} / {{:data.records.janitor.user_loc.y}}</span>
             {{/if}}
         </div>
+        {{for data.records.janitor.mops}}
             <div class="item">
-                {{for data.records.janitor.mops}}
-                    {{if value.x==0}}
-                        <span class="bad">Unable to locate Mop</span>
-                    {{else}}
-                        <span class="good">Mop Location:</span>
-                        <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Status: {{:value.status}}</span><br>
-                    {{/if}}
-                {{/for}}
-            </div>
-        <div class="item">
-            {{for data.records.janitor.buckets}}
                 {{if value.x==0}}
-                    <span class="bad">Unable to locate Water Buckets</span>
+                    <span class="bad">Unable to locate Mop</span>
                 {{else}}
-                    <span class="good">Water Buckets Location:</span>
-                    <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Water Level: {{:value.status}}</span><br>
+                    <span class="good">Mop Location:</span>
+                    <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Status: {{:value.status}}</span><br>
                 {{/if}}
-            {{/for}}
-        </div>
-        <div class="item">
-            {{for data.records.janitor.cleanbots}}
+            </div>
+        {{/for}}
+        {{for data.records.janitor.buckets}}
+            <div class="item">
+            {{if value.x==0}}
+                <span class="bad">Unable to locate Water Buckets</span>
+            {{else}}
+                <span class="good">Water Buckets Location:</span>
+                <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Water Level: {{:value.status}}</span><br>
+            {{/if}}
+            </div>
+        {{/for}}
+        {{for data.records.janitor.cleanbots}}
+            <div class="item">
                 {{if value.x==0}}
                     <span class="bad">Unable to locate Clean Bots</span>
                 {{else}}
                     <span class="good">Clean Bots Location:</span>
                     <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Status: {{:value.status}}</span><br>
                 {{/if}}
-            {{/for}}
-        </div>
+            </div>
+        {{/for}}
+        {{for data.records.janitor.carts}}
             <div class="item">
-                {{for data.records.janitor.carts}}
-                    {{if value.x==0}}
-                        <span class="bad">Unable to locate Janitorial Cart</span>
-                    {{else}}
-                        <span class="good">Janitorial cart Location:</span>
-                        <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Status: {{:value.status}}</span><br>
-                    {{/if}}
-                {{/for}}
+                {{if value.x==0}}
+                    <span class="bad">Unable to locate Janitorial Cart</span>
+                {{else}}
+                    <span class="good">Janitorial cart Location:</span>
+                    <span class="average">({{:value.x}} / {{:value.y}}) - {{:value.dir}} - Status: {{:value.status}}</span><br>
+                {{/if}}
+            </div>
+        {{/for}}
 
     <!-- {{else data.mode == 6}}
         <H2><span class="white">InstaNews ED 2.0.9</span></H2>
@@ -1099,14 +1110,12 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             </div>
         </div>
 	{{else data.mode == 8}} <!-- Online Shop -->
-        <div class="item">
-            <center><H2><span class="cargo">ГрузТорг</span></H2></center>
-			{{if data.no_cargonauts}}
-				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
-			{{/if}}
-			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
-			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
-        </div>
+        <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+		{{if data.no_cargonauts}}
+			<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+		{{/if}}
+		<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
+		{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
 		<div class="item">
 			<table class="shop" style="width: 100%;"><tbody>
 			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
@@ -1130,31 +1139,27 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 			<tr><td><center><H4>Нет новинок</H4></center></td></tr>
         {{/for}}
 		</tbody></table></center>
+		<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
+		{{:helper.link('Добавить новый запрос', 'plusthick', {'choice' : "Shop_Add_Order_or_Offer"}, null, 'fixedLeftWider')}}<br>
 		<div class="item">
-			<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
-			{{:helper.link('Добавить новый запрос', 'plusthick', {'choice' : "Shop_Add_Order_or_Offer"}, null, 'fixedLeftWider')}}<br>
-			<div class="item">
-				{{for data.orders_and_offers}}
-					{{if value}}
-						<div class="fxdLft">
-						<table class="shop"><tbody>
-							<tr><th colspan="4" class="cargo"><B>Имя: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
-							<tr><td><SMALL><I>{{:value.description}} | {{:value.time}}</I></SMALL></td></tr>
-						</tbody></table>
-						</div>
-					{{/if}}
-				{{/for}}
-			</div>
-        </div>
+			{{for data.orders_and_offers}}
+				{{if value}}
+					<div class="fxdLft">
+					<table class="shop"><tbody>
+						<tr><th colspan="4" class="cargo"><B>Имя: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
+						<tr><td><SMALL><I>{{:value.description}} | {{:value.time}}</I></SMALL></td></tr>
+					</tbody></table>
+					</div>
+				{{/if}}
+			{{/for}}
+		</div>
 	{{else data.mode == 81}} <!-- Online Shop Item -->
-        <div class="item">
-            <center><H2><span class="cargo">ГрузТорг</span></H2></center>
-			{{if data.no_cargonauts}}
-				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
-			{{/if}}
-			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
-			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
-        </div>
+        <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+		{{if data.no_cargonauts}}
+			<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+		{{/if}}
+		<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
+		{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
 		<div class="item">
 			<table class="shop" style="width: 100%;"><tbody>
 			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
@@ -1188,14 +1193,12 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		</tbody></table></center>
 
 	{{else data.mode == 82}} <!-- Online Shop Cart -->
-		<div class="item">
-            <center><H2><span class="cargo">ГрузТорг</span></H2></center>
-			{{if data.no_cargonauts}}
-				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
-			{{/if}}
-			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
-			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
-        </div>
+        <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+		{{if data.no_cargonauts}}
+			<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+		{{/if}}
+		<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
+		{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
 		<center><table class="shop" style="width: 100%;"><tbody>
 		<tr><th colspan="5" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
 		{{for data.shopping_cart}}
