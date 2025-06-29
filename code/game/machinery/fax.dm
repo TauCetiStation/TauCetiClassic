@@ -38,48 +38,65 @@ var/global/list/alldepartments = list("Central Command")
 	QDEL_NULL(tofax)
 	return ..()
 
+/obj/machinery/faxmachine/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Fax", name)
+		ui.open()
+
+/obj/machinery/faxmachine/tgui_data(mob/user)
+	var/list/data = list()
+	data["scan"] = scan
+	return data
+
+
+
 /obj/machinery/faxmachine/ui_interact(mob/user)
-	var/dat
+	tgui_interact()
 
-	var/scan_name
-	if(scan)
-		scan_name = scan.name
-	else
-		scan_name = "--------"
 
-	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
+// /obj/machinery/faxmachine/ui_interact(mob/user)
+// 	var/dat
 
-	if(authenticated)
-		dat += "<a href='byond://?src=\ref[src];logout=1'>Log Out</a>"
-	else
-		dat += "<a href='byond://?src=\ref[src];auth=1'>Log In</a>"
+// 	var/scan_name
+// 	if(scan)
+// 		scan_name = scan.name
+// 	else
+// 		scan_name = "--------"
 
-	dat += "<hr>"
+// 	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
 
-	if(authenticated)
-		dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
+// 	if(authenticated)
+// 		dat += "<a href='byond://?src=\ref[src];logout=1'>Log Out</a>"
+// 	else
+// 		dat += "<a href='byond://?src=\ref[src];auth=1'>Log In</a>"
 
-		if(tofax)
-			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
+// 	dat += "<hr>"
 
-			if(sendcooldown)
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-			else
-				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
-				dat += "<b>Currently sending:</b> [tofax.name]<br>"
-				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
-		else
-			dat += "Please insert paper, photo or bundle to send via secure connection.<br><br>"
-			if(sendcooldown)
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-	else
-		dat += "Proper authentication is required to use this device.<br><br>"
-		if(tofax)
-			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Item</a><br>"
+// 	if(authenticated)
+// 		dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
 
-	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
-	popup.set_content(dat)
-	popup.open()
+// 		if(tofax)
+// 			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
+
+// 			if(sendcooldown)
+// 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+// 			else
+// 				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
+// 				dat += "<b>Currently sending:</b> [tofax.name]<br>"
+// 				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
+// 		else
+// 			dat += "Please insert paper, photo or bundle to send via secure connection.<br><br>"
+// 			if(sendcooldown)
+// 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+// 	else
+// 		dat += "Proper authentication is required to use this device.<br><br>"
+// 		if(tofax)
+// 			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Item</a><br>"
+
+// 	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
+// 	popup.set_content(dat)
+// 	popup.open()
 
 /obj/machinery/faxmachine/is_operational()
 	return TRUE

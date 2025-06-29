@@ -6,27 +6,23 @@ export const SampleInterface = (props, context) => {
   const { act, data } = useBackend(context);
   // Extract `health` and `color` variables from the `data` object.
   const {
-    health,
+    scan,
     color,
   } = data;
   return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section title="Health status">
-          <LabeledList>
-            <LabeledList.Item label="Health">
-              {health}
-            </LabeledList.Item>
-            <LabeledList.Item label="Color">
-              {color}
-            </LabeledList.Item>
-            <LabeledList.Item label="Button">
-              <Button
-                content="Dispatch a 'test' action"
-                onClick={() => act('test')} />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
+    <Window width={300} height={405}>
+      <Window.Content>
+      <Section
+        title="Аутентификация в систему"
+        minHeight="82px"
+        buttons={
+          <Button
+            icon="eject"
+            content={scan ? scan.name : '--------'}
+            onClick={() => act('confirm')}
+          />
+        }>
+      </Section>
       </Window.Content>
     </Window>
   );
