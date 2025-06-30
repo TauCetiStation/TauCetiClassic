@@ -60,6 +60,8 @@ var/global/list/alldepartments = list("Central Command")
 	tgui_interact(user)
 
 
+
+
 // /obj/machinery/faxmachine/ui_interact(mob/user)
 // 	var/dat
 
@@ -106,73 +108,69 @@ var/global/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/is_operational()
 	return TRUE
 
-/obj/machinery/faxmachine/Topic(href, href_list)
+/obj/machinery/faxmachine/tgui_act(action, params)
 	. = ..()
 	if(!.)
 		return
 
-	if(href_list["send"])
-		if(sendcooldown)
-			return
+	switch(action)
+		if("send")
+			if(sendcooldown)
+				return
 
-		if(tofax)
-			if(dptdest == "Central Command")
-				sendcooldown = 1800
-				centcomm_fax(usr, tofax, src)
-			else
-				sendcooldown = 600
-				send_fax(usr, tofax, dptdest)
+			if(tofax)
+				if(dptdest == "Central Command")
+					sendcooldown = 1800
+					centcomm_fax(usr, tofax, src)
+				else
+					sendcooldown = 600
+					send_fax(usr, tofax, dptdest)
 
-			audible_message("Message transmitted successfully.")
-			spawn(sendcooldown) // cooldown time
-				sendcooldown = 0
+				audible_message("Message transmitted successfully.")
+				spawn(sendcooldown) // cooldown time
+					sendcooldown = 0
 
-	if(href_list["remove"])
-		if(tofax)
-			if(usr.Adjacent(loc))
-				tofax.loc = usr.loc
-				usr.put_in_hands(tofax)
-			else
-				tofax.forceMove(loc)
+		if("removeitem")
+			if(tofax)
+				if(usr.Adjacent(loc))
+					tofax.loc = usr.loc
+					usr.put_in_hands(tofax)
+				else
+					tofax.forceMove(loc)
 
-			to_chat(usr, "<span class='notice'>You take the item out of \the [src].</span>")
-			tofax = null
+				to_chat(usr, "<span class='notice'>You take the item out of \the [src].</span>")
+				tofax = null
 
-	if(href_list["scan"])
-		if (scan)
-			if(ishuman(usr) && usr.Adjacent(loc))
-				scan.loc = usr.loc
-				if(!usr.get_active_hand())
-					usr.put_in_hands(scan)
-				scan = null
-			else
-				scan.loc = src.loc
-				scan = null
-		else if(ishuman (usr))
-			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/card/id))
-				usr.drop_from_inventory(I, src)
-				scan = I
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			H.sec_hud_set_ID()
-		authenticated = 0
+		if("scan")
+			if (scan)
+				if(ishuman(usr) && usr.Adjacent(loc))
+					scan.loc = usr.loc
+					if(!usr.get_active_hand())
+						usr.put_in_hands(scan)
+					scan = null
+				else
+					scan.loc = src.loc
+					scan = null
+			else if(ishuman (usr))
+				var/obj/item/I = usr.get_active_hand()
+				if (istype(I, /obj/item/weapon/card/id))
+					usr.drop_from_inventory(I, src)
+					scan = I
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
+			authenticated = 0
 
-	if(href_list["dept"])
-		var/new_dep_dest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
-		if(!new_dep_dest || !can_still_interact_with(usr))
-			return
-		dptdest = new_dep_dest
+		if("setDestination")
+			var/new_dep_dest = params["to"]
+			if(!new_dep_dest || !(new_dep_dest in alldepartments))
+				return
+			dptdest = new_dep_dest
 
-	if(href_list["auth"])
-		if ( (!( authenticated ) && (scan)) )
-			if (check_access(scan))
-				authenticated = 1
-
-	if(href_list["logout"])
-		authenticated = 0
-
-	updateUsrDialog()
+		if("authenticated")
+			if ( (!( authenticated ) && (scan)) )
+				if (check_access(scan))
+					authenticated = 1
 
 /obj/machinery/faxmachine/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))

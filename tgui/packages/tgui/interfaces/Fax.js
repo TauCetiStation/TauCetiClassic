@@ -6,6 +6,7 @@ import {
   Section,
   Divider,
   Dropdown,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -46,17 +47,20 @@ export const Fax = (props, context) => {
           />
         </LabeledList>
         <Divider />
-        <Box bold={1} m={1}>
+        <Box bold={1}>
           {authenticated
             ? 'Logged in to: Central Command Quantum Entaglement Network'
-            : 'This device required to authenticate'}
+            : 'This device required to authenticate.'}
         </Box>
-        <Box bold={1} m={1}>
-          {paperName
-            ? 'Currently sending:' + paperName
-            : 'Please insert paper, photo or bundle to send via secure connection.'}
-        </Box>
+        {authenticated ? (
+          <Box bold={1} mt={1}>
+            {paperName
+              ? 'Currently sending:' + paperName
+              : 'Please insert paper, photo or bundle to send via secure connection.'}
+          </Box>
+        ) : null}
         <Button
+          mt={1}
           icon="eject"
           content={'Remove Item'}
           onClick={() => act('removeitem')}
@@ -65,22 +69,20 @@ export const Fax = (props, context) => {
           icon="eject"
           content={'Send Message'}
           onClick={() => act('sendmessage')}
+          disabled={sendCooldown}
         />
         <Divider />
-        <LabeledList>
-          <LabeledList.Item
-            label="Sending to"
-            buttons={
-              <Dropdown
-                inline
-                width={20}
-                selected={destination}
-                options={allDepartments}
-                onSelected={(dept) => act('setDestination', { to: dept })}
-              />
-            }
-          />
-        </LabeledList>
+        <Stack>
+          <Stack.Item>Sending to:</Stack.Item>
+          <Stack.Item>
+            <Dropdown
+              width={12}
+              selected={destination}
+              options={allDepartments}
+              onSelected={(dept) => act('setDestination', { to: dept })}
+            />
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
