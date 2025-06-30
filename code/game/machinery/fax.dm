@@ -53,6 +53,9 @@ var/global/list/alldepartments = list("Central Command")
     "destination" = dptdest
   )
 
+/obj/machinery/faxmachine/tgui_static_data(mob/user)
+  return list("allDepartments" = alldepartments)
+
 /obj/machinery/faxmachine/ui_interact(mob/user)
 	tgui_interact(user)
 
