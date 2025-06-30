@@ -21,8 +21,7 @@ export const SampleInterface = (props, context) => {
             content={scan ? scan.name : '--------'}
             onClick={() => act('confirm')}
           />
-        }>
-      </Section>
+        }></Section>
       </Window.Content>
     </Window>
   );

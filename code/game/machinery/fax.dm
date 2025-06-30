@@ -49,10 +49,8 @@ var/global/list/alldepartments = list("Central Command")
 	data["scan"] = scan
 	return data
 
-
-
 /obj/machinery/faxmachine/ui_interact(mob/user)
-	tgui_interact()
+	tgui_interact(user)
 
 
 // /obj/machinery/faxmachine/ui_interact(mob/user)
