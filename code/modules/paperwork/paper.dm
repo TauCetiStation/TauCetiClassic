@@ -680,6 +680,18 @@
 		spin = FALSE
 	return ..()
 
+/obj/item/weapon/paper/attack_hand(mob/user)
+	if(plane_mode && user.a_intent == INTENT_HELP && loc == user)
+		unfold_plane()
+		return
+	return ..()
+
+/obj/item/weapon/paper/examine(mob/user)
+	if(plane_mode)
+		to_chat(user, desc)
+		return
+	..()
+
 /*
  * Premade paper
  */
