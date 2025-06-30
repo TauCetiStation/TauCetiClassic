@@ -47,6 +47,7 @@
 	var/windowWidth = 425
 	var/windowHeight = 600
 	var/windowTheme = CSS_THEME_LIGHT
+	var/plane_mode = FALSE
 
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
@@ -603,9 +604,6 @@
 
 	else
 		return ..()
-
-/obj/item/weapon/paper
-	var/plane_mode = FALSE
 
 /obj/item/weapon/paper/verb/make_plane()
 	set name = "Make Paper Plane"
