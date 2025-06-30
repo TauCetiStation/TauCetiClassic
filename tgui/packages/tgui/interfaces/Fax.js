@@ -1,25 +1,39 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, Box, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const SampleInterface = (props, context) => {
+export const Fax = (props, context) => {
   const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
-  const { scan, color } = data;
+  const { scan, authenticated, sendCooldown, paperName, destination } = data;
+
   return (
     <Window width={300} height={405}>
       <Window.Content>
-        <Section
-          title="Аутентификация в систему"
-          minHeight="82px"
-          buttons={
-            <Button
-              icon="eject"
-              content={scan ? scan.name : '--------'}
-              onClick={() => act('confirm')}
-            />
-          }
-        />
+        <LabeledList>
+          <LabeledList.Item
+            label="Confirm Identify"
+            buttons={
+              <Button
+                icon="eject"
+                content={scan ? scan : '-------'}
+                onClick={() => act('scan')}
+              />
+            }
+          />
+          <LabeledList.Item
+            label="Auth"
+            buttons={
+              <Button
+                icon="eject"
+                content={authenticated ? 'Log Out' : 'Log In'}
+                onClick={() => act('authenticated')}
+              />
+            }>
+            <Box style={{ marginTop: '0.5rem' }}>
+              Proper authentication is required to use this device
+            </Box>
+          </LabeledList.Item>
+        </LabeledList>
       </Window.Content>
     </Window>
   );

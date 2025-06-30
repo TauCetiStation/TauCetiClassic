@@ -45,9 +45,13 @@ var/global/list/alldepartments = list("Central Command")
 		ui.open()
 
 /obj/machinery/faxmachine/tgui_data(mob/user)
-	var/list/data = list()
-	data["scan"] = scan
-	return data
+  return list(
+    "scan" = scan?.name,
+    "authenticated" = authenticated,
+    "sendCooldown" = sendcooldown,
+    "paperName" = tofax?.name,
+    "destination" = dptdest
+  )
 
 /obj/machinery/faxmachine/ui_interact(mob/user)
 	tgui_interact(user)
