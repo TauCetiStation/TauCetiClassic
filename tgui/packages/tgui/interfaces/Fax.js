@@ -64,11 +64,12 @@ export const Fax = (props, context) => {
           icon="eject"
           content={'Remove Item'}
           onClick={() => act('removeitem')}
+          disabled={!paperName}
         />
         <Button
           icon="eject"
           content={'Send Message'}
-          onClick={() => act('sendmessage')}
+          onClick={() => act('send')}
           disabled={sendCooldown}
         />
         <Divider />
