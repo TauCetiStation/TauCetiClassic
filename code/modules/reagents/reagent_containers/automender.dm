@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/applicator
+/obj/item/weapon/reagent_containers/automender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."
 	icon = 'icons/obj/syringe.dmi'
@@ -6,32 +6,33 @@
 	item_state = "mender"
 	volume = 200
 	possible_transfer_amounts = null
-	amount_per_transfer_from_this = 8
+	amount_per_transfer_from_this = 7 // injecting bicaridine or kelotane more than 4 times would cause overdose
 	flags = OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
 	var/delay = 10
+	var/emagged = FALSE
 	var/ignore_flags = FALSE
 	var/applying = FALSE // So it can't be spammed.
 	var/measured_health = 0 // Used for measuring health; we don't want this to stop applying once the person's health isn't changing.
-	var/static/list/safe_chem_applicator_list = list("bicaridine", "kelotane", "tricordrazine")
+	var/static/list/safe_chem_automender_list = list("bicaridine", "kelotane", "dermaline", "tricordrazine")
 
 
-/obj/item/weapon/reagent_containers/applicator/atom_init()
+/obj/item/weapon/reagent_containers/automender/atom_init()
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/applicator/emag_act(mob/user)
+/obj/item/weapon/reagent_containers/automender/emag_act(mob/user)
 	if(!emagged)
 		emagged = TRUE
 		ignore_flags = TRUE
 		to_chat(user, "<span class='warning'>You short out the safeties on [src].</span>")
 		return TRUE
 
-/obj/item/weapon/reagent_containers/applicator/on_reagent_change()
+/obj/item/weapon/reagent_containers/automender/on_reagent_change()
 	if(!emagged)
 		var/found_forbidden_reagent = FALSE
 		for(var/datum/reagent/R in reagents.reagent_list)
-			if(!safe_chem_applicator_list.Find(R.id))
+			if(!safe_chem_automender_list.Find(R.id))
 				reagents.del_reagent(R.id)
 				found_forbidden_reagent = TRUE
 		if(found_forbidden_reagent)
@@ -41,31 +42,31 @@
 				visible_message("<span class='warning'>[src] identifies and removes a harmful substance.</span>")
 	update_icon()
 
-/obj/item/weapon/reagent_containers/applicator/update_icon()
+/obj/item/weapon/reagent_containers/automender/update_icon()
 	if(applying)
 		icon_state = "mender-active"
 	else
 		icon_state = "mender"
 	update_overlays()
 
-/obj/item/weapon/reagent_containers/applicator/proc/update_overlays()
+/obj/item/weapon/reagent_containers/automender/proc/update_overlays()
 	cut_overlays()
 	if(reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/syringe.dmi', "mender-fluid")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 	var/reag_pct = round((reagents.total_volume / volume) * 100)
-	var/mutable_appearance/applicator_bar = mutable_appearance('icons/obj/syringe.dmi', "app_e")
+	var/mutable_appearance/automender_bar = mutable_appearance('icons/obj/syringe.dmi', "app_e")
 	switch(reag_pct)
 		if(51 to 100)
-			applicator_bar.icon_state = "app_hf"
+			automender_bar.icon_state = "app_hf"
 		if(1 to 50)
-			applicator_bar.icon_state = "app_he"
+			automender_bar.icon_state = "app_he"
 		if(0)
-			applicator_bar.icon_state = "app_e"
-	add_overlay(applicator_bar)
+			automender_bar.icon_state = "app_e"
+	add_overlay(automender_bar)
 
-/obj/item/weapon/reagent_containers/applicator/proc/apply(mob/living/M, mob/user)
+/obj/item/weapon/reagent_containers/automender/proc/apply(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
@@ -73,7 +74,7 @@
 		to_chat(user, "<span class='warning'>You're already applying [src].</span>")
 		return
 
-	if(ignore_flags || M.can_inject(user, TRUE))
+	if(ignore_flags || M.can_inject(user, user.get_targetzone()))
 		if(M == user)
 			M.visible_message("[user] begins mending themselves with [src].", "<span class='notice'>You begin mending yourself with [src].</span>")
 		else
@@ -83,7 +84,7 @@
 			update_icon()
 			while(do_after(user, delay, target = M))
 				measured_health = M.health
-				apply_to(M, user, 1, FALSE)
+				apply_to(M, user)
 				if(measured_health == M.health)
 					to_chat(user, "<span class='notice'>[M] is finished healing and [src] powers down automatically.</span>")
 					break
@@ -93,43 +94,33 @@
 		applying = FALSE
 		update_icon()
 
-/obj/item/weapon/reagent_containers/applicator/attack(mob/living/M, mob/user)
+/obj/item/weapon/reagent_containers/automender/attack(mob/living/M, mob/user)
 	if(!istype(M) || !iscarbon(M))
 		return
-	apply(target, user)
+	apply(M, user)
 
-/obj/item/weapon/reagent_containers/applicator/proc/apply_to(mob/living/carbon/M, mob/user, multiplier = 1, show_message = TRUE)
-	var/total_applied_amount = amount_per_transfer_from_this * multiplier
-
+/obj/item/weapon/reagent_containers/automender/proc/apply_to(mob/living/carbon/M, mob/user)
 	if(reagents && reagents.total_volume)
 		var/list/injected = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
 			injected += R.name
-
 		var/contained = get_english_list(injected)
 		M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
-		var/fractional_applied_amount = total_applied_amount / reagents.total_volume
-
 		reagents.reaction(M, INGEST)
-		var/trans = reagents.trans_to(M, fractional_applied_amount)
+		var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in [src].</span>")
 
 		playsound(src, 'sound/effects/hypospray.ogg', VOL_EFFECTS_MASTER, 25)
-		//playsound(get_turf(src), pick('sound/goonstation/items/mender.ogg', 'sound/goonstation/items/mender2.ogg'), 50, 1)
 
-/obj/item/weapon/reagent_containers/applicator/brute
+/obj/item/weapon/reagent_containers/automender/brute
 	name = "brute auto-mender"
 	list_reagents = list("bicaridine" = 200)
 
-/obj/item/weapon/reagent_containers/applicator/burn
+/obj/item/weapon/reagent_containers/automender/burn
 	name = "burn auto-mender"
-	list_reagents = list("kelotane" = 200)
+	list_reagents = list("dermaline" = 200)
 
-/obj/item/weapon/reagent_containers/applicator/dual
+/obj/item/weapon/reagent_containers/automender/dual
 	name = "dual auto-mender"
 	list_reagents = list("tricordrazine" = 200)
-
-/// It magically goes through hardsuits. Don't ask how.
-/obj/item/reagent_containers/applicator/dual/syndi
-	ignore_flags = TRUE
