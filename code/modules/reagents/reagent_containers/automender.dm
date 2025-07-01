@@ -13,7 +13,6 @@
 	var/emagged = FALSE
 	var/ignore_flags = FALSE
 	var/applying = FALSE // So it can't be spammed.
-	var/measured_health = 0 // Used for measuring health; we don't want this to stop applying once the person's health isn't changing.
 	var/static/list/safe_chem_automender_list = list("bicaridine", "kelotane", "dermaline", "tricordrazine")
 
 
@@ -83,15 +82,12 @@
 			applying = TRUE
 			update_icon()
 			while(do_after(user, delay, target = M))
-				measured_health = M.health
 				apply_to(M, user)
-				if(measured_health == M.health)
-					to_chat(user, "<span class='notice'>[M] is finished healing and [src] powers down automatically.</span>")
-					break
 				if(!reagents.total_volume)
 					to_chat(user, "<span class='notice'>[src] is out of reagents and powers down automatically.</span>")
 					break
 		applying = FALSE
+		user.SetNextMove(CLICK_CD_MELEE)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/automender/attack(mob/living/M, mob/user)
