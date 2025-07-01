@@ -415,10 +415,13 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
+	item_state_world = "egg_world"
+	w_class = SIZE_MINUSCULE
 	filling_color = "#fdffd1"
 	list_reagents = list("nutriment" = 1, "egg" = 5)
 	cookingThreshold = 10
 	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
+	var/egg_color = "" // default egg color is white, can be changed with crayons
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
@@ -439,36 +442,60 @@
 
 		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
 			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
-			return
 
 		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
-		icon_state = "egg-[clr]"
+		egg_color = clr
+		update_icon()
 	else
 		return ..()
 
+/obj/item/weapon/reagent_containers/food/snacks/egg/update_icon()
+	item_state_inventory = "egg-[egg_color]"
+	item_state_world = "egg-[egg_color]_world"
+	icon_state = "egg-[egg_color]"
+	update_world_icon()
+	update_inv_mob()
+
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
+	item_state_world = "egg-blue_world"
+	egg_color = "blue"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
+	item_state_world = "egg-green_world"
+	egg_color = "green"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
+	item_state = "egg"
+	item_state_world = "egg-mime_world"
+	egg_color = "mime"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
+	item_state_world = "egg-orange_world"
+	egg_color = "orange"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
+	item_state_world = "egg-purple_world"
+	egg_color = "purple"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
+	item_state_world = "egg-rainbow_world"
+	egg_color = "rainbow"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
+	item_state_world = "egg-red_world"
+	egg_color = "red"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
+	item_state_world = "egg-yellow_world"
+	egg_color = "yellow"
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "Fried egg"
@@ -482,8 +509,75 @@
 	name = "Boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
+	item_state_world = "egg_world"
 	filling_color = "#ffffff"
 	list_reagents = list("nutriment" = 2, "vitamin" = 1, "egg" = 5)
+	var/egg_color = "" // default egg color is white, can be changed with crayons
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/C = I
+		var/clr = C.colourName
+
+		var/static/list/valid_colors = list("blue","green","mime","orange","purple","rainbow","red","yellow")
+		if(!(clr in valid_colors))
+			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+			return
+
+		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
+		egg_color = clr
+		update_icon()
+	else
+		return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/update_icon()
+	..()
+	item_state_inventory = "egg-[egg_color]"
+	item_state_world = "egg-[egg_color]_world"
+	icon_state = "egg-[egg_color]"
+	update_world_icon()
+	update_inv_mob()
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/blue
+	icon_state = "egg-blue"
+	item_state_world = "egg-blue_world"
+	egg_color = "blue"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/green
+	icon_state = "egg-green"
+	item_state_world = "egg-green_world"
+	egg_color = "green"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/mime
+	icon_state = "egg-mime"
+	item_state = "egg"
+	item_state_world = "egg-mime_world"
+	egg_color = "mime"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/orange
+	icon_state = "egg-orange"
+	item_state_world = "egg-orange_world"
+	egg_color = "orange"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/purple
+	icon_state = "egg-purple"
+	item_state_world = "egg-purple_world"
+	egg_color = "purple"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/rainbow
+	icon_state = "egg-rainbow"
+	item_state_world = "egg-rainbow_world"
+	egg_color = "rainbow"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/red
+	icon_state = "egg-red"
+	item_state_world = "egg-red_world"
+	egg_color = "red"
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg/yellow
+	icon_state = "egg-yellow"
+	item_state_world = "egg-yellow_world"
+	egg_color = "yellow"
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
@@ -2075,6 +2169,24 @@
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
 	filling_color = "#f7ffe0"
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/kulich
+	name = "Kulich"
+	desc = "A big cylinder-shaped festive cupcake."
+	icon_state = "kulich"
+	item_state_world = "kulich_world"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/kulich
+	filling_color = "#ede5ad"
+	list_reagents = list("sugar" = 10, "nutriment" = 25)
+
+/obj/item/weapon/reagent_containers/food/snacks/breadslice/kulich
+	name = "Kulich slice"
+	desc = "A slice of delicious kulich."
+	icon_state = "kulichslice"
+	item_state_world = "kulichslice_world"
+	item_state = "kulich"
+	filling_color = "#ede5ad"
+	trash = null
 
 // === CAKE ===
 

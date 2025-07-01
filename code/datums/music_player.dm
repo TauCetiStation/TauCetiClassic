@@ -25,7 +25,7 @@
 #define DEFAULT_TEMPO    120
 #define DEFAULT_VOLUME   100
 #define MAX_LINE_SIZE    50
-#define MAX_LINES_COUNT  150
+#define MAX_LINES_COUNT  450
 #define MAX_SONG_SIZE    MAX_LINE_SIZE*MAX_LINES_COUNT
 #define MAX_REPEAT_COUNT 10
 #define MAX_TEMPO_RATE   600
@@ -55,8 +55,8 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/obj/instrument  = null
 	var/sound_path      = ""
 
-	var/list/song_lines = list()
-	var/song_tempo      = DEFAULT_TEMPO
+	var/list/song_lines    = list()
+	var/song_tempo         = DEFAULT_TEMPO
 
 	var/playing   = FALSE
 	var/show_help = FALSE
@@ -232,6 +232,9 @@ var/global/datum/notes_storage/note_cache_storage = new
 			cur_acc[i] = "n"
 
 		for(var/line in song_lines)
+			// Use new BPM for the songlines
+			if(find_and_set_tempo(line))
+				continue
 			for(var/beat in splittext(lowertext(line), ","))
 
 				// Some browsers may delete last space on line when copying text in buffer,
@@ -298,8 +301,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	var/list/lines = splittext(song_text, "\n")
 
-	if(copytext(lines[1], 1, 5) == "BPM:")
-		song_tempo = clamp(text2num(copytext(lines[1], 5)), 1, MAX_TEMPO_RATE)
+	if(find_and_set_tempo(lines[1]) && !has_multiple_matches(song_text, "BPM:"))
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)
@@ -310,6 +312,12 @@ var/global/datum/notes_storage/note_cache_storage = new
 			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
 
 	song_lines = lines
+
+/datum/music_player/proc/find_and_set_tempo(song_line)
+	if(copytext(song_line, 1, 5) == "BPM:")
+		song_tempo = clamp(text2num(copytext(song_line, 5)), 1, MAX_TEMPO_RATE)
+		return TRUE
+	return FALSE
 
 #undef COUNT_PAUSE
 #undef DEFAULT_TEMPO

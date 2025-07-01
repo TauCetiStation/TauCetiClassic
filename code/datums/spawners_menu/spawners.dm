@@ -472,7 +472,7 @@
 	cooldown = 0
 	positions = INFINITY
 
-	spawn_landmark_name = "eorgwarp"
+	spawn_landmark_name = "Gladiator"
 
 /datum/spawner/gladiator/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
@@ -890,6 +890,10 @@
 	spectator.forceMove(get_turf(fabricator))
 
 /datum/spawner/malf_drone/spawn_body(mob/dead/spectator)
+	if(fabricator.stat & NOPOWER || !fabricator.produce_drones)
+		to_chat(spectator, "<span class='warning'>Фабрикатор обесточен и не может произвести нового дрона.</span>")
+		return
+
 	var/client/C = spectator.client
 
 	var/mob/living/silicon/robot/drone/maintenance/malfuction/D = new
