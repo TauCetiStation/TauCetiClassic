@@ -1703,6 +1703,14 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/stack/nanopaste
 	category = list("Support")
 
+/datum/design/automender
+	name = "Auto-mender"
+	id = "automender"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/reagent_containers/automender
+	category = list("Support")
+
 /datum/design/implanter
 	name = "implanter"
 	desc = "Implanter, used to inject implants."

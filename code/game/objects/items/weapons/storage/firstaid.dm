@@ -98,10 +98,11 @@
 	if (empty)
 		return
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
-	for (var/i in 1 to 3)
-		new /obj/item/stack/medical/advanced/bruise_pack(src)
 	for (var/i in 1 to 2)
-		new /obj/item/stack/medical/advanced/ointment(src)
+		new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/weapon/reagent_containers/automender/brute(src)
+	new /obj/item/weapon/reagent_containers/automender/burn(src)
 	new /obj/item/stack/medical/splint(src)
 
 /*

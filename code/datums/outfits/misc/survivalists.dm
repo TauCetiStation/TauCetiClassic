@@ -43,8 +43,8 @@
 	/obj/item/weapon/reagent_containers/hypospray,
 	/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
 	/obj/item/stack/medical/suture,
-	/obj/item/weapon/storage/pill_bottle/bicaridine,
-	/obj/item/weapon/storage/pill_bottle/dermaline,
+	/obj/item/weapon/reagent_containers/automender/brute,
+	/obj/item/weapon/reagent_containers/automender/burn,
 	/obj/item/weapon/storage/pill_bottle/dylovene,
 	/obj/item/weapon/storage/pill_bottle/tramadol
 	)

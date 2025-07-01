@@ -18,6 +18,8 @@
 		/obj/item/weapon/reagent_containers/dropper = 2,
 		/obj/item/stack/medical/advanced/bruise_pack = 3,
 		/obj/item/stack/medical/advanced/ointment = 3,
+		/obj/item/weapon/reagent_containers/automender/brute = 2,
+		/obj/item/weapon/reagent_containers/automender/burn = 2,
 		/obj/item/stack/medical/splint = 2,
 		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 9,
 		/obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine = 5,
