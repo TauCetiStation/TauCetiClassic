@@ -47,6 +47,7 @@
 	var/windowWidth = 425
 	var/windowHeight = 600
 	var/windowTheme = CSS_THEME_LIGHT
+	var/plane_mode = FALSE
 
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
@@ -583,6 +584,93 @@
 
 	else
 		return ..()
+
+/obj/item/weapon/paper/verb/make_plane()
+	set name = "Make Paper Plane"
+	set category = "Object"
+	set src in usr
+
+	if(crumpled)
+		to_chat(usr, "<span class='warning'>You can't make a plane from crumpled paper!</span>")
+		return
+	if(plane_mode)
+		to_chat(usr, "<span class='warning'>This is already a paper plane!</span>")
+		return
+	if(usr.incapacitated())
+		return
+
+	usr.visible_message(
+		"[usr] starts folding [src] into a paper plane.",
+		"You start folding [src] into a paper plane."
+	)
+
+	if(!do_after(usr, 3 SECOND, target = src))
+		return
+
+	on_craft_complete()
+
+/obj/item/weapon/paper/proc/on_craft_complete()
+	plane_mode = TRUE
+	name = "paper plane"
+	desc = "A simple folded paper airplane."
+	icon_state = "paper_plane"
+	throwforce = 0
+	throw_range = 7
+	throw_speed = 1
+	w_class = SIZE_MINUSCULE
+	attack_verb = list("glides past", "flutters near")
+	pixel_x = rand(-9, 9)
+	pixel_y = rand(-8, 8)
+
+	verbs -= /obj/item/weapon/paper/verb/make_plane
+	verbs += /obj/item/weapon/paper/verb/unfold_plane
+
+/obj/item/weapon/paper/verb/unfold_plane()
+	set name = "Unfold Paper Plane"
+	set category = "Object"
+	set src in usr
+
+	if(!plane_mode)
+		return
+	if(usr.incapacitated())
+		return
+
+	usr.visible_message(
+		"[usr] unfolds [src] back into a sheet of paper.",
+		"You unfold [src] back into a sheet of paper."
+	)
+
+	plane_mode = FALSE
+	name = initial(name)
+	desc = initial(desc)
+	icon_state = initial(icon_state)
+	throwforce = initial(throwforce)
+	throw_range = initial(throw_range)
+	throw_speed = initial(throw_speed)
+	w_class = initial(w_class)
+	attack_verb = initial(attack_verb)
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y)
+
+	verbs -= /obj/item/weapon/paper/verb/unfold_plane
+	verbs += /obj/item/weapon/paper/verb/make_plane
+
+/obj/item/weapon/paper/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+	if(plane_mode)
+		spin = FALSE
+	return ..()
+
+/obj/item/weapon/paper/attack_hand(mob/user)
+	if(plane_mode && user.a_intent == INTENT_HELP && loc == user)
+		unfold_plane()
+		return
+	return ..()
+
+/obj/item/weapon/paper/examine(mob/user)
+	if(plane_mode)
+		to_chat(user, desc)
+		return
+	..()
 
 /*
  * Premade paper
