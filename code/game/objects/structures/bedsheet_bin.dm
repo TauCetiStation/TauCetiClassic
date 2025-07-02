@@ -141,12 +141,18 @@ LINEN BINS
 	name = "linen bin"
 	desc = "A linen bin. It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
+	var/base_icon_state = "linenbin"
 	icon_state = "linenbin-full"
+	pass_flags = PASSTABLE
 	anchored = TRUE
 	var/amount = 20
 	var/list/sheets = list()
 	var/obj/item/hidden = null
 
+/obj/structure/bedsheetbin/empty
+	amount = 0
+	icon_state = "linenbin-empty"
+	anchored = FALSE
 
 /obj/structure/bedsheetbin/examine(mob/user)
 	..()
@@ -160,12 +166,14 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/update_icon()
-	if(amount == 0)
-		icon_state = "linenbin-empty"
-	else if(amount < initial(amount) / 2)
-		icon_state = "linenbin-half"
-	else
-		icon_state = "linenbin-full"
+	switch(amount)
+		if(0)
+			icon_state = "[base_icon_state]-empty"
+		if(1 to 10)
+			icon_state = "[base_icon_state]-half"
+		else
+			icon_state = "[base_icon_state]-full"
+	return ..()
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/bedsheet))
@@ -178,7 +186,7 @@ LINEN BINS
 		user.drop_from_inventory(I, src)
 		hidden = I
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
-
+	update_icon()
 
 
 /obj/structure/bedsheetbin/attack_paw(mob/living/user)
@@ -205,5 +213,16 @@ LINEN BINS
 			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
-
+	update_icon()
 	add_fingerprint(user)
+
+/obj/structure/bedsheetbin/basket
+	name = "linen basket"
+	icon_state = "linenbasket-full"
+	base_icon_state = "linenbasket"
+
+/obj/structure/bedsheetbin/empty/basket
+	name = "linen basket"
+	icon_state = "linenbasket-empty"
+	base_icon_state = "linenbasket"
+
