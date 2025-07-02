@@ -110,7 +110,7 @@ var/global/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	switch(action)
