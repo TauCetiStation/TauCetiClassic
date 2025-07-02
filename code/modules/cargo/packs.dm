@@ -912,6 +912,49 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 				var/obj/item/stack/sheet/n_sheet = n_item
 				n_sheet.set_amount(sheet_amount)
 
+/datum/supply_pack/fancy_table
+	name = "Mixed fancy tables"
+	contains = list(/obj/item/weapon/table_parts/wood/fancy,
+		/obj/item/weapon/table_parts/wood/fancy,
+		/obj/item/weapon/table_parts/wood/fancy,
+		/obj/item/weapon/table_parts/wood/fancy,
+		/obj/item/weapon/table_parts/wood/fancy,
+		/obj/item/weapon/table_parts/wood/fancy/black,
+		/obj/item/weapon/table_parts/wood/fancy/black,
+		/obj/item/weapon/table_parts/wood/fancy/black,
+		/obj/item/weapon/table_parts/wood/fancy/black,
+		/obj/item/weapon/table_parts/wood/fancy/black,
+		/obj/item/weapon/table_parts/wood/fancy/blue,
+		/obj/item/weapon/table_parts/wood/fancy/blue,
+		/obj/item/weapon/table_parts/wood/fancy/blue,
+		/obj/item/weapon/table_parts/wood/fancy/blue,
+		/obj/item/weapon/table_parts/wood/fancy/blue,
+		/obj/item/weapon/table_parts/wood/fancy/cyan,
+		/obj/item/weapon/table_parts/wood/fancy/cyan,
+		/obj/item/weapon/table_parts/wood/fancy/cyan,
+		/obj/item/weapon/table_parts/wood/fancy/cyan,
+		/obj/item/weapon/table_parts/wood/fancy/cyan,
+		/obj/item/weapon/table_parts/wood/fancy/green,
+		/obj/item/weapon/table_parts/wood/fancy/green,
+		/obj/item/weapon/table_parts/wood/fancy/green,
+		/obj/item/weapon/table_parts/wood/fancy/green,
+		/obj/item/weapon/table_parts/wood/fancy/green,
+		/obj/item/weapon/table_parts/wood/fancy/orange,
+		/obj/item/weapon/table_parts/wood/fancy/orange,
+		/obj/item/weapon/table_parts/wood/fancy/orange,
+		/obj/item/weapon/table_parts/wood/fancy/orange,
+		/obj/item/weapon/table_parts/wood/fancy/orange,
+		/obj/item/weapon/table_parts/wood/fancy/purple,
+		/obj/item/weapon/table_parts/wood/fancy/purple,
+		/obj/item/weapon/table_parts/wood/fancy/purple,
+		/obj/item/weapon/table_parts/wood/fancy/purple,
+		/obj/item/weapon/table_parts/wood/fancy/purple
+	)
+	additional_costs = 200
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Fancy tablecrate"
+	group = "Engineering"
+
 /datum/supply_pack/electrical
 	name = "Electrical maintenance crate"
 	contains = list(/obj/item/weapon/storage/toolbox/electrical,
