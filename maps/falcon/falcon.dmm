@@ -3166,12 +3166,12 @@
 	pixel_y = 28
 	},
 /obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/medium,
+/obj/item/weapon/rcd_ammo/medium,
+/obj/item/weapon/rcd_ammo/medium,
+/obj/item/weapon/rcd_ammo/medium,
+/obj/item/weapon/rcd_ammo/medium,
+/obj/item/weapon/rcd_ammo/medium,
 /obj/item/weapon/book/manual/wiki/possible_threats,
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "Engineering";

@@ -323,7 +323,7 @@
 
 /obj/structure/closet/crate/rcd/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/rcd_ammo(src)
+		new /obj/item/weapon/rcd_ammo/huge(src)
 	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/solar
@@ -393,7 +393,7 @@
 	icon_state = "syndicrate"
 	icon_opened = "syndicrateopen"
 	icon_closed = "syndicrate"
-	
+
 /obj/structure/closet/crate/surplus_crate_team
 	icon_state = "gorlexcrate"
 	icon_opened = "gorlexcrateopen"

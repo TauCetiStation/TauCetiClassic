@@ -9183,9 +9183,9 @@
 "avE" = (
 /obj/structure/table,
 /obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -11739,9 +11739,9 @@
 /area/centcom/specops)
 "aAZ" = (
 /obj/structure/rack,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
 /obj/item/weapon/rcd,
 /obj/machinery/light{
 	dir = 4
@@ -12070,9 +12070,9 @@
 /area/centcom/living)
 "aBL" = (
 /obj/structure/rack,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
 /obj/item/weapon/rcd,
 /turf/unsimulated/floor{
 	dir = 4;

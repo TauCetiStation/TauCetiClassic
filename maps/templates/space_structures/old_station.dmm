@@ -416,7 +416,7 @@
 	},
 /area/space_structures/carp_space)
 "cy" = (
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/huge,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
