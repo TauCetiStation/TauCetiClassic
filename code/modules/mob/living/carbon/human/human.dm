@@ -407,6 +407,8 @@
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 		return TRUE
+	if (buckled && istype(buckled, /obj/structure/stool/bed/nest))
+		return TRUE
 	return 0
 
 /mob/living/carbon/human/resist()
