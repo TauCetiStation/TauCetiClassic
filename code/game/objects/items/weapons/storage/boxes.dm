@@ -735,6 +735,11 @@
 	desc = "XOXO! - Granny"
 	startswith = list(/obj/item/seeds/gourdseed = 1, /obj/item/seeds/gelthi = 1, /obj/item/seeds/vale = 1, /obj/item/seeds/surik = 1, /obj/item/seeds/blackberry = 1, /obj/item/seeds/amauri = 1, /obj/item/seeds/jurlmah = 1)
 
+/obj/item/weapon/storage/box/expimplant
+	name = "Gilthari Exports"
+	desc = "Экспериментальные кибер-импланты от Gilthari Exports"
+	startswith = list(/obj/item/gland/heals = 1, /obj/item/gland/pop = 1, /obj/item/gland/ventcrawling = 1, /obj/item/gland/egg = 1, /obj/item/gland/bodysnatch = 1)
+
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box
 	name = "syndie box"
