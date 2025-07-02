@@ -5397,6 +5397,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
+"wF" = (
+/obj/machinery/build_crane,
+/turf/environment/space,
+/area/space)
 "wI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
@@ -40199,7 +40203,7 @@ hz
 hz
 hz
 hz
-MC
+wF
 MC
 MC
 MC
@@ -40456,7 +40460,7 @@ kw
 fL
 fQ
 hz
-MC
+wF
 MC
 MC
 MC
