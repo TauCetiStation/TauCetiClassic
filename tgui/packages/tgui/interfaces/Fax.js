@@ -63,21 +63,28 @@ export const Fax = (props, context) => {
                 ? 'Currently sending:' + paperName
                 : 'Please insert paper, photo or bundle to send via secure connection.'}
             </Box>
-            <Button
-              mt={1}
-              icon="eject"
-              content={'Remove Paper'}
-              color="red"
-              onClick={() => act('removeitem')}
-              disabled={!paper}
-            />
-            <Button
-              icon="fa fa-reply"
-              content={'Send Message'}
-              color="green"
-              onClick={() => act('send')}
-              disabled={sendCooldown || !paper}
-            />
+            <Stack>
+              <Stack.Item>
+                <Button
+                  mt={1}
+                  icon="eject"
+                  content={'Remove Paper'}
+                  color="red"
+                  onClick={() => act('removeitem')}
+                  disabled={!paper}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  mt={1}
+                  icon="fa fa-reply"
+                  content={'Send Message'}
+                  color="green"
+                  onClick={() => act('send')}
+                  disabled={sendCooldown || !paper}
+                />
+              </Stack.Item>
+            </Stack>
           </>
         ) : null}
       </Window.Content>
