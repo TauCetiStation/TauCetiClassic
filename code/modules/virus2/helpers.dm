@@ -157,8 +157,8 @@
 		for (var/ID in virus2)
 //			log_debug("Attempting virus [ID]")
 			var/datum/disease2/disease/V = virus2[ID]
-			if(V.spreadtype != vector) continue
-
+			if(V.spreadtype != vector)
+				continue
 			if (vector == DISEASE_SPREAD_AIRBORNE)
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
 //					log_debug("In range, infecting")
