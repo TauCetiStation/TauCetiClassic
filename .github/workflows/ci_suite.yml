@@ -41,12 +41,6 @@ jobs:
         uses: actions/setup-dotnet@v4.2.0
         with:
           dotnet-version: 9.x
-      #- name: Restore Cache
-      #  id: cache-od
-      #  uses: actions/cache@v4
-      #  with:
-      #    path: ~/openDream
-      #    key: ${{ runner.os }}-openDream-${{ env.OPENDREAM_RELEASE_VERSION }}
       - name: Install OpenDream
         if: steps.cache-od.outputs.cache-hit != 'true'
         uses: robinraju/release-downloader@v1.12
@@ -56,9 +50,9 @@ jobs:
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
       - name: Run OpenDream
-        run: |
-            ls -la
-            ./DMCompiler_linux-x64/DMCompiler ./taucetistation.dme --suppress-unimplemented --define=CIBUILDING
+        run: ./DMCompiler_linux-x64/DMCompiler taucetistation.dme --suppress-unimplemented --define=CIBUILDING
+      - name: Check Python version
+        run: python3 --version
   Code:
     name: Code and Map Linting
     runs-on: ubuntu-22.04
