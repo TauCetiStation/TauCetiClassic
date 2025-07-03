@@ -309,7 +309,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 							else if(req_one_access.len)
 								ae.conf_access = req_one_access
 								ae.one_access = 1
-							else
 						else
 							ae = electronics
 							electronics = null

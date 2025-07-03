@@ -147,7 +147,6 @@
 							dat += "<td>[crimstat]</td></tr>"
 						dat += "</table><hr width='75%' />"
 						dat += "<br><A href='byond://?src=\ref[src];choice=Return'>Return to index</A>"
-				else
 		else
 			dat += "<A href='byond://?src=\ref[src];choice=Log In'>Log In</A>"
 

@@ -163,7 +163,7 @@
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
-				else
+//				else
 //					log_debug("Could not reach target")
 
 			if (vector == DISEASE_SPREAD_CONTACT)

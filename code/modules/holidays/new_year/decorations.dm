@@ -223,7 +223,7 @@
 				choosen_gift = present
 	if(how_many_gifts)
 		var/obj/item/weapon/gift/G = choosen_gift
-		to_chat(user, "<span class='notice'>Looks like there is [how_many_gifts] gifts for you under \the tree!</span>")
+		to_chat(user, "<span class='notice'>Looks like there is [how_many_gifts] gifts for you under the tree!</span>")
 		visible_message("<span class='notice'>[H] takes a gift from \the [src].</span>",
 			"<span class='notice'>You take a gift from \the [src].</span>")
 		G.forceMove(H.loc)
