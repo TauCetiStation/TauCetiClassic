@@ -134,7 +134,7 @@
 		sleep(-1)
 		if((!issaved(A.vars[V])) || (A.vars[V]==initial(A.vars[V])))continue
 		if(istext(A.vars[V]))
-			attributes_text += "[V] = "[A.vars[V]]""
+			attributes_text += "[V] = [A.vars[V]]"
 
 		else if(isnum(A.vars[V])||ispath(A.vars[V]))
 			attributes_text += "[V] = [A.vars[V]]"
