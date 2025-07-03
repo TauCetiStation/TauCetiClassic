@@ -33,6 +33,8 @@ jobs:
         with:
           outputFile: output-annotations.txt
   OpenDream:
+    runs-on: ubuntu-22.04
+    steps:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4.2.0
         with:
