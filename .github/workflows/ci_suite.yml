@@ -10,6 +10,7 @@ env:
   BYOND_MAJOR: 516
   BYOND_MINOR: 1663
   SPACEMAN_DMM_VERSION: suite-1.10
+  OPENDREAM_RELEASE_VERSION: latest
 jobs:
   DreamChecker:
     runs-on: ubuntu-22.04
@@ -31,6 +32,28 @@ jobs:
         if: always()
         with:
           outputFile: output-annotations.txt
+  OpenDream:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.x
+      - name: Restore Cache
+        id: cache-od
+        uses: actions/cache@v4
+        with:
+          path: ~/openDream
+          key: ${{ runner.os }}-openDream-${{ env.OPENDREAM_RELEASE_VERSION }}
+      - name: Install OpenDream
+        if: steps.cache-od.outputs.cache-hit != 'true'
+        uses: robinraju/release-downloader@v1.12
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: OPENDREAM_RELEASE_VERSION
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+          out-file-path: '~/openDream'
+      - name: Run OpenDream
+        run: ~/openDream/DMCompiler_linux-x64/DMCompiler taucetistation.dme --suppress-unimplemented --define=CIBUILDING
   Code:
     name: Code and Map Linting
     runs-on: ubuntu-22.04
