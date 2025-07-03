@@ -55,7 +55,9 @@ jobs:
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
       - name: Run OpenDream
-        run: ./DMCompiler_linux-x64/DMCompiler taucetistation.dme --suppress-unimplemented --define=CIBUILDING
+        run: |
+            ls -la
+            ./DMCompiler_linux-x64/DMCompiler ./source/taucetistation.dme --suppress-unimplemented --define=CIBUILDING
   Code:
     name: Code and Map Linting
     runs-on: ubuntu-22.04
