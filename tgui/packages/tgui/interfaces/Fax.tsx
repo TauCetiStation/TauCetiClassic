@@ -63,41 +63,31 @@ export const Fax = (props, context) => {
           </Stack.Item>
         </Stack>
         <Divider />
-        <Box bold={1}>
+        <Box>
           {authenticated
-            ? 'Logged in to: Central Command Quantum Entaglement Network'
+            ? 'Authentication was successful.'
             : 'This device required to authenticate.'}
         </Box>
         {authenticated ? (
-          <Box vertical>
-            <Box bold={1} mt={1}>
-              {paperName
-                ? 'Currently sending:' + paperName
-                : 'Please insert paper, photo or bundle to send via secure connection.'}
-            </Box>
-            <Stack>
-              <Stack.Item>
-                <Button
-                  mt={1}
-                  icon="eject"
-                  content={'Remove Paper'}
-                  color="red"
-                  onClick={() => act('removeitem')}
-                  disabled={!paper}
-                />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  mt={1}
-                  icon="fa fa-reply"
-                  content={'Send Message'}
-                  color="green"
-                  onClick={() => act('send')}
-                  disabled={sendCooldown || !paper}
-                />
-              </Stack.Item>
-            </Stack>
-          </Box>
+          <Stack mt={2} width="100%">
+            <Stack.Item>Currently sending:</Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="fa fa-file"
+                content={paperName ? paperName : 'No content found'}
+                onClick={() => act('removeitem')}
+                disabled={!paper}
+              />
+            </Stack.Item>
+            <Stack.Item grow>
+              <Button
+                icon="fa fa-reply"
+                content={'Send Message'}
+                onClick={() => act('send')}
+                disabled={sendCooldown || !paper}
+              />
+            </Stack.Item>
+          </Stack>
         ) : null}
       </Window.Content>
     </Window>
