@@ -51,7 +51,7 @@ jobs:
         uses: robinraju/release-downloader@v1.12
         with:
           repository: "OpenDreamProject/OpenDream"
-          tag: {{ env.OPENDREAM_RELEASE_VERSION }}
+          tag: ${{ env.OPENDREAM_RELEASE_VERSION }}
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
           out-file-path: '~/openDream'
