@@ -49,8 +49,6 @@ jobs:
           tag: ${{ env.OPENDREAM_RELEASE_VERSION }}
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
-      - name: Check Python version
-        run: python3 --version
       - name: Run OpenDream
         run: ./DMCompiler_linux-x64/DMCompiler taucetistation.dme --suppress-unimplemented --define=CIBUILDING | bash scripts/annotate_od.sh
   Code:
