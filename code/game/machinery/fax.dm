@@ -162,16 +162,15 @@ var/global/list/alldepartments = list("Central Command")
 				H.sec_hud_set_ID()
 			authenticated = 0
 
+			if ( (!( authenticated ) && (scan)) )
+				if (check_access(scan))
+					authenticated = 1
+
 		if("setDestination")
 			var/new_dep_dest = params["to"]
 			if(!new_dep_dest || !(new_dep_dest in alldepartments))
 				return
 			dptdest = new_dep_dest
-
-		if("authenticated")
-			if ( (!( authenticated ) && (scan)) )
-				if (check_access(scan))
-					authenticated = 1
 
 /obj/machinery/faxmachine/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))
@@ -189,6 +188,9 @@ var/global/list/alldepartments = list("Central Command")
 			usr.drop_from_inventory(idcard, src)
 			idcard.loc = src
 			scan = idcard
+			if ( (!( authenticated ) && (scan)) )
+				if (check_access(scan))
+					authenticated = 1
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()

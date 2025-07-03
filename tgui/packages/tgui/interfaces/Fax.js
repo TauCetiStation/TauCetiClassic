@@ -23,59 +23,24 @@ export const Fax = (props, context) => {
   } = data;
 
   return (
-    <Window width={300} height={405}>
+    <Window width={400} height={270}>
       <Window.Content>
-        <LabeledList>
-          <LabeledList.Item
-            label="Confirm Identify"
-            buttons={
-              <Button
-                icon="eject"
-                content={scan ? scan : '-------'}
-                onClick={() => act('scan')}
-              />
-            }
-          />
-          <LabeledList.Item
-            label="Auth"
-            buttons={
-              <Button
-                icon="eject"
-                content={authenticated ? 'Log Out' : 'Log In'}
-                onClick={() => act('authenticated')}
-              />
-            }
-          />
-        </LabeledList>
-        <Divider />
-        <Box bold={1}>
-          {authenticated
-            ? 'Logged in to: Central Command Quantum Entaglement Network'
-            : 'This device required to authenticate.'}
-        </Box>
-        {authenticated ? (
-          <Box bold={1} mt={1}>
-            {paperName
-              ? 'Currently sending:' + paperName
-              : 'Please insert paper, photo or bundle to send via secure connection.'}
-          </Box>
-        ) : null}
-        <Button
-          mt={1}
-          icon="eject"
-          content={'Remove Paper'}
-          onClick={() => act('removeitem')}
-          disabled={!paper}
-        />
-        <Button
-          icon="eject"
-          content={'Send Message'}
-          onClick={() => act('send')}
-          disabled={sendCooldown}
-        />
-        <Divider />
-        <Stack>
-          <Stack.Item>Sending to:</Stack.Item>
+        <Stack width="100%" textAlign="base">
+          <Stack.Item grow italic>
+            Confirm Identify:
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="fa fa-sign-in"
+              content={scan ? scan : '-------'}
+              onClick={() => act('scan')}
+            />
+          </Stack.Item>
+        </Stack>
+        <Stack mt={1} width="100%" textAlign="base">
+          <Stack.Item grow italic>
+            Sending to:
+          </Stack.Item>
           <Stack.Item>
             <Dropdown
               width={12}
@@ -85,6 +50,36 @@ export const Fax = (props, context) => {
             />
           </Stack.Item>
         </Stack>
+        <Divider />
+        <Box bold={1}>
+          {authenticated
+            ? 'Logged in to: Central Command Quantum Entaglement Network'
+            : 'This device required to authenticate.'}
+        </Box>
+        {authenticated ? (
+          <>
+            <Box bold={1} mt={1}>
+              {paperName
+                ? 'Currently sending:' + paperName
+                : 'Please insert paper, photo or bundle to send via secure connection.'}
+            </Box>
+            <Button
+              mt={1}
+              icon="eject"
+              content={'Remove Paper'}
+              color="red"
+              onClick={() => act('removeitem')}
+              disabled={!paper}
+            />
+            <Button
+              icon="fa fa-reply"
+              content={'Send Message'}
+              color="green"
+              onClick={() => act('send')}
+              disabled={sendCooldown || !paper}
+            />
+          </>
+        ) : null}
       </Window.Content>
     </Window>
   );
