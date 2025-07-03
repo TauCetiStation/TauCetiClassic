@@ -1,3 +1,4 @@
+import { InfernoNode } from 'inferno';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -8,10 +9,21 @@ import {
   Dropdown,
   Stack,
 } from '../components';
+
 import { Window } from '../layouts';
 
+type Data = {
+  scan?: string;
+  authenticated: boolean;
+  sendCooldown: number;
+  paper: string;
+  paperName?: string;
+  destination: string;
+  allDepartments: string[];
+};
+
 export const Fax = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const {
     scan,
     authenticated,
@@ -57,7 +69,7 @@ export const Fax = (props, context) => {
             : 'This device required to authenticate.'}
         </Box>
         {authenticated ? (
-          <>
+          <Stack vertical>
             <Box bold={1} mt={1}>
               {paperName
                 ? 'Currently sending:' + paperName
@@ -85,7 +97,7 @@ export const Fax = (props, context) => {
                 />
               </Stack.Item>
             </Stack>
-          </>
+          </Stack>
         ) : null}
       </Window.Content>
     </Window>
