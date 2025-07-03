@@ -67,14 +67,14 @@
 	var/list/keys[templates.len]
 	for(var/key_pos=1; key_pos <= templates.len; key_pos++)
 		keys[key_pos] = get_model_key(key_pos, key_length)
-		dmm_text += ""[keys[key_pos]]" = ([templates[key_pos]])\n"
+		dmm_text += "[keys[key_pos]] = ([templates[key_pos]])\n"
 
 	var/z_level = 0
 	var/z_pos = 1
 	while(z_pos < length(template_buffer))
 		if(z_level)
 			dmm_text += "\n"
-		dmm_text += "\n(1,1,[++z_level]) = "\n"
+		dmm_text += "\n(1,1,[++z_level]) = \n"
 		var/z_block = copytext(template_buffer,z_pos,findtext(template_buffer,".",z_pos))
 		var/y_pos = 1
 		while(y_pos < length(z_block))
