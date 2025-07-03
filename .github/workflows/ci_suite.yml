@@ -58,7 +58,7 @@ jobs:
       - name: Run OpenDream
         run: |
             ls -la
-            ./DMCompiler_linux-x64/DMCompiler ./source/taucetistation.dme --suppress-unimplemented --define=CIBUILDING
+            ./DMCompiler_linux-x64/DMCompiler ./taucetistation.dme --suppress-unimplemented --define=CIBUILDING
   Code:
     name: Code and Map Linting
     runs-on: ubuntu-22.04
