@@ -207,7 +207,7 @@ var/global/list/blacklisted_builds
 		tdata = params2list(TopicData)
 		TopicData = null //Prevent calls to client.Topic from connect
 
-	if(!IsGuestKey(key) && /client::authenticate)
+	if(!IsGuestKey(key) && authenticate)
 		hub_authenticated = TRUE
 
 	// check access token and associated ckey for guest accounts
