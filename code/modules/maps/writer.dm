@@ -102,7 +102,8 @@
 	var/turf_template = ""
 	if(!(flags & DMM_IGNORE_TURFS))
 		turf_template = "[model.type][check_attributes(model)],"
-		 else turf_template = "[world.turf],"
+	else
+		turf_template = "[world.turf],"
 	var/area_template = ""
 	if(!(flags & DMM_IGNORE_OBJS))
 		for(var/obj/O in model.contents)
@@ -113,8 +114,6 @@
 		if(M.client)
 			if(!(flags & DMM_IGNORE_PLAYERS))
 				mob_template += "[M.type][check_attributes(M)],"
-
-
 		else
 			if(!(flags & DMM_IGNORE_NPCS))
 				mob_template += "[M.type][check_attributes(M)],"
@@ -124,7 +123,8 @@
 	if(!(flags & DMM_IGNORE_AREAS))
 		var/area/m_area = model.loc
 		area_template = "[m_area.type][check_attributes(m_area)]"
-		 else area_template = "[world.area]"
+	else
+		area_template = "[world.area]"
 	template = "[obj_template][mob_template][turf_template][area_template]"
 	return template
 
@@ -141,7 +141,6 @@
 
 		else if(isicon(A.vars[V])||isfile(A.vars[V]))
 			attributes_text += "[V] = '[A.vars[V]]'"
-
 		else
 			continue
 
