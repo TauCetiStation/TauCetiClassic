@@ -33,6 +33,7 @@ jobs:
         with:
           outputFile: output-annotations.txt
   OpenDream:
+    name: OpenDream Linting
     runs-on: ubuntu-22.04
     steps:
       - name: Setup .NET SDK
