@@ -16,6 +16,7 @@ export const Fax = (props, context) => {
     scan,
     authenticated,
     sendCooldown,
+    paper,
     paperName,
     destination,
     allDepartments,
@@ -62,9 +63,9 @@ export const Fax = (props, context) => {
         <Button
           mt={1}
           icon="eject"
-          content={'Remove Item'}
+          content={'Remove Paper'}
           onClick={() => act('removeitem')}
-          disabled={!paperName}
+          disabled={!paper}
         />
         <Button
           icon="eject"

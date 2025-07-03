@@ -50,6 +50,7 @@ var/global/list/alldepartments = list("Central Command")
     "authenticated" = authenticated,
     "sendCooldown" = sendcooldown,
     "paperName" = tofax?.name,
+	"paper" = tofax,
     "destination" = dptdest
   )
 
