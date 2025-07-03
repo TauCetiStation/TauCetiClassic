@@ -69,7 +69,7 @@ export const Fax = (props, context) => {
             : 'This device required to authenticate.'}
         </Box>
         {authenticated ? (
-          <Stack vertical>
+          <Box vertical>
             <Box bold={1} mt={1}>
               {paperName
                 ? 'Currently sending:' + paperName
@@ -97,7 +97,7 @@ export const Fax = (props, context) => {
                 />
               </Stack.Item>
             </Stack>
-          </Stack>
+          </Box>
         ) : null}
       </Window.Content>
     </Window>
