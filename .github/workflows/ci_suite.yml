@@ -54,9 +54,9 @@ jobs:
           tag: ${{ env.OPENDREAM_RELEASE_VERSION }}
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
-          out-file-path: '~/openDream'
+          out-file-path: ~/openDream
       - name: Run OpenDream
-        run: ~/openDream/DMCompiler_linux-x64/DMCompiler taucetistation.dme --suppress-unimplemented --define=CIBUILDING
+        run: ~/openDream/DMCompiler_linux-x64/DMCompiler ~/taucetistation.dme --suppress-unimplemented --define=CIBUILDING
   Code:
     name: Code and Map Linting
     runs-on: ubuntu-22.04
