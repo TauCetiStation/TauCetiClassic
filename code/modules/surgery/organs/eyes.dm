@@ -19,8 +19,8 @@
 		return
 	var/obj/item/organ/external/head/head = owner.bodyparts_by_name[BP_HEAD]
 	r_eyes = head.r_eyes
-	r_eyes = head.r_eyes
-	r_eyes = head.r_eyes
+	g_eyes = head.g_eyes
+	b_eyes = head.b_eyes
 
 
 /obj/item/organ/internal/eyes/insert_organ(mob/living/carbon/human/M)
