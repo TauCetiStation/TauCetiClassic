@@ -8,6 +8,10 @@
 		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
 		QDEL_IN(animation, 2 SECOND)
 
+	for(var/obj/item/organ/internal/IO in organs)
+		IO.remove(src)
+		IO.forceMove(get_turf(src))
+
 	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
 		if(prob(100 - BP.get_damage()))

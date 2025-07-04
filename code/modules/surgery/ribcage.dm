@@ -227,7 +227,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
-			if(IO.robotic < 2)
+			if(!IO.is_robotic())
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].", \
 				"You start treating damage to [target]'s [IO.name] with [tool_name]." )
 			else
@@ -249,7 +249,7 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
-			if(IO.robotic < 2)
+			if(!IO.is_robotic())
 				user.visible_message("[user] treats damage to [target]'s [IO.name] with [tool_name].", \
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
 				IO.damage = 0
@@ -296,14 +296,14 @@
 		return FALSE
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		if(IO.damage > 0 && IO.robotic == 2)
+		if(IO.damage > 0 && IO.is_robotic())
 			return TRUE
 	return FALSE
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		if(IO.damage > 0 && IO.robotic == 2)
+		if(IO.damage > 0 && IO.is_robotic())
 			user.visible_message("[user] starts mending the mechanisms on [target]'s [IO] with \the [tool].",
 			"You start mending the mechanisms on [target]'s [IO] with \the [tool]." )
 			continue
@@ -316,7 +316,7 @@
 /datum/surgery_step/ribcage/fix_chest_internal_robot/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		if(IO.damage > 0 && IO.robotic == 2)
+		if(IO.damage > 0 && IO.is_robotic())
 			user.visible_message("<span class='notice'>[user] repairs [target]'s [IO] with \the [tool].</span>",
 			"<span class='notice'>You repair [target]'s [IO] with \the [tool].</span>" )
 			IO.damage = 0
@@ -335,7 +335,7 @@
 
 	var/dam_amt = 2
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		if(IO.damage > 0 && IO.robotic == 2)
+		if(IO.damage > 0 && IO.is_robotic())
 			IO.take_damage(dam_amt,0)
 
 //////////////////////////////////////////////////////////////////

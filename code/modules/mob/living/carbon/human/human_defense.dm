@@ -258,7 +258,7 @@
 			continue
 		BP.emplode(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-			if(IO.robotic == 0)
+			if(!IO.is_robotic())
 				continue
 			IO.emplode(severity)
 	..()
@@ -275,7 +275,7 @@
 	var/hit_area = BP.name
 
 	if(istype(I,/obj/item/weapon/card/emag))
-		if(!BP.is_robotic())
+		if(!BP.is_robotic_part())
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(BP.sabotaged)
