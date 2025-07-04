@@ -264,6 +264,9 @@ var/global/list/zombie_list = list()
 	var/datum/faction/zombie/Z = create_uniq_faction(/datum/faction/zombie)
 	add_faction_member(Z, H, FALSE)
 
+	var/obj/item/organ/internal/eyes/zombie_vision/EYE = new(null)
+	EYE.insert_organ(H)
+
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
 	H.RemoveSpell(spell)

@@ -35,6 +35,8 @@
 
 	voice = GetVoice()
 
+	var/obj/item/organ/internal/heart/heart = organs_by_name[O_HEART]
+
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
@@ -64,13 +66,11 @@
 
 			handle_pain()
 
-			handle_heart_beat()
-
 			//This block was in handle_regular_status_updates under != DEAD
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
-			if(!HAS_TRAIT(src, TRAIT_NO_BLOOD) && bodytemperature >= 170)
-				handle_blood()
+			if(!HAS_TRAIT(src, TRAIT_NO_BLOOD) && heart && bodytemperature >= 170)
+				heart.handle_blood()
 
 			handle_drunkenness()
 
@@ -93,7 +93,8 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name() // why in life wtf
 
-	pulse = handle_pulse()
+	if(istype(heart) && !(heart.status & ORGAN_DEAD))
+		pulse = heart.handle_pulse()
 
 	if(client)
 		handle_alerts()
@@ -344,16 +345,28 @@ var/global/list/tourette_bad_words= list(
 				rupture_lung()
 
 /mob/living/carbon/human/breathe()
-	var/datum/gas_mixture/breath = ..()
+	var/species_organ = species.breathing_organ
 
-	failed_last_breath = inhale_alert
+	if(species_organ)
+		var/active_breaths = 0
+		var/obj/item/organ/internal/lungs/L = organs_by_name[species_organ]
+		if(L)
+			active_breaths = L.active_breathing
+		..(active_breaths)
 
-	if(breath)
-		//spread some viruses while we are at it
-		if (virus2.len > 0)
-			if (prob(10) && get_infection_chance(src))
-				for(var/mob/living/carbon/M in view(1,src))
-					spread_disease_to(M)
+/mob/living/carbon/human/handle_breath(datum/gas_mixture/breath)
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
+		return
+	var/species_organ = species.breathing_organ
+	if(!species_organ)
+		return
+
+	var/obj/item/organ/internal/lungs/L = organs_by_name[species_organ]
+	if(!L)
+		failed_last_breath = 1
+	else
+		failed_last_breath = L.handle_breath(breath) //if breath is null or vacuum, the lungs will handle it for us
+	return !failed_last_breath
 
 /mob/living/carbon/human/get_breath_from_internal(volume_needed)
 	if(!internal)
@@ -376,29 +389,10 @@ var/global/list/tourette_bad_words= list(
 		playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	return internal.remove_air_volume(volume_needed)
 
-/mob/living/carbon/human/handle_breath_temperature(datum/gas_mixture/breath)
-	// Hot air hurts :(
-	if(breath.temperature > species.heat_level_1)
-		if(breath.temperature > species.heat_level_3)
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-		else if(breath.temperature > species.heat_level_2)
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-		else
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-	else if(breath.temperature < species.breath_cold_level_1)
-		if(breath.temperature >= species.breath_cold_level_2)
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-		else if(breath.temperature >= species.breath_cold_level_3)
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-		else
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-
-	//breathing in hot/cold air also heats/cools you a bit
-	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
-
-	adjust_bodytemperature(affecting_temp / 5, use_insulation = TRUE, use_steps = TRUE)
-
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
+	var/obj/item/organ/internal/lungs/lungs = organs_by_name[O_LUNGS]
+	if(!lungs) // T.C. Lungs need be dead?
+		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 4)
 	if(suiciding)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
 	else if(health > config.health_threshold_crit)
@@ -503,26 +497,6 @@ var/global/list/tourette_bad_words= list(
 		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 	return
 //END FIRE CODE
-
-
-/*
-/mob/living/carbon/human/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(difference > 50)
-		increments = difference/5
-	else
-		increments = difference/10
-	var/change = increments*boost	// Get the amount to change by (x per increment)
-	var/temp_change
-	if(current < loc_temp)
-		temperature = min(loc_temp, temperature+change)
-	else if(current > loc_temp)
-		temperature = max(loc_temp, temperature-change)
-	temp_change = (temperature - current)
-	return temp_change
-*/
 
 /mob/living/carbon/human/stabilize_body_temperature()
 	if (species.flags[IS_SYNTHETIC])
@@ -1060,7 +1034,12 @@ var/global/list/tourette_bad_words= list(
 		set_EyesVision(sightglassesmod)
 		return FALSE
 
-	see_in_dark = species.darksight
+	var/obj/item/organ/internal/eyes/eyes = organs_by_name[O_EYES]
+	var/night = null
+	if(eyes)
+		see_in_dark = eyes.darksight
+		night = eyes.nighteyes
+
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_ZOMBIE))
 		see_in_dark = max(see_in_dark, 8)
 
@@ -1078,7 +1057,7 @@ var/global/list/tourette_bad_words= list(
 	else
 		sightglassesmod = null
 
-	if(HAS_TRAIT(src, TRAIT_NIGHT_EYES))
+	if(night)
 		var/light_amount = 0
 		var/turf/T = get_turf(src)
 		light_amount = round(T.get_lumcount()*10)
@@ -1203,6 +1182,7 @@ var/global/list/tourette_bad_words= list(
 	drop_from_inventory(l_hand)
 	drop_from_inventory(r_hand)
 
+	/*T.C.
 /mob/living/carbon/human/proc/handle_heart_beat()
 
 	if(pulse == PULSE_NONE) return
@@ -1266,9 +1246,8 @@ var/global/list/tourette_bad_words= list(
 			if(R.volume >= R.overdose)
 				temp = PULSE_NONE
 
-	return temp
+	return temp */
 
-#undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
 
 #undef LIGHT_DAM_THRESHOLD
