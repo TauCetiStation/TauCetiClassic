@@ -780,6 +780,14 @@
 	gender = NEUTER
 	species_allowed = list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX, IPC, DIONA, PODMAN, PLUVIAN)
 
+/datum/sprite_accessory/facial_hair/fiveoclock
+	name = "Five o'Clock Shadow"
+	icon_state = "facial_fiveoclock"
+
+/datum/sprite_accessory/facial_hair/sevenoclock
+	name = "Seven o'Clock Shadow"
+	icon_state = "facial_sevenoclock"
+
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
 	icon_state = "facial_watson"
@@ -843,10 +851,6 @@
 /datum/sprite_accessory/facial_hair/dwarf
 	name = "Dwarf Beard"
 	icon_state = "facial_dwarf"
-
-//datum/sprite_accessory/facial_hair/fiveoclock
-//	name = "Five o Clock Shadow"
-//	icon_state = "facial_fiveoclock"
 
 //datum/sprite_accessory/facial_hair/fu
 //	name = "Fu Manchu"
