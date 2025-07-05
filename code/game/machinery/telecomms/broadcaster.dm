@@ -732,7 +732,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 /atom/proc/test_telecomms()
 	var/datum/signal/signal = telecomms_process()
 	var/turf/position = get_turf(src)
-	return (position.z in signal.data["level"] && signal.data["done"])
+	return (position.z in signal.data["level"]) && signal.data["done"]
 
 /atom/proc/telecomms_process()
 

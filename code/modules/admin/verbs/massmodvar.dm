@@ -299,6 +299,7 @@
 				return
 
 			if(variable in list("opacity", "light_range", "light_power", "dynamic_lighting"))
+				EMPTY_BLOCK_GUARD
 				// do nothing, as we shouldn't set O.vars[variable] = new_value before procs.
 			else if(variable=="resize")
 				if(new_value == 0)

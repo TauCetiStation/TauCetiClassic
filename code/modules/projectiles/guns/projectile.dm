@@ -112,7 +112,7 @@
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	if(src in view(1, user) && has_ammo_counter)
+	if((src in view(1, user)) && has_ammo_counter)
 		to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)

@@ -44,7 +44,7 @@
 	else
 		return TRUE
 
-/obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	if(!density)
 		return TRUE
 	if(dir == to_dir)

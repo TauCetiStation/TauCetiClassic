@@ -139,7 +139,7 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/proc/isElectrified()

@@ -11,7 +11,7 @@ var/global/list/ROOT_DATUM_VARS
 /proc/datum2list(datum/D, list/do_not_copy, parent_datum)
 	var/list/L = list()
 	for(var/I in D.vars)
-		if(I in ROOT_DATUM_VARS + do_not_copy)
+		if(I in (ROOT_DATUM_VARS + do_not_copy))
 			continue
 		// avoid byond type
 		if(I == "__type")
