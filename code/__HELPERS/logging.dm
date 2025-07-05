@@ -204,14 +204,15 @@
 /mob/get_log_info_line()
 	return ckey ? "[..()] ([ckey])" : ..()
 
-/proc/log_info_line(atom/D)
+/proc/log_info_line(datum/D)
 	if(isnull(D))
 		return "*null*"
 	if(islist(D))
 		var/list/L = list()
 		for(var/e in D)
 			// Indexing on numbers just gives us the same number again in the best case and causes an index out of bounds runtime in the worst
-			var/v = isnum(e) ? null : D.contents[e]
+			var/list/list = D
+			var/v = isnum(e) ? null : list[e]
 			L += "[log_info_line(e)][v ? " - [log_info_line(v)]" : ""]"
 		return "\[[jointext(L, ", ")]\]" // We format the string ourselves, rather than use json_encode(), because it becomes difficult to read recursively escaped "
 	if(!istype(D))

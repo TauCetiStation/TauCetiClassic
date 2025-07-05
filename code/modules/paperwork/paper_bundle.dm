@@ -130,7 +130,7 @@
 				insert_sheet_at(usr, page, in_hand)
 			else if(page > 1)
 				page--
-			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
+				playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 		else if(href_list["remove"] && !istype(loc, /obj/structure/noticeboard))
 			var/obj/item/weapon/W = pages[page]
 			usr.put_in_hands(W)

@@ -67,14 +67,14 @@
 	var/list/keys[templates.len]
 	for(var/key_pos=1; key_pos <= templates.len; key_pos++)
 		keys[key_pos] = get_model_key(key_pos, key_length)
-		dmm_text += "[keys[key_pos]] = ([templates[key_pos]])\n"
+		dmm_text += "\"[keys[key_pos]]\" = ([templates[key_pos]])\n"
 
 	var/z_level = 0
 	var/z_pos = 1
 	while(z_pos < length(template_buffer))
 		if(z_level)
 			dmm_text += "\n"
-		dmm_text += "\n(1,1,[++z_level]) = \n"
+		dmm_text += "\n(1,1,[++z_level]) = {\"\n"
 		var/z_block = copytext(template_buffer,z_pos,findtext(template_buffer,".",z_pos))
 		var/y_pos = 1
 		while(y_pos < length(z_block))
@@ -90,7 +90,7 @@
 			dmm_text += "\n"
 			sleep(-1)
 			y_pos = findtext(z_block, ";", y_pos) + 1
-		dmm_text += "\""
+		dmm_text += "\"}"
 		sleep(-1)
 		z_pos = findtext(template_buffer, ".", z_pos) + 1
 	return dmm_text
@@ -109,7 +109,6 @@
 		for(var/obj/O in model.contents)
 			obj_template += "[O.type][check_attributes(O)],"
 
-
 	for(var/mob/M in model.contents)
 		if(M.client)
 			if(!(flags & DMM_IGNORE_PLAYERS))
@@ -117,8 +116,6 @@
 		else
 			if(!(flags & DMM_IGNORE_NPCS))
 				mob_template += "[M.type][check_attributes(M)],"
-
-
 
 	if(!(flags & DMM_IGNORE_AREAS))
 		var/area/m_area = model.loc
@@ -129,32 +126,31 @@
 	return template
 
 /dmm_suite/proc/check_attributes(atom/A)
-	var/attributes_text = ""
+	var/attributes_text = "{"
 	for(var/V in A.vars)
 		sleep(-1)
-		if((!issaved(A.vars[V])) || (A.vars[V]==initial(A.vars[V])))continue
+		if((!issaved(A.vars[V])) || (A.vars[V]==initial(A.vars[V])))
+			continue
 		if(istext(A.vars[V]))
 			attributes_text += "[V] = [A.vars[V]]"
-
 		else if(isnum(A.vars[V])||ispath(A.vars[V]))
 			attributes_text += "[V] = [A.vars[V]]"
-
 		else if(isicon(A.vars[V])||isfile(A.vars[V]))
 			attributes_text += "[V] = '[A.vars[V]]'"
 		else
 			continue
 
-		if(attributes_text != "")
+		if(attributes_text != "{")
 			attributes_text+="; "
 
 
-	if(attributes_text=="")
+	if(attributes_text=="{")
 		return
 
 	if(copytext(attributes_text, length(attributes_text)-1, 0) == "; ")
 		attributes_text = copytext(attributes_text, 1, length(attributes_text)-1)
 
-	attributes_text += ""
+	attributes_text += "}"
 	return attributes_text
 
 /dmm_suite/proc/get_model_key(which as num, key_length as num)
