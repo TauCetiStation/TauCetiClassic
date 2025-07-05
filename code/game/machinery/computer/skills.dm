@@ -65,7 +65,6 @@
 						</tr>"}
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
-							for(var/datum/data/record/E in data_core.security)
 							var/background
 							dat += {"<tr style=[background]>
 							<td><A href='byond://?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>
