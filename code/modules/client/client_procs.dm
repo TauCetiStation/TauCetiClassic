@@ -211,7 +211,8 @@ var/global/list/blacklisted_builds
 	if(!IsGuestKey(key) && authenticate)
 		hub_authenticated = TRUE
 #else
-	hub_authenticated = TRUE
+	if(!IsGuestKey(key))
+		hub_authenticated = TRUE
 #endif
 
 	// check access token and associated ckey for guest accounts
