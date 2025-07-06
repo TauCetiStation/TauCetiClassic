@@ -1,5 +1,7 @@
 import { InfernoNode } from 'inferno';
 import { useBackend } from '../backend';
+import { Component } from 'inferno';
+
 import {
   Button,
   Box,
@@ -8,6 +10,7 @@ import {
   Divider,
   Dropdown,
   Stack,
+  Tooltip,
 } from '../components';
 
 import { Window } from '../layouts';
@@ -43,9 +46,13 @@ export const Fax = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              icon="fa fa-sign-in"
+              icon="eject"
               content={scan ? scan : '-------'}
               onClick={() => act('scan')}
+              color={authenticated ? 'green' : 'red'}
+              tooltip={
+                'Green means authorization to the system. Red means lack of access.'
+              }
             />
           </Stack.Item>
         </Stack>
@@ -62,32 +69,28 @@ export const Fax = (props, context) => {
             />
           </Stack.Item>
         </Stack>
-        <Divider />
-        <Box>
-          {authenticated
-            ? 'Authentication was successful.'
-            : 'This device required to authenticate.'}
-        </Box>
         {authenticated ? (
-          <Stack mt={2} width="100%">
-            <Stack.Item>Currently sending:</Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="fa fa-file"
-                content={paperName ? paperName : 'No content found'}
-                onClick={() => act('removeitem')}
-                disabled={!paper}
-              />
-            </Stack.Item>
-            <Stack.Item grow>
-              <Button
-                icon="fa fa-reply"
-                content={'Send Message'}
-                onClick={() => act('send')}
-                disabled={sendCooldown || !paper}
-              />
-            </Stack.Item>
-          </Stack>
+          <Component>
+            <Stack width="100%" textAlign="base">
+              <Stack.Item>Currently sending:</Stack.Item>
+              <Stack.Item>
+                <Button
+                  mt={1}
+                  icon="fa fa-file"
+                  content={paperName ? paperName : 'No content found'}
+                  onClick={() => act('removeitem')}
+                  disabled={!paper}
+                />
+              </Stack.Item>
+            </Stack>
+            <Button
+              textAlign={'center'}
+              icon="fa fa-reply"
+              content={'Send Message'}
+              onClick={() => act('send')}
+              disabled={sendCooldown || !paper}
+            />
+          </Component>
         ) : null}
       </Window.Content>
     </Window>
