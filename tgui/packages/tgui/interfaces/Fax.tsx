@@ -41,7 +41,7 @@ export const Fax = (props, context) => {
     <Window width={400} height={270}>
       <Window.Content>
         <Stack width="100%" textAlign="base">
-          <Stack.Item grow italic>
+          <Stack.Item grow bold={1}>
             Confirm Identify:
           </Stack.Item>
           <Stack.Item>
@@ -49,15 +49,19 @@ export const Fax = (props, context) => {
               icon="eject"
               content={scan ? scan : '-------'}
               onClick={() => act('scan')}
-              color={authenticated ? 'green' : 'red'}
+              color={!scan ? 'default' : authenticated ? 'green' : 'red'}
               tooltip={
-                'Green means authorization to the system. Red means lack of access.'
+                !scan
+                  ? 'Insert the ID-card'
+                  : authenticated
+                    ? 'Access Granted'
+                    : 'Access Denied'
               }
             />
           </Stack.Item>
         </Stack>
         <Stack mt={1} width="100%" textAlign="base">
-          <Stack.Item grow italic>
+          <Stack.Item grow bold={1}>
             Sending to:
           </Stack.Item>
           <Stack.Item>
@@ -69,29 +73,31 @@ export const Fax = (props, context) => {
             />
           </Stack.Item>
         </Stack>
-        {authenticated ? (
-          <Component>
-            <Stack width="100%" textAlign="base">
-              <Stack.Item>Currently sending:</Stack.Item>
-              <Stack.Item>
-                <Button
-                  mt={1}
-                  icon="fa fa-file"
-                  content={paperName ? paperName : 'No content found'}
-                  onClick={() => act('removeitem')}
-                  disabled={!paper}
-                />
-              </Stack.Item>
-            </Stack>
+        <Stack>
+          <Stack.Item width="100%" textAlign="base" mt={1} bold={1}>
+            Currently sending:
+          </Stack.Item>
+          <Stack.Item>
             <Button
-              textAlign={'center'}
-              icon="fa fa-reply"
-              content={'Send Message'}
-              onClick={() => act('send')}
-              disabled={sendCooldown || !paper}
+              mt={1}
+              icon={'fa fa-file'}
+              content={paper ? paperName : 'No content found'}
+              tooltip={
+                !paper ? 'Add attachment for sending' : 'Remove attachment'
+              }
+              onClick={() => act('paperinteraction')}
             />
-          </Component>
-        ) : null}
+          </Stack.Item>
+        </Stack>
+        <Box textAlign={'center'} mt={2}>
+          <Divider>/</Divider>
+          <Button
+            icon="fa-solid fa-paper-plane"
+            content={'Send Message'}
+            onClick={() => act('send')}
+            disabled={sendCooldown || !paper || !authenticated}
+          />
+        </Box>
       </Window.Content>
     </Window>
   );

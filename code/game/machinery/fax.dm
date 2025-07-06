@@ -109,7 +109,7 @@ var/global/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/is_operational()
 	return TRUE
 
-/obj/machinery/faxmachine/tgui_act(action, params)
+/obj/machinery/faxmachine/tgui_act(action, params, obj/item/O)
 	. = ..()
 	if(.)
 		return
@@ -131,7 +131,7 @@ var/global/list/alldepartments = list("Central Command")
 				spawn(sendcooldown) // cooldown time
 					sendcooldown = 0
 
-		if("removeitem")
+		if("paperinteraction")
 			if(tofax)
 				if(usr.Adjacent(loc))
 					tofax.loc = usr.loc
@@ -141,6 +141,12 @@ var/global/list/alldepartments = list("Central Command")
 
 				to_chat(usr, "<span class='notice'>You take the item out of \the [src].</span>")
 				tofax = null
+			else
+				var/obj/item/I = usr.get_active_hand()
+				if (istype(I, /obj/item/weapon/paper))
+					usr.drop_from_inventory(I, src)
+					tofax = I
+
 
 		if("scan")
 			if (scan)
@@ -179,7 +185,6 @@ var/global/list/alldepartments = list("Central Command")
 			tofax = O
 			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
 			flick("faxsend", src)
-			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/card/id))
