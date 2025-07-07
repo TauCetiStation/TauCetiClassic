@@ -138,6 +138,7 @@ var/global/list/alldepartments = list("Central Command")
 			tofax = O
 			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
 			flick("faxsend", src)
+			SStgui.update_uis(src)
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/card/id))
