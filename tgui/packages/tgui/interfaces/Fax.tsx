@@ -90,7 +90,7 @@ export const Fax = (props, context) => {
           </Stack.Item>
         </Stack>
         <Box textAlign={'center'} mt={2}>
-          <Divider>/</Divider>
+          <Divider />
           <Button
             icon="fa-solid fa-paper-plane"
             content={'Send Message'}
