@@ -25,7 +25,7 @@
 	password = copytext_char(trim(password), 1, 1024)
 
 	if(!password || length(password) < 8 || length(replacetext(password, regex(@"[0-9]", "g"), "")) == 0)
-		to_chat(src, "<span class='warning'>Ваш пароль слишком простой. Попоробуйте еще раз.</span>")
+		to_chat(src, "<span class='warning'>Ваш пароль слишком простой. Попробуйте еще раз.</span>")
 		return
 
 	// app side - pepper
@@ -75,7 +75,7 @@
 	var/password = input("Введите пароль для [account_ckey].", "Password") as null|text
 
 	password = copytext_char(trim(password), 1, 1024)
-	
+
 	if(!password)
 		return
 
@@ -101,8 +101,8 @@
 		query = dbcon.NewQuery({"INSERT INTO erro_auth_token (token, ckey, ip, computerid, expires_at)
 			VALUES (
 				HEX(RANDOM_BYTES(32)),
-				'[account_ckey]', 
-				'[sanitize_sql(address)]', 
+				'[account_ckey]',
+				'[sanitize_sql(address)]',
 				'[sanitize_sql(computer_id)]',
 				DATE_ADD(NOW(), INTERVAL 7 DAY)
 			)
@@ -133,7 +133,7 @@
 
 	var/DBQuery/query = dbcon.NewQuery({"SELECT ckey
 		FROM erro_auth_token
-		WHERE 
+		WHERE
 			token = '[sanitize_sql(token)]' AND
 			ip = '[sanitize_sql(address)]' AND
 			computerid = '[sanitize_sql(computer_id)]' AND
