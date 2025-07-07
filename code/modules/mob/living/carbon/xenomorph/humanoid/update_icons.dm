@@ -16,11 +16,7 @@
 	update_fire_underlay()
 
 	if(stat == DEAD)
-		//If we mostly took damage from fire
-		if(fireloss > 125)
-			icon_state = "alien[caste]_husked"
-		else
-			icon_state = "alien[caste]_dead"
+		icon_state = "alien[caste]_dead"
 	else if((stat == UNCONSCIOUS && !IsSleeping()) || weakened)
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
@@ -37,7 +33,7 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		icon_state = "alien[caste]_leap"
+		icon_state = "alien[caste]_pounce"
 		pixel_x = -32
 		pixel_y = -32
 	else

@@ -18,6 +18,11 @@
 	alien_list[ALIEN_HUNTER] += src
 	. = ..()
 
+/mob/living/carbon/xenomorph/humanoid/hunter/update_icons()
+	. = ..()
+	if(m_intent == MOVE_INTENT_WALK)
+		icon_state = "alienh_walking"
+
 /mob/living/carbon/xenomorph/humanoid/hunter/Destroy()
 	alien_list[ALIEN_HUNTER] -= src
 	return ..()

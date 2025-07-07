@@ -46,7 +46,7 @@
 	if(stat == DEAD)
 		icon_state = "queen_dead"
 	else if((stat == UNCONSCIOUS && !IsSleeping()) || weakened)
-		icon_state = "queen_l"
+		icon_state = "queen_unconscious"
 	else if(lying || crawling)
 		icon_state = "queen_sleep"
 	else
