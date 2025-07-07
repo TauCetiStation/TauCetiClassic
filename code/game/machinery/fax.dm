@@ -122,7 +122,6 @@ var/global/list/alldepartments = list("Central Command")
 				H.sec_hud_set_ID()
 			authenticated = 0
 
-			if ( (!( authenticated ) && (scan)) )
 				if (check_access(scan))
 					authenticated = 1
 
