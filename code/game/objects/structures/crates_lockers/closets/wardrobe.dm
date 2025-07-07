@@ -43,7 +43,7 @@
 
 /obj/structure/closet/wardrobe/pink/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/pink(src)
+		new /obj/item/clothing/under/pink(src)
 		new /obj/item/clothing/shoes/brown(src)
 
 /obj/structure/closet/wardrobe/black
@@ -53,7 +53,7 @@
 
 /obj/structure/closet/wardrobe/black/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/black(src)
+		new /obj/item/clothing/under/black(src)
 	if(prob(25))
 		new /obj/item/clothing/suit/jacket/leather(src)
 	if(prob(20))
@@ -97,7 +97,7 @@
 
 /obj/structure/closet/wardrobe/green/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/green(src)
+		new /obj/item/clothing/under/green(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/black(src)
 	//for (var/i in 1 to 2)
@@ -124,7 +124,7 @@
 
 /obj/structure/closet/wardrobe/orange/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/orange(src)
+		new /obj/item/clothing/under/orange(src)
 		new /obj/item/clothing/shoes/orange(src)
 
 
@@ -135,7 +135,7 @@
 
 /obj/structure/closet/wardrobe/yellow/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/yellow(src)
+		new /obj/item/clothing/under/yellow(src)
 		new /obj/item/clothing/shoes/orange(src)
 	//for (var/i in 1 to 2)
 	//	new /obj/item/clothing/mask/bandana/gold(src)
@@ -192,7 +192,7 @@
 
 /obj/structure/closet/wardrobe/white/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/white(src)
+		new /obj/item/clothing/under/white(src)
 		new /obj/item/clothing/shoes/white(src)
 
 
@@ -347,7 +347,7 @@
 
 /obj/structure/closet/wardrobe/grey/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/grey(src)
+		new /obj/item/clothing/under/grey(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 3)
@@ -367,20 +367,20 @@
 	for (var/i in 1 to 2)
 		if(prob(25))
 			new /obj/item/clothing/suit/jacket(src)
-	new /obj/item/clothing/under/color/blue(src)
-	new /obj/item/clothing/under/color/yellow(src)
-	new /obj/item/clothing/under/color/green(src)
-	new /obj/item/clothing/under/color/orange(src)
-	new /obj/item/clothing/under/color/pink(src)
-	new /obj/item/clothing/under/color/red(src)
-	//new /obj/item/clothing/under/color/lightblue(src)
-	//new /obj/item/clothing/under/color/aqua(src)
-	//new /obj/item/clothing/under/color/purple(src)
-	//new /obj/item/clothing/under/color/lightpurple(src)
-	//new /obj/item/clothing/under/color/lightgreen(src)
-	//new /obj/item/clothing/under/color/darkblue(src)
-	//new /obj/item/clothing/under/color/darkred(src)
-	//new /obj/item/clothing/under/color/lightred(src)
+	new /obj/item/clothing/under/blue(src)
+	new /obj/item/clothing/under/yellow(src)
+	new /obj/item/clothing/under/green(src)
+	new /obj/item/clothing/under/orange(src)
+	new /obj/item/clothing/under/pink(src)
+	new /obj/item/clothing/under/red(src)
+	//new /obj/item/clothing/under/lightblue(src)
+	//new /obj/item/clothing/under/aqua(src)
+	//new /obj/item/clothing/under/purple(src)
+	//new /obj/item/clothing/under/lightpurple(src)
+	//new /obj/item/clothing/under/lightgreen(src)
+	//new /obj/item/clothing/under/darkblue(src)
+	//new /obj/item/clothing/under/darkred(src)
+	//new /obj/item/clothing/under/lightred(src)
 	//new /obj/item/clothing/mask/bandana/red(src)
 	//new /obj/item/clothing/mask/bandana/red(src)
 	//new /obj/item/clothing/mask/bandana/blue(src)

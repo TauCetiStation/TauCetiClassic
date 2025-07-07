@@ -81,7 +81,7 @@
 			new /obj/item/weapon/melee/energy/sword/black(src)
 			new /obj/item/device/powersink(src)
 			new /obj/item/weapon/storage/box/syndie_kit/throwing_weapon(src)
-			new /obj/item/clothing/under/color/black(src)
+			new /obj/item/clothing/under/black(src)
 			new /obj/item/clothing/head/chaplain_hood(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/clothing/mask/gas/voice(src)

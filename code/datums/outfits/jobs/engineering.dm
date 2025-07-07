@@ -65,7 +65,7 @@
 /datum/outfit/job/technical_assistant
 	name = OUTFIT_JOB_NAME("Technical Assistant")
 
-	uniform = /obj/item/clothing/under/color/yellow
+	uniform = /obj/item/clothing/under/yellow
 	shoes = /obj/item/clothing/shoes/yellow
 	belt = /obj/item/device/pda
 	l_ear = /obj/item/device/radio/headset/headset_eng

@@ -4,6 +4,6 @@
 		/obj/item/weapon/coin/silver = /obj/item/stack/sheet/mineral/gold,
 		/obj/item/weapon/spacecash = /obj/item/stack/sheet/mineral/gold,
 		/obj/item/weapon/storage/belt/champion = /obj/item/stack/sheet/mineral/gold,
-		/obj/item/clothing/under/color/yellow = /obj/item/stack/sheet/mineral/gold,
+		/obj/item/clothing/under/yellow = /obj/item/stack/sheet/mineral/gold,
 		/obj/item/toy/katana = /obj/item/stack/sheet/mineral/gold,
 		) // without golden extinguisher

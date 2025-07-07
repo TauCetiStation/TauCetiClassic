@@ -3,7 +3,7 @@
 
 /datum/outfit/mafia
 	name = "Mafia Game Outfit"
-	uniform = /obj/item/clothing/under/color/grey
+	uniform = /obj/item/clothing/under/grey
 	shoes = /obj/item/clothing/shoes/black
 
 //town
@@ -11,7 +11,7 @@
 /datum/outfit/mafia/assistant
 	name = "Mafia Assistant"
 
-	uniform = /obj/item/clothing/under/color/grey
+	uniform = /obj/item/clothing/under/grey
 
 /datum/outfit/mafia/detective
 	name = "Mafia Detective"
@@ -97,7 +97,7 @@
 /datum/outfit/mafia/fugitive
 	name = "Mafia Fugitive"
 
-	uniform = /obj/item/clothing/under/color/orange
+	uniform = /obj/item/clothing/under/orange
 	shoes = /obj/item/clothing/shoes/orange
 
 /datum/outfit/mafia/obsessed

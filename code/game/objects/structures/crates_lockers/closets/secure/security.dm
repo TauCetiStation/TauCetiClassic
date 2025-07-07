@@ -376,7 +376,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
-	new /obj/item/clothing/under/color/orange(src)
+	new /obj/item/clothing/under/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 
 /obj/structure/closet/secure_closet/courtroom

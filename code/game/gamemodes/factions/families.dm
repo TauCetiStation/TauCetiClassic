@@ -75,11 +75,11 @@
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
 							/obj/item/clothing/mask/scarf/red,
 							/obj/item/clothing/suit/jacket/letterman_red,
-							/obj/item/clothing/under/color/red,
+							/obj/item/clothing/under/red,
 							/obj/item/clothing/mask/bandana/red,
 							/obj/item/clothing/under/suit_jacket/red)
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
-						/obj/item/clothing/under/color/red,
+						/obj/item/clothing/under/red,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective_type = /datum/objective/gang/kill_undercover_cops
 
@@ -91,7 +91,7 @@
 							/obj/item/clothing/mask/scarf/violet,
 							/obj/item/clothing/gloves/purple,
 							/obj/item/clothing/mask/bandana/skull,
-							/obj/item/clothing/under/color/pink)
+							/obj/item/clothing/under/pink)
 
 	free_clothes = list(/obj/item/clothing/under/lightpurple,
 						/obj/item/clothing/gloves/purple,
@@ -152,11 +152,11 @@
 	name = "Los Santos Vagos"
 	gang_id = "LSV"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
-							/obj/item/clothing/under/color/yellow,
+							/obj/item/clothing/under/yellow,
 							/obj/item/clothing/mask/scarf/yellow,
 							/obj/item/clothing/mask/bandana/gold)
 	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
-						/obj/item/clothing/under/color/yellow,
+						/obj/item/clothing/under/yellow,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective_type = /datum/objective/gang/rob_nt
 
