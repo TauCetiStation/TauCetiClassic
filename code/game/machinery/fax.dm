@@ -60,52 +60,6 @@ var/global/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/ui_interact(mob/user)
 	tgui_interact(user)
 
-
-
-
-// /obj/machinery/faxmachine/ui_interact(mob/user)
-// 	var/dat
-
-// 	var/scan_name
-// 	if(scan)
-// 		scan_name = scan.name
-// 	else
-// 		scan_name = "--------"
-
-// 	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
-
-// 	if(authenticated)
-// 		dat += "<a href='byond://?src=\ref[src];logout=1'>Log Out</a>"
-// 	else
-// 		dat += "<a href='byond://?src=\ref[src];auth=1'>Log In</a>"
-
-// 	dat += "<hr>"
-
-// 	if(authenticated)
-// 		dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
-
-// 		if(tofax)
-// 			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
-
-// 			if(sendcooldown)
-// 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-// 			else
-// 				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
-// 				dat += "<b>Currently sending:</b> [tofax.name]<br>"
-// 				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
-// 		else
-// 			dat += "Please insert paper, photo or bundle to send via secure connection.<br><br>"
-// 			if(sendcooldown)
-// 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-// 	else
-// 		dat += "Proper authentication is required to use this device.<br><br>"
-// 		if(tofax)
-// 			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Item</a><br>"
-
-// 	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
-// 	popup.set_content(dat)
-// 	popup.open()
-
 /obj/machinery/faxmachine/is_operational()
 	return TRUE
 

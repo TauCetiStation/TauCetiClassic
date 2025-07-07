@@ -38,7 +38,7 @@ export const Fax = (props, context) => {
   } = data;
 
   return (
-    <Window width={400} height={270}>
+    <Window width={480} height={320}>
       <Window.Content>
         <Stack width="100%" textAlign="base">
           <Stack.Item grow bold={1}>
