@@ -80,7 +80,7 @@ export const Fax = (props, context) => {
           <Stack.Item>
             <Button
               mt={1}
-              icon={'fa fa-file'}
+              icon="fa-file"
               content={paper ? paperName : 'No content found'}
               tooltip={
                 !paper ? 'Add attachment for sending' : 'Remove attachment'
