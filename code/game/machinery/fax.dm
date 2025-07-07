@@ -46,16 +46,16 @@ var/global/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine/tgui_data(mob/user)
   return list(
-    "scan" = scan?.name,
-    "authenticated" = authenticated,
-    "sendCooldown" = sendcooldown,
-    "paperName" = tofax?.name,
+	"scan" = scan?.name,
+	"authenticated" = authenticated,
+	"sendCooldown" = sendcooldown,
+	"paperName" = tofax?.name,
 	"paper" = tofax,
-    "destination" = dptdest
+	"destination" = dptdest
   )
 
 /obj/machinery/faxmachine/tgui_static_data(mob/user)
-  return list("allDepartments" = alldepartments)
+	return list("allDepartments" = alldepartments)
 
 /obj/machinery/faxmachine/ui_interact(mob/user)
 	tgui_interact(user)
