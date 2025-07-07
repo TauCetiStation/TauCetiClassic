@@ -66,7 +66,7 @@ export const Fax = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Dropdown
-              width={12}
+              minWidth={12}
               selected={destination}
               options={allDepartments}
               onSelected={(dept) => act('setDestination', { to: dept })}
