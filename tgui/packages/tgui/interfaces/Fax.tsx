@@ -42,7 +42,7 @@ export const Fax = (props, context) => {
       <Window.Content>
         <Stack width="100%" textAlign="base">
           <Stack.Item grow bold={1}>
-            Confirm Identify:
+            Confirm Identity:
           </Stack.Item>
           <Stack.Item>
             <Button
