@@ -122,8 +122,8 @@ var/global/list/alldepartments = list("Central Command")
 				H.sec_hud_set_ID()
 			authenticated = 0
 
-				if (check_access(scan))
-					authenticated = 1
+			if (check_access(scan))
+				authenticated = 1
 
 		if("setDestination")
 			var/new_dep_dest = params["to"]
