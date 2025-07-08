@@ -51,7 +51,7 @@ export const Fax = (props, context) => {
       <Window.Content>
         <Stack width="100%" textAlign="base">
           <Stack.Item grow bold={1}>
-            Confirm Identity:
+            Confirm identity:
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -63,8 +63,8 @@ export const Fax = (props, context) => {
                 !scan
                   ? 'Insert the ID-card'
                   : authenticated
-                    ? 'Access Granted'
-                    : 'Access Denied'
+                    ? 'Access granted'
+                    : 'Access denied'
               }
             />
           </Stack.Item>
@@ -91,9 +91,9 @@ export const Fax = (props, context) => {
             <Button
               mt={1}
               icon={paperIcon}
-              content={paper ? paperName : 'No content found'}
+              content={paper ? paperName : 'Nothing'}
               tooltip={
-                !paper ? 'Add attachment for sending' : 'Remove attachment'
+                !paper ? 'Add attachment' : 'Remove attachment'
               }
               onClick={() => act('paperinteraction')}
             />
@@ -103,7 +103,7 @@ export const Fax = (props, context) => {
           <Divider />
           <Button
             icon="fa-solid fa-paper-plane"
-            content={'Send Message'}
+            content={'Send message'}
             onClick={() => act('send')}
             disabled={sendCooldown || !paper || !authenticated}
           />
