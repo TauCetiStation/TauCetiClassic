@@ -1,17 +1,6 @@
-import { InfernoNode } from 'inferno';
 import { useBackend } from '../backend';
-import { Component } from 'inferno';
 
-import {
-  Button,
-  Box,
-  LabeledList,
-  Section,
-  Divider,
-  Dropdown,
-  Stack,
-  Tooltip,
-} from '../components';
+import { Button, Box, Divider, Dropdown, Stack } from '../components';
 
 import { Window } from '../layouts';
 
