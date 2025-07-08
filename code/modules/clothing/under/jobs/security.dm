@@ -16,6 +16,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/security
 	name = "security officer's jumpsuit"
@@ -25,6 +26,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/security/skirt
 	name = "security officer's jumpskirt"
@@ -47,12 +49,14 @@
 	item_state = "marinad"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/tactical/skrell
 	name = "raskinta uniform"
 	desc = "It's a traditional skrellian warrior-caste blue and black uniform. Skintight, sturdy and slightly wet."
 	icon_state = "raskinta"
 	item_state = "raskinta"
+	can_be_rolled_down = TRUE
 /*
  * Detective
  */
@@ -104,6 +108,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/forensic_technician/black
 	icon_state = "forensicsblack"
@@ -111,6 +116,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
+	can_be_rolled_down = TRUE
 
 /*
  * Head of Security
@@ -123,6 +129,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.8
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/head_of_security/turtleneck
 	name = "head of security's turtleneck"
@@ -170,3 +177,4 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
+	can_be_rolled_down = TRUE

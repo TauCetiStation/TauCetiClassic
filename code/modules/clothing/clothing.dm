@@ -517,7 +517,7 @@ BLIND     // can't see anything
 		*/
 	var/displays_id = 1
 	var/rolled_down = 0
-	var/basecolor
+	var/can_be_rolled_down = 0
 
 	var/fresh_laundered_until = 0
 
@@ -564,6 +564,10 @@ BLIND     // can't see anything
 			to_chat(user, "Its vital tracker appears to be enabled.")
 		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
+	if(rolled_down)
+		to_chat(usr, "Its rolled down.")
+	else if(can_be_rolled_down)
+		to_chat(usr, "It can be rolled down.")
 
 /obj/item/clothing/under/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for(var/obj/item/clothing/accessory/A in accessories)
@@ -630,12 +634,10 @@ BLIND     // can't see anything
 	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
-
-	if(copytext(item_state,-2) != "_d")
-		basecolor = item_state
-	if(icon_exists('icons/mob/uniform.dmi', "[basecolor]_d"))
-		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+	if(can_be_rolled_down)
+		rolled_down = !rolled_down
 		update_inv_mob()
+		to_chat(usr, "<span class='notice'>You roll down the the uniform.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 

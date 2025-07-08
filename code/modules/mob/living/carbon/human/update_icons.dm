@@ -124,13 +124,26 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(icon_path != def_icon_path && !icon_exists(icon_path, "[t_state][icon_state_appendix]"))
 		icon_path = def_icon_path
 
-	var/fem = ""
+
+	var/fem_appendix = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(t_state != null)
 			if(icon_exists(icon_path, "[t_state]_fem"))
-				fem = "_fem"
+				fem_appendix = "_fem"
 
-	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
+	var/rolled_down_appendix = ""
+	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
+		if(istype(src, /obj/item/clothing/under))
+			var/obj/item/clothing/under/U = src
+			if(U.rolled_down)
+				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
+					fem_appendix = "" // we do not have overweight sprites for women
+				to_chat(H, "[t_state]_d[fem_appendix]")
+				to_chat(H, "[icon_exists(icon_path, "[t_state]_d[fem_appendix]")]")
+				if(icon_exists(icon_path, "[t_state]_d[fem_appendix]")) // double check if there is such sprite
+					rolled_down_appendix = "_d"
+
+	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][rolled_down_appendix][fem_appendix][icon_state_appendix]", layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
@@ -239,7 +252,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	// BODY_LAYER just used here as a cache index, keep in mind that it can contain overlays with any other layer
 	overlays_standing[BODY_LAYER] = standing
-	apply_standing_overlay(BODY_LAYER) 
+	apply_standing_overlay(BODY_LAYER)
 
 #define BODY_ICON(icon, fat_icon, icon_state) (!fat) ? mutable_appearance(icon, icon_state, -UNDERWEAR_LAYER) : mutable_appearance(fat_icon, icon_state, -UNDERWEAR_LAYER)
 
@@ -848,20 +861,20 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/L
 	if(head)//If your item is upper the torso - we want to shift it more.
 		L = list(
-			HUMANHEIGHT_SHORTEST = -2, 
-			HUMANHEIGHT_SHORT = -1, 
-			HUMANHEIGHT_MEDIUM = 0, 
-			HUMANHEIGHT_TALL = 1, 
-			HUMANHEIGHT_TALLEST = 2, 
+			HUMANHEIGHT_SHORTEST = -2,
+			HUMANHEIGHT_SHORT = -1,
+			HUMANHEIGHT_MEDIUM = 0,
+			HUMANHEIGHT_TALL = 1,
+			HUMANHEIGHT_TALLEST = 2,
 			"gnome" = -5
 		)
 	else
 		L = list(
-			HUMANHEIGHT_SHORTEST = -1, 
-			HUMANHEIGHT_SHORT = -1, 
-			HUMANHEIGHT_MEDIUM = 0, 
-			HUMANHEIGHT_TALL = 1, 
-			HUMANHEIGHT_TALLEST = 1, 
+			HUMANHEIGHT_SHORTEST = -1,
+			HUMANHEIGHT_SHORT = -1,
+			HUMANHEIGHT_MEDIUM = 0,
+			HUMANHEIGHT_TALL = 1,
+			HUMANHEIGHT_TALLEST = 1,
 			"gnome" = -3
 		)
 
