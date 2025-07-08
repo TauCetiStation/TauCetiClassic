@@ -1,3 +1,7 @@
+#define TYPE_PAPER 1
+#define TYPE_PHOTO 2
+#define TYPE_BUNDLE 3
+
 var/global/list/obj/machinery/faxmachine/allfaxes = list()
 var/global/list/alldepartments = list("Central Command")
 
@@ -45,14 +49,26 @@ var/global/list/alldepartments = list("Central Command")
 		ui.open()
 
 /obj/machinery/faxmachine/tgui_data(mob/user)
-  return list(
-	"scan" = scan?.name,
-	"authenticated" = authenticated,
-	"sendCooldown" = sendcooldown,
-	"paperName" = tofax?.name,
-	"paper" = tofax,
-	"destination" = dptdest
-  )
+	var/list/data = list(
+		"scan" = scan?.name,
+		"authenticated" = authenticated,
+		"sendCooldown" = sendcooldown,
+		"paperName" = tofax?.name,
+		"paper" = tofax,
+		"destination" = dptdest
+	)
+	if(isnull(tofax))
+		data["paperType"] = 0
+	else if(istype(tofax, /obj/item/weapon/paper))
+		data["paperType"] = TYPE_PAPER
+	else if(istype(tofax, /obj/item/weapon/photo))
+		data["paperType"] = TYPE_PHOTO
+	else if(istype(tofax, /obj/item/weapon/paper_bundle))
+		data["paperType"] = TYPE_BUNDLE
+	else
+		data["paperType"] = 0
+
+	return data
 
 /obj/machinery/faxmachine/tgui_static_data(mob/user)
 	return list("allDepartments" = alldepartments)
@@ -276,3 +292,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	P.loc = loc
 	audible_message("Received message.")
+
+#undef TYPE_PAPER
+#undef TYPE_PHOTO
+#undef TYPE_BUNDLE
