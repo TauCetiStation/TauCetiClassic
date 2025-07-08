@@ -138,8 +138,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(U.rolled_down)
 				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
 					fem_appendix = "" // we do not have overweight sprites for women
-				to_chat(H, "[t_state]_d[fem_appendix]")
-				to_chat(H, "[icon_exists(icon_path, "[t_state]_d[fem_appendix]")]")
 				if(icon_exists(icon_path, "[t_state]_d[fem_appendix]")) // double check if there is such sprite
 					rolled_down_appendix = "_d"
 
