@@ -194,9 +194,12 @@
 	name = "feminine black jumpsuit"
 	desc = "It's very smart and in a ladies-size!"
 	icon_state = "black"
-	item_state_world = "blackf"
+	item_state = "blackf"
 
 /obj/item/clothing/under/psyche
 	name = "psychedelic"
 	desc = "Groovy!"
 	icon_state = "psyche"
+	item_state = "psyche"
+	item_state_inventory = "psyche"
+	item_state_world = "psyche_world"
