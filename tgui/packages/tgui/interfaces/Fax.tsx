@@ -1,8 +1,13 @@
 import { useBackend } from '../backend';
-
 import { Button, Box, Divider, Dropdown, Stack } from '../components';
-
 import { Window } from '../layouts';
+
+// For symmetrical backend defines look in code\game\machinery\fax.dm
+enum PaperType {
+  Paper = 1,
+  Photo = 2,
+  Bundle = 3,
+}
 
 type Data = {
   scan?: string;
@@ -10,6 +15,7 @@ type Data = {
   sendCooldown: number;
   paper: string;
   paperName?: string;
+  paperType: number;
   destination: string;
   allDepartments: string[];
 };
@@ -22,9 +28,23 @@ export const Fax = (props, context) => {
     sendCooldown,
     paper,
     paperName,
+    paperType,
     destination,
     allDepartments,
   } = data;
+
+  let paperIcon = '';
+  switch (paperType) {
+    case PaperType.Paper:
+      paperIcon = 'file';
+      break;
+    case PaperType.Photo:
+      paperIcon = 'image';
+      break;
+    case PaperType.Bundle:
+      paperIcon = 'paperclip';
+      break;
+  }
 
   return (
     <Window width={480} height={320}>
@@ -56,6 +76,7 @@ export const Fax = (props, context) => {
           <Stack.Item>
             <Dropdown
               minWidth={12}
+              textAlign="base"
               selected={destination}
               options={allDepartments}
               onSelected={(dept) => act('setDestination', { to: dept })}
@@ -69,7 +90,7 @@ export const Fax = (props, context) => {
           <Stack.Item>
             <Button
               mt={1}
-              icon="fa-file"
+              icon={paperIcon}
               content={paper ? paperName : 'No content found'}
               tooltip={
                 !paper ? 'Add attachment for sending' : 'Remove attachment'
