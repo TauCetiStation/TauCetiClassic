@@ -92,9 +92,7 @@ export const Fax = (props, context) => {
               mt={1}
               icon={paperIcon}
               content={paper ? paperName : 'Nothing'}
-              tooltip={
-                !paper ? 'Add attachment' : 'Remove attachment'
-              }
+              tooltip={!paper ? 'Add attachment' : 'Remove attachment'}
               onClick={() => act('paperinteraction')}
             />
           </Stack.Item>
