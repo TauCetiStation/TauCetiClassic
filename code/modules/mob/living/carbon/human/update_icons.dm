@@ -133,7 +133,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/rolled_down_appendix = ""
 	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
-		if(istype(src, /obj/item/clothing/under))
+		if(isunder(src))
 			var/obj/item/clothing/under/U = src
 			if(U.rolled_down)
 				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
