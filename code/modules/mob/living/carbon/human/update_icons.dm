@@ -239,7 +239,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	// BODY_LAYER just used here as a cache index, keep in mind that it can contain overlays with any other layer
 	overlays_standing[BODY_LAYER] = standing
-	apply_standing_overlay(BODY_LAYER) 
+	apply_standing_overlay(BODY_LAYER)
 
 #define BODY_ICON(icon, fat_icon, icon_state) (!fat) ? mutable_appearance(icon, icon_state, -UNDERWEAR_LAYER) : mutable_appearance(fat_icon, icon_state, -UNDERWEAR_LAYER)
 
@@ -706,7 +706,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += neck
 
 		var/image/standing = neck.get_standing_overlay(src, 'icons/mob/neck.dmi', SPRITE_SHEET_NECK, -NECK_LAYER)
-		standing = human_update_offset(standing, FALSE)
+		standing = human_update_offset(standing, TRUE)
 		standing.pixel_x += species.offset_features[OFFSET_NECK][1]
 		standing.pixel_y += species.offset_features[OFFSET_NECK][2]
 		overlays_standing[NECK_LAYER] = standing
@@ -848,20 +848,20 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/L
 	if(head)//If your item is upper the torso - we want to shift it more.
 		L = list(
-			HUMANHEIGHT_SHORTEST = -2, 
-			HUMANHEIGHT_SHORT = -1, 
-			HUMANHEIGHT_MEDIUM = 0, 
-			HUMANHEIGHT_TALL = 1, 
-			HUMANHEIGHT_TALLEST = 2, 
+			HUMANHEIGHT_SHORTEST = -2,
+			HUMANHEIGHT_SHORT = -1,
+			HUMANHEIGHT_MEDIUM = 0,
+			HUMANHEIGHT_TALL = 1,
+			HUMANHEIGHT_TALLEST = 2,
 			"gnome" = -5
 		)
 	else
 		L = list(
-			HUMANHEIGHT_SHORTEST = -1, 
-			HUMANHEIGHT_SHORT = -1, 
-			HUMANHEIGHT_MEDIUM = 0, 
-			HUMANHEIGHT_TALL = 1, 
-			HUMANHEIGHT_TALLEST = 1, 
+			HUMANHEIGHT_SHORTEST = -1,
+			HUMANHEIGHT_SHORT = -1,
+			HUMANHEIGHT_MEDIUM = 0,
+			HUMANHEIGHT_TALL = 1,
+			HUMANHEIGHT_TALLEST = 1,
 			"gnome" = -3
 		)
 
