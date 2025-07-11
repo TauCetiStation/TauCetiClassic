@@ -712,7 +712,11 @@ var/global/list/tourette_bad_words= list(
 	else
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
-
+		if(prob(1) && !species.flags[IS_SYNTHETIC] && stat == CONSCIOUS)
+			if(nutrition < NUTRITION_LEVEL_HUNGRY)
+				to_chat(src, "<span class='warning'>[pick("You're starving!", "You feel extremely hungry!", "You're really hungry.", "Your stomach aches with intense hunger.", "You're starving right now.")]</span>")
+			else if(nutrition < NUTRITION_LEVEL_FED)
+				to_chat(src, "<span class='notice'>[pick("You feel hungry.", "You feel like you could eat something right now.", "You start to feel hungry.", "You could really go for a bite.")]</span>")
 	if(species.flags[REQUIRE_LIGHT])
 		if(nutrition < 200)
 			take_overall_damage(2,0)
