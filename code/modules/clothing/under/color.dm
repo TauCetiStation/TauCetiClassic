@@ -146,7 +146,7 @@
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/lightpurple
-	name = "lightpurple"
+	name = "lightpurple jumpsuit"
 	icon_state = "lightpurple"
 	item_state = "lightpurple"
 	item_state_inventory = "lightpurple"
