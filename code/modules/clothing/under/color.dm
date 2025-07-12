@@ -5,7 +5,6 @@
 	item_state_inventory = "black"
 	item_state_world = "black_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/grey
 	name = "grey jumpsuit"
@@ -14,7 +13,6 @@
 	item_state_inventory = "grey"
 	item_state_world = "grey_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/white
 	name = "white jumpsuit"
@@ -23,7 +21,6 @@
 	item_state_inventory = "white"
 	item_state_world = "white_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/darkred
 	name = "darkred jumpsuit"
@@ -32,7 +29,6 @@
 	item_state_inventory = "darkred"
 	item_state_world = "darkred_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/red
 	name = "red jumpsuit"
@@ -41,7 +37,6 @@
 	item_state_inventory = "red"
 	item_state_world = "red_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/lightred
 	name = "lightred jumpsuit"
@@ -50,7 +45,6 @@
 	item_state_inventory = "lightred"
 	item_state_world = "lightred_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/orange
 	name = "orange jumpsuit"
@@ -62,7 +56,6 @@
 	has_sensor = 2
 	sensor_mode = SUIT_SENSOR_TRACKING
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/brown
 	name = "brown jumpsuit"
@@ -71,7 +64,6 @@
 	item_state_inventory = "brown"
 	item_state_world = "brown_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/lightbrown
 	name = "lightbrown jumpsuit"
@@ -80,7 +72,6 @@
 	item_state_inventory = "lightbrown"
 	item_state_world = "lightbrown_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/yellow
 	name = "yellow jumpsuit"
@@ -89,7 +80,6 @@
 	item_state_inventory = "yellow"
 	item_state_world = "yellow_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/yellowgreen
 	name = "yellowgreen jumpsuit"
@@ -98,7 +88,6 @@
 	item_state_inventory = "yellowgreen"
 	item_state_world = "yellowgreen_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/lightgreen
 	name = "lightgreen jumpsuit"
@@ -107,7 +96,6 @@
 	item_state_inventory = "lightgreen"
 	item_state_world = "lightgreen_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/green
 	name = "green jumpsuit"
@@ -116,7 +104,6 @@
 	item_state_inventory = "green"
 	item_state_world = "green_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/aqua
 	name = "aqua jumpsuit"
@@ -125,7 +112,6 @@
 	item_state_inventory = "aqua"
 	item_state_world = "aqua_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/lightblue
 	name = "lightblue jumpsuit"
@@ -134,7 +120,6 @@
 	item_state_inventory = "lightblue"
 	item_state_world = "lightblue_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/blue
 	name = "blue jumpsuit"
@@ -143,7 +128,6 @@
 	item_state_inventory = "blue"
 	item_state_world = "blue_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/darkblue
 	name = "darkblue jumpsuit"
@@ -152,7 +136,6 @@
 	item_state_inventory = "darkblue"
 	item_state_world = "darkblue_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/purple
 	name = "purple jumpsuit"
@@ -161,7 +144,6 @@
 	item_state_inventory = "purple"
 	item_state_world = "purple_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/lightpurple
 	name = "lightpurple"
@@ -170,7 +152,6 @@
 	item_state_inventory = "lightpurple"
 	item_state_world = "lightpurple_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/pink
 	name = "pink jumpsuit"
@@ -179,7 +160,6 @@
 	item_state_inventory = "pink"
 	item_state_world = "pink_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/maroon
 	name = "maroon jumpsuit"
@@ -188,7 +168,6 @@
 	item_state_inventory = "maroon"
 	item_state_world = "maroon_world"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/blackf
 	name = "feminine black jumpsuit"

@@ -34,7 +34,6 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
@@ -44,7 +43,6 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/chemist/skirt
 	name = "chemist's jumpskirt"
@@ -58,7 +56,6 @@
 	icon_state = "robotics"
 	item_state = "robotics"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /*
  * Medical
@@ -69,7 +66,6 @@
 	icon_state = "cmo"
 	item_state = "cmo"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
@@ -87,7 +83,6 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/geneticist/skirt
 	name = "geneticist's jumpskirt"
@@ -103,7 +98,6 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/virologist/skirt
 	name = "virologist's jumpskirt"
@@ -146,7 +140,6 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/medical/skirt
 	name = "medical doctor's jumpskirt"

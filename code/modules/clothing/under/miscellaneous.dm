@@ -80,7 +80,6 @@
 	desc = "A short-sleeved black uniform, paired with grey digital-camo cargo pants. It looks very tactical."
 	icon_state = "ert_uniform"
 	item_state = "ert_uniform"
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/space
 	name = "NASA jumpsuit"
@@ -106,7 +105,6 @@
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -264,7 +262,6 @@
 	desc = "For the Motherland!"
 	icon_state = "soviet"
 	item_state = "soviet"
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
@@ -479,7 +476,6 @@
 	icon_state = "cadet"
 	item_state = "cadet"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/cadet/skirt
 	name = "security cadet's jumpskirt"
@@ -520,7 +516,6 @@
 	name = "bartender's female uniform"
 	icon_state = "bar_f"
 	item_state = "bar_f"
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
@@ -764,7 +759,6 @@
 	has_sensor = 2
 	sensor_mode = SUIT_SENSOR_TRACKING
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/indiana
 	name = "leather suit"
@@ -799,7 +793,6 @@
 	icon_state = "Durauniform"
 	item_state = "Durauniform"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	can_be_rolled_down = TRUE
 	siemens_coefficient = 0.8
 	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
 
