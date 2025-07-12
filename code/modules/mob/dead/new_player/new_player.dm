@@ -479,7 +479,7 @@
 	new_character.dna.original_character_name = new_character.real_name
 
 	// little randomize hunger parameters
-	new_character.nutrition = rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_WELL_FED)
+	new_character.nutrition = rand(NUTRITION_LEVEL_NORMAL, NUTRITION_LEVEL_WELL_FED)
 	// random individual metabolism mod from -10% to +10%
 	// so people don't get hungry at the same time
 	// but it affects all metabolism including chemistry, so i don't know if we need it
