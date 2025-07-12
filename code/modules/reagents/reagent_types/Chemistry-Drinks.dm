@@ -87,8 +87,6 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
-		if(1 to 20)
-			//nothing
 		if(21 to INFINITY)
 			if(prob(data["ticks"] - 10))
 				M.cure_nearsighted(EYE_DAMAGE_TRAIT)

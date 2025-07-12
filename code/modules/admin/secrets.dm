@@ -541,6 +541,7 @@
 	var/ok = 0
 	switch(href_list["secretsadmin"])
 		if("clear_bombs")
+			EMPTY_BLOCK_GUARD
 			//I do nothing
 		// Cure all diseases currently in existence
 		if("clear_virus")

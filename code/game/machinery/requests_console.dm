@@ -259,7 +259,8 @@ var/global/list/departments_genitive = list()
 
 	//Handle screen switching
 	switch(text2num(href_list["setScreen"]))
-		if(null)	//skip
+		if(null)
+			EMPTY_BLOCK_GUARD
 		if(1)		//req. assistance
 			screen = 1
 		if(2)		//req. supplies
@@ -287,8 +288,9 @@ var/global/list/departments_genitive = list()
 			screen = 0
 
 	//Handle silencing the console
-	switch( href_list["setSilent"] )
-		if(null)	//skip
+	switch(href_list["setSilent"])
+		if(null)
+			EMPTY_BLOCK_GUARD
 		if("1")
 			silent = TRUE
 		else

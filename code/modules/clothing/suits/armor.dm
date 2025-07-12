@@ -403,7 +403,7 @@
 			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
 		if(!I.can_be_holstered)
-			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
+			to_chat(usr, "<span class='warning'>This gun won't fit in the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
 		usr.drop_from_inventory(holstered, src)

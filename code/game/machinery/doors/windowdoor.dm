@@ -156,7 +156,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		return turn(dir,180) & unres_sides
 	return ..()
 
-/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
@@ -309,7 +309,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 							else if(req_one_access.len)
 								ae.conf_access = req_one_access
 								ae.one_access = 1
-							else
 						else
 							ae = electronics
 							electronics = null

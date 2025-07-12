@@ -181,6 +181,7 @@
 /obj/item/device/cardpay/proc/clear_numbers()
 	switch(mode)
 		if(CARDPAY_IDLEMODE)
+			EMPTY_BLOCK_GUARD
 		if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 			if(!display_numbers)
 				pay_amount = 0

@@ -195,7 +195,6 @@
 							dat += "<td>[crimstat]</td></tr>"
 						dat += "</table><hr width='75%' />"
 						dat += "<br><A href='byond://?src=\ref[src];choice=Return'>Return to index</a>"
-				else
 		else
 			dat += "<A href='byond://?src=\ref[src];choice=Log In'>Log In</A>"
 
@@ -571,7 +570,6 @@ What a mess.*/
 						for(var/datum/data/record/R in data_core.medical)
 							if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 								qdel(R)
-							else
 						qdel(active1)
 					if (active2)
 						qdel(active2)

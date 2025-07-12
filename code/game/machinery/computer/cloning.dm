@@ -192,7 +192,7 @@
 			continue
 
 		var/obj/item/clothing/under/C = H.w_uniform
-		
+
 		if(!C.has_sensor || C.sensor_mode == SUIT_SENSOR_OFF)
 			continue
 
@@ -375,7 +375,7 @@
 	if((!subject.ckey) || (!subject.client))
 		scantemp = "Ошибка: сканирование не удалось."
 		return
-	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
+	if(((NOCLONE in subject.mutations) && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
 		scantemp = "<span class='bad'>Геном пациента повреждён и не пригоден для клонирования.</span>"
 		return
 	if(!isnull(find_record(subject.ckey)))

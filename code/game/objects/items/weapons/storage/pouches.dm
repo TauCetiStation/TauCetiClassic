@@ -16,7 +16,7 @@
 
 /obj/item/weapon/storage/pouch/verb/toggle_slide()
 	set name = "Toggle Slide"
-	set desc = "Toggle the behavior of last item in [src] \"sliding\" into your hand."
+	set desc = "Toggle the behavior of last item in storage \"sliding\" into your hand."
 	set category = "Object"
 
 	sliding_behavior = !sliding_behavior
