@@ -31,7 +31,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
-		if(BP && BP.is_robotic())
+		if(BP && BP.is_robotic_part())
 			if(can_operate(H, user))
 				for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 					if(IO.is_bruised())
