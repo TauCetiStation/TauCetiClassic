@@ -517,7 +517,6 @@ BLIND     // can't see anything
 		*/
 	var/displays_id = 1
 	var/rolled_down = 0
-	var/can_be_rolled_down = 0
 
 	var/fresh_laundered_until = 0
 
@@ -527,8 +526,14 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_UNIFORM
 
+/obj/item/clothing/under/atom_init()
+	. = ..()
+	if(icon_exists("icons/mob/uniform.dmi", "[item_state]_d"))
+		verbs += /obj/item/clothing/under/proc/rollsuit
+
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
+	rolled_down = FALSE
 	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
 		fresh_laundered_until = world.time
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
@@ -566,8 +571,6 @@ BLIND     // can't see anything
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 	if(rolled_down)
 		to_chat(usr, "Its rolled down.")
-	else if(can_be_rolled_down)
-		to_chat(usr, "It can be rolled down.")
 
 /obj/item/clothing/under/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for(var/obj/item/clothing/accessory/A in accessories)
@@ -627,23 +630,29 @@ BLIND     // can't see anything
 	set src in usr
 	set_sensors(usr)
 
-/obj/item/clothing/under/verb/rollsuit()
+/obj/item/clothing/under/proc/rollsuit()
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
 	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
-	if(can_be_rolled_down)
+	if(icon_exists("icons/mob/uniform.dmi", "[item_state]_d"))
 		rolled_down = !rolled_down
 		update_inv_mob()
-		to_chat(usr, "<span class='notice'>You roll down the the uniform.</span>")
+		to_chat(usr, "<span class='notice'>You roll down the uniform.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/wash_act(w_color)
-	. = ..()
+	..()
 	fresh_laundered_until = world.time + 5 MINUTES
+	if(locate(/obj/item/clothing/under/proc/rollsuit) in verbs)
+		verbs -= /obj/item/clothing/under/proc/rollsuit
+	if(icon_exists("icons/mob/uniform.dmi", "[item_state]_d"))
+		verbs += /obj/item/clothing/under/proc/rollsuit
+	else
+		verbs -= /obj/item/clothing/under/proc/rollsuit
 
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
