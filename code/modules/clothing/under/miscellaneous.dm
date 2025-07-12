@@ -80,6 +80,7 @@
 	desc = "A short-sleeved black uniform, paired with grey digital-camo cargo pants. It looks very tactical."
 	icon_state = "ert_uniform"
 	item_state = "ert_uniform"
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/space
 	name = "NASA jumpsuit"
@@ -105,17 +106,20 @@
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
+	item_state = "owl"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
 	desc = "Johnny~~"
 	icon_state = "johnny"
+	item_state = "johnny"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/rainbow
@@ -232,6 +236,7 @@
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
+	item_state = "blackskirt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/schoolgirl
@@ -259,6 +264,7 @@
 	desc = "For the Motherland!"
 	icon_state = "soviet"
 	item_state = "soviet"
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/redcoat
 	name = "redcoat uniform"
@@ -295,62 +301,74 @@
 	name = "flame dress"
 	desc = "A small black dress with blue flames print on it."
 	icon_state = "dress_fire"
+	item_state = "dress_fire"
 
 /obj/item/clothing/under/dress/dress_green
 	name = "green dress"
 	desc = "A simple, tight fitting green dress."
 	icon_state = "dress_green"
+	item_state = "dress_green"
 
 /obj/item/clothing/under/dress/dress_orange
 	name = "orange dress"
 	desc = "A fancy orange gown for those who like to show leg."
 	icon_state = "dress_orange"
+	item_state = "dress_orange"
 
 /obj/item/clothing/under/dress/dress_pink
 	name = "pink dress"
 	desc = "A simple, tight fitting pink dress."
 	icon_state = "dress_pink"
+	item_state = "dress_pink"
 
 /obj/item/clothing/under/dress/dress_yellow
 	name = "yellow dress"
 	desc = "A flirty, little yellow dress."
 	icon_state = "dress_yellow"
+	item_state = "dress_yellow"
 
 /obj/item/clothing/under/dress/dress_purple
 	name = "purple dress"
 	desc = "A nicely tailored purple dress made for the taller woman."
 	icon_state = "dress_purple"
+	item_state = "dress_purple"
 
 /obj/item/clothing/under/dress/dress_saloon
 	name = "saloon girl dress"
 	desc = "A old western inspired gown for the girl who likes to drink."
 	icon_state = "dress_saloon"
+	item_state = "dress_saloon"
 
 /obj/item/clothing/under/dress/dress_summer
 	name = "summer dress"
 	desc = "Ruffle your way through the season in this sweet, sunshine green dress."
 	icon_state = "dress_summer"
+	item_state = "dress_summer"
 
 /obj/item/clothing/under/dress/dress_vintage
 	name = "vintage dress"
 	desc = "Take a swan dive into vintage love, dames!"
 	icon_state = "dress_vintage"
+	item_state = "dress_vintage"
 
 /obj/item/clothing/under/dress/dress_evening
 	name = "elegant evening dress"
 	desc = "A stylish gown perfect for a wedding-guest dress, ball gown or your next formal celebration."
 	icon_state = "dress_evening"
+	item_state = "dress_evening"
 
 /obj/item/clothing/under/dress/dress_party
 	name = "party dress"
 	desc = "The party doesn't start 'til you walk in, so make an entrance no one can ignore."
 	icon_state = "dress_party"
+	item_state = "dress_party"
 
 
 /obj/item/clothing/under/dress/dress_cap
 	name = "captain dress uniform"
 	desc = "Feminine fashion for the style concious captain."
 	icon_state = "dress_cap"
+	item_state = "dress_cap"
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -358,6 +376,7 @@
 	name = "head of personal dress uniform"
 	desc = "Feminine fashion for the style concious HoP."
 	icon_state = "dress_hop"
+	item_state = "dress_hop"
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -365,6 +384,7 @@
 	name = "human resources director uniform"
 	desc = "Superior class for the nosy H.R. Director."
 	icon_state = "huresource"
+	item_state = "huresource"
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -389,18 +409,21 @@
 	name = "blue plaid skirt"
 	desc = "A preppy blue skirt with a white blouse."
 	icon_state = "plaid_blue"
+	item_state = "plaid_blue"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/dress/plaid_red
 	name = "red plaid skirt"
 	desc = "A preppy red skirt with a white blouse."
 	icon_state = "plaid_red"
+	item_state = "plaid_red"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/dress/plaid_purple
 	name = "blue purple skirt"
 	desc = "A preppy purple skirt with a white blouse."
 	icon_state = "plaid_purple"
+	item_state = "plaid_purple"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 //wedding stuff
@@ -411,30 +434,35 @@
 	name = "orange wedding dress"
 	desc = "A big and puffy orange dress."
 	icon_state = "bride_orange"
+	item_state = "bride_orange"
 	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_purple
 	name = "purple wedding dress"
 	desc = "A big and puffy purple dress."
 	icon_state = "bride_purple"
+	item_state = "bride_purple"
 	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_blue
 	name = "blue wedding dress"
 	desc = "A big and puffy blue dress."
 	icon_state = "bride_blue"
+	item_state = "bride_blue"
 	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_red
 	name = "red wedding dress"
 	desc = "A big and puffy red dress."
 	icon_state = "bride_red"
+	item_state = "bride_red"
 	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/wedding/bride_white
 	name = "silky wedding dress"
 	desc = "A white wedding gown made from the finest silk."
 	icon_state = "bride_white"
+	item_state = "bride_white"
 	flags_inv = HIDESHOES
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -451,6 +479,7 @@
 	icon_state = "cadet"
 	item_state = "cadet"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/cadet/skirt
 	name = "security cadet's jumpskirt"
@@ -491,6 +520,7 @@
 	name = "bartender's female uniform"
 	icon_state = "bar_f"
 	item_state = "bar_f"
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
@@ -569,51 +599,62 @@
 	name = "patient gown"
 	desc = "A long loose piece of clothing worn in a hospital by someone doing or having an operation. It can be used as clothing for bedridden patients."
 	icon_state = "patient_gown"
+	item_state = "patient_gown"
 	body_parts_covered = 0
 
 /obj/item/clothing/under/pretty_dress
 	name = "pretty dress"
 	desc = "An Enchanting blue dress."
 	icon_state = "pretty_dress"
+	item_state = "pretty_dress"
 
 /obj/item/clothing/under/sukeban_pants
 	name = "sukeban pants"
 	desc = "A white shirt with wide baggy pants"
 	icon_state = "sukeban_pants"
+	item_state = "sukeban_pants"
 
 /obj/item/clothing/under/sukeban_dress
 	name = "sukeban dress"
 	desc = "A Dress of Japanese schoolgirls"
 	icon_state = "sukeban_dress"
+	item_state = "sukeban_dress"
 
 /obj/item/clothing/under/karate
 	name = "karate underwear"
 	icon_state = "karate"
+	item_state = "karate"
 
 /obj/item/clothing/under/smoking
 	name = "smoking"
 	icon_state = "smoking_new"
+	item_state = "smoking_new"
 
 /obj/item/clothing/under/popking
 	name = "popking suit"
 	desc = "Classic costume of the King of Pop. A great choice if you want to twist again, watching Pretty Woman."
 	icon_state = "popking"
+	item_state = "popking"
 
 /obj/item/clothing/under/popking/alternate
 	icon_state = "popking2"
+	item_state = "popking2"
 
 /obj/item/clothing/under/pinkpolo
 	name = "pink polo"
 	desc = "The classic image of an American gangster 80. Hello from Miami."
 	icon_state = "pinkpolo"
+	item_state = "pinkpolo"
 
 /obj/item/clothing/under/bathrobe
 	name = "bath robe"
 	icon_state = "bathrobe"
+	item_state = "bathrobe"
 
 /obj/item/clothing/under/bathtowel
 	name = "bath towel"
 	icon_state = "bathtowel"
+	item_state = "bathtowel"
 	has_sensor = 0
 	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_ICLOTHING
 
@@ -723,6 +764,7 @@
 	has_sensor = 2
 	sensor_mode = SUIT_SENSOR_TRACKING
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/indiana
 	name = "leather suit"
@@ -748,6 +790,7 @@
 	name = "Kung Jeans"
 	desc = "Pair of old jeans combined with a red tank-top"
 	icon_state = "kung_suit"
+	item_state = "kung_suit"
 	w_class = SIZE_SMALL
 
 /obj/item/clothing/under/durathread
@@ -756,6 +799,7 @@
 	icon_state = "Durauniform"
 	item_state = "Durauniform"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 	siemens_coefficient = 0.8
 	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
 

@@ -6,11 +6,13 @@
 	icon_state = "ba_suit"
 	item_state = "ba_suit"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/bartender/alt
 	icon_state = "alt_ba_suit"
 	item_state = "alt_ba_suit"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
@@ -18,6 +20,7 @@
 	icon_state = "captain"
 	item_state = "captain"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 
 /obj/item/clothing/under/rank/cargo
@@ -28,6 +31,7 @@
 	item_state_world = "qm_w"
 
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 
 /obj/item/clothing/under/rank/cargotech
@@ -39,6 +43,7 @@
 
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/recycler
 	name = "recycler's jumpsuit"
@@ -49,6 +54,7 @@
 
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/chaplain
 	desc = "It's a dark robe, often worn by religious folk."
@@ -71,6 +77,7 @@
 	icon_state = "chef_uniform"
 	item_state = "chef_uniform"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/chef/sushi
 	name = "sushi master robe"
@@ -93,6 +100,7 @@
 	icon_state = "hop"
 	item_state = "hop"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/head_of_personnel_whimsy
 	desc = "A blue jacket and red tie, with matching red cuffs! Snazzy. Wearing this makes you feel more important than your job title does."
@@ -109,6 +117,7 @@
 	item_state = "hydroponics"
 	permeability_coefficient = 0.50
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 
 /obj/item/clothing/under/rank/internalaffairs
@@ -123,10 +132,11 @@
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
 	icon_state = "janitor"
+	item_state = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	can_get_wet = FALSE
-
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
@@ -189,6 +199,7 @@
 	item_state = "miner"
 	item_state_world = "miner_w"
 	flags = ONESIZEFITSALL|HEAR_TALK
+	can_be_rolled_down = TRUE
 
 /obj/item/clothing/under/rank/barber
 	desc = "A fancy pink shirt paired with light-catching white pants. Yet to be blood- and puke-stained."

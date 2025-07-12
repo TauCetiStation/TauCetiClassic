@@ -1046,6 +1046,9 @@
 	name = initial(dye_type.name)
 	icon_state = initial(dye_type.icon_state)
 	item_state = initial(dye_type.item_state)
+	item_state_world = initial(dye_type.item_state_world)
+	item_state_inventory = initial(dye_type.item_state_inventory)
+	update_world_icon()
 	desc = "The colors are a bit dodgy."
 
 /obj/item/attack_hulk(mob/living/user)
