@@ -159,16 +159,20 @@
 		last_command_report = 4
 
 /datum/faction/revolution/proc/command_report(message)
-	for (var/obj/machinery/computer/communications/comm in communications_list)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+	var/obj/item/weapon/stamp/centcomm/stamp = new
+
+	for(var/obj/machinery/computer/communications/comm in communications_list)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper(comm.loc)
 			intercept.name = "Cent. Com. Announcement"
 			intercept.info = message
+			stamp.stamp_paper(intercept)
 			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
+	qdel(stamp)
 	announcement_ping.play()
 
 /datum/faction/revolution/build_scorestat()
