@@ -62,7 +62,7 @@
 		/obj/item/seeds/soyaseed = 3,
 		/obj/item/seeds/sunflowerseed = 3,
 		/obj/item/seeds/tomatoseed = 3,
-		/obj/item/seeds/towermycelium = 3,
+		/obj/item/seeds/fungiwood = 3,
 		/obj/item/seeds/watermelonseed = 3,
 		/obj/item/seeds/wheatseed = 3,
 		/obj/item/seeds/whitebeetseed = 3,
