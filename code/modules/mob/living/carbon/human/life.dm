@@ -1000,20 +1000,39 @@ var/global/list/tourette_bad_words= list(
 		return ..()
 
 	if(nutrition_icon)
-		var/full_perc // Nutrition pecentage
-		var/fullness_icon = species.flags[IS_SYNTHETIC] ? "lowcell" : "burger"
-		var/get_nutrition_max
 		if (species.flags[IS_SYNTHETIC])
+			var/full_perc // Charge pecentage
+			var/get_charge_max
 			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 			var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
 			if (I)
-				get_nutrition_max = I.maxcharge
+				get_charge_max = I.maxcharge
 			else
-				get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
+				get_charge_max = 1 // IPC nutrition should be set to zero to this moment
+			full_perc = clamp(((get_satiation() / get_charge_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
+			nutrition_icon.icon_state = "lowcell[CEILING(full_perc, 20)]"
 		else
-			get_nutrition_max = NUTRITION_LEVEL_FAT
-		full_perc = clamp(((get_satiation() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
-		nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
+			var/current_nutrition = get_satiation()
+			var/new_nutrition_color = "#654956"
+			if(current_nutrition < NUTRITION_LEVEL_STARVING)
+				new_nutrition_color = "#654956"
+			else if(current_nutrition < NUTRITION_LEVEL_HUNGRY)
+				new_nutrition_color = "#da2010"
+			else if(current_nutrition < NUTRITION_LEVEL_FED)
+				new_nutrition_color = "#f1641f"
+			else if(current_nutrition < NUTRITION_LEVEL_NORMAL)
+				new_nutrition_color = "#f8c53a"
+			else if(current_nutrition < NUTRITION_LEVEL_WELL_FED)
+				new_nutrition_color = "#8fd032"
+			else if(current_nutrition < NUTRITION_LEVEL_FULL)
+				new_nutrition_color = "#32d0b8"
+			else if(current_nutrition < NUTRITION_LEVEL_FAT)
+				new_nutrition_color = "#2789cd"
+			else
+				new_nutrition_color = "#918c8b"
+			if(nutrition_icon.color != new_nutrition_color)
+				nutrition_icon.cut_overlays()
+				nutrition_icon.color = new_nutrition_color
 
 	//OH cmon...
 	var/impaired    = 0

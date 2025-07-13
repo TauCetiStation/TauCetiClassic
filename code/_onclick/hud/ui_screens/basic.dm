@@ -132,13 +132,13 @@
 
 /atom/movable/screen/nutrition
 	name = "nutrition"
-	icon_state = "starving"
+	icon_state = "hunger"
 	screen_loc = ui_nutrition
 
 	copy_flags = NONE
 
 /atom/movable/screen/nutrition/update_icon(mob/living/carbon/human/mymob)
-	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/hud/screen_alert.dmi' : 'icons/hud/screen_gen.dmi'
+	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/hud/screen_alert.dmi' : 'icons/hud/screen1.dmi'
 
 /atom/movable/screen/nutrition/add_to_hud(datum/hud/hud)
 	..()
