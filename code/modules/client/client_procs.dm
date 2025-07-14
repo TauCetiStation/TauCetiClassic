@@ -362,6 +362,12 @@ var/global/list/blacklisted_builds
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	if(!view_size)
+		view_size = new /datum/view_data(src)
+
+	if(prefs.widescreenpref)
+		view_size?.setDefault(VIEWPORT_USE_PREF)
+
 	if(prefs.auto_fit_viewport)
 		fit_viewport()
 

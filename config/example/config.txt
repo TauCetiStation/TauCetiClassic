@@ -92,7 +92,7 @@ ALLOW_AI 1
 ## 0 - blocked
 ## 1 - lobby only (for alternative login methods like server password)
 ## 2 - game access
-GUEST_MODE 0
+GUEST_MODE 2
 
 ## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)

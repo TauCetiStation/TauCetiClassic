@@ -810,7 +810,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/viewx = clamp(input("Enter view width (1-127)") as num, 1, 127) * 2 + 1
 	var/viewy = clamp(input("Enter view height (1-127)") as num, 1, 127) * 2 + 1
 
-	change_view("[viewx]x[viewy]")
+	view_size?.setDefault("[viewx]x[viewy]")
 	if(prefs.auto_fit_viewport)
 		fit_viewport()
 

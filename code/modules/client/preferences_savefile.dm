@@ -470,9 +470,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ipc_head = initial(ipc_head)
 		// fuck named hairstyles, we should just move it to indexes
 		var/static/list/ipc_hairstyles_reset = list(
-			"alien IPC screen", 
-			"double IPC screen", 
-			"pillar IPC screen", 
+			"alien IPC screen",
+			"double IPC screen",
+			"pillar IPC screen",
 			"human IPC screen"
 		)
 		if(h_style in ipc_hairstyles_reset)
@@ -625,6 +625,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eye_blur_effect"]   >> eye_blur_effect
 	S["auto_fit_viewport"] >> auto_fit_viewport
 	S["lobbyanimation"]    >> lobbyanimation
+	S["widescreenpref"]    >> widescreenpref
 	S["tooltip"]           >> tooltip
 	S["tooltip_size"]      >> tooltip_size
 	S["tooltip_font"]      >> tooltip_font
@@ -685,6 +686,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lampsexposure	= sanitize_integer(lampsexposure, 0, 1, initial(lampsexposure))
 	lampsglare		= sanitize_integer(lampsglare, 0, 1, initial(lampsglare))
 	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
+	widescreenpref	= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
@@ -750,6 +752,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lampsexposure"]     << lampsexposure
 	S["lampsglare"]        << lampsglare
 	S["lobbyanimation"]    << lobbyanimation
+	S["widescreenpref"]    << widescreenpref
 	S["auto_fit_viewport"] << auto_fit_viewport
 	S["tooltip"]           << tooltip
 	S["tooltip_size"]      << tooltip_size

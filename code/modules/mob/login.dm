@@ -94,7 +94,7 @@
 	if(client.click_intercept)
 		client.click_intercept.post_login()
 
-	client.change_view(world.view)
+	client.view_size?.setDefault(VIEWPORT_USE_PREF)
 
 	var/turf/T = get_turf(src)
 	if(T && last_z != T.z)
