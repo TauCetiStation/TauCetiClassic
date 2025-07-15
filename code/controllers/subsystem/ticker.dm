@@ -25,6 +25,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/admin_delayed = 0						//if set to nonzero, the round will not restart on it's own
 
+	// todo: move it to round aspects
 	var/triai = 0							//Global holder for Triumvirate
 
 	var/timeLeft = 1800						//pregame timer

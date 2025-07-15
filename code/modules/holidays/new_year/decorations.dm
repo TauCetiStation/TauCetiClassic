@@ -245,7 +245,7 @@
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src].</span>")
 
 			var/bad_boy = 0
-			for(var/datum/job/job in SSjob.occupations)
+			for(var/datum/job/job in SSjob.all_occupations)
 				if(jobban_isbanned(C, job.title))
 					bad_boy += 1
 			if(!bad_boy)

@@ -1167,7 +1167,7 @@
 
 		if("Staff Salary")
 			mode = 73
-			subordinate_staff = my_subordinate_staff(ownrank)
+			subordinate_staff = SSeconomy.my_subordinate_staff(ownrank)
 
 		if("Change insurance price")
 			if(!check_permission_to_change_insurance_price())
@@ -2010,7 +2010,7 @@
 	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)
-	if((rank in command_positions) || (rank == "Quartermaster"))
+	if((rank in SSjob.heads_positions) || (rank == JOB_QM))
 		boss_PDA = 1
 	else
 		boss_PDA = 0

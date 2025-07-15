@@ -882,7 +882,7 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		var/list/jobs = list()
-		for (var/datum/job/J in SSjob.occupations)
+		for (var/datum/job/J as anything in SSjob.active_occupations)
 			if (J.current_positions >= J.total_positions && J.total_positions != -1)
 				jobs += J.title
 		if (!jobs.len)
@@ -891,7 +891,6 @@ var/global/list/admin_verbs_hideable = list(
 		var/job = input("Please select job slot to free", "Free job slot")  as null|anything in jobs
 		if (job)
 			SSjob.FreeRole(job)
-	return
 
 /client/proc/toggle_combo_hud()
 	set name = "Toggle Combo HUD"

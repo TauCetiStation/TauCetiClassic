@@ -171,30 +171,71 @@
 	name = "blueshield implant"
 	cases = list("имплант синего щита", "импланта синего щита", "импланту синего щита", "имплант синего щита", "имплантом синего щита", "импланте синего щита")
 	desc = "Нежно промывает мозг."
-	var/last_examined = 0
+	COOLDOWN_DECLARE(penalty_cooldown)
+	var/penalty_stack = 0
+	var/list/protected_jobs
 	implant_data = {"
 <b>Характеристики импланта:</b><BR>
 <b>Наименование:</b> Экспериментальная инициатива \"Синий щит\" Nanotrasen<BR>
 <b>Срок годности:</b> Активируется при инъекции.<BR>
-<b>Важные примечания:</b> Незаметно заставляет носителя защищать членов командования.<BR>
+<b>Важные примечания:</b> Мотивирует носителя защищать членов командования.<BR>
 <HR>
 <b>Подробности:</b><BR>
-<b>Функционал:</b> Содержит специальные гормоны, влияющие на мозг носителя.<BR>
+<b>Функционал:</b> Бьет током при игнорировании доджностных обязанностей.<BR>
 <b>Целостность:</b> Имплант не теряет функционал даже после смерти носителя, что позволяет пересадить его с помощью специальных приборов.<BR>
 Правда, эти приборы никогда на станцию не доставляются."}
 
-/obj/item/weapon/implant/blueshield/inject()
+/obj/item/weapon/implant/blueshield/atom_init()
+	protected_jobs = SSjob.departments_occupations[DEP_SECURITY] + JOB_LAWYER
+	. = ..()
+
+/obj/item/weapon/implant/blueshield/inject(mob/living/carbon/C, def_zone)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	RegisterSignal(implanted_mob, COMSIG_MOB_EXAMINED, PROC_REF(on_examine))
+
+/obj/item/weapon/implant/eject()
+	UnregisterSignal(implanted_mob, COMSIG_MOB_EXAMINED)
+	. = ..()
+
+/obj/item/weapon/implant/blueshield/proc/on_examine(mob/M)
+	if(M.mind && (M.mind.assigned_role in protected_jobs))
+		penalty_stack = 0
+		COOLDOWN_RESET(src, penalty_cooldown)
 
 /obj/item/weapon/implant/blueshield/process()
 	if(!implanted_mob)
 		STOP_PROCESSING(SSobj, src)
 		return
 
-	if(world.time > last_examined + 6000)
-		SEND_SIGNAL(implanted_mob, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-		SEND_SIGNAL(implanted_mob, COMSIG_ADD_MOOD_EVENT, "blueshield", /datum/mood_event/blueshield)
+	if(!COOLDOWN_FINISHED(src, penalty_cooldown))
+		return
+
+	COOLDOWN_START(src, penalty_cooldown, 5 MINUTES)
+
+	// check if there is any heads on the station
+	// todo: store crew in jobs/departments datums
+	var/list/to_protect = list()
+	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(player.mind && (player.mind.assigned_role in protected_jobs))
+			to_protect += player.mind
+
+	if(!length(to_protect))
+		penalty_stack = 0
+		return
+
+	switch(++penalty_stack)
+		if(1)
+			to_chat(implanted_mob, "<span class='bold warning'>Кто-то из глав или АВД должны быть на станции. Следует проверить их, или имплант напомнит о себе.</span>")
+		if(2)
+			to_chat(implanted_mob, "<span class='bold warning'>[C_CASE(src, NOMINATIVE_CASE)] в [CASE(body_part, PREPOSITIONAL_CASE)] напоминает о должностных обязанностях легким ударом тока, дальше может быть хуже.</span>")
+		else
+			if(implanted_mob.mood_prob(5*(penalty_stack-3))) // one guaranteed electrocute act
+				to_chat(implanted_mob, "<span class='bold warning'>Вы ожидаете очередной удар током от [CASE(src, GENITIVE_CASE)], но его не происходит. Вы пережили свой имплант в этой битве. Если бы только вам не пришлось потом писать объяснительную...</span>")
+				meltdown(harmful = FALSE)
+			else
+				to_chat(implanted_mob, "<span class='bold warning'>[C_CASE(body_part, NOMINATIVE_CASE)] бьет вас током за игнорирование служебных обязанностей.</span>")
+				implanted_mob.electrocute_act(15 * (penalty_stack - 2), src)
 
 /obj/item/weapon/implant/bork
 	name = "B0RK-X3 skillchip"

@@ -362,7 +362,7 @@ What a mess.*/
 					if ((istype(active1, /datum/data/record) && L.Find(rank)))
 						temp = "<h5>Rank:</h5>"
 						temp += "<ul>"
-						for(var/rank in joblist)
+						for(var/rank in SSjob.GetHumanJobs())
 							temp += "<li><a href='byond://?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 						temp += "</ul>"
 					else
@@ -382,7 +382,7 @@ What a mess.*/
 					if (active1)
 						PDA_Manifest.Cut()
 						active1.fields["rank"] = href_list["rank"]
-						if(href_list["rank"] in joblist)
+						if(href_list["rank"] in SSjob.GetHumanJobs())
 							active1.fields["real_rank"] = href_list["real_rank"]
 
 				if ("Delete Record (ALL) Execute")
