@@ -734,3 +734,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	set hidden = TRUE
 	to_chat(src, "<span class='info'>You can now right click to use inspect on browsers.</span>")
 	winset(src, null, list("browser-options" = "+devtools"))
+
+/client/proc/mc_show_all_toggle()
+	set category = "Debug"
+	set name = "Toggle MC SS visibility"
+
+	usr.client.holder.MC_ss_show_all = !usr.client.holder.MC_ss_show_all
