@@ -53,6 +53,7 @@
 
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
+	add_fingerprint(user)
 	if(!allowed(usr))
 		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
 		return FALSE
@@ -86,6 +87,7 @@
 	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
+	add_fingerprint(user)
 	if(!allowed(usr))
 		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
 		return FALSE

@@ -12941,36 +12941,33 @@
 /area/station/security/detectives_office)
 "avg" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
-	pixel_x = 3
-	},
 /obj/item/ashtray/bronze{
 	pixel_x = -7;
 	pixel_y = -13
+	},
+/obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
+/obj/item/clothing/mask/cigarette/cigar/cohiba{
+	pixel_x = 3
+	},
+/obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "avh" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
-/obj/item/device/taperecorder{
-	pixel_x = -8;
-	pixel_y = 5
-	},
 /obj/machinery/door_control{
 	id = "Detectives Lockdown";
 	name = "Detectives Lockdown";
 	pixel_y = 25
 	},
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "avi" = (
 /obj/structure/table/woodentable,
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/microscope,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "avj" = (
@@ -13008,13 +13005,11 @@
 	},
 /area/station/security/forensic_office)
 "avn" = (
-/obj/machinery/computer/forensic_scanning,
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "bot_old"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
+/obj/structure/table/glass,
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -13596,6 +13591,10 @@
 /obj/item/device/flashlight/lamp{
 	pixel_x = -4;
 	pixel_y = 6
+	},
+/obj/item/device/taperecorder{
+	pixel_x = -8;
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
@@ -50115,11 +50114,11 @@
 /obj/structure/closet/cabinet,
 /obj/item/weapon/storage/briefcase,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/device/detective_scanner,
 /obj/item/weapon/folder/red,
 /obj/item/device/cardpay{
 	dir = 1
 	},
+/obj/item/toy/figure/assistant,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -50662,11 +50661,11 @@
 /area/station/civilian/chapel/mass_driver)
 "iCW" = (
 /obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
 	icon_state = "siding_wood_line"
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "iDi" = (
@@ -91965,12 +91964,12 @@
 	pixel_y = -32
 	},
 /obj/structure/table/woodentable,
-/obj/item/toy/figure/assistant,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
 	icon_state = "siding_wood_line"
 	},
 /obj/machinery/light/smart,
+/obj/item/weapon/storage/briefcase/crimekit,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "szt" = (

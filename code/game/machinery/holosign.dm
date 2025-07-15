@@ -54,7 +54,7 @@
 	var/active = FALSE
 
 /obj/machinery/holosign_switch/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/detective_scanner))
+	if(istype(W, /obj/item/device/detective_scanner) || istype(W, /obj/item/weapon/forensic_sample_kit) || istype(W, /obj/item/weapon/swab))
 		return
 	return attack_hand(user)
 

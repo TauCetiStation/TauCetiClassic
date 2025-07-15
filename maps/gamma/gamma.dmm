@@ -14765,12 +14765,13 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "ckE" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
-/turf/simulated/floor/wood{
-	icon_state = "wood7"
+/obj/machinery/microscope,
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteredfull"
 	},
-/area/station/security/detectives_office)
+/area/station/security/forensic_office)
 "ckG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -43356,18 +43357,12 @@
 	},
 /area/station/ai_monitored/eva)
 "hMC" = (
-/obj/structure/table,
-/obj/item/device/detective_scanner,
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_line"
+/obj/structure/table/woodentable,
+/obj/machinery/microscope,
+/turf/simulated/floor/wood{
+	icon_state = "wood7"
 	},
-/obj/machinery/light_switch{
-	pixel_y = 24
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/vacantoffice)
+/area/station/security/detectives_office)
 "hMG" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -63998,12 +63993,18 @@
 	},
 /area/station/rnd/lab)
 "lOi" = (
-/obj/machinery/computer/forensic_scanning,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "whiteredfull"
+/obj/structure/table,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
 	},
-/area/station/security/forensic_office)
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
+/obj/item/weapon/storage/briefcase/crimekit,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/vacantoffice)
 "lOq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -77246,10 +77247,10 @@
 /area/station/medical/morgue)
 "ovo" = (
 /obj/structure/table,
-/obj/machinery/computer/forensic_scanning/detective,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -105254,6 +105255,7 @@
 /area/station/construction/assembly_line)
 "tUo" = (
 /obj/structure/closet/secure_closet/forensics,
+/obj/item/weapon/storage/briefcase/crimekit,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteredfull"
@@ -154474,7 +154476,7 @@ eVq
 mQz
 rIl
 isW
-ckE
+hMC
 mvq
 nRc
 kHX
@@ -155240,7 +155242,7 @@ bkw
 iVK
 gyJ
 nYC
-uvV
+ckE
 iuC
 sur
 tUo
@@ -155497,7 +155499,7 @@ wpn
 iVK
 gyJ
 nYC
-lOi
+uvV
 lQY
 vho
 eFw
@@ -155521,7 +155523,7 @@ miO
 dbR
 nRU
 eCN
-hMC
+lOi
 lms
 wTt
 aEV

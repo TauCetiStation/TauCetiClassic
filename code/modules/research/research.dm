@@ -925,7 +925,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("seccamera", "secdata", "prisonmanage")
+	unlocks_designs = list("seccamera", "secdata", "prisonmanage", "microscope")
 
 /datum/technology/basic_lethal
 	name = "Basic Lethal Weapons"
