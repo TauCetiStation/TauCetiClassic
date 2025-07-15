@@ -49,9 +49,8 @@
 /obj/item/weapon/storage/briefcase/crimekit
 	name = "Crime inspection kit"
 	desc = "A stainless steel-coated suitcase for all your forensic needs. It feels heavy."
-	icon = 'icons/obj/detective_work.dmi'
-	icon_state = "case"
-	item_state = "case"
+	icon_state = "crimekit"
+	item_state = "crimekit"
 
 /obj/item/weapon/storage/briefcase/crimekit/atom_init()
 	. = ..()

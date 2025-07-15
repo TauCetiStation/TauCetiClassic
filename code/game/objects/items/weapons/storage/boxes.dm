@@ -749,7 +749,6 @@
 /obj/item/weapon/storage/box/swabs
 	name = "Swab kit box"
 	desc = "Sterile equipment inside. Do not allow contamination."
-	icon = 'icons/obj/detective_work.dmi'
 	icon_state = "dnabox"
 
 /obj/item/weapon/storage/box/swabs/atom_init()

@@ -70,7 +70,7 @@
 
 	l_hand_back = /obj/item/weapon/storage/box/evidence
 	l_pocket = /obj/item/weapon/lighter/zippo
-	r_pocket_back = /obj/item/weapon/storage/briefcase/crimekit
+	backpack_contents = list(/obj/item/weapon/storage/briefcase/crimekit)
 
 // OFFICER OUTFIT
 /datum/outfit/job/officer
@@ -109,7 +109,7 @@
 	belt = /obj/item/device/pda/forensic
 	l_ear = /obj/item/device/radio/headset/headset_sec
 
-	r_pocket_back = /obj/item/weapon/storage/briefcase/crimekit
+	backpack_contents = list(/obj/item/weapon/storage/briefcase/crimekit)
 	l_hand_back = /obj/item/weapon/storage/box/evidence
 
 // CADET OUTFIT
