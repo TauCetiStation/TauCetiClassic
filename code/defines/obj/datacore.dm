@@ -48,7 +48,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 
 		var/account_number = t.fields["acc_number"]
 
-		var/datum/job/J = SSjob.GetJob(t.fields["rank"])
+		var/datum/job/J = SSjob.GetJob(t.fields["real_rank"])
 		if(J)
 			var/list/entry = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = J.order)
 			if (DEP_COMMAND in J.departments)
