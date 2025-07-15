@@ -930,6 +930,12 @@ var/global/list/humanoid_icon_cache = list()
 		return TRUE
 	else
 		icon_states_cache[file][state] = FALSE
+
+		var/log_note = "Icon Lookup for state: [state] in file [file] failed."
+
+		if(config?.log_icon_lookup)
+			log_icon_lookup(log_note)
+
 		if(scream)
-			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
+			stack_trace(log_note)
 		return FALSE
