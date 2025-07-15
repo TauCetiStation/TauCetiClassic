@@ -69,7 +69,7 @@
 	if(!proximity || istype(A, /obj/machinery/microscope))
 		return
 
-	if(istype(A,/mob/living))
+	if(isliving(A))
 		return
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is already used.</span>")
