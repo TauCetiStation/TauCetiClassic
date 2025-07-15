@@ -51,6 +51,7 @@
 	desc = "A stainless steel-coated suitcase for all your forensic needs. It feels heavy."
 	icon_state = "crimekit"
 	item_state = "crimekit"
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/briefcase/crimekit/atom_init()
 	. = ..()

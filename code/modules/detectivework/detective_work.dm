@@ -43,11 +43,15 @@
 		if(M.gloves)
 			fibertext = "Material from a pair of [M.gloves.name]."
 			if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
-				suit_fibers += "Material from a pair of [M.gloves.name]."
+				var/obj/item/clothing/gloves/C = M.gloves
+				if(C.can_leave_fibers)
+					suit_fibers += fibertext
 	else if(M.gloves)
 		fibertext = "Material from a pair of [M.gloves.name]."
 		if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
-			suit_fibers += "Material from a pair of [M.gloves.name]."
+			var/obj/item/clothing/gloves/C = M.gloves
+			if(C.can_leave_fibers)
+				suit_fibers += fibertext
 	if(M.species.flags[FUR])
 		fibertext = "Small particles of [M.species.name] fur."
 		var/bio_restriction = 100 - M.getarmor(null, "bio")
