@@ -46,7 +46,7 @@
 			to_chat(user, "<span class='warning'>They have no head!</span>")
 			inuse = FALSE
 			return
-		user.visible_message("<span class='notice'>[user] takes a sample from [H] mouth with a swab.")
+		user.visible_message("<span class='notice'>[user] takes a sample from [H] mouth with a swab.</span>")
 		if(!H.dna || !H.dna.unique_enzymes)
 			target_dna = null
 		else
@@ -91,8 +91,8 @@
 			return
 		if(target_dna)
 			user.visible_message(
-				"<span class='notice'>[user] takes a sample from [A] with a swab.",
-				"<span class='notice'>You take a sample from [A] with a swab.")
+				"<span class='notice'>[user] takes a sample from [A] with a swab.</span>",
+				"<span class='notice'>You take a sample from [A] with a swab.</span>")
 			if(!dispenser)
 				dna = target_dna
 				set_used(A)
