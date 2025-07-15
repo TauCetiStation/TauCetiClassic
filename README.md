@@ -24,7 +24,8 @@
   - [Contribution Guide](/.github/CONTRIBUTING.md)
   - [Соглашения о коде](/.github/wiki/CODE_CONVENTION.md)
   - [Оформление PR-ов](/.github/wiki/STYLING_OF_PR.md)
-  - [Вводный курс (wiki)](https://wiki.taucetistation.org/Git)
+  - [Быстрый старт](https://wiki.taucetistation.org/Git)
+
 * **Код:**
   - [DM Reference (byond)](https://www.byond.com/docs/ref/)
   - [New(), atom_init()](/.github/wiki/ABOUT_INIT.md)
