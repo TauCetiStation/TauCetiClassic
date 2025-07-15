@@ -156,6 +156,10 @@
 	if (config && config.log_runtime)
 		global.runtime_log << "\[[time_stamp()]] [text][log_end]"
 
+/proc/log_icon_lookup(text)
+	if (config && config.log_icon_lookup)
+		global.icon_lookup_log << "\[[time_stamp()]] [text][log_end]"
+
 /proc/log_initialization(text)
 	var/static/preconfig_init_log = ""
 	if (!SSticker || SSticker.current_state == GAME_STATE_STARTUP)
