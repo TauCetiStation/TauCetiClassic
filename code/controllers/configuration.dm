@@ -23,6 +23,7 @@ var/global/bridge_secret = null
 	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs runtimes to round log folder
+	var/log_icon_lookup = 0				// logs icon_exists bad lookups
 	var/log_sql_error = 0				// same but for sql errors
 	var/log_js_error = 0				   // same but for client side js errors
 	var/log_initialization = 0			// same but for debug init logs
@@ -341,6 +342,9 @@ var/global/bridge_secret = null
 
 				if ("log_sql_error")
 					config.log_sql_error = 1
+
+				if ("log_icon_lookup")
+					config.log_icon_lookup = 1
 
 				if ("log_js_error")
 					config.log_js_error = 1
