@@ -186,7 +186,7 @@
 Правда, эти приборы никогда на станцию не доставляются."}
 
 /obj/item/weapon/implant/blueshield/atom_init()
-	protected_jobs = SSjob.departments_occupations[DEP_SECURITY] + JOB_LAWYER
+	protected_jobs = SSjob.departments_occupations[DEP_COMMAND] + JOB_LAWYER
 	. = ..()
 
 /obj/item/weapon/implant/blueshield/inject(mob/living/carbon/C, def_zone)
