@@ -11,12 +11,6 @@
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
-// Define for coders.
-// If you want switch conditions to be fully specified in the switch body
-// and at the same time the empty condition do nothing.
-#define SWITCH_PASS ;
-
-
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
 #define ENGINE_EJECT_Z		3 //Unused now
