@@ -171,7 +171,7 @@
 			if(10)
 				new_letter += "'"
 			if(11 to 15)
-				SWITCH_PASS
+				EMPTY_BLOCK_GUARD
 
 		new_text += new_letter
 

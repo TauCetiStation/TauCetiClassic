@@ -426,9 +426,10 @@
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
-	if(C.cob.busy)
-		//do nothing
-	else if(modifiers[LEFT_CLICK])
+	if(!C.cob.busy)
+		return
+
+	if(modifiers[LEFT_CLICK])
 		if(modifiers[ALT_CLICK])
 			C.cob.rotate_object()
 		else

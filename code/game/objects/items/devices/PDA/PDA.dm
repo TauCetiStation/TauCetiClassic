@@ -893,8 +893,9 @@
 			U.unset_machine()
 			ui.close()
 			return 0
-		if("Refresh")//Refresh, goes to the end of the proc.
-		if("Return")//Return
+		if("Refresh") //Refresh, goes to the end of the proc.
+			EMPTY_BLOCK_GUARD
+		if("Return") //Return
 			if(mode<=9)
 				mode = 0
 			else
@@ -1034,7 +1035,6 @@
 					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 						to_chat(U, "The PDA softly beeps.")
 						ui.close()
-					else
 
 				set_ringtone(Tone, t)
 				play_ringtone(ignore_presence = TRUE)
