@@ -59,7 +59,6 @@ var/global/bridge_secret = null
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/afk_time_bracket = 6000 // 10 minutes
-	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	// If true - disable OOC for the duration of a round.
@@ -465,9 +464,6 @@ var/global/bridge_secret = null
 
 				if ("afk_time_bracket")
 					config.afk_time_bracket = (text2num(value) MINUTES)
-
-				if("load_jobs_from_txt")
-					load_jobs_from_txt = 1
 
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1

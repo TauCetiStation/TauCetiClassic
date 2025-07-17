@@ -125,6 +125,8 @@
 	#define COMPONENT_NO_AFTERATTACK 1
 /// from base of atom/examine(): (/mob)
 #define COMSIG_PARENT_EXAMINE "atom_examine"
+/// from base of atom/examine(): (/mob)
+#define COMSIG_MOB_EXAMINED "mob_examined"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
 /// from base of mob/examinate(): (/atom)

@@ -1,15 +1,19 @@
+/datum/department/science
+	title = DEP_SCIENCE
+	head = JOB_RD
+	order = 6
+	color = "#e6b3e6"
+
 /datum/job/rd
-	title = "Research Director"
-	flag = RD
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_RD
+	departments = list(DEP_SCIENCE, DEP_COMMAND)
+	order = CREW_INTEND_HEADS(5)
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddff"
 	idtype = /obj/item/weapon/card/id/sciGold
 	req_admin_notify = 1
-	is_head = TRUE
 	access = list(
 		access_rd, access_heads, access_tox, access_genetics, access_morgue,
 		access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
@@ -29,13 +33,11 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
-	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_SCIENCE|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/scientist
-	title = "Scientist"
-	flag = SCIENTIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_SCIENTIST
+	departments = list(DEP_SCIENCE)
+	order = CREW_INTEND_EMPLOYEE(1)
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the research director"
@@ -50,13 +52,11 @@
 		"Scientist" = /datum/skillset/scientist,
 		"Phoron Researcher" = /datum/skillset/scientist/phoron
 		)
-	flags = JOB_FLAG_SCIENCE
 
 /datum/job/xenoarchaeologist
-	title = "Xenoarchaeologist"
-	flag = XENOARCHAEOLOGIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_XENOARCHAEOLOGIST
+	departments = list(DEP_SCIENCE)
+	order = CREW_INTEND_EMPLOYEE(2)
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the research director"
@@ -73,13 +73,11 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	flags = JOB_FLAG_SCIENCE
 
 /datum/job/xenobiologist
-	title = "Xenobiologist"
-	flag = XENOBIOLOGIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_XENOBIOLOGIST
+	departments = list(DEP_SCIENCE)
+	order = CREW_INTEND_EMPLOYEE(3)
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the research director"
@@ -90,13 +88,11 @@
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
 	skillsets = list("Xenobiologist" = /datum/skillset/xenobiologist)
-	flags = JOB_FLAG_SCIENCE
 
 /datum/job/roboticist
-	title = "Roboticist"
-	flag = ROBOTICIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_ROBOTICIST
+	departments = list(DEP_SCIENCE)
+	order = CREW_INTEND_EMPLOYEE(4)
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "research director"
@@ -112,13 +108,11 @@
 		"Biomechanical Engineer" = /datum/skillset/roboticist/bio,
 		"Mechatronic Engineer" = /datum/skillset/roboticist/mecha
 	)
-	flags = JOB_FLAG_SCIENCE
 
 /datum/job/research_assistant
-	title = "Research Assistant"
-	flag = RESEARCHASSISTANT
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_RESEARCH_ASSISTANT
+	departments = list(DEP_SCIENCE)
+	order = CREW_INTEND_ASSIST(1)
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "research director"
@@ -128,4 +122,3 @@
 	salary = 50
 	outfit = /datum/outfit/job/research_assistant
 	skillsets = list("Research Assistant" = /datum/skillset/research_assistant)
-	flags = JOB_FLAG_SCIENCE

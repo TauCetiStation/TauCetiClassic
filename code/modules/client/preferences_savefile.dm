@@ -119,61 +119,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			player_alt_titles -= J.title
 
 	if(current_version < 27)
+		// before there was migration for old job preferences but we dropped it
+		// 5 years is enough
 		job_preferences = list() //It loaded null from nonexistant savefile field.
-		var/job_civilian_high = 0
-		var/job_civilian_med = 0
-		var/job_civilian_low = 0
-
-		var/job_medsci_high = 0
-		var/job_medsci_med = 0
-		var/job_medsci_low = 0
-
-		var/job_engsec_high = 0
-		var/job_engsec_med = 0
-		var/job_engsec_low = 0
-
-		S["job_civilian_high"] >> job_civilian_high
-		S["job_civilian_med"]  >> job_civilian_med
-		S["job_civilian_low"]  >> job_civilian_low
-		S["job_medsci_high"]   >> job_medsci_high
-		S["job_medsci_med"]    >> job_medsci_med
-		S["job_medsci_low"]    >> job_medsci_low
-		S["job_engsec_high"]   >> job_engsec_high
-		S["job_engsec_med"]    >> job_engsec_med
-		S["job_engsec_low"]    >> job_engsec_low
-
-		//Can't use SSjob here since this happens right away on login
-		for(var/job in subtypesof(/datum/job))
-			var/datum/job/J = job
-			var/new_value
-			var/fval = initial(J.flag)
-			switch(initial(J.department_flag))
-				if(CIVILIAN)
-					if(job_civilian_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_civilian_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_civilian_low & fval)
-						new_value = JP_LOW
-				if(MEDSCI)
-					if(job_medsci_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_medsci_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_medsci_low & fval)
-						new_value = JP_LOW
-				if(ENGSEC)
-					if(job_engsec_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_engsec_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_engsec_low & fval)
-						new_value = JP_LOW
-			if(new_value)
-				job_preferences[initial(J.title)] = new_value
 		S["job_preferences"] << job_preferences
 
 	if(current_version < 28)
@@ -532,7 +480,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
 		if(species != HUMAN)
-			for(var/datum/job/job in SSjob.occupations)
+			for(var/datum/job/job as anything in SSjob.all_occupations)
 				if(!job.is_species_permitted(species))
 					SetJobPreferenceLevel(job, 0)
 			S["job_preferences"] << job_preferences
