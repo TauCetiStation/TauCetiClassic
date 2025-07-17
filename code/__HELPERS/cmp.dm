@@ -93,9 +93,9 @@ var/global/cmp_field = "name"
 /proc/cmp_filter_data_priority(list/A, list/B)
 	return A["priority"] - B["priority"]
 
-/proc/cmp_legacy_job_titles(list/record, list/record)
-	var/datum/job/A = SSjob.name_occupations[record["rank"]]
-	var/datum/job/B = SSjob.name_occupations[record["rank"]]
+/proc/cmp_legacy_job_titles(list/recordA, list/recordB)
+	var/datum/job/A = SSjob.name_occupations[recordA["rank"]]
+	var/datum/job/B = SSjob.name_occupations[recordB["rank"]]
 	return A.order - B.order
 
 /proc/cmp_job_titles(job_a, job_b)
