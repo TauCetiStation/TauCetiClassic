@@ -2578,10 +2578,11 @@
 
 	var/list/admins = list()
 	for(var/ckey in global.admin_datums)
+		var/datum/admnins/ad = global.admin_datums[ckey]
 		admins += new /datum/admin_list_entry(ckey,
-				global.admin_datums[ckey].rank,
-				global.admin_datums[ckey].rights,
-				!!global.admin_datums[ckey].owner
+				ad.rank,
+				ad.rights,
+				!!ad.owner
 				)
 
 	sortTim(admins, cmp=GLOBAL_PROC_REF(cmp_admin_entries_desc))
