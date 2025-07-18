@@ -7116,7 +7116,7 @@
 	icon = 'icons/obj/cult.dmi';
 	icon_state = "book"
 	},
-/obj/item/clothing/under/color/black,
+/obj/item/clothing/under/black,
 /obj/item/clothing/suit/wizrobe/necromancer_hoodie,
 /obj/item/clothing/head/wizard/black_hood,
 /obj/item/clothing/shoes/boots/German/wizard,
@@ -8142,7 +8142,7 @@
 /obj/item/clothing/suit/wizrobe/crusader,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/head/wizard/crusader,
-/obj/item/clothing/under/color/black,
+/obj/item/clothing/under/black,
 /obj/item/weapon/storage/backpack/chaplain,
 /obj/item/weapon/claymore/religion,
 /obj/item/weapon/shield/riot/roman{
@@ -19208,7 +19208,7 @@
 /obj/item/weapon/storage/backpack/satchel/norm,
 /obj/item/device/radio/headset/ert,
 /obj/item/device/radio,
-/obj/item/clothing/under/color/yellow,
+/obj/item/clothing/under/yellow,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -19705,7 +19705,7 @@
 /area/centcom/tdome)
 "aWV" = (
 /obj/structure/rack,
-/obj/item/clothing/under/color/red,
+/obj/item/clothing/under/red,
 /obj/item/clothing/shoes/brown,
 /obj/item/weapon/melee/energy/axe,
 /obj/effect/decal/turf_decal/alpha/dark_red{
@@ -19717,7 +19717,7 @@
 /area/centcom/tdome)
 "aWY" = (
 /obj/structure/rack,
-/obj/item/clothing/under/color/green,
+/obj/item/clothing/under/green,
 /obj/item/clothing/shoes/brown,
 /obj/item/weapon/melee/energy/axe,
 /obj/effect/decal/turf_decal/alpha/green{
@@ -19932,7 +19932,7 @@
 /area/shuttle/vox/arkship_hold)
 "aXM" = (
 /obj/structure/rack,
-/obj/item/clothing/under/color/red,
+/obj/item/clothing/under/red,
 /obj/item/clothing/shoes/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
@@ -20008,7 +20008,7 @@
 /area/centcom/tdome/tdome1)
 "aXT" = (
 /obj/structure/rack,
-/obj/item/clothing/under/color/green,
+/obj/item/clothing/under/green,
 /obj/item/clothing/shoes/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
@@ -20348,7 +20348,7 @@
 /area/centcom/tdome)
 "aZf" = (
 /obj/structure/rack,
-/obj/item/clothing/under/color/red,
+/obj/item/clothing/under/red,
 /obj/item/clothing/shoes/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
@@ -20370,7 +20370,7 @@
 /area/centcom/tdome)
 "aZi" = (
 /obj/structure/rack,
-/obj/item/clothing/under/color/green,
+/obj/item/clothing/under/green,
 /obj/item/clothing/shoes/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,

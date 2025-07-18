@@ -105539,7 +105539,7 @@
 /area/shuttle/escape_pod2/station)
 "tWZ" = (
 /obj/structure/safe,
-/obj/item/clothing/under/color/yellow,
+/obj/item/clothing/under/yellow,
 /obj/item/toy/katana,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -118069,7 +118069,7 @@
 /obj/item/weapon/tank/emergency_oxygen{
 	pixel_x = -8
 	},
-/obj/item/clothing/under/color/grey,
+/obj/item/clothing/under/grey,
 /turf/simulated/floor/plating,
 /area/station/medical/patients_rooms)
 "wrB" = (

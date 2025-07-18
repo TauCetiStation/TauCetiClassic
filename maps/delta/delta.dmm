@@ -4048,8 +4048,8 @@
 /area/station/security/brig)
 "agG" = (
 /obj/structure/closet,
-/obj/item/clothing/under/color/orange,
-/obj/item/clothing/under/color/orange,
+/obj/item/clothing/under/orange,
+/obj/item/clothing/under/orange,
 /obj/item/clothing/shoes/orange,
 /obj/item/clothing/shoes/orange,
 /obj/structure/window/thin/reinforced{
@@ -4200,8 +4200,8 @@
 /area/station/security/prison)
 "agX" = (
 /obj/structure/closet,
-/obj/item/clothing/under/color/orange,
-/obj/item/clothing/under/color/orange,
+/obj/item/clothing/under/orange,
+/obj/item/clothing/under/orange,
 /obj/item/clothing/shoes/orange,
 /obj/item/clothing/shoes/orange,
 /obj/structure/window/thin/reinforced{
@@ -5084,7 +5084,7 @@
 /area/station/security/range)
 "aiA" = (
 /obj/structure/table,
-/obj/item/clothing/under/color/orange{
+/obj/item/clothing/under/orange{
 	pixel_x = -7;
 	pixel_y = 5
 	},
@@ -7480,7 +7480,7 @@
 /area/station/security/main)
 "ami" = (
 /obj/structure/rack,
-/obj/item/clothing/under/color/grey,
+/obj/item/clothing/under/grey,
 /obj/item/clothing/head/soft/grey{
 	pixel_x = -2;
 	pixel_y = 3
@@ -7496,7 +7496,7 @@
 /area/station/security/brig)
 "amk" = (
 /obj/structure/table,
-/obj/item/clothing/under/color/orange{
+/obj/item/clothing/under/orange{
 	pixel_x = 7;
 	pixel_y = 5
 	},
@@ -8682,7 +8682,7 @@
 /area/station/security/prison)
 "aow" = (
 /obj/structure/closet/crate/trashcart,
-/obj/item/clothing/under/color/orange,
+/obj/item/clothing/under/orange,
 /obj/item/clothing/head/orange_bandana,
 /turf/simulated/floor{
 	icon_state = "greenbluefull"
@@ -9761,11 +9761,11 @@
 /area/station/security/processing)
 "aqs" = (
 /obj/structure/table,
-/obj/item/clothing/under/color/orange{
+/obj/item/clothing/under/orange{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/color/orange{
+/obj/item/clothing/under/orange{
 	pixel_x = 7;
 	pixel_y = 5
 	},
@@ -97085,11 +97085,11 @@
 /area/station/medical/storage)
 "tPU" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/clothing/under/color/white,
-/obj/item/clothing/under/color/white,
-/obj/item/clothing/under/color/white,
-/obj/item/clothing/under/color/white,
-/obj/item/clothing/under/color/white,
+/obj/item/clothing/under/white,
+/obj/item/clothing/under/white,
+/obj/item/clothing/under/white,
+/obj/item/clothing/under/white,
+/obj/item/clothing/under/white,
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/shoes/white,
@@ -107816,7 +107816,7 @@
 /area/station/maintenance/engineering)
 "wCN" = (
 /obj/structure/table,
-/obj/item/clothing/under/color/white,
+/obj/item/clothing/under/white,
 /obj/item/clothing/head/soft/mime,
 /obj/item/clothing/mask/surgical,
 /turf/simulated/floor/plating,

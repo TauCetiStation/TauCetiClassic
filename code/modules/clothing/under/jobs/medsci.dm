@@ -5,6 +5,7 @@
 	desc = "It's a jumpsuit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's jumpsuit"
 	icon_state = "director"
+	item_state = "director"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 
@@ -12,6 +13,7 @@
 	desc = "A dress suit and slacks stained with hard work and dedication to science. Perhaps other things as well, but mostly hard work and dedication."
 	name = "head researcher uniform"
 	icon_state = "rdalt"
+	item_state = "rdalt"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 
@@ -19,6 +21,7 @@
 	name = "research director dress uniform"
 	desc = "Feminine fashion for the style concious RD. Its fabric provides minor protection from biological contaminants."
 	icon_state = "dress_rd"
+	item_state = "dress_rd"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -31,7 +34,6 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
-
 
 /obj/item/clothing/under/rank/chemist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
@@ -47,6 +49,13 @@
 	icon_state = "skirt_chemistry"
 	item_state = "skirt_chemistry"
 	flags = NONE
+
+/obj/item/clothing/under/rank/roboticist
+	desc = "It's a slimming black with reinforced seams; great for industrial work."
+	name = "roboticist's jumpsuit"
+	icon_state = "robotics"
+	item_state = "robotics"
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /*
  * Medical
