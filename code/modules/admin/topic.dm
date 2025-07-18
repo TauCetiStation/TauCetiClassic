@@ -2228,6 +2228,9 @@
 				current_tab = text2num(href_list["tab"])
 				Secrets(usr)
 				return 1
+			if("admin_list")
+				admin_list()
+				return 1
 
 	else if(href_list["readbook"])
 		var/bookid = text2num(href_list["readbook"])
@@ -2554,3 +2557,40 @@
 				message_admins("[key_name_admin(usr)] broke powernet for this round.")
 
 		show_lag_switch_panel()
+
+/datum/admin_list_entry
+	var/ckey
+	var/rank
+	var/rights
+	var/isOnline
+
+/datum/admin_list_entry/New(_ckey, _rank, _rights, _isOnline)
+	ckey = _ckey
+	rank = _rank
+	rights = _rights
+	isOnline = _isOnline
+
+/datum/admins/proc/admin_list()
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/dat = "<ul>"
+
+	var/list/admins = list()
+	for(var/ckey in global.admin_datums)
+		admins += new /datum/admin_list_entry(ckey,
+				global.admin_datums[ckey].rank,
+				global.admin_datums[ckey].rights,
+				!!global.admin_datums[ckey].owner
+				)
+
+	sortTim(admins, cmp=GLOBAL_PROC_REF(cmp_admin_entries_desc))
+
+	for(var/datum/admin_list_entry/D in admins)
+		dat += "<li>[D.ckey] - [D.rank][D.isOnline ? " (Online)" : ""]</li>"
+
+	dat += "</ul>"
+
+	var/datum/browser/popup = new(usr, "admin_list", "<div align='center'>Admin List</div>", 500, 600)
+	popup.set_content(dat)
+	popup.open()
