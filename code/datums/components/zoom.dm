@@ -65,7 +65,7 @@
 	UnregisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
 	if(!can_move)
 		UnregisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED))
-	zoomer.client?.change_view(world.view)
+	zoomer.client?.view_size?.setDefault(VIEWPORT_USE_PREF)
 	zoomer.hud_used?.show_hud(HUD_STYLE_STANDARD)
 	zoomer = null
 
@@ -73,7 +73,7 @@
 	SIGNAL_HANDLER
 	zoomer = user
 	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
-	zoomer.client?.change_view(zoom_view_range)
+	zoomer.client?.view_size?.setDefault(zoom_view_range)
 	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(reset_zoom))
 	if(!can_move)
 		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), PROC_REF(reset_zoom))

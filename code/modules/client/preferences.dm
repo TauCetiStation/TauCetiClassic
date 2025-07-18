@@ -173,6 +173,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
 	var/lobbyanimation = FALSE
+	var/widescreenpref = TRUE
 	// lighting settings
 	var/glowlevel = GLOW_MED // or bloom
 	var/lampsexposure = TRUE // idk how we should name it
