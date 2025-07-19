@@ -39,6 +39,21 @@
 // probably we should make /obj/structure/falsewall
 // and /turf/simulated/wall as meta-types not used in the game, and move
 // real walls and falsewalls to subtypes
+
+/turf/simulated/wall/atom_init()
+	. = ..()
+	if(is_station_level(z))
+		global.station_walls += src
+	return .
+
+/turf/simulated/wall/ChangeTurf(newtype)
+	if(iswallturf(src))
+		global.station_walls -= src
+	for(var/obj/effect/E in src)
+		if(E.name == "Wallrot")
+			qdel(E)
+	return ..()
+
 /turf/simulated/wall/yellow
 	icon = 'icons/turf/walls/has_false_walls/wall_yellow.dmi'
 
@@ -75,16 +90,11 @@
 		ChangeTurf(new_type)
 
 /turf/simulated/wall/Destroy()
+	global.station_walls -= src
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
 	dismantle_wall()
-	return ..()
-
-/turf/simulated/wall/ChangeTurf()
-	for(var/obj/effect/E in src)
-		if(E.name == "Wallrot")
-			qdel(E)
 	return ..()
 
 //Appearance
