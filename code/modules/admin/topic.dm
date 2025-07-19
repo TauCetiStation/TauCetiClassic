@@ -2578,7 +2578,7 @@
 
 	var/list/admins = list()
 	for(var/ckey in global.admin_datums)
-		var/datum/admnins/ad = global.admin_datums[ckey]
+		var/datum/admins/ad = global.admin_datums[ckey]
 		admins += new /datum/admin_list_entry(ckey,
 				ad.rank,
 				ad.rights,
