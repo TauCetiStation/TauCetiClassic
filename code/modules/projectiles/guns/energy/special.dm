@@ -180,8 +180,13 @@
 	var/cooldown = FALSE
 
 /obj/item/weapon/gun/tesla/atom_init()
-	. = ..()
+	..()
 	update_icon()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/gun/tesla/atom_init_late()
+	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
@@ -582,8 +587,12 @@
 	var/datum/beam/current_beam = null
 
 /obj/item/weapon/gun/medbeam/atom_init()
-	. = ..()
+	..()
 	START_PROCESSING(SSobj, src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/gun/medbeam/atom_init_late()
+	AddComponent(/datum/component/serialNumber, src)
 
 /obj/item/weapon/gun/medbeam/Destroy()
 	LoseTarget()
