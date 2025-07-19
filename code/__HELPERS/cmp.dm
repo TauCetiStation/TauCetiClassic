@@ -112,3 +112,6 @@ var/global/cmp_field = "name"
 
 /proc/cmp_spawners_asc(datum/spawner/A, datum/spawner/B)
 	return A.priority - B.priority
+
+/proc/cmp_admin_entries_desc(datum/admin_list_entry/A, datum/admin_list_entry/B)
+	return B.rights - A.rights
