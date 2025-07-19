@@ -869,10 +869,12 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		if(!IO)
+			return
 		IO.damage += rand(force * 0.5, force)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
-				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
+				if(!IO.is_robotic()) //robot eyes bleeding might be a bit silly
 					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
 			if(prob(10 * force))
 				if(H.stat != DEAD)

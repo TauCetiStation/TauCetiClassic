@@ -85,168 +85,6 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/blood_trans_to(obj/target, amount = 1)
 	return vessel.trans_to(target, amount)
 
-// Takes care blood loss and regeneration:
-/mob/living/carbon/var/tmp/next_blood_squirt = 0 // until this moved to heart or not...
-
-/mob/living/carbon/human/proc/handle_blood()
-	var/blood_total = blood_amount(exact = TRUE)
-
-	// Blood regeneration if there is some space:
-	if(blood_total < BLOOD_VOLUME_NORMAL)
-		var/change_volume = 0.1 // Regenerate blood VERY slowly
-		if (reagents.has_reagent("nutriment")) // Getting food speeds it up
-			change_volume += 0.4
-			reagents.remove_reagent("nutriment", 0.1)
-		if (reagents.has_reagent("copper") && get_species(src) == SKRELL) // skrell blood base on copper
-			change_volume += 1
-			reagents.remove_reagent("copper", 0.1)
-		if (reagents.has_reagent("iron")) // Hematogen candy anyone?
-			if(get_species(src) == SKRELL) // a little more toxins when trying to restore blood with iron
-				var/mob/living/carbon/human/H = src
-				H.adjustToxLoss(1)
-			else
-				change_volume += 0.8
-				reagents.remove_reagent("iron", 0.1)
-		blood_add(change_volume)
-		blood_total += change_volume
-
-	// Damaged heart virtually reduces the blood volume, as the blood isn't
-	// being pumped properly anymore.
-	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	if(!IO)
-		return
-
-	var/blood_volume = blood_total // Blood volume adjusted by heart
-
-	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage || IO.heart_status == HEART_FIBR)
-		blood_volume *= 0.8
-	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
-		blood_volume *= 0.6
-	else if((IO.damage >= IO.min_broken_damage && IO.damage < INFINITY) || IO.heart_status == HEART_FAILURE)
-		blood_volume *= 0.3
-
-	// Effects of bloodloss
-	if(!HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))
-		switch(blood_volume)
-			if(BLOOD_VOLUME_SAFE to 10000)
-				if(pale)
-					pale = FALSE
-			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-				if(!pale)
-					pale = TRUE
-					var/word = pick("dizzy", "woosey", "faint")
-					to_chat(src, "<span class='warning'>You feel [word]</span>")
-				if(prob(1))
-					var/word = pick("dizzy", "woosey", "faint")
-					to_chat(src, "<span class='warning'>You feel [word]</span>")
-				if(oxyloss < 20)
-					oxyloss += 3
-			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				if(!pale)
-					pale = TRUE
-				blurEyes(6)
-				if(oxyloss < 50)
-					oxyloss += 10
-				oxyloss += 1
-				if(prob(15))
-					Paralyse(rand(1,3))
-					var/word = pick("dizzy", "woosey", "faint")
-					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				oxyloss += 5
-				toxloss += 3
-				if(prob(15))
-					var/word = pick("dizzy", "woosey", "faint")
-					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-			if(0 to BLOOD_VOLUME_SURVIVE)
-				if(!iszombie(src)) // zombies dont care about blood
-					death()
-
-	// Without enough blood you slowly go hungry.
-	if(blood_volume < BLOOD_VOLUME_SAFE)
-		if(nutrition >= 300)
-			nutrition -= 10
-		else if(nutrition >= 200)
-			nutrition -= 3
-
-	if(reagents.has_reagent("metatrombine"))
-		return
-
-	// Bleeding out:
-	var/blood_max = 0
-	var/list/do_spray = list()
-	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic())
-			continue
-
-		var/open_wound
-		if(BP.status & ORGAN_BLEEDING)
-			if(BP.open)
-				blood_max += 2 // Yer stomach is cut open
-			if(HAS_TRAIT(src, TRAIT_HEMOPHILIAC))
-				blood_max += 4
-
-			for(var/datum/wound/W in BP.wounds)
-				if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())
-					open_wound = TRUE
-
-				if(W.bleeding())
-					if(BP.applied_pressure)
-						if(ishuman(BP.applied_pressure))
-							var/mob/living/carbon/human/H = BP.applied_pressure
-							H.bloody_hands(src, 0)
-						// somehow you can apply pressure to every wound on the organ at the same time
-						// you're basically forced to do nothing at all, so let's make it pretty effective
-						var/min_eff_damage = max(0, W.damage - 10) / 6 // still want a little bit to drip out, for effect
-						blood_max += max(min_eff_damage, W.damage - 30) / 40
-					else
-						blood_max += W.damage / 40
-
-		if(BP.status & ORGAN_ARTERY_CUT)
-			var/bleed_amount = blood_total / (BP.applied_pressure ? 500 : 250) * BP.arterial_bleed_severity
-			if(bleed_amount)
-				if(open_wound)
-					blood_max += bleed_amount
-					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
-				else
-					blood_remove(bleed_amount)
-				playsound(src, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
-
-	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
-		return
-
-	switch(pulse)
-		if(PULSE_NONE)
-			blood_max *= 0.2 // simulates passive blood loss.
-		if(PULSE_SLOW)
-			blood_max *= 0.8
-		if(PULSE_FAST)
-			blood_max *= 1.25
-		if(PULSE_2FAST)
-			blood_max *= 1.5
-		if(PULSE_THREADY)
-			blood_max *= 1.8
-
-	if(reagents.has_reagent("inaprovaline"))
-		blood_max *= 0.8
-
-	if(!isturf(loc)) // No floor to drip on
-		blood_remove(blood_max)
-		return
-
-	if(world.time >= next_blood_squirt && do_spray.len) // It becomes very spammy otherwise. Arterial bleeding will still happen outside of this block, just not the squirt effect.
-		if(prob(50)) // added 50 prob for message and halved delay between squit effects (difference between us and Bay12), lets see how this will be on live server.
-			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
-		next_blood_squirt = world.time + 50
-		var/turf/sprayloc = get_turf(src)
-		var/third = CEIL(blood_max / 3)
-		drip(third, sprayloc)
-		blood_max -= third
-		if(blood_max > 0)
-			blood_squirt(blood_max, sprayloc)
-	else
-		drip(blood_max) // No fancy shooting of blood, just bleeding
-
 // Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
 	if(reagents.has_reagent("metatrombine"))
@@ -500,3 +338,61 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 			)
 		)
 	return blood_recipient_can_receive[blood_recipient][blood_donor]
+
+//Percentage of maximum blood volume.
+/mob/living/carbon/human/proc/get_blood_volume()
+	return round((vessel.get_reagent_amount("blood")/species.blood_volume)*100)
+
+//Percentage of maximum blood volume, affected by the condition of circulation organs
+/mob/living/carbon/human/proc/get_blood_circulation()
+	var/obj/item/organ/internal/heart/heart = organs_by_name[O_HEART]
+	var/blood_volume = get_blood_volume()
+	if(!heart)
+		return 0.25 * blood_volume
+
+	var/recent_pump = LAZYACCESS(heart.external_pump, 1) > world.time - (20 SECONDS)
+	var/pulse_mod = 1
+	if((status_flags & FAKEDEATH) || heart.is_robotic())
+		pulse_mod = 1
+	else
+		switch(heart.pulse)
+			if(PULSE_NONE)
+				if(recent_pump)
+					pulse_mod = LAZYACCESS(heart.external_pump, 2)
+				else
+					pulse_mod *= 0.25
+			if(PULSE_SLOW)
+				pulse_mod *= 0.9
+			if(PULSE_FAST)
+				pulse_mod *= 1.1
+			if(PULSE_2FAST, PULSE_THREADY)
+				pulse_mod *= 1.25
+	blood_volume *= pulse_mod
+
+	var/min_efficiency = recent_pump ? 0.5 : 0.3
+	blood_volume *= max(min_efficiency, (1-(heart.damage / heart.max_damage)))
+
+	return min(blood_volume, 100)
+
+//Whether the species needs blood to carry oxygen. Used in get_blood_oxygenation and may be expanded based on blood rather than species in the future.
+/mob/living/carbon/human/proc/blood_carries_oxygen()
+	return species.blood_oxy
+
+//Percentage of maximum blood volume, affected by the condition of circulation organs, affected by the oxygen loss. What ultimately matters for brain
+/mob/living/carbon/human/proc/get_blood_oxygenation()
+	var/blood_volume = get_blood_circulation()
+	if(blood_carries_oxygen())
+		if(!need_breathe())
+			return blood_volume
+	else
+		blood_volume = 100
+
+	var/blood_volume_mod = max(0, 1 - getOxyLoss()/(species.total_health/2))
+	var/oxygenated_mult = 0
+	if(reagents.has_reagent("dexalin")) // Dexalin.
+		oxygenated_mult = 0.5
+	else if(reagents.has_reagent("dexalinp")) // Dexplus.
+		oxygenated_mult = 0.8
+	blood_volume_mod = blood_volume_mod + oxygenated_mult - (blood_volume_mod * oxygenated_mult)
+	blood_volume = blood_volume * blood_volume_mod
+	return min(blood_volume, 100)

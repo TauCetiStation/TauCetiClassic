@@ -4,7 +4,7 @@
 	var/total_burn = 0
 	var/total_brute = 0
 	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // *non-vital* robot limbs don't count towards shock and crit
 		total_brute += BP.brute_dam
 		total_burn += BP.burn_dam
@@ -57,7 +57,7 @@
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
 	return amount
@@ -76,7 +76,7 @@
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
 	return amount

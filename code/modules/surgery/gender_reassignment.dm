@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/gender_reassignment
-	priority = 2
+	priority = 1
 	can_infect = 0
 	blood_level = 1
 	allowed_species = list("exclude", IPC, DIONA, PODMAN, VOX)

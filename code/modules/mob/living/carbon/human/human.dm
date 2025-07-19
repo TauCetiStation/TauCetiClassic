@@ -1266,6 +1266,9 @@
 /mob/living/carbon/human/proc/rupture_lung()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 
+	if(!IO)
+		return
+
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
@@ -1352,7 +1355,7 @@
 				to_chat(src, msg)
 
 				BP.take_damage(rand(1,3), 0, 0)
-				if(!BP.is_robotic()) //There is no blood in protheses.
+				if(!BP.is_robotic_part()) //There is no blood in protheses.
 					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
 						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
@@ -1449,7 +1452,7 @@
 		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
-// todo: why we need to support two set species procedures just because of abductors, 
+// todo: why we need to support two set species procedures just because of abductors,
 // merge it with the one above and add args to toggle behavior
 /mob/living/carbon/human/proc/set_species_soft(new_species)
 	if(species.name == new_species)
@@ -1775,7 +1778,7 @@
 	var/mutable_appearance/MA = new()
 	MA.appearance_flags = KEEP_TOGETHER
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
+		if(BP.is_stump || BP.is_robotic_part() || !BP.species.skeleton)
 			continue
 		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
 		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
@@ -1795,6 +1798,12 @@
 	MA = update_height(MA)
 	return MA
 
+/mob/living/carbon/human/proc/need_breathe()
+	if(!species.breathing_organ && should_have_organ(species.breathing_organ))
+		return 1
+	else
+		return 0
+
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SKELETON))
@@ -1806,7 +1815,7 @@
 	else if(organ_check in list(O_LIVER, O_KIDNEYS))
 		BP = bodyparts_by_name[BP_GROIN]
 
-	if(BP && BP.is_robotic())
+	if(BP && BP.is_robotic_part())
 		return FALSE
 	return species.has_organ[organ_check]
 
@@ -2014,7 +2023,7 @@
 	if(deadtime > DEFIB_TIME_LOSS)
 		// damage for every second above DEFIB_TIME_LOSS till DEFIB_TIME_LIMIT
 		// 60 is often used as threshold for brainloss to trigger funny interactions
-		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS))) 
+		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS)))
 
 	med_hud_set_health()
 
@@ -2291,12 +2300,12 @@
 	var/datum/species/S = all_species[species.name]
 	age = rand(S.min_age, S.max_age)
 
-	regenerate_icons(update_body_preferences = TRUE) 
+	regenerate_icons(update_body_preferences = TRUE)
 
 /mob/living/carbon/human/get_blood_datum()
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		return /datum/dirt_cover/blue_blood
-	
+
 	if(species.blood_datum_path)
 		return species.blood_datum_path
 

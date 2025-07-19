@@ -108,6 +108,8 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		if(!IO)
+			return
 		if(IO.damage >= IO.min_bruised_damage)
 			to_chat(M, "<span class='warning'>Ваши глаза сильно щиплит!</span>")
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
