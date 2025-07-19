@@ -311,6 +311,9 @@ var/global/list/blacklisted_builds
 
 	SSdemo.write_event_line("login [ckey]")
 
+	log_game("[key_name(src)] connected.")
+	message_admins("[ADMIN_LOOKUPJMP(mob)] connected.")
+
 	connection_time = world.time
 
 	SSevents.custom_event_announce(src)
@@ -408,6 +411,9 @@ var/global/list/blacklisted_builds
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	log_game("[key_name(src)] disconnected.")
+	message_admins("[ADMIN_PPJMPFLW(mob)] disconnected.")
 
 	handle_leave()
 
