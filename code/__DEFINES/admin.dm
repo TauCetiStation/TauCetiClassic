@@ -47,28 +47,31 @@ var/global/list/admin_cooldowns_list = list(
 
 #define IS_ON_ADMIN_CD(client, type) (LAZYACCESS(client.prefs.admin_cooldowns, type) > world.time)
 
-//Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
-#define R_BUILDMODE		1
-#define R_ADMIN			2
-#define R_BAN			4
-#define R_FUN			8
-#define R_SERVER		16
-#define R_DEBUG			32
-#define R_POSSESS		64
-#define R_PERMISSIONS	128
-#define R_STEALTH		256
-#define R_REJUVINATE	512
-#define R_VAREDIT		1024
-#define R_SOUNDS		2048
-#define R_SPAWN			4096
-#define R_WHITELIST		8192
-#define R_EVENT			16384
-#define R_LOG			32768
+#define R_ADMIN 		(1 << 0)
+#define R_LOG			(1 << 1)
+#define R_STEALTH		(1 << 2)
+#define R_BUILDMODE		(1 << 3)
+#define R_VAREDIT		(1 << 4)
+#define R_SPAWN 		(1 << 5)
+#define R_EVENT 		(1 << 6)
+#define R_FUN 			(1 << 7)
+#define R_SERVER 		(1 << 8)
+#define R_SOUNDS 		(1 << 9)
+#define R_REJUVINATE 	(1 << 10)
+#define R_POSSESS 		(1 << 11)
+#define R_DEBUG 		(1 << 12)
+#define R_WHITELIST		(1 << 13)
+#define R_BAN 			(1 << 14)
+#define R_PERMISSIONS 	(1 << 15)
 
-#define R_MAXPERMISSION 32768 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+#define R_MAXPERMISSION (1 << 15) //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
-#define R_HOST			65535
+#define R_HOST ( \
+    R_ADMIN | R_LOG | R_STEALTH | R_BUILDMODE | R_VAREDIT | \
+    R_SPAWN | R_EVENT | R_FUN | R_SERVER | R_SOUNDS | \
+    R_REJUVINATE | R_POSSESS | R_DEBUG | R_WHITELIST | \
+    R_BAN | R_PERMISSIONS )
 
 #define ADMIN_RANK_ROUND   "Temporary Round Admin"
 #define ADMIN_RANK_SANDBOX "Sandbox Admin"
