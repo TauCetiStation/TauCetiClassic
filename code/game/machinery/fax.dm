@@ -113,7 +113,7 @@ var/global/list/alldepartments = list("Central Command")
 				tofax = null
 			else
 				var/obj/item/I = usr.get_active_hand()
-				if (istype(I, /obj/item/weapon/paper))
+				if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
 					usr.drop_from_inventory(I, src)
 					tofax = I
 
