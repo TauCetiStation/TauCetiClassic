@@ -208,7 +208,7 @@ var/global/list/wedge_image_cache = list()
 			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/device/detective_scanner) || istype(I, /obj/item/weapon/forensic_sample_kit) || istype(I, /obj/item/weapon/swab))
+	if(isdetectivetool(I))
 		return
 	if(src.operating)
 		return

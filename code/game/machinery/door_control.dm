@@ -107,7 +107,7 @@
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
-				if(istype(W, /obj/item/device/detective_scanner) || istype(W, /obj/item/weapon/forensic_sample_kit) || istype(W, /obj/item/weapon/swab))
+				if(isdetectivetool(W))
 					return
 				else if(isscrewing(W))
 					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
@@ -482,7 +482,7 @@
 
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W, /obj/item/device/detective_scanner) || istype(W, /obj/item/weapon/forensic_sample_kit) || istype(W, /obj/item/weapon/swab))
+	if(isdetectivetool(W))
 		return
 	return attack_hand(user)
 

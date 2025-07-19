@@ -7,6 +7,9 @@
 	w_class = SIZE_MINUSCULE
 	throw_speed = 3
 	throw_range = 5
+	qualities = list(
+		QUALITY_DETECTIVE_TOOL = 1
+	)
 
 	var/dispenser = FALSE // Means its one-use only
 	var/list/dna
@@ -106,8 +109,8 @@
 	inuse = FALSE
 
 /obj/item/weapon/swab/proc/set_used(atom/source)
-	name = ("[initial(name)] (DNA - [source])")
-	desc = "[initial(desc)]: 'DNA sample from [source].'."
+	name = "[initial(name)] (DNA - [source])"
+	desc = "[initial(desc)]: 'DNA sample from [source]'"
 	icon_state = "swab_used"
 	used = TRUE
 
@@ -117,6 +120,10 @@
 	icon = 'icons/obj/detective_work.dmi'
 	icon_state = "m_glass"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_DETECTIVE_TOOL = 1
+	)
+
 	var/evidence_type = "fiber"
 	var/evidence_path = /obj/item/weapon/forensic_sample/fibers
 	var/inuse = FALSE
@@ -189,7 +196,7 @@
 	if(!supplied.evidence || !supplied.evidence.len)
 		return FALSE
 	evidence |= supplied.evidence
-	name = ("[initial(name)] (combined)")
+	name = "[initial(name)] (combined)"
 	to_chat(user, "<span class='notice'>You transfer \the [supplied] into \the [src].</span>")
 	return TRUE
 

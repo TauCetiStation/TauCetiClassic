@@ -13,3 +13,5 @@
 #define QUALITY_PULSING	   "pulsing"	// for multitools
 
 #define QUALITY_SIGNALLING "signaling"	// for signaller
+
+#define QUALITY_DETECTIVE_TOOL "detective_tool"	// for detective scanner/swabs/forensic sample kits

@@ -385,26 +385,17 @@
 			return FALSE
 		if (H.gloves)
 			if(fingerprintslast != H.key)
-				//Add the list if it does not exist.
-				if(!fingerprintshidden)
-					fingerprintshidden = list()
-				fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
+				LAZYADD(fingerprintshidden, "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]")
 				fingerprintslast = H.key
 			return FALSE
 		if (!fingerprints)
 			if(fingerprintslast != H.key)
-				//Add the list if it does not exist.
-				if(!fingerprintshidden)
-					fingerprintshidden = list()
-				fingerprintshidden += "\[[time_stamp()]\] Real name: [H.real_name], Key: [H.key]"
+				LAZYADD(fingerprintshidden, "\[[time_stamp()]\] Real name: [H.real_name], Key: [H.key]")
 				fingerprintslast = H.key
 			return TRUE
 	else
 		if(fingerprintslast != M.key)
-			//Add the list if it does not exist.
-			if(!fingerprintshidden)
-				fingerprintshidden = list()
-			fingerprintshidden += "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]"
+			LAZYADD(fingerprintshidden, "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
 			fingerprintslast = M.key
 	return
 
@@ -412,22 +403,18 @@
 	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
 		return
 	if(ishuman(M))
-		//Add the list if it does not exist.
-		if(!fingerprintshidden)
-			fingerprintshidden = list()
-
 		//Fibers~
 		add_fibers(M)
 
 		//He has no prints!
 		if (FINGERPRINTS in M.mutations)
 			if(fingerprintslast != M.key)
-				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
+				LAZYADD(fingerprintshidden, "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]")
 				fingerprintslast = M.key
 			return FALSE		//Now, lets get to the dirty work.
 		var/mob/living/carbon/human/H = M
 		if(HAS_TRAIT(H, TRAIT_NO_FINGERPRINT)) // They don't leave readable fingerprints, but admins gotta know.
-			fingerprintshidden += "(Mob has no fingerprints) Real name: [H.real_name], Key: [H.key]"
+			LAZYADD(fingerprintshidden, "(Mob has no fingerprints) Real name: [H.real_name], Key: [H.key]")
 			fingerprintslast = H.key
 			return FALSE
 		//First, make sure their DNA makes sense.
@@ -446,14 +433,14 @@
 		//Now, deal with gloves.
 		if(!ignoregloves)
 			if(H.gloves && H.gloves != src)
-				if(fingerprintslast != H.ckey)
-					fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
-					fingerprintslast = H.ckey
+				if(fingerprintslast != H.key)
+					LAZYADD(fingerprintshidden, "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]")
+					fingerprintslast = H.key
 				return FALSE
 
 		//More adminstuffz
 		if(fingerprintslast != H.key)
-			fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
+			LAZYADD(fingerprintshidden, "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]")
 			fingerprintslast = H.key
 
 		//Make the list if it does not exist.
