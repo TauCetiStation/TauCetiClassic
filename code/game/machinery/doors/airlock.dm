@@ -898,7 +898,7 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
+	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/weapon/forensic_sample_kit) || istype(C, /obj/item/weapon/swab) || istype(C, /obj/item/taperoll))
 		return
 
 	if(iswelding(C) && !(operating > 0))

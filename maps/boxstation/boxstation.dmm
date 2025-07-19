@@ -7487,6 +7487,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 24
 	},
+/obj/machinery/computer/secure_data/detective_computer,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "amn" = (
@@ -8191,7 +8192,6 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "ans" = (
-/obj/machinery/photocopier,
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
@@ -8199,6 +8199,7 @@
 	c_tag = "Forensic's Office";
 	network = list("SS13","Security")
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitered"
@@ -8389,10 +8390,11 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anK" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
+/obj/structure/table/woodentable,
+/obj/machinery/microscope,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anL" = (
@@ -9124,7 +9126,8 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoU" = (
-/obj/item/weapon/flora/random,
+/obj/structure/table/glass,
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteredcorner"
@@ -9580,11 +9583,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "apJ" = (
-/obj/machinery/computer/forensic_scanning{
-	dir = 4
-	},
 /obj/structure/window/thin/reinforced{
 	dir = 8
+	},
+/obj/machinery/computer/secure_data{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -9831,20 +9834,26 @@
 /turf/simulated/floor/grid_floor,
 /area/station/rnd/tox_launch)
 "aqo" = (
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/folder/red,
 /obj/structure/table/glass,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/machinery/light/smart,
-/obj/item/weapon/storage/fancy/vials,
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/dropper,
 /obj/machinery/computer/shop{
 	department = "Security";
 	pixel_y = -32
+	},
+/obj/item/device/reagent_scanner{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/device/mass_spectrometer{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "whitered"
@@ -9869,7 +9878,6 @@
 /area/station/maintenance/dormitory)
 "aqq" = (
 /obj/structure/closet/secure_closet/forensics,
-/obj/item/weapon/storage/briefcase,
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "Dark Brig";
@@ -10675,11 +10683,28 @@
 	},
 /area/station/security/detectives_office)
 "arM" = (
-/obj/machinery/computer/secure_data{
-	dir = 4
-	},
 /obj/structure/window/thin/reinforced{
 	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/bodybag{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/bodybag{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/bodybag{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_y = -6
+	},
+/obj/item/device/flash{
+	pixel_x = 10;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "redfull"
@@ -10698,13 +10723,11 @@
 	},
 /area/station/security/detectives_office)
 "arO" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor{
 	icon_state = "whitered"
 	},
@@ -11079,8 +11102,6 @@
 	},
 /area/station/hallway/primary/fore)
 "ast" = (
-/obj/item/device/flash,
-/obj/item/clothing/glasses/sunglasses,
 /obj/structure/table/glass,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -11089,8 +11110,16 @@
 	name = "Station Intercom (Security)";
 	pixel_y = -28
 	},
-/obj/item/device/mass_spectrometer,
-/obj/item/device/reagent_scanner,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/fancy/vials{
+	pixel_x = 18
+	},
+/obj/item/weapon/folder/red,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitered"
@@ -36628,14 +36657,14 @@
 /area/station/rnd/robotics)
 "bmJ" = (
 /obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmK" = (
 /obj/structure/closet/cabinet,
 /obj/item/weapon/storage/briefcase,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/device/detective_scanner,
+/obj/item/weapon/storage/briefcase/crimekit,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmL" = (

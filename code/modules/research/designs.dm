@@ -1569,6 +1569,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/minefab
 	category = list("Machine")
 
+/datum/design/microscope
+	name = "Microscope Board"
+	desc = "The circuit board for a forensics microscope."
+	id = "microscope"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/microscope
+	category = list("Machine")
+
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
 /////////////////////////////////////////
@@ -1873,6 +1882,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
 	build_path = /obj/item/device/sensor_device
+	category = list("Support")
+
+/datum/design/detective_scanner
+	name = "Forensic Scanner"
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
+	id = "detective_scanner"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
+	build_path = /obj/item/device/detective_scanner
 	category = list("Support")
 
 /datum/design/scalpel_laser1

@@ -68,7 +68,7 @@
 	update_power_use()
 
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/detective_scanner))
+	if(istype(W, /obj/item/device/detective_scanner) || istype(W, /obj/item/weapon/forensic_sample_kit) || istype(W, /obj/item/weapon/swab))
 		return
 	if (isscrewing(W))
 		add_fingerprint(user)

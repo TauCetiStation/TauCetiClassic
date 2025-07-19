@@ -46,9 +46,6 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 
-	//Detective Work, used for the duplicate data points kept in the scanners
-	var/list/original_atom
-
 	var/in_use_action = FALSE // do_after sets this to TRUE and is_busy() can check for that to disallow multiple users to interact with this at the same time.
 
 	/// Last name used to calculate a color for the chatmessage overlays
@@ -385,27 +382,36 @@
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
-			return 0
+			return FALSE
 		if (H.gloves)
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
-			return 0
-		if (!( src.fingerprints ))
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
-			return 1
+			if(fingerprintslast != H.key)
+				//Add the list if it does not exist.
+				if(!fingerprintshidden)
+					fingerprintshidden = list()
+				fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
+				fingerprintslast = H.key
+			return FALSE
+		if (!fingerprints)
+			if(fingerprintslast != H.key)
+				//Add the list if it does not exist.
+				if(!fingerprintshidden)
+					fingerprintshidden = list()
+				fingerprintshidden += "\[[time_stamp()]\] Real name: [H.real_name], Key: [H.key]"
+				fingerprintslast = H.key
+			return TRUE
 	else
-		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
-			src.fingerprintslast = M.key
+		if(fingerprintslast != M.key)
+			//Add the list if it does not exist.
+			if(!fingerprintshidden)
+				fingerprintshidden = list()
+			fingerprintshidden += "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]"
+			fingerprintslast = M.key
 	return
 
-/atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
+/atom/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
 	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
 		return
-	if (ishuman(M))
+	if(ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
@@ -418,39 +424,36 @@
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
-			return 0		//Now, lets get to the dirty work.
-		//First, make sure their DNA makes sense.
+			return FALSE		//Now, lets get to the dirty work.
 		var/mob/living/carbon/human/H = M
-
-		if(!HAS_TRAIT(H, TRAIT_NO_FINGERPRINT)) // They don't leave readable fingerprints, but admins gotta know.
+		if(HAS_TRAIT(H, TRAIT_NO_FINGERPRINT)) // They don't leave readable fingerprints, but admins gotta know.
 			fingerprintshidden += "(Mob has no fingerprints) Real name: [H.real_name], Key: [H.key]"
 			fingerprintslast = H.key
-			return 0
-
+			return FALSE
+		//First, make sure their DNA makes sense.
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
 				H.dna.real_name = H.real_name
 		H.check_dna()
 
-		//Now, deal with gloves.
-		if (H.gloves && H.gloves != src)
-			if(fingerprintslast != H.key)
-				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
-				fingerprintslast = H.key
-			H.gloves.add_fingerprint(M)
+		//Check if the gloves (if any) hide fingerprints
+		if(H.gloves)
+			var/obj/item/clothing/gloves/G = H.gloves
+			if(G.can_leave_fingerprints)
+				ignoregloves = TRUE
 
-		//Deal with gloves the pass finger/palm prints.
+		//Now, deal with gloves.
 		if(!ignoregloves)
-			if(H.gloves != src)
-				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
-				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
+			if(H.gloves && H.gloves != src)
+				if(fingerprintslast != H.ckey)
+					fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
+					fingerprintslast = H.ckey
+				return FALSE
 
 		//More adminstuffz
 		if(fingerprintslast != H.key)
-			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
+			fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
 			fingerprintslast = H.key
 
 		//Make the list if it does not exist.
@@ -458,79 +461,43 @@
 			fingerprints = list()
 
 		//Hash this shit.
-		var/full_print = md5(H.dna.uni_identity)
+		var/full_print = H.get_full_print()
 
 		// Add the fingerprints
-		//
-		if(fingerprints[full_print])
-			switch(stringpercent_ascii(fingerprints[full_print]))		//tells us how many stars are in the current prints.
-
-				if(28 to 32)
-					if(prob(1))
-						fingerprints[full_print] = full_print 		// You rolled a one buddy.
-					else
-						fingerprints[full_print] = stars(full_print, rand(0,40)) // 24 to 32
-
-				if(24 to 27)
-					if(prob(3))
-						fingerprints[full_print] = full_print     	//Sucks to be you.
-					else
-						fingerprints[full_print] = stars(full_print, rand(15, 55)) // 20 to 29
-
-				if(20 to 23)
-					if(prob(5))
-						fingerprints[full_print] = full_print		//Had a good run didn't ya.
-					else
-						fingerprints[full_print] = stars(full_print, rand(30, 70)) // 15 to 25
-
-				if(16 to 19)
-					if(prob(5))
-						fingerprints[full_print] = full_print		//Welp.
-					else
-						fingerprints[full_print]  = stars(full_print, rand(40, 100))  // 0 to 21
-
-				if(0 to 15)
-					if(prob(5))
-						fingerprints[full_print] = stars(full_print, rand(0,50)) 	// small chance you can smudge.
-					else
-						fingerprints[full_print] = full_print
-
+		if(prob(50)) // Has a probabilty to leave unrecognizable fingerprints
+			fingerprints[full_print] = full_print
+		else if(H.species && H.species.name) // We can still see what type of species left the fingerprints
+			fingerprints["Unrecognizable [H.species.name] fingerprints"] = "Unrecognizable [H.species.name] fingerprints"
 		else
-			fingerprints[full_print] = stars(full_print, rand(0, 20))	//Initial touch, not leaving much evidence the first time.
-
-
-		return 1
+			fingerprints["Unrecognizable fingerprints"] = "Unrecognizable fingerprints"
+		return TRUE
 	else
 		//Smudge up dem prints some
 		if(fingerprintslast != M.key)
-			fingerprintshidden += text("\[[]\]Real name: [], Key: []", time_stamp(), M.real_name, M.key)
+			fingerprintshidden += "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]"
 			fingerprintslast = M.key
 
-	//Cleaning up shit.
-	if(fingerprints && !fingerprints.len)
-		fingerprints = null
 	return
 
 
 /atom/proc/transfer_fingerprints_to(atom/A)
-
-	if(!istype(A.fingerprints,/list))
+	// Make sure everything are lists.
+	if(!islist(A.fingerprints))
 		A.fingerprints = list()
-
-	if(!istype(A.fingerprintshidden,/list))
+	if(!islist(A.fingerprintshidden))
 		A.fingerprintshidden = list()
 
-	if(!istype(fingerprintshidden, /list))
+	if(!islist(fingerprints))
+		fingerprints = list()
+	if(!islist(fingerprintshidden))
 		fingerprintshidden = list()
 
-	//skytodo
-	//A.fingerprints |= fingerprints            //detective
-	//A.fingerprintshidden |= fingerprintshidden    //admin
-	if(A.fingerprints && fingerprints)
+	// Transfer
+	if(fingerprints)
 		A.fingerprints |= fingerprints.Copy()            //detective
-	if(A.fingerprintshidden && fingerprintshidden)
-		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
-
+	if(fingerprintshidden)
+		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
+	A.fingerprintslast = fingerprintslast
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)

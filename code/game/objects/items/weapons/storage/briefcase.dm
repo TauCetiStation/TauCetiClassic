@@ -45,3 +45,18 @@
 /obj/item/weapon/storage/briefcase/centcomm
 	icon_state = "briefcase-centcomm"
 	item_state = "briefcase-centcomm"
+
+/obj/item/weapon/storage/briefcase/crimekit
+	name = "Crime inspection kit"
+	desc = "A stainless steel-coated suitcase for all your forensic needs. It feels heavy."
+	icon_state = "crimekit"
+	item_state = "crimekit"
+	w_class = SIZE_SMALL
+
+/obj/item/weapon/storage/briefcase/crimekit/atom_init()
+	. = ..()
+	new /obj/item/weapon/storage/box/swabs(src)
+	new /obj/item/weapon/storage/box/swabs(src)
+	new /obj/item/weapon/storage/box/swabs(src)
+	new /obj/item/weapon/forensic_sample_kit(src)
+	new /obj/item/weapon/forensic_sample_kit/powder(src)

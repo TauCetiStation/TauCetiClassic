@@ -12346,7 +12346,7 @@
 /area/station/civilian/dormitories/dormone)
 "cMi" = (
 /obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
