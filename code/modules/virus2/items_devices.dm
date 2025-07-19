@@ -97,6 +97,8 @@
 	name = "blank GNA disk"
 	icon = 'icons/obj/disks.dmi'
 	icon_state = "datadisk0"
+	item_state_inventory = "datadisk0"
+	item_state_world = "datadisk0_world"
 	var/datum/disease2/effectholder/effect = null
 	var/list/species = null
 	var/stage = 1
