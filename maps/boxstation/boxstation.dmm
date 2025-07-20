@@ -28850,13 +28850,23 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aYX" = (
-/obj/structure/sign/map/left,
-/turf/simulated/wall,
-/area/station/storage/primary)
-"aYY" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
 /obj/structure/sign/map/right,
-/turf/simulated/wall,
-/area/station/storage/primary)
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/arrival)
+"aYY" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/sign/map/left,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/arrival)
 "aYZ" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
@@ -32372,6 +32382,9 @@
 /area/station/medical/reception)
 "bfb" = (
 /obj/structure/table,
+/obj/item/station_map,
+/obj/item/station_map,
+/obj/item/station_map,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "bfc" = (
@@ -97584,7 +97597,7 @@ aah
 aah
 aah
 aah
-iur
+aYY
 ogz
 aJJ
 iur
@@ -97841,7 +97854,7 @@ aaa
 aaa
 aaa
 aaa
-iur
+aYX
 lay
 aJZ
 iur
@@ -107351,7 +107364,7 @@ akR
 aJk
 aVl
 aWI
-aYX
+aFL
 bdv
 bdZ
 ipb
@@ -107608,7 +107621,7 @@ aSr
 aTN
 aVm
 aWK
-aYY
+aFL
 bdv
 coa
 tpw
