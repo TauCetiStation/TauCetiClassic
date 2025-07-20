@@ -28850,22 +28850,12 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aYX" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/structure/sign/map/right,
-/turf/simulated/floor/plating,
+/turf/simulated/wall,
 /area/station/hallway/secondary/arrival)
 "aYY" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
 /obj/structure/sign/map/left,
-/turf/simulated/floor/plating,
+/turf/simulated/wall,
 /area/station/hallway/secondary/arrival)
 "aYZ" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -93742,10 +93732,10 @@ bWt
 bWt
 bWt
 bWt
-iur
+odL
 iCC
 aGY
-iur
+odL
 aaa
 aaa
 aaa
@@ -97083,7 +97073,7 @@ aGy
 aGy
 aaa
 aaa
-odL
+aYY
 aGU
 aIm
 odL
@@ -97340,10 +97330,10 @@ bWt
 bWt
 bWt
 bWt
-iur
+aYX
 iCC
 aGY
-iur
+odL
 aaa
 aaa
 aaa
@@ -97597,7 +97587,7 @@ aah
 aah
 aah
 aah
-aYY
+iur
 ogz
 aJJ
 iur
@@ -97854,7 +97844,7 @@ aaa
 aaa
 aaa
 aaa
-aYX
+iur
 lay
 aJZ
 iur
