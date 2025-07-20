@@ -88,6 +88,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define REQUIRE_LIGHT      "require_light"
 #define IS_SYNTHETIC       "is_synthetic"
 #define HAS_HAIR           "has_hair"
+#define HAS_MUSCLES        "has_muscles"
 #define FACEHUGGABLE       "facehuggable"
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
