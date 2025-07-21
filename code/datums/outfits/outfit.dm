@@ -285,7 +285,6 @@
 				"Prometheus Station" = /obj/item/station_map/prometheus,
 			)
 			var/stationmap_type = mapByType[SSmapping.config.map_name]
-			to_chat(H, "[stationmap_type]")
 			if(stationmap_type)
 				H.equip_or_collect(new stationmap_type(H), SLOT_R_STORE)
 
