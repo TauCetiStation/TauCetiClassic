@@ -90,9 +90,6 @@
 			if(AM.density)
 				. = FALSE
 				break
-	if(istype(here, /area/space/holospace/forts/no_build))
-		to_chat(M, "<span class='warning'>You can't build here!</span>")
-		. = FALSE
 	if(!.)
 		b_overlay.color = "red"
 		animate(b_overlay, time = 5, color = "white")
