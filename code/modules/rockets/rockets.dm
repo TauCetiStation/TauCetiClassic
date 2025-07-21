@@ -163,7 +163,7 @@
 /obj/item/rocket/piercing/trigger(atom/target)
 	if(!exploded)
 		exploded = TRUE
-		explosion(target, 2, 4, 6)
+		explosion(target, 1, 1, 1)
 
 /obj/item/rocket/piercing/Bump(atom/target)
 	if(!throwing || pierced >= pierced_cap)
