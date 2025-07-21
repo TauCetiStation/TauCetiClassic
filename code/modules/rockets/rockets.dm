@@ -176,14 +176,17 @@
 		var/turf/simulated/wall/W = target
 		var/chance = (pierced_cap - pierced) / pierced_cap * 100 + (W.damage / W.damage_cap) * 100
 		if(istype(W, /obj/structure/window/thin/reinforced))
-			chance = chance * 0.5
+			chance = chance * 0.25 // -25%
+		if(istype(W, /turf/simulated/wall/r_wall))
+			chance = chance * 0.5 // -50%
 		if(prob(chance))
 			W.ChangeTurf(W.basetype)
 			pierced++
 			return FALSE
-	else if(ismob(target) && prob((pierced_cap - pierced) / pierced_cap * 100 + 50))
-		var/mob/M = target
-		M.gib()
+	else if(isliving(target) && prob((pierced_cap - pierced) / pierced_cap * 100 + 50))
+		var/mob/living/L = target
+		L.adjustBruteLoss(40)
+		L.adjustFireLoss(20)
 		pierced += 0.75
 		return FALSE
 	else if(!(target.resistance_flags & INDESTRUCTIBLE) && prob((pierced_cap - pierced) / pierced_cap * 100 + 50))
