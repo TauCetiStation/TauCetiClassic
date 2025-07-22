@@ -168,7 +168,7 @@
 			. = on_serpentid_digest(M)
 		else
 			return TRUE
-		return .
+	return .
 
 /datum/reagent/proc/on_skrell_digest(mob/living/M)
 	return TRUE
