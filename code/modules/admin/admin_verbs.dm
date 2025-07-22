@@ -60,6 +60,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
+	/client/proc/phylactery,
 	/client/proc/man_up,
 	/client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb,
@@ -994,6 +995,18 @@ var/global/list/admin_verbs_hideable = list(
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>")
+
+/client/proc/phylactery()
+	set category = "Fun"
+	set name = "Phylactery"
+	set desc = "Switches phylactery on and off."
+
+	phylactery_is_on = !phylactery_is_on
+	var/logadmintext = "off"
+	if(phylactery_is_on)
+		logadmintext = "on"
+	log_admin("[key_name(usr)] turned phylactery event [logadmintext].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] turned phylactery event [logadmintext].</span>")
 
 /client/proc/global_man_up()
 	set category = "Fun"

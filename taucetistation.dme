@@ -1704,6 +1704,7 @@
 #include "code\modules\events\mundane_news.dm"
 #include "code\modules\events\organ_failure.dm"
 #include "code\modules\events\pda_spam.dm"
+#include "code\modules\events\phylactery.dm"
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"
 #include "code\modules\events\replicator.dm"

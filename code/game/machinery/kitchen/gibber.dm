@@ -44,7 +44,12 @@
 
 		if(M.loc == input_plate)
 			M.loc = src
-			M.gib()
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!H.phylactery_egg)
+					H.gib()
+			else
+				M.gib()
 
 
 /obj/machinery/gibber/atom_init()
@@ -206,6 +211,13 @@
 	addtimer(CALLBACK(src, PROC_REF(gib_mob), user), gibtime)
 
 /obj/machinery/gibber/proc/gib_mob(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.phylactery_egg)
+			pixel_x = initial(pixel_x) //return to it's spot after shaking
+			operating = 0
+			update_icon()
+			return
 	occupant.log_combat(user, "gibbed via [name]")
 	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, occupant)
 	occupant.ghostize(bancheck = TRUE)

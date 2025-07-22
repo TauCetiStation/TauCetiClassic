@@ -48,8 +48,11 @@
 			"<span class='warning'><b>[src] is twisting \his own neck! It looks like \he's trying to commit suicide.</b></span>", \
 			"<span class='warning'><b>[src] is holding \his breath! It looks like \he's trying to commit suicide.</b></span>" \
 			))
-		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		updatehealth()
+		if(!phylactery_egg)
+			adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+			updatehealth()
+		else
+			to_chat(src, "Кажется, что в этом нет смысла, ваша филактерия вас защищает.")
 		return
 
 	var/damagetype = held_item.suicide_act(src)
@@ -70,20 +73,22 @@
 
 	//Do 175 damage divided by the number of damage types applied.
 	var/dmg = 175 / damage_mod
+	if(!phylactery_egg)
+		if(is_brute)
+			adjustBruteLoss(dmg)
 
-	if(is_brute)
-		adjustBruteLoss(dmg)
+		if(is_burn)
+			adjustFireLoss(dmg)
 
-	if(is_burn)
-		adjustFireLoss(dmg)
+		if(is_tox)
+			adjustToxLoss(dmg)
 
-	if(is_tox)
-		adjustToxLoss(dmg)
+		if(is_oxy)
+			adjustOxyLoss(dmg)
 
-	if(is_oxy)
-		adjustOxyLoss(dmg)
-
-	updatehealth()
+		updatehealth()
+	else
+		to_chat(src, "Кажется, что в этом нет смысла, ваша филактерия вас защищает.")
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1

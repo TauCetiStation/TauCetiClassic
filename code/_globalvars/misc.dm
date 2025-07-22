@@ -65,3 +65,5 @@ var/global/nuclear_siren_cooldown = 0
 
 var/global/station_disposal_count = 0
 var/global/station_chairs_count = 0
+
+var/global/phylactery_is_on = 0

@@ -312,6 +312,9 @@ This function restores all bodyparts.
 	if(damagetype == HALLOSS && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return FALSE
 
+	if(phylactery_egg)
+		return
+
 	//Handle other types of damage or healing
 	if(damage < 0 || !(damagetype in list(BRUTE, BURN)))
 		..(damage, damagetype, def_zone, blocked)

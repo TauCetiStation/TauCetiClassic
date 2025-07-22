@@ -278,6 +278,10 @@
 	post_equip(H, visualsOnly)
 
 	if(!visualsOnly)
+		if(phylactery_is_on)
+			var/obj/item/weapon/phylactery/P = new(H.loc)
+			H.put_in_hands(P)
+			P.egg_link(H)
 		apply_fingerprints(H)
 		if(internals_slot)
 			H.internal = H.get_equipped_item(internals_slot)

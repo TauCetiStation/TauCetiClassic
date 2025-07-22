@@ -327,9 +327,16 @@
 		if (M.stat != DEAD)
 			M.emote("scream")
 		M.log_combat(user, "cremated")
-		M.death(1)
-		M.ghostize(bancheck = TRUE)
-		qdel(M)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.phylactery_egg)
+				H.death(1)
+				H.ghostize(bancheck = TRUE)
+				qdel(H)
+		else
+			M.death(1)
+			M.ghostize(bancheck = TRUE)
+			qdel(M)
 
 	for(var/obj/O in contents)
 		qdel(O)
