@@ -51,6 +51,19 @@
 	else if(istype(A,/obj/structure/boulder))
 		var/obj/structure/boulder/B = A
 		if(B.artifact_find)
+			//create a new scanlog entry
+			var/datum/depth_scan/D = new()
+			D.coords = "[10 * B.x].[rand(0,9)]:[10 * B.y].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
+			D.time = worldtime2text()
+			D.record_index = positive_locations.len + 1
+
+			//these values are arbitrary
+			D.depth = rand(75,100)
+			D.clearance = rand(5,25)
+			D.dissonance_spread = rand(750,2500) / 100
+
+			positive_locations.Add(D)
+
 			for(var/mob/L in range(src, 1))
 				to_chat(L, "<span class='notice'>[bicon(src)] [src] pings [pick("madly", "wildly", "excitedly", "crazily")]!.</span>")
 

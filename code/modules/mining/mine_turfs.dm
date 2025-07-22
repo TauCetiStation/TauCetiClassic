@@ -230,7 +230,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 2 SECONDS, volume = 100))
+		if(P.use_tool(src, user, 50, volume = 100))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
@@ -266,7 +266,6 @@
 						B = new(src)
 						if(artifact_find)
 							B.artifact_find = artifact_find
-							B.setup_artifact()
 					else
 						artifact_debris(1)
 				else if(prob(15))

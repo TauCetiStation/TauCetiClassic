@@ -204,7 +204,7 @@
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
 		playsound(src, 'sound/weapons/guns/gunpulse_wave.ogg', VOL_EFFECTS_MASTER, 10)
-		INVOKE_ASYNC(src, PROC_REF(scan), user)
+		INVOKE_ASYNC(src, PROC_REF(scan))
 		if(nearest_artifact_distance >= 0)
 			message = "Exotic energy detected on wavelength '[nearest_artifact_id]' in a radius of [nearest_artifact_distance]m"
 	else
@@ -212,7 +212,7 @@
 
 	to_chat(user, "<span class='info'>[message]</span>")
 
-/obj/item/device/searcher/proc/scan(mob/user)
+/obj/item/device/searcher/proc/scan()
 	//set background = 1
 
 	last_scan_time = world.time
@@ -225,9 +225,6 @@
 				if( (nearest_artifact_distance < 0 || cur_dist < nearest_artifact_distance) && cur_dist <= T.artifact_find.artifact_detect_range )
 					nearest_artifact_distance = cur_dist + rand() * 2 - 1
 					nearest_artifact_id = T.artifact_find.artifact_id
-					if(ishuman(user))
-						var/mob/living/carbon/human/H = user
-						H.loc = T
 		else
 			SSxenoarch.turfs_with_artifacts.Remove(T)
 	cur_turf.visible_message("<span class='info'>[src] clicks.</span>")
