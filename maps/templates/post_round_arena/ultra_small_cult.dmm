@@ -1,0 +1,324 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/obj/structure/cult{
+	icon_state = "gargoyle"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"d" = (
+/obj/item/clothing/suit/armor/syndilight,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"f" = (
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"m" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"o" = (
+/obj/structure/pedestal/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"p" = (
+/obj/structure/cult{
+	icon_state = "shell"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"z" = (
+/obj/item/clothing/head/helmet/syndilight,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"B" = (
+/obj/effect/landmark/post_round_dm/gladiator{
+	name = "Gladiator"
+	},
+/turf/unsimulated/floor/cult,
+/area/custom/arena)
+"D" = (
+/turf/unsimulated/floor/cult,
+/area/custom/arena)
+"E" = (
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"G" = (
+/obj/random/guns/set_special,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"O" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"U" = (
+/turf/unsimulated/wall/cult/runed/anim,
+/area/custom/arena)
+"V" = (
+/obj/structure/cult{
+	icon_state = "gargoyle"
+	},
+/turf/unsimulated/floor/cult,
+/area/custom/arena)
+"Y" = (
+/obj/structure/cult{
+	icon_state = "shell"
+	},
+/turf/unsimulated/floor/cult,
+/area/custom/arena)
+
+(1,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
+(2,1,1) = {"
+U
+c
+z
+f
+O
+f
+o
+U
+o
+f
+O
+f
+z
+p
+U
+"}
+(3,1,1) = {"
+U
+d
+B
+f
+D
+D
+f
+U
+f
+D
+D
+f
+B
+d
+U
+"}
+(4,1,1) = {"
+U
+f
+f
+E
+U
+D
+G
+f
+G
+D
+U
+E
+f
+f
+U
+"}
+(5,1,1) = {"
+U
+m
+D
+U
+U
+D
+D
+f
+D
+D
+U
+U
+D
+m
+U
+"}
+(6,1,1) = {"
+U
+f
+D
+D
+D
+f
+f
+G
+f
+f
+D
+D
+D
+f
+U
+"}
+(7,1,1) = {"
+U
+o
+f
+G
+D
+f
+D
+Y
+D
+f
+D
+G
+f
+o
+U
+"}
+(8,1,1) = {"
+U
+U
+U
+f
+f
+G
+V
+U
+V
+G
+f
+f
+U
+U
+U
+"}
+(9,1,1) = {"
+U
+o
+f
+G
+D
+f
+D
+Y
+D
+f
+D
+G
+f
+o
+U
+"}
+(10,1,1) = {"
+U
+f
+D
+D
+D
+f
+f
+G
+f
+f
+D
+D
+D
+f
+U
+"}
+(11,1,1) = {"
+U
+m
+D
+U
+U
+D
+D
+f
+D
+D
+U
+U
+D
+m
+U
+"}
+(12,1,1) = {"
+U
+f
+f
+E
+U
+D
+G
+f
+G
+D
+U
+E
+f
+f
+U
+"}
+(13,1,1) = {"
+U
+d
+B
+f
+D
+D
+f
+U
+f
+D
+D
+f
+B
+d
+U
+"}
+(14,1,1) = {"
+U
+p
+z
+f
+O
+f
+o
+U
+o
+f
+O
+f
+z
+c
+U
+"}
+(15,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}

@@ -569,14 +569,6 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 
-	//someone here, but who?
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(isimplantedblueshield(H) && mind && (mind.assigned_role in protected_by_blueshield_list))
-			for(var/obj/item/weapon/implant/blueshield/B in H.implants)
-				B.last_examined = world.time
-			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)
 		if(isobserver(user))
@@ -590,6 +582,8 @@
 
 	to_chat(user, msg)
 
+	// todo: better names for signals
+	SEND_SIGNAL(user, COMSIG_MOB_EXAMINED, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.

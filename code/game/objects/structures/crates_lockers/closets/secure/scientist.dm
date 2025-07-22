@@ -41,3 +41,4 @@
 	new /obj/item/device/remote_device/research_director(src)
 	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/lockbox/medal/rd(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)

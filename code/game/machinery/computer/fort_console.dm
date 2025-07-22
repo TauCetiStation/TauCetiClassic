@@ -247,7 +247,7 @@
 /datum/fort_console_lot/rcd_ammo/purchase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/scicrate
 	for(var/i in 1 to 10)
-		new /obj/item/weapon/rcd_ammo/bluespace(C)
+		new /obj/item/weapon/rcd_ammo/huge(C)
 
 	return C
 

@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/datum/space_level/z_list
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
+	var/mine_image = ""
 
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
@@ -240,9 +241,11 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	if(global.config.load_mine)
 		if(config.minetype == "asteroid")
-			var/asteroidmap = pick("asteroid_classic.dmm", "asteroid_rich.dmm")
-			LoadGroup(FailedZs, "Asteroid", "asteroid", asteroidmap, default_traits = ZTRAITS_ASTEROID)
+			var/asteroidmap = pick("asteroid_classic", "asteroid_rich")
+			mine_image = asteroidmap
+			LoadGroup(FailedZs, "Asteroid", "asteroid", asteroidmap + ".dmm", default_traits = ZTRAITS_ASTEROID)
 		else if(config.minetype == "prometheus_asteroid")
+			mine_image = "prometheus_asteroid"
 			LoadGroup(FailedZs, "Asteroid", "prometheus_asteroid", "prometheus_asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
 		else if (!isnull(config.minetype))
 			INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")

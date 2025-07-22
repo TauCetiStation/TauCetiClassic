@@ -58,14 +58,14 @@
 		if("exposure_contrast_power")
 			global.EXPOSURE_CONTRAST_POWER = clamp(params["value"], -10, 10)
 		if("default")
-			global.GLOW_BRIGHTNESS_BASE = initial(global.GLOW_BRIGHTNESS_BASE)
-			global.GLOW_BRIGHTNESS_POWER = initial(global.GLOW_BRIGHTNESS_POWER)
-			global.GLOW_CONTRAST_BASE = initial(global.GLOW_CONTRAST_BASE)
-			global.GLOW_CONTRAST_POWER = initial(global.GLOW_CONTRAST_POWER)
-			global.EXPOSURE_BRIGHTNESS_BASE = initial(global.EXPOSURE_BRIGHTNESS_BASE)
-			global.EXPOSURE_BRIGHTNESS_POWER = initial(global.EXPOSURE_BRIGHTNESS_POWER)
-			global.EXPOSURE_CONTRAST_BASE = initial(global.EXPOSURE_CONTRAST_BASE)
-			global.EXPOSURE_CONTRAST_POWER = initial(global.EXPOSURE_CONTRAST_POWER)
+			global.GLOW_BRIGHTNESS_BASE = GLOW_BRIGHTNESS_BASE_DEF
+			global.GLOW_BRIGHTNESS_POWER = GLOW_BRIGHTNESS_POWER_DEF
+			global.GLOW_CONTRAST_BASE = GLOW_CONTRAST_BASE_DEF
+			global.GLOW_CONTRAST_POWER = GLOW_CONTRAST_POWER_DEF
+			global.EXPOSURE_BRIGHTNESS_BASE = EXPOSURE_BRIGHTNESS_BASE_DEF
+			global.EXPOSURE_BRIGHTNESS_POWER = EXPOSURE_BRIGHTNESS_POWER_DEF
+			global.EXPOSURE_CONTRAST_BASE = EXPOSURE_CONTRAST_BASE_DEF
+			global.EXPOSURE_CONTRAST_POWER = EXPOSURE_CONTRAST_POWER_DEF
 		if("update_lamps") // todo: make this update all objects with glow
 			for(var/obj/machinery/light/L in machines)
 				if(L.glow_overlay || L.exposure_overlay)
