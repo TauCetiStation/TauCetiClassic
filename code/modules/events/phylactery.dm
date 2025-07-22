@@ -62,7 +62,7 @@
 		egg_master = null
 	qdel(src)
 
-/obj/item/weapon/phylactery/proc/egg_link(var/mob/living/carbon/human/H)
+/obj/item/weapon/phylactery/proc/egg_link(mob/living/carbon/human/H)
 	if(ishuman(H))
 		egg_master = H
 		H.phylactery_egg = src
