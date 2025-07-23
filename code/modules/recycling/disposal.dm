@@ -38,7 +38,7 @@
 
 /obj/machinery/disposal/atom_init_late()
 	trunk = locate() in src.loc
-	if(!trunk)
+	if(!checkTrunk())
 		mode = 0
 		flush = 0
 	else
@@ -493,7 +493,7 @@
 	if(wrapcheck == 1)
 		H.tomail = 1
 
-	if(!trunk)
+	if(!checkTrunk())
 		expel(H)
 		return
 
@@ -516,6 +516,13 @@
 	update()	// update icon
 	return
 
+// return TRUE if disposal has a functional trunk underneath
+/obj/machinery/disposal/proc/checkTrunk()
+	if(isnull(trunk) || isnull(trunk.loc))
+		return FALSE
+	if(trunk.loc != loc)
+		return FALSE
+	return TRUE
 
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified

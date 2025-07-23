@@ -556,7 +556,7 @@
 
 	var/obj/structure/disposalholder/H = new(null, contents, new /datum/gas_mixture)
 
-	if(!trunk)
+	if(!checkTrunk())
 		expel(H)
 		return
 
