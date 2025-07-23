@@ -1,15 +1,19 @@
+/datum/department/engineering
+	title = DEP_ENGINEERING
+	head = JOB_CHIEF_ENGINEER
+	order = 4
+	color = "#ffd699"
+
 /datum/job/chief_engineer
-	title = "Chief Engineer"
-	flag = CHIEF
-	department_flag = ENGSEC
-	faction = "Station"
+	title = JOB_CHIEF_ENGINEER
+	departments = list(DEP_ENGINEERING, DEP_COMMAND)
+	order = CREW_INTEND_HEADS(4)
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffeeaa"
 	idtype = /obj/item/weapon/card/id/engGold
 	req_admin_notify = 1
-	is_head = TRUE
 	access = list(
 		access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 		access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -28,13 +32,11 @@
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN, VOX, DIONA)
-	flags = JOB_FLAG_COMMAND|JOB_FLAG_ENGINEERING|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/engineer
-	title = "Station Engineer"
-	flag = ENGINEER
-	department_flag = ENGSEC
-	faction = "Station"
+	title = JOB_ENGINEER
+	departments = list(DEP_ENGINEERING)
+	order = CREW_INTEND_EMPLOYEE(1)
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = "the chief engineer"
@@ -47,13 +49,11 @@
 	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
-	flags = JOB_FLAG_ENGINEERING
 
 /datum/job/atmos
-	title = "Atmospheric Technician"
-	flag = ATMOSTECH
-	department_flag = ENGSEC
-	faction = "Station"
+	title = JOB_ATMOS
+	departments = list(DEP_ENGINEERING)
+	order = CREW_INTEND_EMPLOYEE(2)
 	total_positions = 3
 	spawn_positions = 2
 	supervisors = "the chief engineer"
@@ -65,13 +65,11 @@
 	minimal_player_ingame_minutes = 600
 	outfit = /datum/outfit/job/atmos
 	skillsets = list("Atmospheric Technician" = /datum/skillset/atmostech)
-	flags = JOB_FLAG_ENGINEERING
 
 /datum/job/technical_assistant
-	title = "Technical Assistant"
-	flag = TECHNICASSISTANT
-	department_flag = ENGSEC
-	faction = "Station"
+	title = JOB_TECHNICAL_ASSISTANT
+	departments = list(DEP_ENGINEERING)
+	order = CREW_INTEND_ASSIST(1)
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the chief engineer"
@@ -81,7 +79,6 @@
 	salary = 50
 	outfit = /datum/outfit/job/technical_assistant
 	skillsets = list("Technical Assistant" = /datum/skillset/technicassistant)
-	flags = JOB_FLAG_ENGINEERING
 
 /proc/get_airlock_wires_identification()
 	var/list/wire_list = same_wires[/obj/machinery/door/airlock]

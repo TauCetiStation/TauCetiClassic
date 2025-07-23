@@ -7,6 +7,8 @@ var/global/list/admin_datums = list()
 	var/fakekey			= null
 	var/deadminned = FALSE
 
+	var/MC_ss_show_all = FALSE
+
 	var/datum/marked_datum
 
 	var/admincaster_screen = 0	//See newscaster.dm under machinery for a full description

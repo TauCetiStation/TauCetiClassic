@@ -197,27 +197,6 @@
 		return FALSE
 	return TRUE
 
-/proc/get_centcom_access(job)
-	switch(job)
-		if("VIP Guest")
-			return list(access_cent_general)
-		if("Custodian")
-			return list(access_cent_general, access_cent_living, access_cent_storage)
-		if("Thunderdome Overseer")
-			return list(access_cent_general, access_cent_thunder)
-		if("Intel Officer")
-			return list(access_cent_general, access_cent_living)
-		if("Medical Officer")
-			return list(access_cent_general, access_cent_living, access_cent_medical)
-		if("Death Commando")
-			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
-		if("Research Officer")
-			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
-		if("BlackOps Commander")
-			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
-		if("Supreme Commander")
-			return get_all_centcom_access()
-
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_blueshield,
 	            access_medical, access_genetics, access_morgue, access_rd, access_cargoshop,
@@ -238,6 +217,8 @@
 	return list(access_syndicate)
 
 /proc/get_region_accesses(code)
+	// todo: we have defines for region codes: REGION_*
+	// but in wrong order
 	switch(code)
 		if(0)
 			return get_all_accesses()
@@ -444,153 +425,6 @@
 			return "Code Silver"
 		if(access_cent_captain)
 			return "Code Gold"
-
-/proc/get_all_jobs(silicons = FALSE)
-	var/list/all_jobs = list()
-	var/list/all_datums = subtypesof(/datum/job)
-	if(!silicons)
-		all_datums.Remove(list(/datum/job/ai, /datum/job/cyborg))
-	var/datum/job/jobdatum
-	for(var/jobtype in all_datums)
-		jobdatum = new jobtype
-		all_jobs.Add(jobdatum.title)
-	return all_jobs
-
-/proc/get_all_jobs_with_silicons()
-	return get_all_jobs(TRUE)
-
-/proc/get_all_centcom_jobs()
-	return list("VIP Guest",
-		"Custodian",
-		"Thunderdome Overseer",
-		"Intel Officer",
-		"Medical Officer",
-		"Death Commando",
-		"Research Officer",
-		"BlackOps Commander",
-		"Supreme Commander",
-		"Emergency Response Team",
-		"Emergency Response Team Leader",
-		"Organized Crimes Department",
-		)
-
-/proc/get_all_velocity_jobs()
-	return list("Velocity Chief",
-	            "Velocity Officer",
-	            "Velocity Medical Doctor")
-
-//gets the actual job rank (ignoring alt titles)
-//this is used solely for sechuds
-/obj/proc/GetJobRealName()
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/rank
-	var/assignment
-	if(istype(src, /obj/item/device/pda))
-		if(src:id)
-			rank = src:id:rank
-			assignment = src:id:assignment
-	else if(istype(src, /obj/item/weapon/card/id))
-		rank = src:rank
-		assignment = src:assignment
-
-	if( rank in joblist )
-		return rank
-
-	if( assignment in joblist )
-		return assignment
-
-	return "Unknown"
-
-//gets the alt title, failing that the actual job rank
-//this is unused
-/obj/proc/sdsdsd()	//GetJobDisplayName
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/assignment
-	if(istype(src, /obj/item/device/pda))
-		if(src:id)
-			assignment = src:id:assignment
-	else if(istype(src, /obj/item/weapon/card/id))
-		assignment = src:assignment
-
-	if(assignment)
-		return assignment
-
-	return "Unknown"
-
-/proc/FindNameFromID(mob/living/carbon/human/H)
-	ASSERT(istype(H))
-	var/obj/item/weapon/card/id/C = H.get_active_hand()
-	if( istype(C) || istype(C, /obj/item/device/pda) )
-		var/obj/item/weapon/card/id/ID = C
-
-		if( istype(C, /obj/item/device/pda) )
-			var/obj/item/device/pda/pda = C
-			ID = pda.id
-		if(!istype(ID))
-			ID = null
-
-		if(ID)
-			return ID.registered_name
-
-	C = H.wear_id
-
-	if( istype(C) || istype(C, /obj/item/device/pda) )
-		var/obj/item/weapon/card/id/ID = C
-
-		if( istype(C, /obj/item/device/pda) )
-			var/obj/item/device/pda/pda = C
-			ID = pda.id
-		if(!istype(ID))
-			ID = null
-
-		if(ID)
-			return ID.registered_name
-
-/proc/get_all_job_icons() //For all existing HUD icons
-	return joblist
-
-/proc/get_all_misc_job_icons() //Use for all misc and custom job hud icons if you ever need one!
-	return list("Prisoner",
-				"Marine",
-				"Marine Squad Leader",
-				"Senior Engineer",
-				"Senior Medic",
-				"Space Trader")
-
-/obj/proc/GetJobName() //Used in secHUD icon generation
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/jobName
-	var/alt
-	if(istype(src, /obj/item/device/pda))
-		var/obj/item/device/pda/P = src
-		if(P.id)
-			jobName = P.id.rank
-			alt = P.id.assignment
-	if(istype(src, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = src
-		jobName = I.rank
-		alt = I.assignment
-	if(istype(src, /obj/item/weapon/card/id/syndicate))
-		var/obj/item/weapon/card/id/syndicate/S = src
-		jobName = S.assignment
-		alt = S.assignment
-	if(alt in get_alternate_titles(jobName))
-		return alt
-	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
-		return jobName
-	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
-		return "Centcom"
-	if(jobName in get_all_velocity_jobs())
-		return jobName
-	if(jobName in get_all_misc_job_icons())
-		return jobName
-	return "Unknown" //Return unknown if none of the above apply
 
 /proc/get_accesslist_static_data(num_min_region = REGION_GENERAL, num_max_region = REGION_COMMAND)
 	var/list/retval

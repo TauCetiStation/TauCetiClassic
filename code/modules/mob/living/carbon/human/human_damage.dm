@@ -140,17 +140,17 @@
 // =============================================
 
 /mob/living/carbon/human/Stun(amount, ignore_canstun = FALSE)
-	if(HULK in mutations && !ignore_canstun)
+	if((HULK in mutations) && !ignore_canstun)
 		return SetStunned(0)
 	..()
 
 /mob/living/carbon/human/Weaken(amount, ignore_canstun = FALSE)
-	if(HULK in mutations && !ignore_canstun)
+	if((HULK in mutations) && !ignore_canstun)
 		return SetWeakened(0)
 	..()
 
 /mob/living/carbon/human/Paralyse(amount, ignore_canstun = FALSE)
-	if(HULK in mutations && !ignore_canstun)
+	if((HULK in mutations) && !ignore_canstun)
 		return SetParalysis(0)
 	..()
 

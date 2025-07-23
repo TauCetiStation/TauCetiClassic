@@ -207,8 +207,13 @@ var/global/list/blacklisted_builds
 		tdata = params2list(TopicData)
 		TopicData = null //Prevent calls to client.Topic from connect
 
+#ifndef OPENDREAM
 	if(!IsGuestKey(key) && authenticate)
 		hub_authenticated = TRUE
+#else
+	if(!IsGuestKey(key))
+		hub_authenticated = TRUE
+#endif
 
 	// check access token and associated ckey for guest accounts
 	if(IsGuestKey(key))

@@ -30,7 +30,7 @@ var/global/power_fail_event = FALSE
 
 	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas || !is_station_level(S.z))
+		if((current_area.type in skipped_areas) || !is_station_level(S.z))
 			continue
 		if(prob(25))
 			S.charge = rand(0, S.charge / 10)
@@ -66,7 +66,7 @@ var/global/power_fail_event = FALSE
 
 	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas || !is_station_level(S.z))
+		if((current_area.type in skipped_areas) || !is_station_level(S.z))
 			continue
 		if(badminery)
 			S.charge = S.capacity
