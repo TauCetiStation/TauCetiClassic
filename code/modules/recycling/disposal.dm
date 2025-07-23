@@ -495,11 +495,11 @@
 
 	if(!checkTrunk())
 		expel(H)
-		return
+	else
+		H.start(trunk) // start the holder processing movement
 
 	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
-	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
@@ -1285,7 +1285,7 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
+	var/obj/linked 	// the linked obj/machinery/disposal or /obj/structure/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/atom_init()
 	..()
@@ -1294,6 +1294,12 @@
 
 /obj/structure/disposalpipe/trunk/atom_init_late()
 	getlinked()
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if(istype(linked, /obj/machinery/disposal))
+		var/obj/machinery/disposal/D = linked
+		D.trunk = null
+	. = ..()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
