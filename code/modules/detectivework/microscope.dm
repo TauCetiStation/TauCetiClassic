@@ -23,22 +23,40 @@
 	RefreshParts()
 	update_icon()
 
-/obj/machinery/microscope/attackby(obj/item/used, mob/user)
-	if(sample)
-		to_chat(user, "<span class='warning'>There is already a sample in the microscope!</span>")
-		return
-
-	if(istype(used, /obj/item/weapon/swab)|| istype(used, /obj/item/weapon/forensic_sample/fibers) || istype(used, /obj/item/weapon/forensic_sample/print))
+/obj/machinery/microscope/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/weapon/swab)|| istype(O, /obj/item/weapon/forensic_sample/fibers) || istype(O, /obj/item/weapon/forensic_sample/print))
+		if(panel_open)
+			return
+		if(sample)
+			to_chat(user, "<span class='warning'>There is already a sample in the microscope!</span>")
+			return
 		add_fingerprint(user)
-		to_chat(user, "<span class='notice'>You put [used] inside the microscope.</span>")
-		user.unEquip(used)
-		used.forceMove(src)
-		sample = used
+		to_chat(user, "<span class='notice'>You put [O] inside the microscope.</span>")
+		user.unEquip(O)
+		O.forceMove(src)
+		sample = O
 		update_icon()
 		return
+
+	if(!scanning)
+		if(default_deconstruction_screwdriver(user, "microscope_off", "microscope", O))
+			if(sample)
+				sample.forceMove(get_turf(src))
+				sample = null
+			return
+
+	if(exchange_parts(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
+
+	update_icon()
+
 	return ..()
 
 /obj/machinery/microscope/attack_hand(mob/living/user)
+	if(panel_open)
+		return
 	if(!sample)
 		to_chat(user, "<span class='warning'>There is no sample in the microscope!</span>")
 		return
@@ -126,7 +144,7 @@
 
 /obj/machinery/microscope/update_icon()
 	icon_state = "microscope"
-	if(stat & NOPOWER)
+	if(panel_open || stat & NOPOWER)
 		icon_state += "_off"
 	if(sample)
 		icon_state += "_slide"

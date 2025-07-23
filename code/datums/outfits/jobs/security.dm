@@ -62,7 +62,7 @@
 	uniform = /obj/item/clothing/under/det
 	suit = /obj/item/clothing/suit/storage/det_suit
 	belt = /obj/item/device/pda/detective
-	gloves = /obj/item/clothing/gloves/forensics
+	gloves = /obj/item/clothing/gloves/black
 	shoes = /obj/item/clothing/shoes/brown
 	head = /obj/item/clothing/head/det_hat
 	l_ear = /obj/item/device/radio/headset/headset_sec
@@ -104,7 +104,7 @@
 
 	uniform = /obj/item/clothing/under/rank/forensic_technician
 	suit = /obj/item/clothing/suit/storage/forensics/red
-	gloves = /obj/item/clothing/gloves/forensics
+	gloves = /obj/item/clothing/gloves/black
 	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/device/pda/forensic
 	l_ear = /obj/item/device/radio/headset/headset_sec

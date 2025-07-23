@@ -50,13 +50,15 @@
 	name = "Crime inspection kit"
 	desc = "A stainless steel-coated suitcase for all your forensic needs. It feels heavy."
 	icon_state = "crimekit"
+	item_state_inventory = "crimekit"
+	item_state_world = "crimekit_world"
 	item_state = "crimekit"
 	w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/briefcase/crimekit/atom_init()
 	. = ..()
-	new /obj/item/weapon/storage/box/swabs(src)
-	new /obj/item/weapon/storage/box/swabs(src)
-	new /obj/item/weapon/storage/box/swabs(src)
-	new /obj/item/weapon/forensic_sample_kit(src)
+	new /obj/item/clothing/gloves/forensics(src)
 	new /obj/item/weapon/forensic_sample_kit/powder(src)
+	new /obj/item/weapon/forensic_sample_kit(src)
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/swab(src)

@@ -14766,7 +14766,6 @@
 /area/station/civilian/hydroponics)
 "ckE" = (
 /obj/machinery/microscope,
-/obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteredfull"
@@ -43357,7 +43356,6 @@
 	},
 /area/station/ai_monitored/eva)
 "hMC" = (
-/obj/structure/table/woodentable,
 /obj/machinery/microscope,
 /turf/simulated/floor/wood{
 	icon_state = "wood7"
@@ -77246,7 +77244,6 @@
 	},
 /area/station/medical/morgue)
 "ovo" = (
-/obj/structure/table,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},

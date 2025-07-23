@@ -344,7 +344,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/weapon/storage/briefcase/crimekit(src)
-	new /obj/item/clothing/gloves/forensics(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		new /obj/item/weapon/gun/energy/taser(src)
@@ -414,7 +414,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/weapon/storage/briefcase/crimekit(src)
-	new /obj/item/clothing/gloves/forensics(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
 

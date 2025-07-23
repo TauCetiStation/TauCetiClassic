@@ -8393,7 +8393,6 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/structure/table/woodentable,
 /obj/machinery/microscope,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
@@ -9126,7 +9125,6 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoU" = (
-/obj/structure/table/glass,
 /obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 1;
@@ -36656,7 +36654,6 @@
 /turf/simulated/wall,
 /area/station/rnd/robotics)
 "bmJ" = (
-/obj/structure/table/woodentable,
 /obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)

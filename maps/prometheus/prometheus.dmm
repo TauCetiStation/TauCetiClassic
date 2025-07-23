@@ -16694,14 +16694,13 @@
 /turf/environment/space,
 /area/space)
 "dCP" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/security/wooden_tv,
 /obj/structure/noticeboard{
 	pixel_y = 28
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "dDf" = (
@@ -69205,7 +69204,6 @@
 	},
 /area/station/engineering/atmos)
 "qrN" = (
-/obj/structure/table/woodentable,
 /obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
@@ -76250,11 +76248,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
 "sgm" = (
-/obj/structure/table/woodentable,
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
-/obj/machinery/microscope,
+/obj/structure/table/woodentable,
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "sgo" = (
@@ -85286,7 +85284,6 @@
 /obj/machinery/requests_console/forensic{
 	pixel_y = 28
 	},
-/obj/structure/table/glass,
 /obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 1;

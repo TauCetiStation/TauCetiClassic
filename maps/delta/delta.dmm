@@ -12966,7 +12966,6 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "avi" = (
-/obj/structure/table/woodentable,
 /obj/machinery/microscope,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
@@ -13008,7 +13007,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/structure/table/glass,
 /obj/machinery/microscope,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -50660,7 +50658,6 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/mass_driver)
 "iCW" = (
-/obj/structure/table/woodentable,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
 	icon_state = "siding_wood_line"

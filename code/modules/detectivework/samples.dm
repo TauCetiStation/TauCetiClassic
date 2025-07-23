@@ -3,8 +3,11 @@
 	desc = "Sterile cotton swab and test tube for taking DNA samples."
 	icon = 'icons/obj/detective_work.dmi'
 	icon_state = "swab"
+	item_state_inventory = "swab"
+	item_state_world = "swab_world"
+	item_state = "implantcase"
 	throwforce = 1
-	w_class = SIZE_MINUSCULE
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	qualities = list(
@@ -74,14 +77,21 @@
 
 	if(isliving(A))
 		return
+
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is already used.</span>")
 		return
+
 	if(inuse)
 		to_chat(user, "<span class='warning'>[src] is being used.</span>")
 		return
 
 	add_fingerprint(user)
+
+	if(!A.blood_DNA)
+		to_chat(user, "<span class='warning'>There is no blood to sample from [A].</span>")
+		return
+
 	inuse = TRUE
 	to_chat(user, "<span class='notice'>You start sampling [A].</span>")
 	if(do_after(user, 2 SECONDS, target = user))
@@ -112,6 +122,9 @@
 	name = "[initial(name)] (DNA - [source])"
 	desc = "[initial(desc)]: 'DNA sample from [source]'"
 	icon_state = "swab_used"
+	item_state_inventory = "swab_used"
+	item_state_world = "swab_used_world"
+	update_world_icon()
 	used = TRUE
 
 /obj/item/weapon/forensic_sample_kit
@@ -119,6 +132,8 @@
 	desc = "Magnifying glass and tweezers. Used to collect fibers."
 	icon = 'icons/obj/detective_work.dmi'
 	icon_state = "m_glass"
+	item_state_world = "m_glass_world"
+	item_state = "m_glass"
 	w_class = SIZE_TINY
 	qualities = list(
 		QUALITY_DETECTIVE_TOOL = 1
@@ -165,6 +180,8 @@
 	name = "fingerprint powder"
 	desc = "A jar of aluminum powder and a specialized brush."
 	icon_state = "dust"
+	item_state_world = "dust_world"
+	item_state = "teapot"
 	evidence_type = "fingerprint"
 	evidence_path = /obj/item/weapon/forensic_sample/print
 
@@ -191,6 +208,7 @@
 	name = "fiber bag"
 	desc = "Used to store fiber evidence for the detective."
 	icon_state = "fiberbag"
+	item_state_world = "fiberbag_world"
 
 /obj/item/weapon/forensic_sample/fibers/proc/merge_evidence(obj/item/weapon/forensic_sample/supplied, mob/user)
 	if(!supplied.evidence || !supplied.evidence.len)
@@ -212,6 +230,7 @@
 	name = "fingerprint tape"
 	desc = "Used to store fingerprint evidence for the detective."
 	icon_state = "fingerprint_tape"
+	item_state_world = "fingerprint_tape_world"
 
 /obj/item/weapon/forensic_sample/print/copy_evidence(atom/supplied)
 	if(supplied.fingerprints && supplied.fingerprints.len)
