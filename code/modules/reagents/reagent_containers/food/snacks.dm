@@ -198,7 +198,7 @@
 	else if(ismouse(M))
 		var/mob/living/simple_animal/mouse/N = M
 		if(M.layer == MOB_LAYER)
-			if(N.nutrition < NUTRITION_LEVEL_HUNGRY)
+			if(N.nutrition < 80)
 				N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
 				N.health = min(N.health + 1, N.maxHealth)
 				N.nutrition += 0.5 * bitesize
