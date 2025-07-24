@@ -21403,7 +21403,7 @@
 /area/station/maintenance/brig)
 "dwI" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/detective,
+/obj/item/weapon/book/manual/wiki/forensics,
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
