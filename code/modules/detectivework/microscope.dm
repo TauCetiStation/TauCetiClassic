@@ -78,7 +78,7 @@
 		if(istype(sample, /obj/item/weapon/swab))
 			var/obj/item/weapon/swab/swab = sample
 
-			report.name = ("Forensic Report №[+report_num]: [swab.name]")
+			report.name = ("Forensic Report №[++report_num]: [swab.name]")
 			report.info = "<b>Object analyzed:</b><br>[swab.name]<br><br>"
 			//dna data itself
 			var/data = "No data to analyze."
