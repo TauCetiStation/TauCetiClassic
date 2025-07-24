@@ -7455,7 +7455,7 @@
 	pixel_y = 32
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/book/manual/detective,
+/obj/item/weapon/book/manual/wiki/forensics,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "amk" = (
@@ -23645,7 +23645,7 @@
 /obj/structure/bookcase,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/book/manual/detective,
+/obj/item/weapon/book/manual/wiki/forensics,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aPQ" = (
