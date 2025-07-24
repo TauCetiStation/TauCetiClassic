@@ -78,7 +78,7 @@
 		if(istype(sample, /obj/item/weapon/swab))
 			var/obj/item/weapon/swab/swab = sample
 
-			report.name = ("Forensic Report №[report_num]: [swab.name]")
+			report.name = ("Forensic Report №[++report_num]: [swab.name]")
 			report.info = "<b>Object analyzed:</b><br>[swab.name]<br><br>"
 			//dna data itself
 			var/data = "No data to analyze."
@@ -91,7 +91,7 @@
 			report.info += data
 		else if(istype(sample, /obj/item/weapon/forensic_sample/fibers))
 			var/obj/item/weapon/forensic_sample/fibers/fibers = sample
-			report.name = ("Forensic Report №[report_num]: [fibers.name]")
+			report.name = ("Forensic Report №[++report_num]: [fibers.name]")
 			report.info = "<b>Object analyzed:</b><br>[fibers.name]<br><br>"
 			if(fibers.evidence)
 				report.info = "A molecular analysis of the provided sample revealed the presence of unique fiber strings.<br><br>"
