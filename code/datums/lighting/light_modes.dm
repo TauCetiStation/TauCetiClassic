@@ -25,7 +25,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/default
 	name = "Default"
 
-	color = "#fff4ed" //6000k
+	color = "#fff4ed" // 6000k
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
