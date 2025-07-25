@@ -162,7 +162,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/horror
 	name = "Horror"
 
-	color = "#6fcfba"
+	color = "#61ffc8"
 	power = 0.5
 	range = 5
 
