@@ -100,18 +100,27 @@
 	return ..()
 
 /obj/item/clothing/shoes/orange/attack_hand(mob/user)
-	var/confirmed = 1
+	var/confirmed = TRUE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(chained && src == H.shoes)
 			if(user.is_busy()) return
-			confirmed = 0
+			confirmed = FALSE
 			H.visible_message("<span class='notice'>[H] attempts to remove the [src]!</span>",
 			"<span class='notice'>You attempt to remove the [src]. (This will take around 2 minutes and you need to stand still)</span>")
 			if(do_after(user,1200,target = usr))
-				confirmed = 1
+				confirmed = TRUE
 	if(confirmed)
 		return ..()
+
+/obj/item/clothing/shoes/orange/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(chained && src == H.shoes)
+			if(src != over)
+				remove_outline()
+			return
+	. = ..()
 
 /obj/item/clothing/shoes/orange/candals/atom_init()
 	. = ..()
