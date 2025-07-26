@@ -152,7 +152,6 @@
 		burning -= 1
 		if(!burning)
 			var/obj/item/weapon/diseasedisk/d = new /obj/item/weapon/diseasedisk(loc)
-			d.update_world_icon()
 			d.analysed = analysed
 			if(analysed)
 				if (memorybank)
