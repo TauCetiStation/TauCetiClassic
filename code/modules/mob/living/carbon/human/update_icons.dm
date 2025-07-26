@@ -138,7 +138,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(U.rolled_down)
 				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
 					fem_appendix = "" // we do not have overweight sprites for women
-				if(icon_exists(icon_path, "[t_state]_d[fem_appendix]")) // double check if there is such sprite
+				if(icon_exists(icon_path, "[t_state]_d[fem_appendix]")) // check if there is such sprite
 					rolled_down_appendix = "_d"
 
 	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][rolled_down_appendix][fem_appendix][icon_state_appendix]", layer = layer)

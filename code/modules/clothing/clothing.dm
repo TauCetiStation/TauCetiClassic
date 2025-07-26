@@ -526,11 +526,6 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_UNIFORM
 
-/obj/item/clothing/under/atom_init()
-	. = ..()
-	if(icon_exists("icons/mob/uniform.dmi", "[item_state]_d"))
-		verbs += /obj/item/clothing/under/proc/rollsuit
-
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
 	rolled_down = FALSE
@@ -630,29 +625,23 @@ BLIND     // can't see anything
 	set src in usr
 	set_sensors(usr)
 
-/obj/item/clothing/under/proc/rollsuit()
+/obj/item/clothing/under/verb/rollsuit()
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
 	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
-	if(icon_exists("icons/mob/uniform.dmi", "[item_state]_d"))
-		rolled_down = !rolled_down
-		update_inv_mob()
-		to_chat(usr, "<span class='notice'>You roll down the uniform.</span>")
+	if(rolled_down)
+		to_chat(usr, "<span class='notice'>Вы пытаетесь распахнуть униформу.</span>")
 	else
-		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
+		to_chat(usr, "<span class='notice'>Вы пытаетесь застягнуть униформу.</span>")
+	rolled_down = !rolled_down
+	update_inv_mob()
 
 /obj/item/clothing/under/wash_act(w_color)
 	..()
 	fresh_laundered_until = world.time + 5 MINUTES
-	if(locate(/obj/item/clothing/under/proc/rollsuit) in verbs)
-		verbs -= /obj/item/clothing/under/proc/rollsuit
-	if(icon_exists("icons/mob/uniform.dmi", "[item_state]_d"))
-		verbs += /obj/item/clothing/under/proc/rollsuit
-	else
-		verbs -= /obj/item/clothing/under/proc/rollsuit
 
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
