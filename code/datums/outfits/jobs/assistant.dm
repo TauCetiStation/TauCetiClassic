@@ -2,7 +2,7 @@
 /datum/outfit/job/assistant
 	name = OUTFIT_JOB_NAME("Assistant Gear")
 
-	uniform = /obj/item/clothing/under/grey
+	uniform = /obj/item/clothing/under/colored/grey
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -21,7 +21,7 @@
 /datum/outfit/job/assistant/private_eye
 	name = OUTFIT_JOB_NAME("Private Eye")
 
-	uniform = /obj/item/clothing/under/black
+	uniform = /obj/item/clothing/under/colored/black
 	shoes = /obj/item/clothing/shoes/boots
 	suit = /obj/item/clothing/suit/leathercoat
 	l_pocket = /obj/item/weapon/lighter/zippo

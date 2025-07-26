@@ -195,7 +195,7 @@
 	name = "Responders: Death Squad"
 
 	l_ear = /obj/item/device/radio/headset/deathsquad
-	uniform = /obj/item/clothing/under/green
+	uniform = /obj/item/clothing/under/colored/green
 	shoes = /obj/item/clothing/shoes/boots/swat
 	suit = /obj/item/clothing/suit/armor/swat
 	gloves = /obj/item/clothing/gloves/combat
@@ -228,7 +228,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/ammo_box/speedloader/a357(P)
 
-	var/obj/item/clothing/under/green/U = H.w_uniform
+	var/obj/item/clothing/under/colored/green/U = H.w_uniform
 	if(istype(U))
 		var/obj/item/clothing/accessory/storage/black_vest/A = new(U)
 		LAZYADD(U.accessories, A)

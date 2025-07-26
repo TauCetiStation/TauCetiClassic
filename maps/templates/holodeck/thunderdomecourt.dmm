@@ -62,7 +62,7 @@
 /obj/structure/table/holotable,
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/clothing/suit/armor/tdome/red,
-/obj/item/clothing/under/red,
+/obj/item/clothing/under/colored/red,
 /obj/item/weapon/holo/esword/red,
 /turf/simulated/floor/holofloor{
 	dir = 8;
@@ -85,7 +85,7 @@
 /obj/structure/table/holotable,
 /obj/item/clothing/head/helmet/thunderdome,
 /obj/item/clothing/suit/armor/tdome/green,
-/obj/item/clothing/under/green,
+/obj/item/clothing/under/colored/green,
 /obj/item/weapon/holo/esword/green,
 /turf/simulated/floor/holofloor{
 	dir = 4;

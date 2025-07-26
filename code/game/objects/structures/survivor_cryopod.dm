@@ -110,7 +110,7 @@
 	fixed_name = "Major Tom" // ground control to maaaajor tom
 
 /obj/structure/survivor_cryopod/nasa/equip_survivor(mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/grey(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/colored/grey(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
 
@@ -119,7 +119,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/oxygen(H), SLOT_BACK)
 
 /obj/structure/survivor_cryopod/civilian/equip_survivor(mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/grey(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/colored/grey(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
 

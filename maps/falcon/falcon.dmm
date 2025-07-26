@@ -3846,7 +3846,7 @@
 "aha" = (
 /obj/structure/closet,
 /obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/under/orange,
+/obj/item/clothing/under/colored/orange,
 /obj/item/clothing/head/justice/yellow,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
@@ -7553,7 +7553,7 @@
 /area/station/cargo/storage)
 "aor" = (
 /obj/structure/closet,
-/obj/item/clothing/under/yellow,
+/obj/item/clothing/under/colored/yellow,
 /obj/item/clothing/shoes/yellow,
 /obj/effect/spawner/lootdrop/maintenance/four,
 /obj/effect/decal/cleanable/dirt,
@@ -17723,7 +17723,7 @@
 /area/station/solar/auxport)
 "hYv" = (
 /obj/structure/safe,
-/obj/item/clothing/under/yellow,
+/obj/item/clothing/under/colored/yellow,
 /obj/item/toy/katana,
 /obj/machinery/light/small{
 	dir = 4

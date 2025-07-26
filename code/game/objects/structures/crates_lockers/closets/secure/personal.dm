@@ -16,7 +16,7 @@
 	name = "patient's closet"
 
 /obj/structure/closet/secure_closet/personal/patient/PopulateContents()
-	new /obj/item/clothing/under/white(src)
+	new /obj/item/clothing/under/colored/white(src)
 	new /obj/item/clothing/shoes/white(src)
 
 /obj/structure/closet/secure_closet/personal/cabinet

@@ -161,7 +161,7 @@
 
 /obj/structure/closet/bombcloset/PopulateContents()
 	new /obj/item/clothing/suit/bomb_suit(src)
-	new /obj/item/clothing/under/black(src)
+	new /obj/item/clothing/under/colored/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/head/bomb_hood(src)
 

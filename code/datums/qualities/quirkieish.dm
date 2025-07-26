@@ -385,7 +385,7 @@
 
 	data_core.manifest_modify(ID.registered_name, ID.assignment)
 
-	H.equip_to_slot(new /obj/item/clothing/under/orange(H), SLOT_W_UNIFORM)
+	H.equip_to_slot(new /obj/item/clothing/under/colored/orange(H), SLOT_W_UNIFORM)
 	H.equip_to_slot(new /obj/item/clothing/shoes/orange(H), SLOT_SHOES)
 
 	if(H.wear_suit)

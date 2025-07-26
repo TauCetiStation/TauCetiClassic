@@ -49809,7 +49809,7 @@
 "lBv" = (
 /obj/structure/closet,
 /obj/item/clothing/head/soft/orange,
-/obj/item/clothing/under/orange,
+/obj/item/clothing/under/colored/orange,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -83441,7 +83441,7 @@
 	pixel_x = 1;
 	pixel_y = -2
 	},
-/obj/item/clothing/under/yellow,
+/obj/item/clothing/under/colored/yellow,
 /obj/item/toy/katana,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"

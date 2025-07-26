@@ -1,7 +1,7 @@
 /datum/outfit/job
 	name = "Standard Gear"
 
-	uniform = /obj/item/clothing/under/grey
+	uniform = /obj/item/clothing/under/colored/grey
 	shoes = /obj/item/clothing/shoes/black
 
 	l_ear = /obj/item/device/radio/headset

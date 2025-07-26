@@ -143,13 +143,12 @@
 
 /datum/gear/under/jumpsuit
 	display_name = "Generic jumpsuits"
-	path = /obj/item/clothing/under/grey
+	path = /obj/item/clothing/under/colored/grey
 
 /datum/gear/under/jumpsuit/New()
 	..()
 	var/list/jumpsuits = list()
-/// /obj/item/clothing/under/orange, Skipping this cause its for prisoners
-	for(var/color in list(/obj/item/clothing/under/black,/obj/item/clothing/under/grey,/obj/item/clothing/under/white,/obj/item/clothing/under/darkred,/obj/item/clothing/under/red,/obj/item/clothing/under/lightred,/obj/item/clothing/under/brown,/obj/item/clothing/under/lightbrown,/obj/item/clothing/under/yellow,/obj/item/clothing/under/yellowgreen,/obj/item/clothing/under/lightgreen,/obj/item/clothing/under/green,/obj/item/clothing/under/aqua,/obj/item/clothing/under/lightblue,/obj/item/clothing/under/blue,/obj/item/clothing/under/darkblue,/obj/item/clothing/under/lightpurple,/obj/item/clothing/under/purple,/obj/item/clothing/under/pink,/obj/item/clothing/under/maroon))
+	for(var/color in subtypesof(/obj/item/clothing/under/colored))
 		var/obj/item/clothing/under/color_type = color
 		jumpsuits[initial(color_type.name)] = color_type
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(jumpsuits))

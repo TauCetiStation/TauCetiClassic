@@ -1,7 +1,7 @@
 /datum/outfit/space_gear
 	name = "standard space gear"
 
-	uniform = /obj/item/clothing/under/grey
+	uniform = /obj/item/clothing/under/colored/grey
 	shoes = /obj/item/clothing/shoes/black
 
 	head = /obj/item/clothing/head/helmet/space/globose
@@ -18,7 +18,7 @@
 /datum/outfit/tournament
 	name = "Tournament: standard red"
 
-	uniform = /obj/item/clothing/under/red
+	uniform = /obj/item/clothing/under/colored/red
 	shoes = /obj/item/clothing/shoes/black
 
 	suit = /obj/item/clothing/suit/armor/vest
@@ -31,7 +31,7 @@
 /datum/outfit/tournament/green
 	name = "Tournament: standard green"
 
-	uniform = /obj/item/clothing/under/green
+	uniform = /obj/item/clothing/under/colored/green
 
 /datum/outfit/tournament_ganster
 	name = "Tournament: gangster"
@@ -170,7 +170,7 @@
 /datum/outfit/preparation
 	name = "preparation"
 
-	uniform = /obj/item/clothing/under/black
+	uniform = /obj/item/clothing/under/colored/black
 	shoes = /obj/item/clothing/shoes/boots
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_ear = /obj/item/device/radio/headset
@@ -183,7 +183,7 @@
 	name = "NanoTrasen: death squad"
 
 	l_ear = /obj/item/device/radio/headset/deathsquad
-	uniform = /obj/item/clothing/under/green
+	uniform = /obj/item/clothing/under/colored/green
 	shoes = /obj/item/clothing/shoes/boots/swat
 	suit = /obj/item/clothing/suit/armor/swat
 	gloves = /obj/item/clothing/gloves/combat
@@ -213,7 +213,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/ammo_box/speedloader/a357(P)
 
-	var/obj/item/clothing/under/green/U = H.w_uniform
+	var/obj/item/clothing/under/colored/green/U = H.w_uniform
 	if(istype(U))
 		var/obj/item/clothing/accessory/storage/black_vest/A = new(U)
 		LAZYADD(U.accessories, A)
@@ -347,7 +347,7 @@
 /datum/outfit/psyops_officer
 	name = "psyops officer"
 
-	uniform = /obj/item/clothing/under/darkred
+	uniform = /obj/item/clothing/under/colored/darkred
 	head = /obj/item/clothing/head/helmet/psyamp
 	suit = /obj/item/clothing/suit/armor/vest/fullbody/psy_robe
 	shoes = /obj/item/clothing/shoes/boots/combat
@@ -492,7 +492,7 @@
 	id = /obj/item/weapon/card/id/centcom/special_ops
 
 /datum/outfit/wizard
-	uniform = /obj/item/clothing/under/lightpurple
+	uniform = /obj/item/clothing/under/colored/lightpurple
 	shoes = /obj/item/clothing/shoes/sandal
 	l_ear = /obj/item/device/radio/headset
 	r_pocket = /obj/item/weapon/teleportation_scroll

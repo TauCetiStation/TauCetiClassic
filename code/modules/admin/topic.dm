@@ -1319,7 +1319,7 @@
 		M.loc = prison_cell
 		if(ishuman(M))
 			var/mob/living/carbon/human/prisoner = M
-			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/orange(prisoner), SLOT_W_UNIFORM)
+			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/colored/orange(prisoner), SLOT_W_UNIFORM)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
 
 		to_chat(M, "<span class='warning'>You have been sent to the prison station!</span>")
