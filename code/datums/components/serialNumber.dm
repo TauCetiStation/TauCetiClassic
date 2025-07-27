@@ -5,7 +5,7 @@
 	serialNumber = generateSerialNumber()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(onExamine))
 	var/area/A = get_area(target)
-	if(A)
+	if(A && (SSticker.current_state <= GAME_STATE_SETTING_UP))
 		var/obj/item/weapon/paper/P = A.inventoryPaper
 		P?.info += "<hr><b>[target.name]</b><br><u>Серийный номер: [serialNumber]</u><br>"
 

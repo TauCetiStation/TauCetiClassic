@@ -1147,9 +1147,13 @@ var/global/list/contributor_names
 	name = "Inventory for "
 	info = "<h1>Опись:</h1><br>"
 
+	var/inventoryTag
+
 /obj/item/weapon/paper/inventory/atom_init()
 	. = ..()
 	if(SSticker.current_state <= GAME_STATE_SETTING_UP)
 		var/area/A = get_area(src)
-		A.inventoryPaper = src
+		var/datum/weakref/PWeakref = WEAKREF(src).resolve()
+		global.inventoryPapers += PWeakref
+		A.inventoryPaper = PWeakref
 		src.name += A.name
