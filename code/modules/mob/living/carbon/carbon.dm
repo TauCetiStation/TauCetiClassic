@@ -326,7 +326,10 @@
 
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE)) // probably we need to create TRAIT_INGORE_ENVIRONMENT or something
 		return
-
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	switch(bodytemperature)
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			temp_alert = 2

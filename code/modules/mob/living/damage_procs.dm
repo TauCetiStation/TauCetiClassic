@@ -46,6 +46,10 @@
 /mob/living/proc/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
 		return FALSE
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	blocked = (100-blocked)/100
 	if(!effect || (blocked <= 0))
 		return FALSE

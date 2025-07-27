@@ -53,6 +53,7 @@
 
 /obj/item/weapon/phylactery/proc/egg_break()
 	new /obj/effect/decal/remains/robot(loc)
+	global.phylactery_eggs -= src
 	playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	if(egg_master)
 		visible_message("<span class='danger'>Филактерия [egg_master.real_name] разбивается вдребезги!</span>")
@@ -66,6 +67,7 @@
 	if(ishuman(H))
 		egg_master = H
 		H.phylactery_egg = src
+		global.phylactery_eggs += src
 		// immune to damage
 		H.mob_brute_mod.ModMultiplicative(0, src)
 		H.mob_burn_mod.ModMultiplicative(0, src)

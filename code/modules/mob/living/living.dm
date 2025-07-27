@@ -323,6 +323,10 @@
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return 0
 	if(amount > 0) // apply mod only for damage
 		amount *= mob_brute_mod.Get()
 	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
@@ -336,6 +340,10 @@
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return 0
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_BREATHE))
 		return
 	if(amount > 0)
@@ -351,6 +359,10 @@
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return 0
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		amount *= mob_tox_mod.Get()
 	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
@@ -366,6 +378,10 @@
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return 0
 	if(amount > 0)
 		amount *= mob_burn_mod.Get()
 	fireloss = clamp(fireloss + amount, 0, maxHealth * 2)
@@ -379,6 +395,10 @@
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return 0
 	if(amount > 0)
 		amount *= mob_clone_mod.Get()
 	cloneloss = clamp(cloneloss + amount, 0, maxHealth * 2)
@@ -392,6 +412,10 @@
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return 0
 	if(amount > 0)
 		amount *= mob_brain_mod.Get()
 	brainloss = clamp(brainloss + amount, 0, maxHealth * 2)
@@ -405,6 +429,10 @@
 	return halloss
 
 /mob/living/proc/adjustHalLoss(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return 0
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	if(amount > 0)

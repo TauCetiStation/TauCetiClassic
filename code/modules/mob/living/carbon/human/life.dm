@@ -271,6 +271,8 @@ var/global/list/tourette_bad_words= list(
 	if(radiation)
 		if(HAS_TRAIT(src, TRAIT_RADIATION_IMMUNE))
 			return
+		if(phylactery_egg)
+			return
 
 		if (radiation > 100)
 			radiation = 100
@@ -434,6 +436,8 @@ var/global/list/tourette_bad_words= list(
 			irradiate_one_mob(src, 5)
 
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
+		return
+	if(src.phylactery_egg)
 		return
 
 	if(bodytemperature > species.heat_level_1)

@@ -262,7 +262,11 @@
 				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
-
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.phylactery_egg)
+					to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it with [src].</span>")
+					return
 			chambered.BB.on_hit(M, O_MOUTH, 0)
 			if(chambered.BB.damage_type == HALLOSS)
 				to_chat(user, "<span class = 'notice'>Ow...</span>")

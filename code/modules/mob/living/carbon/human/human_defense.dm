@@ -249,6 +249,8 @@
 			R.teleport_user(6, src, attack_text)
 
 /mob/living/carbon/human/emp_act(severity)
+	if(phylactery_egg)
+		return
 	for(var/obj/O in src)
 		if(!O)
 			continue

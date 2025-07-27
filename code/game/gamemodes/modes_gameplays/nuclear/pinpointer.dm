@@ -313,5 +313,32 @@
 				if(201 to INFINITY)
 					icon_state = "pinonfar"
 
+
+/obj/item/weapon/pinpointer/highriskitems/egg
+	desc = "A pinpointer designed and configured to search for specific items using a network of quantum signals."
+	origin_tech = "programming=5;bluespace=5"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_pinpointer_mode)
+
+/obj/item/weapon/pinpointer/highriskitems/egg/toggle_mode()
+	reset_target()
+
+	var/obj/item/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in global.phylactery_eggs
+	if(!targetitem)
+		return
+	for(var/obj/item/I in global.phylactery_eggs)
+		if(!istype(I, targetitem))
+			continue
+		var/turf/T = get_turf(I)
+		if(is_centcom_level(T.z))
+			continue
+		target = I
+		break
+	if(!target)
+		to_chat(usr, "Failed to locate [targetitem.name]!")
+		return
+	to_chat(usr, "You set the pinpointer to locate [targetitem.name]")
+
+	return attack_self(usr)
+
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT

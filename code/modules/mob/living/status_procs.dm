@@ -51,6 +51,10 @@
 /mob/living/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	amount *= SS_WAIT_DEFAULT // workaround for our Stun amount
 	if(S)
@@ -62,6 +66,10 @@
 /mob/living/SetStunned(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(amount <= 0)
 		if(S)
@@ -77,6 +85,10 @@
 /mob/living/AdjustStunned(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	amount *= SS_WAIT_DEFAULT
 	if(S)
@@ -109,6 +121,10 @@
 /mob/living/Paralyse(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(IS_PARALYSE_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	amount *= SS_WAIT_DEFAULT
 	if(P)
@@ -120,6 +136,10 @@
 /mob/living/SetParalysis(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(IS_PARALYSE_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	if(amount <= 0)
 		if(P)
@@ -135,6 +155,10 @@
 /mob/living/AdjustParalysis(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(IS_PARALYSE_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	amount *= SS_WAIT_DEFAULT
 	if(P)
@@ -167,6 +191,10 @@
 /mob/living/Weaken(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
 	amount *= SS_WAIT_DEFAULT
 	if(K)
@@ -178,6 +206,10 @@
 /mob/living/SetWeakened(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
 	if(amount <= 0)
 		if(K)
@@ -193,6 +225,10 @@
 /mob/living/AdjustWeakened(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
 		return
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.phylactery_egg)
+			return
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
 	amount *= SS_WAIT_DEFAULT
 	if(K)

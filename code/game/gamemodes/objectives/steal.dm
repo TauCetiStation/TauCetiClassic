@@ -1,4 +1,5 @@
 var/global/list/possible_items_for_steal = list()
+var/global/list/phylactery_eggs = list()
 
 #define ADD_TO_POIFS_LIST(type) ADD_TO_GLOBAL_LIST(type, possible_items_for_steal)
 ADD_TO_POIFS_LIST(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
