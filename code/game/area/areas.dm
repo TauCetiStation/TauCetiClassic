@@ -95,6 +95,7 @@
 	var/list/obj/effect/spawner/mob_spawners
 
 	var/datum/weakref/inventoryPaper
+	var/areaInventoryTag
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -149,6 +150,10 @@ var/global/list/ghostteleportlocs = list()
 	if(!dynamic_lighting)
 		luminosity = 1
 		add_overlay(area_unsimulated_light_mask)
+
+	for(var/obj/item/weapon/paper/inventory/P in global.inventoryPapers)
+		if(P.inventoryTag == src.name)
+			inventoryPaper = WEAKREF(P)
 
 	update_areasize()
 	power_change() // all machines set to current power level, also updates lighting icon
