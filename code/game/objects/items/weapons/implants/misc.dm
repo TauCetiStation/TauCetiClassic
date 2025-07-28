@@ -211,7 +211,7 @@
 	if(!COOLDOWN_FINISHED(src, penalty_cooldown))
 		return
 
-	COOLDOWN_START(src, penalty_cooldown, 5 MINUTES)
+	COOLDOWN_START(src, penalty_cooldown, 4 MINUTES)
 
 	// check if there is any heads on the station
 	// todo: store crew in jobs/departments datums
