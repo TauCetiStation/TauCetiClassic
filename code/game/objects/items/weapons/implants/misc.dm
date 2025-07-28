@@ -227,7 +227,7 @@
 		penalty_stack++
 		return
 
-	switch(++penalty_stack)
+	switch(penalty_stack++)
 		if(1)
 			to_chat(implanted_mob, "<span class='bold warning'>Кто-то из глав или АВД должны быть на станции. Следует проверить их, или имплант напомнит о себе.</span>")
 		if(2)
