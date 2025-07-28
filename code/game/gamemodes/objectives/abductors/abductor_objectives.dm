@@ -5,7 +5,7 @@
 	var/team
 
 /datum/objective/experiment/New()
-	explanation_text = "Experiment on [target_amount] humans."
+	explanation_text = "Проведите [target_amount] [pluralize_russian(points, "эксперимент", "эксперимента", "экспериментов")] над людьми или другими разумными расами"
 
 /datum/objective/experiment/check_completion()
 	. = OBJECTIVE_LOSS
@@ -51,22 +51,20 @@
 		explanation_text += " someone."
 
 /datum/objective/abductee/shuttle
-	explanation_text = "You must escape the station! Get the shuttle called!"
+	explanation_text = "Вы должны сбежать со станции.! Сделайте так, чтобы был вызван шаттл!"
 
 /datum/objective/abductee/noclone
-	explanation_text = "Don't allow anyone to be cloned."
+	explanation_text = "Не позволяйте никому вас клонировать."
 
 /datum/objective/abductee/blazeit
-	explanation_text = "Your body must be improved. Ingest as many drugs as you can."
+	explanation_text = "Ваше тело должно быть улучшено. Употребите как можно больше лекарств."
 
 /datum/objective/abductee/yumyum
-	explanation_text = "You are hungry. Eat as much food as you can find."
+	explanation_text = "Вы голодны. Съешьте столько еды, сколько сможете найти..."
 
 /datum/objective/abductee/insane
-	explanation_text = "You see you see what they cannot you see the open door you seeE you SEeEe you SEe yOU seEee SHOW THEM ALL"
-
-/datum/objective/abductee/cannotmove
-	explanation_text = "Convince the crew that you are a paraplegic."
+	explanation_text = "Ты видишь, ты видишь то, что они не видят, ты видишь открытую дверь, ты ВидИимиишь, ТЫ ВИДИШЬ, ты види~и~и~ишь~, Т Ы  В И Д И Ш Ь"
+	explanation_text = " Убедите команду, что вы паралитик."
 
 /datum/objective/abductee/deadbodies
 	explanation_text = "Start a collection of corpses. Don't kill people to get these corpses."
@@ -128,7 +126,7 @@
 	explanation_text = "So much lies undiscovered. Look deeper into the machinations of the universe."
 
 /datum/objective/abductee/build
-	explanation_text = "Expand the station."
+	explanation_text = "Расширьте границы станции."
 
 /datum/objective/abductee/pragnant
 	explanation_text = "You are pregnant and soon due. Find a safe place to deliver your baby."
