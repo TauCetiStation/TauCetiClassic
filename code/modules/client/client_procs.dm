@@ -254,6 +254,9 @@ var/global/list/blacklisted_builds
 
 	global.ahelp_tickets?.ClientLogin(src)
 
+	log_game("[key_name(src)] connected.")
+	message_admins("[ADMIN_LOOKUPJMP(mob)] connected.")
+
 	if(!IsGuestKey(key))
 		update_supporter_status()
 
@@ -310,9 +313,6 @@ var/global/list/blacklisted_builds
 		tooltip.set_state(TRUE)
 
 	SSdemo.write_event_line("login [ckey]")
-
-	log_game("[key_name(src)] connected.")
-	message_admins("[ADMIN_LOOKUPJMP(mob)] connected.")
 
 	connection_time = world.time
 
