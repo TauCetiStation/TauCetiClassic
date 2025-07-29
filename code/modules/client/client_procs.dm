@@ -413,7 +413,7 @@ var/global/list/blacklisted_builds
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
 
 	log_game("[key_name(src)] disconnected.")
-	message_admins("[key_name_admin(src)] [ADMIN_PPJMPFLW(mob)] disconnected.")
+	message_admins("[key_name(src)] [ADMIN_PPJMPFLW(mob)] disconnected.")
 
 	handle_leave()
 
