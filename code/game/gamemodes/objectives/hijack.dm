@@ -1,5 +1,5 @@
 /datum/objective/hijack
-	explanation_text = "Угоните шаттл смены экипажа, сбежав в одиночку. Вы можете использовать любые средства для достижения своих целей."
+	explanation_text = "Угоните шаттл смены экипажа, сбежав в одиночку. Вы можете использовать для этого любые средства и возможности."
 
 /datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat != CONSCIOUS)
