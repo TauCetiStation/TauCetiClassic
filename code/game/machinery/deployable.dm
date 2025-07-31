@@ -143,7 +143,7 @@ for reference:
 	req_access = list(access_security)//I'm changing this until these are properly tested./N
 
 /obj/machinery/deployable/barrier
-	name = "deployable barrier"
+	name = "deployable barrier - SECURITY"
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
 	icon = 'icons/obj/objects.dmi'
 	anchored = FALSE
@@ -151,11 +151,12 @@ for reference:
 	icon_state = "barrier0"
 	max_integrity = 100
 	var/locked = 0.0
+	var/department = "" // sec by default
 //	req_access = list(access_maint_tunnels)
 
 /obj/machinery/deployable/barrier/atom_init()
 	. = ..()
-	icon_state = "barrier[locked]"
+	icon_state = "barrier[department][locked]"
 
 /obj/machinery/deployable/barrier/deconstruct(disassembled)
 	explode()
@@ -173,7 +174,7 @@ for reference:
 			if(emagged < 2.0)
 				locked = !locked
 				anchored = !anchored
-				icon_state = "barrier[locked]"
+				icon_state = "barrier[department][locked]"
 				to_chat(user, "Barrier lock toggled [locked ? "on" : "off"].")
 				return
 			else
@@ -227,7 +228,7 @@ for reference:
 	if(prob(50/severity))
 		locked = !locked
 		anchored = !anchored
-		icon_state = "barrier[src.locked]"
+		icon_state = "barrier[department][src.locked]"
 
 /obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -250,3 +251,90 @@ for reference:
 	explosion(src.loc,-1,-1,0)
 	if(src)
 		qdel(src)
+
+
+/obj/machinery/deployable/barrier/cargo
+	name = "deployable barrier - CARGO"
+	req_access = list(access_mailsorting)
+	department = "cargo"
+
+/obj/machinery/deployable/barrier/medical
+	name = "deployable barrier - MEDBAY"
+	req_access = list(access_medical)
+	department = "med"
+
+/obj/machinery/deployable/barrier/science
+	name = "deployable barrier - RnD"
+	req_access = list(access_research)
+	department = "sci"
+
+/obj/machinery/deployable/barrier/engineering
+	name = "deployable barrier - ENGINEERING"
+	req_access = list(access_engineering_lobby)
+	department = "eng"
+
+/obj/machinery/deployable/barrier/civilian
+	name = "deployable barrier - CIVILIAN"
+	req_access = list(access_hop)
+	department = "civ"
+
+/obj/item/banner
+	name = "banner"
+	desc = "A banner with Nanotrasen's logo on it."
+	icon = 'icons/obj/banner.dmi'
+	icon_state = "banner"
+	force = 8
+	var/warcry = "СЛАВА НАНОТРАЗЕН!"
+	COOLDOWN_DECLARE(banner_cooldown)
+
+/obj/item/banner/attack_self(mob/living/carbon/human/user)
+	if(!COOLDOWN_FINISHED(src, banner_cooldown))
+		return
+	if(warcry)
+		user.say("[warcry]")
+	COOLDOWN_START(src, banner_cooldown, 3 SECONDS)
+	var/old_transform = user.transform
+	user.transform *= 1.2
+	animate(user, transform = old_transform, time = 10)
+
+/obj/item/banner/security
+	name = "securistan banner"
+	desc = "The banner of Securistan, ruling the station with an iron fist."
+	icon_state = "banner_security"
+	item_state = "banner_security"
+	warcry = "СЛАВА БРИГУ!"
+
+/obj/item/banner/medical
+	name = "meditopia banner"
+	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
+	icon_state = "banner_medical"
+	item_state = "banner_medical"
+	warcry = "СЛАВА МЕДБЕЮ!"
+
+/obj/item/banner/science
+	name = "sciencia banner"
+	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
+	icon_state = "banner_science"
+	item_state = "banner_science"
+	warcry = "СЛАВА РНД!"
+
+/obj/item/banner/cargo
+	name = "cargonia banner"
+	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
+	icon_state = "banner_cargo"
+	item_state = "banner_cargo"
+	warcry = "СЛАВА КАРГОНИИ!"
+
+/obj/item/banner/engineering
+	name = "engitopia banner"
+	desc = "The banner of Engitopia, wielders of limitless power."
+	icon_state = "banner_engineering"
+	item_state = "banner_engineering"
+	warcry = "СЛАВА ИНЖЕНЕРКЕ!"
+
+/obj/item/banner/civilian
+	name = "civilian banner"
+	icon_state = "banner_civilian"
+	item_state = "banner_civilian"
+	desc = "A green banner."
+	warcry = "СЛАВА ГРАЖДАНКЕ!"

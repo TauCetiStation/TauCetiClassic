@@ -8,8 +8,8 @@
 	title = JOB_CAPTAIN
 	departments = list(DEP_COMMAND)
 	order = CREW_INTEND_HEADS(1)
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
 	idtype = /obj/item/weapon/card/id/gold

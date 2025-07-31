@@ -10,7 +10,7 @@
 	departments = list(DEP_SILICON)
 	order = CREW_INTEND_EMPLOYEE(1)
 	total_positions = 0
-	spawn_positions = 1
+	spawn_positions = 0
 	selection_color = "#ccffcc"
 	supervisors = "your laws"
 	req_admin_notify = 1
