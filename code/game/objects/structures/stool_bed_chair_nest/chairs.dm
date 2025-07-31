@@ -520,6 +520,7 @@
 		cut_overlay(armrest)
 
 /obj/structure/stool/bed/chair/comfy/attackby(obj/item/W, mob/user)
+	..()
 	if(isscrewing(W))
 		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 		if(anchored == TRUE)
