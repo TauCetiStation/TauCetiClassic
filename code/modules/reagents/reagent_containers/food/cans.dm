@@ -1,6 +1,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans
 	name = "soda can"
-	var/canopened = 0
+	var/canopened = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/atom_init()
 	. = ..()
@@ -9,13 +9,34 @@
 		flags &= ~OPENCONTAINER
 		verbs -= /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 
+/obj/item/weapon/reagent_containers/food/drinks/cans/update_icon()
+	. = ..()
+	if(canopened)
+		add_overlay(image(icon_state, "can_open"))
+
+	var/datum/reagents/R = src.reagents
+	if(!R?.total_volume)
+		item_state_world = "[initial(item_state_world)]_empty"
+	else
+		item_state_world = initial(item_state_world)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/dropped()
+	. = ..()
+	update_icon()
+	cut_overlays()
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/mob_pickup(mob/user, hand_index)
+	. = ..()
+	update_icon()
+
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
 		playsound(src, pick(SOUNDIN_CAN_OPEN), VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		flags |= OPENCONTAINER
 		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
-		canopened = 1
+		canopened = TRUE
+		update_icon()
 	else
 		return
 
@@ -43,6 +64,7 @@
 			reagents.reaction(M, INGEST)
 			addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, gulp_size), 5)
 
+		update_icon()
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else if (!canopened)
@@ -67,6 +89,7 @@
 			var/refill = R.get_master_reagent_id()
 			addtimer(CALLBACK(R, TYPE_PROC_REF(/datum/reagents, add_reagent), refill, fillevel), 600)
 
+		update_icon()
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 
@@ -89,6 +112,7 @@
 
 		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+		update_icon()
 
 	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
@@ -107,6 +131,7 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
+		update_icon()
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
@@ -118,26 +143,111 @@
 	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		reagents.standard_splash(target, user=user)
+		update_icon()
 
 //DRINKS
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/cola
-	name = "Space Cola"
-	desc = "Cola. in space."
-	icon_state = "cola"
-	list_reagents = list("cola" = 30)
+	name	 			 = "Space Cola"
+	desc 				 = "Cola. in space."
+	icon_state 			 = "cola"
+	item_state_inventory = "cola"
+	item_state_world 	 = "cola_w"
+	list_reagents 		 = list("cola" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/brepsi
-	name = "Brepsi"
-	desc = "Three or four sips of an absolutely refreshing drink."
-	icon_state = "brepsi"
-	list_reagents = list("cola" = 30)
+	name 				 = "Brepsi"
+	desc 				 = "Three or four sips of an absolutely refreshing drink."
+	icon_state 			 = "brepsi"
+	item_state_inventory = "brepsi"
+	item_state_world 	 = "brepsi_w"
+	list_reagents 		 = list("cola" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind
+	name			 	 = "Space Mountain Wind"
+	desc 			 	 = "Blows right through you like a space wind."
+	icon_state 			 = "space_mountain_wind"
+	item_state_inventory = "space_mountain_wind"
+	item_state_world 	 = "space_mountain_wind_w"
+	list_reagents 		 = list("spacemountainwind" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/thirteenloko
+	name				 = "Thirteen Loko"
+	desc 				 = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly."
+	icon_state 			 = "thirteen_loko"
+	item_state_inventory = "thirteen_loko"
+	item_state_world 	 = "thirteen_loko_w"
+	list_reagents 		 = list("thirteenloko" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb
+	name 				 = "Dr. Gibb"
+	desc  				 = "A delicious mixture of 42 different flavors."
+	icon_state 			 = "dr_gibb"
+	item_state_inventory = "dr_gibb"
+	item_state_world 	 = "dr_gibb_w"
+	list_reagents 		 = list("dr_gibb" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/starkist
+	name 				 = "Star-kist"
+	desc 				 = "The taste of a star in liquid form. And, a bit of tuna...?"
+	icon_state 			 = "starkist"
+	item_state_inventory = "starkist"
+	item_state_world 	 = "starkist_w"
+	list_reagents 		 = list("sodawater" = 15, "orangejuice" = 15)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/space_up
+	name 				 = "Space-Up"
+	desc 				 = "Tastes like a hull breach in your mouth."
+	icon_state 			 = "space-up"
+	item_state_inventory = "space-up"
+	item_state_world 	 = "space-up_w"
+	list_reagents 		 = list("space_up" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/lemon_lime
+	name 			 	 = "Lemon-Lime"
+	desc 				 = "You wanted ORANGE. It gave you Lemon Lime."
+	icon_state 			 = "lemon-lime"
+	item_state_inventory = "lemon-lime"
+	item_state_world 	 = "lemon-lime_w"
+	list_reagents 		 = list("lemon_lime" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea
+	name 			 	 = "Vrisk Serket Iced Tea"
+	desc 				 = "That sweet, refreshing southern earthy flavor. That's where it's from, right? South Earth?"
+	icon_state 			 = "ice_tea_can"
+	item_state_inventory = "ice_tea_can"
+	item_state_world 	 = "ice_tea_can_w"
+	list_reagents 		 = list("icetea" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice
+	name 				 = "Grapel Juice"
+	desc 				 = "500 pages of rules of how to appropriately enter into a combat with this juice!"
+	icon_state 			 = "purple_can"
+	item_state_inventory = "purple_can"
+	item_state_world 	 = "purple_can_w"
+	list_reagents 	 	 = list("grapejuice" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/tonic
+	name 				 = "T-Borg's Tonic Water"
+	desc 			 	 = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	icon_state 			 = "tonic"
+	item_state_inventory = "tonic"
+	item_state_world 	 = "tonic_w"
+	list_reagents 		 = list("tonic" = 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater
+	name 				 = "Soda Water"
+	desc 				 = "A can of soda water. Still water's more refreshing cousin."
+	icon_state 			 = "sodawater"
+	item_state_inventory = "sodawater"
+	item_state_world 	 = "sodawater_w"
+	list_reagents 		 = list("sodawater" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle
-	name = "Bottled Water"
-	desc = "Introduced to the vending machines by Skrellian request, this water comes straight from the Martian poles."
-	icon_state = "waterbottle"
-	list_reagents = list("water" = 30)
+	name 				 = "Bottled Water"
+	desc 				 = "Introduced to the vending machines by Skrellian request, this water comes straight from the Martian poles."
+	icon_state 			 = "waterbottle"
+	list_reagents 		 = list("water" = 30)
 
 ///chem list, minus foods/drinks/base chems/paint and special chems, only for waterbottle/relic
 #define RELIC_WATER_CHEM_LIST list(\
@@ -167,63 +277,3 @@
 	. = ..()
 
 #undef RELIC_WATER_CHEM_LIST
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind
-	name = "Space Mountain Wind"
-	desc = "Blows right through you like a space wind."
-	icon_state = "space_mountain_wind"
-	list_reagents = list("spacemountainwind" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/thirteenloko
-	name = "Thirteen Loko"
-	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly."
-	icon_state = "thirteen_loko"
-	list_reagents = list("thirteenloko" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb
-	name = "Dr. Gibb"
-	desc = "A delicious mixture of 42 different flavors."
-	icon_state = "dr_gibb"
-	list_reagents = list("dr_gibb" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/starkist
-	name = "Star-kist"
-	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
-	icon_state = "starkist"
-	list_reagents = list("sodawater" = 15, "orangejuice" = 15)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/space_up
-	name = "Space-Up"
-	desc = "Tastes like a hull breach in your mouth."
-	icon_state = "space-up"
-	list_reagents = list("space_up" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/lemon_lime
-	name = "Lemon-Lime"
-	desc = "You wanted ORANGE. It gave you Lemon Lime."
-	icon_state = "lemon-lime"
-	list_reagents = list("lemon_lime" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea
-	name = "Vrisk Serket Iced Tea"
-	desc = "That sweet, refreshing southern earthy flavor. That's where it's from, right? South Earth?"
-	icon_state = "ice_tea_can"
-	list_reagents = list("icetea" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice
-	name = "Grapel Juice"
-	desc = "500 pages of rules of how to appropriately enter into a combat with this juice!"
-	icon_state = "purple_can"
-	list_reagents = list("grapejuice" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/tonic
-	name = "T-Borg's Tonic Water"
-	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
-	icon_state = "tonic"
-	list_reagents = list("tonic" = 50)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater
-	name = "Soda Water"
-	desc = "A can of soda water. Still water's more refreshing cousin."
-	icon_state = "sodawater"
-	list_reagents = list("sodawater" = 50)

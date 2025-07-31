@@ -1,18 +1,20 @@
 /obj/item/weapon/grenade/cancasing
-	name = "can explosive"
-	desc = "Слабое, самодельное устройство."
-	w_class = SIZE_TINY
-	icon = 'icons/obj/makeshift.dmi'
-	icon_state = "can_grenade_preview"
-	item_state = "flashbang"
-	throw_speed = 4
-	throw_range = 20
-	flags = CONDUCT
-	slot_flags = SLOT_FLAGS_BELT
-	active = 0
-	det_time = 50
-	activate_sound = 'sound/items/matchstick_light.ogg'
-	var/range = 3
+	name 			 	 = "can explosive"
+	desc 				 = "Слабое, самодельное устройство."
+	w_class 			 = SIZE_TINY
+	icon 				 = 'icons/obj/makeshift.dmi'
+	icon_state 			 = "canbomb1"
+	item_state_inventory = "canbomb1"
+	item_state_world	 = "canbomb1_inworld"
+	item_state 			 = "flashbang"
+	throw_speed 		 = 4
+	throw_range 		 = 20
+	flags 				 = CONDUCT
+	slot_flags 			 = SLOT_FLAGS_BELT
+	active 	 			 = FALSE
+	det_time 			 = 50
+	activate_sound 		 = 'sound/items/matchstick_light.ogg'
+	var/range 			 = 3
 	var/list/times
 
 	// Used to visualize can grenade correctly
@@ -30,35 +32,17 @@
 	else
 		range = pick(2,2,2, 3,3,3, 4)
 
-/obj/item/weapon/grenade/cancasing/CheckParts(list/parts_list)
-	..()
-	for(var/obj/item/I in contents)
-		if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/cans))
-			can_icon = I.icon
-			can_icon_state = I.icon_state
-		else if(istype(I, /obj/item/stack/cable_coil))
-			wire_color = I.color
-	update_icon()
-
 /obj/item/weapon/grenade/cancasing/update_icon()
-	if(can_icon && can_icon_state)
-		icon = can_icon
-		icon_state = can_icon_state
-
-	var/list/overlays_list = list()
-
-	overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_igniter")
-
-	var/mutable_appearance/I = mutable_appearance('icons/obj/makeshift.dmi', "can_grenade_wired")
-	if(wire_color)
-		I.color = wire_color
-	overlays_list += I
-
+	. = ..()
 	if(active)
-		overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_active")
+		icon_state 			 += "_activated"
+		item_state_inventory += "_activated"
+		item_state_world 	 += "_activated"
 
-	cut_overlays()
-	add_overlay(overlays_list)
+
+/obj/item/weapon/grenade/cancasing/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
+		return
 
 /obj/item/weapon/grenade/cancasing/activate(mob/user)
 	if(user)
@@ -67,7 +51,7 @@
 		if(T)
 			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
 
-	active = 1
+	active = TRUE
 	update_icon()
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER)
 	addtimer(CALLBACK(src, PROC_REF(prime)), det_time)
@@ -82,32 +66,16 @@
 	to_chat(user, "Вы не можете сказать, когда она взорвется!")
 
 /obj/item/weapon/grenade/cancasing/rag
-	icon_state = "can_grenade_rag_preview"
+	icon_state 			 = "canbomb2"
+	item_state_inventory = "canbomb2"
+	item_state_world 	 = "canbomb2_inworld"
 
-/obj/item/weapon/grenade/cancasing/rag/update_icon()
-	if(can_icon && can_icon_state)
-		icon = can_icon
-		icon_state = can_icon_state
-
-	var/list/overlays_list = list()
-
-	var/mutable_appearance/I = mutable_appearance('icons/obj/makeshift.dmi', "can_grenade_rag_wired")
-	if(wire_color)
-		I.color = wire_color
-	overlays_list += I
-
-	overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_rag")
-
-	if(active)
-		overlays_list += image('icons/obj/makeshift.dmi', "can_grenade_rag_active")
-
-	cut_overlays()
-	add_overlay(overlays_list)
 
 /obj/item/weapon/grenade/cancasing/rag/attack_self(mob/user)
 	return
 
 /obj/item/weapon/grenade/cancasing/rag/attackby(obj/item/I, mob/user, params)
+	. = ..()
 	if(active)
 		return
 
