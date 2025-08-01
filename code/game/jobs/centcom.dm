@@ -7,8 +7,8 @@
 	title = JOB_BLUESHIELD
 	departments = list(DEP_SPECIAL)
 	order = CREW_INTEND_EMPLOYEE(1)
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "The Central Command"
 	selection_color = "#6c7391"
 	idtype = /obj/item/weapon/card/id/blueshield
@@ -33,8 +33,8 @@
 	departments = list(DEP_SPECIAL)
 	order = CREW_INTEND_EMPLOYEE(2)
 	title = "Internal Affairs Agent"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "The Central Command"
 	selection_color = "#6c7391"
 	idtype = /obj/item/weapon/card/id/int
