@@ -17,11 +17,6 @@
 	var/range 			 = 3
 	var/list/times
 
-	// Used to visualize can grenade correctly
-	var/can_icon
-	var/can_icon_state
-	var/wire_color
-
 /obj/item/weapon/grenade/cancasing/atom_init()
 	. = ..()
 	times = list("5" = 10, "-1" = 20, "[rand(30, 80)]" = 50, "[rand(65, 180)]" = 20) // "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
