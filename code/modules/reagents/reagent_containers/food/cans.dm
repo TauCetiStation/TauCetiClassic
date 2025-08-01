@@ -21,9 +21,9 @@
 		item_state_world = initial(item_state_world)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/dropped()
-	. = ..()
 	update_icon()
 	cut_overlays()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/mob_pickup(mob/user, hand_index)
 	. = ..()
@@ -64,7 +64,6 @@
 			reagents.reaction(M, INGEST)
 			addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, gulp_size), 5)
 
-		update_icon()
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else if (!canopened)
@@ -89,7 +88,6 @@
 			var/refill = R.get_master_reagent_id()
 			addtimer(CALLBACK(R, TYPE_PROC_REF(/datum/reagents, add_reagent), refill, fillevel), 600)
 
-		update_icon()
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 
@@ -112,7 +110,6 @@
 
 		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
-		update_icon()
 
 	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
@@ -131,7 +128,6 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
-		update_icon()
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
@@ -143,7 +139,6 @@
 	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		reagents.standard_splash(target, user=user)
-		update_icon()
 
 //DRINKS
 
