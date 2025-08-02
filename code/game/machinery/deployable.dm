@@ -140,7 +140,7 @@ for reference:
 	name = "deployable"
 	desc = "deployable"
 	icon = 'icons/obj/objects.dmi'
-	req_access = list(access_security)//I'm changing this until these are properly tested./N
+	req_access = list(access_security_barrier)//I'm changing this until these are properly tested./N
 
 /obj/machinery/deployable/barrier
 	name = "deployable barrier - SECURITY"
@@ -255,27 +255,27 @@ for reference:
 
 /obj/machinery/deployable/barrier/cargo
 	name = "deployable barrier - CARGO"
-	req_access = list(access_mailsorting)
+	req_access = list(access_cargo_barrier)
 	department = "cargo"
 
 /obj/machinery/deployable/barrier/medical
 	name = "deployable barrier - MEDBAY"
-	req_access = list(access_medical)
+	req_access = list(access_medical_barrier)
 	department = "med"
 
 /obj/machinery/deployable/barrier/science
 	name = "deployable barrier - RnD"
-	req_access = list(access_research)
+	req_access = list(access_research_barrier)
 	department = "sci"
 
 /obj/machinery/deployable/barrier/engineering
 	name = "deployable barrier - ENGINEERING"
-	req_access = list(access_engineering_lobby)
+	req_access = list(access_engineering_barrier)
 	department = "eng"
 
 /obj/machinery/deployable/barrier/civilian
 	name = "deployable barrier - CIVILIAN"
-	req_access = list(access_hop)
+	req_access = list(access_civilian_barrier)
 	department = "civ"
 
 /obj/item/banner

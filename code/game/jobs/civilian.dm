@@ -23,7 +23,7 @@
 		access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 		access_crematorium, access_kitchen, access_cargo, access_cargoshop, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
+		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber, access_civilian_barrier
 	)
 	outfit = /datum/outfit/job/hop
 	/*
@@ -45,7 +45,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargoshop, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargoshop, access_qm, access_mint, access_mining, access_mining_station, access_recycler, access_cargo_barrier)
 	salary = 0
 	starting_money = 60
 	minimal_player_ingame_minutes = 960
@@ -69,12 +69,12 @@
 	title = JOB_CARGO_TECH
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(2)
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 3
+	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_maint_tunnels, access_cargo, access_cargoshop, access_mailsorting)
+	access = list(access_maint_tunnels, access_cargo, access_cargoshop, access_mailsorting, access_cargo_barrier)
 	salary = 0
 	starting_money = 25
 	minimal_player_ingame_minutes = 480
@@ -92,7 +92,7 @@
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
+	access = list(access_mining, access_mint, access_mining_station, access_mailsorting, access_cargo_barrier)
 	salary = 0
 	starting_money = 30
 	minimal_player_ingame_minutes = 480
@@ -110,7 +110,7 @@
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_mailsorting, access_recycler)
+	access = list(access_mailsorting, access_recycler, access_cargo_barrier)
 	salary = 0
 	starting_money = 20
 	minimal_player_ingame_minutes = 480
@@ -135,7 +135,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_bar)
+	access = list(access_bar, access_civilian_barrier)
 	salary = 40
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/bartender
@@ -151,12 +151,12 @@
 	title = JOB_CHEF
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(6)
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_kitchen)
+	access = list(access_kitchen, access_civilian_barrier)
 	salary = 40
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
@@ -178,12 +178,12 @@
 	title = JOB_HYDRO
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(7)
-	total_positions = 3
-	spawn_positions = 2
+	total_positions = 2
+	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
+	access = list(access_hydroponics, access_civilian_barrier) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	salary = 60
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 120
@@ -199,7 +199,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby)
+	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby, access_civilian_barrier)
 	salary = 50
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
@@ -220,7 +220,7 @@
 	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
-	skillsets = list("Barber" = /datum/skillset/barber)
+	skillsets = list("Barber" = /datum/skillset/barber, access_civilian_barrier)
 
 /datum/job/librarian
 	title = JOB_LIBRARIAN
@@ -231,7 +231,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_library)
+	access = list(access_library, access_civilian_barrier)
 	salary = 40
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
@@ -247,7 +247,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
-	access = list(access_clown, access_theatre)
+	access = list(access_clown, access_theatre, access_civilian_barrier)
 	salary = 20
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
@@ -269,7 +269,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/mime
-	access = list(access_mime, access_theatre)
+	access = list(access_mime, access_theatre, access_civilian_barrier)
 	salary = 20
 	outfit = /datum/outfit/job/mime
 	skillsets = list("Mime" = /datum/skillset/mime)
@@ -292,7 +292,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_morgue, access_chapel_office, access_crematorium)
+	access = list(access_morgue, access_chapel_office, access_crematorium, access_civilian_barrier)
 	salary = 40
 	alt_titles = list("Counselor")
 	minimal_player_ingame_minutes = 480

@@ -1,8 +1,10 @@
 /var/const/access_security = 1 // Security equipment
+/var/const/access_security_barrier = 301
 /var/const/access_brig = 2 // Brig timers and permabrig
 /var/const/access_armory = 3
 /var/const/access_forensics_lockers= 4
 /var/const/access_medical = 5
+/var/const/access_medical_barrier = 305
 /var/const/access_morgue = 6
 /var/const/access_tox = 7
 /var/const/access_tox_storage = 8
@@ -45,9 +47,11 @@
 /var/const/access_surgery = 45
 /var/const/access_theatre = 46
 /var/const/access_research = 47
+/var/const/access_research_barrier = 347
 /var/const/access_mining = 48
 /var/const/access_mining_office = 49 //not in use
 /var/const/access_mailsorting = 50
+/var/const/access_cargo_barrier = 350
 /var/const/access_mint = 51
 /var/const/access_mint_vault = 52
 /var/const/access_heads_vault = 53
@@ -55,6 +59,7 @@
 /var/const/access_xenobiology = 55
 /var/const/access_ce = 56
 /var/const/access_hop = 57
+/var/const/access_civilian_barrier = 357
 /var/const/access_hos = 58
 /var/const/access_RC_announce = 59 //Request console announcements
 /var/const/access_keycard_auth = 60 //Used for events which require at least two people to confirm them
@@ -69,6 +74,7 @@
 /var/const/access_barber = 69
 /var/const/access_paramedic = 70
 /var/const/access_engineering_lobby = 71
+/var/const/access_engineering_barrier = 371
 /var/const/access_medbay_storage = 72
 /var/const/access_oldstation = 73
 /var/const/access_space_traders = 74

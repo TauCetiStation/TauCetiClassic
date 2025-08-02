@@ -18,7 +18,7 @@
 		access_security, access_sec_doors, access_brig, access_armory,
 		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 		access_research, access_mining, access_medical, access_construction,
-		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
+		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective, access_security_barrier
 	)
 	salary = 250
 	minimal_player_age = 14
@@ -42,7 +42,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels, access_security_barrier)
 	salary = 190
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
@@ -69,7 +69,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_security_barrier)
 	salary = 180
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
@@ -92,7 +92,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
+	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_security_barrier)
 	salary = 150
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
@@ -110,12 +110,12 @@
 	title = JOB_OFFICER
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_EMPLOYEE(4)
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "the head of security and warden"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels, access_security_barrier)
 	salary = 130
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
@@ -143,7 +143,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_sec_doors, access_maint_tunnels)
+	access = list(access_sec_doors, access_maint_tunnels, access_security_barrier)
 	salary = 50
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520

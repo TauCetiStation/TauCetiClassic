@@ -19,7 +19,7 @@
 		access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
 		access_research, access_robotics, access_xenobiology, access_ai_upload,
 		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway,
-		access_xenoarch, access_maint_tunnels, access_eva
+		access_xenoarch, access_maint_tunnels, access_eva, access_research_barrier
 	)
 	salary = 250
 	minimal_player_age = 7
@@ -43,7 +43,7 @@
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
+	access = list(access_tox, access_tox_storage, access_research, access_xenoarch, access_research_barrier)
 	alt_titles = list("Phoron Researcher")
 	salary = 180
 	minimal_player_ingame_minutes = 1560
@@ -57,12 +57,12 @@
 	title = JOB_XENOARCHAEOLOGIST
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(2)
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_research, access_xenoarch)
+	access = list(access_research, access_xenoarch, access_research_barrier)
 	salary = 190
 	minimal_player_ingame_minutes = 1400
 	outfit = /datum/outfit/job/xenoarchaeologist
@@ -78,12 +78,12 @@
 	title = JOB_XENOBIOLOGIST
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(3)
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_research, access_xenobiology)
+	access = list(access_research, access_xenobiology, access_research_barrier)
 	salary = 190
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
@@ -93,12 +93,12 @@
 	title = JOB_ROBOTICIST
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(4)
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+	access = list(access_robotics, access_morgue, access_research, access_research_barrier) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	salary = 180
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
@@ -113,12 +113,12 @@
 	title = JOB_RESEARCH_ASSISTANT
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_ASSIST(1)
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_research)
+	access = list(access_research, access_research_barrier)
 	salary = 50
 	outfit = /datum/outfit/job/research_assistant
 	skillsets = list("Research Assistant" = /datum/skillset/research_assistant)

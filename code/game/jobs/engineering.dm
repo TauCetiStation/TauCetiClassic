@@ -37,12 +37,12 @@
 	title = JOB_ENGINEER
 	departments = list(DEP_ENGINEERING)
 	order = CREW_INTEND_EMPLOYEE(1)
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 4
+	spawn_positions = 4
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby, access_engineering_barrier)
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	outfit = /datum/outfit/job/engineer
 	skillsets = list("Station Engineer" = /datum/skillset/engineer)
@@ -59,7 +59,7 @@
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks, access_engineering_lobby)
+	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks, access_engineering_lobby, access_engineering_barrier)
 	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
@@ -75,7 +75,7 @@
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
+	access = list(access_engineering_lobby, access_construction, access_maint_tunnels, access_engineering_barrier)
 	salary = 50
 	outfit = /datum/outfit/job/technical_assistant
 	skillsets = list("Technical Assistant" = /datum/skillset/technicassistant)
