@@ -30,10 +30,9 @@
 /obj/item/weapon/grenade/cancasing/update_icon()
 	. = ..()
 	if(active)
-		icon_state 			 += "_activated"
-		item_state_inventory += "_activated"
-		item_state_world 	 += "_activated"
-
+		icon_state 			 = "[initial(icon_state)]_activated"
+		item_state_inventory = "[initial(item_state_inventory)]_activated"
+		item_state_world 	 = "[initial(item_state_world)]_activated"
 
 /obj/item/weapon/grenade/cancasing/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
