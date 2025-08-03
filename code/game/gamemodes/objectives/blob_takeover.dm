@@ -1,5 +1,5 @@
 /datum/objective/blob_takeover
-	explanation_text = "We must grow and expand. Fill this station with our spores. Cover X station tiles."
+	explanation_text = "Мы должны расти и расширяться. Заполните эту станцию нашими спорами. Покройте Х клеток на станции."
 	var/invade_tiles = 0
 
 /datum/objective/blob_takeover/PostAppend()
