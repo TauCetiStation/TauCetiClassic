@@ -56,7 +56,7 @@ ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher/golden)
 	steal_target = items_to_steal[target_name]
 	if (!steal_target )
 		steal_target = possible_items_special[target_name]
-	explanation_text = "Steal [target_name]."
+	explanation_text = "Украдите [target_name]."
 	return steal_target
 
 

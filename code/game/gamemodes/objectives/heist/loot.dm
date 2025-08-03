@@ -7,31 +7,31 @@
 		if(1)
 			loot_type = /obj/structure/particle_accelerator
 			target_amount = 6
-			loot = "a complete particle accelerator (6 components)"
+			loot = "полностью ускоритель частиц (6 компонентов)"
 		if(2)
 			loot_type = /obj/machinery/the_singularitygen
 			target_amount = 1
-			loot = "a Gravitational Singularity Generator"
+			loot = "генератор гравитационной сингулярности"
 		if(3)
 			loot_type = /obj/machinery/power/emitter
 			target_amount = 4
-			loot = "four emitters"
+			loot = "4 эмиттера"
 		if(4)
 			loot_type = /obj/machinery/nuclearbomb
 			target_amount = 1
-			loot = "a nuclear bomb"
+			loot = "ядерную бомбу"
 		if(5)
 			loot_type = /obj/item/weapon/gun
 			target_amount = 6
-			loot = "six guns"
+			loot = "6 пушек"
 		if(6)
 			loot_type = /obj/item/weapon/gun/energy
 			target_amount = 4
-			loot = "four energy guns"
+			loot = "4 энергетических пушек"
 		if(7)
 			loot_type = /obj/item/weapon/gun/energy/ionrifle
 			target_amount = 1
-			loot = "an ion rifle"
+			loot = "ионное ружьё"
 
 	explanation_text = "We are lacking in hardware. Steal [loot]."
 	return TRUE

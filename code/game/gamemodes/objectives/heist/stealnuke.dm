@@ -1,5 +1,5 @@
 /datum/objective/heist/stealnuke
-	explanation_text = "Escape with all Nuclear Fission Explosives"
+	explanation_text = "Сбегите со всеми ядерными бомбами со станции"
 	var/list/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold, /area/shuttle/vox/transit)
 
 /datum/objective/heist/stealnuke/check_completion()

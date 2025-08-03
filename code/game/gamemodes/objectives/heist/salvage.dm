@@ -13,7 +13,7 @@
 			str_target = /obj/item/stack/sheet/plasteel
 			target_amount = pick(20, 30, 40, 50)
 
-	explanation_text = "Ransack the station and escape with [target_amount] [str_target]."
+	explanation_text = "Разграбьте станцию и сбегите с [target_amount] листами [CASE(str_target, GENITIVE_CASE)]."
 	return TRUE
 
 /datum/objective/heist/salvage/check_completion()
