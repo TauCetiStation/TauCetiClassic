@@ -4,13 +4,13 @@
 /datum/objective/heist/salvage/find_target()
 	switch(rand(1, 3))
 		if(1)
-			str_target = "metal"
+			str_target = /obj/item/stack/sheet/metal
 			target_amount = pick(150, 200)
 		if(2)
-			str_target = "glass"
+			str_target = /obj/item/stack/sheet/glass
 			target_amount = pick(150, 200)
 		if(3)
-			str_target = "plasteel"
+			str_target = /obj/item/stack/sheet/plasteel
 			target_amount = pick(20, 30, 40, 50)
 
 	explanation_text = "Ransack the station and escape with [target_amount] [str_target]."
