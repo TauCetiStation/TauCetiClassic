@@ -94,7 +94,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 
 /obj/item/stack/sheet/metal
 	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
+	cases = list("металл", "металла", "металлу", "металл", "металлом", "металле")
+	desc = "Листы, изготовленные из металла. Их ещё называют: металлическими листами."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	hitsound = list('sound/items/trayhit2.ogg')
@@ -105,7 +106,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 
 /obj/item/stack/sheet/metal/cyborg
 	name = "metal"
-	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
+	cases = list("металл", "металла", "металлу", "металл", "металлом", "металле")
+	desc = "Листы, изготовленные из металла. Их ещё называют: металлическими листами."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 0
@@ -126,8 +128,9 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
+	cases = list("пласталь", "пластали", "пласталю", "пласталь", "пласталем", "пластале")
 	singular_name = "plasteel sheet"
-	desc = "This sheet is an alloy of steel and platinum."
+	desc = "Этот лист представляет собой сплав стали и платины."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	m_amt = 7500
@@ -165,14 +168,16 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 
 /obj/item/stack/sheet/wood
 	name = "wooden plank"
-	desc = "One can only guess that this is a bunch of wood."
+	cases = list("деревянная доска", "деревянной доски", "деревянной доске", "деревянную доску", "деревянной доской", "деревянной доске")
+	desc = "Можно только догадываться, что это куча дров."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
 
 /obj/item/stack/sheet/wood/cyborg
 	name = "wooden plank"
-	desc = "One can only guess that this is a bunch of wood."
+	cases = list("деревянная доска", "деревянной доски", "деревянной доске", "деревянную доску", "деревянной доской", "деревянной доске")
+	desc = "Можно только догадываться, что это куча дров."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 
