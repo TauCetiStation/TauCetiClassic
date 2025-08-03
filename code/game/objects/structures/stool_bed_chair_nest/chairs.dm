@@ -524,11 +524,11 @@
 	if(isscrewing(W))
 		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 		if(anchored == TRUE)
-			to_chat(user, "<span class='notice'>Вы откручиваете диван от пола.</span>")
+			to_chat(user, "<span class='notice'>Вы откручиваете кресло от пола.</span>")
 			anchored = FALSE
 		else
-			to_chat(user, "<span class='notice'>Вы прикручиваете диван к полу.</span>")
-			anchored = initial(anchored)
+			to_chat(user, "<span class='notice'>Вы прикручиваете кресло к полу.</span>")
+			anchored = TRUE
 
 /obj/structure/stool/bed/chair/comfy/black
 	icon_state = "comfychair_black"
