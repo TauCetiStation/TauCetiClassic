@@ -5,7 +5,7 @@
 	var/team
 
 /datum/objective/experiment/New()
-	explanation_text = "Проведите [target_amount] [pluralize_russian(points, "эксперимент", "эксперимента", "экспериментов")] над людьми или другими разумными расами"
+	explanation_text = "Проведите [target_amount] [pluralize_russian(target_amount, "эксперимент", "эксперимента", "экспериментов")] над людьми или другими разумными расами"
 
 /datum/objective/experiment/check_completion()
 	. = OBJECTIVE_LOSS
