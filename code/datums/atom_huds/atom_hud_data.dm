@@ -174,8 +174,11 @@
 /mob/living/carbon/human/proc/sec_hud_set_ID()
 	var/image/holder = hud_list[ID_HUD]
 	holder.icon_state = "hudunknown"
-	if(wear_id?.GetID())
-		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
+	var/obj/item/weapon/card/id/I = wear_id?.GetID()
+	if(I)
+		var/hud_icon = "hud[ckey(I.sec_hud_icon || I.assignment || I.rank)]"
+		if(icon_exists(holder.icon, hud_icon))
+			holder.icon_state = hud_icon
 	holder.pixel_y = species.hud_offset_y - 8
 	holder.pixel_x = species.hud_offset_x
 	sec_hud_set_security_status()

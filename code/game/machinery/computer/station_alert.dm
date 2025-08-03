@@ -21,9 +21,9 @@
 	if(!do_skill_checks(user))
 		return
 	var/dat = ""
-	dat += text({"
-		<td>Mute Mode: </td><td>[]</td>
-		<A href='byond://?src=\ref[src];command=mute'>[muted ? "On" : "Off"]</A><BR><BR>"})
+	dat += {"
+		<td>Mute Mode: </td><td>[muted ? "On" : "Off"]</td>
+		<A href='byond://?src=\ref[src];command=mute'>[muted ? "On" : "Off"]</A><BR><BR>"}
 	for (var/cat in src.alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = src.alarms[cat]

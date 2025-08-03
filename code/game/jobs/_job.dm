@@ -1,21 +1,24 @@
 /datum/job
-	//The name of the job, used for preferences, bans and more. Make sure you know what you're doing before changing this.
-	var/title = "NOPE"
+	// The name of the job, used for preferences, bans and more. Make sure you know what you're doing before changing this.
+	var/title
+	// Departments this job is belongs to
+	var/list/departments
+
+	// order in department manifests/etc.
+	var/order = CREW_INTEND_UNDEFINED
 
 	var/list/access = list()
-
-	//Bitflags for the job  (Ha-ha we no longer use bitflags this is useless)
-	var/flag = 0 // Deprecated (is here only for savefile compatibility)
-	var/department_flag = 0 // Deprecated (is here only for savefile compatibility)
-
-	//Players will be allowed to spawn in as jobs that are set to "Station"
-	var/faction = "None"
 
 	//How many players can be this job
 	var/total_positions = 0
 
 	//How many players can spawn in as this job
 	var/spawn_positions = 0
+
+	// total_positions override by map
+	var/map_total_positions
+	// spawn_positions override by map
+	var/map_spawn_positions
 
 	//How many players have this job
 	var/current_positions = 0
@@ -34,9 +37,6 @@
 
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
-
-	// Is this position of a Head of some department? They always start with max level insurance.
-	var/is_head = FALSE
 
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
@@ -74,9 +74,11 @@
 	// Which department stocks this job has on arrival.
 	var/list/department_stocks
 
-	var/flags = 0
-
 	var/quota = QUOTA_NEUTRAL
+
+/*/datum/job/New()
+	world.log << "Creating [src.type] : [src.title]"
+	..()*/
 
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return

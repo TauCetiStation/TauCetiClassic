@@ -23,6 +23,7 @@ var/global/bridge_secret = null
 	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs runtimes to round log folder
+	var/log_icon_lookup = 0				// logs icon_exists bad lookups
 	var/log_sql_error = 0				// same but for sql errors
 	var/log_js_error = 0				   // same but for client side js errors
 	var/log_initialization = 0			// same but for debug init logs
@@ -58,7 +59,6 @@ var/global/bridge_secret = null
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/afk_time_bracket = 6000 // 10 minutes
-	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	// If true - disable OOC for the duration of a round.
@@ -342,6 +342,9 @@ var/global/bridge_secret = null
 				if ("log_sql_error")
 					config.log_sql_error = 1
 
+				if ("log_icon_lookup")
+					config.log_icon_lookup = 1
+
 				if ("log_js_error")
 					config.log_js_error = 1
 
@@ -461,9 +464,6 @@ var/global/bridge_secret = null
 
 				if ("afk_time_bracket")
 					config.afk_time_bracket = (text2num(value) MINUTES)
-
-				if("load_jobs_from_txt")
-					load_jobs_from_txt = 1
 
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1

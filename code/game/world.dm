@@ -18,8 +18,10 @@ var/global/it_is_a_snow_day = FALSE
 	if(byond_version < RECOMMENDED_VERSION)
 		warning("Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
 
+#ifndef OPENDREAM
 	if(!(/client::authenticate))
 		warning("Byond hub authentication is disabled for clients.")
+#endif
 
 	global.bridge_secret = world.params["bridge_secret"]
 	world.params = null
@@ -109,6 +111,7 @@ var/global/it_is_a_snow_day = FALSE
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
+	global.icon_lookup_log = file("[log_debug_directory]/icon_lookup.log")
 
 	#ifdef REFERENCE_TRACKING
 	global.gc_log  = file("[log_debug_directory]/gc_debug.log")

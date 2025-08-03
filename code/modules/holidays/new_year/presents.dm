@@ -46,7 +46,7 @@
 	var/present
 
 	// Checks for jobbans and increase chance of bad gift
-	for(var/datum/job/job in SSjob.occupations)
+	for(var/datum/job/job in SSjob.all_occupations)
 		if(jobban_isbanned(user, job.title))
 			bad_chance += 5
 
