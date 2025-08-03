@@ -33,6 +33,7 @@
 		icon_state 			 = "[initial(icon_state)]_activated"
 		item_state_inventory = "[initial(item_state_inventory)]_activated"
 		item_state_world 	 = "[initial(item_state_world)]_activated"
+	update_world_icon()
 
 /obj/item/weapon/grenade/cancasing/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
