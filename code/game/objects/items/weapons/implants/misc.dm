@@ -198,7 +198,7 @@
 	UnregisterSignal(implanted_mob, COMSIG_MOB_EXAMINED)
 	. = ..()
 
-/obj/item/weapon/implant/blueshield/proc/on_examine(mob/M)
+/obj/item/weapon/implant/blueshield/proc/on_examine(mob/user, mob/M)
 	if(M.mind && (M.mind.assigned_role in protected_jobs))
 		penalty_stack = 0
 		COOLDOWN_RESET(src, penalty_cooldown)
@@ -211,7 +211,7 @@
 	if(!COOLDOWN_FINISHED(src, penalty_cooldown))
 		return
 
-	COOLDOWN_START(src, penalty_cooldown, 5 MINUTES)
+	COOLDOWN_START(src, penalty_cooldown, 4 MINUTES)
 
 	// check if there is any heads on the station
 	// todo: store crew in jobs/departments datums
@@ -223,8 +223,11 @@
 	if(!length(to_protect))
 		penalty_stack = 0
 		return
+	if(!penalty_stack) // so we dont immediately go to 1, prevents spamming when examining players
+		penalty_stack++
+		return
 
-	switch(++penalty_stack)
+	switch(penalty_stack++)
 		if(1)
 			to_chat(implanted_mob, "<span class='bold warning'>Кто-то из глав или АВД должны быть на станции. Следует проверить их, или имплант напомнит о себе.</span>")
 		if(2)

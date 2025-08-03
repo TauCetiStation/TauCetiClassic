@@ -122,10 +122,10 @@
 	if(beaker)
 		var/vol = beaker.reagents.total_volume
 		foodsupply += drain_reagent_from_beaker("virusfood", min(SUPPLY_CAP - foodsupply, DRAIN_RATE))
-		toxinsupply += drain_reagent_from_beaker("toxin", min(SUPPLY_CAP - foodsupply, DRAIN_RATE))
-		sleeptoxinsupply += drain_reagent_from_beaker("stoxin", min(SUPPLY_CAP - foodsupply, DRAIN_RATE))
-		synaptizinesupply += drain_reagent_from_beaker("synaptizine", min(SUPPLY_CAP - foodsupply, DRAIN_RATE))
-		phoronsupply += drain_reagent_from_beaker("phoron", min(SUPPLY_CAP - foodsupply, DRAIN_RATE))
+		toxinsupply += drain_reagent_from_beaker("toxin", min(SUPPLY_CAP - toxinsupply, DRAIN_RATE))
+		sleeptoxinsupply += drain_reagent_from_beaker("stoxin", min(SUPPLY_CAP - sleeptoxinsupply, DRAIN_RATE))
+		synaptizinesupply += drain_reagent_from_beaker("synaptizine", min(SUPPLY_CAP - synaptizinesupply, DRAIN_RATE))
+		phoronsupply += drain_reagent_from_beaker("phoron", min(SUPPLY_CAP - phoronsupply, DRAIN_RATE))
 		if(beaker.reagents.total_volume != vol)
 			SStgui.update_uis(src)
 
