@@ -198,9 +198,13 @@
 	else if(ismouse(M))
 		var/mob/living/simple_animal/mouse/N = M
 		if(M.layer == MOB_LAYER)
-			N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
-			N.health = min(N.health + 1, N.maxHealth)
-			reagents.remove_any(0.5 * bitesize)
+			if(N.nutrition < 80)
+				N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
+				N.health = min(N.health + 1, N.maxHealth)
+				N.nutrition += 0.5 * bitesize
+				reagents.remove_any(0.5 * bitesize)
+			else
+				to_chat(N, "<span class='warning'>You are too full to eat any more, greedy little mouse!</span>")
 			if(reagents.total_volume <= 0)
 				N.visible_message("<span class='notice'><b>[N]</b> just ate \the [src]!</span>", "<span class='notice'>You just ate \the [src], [pick("delicious", "wonderful", "smooth", "disgusting")]!</span>")
 				qdel(src)
