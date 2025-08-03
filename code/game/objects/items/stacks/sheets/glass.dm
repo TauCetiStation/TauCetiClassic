@@ -38,7 +38,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
  */
 /obj/item/stack/sheet/glass
 	name = "glass"
-	cases = ("стекло", "стекла", "стеклу", "стекло", "стеклом", "стекле")
+	cases = list("стекло", "стекла", "стеклу", "стекло", "стеклом", "стекле")
 	desc = "СВЯТЫЕ СТЁКЛА! Это же тонна несвятого стекла..."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
@@ -51,7 +51,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
-	cases = ("стекло", "стекла", "стеклу", "стекло", "стеклом", "стекле")
+	cases = list("стекло", "стекла", "стеклу", "стекло", "стеклом", "стекле")
 	desc = "СВЯТЫЕ СТЁКЛА! Это же тонна несвятого стекла..."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
