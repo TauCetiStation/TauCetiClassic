@@ -6,6 +6,7 @@
 	canmove = FALSE
 	anchored = TRUE // don't get pushed around
 	hud_possible = list()
+	ear_deaf = 1000 // so we don't hear unnecessary sounds
 
 	var/ready             = FALSE
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
