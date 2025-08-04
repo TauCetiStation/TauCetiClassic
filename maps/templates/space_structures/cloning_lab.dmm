@@ -78,7 +78,7 @@
 /area/space_structures/cloning_lab)
 "n" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -181,8 +181,8 @@
 /area/space_structures/cloning_lab)
 "C" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Reabilitaion Chamber";
-	dir = 4
+	dir = 4;
+	name = "Reabilitaion Chamber"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood4"
@@ -196,8 +196,8 @@
 /area/space_structures/cloning_lab)
 "E" = (
 /obj/machinery/door/airlock/research{
-	name = "Cloning Facility";
-	dir = 4
+	dir = 4;
+	name = "Cloning Facility"
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -306,8 +306,8 @@
 /area/space_structures/cloning_lab)
 "S" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Reabilitaion Chamber";
-	dir = 4
+	dir = 4;
+	name = "Reabilitaion Chamber"
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"

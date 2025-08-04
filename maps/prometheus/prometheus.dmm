@@ -48290,7 +48290,7 @@
 /area/station/civilian/gym)
 "lhj" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light/small{
 	dir = 4
 	},
