@@ -2783,7 +2783,6 @@
 "gG" = (
 /obj/structure/alien/weeds,
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
 	icon_state = "dark"
@@ -3312,7 +3311,6 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "il" = (
-/obj/item/weapon/storage/box/cups,
 /obj/structure/table/woodentable,
 /obj/machinery/firealarm{
 	dir = 4;
