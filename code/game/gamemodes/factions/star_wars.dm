@@ -1,4 +1,7 @@
 
+/datum/faction/star_wars
+	var/obj/structure/ivent/star_wars/artifact/force_source
+
 // JEDI
 
 /datum/faction/star_wars/jedi
@@ -8,7 +11,7 @@
 	initroletype = /datum/role/star_wars/jedi_leader
 	roletype = /datum/role/star_wars/jedi
 
-	min_roles = 2
+	min_roles = 0
 	max_roles = 2
 
 	logo_state = "jedi_logo"
@@ -21,6 +24,8 @@
 	AppendObjective(/datum/objective/star_wars/jedi)
 	return TRUE
 
+/datum/faction/star_wars/jedi/OnPostSetup()
+
 // SITH
 
 /datum/faction/star_wars/sith
@@ -30,11 +35,10 @@
 	initroletype = /datum/role/star_wars/sith_leader
 	roletype = /datum/role/star_wars/sith
 
-	min_roles = 2
+	min_roles = 0
 	max_roles = 2
 
 	logo_state = "sith_logo"
-
 
 /datum/faction/star_wars/sith/forgeObjectives()
 	if(!..())

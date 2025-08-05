@@ -79983,6 +79983,12 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"nEU" = (
+/obj/effect/landmark{
+	name = "isolator"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/misc_lab)
 "nFb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -132025,7 +132031,7 @@ bLl
 bQZ
 bLj
 bMJ
-bLj
+nEU
 awV
 bJJ
 bJJ

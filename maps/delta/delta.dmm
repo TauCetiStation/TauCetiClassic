@@ -26288,6 +26288,12 @@
 /obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"cJA" = (
+/obj/effect/landmark{
+	name = "isolator"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/mixing)
 "cJB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -148870,7 +148876,7 @@ lSy
 pku
 hXu
 esc
-esc
+cJA
 esc
 mYj
 mYj

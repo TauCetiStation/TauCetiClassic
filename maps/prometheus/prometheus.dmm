@@ -70120,6 +70120,12 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/break_room)
+"qDe" = (
+/obj/effect/landmark{
+	name = "isolator"
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/misc_lab)
 "qDk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -128634,7 +128640,7 @@ afm
 gxY
 nla
 nla
-nla
+qDe
 nla
 dOk
 rHg
