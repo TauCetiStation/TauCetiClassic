@@ -83,7 +83,7 @@
 #define ANTAG_HUD_PIRATES       "antag_hud_pirates"
 #define ANTAG_HUD_TEAMS_RED     "antag_hud_teams_red"
 #define ANTAG_HUD_TEAMS_BLUE    "antag_hud_teams_blue"
-
+#define ANTAG_HUD_STAR_WARS     "antag_hud_jedi"
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

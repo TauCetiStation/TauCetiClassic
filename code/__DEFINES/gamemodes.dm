@@ -27,6 +27,8 @@
 #define F_REPLICATORS        "Replicators"
 #define F_MALF_DRONES		 "Malf Drones"
 #define F_SPACE_TRADERS      "Space Traders"
+#define F_JEDI_ORDER         "Jedi Order"
+#define F_SITH_ORDER         "Sith Order"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -73,6 +75,10 @@
 #define SPACE_TRADER "Space Trader"
 #define THIEF "Thief"
 #define ZOMBIE "Zombie"
+#define JEDI_LEADER "Jedi Leader"
+#define JEDI "Jedi"
+#define SITH_LEADER "Sith Leader"
+#define SITH "Sith"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
