@@ -25,6 +25,9 @@
 	return TRUE
 
 /datum/faction/star_wars/jedi/OnPostSetup()
+	. = ..()
+	for(var/datum/role/R in members)
+		R.antag.current.forceMove(pick_landmarked_location("Jedi Spawn"))
 
 // SITH
 

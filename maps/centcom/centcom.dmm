@@ -31770,6 +31770,12 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"wSX" = (
+/obj/effect/landmark/ivent/star_wars/jedi,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/transport1/centcom)
 "wXB" = (
 /turf/unsimulated/floor{
 	dir = 6;
@@ -50662,7 +50668,7 @@ agw
 agF
 awi
 agT
-ahB
+wSX
 agT
 agT
 aVy
@@ -51176,7 +51182,7 @@ agx
 agK
 agV
 ahn
-ahB
+wSX
 awz
 awz
 ali

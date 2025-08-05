@@ -45,6 +45,12 @@
 	skillset_type = /datum/skillset/max
 	moveset_type = /datum/combat_moveset/cqc
 
+
+/datum/role/star_wars/jedi_leader/OnPostSetup()
+	. = ..()
+	var/datum/faction/star_wars/F = faction
+	F.force_source += antag.current
+
 /datum/role/star_wars/sith
 	name = "Sith"
 	id = SITH
