@@ -60,45 +60,49 @@
 			break
 		force_users += pick_n_take(candidates)
 
-// clothes - armored for use in star wars ivent, default for future addition to wizard
+/obj/item/clothing/suit/star_wars
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
+	canremove == REMOVE_OWNER_ONLY
+	unacidable = 1
 
-/obj/item/clothing/suit/wizrobe/jedi
+/obj/item/clothing/head/star_wars
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
+	canremove == REMOVE_OWNER_ONLY
+	unacidable = 1
+
+/obj/item/clothing/shoes/star_wars
+	name = "leather shoes"
+	desc = "A sturdy pair of leather shoes."
+	icon_state = "leather"
+	canremove == REMOVE_OWNER_ONLY
+	unacidable = 1
+	flags = NOSLIP
+
+/obj/item/clothing/shoes/star_wars/atom_init()
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
+/obj/item/clothing/suit/star_wars/jedi
 	name = "Jedi robe"
 	desc = "."
 	icon_state = "wizard"
 	item_state = "wizrobe"
 
-/obj/item/clothing/suit/wizrobe/jedi/armored
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
-
-/obj/item/clothing/head/wizard/jedi
+/obj/item/clothing/head/star_wars/jedi
 	name = "Jedi hood"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
-	siemens_coefficient = 0.4
-	body_parts_covered = 0
 
-/obj/item/clothing/head/wizard/jedi/armored
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
-
-/obj/item/clothing/suit/wizrobe/sith
+/obj/item/clothing/suit/star_wars/sith
 	name = "Sith robe"
 	desc = "."
 	icon_state = "wizard"
 	item_state = "wizrobe"
 
-/obj/item/clothing/suit/wizrobe/sith/armored
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
-
-/obj/item/clothing/head/wizard/sith
+/obj/item/clothing/head/star_wars/sith
 	name = "Sith hood"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
-	siemens_coefficient = 0.4
-	body_parts_covered = 0
-
-/obj/item/clothing/head/wizard/sith/armored
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
 
 // swords
 /obj/item/weapon/melee/energy/sword/star_wars/attack_self(mob/living/user)
