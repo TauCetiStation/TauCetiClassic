@@ -585,7 +585,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	has_sensor = 0
-	canremove = 0
+	canremove = REMOVE_RESTRICTED
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 
@@ -595,7 +595,7 @@
 	desc = "Sturdy adamantine feet."
 	icon_state = "golem"
 	item_state = null
-	canremove = 0
+	canremove = REMOVE_RESTRICTED
 	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
 	unacidable = 1
 
@@ -605,7 +605,7 @@
 	desc = "The imposing face of an adamantine golem."
 	icon_state = "golem"
 	item_state = "golem"
-	canremove = 0
+	canremove = REMOVE_RESTRICTED
 	siemens_coefficient = 0
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
@@ -618,7 +618,7 @@
 	icon_state = "golem"
 	item_state = null
 	siemens_coefficient = 0
-	canremove = 0
+	canremove = REMOVE_RESTRICTED
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 
@@ -628,7 +628,7 @@
 	item_state = "dermal"
 	name = "golem's head"
 	desc = "A golem's head."
-	canremove = 0
+	canremove = REMOVE_RESTRICTED
 	unacidable = 1
 
 	body_parts_covered = HEAD|FACE|EYES
@@ -641,7 +641,7 @@
 	flags_inv = 0
 	slowdown = 0
 	unacidable = 1
-	canremove = 0
+	canremove = REMOVE_RESTRICTED
 	siemens_coefficient = 0
 
 	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
@@ -665,7 +665,7 @@
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	slowdown = 0
 	unacidable = 1
-	canremove = 0
+	canremove = REMOVE_RESTRICTED
 	siemens_coefficient = 0
 	can_breach = 0
 

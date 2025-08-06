@@ -462,7 +462,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
 		assailant.visible_message("<span class='danger'>[assailant] falls limp after violating [affecting]'s face!</span>")
 		var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
-		FH_mask.canremove = TRUE
+		FH_mask.canremove = REMOVE_ALLOWED
 		FH_mask.Impregnate(affecting, assailant)
 		qdel(src)
 

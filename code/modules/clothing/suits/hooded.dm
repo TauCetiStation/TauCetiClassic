@@ -15,7 +15,7 @@
 /obj/item/clothing/suit/hooded/atom_init()
 	. = ..()
 	hood = new hoodtype(src)
-	hood.canremove = FALSE
+	hood.canremove = REMOVE_RESTRICTED
 	hood.unacidable = FALSE
 
 /obj/item/clothing/suit/hooded/Destroy()

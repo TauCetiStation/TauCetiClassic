@@ -242,7 +242,7 @@ var/global/list/dyed_item_types = list(
 		else
 			..()
 	else if(is_type_in_typecache(W, global.washing_items_list))
-		if(!W.canremove) //if "can't drop" item
+		if(W.canremove == REMOVE_RESTRICTED) //if "can't drop" item
 			to_chat(user, "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return
 

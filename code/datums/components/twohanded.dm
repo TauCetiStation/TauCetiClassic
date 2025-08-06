@@ -340,7 +340,7 @@
 	icon_state = "offhand"
 	w_class = SIZE_LARGE
 	flags = NODROP | ABSTRACT
-	canremove = FALSE
+	canremove = REMOVE_RESTRICTED
 	unacidable = TRUE
 	var/wielded = FALSE // Off Hand tracking of wielded status
 

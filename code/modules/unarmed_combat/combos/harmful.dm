@@ -102,7 +102,7 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/C = victim
-		if(C.head && !(C.head.flags & (ABSTRACT|NODROP)) && C.head.canremove)
+		if(C.head && !(C.head.flags & (ABSTRACT|NODROP)) && C.head.canremove == REMOVE_ALLOWED)
 			var/obj/item/clothing/VH = C.head
 			victim.drop_from_inventory(VH, victim.loc)
 			attacker.newtonian_move(get_dir(victim, attacker))

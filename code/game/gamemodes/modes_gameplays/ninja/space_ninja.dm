@@ -142,15 +142,15 @@
 			return FALSE
 
 		affecting = U
-		canremove = 0
+		canremove = REMOVE_RESTRICTED
 		slowdown = 0
 		n_hood = U.head
-		n_hood.canremove=0
+		n_hood.canremove = REMOVE_RESTRICTED
 		n_shoes = U.shoes
-		n_shoes.canremove=0
+		n_shoes.canremove = REMOVE_RESTRICTED
 		n_shoes.slowdown--
 		n_gloves = U.gloves
-		n_gloves.canremove=0
+		n_gloves.canremove = REMOVE_RESTRICTED
 
 	U.regenerate_icons()
 
@@ -159,18 +159,18 @@
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit(mob/living/carbon/human/U)
 	affecting = null
-	canremove = 1
+	canremove = REMOVE_ALLOWED
 	slowdown = 0.5
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.canremove=1
+		n_hood.canremove = REMOVE_ALLOWED
 	if(n_shoes)
-		n_shoes.canremove=1
+		n_shoes.canremove = REMOVE_ALLOWED
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.canremove=1
+		n_gloves.canremove = REMOVE_ALLOWED
 		n_gloves.candrain=0
 		n_gloves.draining=0
 

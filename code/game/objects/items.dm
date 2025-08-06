@@ -1,3 +1,7 @@
+#define REMOVE_ALLOWED    1
+#define REMOVE_RESTRICTED 2
+#define REMOVE_OWNER_ONLY 4
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
@@ -45,7 +49,7 @@
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
+	var/canremove = REMOVE_ALLOWED //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/materials = list()
 	var/list/allowed = null //suit storage stuff.
@@ -259,8 +263,8 @@
 	user.SetNextMove(CLICK_CD_RAPID)
 
 	if(loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(!canremove)
+		//canremove == REMOVE_RESTRICTED means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		if(canremove == REMOVE_RESTRICTED)
 			return
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -317,10 +321,10 @@
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src)
 
-	src.throwing = 0
-	if (src.loc == user)
-		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(istype(src, /obj/item/clothing) && !src:canremove)
+	throwing = 0
+	if (loc == user)
+		//canremove == REMOVE_RESTRICTED means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		if(istype(src, /obj/item/clothing) && src:canremove == REMOVE_RESTRICTED)
 			return
 		else
 			user.remove_from_mob(src)
@@ -990,7 +994,7 @@
 		remove_outline()
 
 /obj/item/be_thrown(mob/living/thrower, atom/target)
-	if(!canremove || flags & NODROP)
+	if(canremove == REMOVE_RESTRICTED || flags & NODROP)
 		return null
 	return src
 

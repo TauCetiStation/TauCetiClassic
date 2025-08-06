@@ -9,5 +9,5 @@
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
-	if(!canremove)
+	if(canremove == REMOVE_RESTRICTED)
 		to_chat(user, "The energy drain mechanism is: <B>[candrain ? "active" : "inactive"]</B>.")

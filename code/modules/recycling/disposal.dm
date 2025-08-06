@@ -57,7 +57,7 @@
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(obj/item/I, mob/user)
-	if(stat & BROKEN || !I || !user || !I.canremove)
+	if(stat & BROKEN || !I || !user || I.canremove != REMOVE_ALLOWED)
 		return
 
 	add_fingerprint(user)
@@ -136,7 +136,7 @@
 		if (!S.crumpled)
 			return
 
-	if(!I || !I.canremove || I.flags & NODROP)
+	if(!I || I.canremove != REMOVE_ALLOWED || I.flags & NODROP)
 		return
 
 	user.drop_from_inventory(I, src)

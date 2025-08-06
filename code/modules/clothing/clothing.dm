@@ -232,7 +232,7 @@
 		..()
 		return
 
-	if(!canremove)
+	if(canremove == REMOVE_RESTRICTED)
 		return
 
 	var/obj/item/clothing/ears/O

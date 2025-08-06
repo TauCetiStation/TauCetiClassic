@@ -30,7 +30,7 @@
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items()
 		for(var/obj/item/W in Itemlist)
-			if(W.flags & NODROP || !W.canremove)
+			if(W.flags & NODROP || W.canremove != REMOVE_ALLOWED)
 				continue
 			drop_from_inventory(W)
 

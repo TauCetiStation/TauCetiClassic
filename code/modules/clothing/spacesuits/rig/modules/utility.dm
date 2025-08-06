@@ -121,7 +121,7 @@
 	. = ..()
 	if(device_type)
 		device = new device_type(src)
-		device.canremove = FALSE // so we can't place mounted devices on tables/racks
+		device.canremove = REMOVE_RESTRICTED // so we can't place mounted devices on tables/racks
 		device.flags |= ABSTRACT // so we can't put mounted devices into backpacks
 		device.origin_tech = null // so we can't put them into destructive analyzer
 		device.m_amt = 0 // so we can't put them into autolathe
@@ -837,7 +837,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = holder.wearer
-	holder.canremove = FALSE
+	holder.canremove = REMOVE_RESTRICTED
 	to_chat(H, "<span class='notice'>Starting invisibility protocol, please wait until it done.</span>")
 	if(do_after(H, 40, target = H))
 		if(!active)
@@ -852,7 +852,7 @@
 	if(!.)
 		return FALSE
 
-	holder.canremove = TRUE
+	holder.canremove = REMOVE_ALLOWED
 	holder.wearer.alpha = 255
 
 	return TRUE

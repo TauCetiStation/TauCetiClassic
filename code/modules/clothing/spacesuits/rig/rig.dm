@@ -53,7 +53,7 @@
 	if(rig_connect)
 		rig_connect.helmet = null
 		rig_connect = null
-		canremove = 1
+		canremove = REMOVE_ALLOWED
 	return ..()
 
 /obj/item/clothing/suit/space/rig
@@ -395,7 +395,7 @@
 		H = helmet.loc
 		if(istype(H))
 			if(helmet && H.head == helmet)
-				helmet.canremove = 1
+				helmet.canremove = REMOVE_ALLOWED
 				var/dropped_helmet = helmet
 				H.drop_from_inventory(helmet)
 				helmet = dropped_helmet		//attach the helmet back to the suit
@@ -405,7 +405,7 @@
 		H = boots.loc
 		if(istype(H))
 			if(boots && H.shoes == boots)
-				boots.canremove = 1
+				boots.canremove = REMOVE_ALLOWED
 				H.drop_from_inventory(boots)
 				boots.loc = src
 
@@ -438,7 +438,7 @@
 	if(H.wear_suit != src) return
 
 	if(H.head == helmet)
-		helmet.canremove = 1
+		helmet.canremove = REMOVE_ALLOWED
 		var/dropped_helmet = helmet
 		H.drop_from_inventory(helmet)
 		helmet = dropped_helmet		//attach the helmet back to the suit
@@ -446,7 +446,7 @@
 		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
 
 	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))
-		helmet.canremove = 0
+		helmet.canremove = REMOVE_RESTRICTED
 		if(helmet.on)
 			helmet.set_light(helmet.brightness_on)
 		else
@@ -784,13 +784,13 @@
 		combat_mode = !combat_mode
 		if(combat_mode)
 			armor = combat_armor
-			canremove = FALSE
+			canremove = REMOVE_RESTRICTED
 			flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
 			usr.visible_message("<span class='notice'>[usr] moves faceplate of their helmet into combat position, covering their visor and extending cameras.</span>")
 		else
 			armor = space_armor
-			canremove = TRUE
+			canremove = REMOVE_ALLOWED
 			flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_pressure |= STOPS_PRESSUREDMAGE
 			usr.visible_message("<span class='notice'>[usr] pulls up faceplate from helmet's visor, retracting cameras</span>")
@@ -878,7 +878,7 @@
 			if(H.combat_mode != combat_mode)
 				H.toggle()
 		if(combat_mode)
-			canremove = FALSE
+			canremove = REMOVE_RESTRICTED
 			can_breach = FALSE
 			flags_pressure &= ~STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
@@ -886,7 +886,7 @@
 			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
 			armor = combat_armor
 		else
-			canremove = TRUE
+			canremove = REMOVE_ALLOWED
 			can_breach = TRUE
 			flags_pressure |= STOPS_PRESSUREDMAGE
 			playsound(usr, 'sound/effects/inflate.ogg', VOL_EFFECTS_MASTER, 30)
