@@ -62,25 +62,18 @@
 
 /obj/item/clothing/suit/star_wars
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
-	canremove == REMOVE_OWNER_ONLY
 	unacidable = 1
 
 /obj/item/clothing/head/star_wars
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
-	canremove == REMOVE_OWNER_ONLY
 	unacidable = 1
 
 /obj/item/clothing/shoes/star_wars
 	name = "leather shoes"
 	desc = "A sturdy pair of leather shoes."
 	icon_state = "leather"
-	canremove == REMOVE_OWNER_ONLY
 	unacidable = 1
 	flags = NOSLIP
-
-/obj/item/clothing/shoes/star_wars/atom_init()
-	. = ..()
-	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/star_wars/jedi
 	name = "Jedi robe"
@@ -104,7 +97,6 @@
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
 
-// swords
 /obj/item/weapon/melee/energy/sword/star_wars/attack_self(mob/living/user)
 	if(!active && !isrolebytype(/datum/role/star_wars, user))
 		return
