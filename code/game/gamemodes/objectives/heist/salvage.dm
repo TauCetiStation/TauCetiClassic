@@ -17,7 +17,7 @@
 			target_amount = pick(20, 30, 40, 50)
 			loot = "пластали"
 
-	explanation_text = "Разграбьте станцию и сбегите с [target_amount] [loot] листами."
+	explanation_text = "Разграбьте станцию и сбегите с [target_amount] листами [loot]."
 	return TRUE
 
 /datum/objective/heist/salvage/check_completion()

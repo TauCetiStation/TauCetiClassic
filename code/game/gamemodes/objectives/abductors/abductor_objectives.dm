@@ -51,7 +51,7 @@
 		explanation_text += " кого-нибудь."
 
 /datum/objective/abductee/shuttle
-	explanation_text = "Вы должны сбежать со станции.! Сделайте так, чтобы был вызван шаттл!"
+	explanation_text = "Вы должны сбежать со станции! Сделайте так, чтобы был вызван шаттл!"
 
 /datum/objective/abductee/noclone
 	explanation_text = "Не позволяйте никому вас клонировать."
@@ -64,6 +64,8 @@
 
 /datum/objective/abductee/insane
 	explanation_text = "Ты видишь, ты видишь то, что они не видят, ты видишь открытую дверь, ты ВидИимиишь, ТЫ ВИДИШЬ, ты види~и~и~ишь~, Т Ы  В И Д И Ш Ь"
+
+/datum/objective/abductee/cannotmove
 	explanation_text = " Убедите команду, что вы паралитик."
 
 /datum/objective/abductee/deadbodies
