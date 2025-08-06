@@ -107,7 +107,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	name = "Soft"
 
 	color = "#ffd9ab" // 4200k
-	power = DEFAULT_POWER // todo: ex-nightshift, should we adapt another for day ?
+	power = DEFAULT_POWER //todo: ex-nightshift, should we adapt another for day ?
 	range = DEFAULT_RANGE
 
 /datum/light_mode/hard
