@@ -137,3 +137,9 @@
 	icon_state = "red"
 	requires_power = 0
 	dynamic_lighting = FALSE
+
+/area/custom/jedi_ship
+	name = "Jedi Ship"
+	cases = list("корабль джедаев", "корабля джедаев", "кораблю джедаев", "корабль джедаев", "кораблём джедаев", "корабле джедаев")
+	icon_state = "green"
+	requires_power = 0

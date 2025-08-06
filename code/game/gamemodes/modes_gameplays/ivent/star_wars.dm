@@ -123,21 +123,21 @@
 	return 0
 
 // red for sith
-/obj/item/weapon/melee/energy/sword/star_wars/jedi/atom_init()
+/obj/item/weapon/melee/energy/sword/star_wars/sith/atom_init()
 	. = ..()
 	blade_color = "red"
 	light_color = COLOR_RED
-/obj/item/weapon/melee/energy/sword/star_wars/jedi/Get_shield_chance()
+/obj/item/weapon/melee/energy/sword/star_wars/sith/Get_shield_chance()
 	if(active)
 		return 80
 	return 0
 
 // black for master sith
-/obj/item/weapon/melee/energy/sword/star_wars/jedi/leader/atom_init()
+/obj/item/weapon/melee/energy/sword/star_wars/sith/leader/atom_init()
 	. = ..()
 	blade_color = "black"
 	light_color = COLOR_BLACK
-/obj/item/weapon/melee/energy/sword/star_wars/jedi/leader/Get_shield_chance()
+/obj/item/weapon/melee/energy/sword/star_wars/sith/leader/Get_shield_chance()
 	if(active)
 		return 100
 	return 0
