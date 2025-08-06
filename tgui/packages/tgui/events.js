@@ -64,7 +64,6 @@ const releaseStolenFocus = () => {
   if (focusStolenBy) {
     focusStolenBy.removeEventListener('blur', releaseStolenFocus);
     focusStolenBy = null;
-    globalEvents.emit('input-blur');
   }
 };
 
@@ -146,7 +145,7 @@ document.addEventListener(
 );
 
 // Handle setting the window focus
-window.addEventListener('focus', () => {
+window.addEventListener('focus', (e) => {
   setWindowFocus(true);
   if (canStealFocus(e.target)) {
     stealFocus(e.target);
