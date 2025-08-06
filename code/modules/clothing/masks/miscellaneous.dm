@@ -144,7 +144,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/mask/pig/speechModification(message)
-	if(canremove == REMOVE_RESTRICTED)
+	if(!canremove)
 		message = pick("Oink!", "Squeeeeeeee!", "Oink Oink!")
 	return message
 
@@ -160,7 +160,7 @@
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/mask/horsehead/speechModification(message)
-	if(canremove == REMOVE_RESTRICTED)
+	if(!canremove)
 		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	return message
 
@@ -175,7 +175,7 @@
 	w_class = SIZE_TINY
 
 /obj/item/clothing/mask/cowmask/speechModification(message)
-	if(canremove == REMOVE_RESTRICTED)
+	if(!canremove)
 		message = pick("Moooooooo!", "Moo!", "Moooo!")
 	return message
 
@@ -200,7 +200,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/mask/chicken/speechModification(message)
-	if(canremove == REMOVE_RESTRICTED)
+	if(!canremove)
 		message = pick("BKAW!", "BUK BUK!", "Ba-Gawk!")
 	return message
 

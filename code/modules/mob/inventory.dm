@@ -319,7 +319,7 @@ var/global/list/slot_equipment_priority = list(
 		return TRUE
 
 	if(!force)
-		if(I.canremove == REMOVE_RESTRICTED)
+		if(!I.canremove)
 			return FALSE
 		if(I.slot_equipped && (I.slot_equipped in check_obscured_slots()))
 			to_chat(src, "<span class='warning'>You can't reach that! Something is covering it.</span>")

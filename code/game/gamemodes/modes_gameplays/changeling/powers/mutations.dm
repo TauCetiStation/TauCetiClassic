@@ -12,7 +12,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if(istype(user.get_active_hand(),weapon_type))
-		user.drop_from_inventory(user.get_active_hand()) // cuz changeling weapons are unremovable with standart procedure with canremove = REMOVE_RESTRICTED, but we still need it
+		user.drop_from_inventory(user.get_active_hand()) // cuz changeling weapons are unremovable with standart procedure with canremove = 0, but we still need it
 		return
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -111,7 +111,7 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | DROPDEL
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	w_class = SIZE_BIG
 	force = 25
 	throwforce = 0 //Just to be on the safe side
@@ -173,7 +173,7 @@
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
@@ -232,7 +232,7 @@
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	flags = DROPDEL // No PHORONGUARD, because it's organic tissue, so syringes or other things can get thru easily.
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) // No armor at all.
 	siemens_coefficient = 2 // fleeesh! not a skin! very sensitive!
@@ -257,7 +257,7 @@
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | DROPDEL
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 2 // fleeesh!
 
@@ -290,7 +290,7 @@
 	desc = "A tough, hard covering of black chitin."
 	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingarmor"
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	flags = DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -315,7 +315,7 @@
 	flags = HEADCOVERSEYES | DROPDEL
 	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	pierce_protection = HEAD
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	armor = list(melee = 70, bullet = 45, laser = 45, energy = 35, bomb = 25, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.4

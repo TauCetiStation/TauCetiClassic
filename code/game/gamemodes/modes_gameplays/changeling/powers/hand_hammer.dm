@@ -14,7 +14,7 @@
 /obj/item/weapon/melee/changeling_hammer
 	name = "organic hammer"
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	force = 15
 	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'

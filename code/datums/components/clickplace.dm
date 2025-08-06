@@ -62,7 +62,7 @@
 		return FALSE
 	if(isessence(user))
 		return FALSE
-	if(I.canremove != REMOVE_ALLOWED)
+	if(!I.canremove)
 		return FALSE
 	if(I.flags & ABSTRACT)
 		return FALSE

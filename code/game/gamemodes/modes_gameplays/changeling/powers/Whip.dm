@@ -14,7 +14,7 @@
 /obj/item/weapon/changeling_whip
 	name = "Organic Whip"
 	desc = "A mass of tough tissue that can be elastic"
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"

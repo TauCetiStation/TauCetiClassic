@@ -47,7 +47,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.speech_problem_flag = 1
-	magichead.canremove = REMOVE_RESTRICTED
+	magichead.canremove = 0
 	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
 	playsound(target, mSounds[randM], VOL_EFFECTS_MASTER)

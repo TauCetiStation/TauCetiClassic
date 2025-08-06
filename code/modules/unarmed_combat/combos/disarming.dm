@@ -26,7 +26,7 @@
 	if(to_give)
 		if(to_give.flags & (ABSTRACT|DROPDEL))
 			to_give = null
-		else if(to_give.canremove != REMOVE_ALLOWED)
+		else if(!to_give.canremove)
 			to_give = null
 		else if(to_give.w_class < SIZE_NORMAL && (HULK in victim.mutations))
 			to_give = null
@@ -37,7 +37,7 @@
 
 		if(I.flags & (ABSTRACT | DROPDEL))
 			return
-		if(I.canremove != REMOVE_ALLOWED)
+		if(!I.canremove)
 			return
 		if(I.w_class < SIZE_NORMAL && (HULK in victim.mutations))
 			return
@@ -152,7 +152,7 @@
 		// Perhaps they fell off during the slide-kick or something.
 		if(I.loc != L)
 			continue
-		if((I.flags & (ABSTRACT|NODROP)) || I.canremove != REMOVE_ALLOWED)
+		if((I.flags & (ABSTRACT|NODROP)) || !I.canremove)
 			continue
 		if(first)
 			. = ", taking off their [I]"

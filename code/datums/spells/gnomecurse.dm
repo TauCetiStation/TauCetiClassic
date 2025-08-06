@@ -50,9 +50,9 @@
 	var/obj/item/clothing/under/gnome_suit/gnomeunder = new /obj/item/clothing/under/gnome_suit
 	var/obj/item/clothing/suit/gnome/gnomesuit = new /obj/item/clothing/suit/gnome
 
-	gnomebeard.canremove = REMOVE_RESTRICTED
-	gnomehat.canremove = REMOVE_RESTRICTED
-	gnomeunder.canremove = REMOVE_RESTRICTED
+	gnomebeard.canremove = FALSE
+	gnomehat.canremove = FALSE
+	gnomeunder.canremove = FALSE
 
 	H.remove_from_mob(H.wear_mask)
 	H.remove_from_mob(H.w_uniform)
@@ -83,7 +83,7 @@
 
 /obj/item/clothing/mask/gnome_beard/attack_hand(mob/user)
 	. = ..()
-	if(canremove == REMOVE_RESTRICTED)
+	if(!canremove)
 		to_chat(user, "<span class='warning'>But you're GNOMED!</span>")
 
 /obj/item/clothing/head/gnome_hat
@@ -93,7 +93,7 @@
 
 /obj/item/clothing/head/gnome_hat/attack_hand(mob/user)
 	. = ..()
-	if(canremove == REMOVE_RESTRICTED)
+	if(!canremove)
 		to_chat(user, "<span class='warning'>But you're GNOMED!</span>")
 
 /obj/item/clothing/under/gnome_suit
@@ -105,11 +105,11 @@
 
 /obj/item/clothing/under/gnome_suit/attack_hand(mob/user)
 	. = ..()
-	if(canremove == REMOVE_RESTRICTED)
+	if(!canremove)
 		to_chat(user, "<span class='warning'>But you're GNOMED!</span>")
 
 /obj/item/clothing/suit/gnome
 	name = "gnome suit"
 	icon_state = "golem"
-	canremove = REMOVE_RESTRICTED
+	canremove = FALSE
 	flags = ABSTRACT | DROPDEL

@@ -417,7 +417,7 @@
 	if(src.magpulse)
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		magpulse = 0
-		canremove = REMOVE_ALLOWED
+		canremove = 1
 		to_chat(user, "You relax your deathgrip on the flooring.")
 	else
 		//make sure these can only be used when equipped.
@@ -431,7 +431,7 @@
 
 		flags |= NOSLIP | AIR_FLOW_PROTECT
 		magpulse = 1
-		canremove = REMOVE_RESTRICTED	//kinda hard to take off magclaws when you are gripping them tightly.
+		canremove = 0	//kinda hard to take off magclaws when you are gripping them tightly.
 		to_chat(user, "You dig your claws deeply into the flooring, bracing yourself.")
 		to_chat(user, "It would be hard to take off the [src] without relaxing your grip first.")
 
@@ -442,7 +442,7 @@
 		user.visible_message("The [src] go limp as they are removed from [usr]'s feet.", "The [src] go limp as they are removed from your feet.")
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		magpulse = 0
-		canremove = REMOVE_ALLOWED
+		canremove = 1
 
 /obj/item/clothing/shoes/magboots/vox/examine(mob/user)
 	..()

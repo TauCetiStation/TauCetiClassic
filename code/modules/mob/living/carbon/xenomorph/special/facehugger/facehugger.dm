@@ -244,8 +244,8 @@
 
 /obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
 	var/obj/item/clothing/head/helmet/space/rig/R = I
-	if(istype(R) && R.canremove != REMOVE_ALLOWED)	//if the helmet is attached to the rig, facehugger will not be able to remove it
-		R.canremove = REMOVE_ALLOWED
+	if(istype(R) && !R.canremove)	//if the helmet is attached to the rig, facehugger will not be able to remove it
+		R.canremove = TRUE
 	if(C.unEquip(I))
 		return TRUE
 	return FALSE

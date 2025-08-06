@@ -150,7 +150,7 @@
 	. = ..()
 	if(gun)
 		gun = new gun(src)
-		gun.canremove = REMOVE_RESTRICTED
+		gun.canremove = FALSE
 		gun.name = interface_name
 		if(charge_override)
 			gun.power_supply.maxcharge = charge_override

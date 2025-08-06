@@ -54,7 +54,7 @@
 	var/slot_name = slot_id_to_name(where)
 
 	if(slot_ref)
-		if(slot_ref.canremove != REMOVE_ALLOWED)
+		if(!slot_ref.canremove)
 			if(!strip_gloves)
 				who.visible_message("<span class='danger'>[who] fails to take off \a [slot_ref] from [src]'s [slot_name]!</span>")
 			else

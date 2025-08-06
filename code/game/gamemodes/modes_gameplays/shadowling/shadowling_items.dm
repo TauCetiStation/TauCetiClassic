@@ -4,7 +4,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	has_sensor = 0
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	origin_tech = null
 	flags = ABSTRACT | DROPDEL
 	unacidable = 1
@@ -26,7 +26,7 @@
 	unacidable = 1
 	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?
 	max_heat_protection_temperature = null
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	siemens_coefficient = 0.2
 
 
@@ -36,7 +36,7 @@
 	icon_state = "shadowling_shoes"
 	unacidable = 1
 	flags = NOSLIP | ABSTRACT | DROPDEL
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 
 
 /obj/item/clothing/mask/gas/shadowling
@@ -48,7 +48,7 @@
 	siemens_coefficient = 0
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	flags_inv = 0
 
 
@@ -61,7 +61,7 @@
 	siemens_coefficient = 0
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 
 
 /obj/item/clothing/head/shadowling
@@ -72,7 +72,7 @@
 	origin_tech = null
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	flags_inv = 0
 
 
@@ -89,7 +89,7 @@
 	darkness_view = 3
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
-	canremove = REMOVE_RESTRICTED
+	canremove = 0
 	icon = 'icons/mob/shadowling_hud.dmi'
 	icon_state = "ling_vision_off"
 	flash_protection = FLASHES_AMPLIFIER

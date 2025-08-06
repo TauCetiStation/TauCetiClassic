@@ -203,11 +203,11 @@ var/global/list/tourette_bad_words= list(
 				to_chat(src, "<span class='notice'>You are no longer gnomed!</span>")
 				gnomed = FALSE
 				if(wear_mask)
-					wear_mask.canremove = REMOVE_ALLOWED
+					wear_mask.canremove = TRUE
 				if(head)
-					head.canremove = REMOVE_ALLOWED
+					head.canremove = TRUE
 				if(w_uniform)
-					w_uniform.canremove = REMOVE_ALLOWED
+					w_uniform.canremove = TRUE
 				if(wear_suit)
 					remove_from_mob(wear_suit)
 				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
