@@ -1,7 +1,3 @@
-#define REMOVE_ALLOWED    1
-#define REMOVE_RESTRICTED 2
-#define REMOVE_OWNER_ONLY 4
-
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
