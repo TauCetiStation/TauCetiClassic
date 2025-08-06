@@ -2,6 +2,12 @@
 /datum/faction/star_wars
 	var/obj/structure/ivent/star_wars/artifact/force_source
 
+/datum/faction/star_wars/proc/get_force_users()
+	return force_source.force_users
+
+/datum/faction/star_wars/proc/isforceuser(mob/living/carbon/C)
+	return C in get_force_users()
+
 // JEDI
 
 /datum/faction/star_wars/jedi

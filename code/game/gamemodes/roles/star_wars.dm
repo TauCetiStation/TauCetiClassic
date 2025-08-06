@@ -18,8 +18,14 @@
 	var/mob/living/carbon/human/H = antag.current
 	var/datum/faction/star_wars/F = faction
 
-	F.force_source.force_users += H
+	F.get_force_users() += H
 	H.equipOutfit(/datum/outfit/star_wars/jedi)
+
+	var/datum/action/innate/star_wars/jedi/find_force/FF = new(H)
+	var/datum/action/innate/star_wars/jedi/convert/C = new(H)
+	FF.Grant(H)
+	C.Grant(H)
+
 	. = ..()
 
 /datum/role/star_wars/jedi
@@ -53,7 +59,15 @@
 	var/mob/living/carbon/human/H = antag.current
 	var/datum/faction/star_wars/F = faction
 
-	F.force_source.force_users += H
+	F.get_force_users() += H
+
+	var/datum/action/innate/star_wars/sith/find_force/FF = new(H)
+	var/datum/action/innate/star_wars/sith/convert/C = new(H)
+	var/datum/action/innate/star_wars/sith/force_convert/FC = new(H)
+	FF.Grant(H)
+	C.Grant(H)
+	FC.Grant(H)
+
 	var/sword = new /obj/item/weapon/melee/energy/sword/star_wars/sith/leader(H.loc)
 	var/robe = new /obj/item/clothing/suit/star_wars/sith(H.loc)
 	var/hood = new /obj/item/clothing/head/star_wars/sith(H.loc)

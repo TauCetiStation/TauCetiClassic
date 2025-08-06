@@ -24,8 +24,8 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/ivent/star_wars/artifact/attack_hand(mob/living/user)
-	if(!isliving(user))
+/obj/structure/ivent/star_wars/artifact/attack_hand(mob/living/carbon/user)
+	if(!iscarbon(user))
 		return
 
 	if((world.time < next_touch) || (user in force_users))
@@ -53,18 +53,16 @@
 /obj/structure/ivent/star_wars/artifact/proc/pulse()
 	activate()
 	next_pulse = world.time + pick(10, 11, 12, 13, 14, 15) MINUTE
-	var/list/candidates = player_list - force_users
+	var/list/candidates = global.player_list - force_users - global.silicon_list
 
 	for(var/i in 1 to pick(2, 3))
 		if(candidates.len == 0)
 			break
 		force_users += pick_n_take(candidates)
 
-/obj/item/clothing/suit/star_wars
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
-	unacidable = 1
+// clothes
 
-/obj/item/clothing/head/star_wars
+/obj/item/clothing/suit/hooded/star_wars
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
 	unacidable = 1
 
@@ -75,27 +73,17 @@
 	unacidable = 1
 	flags = NOSLIP
 
-/obj/item/clothing/suit/star_wars/jedi
+/obj/item/clothing/suit/hooded/star_wars/jedi
 	name = "Jedi robe"
 	desc = "."
 	icon_state = "wizard"
 	item_state = "wizrobe"
 
-/obj/item/clothing/head/star_wars/jedi
-	name = "Jedi hood"
-	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
-	icon_state = "wizard"
-
-/obj/item/clothing/suit/star_wars/sith
+/obj/item/clothing/suit/hooded/star_wars/sith
 	name = "Sith robe"
 	desc = "."
 	icon_state = "wizard"
 	item_state = "wizrobe"
-
-/obj/item/clothing/head/star_wars/sith
-	name = "Sith hood"
-	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
-	icon_state = "wizard"
 
 /obj/item/weapon/melee/energy/sword/star_wars/attack_self(mob/living/user)
 	if(!active && !isrolebytype(/datum/role/star_wars, user))
@@ -109,7 +97,7 @@
 	light_color = COLOR_BLUE
 /obj/item/weapon/melee/energy/sword/star_wars/jedi/Get_shield_chance()
 	if(active)
-		return 80
+		return 200
 	return 0
 
 // green for master jedi
@@ -119,7 +107,7 @@
 	light_color = COLOR_GREEN
 /obj/item/weapon/melee/energy/sword/star_wars/jedi/leader/Get_shield_chance()
 	if(active)
-		return 100
+		return 200
 	return 0
 
 // red for sith
@@ -129,7 +117,7 @@
 	light_color = COLOR_RED
 /obj/item/weapon/melee/energy/sword/star_wars/sith/Get_shield_chance()
 	if(active)
-		return 80
+		return 200
 	return 0
 
 // black for master sith
@@ -137,7 +125,171 @@
 	. = ..()
 	blade_color = "black"
 	light_color = COLOR_BLACK
-/obj/item/weapon/melee/energy/sword/star_wars/sith/leader/Get_shield_chance()
+/obj/item/weapon/dualsaber/sith/Get_shield_chance()
 	if(active)
-		return 100
+		return 200
 	return 0
+
+// actions
+
+// jedi actions
+/datum/action/innate/star_wars/jedi
+	var/datum/faction/star_wars/jedi/faction = find_faction_by_type(/datum/faction/star_wars/jedi)
+
+/datum/action/innate/star_wars/jedi/New()
+	faction = find_faction_by_type(/datum/faction/star_wars/jedi)
+
+/datum/action/innate/star_wars/jedi/find_force
+	name = "Обнаружить силу"
+	button_icon_state = "jedi_find_force"
+	cooldown = 2 MINUTE
+
+/datum/action/innate/jedi/find_force/Activate()
+	for(var/mob/living/carbon/C in view(5, owner))
+		if(isrolebytype(/datum/role/star_wars/jedi, C))
+			C.set_light(2, 2, COLOR_GREEN)
+			addtimer(CALLBACK(C, PROC_REF(set_light(0, 0))), 4 SECOND)
+
+		else if(faction.isforceuser(C))
+			C.set_light(2, 2, COLOR_BLUE)
+			addtimer(CALLBACK(C, PROC_REF(set_light(0, 0))), 4 SECOND)
+
+	StartCooldown()
+
+/datum/action/innate/star_wars/jedi/convert
+	name = "Обучить светлой стороне силы"
+	button_icon_state = "jedi_convert"
+	cooldown = 1 MINUTE
+
+/datum/action/innate/star_wars/jedi/convert/Activate()
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	. = ..()
+
+/datum/action/innate/star_wars/jedi/convert/Deactivate()
+	UnregisterSignal(owner, COMSIG_MOB_CLICK)
+	. = ..()
+
+/datum/action/innate/star_wars/jedi/convert/proc/convert(mob/user, atom/target, params)
+	if(!iscarbon(target))
+		return
+
+	if(!in_range(target, user))
+		to_chat(user, "<span class='warning'>Нужно находиться ближе!</span>")
+		return
+
+	if(!faction.isforceuser(target))
+		StartCooldown()
+		to_chat(user, "<span class='warning'>Цель не является носителем Силы!</span>")
+		return
+
+	if(!(target in faction.members))
+		var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на светлую сторону Силы?", "Присоединиться к джедаям?", list("Да!","Нет!"))
+		if(choice == "Да!")
+			add_faction_member(faction, target)
+			to_chat(user, "<span class='notice'>[target] присоединился к светлой стороне Силы!</span>")
+			StartCooldown()
+		else
+			to_chat(target, "<span class='warning'>Вы отказались присоединяться к светлой стороне Силы!</span>")
+			to_chat(user, "<span class='bold warning'>[target] отказался присоединяться к светлой стороне Силы!</span>")
+
+// sith actions
+/datum/action/innate/star_wars/sith
+	var/datum/faction/star_wars/sith/faction = find_faction_by_type(/datum/faction/star_wars/jedi)
+
+/datum/action/innate/star_wars/sith/New()
+	faction = find_faction_by_type(/datum/faction/star_wars/sith)
+
+/datum/action/innate/star_wars/sith/find_force
+	name = "Обнаружить силу"
+	button_icon_state = "sith_find_force"
+	cooldown = 5 SECOND
+
+/datum/action/innate/star_wars/sith/find_force/Activate()
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(check))
+	. = ..()
+
+/datum/action/innate/star_wars/sith/find_force/Deactivate()
+	UnregisterSignal(owner, COMSIG_MOB_CLICK)
+	. = ..()
+
+/datum/action/innate/star_wars/sith/find_force/proc/check(mob/user, atom/target, params)
+	if(!iscarbon(target))
+		return
+
+	StartCooldown()
+
+	if(isrolebytype(/datum/role/star_wars/jedi, target))
+		to_chat(user, "<span class='bold warning'>[target] является джедаем!</span>")
+	else if(faction.isforceuser(target))
+		to_chat(user, "<span class='notice'>[target] является носителем Силы!</span>")
+
+/datum/action/innate/star_wars/sith/convert
+	name = "Обучить тёмной стороне силы"
+	button_icon_state = "sith_convert"
+	cooldown = 30 SECOND
+
+/datum/action/innate/star_wars/sith/convert/Activate()
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	. = ..()
+
+/datum/action/innate/star_wars/sith/convert/Deactivate()
+	UnregisterSignal(owner, COMSIG_MOB_CLICK)
+	. = ..()
+
+/datum/action/innate/star_wars/sith/convert/proc/convert(mob/user, atom/target, params)
+	if(!iscarbon(target))
+		return
+
+	if(!in_range(target, user))
+		to_chat(user, "<span class='warning'>Нужно находиться ближе!</span>")
+		return
+
+	if(!faction.isforceuser(target))
+		to_chat(user, "<span class='warning'>Цель не является носителем Силы!</span>")
+		return
+
+	if(!(target in faction.members))
+		var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на тёмную сторону Силы?", "Присоединиться к ситхам?", list("Да!","Нет!"))
+		if(choice == "Да!")
+			add_faction_member(faction, target)
+			to_chat(user, "<span class='notice'>[target] присоединился к тёмной стороне Силы!</span>")
+			StartCooldown()
+		else
+			to_chat(target, "<span class='warning'>Вы отказались присоединяться к тёмной стороне Силы!</span>")
+			to_chat(user, "<span class='bold warning'>[target] отказался присоединяться к тёмной стороне Силы!</span>")
+
+/datum/action/innate/star_wars/sith/force_convert
+	name = "Промыть мозги"
+	button_icon_state = "sith_convert"
+	cooldown = 3 MINUTE
+
+/datum/action/innate/star_wars/sith/force_convert/Activate()
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	. = ..()
+
+/datum/action/innate/star_wars/sith/force_convert/Deactivate()
+	UnregisterSignal(owner, COMSIG_MOB_CLICK)
+	. = ..()
+
+/datum/action/innate/star_wars/sith/force_convert/proc/convert(mob/user, atom/target, params)
+	if(!iscarbon(target))
+		return
+
+	if(!in_range(target, user))
+		to_chat(user, "<span class='warning'>Нужно находиться ближе!</span>")
+		return
+
+	if(isrolebytype(/datum/role/star_wars/jedi, target))
+		to_chat(user, "<span class='bold warning'>[target] является джедаем!</span>")
+		return
+
+	if(faction.isforceuser(target))
+		StartCooldown()
+		to_chat(target, "<span class='bold warning'>[user] посеял сомненья в ваш разум, отныне вы принадлежите тёмной стороне силы!</span>")
+		add_faction_member(faction, target)
+	else
+		var/message = input(user, "Отдайте короткий приказ, цель будет обязана его выполнить и забыть об этом.", "Короткий приказ") as text|null
+		if(message)
+			StartCooldown()
+			to_chat(target, "<span class='big'>Ситх завладел вашим разумом, вы ОБЯЗАНЫ исполнить следующий приказ и ЗАБЫТЬ о произошедшем!</span>")
+			to_chat(target, "<span class='reallybig'>[message]</span>")
