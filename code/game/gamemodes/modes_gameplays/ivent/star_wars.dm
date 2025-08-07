@@ -366,7 +366,6 @@
 		to_chat(user, "<span class='warning'>Цель уже принадлежит одной из сторон!</span>")
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(do_something_wrapper), variable)
 	var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на тёмную сторону Силы?",
 		"Присоединиться к ситхам?", list("Да!","Нет!"))
 	if(choice == "Да!")
