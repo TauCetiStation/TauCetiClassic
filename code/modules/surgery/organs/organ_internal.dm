@@ -83,7 +83,7 @@
 
 /obj/item/organ/internal/take_damage(amount, silent=0)
 	if(durability)
-		src.damage += (amount * durability)
+		damage += (amount * durability)
 	else
 		damage += amount
 
