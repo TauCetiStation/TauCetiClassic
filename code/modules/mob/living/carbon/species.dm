@@ -66,7 +66,7 @@
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
-	var/blood_oxy = 1                         // Oxygen in blood species?
+	var/blood_oxy = TRUE                         // Oxygen in blood species?
 	var/breathing_organ = O_LUNGS  			  // If set, this organ is required for breathing. Defaults to "lungs" if the species has them.
 	var/blood_volume = SPECIES_BLOOD_DEFAULT  // Initial blood volume.
 
