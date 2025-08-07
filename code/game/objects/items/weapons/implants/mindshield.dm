@@ -54,7 +54,7 @@
 	if(C.get_species() in list(VOX, VOX_ARMALIS))
 		addtimer(CALLBACK(src, PROC_REF(vox_mind_resistance)), rand(5, 15) MINUTES)
 
-	var/datum/faction/star_wars/SW = find_faction_by_type(datum/faction/star_wars/jedi)
+	var/datum/faction/star_wars/SW = find_faction_by_type(/datum/faction/star_wars/jedi)
 	if(SW && SW.isforceuser(C))
 		addtimer(CALLBACK(src, PROC_REF(force_mind_resistance)), rand(1, 3) MINUTES)
 

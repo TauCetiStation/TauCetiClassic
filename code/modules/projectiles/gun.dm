@@ -75,6 +75,8 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
 		return FALSE
+	if(isrolebytype(/datum/role/star_wars, M))
+		return FALSE
 	if(two_hand_weapon == ONLY_TWOHAND)
 		if(M.get_inactive_hand())
 			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")

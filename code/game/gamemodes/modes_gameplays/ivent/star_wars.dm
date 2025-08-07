@@ -20,16 +20,44 @@
 	var/next_touch = 0
 	var/next_pulse = 0
 
+	var/list/research_phrases = list(
+		"Объект идентифицирован как энергетический фокус нестабильного типа.",
+		"При контакте с органикой наблюдается передача аномального заряда.",
+		"Избыточный контакт приводит к термическому повреждению тканей.",
+		"Спонтанная эмиссия: зафиксировано случайное распределение заряда среди ближайших организмов.",
+		"Активация не зависит от прямого контакта – требуется пересмотр принципов работы.",
+		"Объект не имеет видимого источника питания – вероятно, использует внешние резервы.",
+		"Рекомендуется осторожное обращение: паттерны излучения непредсказуемы.")
+
 /obj/structure/ivent/star_wars/artifact/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/ivent/star_wars/artifact/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(istype(I, /obj/item/device/science_tool) && do_after(user, 1 SECOND))
+		to_chat(user, "<span class='notice'>Сканер отображает два числа [next_touch] и [next_pulse].</span>")
+		to_chat(user, pick(research_phrases))
 
 /obj/structure/ivent/star_wars/artifact/attack_hand(mob/living/carbon/user)
 	if(!iscarbon(user))
 		return
 
 	if((world.time < next_touch) || (user in force_users))
-		user.adjustFireLoss(15)
+		var/effect = rand(1, 5)
+		switch(effect)
+			if(1)
+				user.electrocute_act(15, src)
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+				s.set_up(3, 1, src)
+				s.start()
+
+			if(2)
+				to_chat(user, "<span class='warning'>Артефакт обжигает вас!</span>")
+				user.adjustFireLoss(15)
+
+			if(3)
+				empulse(src, 1, 3)
 		return
 
 	activate()
@@ -55,7 +83,7 @@
 	next_pulse = world.time + rand(10, 15) MINUTE
 	var/list/candidates = global.player_list & global.carbon_list - force_users
 
-	for(var/i in 1 to pick(2, 3))
+	for(var/i in 1 to rand(2, 3))
 		if(candidates.len == 0)
 			break
 		add_force_user(pick_n_take(candidates))
@@ -66,6 +94,15 @@
 	if(ismindprotect(force_user))
 		for(var/obj/item/weapon/implant/mind_protect/L in force_user.implants)
 			L.meltdown(harmful = FALSE)
+
+	var/effect = rand(1, 5)
+	switch(effect)
+		if(1)
+			force_user.set_light(1, 1, COLOR_BLUE)
+			addtimer(CALLBACK(force_user, .atom/proc/set_light, 0, 0), 2 SECOND)
+
+		if(2)
+			playsound(force_user, "sound/ambience/loop_regular.ogg", VOL_EFFECTS_MASTER)
 
 /obj/structure/sign/departments/jedi
 	name = "Jedi Orden"
@@ -203,7 +240,7 @@
 	button_icon_state = "jedi_find_force"
 	cooldown = 2 MINUTE
 /datum/action/innate/star_wars/jedi/find_force/Activate()
-	to_chat(owner, "<span class='notice'>Существа в 4 метрах от вас, Силой обладающие, засветятся синим.</span>")
+	to_chat(owner, "<span class='notice'>Существа в 4 метрах от вас, Силой обладающие, да засветятся синим.</span>")
 	for(var/mob/living/carbon/C in view(5, owner))
 		if(jedi_faction.isforceuser(C))
 			C.set_light(4, 2, COLOR_BLUE)
@@ -218,7 +255,7 @@
 
 /datum/action/innate/star_wars/jedi/convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь обучить цель использовать Силу.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/jedi/convert/Deactivate()
@@ -228,8 +265,8 @@
 
 /datum/action/innate/star_wars/jedi/convert/proc/convert(mob/user, atom/target, params)
 	SIGNAL_HANDLER
-
 	Deactivate()
+
 	if(!iscarbon(target))
 		to_chat(user, "<span class='warning'>[target] не может быть носителем Силы.</span>")
 		return
@@ -267,7 +304,7 @@
 
 /datum/action/innate/star_wars/sith/find_force/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы узнаете, является ли цель носителем Силы.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(check))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(check), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/sith/find_force/Deactivate()
@@ -276,6 +313,9 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/find_force/proc/check(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+	Deactivate()
+
 	if(!iscarbon(target))
 		to_chat(user, "<span class='warning'>[target] не может быть носителем Силы.</span>")
 		return
@@ -292,11 +332,11 @@
 /datum/action/innate/star_wars/sith/convert
 	name = "Обучить тёмной стороне силы"
 	button_icon_state = "sith_convert"
-	cooldown = 30 SECOND
+	cooldown = 5 SECOND
 
 /datum/action/innate/star_wars/sith/convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь обучить цель использовать Силу.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/sith/convert/Deactivate()
@@ -305,6 +345,9 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/convert/proc/convert(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+	Deactivate()
+
 	if(!iscarbon(target))
 		to_chat(user, "<span class='warning'>[target] не может быть носителем Силы.</span>")
 		return
@@ -338,7 +381,7 @@
 
 /datum/action/innate/star_wars/sith/force_convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь промыть цели мозги.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/sith/force_convert/Deactivate()
@@ -347,10 +390,13 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/force_convert/proc/convert(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+	Deactivate()
+
 	if(!iscarbon(target))
 		return
 
-	if(get_dist(target, user) <= 2)
+	if(get_dist(target, user) > 2)
 		to_chat(user, "<span class='warning'>Нужно находиться ближе!</span>")
 		return
 
