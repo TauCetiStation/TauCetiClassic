@@ -244,7 +244,7 @@
 
 	breath.update_values()
 
-/mob/living/carbon/proc/breathe(active_breathe = 1)
+/mob/living/carbon/proc/breathe(active_breathe = TRUE)
 	if(is_skip_breathe())
 		return null
 
