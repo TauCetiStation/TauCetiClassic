@@ -72,7 +72,7 @@
 	if(breath.total_moles == 0)
 		breath_fail_ratio = 1
 		handle_failed_breath()
-		return 1
+		return TRUE
 
 	var/safe_pressure_min = min_breath_pressure // Minimum safe partial pressure of breathable gas in kPa
 	// Lung damage increases the minimum safe pressure.
