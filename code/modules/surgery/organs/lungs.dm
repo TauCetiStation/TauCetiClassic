@@ -11,7 +11,7 @@
 	var/exhale_type = "carbon_dioxide"
 	var/breath_type = "oxygen"
 	var/has_gills = FALSE
-	var/active_breathing = 1
+	var/active_breathing = TRUE
 	var/min_breath_pressure = 16
 	var/last_int_pressure
 	var/last_ext_pressure
