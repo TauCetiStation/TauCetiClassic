@@ -33,8 +33,8 @@
 		return
 
 	activate()
-	force_users += user
-	next_touch = world.time + pick(10, 11, 12, 13, 14, 15) MINUTE
+	add_force_user(user)
+	next_touch = world.time + rand(10, 15) MINUTE
 
 /obj/structure/ivent/star_wars/artifact/proc/activate()
 	//playsound
@@ -52,13 +52,20 @@
 
 /obj/structure/ivent/star_wars/artifact/proc/pulse()
 	activate()
-	next_pulse = world.time + pick(10, 11, 12, 13, 14, 15) MINUTE
-	var/list/candidates = global.player_list - force_users - global.silicon_list
+	next_pulse = world.time + rand(10, 15) MINUTE
+	var/list/candidates = global.player_list & global.carbon_list - force_users
 
 	for(var/i in 1 to pick(2, 3))
 		if(candidates.len == 0)
 			break
-		force_users += pick_n_take(candidates)
+		add_force_user(pick_n_take(candidates))
+
+/obj/structure/ivent/star_wars/artifact/proc/add_force_user(mob/living/carbon/force_user)
+	force_users += force_user
+
+	if(ismindprotect(force_user))
+		for(var/obj/item/weapon/implant/mind_protect/L in force_user.implants)
+			L.meltdown(harmful = FALSE)
 
 /obj/structure/sign/departments/jedi
 	name = "Jedi Orden"
@@ -100,9 +107,9 @@
 	var/list/stands = list(1, 2, 3)
 
 /obj/item/weapon/melee/energy/sword/star_wars/dropped(mob/user)
+	. = ..()
 	if(active)
 		attack_self(usr)
-	..()
 
 /obj/item/weapon/melee/energy/sword/star_wars/Get_shield_chance()
 	if(active)
@@ -139,8 +146,10 @@
 	. = ..()
 	if(active)
 		canremove = FALSE
+		flags = NODROP | ABSTRACT
 	else
 		canremove = TRUE
+		flags = null
 
 // blue for jedi
 /obj/item/weapon/melee/energy/sword/star_wars/jedi/atom_init()

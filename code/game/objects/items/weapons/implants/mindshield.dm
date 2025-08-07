@@ -54,11 +54,22 @@
 	if(C.get_species() in list(VOX, VOX_ARMALIS))
 		addtimer(CALLBACK(src, PROC_REF(vox_mind_resistance)), rand(5, 15) MINUTES)
 
+	var/datum/faction/star_wars/SW = find_faction_by_type(datum/faction/star_wars/jedi)
+	if(SW && SW.isforceuser(C))
+		addtimer(CALLBACK(src, PROC_REF(force_mind_resistance)), rand(1, 3) MINUTES)
+
 /obj/item/weapon/implant/mind_protect/proc/vox_mind_resistance()
 	if(QDELING(src) || !implanted_mob)
 		return
 
 	to_chat(implanted_mob, "<span class='notice'>Ваша естественная ментальная стабильность нейтрализовала воздействие импланта, влияющего на разум.</span>")
+	meltdown(harmful = FALSE)
+
+/obj/item/weapon/implant/mind_protect/proc/force_mind_resistance()
+	if(QDELING(src) || !implanted_mob)
+		return
+
+	to_chat(implanted_mob, "<span class='notice'>Сила нейтрализовала воздействие импланта, влияющего на ваш разум.</span>")
 	meltdown(harmful = FALSE)
 
 /obj/item/weapon/implant/mind_protect/mindshield
