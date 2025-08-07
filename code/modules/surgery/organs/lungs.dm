@@ -64,7 +64,7 @@
 	if(!breath || (max_damage <= 0))
 		breath_fail_ratio = 1
 		handle_failed_breath()
-		return 1
+		return TRUE
 
 	var/datum/gas_mixture/environment = owner.loc.return_air_for_internal_lifeform()
 	last_ext_pressure = environment && environment.return_pressure()
