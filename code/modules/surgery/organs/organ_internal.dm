@@ -17,7 +17,7 @@
 	var/tough = FALSE //can organ be easily die?
 	var/list/compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL) // races with which organs are compatible
 	var/requires_robotic_bodypart = FALSE
-	var/sterile = 0
+	var/sterile = FALSE
 	var/durability = 1 // Damage multiplier for organs, that have damage values.
 
 /obj/item/organ/internal/New(mob/living/carbon/holder)// T.C. maybe atom init?
