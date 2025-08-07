@@ -59,7 +59,7 @@
 
 
 	if(!owner)
-		return 1
+		return TRUE
 
 	if(!breath || (max_damage <= 0))
 		breath_fail_ratio = 1
