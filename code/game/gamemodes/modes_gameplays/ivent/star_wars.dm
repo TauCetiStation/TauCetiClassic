@@ -255,7 +255,7 @@
 
 /datum/action/innate/star_wars/jedi/convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь обучить цель использовать Силу.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
 	. = ..()
 
 /datum/action/innate/star_wars/jedi/convert/Deactivate()
@@ -304,7 +304,7 @@
 
 /datum/action/innate/star_wars/sith/find_force/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы узнаете, является ли цель носителем Силы.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(check), override = TRUE)
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(check))
 	. = ..()
 
 /datum/action/innate/star_wars/sith/find_force/Deactivate()
@@ -336,7 +336,7 @@
 
 /datum/action/innate/star_wars/sith/convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь обучить цель использовать Силу.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
 	. = ..()
 
 /datum/action/innate/star_wars/sith/convert/Deactivate()
@@ -381,7 +381,7 @@
 
 /datum/action/innate/star_wars/sith/force_convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь промыть цели мозги.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
 	. = ..()
 
 /datum/action/innate/star_wars/sith/force_convert/Deactivate()
