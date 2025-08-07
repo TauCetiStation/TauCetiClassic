@@ -85,50 +85,92 @@
 	icon_state = "wizard"
 	item_state = "wizrobe"
 
+/obj/item/weapon/melee/energy/sword/star_wars
+	name = "Lightsaber"
+	can_be_dual = FALSE
+
+	var/stand = 1
+	var/shield_chance = 200
+	var/max_shield_chance = 200
+	var/list/stands = list(1, 2, 3)
+
+/obj/item/weapon/melee/energy/sword/star_wars/dropped(mob/user)
+	if(active)
+		attack_self(usr)
+	..()
+
+/obj/item/weapon/melee/energy/sword/star_wars/Get_shield_chance()
+	if(active)
+		stand = pick(stands)
+		update_icon()
+		update_inv_mob()
+
+		var/mob/user = loc
+		var/old_transform = user.transform
+		user.transform *= 1.2
+		animate(user, transform = old_transform, time = 5)
+
+		shield_chance -= 20
+		if(shield_chance < max_shield_chance)
+			START_PROCESSING(SSobj, src)
+		return shield_chance
+	return 0
+
+/obj/item/weapon/melee/energy/sword/star_wars/process()
+	if(shield_chance < max_shield_chance)
+		shield_chance = min(max_shield_chance, shield_chance + 2)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/weapon/melee/energy/sword/star_wars/update_icon()
+	if(active)
+		icon_state = "lightsaber_[blade_color]_[stand]"
+	else
+		icon_state = "lightsaber_off"
+
 /obj/item/weapon/melee/energy/sword/star_wars/attack_self(mob/living/user)
 	if(!active && !isrolebytype(/datum/role/star_wars, user))
 		return
 	. = ..()
+	if(active)
+		canremove = FALSE
+	else
+		canremove = TRUE
 
-//blue for jedi
+// blue for jedi
 /obj/item/weapon/melee/energy/sword/star_wars/jedi/atom_init()
 	. = ..()
 	blade_color = "blue"
 	light_color = COLOR_BLUE
-/obj/item/weapon/melee/energy/sword/star_wars/jedi/Get_shield_chance()
-	if(active)
-		return 200
-	return 0
+	stand = 2
 
 // green for master jedi
 /obj/item/weapon/melee/energy/sword/star_wars/jedi/leader/atom_init()
 	. = ..()
 	blade_color = "green"
 	light_color = COLOR_GREEN
-/obj/item/weapon/melee/energy/sword/star_wars/jedi/leader/Get_shield_chance()
-	if(active)
-		return 200
-	return 0
+	stand = 1
+	max_shield_chance = 240
+	shield_chance = 240
 
 // red for sith
 /obj/item/weapon/melee/energy/sword/star_wars/sith/atom_init()
 	. = ..()
 	blade_color = "red"
 	light_color = COLOR_RED
-/obj/item/weapon/melee/energy/sword/star_wars/sith/Get_shield_chance()
-	if(active)
-		return 200
-	return 0
+	stand = 3
 
 // dual red for master sith
-/obj/item/weapon/dualsaber/sith/atom_init()
-	. = ..()
-	blade_color = "red"
-	light_color = COLOR_BLACK
-/obj/item/weapon/dualsaber/sith/Get_shield_chance()
-	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
-		return 200
-	return 0
+/obj/item/weapon/melee/energy/sword/star_wars/dual/atom_init()
+	name = "Dual Lightsaber"
+	stands = list(1, 2)
+	stand = 1
+	light_color = COLOR_RED
+/obj/item/weapon/melee/energy/sword/star_wars/dual/update_icon()
+	if(active)
+		icon_state = "duallightsaber_[stand]"
+	else
+		icon_state = "duallightsaber_off"
 
 // actions
 

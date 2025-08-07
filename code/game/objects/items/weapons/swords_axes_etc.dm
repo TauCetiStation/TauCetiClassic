@@ -46,6 +46,12 @@
 		if("black")
 			light_color = COLOR_GRAY
 
+/obj/item/weapon/melee/energy/sword/update_icon()
+	if(active)
+		icon_state = "sword[blade_color]"
+	else
+		icon_state = "sword0"
+
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
@@ -58,28 +64,22 @@
 		sharp = TRUE
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass1"
-		else
-			icon_state = "sword[blade_color]"
 		w_class = SIZE_SMALL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 		set_light(2)
+		update_icon()
 	else
 		qualities = null
 		sharp = FALSE
 		force = 3
 		flags = NOBLOODY
 		hitsound = initial(hitsound)
-		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
-			icon_state = "cutlass0"
-		else
-			icon_state = "sword0"
 		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 		set_light(0)
+		update_icon()
 
 	update_inv_mob()
 	add_fingerprint(user)

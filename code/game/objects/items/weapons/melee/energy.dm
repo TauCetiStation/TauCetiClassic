@@ -72,9 +72,10 @@
 	var/can_combine = TRUE
 
 	var/blade_color
+	var/can_be_dual = TRUE
 
 /obj/item/weapon/melee/energy/sword/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/melee/energy/sword))
+	if(istype(I, /obj/item/weapon/melee/energy/sword) && can_be_dual)
 		var/obj/item/weapon/melee/energy/sword/S = I
 		if(!S.can_combine || !can_combine)
 			return
@@ -109,6 +110,12 @@
 	icon_state = "cutlass0"
 
 	can_combine = FALSE
+
+/obj/item/weapon/melee/energy/sword/pirate/update_icon()
+	if(active)
+		icon_state = "cutlass1"
+	else
+		icon_state = "cutlass0"
 
 /obj/item/weapon/melee/energy/sword/traitor
 	name = "toy sword"
