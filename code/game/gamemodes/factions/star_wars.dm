@@ -2,11 +2,8 @@
 /datum/faction/star_wars
 	var/obj/structure/ivent/star_wars/artifact/force_source
 
-/datum/faction/star_wars/proc/get_force_users()
-	return force_source.force_users
-
 /datum/faction/star_wars/proc/isforceuser(mob/living/carbon/C)
-	return C in get_force_users()
+	return C in force_source.force_users
 
 // JEDI
 
@@ -21,6 +18,12 @@
 	max_roles = 2
 
 	logo_state = "jedi_logo"
+
+	var/list/force_spells = list(
+		/obj/effect/proc_holder/spell/in_hand/heal/star_wars,
+		/obj/effect/proc_holder/spell/targeted/summonitem/star_wars,
+		/obj/effect/proc_holder/spell/targeted/forcewall/star_wars,
+		/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars)
 
 /datum/faction/star_wars/jedi/forgeObjectives()
 	if(!..())
@@ -48,6 +51,12 @@
 	max_roles = 2
 
 	logo_state = "sith_logo"
+
+	var/list/force_spells = list(
+		/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/star_wars,
+		/obj/effect/proc_holder/spell/targeted/summonitem/star_wars,
+		/obj/effect/proc_holder/spell/aoe_turf/repulse/star_wars,
+		/obj/effect/proc_holder/spell/in_hand/tesla/star_wars)
 
 /datum/faction/star_wars/sith/forgeObjectives()
 	if(!..())

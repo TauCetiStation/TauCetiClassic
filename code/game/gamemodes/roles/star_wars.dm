@@ -16,15 +16,20 @@
 
 /datum/role/star_wars/jedi_leader/OnPostSetup()
 	var/mob/living/carbon/human/H = antag.current
-	var/datum/faction/star_wars/F = faction
+	var/datum/faction/star_wars/jedi/F = faction
 
-	F.get_force_users() += H
+	F.force_source.force_users += H
 	H.equipOutfit(/datum/outfit/star_wars/jedi)
 
 	var/datum/action/innate/star_wars/jedi/find_force/FF = new(H)
-	var/datum/action/innate/star_wars/jedi/convert/C = new(H)
+	var/datum/action/innate/star_wars/jedi/convert/CO = new(H)
 	FF.Grant(H)
-	C.Grant(H)
+	CO.Grant(H)
+
+	var/list/force_spells = F.force_spells.Copy()
+	for(var/i in 1 to 3)
+		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
+		H.AddSpell(new S)
 
 	. = ..()
 
@@ -38,6 +43,15 @@
 
 	skillset_type = /datum/skillset/willpower
 	moveset_type = /datum/combat_moveset/cqc
+
+/datum/role/star_wars/jedi/OnPostSetup()
+	var/mob/living/carbon/C = antag.current
+	var/datum/faction/star_wars/jedi/F = faction
+
+	var/list/force_spells = F.force_spells.Copy()
+	for(var/i in 1 to 2)
+		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
+		C.AddSpell(new S)
 
 // SITH
 
@@ -57,24 +71,27 @@
 
 /datum/role/star_wars/sith_leader/OnPostSetup()
 	var/mob/living/carbon/human/H = antag.current
-	var/datum/faction/star_wars/F = faction
+	var/datum/faction/star_wars/sith/F = faction
 
-	F.get_force_users() += H
+	F.force_source.force_users += H
 
 	var/datum/action/innate/star_wars/sith/find_force/FF = new(H)
-	var/datum/action/innate/star_wars/sith/convert/C = new(H)
+	var/datum/action/innate/star_wars/sith/convert/CO = new(H)
 	var/datum/action/innate/star_wars/sith/force_convert/FC = new(H)
 	FF.Grant(H)
-	C.Grant(H)
+	CO.Grant(H)
 	FC.Grant(H)
 
-	var/sword = new /obj/item/weapon/melee/energy/sword/star_wars/sith/leader(H.loc)
-	var/robe = new /obj/item/clothing/suit/star_wars/sith(H.loc)
-	var/hood = new /obj/item/clothing/head/star_wars/sith(H.loc)
+	var/list/force_spells = F.force_spells.Copy()
+	for(var/i in 1 to 3)
+		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
+		H.AddSpell(new S)
+
+	var/sword = new /obj/item/weapon/dualsaber/sith(H.loc)
+	var/robe = new /obj/item/clothing/suit/hooded/star_wars/sith(H.loc)
 
 	H.equip_to_slot_if_possible(sword, SLOT_IN_BACKPACK)
 	H.equip_to_slot_if_possible(robe, SLOT_IN_BACKPACK)
-	H.equip_to_slot_if_possible(hood, SLOT_IN_BACKPACK)
 	. = ..()
 
 /datum/role/star_wars/sith
@@ -87,3 +104,12 @@
 
 	skillset_type = /datum/skillset/willpower
 	moveset_type = /datum/combat_moveset/cqc
+
+/datum/role/star_wars/sith/OnPostSetup()
+	var/mob/living/carbon/C = antag.current
+	var/datum/faction/star_wars/sith/F = faction
+
+	var/list/force_spells = F.force_spells.Copy()
+	for(var/i in 1 to 2)
+		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
+		C.AddSpell(new S)

@@ -120,13 +120,13 @@
 		return 200
 	return 0
 
-// black for master sith
-/obj/item/weapon/melee/energy/sword/star_wars/sith/leader/atom_init()
+// dual red for master sith
+/obj/item/weapon/dualsaber/sith/atom_init()
 	. = ..()
-	blade_color = "black"
+	blade_color = "red"
 	light_color = COLOR_BLACK
 /obj/item/weapon/dualsaber/sith/Get_shield_chance()
-	if(active)
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
 		return 200
 	return 0
 
@@ -134,7 +134,7 @@
 
 // jedi actions
 /datum/action/innate/star_wars/jedi
-	var/datum/faction/star_wars/jedi/faction = find_faction_by_type(/datum/faction/star_wars/jedi)
+	var/datum/faction/star_wars/jedi/faction
 
 /datum/action/innate/star_wars/jedi/New()
 	faction = find_faction_by_type(/datum/faction/star_wars/jedi)
@@ -144,15 +144,15 @@
 	button_icon_state = "jedi_find_force"
 	cooldown = 2 MINUTE
 
-/datum/action/innate/jedi/find_force/Activate()
+/datum/action/innate/star_wars/jedi/find_force/Activate()
 	for(var/mob/living/carbon/C in view(5, owner))
 		if(isrolebytype(/datum/role/star_wars/jedi, C))
 			C.set_light(2, 2, COLOR_GREEN)
-			addtimer(CALLBACK(C, PROC_REF(set_light(0, 0))), 4 SECOND)
+			addtimer(CALLBACK(src, .atom/proc/set_light, 0, 0), 4 SECOND)
 
 		else if(faction.isforceuser(C))
 			C.set_light(2, 2, COLOR_BLUE)
-			addtimer(CALLBACK(C, PROC_REF(set_light(0, 0))), 4 SECOND)
+			addtimer(CALLBACK(src, .atom/proc/set_light, 0, 0), 4 SECOND)
 
 	StartCooldown()
 
@@ -194,7 +194,7 @@
 
 // sith actions
 /datum/action/innate/star_wars/sith
-	var/datum/faction/star_wars/sith/faction = find_faction_by_type(/datum/faction/star_wars/jedi)
+	var/datum/faction/star_wars/sith/faction
 
 /datum/action/innate/star_wars/sith/New()
 	faction = find_faction_by_type(/datum/faction/star_wars/sith)
@@ -216,9 +216,11 @@
 	if(!iscarbon(target))
 		return
 
+	var/mob/living/carbon/C = target
+
 	StartCooldown()
 
-	if(isrolebytype(/datum/role/star_wars/jedi, target))
+	if(isrolebytype(/datum/role/star_wars/jedi, C))
 		to_chat(user, "<span class='bold warning'>[target] является джедаем!</span>")
 	else if(faction.isforceuser(target))
 		to_chat(user, "<span class='notice'>[target] является носителем Силы!</span>")
@@ -275,11 +277,13 @@
 	if(!iscarbon(target))
 		return
 
+	var/mob/living/carbon/C = target
+
 	if(!in_range(target, user))
 		to_chat(user, "<span class='warning'>Нужно находиться ближе!</span>")
 		return
 
-	if(isrolebytype(/datum/role/star_wars/jedi, target))
+	if(isrolebytype(/datum/role/star_wars/jedi, C))
 		to_chat(user, "<span class='bold warning'>[target] является джедаем!</span>")
 		return
 
@@ -293,3 +297,42 @@
 			StartCooldown()
 			to_chat(target, "<span class='big'>Ситх завладел вашим разумом, вы ОБЯЗАНЫ исполнить следующий приказ и ЗАБЫТЬ о произошедшем!</span>")
 			to_chat(target, "<span class='reallybig'>[message]</span>")
+
+
+/obj/effect/proc_holder/spell/in_hand/heal/star_wars
+	invocation = ""
+	clothes_req = FALSE
+	charge_max = 1 MINUTE
+
+/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/star_wars
+	invocation = ""
+	clothes_req = FALSE
+	charge_max = 1 MINUTE
+	emp_heavy = 3
+	emp_light = 5
+
+/obj/effect/proc_holder/spell/targeted/summonitem/star_wars
+	invocation = ""
+	clothes_req = FALSE
+	charge_max = 10 SECOND
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/star_wars
+	invocation = ""
+	clothes_req = FALSE
+	charge_max = 1 MINUTE
+	maxthrow = 3
+
+/obj/effect/proc_holder/spell/targeted/forcewall/star_wars
+	invocation = ""
+	clothes_req = FALSE
+	charge_max = 1 MINUTE
+
+/obj/effect/proc_holder/spell/in_hand/tesla/star_wars
+	invocation = ""
+	clothes_req = FALSE
+	charge_max = 1 MINUTE
+
+/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars
+	invocation = ""
+	clothes_req = FALSE
+	charge_max = 1 MINUTE
