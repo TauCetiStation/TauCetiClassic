@@ -85,7 +85,7 @@
 	if(durability)
 		src.damage += (amount * durability)
 	else
-		src.damage += amount
+		damage += amount
 
 		//only show this if the organ is not robotic
 		if(owner && parent_bodypart && amount > 0)
