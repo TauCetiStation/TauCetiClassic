@@ -95,7 +95,7 @@
 		else
 			owner.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 
-		failed_inhale = 1
+		failed_inhale = TRUE
 		owner.inhale_alert = TRUE
 
 	breath.adjust_gas(breath_type, -inhaled_gas_used, update = FALSE) //update afterwards
