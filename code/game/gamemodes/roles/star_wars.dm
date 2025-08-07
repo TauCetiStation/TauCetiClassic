@@ -44,6 +44,8 @@
 	moveset_type = /datum/combat_moveset/cqc
 
 /datum/role/star_wars/jedi/OnPostSetup()
+	. = ..()
+
 	var/mob/living/carbon/C = antag.current
 	var/datum/faction/star_wars/jedi/F = faction
 
@@ -70,6 +72,7 @@
 
 /datum/role/star_wars/sith_leader/OnPostSetup()
 	. = ..()
+
 	var/mob/living/carbon/human/H = antag.current
 	var/datum/faction/star_wars/sith/F = faction
 
@@ -103,6 +106,8 @@
 	moveset_type = /datum/combat_moveset/cqc
 
 /datum/role/star_wars/sith/OnPostSetup()
+	. = ..()
+
 	var/mob/living/carbon/C = antag.current
 	var/datum/faction/star_wars/sith/F = faction
 
