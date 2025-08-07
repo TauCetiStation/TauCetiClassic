@@ -51,7 +51,7 @@
 	owner = H
 
 /obj/item/organ/process()
-	return 0
+	return FALSE
 
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	SHOULD_CALL_PARENT(TRUE)
