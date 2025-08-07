@@ -393,7 +393,7 @@ var/global/list/tourette_bad_words= list(
 	var/obj/item/organ/internal/lungs/lungs = organs_by_name[O_LUNGS]
 	if(!lungs) // T.C. Lungs need be dead?
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 4)
-	if(suiciding)
+	else if(suiciding)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
 	else if(health > config.health_threshold_crit)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS)
