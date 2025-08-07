@@ -79,7 +79,7 @@
 	safe_pressure_min *= 1 + rand(1,4) * damage/max_damage
 
 	var/failed_inhale = 0
-	var/failed_exhale = 0
+	var/failed_exhale = FALSE
 
 	var/inhale_efficiency = min(round(((inhaling/breath.total_moles)*breath_pressure)/safe_pressure_min, 0.001), 3)
 
