@@ -37,32 +37,35 @@
 
 /obj/item/organ/internal/brain/process()
 
-	if(owner)
+	if(!owner)
+		return ..()
 
-		handle_damage_effects()
+	handle_damage_effects()
 
-		if(owner.should_have_organ(O_HEART))
-			if(HAS_TRAIT(owner, TRAIT_NO_BLOOD))
-				return
-			// No heart? You are going to have a very bad time. Not 100% lethal because heart transplants should be a thing.
-			var/blood_volume = owner.get_blood_oxygenation()
-			if(blood_volume < BLOOD_VOLUME_SURVIVE_P)
-				if(!owner.reagents.has_reagent("inaprovaline") || prob(60))
-					oxygen_reserve = max(0, oxygen_reserve-1)
-			else
-				oxygen_reserve = min(initial(oxygen_reserve), oxygen_reserve+1)
-			if(!oxygen_reserve) //(hardcrit)
-				owner.Paralyse(3)
-			var/damprob
-			// Effects of bloodloss
-			oxy = owner.getOxyLoss()
-			if(!HAS_TRAIT(owner, TRAIT_EXTERNAL_HEART))
-				switch(blood_volume)
-					if(BLOOD_VOLUME_SAFE_P to 10000)
-						if(owner.pale)
-							owner.pale = FALSE
-							owner.update_body()
-					if(BLOOD_VOLUME_OKAY_P to BLOOD_VOLUME_SAFE_P)
+	if(!owner.should_have_organ(O_HEART))
+		return ..()
+	if(HAS_TRAIT(owner, TRAIT_NO_BLOOD))
+		return
+	// No heart? You are going to have a very bad time. Not 100% lethal because heart transplants should be a thing.
+	var/blood_volume = owner.get_blood_oxygenation()
+	if(blood_volume < BLOOD_VOLUME_SURVIVE_P)
+		if(!owner.reagents.has_reagent("inaprovaline") || prob(60))
+			oxygen_reserve = max(0, oxygen_reserve-1)
+		else
+			oxygen_reserve = min(initial(oxygen_reserve), oxygen_reserve+1)
+		if(!oxygen_reserve) //(hardcrit)
+			owner.Paralyse(3)
+		var/damprob
+		// Effects of bloodloss
+		oxy = owner.getOxyLoss()
+		if(HAS_TRAIT(owner, TRAIT_EXTERNAL_HEART))
+			return ..()
+		switch(blood_volume)
+			if(BLOOD_VOLUME_SAFE_P to 10000)
+				if(owner.pale)
+					owner.pale = FALSE
+					owner.update_body()
+			if(BLOOD_VOLUME_OKAY_P to BLOOD_VOLUME_SAFE_P)
 						if(!owner.pale)
 							owner.pale = TRUE
 							owner.update_body()
