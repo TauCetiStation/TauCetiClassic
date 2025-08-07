@@ -255,7 +255,7 @@
 
 /datum/action/innate/star_wars/jedi/convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь обучить цель использовать Силу.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/jedi/convert/Deactivate()
@@ -264,6 +264,7 @@
 	. = ..()
 
 /datum/action/innate/star_wars/jedi/convert/proc/convert(mob/user, atom/target, params)
+	set waitfor = FALSE
 	SIGNAL_HANDLER
 	Deactivate()
 
@@ -304,7 +305,7 @@
 
 /datum/action/innate/star_wars/sith/find_force/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы узнаете, является ли цель носителем Силы.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(check))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(check), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/sith/find_force/Deactivate()
@@ -336,7 +337,7 @@
 
 /datum/action/innate/star_wars/sith/convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь обучить цель использовать Силу.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/sith/convert/Deactivate()
@@ -345,6 +346,7 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/convert/proc/convert(mob/user, atom/target, params)
+	set waitfor = FALSE
 	SIGNAL_HANDLER
 	Deactivate()
 
@@ -364,6 +366,7 @@
 		to_chat(user, "<span class='warning'>Цель уже принадлежит одной из сторон!</span>")
 		return
 
+	INVOKE_ASYNC(src, PROC_REF(do_something_wrapper), variable)
 	var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на тёмную сторону Силы?",
 		"Присоединиться к ситхам?", list("Да!","Нет!"))
 	if(choice == "Да!")
@@ -381,7 +384,7 @@
 
 /datum/action/innate/star_wars/sith/force_convert/Activate()
 	to_chat(owner, "<span class='notice'>При следующем клике вы попытаетесь промыть цели мозги.</span>")
-	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert))
+	RegisterSignal(owner, COMSIG_MOB_CLICK, PROC_REF(convert), override = TRUE)
 	. = ..()
 
 /datum/action/innate/star_wars/sith/force_convert/Deactivate()
@@ -390,6 +393,7 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/force_convert/proc/convert(mob/user, atom/target, params)
+	set waitfor = FALSE
 	SIGNAL_HANDLER
 	Deactivate()
 
