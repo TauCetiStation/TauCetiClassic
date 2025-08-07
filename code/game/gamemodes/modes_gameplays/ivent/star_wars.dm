@@ -264,7 +264,6 @@
 	. = ..()
 
 /datum/action/innate/star_wars/jedi/convert/proc/convert(mob/user, atom/target, params)
-	set waitfor = FALSE
 	SIGNAL_HANDLER
 	Deactivate()
 
@@ -286,6 +285,9 @@
 		StartCooldown()
 		return
 
+	INVOKE_ASYNC(src, PROC_REF(offer), user, target)
+
+/datum/action/innate/star_wars/jedi/convert/proc/offer(mob/user, mob/living/carbon/target)
 	var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на светлую сторону Силы?",
 		"Присоединиться к джедаям?", list("Да!","Нет!"))
 	if(choice == "Да!")
@@ -346,7 +348,6 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/convert/proc/convert(mob/user, atom/target, params)
-	set waitfor = FALSE
 	SIGNAL_HANDLER
 	Deactivate()
 
@@ -366,6 +367,9 @@
 		to_chat(user, "<span class='warning'>Цель уже принадлежит одной из сторон!</span>")
 		return
 
+	INVOKE_ASYNC(src, PROC_REF(offer), user, target)
+
+/datum/action/innate/star_wars/sith/convert/proc/offer(mob/user, mob/living/carbon/target)
 	var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на тёмную сторону Силы?",
 		"Присоединиться к ситхам?", list("Да!","Нет!"))
 	if(choice == "Да!")
@@ -392,7 +396,6 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/force_convert/proc/convert(mob/user, atom/target, params)
-	set waitfor = FALSE
 	SIGNAL_HANDLER
 	Deactivate()
 
@@ -412,6 +415,9 @@
 		to_chat(user, "<span class='bold warning'>Разум [target] защищён от псионических воздействий!</span>")
 		return
 
+	INVOKE_ASYNC(src, PROC_REF(mindwash), user, target)
+
+/datum/action/innate/star_wars/sith/force_convert/proc/mindwash(mob/user, mob/living/carbon/target)
 	if(sith_faction.isforceuser(target))
 		StartCooldown()
 		to_chat(target, "<span class='bold warning'>[user] посеял сомненья в ваш разум, отныне вы принадлежите тёмной стороне силы!</span>")
