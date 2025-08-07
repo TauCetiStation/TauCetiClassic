@@ -156,6 +156,10 @@
 	if (config && config.log_runtime)
 		global.runtime_log << "\[[time_stamp()]] [text][log_end]"
 
+/proc/log_icon_lookup(text)
+	if (config && config.log_icon_lookup)
+		global.icon_lookup_log << "\[[time_stamp()]] [text][log_end]"
+
 /proc/log_initialization(text)
 	var/static/preconfig_init_log = ""
 	if (!SSticker || SSticker.current_state == GAME_STATE_STARTUP)
@@ -211,7 +215,8 @@
 		var/list/L = list()
 		for(var/e in D)
 			// Indexing on numbers just gives us the same number again in the best case and causes an index out of bounds runtime in the worst
-			var/v = isnum(e) ? null : D[e]
+			var/list/list = D
+			var/v = isnum(e) ? null : list[e]
 			L += "[log_info_line(e)][v ? " - [log_info_line(v)]" : ""]"
 		return "\[[jointext(L, ", ")]\]" // We format the string ourselves, rather than use json_encode(), because it becomes difficult to read recursively escaped "
 	if(!istype(D))

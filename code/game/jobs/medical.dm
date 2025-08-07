@@ -1,15 +1,19 @@
+/datum/department/medical
+	title = DEP_MEDICAL
+	head = JOB_CMO
+	order = 5
+	color = "#99ffe6"
+
 /datum/job/cmo
-	title = "Chief Medical Officer"
-	flag = CMO
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_CMO
+	departments = list(DEP_MEDICAL, DEP_COMMAND)
+	order = CREW_INTEND_HEADS(6)
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/medGold
 	req_admin_notify = 1
-	is_head = TRUE
 	access = list(
 		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
@@ -30,13 +34,12 @@
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 	department_stocks = list("Medical" = 40)
-	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_MEDBAY|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/doctor
+	title = JOB_DOCTOR
+	departments = list(DEP_MEDICAL)
+	order = CREW_INTEND_EMPLOYEE(1)
 	title = "Medical Doctor"
-	flag = DOCTOR
-	department_flag = MEDSCI
-	faction = "Station"
 	total_positions = 4
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
@@ -64,13 +67,11 @@
 	restricted_species = list(UNATHI, DIONA)
 
 	department_stocks = list("Medical" = 20)
-	flags = JOB_FLAG_MEDBAY
 
 /datum/job/paramedic
-	title = "Paramedic"
-	flag = PARAMEDIC
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_PARAMEDIC
+	departments = list(DEP_MEDICAL)
+	order = CREW_INTEND_EMPLOYEE(2)
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
@@ -89,16 +90,13 @@
 	*/
 
 	department_stocks = list("Medical" = 15)
-	flags = JOB_FLAG_MEDBAY
 
 	restricted_species = list(DIONA)// Slow species shouldn't be paramedics.
 
-//Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
-	title = "Chemist"
-	flag = CHEMIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_CHEMIST
+	departments = list(DEP_MEDICAL)
+	order = CREW_INTEND_EMPLOYEE(3)
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
@@ -112,13 +110,11 @@
 	skillsets = list("Chemist" = /datum/skillset/chemist)
 
 	department_stocks = list("Medical" = 10)
-	flags = JOB_FLAG_MEDBAY
 
 /datum/job/geneticist
-	title = "Geneticist"
-	flag = GENETICIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_GENETICIST
+	departments = list(DEP_MEDICAL, DEP_SCIENCE)
+	order = CREW_INTEND_EMPLOYEE(4)
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
@@ -131,13 +127,11 @@
 	skillsets = list("Geneticist" = /datum/skillset/geneticist)
 
 	department_stocks = list("Medical" = 10)
-	flags = JOB_FLAG_MEDBAY
 
 /datum/job/virologist
-	title = "Virologist"
-	flag = VIROLOGIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_VIROLOGIST
+	departments = list(DEP_MEDICAL)
+	order = CREW_INTEND_EMPLOYEE(5)
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
@@ -158,13 +152,11 @@
 	restricted_species = list(UNATHI)
 
 	department_stocks = list("Medical" = 10)
-	flags = JOB_FLAG_MEDBAY
 
 /datum/job/psychiatrist
-	title = "Psychiatrist"
-	flag = PSYCHIATRIST
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_PSYCHIATRIST
+	departments = list(DEP_MEDICAL)
+	order = CREW_INTEND_EMPLOYEE(6)
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
@@ -180,13 +172,11 @@
 	restricted_species = list(UNATHI)
 
 	department_stocks = list("Medical" = 10)
-	flags = JOB_FLAG_MEDBAY
 
 /datum/job/intern
-	title = "Medical Intern"
-	flag = INTERN
-	department_flag = MEDSCI
-	faction = "Station"
+	title = JOB_INTERN
+	departments = list(DEP_MEDICAL)
+	order = CREW_INTEND_ASSIST(1)
 	total_positions = 3
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
@@ -198,4 +188,3 @@
 	skillsets = list("Medical Intern" = /datum/skillset/intern)
 
 	department_stocks = list("Medical" = 5)
-	flags = JOB_FLAG_MEDBAY

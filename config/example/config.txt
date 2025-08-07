@@ -34,6 +34,7 @@ LOG_ASSET
 LOG_TGUI
 # LOG_JS_ERROR
 # LOG_HREFS
+# LOG_ICON_LOOKUP
 # LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## sql switching

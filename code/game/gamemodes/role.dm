@@ -488,7 +488,7 @@
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/role/proc/add_antag_hud(custom_name)
 	if(antag_hud_type && (antag_hud_name || custom_name))
-		var/name = antag_hud_name ? antag_hud_name :custom_name
+		var/name = antag_hud_name ? antag_hud_name : custom_name
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.join_hud(antag.current)
 		set_antag_hud(antag.current, name, antag_hud_type)

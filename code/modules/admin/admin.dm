@@ -499,7 +499,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/change_crew_salary()
 
-	var/list/crew = my_subordinate_staff("Admin")
+	var/list/crew = SSeconomy.my_subordinate_staff("Admin")
 	var/dat
 
 	dat += "<A href='byond://?src=\ref[src];global_salary=1'>Globally change crew salaries</A><br>"

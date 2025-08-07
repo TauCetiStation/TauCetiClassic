@@ -6793,7 +6793,6 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -63807,12 +63806,12 @@
 "oXS" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/small,
+/obj/item/weapon/rcd_ammo/small,
+/obj/item/weapon/rcd_ammo/small,
+/obj/item/weapon/rcd_ammo/small,
+/obj/item/weapon/rcd_ammo/small,
+/obj/item/weapon/rcd_ammo/small,
 /obj/item/weapon/book/manual/wiki/possible_threats,
 /obj/structure/cable{
 	d1 = 1;

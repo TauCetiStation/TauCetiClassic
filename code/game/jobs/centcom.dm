@@ -1,8 +1,12 @@
+/datum/department/special
+	title = DEP_SPECIAL
+	order = 2
+	color = "#6c7391"
+
 /datum/job/blueshield
-	title = "Blueshield Officer"
-	flag = BLUESHIELD
-	department_flag = CENTCOMREPRESENT
-	faction = "Station"
+	title = JOB_BLUESHIELD
+	departments = list(DEP_SPECIAL)
+	order = CREW_INTEND_EMPLOYEE(1)
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "The Central Command"
@@ -23,13 +27,12 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	flags = JOB_FLAG_CENTCOMREPRESENTATIVE
 
 /datum/job/lawyer
+	title = JOB_LAWYER
+	departments = list(DEP_SPECIAL)
+	order = CREW_INTEND_EMPLOYEE(2)
 	title = "Internal Affairs Agent"
-	flag = LAWYER
-	department_flag = CENTCOMREPRESENT
-	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "The Central Command"
@@ -47,4 +50,3 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC, PLUVIAN)
-	flags = JOB_FLAG_CENTCOMREPRESENTATIVE|JOB_FLAG_BLUESHIELD_PROTEC
