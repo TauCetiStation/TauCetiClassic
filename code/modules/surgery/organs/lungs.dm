@@ -19,7 +19,7 @@
 	var/breath_fail_ratio // How badly they failed a breath. Higher is worse.
 	var/poison_type = "phoron"
 	var/last_successful_breath
-	var/breathing = 0
+	var/breathing = FALSE
 
 
 /obj/item/organ/internal/lungs/proc/handle_breath(datum/gas_mixture/breath, forced)
