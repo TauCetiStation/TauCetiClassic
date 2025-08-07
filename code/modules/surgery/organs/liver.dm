@@ -83,7 +83,7 @@
 	if(owner.life_tick % process_accuracy != 0)
 		return
 
-	if(src.damage < 0)
+	if(damage < 0)
 		src.damage = 0
 
 	//High toxins levels are dangerous
