@@ -94,7 +94,7 @@
 	name = get_visible_name() // why in life wtf
 
 	if(istype(heart) && !(heart.status & ORGAN_DEAD))
-		pulse = heart.handle_pulse()
+		pulse = heart.pulse
 
 	if(client)
 		handle_alerts()
