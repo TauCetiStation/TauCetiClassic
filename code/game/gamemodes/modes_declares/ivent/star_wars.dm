@@ -2,7 +2,7 @@
 	name = "Star Wars"
 	config_name = "star_wars"
 
-	factions_allowed = list(/datum/faction/star_wars/jedi, /datum/faction/star_wars/sith)
+	factions_allowed = list(/datum/faction/star_wars/sith, /datum/faction/star_wars/jedi)
 
 /datum/game_mode/ivent/star_wars/announce()
 	to_chat(world, "<B>Текущий режим игры - Звёздные Войны!</B>")

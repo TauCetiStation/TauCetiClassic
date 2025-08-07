@@ -23160,8 +23160,11 @@
 	},
 /area/velocity)
 "cME" = (
-/obj/machinery/computer{
-	icon_state = "erokEz"
+/obj/structure/ivent{
+	anchored = 1;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "erokEz";
+	name = "computer"
 	},
 /turf/unsimulated/floor{
 	icon_state = "darkgreenfull"
@@ -24099,6 +24102,16 @@
 /obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
+"ehW" = (
+/obj/structure/sign/departments/jedi{
+	pixel_x = 1;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "darkgreen"
+	},
+/area/custom/jedi_ship)
 "eil" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/environment/space,
@@ -24110,8 +24123,11 @@
 /turf/environment/space,
 /area/velocity/monorailwagon)
 "ejn" = (
-/obj/machinery/computer{
-	icon_state = "erokezz"
+/obj/structure/ivent{
+	anchored = 1;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "erokezz";
+	name = "computer"
 	},
 /turf/unsimulated/floor{
 	icon_state = "darkgreenfull"
@@ -25846,6 +25862,9 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "hgu" = (
+/obj/structure/sign/departments/jedi{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "darkgreen"
@@ -27385,9 +27404,12 @@
 	},
 /area/centcom/control)
 "jJh" = (
-/obj/machinery/computer{
+/obj/structure/ivent{
+	anchored = 1;
 	dir = 8;
-	icon_state = "command"
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "command";
+	name = "computer"
 	},
 /turf/unsimulated/floor{
 	icon_state = "darkgreenfull"
@@ -29433,7 +29455,7 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "ngt" = (
-/obj/structure/mirror{
+/obj/structure/mirror/magic{
 	pixel_y = 32
 	},
 /obj/structure/sink{
@@ -29704,6 +29726,14 @@
 /area/centcom/tdome/tdomeobserve)
 "nAp" = (
 /obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "darkgreenfull"
 	},
@@ -30617,8 +30647,11 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "pho" = (
-/obj/machinery/computer{
-	icon_state = "erokez"
+/obj/structure/ivent{
+	anchored = 1;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "erokez";
+	name = "computer"
 	},
 /turf/unsimulated/floor{
 	icon_state = "darkgreenfull"
@@ -39696,7 +39729,7 @@ tbZ
 tbZ
 tbZ
 tbZ
-dIr
+ehW
 wXx
 wXx
 dQN
@@ -40721,7 +40754,7 @@ aaM
 aaM
 tbZ
 tbZ
-dIr
+ehW
 wXx
 wXx
 wXx

@@ -33,7 +33,8 @@ var/global/list/huds = list(
 	ANTAG_HUD_PIRATES = new/datum/atom_hud/antag,
 	ANTAG_HUD_TEAMS_RED = new/datum/atom_hud/antag/bg_red,
 	ANTAG_HUD_TEAMS_BLUE = new/datum/atom_hud/antag/bg_blue,
-	ANTAG_HUD_STAR_WARS = new/datum/atom_hud/antag
+	ANTAG_HUD_JEDI = new/datum/atom_hud/antag/hidden,
+	ANTAG_HUD_SITH = new/datum/atom_hud/antag/hidden
 )
 
 /datum/atom_hud
