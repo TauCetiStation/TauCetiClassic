@@ -63,7 +63,6 @@
 	item_state_world = "analyser"
 
 /obj/item/organ/internal/kidneys/process()
-
 	..()
 
 	if(!owner)
