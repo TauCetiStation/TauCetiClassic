@@ -26,7 +26,6 @@
 		"Избыточный контакт приводит к термическому повреждению тканей.",
 		"Спонтанная эмиссия: зафиксировано случайное распределение заряда среди ближайших организмов.",
 		"Активация не зависит от прямого контакта – требуется пересмотр принципов работы.",
-		"Объект не имеет видимого источника питания – вероятно, использует внешние резервы.",
 		"Рекомендуется осторожное обращение: паттерны излучения непредсказуемы.")
 
 /obj/structure/ivent/star_wars/artifact/atom_init()
@@ -35,7 +34,7 @@
 
 /obj/structure/ivent/star_wars/artifact/attackby(obj/item/I, mob/user)
 	. = ..()
-	if(istype(I, /obj/item/device/science_tool) && do_after(user, 1 SECOND))
+	if(istype(I, /obj/item/device/science_tool) && do_after(user, 1 SECOND, target = src))
 		to_chat(user, "<span class='notice'>Сканер отображает два числа [next_touch] и [next_pulse].</span>")
 		to_chat(user, pick(research_phrases))
 
@@ -62,7 +61,7 @@
 
 	activate()
 	add_force_user(user)
-	next_touch = world.time + rand(10, 15) MINUTE
+	next_touch = world.time + rand(5, 10) MINUTE
 
 /obj/structure/ivent/star_wars/artifact/proc/activate()
 	//playsound
@@ -80,7 +79,7 @@
 
 /obj/structure/ivent/star_wars/artifact/proc/pulse()
 	activate()
-	next_pulse = world.time + rand(10, 15) MINUTE
+	next_pulse = world.time + rand(5, 10) MINUTE
 	var/list/candidates = global.player_list & global.carbon_list - force_users
 
 	for(var/i in 1 to rand(2, 3))

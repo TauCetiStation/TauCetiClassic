@@ -1,6 +1,8 @@
 
 /datum/faction/star_wars
 	var/obj/structure/ivent/star_wars/artifact/force_source
+	var/competition = FALSE
+	var/escalation = FALSE
 
 /datum/faction/star_wars/proc/isforceuser(mob/living/carbon/C)
 	return C in force_source.force_users
@@ -25,21 +27,19 @@
 		/obj/effect/proc_holder/spell/targeted/forcewall/star_wars,
 		/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars)
 
-/datum/faction/star_wars/jedi/forgeObjectives()
-	if(!..())
-		return FALSE
-
-	AppendObjective(/datum/objective/star_wars/convert)
-	AppendObjective(/datum/objective/star_wars/jedi)
-	return TRUE
+	var/list/admin_verbs = list(/client/proc/star_wars_jedi_competition, /client/proc/star_wars_escalation)
 
 /datum/faction/star_wars/jedi/OnPostSetup()
 	. = ..()
 	for(var/datum/role/R in members)
 		R.antag.current.forceMove(pick_landmarked_location("Jedi Spawn"))
 
-	addtimer(CALLBACK(src, PROC_REF(give_announce)), 20 SECOND)
-	addtimer(CALLBACK(src, PROC_REF(open_gate)), 30 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(give_announce)), 5 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(open_gate)), 10 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(give_competition_objective)), 30 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(give_escalation_objective)), 60 SECOND)
+
+	setup_temp_admin_verbs(admin_verbs, "Star Wars Ivent")
 
 /datum/faction/star_wars/jedi/proc/give_announce()
 	var/datum/announcement/centcomm/star_wars/jedi_arrival/A = new
@@ -57,6 +57,19 @@
 
 	jedi_gate.destination = station_gate
 	jedi_gate.toggleon()
+
+	AppendObjective(/datum/objective/star_wars/jedi/research)
+	AppendObjective(/datum/objective/star_wars/jedi/convert)
+
+/datum/faction/star_wars/jedi/proc/give_competition_objective()
+	if(!competition)
+		AppendObjective(/datum/objective/star_wars/jedi/competition)
+		competition = TRUE
+
+/datum/faction/star_wars/jedi/proc/give_escalation_objective()
+	if(!escalation)
+		AppendObjective(/datum/objective/star_wars/jedi/escalation)
+		escalation = TRUE
 
 // SITH
 
@@ -82,6 +95,43 @@
 	if(!..())
 		return FALSE
 
-	AppendObjective(/datum/objective/star_wars/convert)
-	AppendObjective(/datum/objective/star_wars/sith)
+	AppendObjective(/datum/objective/star_wars/sith/convert)
 	return TRUE
+
+/datum/faction/star_wars/jedi/OnPostSetup()
+	. = ..()
+	for(var/datum/role/R in members)
+		R.antag.current.forceMove(pick_landmarked_location("Jedi Spawn"))
+
+	addtimer(CALLBACK(src, PROC_REF(give_competition_objective)), 5 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(give_escalation_objective)), 60 SECOND)
+
+/datum/faction/star_wars/sith/proc/give_competition_objective()
+	if(!competition)
+		AppendObjective(/datum/objective/star_wars/sith/competition)
+		competition = TRUE
+
+/datum/faction/star_wars/sith/proc/give_escalation_objective()
+	if(!escalation)
+		AppendObjective(/datum/objective/star_wars/sith/escalation)
+		escalation = TRUE
+
+
+/client/proc/star_wars_jedi_competition()
+	set category = "Event"
+	set name = "Give Jedi Competition Objective"
+
+	if(tgui_alert(mob, "Это даст джедаям информацию о том, что ситхи на станции!", "Вы уверены?", list("Да", "Нет")) == "Да")
+		var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
+		J.give_competition_objective()
+
+/client/proc/star_wars_escalation()
+	set category = "Event"
+	set name = "Give Escalation Objective"
+
+	if(tgui_alert(mob, "Это приведёт к эскалации конфликта между ситхами и джедаями!", "Вы уверены?", list("Да", "Нет")) == "Да")
+		var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
+		var/datum/faction/star_wars/sith/S = find_faction_by_type(/datum/faction/star_wars/sith)
+
+		J.give_escalation_objective()
+		S.give_escalation_objective()
