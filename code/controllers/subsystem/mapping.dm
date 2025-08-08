@@ -321,6 +321,7 @@ SUBSYSTEM_DEF(mapping)
 	if(length(mine_image))
 		data["mineMapName"] = mine_image
 	data["mineZLevels"] = levels_by_trait(ZTRAIT_MINING)
+	// TODO: Instead of mineZLevels and minemapname/stationmapname etc pack both name and map texture into a list
 	var/list/level_names = list()
 
 	for(var/datum/space_level/space_level as anything in z_list)

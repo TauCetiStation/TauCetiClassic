@@ -116,7 +116,6 @@ export const NanoMapZoomer = (props: NanoMapZoomerProps, context: any) => {
             props.onZLevel(index);
           }
         }}
-        // width={'50px'}
       />
     );
   };
@@ -255,31 +254,44 @@ export class NanoMap extends Component<Props, State> {
     snapshot: any
   ): void {
     const { trackData } = this.props;
-    if (prevProps.trackData === trackData) {
-      return;
-    }
-    if (trackData) {
-      if (!prevProps.trackData) {
-        this.zoomToPoint(4);
-      }
-      this.setState(
-        (prevState) => {
-          const state = { ...prevState };
-          const zoom = transformZoom(state.zoom);
-          // God forgive me, my math is terribly wrong but somehow gives right result....
-          const halfSize = MAP_SIZE / 2;
-          state.centerX = halfSize - (trackData.trackX - halfSize) * zoom;
-          state.centerY = halfSize + (trackData.trackY - halfSize) * zoom;
-          return state;
-        },
-        () => {
-          this.props.onCenterChange?.(this.state.centerX, this.state.centerY);
+    if (prevProps.trackData !== trackData) {
+      if (trackData) {
+        if (!prevProps.trackData) {
+          this.zoomToPoint(4);
         }
-      );
+        this.setState(
+          (prevState) => {
+            const state = { ...prevState };
+            const zoom = transformZoom(state.zoom);
+            // God forgive me, my math is terribly wrong but somehow gives right result....
+            const halfSize = MAP_SIZE / 2;
+            state.centerX = halfSize - (trackData.trackX - halfSize) * zoom;
+            state.centerY = halfSize + (trackData.trackY - halfSize) * zoom;
+            return state;
+          },
+          () => {
+            this.props.onCenterChange?.(this.state.centerX, this.state.centerY);
+          }
+        );
 
-      if (trackData.trackZ !== this.props.zLevel) {
-        this.handleZLevel(trackData.trackZ, false);
+        if (trackData.trackZ !== this.state.zLevel) {
+          if (this.props.availableZLevels.indexOf(trackData.trackZ) !== -1) {
+            this.handleZLevel(trackData.trackZ, false);
+          } else {
+            if (this.props.availableZLevels.length) {
+              this.handleZLevel(this.props.availableZLevels[0]);
+            } else {
+              // No Z level to switch to...
+              this.props.trackData?.stopTracking();
+            }
+          }
+        }
       }
+    } else if (
+      this.props.availableZLevels.length &&
+      this.props.availableZLevels.indexOf(this.state.zLevel) === -1
+    ) {
+      this.handleZLevel(this.props.availableZLevels[0]);
     }
   }
 
