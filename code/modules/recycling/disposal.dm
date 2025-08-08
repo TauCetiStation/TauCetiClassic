@@ -10,7 +10,8 @@
 
 /obj/machinery/disposal
 	name = "disposal unit"
-	desc = "A pneumatic waste disposal unit."
+	cases = list("пневматический мусоросброс", "пневматического мусоросброса", "пневматическому мусоросбросу", "пневматический мусоросброс", "пневматическим мусоросбросом", "пневматическом мусоросбросе")
+	desc = "Пневматический мусоросброс внушительного размера. Кажется, в него даже вместится живой человек?"
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "disposal"
 	anchored = TRUE
@@ -64,38 +65,38 @@
 	if(mode<=0) // It's off
 		if(isscrewing(I))
 			if(contents.len > 0)
-				to_chat(user, "Eject the items first!")
+				to_chat(user, "Вытащите содержимое из [CASE(src, GENITIVE_CASE)]!")
 				return
 			if(mode==0) // It's off but still not unscrewed
 				mode=-1 // Set it to doubleoff l0l
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "You remove the screws around the power connection.")
+				to_chat(user, "Вы открутили винты у разьёма питания")
 				return
 			else if(mode==-1)
 				mode=0
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "You attach the screws around the power connection.")
+				to_chat(user, "Вы вкрутили винты у разьёма питания.")
 				return
 		else if(iswelding(I) && mode==-1)
 			if(contents.len > 0)
-				to_chat(user, "<span class='warning'>Eject the items first!</span>")
+				to_chat(user, "<span class='warning'>Вытащите содержимое из [CASE(src, GENITIVE_CASE)]!</span>")
 				return
 			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.use(0,user))
-				to_chat(user, "You start slicing the floorweld off the disposal unit.")
+				to_chat(user, "Вы начали снимать напольное покрытие под [CASE(src, ABLATIVE_CASE)].")
 
 				if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
-					to_chat(user, "You sliced the floorweld off the disposal unit.")
+					to_chat(user, "Вы сняли напольное покрытие под [CASE(src, ABLATIVE_CASE)].")
 					deconstruct(TRUE)
 				return
 			else
-				to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
+				to_chat(user, "<span class='warning'>Вам не хватило сварочного топлива в вашем аппарате!</span>")
 				return
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
-		to_chat(user, "<span class='notice'>You empty the bag.</span>")
+		to_chat(user, "<span class='notice'>Вы опустошили мешок.</span>")
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
@@ -105,7 +106,7 @@
 		return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		to_chat(user, "<span class='warning'>You can't place that item inside the disposal unit.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете положить это в мусорку!</span>")
 		return
 
 	var/obj/item/weapon/grab/G = I
@@ -114,13 +115,13 @@
 			var/mob/living/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
-			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
+			user.visible_message("<span class='red'>[user] засовывает [GM.name] в [CASE(src, NOMINATIVE_CASE)].</span>")
 			if(G.use_tool(src, usr, 20, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				var/atom/old_loc = GM.loc
 				GM.forceMove(src)
 				INVOKE_ASYNC(GM, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 				GM.instant_vision_update(1,src)
-				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
+				user.visible_message("<span class='danger'>[user] [user.gender == FEMALE ? "засунула" : "засунул"] [GM.name] в [CASE(src, ACCUSATIVE_CASE)].</span>")
 				qdel(G)
 
 				GM.log_combat(usr, "placed in disposals")
@@ -141,7 +142,7 @@
 
 	user.drop_from_inventory(I, src)
 
-	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
+	user.visible_message("<span class='notice'>[user.name] ложит [CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>", self_message = "<span class='notice'>Вы положили [CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>")
 
 	update()
 
@@ -180,13 +181,13 @@
 	if(target == user)
 		if(user.incapacitated(LEGS))
 			return
-		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
+		user.visible_message("<span class='red'>[user] залезает в [CASE(src, NOMINATIVE_CASE)].</span>")
 		if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
 			time_climbing *= 0.25
 	else
 		if(user.incapacitated(ARMS))
 			return
-		user.visible_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>")
+		user.visible_message("<span class='red'>[user] засовывает [target.name] в [CASE(src, NOMINATIVE_CASE)].</span>")
 
 	if(user.is_busy() || !do_after(usr, time_climbing, target = src))
 		return
@@ -195,13 +196,13 @@
 	if(target == user)
 		if(user.incapacitated(LEGS))
 			return
-		msg = "<span class='red'>[user.name] climbs into the [src].</span>"
-		self_msg = "<span class='notice'>You climb into the [src].</span>"
+		msg = "<span class='red'>[user.name] залезает в [CASE(src, NOMINATIVE_CASE)].</span>"
+		self_msg = "<span class='notice'>Вы залезаете в [CASE(src, NOMINATIVE_CASE)].</span>"
 	else
 		if(user.incapacitated(ARMS))
 			return
-		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
-		self_msg = "<span class='red'>You stuff [target.name] into the [src]!</span>"
+		msg = "<span class='danger'>[user.name] засовывает [target.name] в [CASE(src, NOMINATIVE_CASE)]!</span>"
+		self_msg = "<span class='red'>Вы засунули [target.name] в [CASE(src, NOMINATIVE_CASE)]!</span>"
 
 		target.log_combat(user, "placed in disposals")
 
@@ -233,7 +234,7 @@
 
 		if(user.incapacitated())
 			return
-		user.visible_message("<span class='notice'>[user] starts stuffing [target.name] into the disposal.</span>")
+		user.visible_message("<span class='notice'>[user.name] засовывает [target.name] в [CASE(src, NOMINATIVE_CASE)]!</span>")
 		if(user.is_busy() || !do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
@@ -241,8 +242,8 @@
 
 		if(user.incapacitated())
 			return
-		msg = "<span class='notice'>[user.name] stuffs [target.name] into the [src]!</span>"
-		self_msg = "<span class='notice'>You stuff [target.name] into the [src]!</span>"
+		msg = "<span class='notice'>[user.name] засовывает [target.name] в [CASE(src, NOMINATIVE_CASE)]!</span>"
+		self_msg = "<span class='notice'>Вы засунули [target.name] в [CASE(src, NOMINATIVE_CASE)]!</span>"
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] () in disposals.</font>")
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
@@ -288,7 +289,7 @@
 // human interact with machine
 /obj/machinery/disposal/interact(mob/user)
 	if(user && user.loc == src)
-		to_chat(usr, "<span class='red'>You cannot reach the controls from inside.</span>")
+		to_chat(usr, "<span class='red'>Вы не можете пользоваться мусоросбросом, пока в нём находитесь!</span>")
 	else
 		..()
 
@@ -320,11 +321,11 @@
 		return
 
 	if(usr.loc == src)
-		to_chat(usr, "<span class='warning'>You cannot reach the controls from inside.</span>")
+		to_chat(usr, "<span class='warning'>Вы не можете пользоваться мусоросбросом, пока в нём находитесь!</span>")
 		return
 
 	if(mode == -1 && action != "eject") // only allow ejecting if mode is -1
-		to_chat(usr, "<span class='warning'>The disposal units power is disabled.</span>")
+		to_chat(usr, "<span class='warning'>Питание мусоросброса отключено!</span>")
 		return
 
 	if(stat & BROKEN)
@@ -548,9 +549,9 @@
 			return
 		if(prob(75))
 			I.loc = src
-			visible_message("\the [I] lands in \the [src].")
+			visible_message("[CASE(I, NOMINATIVE_CASE)] прилетает в [CASE(src, NOMINATIVE_CASE)].")
 		else
-			visible_message("\the [I] bounces off of \the [src]'s rim!")
+			visible_message("[CASE(I, NOMINATIVE_CASE)] отскакивает от обода [CASE(src, GENITIVE_CASE)]!")
 		return 0
 	else
 		return ..()
