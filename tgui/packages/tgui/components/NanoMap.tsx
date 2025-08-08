@@ -31,7 +31,7 @@ interface NanoMapMarkerProps extends BoxProps {
   children?: InfernoNode;
 }
 
-const NanoMapMarker = (props: NanoMapMarkerProps, context: any) => {
+export const NanoMapMarker = (props: NanoMapMarkerProps, context: any) => {
   const {
     map: { pixelsPerTurf },
   } = context;
@@ -59,7 +59,10 @@ interface NanoMapMarkerIconProps extends NanoMapMarkerProps {
   icon: string;
 }
 
-const NanoMapMarkerIcon = (props: NanoMapMarkerIconProps, context: any) => {
+export const NanoMapMarkerIcon = (
+  props: NanoMapMarkerIconProps,
+  context: any
+) => {
   const {
     map: { pixelsPerTurf },
   } = context;
@@ -89,7 +92,7 @@ type NanoMapZoomerProps = {
   availableZLevels: number[];
 };
 
-const NanoMapZoomer = (props: NanoMapZoomerProps, context: any) => {
+export const NanoMapZoomer = (props: NanoMapZoomerProps, context: any) => {
   return (
     <Box
       z-index={1000}
@@ -155,9 +158,10 @@ type State = {
   zLevel: number;
 };
 
-type TrackData = {
+export type NanoMapTrackData = {
   trackX: number;
   trackY: number;
+  trackZ: number;
   stopTracking: () => void;
 };
 
@@ -172,19 +176,13 @@ type Props = {
   onCenterChange?: (centerX: number, centerY: number) => void;
   controlsOnTop?: boolean;
   pixelsPerTurf?: number;
-  trackData?: TrackData;
+  trackData?: NanoMapTrackData;
 };
 
 export class NanoMap extends Component<Props, State> {
   static mapSize = MAP_SIZE;
 
   static defaultProps = { pixelsPerTurf: 1, controlsOnTop: false };
-
-  static Marker = NanoMapMarker;
-
-  static Zoomer = NanoMapZoomer;
-
-  static MarkerIcon = NanoMapMarkerIcon;
 
   ref?: RefObject<HTMLDivElement>;
 
@@ -236,11 +234,30 @@ export class NanoMap extends Component<Props, State> {
     snapshot: any
   ): void {
     const { trackData } = this.props;
+    if (prevProps.trackData === trackData) {
+      return;
+    }
     if (trackData) {
       if (!prevProps.trackData) {
-        this.zoomToPoint(4, trackData.trackX, trackData.trackY);
-      } else {
-        this.zoomToPoint(this.state.zoom, trackData.trackX, trackData.trackY);
+        this.zoomToPoint(4);
+      }
+      this.setState(
+        (prevState) => {
+          const state = { ...prevState };
+          const zoom = transformZoom(state.zoom);
+          // God forgive me, my math is terribly wrong but somehow gives right result....
+          const halfSize = MAP_SIZE / 2;
+          state.centerX = halfSize - (trackData.trackX - halfSize) * zoom;
+          state.centerY = halfSize + (trackData.trackY - halfSize) * zoom;
+          return state;
+        },
+        () => {
+          this.props.onCenterChange?.(this.state.centerX, this.state.centerY);
+        }
+      );
+
+      if (trackData.trackZ !== this.props.zLevel) {
+        this.handleZLevel(trackData.trackZ, false);
       }
     }
   }
@@ -292,7 +309,11 @@ export class NanoMap extends Component<Props, State> {
     };
   }
 
-  handleZLevel = (value: number) => {
+  handleZLevel = (value: number, stopTracking: boolean = true) => {
+    if (stopTracking) {
+      this.props.trackData?.stopTracking();
+    }
+
     this.setState({ zLevel: value }, () => {
       this.props.setZLevel(value);
     });

@@ -3,16 +3,10 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Button,
-  ByondUi,
-  Input,
-  Section,
-  Box,
-  NanoMap,
-  Stack,
-} from '../components';
+import { Button, ByondUi, Input, Section, Box, Stack } from '../components';
 import { Window } from '../layouts';
+
+import { NanoMap, NanoMapMarkerIcon } from '../components/NanoMap';
 
 type Data = {
   mapRef: string;
@@ -207,7 +201,7 @@ export const CameraMinimapContent = (props, context) => {
         mineZLevels={mineZLevels}
         availableZLevels={availableZLevels}>
         {cameras.map((camera: CameraObject) => (
-          <NanoMap.MarkerIcon
+          <NanoMapMarkerIcon
             key={camera.name}
             x={camera.x}
             y={camera.y}
