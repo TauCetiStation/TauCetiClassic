@@ -248,9 +248,9 @@
 	flag = ENERGY
 	damage = 5
 	stun = 0
-	weaken = 0
-	stutter = 10
-	agony = 80
+	weaken = 2
+	stutter = 3
+	agony = 40
 	embed = 0
 	sharp = 0
 	dispersion = 2.0
