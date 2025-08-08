@@ -1,8 +1,9 @@
-import { Component, RefObject, createRef } from 'inferno';
+import { Component, InfernoNode, RefObject, createRef } from 'inferno';
 import { Box, Button, Dropdown, Flex, Icon, Tooltip, Stack } from '.';
 import { LabeledList } from './LabeledList';
 import { Slider } from './Slider';
 import { resolveAsset } from '../assets';
+import { BoxProps } from './Box';
 
 const MAP_SIZE = 255;
 /** At zoom = 1 */
@@ -23,11 +24,18 @@ const transformZoom = (value: number): number => {
   return Math.exp((value - 1) * 0.5);
 };
 
-const NanoMapMarker = (props, context) => {
+interface NanoMapMarkerProps extends BoxProps {
+  x: number;
+  y: number;
+  tooltip: InfernoNode;
+  children?: InfernoNode;
+}
+
+const NanoMapMarker = (props: NanoMapMarkerProps, context: any) => {
   const {
     map: { pixelsPerTurf },
   } = context;
-  const { x, y, icon, tooltip, color, children, ...rest } = props;
+  const { x, y, tooltip, children, ...rest } = props;
   // For some reason the X and Y are offset by 1
   const rx = (x - 2) * pixelsPerTurf;
   const ry = y * pixelsPerTurf;
@@ -47,7 +55,11 @@ const NanoMapMarker = (props, context) => {
   );
 };
 
-const NanoMapMarkerIcon = (props, context) => {
+interface NanoMapMarkerIconProps extends NanoMapMarkerProps {
+  icon: string;
+}
+
+const NanoMapMarkerIcon = (props: NanoMapMarkerIconProps, context: any) => {
   const {
     map: { pixelsPerTurf },
   } = context;
@@ -67,7 +79,17 @@ const NanoMapMarkerIcon = (props, context) => {
   );
 };
 
-const NanoMapZoomer = (props, context) => {
+type NanoMapZoomerProps = {
+  zoom: number;
+  onZoom: (number: number) => void;
+  onReset: () => void;
+  controlsOnTop: boolean;
+  zLevel: number;
+  onZLevel: (number: number) => void;
+  availableZLevels: number[];
+};
+
+const NanoMapZoomer = (props: NanoMapZoomerProps, context: any) => {
   return (
     <Box
       z-index={1000}
@@ -86,9 +108,9 @@ const NanoMapZoomer = (props, context) => {
                     maxValue={6}
                     step={0.5}
                     stepPixelSize={25}
-                    format={(v) => v.toFixed(1) + 'x'}
+                    format={(v: number) => v.toFixed(1) + 'x'}
                     value={props.zoom}
-                    onDrag={(e, v) => props.onZoom(v)}
+                    onDrag={(_: MouseEvent, v: number) => props.onZoom(v)}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -96,7 +118,7 @@ const NanoMapZoomer = (props, context) => {
                     float="right"
                     icon="sync"
                     tooltip="Reset View"
-                    onClick={(e) => props.onReset()}
+                    onClick={(_: MouseEvent) => props.onReset()}
                   />
                 </Stack.Item>
               </Stack>
@@ -133,6 +155,12 @@ type State = {
   zLevel: number;
 };
 
+type TrackData = {
+  trackX: number;
+  trackY: number;
+  stopTracking: () => void;
+};
+
 type Props = {
   stationMapName: string;
   mineMapName?: string;
@@ -144,6 +172,7 @@ type Props = {
   onCenterChange?: (centerX: number, centerY: number) => void;
   controlsOnTop?: boolean;
   pixelsPerTurf?: number;
+  trackData?: TrackData;
 };
 
 export class NanoMap extends Component<Props, State> {
@@ -174,6 +203,7 @@ export class NanoMap extends Component<Props, State> {
   }
 
   handleDragStart = (e: MouseEvent) => {
+    this.props.trackData?.stopTracking();
     this.setState({
       dragging: false,
       originX: e.screenX,
@@ -199,6 +229,21 @@ export class NanoMap extends Component<Props, State> {
     document.removeEventListener('mouseup', this.handleDragEnd);
     pauseEvent(e);
   };
+
+  componentDidUpdate(
+    prevProps: Readonly<{ children?: InfernoNode } & Props>,
+    prevState: Readonly<State>,
+    snapshot: any
+  ): void {
+    const { trackData } = this.props;
+    if (trackData) {
+      if (!prevProps.trackData) {
+        this.zoomToPoint(4, trackData.trackX, trackData.trackY);
+      } else {
+        this.zoomToPoint(this.state.zoom, trackData.trackX, trackData.trackY);
+      }
+    }
+  }
 
   handleDragMove = (e: MouseEvent) => {
     this.setState((prevState) => {
@@ -281,6 +326,7 @@ export class NanoMap extends Component<Props, State> {
   };
 
   handleScroll = (e: WheelEvent) => {
+    this.props.trackData?.stopTracking();
     let zoomChange = 0;
     if (e.deltaY > 0) {
       zoomChange = -0.5;
@@ -299,7 +345,7 @@ export class NanoMap extends Component<Props, State> {
     pauseEvent(e);
   };
 
-  getMapName = () => {
+  getMapImageName = () => {
     if (
       this.props.mineMapName &&
       this.props.mineZLevels.includes(this.state.zLevel)
@@ -315,7 +361,7 @@ export class NanoMap extends Component<Props, State> {
 
     const exponentialZoom = transformZoom(zoom);
 
-    const mapUrl = resolveAsset(this.getMapName());
+    const mapUrl = resolveAsset(this.getMapImageName());
     const pixelsPerTurf = this.props.pixelsPerTurf;
     const mapSize = MAP_SIZE * this.props.pixelsPerTurf + 'px';
     const mapStyle = {

@@ -187,7 +187,7 @@ const CrewMonitorDataContent = (
     hoveredMemberRef: string;
     hoverMemberRef: (value: string) => void;
   },
-  context
+  context: any
 ) => {
   const {
     crewMembers,
