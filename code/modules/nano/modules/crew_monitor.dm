@@ -78,13 +78,8 @@
 	return data
 
 /obj/crew_monitor_module/tgui_static_data(mob/user)
-	var/data = list()
-
-	data["stationMapName"] = SSmapping.station_image
-	if(length(SSmapping.mine_image))
-		data["mineMapName"] = SSmapping.mine_image
-	data["mineZLevels"] = SSmapping.levels_by_trait(ZTRAIT_MINING)
-
+	var/list/data = list()
+	data["nanomapPayload"] = SSmapping.tgui_nanomap_payload()
 	return data
 
 /obj/crew_monitor_module/proc/scan()

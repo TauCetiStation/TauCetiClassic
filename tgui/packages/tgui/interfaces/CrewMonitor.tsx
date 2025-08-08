@@ -17,6 +17,7 @@ import { filter, sortBy, map, uniqBy } from 'common/collections';
 import {
   NanoMap,
   NanoMapMarkerIcon,
+  NanoMapStaticPayload,
   NanoMapTrackData,
 } from '../components/NanoMap';
 
@@ -111,9 +112,7 @@ type CrewMember = {
 type Data = {
   crewMembers: CrewMember[];
   currentZ: number;
-  stationMapName: string;
-  mineMapName: string;
-  mineZLevels: number[];
+  nanomapPayload: NanoMapStaticPayload;
 };
 
 export const selectMembers = (
@@ -331,7 +330,7 @@ const CrewMonitorMapContent = (
   context: any
 ) => {
   const { data } = useBackend<Data>(context);
-  const { stationMapName, mineMapName, mineZLevels, currentZ } = data;
+  const { currentZ, nanomapPayload } = data;
   const allCrewMembers = data.crewMembers;
   const {
     zLevel,
@@ -376,9 +375,7 @@ const CrewMonitorMapContent = (
   return (
     <Box width="100%" height="100%" overflow="hidden">
       <NanoMap
-        stationMapName={stationMapName}
-        mineMapName={mineMapName}
-        mineZLevels={mineZLevels}
+        nanomapPayload={nanomapPayload}
         zLevel={zLevel}
         setZLevel={setZLevel}
         availableZLevels={availableZLevels}

@@ -24,7 +24,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/datum/space_level/z_list
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
-	var/mine_image = ""
+	var/mine_image = "" // What image file to use for mine
+	var/list/cached_nanomap_payload
 
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
@@ -310,6 +311,25 @@ SUBSYSTEM_DEF(mapping)
 	if(map_poll && map_poll.can_start())
 		to_chat(world, "<span class='notice'>Current next map is inappropriate for ammount of players online. Map vote will be forced.</span>")
 		SSvote.start_vote(map_poll)
+
+/datum/controller/subsystem/mapping/proc/tgui_nanomap_payload()
+	if(cached_nanomap_payload)
+		return cached_nanomap_payload.Copy()
+	var/list/data = list()
+
+	data["stationMapName"] = station_image
+	if(length(mine_image))
+		data["mineMapName"] = mine_image
+	data["mineZLevels"] = levels_by_trait(ZTRAIT_MINING)
+	var/list/level_names = list()
+
+	for(var/datum/space_level/space_level as anything in z_list)
+		level_names["[space_level.z_value]"] = space_level.name // Key is a string cos DM crashes due to index out of bounds for some reason
+
+	data["levelNames"] = level_names
+	cached_nanomap_payload = data
+
+	return data.Copy()
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM

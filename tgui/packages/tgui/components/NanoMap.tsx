@@ -90,9 +90,37 @@ type NanoMapZoomerProps = {
   zLevel: number;
   onZLevel: (number: number) => void;
   availableZLevels: number[];
+  levelNames: string[];
 };
 
 export const NanoMapZoomer = (props: NanoMapZoomerProps, context: any) => {
+  const buildDropdown = (): InfernoNode => {
+    const levelName = (zLevel: number): string =>
+      props.levelNames[zLevel] ?? `UNKNOWN ${props.zLevel}`;
+
+    const map: string[] = props.availableZLevels.reduce(
+      (map: string[], zLevel: number) => {
+        map[zLevel] = levelName(zLevel);
+        return map;
+      },
+      []
+    );
+    return (
+      <Dropdown
+        over={!props.controlsOnTop}
+        selected={levelName(props.zLevel)}
+        options={map.filter((s: string) => s)}
+        onSelected={(val: string) => {
+          const index = map.indexOf(val);
+          if (index) {
+            props.onZLevel(index);
+          }
+        }}
+        // width={'50px'}
+      />
+    );
+  };
+
   return (
     <Box
       z-index={1000}
@@ -129,19 +157,7 @@ export const NanoMapZoomer = (props: NanoMapZoomerProps, context: any) => {
           </LabeledList>
         </Stack.Item>
         {props.availableZLevels.length > 1 && (
-          <Stack.Item>
-            <LabeledList>
-              <LabeledList.Item label="Z-Level">
-                <Dropdown
-                  over={!props.controlsOnTop}
-                  selected={props.zLevel}
-                  options={props.availableZLevels}
-                  onSelected={props.onZLevel}
-                  width={'50px'}
-                />
-              </LabeledList.Item>
-            </LabeledList>
-          </Stack.Item>
+          <Stack.Item>{buildDropdown()}</Stack.Item>
         )}
       </Stack>
     </Box>
@@ -165,10 +181,15 @@ export type NanoMapTrackData = {
   stopTracking: () => void;
 };
 
-type Props = {
+export type NanoMapStaticPayload = {
   stationMapName: string;
   mineMapName?: string;
   mineZLevels: number[];
+  levelNames: string[];
+};
+
+type Props = {
+  nanomapPayload: NanoMapStaticPayload;
   availableZLevels: number[];
   zLevel: number;
   setZLevel: (zLevel: number) => void;
@@ -368,12 +389,12 @@ export class NanoMap extends Component<Props, State> {
 
   getMapImageName = () => {
     if (
-      this.props.mineMapName &&
-      this.props.mineZLevels.includes(this.state.zLevel)
+      this.props.nanomapPayload.mineMapName &&
+      this.props.nanomapPayload.mineZLevels.includes(this.state.zLevel)
     ) {
-      return `nanomap_${this.props.mineMapName}_1.png`;
+      return `nanomap_${this.props.nanomapPayload.mineMapName}_1.png`;
     }
-    return `nanomap_${this.props.stationMapName}_1.png`;
+    return `nanomap_${this.props.nanomapPayload.stationMapName}_1.png`;
   };
 
   render() {
@@ -419,6 +440,7 @@ export class NanoMap extends Component<Props, State> {
         onZoom={this.handleZoom}
         zLevel={this.state.zLevel}
         availableZLevels={this.props.availableZLevels}
+        levelNames={this.props.nanomapPayload.levelNames}
         onZLevel={this.handleZLevel}
         onReset={this.handleReset}
         controlsOnTop={this.props.controlsOnTop}
