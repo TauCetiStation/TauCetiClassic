@@ -9,6 +9,7 @@ import {
   NanoMap,
   Table,
   Input,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
@@ -16,6 +17,47 @@ import { filter, sortBy, map, uniqBy } from 'common/collections';
 
 import { createSearch } from 'common/string';
 import { BoxProps } from '../components/Box';
+
+const createAbbreviation = (text: string): string => {
+  const words = text.split(' ');
+
+  if (words.length <= 1 || (words.length <= 3 && text.length < 10)) {
+    return text;
+  }
+
+  const abbreviation =
+    words.map((word) => word.charAt(0).toUpperCase()).join('.') + '.';
+
+  return abbreviation;
+};
+
+type CrewIcon = {
+  icon: string;
+  color: string;
+};
+
+const pickCrewIcon = (crewMember: CrewMember): CrewIcon => {
+  let totalDamage = 0;
+  const { vitals } = crewMember;
+  if (vitals) {
+    totalDamage = vitals.brute + vitals.fire + vitals.tox + vitals.oxy;
+  }
+
+  let icon: string | string[] = 'user';
+  let color = 'good';
+  if (crewMember.dead) {
+    icon = 'skull';
+    color = 'bad';
+  } else if (totalDamage > 100) {
+    icon = 'user-injured';
+    color = 'orange';
+  } else if (totalDamage > 50) {
+    icon = 'user-injured';
+    color = 'yellow';
+  }
+
+  return { icon, color };
+};
 
 enum SensorType {
   off = 0,
@@ -110,7 +152,7 @@ export const CrewMonitor = (_, context: any) => {
   const filteredCrewMembers = selectMembers(crewMembers, searchText, zLevel);
 
   return (
-    <Window width={1200} height={600}>
+    <Window width={800} height={600}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -156,12 +198,12 @@ const CrewMonitorDataContent = (
   } = props;
 
   return (
-    <Section fill scrollable>
+    <Section fill scrollable textAlign="center">
       <Table>
         <Table.Row header>
           <Table.Cell width="45%">Name</Table.Cell>
           <Table.Cell>Status</Table.Cell>
-          <Table.Cell width="35%">Location</Table.Cell>
+          <Table.Cell width="45%">Location</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Stack>
@@ -169,43 +211,69 @@ const CrewMonitorDataContent = (
               <Input
                 fluid
                 onInput={(e, value) => setSearchText(value)}
-                placeholder="Search for name.."
+                placeholder="Search.."
               />
             </Stack.Item>
           </Stack>
         </Table.Row>
-        {crewMembers.map((crewMember: CrewMember) => (
-          <Table.Row
-            key={crewMember.ref}
-            onMouseEnter={() => hoverMemberRef(crewMember.ref)}
-            onMouseLeave={() => hoverMemberRef('')}
-            backgroundColor={hoveredMemberRef === crewMember.ref && 'white'}
-            textColor={hoveredMemberRef === crewMember.ref && 'black'}>
-            <Table.Cell>
-              <Box m={0.5}>
-                {`${crewMember.name} (${crewMember.assignment})`}
-              </Box>
-            </Table.Cell>
-            <Table.Cell>
-              {crewMember.vitals ? (
-                <VitalsDisplay vitals={crewMember.vitals} />
-              ) : crewMember.dead ? (
-                <Box inline color="bad">
-                  Dead
+        {crewMembers.map((crewMember: CrewMember) => {
+          const { icon, color } = pickCrewIcon(crewMember);
+          return (
+            <Table.Row
+              key={crewMember.ref}
+              onMouseEnter={() => hoverMemberRef(crewMember.ref)}
+              onMouseLeave={() => hoverMemberRef('')}
+              backgroundColor={hoveredMemberRef === crewMember.ref && 'white'}
+              textColor={hoveredMemberRef === crewMember.ref && 'black'}>
+              <Table.Cell>
+                <Tooltip
+                  content={`${crewMember.name} (${crewMember.assignment})`}>
+                  <Box m={0.5}>
+                    {crewMember.name}(
+                    {createAbbreviation(crewMember.assignment)})
+                  </Box>
+                </Tooltip>
+              </Table.Cell>
+              <Table.Cell collapsing textAlign="center">
+                <Box
+                  inline
+                  m={0.5}
+                  textAlign="center"
+                  width="100%"
+                  height="100%">
+                  <Tooltip
+                    content={
+                      crewMember.vitals ? (
+                        <VitalsDisplay vitals={crewMember.vitals} />
+                      ) : crewMember.dead ? (
+                        <Box inline color="bad">
+                          Dead
+                        </Box>
+                      ) : (
+                        <Box inline color="good">
+                          Alive
+                        </Box>
+                      )
+                    }>
+                    <Icon name={icon} color={color} size={2} />
+                  </Tooltip>
                 </Box>
-              ) : (
-                <Box inline color="good">
-                  Alive
-                </Box>
-              )}
-            </Table.Cell>
-            <Table.Cell>
-              {crewMember.position
-                ? `${crewMember.position.area} (${crewMember.position.x}, ${crewMember.position.y}, ${crewMember.position.z})`
-                : 'Not Available'}
-            </Table.Cell>
-          </Table.Row>
-        ))}
+              </Table.Cell>
+              <Table.Cell>
+                {crewMember.position ? (
+                  <Tooltip content={crewMember.position.area}>
+                    <Box m={0.5} verticalAlign="center">
+                      ({crewMember.position.x},{crewMember.position.y},
+                      {crewMember.position.z})
+                    </Box>
+                  </Tooltip>
+                ) : (
+                  'N/A'
+                )}
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table>
     </Section>
   );
@@ -256,25 +324,7 @@ const CrewMonitorMapContent = (
         {crewMembers
           .filter((crewMember: CrewMember) => crewMember.position)
           .map((crewMember: CrewMember) => {
-            let totalDamage = 0;
-            const { vitals } = crewMember;
-            if (vitals) {
-              totalDamage =
-                vitals.brute + vitals.fire + vitals.tox + vitals.oxy;
-            }
-
-            let icon: string | string[] = 'user';
-            let color = 'good';
-            if (crewMember.dead) {
-              icon = 'skull';
-              color = 'bad';
-            } else if (totalDamage > 100) {
-              icon = 'user-injured';
-              color = 'orange';
-            } else if (totalDamage > 50) {
-              icon = 'user-injured';
-              color = 'yellow';
-            }
+            let { color, icon } = pickCrewIcon(crewMember);
 
             if (crewMember.ref === hoveredMemberRef) {
               color = 'white';
