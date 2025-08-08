@@ -54,6 +54,15 @@
 		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
 		C.AddSpell(new S)
 
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+
+		var/sword = new /obj/item/weapon/melee/energy/sword/star_wars/jedi(H.loc)
+		var/robe = new /obj/item/clothing/suit/hooded/star_wars/jedi(H.loc)
+
+		H.equip_or_collect(sword, SLOT_IN_BACKPACK)
+		H.equip_or_collect(robe, SLOT_IN_BACKPACK)
+
 // SITH
 
 /datum/role/star_wars/sith_leader
@@ -88,11 +97,11 @@
 		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
 		H.AddSpell(new S)
 
-	var/sword = new /obj/item/weapon/melee/energy/sword/star_wars/dual(H.loc)
+	var/sword = new /obj/item/weapon/melee/energy/sword/star_wars/sith/master(H.loc)
 	var/robe = new /obj/item/clothing/suit/hooded/star_wars/sith(H.loc)
 
-	H.equip_to_slot_if_possible(sword, SLOT_IN_BACKPACK)
-	H.equip_to_slot_if_possible(robe, SLOT_IN_BACKPACK)
+	H.equip_or_collect(sword, SLOT_IN_BACKPACK)
+	H.equip_or_collect(robe, SLOT_IN_BACKPACK)
 
 /datum/role/star_wars/sith
 	name = "Sith"
@@ -115,3 +124,12 @@
 	for(var/i in 1 to 2)
 		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
 		C.AddSpell(new S)
+
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+
+		var/sword = new /obj/item/weapon/melee/energy/sword/star_wars/sith(H.loc)
+		var/robe = new /obj/item/clothing/suit/hooded/star_wars/sith(H.loc)
+
+		H.equip_or_collect(sword, SLOT_IN_BACKPACK)
+		H.equip_or_collect(robe, SLOT_IN_BACKPACK)

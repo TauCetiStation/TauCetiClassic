@@ -196,7 +196,7 @@
 	stand = 2
 
 // green for master jedi
-/obj/item/weapon/melee/energy/sword/star_wars/jedi/leader/atom_init()
+/obj/item/weapon/melee/energy/sword/star_wars/jedi/master/atom_init()
 	. = ..()
 	blade_color = "green"
 	light_color = COLOR_GREEN
@@ -212,12 +212,12 @@
 	stand = 3
 
 // dual red for master sith
-/obj/item/weapon/melee/energy/sword/star_wars/dual/atom_init()
+/obj/item/weapon/melee/energy/sword/star_wars/sith/master/atom_init()
 	name = "Dual Lightsaber"
 	stands = list(1, 2)
 	stand = 1
 	light_color = COLOR_RED
-/obj/item/weapon/melee/energy/sword/star_wars/dual/update_icon()
+/obj/item/weapon/melee/energy/sword/star_wars/sith/master/update_icon()
 	if(active)
 		icon_state = "duallightsaber_[stand]"
 	else
