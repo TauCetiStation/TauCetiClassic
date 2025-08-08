@@ -145,6 +145,31 @@
 	update_icon(hud.mymob)
 	hud.mymob.nutrition_icon = src
 
+/atom/movable/screen/nutrition/Click(location, control, params)
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/H = usr
+	if(H.stat != CONSCIOUS)
+		return
+	if(H.species.flags[IS_SYNTHETIC])
+		return
+	if(H.nutrition < NUTRITION_LEVEL_STARVING)
+		to_chat(H, "<span class='boldwarning'>You are starving to death!</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_HUNGRY)
+		to_chat(H, "<span class='boldwarning'>You are starving!</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_FED)
+		to_chat(H, "<span class='boldwarning'>You are very hungry.</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_NORMAL)
+		to_chat(H, "<span class='boldwarning'>You are hungry.</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_WELL_FED)
+		to_chat(H, "<span class='nicegreen'>You don't feel hungry.</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_FULL)
+		to_chat(H, "<span class='nicegreen'>You feel well fed!</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_FAT)
+		to_chat(H, "<span class='nicegreen'>You feel full.</span>")
+	else
+		to_chat(H, "<span class='nicegreen'>Your belly feels great!</span>")
+
 // Gun screens
 /atom/movable/screen/gun
 	name = "gun"

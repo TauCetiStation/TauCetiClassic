@@ -73,9 +73,9 @@
 	var/initial_table_count = 0
 
 /datum/objective/malf_drone/department/table/New()
-	..()
 	objective += "Полностью заполните [possible_area[target_area]] столами."
 	initial_table_count = count_tables()
+	..()
 
 /datum/objective/malf_drone/department/table/check_completion()
 	if(count_tables() > 60 - initial_table_count)
@@ -97,9 +97,9 @@
 	var/initial_airlock_count = 0
 
 /datum/objective/malf_drone/department/airlock/New()
-	..()
 	objective += "Освободите [possible_area[target_area]] от шлюзов."
 	initial_airlock_count = count_airlocks()
+	..()
 
 /datum/objective/malf_drone/department/airlock/check_completion()
 	if(count_airlocks() < initial_airlock_count * 0.2)

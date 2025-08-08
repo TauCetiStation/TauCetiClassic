@@ -244,7 +244,7 @@
 		return
 
 	if (href_list["job_edit"])
-		var/new_job = input("Select new job", "Assigned job", assigned_role) as null|anything in get_all_jobs()
+		var/new_job = input("Select new job", "Assigned job", assigned_role) as null|anything in SSjob.name_occupations
 		if (!new_job)
 			return
 		assigned_role = new_job

@@ -1,7 +1,7 @@
 /proc/get_living_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in heads_positions))
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in SSjob.heads_positions))
 			heads += player.mind
 	return heads
 
@@ -24,7 +24,7 @@
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.mind && (player.mind.assigned_role in heads_positions))
+		if(player.mind && (player.mind.assigned_role in SSjob.heads_positions))
 			heads += player.mind
 	return heads
 
@@ -91,7 +91,7 @@
 	return dat
 
 /datum/faction/revolution/latespawn(mob/M)
-	if(M.mind.assigned_role in heads_positions)
+	if(M.mind.assigned_role in SSjob.heads_positions)
 		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 
 		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
@@ -132,14 +132,15 @@
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		command_report("Ваша низкая производительность вынуждает нас принять непростое решение о сокращении финансового обеспечения станции. В связи с этим вдвое уменьшены заработные платы всего персонала, за исключением сотрудников службы безопасности и командного состава.")
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police") + command_positions + security_positions + centcom_positions
-		for(var/datum/job/J in SSjob.occupations)
-			if(J.title in excluded_rank)
+		var/list/excluded_departments = list(DEP_COMMAND, DEP_SECURITY, DEP_SILICON, DEP_SPECIAL)
+		for(var/datum/job/J as anything in SSjob.active_occupations)
+			if(length(J.departments & excluded_departments)) // in one of the excluded departments
 				continue
 			J.salary_ratio = 0.5	//halve the salary of all professions except leading
-		var/list/crew = my_subordinate_staff("Admin")
+		var/list/crew = SSeconomy.my_subordinate_staff("Admin")
 		for(var/person in crew)
-			if(person["rank"] in excluded_rank)
+			var/datum/job/J = SSjob.GetJob(person["rank"])
+			if(length(J.departments & excluded_departments))
 				continue
 
 			var/datum/money_account/account = get_account(person["account"])
@@ -159,16 +160,20 @@
 		last_command_report = 4
 
 /datum/faction/revolution/proc/command_report(message)
-	for (var/obj/machinery/computer/communications/comm in communications_list)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+	var/obj/item/weapon/stamp/centcomm/stamp = new
+
+	for(var/obj/machinery/computer/communications/comm in communications_list)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper(comm.loc)
 			intercept.name = "Cent. Com. Announcement"
 			intercept.info = message
+			stamp.stamp_paper(intercept)
 			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
+	qdel(stamp)
 	announcement_ping.play()
 
 /datum/faction/revolution/build_scorestat()
@@ -189,7 +194,7 @@
 	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(player.mind)
 			var/role = player.mind.assigned_role
-			if(role in global.command_positions)
+			if(role in SSjob.heads_positions)
 				if (player.stat == DEAD)
 					SSStatistics.score.deadcommand++
 
@@ -220,7 +225,7 @@
 		if(!player.mind)
 			continue
 		var/role = player.mind.assigned_role
-		if(role in global.command_positions)
+		if(role in SSjob.heads_positions)
 			if(player.stat != DEAD)
 				comcount++
 		else
