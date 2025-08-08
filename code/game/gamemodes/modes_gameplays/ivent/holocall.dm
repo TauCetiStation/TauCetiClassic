@@ -115,7 +115,7 @@ var/global/list/holocomms_global = list()
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		T = get_ranged_target_turf(T, mob_loc.dir, 1)
-	var/obj/effect/overlay/hologram/hologram = new(T)//Spawn a blank effect at the location.
+	var/obj/effect/overlay/hologram/hologram = new(T) // Spawn a blank effect at the location.
 	holocomm_overlay = hologram
 	var/olddir = user.dir
 	user.dir = SOUTH
