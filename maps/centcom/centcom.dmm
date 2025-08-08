@@ -25001,14 +25001,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
-"fJK" = (
-/obj/machinery/door/airlock/highsecurity{
-	locked = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "darkgreenfull"
-	},
-/area/custom/jedi_ship)
 "fKb" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/hos{
@@ -31180,10 +31172,13 @@
 /area/pluvian_heaven)
 "qrv" = (
 /obj/structure/table/rglass,
+/obj/item/weapon/phone{
+	pixel_y = 5
+	},
 /obj/item/weapon/flora/deskferntrim{
 	icon_state = "plant-34-alternative";
 	pixel_x = -6;
-	pixel_y = 8
+	pixel_y = -6
 	},
 /turf/simulated/floor/glass,
 /area/custom/jedi_ship)
@@ -31273,7 +31268,9 @@
 /area/custom/jedi_ship)
 "qJM" = (
 /obj/structure/table/rglass,
-/obj/item/device/multitool,
+/obj/item/bust{
+	pixel_y = 8
+	},
 /turf/simulated/floor/glass,
 /area/custom/jedi_ship)
 "qOG" = (
@@ -32412,9 +32409,9 @@
 /area/velocity)
 "xev" = (
 /obj/structure/table/rglass,
-/obj/item/weapon/melee/energy/sword/star_wars/jedi{
-	pixel_x = -4;
-	pixel_y = 2
+/obj/item/newtons_pendulum{
+	pixel_x = 3;
+	pixel_y = 4
 	},
 /turf/simulated/floor/glass,
 /area/custom/jedi_ship)
@@ -32495,7 +32492,13 @@
 /area/custom/jedi_ship)
 "xBR" = (
 /obj/structure/table/rglass,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/flora/deskfern{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/weapon/storage/fancy/donut_box/traitor{
+	pixel_y = -8
+	},
 /turf/simulated/floor/glass,
 /area/custom/jedi_ship)
 "xEl" = (
@@ -40502,7 +40505,7 @@ tTY
 fke
 fke
 qrz
-fJK
+lhM
 cLV
 fke
 fke

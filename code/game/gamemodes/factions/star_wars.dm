@@ -38,6 +38,26 @@
 	for(var/datum/role/R in members)
 		R.antag.current.forceMove(pick_landmarked_location("Jedi Spawn"))
 
+	addtimer(CALLBACK(src, PROC_REF(give_announce)), 20 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(open_gate)), 30 SECOND)
+
+/datum/faction/star_wars/jedi/proc/give_announce()
+	var/datum/announcement/centcomm/star_wars/jedi_arrival/A = new
+	A.play()
+
+/datum/faction/star_wars/jedi/proc/open_gate()
+	var/obj/machinery/gateway/center/jedi_gate
+	var/obj/machinery/gateway/center/station_gate
+
+	for(var/obj/machinery/gateway/center/G in global.gateways_list)
+		if(G.name == "Jedi Gateway")
+			jedi_gate = G
+		if(G.name == "[station_name()] Gateway")
+			station_gate = G
+
+	jedi_gate.destination = station_gate
+	jedi_gate.toggleon()
+
 // SITH
 
 /datum/faction/star_wars/sith
