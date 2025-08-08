@@ -24,7 +24,7 @@ export const DisposalUnit = (props, context) => {
     stateText = 'N/A';
   } else if (data.mode === 1) {
     stateColor = 'average';
-    stateText = 'Отправка';
+    stateText = 'Подготовка';
   } else {
     stateColor = 'average';
     stateText = 'Не активен';
