@@ -174,7 +174,7 @@ export const CrewMonitor = (_: any, context: any) => {
   const filteredCrewMembers = selectMembers(crewMembers, searchText, zLevel);
 
   return (
-    <Window width={800} height={600}>
+    <Window width={820} height={600}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -228,92 +228,93 @@ const CrewMonitorDataContent = (
   } = props;
 
   return (
-    <Section fill scrollable textAlign="center">
-      <Table>
-        <Table.Row header>
-          <Table.Cell width="45%">Name</Table.Cell>
-          <Table.Cell>Status</Table.Cell>
-          <Table.Cell width="45%">Location</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Stack>
-            <Stack.Item grow>
-              <Input
-                fluid
-                onInput={(e, value) => setSearchText(value)}
-                placeholder="Search.."
-              />
-            </Stack.Item>
-          </Stack>
-        </Table.Row>
-        {crewMembers.map((crewMember: CrewMember) => {
-          const { icon, color } = pickCrewIcon(crewMember);
-          const shouldHighlight =
-            crewMember.ref === selectedMemberRef ||
-            crewMember.ref === hoveredMemberRef;
-          return (
-            <Table.Row
-              key={crewMember.ref}
-              onMouseEnter={() => hoverMemberRef(crewMember.ref)}
-              onMouseLeave={() => hoverMemberRef('')}
-              onMouseDown={() =>
-                selectMemberRef(
-                  selectedMemberRef === crewMember.ref ? '' : crewMember.ref
-                )
-              }
-              backgroundColor={shouldHighlight && 'white'}
-              textColor={shouldHighlight && 'black'}>
-              <Table.Cell>
-                <Tooltip
-                  content={`${crewMember.name} (${crewMember.assignment})`}>
-                  <Box m={0.5}>
-                    {crewMember.name}(
-                    {createAbbreviation(crewMember.assignment)})
-                  </Box>
-                </Tooltip>
-              </Table.Cell>
-              <Table.Cell collapsing textAlign="center">
-                <Box
-                  inline
-                  m={0.5}
-                  textAlign="center"
-                  width="100%"
-                  height="100%">
-                  <Tooltip
-                    content={
-                      crewMember.vitals ? (
-                        <VitalsDisplay vitals={crewMember.vitals} />
-                      ) : crewMember.dead ? (
-                        <Box inline color="bad">
-                          Dead
-                        </Box>
-                      ) : (
-                        <Box inline color="good">
-                          Alive
-                        </Box>
-                      )
-                    }>
-                    <Icon name={icon} color={color} size={2} />
-                  </Tooltip>
-                </Box>
-              </Table.Cell>
-              <Table.Cell>
-                {crewMember.position ? (
-                  <Tooltip content={crewMember.position.area}>
-                    <Box m={0.5} verticalAlign="center">
-                      ({crewMember.position.x},{crewMember.position.y},
-                      {crewMember.position.z})
-                    </Box>
-                  </Tooltip>
-                ) : (
-                  'N/A'
-                )}
-              </Table.Cell>
+    <Stack vertical fill>
+      <Stack.Item>
+        <Input
+          fluid
+          onInput={(e, value) => setSearchText(value)}
+          placeholder="Search.."
+        />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section fill scrollable textAlign="center">
+          <Table>
+            <Table.Row header>
+              <Table.Cell width="45%">Name</Table.Cell>
+              <Table.Cell>Status</Table.Cell>
+              <Table.Cell width="45%">Location</Table.Cell>
             </Table.Row>
-          );
-        })}
-      </Table>
-    </Section>
+            {crewMembers.map((crewMember: CrewMember) => {
+              const { icon, color } = pickCrewIcon(crewMember);
+              const shouldHighlight =
+                crewMember.ref === selectedMemberRef ||
+                crewMember.ref === hoveredMemberRef;
+              return (
+                <Table.Row
+                  key={crewMember.ref}
+                  onMouseEnter={() => hoverMemberRef(crewMember.ref)}
+                  onMouseLeave={() => hoverMemberRef('')}
+                  onMouseDown={() =>
+                    selectMemberRef(
+                      selectedMemberRef === crewMember.ref ? '' : crewMember.ref
+                    )
+                  }
+                  backgroundColor={shouldHighlight && 'white'}
+                  verticalAlign="center"
+                  textColor={shouldHighlight && 'black'}>
+                  <Table.Cell verticalAlign="center">
+                    <Tooltip
+                      content={`${crewMember.name} (${crewMember.assignment})`}>
+                      <Box m={0.5}>
+                        {crewMember.name}(
+                        {createAbbreviation(crewMember.assignment)})
+                      </Box>
+                    </Tooltip>
+                  </Table.Cell>
+                  <Table.Cell collapsing verticalAlign="center">
+                    <Box
+                      inline
+                      m={0.5}
+                      textAlign="center"
+                      width="100%"
+                      height="100%">
+                      <Tooltip
+                        content={
+                          crewMember.vitals ? (
+                            <VitalsDisplay vitals={crewMember.vitals} />
+                          ) : crewMember.dead ? (
+                            <Box inline color="bad">
+                              Dead
+                            </Box>
+                          ) : (
+                            <Box inline color="good">
+                              Alive
+                            </Box>
+                          )
+                        }>
+                        <Icon name={icon} color={color} size={2} />
+                      </Tooltip>
+                    </Box>
+                  </Table.Cell>
+                  <Table.Cell verticalAlign="center">
+                    {crewMember.position ? (
+                      <Tooltip content={crewMember.position.area}>
+                        <Box m={0.5} verticalAlign="center">
+                          ({crewMember.position.x},{crewMember.position.y},
+                          {crewMember.position.z})
+                        </Box>
+                      </Tooltip>
+                    ) : (
+                      'N/A'
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table>
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 
