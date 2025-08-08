@@ -177,6 +177,11 @@
 	else
 		icon_state = "lightsaber_off"
 
+/obj/item/weapon/melee/energy/sword/star_wars/examine(mob/user, distance)
+	. = ..()
+	if(isrolebytype(/datum/role/star_wars, user))
+		to_chat(user, "<span class='notice'>Шанс заблокировать следующий удар: [shield_chance]%.</span>")
+
 /obj/item/weapon/melee/energy/sword/star_wars/attack_self(mob/living/user)
 	if(!active && !isrolebytype(/datum/role/star_wars, user))
 		return
@@ -382,7 +387,7 @@
 
 /datum/action/innate/star_wars/sith/force_convert
 	name = "Промыть мозги"
-	button_icon_state = "sith_convert"
+	button_icon_state = "sith_force_convert"
 	cooldown = 3 MINUTE
 
 /datum/action/innate/star_wars/sith/force_convert/Activate()
