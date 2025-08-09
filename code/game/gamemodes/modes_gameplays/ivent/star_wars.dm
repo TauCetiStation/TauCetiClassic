@@ -260,14 +260,14 @@
 	. = ..()
 	blade_color = "blue"
 	light_color = COLOR_BLUE
-	stand = 2
+	stand = "2"
 
 // green for master jedi
 /obj/item/weapon/melee/energy/sword/star_wars/jedi/master/atom_init()
 	. = ..()
 	blade_color = "green"
 	light_color = COLOR_GREEN
-	stand = 1
+	stand = "1"
 	max_shield_chance = 400
 	shield_chance = 400
 
@@ -276,7 +276,7 @@
 	. = ..()
 	blade_color = "red"
 	light_color = COLOR_RED
-	stand = 3
+	stand = "3"
 
 // dual red for master sith
 /obj/item/weapon/melee/energy/sword/star_wars/sith/master/atom_init()
@@ -360,7 +360,7 @@
 	var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на светлую сторону Силы?",
 		"Присоединиться к джедаям?", list("Да!","Нет!"))
 	if(choice == "Да!")
-		add_faction_member(jedi_faction, target)
+		add_faction_member(jedi_faction, target, post_setup = TRUE)
 		to_chat(user, "<span class='notice'>[target] присоединился к светлой стороне Силы!</span>")
 		StartCooldown()
 	else
@@ -400,6 +400,8 @@
 		to_chat(user, "<span class='notice'>[target] является ситхом!</span>")
 	else if(sith_faction.isforceuser(target))
 		to_chat(user, "<span class='notice'>[target] является носителем Силы!</span>")
+	else
+		to_chat(user, "[target] не является носителем Силы.")
 
 /datum/action/innate/star_wars/sith/convert
 	name = "Обучить тёмной стороне силы"
@@ -442,7 +444,7 @@
 	var/choice = tgui_alert(target, "[user] спрашивает вас: Хотите ли вы перейти на тёмную сторону Силы?",
 		"Присоединиться к ситхам?", list("Да!","Нет!"))
 	if(choice == "Да!")
-		add_faction_member(sith_faction, target)
+		add_faction_member(sith_faction, target, post_setup = TRUE)
 		to_chat(user, "<span class='notice'>[target] присоединился к тёмной стороне Силы!</span>")
 		StartCooldown()
 	else
@@ -490,7 +492,7 @@
 	if(sith_faction.isforceuser(target))
 		StartCooldown()
 		to_chat(target, "<span class='bold warning'>[user] посеял сомненья в ваш разум, отныне вы принадлежите тёмной стороне силы!</span>")
-		add_faction_member(sith_faction, target)
+		add_faction_member(sith_faction, target, post_setup = TRUE)
 	else
 		var/message = input(user, "Отдайте короткий приказ, цель будет обязана его выполнить и забыть об этом.", "Короткий приказ") as text|null
 		if(message)
