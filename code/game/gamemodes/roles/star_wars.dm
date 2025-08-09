@@ -112,7 +112,7 @@
 		A.Grant(H)
 
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
-	H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/tesla/star_wars)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars)
 
 	H.equip_or_collect(new /obj/item/weapon/melee/energy/sword/star_wars/sith/master(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/clothing/shoes/star_wars/sith(H), SLOT_IN_BACKPACK)

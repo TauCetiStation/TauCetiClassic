@@ -511,7 +511,7 @@
 	clothes_req = FALSE
 	charge_max = 10 SECOND
 
-/obj/effect/proc_holder/spell/in_hand/tesla/star_wars
+/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars
 	invocation = ""
 	clothes_req = FALSE
 	charge_max = 1 MINUTE
