@@ -61,12 +61,11 @@
 	. = ..()
 
 	var/mob/living/carbon/C = antag.current
-	var/datum/faction/star_wars/jedi/F = faction
-
-	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
+
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
 
 		H.equip_or_collect(new /obj/item/weapon/melee/energy/sword/star_wars/jedi(H), SLOT_IN_BACKPACK)
 		H.equip_or_collect(new /obj/item/clothing/shoes/star_wars/jedi(H), SLOT_IN_BACKPACK)
@@ -164,12 +163,11 @@
 	. = ..()
 
 	var/mob/living/carbon/C = antag.current
-	var/datum/faction/star_wars/sith/F = faction
-
-	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
+
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
 
 		H.equip_or_collect(new /obj/item/weapon/melee/energy/sword/star_wars/sith(H), SLOT_IN_BACKPACK)
 		H.equip_or_collect(new /obj/item/clothing/shoes/star_wars/sith(H), SLOT_IN_BACKPACK)
