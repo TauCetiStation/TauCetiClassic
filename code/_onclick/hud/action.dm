@@ -59,12 +59,13 @@
 	return
 
 /datum/action/proc/Remove(mob/T)
-	if(button)
-		if(T && T.client)
-			T.client.screen -= button
+	owner = null
+	if(!T)
+		return
+	if(button && T.client)
+		T.client.screen -= button
 	T.actions.Remove(src)
 	T.update_action_buttons()
-	owner = null
 	return
 
 /datum/action/proc/Trigger()
