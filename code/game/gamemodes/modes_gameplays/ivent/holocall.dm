@@ -174,6 +174,7 @@ var/global/list/holocomms_global = list()
 	UnregisterSignal(src, COMSIG_MOVABLE_HEAR)
 	if(is_in_call)
 		end_call()
+	return ..()
 
 /obj/effect/overlay/hologram
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE|KEEP_TOGETHER
