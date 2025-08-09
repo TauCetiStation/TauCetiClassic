@@ -19,6 +19,12 @@ var/global/list/holocomms_global = list()
 	var/mob/holo_caller
 	COOLDOWN_DECLARE(ringing_cooldown)
 
+/obj/item/device/holocomm/jedi
+	network_number = HOLOCOMM_NETWORK_JEDI
+
+/obj/item/device/holocomm/sith
+	network_number = HOLOCOMM_NETWORK_SITH
+
 /obj/item/device/holocomm/atom_init()
 	name = "Holocomm Number[rand(1,9)][rand(1,9)][rand(1,9)][rand(1,9)][rand(1,9)][rand(1,9)]"
 	holocomms_global += src
@@ -37,7 +43,7 @@ var/global/list/holocomms_global = list()
 		if(choice == "Yes")
 			to_chat(user, "<span class='notice'>You stopped calling.</span>")
 			is_calling = FALSE
-			if(holocomm_calling)
+			if(holocomm_calling && holocomm_calling.is_ringing)
 				holocomm_calling.is_ringing = FALSE
 				holocomm_calling.icon_state = "holocomm-idle"
 				holocomm_calling = null
@@ -60,9 +66,14 @@ var/global/list/holocomms_global = list()
 				holocomm_calling = null
 				to_chat(user, "<span class='notice'>You rejected the call.</span>")
 		return
-
 	var/list/holocomms_to_pick = holocomms_global.Copy()
 	holocomms_to_pick -= src
+	for(var/obj/item/device/holocomm/N in holocomms_to_pick)
+		if(N.network_number != network_number)
+			holocomms_to_pick -= N
+	if(!holocomms_to_pick.len)
+		to_chat(user, "<span class='warning'>There is no one to call!</span>")
+		return
 	var/obj/item/device/holocomm/H
 	H = input(user, "Select a receiver", "Pick Holocomm") as null|anything in holocomms_to_pick
 	if(!H)
@@ -90,7 +101,7 @@ var/global/list/holocomms_global = list()
 	to_chat(user, "<span class='notice'>You are calling [H]!</span>")
 
 /obj/item/device/holocomm/proc/accept_call(mob/user)
-	if(!holocomm_calling || !holo_caller)
+	if(!holocomm_calling || !holo_caller || !holocomm_calling.is_calling)
 		return
 	is_ringing = FALSE
 	holocomm_calling.is_calling = FALSE
@@ -101,6 +112,20 @@ var/global/list/holocomms_global = list()
 	create_hologram(holo_caller)
 	holocomm_calling.create_hologram(user)
 	to_chat(user, "<span class='notice'>You accepted the incoming call.</span>")
+
+/obj/item/device/holocomm/pickup(mob/user)
+	. = ..()
+	name = "Holocomm ([user.name])"
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement), override = TRUE)
+
+/obj/item/device/holocomm/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	. = ..()
+
+/obj/item/device/holocomm/proc/on_movement(datum/source, atom/OldLoc, dir)
+	if(holocomm_overlay && ismob(loc))
+		var/turf/T = get_ranged_target_turf(get_turf(src), dir, 1)
+		holocomm_overlay.forceMove(T)
 
 /obj/item/device/holocomm/proc/catchMessage(datum/source, msg, mob/speaker)
 	if(!is_in_call || !holocomm_calling || !holocomm_calling.holocomm_overlay)
@@ -181,10 +206,6 @@ var/global/list/holocomms_global = list()
 	var/mob/living/Impersonation
 	//var/datum/holocall/HC
 
-/obj/effect/overlay/hologram/atom_init()
-	. = ..()
-	AddComponent(/datum/component/holographic_nature)
-
 /obj/effect/overlay/hologram/Destroy()
 	Impersonation = null
 	//if(!QDELETED(HC))
@@ -213,155 +234,6 @@ var/global/list/holocomms_global = list()
 	if(Impersonation)
 		return Impersonation.examine(user)
 	return ..()
-
-/*
- * A component given to holographic objects to make them glitch out when passed through
- */
-#define GLITCH_DURATION 0.45 SECONDS
-#define GLITCH_REMOVAL_DURATION 0.25 SECONDS
-
-/datum/component/holographic_nature
-	///cooldown before we can glitch out again
-	COOLDOWN_DECLARE(glitch_cooldown)
-	///list of signals we apply to our turf
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-
-/datum/component/holographic_nature/Initialize()
-	if(!ismovable(parent))
-		return COMPONENT_INCOMPATIBLE
-
-/datum/component/holographic_nature/RegisterWithParent()
-	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
-
-	var/atom/atom_parent = parent
-	if(isobj(atom_parent) && atom_parent.uses_integrity)
-		RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_object_damaged))
-
-
-/datum/component/holographic_nature/proc/on_object_damaged(obj/source, damage, damage_type, ...)
-	SIGNAL_HANDLER
-	if(damage_type == BURN || damage_type == BRUTE)
-		apply_effects()
-
-/datum/component/holographic_nature/proc/on_entered(atom/movable/source, atom/movable/thing)
-	SIGNAL_HANDLER
-	var/atom/movable/movable_parent = parent
-	if(!isturf(movable_parent.loc))
-		return
-	if((istype(thing, /obj/item/projectile)) || thing.density)
-		apply_effects()
-
-/datum/component/holographic_nature/proc/apply_effects()
-	if(!COOLDOWN_FINISHED(src, glitch_cooldown))
-		return
-	COOLDOWN_START(src, glitch_cooldown, GLITCH_DURATION + GLITCH_REMOVAL_DURATION)
-	apply_wibbly_filters(parent)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_wibbly_filters), parent, GLITCH_REMOVAL_DURATION), GLITCH_DURATION)
-
-#undef GLITCH_DURATION
-#undef GLITCH_REMOVAL_DURATION
-
-/// This component behaves similar to connect_loc, hooking into a signal on a tracked object's turf
-/// It has the ability to react to that signal on behalf of a separate listener however
-/// This has great use, primarily for components, but it carries with it some overhead
-/// So we do it separately as it needs to hold state which is very likely to lead to bugs if it remains as an element.
-/datum/component/connect_loc_behalf
-	dupe_mode = COMPONENT_DUPE_UNIQUE
-
-	/// An assoc list of signal -> procpath to register to the loc this object is on.
-	var/list/connections
-
-	var/atom/movable/tracked
-
-	var/atom/tracked_loc
-
-/datum/component/connect_loc_behalf/Initialize(atom/movable/tracked, list/connections)
-	. = ..()
-	if (!istype(tracked))
-		return COMPONENT_INCOMPATIBLE
-	src.connections = connections
-	src.tracked = tracked
-
-/datum/component/connect_loc_behalf/RegisterWithParent()
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, PROC_REF(handle_tracked_qdel))
-	update_signals()
-
-/datum/component/connect_loc_behalf/UnregisterFromParent()
-	unregister_signals()
-	UnregisterSignal(tracked, list(
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_PARENT_QDELETING,
-	))
-
-	tracked = null
-
-/datum/component/connect_loc_behalf/proc/handle_tracked_qdel()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/component/connect_loc_behalf/proc/update_signals()
-	unregister_signals()
-	//You may ask yourself, isn't this just silencing an error?
-	//The answer is yes, but there's no good cheap way to fix it
-	//What happens is the tracked object or hell the listener gets say, deleted, which makes targets[old_loc] return a null
-	//The null results in a bad index, because of course it does
-	//It's not a solvable problem though, since both actions, the destroy and the move, are sourced from the same signal send
-	//And sending a signal should be agnostic of the order of listeners
-	//So we need to either pick the order agnositic, or destroy safe
-	//And I picked destroy safe. Let's hope this is the right path!
-	if(isnull(tracked.loc))
-		return
-
-	tracked_loc = tracked.loc
-
-	for (var/signal in connections)
-		parent.RegisterSignal(tracked_loc, signal, connections[signal])
-
-/datum/component/connect_loc_behalf/proc/unregister_signals()
-	if(isnull(tracked_loc))
-		return
-
-	parent.UnregisterSignal(tracked_loc, connections)
-
-	tracked_loc = null
-
-/datum/component/connect_loc_behalf/proc/on_moved(sigtype, atom/movable/tracked, atom/old_loc)
-	SIGNAL_HANDLER
-	update_signals()
-
-
-/proc/apply_wibbly_filters(atom/in_atom, length)
-	for(var/i in 1 to 7)
-		//This is a very baffling and strange way of doing this but I am just preserving old functionality
-		var/X
-		var/Y
-		var/rsq
-		do
-			X = 60*rand() - 30
-			Y = 60*rand() - 30
-			rsq = X*X + Y*Y
-		while(rsq<100 || rsq>900) // Yeah let's just loop infinitely due to bad luck what's the worst that could happen?
-		var/random_roll = rand()
-		in_atom.add_filter("wibbly-[i]", 5, wave_filter(x = X, y = Y, size = rand() * 2.5 + 0.5, offset = random_roll))
-		var/filter = in_atom.get_filter("wibbly-[i]")
-		animate(filter, offset = random_roll, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
-		animate(offset = random_roll - 1, time = rand() * 20 + 10)
-
-/proc/remove_wibbly_filters(atom/in_atom, remove_duration = 0)
-	if(QDELETED(in_atom))
-		return
-	var/filter
-	for(var/i in 1 to 7)
-		filter = in_atom.get_filter("wibbly-[i]")
-		if(remove_duration == 0)
-			animate(filter)
-			in_atom.remove_filter("wibbly-[i]")
-			continue
-		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration)
-		addtimer(CALLBACK(in_atom, TYPE_PROC_REF(/datum, remove_filter), "wibbly-[i]"), remove_duration)
 
 /// Makes this atom look like a "hologram"
 /// So transparent, blue, with a scanline and an emissive glow
