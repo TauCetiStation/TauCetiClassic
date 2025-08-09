@@ -37887,6 +37887,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"fET" = (
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
+/area/station/storage/primary)
 "fEV" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -46751,6 +46758,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"hGq" = (
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/station/storage/primary)
 "hGs" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -70776,6 +70790,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -75309,6 +75324,12 @@
 	icon_state = "graychoco"
 	},
 /area/station/engineering/break_room)
+"owg" = (
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/station/storage/primary)
 "owz" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -79323,6 +79344,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_left"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -87407,6 +87429,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -98404,6 +98427,14 @@
 	icon_state = "neutralfull"
 	},
 /area/station/hallway/primary/port)
+"uhN" = (
+/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/station/storage/primary)
 "uhS" = (
 /obj/structure/morgue{
 	dir = 8
@@ -99881,6 +99912,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/robotics)
+"uAY" = (
+/obj/effect/landmark/ivent/star_wars/red_portal,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/storage/primary)
 "uBj" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -146759,7 +146796,7 @@ aVs
 jvD
 bvG
 ohG
-ohG
+fET
 ohG
 ohG
 xJS
@@ -147019,7 +147056,7 @@ sxV
 qiW
 qiW
 oXx
-eiG
+owg
 daq
 dka
 oqH
@@ -147528,11 +147565,11 @@ uac
 oBd
 aVs
 aEc
-hpd
+hGq
 eUS
 kDX
 iyJ
-gro
+uAY
 pGv
 gaV
 jHQ
@@ -148045,7 +148082,7 @@ bBX
 etq
 kYF
 dlC
-dlC
+uhN
 kYF
 dAl
 oqt

@@ -28,6 +28,7 @@
 		/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars)
 
 	var/list/admin_verbs = list(/client/proc/star_wars_jedi_competition, /client/proc/star_wars_escalation)
+	var/spawners_created = FALSE
 
 /datum/faction/star_wars/jedi/OnPostSetup()
 	. = ..()
@@ -72,6 +73,14 @@
 		AppendObjective(/datum/objective/star_wars/jedi/escalation)
 		AnnounceObjectives()
 		escalation = TRUE
+
+/datum/faction/star_wars/jedi/proc/create_spawners()
+	if(!spawners_created)
+		create_spawner(/datum/spawner/star_wars/blue)
+		create_spawner(/datum/spawner/star_wars/red)
+		var/turf/T = pick_landmarked_location("SW Red Portal")
+		new /obj/structure/ivent/star_wars/red_portal(T)
+		spawners_created = TRUE
 
 // SITH
 
@@ -123,6 +132,11 @@
 	set category = "Event"
 	set name = "Give Jedi Competition Objective"
 
+	var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
+
+	if(J.competition)
+		tgui_alert(mob, "Джедаям уже выдана эта цель", "", list("Ок"))
+
 	if(tgui_alert(mob, "Это даст джедаям информацию о том, что ситхи на станции!", "Вы уверены?", list("Да", "Нет")) == "Да")
 		var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
 		J.give_competition_objective()
@@ -131,9 +145,24 @@
 	set category = "Event"
 	set name = "Give Escalation Objective"
 
-	if(tgui_alert(mob, "Это приведёт к эскалации конфликта между ситхами и джедаями!", "Вы уверены?", list("Да", "Нет")) == "Да")
-		var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
-		var/datum/faction/star_wars/sith/S = find_faction_by_type(/datum/faction/star_wars/sith)
+	var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
+	var/datum/faction/star_wars/sith/S = find_faction_by_type(/datum/faction/star_wars/sith)
 
+	if(J.escalation)
+		tgui_alert(mob, "Цели на эскалацию уже выданы", "", list("Ок"))
+
+	if(tgui_alert(mob, "Это приведёт к эскалации конфликта между ситхами и джедаями!", "Вы уверены?", list("Да", "Нет")) == "Да")
 		J.give_escalation_objective()
 		S.give_escalation_objective()
+
+/client/proc/star_wars_create_spawners()
+	set category = "Event"
+	set name = "Create Star Wars Spawners"
+
+	var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
+
+	if(J.spawners_created)
+		tgui_alert(mob, "Спавнеры уже созданы", "", list("Ок"))
+
+	if(tgui_alert(mob, "Это откроет для гостов спавнеры солдат империи и клонов! Открывать стоит только когда джедаи и ситхи начали сражаться!", "Вы уверены?", list("Да", "Нет")) == "Да")
+		J.create_spawners()

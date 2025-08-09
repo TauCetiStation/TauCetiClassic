@@ -11115,6 +11115,7 @@
 /obj/structure/sign/map/prometheus{
 	pixel_y = 32
 	},
+/obj/effect/landmark/ivent/star_wars/red,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -13497,6 +13498,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -30595,6 +30597,12 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"gLL" = (
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/hallway/secondary/arrival)
 "gLO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -44481,6 +44489,21 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"klC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor,
+/area/station/hallway/secondary/arrival)
 "klJ" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/garden,
@@ -50098,6 +50121,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -50836,6 +50860,7 @@
 	codes_txt = "patrol;next_patrol=TauCeti2";
 	location = "Arrival"
 	},
+/obj/effect/landmark/ivent/star_wars/red_portal,
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "lNf" = (
@@ -64155,6 +64180,7 @@
 "pdO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/landmark/ivent/star_wars/red,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -90418,6 +90444,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_left"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -132741,7 +132768,7 @@ kYI
 exM
 kYI
 rSg
-lFI
+klC
 wox
 pmi
 nID
@@ -133256,7 +133283,7 @@ eCj
 jXE
 rSg
 lFI
-wox
+gLL
 mJS
 djZ
 beE
@@ -134283,7 +134310,7 @@ kYI
 exM
 kYI
 rSg
-lFI
+klC
 puv
 nHb
 nHb

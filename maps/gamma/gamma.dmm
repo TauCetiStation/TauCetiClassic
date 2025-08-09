@@ -9284,6 +9284,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_left"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39806,6 +39807,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -44018,6 +44020,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"hSk" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor/garden,
+/area/station/civilian/garden)
 "hSr" = (
 /obj/machinery/alarm{
 	pixel_x = 29;
@@ -49666,6 +49677,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
+"iVg" = (
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid7"
+	},
+/area/station/civilian/garden)
 "iVw" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
@@ -91313,6 +91330,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/effect/landmark/ivent/star_wars/blue,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -92568,6 +92586,12 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"rwW" = (
+/obj/effect/landmark/ivent/star_wars/red_portal,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid6"
+	},
+/area/station/civilian/garden)
 "rxf" = (
 /obj/machinery/washing_machine,
 /obj/effect/decal/turf_decal/blue{
@@ -96239,6 +96263,10 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"sjW" = (
+/obj/effect/landmark/ivent/star_wars/red,
+/turf/simulated/floor/garden,
+/area/station/civilian/garden)
 "ski" = (
 /obj/machinery/requests_console/ai{
 	pixel_y = 32
@@ -158637,7 +158665,7 @@ euV
 iiI
 afm
 kVA
-kVA
+sjW
 xYO
 kst
 iQU
@@ -159149,7 +159177,7 @@ oeF
 iYc
 xmi
 fSl
-mPo
+rwW
 kVA
 mPo
 kVA
@@ -159401,7 +159429,7 @@ nVU
 acr
 lJw
 kVA
-kbS
+iVg
 kVA
 kVA
 kVA
@@ -159410,7 +159438,7 @@ kVA
 kVA
 kVA
 eIO
-iQU
+hSk
 acH
 rwv
 xqf
@@ -159918,7 +159946,7 @@ iOO
 jAJ
 wfu
 xTn
-kVA
+sjW
 lrP
 dkh
 qik

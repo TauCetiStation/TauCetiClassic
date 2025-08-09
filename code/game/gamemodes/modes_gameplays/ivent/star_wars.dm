@@ -10,6 +10,10 @@
 	name = "SW Red Spawn"
 	icon_state = "x"
 
+/obj/effect/landmark/ivent/star_wars/red_portal
+	name = "SW Red Portal"
+	icon_state = "x2"
+
 // artifact - force source
 
 /obj/structure/ivent/star_wars/artifact
@@ -597,3 +601,41 @@
 	icon_state = "sw_red"
 
 
+/obj/structure/ivent/star_wars/red_portal
+	name = "Red Portal"
+	desc = "Портал Ситхов"
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "portal"
+
+/datum/spawner/star_wars/blue
+	name = "Солдат Империи"
+	desc = "Окажите поддержку джедаям!"
+	spawn_landmark_name = "SW Blue Spawn"
+
+	outfit = /datum/outfit/star_wars/blue
+	skillset = /datum/skillset/max
+
+	positions = INFINITY
+	cooldown = 5 MINUTES
+
+/datum/spawner/star_wars/red
+	name = "Клон Ситхов"
+	desc = "Окажите поддержку ситхам!"
+	spawn_landmark_name = "SW Red Spawn"
+
+	outfit = /datum/outfit/star_wars/blue
+	skillset = /datum/skillset/max
+
+	positions = INFINITY
+	cooldown = 5 MINUTES
+
+/datum/spawner/star_wars/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new
+	H.key = C.key
+	H.forceMove(spawnloc)
+	H.equipOutfit(outfit)
+	H.mind.skills.add_available_skillset(skillset)
+	H.mind.skills.maximize_active_skills()
