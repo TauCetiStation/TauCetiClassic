@@ -516,3 +516,4 @@
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
+	
