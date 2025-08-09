@@ -43,10 +43,8 @@
 		A = new V (H)
 		A.Grant(H)
 
-	var/list/force_spells = F.force_spells.Copy()
-	for(var/i in 1 to 3)
-		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
-		H.AddSpell(new S)
+	H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/heal/star_wars)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
 
 /datum/role/star_wars/jedi
 	name = "Jedi"
@@ -65,10 +63,7 @@
 	var/mob/living/carbon/C = antag.current
 	var/datum/faction/star_wars/jedi/F = faction
 
-	var/list/force_spells = F.force_spells.Copy()
-	for(var/i in 1 to 2)
-		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
-		C.AddSpell(new S)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -117,10 +112,8 @@
 		A = new V (H)
 		A.Grant(H)
 
-	var/list/force_spells = F.force_spells.Copy()
-	for(var/i in 1 to 3)
-		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
-		H.AddSpell(new S)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
+	H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/tesla/star_wars)
 
 	H.equip_or_collect(new /obj/item/weapon/melee/energy/sword/star_wars/sith/master(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/clothing/shoes/star_wars/sith(H), SLOT_IN_BACKPACK)
@@ -173,10 +166,7 @@
 	var/mob/living/carbon/C = antag.current
 	var/datum/faction/star_wars/sith/F = faction
 
-	var/list/force_spells = F.force_spells.Copy()
-	for(var/i in 1 to 2)
-		var/obj/effect/proc_holder/spell/S = pick_n_take(force_spells)
-		C.AddSpell(new S)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem/star_wars)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

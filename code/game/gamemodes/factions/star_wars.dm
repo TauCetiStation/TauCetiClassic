@@ -3,9 +3,27 @@
 	var/obj/structure/ivent/star_wars/artifact/force_source
 	var/competition = FALSE
 	var/escalation = FALSE
+	required_pref = ROLE_TRAITOR
 
 /datum/faction/star_wars/proc/isforceuser(mob/living/carbon/C)
 	return C in force_source.force_users
+
+/datum/faction/star_wars/proc/isjedi(mob/living/carbon/C)
+	if(isrolebytype(/datum/role/star_wars/jedi_leader, C))
+		return TRUE
+	if(isrolebytype(/datum/role/star_wars/jedi, C))
+		return TRUE
+	return FALSE
+
+/datum/faction/star_wars/proc/issith(mob/living/carbon/C)
+	if(isrolebytype(/datum/role/star_wars/sith_leader, C))
+		return TRUE
+	if(isrolebytype(/datum/role/star_wars/sith, C))
+		return TRUE
+	return FALSE
+
+/datum/faction/star_wars/proc/isforcetrained(mob/living/carbon/C)
+	return issith(C) || isjedi(C)
 
 // JEDI
 
@@ -21,12 +39,6 @@
 
 	logo_state = "jedi_logo"
 
-	var/list/force_spells = list(
-		/obj/effect/proc_holder/spell/in_hand/heal/star_wars,
-		/obj/effect/proc_holder/spell/targeted/summonitem/star_wars,
-		/obj/effect/proc_holder/spell/targeted/forcewall/star_wars,
-		/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars)
-
 	var/list/admin_verbs = list(
 		/client/proc/star_wars_jedi_competition,
 		/client/proc/star_wars_escalation,
@@ -38,10 +50,10 @@
 	for(var/datum/role/R in members)
 		R.antag.current.forceMove(pick_landmarked_location("Jedi Spawn"))
 
-	addtimer(CALLBACK(src, PROC_REF(give_announce)), 5 SECOND)
-	addtimer(CALLBACK(src, PROC_REF(open_gate)), 10 SECOND)
-	addtimer(CALLBACK(src, PROC_REF(give_competition_objective)), 30 SECOND)
-	addtimer(CALLBACK(src, PROC_REF(give_escalation_objective)), 60 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(give_announce)), 5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(open_gate)), 10 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(give_competition_objective)), 30 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(give_escalation_objective)), 60 MINUTES)
 
 	setup_temp_admin_verbs(admin_verbs, "Star Wars Ivent")
 
@@ -99,12 +111,6 @@
 
 	logo_state = "sith_logo"
 
-	var/list/force_spells = list(
-		/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/star_wars,
-		/obj/effect/proc_holder/spell/targeted/summonitem/star_wars,
-		/obj/effect/proc_holder/spell/aoe_turf/repulse/star_wars,
-		/obj/effect/proc_holder/spell/in_hand/tesla/star_wars)
-
 /datum/faction/star_wars/sith/forgeObjectives()
 	if(!..())
 		return FALSE
@@ -114,8 +120,8 @@
 
 /datum/faction/star_wars/sith/OnPostSetup()
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(give_competition_objective)), 5 SECOND)
-	addtimer(CALLBACK(src, PROC_REF(give_escalation_objective)), 60 SECOND)
+	addtimer(CALLBACK(src, PROC_REF(give_competition_objective)), 5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(give_escalation_objective)), 60 MINUTES)
 
 /datum/faction/star_wars/sith/proc/give_competition_objective()
 	if(!competition)

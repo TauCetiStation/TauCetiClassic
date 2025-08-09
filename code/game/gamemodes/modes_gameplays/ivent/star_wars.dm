@@ -201,7 +201,7 @@
 /obj/item/weapon/melee/energy/sword/star_wars/dropped(mob/user)
 	. = ..()
 	if(active)
-		attack_self(usr)
+		attack_self(user)
 
 /obj/item/weapon/melee/energy/sword/star_wars/Get_shield_chance()
 	if(active)
@@ -303,7 +303,7 @@
 	to_chat(owner, "<span class='notice'>Существа в 4 метрах от вас, Силой обладающие, да засветятся синим.</span>")
 	for(var/mob/living/carbon/C in view(5, owner))
 		if(jedi_faction.isforceuser(C))
-			C.set_light(4, 2, COLOR_BLUE)
+			C.set_light(2, 1, COLOR_BLUE)
 			addtimer(CALLBACK(C, .atom/proc/set_light, 0, 0), 4 SECOND)
 
 	StartCooldown()
@@ -340,7 +340,7 @@
 		StartCooldown()
 		return
 
-	if((target in jedi_faction.members) || (target in sith_faction.members))
+	if(jedi_faction.isforcetrained(target))
 		to_chat(user, "<span class='warning'>Цель уже принадлежит одной из сторон!</span>")
 		StartCooldown()
 		return
@@ -385,9 +385,9 @@
 
 	StartCooldown()
 
-	if(target in jedi_faction.members)
+	if(sith_faction.isjedi(target))
 		to_chat(user, "<span class='bold warning'>[target] является джедаем!</span>")
-	else if(target in sith_faction.members)
+	else if(sith_faction.issith(target))
 		to_chat(user, "<span class='notice'>[target] является ситхом!</span>")
 	else if(sith_faction.isforceuser(target))
 		to_chat(user, "<span class='notice'>[target] является носителем Силы!</span>")
@@ -423,7 +423,7 @@
 		to_chat(user, "<span class='warning'>Цель не является носителем Силы!</span>")
 		return
 
-	if((target in jedi_faction.members) || (target in sith_faction.members))
+	if(sith_faction.isforcetrained(target))
 		to_chat(user, "<span class='warning'>Цель уже принадлежит одной из сторон!</span>")
 		return
 
@@ -466,8 +466,8 @@
 		to_chat(user, "<span class='warning'>Нужно находиться ближе!</span>")
 		return
 
-	if(target in jedi_faction.members)
-		to_chat(user, "<span class='bold warning'>[target] является джедаем!</span>")
+	if(sith_faction.isforcetrained(target))
+		to_chat(user, "<span class='bold warning'>[target] принадлежит одной из сторон Силы!</span>")
 		return
 
 	var/mob/living/carbon/C = target
@@ -495,35 +495,12 @@
 	clothes_req = FALSE
 	charge_max = 1 MINUTE
 
-/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/star_wars
-	invocation = ""
-	clothes_req = FALSE
-	charge_max = 1 MINUTE
-	emp_heavy = 1
-	emp_light = 2
-
 /obj/effect/proc_holder/spell/targeted/summonitem/star_wars
 	invocation = ""
 	clothes_req = FALSE
 	charge_max = 10 SECOND
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/star_wars
-	invocation = ""
-	clothes_req = FALSE
-	charge_max = 1 MINUTE
-	maxthrow = 1
-
-/obj/effect/proc_holder/spell/targeted/forcewall/star_wars
-	invocation = ""
-	clothes_req = FALSE
-	charge_max = 1 MINUTE
-
 /obj/effect/proc_holder/spell/in_hand/tesla/star_wars
-	invocation = ""
-	clothes_req = FALSE
-	charge_max = 1 MINUTE
-
-/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars
 	invocation = ""
 	clothes_req = FALSE
 	charge_max = 1 MINUTE
@@ -628,7 +605,7 @@
 	desc = "Окажите поддержку ситхам!"
 	spawn_landmark_name = "SW Red Spawn"
 
-	outfit = /datum/outfit/star_wars/blue
+	outfit = /datum/outfit/star_wars/red
 	skillset = /datum/skillset/max
 
 	positions = INFINITY
