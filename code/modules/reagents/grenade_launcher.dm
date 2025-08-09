@@ -96,8 +96,8 @@
 		mode = 1
 	switch(mode)
 		if(1)
-			current_grenade = /obj/item/weapon/grenade/flashbang
-			to_chat(user, "<span class='notice'>Flashbang selected.</span>")
+			current_grenade = null
+			to_chat(user, "<span class='notice'>Flashbang is not available.</span>")
 		if(2)
 			current_grenade = /obj/item/weapon/grenade/smokebomb
 			to_chat(user, "<span class='notice'>Smokebomb selected.</span>")

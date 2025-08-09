@@ -134,11 +134,6 @@
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.</span>"
 	icon_state = "flashbang_box"
 
-/obj/item/weapon/storage/box/flashbangs/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/grenade/flashbang(src)
-
 //Teargas
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"

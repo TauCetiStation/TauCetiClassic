@@ -339,7 +339,6 @@
 	/obj/item/ammo_box/magazine/a74 = 3,
 	/obj/item/weapon/gun/projectile/automatic/a74,
 	/obj/item/weapon/shield/energy,
-	/obj/item/weapon/grenade/flashbang = 4,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 	/obj/item/weapon/plastique = 2,
 	)

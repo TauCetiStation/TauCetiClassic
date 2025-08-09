@@ -604,7 +604,7 @@
 	H.sec_hud_set_ID()
 
 /obj/item/weapon/storage/belt/security/ert
-	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
+	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/handcuffs = 3)
 
 /obj/item/weapon/storage/belt/security/tactical/marines
 	startswith = list(/obj/item/ammo_box/magazine/m41a = 7, /obj/item/ammo_box/magazine/colt = 2)
