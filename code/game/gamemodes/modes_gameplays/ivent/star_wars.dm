@@ -601,7 +601,7 @@
 	var/skillset
 
 /datum/spawner/star_wars/blue
-	name = "Солдат Империи"
+	name = "Солдат Республики"
 	desc = "Окажите поддержку джедаям!"
 	spawn_landmark_name = "SW Blue Spawn"
 
@@ -612,7 +612,7 @@
 	cooldown = 5 MINUTES
 
 /datum/spawner/star_wars/red
-	name = "Клон Ситхов"
+	name = "Солдат Империи"
 	desc = "Окажите поддержку ситхам!"
 	spawn_landmark_name = "SW Red Spawn"
 
