@@ -34,8 +34,8 @@
 	initroletype = /datum/role/star_wars/jedi_leader
 	roletype = /datum/role/star_wars/jedi
 
-	min_roles = 0
-	max_roles = 1
+	min_roles = 2
+	max_roles = 2
 
 	logo_state = "jedi_logo"
 
@@ -115,8 +115,8 @@
 	initroletype = /datum/role/star_wars/sith_leader
 	roletype = /datum/role/star_wars/sith
 
-	min_roles = 0
-	max_roles = 1
+	min_roles = 2
+	max_roles = 2
 
 	logo_state = "sith_logo"
 
