@@ -161,6 +161,7 @@ var/global/list/holocomms_global = list()
 /obj/item/device/holocomm/process()
 	if(is_ringing && COOLDOWN_FINISHED(src, ringing_cooldown))
 		visible_message("<span class='warning'>[bicon(src)][src] rings! Someone is calling!</span>")
+		playsound(src, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER)
 		COOLDOWN_START(src, ringing_cooldown, 5 SECONDS)
 	if(!holocomm_overlay || !holocomm_overlay.Impersonation)
 		return
@@ -229,6 +230,7 @@ var/global/list/holocomms_global = list()
 
 	for(var/mob/M in listening)
 		to_chat(M, "<span class='notice'>[msg]</span>")
+	playsound(src, pick('sound/effects/radio1.ogg', 'sound/effects/radio2.ogg'), VOL_EFFECTS_MASTER, 50)
 
 /obj/effect/overlay/hologram/examine(mob/user)
 	if(Impersonation)
