@@ -43,9 +43,6 @@
 	///Warp effect holder for displacement filter to "pulse" the anomaly
 	var/atom/movable/warp_effect/warp
 
-	var/list/force_users = list()
-	var/next_touch = 0
-
 /obj/structure/ivent/star_wars/artifact/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
