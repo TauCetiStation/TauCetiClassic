@@ -76,6 +76,7 @@
 
 	AppendObjective(/datum/objective/star_wars/jedi/research)
 	AppendObjective(/datum/objective/star_wars/jedi/convert)
+	AnnounceObjectives()
 
 /datum/faction/star_wars/jedi/proc/give_competition_objective()
 	if(!competition)

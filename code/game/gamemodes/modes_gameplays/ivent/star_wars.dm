@@ -312,7 +312,7 @@
 	to_chat(owner, "<span class='notice'>Существа в 4 метрах от вас, Силой обладающие, да засветятся синим.</span>")
 	for(var/mob/living/carbon/C in view(5, owner))
 		if(jedi_faction.isforceuser(C))
-			C.set_light(2, 1, COLOR_BLUE)
+			C.set_light(3, 1, COLOR_BLUE)
 			addtimer(CALLBACK(C, .atom/proc/set_light, 0, 0), 4 SECOND)
 
 	StartCooldown()
