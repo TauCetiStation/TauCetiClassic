@@ -110,28 +110,72 @@
 
 // clothes
 
+// shoes
+/obj/item/clothing/shoes/star_wars
+	unacidable = 1
+	flags = NOSLIP
+	w_class = SIZE_TINY
+
+/obj/item/clothing/shoes/star_wars/jedi
+	name = "Jedi Boots"
+	icon_state = "jedi"
+
+/obj/item/clothing/shoes/star_wars/sith
+	name = "Sith Boots"
+	icon_state = "sith"
+
+// uniform
+/obj/item/clothing/under/star_wars
+	w_class = SIZE_TINY
+
+/obj/item/clothing/under/star_wars/jedi
+	name = "Jedi Uniform"
+	icon_state = "jedi_white"
+
+/obj/item/clothing/under/star_wars/jedi/atom_init()
+	. = ..()
+	icon_state = "jedi_[pick("white", "dark")]"
+
+/obj/item/clothing/under/star_wars/sith
+	name = "Sith Uniform"
+	icon_state = "sith_dark"
+
+/obj/item/clothing/under/star_wars/sith/atom_init()
+	. = ..()
+	icon_state = "sith_[pick("dark", "gray")]"
+
+// robe and hood
 /obj/item/clothing/suit/hooded/star_wars
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
 	unacidable = 1
+	w_class = SIZE_TINY
 
-/obj/item/clothing/shoes/star_wars
-	name = "leather shoes"
-	desc = "A sturdy pair of leather shoes."
-	icon_state = "leather"
+/obj/item/clothing/head/hooded/star_wars
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
 	unacidable = 1
-	flags = NOSLIP
+	w_class = SIZE_TINY
 
 /obj/item/clothing/suit/hooded/star_wars/jedi
 	name = "Jedi robe"
-	desc = "."
-	icon_state = "wizard"
-	item_state = "wizrobe"
+	icon_state = "jedi_robe"
+	icon_suit_up = "jedi_robe_up"
+	hoodtype = /obj/item/clothing/head/hooded/star_wars/jedi
 
 /obj/item/clothing/suit/hooded/star_wars/sith
 	name = "Sith robe"
-	desc = "."
-	icon_state = "wizard"
-	item_state = "wizrobe"
+	icon_state = "sith_robe"
+	icon_suit_up = "sith_robe_up"
+	hoodtype = /obj/item/clothing/head/hooded/star_wars/sith
+
+/obj/item/clothing/head/hooded/star_wars/jedi
+	name = "Jedi hood"
+	icon_state = "jedi_hood"
+
+/obj/item/clothing/head/hooded/star_wars/sith
+	name = "Sith hood"
+	icon_state = "sith_hood"
+
+// Lightsabers
 
 /obj/item/weapon/melee/energy/sword/star_wars
 	name = "Lightsaber"
@@ -315,7 +359,7 @@
 	. = ..()
 
 /datum/action/innate/star_wars/sith/find_force/Deactivate()
-	to_chat(owner, "<span class='notice'>Вы больше не будете при клике пытаться обнаркжить Силу.</span>")
+	to_chat(owner, "<span class='notice'>Вы больше не будете при клике пытаться обнаружить Силу.</span>")
 	UnregisterSignal(owner, COMSIG_MOB_CLICK)
 	. = ..()
 
@@ -443,8 +487,8 @@
 	invocation = ""
 	clothes_req = FALSE
 	charge_max = 1 MINUTE
-	emp_heavy = 3
-	emp_light = 5
+	emp_heavy = 1
+	emp_light = 2
 
 /obj/effect/proc_holder/spell/targeted/summonitem/star_wars
 	invocation = ""
@@ -455,7 +499,7 @@
 	invocation = ""
 	clothes_req = FALSE
 	charge_max = 1 MINUTE
-	maxthrow = 3
+	maxthrow = 1
 
 /obj/effect/proc_holder/spell/targeted/forcewall/star_wars
 	invocation = ""

@@ -64,11 +64,13 @@
 /datum/faction/star_wars/jedi/proc/give_competition_objective()
 	if(!competition)
 		AppendObjective(/datum/objective/star_wars/jedi/competition)
+		AnnounceObjectives()
 		competition = TRUE
 
 /datum/faction/star_wars/jedi/proc/give_escalation_objective()
 	if(!escalation)
 		AppendObjective(/datum/objective/star_wars/jedi/escalation)
+		AnnounceObjectives()
 		escalation = TRUE
 
 // SITH
@@ -98,24 +100,24 @@
 	AppendObjective(/datum/objective/star_wars/sith/convert)
 	return TRUE
 
-/datum/faction/star_wars/jedi/OnPostSetup()
+/datum/faction/star_wars/sith/OnPostSetup()
 	. = ..()
-	for(var/datum/role/R in members)
-		R.antag.current.forceMove(pick_landmarked_location("Jedi Spawn"))
-
 	addtimer(CALLBACK(src, PROC_REF(give_competition_objective)), 5 SECOND)
 	addtimer(CALLBACK(src, PROC_REF(give_escalation_objective)), 60 SECOND)
 
 /datum/faction/star_wars/sith/proc/give_competition_objective()
 	if(!competition)
 		AppendObjective(/datum/objective/star_wars/sith/competition)
+		AnnounceObjectives()
 		competition = TRUE
 
 /datum/faction/star_wars/sith/proc/give_escalation_objective()
 	if(!escalation)
 		AppendObjective(/datum/objective/star_wars/sith/escalation)
+		AnnounceObjectives()
 		escalation = TRUE
 
+// admin verbs
 
 /client/proc/star_wars_jedi_competition()
 	set category = "Event"
