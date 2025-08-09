@@ -60,7 +60,7 @@
 
 /datum/action/proc/Remove(mob/T)
 	if(button)
-		if(T.client)
+		if(T && T.client)
 			T.client.screen -= button
 	T.actions.Remove(src)
 	T.update_action_buttons()
