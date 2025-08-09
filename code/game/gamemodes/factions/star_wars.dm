@@ -153,6 +153,7 @@
 
 	if(J.competition)
 		tgui_alert(mob, "Джедаям уже выдана эта цель", "", list("Ок"))
+		return
 
 	if(tgui_alert(mob, "Это даст джедаям информацию о том, что ситхи на станции!", "Вы уверены?", list("Да", "Нет")) == "Да")
 		J.give_competition_objective()
@@ -166,6 +167,7 @@
 
 	if(J.escalation)
 		tgui_alert(mob, "Цели на эскалацию уже выданы", "", list("Ок"))
+		return
 
 	if(tgui_alert(mob, "Это приведёт к эскалации конфликта между ситхами и джедаями!", "Вы уверены?", list("Да", "Нет")) == "Да")
 		J.give_escalation_objective()
@@ -179,6 +181,7 @@
 
 	if(J.spawners_created)
 		tgui_alert(mob, "Спавнеры уже созданы", "", list("Ок"))
+		return
 
 	if(tgui_alert(mob, "Это откроет для гостов спавнеры солдат империи и клонов! Открывать стоит только когда джедаи и ситхи начали сражаться!", "Вы уверены?", list("Да", "Нет")) == "Да")
 		J.create_dm_spawners()
