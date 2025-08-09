@@ -27,7 +27,10 @@
 		/obj/effect/proc_holder/spell/targeted/forcewall/star_wars,
 		/obj/effect/proc_holder/spell/targeted/lighting_shock/star_wars)
 
-	var/list/admin_verbs = list(/client/proc/star_wars_jedi_competition, /client/proc/star_wars_escalation)
+	var/list/admin_verbs = list(
+		/client/proc/star_wars_jedi_competition,
+		/client/proc/star_wars_escalation,
+		/client/proc/star_wars_create_spawners)
 	var/spawners_created = FALSE
 
 /datum/faction/star_wars/jedi/OnPostSetup()
@@ -74,7 +77,7 @@
 		AnnounceObjectives()
 		escalation = TRUE
 
-/datum/faction/star_wars/jedi/proc/create_spawners()
+/datum/faction/star_wars/jedi/proc/create_dm_spawners()
 	if(!spawners_created)
 		create_spawner(/datum/spawner/star_wars/blue)
 		create_spawner(/datum/spawner/star_wars/red)
@@ -138,7 +141,6 @@
 		tgui_alert(mob, "Джедаям уже выдана эта цель", "", list("Ок"))
 
 	if(tgui_alert(mob, "Это даст джедаям информацию о том, что ситхи на станции!", "Вы уверены?", list("Да", "Нет")) == "Да")
-		var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
 		J.give_competition_objective()
 
 /client/proc/star_wars_escalation()
@@ -165,4 +167,4 @@
 		tgui_alert(mob, "Спавнеры уже созданы", "", list("Ок"))
 
 	if(tgui_alert(mob, "Это откроет для гостов спавнеры солдат империи и клонов! Открывать стоит только когда джедаи и ситхи начали сражаться!", "Вы уверены?", list("Да", "Нет")) == "Да")
-		J.create_spawners()
+		J.create_dm_spawners()

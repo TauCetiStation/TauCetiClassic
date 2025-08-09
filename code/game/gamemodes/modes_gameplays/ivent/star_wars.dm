@@ -607,6 +607,11 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "portal"
 
+
+/datum/spawner/star_wars
+	var/outfit
+	var/skillset
+
 /datum/spawner/star_wars/blue
 	name = "Солдат Империи"
 	desc = "Окажите поддержку джедаям!"
