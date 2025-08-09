@@ -22939,9 +22939,13 @@
 	},
 /area/velocity)
 "cxs" = (
-/obj/machinery/hologram/holopad{
-	name = "Holopad"
+/obj/structure/ivent{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "holopad0";
+	name = "holopad";
+	pixel_y = 5
 	},
+/obj/structure/table/rglass,
 /turf/simulated/floor/glass,
 /area/custom/jedi_ship)
 "cyb" = (
@@ -24104,7 +24108,6 @@
 /area/shuttle/escape/centcom)
 "ehW" = (
 /obj/structure/sign/departments/jedi{
-	pixel_x = 1;
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
@@ -25855,6 +25858,7 @@
 /area/centcom/evac)
 "hgu" = (
 /obj/structure/sign/departments/jedi{
+	pixel_x = 1;
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
@@ -31260,7 +31264,9 @@
 /area/centcom/specops)
 "qHp" = (
 /obj/structure/closet,
-/obj/item/clothing/shoes/star_wars,
+/obj/item/clothing/shoes/star_wars/jedi,
+/obj/item/clothing/under/star_wars/jedi,
+/obj/item/clothing/under/star_wars/jedi,
 /obj/item/clothing/suit/hooded/star_wars/jedi,
 /turf/unsimulated/floor{
 	icon_state = "darkgreenfull"
@@ -40757,7 +40763,7 @@ aaM
 aaM
 tbZ
 tbZ
-ehW
+dIr
 wXx
 wXx
 wXx

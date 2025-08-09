@@ -126,6 +126,7 @@
 	H.equip_or_collect(new /obj/item/clothing/shoes/star_wars/sith(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/clothing/under/star_wars/sith(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/clothing/suit/hooded/star_wars/sith(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/device/holocomm/sith(H), SLOT_IN_BACKPACK)
 
 
 /datum/role/star_wars/sith_leader/Greet(greeting, custom)

@@ -17,7 +17,7 @@
 	roletype = /datum/role/star_wars/jedi
 
 	min_roles = 0
-	max_roles = 2
+	max_roles = 1
 
 	logo_state = "jedi_logo"
 
@@ -83,7 +83,7 @@
 	roletype = /datum/role/star_wars/sith
 
 	min_roles = 0
-	max_roles = 2
+	max_roles = 1
 
 	logo_state = "sith_logo"
 
