@@ -2,6 +2,14 @@
 	name = "Jedi Spawn"
 	icon_state = "x3"
 
+/obj/effect/landmark/ivent/star_wars/blue
+	name = "SW Blue Spawn"
+	icon_state = "x2"
+
+/obj/effect/landmark/ivent/star_wars/red
+	name = "SW Red Spawn"
+	icon_state = "x"
+
 // artifact - force source
 
 /obj/structure/ivent/star_wars/artifact
@@ -515,3 +523,77 @@
 	invocation = ""
 	clothes_req = FALSE
 	charge_max = 1 MINUTE
+
+// ARMOR
+
+/obj/item/clothing/suit/armor/star_wars
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 20, bio = 20, rad = 20)
+
+/obj/item/clothing/suit/armor/star_wars/atom_init()
+	. = ..()
+	icon_state += pick("1", "2", "3")
+
+/obj/item/clothing/suit/armor/star_wars/blue
+	name = "blue armor"
+	icon_state = "sw_blue_"
+
+/obj/item/clothing/suit/armor/star_wars/red
+	name = "red helmet"
+	icon_state = "sw_red_"
+
+/obj/item/clothing/head/helmet/star_wars
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 20, bio = 20, rad = 20)
+
+/obj/item/clothing/head/helmet/star_wars/atom_init()
+	. = ..()
+	icon_state += pick("1", "2", "3")
+
+/obj/item/clothing/head/helmet/star_wars/blue
+	name = "blue helmet"
+	icon_state = "sw_blue_"
+
+/obj/item/clothing/head/helmet/star_wars/red
+	name = "red helmet"
+	icon_state = "sw_red_"
+
+// GUN
+
+/obj/item/weapon/gun/energy/star_wars
+	name = "E-5"
+	icon_state = "sw_e5"
+
+/obj/item/weapon/gun/energy/star_wars/blue
+	ammo_type = /obj/item/ammo_casing/energy/star_wars/blue
+
+/obj/item/weapon/gun/energy/star_wars/red
+	ammo_type = /obj/item/ammo_casing/energy/star_wars/red
+
+// CASING
+
+/obj/item/ammo_casing/energy/star_wars
+	e_cost = 0
+
+/obj/item/ammo_casing/energy/star_wars/blue
+	projectile_type = /obj/item/projectile/energy/star_wars/blue
+
+/obj/item/ammo_casing/energy/star_wars/red
+	projectile_type = /obj/item/projectile/energy/star_wars/red
+
+// PROJECTILE
+
+/obj/item/projectile/energy/star_wars
+	damage = 40
+	damage_type = BURN
+	light_power = 2
+	light_range = 2
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
+/obj/item/projectile/energy/star_wars/blue
+	light_color = COLOR_BLUE
+	icon_state = "sw_blue"
+
+/obj/item/projectile/energy/star_wars/red
+	light_color = COLOR_RED
+	icon_state = "sw_red"
+
+
