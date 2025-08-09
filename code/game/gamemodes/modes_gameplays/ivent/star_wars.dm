@@ -194,8 +194,8 @@
 	can_be_dual = FALSE
 
 	var/stand = 1
-	var/shield_chance = 200
-	var/max_shield_chance = 200
+	var/shield_chance = 240
+	var/max_shield_chance = 240
 	var/list/stands = list(1, 2, 3)
 
 /obj/item/weapon/melee/energy/sword/star_wars/dropped(mob/user)
@@ -261,8 +261,8 @@
 	blade_color = "green"
 	light_color = COLOR_GREEN
 	stand = 1
-	max_shield_chance = 240
-	shield_chance = 240
+	max_shield_chance = 400
+	shield_chance = 400
 
 // red for sith
 /obj/item/weapon/melee/energy/sword/star_wars/sith/atom_init()
@@ -276,7 +276,9 @@
 	name = "Dual Lightsaber"
 	stands = list(1, 2)
 	stand = 1
-	light_color = COLOR_RED
+	max_shield_chance = 400
+	shield_chance = 400
+
 /obj/item/weapon/melee/energy/sword/star_wars/sith/master/update_icon()
 	if(active)
 		icon_state = "duallightsaber_[stand]"
