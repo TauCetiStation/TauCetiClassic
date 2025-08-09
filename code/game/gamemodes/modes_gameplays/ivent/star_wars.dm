@@ -158,14 +158,21 @@
 
 // robe and hood
 /obj/item/clothing/suit/hooded/star_wars
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 20, bio = 20, rad = 20)
 	unacidable = 1
 	w_class = SIZE_TINY
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	siemens_coefficient = 0.2
 
 /obj/item/clothing/head/hooded/star_wars
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 20, bio = 20, rad = 20)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 20, bio = 20, rad = 20)
+	flags_inv = HIDEFACE
+	flags = HEADCOVERSEYES
+	body_parts_covered = HEAD|EYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	unacidable = 1
 	w_class = SIZE_TINY
+	siemens_coefficient = 0.2
 
 /obj/item/clothing/suit/hooded/star_wars/jedi
 	name = "Jedi robe"
@@ -193,10 +200,10 @@
 	name = "Lightsaber"
 	can_be_dual = FALSE
 
-	var/stand = 1
+	var/stand = "1"
 	var/shield_chance = 240
 	var/max_shield_chance = 240
-	var/list/stands = list(1, 2, 3)
+	var/list/stands = list("1", "2", "3")
 
 /obj/item/weapon/melee/energy/sword/star_wars/dropped(mob/user)
 	. = ..()
@@ -205,7 +212,7 @@
 
 /obj/item/weapon/melee/energy/sword/star_wars/Get_shield_chance()
 	if(active)
-		stand = pick(stands)
+		stand = pick(stands - stand)
 		update_icon()
 		update_inv_mob()
 
@@ -228,7 +235,7 @@
 
 /obj/item/weapon/melee/energy/sword/star_wars/update_icon()
 	if(active)
-		icon_state = "lightsaber_[blade_color]_[stand]"
+		icon_state = "lightsaber_[blade_color]_" + stand
 	else
 		icon_state = "lightsaber_off"
 
@@ -274,14 +281,14 @@
 // dual red for master sith
 /obj/item/weapon/melee/energy/sword/star_wars/sith/master/atom_init()
 	name = "Dual Lightsaber"
-	stands = list(1, 2)
-	stand = 1
+	stands = list("1", "2")
+	stand = "1"
 	max_shield_chance = 400
 	shield_chance = 400
 
 /obj/item/weapon/melee/energy/sword/star_wars/sith/master/update_icon()
 	if(active)
-		icon_state = "duallightsaber_[stand]"
+		icon_state = "duallightsaber_" + stand
 	else
 		icon_state = "duallightsaber_off"
 
@@ -509,33 +516,35 @@
 
 // ARMOR
 
-/obj/item/clothing/suit/armor/star_wars
+/obj/item/clothing/suit/space/star_wars
+	slowdown = 0
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 20, bio = 20, rad = 20)
+	allowed = list(/obj/item/weapon/tank)
 
-/obj/item/clothing/suit/armor/star_wars/atom_init()
+/obj/item/clothing/suit/space/star_wars/atom_init()
 	. = ..()
 	icon_state += pick("1", "2", "3")
 
-/obj/item/clothing/suit/armor/star_wars/blue
+/obj/item/clothing/suit/space/star_wars/blue
 	name = "blue armor"
 	icon_state = "sw_blue_"
 
-/obj/item/clothing/suit/armor/star_wars/red
+/obj/item/clothing/suit/space/star_wars/red
 	name = "red helmet"
 	icon_state = "sw_red_"
 
-/obj/item/clothing/head/helmet/star_wars
+/obj/item/clothing/head/helmet/space/star_wars
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 20, bio = 20, rad = 20)
 
-/obj/item/clothing/head/helmet/star_wars/atom_init()
+/obj/item/clothing/head/helmet/space/star_wars/atom_init()
 	. = ..()
 	icon_state += pick("1", "2", "3")
 
-/obj/item/clothing/head/helmet/star_wars/blue
+/obj/item/clothing/head/helmet/space/star_wars/blue
 	name = "blue helmet"
 	icon_state = "sw_blue_"
 
-/obj/item/clothing/head/helmet/star_wars/red
+/obj/item/clothing/head/helmet/space/star_wars/red
 	name = "red helmet"
 	icon_state = "sw_red_"
 
@@ -543,13 +552,13 @@
 
 /obj/item/weapon/gun/energy/star_wars
 	name = "E-5"
-	icon_state = "sw_e5"
+	icon_state = "sw_e5_"
 
 /obj/item/weapon/gun/energy/star_wars/blue
-	ammo_type = /obj/item/ammo_casing/energy/star_wars/blue
+	ammo_type = list(/obj/item/ammo_casing/energy/star_wars/blue)
 
 /obj/item/weapon/gun/energy/star_wars/red
-	ammo_type = /obj/item/ammo_casing/energy/star_wars/red
+	ammo_type = list(/obj/item/ammo_casing/energy/star_wars/red)
 
 // CASING
 

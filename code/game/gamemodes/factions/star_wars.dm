@@ -95,6 +95,14 @@
 		create_spawner(/datum/spawner/star_wars/red)
 		var/turf/T = pick_landmarked_location("SW Red Portal")
 		new /obj/structure/ivent/star_wars/red_portal(T)
+
+		var/datum/announcement/centcomm/star_wars/star_war_begin/A = new
+		A.play()
+
+		SSshuttle.incall()
+		SSshuttle.announce_emer_called.play()
+		make_maint_all_access()
+
 		spawners_created = TRUE
 
 // SITH
@@ -139,7 +147,7 @@
 
 /client/proc/star_wars_jedi_competition()
 	set category = "Event"
-	set name = "Give Jedi Competition Objective"
+	set name = "STAR WARS Jedi Competition"
 
 	var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
 
@@ -151,7 +159,7 @@
 
 /client/proc/star_wars_escalation()
 	set category = "Event"
-	set name = "Give Escalation Objective"
+	set name = "STAR WARS Escalation"
 
 	var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
 	var/datum/faction/star_wars/sith/S = find_faction_by_type(/datum/faction/star_wars/sith)
@@ -165,7 +173,7 @@
 
 /client/proc/star_wars_create_spawners()
 	set category = "Event"
-	set name = "Create Star Wars Spawners"
+	set name = "STAR WARS Final Spawners"
 
 	var/datum/faction/star_wars/jedi/J = find_faction_by_type(/datum/faction/star_wars/jedi)
 
