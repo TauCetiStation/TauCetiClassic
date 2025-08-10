@@ -4,8 +4,11 @@
 	icon_state = "langcollar"
 	item_state = "langcollar"
 	item_state_world = "langcollar_w"
-	flags = SLOT_FLAGS_NECK
+	origin_tech = "magnets=5;programming=4;engineering=5"
+	flags = SLOT_FLAGS_NECK | HEAR_TALK
 	var/working = FALSE
+	var/emagged = FALSE
+	var/phrase
 	var/obj/item/weapon/disk/language/lang_disk
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_language_collar)
 
@@ -27,6 +30,34 @@
 		lang_disk = null
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the [lang_disk] from the [src]</span>")
+
+/obj/item/clothing/neck/language_collar/emag_act(mob/user)
+	.=..()
+	if(emagged)
+		return FALSE
+	emagged = TRUE
+	var/set_phrase = sanitize(input(user, "Введите кодовую фразу:") as text)
+	if(!length(set_phrase))
+		to_chat(user, "<span class='warning'>Вам нужно задать фразу активации.</span>")
+		return FALSE
+	phrase = set_phrase
+	to_chat(user, "<span class='warning'>Теперь взрыв случится после фразы [phrase]. Вот так-то лучше!</span>")
+	return TRUE
+
+/obj/item/clothing/neck/language_collar/hear_talk(mob/M, msg)
+	if(!phrase)
+		return
+	if(findtext(msg, phrase))
+		explode_collar(M)
+
+/obj/item/clothing/neck/language_collar/proc/explode_collar(mob/user)
+    if(slot_equipped == SLOT_NECK)
+        var/mob/living/carbon/human/H = user
+        var/obj/item/organ/external/head/M = H.bodyparts_by_name[BP_HEAD]
+        if(M)
+            M.take_damage(60, used_weapon = "Explosion")
+	explosion(get_turf(H), -1, -1, 2, 3)
+    qdel(src)
 
 /obj/item/clothing/neck/language_collar/dropped(mob/user)
     ..()
