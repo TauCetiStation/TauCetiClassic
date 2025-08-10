@@ -218,7 +218,6 @@
 	return protection
 
 /mob/living/carbon/human/proc/is_bodypart_covered(body_part)
-	world.log << body_part
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
 	for(var/obj/item/clothing/C in protective_gear)
 		if(body_part == HEAD)
