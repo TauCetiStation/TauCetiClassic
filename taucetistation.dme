@@ -171,6 +171,7 @@
 #include "code\_globalvars\lists\names.dm"
 #include "code\_globalvars\lists\objects.dm"
 #include "code\_globalvars\lists\pois.dm"
+#include "code\_globalvars\lists\roles_preferences.dm"
 #include "code\_globalvars\lists\skills.dm"
 #include "code\_globalvars\lists\sound.dm"
 #include "code\_onclick\adjacent.dm"
