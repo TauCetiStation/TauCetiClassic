@@ -9,4 +9,3 @@
 /area/space/holospace/forts/no_droppods
 	icon_state = "yellow"
 
-	icon_state = "red"
