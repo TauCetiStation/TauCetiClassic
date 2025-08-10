@@ -3,37 +3,37 @@
 /obj/structure/sign/map
 	name = "station map"
 	desc = "A framed picture of the station."
-	var/icon/nanomap
+	var/nanomap_file
 	var/nanomap_size = 600
 
 /obj/structure/sign/map/examine(mob/user)
 	..()
-	if(nanomap)
-		user << browse_rsc(nanomap, "nanomap.png")
-		sleep(5) // wait for it to load
+	if(nanomap_file)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/station_map)
+		assets.send(user)
 		var/datum/browser/popup = new(user, "window=[name]", "[name]", nanomap_size-30, nanomap_size, ntheme = CSS_THEME_DARK)
-		popup.set_content("<img src='nanomap.png' style='height:100%;width:auto;-ms-interpolation-mode:nearest-neighbor'>")
+		popup.set_content("<img src='[nanomap_file]' style='height:100%;width:auto;-ms-interpolation-mode:nearest-neighbor'>")
 		popup.open()
 
 /obj/structure/sign/map/left
 	icon_state = "map-left"
-	nanomap = 'nano/images/nanomap_exodus_1_small.png'
+	nanomap_file = "nanomap_exodus_1_small.png"
 
 /obj/structure/sign/map/right
 	icon_state = "map-right"
-	nanomap = 'nano/images/nanomap_exodus_1_small.png'
+	nanomap_file = "nanomap_exodus_1_small.png"
 
 /obj/structure/sign/map/gamma_left
 	icon_state = "gammamap-left"
-	nanomap = 'nano/images/nanomap_gamma_1_small.png'
+	nanomap_file = "nanomap_gamma_1_small.png"
 
 /obj/structure/sign/map/gamma_right
 	icon_state = "gammamap-right"
-	nanomap = 'nano/images/nanomap_gamma_1_small.png'
+	nanomap_file = "nanomap_gamma_1_small.png"
 
 /obj/structure/sign/map/prometheus
 	icon_state = "prometheus"
-	nanomap = 'nano/images/nanomap_prometheus_1_small.png'
+	nanomap_file = "nanomap_prometheus_1_small.png"
 
 /obj/structure/sign/directions/science
 	name = "science department"

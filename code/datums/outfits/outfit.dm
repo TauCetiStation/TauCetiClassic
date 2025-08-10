@@ -278,13 +278,13 @@
 		// gives players wuth less than 5 days on server OR less than 10 hours in game a station map in their pocket or backpack
 		if((isnum(H.client.player_age) && H.client.player_age < 5) || (isnum(H.client.player_ingame_age) && H.client.player_ingame_age < 600))
 			var/list/mapByType = list(
-				"Box Station" = /obj/item/station_map,
-				"Gamma Station" = /obj/item/station_map/gamma,
-				"Delta Station" = /obj/item/station_map/delta,
-				"Falcon Station" = /obj/item/station_map/falcon,
-				"Prometheus Station" = /obj/item/station_map/prometheus,
+				"boxstation" = /obj/item/station_map,
+				"gamma" = /obj/item/station_map/gamma,
+				"delta" = /obj/item/station_map/delta,
+				"falcon" = /obj/item/station_map/falcon,
+				"prometheus" = /obj/item/station_map/prometheus,
 			)
-			var/stationmap_type = mapByType[SSmapping.config.map_name]
+			var/stationmap_type = mapByType[SSmapping.config.map_path]
 			if(stationmap_type)
 				H.equip_or_collect(new stationmap_type(H), SLOT_R_STORE)
 
