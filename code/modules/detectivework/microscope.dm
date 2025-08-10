@@ -78,13 +78,13 @@
 
 	scanning = TRUE
 	if(do_after(user, 2 SECONDS, target = user))
+		scanning = FALSE
 		if(!sample)
 			to_chat(user, "<span class='warning'>There is no sample!</span>")
 			return
 		if(stat & NOPOWER)
 			to_chat(user, "<span class='warning'>There is no power!</span>")
 			return
-		scanning = FALSE
 		visible_message("<span class='notice'>Microscope starts printing a report.</span>")
 		var/obj/item/weapon/paper/report = new(get_turf(src))
 		report_num++

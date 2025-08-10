@@ -29,27 +29,24 @@
 	if(!ishuman(M))
 		to_chat(user, "<span class='warning'>You can't take a sample from [M] with [src].</span>")
 		return
-
 	var/mob/living/carbon/human/H = M
-	inuse = TRUE
-	to_chat(user, "<span class='notice'>You start taking a sample from [H].</span>")
-	add_fingerprint(user)
 	var/target_zone = user.get_targetzone()
 	if(!target_zone)
 		return
 	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 	if(!BP || BP.is_stump)
 		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
-		inuse = FALSE
 		return
-	if(H.is_bodypart_covered(BP.body_part))
-		to_chat(user, "<span class='warning'>[H] has something covering their [BP.name].</span>")
-		inuse = FALSE
+	var/obj/item/clothing/C = H.is_bodypart_covered(BP.body_part)
+	if(C)
+		to_chat(user, "<span class='warning'>[H] has [C] covering their [BP.name].</span>")
 		return
 	if(H.isSynthetic(target_zone))
 		to_chat(user, "<span class='warning'>[H]'s [target_zone] is synthetic.</span>")
-		inuse = FALSE
 		return
+	inuse = TRUE
+	to_chat(user, "<span class='notice'>You start taking a sample from [H].</span>")
+	add_fingerprint(user)
 	if(do_after(user, 2 SECONDS, target = user))
 		if(!user.Adjacent(H))
 			to_chat(user, "<span class='warning'>They moved away!</span>")
@@ -59,8 +56,9 @@
 			to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 			inuse = FALSE
 			return
-		if(H.is_bodypart_covered(BP.body_part))
-			to_chat(user, "<span class='warning'>[H] has something covering their [BP.name].</span>")
+		var/obj/item/clothing/J = H.is_bodypart_covered(BP.body_part)
+		if(J)
+			to_chat(user, "<span class='warning'>[H] has [J] covering their [BP.name].</span>")
 			inuse = FALSE
 			return
 		var/target_dna = list()
@@ -82,7 +80,7 @@
 		inuse = FALSE
 		return TRUE
 	else
-		user.visible_message("<span class='warning'>[user] is trying to take a sample from [H], but they resist.</span>")
+		user.visible_message("<span class='warning'>[user] is trying to take a sample from [H], but fails.</span>")
 	inuse = FALSE
 
 /obj/item/weapon/swab/afterattack(atom/A, mob/user, proximity)
