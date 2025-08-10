@@ -278,6 +278,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		broken = TRUE
 	else if(is_carpet_floor())
 		damage_state = "carpet_damaged"
+		broken = TRUE
 	else if(istype(src, /turf/simulated/floor/glass))
 		damage_state = "glass_damaged_[pick("1","2","3")]"
 		broken = TRUE
@@ -458,7 +459,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	update_icon()
 	levelupdate()
 
-//Proc for make turf into plating 
+//Proc for make turf into plating
 /turf/simulated/floor/proc/remove_floor(obj/item/C, mob/user)
 	if(broken || burnt)
 		to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")

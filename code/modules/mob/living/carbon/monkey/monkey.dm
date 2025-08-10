@@ -6,7 +6,6 @@
 	icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE
@@ -95,7 +94,7 @@
 	if(stat != DEAD) // lets put this shit somewhere here
 		stabilize_body_temperature()
 
-	if(!environment || (flags & GODMODE))
+	if(!environment || HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
 		return
 	handle_monkey_pressure(environment)
 	handle_monkey_temperature(environment)
@@ -268,8 +267,6 @@
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 			if (prob(50))
 				Paralyse(10)
-		else
-	return
 
 /mob/living/carbon/monkey/blob_act()
 	if (stat != DEAD)
@@ -281,7 +278,7 @@
 		gib()
 		return
 	if (stat == DEAD && !client)
-		gibs(loc)
+		new /obj/effect/gibspawner/generic(get_turf(loc), src)
 		qdel(src)
 		return
 

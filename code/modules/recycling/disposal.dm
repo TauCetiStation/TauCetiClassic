@@ -32,11 +32,13 @@
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/atom_init()
 	..()
+	if(is_station_level(z))
+		global.station_disposal_count++
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/disposal/atom_init_late()
 	trunk = locate() in src.loc
-	if(!trunk)
+	if(!checkTrunk())
 		mode = 0
 		flush = 0
 	else
@@ -46,6 +48,8 @@
 	update()
 
 /obj/machinery/disposal/Destroy()
+	if(is_station_level(z))
+		global.station_disposal_count--
 	eject()
 	if(trunk)
 		trunk.linked = null
@@ -489,13 +493,13 @@
 	if(wrapcheck == 1)
 		H.tomail = 1
 
-	if(!trunk)
+	if(!checkTrunk())
 		expel(H)
-		return
+	else
+		H.start(trunk) // start the holder processing movement
 
 	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
-	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
@@ -512,6 +516,13 @@
 	update()	// update icon
 	return
 
+// return TRUE if disposal has a functional trunk underneath
+/obj/machinery/disposal/proc/checkTrunk()
+	if(isnull(trunk) || isnull(trunk.loc))
+		return FALSE
+	if(trunk.loc != loc)
+		return FALSE
+	return TRUE
 
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
@@ -1274,7 +1285,7 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
+	var/obj/linked 	// the linked obj/machinery/disposal or /obj/structure/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/atom_init()
 	..()
@@ -1283,6 +1294,12 @@
 
 /obj/structure/disposalpipe/trunk/atom_init_late()
 	getlinked()
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if(istype(linked, /obj/machinery/disposal))
+		var/obj/machinery/disposal/D = linked
+		D.trunk = null
+	. = ..()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null

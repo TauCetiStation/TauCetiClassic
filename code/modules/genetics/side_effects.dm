@@ -89,7 +89,7 @@
 /datum/genetics/side_effect/bald_madness/finish(mob/living/carbon/human/H)
 	H.f_style = "Shaved"
 	H.h_style = "Skinhead"
-	H.update_hair()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /proc/trigger_side_effect(mob/living/carbon/human/H)
 	set waitfor = 0

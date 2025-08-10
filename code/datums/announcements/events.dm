@@ -96,6 +96,14 @@
 		message = "На [station_name_ru()] обнаружена гравитационная аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
+/datum/announcement/centcomm/anomaly/gas
+	name = "Anomaly: Gravitational"
+	message = "На станции обнаружена газовая аномалия. Ожидаемое местоположение: неизвестно."
+/datum/announcement/centcomm/anomaly/gas/play(area/A)
+	if(A)
+		message = "На [station_name_ru()] обнаружена газовая аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
+	..()
+
 /datum/announcement/centcomm/anomaly/pyro
 	name = "Anomaly: Pyroclastic"
 	message = "На станции обнаружена пирокластическая аномалия. Ожидаемое местоположение: неизвестно."
@@ -272,3 +280,22 @@
 	subtitle = "Космоторговцы."
 	message = "Мы получили и одобрили запрос на стыковку от группы космоторговцев. " + \
 			"У них кончаются припасы и есть товары для продажи. Ожидайте гостей."
+
+/datum/announcement/centcomm/egghunt/pre
+	name = "Egg Hunt will Start soon!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"
+	message = "Исход! В рамках программы по повышению стрессоустойчивости персонала мы проводим пасхальную охоту за яйцами! " + \
+			"Подготовьтесь, через минуту вам потребуется искать цветные яйца, которые мы спрятали по станции, и класть их к себе в рюкзак. " + \
+			"Спустя еще 30 минут таймер подойдет к концу и будут объявлены победители!"
+
+/datum/announcement/centcomm/egghunt/start
+	name = "Egg Hunt Starts!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"
+	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 30 минут объявим победителей "
+
+/datum/announcement/centcomm/egghunt/finish
+	name = "Egg Hunt Ends!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"

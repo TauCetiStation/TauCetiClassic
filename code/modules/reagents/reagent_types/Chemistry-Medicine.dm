@@ -6,12 +6,14 @@
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
-	restrict_species = list(IPC, DIONA)
 
 	data = list()
 
 /datum/reagent/srejuvenate/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath-10)
 	if(!data["ticks"])
@@ -30,10 +32,13 @@
 			M.SetParalysis(0)
 			M.dizziness = 0
 			M.drowsyness = 0
-			M.setStuttering(0)
+			M.resetStuttering()
 			M.SetDrunkenness(0)
 			M.SetConfused(0)
 			M.jitteriness = 0
+
+/datum/reagent/srejuvenate/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/inaprovaline
 	name = "Inaprovaline"
@@ -43,15 +48,19 @@
 	color = "#00bfff" // rgb: 200, 165, 220
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE * 2
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/inaprovaline/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath-5)
 
+/datum/reagent/inaprovaline/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/inaprovaline/on_vox_digest(mob/living/M)
-	..()
 	M.adjustToxLoss(REAGENTS_METABOLISM)
 	return FALSE // General digest proc shouldn't be called.
 
@@ -67,7 +76,10 @@
 	data = list()
 
 /datum/reagent/ryetalyn/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 
@@ -88,13 +100,18 @@
 	reagent_state = LIQUID
 	color = "#c8a5dc"
 	overdose = REAGENTS_OVERDOSE * 2
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustHalLoss(-1)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
+
+/datum/reagent/paracetamol/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/tramadol
 	name = "Tramadol"
@@ -104,16 +121,21 @@
 	color = "#cb68fc"
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.025
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/tramadol/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustHalLoss(-4)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.painkiller_byeffect(5, 15)
+
+/datum/reagent/tramadol/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/oxycodone
 	name = "Oxycodone"
@@ -123,10 +145,12 @@
 	color = "#800080"
 	overdose = 20
 	custom_metabolism = 0.025
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/oxycodone/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustHalLoss(-8)
 	if(volume > overdose)
 		M.adjustDrugginess(1)
@@ -134,6 +158,9 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.painkiller_byeffect(10, 25)
+
+/datum/reagent/oxycodone/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/endorphine
 	name = "Endorphine"
@@ -143,7 +170,9 @@
 	color = "#cb68fc"
 	overdose = 0
 	custom_metabolism = 0.025
-	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/endorphine/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -180,7 +209,10 @@
 	taste_message = null
 
 /datum/reagent/leporazine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
 	else if(M.bodytemperature < BODYTEMP_NORMAL + 1)
@@ -194,11 +226,16 @@
 	color = "#ffc600" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kelotane/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.heal_bodypart_damage(0,2 * REM)
+
+/datum/reagent/kelotane/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/dermaline
 	name = "Dermaline"
@@ -208,15 +245,24 @@
 	color = "#ff8000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = null
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/dermaline/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.heal_bodypart_damage(0,3 * REM)
-	if(volume >= overdose && (HUSK in M.mutations) && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.mutations.Remove(HUSK)
-		H.update_body()
+	var/mob/living/carbon/human/H = M
+	if(volume >= overdose && istype(H))
+		if(HAS_TRAIT_FROM(H, TRAIT_BURNT, GENERIC_TRAIT))
+			REMOVE_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
+			H.update_body()
+		if(HAS_TRAIT_FROM(H, TRAIT_HUSK, GENERIC_TRAIT)) // as husk is now a separate trait, we probably should move it from dermaline which is a burn medication
+			REMOVE_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+			H.update_body()
+
+/datum/reagent/dermaline/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/dexalin
 	name = "Dexalin"
@@ -226,17 +272,21 @@
 	color = "#0080ff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "oxygen"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/dexalin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustOxyLoss(-2 * REM)
 
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
 
+/datum/reagent/dexalin/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/dexalin/on_vox_digest(mob/living/M, alien) // Now dexalin does not remove lexarin from Vox. For the better or the worse.
-	..()
 	M.adjustToxLoss(2 * REM)
 	return FALSE
 
@@ -249,12 +299,14 @@
 	overdose = REAGENTS_OVERDOSE / 3
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_message = "sickening bitterness"
-	restrict_species = list(IPC, DIONA)
 
 	data = list()
 
 /datum/reagent/dextromethorphan/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	M.adjustOxyLoss(-M.getOxyLoss())
@@ -274,9 +326,7 @@
 				H.hallucination = max(H.hallucination, 7)
 	data["ticks"]++
 
-/datum/reagent/dexalinp/on_vox_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(7 * REM)
+/datum/reagent/dextromethorphan/on_diona_digest(mob/living/M)
 	return FALSE
 
 /datum/reagent/dexalinp
@@ -287,17 +337,21 @@
 	color = "#0040ff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = "ability to breath"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/dexalinp/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustOxyLoss(-M.getOxyLoss())
 
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
 
+/datum/reagent/dexalinp/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/dexalinp/on_vox_digest(mob/living/M) // Now dexalin plus does not remove lexarin from Vox. For the better or the worse.
-	..()
 	M.adjustToxLoss(6 * REM) // Let's just say it's thrice as poisonous.
 	return FALSE
 
@@ -307,7 +361,7 @@
 		if(S.is_bruised_organ(O_LIVER))
 			return FALSE
 	M.adjustOxyLoss(-M.getOxyLoss())
-	return TRUE
+	return FALSE
 
 /datum/reagent/tricordrazine
 	name = "Tricordrazine"
@@ -318,11 +372,13 @@
 	overdose = REAGENTS_OVERDOSE * 2
 	overdose_dam = 0
 	taste_message = null
-	restrict_species = list(IPC, DIONA)
 	data = list()
 
 /datum/reagent/tricordrazine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.getOxyLoss())
 		M.adjustOxyLoss(-1 * REM)
 	if(M.getBruteLoss() && prob(80))
@@ -339,6 +395,9 @@
 			M.vomit()
 			data["ticks"] -= rand(25, 30)
 
+/datum/reagent/tricordrazine/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/anti_toxin
 	name = "Anti-Toxin (Dylovene)"
 	id = "anti_toxin"
@@ -346,16 +405,21 @@
 	reagent_state = LIQUID
 	color = "#00a000" // rgb: 200, 165, 220
 	taste_message = null
-	restrict_species = list(IPC, DIONA)
 
 	toxin_absorption = 3.0
 
 /datum/reagent/anti_toxin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.reagents.remove_all_type(/datum/reagent/toxin, REM, 0, 1)
 	M.drowsyness = max(M.drowsyness - 2 * REM, 0)
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
+
+/datum/reagent/anti_toxin/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/thermopsis
 	name = "Thermopsis"
@@ -364,20 +428,25 @@
 	reagent_state = LIQUID
 	color = "#a0a000"
 	taste_message = "vomit"
-	restrict_species = list(IPC, DIONA)
 
 	data = list()
 
 	toxin_absorption = 5.0
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
 	if(data["ticks"] > 10)
 		M.vomit()
 		data["ticks"] -= rand(0, 10)
+
+/datum/reagent/thermopsis/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
@@ -388,15 +457,18 @@
 	taste_message = "admin abuse"
 
 /datum/reagent/adminordrazine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM, 0, 1)
-	M.setCloneLoss(0)
-	M.setOxyLoss(0)
+	M.resetCloneLoss()
+	M.resetOxyLoss()
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5)
 	M.hallucination = 0
-	M.setBrainLoss(0)
+	M.resetBrainLoss()
 	M.disabilities = 0
 	M.sdisabilities = 0
 	M.setBlurriness(0)
@@ -407,7 +479,7 @@
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.setStuttering(0)
+	M.resetStuttering()
 	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
@@ -420,10 +492,12 @@
 	color = "#99ccff" // rgb: 200, 165, 220
 	custom_metabolism = 0.01
 	overdose = REAGENTS_OVERDOSE
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/synaptizine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.drowsyness = max(M.drowsyness - 5, 0)
 	M.AdjustParalysis(-1.5)
 	M.AdjustStunned(-1.5)
@@ -433,6 +507,9 @@
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(40))
 		M.adjustToxLoss(1)
+
+/datum/reagent/synaptizine/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/hyronalin
 	name = "Hyronalin"
@@ -445,7 +522,10 @@
 	taste_message = null
 
 /datum/reagent/hyronalin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.radiation = max(M.radiation - 3 * REM, 0)
 
 /datum/reagent/arithrazine
@@ -459,7 +539,10 @@
 	taste_message = null
 
 /datum/reagent/arithrazine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.radiation = max(M.radiation - 7 * REM, 0)
 	M.adjustToxLoss(-1 * REM)
 	if(prob(15))
@@ -476,7 +559,10 @@
 	taste_message = null
 
 /datum/reagent/alkysine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustBrainLoss(-3 * REM)
 
 /datum/reagent/imidazoline
@@ -487,10 +573,12 @@
 	color = "#a0dbff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "carrot"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/imidazoline/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustBlurriness(-5)
 	M.eye_blind = max(M.eye_blind - 5, 0)
 	if(ishuman(M))
@@ -499,6 +587,9 @@
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
+
+/datum/reagent/imidazoline/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/aurisine
 	name = "Aurisine"
@@ -510,7 +601,10 @@
 	taste_message = "earwax"
 
 /datum/reagent/aurisine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.ear_damage = max(M.ear_damage - 1, 0)
 	M.ear_deaf = max(M.ear_deaf - 3, 0)
 	if(M.ear_damage <= 0 && M.ear_deaf <= 0)
@@ -524,10 +618,12 @@
 	color = "#561ec3" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE / 3
 	taste_message = null
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/peridaxon/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/damaged_organs = 0
@@ -542,6 +638,9 @@
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
 
+/datum/reagent/peridaxon/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
 	id = "kyphotorin"
@@ -551,10 +650,12 @@
 	overdose = 5.1
 	custom_metabolism = 0.01
 	taste_message = "machines"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kyphotorin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.bodytemperature > 400)
 		M.adjustCloneLoss(-1)
 		M.adjustOxyLoss(-15)
@@ -575,6 +676,9 @@
 		if(prob(25))
 			to_chat(M, "You feel just terrible, as if something is tearing you apart inside, it’s very hard for you to breathe!")
 
+/datum/reagent/kyphotorin/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/bicaridine
 	name = "Bicaridine"
 	id = "bicaridine"
@@ -583,11 +687,16 @@
 	color = "#bf0000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/bicaridine/on_general_digest(mob/living/M, alien)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.heal_bodypart_damage(2 * REM, 0)
+
+/datum/reagent/bicaridine/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/xenojelly_un
 	name = "Unnatural xenojelly"
@@ -598,14 +707,22 @@
 	custom_metabolism = 2
 	overdose = REAGENTS_OVERDOSE / 2
 	taste_message = null
-	restrict_species = list (IPC, DIONA, VOX)
 
 /datum/reagent/xenojelly_un/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.heal_bodypart_damage(2,3)
 	M.adjustOxyLoss(-5)
 	M.adjustHalLoss(-5)
 	M.adjustFireLoss(-5)
+
+/datum/reagent/xenojelly_un/on_diona_digest(mob/living/M)
+	return FALSE
+
+/datum/reagent/xenojelly_un/on_vox_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/hyperzine
 	name = "Hyperzine"
@@ -616,12 +733,17 @@
 	custom_metabolism = 0.03
 	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = "speed"
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/hyperizine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(prob(5))
 		M.emote(pick("twitch","blink","shiver"))
+
+/datum/reagent/hyperizine/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/cryoxadone
 	name = "Cryoxadone"
@@ -632,7 +754,10 @@
 	taste_message = null
 
 /datum/reagent/cryoxadone/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.bodytemperature < 170)
 		M.adjustCloneLoss(-1)
 		M.adjustOxyLoss(-1)
@@ -648,7 +773,10 @@
 	taste_message = null
 
 /datum/reagent/clonexadone/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(M.bodytemperature < 170)
 		M.adjustCloneLoss(-3)
 		M.adjustOxyLoss(-3)
@@ -667,7 +795,10 @@
 	data = list()
 
 /datum/reagent/rezadone/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -709,7 +840,10 @@
 	taste_message = null
 
 /datum/reagent/ethylredoxrazine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.dizziness = max(0, M.dizziness - 10)
 	M.drowsyness = max(0, M.drowsyness - 10)
 	M.AdjustStuttering(-10)
@@ -734,17 +868,19 @@
 	taste_message = null
 
 /datum/reagent/vitamin/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(prob(50))
 		M.adjustBruteLoss(-1)
 		M.adjustFireLoss(-1)
 	/*if(M.nutrition < NUTRITION_LEVEL_WELL_FED) //we are making him WELL FED
 		M.nutrition += 30*/  //will remain commented until we can deal with fat
-	if(ishuman(M))
+	if(ishuman(M) && !HAS_TRAIT(M, TRAIT_NO_BLOOD)) // Do not restore blood on things with no blood by nature
 		var/mob/living/carbon/human/H = M
-		if(!(NO_BLOOD in H.species.flags)) // Do not restore blood on things with no blood by nature
-			if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
-				H.blood_add(0.5)
+		if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
+			H.blood_add(0.5)
 
 /datum/reagent/lipozine
 	name = "Lipozine" // The anti-nutriment.
@@ -756,7 +892,10 @@
 	overdose = REAGENTS_OVERDOSE
 
 /datum/reagent/lipozine/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
 
@@ -768,16 +907,21 @@
 	color = "#99ccff" // rgb: 200, 165, 220
 	custom_metabolism = 0.5
 	overdose = REAGENTS_OVERDOSE
-	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/stimulants/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.drowsyness = max(M.drowsyness - 5, 0)
 	M.AdjustParalysis(-3)
 	M.AdjustStunned(-3)
 	M.AdjustWeakened(-3)
 	var/mob/living/carbon/human/H = M
 	H.adjustHalLoss(-30)
+
+/datum/reagent/stimulants/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/nanocalcium
 	name = "Nano-Calcium"
@@ -788,11 +932,13 @@
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.0001
 	taste_message = "wholeness"
-	restrict_species = list(IPC, DIONA)
 	data = list()
 
 /datum/reagent/nanocalcium/on_general_digest(mob/living/carbon/human/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!ishuman(M))
 		return
 
@@ -816,19 +962,24 @@
 					E.perma_injury = 0
 					holder.remove_reagent("nanocalcium", 10)
 
+/datum/reagent/nanocalcium/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/metatrombine
 	name = "Metatrombine"
 	id = "metatrombine"
 	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
 	reagent_state = LIQUID
 	color = "#990000"
-	restrict_species = list(IPC, DIONA)
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE / 6
 	data = list()
 
 /datum/reagent/metatrombine/on_general_digest(mob/living/carbon/human/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!ishuman(M))
 		return
 	if((volume <= overdose) && !data["ticks"])
@@ -853,3 +1004,6 @@
 		if(200 to INFINITY)
 			if(IO.robotic != 2)
 				IO.heart_stop()
+
+/datum/reagent/metatrombine/on_diona_digest(mob/living/M)
+	return FALSE

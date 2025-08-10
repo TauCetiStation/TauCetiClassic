@@ -2,6 +2,13 @@
 	. = ..()
 	living_list += src
 
+	mob_brute_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_burn_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_oxy_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_tox_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_clone_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+	mob_brain_mod.ModMultiplicative(mob_general_damage_mod, "general damage mod")
+
 	default_transform = transform
 	default_pixel_x = pixel_x
 	default_pixel_y = pixel_y
@@ -14,14 +21,20 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
-	beauty = new /datum/modval(0.0)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
-
-	beauty.AddModifier("stat", additive=beauty_living)
-
 	if(spawner_args)
 		spawner_args.Insert(1, /datum/component/logout_spawner)
 		AddComponent(arglist(spawner_args))
+
+/mob/living/proc/metabolism_debug()
+	var/print = "<hr>Debug metabolism data:<br><br>"
+	print += "<b>Nutrition</b>: [nutrition] ([PERCENT(nutrition/NUTRITION_LEVEL_FAT)]%)<br>"
+	print += "<b>Satiation</b>: [get_satiation()] (predicted nutrition)<br>"
+	print += "<b>Overeatduration</b>: [overeatduration] ([PERCENT(overeatduration/OVEREATDURATION_FAT)]%)<br>"
+	print += "<br><br>Metabolism speed:<br><br>"
+	print += mob_metabolism_mod.DebugPrint()
+	print += "<br><hr>"
+
+	to_chat(usr, print)
 
 /mob/living/Destroy()
 	allowed_combos = null
@@ -29,6 +42,18 @@
 	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
+	QDEL_LAZYLIST(implants)
+
+	qdel(mob_metabolism_mod)
+
+	qdel(mob_brute_mod)
+	qdel(mob_burn_mod)
+	qdel(mob_oxy_mod)
+	qdel(mob_tox_mod)
+	qdel(mob_clone_mod)
+	qdel(mob_brain_mod)
+
+	qdel(mob_general_damage_mod)
 
 	if(length(status_effects))
 		for(var/s in status_effects)
@@ -232,13 +257,9 @@
 		death()
 
 /mob/living/proc/updatehealth()
-	if(status_flags & GODMODE)
-		health = 100
-		stat = CONSCIOUS
-	else
-		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
-		med_hud_set_health()
-		med_hud_set_status()
+	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+	med_hud_set_health()
+	med_hud_set_status()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -251,7 +272,7 @@
 /mob/living/proc/burn_skin(burn_amount)
 	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if(IsShockproof()) //shockproof
+		if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
 			return 0
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
@@ -302,92 +323,97 @@
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0) // apply mod only for damage
+		amount *= mob_brute_mod.Get()
 	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
+	return amount
+
+/mob/living/proc/resetBruteLoss()
+	bruteloss = 0
 
 // ========== OXY ==========
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_BREATHE))
 		return
+	if(amount > 0)
+		amount *= mob_oxy_mod.Get()
 	oxyloss = clamp(oxyloss + amount, 0, maxHealth * 2)
+	return amount
 
-/mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	oxyloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetOxyLoss()
+	oxyloss = 0
 
 // ========== TOX ==========
 /mob/living/proc/getToxLoss()
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_BLOOD))
+		amount *= mob_tox_mod.Get()
 	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
+	return amount
 
-/mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	toxloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetToxLoss()
+	toxloss = 0
 
 // ========== FIRE ==========
 /mob/living/proc/getFireLoss()
+	if(!mob_burn_mod.Get())
+		fireloss = 0
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_burn_mod.Get()
 	fireloss = clamp(fireloss + amount, 0, maxHealth * 2)
+	return amount
+
+/mob/living/proc/resetFireLoss()
+	fireloss = 0
 
 // ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_clone_mod.Get()
 	cloneloss = clamp(cloneloss + amount, 0, maxHealth * 2)
+	return amount
 
-/mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	cloneloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetCloneLoss()
+	cloneloss = 0
 
 // ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return
+	if(amount > 0)
+		amount *= mob_brain_mod.Get()
 	brainloss = clamp(brainloss + amount, 0, maxHealth * 2)
+	return amount
 
-/mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	brainloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetBrainLoss()
+	brainloss = 0
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
 	return halloss
 
 /mob/living/proc/adjustHalLoss(amount)
-	if(status_flags & GODMODE)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
 	halloss = clamp(halloss + amount, 0, maxHealth * 2)
+	return amount
 
-/mob/living/proc/setHalLoss(amount)
-	if(status_flags & GODMODE)
-		return
-	if(amount - halloss > 0)
-		add_combo_value_all(amount - halloss)
-	halloss = clamp(amount, 0, maxHealth * 2)
+/mob/living/proc/resetHalLoss()
+	halloss = 0
 
 // ========== BLUR ==========
 
@@ -499,23 +525,19 @@
 
 // damage ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute, burn)
-	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	updatehealth()
 
 // heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
-	adjustBruteLoss(-brute)
-	adjustFireLoss(-burn)
-	updatehealth()
+	if(adjustBruteLoss(-brute) || adjustFireLoss(-burn))
+		updatehealth()
 
 // damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
-	if(status_flags & GODMODE)	return 0	//godmode
-	adjustBruteLoss(brute)
-	adjustFireLoss(burn)
-	updatehealth()
+	if(adjustBruteLoss(brute) || adjustFireLoss(burn))
+		updatehealth()
 
 /mob/living/proc/restore_all_bodyparts()
 	return
@@ -543,14 +565,12 @@
 	if(reagents)
 		reagents.clear_reagents()
 
-	beauty.AddModifier("stat", additive=beauty_living)
-
 	// shut down various types of badness
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
-	setBrainLoss(0)
-	setHalLoss(0)
+	resetToxLoss()
+	resetOxyLoss()
+	resetCloneLoss()
+	resetBrainLoss()
+	resetHalLoss()
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
@@ -603,8 +623,8 @@
 	stat = CONSCIOUS
 
 	// make the icons look correct
-	if(HUSK in mutations)
-		mutations.Remove(HUSK)
+	REMOVE_TRAIT(src, TRAIT_HUSK, GENERIC_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_BURNT, GENERIC_TRAIT)
 
 	regenerate_icons()
 
@@ -616,7 +636,7 @@
 	if(istype(BP))
 		BP.disfigured = FALSE
 
-	for (var/obj/item/organ/external/head/H in organ_head_list) // damn son, where'd you get this?
+	for (var/obj/item/organ/external/head/H in lost_heads_list) // damn son, where'd you get this?
 		if(H.brainmob)
 			if(H.brainmob.real_name == real_name)
 				if(H.brainmob.mind)
@@ -752,7 +772,7 @@
 	if(!lying || buckled || grabbed_by.len || !mob_has_gravity())
 		return FALSE
 	if(prob(getBruteLoss() / 2))
-		makeTrail(new_loc, old_loc, old_dir)
+		make_trail(new_loc, old_loc, old_dir)
 	if(pull_damage() && prob(25))
 		adjustBruteLoss(2)
 		visible_message("<span class='warning'>[src]'s wounds worsen terribly from being dragged!</span>")
@@ -763,17 +783,13 @@
 	if(..())
 		blood_remove(1)
 
-/mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
+/mob/living/proc/make_trail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
 		return
 
-	var/trail_type = getTrail()
+	var/trail_type = get_trail_state()
 	if(!trail_type)
 		return
-
-	var/blood_exists = 0
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in old_loc) //checks for blood splatter already on the floor
-		blood_exists = 1
 
 	var/newdir = turn(dir, 180)
 	if(newdir != old_dir)
@@ -785,44 +801,9 @@
 	if((newdir in global.cardinal) && (prob(50)))
 		newdir = turn(newdir, 180)
 
-	var/datum/dirt_cover/new_cover
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.species)
-			new_cover = new(H.species.blood_datum)
-	if(!new_cover)
-		new_cover = new/datum/dirt_cover/red_blood
-	if(!blood_exists)
-		var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(old_loc)
-		BL.basedatum = new_cover
-		BL.update_icon()
-	else
-		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
-			TH.basedatum.add_dirt(new_cover)
-			TH.update_icon()
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
-		if(!TH.amount)
-			STOP_PROCESSING(SSobj, TH)
-			TH.name = initial(TH.name)
-			TH.desc = initial(TH.desc)
-			TH.amount = initial(TH.amount)
-			TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
-			START_PROCESSING(SSobj, TH)
-		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-			TH.existing_dirs += newdir
-			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-		if(dna)
-			TH.blood_DNA[dna.unique_enzymes] = dna.b_type
-
-/mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
-	return null
-
-/mob/living/carbon/getTrail()
-	return "trails_1"
-
-/mob/living/carbon/human/getTrail()
-	if(blood_amount() > 0)
-		return ..()
+	// recreating new cleanable every time is not really smart but fuck it, blood decals can handle merge and updates
+	// and we don't need separate logic here like before
+	new /obj/effect/decal/cleanable/blood/trail_holder(old_loc, src, trail_type, newdir)
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -859,7 +840,7 @@
 		to_chat(H, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>")
 		to_chat(B.host, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
 
-		spawn(rand(350,450)+B.host.brainloss)
+		spawn(rand(350,450)+B.host.getBrainLoss())
 
 			if(!B || !B.controlling)
 				return
@@ -1061,6 +1042,9 @@
 			if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
 				to_chat(C, "<span class='danger'>I'm in so much pain! I can not get up!</span>")
 				return
+		if(!has_bodypart(BP_L_LEG) && !has_bodypart(BP_L_LEG))
+			to_chat(src, "<span class='danger'>WAIT, where are the legs?</span>")
+			return
 		crawl_getup = TRUE
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
@@ -1311,9 +1295,6 @@
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
 
-/mob/living/proc/get_metabolism_factor()
-	return METABOLISM_FACTOR
-
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
 
@@ -1370,7 +1351,6 @@
 				T.add_blood_floor(src)
 			else
 				T.add_vomit_floor(src, getToxLoss() > 0 ? VOMIT_TOXIC : vomit_type)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 	return TRUE
 
 /mob/living/get_targetzone()
@@ -1420,18 +1400,10 @@
 	return
 
 /mob/living/death(gibbed)
-	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
 	if(wabbajacked)
 		unwabbajack()
 	return ..()
-
-/mob/living/proc/update_beauty(datum/source, old_value)
-	if(old_value != 0.0)
-		RemoveElement(/datum/element/beauty, old_value)
-	if(beauty.Get() == 0.0)
-		return
-	AddElement(/datum/element/beauty, beauty.Get())
 
 //Throwing stuff
 /mob/living/proc/toggle_throw_mode()
@@ -1568,3 +1540,12 @@
 /mob/living/reset_view(atom/A, force_remote_viewing)
 	..()
 	src.force_remote_viewing = force_remote_viewing
+
+/mob/living/proc/get_blood_datum()
+	return /datum/dirt_cover/red_blood
+
+/mob/living/proc/get_flesh_color()
+	return "#ffffff"
+
+/mob/living/proc/get_trail_state()
+	return null

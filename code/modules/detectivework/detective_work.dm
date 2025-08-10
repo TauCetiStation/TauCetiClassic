@@ -27,13 +27,13 @@
 		if(prob(10*item_multiplier) && !(fibertext in suit_fibers))
 			//world.log << "Added fibertext: [fibertext]"
 			suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & 32))
+		if(!(M.wear_suit.body_parts_covered & UPPER_TORSO))
 			if(M.w_uniform)
 				fibertext = "Fibers from \a [M.w_uniform]."
 				if(prob(12*item_multiplier) && !(fibertext in suit_fibers)) //Wearing a suit means less of the uniform exposed.
 					//world.log << "Added fibertext: [fibertext]"
 					suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & 64))
+		if(!(M.wear_suit.body_parts_covered & ARMS))
 			if(M.gloves)
 				fibertext = "Material from a pair of [M.gloves.name]."
 				if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
@@ -110,6 +110,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			if(!authorization(user))
 				return ..()
 		ui_interact(user)
+		playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(istype(I, /obj/item/weapon/evidencebag))
 		if(!authenticated)
 			if(!authorization(user))
@@ -118,6 +119,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 		evidencebag_drop(E)
 		//prevent remove interactions that were not intended
 		attack_hand(user)
+		playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	else
 		return ..()
 
@@ -180,12 +182,14 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			if(scanning)
 				scanning.forceMove(loc)
 				scanning = null
+				playsound(src, 'sound/machines/material_eject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			else
 				temp = "Eject Failed: No Object"
 		if("insert")
 			var/mob/M = usr
 			var/obj/item/I = M.get_active_hand()
 			if(I && istype(I))
+				playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				if(istype(I, /obj/item/weapon/evidencebag))
 					evidencebag_drop(I)
 				else
@@ -403,6 +407,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			else if(scanning)
 				scan_process = 3
 				scan_data = "Scanning [scanning]: 25% complete"
+				playsound(src, 'sound/machines/bzzi.ogg', VOL_EFFECTS_MASTER, vary = FALSE,  frequency = 1)
 				updateDialog()
 				sleep(50)
 				if(!scan_process)
@@ -410,6 +415,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					updateDialog()
 					return
 				scan_data = "Scanning [scanning]: 50% complete"
+				playsound(src, 'sound/machines/bzzi.ogg', VOL_EFFECTS_MASTER, vary = FALSE,  frequency = 1.2)
 				updateDialog()
 				scan_process = 2
 				sleep(50)
@@ -418,6 +424,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					updateDialog()
 					return
 				scan_data = "Scanning [scanning]: 75% complete"
+				playsound(src, 'sound/machines/bzzi.ogg', VOL_EFFECTS_MASTER, vary = FALSE,  frequency = 1.4)
 				updateDialog()
 				scan_process = 1
 				sleep(50)
@@ -426,6 +433,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 					updateDialog()
 					return
 				if(scanning)
+					playsound(src, 'sound/machines/complete.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 					scan_process = 0
 					scan_name = scanning.name
 					scan_data = "<u>[scanning]</u><br><br>"

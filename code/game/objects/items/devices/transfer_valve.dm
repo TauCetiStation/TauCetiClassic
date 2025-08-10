@@ -9,13 +9,13 @@
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
 	var/mob/attacher = null
-	var/valve_open = 0
-	var/toggle = 1
+	var/valve_open = FALSE
+	var/toggle = TRUE
 
 /obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
-	return 1
+	return TRUE
 
 /obj/item/device/transfer_valve/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank))
@@ -33,7 +33,6 @@
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
 		update_icon()
-		nanomanager.update_uis(src) // update all UIs attached to src
 
 //TODO: Have this take an assemblyholder
 	else if(isassembly(I))
@@ -54,7 +53,6 @@
 		message_admins("[key_name_admin(user)] attached a [A] to a transfer valve. [ADMIN_JMP(user)]")
 		log_game("[key_name(user)] attached a [A] to a transfer valve.")
 		attacher = user
-		nanomanager.update_uis(src) // update all UIs attached to src
 
 	else
 		return ..()
@@ -67,65 +65,90 @@
 /obj/item/device/transfer_valve/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/device/transfer_valve/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/item/device/transfer_valve/ui_interact(mob/user)
+	tgui_interact(user)
 
-	// this is the data which will be sent to the ui
-	var/data[0]
-	data["attachmentOne"] = tank_one ? tank_one.name : null
-	data["attachmentTwo"] = tank_two ? tank_two.name : null
-	data["valveAttachment"] = attached_device ? attached_device.name : null
-	data["valveOpen"] = valve_open ? 1 : 0
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "transfer_valve.tmpl", "Tank Transfer Valve", 460, 280)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
+/obj/item/device/transfer_valve/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TransferValve", name)
 		ui.open()
-		// auto update every Master Controller tick
-		//ui.set_auto_update(1)
 
-/obj/item/device/transfer_valve/Topic(href, href_list)
-	..()
-	if ( usr.incapacitated() )
-		return 0
-	if (src.loc != usr)
-		return 0
-	if(tank_one && href_list["tankone"])
-		split_gases()
-		valve_open = 0
-		tank_one.loc = get_turf(src)
-		tank_one = null
-		update_icon()
-	else if(tank_two && href_list["tanktwo"])
-		split_gases()
-		valve_open = 0
-		tank_two.loc = get_turf(src)
-		tank_two = null
-		update_icon()
-	else if(href_list["open"])
-		toggle_valve()
-	else if(attached_device)
-		if(href_list["rem_device"])
-			attached_device.loc = get_turf(src)
-			attached_device:holder = null
-			attached_device = null
+/obj/item/device/transfer_valve/tgui_data(mob/user)
+	// this is the data which will be sent to the ui
+	var/list/data = list(
+	"attachmentOne" = tank_one ? tank_one.name : null,
+	"attachmentTwo" = tank_two ? tank_two.name : null,
+	"valveAttachment" = attached_device ? attached_device.name : null,
+	"valveOpen" =  valve_open
+	)
+	return data
+
+/obj/item/device/transfer_valve/tgui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user = ui.user
+	if(isnull(user))
+		return
+
+	switch(action)
+		if("rightTank")
+			if(isnull(tank_one))
+				var/obj/item/weapon/tank/I = user.get_active_hand()
+				if(istype(I))
+					if(user.drop_from_inventory(I, src))
+						tank_one = I
+						to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
+				else
+					to_chat(user, "<span class='warning'>You need a gas tank in you active hand to attach it to assembly.</span>")
+			else
+				split_gases()
+				valve_open = FALSE
+				tank_one.forceMove(get_turf(src))
+				tank_one = null
 			update_icon()
-		if(href_list["device"])
-			attached_device.attack_self(usr)
-	add_fingerprint(usr)
-	return 1 // Returning 1 sends an update to attached UIs
+		if("leftTank")
+			if(isnull(tank_two))
+				var/obj/item/weapon/tank/I = user.get_active_hand()
+				if(istype(I))
+					if(user.drop_from_inventory(I, src))
+						tank_two = I
+						to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
+				else
+					to_chat(user, "<span class='warning'>You need a gas tank in you active hand to attach it to assembly.</span>")
+			else
+				split_gases()
+				valve_open = FALSE
+				tank_two.forceMove(get_turf(src))
+				tank_two = null
+			update_icon()
+		if("open")
+			toggle_valve()
+		if("device")
+			if(isnull(attached_device))
+				var/obj/item/device/I = user.get_active_hand()
+				if(istype(I))
+					attackby(I, user)
+			else
+				var/obj/item/device/assembly/A = attached_device
+				attached_device = null
+				A.forceMove(get_turf(src))
+				A.holder = null
+			update_icon()
+		if("viewDevice")
+			if(isnull(attached_device))
+				return
+			attached_device.attack_self(user)
+	add_fingerprint(user)
 
 /obj/item/device/transfer_valve/process_activation(obj/item/device/D)
 	if(toggle)
-		toggle = 0
+		toggle = FALSE
 		toggle_valve()
 		spawn(50) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
-			toggle = 1
+			toggle = TRUE
 
 /obj/item/device/transfer_valve/update_icon()
 	cut_overlays()
@@ -166,8 +189,8 @@
 	*/
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
-	if(valve_open==0 && (tank_one && tank_two))
-		valve_open = 1
+	if(!valve_open && (tank_one && tank_two))
+		valve_open = TRUE
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
@@ -199,9 +222,9 @@
 				sleep(10)
 			update_icon()
 
-	else if(valve_open==1 && (tank_one && tank_two))
+	else if(valve_open && (tank_one && tank_two))
 		split_gases()
-		valve_open = 0
+		valve_open = FALSE
 		update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here

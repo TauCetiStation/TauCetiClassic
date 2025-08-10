@@ -25,7 +25,6 @@
 		C.antibodies |= self.data["antibodies"]
 
 /datum/reagent/blood/on_diona_digest(mob/living/M)
-	..() // Should be put in these procs, in case a xeno of sorts has a reaction to ALL reagents.
 	M.adjustCloneLoss(-REM)
 	return FALSE // Returning false would mean that generic digestion proc won't be used.
 
@@ -94,7 +93,10 @@
 	taste_message = "plastic"
 
 /datum/reagent/plasticide/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	// Toxins are really weak, but without being treated, last very long.
 	M.adjustToxLoss(0.2)
 
@@ -132,7 +134,10 @@
 			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
 
 /datum/reagent/thermite/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustFireLoss(1)
 
 /datum/reagent/virus_food
@@ -144,11 +149,13 @@
 	color = "#899613" // rgb: 137, 150, 19
 
 /datum/reagent/virus_food/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.nutrition += nutriment_factor * REM
 
 /datum/reagent/virus_vood/on_skrell_digest(mob/living/M)
-	..()
 	M.adjustToxLoss(2 * REM)
 	return FALSE
 
@@ -172,7 +179,10 @@
 	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
 
 /datum/reagent/fuel/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustToxLoss(1)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
@@ -191,7 +201,10 @@
 	taste_message = "floor cleaner"
 
 /datum/reagent/space_cleaner/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	M.adjustToxLoss(0.2)
 
 	if(prob(10))
@@ -229,7 +242,7 @@
 			var/mob/living/carbon/human/H = M
 			if(H.lip_style)
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE) // should update only lips in the future
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)
@@ -283,7 +296,6 @@
 	reagent_state = LIQUID
 	color = "#181818" // rgb: 24, 24, 24
 	custom_metabolism = 0.005
-	restrict_species = list(IPC, DIONA)
 	var/alert_time = 0
 
 /datum/reagent/nicotine/on_mob_life(mob/living/M)
@@ -314,6 +326,9 @@
 		holder.remove_reagent("nicotine", 0.065)
 	return TRUE
 
+/datum/reagent/nicotine/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/ammonia
 	name = "Ammonia"
 	id = "ammonia"
@@ -343,7 +358,6 @@
 	color = "#604030" // rgb: 96, 64, 48
 
 /datum/reagent/diethylamine/on_diona_digest(mob/living/M)
-	..()
 	M.nutrition += 2 * REM
 	return FALSE
 
@@ -353,7 +367,7 @@
 		if(!H.species.flags[HAS_HAIR])
 			return
 		var/list/species_hair = list()
-		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+		if(!(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)
 				var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
 				if(i == "Bald")
@@ -372,7 +386,7 @@
 					species_facial_hair += i
 			if(species_facial_hair.len)
 				H.f_style = pick(species_facial_hair)
-		H.update_hair()
+		H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Chemlights ///////////////////////////////////////////////
@@ -398,7 +412,10 @@
 	taste_message = "bitterness"
 
 /datum/reagent/luminophore/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.invoke_vomit_async()
@@ -435,12 +452,14 @@
 	var/spawning_horror = 0
 	var/percent_machine = 0
 	taste_message = "nanomachines, son"
-	restrict_species = list(IPC, DIONA)
 
 	data = list()
 
 /datum/reagent/mednanobots/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	if(ishuman(M))
@@ -567,6 +586,9 @@
 	else
 		holder.del_reagent(id)
 
+/datum/reagent/mednanobots/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/paint
 	name = "Paint"
 	id = "paint_"
@@ -667,7 +689,7 @@
 				hair_changes_occured = TRUE
 				body_changes_occured = TRUE
 		else if(H.species && (H.species.name in list(HUMAN, UNATHI, TAJARAN)))
-			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+			if(!(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				if(!H.hair_painted)
 					H.dyed_r_hair = clamp(round(H.r_hair * volume_coefficient + r_tweak), 0, 255)
 					H.dyed_g_hair = clamp(round(H.g_hair * volume_coefficient + g_tweak), 0, 255)
@@ -694,10 +716,10 @@
 			H.lip_color = color
 			hair_changes_occured = TRUE
 			body_changes_occured = TRUE
-		if(hair_changes_occured)
-			H.update_hair()
 		if(body_changes_occured)
-			H.update_body()
+			H.update_body(update_preferences = TRUE)
+		else if (hair_changes_occured)
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/paint/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
@@ -720,7 +742,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/changes_occured = FALSE
-			if(H.hair_painted && !(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
+			if(H.hair_painted && !(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				H.dyed_r_hair = H.r_hair
 				H.dyed_g_hair = H.g_hair
 				H.dyed_b_hair = H.b_hair
@@ -733,7 +755,7 @@
 				H.facial_painted = FALSE
 				changes_occured = TRUE
 			if(changes_occured)
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/paint_remover/reaction_turf(turf/T, volume)
 	. = ..()
@@ -816,7 +838,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name in data["allowed_races"])
-			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+			if(!(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS))))
 				var/list/species_hair = list()
 				if(H.species)
 					for(var/i in hair_styles_list)
@@ -845,7 +867,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 				if(species_facial_hair.len)
 					H.f_style = pick(species_facial_hair)
-			H.update_hair()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/reagent/ectoplasm
 	name = "Ectoplasm"
@@ -860,7 +882,10 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	needed_aspects = list(ASPECT_MYSTIC = 1)
 
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!data["ticks"])
 		data["ticks"] = 1
 	M.hallucination += 1
@@ -915,22 +940,25 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 
-/datum/reagent/aqueous_foam/on_slime_digest(mob/living/M)
+/datum/reagent/aqueous_foam/on_general_digest(mob/living/M)
 	..()
-	M.adjustToxLoss(REM)
-	return FALSE
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
+		M.adjustToxLoss(REM)
 
 /datum/reagent/consumable/drink/liquidelectricity
 	name = "Liquid Electricity"
 	description = "The blood of some aliens, and the stuff that keeps them going. It works like an energy drink."
 	id = "liquidelectricity"
-	nutriment_factor = 5
+	nutriment_factor = 1.25
 	taste_strength = 5
 	color = "#97ee63"
 	taste_message = "pure electricity"
 
 /datum/reagent/consumable/drink/liquidelectricity/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	var/shock_power = rand(5, 10)
 	if(prob(shock_power * 10))
 		M.electrocute_act(shock_power)

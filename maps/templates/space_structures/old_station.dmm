@@ -341,7 +341,6 @@
 "bQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 30
 	},
@@ -417,7 +416,7 @@
 	},
 /area/space_structures/carp_space)
 "cy" = (
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/huge,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3521,7 +3520,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 32
 	},
@@ -4287,12 +4285,10 @@
 /area/space_structures/old_station/central/bridge)
 "zD" = (
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 34
 	},
@@ -5400,12 +5396,10 @@
 	pixel_y = 23
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 30
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 37
 	},
@@ -7095,7 +7089,6 @@
 "PD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = -32
 	},
@@ -7370,7 +7363,6 @@
 	pixel_y = 28
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 36
 	},

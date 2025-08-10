@@ -22,48 +22,6 @@
 /mob/living/silicon/isSynthetic()
 	return TRUE
 
-/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isloyal()
-	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/ismindprotect()
-	for(var/obj/item/weapon/implant/mind_protect/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedobedience()
-	for(var/obj/item/weapon/implant/obedience/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedblueshield()
-	for(var/obj/item/weapon/implant/blueshield/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedchem()
-	for(var/obj/item/weapon/implant/chem/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedtrack()
-	for(var/obj/item/weapon/implant/tracking/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
@@ -213,7 +171,7 @@
 			if(10)
 				new_letter += "'"
 			if(11 to 15)
-				SWITCH_PASS
+				EMPTY_BLOCK_GUARD
 
 		new_text += new_letter
 

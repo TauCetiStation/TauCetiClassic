@@ -65,12 +65,12 @@
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/weapon/gun/proc/process_chamber()
-	return 0
+	return FALSE
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
@@ -179,7 +179,7 @@
 				var/going_to_explode = 0
 				if(H.ClumsyProbabilityCheck(50))
 					going_to_explode = 1
-				if(chambered && chambered.crit_fail && prob(10))
+				if(chambered && chambered.crit_fail && !user.mood_prob(90))
 					going_to_explode = 1
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)

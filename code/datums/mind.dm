@@ -158,12 +158,12 @@
 	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
-			if(H.ismindshielded())
+			if(ismindshielded(H))
 				text += "Mind Shield Implant:<a href='byond://?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Mind Shield Implant:<b>No Implant</b>|<a href='byond://?src=\ref[src];implant=m_add'>Implant him!</a></br>"
 
-			if(H.isloyal())
+			if(isloyal(H))
 				text += "Loyalty Implant:<a href='byond://?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Loyalty Implant:<b>No Implant</b>|<a href='byond://?src=\ref[src];implant=add'>Implant him!</a></br>"
@@ -244,7 +244,7 @@
 		return
 
 	if (href_list["job_edit"])
-		var/new_job = input("Select new job", "Assigned job", assigned_role) as null|anything in get_all_jobs()
+		var/new_job = input("Select new job", "Assigned job", assigned_role) as null|anything in SSjob.name_occupations
 		if (!new_job)
 			return
 		assigned_role = new_job
@@ -475,35 +475,18 @@
 			href_list["implant"] = copytext(href_list["implant"], 3)
 		if(href_list["implant"] == "remove")
 			if(is_mind_shield)
-				for(var/obj/item/weapon/implant/mind_protect/mindshield/I in H.contents)
-					if(I.implanted)
-						qdel(I)
+				for(var/obj/item/weapon/implant/mind_protect/mindshield/I in H.implants)
+					qdel(I)
 			else
-				for(var/obj/item/weapon/implant/mind_protect/loyalty/I in H.contents)
-					if(I.implanted)
-						qdel(I)
+				for(var/obj/item/weapon/implant/mind_protect/loyalty/I in H.implants)
+					qdel(I)
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
-			var/obj/item/weapon/implant/mind_protect/mindshield/L
 			if(is_mind_shield)
-				L = new(H)
-				L.inject(H)
+				new /obj/item/weapon/implant/mind_protect/mindshield(H)
 			else
-				L = new /obj/item/weapon/implant/mind_protect/loyalty(H)
-				L.inject(H)
-
-			H.sec_hud_set_implants()
-			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
-			 and it just activated!</B></FONT></span>")
-			for(var/type in list(TRAITOR, CULTIST, HEADREV, REV))
-				if(is_mind_shield && (type == HEADREV || type == TRAITOR))
-					continue
-				var/datum/role/R = GetRole(type)
-				if(R)
-					R.Deconvert()
-
-			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
+				new /obj/item/weapon/implant/mind_protect/loyalty(H)
 
 	else if (href_list["common"])
 		switch(href_list["common"])

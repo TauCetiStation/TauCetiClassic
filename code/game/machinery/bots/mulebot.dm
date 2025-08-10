@@ -462,8 +462,6 @@
 		var/speed = (wires.motor1() ? 1 : 0) + (wires.motor2() ? 2 : 0)
 		//world << "speed: [speed]"
 		switch(speed)
-			if(0)
-				// do nothing
 			if(1)
 				process_bot()
 				spawn(2)
@@ -686,7 +684,7 @@
 	H.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
 	H.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 
-	if(H.species.flags[NO_BLOOD])
+	if(HAS_TRAIT(H, TRAIT_NO_BLOOD))
 		return
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)

@@ -271,7 +271,7 @@
 
 //Checks for various conditions to see if the mob is revivable
 /obj/item/weapon/shockpaddles/proc/can_defib(mob/living/carbon/human/H) //This is checked before doing the defib operation
-	if(H.species.flags[NO_SCAN] || H.isSynthetic() || (NOCLONE in H.mutations))
+	if(HAS_TRAIT(H, TRAIT_INCOMPATIBLE_DNA) || H.isSynthetic() || (NOCLONE in H.mutations))
 		return "buzzes, \"Unrecogized physiology. Operation aborted.\""
 
 	if(!check_contact(H))
@@ -401,7 +401,6 @@
 			IO.heart_normalize()
 			H.reanimate_body(H)
 			H.stat = UNCONSCIOUS
-			H.beauty.AddModifier("stat", additive=H.beauty_living)
 			INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, return_to_body_dialog))
 		else
 			IO.heart_normalize()

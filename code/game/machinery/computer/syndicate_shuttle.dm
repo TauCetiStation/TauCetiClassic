@@ -116,7 +116,7 @@
 	updateUsrDialog()
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle
-	name = "Syndicate Shuttle (Computer Board)"
+	details = "Syndicate Shuttle (Computer Board)"
 	cases = list("шаттл Синдиката (Компьютерная плата)", "шаттла Синдиката (Компьютерная плата)", "шаттлу Синдиката (Компьютерная плата)", "шаттл Синдиката (Компьютерная плата)", "шаттлом Синдиката (Компьютерная плата)", "шаттле Синдиката (Компьютерная плата)")
 	build_path = /obj/machinery/computer/syndicate_station
 

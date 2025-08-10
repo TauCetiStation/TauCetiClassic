@@ -46,7 +46,7 @@
 	var/present
 
 	// Checks for jobbans and increase chance of bad gift
-	for(var/datum/job/job in SSjob.occupations)
+	for(var/datum/job/job in SSjob.all_occupations)
 		if(jobban_isbanned(user, job.title))
 			bad_chance += 5
 
@@ -64,7 +64,7 @@
 				H.visible_message("[user] begins balding.", \
 										 "<span class='notice'>You become bald from shame.</span>")
 				H.h_style = "Bald"
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 		qdel(src)
 		return
 

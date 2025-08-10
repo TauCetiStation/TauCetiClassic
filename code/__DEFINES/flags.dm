@@ -13,8 +13,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //FLAGS BITMASK
 #define NOBLUDGEON             (1<<1)   // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 
-#define BLOCKHEADHAIR          (1<<2)   // Clothing. Temporarily removes the user's hair overlay. Leaves facial hair.
-
 #define MASKINTERNALS          (1<<3)   // Mask allows internals.
 
 #define NOBLOODY               (1<<4)   // Used to items if they don't want to get a blood overlay. Doesn't work properly with shoes.
@@ -44,10 +42,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DROPDEL                (1<<13)  // When dropped, it calls qdel on itself
 
 #define NODROP                 (1<<14)  // User can't drop this item
-
-#define BLOCKHAIR              (1<<15)  // Clothing. Temporarily removes the user's hair, facial and otherwise.
-
-#define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
 
 #define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
 
@@ -82,39 +76,28 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)
 
 //Species flags.
-#define NO_BLOOD           "no_blood"
-#define NO_BREATHE         "no_breathe"
-#define NO_SCAN            "no_scan"
-#define NO_PAIN            "no_pain"
-#define NO_EMBED           "no_embed"
-#define NO_FAT             "no_fatness"
-#define HAS_SKIN_TONE      "has_skin_tone"
-#define HAS_SKIN_COLOR     "has_skin_color"
+#define HAS_SKIN_TONE      "has_skin_tone" // species use presets colors from /datum/skin_tone (humans only atm)
+#define HAS_SKIN_COLOR     "has_skin_color" // species can colorpick any color
 #define HAS_HAIR_COLOR     "has_hair_color"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
-#define HAS_TAIL           "has_tail"
 #define IS_SOCIAL          "is_social"
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
 #define REQUIRE_LIGHT      "require_light"
 #define IS_SYNTHETIC       "is_synthetic"
-#define RAD_IMMUNE         "rad_immune"
-#define VIRUS_IMMUNE       "virus_immune"
-#define NO_VOMIT           "no_vomit"
 #define HAS_HAIR           "has_hair"
-#define NO_FINGERPRINT     "no_fingerprint"
-#define NO_MINORCUTS	   "no_minorcuts"
-#define NO_BLOOD_TRAILS    "no_blood_trails"
+#define HAS_MUSCLES        "has_muscles"
 #define FACEHUGGABLE       "facehuggable"
-#define NO_EMOTION         "no_emotion"
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"
 #define NO_SLIP            "no_slip"
 #define NO_MED_HEALTH_SCAN "no_med_health_scan"
 #define NO_WILLPOWER       "no_willpower"
+// please do not add new species flags except for species-specific things like underwear or colors, use race_traits
+// most of current flags should be moved to traits too or replaced with species checks
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -186,19 +169,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ESSENCE_POINT 128
 #define ESSENCE_EMOTE 256
 #define ESSENCE_ALL 511
-
-// Jobs flags
-#define JOB_FLAG_SECURITY 1
-#define JOB_FLAG_COMMAND 2
-#define JOB_FLAG_ENGINEERING 4
-#define JOB_FLAG_MEDBAY 8
-#define JOB_FLAG_CIVIL 16
-#define JOB_FLAG_CARGO 32
-#define JOB_FLAG_SCIENCE 64
-#define JOB_FLAG_NON_HUMAN 128
-#define JOB_FLAG_HEAD_OF_STAFF 256
-#define JOB_FLAG_BLUESHIELD_PROTEC 512
-#define JOB_FLAG_CENTCOMREPRESENTATIVE 1024
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise

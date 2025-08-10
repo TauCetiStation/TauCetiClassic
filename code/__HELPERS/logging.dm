@@ -143,6 +143,9 @@
 /proc/log_sql(text)
 	world.log << "\[[time_stamp()]]SQL: [text][log_end]"
 	if(config.log_sql_error)
+		var/static/regex/sql_log_blacklist = regex("erro_password|erro_auth_token", "i")
+		if(sql_log_blacklist.Find(text))
+			text = "|Scrambled because blacklist worlds|"
 		global.sql_error_log << "\[[time_stamp()]]SQL: [text][log_end]"
 
 /proc/log_unit_test(text)
@@ -152,6 +155,10 @@
 /proc/log_runtime(text)
 	if (config && config.log_runtime)
 		global.runtime_log << "\[[time_stamp()]] [text][log_end]"
+
+/proc/log_icon_lookup(text)
+	if (config && config.log_icon_lookup)
+		global.icon_lookup_log << "\[[time_stamp()]] [text][log_end]"
 
 /proc/log_initialization(text)
 	var/static/preconfig_init_log = ""
@@ -208,7 +215,8 @@
 		var/list/L = list()
 		for(var/e in D)
 			// Indexing on numbers just gives us the same number again in the best case and causes an index out of bounds runtime in the worst
-			var/v = isnum(e) ? null : D[e]
+			var/list/list = D
+			var/v = isnum(e) ? null : list[e]
 			L += "[log_info_line(e)][v ? " - [log_info_line(v)]" : ""]"
 		return "\[[jointext(L, ", ")]\]" // We format the string ourselves, rather than use json_encode(), because it becomes difficult to read recursively escaped "
 	if(!istype(D))

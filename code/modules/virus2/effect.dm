@@ -24,7 +24,7 @@
 				return
 			if(!check_conditions(host, disease, src))
 				return
-			if(ismob(host))
+			if(isliving(host))
 				effect.activate_mob(host, src, disease)
 			if(istype(host, /obj/machinery/hydroponics))
 				effect.activate_plant(host, src, disease)
@@ -327,15 +327,17 @@
 	COOLDOWN_DECLARE(metabolicboost_message)
 
 /datum/disease2/effect/metabolism/activate_mob(mob/living/carbon/human/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(M.reagents)
-		M.reagents.metabolize(M) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	M.overeatduration = max(M.overeatduration - 2, 0)
-	var/lost_nutrition = 2
-	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
+	// i have no idea what is happening in diseases, this code is so old
+	M.mob_metabolism_mod.ModAdditive(1, src) // +100%
 	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
 		return
 	to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
+
+/datum/disease2/effect/metabolism/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(isliving(A))
+		var/mob/living/L = A
+		L.mob_metabolism_mod.RemoveMods(src)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustSpeedmultiplier(holder.stage)
@@ -1022,17 +1024,17 @@
 				to_chat(H, "<span class='warning'>Your chin itches.</span>")
 				if(H.f_style == "Shaved" && prob(30))
 					H.f_style = "Jensen Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(2)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard") && !(H.f_style == "Full Beard"))
 					to_chat(H, "<span class='warning'>You feel tough.</span>")
 					H.f_style = "Full Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(3)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard"))
 					to_chat(H, "<span class='warning'>You feel manly!</span>")
 					H.f_style = pick("Dwarf Beard", "Very Long Beard")
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/hallucinations
 	name = "Hallucinational Syndrome"
@@ -1456,7 +1458,7 @@
 			H.h_style = "Balding Hair"
 		else if(H.species.name == TAJARAN)
 			H.h_style = "Tajaran Ears"
-	H.update_hair()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/monitoring
 	name = "Monitoring"
@@ -1598,7 +1600,7 @@
 /datum/disease2/effect/headache/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.species && !H.species.flags[NO_PAIN])
+		if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 			if(prob(20) || holder.stage	== 1)
 				to_chat(H, "<span class = 'notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
 			else if(prob(20) || (holder.stage >= 2 && holder.stage <= 5))

@@ -32,7 +32,7 @@
 
 /obj/structure/window/thin/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 
 	return ..()
 
@@ -44,7 +44,7 @@
 	else
 		return TRUE
 
-/obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	if(!density)
 		return TRUE
 	if(dir == to_dir)

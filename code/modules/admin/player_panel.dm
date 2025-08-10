@@ -180,6 +180,7 @@
 				}
 
 			</script>
+			[get_browse_zoom_style(usr.client)]
 		</head>
 
 
@@ -319,7 +320,7 @@
 	</body></html>
 	"}
 
-	usr << browse(dat, "window=players;size=600x480")
+	usr << browse(dat, "window=players;[get_browse_size_parameter(usr.client, 600, 480)]")
 
 //The old one
 /datum/admins/proc/player_panel_old()

@@ -11,7 +11,6 @@
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
-	var/random_tail_holder = "" // overrides species.tail
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -26,9 +25,6 @@
 	throw_range = 2
 
 	moveset_type = /datum/combat_moveset/human
-
-	beauty_living = 0
-	beauty_dead = -1500
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
@@ -49,9 +45,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor.Set(species.metabolism_mod)
-		metabolism_factor.AddModifier("NeedHeart", multiple=-1)
-		butcher_results = species.butcher_drops.Copy()
+		butcher_results = species.butcher_drops.Copy() // todo move to species on_gain/on_loose
 
 	dna.species = species.name
 	dna.b_type = random_blood_type()
@@ -71,7 +65,6 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
-	regenerate_icons()
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
@@ -137,16 +130,15 @@
 	. = ..(mapload, GOLEM)
 
 /mob/living/carbon/human/shadowling/atom_init(mapload)
+	underwear = 0
+	undershirt = 0
 	. = ..(mapload, SHADOWLING)
 	var/newNameId = pick(possibleShadowlingNames)
 	possibleShadowlingNames.Remove(newNameId)
 	real_name = newNameId
 	name = real_name
 
-	underwear = 0
-	undershirt = 0
 	faction = "faithless"
-	regenerate_icons()
 
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
@@ -159,11 +151,10 @@
 
 	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
 
-/mob/living/carbon/human/slime/atom_init(mapload)
-	. = ..(mapload, SLIME)
-
 /mob/living/carbon/human/skeleton/atom_init(mapload)
-	. = ..(mapload, SKELETON)
+	. = ..(mapload, pick(HUMAN, UNATHI, TAJARAN, SKRELL))
+
+	ADD_TRAIT(src, ELEMENT_TRAIT_SKELETON, ADMIN_TRAIT)
 
 /mob/living/carbon/human/serpentid/atom_init(mapload)
 	. = ..(mapload, SERPENTID)
@@ -218,10 +209,10 @@
 				stat("Unique Identity:", "[dna.unique_enzymes]")
 				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
 				stat("Nutrition Status:", "[nutrition]")
-				stat("Oxygen Loss:", "[getOxyLoss()]")
-				stat("Toxin Levels:", "[getToxLoss()]")
-				stat("Burn Severity:", "[getFireLoss()]")
-				stat("Brute Trauma:", "[getBruteLoss()]")
+				stat("Oxygen Loss:", "[ceil(getOxyLoss())]")
+				stat("Toxin Levels:", "[ceil(getToxLoss())]")
+				stat("Burn Severity:", "[ceil(getFireLoss())]")
+				stat("Brute Trauma:", "[ceil(getBruteLoss())]")
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
@@ -363,6 +354,16 @@
 				return BP
 	return FALSE // In case we didn't find anything.
 
+/mob/living/carbon/human/proc/make_pumped()
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump || BP.parent && (BP.parent.is_stump))
+			continue
+
+		if(!BP.max_pumped)
+			continue
+
+		BP.adjust_pumped(BP.max_pumped)
+
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
 	if(regenerating_bodypart) // start fixing broken/destroyed limb
 		if(remove_blood_amount)
@@ -375,20 +376,20 @@
 		regenerating_organ_time++
 		switch(regenerating_organ_time)
 			if(1)
-				visible_message("<span class='notice'>You see odd movement in [src]'s [regenerating_bodypart.name]...</span>","<span class='notice'> You [species && species.flags[NO_PAIN] ? "notice" : "feel"] strange vibration on tips of your [regenerating_bodypart.name]... </span>")
+				visible_message("<span class='notice'>You see odd movement in [src]'s [regenerating_bodypart.name]...</span>","<span class='notice'> You [HAS_TRAIT(src, TRAIT_NO_PAIN) ? "notice" : "feel"] strange vibration on tips of your [regenerating_bodypart.name]... </span>")
 			if(10)
 				visible_message("<span class='notice'>You hear sickening crunch In [src]'s [regenerating_bodypart.name]...</span>")
 			if(20)
 				visible_message("<span class='notice'>[src]'s [regenerating_bodypart.name] shortly bends...</span>")
 			if(30)
 				if(regenerating_capacity_penalty == regenerating_bodypart.regen_bodypart_penalty/2)
-					visible_message("<span class='notice'>[src] stirs his [regenerating_bodypart.name]...</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] freedom in moving your [regenerating_bodypart.name]</span>")
+					visible_message("<span class='notice'>[src] stirs his [regenerating_bodypart.name]...</span>","<span class='userdanger'>You [HAS_TRAIT(src, TRAIT_NO_PAIN) ? "notice" : "feel"] freedom in moving your [regenerating_bodypart.name]</span>")
 				else
 					visible_message("<span class='notice'>From [src]'s [parse_zone(regenerating_bodypart.body_zone)] grows a small meaty sprout...</span>")
 			if(50)
 				visible_message("<span class='notice'>You see something resembling [parse_zone(regenerating_bodypart.body_zone)] at [src]'s [regenerating_bodypart.parent.name]...</span>")
 			if(65)
-				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
+				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [HAS_TRAIT(src, TRAIT_NO_PAIN) ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
 		if(prob(50))
 			emote("scream")
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
@@ -396,8 +397,8 @@
 			regenerating_organ_time = 0
 			if(use_cost)
 				nutrition -= regenerating_capacity_penalty
+			update_body(regenerating_bodypart.body_zone)
 			regenerating_bodypart = null
-			update_body()
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
 	if ((check_type & ARMS) && handcuffed)
@@ -596,16 +597,24 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	if(!bodyparts_by_name[BP_HEAD])
+	if(!real_name || is_disfigured())
 		return "Unknown"
+
+	return real_name
+
+/mob/living/carbon/human/proc/is_disfigured()
+	if(!bodyparts_by_name[BP_HEAD])
+		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_BURNT))
+		return TRUE
 
 	if(istype(bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-		if( !BP || BP.disfigured || (BP.is_stump) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
-			return "Unknown"
-		return real_name
+		if(!BP || BP.disfigured || BP.is_stump)
+			return TRUE
 
-	return "Unknown"
+	return FALSE
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
@@ -629,10 +638,8 @@
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
-	if(status_flags & GODMODE)
-		return 0	//godmode
-	if(IsShockproof())
-		return 0 //#Z2 no shock with that mutation.
+	if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
+		return 0
 
 	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")
@@ -659,9 +666,9 @@
 	if(.)
 		if(species && species.flags[IS_SYNTHETIC])
 			nutrition += . // Electrocute act returns it's shock_damage value.
-		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
+		if(HAS_TRAIT(src, TRAIT_NO_PAIN)) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
 			. = 0
-		electrocution_animation(40)
+		electrocution_animation(4 SECONDS)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["skill"])
@@ -970,7 +977,7 @@
 
 /mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
-	if(species.flags[NO_VOMIT])
+	if(HAS_TRAIT(src, TRAIT_NO_VOMIT))
 		return FALSE
 
 	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
@@ -1002,7 +1009,7 @@
 		visible_message("<span class='warning'>[src] put \his fingers into \his own mouth.</span>", "<span class='notice'>You put your fingers into your own mouth.</span>")
 		shoving_fingers = TRUE
 
-	if(H.species.flags[NO_VOMIT])
+	if(HAS_TRAIT(src, TRAIT_NO_VOMIT))
 		shoving_fingers = FALSE
 		return
 
@@ -1037,7 +1044,7 @@
 /mob/living/carbon/human/proc/invoke_vomit_async()
 	set waitfor = FALSE
 
-	if(species.flags[NO_VOMIT])
+	if(HAS_TRAIT(src, TRAIT_NO_VOMIT))
 		return // Machines, golems, shadowlings, skeletons, dionaea and abductors don't throw up.
 
 	if(!lastpuke)
@@ -1081,12 +1088,9 @@
 		g_eyes = HEX_VAL_GREEN(new_eyes)
 		b_eyes = HEX_VAL_BLUE(new_eyes)
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
-
-	if (!new_tone)
-		new_tone = 35
-	s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	s_tone =  -s_tone + 35
+	var/new_tone = input("Выберите цвет кожи", "Character Preference") in global.skin_tones_by_ru_name
+	var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+	s_tone = T.name
 
 	// hair
 	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
@@ -1124,7 +1128,7 @@
 			gender = MALE
 		else
 			gender = FEMALE
-	regenerate_icons()
+	regenerate_icons(update_body_preferences = TRUE)
 	check_dna()
 
 	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
@@ -1323,7 +1327,7 @@
 
 	var/list/visible_implants = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		for(var/obj/item/weapon/O in BP.implants)
+		for(var/obj/item/weapon/O in BP.embedded_objects)
 			if(!istype(O,/obj/item/weapon/implant) && O.w_class > class)
 				visible_implants[O] = BP
 
@@ -1334,7 +1338,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.status & ORGAN_SPLINTED) //Splints prevent movement.
 			continue
-		for(var/obj/item/weapon/O in BP.implants)
+		for(var/obj/item/weapon/O in BP.embedded_objects)
 			if(!istype(O,/obj/item/weapon/implant) && prob(5)) //Moving with things stuck in you could be bad.
 				// All kinds of embedded objects cause bleeding.
 				var/msg = null
@@ -1418,23 +1422,9 @@
 
 	maxHealth = species.total_health
 
-	if(species.flags[NO_PAIN])
-		traumatic_shock = 0
-
-	if(species.base_color && default_colour)
-		//Apply colour.
-		r_skin = HEX_VAL_RED(species.base_color)
-		g_skin = HEX_VAL_GREEN(species.base_color)
-		b_skin = HEX_VAL_BLUE(species.base_color)
-	else
-		r_skin = 0
-		g_skin = 0
-		b_skin = 0
-
 	if(force_organs || !bodyparts.len)
-		species.create_organs(src, TRUE)
-	else
-		apply_recolor()
+		species.create_organs(src, deleteOld = TRUE)
+	full_prosthetic = null
 
 	if(species.language)
 		add_language(species.language, LANGUAGE_NATIVE)
@@ -1451,8 +1441,7 @@
 		if(SSquirks.quirk_blacklist_species[Q.name] && (species.name in SSquirks.quirk_blacklist_species[Q.name]))
 			qdel(Q)
 
-	regenerate_icons()
-	full_prosthetic = null
+	regenerate_icons(update_body_preferences = TRUE)
 
 	if(species)
 		return TRUE
@@ -1460,6 +1449,8 @@
 		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
+// todo: why we need to support two set species procedures just because of abductors, 
+// merge it with the one above and add args to toggle behavior
 /mob/living/carbon/human/proc/set_species_soft(new_species)
 	if(species.name == new_species)
 		return
@@ -1471,7 +1462,7 @@
 
 	species.on_gain(src)
 
-	regenerate_icons()
+	regenerate_icons(update_body_preferences = TRUE)
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"
@@ -1777,43 +1768,37 @@
 /mob/living/carbon/human/is_nude(maximum_coverage = 0, pos_slots = list(src.head, src.shoes, src.neck, src.mouth, src.wear_suit, src.w_uniform, src.belt, src.gloves, src.glasses)) // Expands our pos_slots arg.
 	return ..()
 
-//Turns a mob black, flashes a skeleton overlay
-//Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
-	//TG...
-	//Handle mutant parts if possible
-	//if(species)
-	//	species.handle_mutant_bodyparts(src,"black")
-	//	species.handle_hair(src,"black")
-	//	species.update_color(src,"black")
-	//	add_overlay("electrocuted_base")
-	//	spawn(anim_duration)
-	//		if(src)
-	//			if(dna && dna.species)
-	//				dna.species.handle_mutant_bodyparts(src)
-	//				dna.species.handle_hair(src)
-	//				dna.species.update_color(src)
-	//			cut_overlay("electrocuted_base")
-	//else //or just do a generic animation
-	var/list/viewing = list()
-	for(var/mob/M in viewers(src))
-		if(M.client)
-			viewing += M.client
-	var/electrocuted_sprite = "electrocuted_generic"
-	switch(get_species())
-		if(UNATHI)
-			electrocuted_sprite += "_unathi"
-		if(TAJARAN)
-			electrocuted_sprite += "_tajaran"
-		if(SKRELL)
-			electrocuted_sprite += "_skrell"
-		if(VOX)
-			electrocuted_sprite += "_vox"
-	var/image/I = image(icon, src, electrocuted_sprite, MOB_ELECTROCUTION_LAYER)
-	I = update_height(I)
-	flick_overlay(I, viewing, anim_duration)
+	new /obj/effect/electrocute(null, src, anim_duration)
+
+/mob/living/carbon/human/proc/get_skeleton_appearance()
+	var/mutable_appearance/MA = new()
+	MA.appearance_flags = KEEP_TOGETHER
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
+			continue
+		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
+		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
+	MA = update_height(MA)
+	return MA
+
+/mob/living/carbon/human/proc/get_nude_appearance()
+	var/mutable_appearance/MA = new()
+	MA.appearance_flags = KEEP_TOGETHER
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.is_stump)
+			continue
+		// or we can use BP.generate_appearances() right away, but it will generate hairs too
+		var/mutable_appearance/nude_appearance = mutable_appearance(BP.icon, BP.get_icon_state())
+		nude_appearance.color = BP.get_skin_color()
+		MA.add_overlay(nude_appearance)
+	MA = update_height(MA)
+	return MA
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
+
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SKELETON))
+		return FALSE
 
 	var/obj/item/organ/external/BP
 	if(organ_check in list(O_HEART, O_LUNGS))
@@ -1836,16 +1821,17 @@
 	else
 		return 1
 
+// does not skip because of mob_oxy_mod as mod is only for damage
 /mob/living/carbon/human/is_skip_breathe()
 	if(..())
 		return TRUE
-	if(NO_BREATH in src.mutations)
+	if(HAS_TRAIT(src, TRAIT_NO_BREATHE))
+		return TRUE
+	if(!should_have_organ(O_LUNGS))
 		return TRUE
 	if(reagents.has_reagent("lexorin"))
 		return TRUE
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return TRUE
-	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
 		return TRUE
 	if(ismob(loc))
 		return TRUE
@@ -1905,7 +1891,7 @@
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
 
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
-	if(species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD)) // this checks for ipc/dionea/etc., but probably we should check for can_breathe and lungs
 		return
 
 	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
@@ -2024,22 +2010,13 @@
 	tod = null
 	timeofdeath = 0
 	dead_mob_list -= src
+
+	if(deadtime > DEFIB_TIME_LOSS)
+		// damage for every second above DEFIB_TIME_LOSS till DEFIB_TIME_LIMIT
+		// 60 is often used as threshold for brainloss to trigger funny interactions
+		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS))) 
+
 	med_hud_set_health()
-	apply_brain_damage(deadtime)
-
-/mob/living/carbon/human/proc/apply_brain_damage(deadtime)
-	if(deadtime < DEFIB_TIME_LOSS)
-		return
-
-	if(!should_have_organ(O_BRAIN))
-		return //no brain
-
-	var/obj/item/organ/internal/brain/brain = organs_by_name[O_BRAIN]
-	if(!brain)
-		return //no brain
-
-	var/brain_damage = clamp((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, getBrainLoss(), MAX_BRAIN_DAMAGE)
-	setBrainLoss(brain_damage)
 
 /mob/living/carbon/human/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
 	. = TRUE
@@ -2314,4 +2291,29 @@
 	var/datum/species/S = all_species[species.name]
 	age = rand(S.min_age, S.max_age)
 
-	regenerate_icons()
+	regenerate_icons(update_body_preferences = TRUE) 
+
+/mob/living/carbon/human/get_blood_datum()
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
+		return /datum/dirt_cover/blue_blood
+	
+	if(species.blood_datum_path)
+		return species.blood_datum_path
+
+	return /datum/dirt_cover/red_blood
+
+/mob/living/carbon/human/get_flesh_color()
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
+		return "#05fffb"
+
+	if(species.flesh_color)
+		return species.flesh_color
+
+	return "#ffffff"
+
+/mob/living/carbon/get_trail_state()
+	return "trails_1"
+
+/mob/living/carbon/human/get_trail_state()
+	if(blood_amount() > 0)
+		return ..()

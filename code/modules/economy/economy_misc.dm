@@ -109,12 +109,15 @@ var/global/initial_station_money = 7500
 	create_station_account()
 	create_centcomm_account()
 
-	for(var/department in station_departments)
-		create_department_account(department)
+	for(var/datum/department/D as anything in SSjob.departments)
+		if(D.station_account)
+			create_department_account(D.title)
 
 	create_department_account("Vendor")
 	vendor_account = department_accounts["Vendor"]
 
+	// todo: cargo department exists only in accounts, wold be better to separate them already
+	create_department_account("Cargo")
 	cargo_account = department_accounts["Cargo"]
 	SSeconomy.set_dividend_rate("Cargo", 0.1)
 	// Enough stock to supply 2 cargos of employees with it. TO-DO: calculate it programatically depending on map changes to jobs?

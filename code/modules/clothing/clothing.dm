@@ -86,7 +86,7 @@
 			species_restricted = list(target_species)
 
 	if(target_species == VOX)
-		flags &= ~BLOCKHAIR
+		render_flags &= ~HIDE_ALL_HAIR
 
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
@@ -427,7 +427,8 @@ BLIND     // can't see anything
 	name = "space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | PHORONGUARD
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | PHORONGUARD
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_pressure = STOPS_PRESSUREDMAGE
 	item_state = "space"
 	permeability_coefficient = 0.01
@@ -452,7 +453,7 @@ BLIND     // can't see anything
 	throw_range = 2
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = PHORONGUARD | BLOCKUNIFORM
+	flags = PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -460,7 +461,8 @@ BLIND     // can't see anything
 	slowdown = 1.5
 	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	render_flags = parent_type::render_flags | HIDE_TAIL | HIDE_UNIFORM
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
@@ -568,51 +570,51 @@ BLIND     // can't see anything
 		if(A.flags & (HEAR_TALK | HEAR_PASS_SAY | HEAR_TA_SAY))
 			A.hear_talk(M, text, verb, speaking)
 
-/obj/item/clothing/under/proc/set_sensors(mob/usr)
-	var/mob/M = usr
+/obj/item/clothing/under/proc/set_sensors(mob/user)
+	var/mob/M = user
 	if (istype(M, /mob/dead)) return
-	if (usr.incapacitated())
+	if (user.incapacitated())
 		return
 	if(has_sensor >= 2)
-		to_chat(usr, "The controls are locked.")
+		to_chat(user, "The controls are locked.")
 		return 0
 	if(has_sensor <= 0)
-		to_chat(usr, "This suit does not have any sensors.")
+		to_chat(user, "This suit does not have any sensors.")
 		return 0
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
-	if(get_dist(usr, src) > 1)
-		to_chat(usr, "You have moved too far away.")
+	if(get_dist(user, src) > 1)
+		to_chat(user, "You have moved too far away.")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if (loc == user)
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
-				to_chat(usr, "You disable your suit's remote sensing equipment.")
+				to_chat(user, "You disable your suit's remote sensing equipment.")
 			if(SUIT_SENSOR_BINARY)
-				to_chat(usr, "Your suit will now report whether you are live or dead.")
+				to_chat(user, "Your suit will now report whether you are live or dead.")
 			if(SUIT_SENSOR_VITAL)
-				to_chat(usr, "Your suit will now report your vital lifesigns.")
+				to_chat(user, "Your suit will now report your vital lifesigns.")
 			if(SUIT_SENSOR_TRACKING)
-				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
+				to_chat(user, "Your suit will now report your vital lifesigns as well as your coordinate position.")
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.update_suit_sensors()
 
-	else if (istype(src.loc, /mob))
+	else if (istype(loc, /mob))
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
-				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)
+				M.visible_message("<span class='warning'>[user] disables [loc]'s remote sensing equipment.</span>", viewing_distance = 1)
 			if(SUIT_SENSOR_BINARY)
-				M.visible_message("[usr] turns [src.loc]'s remote sensors to binary.", viewing_distance = 1)
+				M.visible_message("[user] turns [loc]'s remote sensors to binary.", viewing_distance = 1)
 			if(SUIT_SENSOR_VITAL)
-				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
+				M.visible_message("[user] sets [loc]'s sensors to track vitals.", viewing_distance = 1)
 			if(SUIT_SENSOR_TRACKING)
-				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/C = src.loc
+				M.visible_message("[user] sets [loc]'s sensors to maximum.", viewing_distance = 1)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
 			C.update_suit_sensors()
 
 /obj/item/clothing/under/verb/toggle()

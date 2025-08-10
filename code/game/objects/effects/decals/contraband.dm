@@ -653,12 +653,12 @@
 		if("Join Revolution")
 			ask_about_revolution(user)
 
-/obj/structure/sign/poster/revolution/proc/ask_about_revolution(mob/user)
+/obj/structure/sign/poster/revolution/proc/ask_about_revolution(mob/living/user)
 	var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
 	if(!rev)
 		to_chat(user, "<span class='bold warning'>The revolutionary minded society has collapsed.</span>")
 		return
-	if(user.ismindprotect())
+	if(ismindprotect(user))
 		to_chat(user, "<span class='bold warning'>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</span>")
 		return
 	else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))

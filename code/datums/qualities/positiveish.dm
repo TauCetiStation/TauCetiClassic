@@ -309,8 +309,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/implant/death_alarm/DA = new(H)
-	DA.stealth_inject(H)
+	new /obj/item/weapon/implant/death_alarm(H)
 
 
 /datum/quality/positiveish/anatomist

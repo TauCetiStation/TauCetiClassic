@@ -11,12 +11,6 @@
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
-// Define for coders.
-// If you want switch conditions to be fully specified in the switch body
-// and at the same time the empty condition do nothing.
-#define SWITCH_PASS ;
-
-
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
 #define ENGINE_EJECT_Z		3 //Unused now
@@ -197,7 +191,8 @@
 #define WORLD_ICON_SIZE 32
 #define PIXEL_MULTIPLIER WORLD_ICON_SIZE/32
 
-// (Bay12 = -2), but we don't have that projectile code, so...
+// bullet_act() return values
+#define PROJECTILE_WEAKENED -2
 #define PROJECTILE_FORCE_MISS -1
 #define PROJECTILE_ACTED 0
 #define PROJECTILE_ABSORBED 2

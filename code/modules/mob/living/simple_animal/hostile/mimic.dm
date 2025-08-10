@@ -50,7 +50,8 @@
 //
 // Crate Mimic
 //
-
+/mob/living/simple_animal/hostile/mimic/crate/proc/create_crate()
+	return new /obj/structure/closet/crate(get_turf(src))
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
@@ -107,13 +108,13 @@
 	icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/mimic/crate/death()
+	var/obj/structure/closet/crate/C = create_crate()
 
-	var/obj/structure/closet/crate/C = new(get_turf(src))
-	// Put loot in crate
 	for(var/obj/O in src)
 		O.loc = C
 
 	visible_message("<span class='warning'><b>[src]</b> stops moving!</span>")
+
 	qdel(src)
 	..()
 
@@ -353,3 +354,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/prophunt/med_hud_set_status()
 	return
+
+/mob/living/simple_animal/hostile/mimic/crate/loot
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "treasure"
+	icon_living = "treasure"
+
+/mob/living/simple_animal/hostile/mimic/crate/loot/create_crate()
+	return new /obj/structure/closet/crate/loot(get_turf(src))

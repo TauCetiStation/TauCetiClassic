@@ -2,7 +2,7 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_SMALL
-	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
+	var/mutable_appearance/blood_overlay = null // current blood splatter overlay
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
@@ -35,7 +35,9 @@
 	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc. Do not mistake it with render_flags, while flags_inv affects other items accessibility, render_flags affects render. Helmet can have transparent visor so we still need to render face.
+	var/render_flags = 0
+
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -509,7 +511,7 @@
 			if(SLOT_BELT)
 				if(H.belt)
 					return 0
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
@@ -557,7 +559,7 @@
 			if(SLOT_WEAR_ID)
 				if(H.wear_id)
 					return 0
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
@@ -620,7 +622,7 @@
 						return 1
 				return 0
 			if(SLOT_TIE)
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE
@@ -908,8 +910,9 @@
 		return
 	if(blood_overlay && blood_overlay.color == dirt_overlay.color)
 		return
-	generate_blood_overlay()
 	cut_overlay(blood_overlay)
+	blood_overlay = mutable_appearance('icons/effects/blood.dmi', "itemblood") // maybe need to move it to upper layer
+	blood_overlay.blend_mode = BLEND_INSET_OVERLAY
 	blood_overlay.color = dirt_overlay.color
 	add_overlay(blood_overlay)
 	update_inv_mob()
@@ -923,22 +926,6 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	update_inv_mob() // if item on mob, update mob's icon too.
 	return 1 //we applied blood to the item
-
-/obj/item/proc/generate_blood_overlay()
-	var/static/list/items_blood_overlay_by_type = list()
-
-	if(blood_overlay)
-		return
-
-	if(items_blood_overlay_by_type[type])
-		blood_overlay = items_blood_overlay_by_type[type]
-		return
-
-	var/image/blood = image(icon = 'icons/effects/blood.dmi', icon_state = "itemblood") // Needs to be a new one each time since we're slicing it up with filters.
-	blood.filters += filter(type = "alpha", icon = icon(icon, icon_state)) // Same, this filter is unique for each blood overlay per type
-	items_blood_overlay_by_type[type] = blood
-
-	blood_overlay = blood
 
 /obj/item/proc/showoff(mob/user)
 	user.visible_message("[user] holds up [src]. <a href=byond://?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")

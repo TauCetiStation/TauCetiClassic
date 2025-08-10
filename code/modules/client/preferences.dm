@@ -66,6 +66,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
+	var/window_scale = TRUE
 
 	//sound volume preferences
 	var/snd_music_vol = 100
@@ -106,16 +107,16 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/r_facial = 0					//Face hair color
 	var/g_facial = 0					//Face hair color
 	var/b_facial = 0					//Face hair color
-	var/s_tone = 0						//Skin tone
-	var/r_skin = 0						//Skin color
-	var/g_skin = 0						//Skin color
-	var/b_skin = 0						//Skin color
+	var/s_tone = HUMAN_DEFAULT_SKIN_TONE //Skin tone
+	var/r_skin = 255					//Skin color
+	var/g_skin = 255					//Skin color
+	var/b_skin = 255					//Skin color
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
-	var/r_belly = 0
-	var/g_belly = 0
-	var/b_belly = 0
+	var/r_belly = 255
+	var/g_belly = 255
+	var/b_belly = 255
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
 	var/insurance = INSURANCE_NONE
@@ -227,7 +228,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		return
 	muted = MUTE_NONE
 	while(query.NextRow())
-		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
 		muted |= mute_ban_bitfield[query.item[1]]
 
 /datum/preferences/proc/ShowChoices(mob/user)
@@ -236,6 +236,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
 	dat += "<meta http-equiv='X-UA-Compatible' content='IE=edge'>"
+	dat += get_browse_zoom_style(user.client)
 	dat += "</head>"
 	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
@@ -243,27 +244,31 @@ var/global/list/datum/preferences/preferences_datums = list()
 	dat += "<style type='text/css'>a.white:hover{background: #dddddd}</style>"
 	dat += "<style type='text/css'>a.disabled{background:#999999!important;text-decoration: none;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style type='text/css'>a.fluid{display:block;margin-left:0;margin-right:0;text-align:center;}</style>"
-	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;background-attachment: fixed;}</style>"
+	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;background-attachment: fixed;background-size:cover}</style>"
 	dat += "<style>.main_menu{margin-left:150px;margin-top:135px;}</style>"
 
+	dat += "<div class='main_menu'>"
+
 	if(path)
-		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
 		dat += "[menu_type=="load_slot"?"<b>Load slot</b>":"<a href=\"byond://?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
 		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a><br>"
-		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
-		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
-		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
-		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
-		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
-		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
-		dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
-		dat += "</div>"
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
 	else
-		dat += "Please create an account to save your preferences."
+		dat += "<span color='#FF4444'>Please create an account if you want to save your preferences.</span>"
+
+	dat += "<br>"
+
+	dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
+	dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
+	dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
+	dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
+	dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
+	dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
+	dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
+	dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
+	dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
+	dat += "</div>"
 
 	dat += "</center><hr width='535'>"
 	switch(menu_type)
@@ -289,6 +294,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 	winshow(user, "preferences_window", TRUE)
 	user << browse(dat, "window=preferences_browser")
+	winset(user, "preferences_window", get_browse_size_parameter(user.client, 810, 770))
+	winset(user, "character_preview_map", get_browse_size_parameter(user.client, 195, 770))
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
@@ -377,7 +384,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -406,8 +413,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height
-
-	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
@@ -507,9 +512,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		else
 			continue
 
-	// Apply skin color
-	character.apply_recolor()
-
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
@@ -535,9 +537,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.backbag = backbag
 	character.use_skirt = use_skirt
 
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
+	character.regenerate_icons(update_body_preferences = TRUE)
 
 //for the 'occupation' and 'roles' panels
 /datum/preferences/proc/open_jobban_info(mob/user, rank)

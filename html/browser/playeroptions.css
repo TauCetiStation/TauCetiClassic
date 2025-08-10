@@ -1,22 +1,25 @@
-.jobs
-{
-	width: 400px;
-	margin: 0 auto;
+.jobsTable {
+	column-count: 3;
 }
 
-.jobsColumn
-{
-	float: left;
-	width: 200px;
-	text-align: center;
+.jobsColumn {
+	break-inside: avoid;
 }
 
-.commandPosition
-{
+.jobPosition {
+	display: block !important;
+}
+
+.jobPosition--command {
 	font-weight: bold;
 }
 
-.otherPosition
-{
-	
+.jobPosition--wanted::before {
+	content: "🡅";
+	color: green;
+}
+
+.jobPosition--unwanted::before {
+	content: "🡇";
+	color: red;
 }
