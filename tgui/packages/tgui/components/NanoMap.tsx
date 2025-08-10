@@ -90,13 +90,13 @@ type NanoMapZoomerProps = {
   zLevel: number;
   onZLevel: (number: number) => void;
   availableZLevels: number[];
-  levelNames: string[];
+  nanomapPayload: NanoMapStaticPayload;
 };
 
 export const NanoMapZoomer = (props: NanoMapZoomerProps, context: any) => {
   const buildDropdown = (): InfernoNode => {
     const levelName = (zLevel: number): string =>
-      props.levelNames[zLevel] ?? `UNKNOWN ${props.zLevel}`;
+      props.nanomapPayload[zLevel]?.name ?? `UNKNOWN ${props.zLevel}`;
 
     const map: string[] = props.availableZLevels.reduce(
       (map: string[], zLevel: number) => {
@@ -180,12 +180,12 @@ export type NanoMapTrackData = {
   stopTracking: () => void;
 };
 
-export type NanoMapStaticPayload = {
-  stationMapName: string;
-  mineMapName?: string;
-  mineZLevels: number[];
-  levelNames: string[];
+type NanoMapLevelData = {
+  name: string;
+  mapTexture?: string;
 };
+
+export type NanoMapStaticPayload = NanoMapLevelData[];
 
 type Props = {
   nanomapPayload: NanoMapStaticPayload;
@@ -399,14 +399,12 @@ export class NanoMap extends Component<Props, State> {
     pauseEvent(e);
   };
 
-  getMapImageName = () => {
-    if (
-      this.props.nanomapPayload.mineMapName &&
-      this.props.nanomapPayload.mineZLevels.includes(this.state.zLevel)
-    ) {
-      return `nanomap_${this.props.nanomapPayload.mineMapName}_1.png`;
+  getMapAsset = (): string | undefined => {
+    const mapName = this.props.nanomapPayload[this.state.zLevel]?.mapTexture;
+    if (mapName) {
+      const mapImageName = `nanomap_${mapName}_1.png`;
+      return resolveAsset(mapImageName);
     }
-    return `nanomap_${this.props.nanomapPayload.stationMapName}_1.png`;
   };
 
   render() {
@@ -415,10 +413,13 @@ export class NanoMap extends Component<Props, State> {
 
     const exponentialZoom = transformZoom(zoom);
 
-    const mapUrl = resolveAsset(this.getMapImageName());
     const pixelsPerTurf = this.props.pixelsPerTurf;
-    const mapSize = MAP_SIZE * this.props.pixelsPerTurf + 'px';
-    const mapStyle = {
+    const mapSize = MAP_SIZE * pixelsPerTurf + 'px';
+
+    const xPos = (centerX - MAP_SIZE / 2) * pixelsPerTurf;
+    const yPos = (centerY - MAP_SIZE / 2) * pixelsPerTurf;
+
+    let mapStyle = {
       width: mapSize,
       height: mapSize,
       overflow: 'hidden',
@@ -426,24 +427,35 @@ export class NanoMap extends Component<Props, State> {
       'z-index': 0,
       'object-fit': 'cover',
       'image-rendering': 'pixelated',
-      'background-image': 'url(' + mapUrl + ')',
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'text-align': 'center',
-      transform: `translate(${(centerX - MAP_SIZE / 2) * pixelsPerTurf}px,${(centerY - MAP_SIZE / 2) * pixelsPerTurf}px) scale(${exponentialZoom})`,
+      transform: `translate(${xPos}px,${yPos}px) scale(${exponentialZoom})`,
       'transform-origin': 'center',
       transition: `${this.state.dragging ? '0s' : '0.075s'} linear`,
     };
 
+    const mapUrl = this.getMapAsset();
+    if (mapUrl) {
+      mapStyle['background-image'] = `url(${mapUrl})`;
+    }
+
     const backgroundUrl = resolveAsset('nanomapBackground.png');
 
+    const backgroundSize = MAP_SIZE * pixelsPerTurf * exponentialZoom + 'px';
+    const backgroundXPos = centerX * pixelsPerTurf;
+    const backgroundYPos = centerY * pixelsPerTurf;
     const backgroundStyle = {
       overflow: 'hiddden',
       position: 'relative',
       width: '100%',
       height: '100%',
       'background-image': `url(${backgroundUrl})`,
+      'background-position': `left ${backgroundXPos}px top ${backgroundYPos}px`,
+      'image-rendering': 'pixelated',
+      'background-size': backgroundSize,
       cursor: dragging ? 'move' : 'auto',
+      transition: `${this.state.dragging ? '0s' : '0.075s'} linear`,
     };
 
     const zoomer = (
@@ -452,7 +464,7 @@ export class NanoMap extends Component<Props, State> {
         onZoom={this.handleZoom}
         zLevel={this.state.zLevel}
         availableZLevels={this.props.availableZLevels}
-        levelNames={this.props.nanomapPayload.levelNames}
+        nanomapPayload={this.props.nanomapPayload}
         onZLevel={this.handleZLevel}
         onReset={this.handleReset}
         controlsOnTop={this.props.controlsOnTop}

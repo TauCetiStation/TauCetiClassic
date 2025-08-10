@@ -246,9 +246,13 @@ const CrewMonitorDataContent = (
             </Table.Row>
             {crewMembers.map((crewMember: CrewMember) => {
               const { icon, color } = pickCrewIcon(crewMember);
-              const shouldHighlight =
-                crewMember.ref === selectedMemberRef ||
-                crewMember.ref === hoveredMemberRef;
+              let highlightColor: string;
+              if (crewMember.ref === selectedMemberRef) {
+                highlightColor = 'yellow';
+              } else if (crewMember.ref === hoveredMemberRef) {
+                highlightColor = 'white';
+              }
+
               return (
                 <Table.Row
                   key={crewMember.ref}
@@ -259,19 +263,22 @@ const CrewMonitorDataContent = (
                       selectedMemberRef === crewMember.ref ? '' : crewMember.ref
                     )
                   }
-                  backgroundColor={shouldHighlight && 'white'}
-                  verticalAlign="center"
-                  textColor={shouldHighlight && 'black'}>
-                  <Table.Cell verticalAlign="center">
+                  backgroundColor={highlightColor}
+                  textColor={!!highlightColor && 'black'}>
+                  <Table.Cell verticalAlign="middle">
                     <Tooltip
                       content={`${crewMember.name} (${crewMember.assignment})`}>
                       <Box m={0.5}>
-                        {crewMember.name}(
-                        {createAbbreviation(crewMember.assignment)})
+                        <Stack vertical>
+                          <Stack.Item>{crewMember.name}</Stack.Item>
+                          <Stack.Item mt={0} fontSize="10px" textColor="label">
+                            {createAbbreviation(crewMember.assignment)}
+                          </Stack.Item>
+                        </Stack>
                       </Box>
                     </Tooltip>
                   </Table.Cell>
-                  <Table.Cell collapsing verticalAlign="center">
+                  <Table.Cell collapsing verticalAlign="middle">
                     <Box
                       inline
                       m={0.5}
@@ -296,7 +303,7 @@ const CrewMonitorDataContent = (
                       </Tooltip>
                     </Box>
                   </Table.Cell>
-                  <Table.Cell verticalAlign="center">
+                  <Table.Cell verticalAlign="middle">
                     {crewMember.position ? (
                       <Tooltip content={crewMember.position.area}>
                         <Box m={0.5} verticalAlign="center">

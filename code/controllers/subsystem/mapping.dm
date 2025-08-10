@@ -316,18 +316,19 @@ SUBSYSTEM_DEF(mapping)
 	if(cached_nanomap_payload)
 		return cached_nanomap_payload.Copy()
 	var/list/data = list()
-
-	data["stationMapName"] = station_image
-	if(length(mine_image))
-		data["mineMapName"] = mine_image
-	data["mineZLevels"] = levels_by_trait(ZTRAIT_MINING)
 	// TODO: Instead of mineZLevels and minemapname/stationmapname etc pack both name and map texture into a list
-	var/list/level_names = list()
 
 	for(var/datum/space_level/space_level as anything in z_list)
-		level_names["[space_level.z_value]"] = space_level.name // Key is a string cos DM crashes due to index out of bounds for some reason
+		var/list/level_data = list()
+		level_data["name"] = space_level.name
 
-	data["levelNames"] = level_names
+		if(space_level.traits[ZTRAIT_MINING])
+			level_data["mapTexture"] = mine_image
+
+		if(space_level.traits[ZTRAIT_STATION])
+			level_data["mapTexture"] = station_image
+
+		data["[space_level.z_value]"] = level_data // Key is a string cos DM crashes due to index out of bounds for some reason
 	cached_nanomap_payload = data
 
 	return data.Copy()
