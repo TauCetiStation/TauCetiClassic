@@ -69,7 +69,7 @@ const pickCrewIcon = (crewMember: CrewMember): CrewIcon => {
   } else if (totalDamage > 100) {
     icon = 'user-injured';
     color = 'orange';
-  } else if (totalDamage > 50) {
+  } else if (totalDamage > 30) {
     icon = 'user-injured';
     color = 'yellow';
   }
