@@ -1416,22 +1416,26 @@
 	return 1 // return 1 tells it to refresh the UI in NanoUI
 
 /obj/item/device/pda/update_icon()
-	..()
 	cut_overlays()
+	var/list/new_overlays = list()
 
 	world_state = (icon_state == item_state_world)
 	overlay_suffix = world_state ? "_world" : ""
 
 	if(newmessage && icon_state != item_state_world)
-		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
+		new_overlays += "pda-r"
 	if(id)
 		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
-			add_overlay(image('icons/obj/pda.dmi', id_overlay + overlay_suffix))
+			new_overlays +=  id_overlay + overlay_suffix
 	if(pen)
-		add_overlay(image('icons/obj/pda.dmi', "pen_pda" + overlay_suffix))
+		new_overlays += "pen_pda" + overlay_suffix
 	if(cartridge)
-		add_overlay(image('icons/obj/pda.dmi', "cart_pda" + overlay_suffix))
+		new_overlays += "cart_pda" + overlay_suffix
+	if(blood_DNA && blood_DNA.len && blood_overlay)
+		new_overlays += blood_overlay
+
+	add_overlay(new_overlays)
 
 /obj/item/device/pda/dropped(mob/user)
 	. = ..()
