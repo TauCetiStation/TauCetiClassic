@@ -1,6 +1,6 @@
 /obj/machinery/microscope
 	name = "microscope"
-	desc = "A high-tech microscope that can magnify images up to 3,000 times. Used for analyzing forestics samples like swabs, bags with fiber and fingerprint tape."
+	desc = "A high-tech microscope that can magnify images up to 3,000 times. Used for analyzing forensic samples like swabs, bags with fiber and fingerprint tape."
 	icon = 'icons/obj/detective_work.dmi'
 	icon_state = "microscope"
 	anchored = TRUE
@@ -26,6 +26,7 @@
 /obj/machinery/microscope/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/swab)|| istype(O, /obj/item/weapon/forensic_sample/fibers) || istype(O, /obj/item/weapon/forensic_sample/print))
 		if(panel_open)
+			to_chat(user, "<span class='warning'>The panel is open!</span>")
 			return
 		if(sample)
 			to_chat(user, "<span class='warning'>There is already a sample in the microscope!</span>")
@@ -38,24 +39,33 @@
 		update_icon()
 		return
 
-	if(!scanning)
-		if(default_deconstruction_screwdriver(user, "microscope_off", "microscope", O))
-			if(sample)
-				sample.forceMove(get_turf(src))
-				sample = null
-			return
-
 	if(exchange_parts(user, O))
 		return
 
 	default_deconstruction_crowbar(O)
 
+	if(default_deconstruction_screwdriver(user, "microscope_off", "microscope", O))
+		if(sample)
+			sample.forceMove(get_turf(src))
+			sample = null
+		return
+
 	update_icon()
 
 	return ..()
 
+/obj/machinery/microscope/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/I)
+	if(scanning)
+		to_chat(user, "<span class='warning'>The microscope is currently busy scanning!</span>")
+	else
+		..()
+
 /obj/machinery/microscope/attack_hand(mob/living/user)
 	if(panel_open)
+		to_chat(user, "<span class='warning'>The panel is open!</span>")
+		return
+	if(stat & NOPOWER)
+		to_chat(user, "<span class='warning'>There is no power!</span>")
 		return
 	if(!sample)
 		to_chat(user, "<span class='warning'>There is no sample in the microscope!</span>")
@@ -66,12 +76,16 @@
 	add_fingerprint(user)
 	to_chat(user, "<span class='notice'>Microscope buzzes while you start analyzing the [sample].</span>")
 
+	scanning = TRUE
 	if(do_after(user, 2 SECONDS, target = user))
 		if(!sample)
 			to_chat(user, "<span class='warning'>There is no sample!</span>")
 			return
-		scanning = TRUE
-		visible_message("<span class='notice'>microscope starts printing a report.</span>")
+		if(stat & NOPOWER)
+			to_chat(user, "<span class='warning'>There is no power!</span>")
+			return
+		scanning = FALSE
+		visible_message("<span class='notice'>Microscope starts printing a report.</span>")
 		var/obj/item/weapon/paper/report = new(get_turf(src))
 		report_num++
 
@@ -118,8 +132,8 @@
 			sample.forceMove(get_turf(src))
 			sample = null
 			update_icon()
-	scanning = FALSE
-	return
+	else
+		scanning = FALSE
 
 /obj/machinery/microscope/proc/remove_sample(mob/living/remover)
 	if(!istype(remover) || remover.incapacitated() || !Adjacent(remover))
@@ -148,3 +162,8 @@
 		icon_state += "_off"
 	if(sample)
 		icon_state += "_slide"
+
+/obj/machinery/microscope/power_change()
+	..()
+	update_icon()
+	return

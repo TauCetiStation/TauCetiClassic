@@ -217,6 +217,13 @@
 
 	return protection
 
+/mob/living/carbon/human/proc/is_bodypart_covered(body_part)
+	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+	for(var/obj/item/clothing/C in protective_gear)
+		if(C.body_parts_covered & body_part)
+			return TRUE
+	return FALSE
+
 /mob/living/carbon/human/proc/check_head_coverage()
 
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)

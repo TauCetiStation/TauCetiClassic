@@ -950,7 +950,7 @@ to destroy them and players will be able to make replacements.
 	name = "circuit board (Microscope)"
 	build_path = /obj/machinery/microscope
 	board_type = "machine"
-	origin_tech = "programming=2;combat=2"
+	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)

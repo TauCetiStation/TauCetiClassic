@@ -150,7 +150,7 @@
 	item_state = "police_gloves"
 
 /obj/item/clothing/gloves/forensics
-	name = "forensics gloves"
+	name = "forensic gloves"
 	desc = "These high-tech gloves don't leave any material traces on objects they touch. Perfect for leaving crime scenes undisturbed."
 	icon_state = "forensics"
 	item_state_inventory = "forensics"

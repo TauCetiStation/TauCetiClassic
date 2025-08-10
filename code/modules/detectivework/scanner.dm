@@ -117,6 +117,7 @@
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
 	scan(M, user)
+	return
 
 /obj/item/device/detective_scanner/proc/scan(atom/A, mob/user)
 	if(!scanning)
@@ -125,11 +126,12 @@
 
 		user.visible_message("[user] starts scanning [A] with [src].",
 		"<span class='notice'>You start scanning [A]. The scanner is buzzing...</span>")
-
+		scanning = TRUE
 		if(do_after(user, 1 SECONDS, target = user))
-			scanning = TRUE
-
-
+			if(!A || !user.Adjacent(A))
+				to_chat(user, "<span class='warning'>Failed to scan [A].</span>")
+				scanning = FALSE
+				return
 			// GATHER INFORMATION
 
 			//Make our lists
@@ -220,7 +222,8 @@
 
 			add_log("---------------------------------------------------------", FALSE)
 			scanning = FALSE
-		scanning = FALSE
+		else
+			scanning = FALSE
 
 /obj/item/device/detective_scanner/proc/add_log(msg, broadcast = TRUE)
 	if(scanning)

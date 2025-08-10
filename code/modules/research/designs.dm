@@ -1891,7 +1891,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
 	build_path = /obj/item/device/detective_scanner
-	category = list("Support")
+	category = list("Equipment")
 
 /datum/design/scalpel_laser1
 	name = "Basic Laser Scalpel"

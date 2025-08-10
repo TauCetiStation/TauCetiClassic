@@ -185,6 +185,8 @@
 		attack_hand(user)
 
 /obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
+	if(isdetectivetool(W))
+		return TRUE
 	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)

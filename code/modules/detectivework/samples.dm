@@ -27,32 +27,44 @@
 		to_chat(user, "<span class='warning'>[src] is being used.</span>")
 		return
 	if(!ishuman(M))
-		to_chat(user, "<span class='warning'>You cant take a sample from [M] with this [src].</span>")
+		to_chat(user, "<span class='warning'>You can't take a sample from [M] with [src].</span>")
 		return
 
 	var/mob/living/carbon/human/H = M
-	if(user.get_targetzone() != O_MOUTH)
-		to_chat(user, "<span class='warning'>The sample is needed to be taken from their mouth.</span>")
-		return
 	inuse = TRUE
 	to_chat(user, "<span class='notice'>You start taking a sample from [H].</span>")
 	add_fingerprint(user)
+	var/target_zone = user.get_targetzone()
+	if(!target_zone)
+		return
+	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+	if(!BP || BP.is_stump)
+		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
+		inuse = FALSE
+		return
+	if(H.is_bodypart_covered(BP.body_part))
+		to_chat(user, "<span class='warning'>[H] has something covering their [BP.name].</span>")
+		inuse = FALSE
+		return
+	if(H.isSynthetic(target_zone))
+		to_chat(user, "<span class='warning'>[H]'s [target_zone] is synthetic.</span>")
+		inuse = FALSE
+		return
 	if(do_after(user, 2 SECONDS, target = user))
-		if(H.wear_mask)
-			to_chat(user, "<span class='warning'>[H] has something covering their face.</span>")
+		if(!user.Adjacent(H))
+			to_chat(user, "<span class='warning'>They moved away!</span>")
 			inuse = FALSE
 			return
-		if(user != H && H.a_intent == INTENT_HARM && !H.lying)
-			user.visible_message("<span class='warning'>[user] is trying to take a sample from [H], but they resist.</span>")
+		if(!BP || BP.is_stump)
+			to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
+			inuse = FALSE
+			return
+		if(H.is_bodypart_covered(BP.body_part))
+			to_chat(user, "<span class='warning'>[H] has something covering their [BP.name].</span>")
 			inuse = FALSE
 			return
 		var/target_dna = list()
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		if(!BP || BP.is_stump)
-			to_chat(user, "<span class='warning'>They have no head!</span>")
-			inuse = FALSE
-			return
-		user.visible_message("<span class='notice'>[user] takes a sample from [H] mouth with a swab.</span>")
+		user.visible_message("<span class='notice'>[user] takes a sample from [H] with a swab.</span>")
 		if(!H.dna || !H.dna.unique_enzymes)
 			target_dna = null
 		else
@@ -69,6 +81,8 @@
 				N.put_in_hands(S)
 		inuse = FALSE
 		return TRUE
+	else
+		user.visible_message("<span class='warning'>[user] is trying to take a sample from [H], but they resist.</span>")
 	inuse = FALSE
 
 /obj/item/weapon/swab/afterattack(atom/A, mob/user, proximity)
@@ -95,6 +109,9 @@
 	inuse = TRUE
 	to_chat(user, "<span class='notice'>You start sampling [A].</span>")
 	if(do_after(user, 2 SECONDS, target = user))
+		if(!user.Adjacent(A))
+			inuse = FALSE
+			return
 		var/target_dna
 		if(A.blood_DNA && A.blood_DNA.len)
 			target_dna = A.blood_DNA.Copy()
@@ -154,7 +171,7 @@
 	inuse = TRUE
 	to_chat(user, "<span class='notice'>You start sampling [supplied].</span>")
 	if(do_after(user, 2 SECONDS, target = user))
-		if(!supplied)
+		if(!supplied || !user.Adjacent(supplied))
 			to_chat(user, "<span class='warning'>Failed to take a sample.</span>")
 			inuse = FALSE
 			return
@@ -219,7 +236,7 @@
 	return TRUE
 
 /obj/item/weapon/forensic_sample/fibers/attackby(obj/O, mob/user)
-	if(O.type == src.type)
+	if(O.type == type)
 		if(merge_evidence(O, user))
 			user.unEquip(O)
 			qdel(O)
