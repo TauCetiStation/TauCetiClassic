@@ -9,5 +9,4 @@
 /area/space/holospace/forts/no_droppods
 	icon_state = "yellow"
 
-/area/space/holospace/forts/no_build
 	icon_state = "red"
