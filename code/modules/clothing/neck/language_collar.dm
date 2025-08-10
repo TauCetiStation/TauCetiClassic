@@ -56,7 +56,7 @@
         var/obj/item/organ/external/head/M = H.bodyparts_by_name[BP_HEAD]
         if(M)
             M.take_damage(60, used_weapon = "Explosion")
-	explosion(get_turf(H), -1, -1, 2, 3)
+    explosion(get_turf(user), -1, -1, 2, 3)
     qdel(src)
 
 /obj/item/clothing/neck/language_collar/dropped(mob/user)
