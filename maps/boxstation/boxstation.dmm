@@ -26167,6 +26167,7 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
+/obj/item/weapon/disk/language/xenomorph,
 /obj/item/clothing/glasses/welding/superior,
 /obj/machinery/light/smart{
 	dir = 4
