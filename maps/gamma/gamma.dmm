@@ -67439,10 +67439,6 @@
 	},
 /obj/structure/cable,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = 7;
-	pixel_y = 9
-	},
 /obj/item/weapon/storage/box/mousetraps{
 	pixel_x = -7;
 	pixel_y = 9
