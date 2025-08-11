@@ -842,6 +842,9 @@
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+// Reads the length of L, returning 0 if null
+#define LAZYLEN(L) length(L)
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 //#define LAZYLEN(L) length(L) // don't return it, pointless now
