@@ -633,9 +633,9 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			impact_direction += "Далеко "
 
 	if(Mob.lying || Mob.crawling)
-		return impact_direction += "сверху"
+		return impact_direction + "сверху"
 
 	if(is_the_opposite_dir(Mob.dir, P.dir))
-		return impact_direction += "сзади"
+		return impact_direction + "сзади"
 
-	return impact_direction += "спереди"
+	return impact_direction + "спереди"

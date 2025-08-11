@@ -120,7 +120,9 @@
 	W.time_inflicted = worldtime2text()
 
 	if(istype(used_weapon, /obj/item/projectile))
-		type_damage = BULLET
+		var/obj/item/projectile/Proj = used_weapon
+		if(Proj.flag == BULLET)
+			type_damage = BULLET
 
 	W.type_damage = type_damage
 
