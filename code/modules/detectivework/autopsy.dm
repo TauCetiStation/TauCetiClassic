@@ -27,7 +27,7 @@
 	var/hits = 0
 	var/time_inflicted = ""
 
-	var/impact_direction = "Неопределено"
+	var/impact_direction = "Не определено"
 
 /datum/autopsy_data/proc/copy()
 	var/datum/autopsy_data/W = new()
