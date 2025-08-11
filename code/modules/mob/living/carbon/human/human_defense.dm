@@ -217,11 +217,11 @@
 
 	return protection
 
-/mob/living/carbon/human/proc/is_bodypart_covered(body_part)
+/mob/living/carbon/human/proc/can_take_sample(body_part)
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
 	for(var/obj/item/clothing/C in protective_gear)
-		if(body_part == HEAD)
-			if((C.body_parts_covered & HEAD || C.body_parts_covered & FACE) && (C.flags & HEADCOVERSMOUTH || C.flags & MASKCOVERSMOUTH))
+		if(body_part == HEAD) // we dont check C.body_parts_covered because some masks have it set to FALSE
+			if(C.flags & HEADCOVERSMOUTH || C.flags & MASKCOVERSMOUTH)
 				return C
 		else if(C.body_parts_covered & body_part)
 			return C

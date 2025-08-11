@@ -37,7 +37,7 @@
 	if(!BP || BP.is_stump)
 		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 		return
-	var/obj/item/clothing/C = H.is_bodypart_covered(BP.body_part)
+	var/obj/item/clothing/C = H.can_take_sample(BP.body_part)
 	if(C)
 		to_chat(user, "<span class='warning'>[H] has [C] covering their [BP.name].</span>")
 		return
@@ -56,7 +56,7 @@
 			to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 			inuse = FALSE
 			return
-		var/obj/item/clothing/J = H.is_bodypart_covered(BP.body_part)
+		var/obj/item/clothing/J = H.can_take_sample(BP.body_part)
 		if(J)
 			to_chat(user, "<span class='warning'>[H] has [J] covering their [BP.name].</span>")
 			inuse = FALSE
