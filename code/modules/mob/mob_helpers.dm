@@ -571,42 +571,31 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 		alert_overlay.plane = ABOVE_HUD_PLANE
 		alert.add_overlay(alert_overlay)
 
+/mob/proc/get_height_num()
+	var/height_num = w_class
+	if(lying || crawling)
+		height_num -= 3
+
+	return height_num
+
+/mob/living/carbon/human/get_height_num()
+	var/height_num = ..()
+
+	switch(height)
+		if(HUMANHEIGHT_SHORTEST)
+			height_num -= 0.5
+		if(HUMANHEIGHT_SHORT)
+			height_num -= 0.25
+		if(HUMANHEIGHT_TALL)
+			height_num += 0.25
+		if(HUMANHEIGHT_TALLEST)
+			height_num += 0.5
+
+	return height_num
+
 /proc/compare_mobs_height(mob/Mob1, mob/Mob2) //Attacker, Defender
-	var/Height1 = Mob1.w_class
-	var/Height2 = Mob2.w_class
-
-	if(Mob1.lying || Mob1.crawling)
-		Height1 -= 3
-
-	if(Mob2.lying || Mob2.crawling)
-		Height2 -= 3
-
-	if(ishuman(Mob1))
-		var/mob/living/carbon/human/H1 = Mob1
-
-		switch(H1.height)
-			if(HUMANHEIGHT_SHORTEST)
-				Height1 -= 0.5
-			if(HUMANHEIGHT_SHORT)
-				Height1 -= 0.25
-			if(HUMANHEIGHT_TALL)
-				Height1 += 0.25
-			if(HUMANHEIGHT_TALLEST)
-				Height1 += 0.5
-
-	if(ishuman(Mob2))
-		var/mob/living/carbon/human/H2 = Mob2
-
-		switch(H2.height)
-			if(HUMANHEIGHT_SHORTEST)
-				Height2 -= 0.5
-			if(HUMANHEIGHT_SHORT)
-				Height2 -= 0.25
-			if(HUMANHEIGHT_TALL)
-				Height2 += 0.25
-			if(HUMANHEIGHT_TALLEST)
-				Height2 += 0.5
-
+	var/Height1 = Mob1.get_height_num()
+	var/Height2 = Mob2.get_height_num()
 
 	switch(Height1 - Height2)
 		if(2 to 12)
