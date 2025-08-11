@@ -570,3 +570,72 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			alert_overlay.appearance_flags |= TILE_BOUND
 		alert_overlay.plane = ABOVE_HUD_PLANE
 		alert.add_overlay(alert_overlay)
+
+/proc/compare_mobs_height(mob/Mob1, mob/Mob2) //Attacker, Defender
+	var/Height1 = Mob1.w_class
+	var/Height2 = Mob2.w_class
+
+	if(Mob1.lying || Mob1.crawling)
+		Height1 -= 3
+
+	if(Mob2.lying || Mob2.crawling)
+		Height2 -= 3
+
+	if(ishuman(Mob1))
+		var/mob/living/carbon/human/H1 = Mob1
+
+		switch(H1.height)
+			if(HUMANHEIGHT_SHORTEST)
+				Height1 -= 0.5
+			if(HUMANHEIGHT_SHORT)
+				Height1 -= 0.25
+			if(HUMANHEIGHT_TALL)
+				Height1 += 0.25
+			if(HUMANHEIGHT_TALLEST)
+				Height1 += 0.5
+
+	if(ishuman(Mob2))
+		var/mob/living/carbon/human/H2 = Mob2
+
+		switch(H2.height)
+			if(HUMANHEIGHT_SHORTEST)
+				Height2 -= 0.5
+			if(HUMANHEIGHT_SHORT)
+				Height2 -= 0.25
+			if(HUMANHEIGHT_TALL)
+				Height2 += 0.25
+			if(HUMANHEIGHT_TALLEST)
+				Height2 += 0.5
+
+
+	switch(Height1 - Height2)
+		if(2 to 12)
+			return "Сильно сверху"
+		if(0.5 to 2)
+			return "Сверху"
+		if(-2 to -0.5)
+			return "Снизу"
+		if(-12 to -2)
+			return "Сильно снизу"
+
+	return "С одной высоты"
+
+/proc/check_projectile_hit_direction(mob/Mob, obj/item/projectile/P)
+	var/impact_direction = ""
+	var/distance = P.starting ? get_dist(P.starting.loc, Mob.loc) : 0
+
+	switch(distance)
+		if(0 to 1)
+			impact_direction += "Вплотную "
+		if(1 to 3)
+			impact_direction += "Близко "
+		else
+			impact_direction += "Далеко "
+
+	if(Mob.lying || Mob.crawling)
+		return impact_direction += "сверху"
+
+	if(is_the_opposite_dir(Mob.dir, P.dir))
+		return impact_direction += "сзади"
+
+	return impact_direction += "спереди"
