@@ -55,8 +55,8 @@ SUBSYSTEM_DEF(job)
 
 		name_occupations[job.title] = job
 		if(job.alt_titles.len)
-			for(var/alt_job_title in alt_titles)
-				name_occupations[job.alt_job_title] = job
+			for(var/alt_job_title in job.alt_titles)
+				name_occupations[alt_job_title] = job
 		for(var/department_title in job.departments)
 			departments_occupations[department_title] += job.title
 
