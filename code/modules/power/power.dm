@@ -309,8 +309,6 @@
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1.0)
 	if(istype(M.loc,/obj/mecha))	return 0	//feckin mechs are dumb
-	if(!isliving(M))
-		return
 	//This is for performance optimization only.
 	//DO NOT modify siemens_coeff here. That is checked in human/electrocute_act()
 	var/def_zone
