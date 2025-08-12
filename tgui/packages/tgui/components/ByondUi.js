@@ -71,7 +71,10 @@ export class ByondUi extends Component {
   constructor(props) {
     super(props);
     this.containerRef = createRef();
-    this.byondUiElement = createByondUiElement(props.params?.id, props.phonehome);
+    this.byondUiElement = createByondUiElement(
+      props.params?.id,
+      props.phonehome
+    );
     this.handleResize = debounce(() => {
       this.forceUpdate();
     }, 100);
