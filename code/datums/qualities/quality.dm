@@ -72,7 +72,7 @@
 		if(jobban_isbanned(C.mob, job))
 			continue
 		var/datum/job/J = SSjob.GetJob(job)
-		if(!J || !J.player_old_enough(C))
+		if(!J.player_old_enough(C))
 			continue
 		if(!J.map_check())
 			continue

@@ -54,6 +54,9 @@ SUBSYSTEM_DEF(job)
 			Debug("Job [job.title] not added because of map setup.")
 
 		name_occupations[job.title] = job
+		if(job.alt_titles.len)
+			for(var/alt_job_title in alt_titles)
+				name_occupations[job.alt_job_title] = job
 		for(var/department_title in job.departments)
 			departments_occupations[department_title] += job.title
 
@@ -679,7 +682,7 @@ SUBSYSTEM_DEF(job)
 	var/count = 0
 	// Only players with the job assigned and AFK for less than 10 minutes count as active
 	// todo: store players in job datums for quick and easy loop
-	for(var/mob/M in player_list) 
+	for(var/mob/M in player_list)
 		if(M.mind?.assigned_role == rank && M.client?.inactivity <= 10 MINUTES)
 			count++
 	return count
