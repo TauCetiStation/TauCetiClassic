@@ -13,7 +13,7 @@
 /obj/structure/stool/atom_init()
 	. = ..()
 
-	AddComponent(/datum/component/hiding_cache, SIZE_TINY)
+	AddComponent(/datum/component/hiding_cache, SIZE_TINY, /obj/item/taperoll)
 
 /obj/structure/stool/bar
 	name = "bar stool"

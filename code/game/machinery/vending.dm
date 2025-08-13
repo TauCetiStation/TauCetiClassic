@@ -86,7 +86,7 @@
 	update_wires_check()
 	update_unstable_product()
 
-	AddComponent(/datum/component/hiding_cache, SIZE_TINY)
+	AddComponent(/datum/component/hiding_cache, SIZE_TINY, null, 'sound/items/surgery_tray_use.ogg')
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -623,6 +623,10 @@
 		unstable_product = null
 	updateUsrDialog()
 	update_unstable_product()
+
+	var/datum/component/hiding_cache/HC = GetComponent(/datum/component/hiding_cache)
+	if(HC)
+		HC.cache_storage.spill()
 	return new VP.product_path(src.loc)
 
 /obj/machinery/vending/proc/update_unstable_product()

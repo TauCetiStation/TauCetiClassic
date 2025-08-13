@@ -49,7 +49,7 @@
 	AddComponent(/datum/component/clickplace)
 
 	if(has_cache)
-		AddComponent(/datum/component/hiding_cache, SIZE_SMALL)
+		AddComponent(/datum/component/hiding_cache, SIZE_SMALL, /obj/item/taperoll)
 
 /obj/structure/table/Destroy()
 	if(flipped)
@@ -343,6 +343,9 @@
 	update_icon()
 	update_adjacent()
 
+	if(has_cache)
+		qdel(GetComponent(/datum/component/hiding_cache))
+
 	return 1
 
 /obj/structure/table/proc/unflip()
@@ -359,6 +362,9 @@
 			T.unflip()
 	update_icon()
 	update_adjacent()
+
+	if(has_cache)
+		AddComponent(/datum/component/hiding_cache, SIZE_SMALL, /obj/item/taperoll)
 
 	return 1
 
