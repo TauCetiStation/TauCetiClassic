@@ -34,6 +34,7 @@
 /obj/item/organ/internal/heart/process()
 	if(owner)
 		handle_pulse()
+		owner.pulse = handle_pulse()
 		if(pulse)
 			handle_heart_beat()
 			if(pulse == PULSE_2FAST && prob(1))
@@ -46,7 +47,7 @@
 /obj/item/organ/internal/heart/proc/handle_pulse()
 
 	if(is_robotic(src))
-		return
+		return PULSE_NONE
 
 	if(owner.life_tick % 5)
 		return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
