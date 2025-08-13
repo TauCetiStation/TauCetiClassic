@@ -30,6 +30,8 @@
 	var/flipable = TRUE
 	var/canconnect = TRUE
 
+	var/has_cache = TRUE
+
 /obj/structure/table/atom_init()
 	. = ..()
 	for(var/obj/structure/table/T in loc)
@@ -45,6 +47,9 @@
 		update_adjacent()
 
 	AddComponent(/datum/component/clickplace)
+
+	if(has_cache)
+		AddComponent(/datum/component/hiding_cache, SIZE_SMALL)
 
 /obj/structure/table/Destroy()
 	if(flipped)
@@ -366,6 +371,8 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	parts = /obj/item/weapon/table_parts/glass
 	max_integrity = 10
+
+	has_cache = FALSE
 
 /obj/structure/table/glass/atom_init()
 	. = ..()
@@ -745,6 +752,8 @@
 	max_integrity = 100
 	parts = /obj/item/weapon/table_parts/rglass
 	flipable = FALSE
+
+	has_cache = FALSE
 
 /*
  * Racks

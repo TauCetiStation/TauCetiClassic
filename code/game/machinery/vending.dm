@@ -86,6 +86,8 @@
 	update_wires_check()
 	update_unstable_product()
 
+	AddComponent(/datum/component/hiding_cache, SIZE_TINY)
+
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
