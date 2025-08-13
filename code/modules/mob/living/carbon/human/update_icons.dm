@@ -246,8 +246,12 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_underwear()
 	remove_standing_overlay(UNDERWEAR_LAYER)
 
+	// probably should copypaste checks from organs get_icon_state
+	// or move underwear to organs rendering (insetting socks overlays on different legs would work better than mob overlay)
 	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
-	var/g = (gender == FEMALE ? "f" : "m")
+	var/g = "m"
+	if(gender == FEMALE && species.gender_body_icons)
+		g = "f"
 
 	var/list/standing = list()
 
@@ -260,25 +264,40 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing += tatoo
 
 	//Underwear
-	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
-		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_underwear.dmi', 'icons/mob/human_underwear_fat.dmi', "underwear[underwear]_[g]_s")
+	if(underwear && species.flags[HAS_UNDERWEAR])
+		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_underwear.dmi', 'icons/mob/human_underwear_fat.dmi', "underwear[underwear]_[g]")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 		MA = update_height(MA)
 		standing += MA
 
-	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
-		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_undershirt.dmi', 'icons/mob/human_undershirt_fat.dmi', "undershirt[undershirt]_s_[g]")
+	if(undershirt && species.flags[HAS_UNDERWEAR])
+		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_undershirt.dmi', 'icons/mob/human_undershirt_fat.dmi', "undershirt[undershirt]_[g]")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
+
+		if(undershirt_print)
+			MA.appearance_flags = KEEP_TOGETHER
+			var/mutable_appearance/print_appearance
+			if(fat) // same prints for both genders
+				print_appearance = mutable_appearance('icons/mob/human_undershirt_prints_fat.dmi', "[undershirt_print]")
+			else
+				print_appearance = mutable_appearance('icons/mob/human_undershirt_prints.dmi', "[undershirt_print]_[g]")
+			print_appearance.blend_mode = BLEND_INSET_OVERLAY
+			MA.add_overlay(print_appearance)
+
 		MA = update_height(MA)
 		standing += MA
 
-	if(socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
+	if(socks && species.flags[HAS_UNDERWEAR])
 		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
-		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
-			var/mutable_appearance/MA = BODY_ICON('icons/mob/human_socks.dmi', 'icons/mob/human_socks_fat.dmi', "socks[socks]_s_[g]")
+		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump && \
+			r_foot.species == l_foot.species && r_foot.owner_gender == l_foot.owner_gender)
+			var/foot_g = "m"
+			if(r_foot.species.gender_limb_icons)
+				foot_g = "f"
+			var/mutable_appearance/MA = BODY_ICON('icons/mob/human_socks.dmi', 'icons/mob/human_socks_fat.dmi', "socks[socks]_[foot_g]")
 			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]
 			MA.pixel_y += species.offset_features[OFFSET_SHOES][2]
 			MA = update_height(MA)
