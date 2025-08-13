@@ -20,7 +20,7 @@
 	var/sterile = FALSE
 	var/durability = 1 // Damage multiplier for organs, that have damage values.
 
-/obj/item/organ/internal/New(mob/living/carbon/holder)// T.C. maybe atom init?
+/obj/item/organ/internal/New(mob/living/carbon/holder)
 	if(istype(holder))
 		insert_organ(holder)
 	..()
@@ -48,7 +48,7 @@
 
 /obj/item/organ/internal/remove(mob/living/carbon/human/M)
 	owner = null
-	START_PROCESSING(SSobj, src)
+
 	if(M)
 		M.organs -= src
 		if(M.organs_by_name[organ_tag] == src)
@@ -65,6 +65,8 @@
 			return
 		else
 			parent.bodypart_organs -= src
+
+	..()
 
 /obj/item/organ/internal/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()

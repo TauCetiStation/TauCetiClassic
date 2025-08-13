@@ -9,8 +9,10 @@
 		QDEL_IN(animation, 2 SECOND)
 
 	for(var/obj/item/organ/internal/IO in organs)
-		IO.remove(src)
-		IO.forceMove(get_turf(src))
+		if(prob(33))
+			IO.remove(src)
+			IO.forceMove(get_turf(src))
+			IO.throw_at(get_edge_target_turf(loc, pick(alldirs)), rand(1, 3), throw_speed)
 
 	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
@@ -81,6 +83,8 @@
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
+		handle_bodyparts()
+
 		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()

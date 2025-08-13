@@ -26,6 +26,9 @@
 /obj/item/organ/internal/eyes/insert_organ(mob/living/carbon/human/M)
 	..()
 
+	if(nighteyes)
+		ADD_TRAIT(owner, TRAIT_NIGHT_EYES, GENERIC_TRAIT)
+
 // Apply our eye colour to the target.
 	if(istype(M))
 		var/mob/living/carbon/human/eyes = M
@@ -35,6 +38,22 @@
 			head.g_eyes = g_eyes
 			head.b_eyes = b_eyes
 			eyes.update_eyes()
+
+/obj/item/organ/internal/eyes/remove(mob/living/carbon/human/M)
+
+	if(nighteyes)
+		REMOVE_TRAIT(owner, TRAIT_NIGHT_EYES, GENERIC_TRAIT)
+
+	if(istype(M))
+		var/mob/living/carbon/human/eyes = M
+		var/obj/item/organ/external/head/head = M.bodyparts_by_name[BP_HEAD]
+		if(head)
+			head.r_eyes = 0
+			head.g_eyes = 0
+			head.b_eyes = 0
+			eyes.update_eyes()
+
+	..()
 
 /mob/living/carbon/human/proc/update_eyes()
 	var/obj/item/organ/internal/eyes/eyes = organs_by_name[O_EYES]
@@ -70,15 +89,9 @@
 	compability = list(DIONA)
 	tough = TRUE
 
-/obj/item/organ/internal/eyes/zombie_vision
-	name = "zombie eyes"
-	desc = "A dead set of eyes that don't blink"
-	darksight = 8
-	nighteyes = TRUE
-
 /obj/item/organ/internal/eyes/night_vision
 	name = "strange eye"
-	desc = "Ф pair of eyes that copy the abilities of the Tajaran."
+	desc = "A pair of eyes that copy the abilities of the Tajaran."
 	darksight = 8
 	nighteyes = TRUE
 

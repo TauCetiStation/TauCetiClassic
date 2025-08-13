@@ -178,7 +178,7 @@
 	if(failed_breath)
 		handle_failed_breath()
 	else
-		owner.inhale_alert = 0
+		owner.inhale_alert = FALSE
 	return failed_breath
 
 /obj/item/organ/internal/lungs/proc/handle_failed_breath()
@@ -191,7 +191,7 @@
 
 	owner.adjustOxyLoss(HUMAN_MAX_OXYLOSS*breath_fail_ratio)
 
-	owner.inhale_alert = max(owner.inhale_alert, 2)
+	owner.inhale_alert = TRUE
 	last_int_pressure = 0
 
 /obj/item/organ/internal/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath)

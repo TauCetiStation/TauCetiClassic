@@ -46,7 +46,6 @@
 /obj/item/organ/internal/heart/proc/handle_pulse()
 
 	if(is_robotic(src))
-		pulse = PULSE_NONE	//that's it, you're dead (or your metal heart is), nothing can influence your pulse
 		return
 
 	if(owner.life_tick % 5)
@@ -229,7 +228,8 @@
 
 /obj/item/organ/internal/heart/proc/handle_heart_beat()
 
-	if(pulse == PULSE_NONE) return
+	if(pulse == PULSE_NONE)
+		return
 
 	if(pulse == PULSE_2FAST)
 

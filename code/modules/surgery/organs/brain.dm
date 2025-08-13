@@ -40,6 +40,9 @@
 	if(!owner)
 		return ..()
 
+	if(owner.stat == DEAD)
+		return ..()
+
 	handle_damage_effects()
 
 	if(!owner.should_have_organ(O_HEART))
@@ -66,45 +69,45 @@
 					owner.pale = FALSE
 					owner.update_body()
 			if(BLOOD_VOLUME_OKAY_P to BLOOD_VOLUME_SAFE_P)
-						if(!owner.pale)
-							owner.pale = TRUE
-							owner.update_body()
-							var/word = pick("dizzy", "woosey", "faint")
-							to_chat(src, "<span class='warning'>You feel [word]</span>")
-						if(prob(1))
-							var/word = pick("dizzy", "woosey", "faint")
-							to_chat(src, "<span class='warning'>You feel [word]</span>")
-						if(oxy < 20)
-							owner.adjustOxyLoss(3)
-					if(BLOOD_VOLUME_BAD_P to BLOOD_VOLUME_OKAY_P)
-						if(!owner.pale)
-							owner.pale = TRUE
-							owner.update_body()
-						owner.blurEyes(6)
-						if(oxy < 50)
-							owner.adjustOxyLoss(10)
-						owner.adjustOxyLoss(1)
-						if(!owner.paralysis && prob(10))
-							owner.Paralyse(rand(1,3))
-							var/word = pick("dizzy", "woosey", "faint")
-							to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-					if(BLOOD_VOLUME_SURVIVE_P to BLOOD_VOLUME_BAD_P)
-						owner.blurEyes(6)
-						owner.adjustOxyLoss(5)
-						damprob = owner.reagents.has_reagent("inaprovaline") ? 60 : 100
-						if(prob(damprob) && damage < 40)// without blood the brain begins to die
-							take_damage(1)
-						if(!owner.paralysis && prob(15))
-							owner.Paralyse(3,5)
-							var/word = pick("dizzy", "woosey", "faint")
-							to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
-					if(0 to BLOOD_VOLUME_SURVIVE_P)
-						if(!iszombie(owner)) // zombies dont care about blood
-							owner.blurEyes(6)
-							owner.adjustOxyLoss(10)
-							damprob = owner.reagents.has_reagent("inaprovaline") ? 80 : 100
-							if(prob(damprob))
-								take_damage(1)
+				if(!owner.pale)
+					owner.pale = TRUE
+					owner.update_body()
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(prob(1))
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(oxy < 20)
+					owner.adjustOxyLoss(3)
+			if(BLOOD_VOLUME_BAD_P to BLOOD_VOLUME_OKAY_P)
+				if(!owner.pale)
+					owner.pale = TRUE
+					owner.update_body()
+				owner.blurEyes(6)
+				if(oxy < 50)
+					owner.adjustOxyLoss(10)
+				owner.adjustOxyLoss(1)
+				if(!owner.paralysis && prob(10))
+					owner.Paralyse(rand(1,3))
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(BLOOD_VOLUME_SURVIVE_P to BLOOD_VOLUME_BAD_P)
+				owner.blurEyes(6)
+				owner.adjustOxyLoss(5)
+				damprob = owner.reagents.has_reagent("inaprovaline") ? 60 : 100
+				if(prob(damprob) && damage < 40)// without blood the brain begins to die
+					take_damage(1)
+				if(!owner.paralysis && prob(15))
+					owner.Paralyse(3,5)
+					var/word = pick("dizzy", "woosey", "faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(0 to BLOOD_VOLUME_SURVIVE_P)
+				if(!iszombie(owner)) // zombies dont care about blood
+					owner.blurEyes(6)
+					owner.adjustOxyLoss(10)
+					damprob = owner.reagents.has_reagent("inaprovaline") ? 80 : 100
+					if(prob(damprob))
+						take_damage(1)
 
 	..()
 

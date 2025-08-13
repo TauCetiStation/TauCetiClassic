@@ -1261,6 +1261,10 @@
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+
+	if(!IO)
+		return
+
 	return IO.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
@@ -1379,7 +1383,7 @@
 		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
-	if(src.pulse)
+	if(pulse())
 		to_chat(usr, "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>")
 	else
 		to_chat(usr, "<span class='warning'>[src] has no pulse!</span>")//it is REALLY UNLIKELY that a dead person would check his own pulse
@@ -1800,9 +1804,9 @@
 
 /mob/living/carbon/human/proc/need_breathe()
 	if(!species.breathing_organ && should_have_organ(species.breathing_organ))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
@@ -2326,3 +2330,25 @@
 /mob/living/carbon/human/get_trail_state()
 	if(blood_amount() > 0)
 		return ..()
+
+//generates realistic-ish pulse output based on preset levels
+/mob/living/carbon/human/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
+	var/temp = 0								//see setup.dm:694
+	switch(pulse())
+		if(PULSE_NONE)
+			return "0"
+		if(PULSE_SLOW)
+			temp = rand(40, 60)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_NORM)
+			temp = rand(60, 90)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_FAST)
+			temp = rand(90, 120)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_2FAST)
+			temp = rand(120, 160)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_THREADY)
+			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
+//			output for machines^	^^^^^^^output for people^^^^^^^^^

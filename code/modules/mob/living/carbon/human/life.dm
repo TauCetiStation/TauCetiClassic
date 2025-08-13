@@ -69,8 +69,6 @@
 			//This block was in handle_regular_status_updates under != DEAD
 			stabilize_body_temperature()	//Body temperature adjusts itself
 			handle_bodyparts()	//Optimized.
-			if(!HAS_TRAIT(src, TRAIT_NO_BLOOD) && heart && bodytemperature >= 170)
-				heart.handle_blood()
 
 			handle_drunkenness()
 
@@ -391,7 +389,7 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
 	var/obj/item/organ/internal/lungs/lungs = organs_by_name[O_LUNGS]
-	if(!lungs) // T.C. Lungs need be dead?
+	if(!lungs)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 4)
 	else if(suiciding)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
@@ -1039,10 +1037,9 @@ var/global/list/tourette_bad_words= list(
 		return FALSE
 
 	var/obj/item/organ/internal/eyes/eyes = organs_by_name[O_EYES]
-	var/night = null
 	if(eyes)
-		see_in_dark = eyes.darksight
-		night = eyes.nighteyes
+		if(eyes.darksight)
+			see_in_dark = eyes.darksight
 
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_ZOMBIE))
 		see_in_dark = max(see_in_dark, 8)
@@ -1061,7 +1058,7 @@ var/global/list/tourette_bad_words= list(
 	else
 		sightglassesmod = null
 
-	if(night)
+	if(HAS_TRAIT(src, TRAIT_NIGHT_EYES))
 		var/light_amount = 0
 		var/turf/T = get_turf(src)
 		light_amount = round(T.get_lumcount()*10)
@@ -1185,72 +1182,6 @@ var/global/list/tourette_bad_words= list(
 	SetCrawling(TRUE)
 	drop_from_inventory(l_hand)
 	drop_from_inventory(r_hand)
-
-	/*T.C.
-/mob/living/carbon/human/proc/handle_heart_beat()
-
-	if(pulse == PULSE_NONE) return
-
-	if(pulse == PULSE_2FAST || traumatic_shock >= TRAUMATIC_SHOCK_INTENSE || isspaceturf(get_turf(src)))
-
-		var/temp = (5 - pulse)/2
-
-		if(heart_beat >= temp)
-			heart_beat = 0
-			playsound_local(null, 'sound/effects/singlebeat.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		else if(temp != 0)
-			heart_beat++
-
-/mob/living/carbon/human/proc/handle_pulse()
-
-	if(life_tick % 5)
-		return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
-
-	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
-		return PULSE_NONE //No blood, no pulse.
-
-	if(HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))
-		return PULSE_NORM
-
-	if(stat == DEAD)
-		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse
-
-	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	if(life_tick % 10)
-		switch(IO.heart_status)
-			if(HEART_FAILURE)
-				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
-				apply_effect(5,AGONY,0)
-				return PULSE_NONE
-			if(HEART_FIBR)
-				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
-				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-				apply_effect(1,AGONY,0)
-				return PULSE_SLOW
-
-	var/temp = PULSE_NORM
-
-	if(blood_amount() <= BLOOD_VOLUME_BAD)	//how much blood do we have
-		temp = PULSE_THREADY	//not enough :(
-
-	if(status_flags & FAKEDEATH)
-		temp = PULSE_NONE		//pretend that we're dead. unlike actual death, can be inflienced by meds
-
-	//handles different chems' influence on pulse
-	for(var/datum/reagent/R in reagents.reagent_list)
-		if(R.id in bradycardics)
-			if(temp <= PULSE_THREADY && temp >= PULSE_NORM)
-				temp--
-		if(R.id in tachycardics)
-			if(temp <= PULSE_FAST && temp >= PULSE_NONE)
-				temp++
-		if(R.id in heartstopper) //To avoid using fakedeath
-			temp = PULSE_NONE
-		if(R.id in cheartstopper) //Conditional heart-stoppage
-			if(R.volume >= R.overdose)
-				temp = PULSE_NONE
-
-	return temp */
 
 #undef HUMAN_CRIT_MAX_OXYLOSS
 

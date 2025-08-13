@@ -57,8 +57,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	set_owner(H)
 
-	START_PROCESSING(SSobj, src)
-
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
 

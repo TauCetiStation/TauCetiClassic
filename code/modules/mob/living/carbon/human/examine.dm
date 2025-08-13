@@ -274,7 +274,7 @@
 			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
-				if(pulse == PULSE_NONE)
+				if(!pulse())
 					to_chat(user, "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>")
 				else
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
@@ -611,3 +611,9 @@
 			dat += "[E.examine_text]\n" //dat.Join("\n") doesn't work here, for some reason
 	if(dat.len)
 		return dat.Join()
+
+/mob/living/carbon/human/proc/pulse()
+	if (stat == DEAD)
+		return PULSE_NONE
+	var/obj/item/organ/internal/heart/H = organs_by_name[O_HEART]
+	return H ? H.pulse : PULSE_NONE
