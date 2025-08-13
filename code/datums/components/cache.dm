@@ -1,10 +1,10 @@
-#define HIDINGCACHE_TIP "Тайник."
+#define HIDINGCACHE_TIP "РўР°Р№РЅРёРє."
 
 /datum/mechanic_tip/hiding_cache
 	tip_name = HIDINGCACHE_TIP
 
 /datum/mechanic_tip/hiding_cache/New(datum/component/hiding_cache/HC)
-	description = "Вы можете проверить тайник кликнув CTRL+SHIFT+LMB на [HC.parent]."
+	description = "Р’С‹ РјРѕР¶РµС‚Рµ РїСЂРѕРІРµСЂРёС‚СЊ С‚Р°Р№РЅРёРє РєР»РёРєРЅСѓРІ CTRL+SHIFT+LMB РЅР° [HC.parent]."
 
 
 /datum/component/hiding_cache
@@ -28,7 +28,7 @@
 	return parent_object.Adjacent(user)
 
 /datum/component/hiding_cache/proc/open_cache(datum/source, mob/user)
-	user.visible_message("<span class='danger'>[user] возится с [parent_object]...</span>")
+	user.visible_message("<span class='danger'>[user] РІРѕР·РёС‚СЃСЏ СЃ [parent_object]...</span>")
 	if(!do_after(user, 50 , target = parent_object))
 		return
 
