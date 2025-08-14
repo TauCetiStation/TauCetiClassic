@@ -2040,11 +2040,14 @@
 
 	var/new_w_class = initial(w_class)
 
-	if(SMALLSIZE in mutations)
-		new_w_class -= 1
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SMOLL))
+		new_w_class = SIZE_MINUSCULE
+	else
+		if(SMALLSIZE in mutations)
+			new_w_class -= 1
 
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
-		new_w_class += 1
+		if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+			new_w_class += 1
 
 	w_class = new_w_class
 
