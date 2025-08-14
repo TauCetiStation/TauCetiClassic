@@ -1556,16 +1556,16 @@
 
 		if(L.a_intent == INTENT_HARM && L.is_bigger_than(src))
 			if(prob(LERP(10, 0, health/maxHealth)))
-				src.visible_message("<span class='warning bold'>[src] has been stepped on by [L]!</span>")
+				visible_message("<span class='warning bold'>[src] has been stepped on by [L]!</span>")
 				log_combat(L, "stepped on")
 				playsound(src, pick(SOUNDIN_DESCERATION), VOL_EFFECTS_MASTER)
 				gib()
 			else
-				src.visible_message("<span class='warning bold'>[src] has been kicked away by [L]!</span>")
+				visible_message("<span class='warning bold'>[src] has been kicked away by [L]!</span>")
 				log_combat(L, "kicked")
 				playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 
 				var/turf/target = get_step(src, pick(turn(L.dir, 45), turn(L.dir, -45)))
-				src.throw_at(target, range = 1, speed = 1, thrower = L, spin = prob(50), diagonals_first = TRUE)
+				throw_at(target, range = 1, speed = 1, thrower = L, spin = prob(50), diagonals_first = TRUE)
 				apply_damage(10, BRUTE)
 	. = ..()
