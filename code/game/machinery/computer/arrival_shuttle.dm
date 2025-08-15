@@ -97,6 +97,9 @@ var/global/lastMove = 0
 	play_flying_sound(toArea)
 	SSshuttle.shake_mobs_in_area(toArea, EAST)
 
+	if(destLocation == ARRIVAL_SHUTTLE_VELOCITY)
+		fromArea.fill_water()
+
 	curr_location = toArea
 	fromArea = toArea
 	toArea = destArea

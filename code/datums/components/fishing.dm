@@ -24,8 +24,10 @@
 	if(catchable_things_amount < 3)
 		to_chat(user, "<span class='warning'>Looks like there is almost no things left in this location.</span>")
 	A.visible_message("<span class='notice'>[user] starts fishing.</span>")
+	playsound(user.loc, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
 	if(!do_after(user, catch_time, target = A))
 		A.visible_message("<span class='notice'>[user] stops fishing.</span>")
+		playsound(user.loc, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 		return
 	if(!prob(catch_chance))
 		A.visible_message("<span class='notice'>[user] fails to catch anything.</span>")

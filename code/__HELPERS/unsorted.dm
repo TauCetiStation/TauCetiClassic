@@ -748,6 +748,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y_pos = null
 	var/z_pos = null
 
+/area/proc/fill_water()
+	var/list/turfs_src = get_area_turfs(src.type)
+	for(var/turf/T as anything in turfs_src)
+		new /turf/simulated/floor/beach/water/waterpool (T)
+
+
 /area/proc/move_contents_to(area/A, turftoleave=null, direction = null)
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.

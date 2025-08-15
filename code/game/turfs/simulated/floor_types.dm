@@ -293,8 +293,7 @@
 
 /turf/simulated/floor/beach/water/waterpool/atom_init()
 	. = ..()
-	AddComponent(/datum/component/fishing, list(/obj/item/clothing/mask/snorkel = 10, /obj/item/clothing/shoes/swimmingfins = 10, /obj/item/weapon/bikehorn/rubberducky = 10, /obj/item/clothing/under/bathtowel = 10, /obj/item/weapon/reagent_containers/food/snacks/soap = 5, /mob/living/simple_animal/hostile/xenomorph = 1), 10 SECONDS, rand(1, 3) , 20)
-
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 15, /obj/item/stack/seashell = 4, /obj/item/fish_carp/mega = 1, /obj/item/fish_carp/full_size = 1, /obj/item/fish_carp/over_size = 1, /obj/item/clothing/under/bathtowel = 1, /obj/item/weapon/bikehorn/rubberducky = 1, PATH_OR_RANDOM_PATH(/obj/random/cloth/shittysuit) = 1), 10 SECONDS, rand(1, 30) , 20)
 
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
@@ -306,17 +305,25 @@
 	if(!istype(new_loc, /turf/simulated/floor/beach/water/waterpool))
 		AM.exited_water_turf()
 
+/turf/simulated/floor/beach/water/waterpool/deep
+	name = "Deep Waters"
+	icon_state = "seadeeper"
+	light_color = "#0c3780ff"
+
+/turf/simulated/floor/beach/water/waterpool/deep/Entered(atom/movable/AM, atom/old_loc)
+	..()
+	if(ishuman(AM))
+		var/mob/M = AM
+		M.Stun(1)
+
 /atom/movable/proc/exited_water_turf()
 	return
 
 /mob/living/carbon/human/exited_water_turf()
 	SEND_SIGNAL(src, COMSIG_HUMAN_EXITED_WATER)
-	if(get_species() != SKRELL)
-		Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/silicon/robot/exited_water_turf()
-	Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable/proc/entered_water_turf()
@@ -328,15 +335,12 @@
 
 /mob/living/carbon/human/entered_water_turf()
 	SEND_SIGNAL(src, COMSIG_HUMAN_ENTERED_WATER)
-	if(get_species() != SKRELL)
-		Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	wear_suit?.make_wet()
 	w_uniform?.make_wet()
 	shoes?.make_wet()
 
 /mob/living/silicon/robot/entered_water_turf()
-	Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	if(stat != CONSCIOUS)
 		return
@@ -351,7 +355,6 @@
 		eye_blind += rand(5, 10)
 
 
-
 /turf/simulated/floor/beach/water/atom_init()
 	. = ..()
 	add_overlay(image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1))
@@ -361,6 +364,7 @@
 
 /turf/simulated/floor/beach/water/burn_tile()
 	return
+
 
 // indoor wariant of asteroid turfs
 // todo: craft

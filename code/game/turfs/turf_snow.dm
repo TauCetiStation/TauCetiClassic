@@ -212,7 +212,7 @@
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
 	icon = 'icons/mob/carp.dmi'
 	icon_state = "purple_dead"
-	var/scale_icon = 0.5
+	var/scale_icon
 	var/meat_amount_max = 1
 	var/loot_amount = 1
 
@@ -221,9 +221,35 @@
 
 	update_icon()
 
+	var/size_caught = 4
+	var/fish_weight = pick(
+		30;"small",
+		30;"normal",
+		20;"big",
+		15;"large",
+		5;"enourmous"
+	)
+	switch(fish_weight)
+		if("small")
+			size_caught = 0.3
+		if("normal")
+			size_caught = 0.4
+		if("big")
+			size_caught = 0.5
+		if("large")
+			size_caught = 0.6
+		if("enourmous")
+			size_caught = 0.7
+	var/length_caught = size_caught * 100 + rand(1,80)
+	name = name + " ([length_caught] cm)"
+	desc = "Карп длинной [length_caught] сантиметров."
+
 	appearance_flags |= PIXEL_SCALE
 	var/matrix/Mx = matrix()
-	Mx.Scale(scale_icon)
+	if(scale_icon)
+		Mx.Scale(scale_icon)
+	else
+		Mx.Scale(size_caught)
 	transform = Mx
 
 	if(catch_target_turf)
