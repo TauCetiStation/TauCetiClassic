@@ -106,7 +106,7 @@
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, TRUE)
-		H.apply_effect(4, PARALYZE)
+		H.apply_effect(2, PARALYZE)
 		H.visible_message("<span class='warning'>[H] сбит с ног!</span>")
 
 /*

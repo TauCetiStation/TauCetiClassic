@@ -6,11 +6,23 @@
 	map_total_positions = 0
 	map_spawn_positions = 0
 
+/datum/job/technical_assistant/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 0
+	map_spawn_positions = 0
+
+/datum/job/chief_engineer/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 0
+	map_spawn_positions = 0
+
 /datum/job/engineer/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 1
-	map_spawn_positions = 1
+	map_total_positions = 0
+	map_spawn_positions = 0
 
 /datum/job/captain/New()
 	..()

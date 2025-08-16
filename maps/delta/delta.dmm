@@ -946,79 +946,6 @@
 	},
 /turf/unsimulated/desert,
 /area/custom/beach)
-"acb" = (
-/obj/structure/table/woodentable,
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = -6
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = -6
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = -6
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = -6
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = -6
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	pixel_x = -12
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood7"
-	},
-/area/custom/beach)
 "acc" = (
 /obj/structure/dumbbells_rack,
 /turf/unsimulated/desert,
@@ -1380,12 +1307,6 @@
 	icon_state = "wood7"
 	},
 /area/custom/beach)
-"aMC" = (
-/obj/effect/landmark/start/technical_assistant,
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/beach)
 "aQq" = (
 /obj/machinery/body_scanconsole{
 	dir = 4
@@ -1418,15 +1339,6 @@
 /obj/structure/window/fulltile{
 	grilled = 1;
 	icon_state = "gr_window"
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood7"
-	},
-/area/custom/beach)
-"beY" = (
-/obj/structure/mineral_door/metal{
-	dir = 4;
-	id = "engi"
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood7"
@@ -1736,12 +1648,6 @@
 	icon_state = "grass2"
 	},
 /area/custom/beach)
-"cfr" = (
-/obj/effect/landmark/start/technical_assistant,
-/turf/unsimulated/floor{
-	icon_state = "grass2"
-	},
-/area/custom/beach)
 "cfA" = (
 /obj/machinery/kitchen_machine/grill,
 /turf/unsimulated/floor{
@@ -1820,18 +1726,6 @@
 /obj/structure/cryofeed,
 /turf/unsimulated/floor{
 	icon_state = "grass3"
-	},
-/area/custom/beach)
-"cgR" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/key/yellow{
-	id = "engi"
-	},
-/obj/item/weapon/key/yellow{
-	id = "engi"
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood7"
 	},
 /area/custom/beach)
 "cgZ" = (
@@ -2085,7 +1979,8 @@
 	},
 /area/custom/beach)
 "dGn" = (
-/obj/effect/landmark/start/technical_assistant,
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/pinacolada,
 /turf/unsimulated/floor{
 	icon_state = "grass3"
 	},
@@ -2100,8 +1995,18 @@
 	},
 /area/custom/beach)
 "dGp" = (
-/obj/structure/sign/departments/engineering,
-/turf/unsimulated/wall/log,
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/ppflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass3"
+	},
 /area/custom/beach)
 "dGz" = (
 /obj/structure/table/woodentable,
@@ -2209,12 +2114,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "grass1"
-	},
-/area/custom/beach)
-"dHU" = (
-/obj/effect/landmark/start/technical_assistant,
-/turf/unsimulated/floor{
-	icon_state = "grass4"
 	},
 /area/custom/beach)
 "dHY" = (
@@ -2522,12 +2421,6 @@
 	icon_state = "grass1"
 	},
 /area/custom/beach)
-"geq" = (
-/obj/structure/closet/secure_closet/engineering_personal,
-/turf/unsimulated/floor{
-	icon_state = "wood7"
-	},
-/area/custom/beach)
 "gkV" = (
 /obj/structure/mineral_door/wood{
 	name = "Bar"
@@ -2678,21 +2571,6 @@
 "ihv" = (
 /turf/unsimulated/floor/carpet/black,
 /area/custom/beach)
-"ilE" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood7"
-	},
-/area/custom/beach)
 "imK" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
@@ -2702,10 +2580,11 @@
 	},
 /area/custom/beach)
 "iqA" = (
-/obj/structure/closet/toolcloset,
-/obj/item/stack/seashell,
+/obj/structure/stool/bed/bench{
+	icon_state = "bench_2"
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood7"
+	icon_state = "grass3"
 	},
 /area/custom/beach)
 "iuj" = (
@@ -2973,12 +2852,6 @@
 /obj/structure/sign/departments/custodian,
 /turf/unsimulated/wall/log,
 /area/custom/beach)
-"kMR" = (
-/obj/effect/landmark/start/station_engineer,
-/turf/unsimulated/floor{
-	icon_state = "wood7"
-	},
-/area/custom/beach)
 "kRY" = (
 /turf/unsimulated/floor/carpet,
 /area/custom/beach)
@@ -3167,20 +3040,9 @@
 	},
 /area/custom/beach)
 "mVu" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/stack/cable_coil/red,
-/obj/item/stack/cable_coil/red,
-/obj/item/stack/cable_coil/red,
-/obj/item/stack/cable_coil/red,
-/obj/item/stack/cable_coil/red,
-/obj/item/stack/cable_coil/red,
+/obj/structure/stool/bed/bench,
 /turf/unsimulated/floor{
-	icon_state = "wood7"
+	icon_state = "grass3"
 	},
 /area/custom/beach)
 "nhX" = (
@@ -3424,12 +3286,6 @@
 /obj/machinery/cryopod,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
-	},
-/area/custom/beach)
-"pQF" = (
-/obj/effect/landmark/start/chief_engineer,
-/turf/unsimulated/floor{
-	icon_state = "wood7"
 	},
 /area/custom/beach)
 "pSU" = (
@@ -3735,12 +3591,6 @@
 /obj/item/stack/seashell,
 /turf/unsimulated/floor{
 	icon_state = "grass4"
-	},
-/area/custom/beach)
-"swz" = (
-/obj/structure/closet/secure_closet/engineering_welding,
-/turf/unsimulated/floor{
-	icon_state = "wood7"
 	},
 /area/custom/beach)
 "sCO" = (
@@ -39177,7 +39027,7 @@ kop
 abM
 mye
 mye
-mye
+gqT
 mye
 mye
 aaH
@@ -39429,13 +39279,13 @@ kop
 kop
 mye
 qSx
-qSx
+gqT
 kop
 kop
-kop
-kop
-kop
-kop
+gqT
+gqT
+gqT
+gqT
 acm
 mye
 aap
@@ -39685,14 +39535,14 @@ kop
 kop
 qSx
 qSx
-qSx
-qSx
 kop
 kop
 kop
 kop
 kop
 kop
+gqT
+gqT
 acn
 bRX
 dHT
@@ -39942,14 +39792,14 @@ kop
 kop
 mye
 mye
-qSx
-qSx
 kop
 kop
 kop
 kop
 kop
 kop
+gqT
+gqT
 qSx
 qSx
 evL
@@ -40199,14 +40049,14 @@ bnx
 gqT
 evL
 evL
-qSx
-qSx
 kop
 kop
 kop
 kop
 kop
 kop
+gqT
+gqT
 dHT
 qSx
 acq
@@ -40456,14 +40306,14 @@ qSx
 wtC
 thi
 mye
-qSx
-qSx
-abZ
-abZ
-acg
-abZ
-abZ
-abZ
+kop
+kop
+kop
+kop
+kop
+kop
+gqT
+wtC
 aad
 mye
 srs
@@ -40713,14 +40563,14 @@ mye
 nhX
 wtC
 gqT
-qSx
-qSx
-aca
-aca
-aca
-aca
-aca
-aca
+kop
+kop
+kop
+kop
+kop
+kop
+gqT
+gqT
 gqT
 qSx
 srs
@@ -40970,14 +40820,14 @@ aal
 abS
 qSx
 wtC
-qSx
-qSx
-kop
-kop
-kop
-kop
-kop
-kop
+abZ
+abZ
+acg
+abZ
+abZ
+abZ
+gqT
+gqT
 dHT
 aal
 srs
@@ -41227,14 +41077,14 @@ wtC
 imK
 dHT
 qSx
-qSx
-qSx
-kop
-kop
-kop
-kop
-kop
-kop
+aca
+aca
+aca
+aca
+aca
+aca
+gqT
+wtC
 evL
 aal
 srs
@@ -41484,14 +41334,14 @@ qSx
 gqT
 iaL
 bnx
-mye
-qSx
 kop
 kop
 kop
 kop
 kop
 kop
+wtC
+gqT
 evL
 qrX
 srs
@@ -41741,14 +41591,14 @@ thi
 thi
 qSx
 evL
-evL
-qSx
 kop
 kop
 kop
 kop
 kop
 kop
+gqT
+gqT
 aco
 qSx
 qSx
@@ -41998,14 +41848,14 @@ mye
 aaH
 abT
 abT
-qSx
-dGn
-aMC
-aMC
-qSx
-bnx
-qSx
-thi
+kop
+kop
+kop
+kop
+kop
+kop
+gqT
+gqT
 mye
 mye
 evL
@@ -42250,17 +42100,17 @@ pQD
 gIC
 gIC
 cfk
-aad
+gIC
 dHT
 gqT
-pjP
 gqT
-mye
-aMC
-cfr
-dHU
-evL
-bnx
+gqT
+kop
+kop
+kop
+kop
+kop
+kop
 gqT
 tiJ
 tiJ
@@ -42507,17 +42357,17 @@ jfu
 cgJ
 abI
 dXr
-bpv
-srs
-srs
-srs
-beY
-beY
-dGp
-srs
-srs
+dXr
 bnx
-evL
+gqT
+gqT
+wtC
+kop
+kop
+kop
+kop
+kop
+kop
 mye
 abX
 evL
@@ -42765,16 +42615,16 @@ bpv
 bpv
 bpv
 bpv
-srs
-geq
-kMR
-dGk
-dGk
-dGk
-cgR
-srs
 bpv
 bpv
+gqT
+gqT
+gqT
+gqT
+gqT
+gqT
+gqT
+gqT
 bpv
 bpv
 mye
@@ -43022,14 +42872,14 @@ srs
 srs
 bpv
 bpv
-srs
-geq
-kMR
-dGk
-dGk
-dGk
-cgR
-srs
+bpv
+bpv
+bpv
+bpv
+gqT
+wtC
+gqT
+gqT
 bpv
 bpv
 bpv
@@ -43279,14 +43129,14 @@ dHJ
 srs
 bpv
 bpv
-srs
-geq
-pQF
-dGk
-dGk
-dGk
-cgR
-srs
+bpv
+bpv
+bpv
+bpv
+bpv
+gqT
+bpv
+bpv
 bpv
 bpv
 bpv
@@ -43536,14 +43386,14 @@ dXF
 srs
 bpv
 bpv
-srs
-geq
-dGk
-dGk
-dGk
-dGk
-mVu
-srs
+bpv
+bpv
+bpv
+bpv
+bpv
+gqT
+gqT
+bpv
 bpv
 bpv
 bpv
@@ -43793,14 +43643,14 @@ gqT
 srs
 bpv
 bpv
-srs
-swz
-dGk
-dGk
-dGk
-dGk
-acb
-srs
+bpv
+bpv
+gqT
+gqT
+gqT
+wtC
+gqT
+gqT
 bpv
 bpv
 bpv
@@ -44050,14 +43900,14 @@ gqT
 bpv
 bpv
 bpv
-srs
-iqA
-dGk
-dGk
-dGk
-dGk
-ilE
-srs
+bpv
+gqT
+mVu
+wtC
+qSx
+aaj
+gqT
+gqT
 bpv
 bpv
 bpv
@@ -44307,14 +44157,14 @@ wtC
 gqT
 bpv
 bpv
-srs
-srs
-srs
-srs
-srs
-srs
-srs
-srs
+bpv
+gqT
+iqA
+wtC
+qSx
+gqT
+aaS
+gqT
 bpv
 bpv
 bpv
@@ -44566,12 +44416,12 @@ bpv
 bpv
 bpv
 bpv
-bpv
-bpv
-bpv
-bpv
-bpv
-bpv
+dGn
+gqT
+wtC
+dGp
+gqT
+gqT
 bpv
 bpv
 bpv
@@ -44825,8 +44675,8 @@ bpv
 bpv
 bpv
 bpv
-bpv
-bpv
+gqT
+gqT
 bpv
 bpv
 bpv
