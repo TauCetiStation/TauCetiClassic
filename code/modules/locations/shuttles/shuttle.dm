@@ -9,6 +9,9 @@ var/global/dock_ids = 1
 
 	var/dock_id = 1
 
+
+	var/occupied = FALSE
+
 /datum/dock/New(name, dir, X, Y, Z)
 	src.name = name
 	src.dir = dir
@@ -20,9 +23,11 @@ var/global/dock_ids = 1
 	dock_ids++
 
 /datum/dock/proc/dock()
+	occupied = TRUE
 	return bolt_unbolt(FALSE)
 
 /datum/dock/proc/undock()
+	occupied = FALSE
 	return bolt_unbolt(TRUE)
 
 /datum/dock/proc/bolt_unbolt(bolt = TRUE)
@@ -44,8 +49,8 @@ var/global/dock_ids = 1
 		turfs_to_check += T
 
 
-	for(var/turf/T in turfs_to_check)
-		for(var/obj/machinery/door/Door in T)
+	for(var/turf/Door_Turf in turfs_to_check)
+		for(var/obj/machinery/door/Door in Door_Turf)
 			if(istype(Door, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/canBeBolted = Door
 				if(bolt)
@@ -131,11 +136,12 @@ var/global/dock_ids = 1
 	grid_id = grid
 
 	try_generate_shuttle()
+	ShuttleArea = create_shuttle_area	()
 
 /datum/shuttle/proc/try_generate_shuttle()
 	var/turf/Starting = get_turf(Console)
 	if(!Starting.grid_id)
-		qdel(src)
+		Starting.grid_id = grid_id
 
 	tiles = list()
 	outer_shell = list()
@@ -143,8 +149,6 @@ var/global/dock_ids = 1
 
 	tiles[Starting] = list("x" = 0, "y" = 0)
 	check_tile_neighbours(Starting, 0, 0)
-
-	ShuttleArea = create_shuttle_area()
 
 /datum/shuttle/proc/check_tile_neighbours(turf/T, x_offset, y_offset)
 	var/turf/CheckingTurf
@@ -171,6 +175,8 @@ var/global/dock_ids = 1
 				check_tile_neighbours(CheckingTurf, x_offset + mask_params[2], y_offset + mask_params[3])
 				continue checking_directions
 
+				CHECK_TICK
+
 			var/obj/machinery/door/Airlock = locate(/obj/machinery/door) in T.contents
 			if(Airlock)
 				var/datum/dock/added = add_docking_port(name, mask_params[1], x_offset + Console.x, y_offset + Console.y, Console.z, airlocks)
@@ -189,7 +195,6 @@ var/global/dock_ids = 1
 		var/area/old_area = T.loc
 		if(old_area)
 			T.under_shuttle_area = old_area
-			old_area.contents -= T
 
 		A.contents += T
 		T.change_area(old_area, A)
@@ -228,7 +233,7 @@ var/global/dock_ids = 1
 	dockedTo = null
 
 /datum/shuttle/proc/try_move(datum/dock/DockBy, datum/dock/DockTo)
-	var/rotation = dir2angle(DockTo.dir) - dir2angle(DockBy.dir) + 180
+	var/rotation = (dir2angle(DockTo.dir) - dir2angle(DockBy.dir) + 180) % 360
 	if(rotation < 0)
 		rotation += 360
 
@@ -248,13 +253,23 @@ var/global/dock_ids = 1
 			var/turf/T = Thing
 			var/old_icon_state1 = T.icon_state
 			var/old_icon1 = T.icon
+
+			var/old_dir = T.dir
+
+			Destination_Turf.save_turf_to_undershuttle_params()
+
 			Destination_Turf = T.Shuttle_MoveTurf(Destination_Turf)
 
-			Destination_Turf.prev_dir = Destination_Turf.dir
-			Destination_Turf.set_dir(turn(Destination_Turf.dir, -rotation))
+			Destination_Turf.grid_id = grid_id
 
-			Destination_Turf.icon_state = old_icon_state1
-			Destination_Turf.icon = old_icon1
+			ShuttleArea.contents += Destination_Turf
+			Destination_Turf.change_area(Destination_Turf.under_shuttle_area, ShuttleArea)
+
+			Destination_Turf.set_dir(turn(old_dir, -rotation))
+
+			if(!isenvironmentturf(Destination_Turf))
+				Destination_Turf.icon_state = old_icon_state1
+				Destination_Turf.icon = old_icon1
 
 
 			var/turf/simulated/ST = T
@@ -268,9 +283,6 @@ var/global/dock_ids = 1
 			tiles -= T
 			tiles[Destination_Turf] = new_relative_coordinates
 
-			ShuttleArea.contents -= T
-			ShuttleArea.contents += Destination_Turf
-
 			for(var/obj/O in T)
 				if(istype(O, /obj/effect/portal))
 					qdel(O)
@@ -280,12 +292,20 @@ var/global/dock_ids = 1
 				O.forceMove(Destination_Turf)
 				O.set_dir(turn(O.dir, -rotation))
 				O.update_parallax_contents()
+
+				CHECK_TICK
+
 			for(var/mob/M in T)
-				if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
+				if(!istype(M,/mob) || istype(M, /mob/camera))
+					continue
 				M.forceMove(Destination_Turf, TRUE, TRUE)
 				M.update_parallax_contents()
 				if(!M.buckled)
 					M.set_dir(turn(M.dir, -rotation))
+
+				shake_mob(M, Console.dir)
+
+				CHECK_TICK
 
 
 		else
@@ -295,6 +315,41 @@ var/global/dock_ids = 1
 			Struct.set_dir(turn(Struct.dir, -rotation))
 
 	dock(DockBy, DockTo)
+
+
+/datum/shuttle/proc/shake_mob(mob/M, fall_direction)
+	if(M.client)
+		if(M.buckled || issilicon(M))
+			shake_camera(M, 2, 1) // buckled, not a lot of shaking
+		else
+			shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
+			M.Stun(1)
+			M.Weaken(3)
+		if(isliving(M) && !issilicon(M) && !M.buckled)
+			var/mob/living/L = M
+			if(isturf(L.loc))
+				for(var/i=0, i < 5, i++)
+					var/turf/T = L.loc
+					var/hit = 0
+					T = get_step(T, fall_direction)
+					if(T.density)
+						hit = 1
+						if(i > 1)
+							L.adjustBruteLoss(10)
+						break
+					else
+						for(var/atom/movable/AM in T.contents)
+							if(AM.density)
+								hit = 1
+								if(i > 1)
+									L.adjustBruteLoss(10)
+									if(isliving(AM))
+										var/mob/living/bumped = AM
+										bumped.adjustBruteLoss(10)
+								break
+					if(hit)
+						break
+					step(L, fall_direction)
 
 
 /datum/shuttle/proc/check_dock(datum/dock/DockBy, datum/dock/DockTo, rotation)
@@ -309,7 +364,7 @@ var/global/dock_ids = 1
 	for(var/turf/T in tiles)
 		relative_object_coordinates = apply_rotation_to_relative_coordinates(tiles[T], rotation)
 		Destination = locate(destination_turf_coordinates["x"] + relative_object_coordinates["x"] - relative_dock_coordinates["x"], destination_turf_coordinates["y"] + relative_object_coordinates["y"] - relative_dock_coordinates["y"], destination_turf_coordinates["z"])
-		if(Destination.density)
+		if(!Destination || Destination.density || locate(/obj/structure/window/shuttle) in Destination.contents || locate(/obj/structure/object_wall) in Destination.contents)
 			return FALSE
 
 		moving_order += list(list(T, Destination, relative_object_coordinates))
@@ -423,7 +478,7 @@ var/global/dock_ids = 1
 			to_chat(usr, "<span class='notice'>Шаттл уже пристыкован к выбранному шлюзу.</span>")
 			return
 
-		if(!Shuttle.try_move(ShuttleDock, StationDock))
+		if(StationDock.occupied || !Shuttle.try_move(ShuttleDock, StationDock))
 			to_chat(usr, "Невозможно пристыковаться к выбранному доку.")
 			return
 
