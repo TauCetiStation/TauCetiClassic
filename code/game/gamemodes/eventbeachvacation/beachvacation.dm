@@ -118,7 +118,7 @@
 	description = "A fresh pineapple drink with coconut rum. Yum."
 	id = "pinacolada"
 	boozepwr = 1.5
-	color = "#FFF1B2"
+	color = "#fceeb1"
 	taste_message = "pineapple, coconut, and a hint of the ocean"
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/pinacolada
