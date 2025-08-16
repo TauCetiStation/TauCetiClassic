@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 55
+#define SAVEFILE_VERSION_MAX 56
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -481,6 +481,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			var/list/diff = ignore_question - global.full_ignore_question
 			if(diff.len)
 				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 56)
+		underwear = /datum/preferences::underwear
+		undershirt = /datum/preferences::undershirt
+		undershirt_print = /datum/preferences::undershirt_print
+		socks = /datum/preferences::socks
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
