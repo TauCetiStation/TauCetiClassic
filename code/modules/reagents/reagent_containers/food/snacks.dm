@@ -3742,6 +3742,8 @@
 	name = "Fasqh'tongue"
 	desc = "A dried and cured sissalika tongue cured in vinegar. Usually seasoned with something spicy. It is usually served straight in its entirety, occupying a good half a meter on the table."
 	icon_state = "fasqhtongue"
+	item_state = "fasqhtongue"
+	item_state_world = "fasqhtongue_world"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/fasqhtongueslice
 	slices_num = 5
 	bitesize = 5
@@ -3752,6 +3754,8 @@
 	name = "Fasqh'tongue slice"
 	desc = "A slice of a spicy alien tongue. Smells like Moghes!"
 	icon_state = "fasqhtongueslice"
+	item_state = "fasqhtongueslice_world"
+	item_state_world = "fasqhtongueslice_world"
 	trash = /obj/item/trash/plate
 	filling_color = "#bf6655"
 	bitesize = 2
