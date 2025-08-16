@@ -1264,6 +1264,7 @@
 #include "code\game\objects\structures\grille.dm"
 #include "code\game\objects\structures\headpole.dm"
 #include "code\game\objects\structures\inflatable.dm"
+#include "code\game\objects\structures\ivent.dm"
 #include "code\game\objects\structures\janicart.dm"
 #include "code\game\objects\structures\kitchen_spike.dm"
 #include "code\game\objects\structures\ladders.dm"
