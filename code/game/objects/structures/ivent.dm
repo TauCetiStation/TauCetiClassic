@@ -4,6 +4,9 @@
 	desc = "Аче, качает."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dj_booth"
+	density = TRUE
+	anchored = TRUE
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/structure/ivent/dj_booth/attack_hand(mob/user)
 	if(!Adjacent(user))
