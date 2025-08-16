@@ -83,7 +83,10 @@
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
-		handle_bodyparts()
+
+		var/obj/item/organ/internal/heart/HEART = organs_by_name[O_HEART]
+		if(HEART)
+			HEART.process()
 
 		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp") //let the world KNOW WE ARE DEAD
 

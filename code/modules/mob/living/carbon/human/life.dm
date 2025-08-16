@@ -91,7 +91,7 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name() // why in life wtf
 
-	if(istype(heart) && !(heart.status & ORGAN_DEAD))
+	if(heart)
 		pulse = heart.pulse
 
 	if(client)

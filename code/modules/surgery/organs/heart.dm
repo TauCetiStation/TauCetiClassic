@@ -34,7 +34,7 @@
 /obj/item/organ/internal/heart/process()
 	if(owner)
 		handle_pulse()
-		owner.pulse = handle_pulse()
+		pulse = handle_pulse()
 		if(pulse)
 			handle_heart_beat()
 			if(pulse == PULSE_2FAST && prob(1))
