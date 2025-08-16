@@ -1579,7 +1579,6 @@
 "acJ" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	locked = 1;
 	name = "Labor Camp Shuttle Airlock";
 	req_access = list(2)
 	},
@@ -4628,7 +4627,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	locked = 1;
 	name = "Labor Camp Shuttle Airlock";
 	req_access = list(2)
 	},
@@ -10187,20 +10185,22 @@
 /area/station/rnd/xenobiology)
 "aqM" = (
 /obj/structure/object_wall/mining{
-	icon_state = "1-1"
+	icon_state = "1-1";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "aqN" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aqO" = (
 /obj/structure/object_wall/mining{
-	icon_state = "1-2"
+	icon_state = "1-2";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "aqP" = (
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
@@ -10227,10 +10227,11 @@
 /area/station/maintenance/engineering)
 "aqS" = (
 /obj/structure/object_wall/mining{
-	icon_state = "1-7"
+	icon_state = "1-7";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "aqT" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -10468,17 +10469,19 @@
 /area/station/rnd/xenobiology)
 "ars" = (
 /obj/structure/object_wall/mining{
-	icon_state = "2-1"
+	icon_state = "2-1";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "art" = (
 /obj/structure/object_wall/mining{
 	icon_state = "2-2";
-	opacity = 0
+	opacity = 0;
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "aru" = (
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
@@ -11265,10 +11268,11 @@
 /area/station/maintenance/dormitory)
 "asJ" = (
 /obj/structure/object_wall/mining{
-	icon_state = "3-1"
+	icon_state = "3-1";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "asK" = (
 /obj/item/weapon/flora/random,
 /obj/effect/decal/turf_decal/set_burned,
@@ -11277,9 +11281,10 @@
 "asL" = (
 /obj/structure/closet/mining,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "3-2"
+	icon_state = "3-2";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "asM" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -11748,20 +11753,22 @@
 /area/station/security/iaa_office)
 "atH" = (
 /obj/structure/object_wall/mining{
-	icon_state = "4-1"
+	icon_state = "4-1";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "atI" = (
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/auxsolarport)
 "atJ" = (
 /obj/structure/object_wall/mining{
 	icon_state = "4-2";
-	opacity = 0
+	opacity = 0;
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "atK" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -11869,9 +11876,10 @@
 "atS" = (
 /obj/machinery/light/smart,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "4-7"
+	icon_state = "4-7";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "atT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -12227,22 +12235,25 @@
 /area/station/civilian/kitchen)
 "aux" = (
 /obj/structure/object_wall/mining{
-	icon_state = "5-1"
+	icon_state = "5-1";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "auy" = (
 /obj/structure/object_wall/mining{
-	icon_state = "1-5"
+	icon_state = "1-5";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "auz" = (
 /obj/structure/object_wall/mining{
-	icon_state = "5-2"
+	icon_state = "5-2";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "auA" = (
 /obj/machinery/alarm{
 	pixel_y = 26
@@ -12255,10 +12266,11 @@
 "auB" = (
 /obj/structure/object_wall/mining{
 	icon_state = "4-8";
-	opacity = 0
+	opacity = 0;
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "auC" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -15351,10 +15363,11 @@
 /area/station/bridge/meeting_room)
 "aAm" = (
 /obj/structure/object_wall/mining{
-	icon_state = "1-9"
+	icon_state = "1-9";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "aAn" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -18825,9 +18838,10 @@
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "2-4,5,6"
+	icon_state = "2-4,5,6";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "aGW" = (
 /turf/simulated/wall,
 /area/station/storage/tools)
@@ -18867,10 +18881,11 @@
 /area/station/hallway/primary/central)
 "aHa" = (
 /obj/structure/object_wall/mining{
-	icon_state = "2-9"
+	icon_state = "2-9";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "aHb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -20353,9 +20368,10 @@
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "3-3"
+	icon_state = "3-3";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "aJP" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
@@ -22790,10 +22806,11 @@
 /area/station/rnd/mixing)
 "aOn" = (
 /obj/structure/object_wall/mining{
-	icon_state = "1-8"
+	icon_state = "1-8";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "aOo" = (
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
@@ -26408,6 +26425,10 @@
 	dock_tag = "stat_dock";
 	name = "Arrival Airlock";
 	req_one_access = list(65,48)
+	},
+/obj/effect/docking_port{
+	dir = 1;
+	name = "Dock 1"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/mine_sci_shuttle)
@@ -34529,10 +34550,11 @@
 /area/station/rnd/test_area)
 "bjc" = (
 /obj/structure/object_wall/mining{
-	icon_state = "5-3"
+	icon_state = "5-3";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "bjd" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -34551,10 +34573,12 @@
 /area/station/bridge/meeting_room)
 "bjg" = (
 /obj/structure/window/shuttle/reinforced/mining{
-	icon_state = "5-4"
+	icon_state = "5-4";
+	grid_id = "min_sci";
+	dir = 2
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "bjh" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -34580,9 +34604,10 @@
 	dock_tag = "mining_shuttle"
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "5-5"
+	icon_state = "5-5";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "bjk" = (
 /turf/simulated/wall,
 /area/station/medical/reception)
@@ -34599,10 +34624,12 @@
 /area/station/medical/chemistry)
 "bjn" = (
 /obj/structure/window/shuttle/reinforced/mining{
-	icon_state = "5-6"
+	icon_state = "5-6";
+	grid_id = "min_sci";
+	dir = 2
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "bjo" = (
 /obj/structure/stool/bed/chair/comfy/green{
 	dir = 4
@@ -34624,10 +34651,11 @@
 /area/station/medical/reception)
 "bjq" = (
 /obj/structure/object_wall/mining{
-	icon_state = "5-7"
+	icon_state = "5-7";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "bjr" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -34722,10 +34750,11 @@
 /area/station/hallway/primary/starboard)
 "bjC" = (
 /obj/structure/object_wall/mining{
-	icon_state = "5-8"
+	icon_state = "5-8";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "bjD" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -34735,10 +34764,12 @@
 /area/station/maintenance/engineering)
 "bjE" = (
 /obj/structure/window/shuttle/reinforced/mining{
-	icon_state = "3-9"
+	icon_state = "3-9";
+	grid_id = "min_sci";
+	dir = 2
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "bjF" = (
 /obj/machinery/camera{
 	c_tag = "Tech Storage";
@@ -34792,9 +34823,10 @@
 /area/station/hallway/secondary/exit)
 "bjM" = (
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "2-7"
+	icon_state = "2-7";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "bjN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -37301,9 +37333,10 @@
 /area/station/civilian/hydroponics)
 "boe" = (
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "4-5"
+	icon_state = "4-5";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "bof" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -39099,10 +39132,11 @@
 /area/station/medical/surgery)
 "brp" = (
 /obj/structure/object_wall/mining{
-	icon_state = "4-9"
+	icon_state = "4-9";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "brq" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -39141,9 +39175,10 @@
 /area/station/rnd/robotics)
 "brt" = (
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "4-4,6"
+	icon_state = "4-4,6";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "bru" = (
 /obj/machinery/alarm/server{
 	dir = 4;
@@ -39560,10 +39595,11 @@
 /area/station/civilian/chapel/altar)
 "bsj" = (
 /obj/structure/object_wall/mining{
-	icon_state = "5-9"
+	icon_state = "5-9";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "bsk" = (
 /obj/structure/stool/bed/chair/pew/right,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -56556,6 +56592,10 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/effect/docking_port{
+	dir = 8;
+	name = "Dock 3"
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "bZB" = (
@@ -70410,6 +70450,10 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/effect/docking_port{
+	dir = 1;
+	name = "Dock 2"
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "dFb" = (
@@ -71135,6 +71179,10 @@
 	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
+	},
+/obj/effect/docking_port{
+	dir = 1;
+	name = "Dock 4"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
@@ -73450,10 +73498,12 @@
 /area/station/rnd/brainstorm_center)
 "gVb" = (
 /obj/structure/window/shuttle/reinforced/mining{
-	icon_state = "1-4,6"
+	icon_state = "1-4,6";
+	grid_id = "min_sci";
+	dir = 2
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "gVm" = (
 /obj/machinery/requests_console/security{
 	pixel_x = 30
@@ -73553,10 +73603,11 @@
 /area/station/maintenance/cargo)
 "gZb" = (
 /obj/structure/object_wall/mining{
-	icon_state = "1-3"
+	icon_state = "1-3";
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "haA" = (
 /obj/machinery/field_generator{
 	anchored = 1;
@@ -73592,9 +73643,10 @@
 /area/station/engineering/drone_fabrication)
 "hcb" = (
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "2-4,5,6"
+	icon_state = "2-4,5,6";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "hct" = (
 /obj/structure/object_wall/cargo,
 /turf/environment/space,
@@ -73647,9 +73699,10 @@
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "2-3"
+	icon_state = "2-3";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "hgi" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -73677,10 +73730,11 @@
 "hhb" = (
 /obj/structure/object_wall/mining{
 	icon_state = "2-8";
-	opacity = 0
+	opacity = 0;
+	grid_id = "min_sci"
 	},
 /turf/environment/space,
-/area/shuttle/mining/station)
+/area/space)
 "hho" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -73715,17 +73769,19 @@
 /area/shuttle/supply/station)
 "hjb" = (
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "3-4,5,6"
+	icon_state = "3-4,5,6";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "hkb" = (
 /obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "3-7"
+	icon_state = "3-7";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "hlb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73787,13 +73843,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "hnb" = (
-/obj/machinery/computer/mine_sci_shuttle/flight_comp{
+/obj/machinery/computer/shuttle_console{
+	shuttleName = "MiningScience";
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "3-8"
+	icon_state = "3-8";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "hne" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -73895,9 +73953,10 @@
 	},
 /obj/machinery/light/smart,
 /turf/simulated/shuttle/floor/mining{
-	icon_state = "4-3"
+	icon_state = "4-3";
+	grid_id = "min_sci"
 	},
-/area/shuttle/mining/station)
+/area/space)
 "htg" = (
 /obj/effect/decal/turf_decal/wood{
 	dir = 10;
@@ -78869,6 +78928,22 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/genetics)
+"mqp" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	locked = 1;
+	name = "Labor Camp Shuttle Airlock";
+	req_access = list(2)
+	},
+/obj/effect/docking_port{
+	dir = 8;
+	name = "PrisonDock"
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/security/processing)
 "mrb" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
@@ -79317,6 +79392,9 @@
 	dock_tag = "trader_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
+	},
+/obj/effect/docking_port{
+	name = "Dock 5"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
@@ -86348,6 +86426,18 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"vND" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	dock_tag = "stat_dock";
+	name = "Arrival Airlock";
+	req_one_access = list(65,48)
+	},
+/obj/effect/docking_port{
+	name = "Dock 1"
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/hallway/secondary/mine_sci_shuttle)
 "vNR" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -86670,6 +86760,22 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
+"wjL" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	locked = 1;
+	name = "Labor Camp Shuttle Airlock";
+	req_access = list(2)
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/effect/docking_port{
+	dir = 8;
+	name = "PrisonDock"
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/security/processing)
 "wld" = (
 /obj/machinery/biogenerator,
 /turf/simulated/floor{
@@ -87085,6 +87191,10 @@
 	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
+	},
+/obj/effect/docking_port{
+	dir = 8;
+	name = "Dock 4"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
@@ -92191,7 +92301,7 @@ aUN
 aWt
 aXQ
 asG
-kAe
+vND
 aaa
 aaa
 aaa
@@ -111943,8 +112053,8 @@ aah
 aah
 aah
 wcY
-ahJ
-acJ
+mqp
+wjL
 amu
 aah
 aaa

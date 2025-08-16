@@ -60,6 +60,11 @@
 
 	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
 
+	var/grid_id
+	var/turf/under_shuttle_type
+	var/area/under_shuttle_area
+	var/prev_dir
+
 /**
   * Turf Initialize
   *
@@ -478,7 +483,29 @@
 		return target
 
 /turf/proc/BreakToBase()
-	ChangeTurf(basetype)
+	if(under_shuttle_area)
+		var/area/shuttle_area = loc
+		shuttle_area.contents -= src
+		change_area(shuttle_area, under_shuttle_area)
+		under_shuttle_area = null
+
+	if(!under_shuttle_type)
+		ChangeTurf(basetype)
+		return
+
+	ChangeTurf(under_shuttle_type)
+	under_shuttle_type = null
+
+/turf/proc/Shuttle_MoveTurf(turf/target)
+	if(!target.under_shuttle_type)
+		target.under_shuttle_type = target.type
+
+	target.grid_id = src.grid_id
+	src.grid_id = null
+	if(prev_dir)
+		dir = prev_dir
+
+	return MoveTurf(target, move_unmovable = TRUE)
 
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(basetype)

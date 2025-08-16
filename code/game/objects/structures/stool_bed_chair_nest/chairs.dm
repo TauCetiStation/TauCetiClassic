@@ -120,6 +120,10 @@
 
 	..()
 
+/obj/structure/stool/bed/chair/set_dir(new_dir)
+	. = ..()
+	handle_rotation()
+
 /obj/structure/stool/bed/chair/handle_rotation() // making this into a seperate proc so office chairs can call it on Move()
 	if(dir == NORTH && buckled_mob)
 		layer = FLY_LAYER
@@ -147,7 +151,6 @@
 		return
 
 	set_dir(turn(src.dir, 90))
-	handle_rotation()
 	return
 
 /obj/structure/stool/bed/chair/AltClick(mob/user)

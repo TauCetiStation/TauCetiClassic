@@ -149,6 +149,17 @@ var/global/EXPOSURE_CONTRAST_POWER = EXPOSURE_CONTRAST_POWER_DEF
 
 		add_overlay(exposure_overlay)
 
+/atom/proc/update_bloom_rotation()
+	cut_overlay(glow_overlay)
+	cut_overlay(exposure_overlay)
+	if(glow_overlay)
+		glow_overlay.dir = dir
+		add_overlay(glow_overlay)
+
+	if(exposure_overlay)
+		exposure_overlay.dir = dir
+		add_overlay(exposure_overlay)
+
 /atom/proc/delete_lights()
 	cut_overlay(glow_overlay)
 	cut_overlay(exposure_overlay)
