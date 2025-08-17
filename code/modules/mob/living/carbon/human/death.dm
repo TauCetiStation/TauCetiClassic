@@ -26,9 +26,6 @@
 	P.real_name = dna.real_name
 	P.dna = dna.Clone()
 	P.UpdateAppearance()
-	P.b_eyes = 200
-	P.g_eyes = 255
-	P.r_eyes = 255
 	P.regenerate_icons(update_body_preferences = TRUE)
 	P.my_corpse = src
 	mind.transfer_to(P)
