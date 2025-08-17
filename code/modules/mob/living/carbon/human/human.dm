@@ -2294,9 +2294,10 @@
 	g_eyes = eye_color[2]
 	b_eyes = eye_color[3]
 
-	underwear = rand(1,underwear_m.len)
-	undershirt = rand(1,undershirt_t.len)
-	socks = rand(1, socks_t.len)
+	underwear = rand(0,underwear_t.len)
+	undershirt = rand(0,undershirt_t.len)
+	undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
+	socks = rand(0, socks_t.len)
 	backbag = rand(2, backbaglist.len)
 
 	use_skirt = pick(TRUE, FALSE)
