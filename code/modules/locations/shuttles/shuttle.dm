@@ -109,8 +109,11 @@ var/global/dock_ids = 1
 
 
 /datum/shuttle
-	var/name = "ShuttleName"
+	var/name = "Shuttle"
 	var/grid_id
+
+	var/dir
+	var/z_level
 
 	var/list/tiles
 	var/list/outer_shell
@@ -129,14 +132,24 @@ var/global/dock_ids = 1
 
 	var/area/shuttle/ShuttleArea
 
+	var/bounds_x
+	var/bounds_y
+
+	var/max_x = 0
+	var/min_x = 0
+	var/max_y = 0
+	var/min_y = 0
+
 /datum/shuttle/New(obj/machinery/computer/shuttle_console/Cons, grid)
+	dir = Cons.dir
+	z_level = Cons.z
 	Console = Cons
 	name = Cons.shuttleName
 
 	grid_id = grid
 
 	try_generate_shuttle()
-	ShuttleArea = create_shuttle_area	()
+	ShuttleArea = create_shuttle_area()
 
 /datum/shuttle/proc/try_generate_shuttle()
 	var/turf/Starting = get_turf(Console)
@@ -152,6 +165,18 @@ var/global/dock_ids = 1
 
 /datum/shuttle/proc/check_tile_neighbours(turf/T, x_offset, y_offset)
 	var/turf/CheckingTurf
+
+	if(x_offset > max_x)
+		max_x = x_offset
+
+	if(x_offset < min_x)
+		min_x = x_offset
+
+	if(y_offset > max_y)
+		max_y = y_offset
+
+	if(y_offset < min_y)
+		min_y = y_offset
 
 	checking_directions:
 		for(var/list/mask_params in nearest_mask)
@@ -183,6 +208,9 @@ var/global/dock_ids = 1
 				if(added)
 					airlocks[added] = list("x" = x_offset, "y" = y_offset)
 
+	bounds_x = max_x - min_x + 1
+	bounds_y = max_y - min_y + 1
+
 
 /datum/shuttle/proc/create_shuttle_area()
 	var/area/shuttle/A = new
@@ -205,7 +233,7 @@ var/global/dock_ids = 1
 
 
 /datum/shuttle/proc/check_docked()
-	var/list/z_level_docks = global.all_docking_ports["[Console.z]"]
+	var/list/z_level_docks = global.all_docking_ports["[z_level]"]
 	for(var/datum/dock/dock in z_level_docks)
 		for(var/datum/dock/port in airlocks)
 			if(dock.dir != angle2dir(dir2angle(port.dir) + 180))
@@ -243,6 +271,8 @@ var/global/dock_ids = 1
 		return FALSE
 
 	undock()
+
+	dir = turn(dir, -rotation)
 
 	for(var/list/MovingList in moving_order)
 		var/Thing = MovingList[1]
@@ -303,7 +333,7 @@ var/global/dock_ids = 1
 				if(!M.buckled)
 					M.set_dir(turn(M.dir, -rotation))
 
-				shake_mob(M, Console.dir)
+				shake_mob(M, dir)
 
 				CHECK_TICK
 
@@ -514,3 +544,11 @@ var/global/list/all_docking_ports = list()
 	var/datum/dock/added = add_docking_port(name, dir, x, y, z, global.all_docking_ports["[z]"])
 	if(added)
 		global.all_docking_ports["[z]"] += added
+
+
+/obj/structure/landing_pole
+	name = "Landing Area Pole"
+	desc = "Обозначает границы посадочной площадки."
+
+	icon = 'icons/obj/shuttle.dmi'
+	icon_state = "landing_pole"

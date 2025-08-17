@@ -60,6 +60,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Drone Fabrication"
 	cases = list("дронная", "дронной", "дронной", "дронную", "дронной", "дронной")
 
+/area/station/engineering/garage
+	name = "Garage"
+	cases = list("гараж", "гаража", "гаражу", "гараж", "гаражом", "гараже")
+
 //Maintenance
 /area/station/maintenance
 	cases = list ("техтоннель", "техтоннеля", "техтоннелю", "техтоннель", "техтоннелем", "техтоннеле")
