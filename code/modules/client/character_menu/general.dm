@@ -133,7 +133,7 @@
 				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt ? undershirt_t[undershirt] : "None"]</a><br>"
 				if(undershirt)
 					. += "Undershirt print: <a href='byond://?_src_=prefs;preference=undershirt_print;task=input'>[undershirt_print ? undershirt_print : "None"]</a><br>"
-				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
+				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
