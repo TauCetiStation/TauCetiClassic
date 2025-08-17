@@ -295,7 +295,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump && \
 			r_foot.species == l_foot.species && r_foot.owner_gender == l_foot.owner_gender)
 			var/foot_g = "m"
-			if(r_foot.species.gender_limb_icons)
+			if(gender == FEMALE && r_foot.species.gender_limb_icons)
 				foot_g = "f"
 			var/mutable_appearance/MA = BODY_ICON('icons/mob/human_socks.dmi', 'icons/mob/human_socks_fat.dmi', "socks[socks]_[foot_g]")
 			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]

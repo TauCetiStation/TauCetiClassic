@@ -46,6 +46,15 @@
 					else
 						H.undershirt = undershirt_t.Find(new_undershirt)
 					H.update_underwear()
+
+					if(H.undershirt)
+						var/new_undershirt_print = input(user, "Choose your undershirt print:", "Character Preference", H.undershirt_print ? H.undershirt_print : "None") as null|anything in list("None") + undershirt_prints_t
+						if (new_undershirt_print)
+							if(new_undershirt_print == "None")
+								H.undershirt_print = null
+							else
+								H.undershirt_print = new_undershirt_print
+							H.update_underwear()
 			if("Socks")
 				var/new_socks = input(user, "Choose your character's socks:", "Character Preference", H.socks ? socks_t[H.socks] : "None") as null|anything in list("None") + socks_t
 				if(new_socks)
