@@ -64,18 +64,15 @@
 		/area/station/security = "отдел охраны",
 		/area/station/cargo = "отдел снабжения")
 
-/datum/objective/malf_drone/department/New()
-	..()
-	target_area = pick(possible_area)
-
 /datum/objective/malf_drone/department/table
 	objective = "Люди слишком громко топают своими ногами, пусть передвигаются ползком. "
 	var/initial_table_count = 0
 
 /datum/objective/malf_drone/department/table/New()
-	..()
+	target_area = pick(possible_area)
 	objective += "Полностью заполните [possible_area[target_area]] столами."
 	initial_table_count = count_tables()
+	..()
 
 /datum/objective/malf_drone/department/table/check_completion()
 	if(count_tables() > 60 - initial_table_count)
@@ -97,9 +94,10 @@
 	var/initial_airlock_count = 0
 
 /datum/objective/malf_drone/department/airlock/New()
-	..()
+	target_area = pick(possible_area)
 	objective += "Освободите [possible_area[target_area]] от шлюзов."
 	initial_airlock_count = count_airlocks()
+	..()
 
 /datum/objective/malf_drone/department/airlock/check_completion()
 	if(count_airlocks() < initial_airlock_count * 0.2)

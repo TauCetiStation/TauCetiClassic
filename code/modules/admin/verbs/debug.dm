@@ -727,8 +727,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	set name = "Allow Browser Inspect"
 	set desc = "Allow browser debugging via inspect"
 
-	if(!check_rights(R_DEBUG))
-		return
+	enable_devtools()
 
+/client/verb/enable_devtools()
+	set name = ".devtools"
+	set hidden = TRUE
 	to_chat(src, "<span class='info'>You can now right click to use inspect on browsers.</span>")
-	winset(src, "", "browser-options=byondstorage,find,devtools,refresh")
+	winset(src, null, list("browser-options" = "+devtools"))
+
+/client/proc/mc_show_all_toggle()
+	set category = "Debug"
+	set name = "Toggle MC SS visibility"
+
+	usr.client.holder.MC_ss_show_all = !usr.client.holder.MC_ss_show_all

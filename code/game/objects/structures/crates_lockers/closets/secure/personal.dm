@@ -11,6 +11,7 @@
 		new /obj/item/weapon/storage/backpack/satchel/norm(src)
 	new /obj/item/device/radio/headset(src)
 
+
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 

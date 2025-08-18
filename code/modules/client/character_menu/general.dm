@@ -129,12 +129,11 @@
 		if("gear")
 			. += "<b>Gear:</b><br>"
 			if(specie_obj.flags[HAS_UNDERWEAR])
-				if(gender == MALE)
-					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
-				else
-					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
-				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
-				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
+				. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear ? underwear_t[underwear] : "None"]</a><br>"
+				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt ? undershirt_t[undershirt] : "None"]</a><br>"
+				if(undershirt)
+					. += "Undershirt print: <a href='byond://?_src_=prefs;preference=undershirt_print;task=input'>[undershirt_print ? undershirt_print : "None"]</a><br>"
+				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
@@ -236,14 +235,13 @@
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					if(gender == MALE)
-						underwear = rand(1, underwear_m.len)
-					else
-						underwear = rand(1, underwear_f.len)
+					underwear = rand(0, underwear_t.len)
 				if("undershirt")
-					undershirt = rand(1,undershirt_t.len)
+					undershirt = rand(0, undershirt_t.len)
+				if("undershirt_print")
+					undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
 				if("socks")
-					socks = rand(1,socks_t.len)
+					socks = rand(0, socks_t.len)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -413,26 +411,36 @@
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
 						return
-					var/list/underwear_options
-					if(gender == MALE)
-						underwear_options = underwear_m
-					else
-						underwear_options = underwear_f
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear]) as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear ? underwear_t[underwear] : "None") as null|anything in list("None") + underwear_t
 					if(new_underwear)
-						underwear = underwear_options.Find(new_underwear)
+						if(new_underwear == "None")
+							underwear = 0
+						else
+							underwear = underwear_t.Find(new_underwear)
+
 				if("undershirt")
-					var/list/undershirt_options
-					undershirt_options = undershirt_t
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt ? undershirt_t[undershirt] : "None") as null|anything in list("None") + undershirt_t
 					if (new_undershirt)
-						undershirt = undershirt_options.Find(new_undershirt)
+						if(new_undershirt == "None")
+							undershirt = 0
+						else
+							undershirt = undershirt_t.Find(new_undershirt)
+
+				if("undershirt_print")
+					var/new_undershirt_print = input(user, "Choose your undershirt print:", "Character Preference", undershirt_print ? undershirt_print : "None") as null|anything in list("None") + undershirt_prints_t
+					if (new_undershirt_print)
+						if(new_undershirt_print == "None")
+							undershirt_print = null
+						else
+							undershirt_print = new_undershirt_print
+
 				if("socks")
-					var/list/socks_options
-					socks_options = socks_t
-					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks_options[socks]) as null|anything in socks_options
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks ? socks_t[socks] : "None") as null|anything in list("None") + socks_t
 					if(new_socks)
-						socks = socks_options.Find(new_socks)
+						if(new_socks == "None")
+							socks = 0
+						else
+							socks = socks_t.Find(new_socks)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", rgb(r_eyes, g_eyes, b_eyes)) as color|null

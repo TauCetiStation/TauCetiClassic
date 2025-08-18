@@ -66,8 +66,8 @@
 /**
  * Wrapper that returns an empty list if A* failed to find a path
  */
-/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+/proc/get_path_to(origin, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/list/path = AStar(origin, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 	if(!path)
 		path = list()
 	return path
@@ -75,13 +75,13 @@
 /**
  * The actual A* algorithm
  */
-/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+/proc/AStar(origin, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
 	var/list/pnodelist = list()
 
 	// Sanitation
-	var/start = get_turf(caller)
+	var/start = get_turf(origin)
 	if(!start)
-		CRASH("Unable to get turf from caller")
+		CRASH("Unable to get turf from origin")
 
 	if(maxnodes)
 		// If start turf is farther than maxnodes from end turf, no need to do anything
@@ -125,7 +125,7 @@
 			break
 
 		// Get adjacents turfs using the adjacent proc, checking for access with id
-		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
+		var/list/L = call(cur.source,adjacent)(origin,id, simulated_only)
 		for(var/turf/T in L)
 			if(T == exclude || (T in closed))
 				continue
@@ -163,7 +163,7 @@
  * Returns adjacent turfs in cardinal directions that are reachable
  * `simulated_only` controls whether only simulated turfs are considered or not
  */
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+/turf/proc/reachableAdjacentTurfs(origin, ID, simulated_only)
 	var/list/L = list()
 
 	for(var/dir in cardinal)
@@ -172,11 +172,11 @@
 		if(simulated_only && !istype(T))
 			continue
 
-		if(!T.density && !LinkBlockedWithAccess(T, caller, ID))
+		if(!T.density && !LinkBlockedWithAccess(T, origin, ID))
 			L += T
 	return L
 
-/turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
+/turf/proc/LinkBlockedWithAccess(turf/T, origin, ID)
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
@@ -189,7 +189,7 @@
 			return TRUE
 
 	for(var/obj/O in T)
-		if(!O.CanAStarPass(ID, rdir, caller))
+		if(!O.CanAStarPass(ID, rdir, origin))
 			return TRUE
 
 	return FALSE

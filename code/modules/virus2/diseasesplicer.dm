@@ -24,7 +24,6 @@
 			return
 		dish = I
 		c.drop_from_inventory(I, src)
-		updateUsrDialog()
 		return
 
 	else if(istype(I,/obj/item/weapon/diseasedisk))
@@ -35,15 +34,22 @@
 		species_buffer = I:species
 		analysed = I:analysed
 		qdel(I)
-		updateUsrDialog()
 		return
 
 	attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	var/data[0]
+/obj/machinery/computer/diseasesplicer/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/computer/diseasesplicer/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DiseaseSplicer", name)
+		ui.open()
+
+/obj/machinery/computer/diseasesplicer/tgui_data(mob/user)
+	var/list/data = list()
 	data["dish_inserted"] = !!dish
-	data["growth"] = 0
 	data["affected_species"] = null
 	data["can_splice"] = FALSE
 
@@ -74,11 +80,61 @@
 	else
 		data["info"] = "No dish loaded."
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "disease_splicer.tmpl", src.name, 400, 600)
-		ui.set_initial_data(data)
-		ui.open()
+	return data
+
+/obj/machinery/computer/diseasesplicer/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if ("grab")
+			if (dish)
+				memorybank = locate(params["index"])
+				species_buffer = null
+				analysed = dish.analysed
+				dish = null
+				scanning = 10
+			return TRUE
+
+		if ("affected_species")
+			if (dish)
+				memorybank = null
+				species_buffer = dish.virus2.affected_species
+				analysed = dish.analysed
+				dish = null
+				scanning = 10
+			return TRUE
+
+		if ("eject")
+			if (dish)
+				dish.forceMove(loc)
+				dish = null
+			return TRUE
+
+		if ("splice")
+			if (dish)
+				if (memorybank && !dish.virus2.haseffect(memorybank.effect))
+					memorybank.stage = 1
+					memorybank.ticks = 0
+					memorybank.cooldownticks = 0
+					memorybank.chance = rand(memorybank.effect.chance_minm,memorybank.effect.chance_maxm)
+					dish.virus2.addeffect(memorybank)
+					memorybank = null
+
+				if (species_buffer)
+					dish.virus2.affected_species = species_buffer
+					species_buffer = null
+
+				splicing = 10
+				dish.virus2.uniqueID = rand(0,10000)
+			return TRUE
+
+		if ("disk")
+			burning = 10
+			return TRUE
+
+	return FALSE
 
 /obj/machinery/computer/diseasesplicer/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -88,16 +144,14 @@
 		scanning -= 1
 		if(!scanning)
 			ping("\The [src] pings, \"Analysis complete.\"")
-			nanomanager.update_uis(src)
 	if(splicing)
 		splicing -= 1
 		if(!splicing)
 			ping("\The [src] pings, \"Splicing operation complete.\"")
-			nanomanager.update_uis(src)
 	if(burning)
 		burning -= 1
 		if(!burning)
-			var/obj/item/weapon/diseasedisk/d = new /obj/item/weapon/diseasedisk(src.loc)
+			var/obj/item/weapon/diseasedisk/d = new /obj/item/weapon/diseasedisk(loc)
 			d.analysed = analysed
 			if(analysed)
 				if (memorybank)
@@ -119,70 +173,3 @@
 					species_buffer = null
 
 			ping("\The [src] pings, \"Backup disk saved.\"")
-			nanomanager.update_uis(src)
-
-/obj/machinery/computer/diseasesplicer/Topic(href, href_list)
-	var/mob/user = usr
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-
-	if (href_list["close"])
-		user.unset_machine(src)
-		ui.close()
-		return FALSE
-
-	. = ..()
-	if(!.)
-		return
-
-	if (href_list["grab"])
-		if (dish)
-			memorybank = locate(href_list["grab"])
-			species_buffer = null
-			analysed = dish.analysed
-			dish = null
-			scanning = 10
-		updateUsrDialog()
-		return TRUE
-
-	if (href_list["affected_species"])
-		if (dish)
-			memorybank = null
-			species_buffer = dish.virus2.affected_species
-			analysed = dish.analysed
-			dish = null
-			scanning = 10
-		updateUsrDialog()
-		return TRUE
-
-	if (href_list["eject"])
-		if (dish)
-			dish.loc = src.loc
-			dish = null
-		updateUsrDialog()
-		return TRUE
-
-	if (href_list["splice"])
-		if (dish)
-			if (memorybank && !dish.virus2.haseffect(memorybank.effect))
-				memorybank.stage = 1
-				memorybank.ticks = 0
-				memorybank.cooldownticks = 0
-				memorybank.chance = rand(memorybank.effect.chance_minm,memorybank.effect.chance_maxm)
-				dish.virus2.addeffect(memorybank)
-				memorybank = null
-
-			if (species_buffer)
-				dish.virus2.affected_species = species_buffer
-				species_buffer = null
-
-			splicing = 10
-			dish.virus2.uniqueID = rand(0,10000)
-		updateUsrDialog()
-		return TRUE
-
-	if (href_list["disk"])
-		burning = 10
-		updateUsrDialog()
-		return TRUE
-
-	return FALSE
