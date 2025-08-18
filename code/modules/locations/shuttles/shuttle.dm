@@ -1,3 +1,13 @@
+var/global/landing_pad_ids = 1
+/datum/landing_pad
+	var/name = "PadName"
+	var/list/landing_coords = list("x" = 0, "y" = 0, "z" = 0)
+	var/bounds_x
+	var/bounds_y
+	var/pad_id = 1
+
+	var/occupied = FALSE
+
 var/global/dock_ids = 1
 /datum/dock
 	var/name = "DockName"
@@ -135,10 +145,8 @@ var/global/dock_ids = 1
 	var/bounds_x
 	var/bounds_y
 
-	var/max_x = 0
-	var/min_x = 0
-	var/max_y = 0
-	var/min_y = 0
+	var/list/min_cords = list("x" = 0, "y" = 0)
+	var/list/max_cords = list("x" = 0, "y" = 0)
 
 /datum/shuttle/New(obj/machinery/computer/shuttle_console/Cons, grid)
 	dir = Cons.dir
@@ -166,17 +174,17 @@ var/global/dock_ids = 1
 /datum/shuttle/proc/check_tile_neighbours(turf/T, x_offset, y_offset)
 	var/turf/CheckingTurf
 
-	if(x_offset > max_x)
-		max_x = x_offset
+	if(x_offset > max_cords["x"])
+		max_cords["x"] = x_offset
 
-	if(x_offset < min_x)
-		min_x = x_offset
+	if(x_offset < min_cords["x"])
+		min_cords["x"] = x_offset
 
-	if(y_offset > max_y)
-		max_y = y_offset
+	if(y_offset > max_cords["y"])
+		max_cords["y"] = y_offset
 
-	if(y_offset < min_y)
-		min_y = y_offset
+	if(y_offset < min_cords["y"])
+		min_cords["y"] = y_offset
 
 	checking_directions:
 		for(var/list/mask_params in nearest_mask)
@@ -208,8 +216,8 @@ var/global/dock_ids = 1
 				if(added)
 					airlocks[added] = list("x" = x_offset, "y" = y_offset)
 
-	bounds_x = max_x - min_x + 1
-	bounds_y = max_y - min_y + 1
+	bounds_x = max_cords["x"] - min_cords["x"] + 1
+	bounds_y = max_cords["y"] - min_cords["y"] + 1
 
 
 /datum/shuttle/proc/create_shuttle_area()
@@ -260,6 +268,30 @@ var/global/dock_ids = 1
 	dockedTo.undock()
 	dockedTo = null
 
+/datum/shuttle/proc/set_dir(new_dir)
+	var/old_dir = dir
+	dir = new_dir
+
+	var/rotation = (dir2angle(dir) - dir2angle(old_dir) + 180) % 360
+	if(rotation < 0)
+		rotation += 360
+
+	min_cords = apply_rotation_to_relative_coordinates(min_cords, rotation)
+	max_cords = apply_rotation_to_relative_coordinates(max_cords, rotation)
+
+	if(max_cords["x"] < min_cords["x"])
+		var/x_holder = min_cords["x"]
+		min_cords["x"] = max_cords["x"]
+		max_cords["x"] = x_holder
+
+	if(max_cords["y"] < min_cords["y"])
+		var/y_holder = min_cords["y"]
+		min_cords["y"] = max_cords["y"]
+		max_cords["y"] = y_holder
+
+	bounds_x = max_cords["x"] - min_cords["x"] + 1
+	bounds_y = max_cords["y"] - min_cords["y"] + 1
+
 /datum/shuttle/proc/try_move(datum/dock/DockBy, datum/dock/DockTo)
 	var/rotation = (dir2angle(DockTo.dir) - dir2angle(DockBy.dir) + 180) % 360
 	if(rotation < 0)
@@ -272,7 +304,7 @@ var/global/dock_ids = 1
 
 	undock()
 
-	dir = turn(dir, -rotation)
+	set_dir(turn(dir, -rotation))
 
 	for(var/list/MovingList in moving_order)
 		var/Thing = MovingList[1]
@@ -380,6 +412,26 @@ var/global/dock_ids = 1
 					if(hit)
 						break
 					step(L, fall_direction)
+
+
+/datum/shuttle/proc/get_landing_pad_rotations(datum/landing_pad/LandOn)
+	var/list/rotations = list()
+
+	if(bound_x <= LandOn.bound_x && bound_y <= LandOn.bound_y)
+		rotations += list(0, 180)
+
+	if(bound_x <= LandOn.bound_y && bound_y <= LandOn.bound_x)
+		rotations += list(90, 270)
+
+	return pick(rotations)
+
+/datum/shuttle/proc/try_land(datum/landing_pad/LandOn)
+	if(LandOn.occupied)
+		return FALSE
+
+	var/rotation = get_landing_pad_rotations(LandOn)
+
+
 
 
 /datum/shuttle/proc/check_dock(datum/dock/DockBy, datum/dock/DockTo, rotation)

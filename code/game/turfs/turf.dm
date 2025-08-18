@@ -62,7 +62,7 @@
 
 	var/grid_id
 
-	var/list/under_shuttle_turf_params //list("type", "icon", "icon_state", "dir")
+	var/list/under_shuttle_turf_params //list("type", "icon", "icon_state", "dir", "decals")
 	var/area/under_shuttle_area
 
 /**
@@ -523,12 +523,14 @@
 	return MoveTurf(target)
 
 /turf/proc/save_turf_to_undershuttle_params()
-	under_shuttle_turf_params = list("type" = type, "icon" = icon, "icon_state" = icon_state, "dir" = dir)
+	under_shuttle_turf_params = list("type" = type, "icon" = icon, "icon_state" = icon_state, "dir" = dir, "decals" = turf_decals)
 
 /turf/proc/set_turf_from_undershuttle_params()
 	icon = under_shuttle_turf_params["icon"]
 	icon_state = under_shuttle_turf_params["icon_state"]
 	dir = under_shuttle_turf_params["dir"]
+
+	turf_decals = under_shuttle_turf_params["decals"]
 
 	under_shuttle_turf_params = null
 
