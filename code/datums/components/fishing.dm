@@ -4,7 +4,7 @@
 	var/catchable_things_amount
 	var/catch_chance
 
-/datum/component/fishing/Initialize(catchable_things, catch_time = 5 SECONDS, catchable_things_amount = 15, catch_chance = 50)
+/datum/component/fishing/Initialize(catchable_things, catch_time = 4 SECONDS, catchable_things_amount = 15, catch_chance = 50)
 	src.catchable_things = catchable_things
 	src.catch_time = catch_time
 	src.catchable_things_amount = catchable_things_amount
@@ -15,7 +15,7 @@
 /datum/component/fishing/proc/try_catch(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(istype(I, /obj/item/weapon/wirerod) && !user.is_busy())
+	if(istype(I, /obj/item/weapon/wirerod) && !user.is_busy(I))
 		INVOKE_ASYNC(src, PROC_REF(start_fishing), I, user)
 		return COMPONENT_NO_AFTERATTACK
 
@@ -25,11 +25,11 @@
 		to_chat(user, "<span class='warning'>Looks like there is almost no things left in this location.</span>")
 	A.visible_message("<span class='notice'>[user] starts fishing.</span>")
 	playsound(user.loc, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
-	if(!do_after(user, catch_time, target = A))
+	if(!do_after(user, catch_time, target = I) || user.is_busy(I))
 		A.visible_message("<span class='notice'>[user] stops fishing.</span>")
 		playsound(user.loc, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 		return
-	if(!prob(catch_chance))
+	if(user.incapacitated() || !prob(catch_chance))
 		A.visible_message("<span class='notice'>[user] fails to catch anything.</span>")
 		return
 	if(!catchable_things_amount)

@@ -293,7 +293,7 @@
 
 /turf/simulated/floor/beach/water/waterpool/atom_init()
 	. = ..()
-	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 15, /obj/item/stack/seashell = 4, /obj/item/fish_carp/mega = 1, /obj/item/fish_carp/full_size = 1, /obj/item/fish_carp/over_size = 1, /obj/item/clothing/under/bathtowel = 1, /obj/item/weapon/bikehorn/rubberducky = 1, PATH_OR_RANDOM_PATH(/obj/random/cloth/shittysuit) = 1), 10 SECONDS, rand(1, 30) , 20)
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 25, /obj/item/fish_carp/mega = 1, /obj/item/fish_carp/full_size = 1, /obj/item/fish_carp/over_size = 1, /obj/item/clothing/under/bathtowel = 1, /obj/item/weapon/bikehorn/rubberducky = 1, PATH_OR_RANDOM_PATH(/obj/random/cloth/shittysuit) = 1), 10 SECONDS, rand(1, 30) , 20)
 
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()

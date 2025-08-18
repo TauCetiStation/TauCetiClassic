@@ -54,6 +54,12 @@
 	map_total_positions = 0
 	map_spawn_positions = 0
 
+/datum/job/officer/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 2
+	map_spawn_positions = 2
+
 /datum/job/recycler/New()
 	..()
 	MAP_JOB_CHECK

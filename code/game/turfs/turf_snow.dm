@@ -221,7 +221,7 @@
 
 	update_icon()
 
-	var/size_caught = 4
+	var/size_caught = 0.4
 	var/fish_weight = pick(
 		30;"small",
 		30;"normal",
@@ -239,17 +239,16 @@
 		if("large")
 			size_caught = 0.6
 		if("enourmous")
-			size_caught = 0.7
-	var/length_caught = size_caught * 100 + rand(1,80)
+			size_caught = 0.8
+	if(scale_icon)
+		size_caught = scale_icon
+	var/length_caught = size_caught * 100 + rand(1, 9)
 	name = name + " ([length_caught] cm)"
 	desc = "Карп длинной [length_caught] сантиметров."
 
 	appearance_flags |= PIXEL_SCALE
 	var/matrix/Mx = matrix()
-	if(scale_icon)
-		Mx.Scale(scale_icon)
-	else
-		Mx.Scale(size_caught)
+	Mx.Scale(size_caught)
 	transform = Mx
 
 	if(catch_target_turf)
@@ -302,6 +301,10 @@
 	meat_amount_max = 4
 	loot_amount = 3
 
+/obj/item/fish_carp/mega/atom_init(mapload, catch_target_turf)
+	. = ..()
+	new /obj/item/stack/seashell(mapload, 1)
+
 /obj/item/fish_carp/mega/update_icon()
 	return
 
@@ -310,7 +313,16 @@
 	meat_amount_max = 8
 	loot_amount = 6
 
+/obj/item/fish_carp/full_size/atom_init(mapload, catch_target_turf)
+	. = ..()
+	new /obj/item/stack/seashell(mapload, 1)
+
 /obj/item/fish_carp/over_size
-	scale_icon = 2
+	name = "giant space carp"
+	scale_icon = 1.3
 	meat_amount_max = 16
 	loot_amount = 12
+
+/obj/item/fish_carp/over_size/atom_init(mapload, catch_target_turf)
+	. = ..()
+	new /obj/item/stack/seashell(mapload, 1)
