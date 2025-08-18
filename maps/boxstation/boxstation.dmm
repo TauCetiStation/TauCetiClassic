@@ -37239,9 +37239,6 @@
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "jXp" = (
-/obj/structure/curtain/open/shower{
-	pixel_x = 32
-	},
 /obj/structure/stool/bed/bench{
 	dir = 8
 	},
@@ -50643,12 +50640,14 @@
 	},
 /area/station/medical/hallway)
 "nyu" = (
-/obj/structure/curtain/open/shower{
-	pixel_x = 32
-	},
 /obj/structure/stool/bed/bench{
 	dir = 8;
 	icon_state = "bench_2"
+	},
+/obj/machinery/windowtint{
+	id = "sauna";
+	pixel_y = 28;
+	range = 12
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -79554,9 +79553,10 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/structure/window/fulltile{
+/obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	icon_state = "gr_window"
+	icon_state = "gr_window_polarized";
+	id = "sauna"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/toilet)
@@ -90301,9 +90301,6 @@
 	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel/mass_driver)
-"xmH" = (
-/turf/simulated/wall/mineral,
-/area/station/hallway/primary/central)
 "xmM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -124426,10 +124423,10 @@ ymd
 llv
 vqu
 vYR
-xmH
+pBg
 rHA
 rHA
-xmH
+pBg
 qgc
 pek
 wTS
@@ -124686,7 +124683,7 @@ vYR
 woC
 bJe
 bJe
-xmH
+pBg
 nqG
 qHm
 rih
@@ -131368,7 +131365,7 @@ yeY
 woC
 bJe
 bJe
-xmH
+pBg
 qmF
 hWW
 utW
@@ -131622,10 +131619,10 @@ ycz
 neB
 wmX
 yeY
-xmH
+pBg
 rHA
 rHA
-xmH
+pBg
 qnq
 rJZ
 wTS
