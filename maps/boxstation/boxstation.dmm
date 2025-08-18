@@ -81328,29 +81328,15 @@
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/weapon/rcd_ammo{
-	pixel_x = -7;
-	pixel_y = -6
+/obj/item/weapon/rcd_ammo/medium{
+	pixel_x = -3
 	},
-/obj/item/weapon/rcd_ammo{
-	pixel_x = -4;
-	pixel_y = -6
+/obj/item/weapon/rcd_ammo/medium,
+/obj/item/weapon/rcd_ammo/medium{
+	pixel_x = 3
 	},
-/obj/item/weapon/rcd_ammo{
-	pixel_x = -1;
-	pixel_y = -6
-	},
-/obj/item/weapon/rcd_ammo{
-	pixel_x = 2;
-	pixel_y = -6
-	},
-/obj/item/weapon/rcd_ammo{
-	pixel_x = 5;
-	pixel_y = -6
-	},
-/obj/item/weapon/rcd_ammo{
-	pixel_x = 8;
-	pixel_y = -6
+/obj/item/weapon/rcd_ammo/medium{
+	pixel_x = 6
 	},
 /obj/item/weapon/rcd{
 	pixel_y = -10
