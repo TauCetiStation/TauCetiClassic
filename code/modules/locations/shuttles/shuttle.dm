@@ -1,36 +1,70 @@
-var/global/landing_pad_ids = 1
-/datum/landing_pad
-	var/name = "PadName"
-	var/list/landing_coords = list("x" = 0, "y" = 0, "z" = 0)
-	var/bounds_x
-	var/bounds_y
-	var/pad_id = 1
-
-	var/occupied = FALSE
-
 var/global/dock_ids = 1
 /datum/dock
 	var/name = "DockName"
 	var/dir
 	var/size = 1
-	var/X
-	var/Y
-	var/Z
+
+	var/bounds_x = 1
+	var/bounds_y = 1
 
 	var/dock_id = 1
 
 
 	var/occupied = FALSE
 
-/datum/dock/New(name, dir, X, Y, Z)
+	var/list/landing_coords = list("x" = 0, "y" = 0, "z" = 0)
+
+/datum/dock/landing_pad
+	name = "PadName"
+
+	var/list/poles
+
+/datum/dock/landing_pad/proc/connect_to(list/Poles)
+	poles = Poles
+	for(var/obj/structure/landing_pole/Pole in poles)
+		RegisterSignal(Pole, list(COMSIG_PARENT_QDELETING), PROC_REF(pole_destroyed))
+		RegisterSignal(Pole, list(COMSIG_MOVABLE_MOVED), PROC_REF(pole_destroyed))
+
+		Pole.connect_landing(src)
+
+/datum/dock/landing_pad/proc/pole_destroyed()
+	for(var/obj/structure/landing_pole/Pole in poles)
+		Pole.landing_destroyed()
+		UnregisterSignal(Pole, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+
+		Pole.disconnect_landing()
+
+	qdel(src)
+
+/datum/dock/landing_pad/dock()
+	occupied = TRUE
+
+	for(var/obj/structure/landing_pole/Pole in poles)
+		Pole.landing_lights_on()
+	return
+
+/datum/dock/landing_pad/undock()
+	occupied = FALSE
+	return
+
+
+/datum/dock/New(name, dir, X, Y, Z, size_X = 1, size_Y = 1)
 	src.name = name
 	src.dir = dir
-	src.X = X
-	src.Y = Y
-	src.Z = Z
+	landing_coords["x"] = X
+	landing_coords["y"] = Y
+	landing_coords["z"] = Z
+
+	bounds_x = size_X
+	bounds_y = size_Y
 
 	dock_id = dock_ids
 	dock_ids++
+
+/datum/dock/Destroy()
+	all_docking_ports["[landing_coords["z"]]"] -= src
+
+	return ..()
 
 /datum/dock/proc/dock()
 	occupied = TRUE
@@ -41,7 +75,7 @@ var/global/dock_ids = 1
 	return bolt_unbolt(TRUE)
 
 /datum/dock/proc/bolt_unbolt(bolt = TRUE)
-	var/turf/T = locate(X, Y, Z)
+	var/turf/T = locate(landing_coords["x"], landing_coords["y"], landing_coords["z"])
 	if(!T)
 		return FALSE
 
@@ -96,22 +130,22 @@ var/global/dock_ids = 1
 
 		switch(dir)
 			if(NORTH, SOUTH)
-				if(!(port.X - x in list(1, -1)))
+				if(!(port.landing_coords["x"] - x in list(1, -1)))
 					continue
 
 				port.size = 2
-				if(port.X > x)
-					port.X = x
+				if(port.landing_coords["x"] > x)
+					port.landing_coords["x"] = x
 
 				return
 
 			if(EAST, WEST)
-				if(!(port.Y - y in list(1, -1)))
+				if(!(port.landing_coords["y"] - y in list(1, -1)))
 					continue
 
 				port.size = 2
-				if(port.Y > y)
-					port.Y = y
+				if(port.landing_coords["y"] > y)
+					port.landing_coords["y"] = y
 
 				return
 
@@ -244,11 +278,11 @@ var/global/dock_ids = 1
 	var/list/z_level_docks = global.all_docking_ports["[z_level]"]
 	for(var/datum/dock/dock in z_level_docks)
 		for(var/datum/dock/port in airlocks)
-			if(dock.dir != angle2dir(dir2angle(port.dir) + 180))
+			if(dock.dir != global.reverse_dir[port.dir])
 				continue
 
-			var/turf/T = get_step(locate(dock.X, dock.Y, dock.Z), dock.dir)
-			if(!T || T.x != (port.X) || T.y != (port.Y))
+			var/turf/T = get_step(locate(dock.landing_coords["x"], dock.landing_coords["y"], dock.landing_coords["z"]), dock.dir)
+			if(!T || T.x != (port.landing_coords["x"]) || T.y != (port.landing_coords["y"]))
 				continue
 
 			dock(port, dock)
@@ -272,7 +306,7 @@ var/global/dock_ids = 1
 	var/old_dir = dir
 	dir = new_dir
 
-	var/rotation = (dir2angle(dir) - dir2angle(old_dir) + 180) % 360
+	var/rotation = (dir2angle(global.reverse_dir[dir]) - dir2angle(old_dir)) % 360
 	if(rotation < 0)
 		rotation += 360
 
@@ -292,12 +326,35 @@ var/global/dock_ids = 1
 	bounds_x = max_cords["x"] - min_cords["x"] + 1
 	bounds_y = max_cords["y"] - min_cords["y"] + 1
 
-/datum/shuttle/proc/try_move(datum/dock/DockBy, datum/dock/DockTo)
-	var/rotation = (dir2angle(DockTo.dir) - dir2angle(DockBy.dir) + 180) % 360
-	if(rotation < 0)
-		rotation += 360
+/datum/shuttle/proc/get_landing_pad_rotation(datum/dock/landing_pad/LandOn)
+	var/list/rotations = list()
 
-	var/list/moving_order = check_dock(DockBy, DockTo, rotation)
+	if(bounds_x <= LandOn.bounds_x && bounds_y <= LandOn.bounds_y)
+		rotations += list(0, 180)
+
+	if(bounds_x <= LandOn.bounds_y && bounds_y <= LandOn.bounds_x)
+		rotations += list(90, 270)
+
+	if(!rotations.len)
+		return FALSE
+
+	return pick(rotations)
+
+/datum/shuttle/proc/try_move(datum/dock/DockBy, datum/dock/DockTo)
+	var/list/moving_order
+	var/rotation = 0
+	if(istype(DockTo, /datum/dock/landing_pad))
+		rotation = get_landing_pad_rotation(DockTo)
+		if(!rotation)
+			return FALSE
+
+		moving_order = check_pad(DockTo, rotation)
+	else
+		rotation = (dir2angle(DockTo.dir) - dir2angle(global.reverse_dir[DockBy.dir])) % 360
+		if(rotation < 0)
+			rotation += 360
+
+		moving_order = check_dock(DockBy, DockTo, rotation)
 
 	if(!moving_order)
 		return FALSE
@@ -414,31 +471,35 @@ var/global/dock_ids = 1
 					step(L, fall_direction)
 
 
-/datum/shuttle/proc/get_landing_pad_rotations(datum/landing_pad/LandOn)
-	var/list/rotations = list()
+/datum/shuttle/proc/check_pad(datum/dock/landing_pad/LandOn, rotation)
+	var/bounds_x_holder = (rotation in list(0, 180)) ? bounds_x : bounds_y
+	var/bounds_y_holder = (rotation in list(0, 180)) ? bounds_y : bounds_x
+	var/min_cords_holder = apply_rotation_to_relative_coordinates(min_cords, rotation)
+	var/max_cords_holder = apply_rotation_to_relative_coordinates(max_cords, rotation)
 
-	if(bound_x <= LandOn.bound_x && bound_y <= LandOn.bound_y)
-		rotations += list(0, 180)
+	if(max_cords_holder["x"] < min_cords_holder["x"])
+		min_cords_holder["x"] = max_cords_holder["x"]
 
-	if(bound_x <= LandOn.bound_y && bound_y <= LandOn.bound_x)
-		rotations += list(90, 270)
+	if(max_cords_holder["y"] < min_cords_holder["y"])
+		min_cords_holder["y"] = max_cords_holder["y"]
 
-	return pick(rotations)
-
-/datum/shuttle/proc/try_land(datum/landing_pad/LandOn)
-	if(LandOn.occupied)
+	var/turf/destination_turf = locate(LandOn.landing_coords["x"] + round((LandOn.bounds_x - bounds_x_holder) / 2) - min_cords_holder["x"], LandOn.landing_coords["y"] + round((LandOn.bounds_y - bounds_y_holder) / 2) - min_cords_holder["y"], LandOn.landing_coords["z"])
+	if(!destination_turf)
 		return FALSE
+	var/list/destination_turf_coordinates = list("x" = destination_turf.x, "y" = destination_turf.y, "z" = destination_turf.z)
 
-	var/rotation = get_landing_pad_rotations(LandOn)
-
-
-
+	return generate_moving_order(destination_turf_coordinates, list(0, 0), rotation)
 
 /datum/shuttle/proc/check_dock(datum/dock/DockBy, datum/dock/DockTo, rotation)
 	var/list/relative_dock_coordinates = apply_rotation_to_relative_coordinates(airlocks[DockBy], rotation)
-	var/turf/destination_turf = get_step(locate(DockTo.X, DockTo.Y, DockTo.Z), DockTo.dir)
+	var/turf/destination_turf = get_step(locate(DockTo.landing_coords["x"], DockTo.landing_coords["y"], DockTo.landing_coords["z"]), DockTo.dir)
+	if(!destination_turf)
+		return FALSE
 	var/list/destination_turf_coordinates = list("x" = destination_turf.x, "y" = destination_turf.y, "z" = destination_turf.z)
 
+	return generate_moving_order(destination_turf_coordinates, relative_dock_coordinates, rotation)
+
+/datum/shuttle/proc/generate_moving_order(list/destination_turf_coordinates, list/relative_dock_coordinates, rotation)
 	var/list/moving_order = list()// list(movingObject, destinationTurf, newRelativeCoordinates)
 
 	var/list/relative_object_coordinates
@@ -462,9 +523,9 @@ var/global/dock_ids = 1
 
 	for(var/datum/dock/Airlock in airlocks)
 		relative_object_coordinates = apply_rotation_to_relative_coordinates(airlocks[Airlock], rotation)
-		Airlock.X = destination_turf_coordinates["x"] + relative_object_coordinates["x"] - relative_dock_coordinates["x"]
-		Airlock.Y = destination_turf_coordinates["y"] + relative_object_coordinates["y"] - relative_dock_coordinates["y"]
-		Airlock.Z = destination_turf_coordinates["z"]
+		Airlock.landing_coords["x"] = destination_turf_coordinates["x"] + relative_object_coordinates["x"] - relative_dock_coordinates["x"]
+		Airlock.landing_coords["y"] = destination_turf_coordinates["y"] + relative_object_coordinates["y"] - relative_dock_coordinates["y"]
+		Airlock.landing_coords["z"] = destination_turf_coordinates["z"]
 
 		Airlock.dir = angle2dir(dir2angle(Airlock.dir) + rotation)
 
@@ -522,11 +583,11 @@ var/global/dock_ids = 1
 	var/list/docks_z_level = global.all_docking_ports["[z]"]
 	dat += "Available docks:<br>"
 	for(var/datum/dock/port in docks_z_level)
-		dat += "<a href='byond://?src=\ref[src];dock=[port.dock_id]'>Dock: [port.name]; Direction: [port.dir]; Size: [port.size]; X: [port.X]; Y: [port.Y]</a><br>"
+		dat += "<a href='byond://?src=\ref[src];dock=[port.dock_id]'>Dock: [port.name]; Direction: [port.dir]; Size: [port.size]; X: [port.landing_coords["x"]]; Y: [port.landing_coords["y"]]</a><br>"
 
 	dat += "<br>Choose airlock:<br>"
 	for(var/datum/dock/airlock in Shuttle.airlocks)
-		dat += "<a href='byond://?src=\ref[src];airlock=[airlock.dock_id]'>Direction: [airlock.dir]; Size: [airlock.size]; X: [airlock.X]; Y: [airlock.Y]</a><br>"
+		dat += "<a href='byond://?src=\ref[src];airlock=[airlock.dock_id]'>Direction: [airlock.dir]; Size: [airlock.size]; X: [airlock.landing_coords["x"]]; Y: [airlock.landing_coords["y"]]</a><br>"
 
 
 	dat += "<a href='byond://?src=\ref[src];fly=1'>Перелёт</a><br>"
@@ -604,3 +665,141 @@ var/global/list/all_docking_ports = list()
 
 	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "landing_pole"
+
+	var/datum/dock/landing_pad/Landing
+
+	var/trying_to_setup_pad = FALSE
+
+/obj/structure/landing_pole/atom_init()
+	. = ..()
+
+	if(anchored && !Landing)
+		setup_pad()
+
+/obj/structure/landing_pole/proc/setup_pad()
+	trying_to_setup_pad = TRUE
+	var/list/outcome = try_setup_field(global.cardinal, prev_dir = list(EAST, WEST))
+
+	if(!outcome.len)
+		return
+
+	outcome -= src
+
+
+	var/max_x = 0
+	var/min_x = 255
+	var/max_y = 0
+	var/min_y = 255
+
+	for(var/obj/structure/landing_pole/Pole in outcome)
+		if(Pole.x < min_x)
+			min_x = Pole.x
+		else if(Pole.x > max_x)
+			max_x = Pole.x
+
+		if(Pole.y < min_y)
+			min_y = Pole.y
+		else if(Pole.y > max_y)
+			max_y = Pole.y
+
+	var/bounds_x = max_x - min_x + 1
+	var/bounds_y = max_y - min_y + 1
+
+	var/turf/T = loc
+	var/area/A = T.loc
+
+	var/datum/dock/landing_pad/New_Pad = new(A.name, NORTH, min_x, min_y, z, bounds_x, bounds_y)
+
+	New_Pad.connect_to(outcome)
+	global.all_docking_ports["[z]"] += New_Pad
+
+/obj/structure/landing_pole/proc/try_setup_field(list/directions, prev_dir = null)
+	if(!directions.len)
+		return list(src)
+	var/list/outcome = list()
+	choose_direction:
+		for(var/direction in directions - prev_dir)
+			var/obj/structure/landing_pole/NextPole
+			var/turf/T = get_turf(src)
+			for(var/dist in 1 to 15)
+				T = get_step(T, direction)
+				if(!T || T.density)
+					continue choose_direction
+				NextPole = locate(/obj/structure/landing_pole) in T
+				if(NextPole && NextPole.anchored && !NextPole.Landing)
+					break
+				NextPole = null
+
+			if(!NextPole)
+				return list()
+
+			outcome = NextPole.try_setup_field(directions - direction, prev_dir = global.reverse_dir[direction])
+
+			if(!outcome.len)
+				continue
+			break
+
+	if(!outcome.len)
+		return list()
+
+	return outcome += src
+
+/obj/structure/landing_pole/proc/landing_destroyed()
+	Landing = null
+
+/obj/structure/landing_pole/proc/connect_landing(datum/dock/landing_pad/Land)
+	Landing = Land
+	trying_to_setup_pad = FALSE
+
+	lights_on()
+
+/obj/structure/landing_pole/proc/disconnect_landing()
+	Landing = null
+	glow_icon_state = null
+
+	lights_off()
+
+/obj/structure/landing_pole/proc/landing_lights_on()
+	set_light(0)
+	glow_icon_state = "landing_light_running"
+	exposure_icon_state = "rotating_cones"
+
+	set_light(2, 10, COLOR_RED)
+
+	update_bloom()
+
+	addtimer(CALLBACK(src,PROC_REF(landing_lights_off)), 10 SECONDS)
+
+/obj/structure/landing_pole/proc/landing_lights_off()
+	lights_off()
+
+	if(Landing)
+		lights_on()
+		return
+
+/obj/structure/landing_pole/proc/lights_on()
+	glow_icon_state = "landing_light"
+
+	set_light(2, 3, COLOR_GREEN)
+
+/obj/structure/landing_pole/proc/lights_off()
+	glow_icon_state = null
+	exposure_icon_state = null
+	set_light(0)
+
+/obj/structure/landing_pole/attack_hand()
+	if(!Landing && !trying_to_setup_pad)
+		setup_pad()
+	..()
+
+/obj/structure/landing_pole/attackby(obj/item/W, mob/user)
+	if(iswrenching(W))
+		if(!anchored)
+			if(!isturf(src.loc) || isspaceturf(src.loc))
+				return
+
+		anchored = !anchored
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+
+		if(Landing)
+			Landing.pole_destroyed()

@@ -70565,9 +70565,11 @@
 /area/station/engineering/engine)
 "dIo" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/effect/decal/turf_decal/alpha/cyan{
 	icon_state = "box_white"
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
 	},
 /turf/simulated/floor/engine/type2,
 /area/station/engineering/garage)
@@ -81159,7 +81161,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "box_white"
 	},
-/obj/structure/landing_pole,
+/obj/structure/landing_pole{
+	anchored = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/garage)
 "ovR" = (

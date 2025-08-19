@@ -530,7 +530,8 @@
 	icon_state = under_shuttle_turf_params["icon_state"]
 	dir = under_shuttle_turf_params["dir"]
 
-	turf_decals = under_shuttle_turf_params["decals"]
+	for(var/decal in under_shuttle_turf_params["decals"])
+		add_turf_decal(decal)
 
 	under_shuttle_turf_params = null
 

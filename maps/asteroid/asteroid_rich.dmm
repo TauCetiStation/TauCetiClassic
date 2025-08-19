@@ -9207,6 +9207,10 @@
 	req_access = list(48)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/docking_port{
+	dir = 1;
+	name = "Mining Outpost"
+	},
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/production)
 "Au" = (
@@ -13397,6 +13401,10 @@
 	locked = 1;
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
+	},
+/obj/effect/docking_port{
+	dir = 1;
+	name = "Science Outpost"
 	},
 /turf/simulated/floor/grid_floor,
 /area/asteroid/research_outpost/entry)
