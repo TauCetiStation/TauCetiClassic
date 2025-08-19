@@ -80,7 +80,7 @@
 	occupant = user
 	occupant.reset_view(src, force_remote_viewing = TRUE)
 	occupant.client.click_intercept = src
-	occupant.client.change_view(12)
+	occupant.client.view_size?.setDefault("22x20")
 	eject_action.Grant(occupant, src)
 	update_icon()
 
@@ -92,7 +92,7 @@
 	occupant.forceMove(loc)
 	occupant.reset_view(null, force_remote_viewing = FALSE)
 	occupant.client.click_intercept = null
-	occupant.client.change_view(world.view)
+	occupant.client.view_size?.setDefault(VIEWPORT_USE_PREF)
 	eject_action.Remove(occupant)
 	occupant = null
 	update_icon()

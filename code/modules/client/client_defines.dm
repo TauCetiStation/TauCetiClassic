@@ -118,6 +118,9 @@
 
 	var/fullscreen = NONE
 
+	// for dealing with client view size
+	var/datum/view_data/view_size
+
 	/// Messages currently seen by this client
 	var/list/seen_messages
 
