@@ -35,12 +35,12 @@
 	.=..()
 	if(emagged)
 		return FALSE
-	emagged = TRUE
 	var/set_phrase = sanitize(input(user, "Введите кодовую фразу:") as text)
 	if(!length(set_phrase))
-		to_chat(user, "<span class='warning'>Вам нужно задать фразу активации.</span>")
+		to_chat(user, "<span class='warning'>Вы не задали фразу активации.</span>")
 		return FALSE
 	phrase = set_phrase
+	emagged = TRUE
 	to_chat(user, "<span class='warning'>Теперь взрыв случится после фразы [phrase]. Вот так-то лучше!</span>")
 	return TRUE
 
