@@ -301,9 +301,9 @@
 	meat_amount_max = 4
 	loot_amount = 3
 
-/obj/item/fish_carp/mega/atom_init(mapload, catch_target_turf)
+/obj/item/fish_carp/mega/atom_init()
 	. = ..()
-	new /obj/item/stack/seashell(mapload, 1)
+	new /obj/item/stack/seashell(get_turf(src), 1)
 
 /obj/item/fish_carp/mega/update_icon()
 	return
@@ -313,9 +313,9 @@
 	meat_amount_max = 8
 	loot_amount = 6
 
-/obj/item/fish_carp/full_size/atom_init(mapload, catch_target_turf)
+/obj/item/fish_carp/full_size/atom_init()
 	. = ..()
-	new /obj/item/stack/seashell(mapload, 1)
+	new /obj/item/stack/seashell(get_turf(src), 1)
 
 /obj/item/fish_carp/over_size
 	name = "giant space carp"
@@ -323,6 +323,6 @@
 	meat_amount_max = 16
 	loot_amount = 12
 
-/obj/item/fish_carp/over_size/atom_init(mapload, catch_target_turf)
+/obj/item/fish_carp/over_size/atom_init()
 	. = ..()
-	new /obj/item/stack/seashell(mapload, 1)
+	new /obj/item/stack/seashell(get_turf(src), 1)
