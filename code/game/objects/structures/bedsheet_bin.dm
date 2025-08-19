@@ -146,7 +146,25 @@ LINEN BINS
 	pass_flags = PASSTABLE
 	var/sheets_capacity = 10
 	var/list/sheets = list()
-	var/obj/item/hidden = null
+	var/obj/item/weapon/storage/internal/bedsheetbin/hidden
+
+/obj/item/weapon/storage/internal/bedsheetbin/can_be_inserted(obj/item/W, stop_messages = FALSE)
+	. = ..()
+	if(loc && istype(loc, /obj/structure/bedsheetbin))
+		var/obj/structure/bedsheetbin/B = loc
+		if(!B.sheets || !B.sheets.len)
+			if(!stop_messages)
+				to_chat(usr, "<span class='warning'>There is no bedsheets to hide something under!</span>")
+			return FALSE
+	if(contents.len)
+		if(!stop_messages)
+			to_chat(usr, "<span class='warning'>There is already something under the sheets.</span>")
+		return FALSE
+
+/obj/structure/bedsheetbin/atom_init()
+	. = ..()
+	hidden = new/obj/item/weapon/storage/internal/bedsheetbin(src)
+	hidden.set_slots(slots = 1, slot_size = SIZE_SMALL)
 
 /obj/structure/bedsheetbin/full/atom_init()
 	. = ..()
@@ -173,7 +191,7 @@ LINEN BINS
 		icon_state = "[initial(icon_state)]-full"
 	return ..()
 
-/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
+/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
@@ -192,26 +210,20 @@ LINEN BINS
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>The [src] is full!</span>")
-	else if(user.a_intent != INTENT_HARM)
-		hide_item_act(I, user)
+	else if(isitem(I) && user.a_intent != INTENT_HARM)
+		hidden.attackby(I, user, params)
 	else
 		return ..()
 	update_icon()
 
-/obj/structure/bedsheetbin/proc/hide_item_act(obj/item/I, mob/user)
-	if(I.w_class >= SIZE_NORMAL)
-		to_chat(user, "<span class='warning'>\The [I] is too big to hide it among the bedsheets!</span>")
-		return
-	if(!sheets.len)
-		to_chat(user, "<span class='warning'>There is no bedsheets to hide \the [I] under!</span>")
-		return
+/obj/structure/bedsheetbin/MouseDrop(obj/over_object as obj)
+	if (hidden && hidden.handle_mousedrop(usr, over_object))
+		..(over_object)
+
+/obj/structure/bedsheetbin/hear_talk(mob/M, msg, verb, datum/language/speaking)
 	if(hidden)
-		to_chat(user, "<span class='warning'>There is already something under the sheets.</span>")
-		return
-	user.drop_from_inventory(I, src)
-	hidden = I
-	user.visible_message("<span class='notice'>[user] hides \the [I] under the sheets in \the [src].</span>",
-	"<span class='notice'>You hide \the [I] under the sheets in \the [src].</span>")
+		hidden.hear_talk(M, msg, verb, speaking)
+	..()
 
 /obj/structure/bedsheetbin/attack_paw(mob/living/user)
 	return attack_hand(user)
@@ -223,20 +235,32 @@ LINEN BINS
 		sheets.Remove(B)
 		user.try_take(B, loc)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
-		if(hidden)
-			hidden.forceMove(loc)
-			visible_message("<span class='notice'>[hidden] falls out of [B]!</span>")
-			hidden = null
+		if(hidden && hidden.contents.len)
+			hidden.hide_from(user)
+			for(var/obj/item/I in hidden.contents)
+				visible_message("<span class='notice'>[I] falls out of [B]!</span>")
+				hidden.remove_from_storage(I, loc)
 		update_icon()
 	add_fingerprint(user)
 
 /obj/structure/bedsheetbin/deconstruct()
 	new /obj/item/stack/sheet/metal(loc, 2)
-	if(hidden)
-		hidden.forceMove(loc)
-		visible_message("<span class='notice'>[hidden] falls out of \the [src]!</span>")
+	if(hidden && hidden.contents.len)
+		for(var/obj/item/I in hidden.contents)
+			visible_message("<span class='notice'>[I] falls out of [src]!</span>")
+			hidden.remove_from_storage(I, loc)
 	if(sheets.len)
 		for(var/obj/item/weapon/bedsheet/B in sheets)
 			sheets.Remove(B)
 			B.forceMove(loc)
 	..()
+
+/obj/structure/bedsheetbin/Destroy()
+	. = ..()
+	if(hidden && hidden.contents.len)
+		for(var/obj/item/I in hidden.contents)
+			QDEL_NULL(I)
+	QDEL_NULL(hidden)
+	if(sheets.len)
+		for(var/obj/item/weapon/bedsheet/B in sheets)
+			QDEL_NULL(B)
