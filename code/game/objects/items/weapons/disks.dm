@@ -255,7 +255,7 @@
 	icon_state = "datadisk[diskcolor]"
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
-	.=..()
+	. = ..()
 
 /obj/item/weapon/disk/language/solcommon
 	name = "Sol Common Language Disk"
