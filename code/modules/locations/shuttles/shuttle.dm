@@ -1,4 +1,6 @@
 var/global/dock_ids = 1
+var/global/list/all_docking_ports = list()
+var/global/list/all_shuttles = list()
 /datum/dock
 	var/name = "DockName"
 	var/dir
@@ -14,21 +16,30 @@ var/global/dock_ids = 1
 
 	var/list/landing_coords = list("x" = 0, "y" = 0, "z" = 0)
 
+	var/list/connected_things = list()
+
+	var/transit = FALSE
+
 /datum/dock/landing_pad
 	name = "PadName"
 
-	var/list/poles
+/datum/dock/landing_pad/transit
+	name = "Transit Space"
+	transit = TRUE
 
-/datum/dock/landing_pad/proc/connect_to(list/Poles)
-	poles = Poles
-	for(var/obj/structure/landing_pole/Pole in poles)
+/datum/dock/proc/connect_to(list/Things)
+	return
+
+/datum/dock/landing_pad/connect_to(list/Things)
+	connected_things = Things
+	for(var/obj/structure/landing_pole/Pole in connected_things)
 		RegisterSignal(Pole, list(COMSIG_PARENT_QDELETING), PROC_REF(pole_destroyed))
 		RegisterSignal(Pole, list(COMSIG_MOVABLE_MOVED), PROC_REF(pole_destroyed))
 
 		Pole.connect_landing(src)
 
 /datum/dock/landing_pad/proc/pole_destroyed()
-	for(var/obj/structure/landing_pole/Pole in poles)
+	for(var/obj/structure/landing_pole/Pole in connected_things)
 		Pole.landing_destroyed()
 		UnregisterSignal(Pole, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
@@ -38,14 +49,15 @@ var/global/dock_ids = 1
 
 /datum/dock/landing_pad/dock()
 	occupied = TRUE
-
-	for(var/obj/structure/landing_pole/Pole in poles)
-		Pole.landing_lights_on()
 	return
 
 /datum/dock/landing_pad/undock()
 	occupied = FALSE
 	return
+
+/datum/dock/landing_pad/prepare_landing()
+	for(var/obj/structure/landing_pole/Pole in poles)
+		Pole.landing_lights_on()
 
 
 /datum/dock/New(name, dir, X, Y, Z, size_X = 1, size_Y = 1)
@@ -113,6 +125,9 @@ var/global/dock_ids = 1
 
 	return TRUE
 
+/datum/dock/proc/prepare_landing()
+	return
+
 /proc/get_dock_by_id(list/docks_list, dock_id)
 	for(var/datum/dock/Dock in docks_list)
 		if(Dock.dock_id != dock_id)
@@ -150,6 +165,15 @@ var/global/dock_ids = 1
 				return
 
 	return new/datum/dock(name, dir, x, y, z)
+
+/proc/get_shuttle_by_id(list/shuttles_list, grid_id)
+	for(var/datum/shuttle/Shuttle in shuttles_list)
+		if(Shuttle.grid_id != grid_id)
+			continue
+
+		return Shuttle
+
+	return FALSE
 
 
 /datum/shuttle
@@ -192,6 +216,17 @@ var/global/dock_ids = 1
 
 	try_generate_shuttle()
 	ShuttleArea = create_shuttle_area()
+
+	all_shuttles += src
+
+/datum/shuttle/Destroy()
+	all_shuttles -= src
+
+	for(var/datum/dock/Airlock in airlocks)
+		qdel(Airlock)
+
+	ShuttleArea.contents = null
+	qdel(ShuttleArea)
 
 /datum/shuttle/proc/try_generate_shuttle()
 	var/turf/Starting = get_turf(Console)
@@ -257,7 +292,7 @@ var/global/dock_ids = 1
 /datum/shuttle/proc/create_shuttle_area()
 	var/area/shuttle/A = new
 	A.name = name
-	A.tag="[A.type]_[md5(name)]"
+	A.tag="[A.type]_[md5(name+grid_id)]"
 	A.power_equip = 0
 	A.power_light = 0
 	A.power_environ = 0
@@ -433,7 +468,8 @@ var/global/dock_ids = 1
 			Struct.forceMove(Destination_Turf)
 			Struct.set_dir(turn(Struct.dir, -rotation))
 
-	dock(DockBy, DockTo)
+	if(!DockTo.transit)
+		dock(DockBy, DockTo)
 
 
 /datum/shuttle/proc/shake_mob(mob/M, fall_direction)
@@ -634,9 +670,6 @@ var/global/dock_ids = 1
 
 
 
-
-
-var/global/list/all_docking_ports = list()
 
 /obj/effect/docking_port
 	name = "dockName"
