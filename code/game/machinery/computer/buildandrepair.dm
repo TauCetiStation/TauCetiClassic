@@ -49,7 +49,10 @@
 		return details
 
 /obj/item/weapon/circuitboard/proc/check_skill(mob/user)
-	return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED))
+	if(isliving(user))
+		return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED))
+	else
+		return TRUE
 
 /obj/item/weapon/circuitboard/turbine_computer
 	details = "circuit board (Turbine Computer)"
