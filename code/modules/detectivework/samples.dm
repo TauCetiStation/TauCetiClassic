@@ -10,9 +10,6 @@
 	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
-	qualities = list(
-		QUALITY_DETECTIVE_TOOL = 1
-	)
 
 	var/dispenser = FALSE // Means its one-use only
 	var/list/dna
@@ -150,9 +147,6 @@
 	item_state_world = "m_glass_world"
 	item_state = "m_glass"
 	w_class = SIZE_TINY
-	qualities = list(
-		QUALITY_DETECTIVE_TOOL = 1
-	)
 
 	var/evidence_type = "fiber"
 	var/evidence_path = /obj/item/weapon/forensic_sample/fibers

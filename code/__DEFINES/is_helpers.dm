@@ -165,8 +165,6 @@
 
 #define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
-#define isdetectivetool(I)  I.get_quality(QUALITY_DETECTIVE_TOOL)
-
 #define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS

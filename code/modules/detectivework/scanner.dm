@@ -10,9 +10,6 @@
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "engineering=4;biotech=2;programming=5"
 	item_action_types = list(/datum/action/item_action/print_forensic_report, /datum/action/item_action/clear_records)
-	qualities = list(
-		QUALITY_DETECTIVE_TOOL = 1
-	)
 
 	var/scanning = FALSE
 	var/list/log = list()

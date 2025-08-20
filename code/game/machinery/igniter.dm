@@ -68,8 +68,6 @@
 	update_power_use()
 
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
-	if(isdetectivetool(W))
-		return
 	if (isscrewing(W))
 		add_fingerprint(user)
 		src.disable = !src.disable

@@ -107,9 +107,7 @@
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
-				if(isdetectivetool(W))
-					return
-				else if(isscrewing(W))
+				if(isscrewing(W))
 					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
@@ -481,9 +479,6 @@
 
 
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user)
-
-	if(isdetectivetool(W))
-		return
 	return attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user)
