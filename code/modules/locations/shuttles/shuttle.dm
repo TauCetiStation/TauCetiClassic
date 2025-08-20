@@ -233,6 +233,8 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	try_generate_shuttle(Starting)
 	ShuttleArea = create_shuttle_area()
+	ShuttleArea.power_change()
+	check_docked()
 
 	all_shuttles += src
 
@@ -309,12 +311,9 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 
 /datum/shuttle/proc/create_shuttle_area() //Создаётся собственная область шаттла.
-	var/area/shuttle/A = new
+	var/area/shuttle/new_shuttle/A = new
 	A.name = name
 	A.tag="[A.type]_[md5(name+grid_id)]"
-	A.power_equip = 0
-	A.power_light = 0
-	A.power_environ = 0
 	for(var/turf/T in tiles)
 		var/area/old_area = T.loc
 		if(old_area)
@@ -323,7 +322,6 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		A.contents += T
 		T.change_area(old_area, A)
 	A.update_areasize()
-	A.power_change()
 
 	return A
 
@@ -988,7 +986,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 			Landing.pole_destroyed()
 
 
-
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/shuttle_console, shuttle_consoles)
 /obj/machinery/computer/shuttle_console
 	name = "Shuttle Console"
 	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
@@ -1005,29 +1003,42 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	var/grid_id
 
-/obj/machinery/computer/shuttle_console/atom_init()
-	. = ..()
-
+/obj/machinery/computer/shuttle_console/proc/generate_shuttle()
 	var/turf/T = get_turf(src)
+	if(!T || !T.grid_id)
+		return
+
+	new /datum/shuttle(src, T.grid_id)
+
+/obj/machinery/computer/shuttle_console/proc/try_find_shuttle()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+
+	var/id_holder = null
+
+	if(grid_id)
+		id_holder = grid_id
 	if(T.grid_id)
-		Shuttle = get_shuttle_by_id(T.grid_id)
-		if(!Shuttle)
-			Shuttle = new(src, T.grid_id)
+		id_holder = T.grid_id
 
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/shuttle_console/atom_init_late()
+	if(!id_holder)
+		return
+	Shuttle = get_shuttle_by_id(id_holder)
 	if(!Shuttle)
-		Shuttle = get_shuttle_by_id(grid_id)
-		if(!Shuttle)
-			return
+		return
 
-	Shuttle.check_docked()
 	ShuttleDock = Shuttle.dockedBy
 
 /obj/machinery/computer/shuttle_console/ui_interact(mob/user) //Наноуи это временно, простая заглушка, сделаю тгуи с картой слоя.
 	var/dat
 	var/list/docks_z_level = global.all_docking_ports["[z]"]
+
+	if(!Shuttle)
+		try_find_shuttle()
+		if(!Shuttle)
+			to_chat(user, "Ведётся поиск шаттла...")
+			return
 
 	if(!Shuttle.is_moving)
 		var/Level_Name = null
