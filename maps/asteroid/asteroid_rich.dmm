@@ -3879,6 +3879,12 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/abandoned)
+"kp" = (
+/obj/effect/landing_pad/size30{
+	name = "North-East of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
 "kq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7547,7 +7553,9 @@
 	},
 /area/asteroid/mine/west_outpost)
 "vf" = (
-/obj/machinery/computer/mine_sci_shuttle,
+/obj/machinery/computer/shuttle_console{
+	grid_id = "min_sci"
+	},
 /turf/simulated/floor{
 	icon_state = "brownchecker"
 	},
@@ -12181,6 +12189,12 @@
 /obj/machinery/power/grounding_rod,
 /turf/simulated/wall/r_wall/purple,
 /area/asteroid/research_outpost/harvesting)
+"Nc" = (
+/obj/effect/landing_pad/size30{
+	name = "South-West of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
 "Nf" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -12233,11 +12247,12 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/research_outpost/gearstore)
 "Np" = (
-/obj/machinery/computer/mine_sci_shuttle{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/computer/shuttle_console{
+	grid_id = "min_sci";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -12430,6 +12445,18 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
+"Ot" = (
+/obj/effect/landing_pad/size30{
+	name = "North-West of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
+"Oy" = (
+/obj/effect/landing_pad/size30{
+	name = "South-East of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
 "OB" = (
 /turf/simulated/wall/r_wall/purple,
 /area/asteroid/research_outpost/atmos)
@@ -17371,6 +17398,7 @@ aa
 aa
 aa
 aa
+Ot
 aa
 aa
 aa
@@ -17576,8 +17604,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+Nc
 aa
 aa
 aa
@@ -70313,7 +70340,7 @@ aa
 aa
 aa
 aa
-aa
+kp
 aa
 aa
 aa
@@ -70519,7 +70546,7 @@ aa
 aa
 aa
 aa
-aa
+Oy
 aa
 aa
 aa
