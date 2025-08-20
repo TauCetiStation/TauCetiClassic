@@ -1,8 +1,8 @@
 #define SHUTTLE_RAM_DAMAGE 1
 var/global/dock_ids = 1
-var/global/list/all_docking_ports = list() //Все докпорты и лендинги.
-var/global/list/all_transit_spaces = list() //Транзитные лендинги на цк используемые для перелётов между слоями.
-var/global/list/all_shuttles = list() //Все шаттлы.
+var/global/list/all_docking_ports = list() //Р’СЃРµ РґРѕРєРїРѕСЂС‚С‹ Рё Р»РµРЅРґРёРЅРіРё.
+var/global/list/all_transit_spaces = list() //РўСЂР°РЅР·РёС‚РЅС‹Рµ Р»РµРЅРґРёРЅРіРё РЅР° С†Рє РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РґР»СЏ РїРµСЂРµР»С‘С‚РѕРІ РјРµР¶РґСѓ СЃР»РѕСЏРјРё.
+var/global/list/all_shuttles = list() //Р’СЃРµ С€Р°С‚С‚Р»С‹.
 /datum/dock
 	var/name = "DockName"
 	var/dir
@@ -14,15 +14,15 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	var/dock_id = 1
 
 
-	var/occupied = FALSE //док занят стоящим на нём шаттлом.
+	var/occupied = FALSE //РґРѕРє Р·Р°РЅСЏС‚ СЃС‚РѕСЏС‰РёРј РЅР° РЅС‘Рј С€Р°С‚С‚Р»РѕРј.
 
 	var/list/landing_coords = list("x" = 0, "y" = 0, "z" = 0)
 
-	var/list/connected_things = list() //вещи, которые к доку привязаны. Пока используется для посадочных площадок.
+	var/list/connected_things = list() //РІРµС‰Рё, РєРѕС‚РѕСЂС‹Рµ Рє РґРѕРєСѓ РїСЂРёРІСЏР·Р°РЅС‹. РџРѕРєР° РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РїРѕСЃР°РґРѕС‡РЅС‹С… РїР»РѕС‰Р°РґРѕРє.
 
-	var/transit = FALSE //транзитный док - при стыковке с ним мы не открываем двери автоматически.
+	var/transit = FALSE //С‚СЂР°РЅР·РёС‚РЅС‹Р№ РґРѕРє - РїСЂРё СЃС‚С‹РєРѕРІРєРµ СЃ РЅРёРј РјС‹ РЅРµ РѕС‚РєСЂС‹РІР°РµРј РґРІРµСЂРё Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
 
-	var/reserved = FALSE //док зарезервирован и к нему летит шаттл.
+	var/reserved = FALSE //РґРѕРє Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅ Рё Рє РЅРµРјСѓ Р»РµС‚РёС‚ С€Р°С‚С‚Р».
 
 /datum/dock/landing_pad
 	name = "PadName"
@@ -93,7 +93,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	occupied = FALSE
 	return bolt_unbolt(TRUE)
 
-/datum/dock/proc/bolt_unbolt(bolt = TRUE) //Открываем/Зкарываем двери дока. Немного костыльно, лучше переписать на коннект как у лендингов.
+/datum/dock/proc/bolt_unbolt(bolt = TRUE) //РћС‚РєСЂС‹РІР°РµРј/Р—РєР°СЂС‹РІР°РµРј РґРІРµСЂРё РґРѕРєР°. РќРµРјРЅРѕРіРѕ РєРѕСЃС‚С‹Р»СЊРЅРѕ, Р»СѓС‡С€Рµ РїРµСЂРµРїРёСЃР°С‚СЊ РЅР° РєРѕРЅРЅРµРєС‚ РєР°Рє Сѓ Р»РµРЅРґРёРЅРіРѕРІ.
 	var/turf/T = locate(landing_coords["x"], landing_coords["y"], landing_coords["z"])
 	if(!T)
 		return FALSE
@@ -132,12 +132,12 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return TRUE
 
-/datum/dock/proc/prepare_landing() //Подготовиться к посадке. Пока только для лендингов - включаются лампочки посадочной площадки.
+/datum/dock/proc/prepare_landing() //РџРѕРґРіРѕС‚РѕРІРёС‚СЊСЃСЏ Рє РїРѕСЃР°РґРєРµ. РџРѕРєР° С‚РѕР»СЊРєРѕ РґР»СЏ Р»РµРЅРґРёРЅРіРѕРІ - РІРєР»СЋС‡Р°СЋС‚СЃСЏ Р»Р°РјРїРѕС‡РєРё РїРѕСЃР°РґРѕС‡РЅРѕР№ РїР»РѕС‰Р°РґРєРё.
 	reserved = TRUE
 	addtimer(CALLBACK(src,PROC_REF(end_landing)), 5 SECONDS)
 	return
 
-/datum/dock/proc/end_landing() //Завершаем подготовку к посадке. Вырубаем лампочки у лендингов.
+/datum/dock/proc/end_landing() //Р—Р°РІРµСЂС€Р°РµРј РїРѕРґРіРѕС‚РѕРІРєСѓ Рє РїРѕСЃР°РґРєРµ. Р’С‹СЂСѓР±Р°РµРј Р»Р°РјРїРѕС‡РєРё Сѓ Р»РµРЅРґРёРЅРіРѕРІ.
 	reserved = FALSE
 	return
 
@@ -151,7 +151,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	return FALSE
 
 
-/proc/add_docking_port(name, dir, x, y, z, list/docks_list) //Здесь мы проверяем есть ли на этом месте рядом уже док и если есть, то вместо добавления нового дока мы расширяем старый. Сделано пока для двойных шлюзов.
+/proc/add_docking_port(name, dir, x, y, z, list/docks_list) //Р—РґРµСЃСЊ РјС‹ РїСЂРѕРІРµСЂСЏРµРј РµСЃС‚СЊ Р»Рё РЅР° СЌС‚РѕРј РјРµСЃС‚Рµ СЂСЏРґРѕРј СѓР¶Рµ РґРѕРє Рё РµСЃР»Рё РµСЃС‚СЊ, С‚Рѕ РІРјРµСЃС‚Рѕ РґРѕР±Р°РІР»РµРЅРёСЏ РЅРѕРІРѕРіРѕ РґРѕРєР° РјС‹ СЂР°СЃС€РёСЂСЏРµРј СЃС‚Р°СЂС‹Р№. РЎРґРµР»Р°РЅРѕ РїРѕРєР° РґР»СЏ РґРІРѕР№РЅС‹С… С€Р»СЋР·РѕРІ.
 	for(var/datum/dock/port in docks_list)
 		if(port.dir != dir || port.size == 2)
 			continue
@@ -196,9 +196,9 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	var/dir
 	var/z_level
 
-	var/list/tiles //турфы шаттла.
-	var/list/outer_shell //Внешние стены-объекты шаттла.
-	var/list/airlocks //собственные доки шаттла которыми он стыкуется.
+	var/list/tiles //С‚СѓСЂС„С‹ С€Р°С‚С‚Р»Р°.
+	var/list/outer_shell //Р’РЅРµС€РЅРёРµ СЃС‚РµРЅС‹-РѕР±СЉРµРєС‚С‹ С€Р°С‚С‚Р»Р°.
+	var/list/airlocks //СЃРѕР±СЃС‚РІРµРЅРЅС‹Рµ РґРѕРєРё С€Р°С‚С‚Р»Р° РєРѕС‚РѕСЂС‹РјРё РѕРЅ СЃС‚С‹РєСѓРµС‚СЃСЏ.
 
 	var/list/nearest_mask = list(
 							                   list(NORTH, 0, 1),
@@ -206,10 +206,10 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 							                   list(SOUTH, 0, -1)
 							)
 
-	var/datum/dock/dockedBy //Док, которым мы пристыкованы.
-	var/datum/dock/dockedTo //Док, к которому мы пристыкованы.
+	var/datum/dock/dockedBy //Р”РѕРє, РєРѕС‚РѕСЂС‹Рј РјС‹ РїСЂРёСЃС‚С‹РєРѕРІР°РЅС‹.
+	var/datum/dock/dockedTo //Р”РѕРє, Рє РєРѕС‚РѕСЂРѕРјСѓ РјС‹ РїСЂРёСЃС‚С‹РєРѕРІР°РЅС‹.
 
-	var/area/shuttle/ShuttleArea //Область шаттла.
+	var/area/shuttle/ShuttleArea //РћР±Р»Р°СЃС‚СЊ С€Р°С‚С‚Р»Р°.
 
 	var/bounds_x
 	var/bounds_y
@@ -217,10 +217,10 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	var/list/min_cords = list("x" = 0, "y" = 0)
 	var/list/max_cords = list("x" = 0, "y" = 0)
 
-	var/datum/dock/Birthplace //Док в котором шаттл был создан. Нужен для антажных и прочих ЦК шаттлов чтобы иметь возможность напрямую в него вернуться откуда угодно.
-	var/list/StoredDestinations = list() //Список z-слоёв на которые шаттл может перемещаться. Изначально наполняется Станционным и Шахтёрским слоём.
+	var/datum/dock/Birthplace //Р”РѕРє РІ РєРѕС‚РѕСЂРѕРј С€Р°С‚С‚Р» Р±С‹Р» СЃРѕР·РґР°РЅ. РќСѓР¶РµРЅ РґР»СЏ Р°РЅС‚Р°Р¶РЅС‹С… Рё РїСЂРѕС‡РёС… Р¦Рљ С€Р°С‚С‚Р»РѕРІ С‡С‚РѕР±С‹ РёРјРµС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РЅР°РїСЂСЏРјСѓСЋ РІ РЅРµРіРѕ РІРµСЂРЅСѓС‚СЊСЃСЏ РѕС‚РєСѓРґР° СѓРіРѕРґРЅРѕ.
+	var/list/StoredDestinations = list() //РЎРїРёСЃРѕРє z-СЃР»РѕС‘РІ РЅР° РєРѕС‚РѕСЂС‹Рµ С€Р°С‚С‚Р» РјРѕР¶РµС‚ РїРµСЂРµРјРµС‰Р°С‚СЊСЃСЏ. РР·РЅР°С‡Р°Р»СЊРЅРѕ РЅР°РїРѕР»РЅСЏРµС‚СЃСЏ РЎС‚Р°РЅС†РёРѕРЅРЅС‹Рј Рё РЁР°С…С‚С‘СЂСЃРєРёРј СЃР»РѕС‘Рј.
 
-	var/is_moving = FALSE //Шаттл находится в движении.
+	var/is_moving = FALSE //РЁР°С‚С‚Р» РЅР°С…РѕРґРёС‚СЃСЏ РІ РґРІРёР¶РµРЅРёРё.
 
 /datum/shuttle/New(obj/machinery/computer/shuttle_console/Cons, grid)
 	dir = Cons.dir
@@ -248,7 +248,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	ShuttleArea.contents = null
 	qdel(ShuttleArea)
 
-/datum/shuttle/proc/try_generate_shuttle(turf/Starting) //Генерирует шаттл с нуля.
+/datum/shuttle/proc/try_generate_shuttle(turf/Starting) //Р“РµРЅРµСЂРёСЂСѓРµС‚ С€Р°С‚С‚Р» СЃ РЅСѓР»СЏ.
 	if(!Starting.grid_id)
 		Starting.grid_id = grid_id
 
@@ -262,7 +262,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	bounds_x = max_cords["x"] - min_cords["x"] + 1
 	bounds_y = max_cords["y"] - min_cords["y"] + 1
 
-/datum/shuttle/proc/check_tile_neighbours(turf/T, x_offset, y_offset, turf/Original) //Проходится по всем тайлам вокруг пока не добавит все тайлы, стены и докпорты.
+/datum/shuttle/proc/check_tile_neighbours(turf/T, x_offset, y_offset, turf/Original) //РџСЂРѕС…РѕРґРёС‚СЃСЏ РїРѕ РІСЃРµРј С‚Р°Р№Р»Р°Рј РІРѕРєСЂСѓРі РїРѕРєР° РЅРµ РґРѕР±Р°РІРёС‚ РІСЃРµ С‚Р°Р№Р»С‹, СЃС‚РµРЅС‹ Рё РґРѕРєРїРѕСЂС‚С‹.
 	var/turf/CheckingTurf
 
 	if(x_offset > max_cords["x"])
@@ -308,7 +308,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 					airlocks[added] = list("x" = x_offset, "y" = y_offset)
 
 
-/datum/shuttle/proc/create_shuttle_area() //Создаётся собственная область шаттла.
+/datum/shuttle/proc/create_shuttle_area() //РЎРѕР·РґР°С‘С‚СЃСЏ СЃРѕР±СЃС‚РІРµРЅРЅР°СЏ РѕР±Р»Р°СЃС‚СЊ С€Р°С‚С‚Р»Р°.
 	var/area/shuttle/A = new
 	A.name = name
 	A.tag="[A.type]_[md5(name+grid_id)]"
@@ -328,7 +328,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	return A
 
 
-/datum/shuttle/proc/check_docked() //Единичная проверка на то, пристыкован ли наш только что созданный шаттл.
+/datum/shuttle/proc/check_docked() //Р•РґРёРЅРёС‡РЅР°СЏ РїСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, РїСЂРёСЃС‚С‹РєРѕРІР°РЅ Р»Рё РЅР°С€ С‚РѕР»СЊРєРѕ С‡С‚Рѕ СЃРѕР·РґР°РЅРЅС‹Р№ С€Р°С‚С‚Р».
 	if(dockedBy && dockedTo)
 		return
 
@@ -374,7 +374,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	dockedTo.undock()
 	dockedTo = null
 
-/datum/shuttle/proc/set_dir(new_dir) //Поворачиваем собственный дир шаттла и его внутренние координаты.
+/datum/shuttle/proc/set_dir(new_dir) //РџРѕРІРѕСЂР°С‡РёРІР°РµРј СЃРѕР±СЃС‚РІРµРЅРЅС‹Р№ РґРёСЂ С€Р°С‚С‚Р»Р° Рё РµРіРѕ РІРЅСѓС‚СЂРµРЅРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚С‹.
 	var/old_dir = dir
 	dir = new_dir
 
@@ -398,7 +398,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	bounds_x = max_cords["x"] - min_cords["x"] + 1
 	bounds_y = max_cords["y"] - min_cords["y"] + 1
 
-/datum/shuttle/proc/get_landing_pad_rotation(datum/dock/landing_pad/LandOn) //Получаем повороты для шаттла, чтобы он уместился на площадке.
+/datum/shuttle/proc/get_landing_pad_rotation(datum/dock/landing_pad/LandOn) //РџРѕР»СѓС‡Р°РµРј РїРѕРІРѕСЂРѕС‚С‹ РґР»СЏ С€Р°С‚С‚Р»Р°, С‡С‚РѕР±С‹ РѕРЅ СѓРјРµСЃС‚РёР»СЃСЏ РЅР° РїР»РѕС‰Р°РґРєРµ.
 	var/list/rotations = list()
 
 	if(bounds_x <= LandOn.bounds_x && bounds_y <= LandOn.bounds_y)
@@ -412,7 +412,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return pick(rotations)
 
-/datum/shuttle/proc/check_can_move(datum/dock/DockTo) //Проверка на то, можем ли мы двигаться до дока.
+/datum/shuttle/proc/check_can_move(datum/dock/DockTo) //РџСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, РјРѕР¶РµРј Р»Рё РјС‹ РґРІРёРіР°С‚СЊСЃСЏ РґРѕ РґРѕРєР°.
 	if(!DockTo)
 		return FALSE
 
@@ -424,7 +424,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return TRUE
 
-/datum/shuttle/proc/fly_to_dock(datum/dock/DockBy, datum/dock/DockTo) //Перелёт до конкретного дока.
+/datum/shuttle/proc/fly_to_dock(datum/dock/DockBy, datum/dock/DockTo) //РџРµСЂРµР»С‘С‚ РґРѕ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РґРѕРєР°.
 	if(!check_can_move(DockTo))
 		return FALSE
 	if(DockTo.landing_coords["z"] == DockBy.landing_coords["z"])
@@ -447,7 +447,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return try_move(DockBy, Transit)
 
-/datum/shuttle/proc/fly_to_z_level(datum/dock/DockBy, z_level) //Перелёт до любой посадочной площадки слоя.
+/datum/shuttle/proc/fly_to_z_level(datum/dock/DockBy, z_level) //РџРµСЂРµР»С‘С‚ РґРѕ Р»СЋР±РѕР№ РїРѕСЃР°РґРѕС‡РЅРѕР№ РїР»РѕС‰Р°РґРєРё СЃР»РѕСЏ.
 	var/list/dockports = all_docking_ports["[z_level]"]
 
 	var/list/landing_spaces = list()
@@ -488,7 +488,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		fly_to_z_level(DockBy, destination["z"])
 
 
-/datum/shuttle/proc/can_move_to(datum/dock/DockBy, datum/dock/DockTo) //Проверка на то, можем ли мы пристыковаться к доку/площадке физически.
+/datum/shuttle/proc/can_move_to(datum/dock/DockBy, datum/dock/DockTo) //РџСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, РјРѕР¶РµРј Р»Рё РјС‹ РїСЂРёСЃС‚С‹РєРѕРІР°С‚СЊСЃСЏ Рє РґРѕРєСѓ/РїР»РѕС‰Р°РґРєРµ С„РёР·РёС‡РµСЃРєРё.
 	var/list/moving_order
 	var/rotation
 	if(istype(DockTo, /datum/dock/landing_pad))
@@ -509,7 +509,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return TRUE
 
-/datum/shuttle/proc/try_move(datum/dock/DockBy, datum/dock/DockTo) //Начало движения шаттла к доку.
+/datum/shuttle/proc/try_move(datum/dock/DockBy, datum/dock/DockTo) //РќР°С‡Р°Р»Рѕ РґРІРёР¶РµРЅРёСЏ С€Р°С‚С‚Р»Р° Рє РґРѕРєСѓ.
 	var/list/moving_order
 	var/rotation
 	if(istype(DockTo, /datum/dock/landing_pad))
@@ -535,7 +535,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	addtimer(CALLBACK(src,PROC_REF(shuttle_move), moving_order, rotation, DockBy, DockTo), 3 SECONDS)
 	return TRUE
 
-/datum/shuttle/proc/shuttle_move(list/moving_order, rotation, datum/dock/DockBy, datum/dock/DockTo) //Перемещение шаттла и всего что в нём к доку.
+/datum/shuttle/proc/shuttle_move(list/moving_order, rotation, datum/dock/DockBy, datum/dock/DockTo) //РџРµСЂРµРјРµС‰РµРЅРёРµ С€Р°С‚С‚Р»Р° Рё РІСЃРµРіРѕ С‡С‚Рѕ РІ РЅС‘Рј Рє РґРѕРєСѓ.
 
 	set_dir(turn(dir, -rotation))
 	var/shake_dir = ShuttleArea.parallax_movedir ? global.reverse_dir[dir] : dir
@@ -638,7 +638,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	addtimer(CALLBACK(src,PROC_REF(dock), DockBy, DockTo), 3 SECONDS)
 
 
-/datum/shuttle/proc/shake_mob(mob/M, fall_direction) //Дёргаем мобов торможением/разгоном.
+/datum/shuttle/proc/shake_mob(mob/M, fall_direction) //Р”С‘СЂРіР°РµРј РјРѕР±РѕРІ С‚РѕСЂРјРѕР¶РµРЅРёРµРј/СЂР°Р·РіРѕРЅРѕРј.
 	if(M.client)
 		if(M.buckled || issilicon(M))
 			shake_camera(M, 2, 1) // buckled, not a lot of shaking
@@ -672,7 +672,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 						break
 					step(L, fall_direction)
 
-/datum/shuttle/proc/crush_object(atom/movable/A) //Уничтожаем объекты под шаттлом.
+/datum/shuttle/proc/crush_object(atom/movable/A) //РЈРЅРёС‡С‚РѕР¶Р°РµРј РѕР±СЉРµРєС‚С‹ РїРѕРґ С€Р°С‚С‚Р»РѕРј.
 	if(isliving(A))
 		var/mob/living/mob_to_gib = A
 		mob_to_gib.gib()
@@ -683,11 +683,11 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		if(!A.anchored)
 			var/turf/T = get_step(get_turf(A), dir)
 			A.throw_at(T, 30, SHUTTLE_RAM_DAMAGE * (tiles.len + outer_shell.len))
-			//A.take_damage(SHUTTLE_RAM_DAMAGE * (tiles.len + outer_shell.len), attack_dir = dir) //Не уверен или throw_at уже должен накидывать урон?
+			//A.take_damage(SHUTTLE_RAM_DAMAGE * (tiles.len + outer_shell.len), attack_dir = dir) //РќРµ СѓРІРµСЂРµРЅ РёР»Рё throw_at СѓР¶Рµ РґРѕР»Р¶РµРЅ РЅР°РєРёРґС‹РІР°С‚СЊ СѓСЂРѕРЅ?
 		else
 			qdel(A)
 
-/datum/shuttle/proc/check_pad(datum/dock/landing_pad/LandOn, rotation, only_check = FALSE) //Проверка возможности сесть на посадочную площадку.
+/datum/shuttle/proc/check_pad(datum/dock/landing_pad/LandOn, rotation, only_check = FALSE) //РџСЂРѕРІРµСЂРєР° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЃРµСЃС‚СЊ РЅР° РїРѕСЃР°РґРѕС‡РЅСѓСЋ РїР»РѕС‰Р°РґРєСѓ.
 	var/bounds_x_holder = (rotation in list(90, 270)) ? bounds_y : bounds_x
 	var/bounds_y_holder = (rotation in list(90, 270)) ? bounds_x : bounds_y
 	var/min_cords_holder = apply_rotation_to_relative_coordinates(min_cords, rotation)
@@ -706,7 +706,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return generate_moving_order(destination_turf_coordinates, list(0, 0), rotation, only_check)
 
-/datum/shuttle/proc/check_dock(datum/dock/DockBy, datum/dock/DockTo, rotation, only_check = FALSE) //Проверка возможности пристыковаться к доку.
+/datum/shuttle/proc/check_dock(datum/dock/DockBy, datum/dock/DockTo, rotation, only_check = FALSE) //РџСЂРѕРІРµСЂРєР° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РїСЂРёСЃС‚С‹РєРѕРІР°С‚СЊСЃСЏ Рє РґРѕРєСѓ.
 	var/list/relative_dock_coordinates = apply_rotation_to_relative_coordinates(airlocks[DockBy], rotation)
 	var/turf/destination_turf = get_step(locate(DockTo.landing_coords["x"], DockTo.landing_coords["y"], DockTo.landing_coords["z"]), DockTo.dir)
 	if(!destination_turf)
@@ -715,7 +715,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return generate_moving_order(destination_turf_coordinates, relative_dock_coordinates, rotation, only_check)
 
-/datum/shuttle/proc/generate_moving_order(list/destination_turf_coordinates, list/relative_dock_coordinates, rotation, only_check) //Проход по всем тайлам, стенам и шлюзам, проверка на то, помещаются ли они на месте и если да, то генерация листа перелёта в котором указан начальный турф, конечный турф и новые относительные координаты каждой части шаттла.
+/datum/shuttle/proc/generate_moving_order(list/destination_turf_coordinates, list/relative_dock_coordinates, rotation, only_check) //РџСЂРѕС…РѕРґ РїРѕ РІСЃРµРј С‚Р°Р№Р»Р°Рј, СЃС‚РµРЅР°Рј Рё С€Р»СЋР·Р°Рј, РїСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, РїРѕРјРµС‰Р°СЋС‚СЃСЏ Р»Рё РѕРЅРё РЅР° РјРµСЃС‚Рµ Рё РµСЃР»Рё РґР°, С‚Рѕ РіРµРЅРµСЂР°С†РёСЏ Р»РёСЃС‚Р° РїРµСЂРµР»С‘С‚Р° РІ РєРѕС‚РѕСЂРѕРј СѓРєР°Р·Р°РЅ РЅР°С‡Р°Р»СЊРЅС‹Р№ С‚СѓСЂС„, РєРѕРЅРµС‡РЅС‹Р№ С‚СѓСЂС„ Рё РЅРѕРІС‹Рµ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РєР°Р¶РґРѕР№ С‡Р°СЃС‚Рё С€Р°С‚С‚Р»Р°.
 	var/list/moving_order = list()// list(movingObject, destinationTurf, newRelativeCoordinates)
 
 	var/list/relative_object_coordinates
@@ -751,7 +751,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	return only_check ? TRUE : moving_order
 
 
-/datum/shuttle/proc/apply_rotation_to_relative_coordinates(list/coordinates, rotation) //Крутим относительные координаты частей шаттла на градус.
+/datum/shuttle/proc/apply_rotation_to_relative_coordinates(list/coordinates, rotation) //РљСЂСѓС‚РёРј РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ С‡Р°СЃС‚РµР№ С€Р°С‚С‚Р»Р° РЅР° РіСЂР°РґСѓСЃ.
 	if(rotation == 0)
 		return coordinates
 	var/X_holder = coordinates["x"]
@@ -764,7 +764,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		if(270)
 			return list("x" = -Y_holder, "y" = X_holder)
 
-/obj/effect/docking_port //Мапперская заглушка для создания докпорта.
+/obj/effect/docking_port //РњР°РїРїРµСЂСЃРєР°СЏ Р·Р°РіР»СѓС€РєР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РґРѕРєРїРѕСЂС‚Р°.
 	name = "dockName"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "docking_port"
@@ -785,7 +785,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		global.all_docking_ports["[z]"] += added
 
 
-/obj/effect/landing_pad //Мапперская заглушка для создания посадочной площадки.
+/obj/effect/landing_pad //РњР°РїРїРµСЂСЃРєР°СЏ Р·Р°РіР»СѓС€РєР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РїРѕСЃР°РґРѕС‡РЅРѕР№ РїР»РѕС‰Р°РґРєРё.
 	name = "padName"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "landing_pad"
@@ -829,7 +829,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	bounds_x = 30
 	bounds_y = 30
 
-/obj/effect/landing_pad/centcom_transit //Мапперская заглушка для создания транзитных областей на ЦК через которые шаттлы летят со слоя на слой.
+/obj/effect/landing_pad/centcom_transit //РњР°РїРїРµСЂСЃРєР°СЏ Р·Р°РіР»СѓС€РєР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ С‚СЂР°РЅР·РёС‚РЅС‹С… РѕР±Р»Р°СЃС‚РµР№ РЅР° Р¦Рљ С‡РµСЂРµР· РєРѕС‚РѕСЂС‹Рµ С€Р°С‚С‚Р»С‹ Р»РµС‚СЏС‚ СЃРѕ СЃР»РѕСЏ РЅР° СЃР»РѕР№.
 	name = "Transit Space"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "landing_pad"
@@ -846,7 +846,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 /obj/structure/landing_pole
 	name = "Landing Area Pole"
-	desc = "Обозначает границы посадочной площадки."
+	desc = "РћР±РѕР·РЅР°С‡Р°РµС‚ РіСЂР°РЅРёС†С‹ РїРѕСЃР°РґРѕС‡РЅРѕР№ РїР»РѕС‰Р°РґРєРё."
 
 	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "landing_pole"
@@ -949,7 +949,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 /obj/structure/landing_pole/proc/landing_lights_on()
 	set_light(0)
 	glow_icon_state = "landing_light_running"
-	exposure_icon_state = "rotating_cones" //Почему-то не работает. Не знаю почему, если выставить этот экспожур настенной лампе или мусорке - то будет работать. А у столбика нет.
+	exposure_icon_state = "rotating_cones" //РџРѕС‡РµРјСѓ-С‚Рѕ РЅРµ СЂР°Р±РѕС‚Р°РµС‚. РќРµ Р·РЅР°СЋ РїРѕС‡РµРјСѓ, РµСЃР»Рё РІС‹СЃС‚Р°РІРёС‚СЊ СЌС‚РѕС‚ СЌРєСЃРїРѕР¶СѓСЂ РЅР°СЃС‚РµРЅРЅРѕР№ Р»Р°РјРїРµ РёР»Рё РјСѓСЃРѕСЂРєРµ - С‚Рѕ Р±СѓРґРµС‚ СЂР°Р±РѕС‚Р°С‚СЊ. Рђ Сѓ СЃС‚РѕР»Р±РёРєР° РЅРµС‚.
 
 	set_light(2, 10, COLOR_RED)
 
@@ -991,7 +991,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 /obj/machinery/computer/shuttle_console
 	name = "Shuttle Console"
-	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
+	cases = list("РєРѕРЅСЃРѕР»СЊ С€Р°С‚С‚Р»Р°", "РєРѕРЅСЃРѕР»Рё С€Р°С‚С‚Р»Р°", "РєРѕРЅСЃРѕР»Рё С€Р°С‚С‚Р»Р°", "РєРѕРЅСЃРѕР»СЊ С€Р°С‚С‚Р»Р°", "РєРѕРЅСЃРѕР»СЊСЋ С€Р°С‚С‚Р»Р°", "РєРѕРЅСЃРѕР»Рё С€Р°С‚С‚Р»Р°")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	state_broken_preset = "commb"
@@ -1025,7 +1025,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	Shuttle.check_docked()
 	ShuttleDock = Shuttle.dockedBy
 
-/obj/machinery/computer/shuttle_console/ui_interact(mob/user) //Наноуи это временно, простая заглушка, сделаю тгуи с картой слоя.
+/obj/machinery/computer/shuttle_console/ui_interact(mob/user) //РќР°РЅРѕСѓРё СЌС‚Рѕ РІСЂРµРјРµРЅРЅРѕ, РїСЂРѕСЃС‚Р°СЏ Р·Р°РіР»СѓС€РєР°, СЃРґРµР»Р°СЋ С‚РіСѓРё СЃ РєР°СЂС‚РѕР№ СЃР»РѕСЏ.
 	var/dat
 	var/list/docks_z_level = global.all_docking_ports["[z]"]
 
@@ -1077,19 +1077,19 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	var/result = FALSE
 	if(href_list["return_home"])
 		if(Shuttle.Birthplace == Shuttle.dockedTo)
-			to_chat(usr, "<span class='notice'>Шаттл уже пристыкован к выбранному шлюзу.</span>")
+			to_chat(usr, "<span class='notice'>РЁР°С‚С‚Р» СѓР¶Рµ РїСЂРёСЃС‚С‹РєРѕРІР°РЅ Рє РІС‹Р±СЂР°РЅРЅРѕРјСѓ С€Р»СЋР·Сѓ.</span>")
 			return
 		if(!Shuttle.fly_to_dock(ShuttleDock, Shuttle.Birthplace))
-			to_chat(usr, "Транзитные пути заняты")
+			to_chat(usr, "РўСЂР°РЅР·РёС‚РЅС‹Рµ РїСѓС‚Рё Р·Р°РЅСЏС‚С‹")
 			return
 	if(href_list["destination"])
 		var/Destination_Num = text2num(href_list["destination"])
 		if(Destination_Num)
 			if(z == Destination_Num)
-				to_chat(usr, "<span class='notice'>Шаттл уже находится на этой локации.</span>")
+				to_chat(usr, "<span class='notice'>РЁР°С‚С‚Р» СѓР¶Рµ РЅР°С…РѕРґРёС‚СЃСЏ РЅР° СЌС‚РѕР№ Р»РѕРєР°С†РёРё.</span>")
 				return
 			if(!Shuttle.fly_to_z_level(ShuttleDock, Destination_Num))
-				to_chat(usr, "Транзитные пути заняты.")
+				to_chat(usr, "РўСЂР°РЅР·РёС‚РЅС‹Рµ РїСѓС‚Рё Р·Р°РЅСЏС‚С‹.")
 				return
 	else if(href_list["dock"])
 		var/DockNum = text2num(href_list["dock"])
@@ -1097,20 +1097,20 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 			var/list/docks_z_level = global.all_docking_ports["[z]"]
 			var/datum/dock/StationDock = get_dock_by_id(docks_z_level, DockNum)
 			if(Shuttle.dockedTo && StationDock == Shuttle.dockedTo)
-				to_chat(usr, "<span class='notice'>Шаттл уже пристыкован к выбранному шлюзу.</span>")
+				to_chat(usr, "<span class='notice'>РЁР°С‚С‚Р» СѓР¶Рµ РїСЂРёСЃС‚С‹РєРѕРІР°РЅ Рє РІС‹Р±СЂР°РЅРЅРѕРјСѓ С€Р»СЋР·Сѓ.</span>")
 				return
 
 			if(!Shuttle.fly_to_dock(ShuttleDock, StationDock))
-				to_chat(usr, "Невозможно пристыковаться к выбранному доку.")
+				to_chat(usr, "РќРµРІРѕР·РјРѕР¶РЅРѕ РїСЂРёСЃС‚С‹РєРѕРІР°С‚СЊСЃСЏ Рє РІС‹Р±СЂР°РЅРЅРѕРјСѓ РґРѕРєСѓ.")
 				return
 	else if(href_list["airlock"])
 		var/datum/dock/DockNum = text2num(href_list["airlock"])
 		if(DockNum)
 			ShuttleDock = get_dock_by_id(Shuttle.airlocks, DockNum)
-			to_chat(usr, "<span class='notice'>Выбран [ShuttleDock.size == 2 ? "двойной" : "одинарный"] стыковочный шлюз [dir2text(ShuttleDock.dir)].</span>")
+			to_chat(usr, "<span class='notice'>Р’С‹Р±СЂР°РЅ [ShuttleDock.size == 2 ? "РґРІРѕР№РЅРѕР№" : "РѕРґРёРЅР°СЂРЅС‹Р№"] СЃС‚С‹РєРѕРІРѕС‡РЅС‹Р№ С€Р»СЋР· [dir2text(ShuttleDock.dir)].</span>")
 
 	if(result)
 		lastMove = world.time
-		to_chat(usr, "<span class='notice'>Шаттл получил запрос и будет отправлен в ближайшее время.</span>")
+		to_chat(usr, "<span class='notice'>РЁР°С‚С‚Р» РїРѕР»СѓС‡РёР» Р·Р°РїСЂРѕСЃ Рё Р±СѓРґРµС‚ РѕС‚РїСЂР°РІР»РµРЅ РІ Р±Р»РёР¶Р°Р№С€РµРµ РІСЂРµРјСЏ.</span>")
 
 	updateUsrDialog()
