@@ -158,7 +158,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 		switch(dir)
 			if(NORTH, SOUTH)
-				if(!(port.landing_coords["x"] - x in list(1, -1)))
+				if(!((port.landing_coords["x"] - x) in list(1, -1)))
 					continue
 
 				port.size = 2
@@ -168,7 +168,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 				return
 
 			if(EAST, WEST)
-				if(!(port.landing_coords["y"] - y in list(1, -1)))
+				if(!((port.landing_coords["y"] - y) in list(1, -1)))
 					continue
 
 				port.size = 2
@@ -249,6 +249,8 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	ShuttleArea.contents = null
 	qdel(ShuttleArea)
+
+	return ..()
 
 /datum/shuttle/proc/try_generate_shuttle(turf/Starting) //Генерирует шаттл с нуля.
 	if(!Starting.grid_id)
