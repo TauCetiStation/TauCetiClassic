@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(new_shuttles)
 	flags = SS_NO_FIRE
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
-	msg_lobby = "Перезаправляем шаттлы..."
+	msg_lobby = "РџРµСЂРµР·Р°РїСЂР°РІР»СЏРµРј С€Р°С‚С‚Р»С‹..."
 
 /datum/controller/subsystem/new_shuttles/Initialize()
 	for(var/obj/machinery/computer/shuttle_console/Console in global.shuttle_consoles)
