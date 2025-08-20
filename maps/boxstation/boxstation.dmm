@@ -2308,7 +2308,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "bluechoco"
 	},
 /area/station/medical/morgue)
 "aKq" = (
@@ -4487,6 +4487,11 @@
 	icon_state = "purplecorner"
 	},
 /area/station/hallway/primary/starboard)
+"boV" = (
+/obj/structure/lattice,
+/obj/item/weapon/ore/iron,
+/turf/environment/space,
+/area/space)
 "bpf" = (
 /obj/structure/drain,
 /turf/simulated/floor{
@@ -24793,6 +24798,10 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"gCW" = (
+/obj/item/weapon/ore/iron,
+/turf/environment/space,
+/area/space)
 "gDn" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -28771,6 +28780,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -41141,6 +41153,11 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"kXV" = (
+/obj/structure/lattice,
+/obj/item/weapon/ore/glass,
+/turf/environment/space,
+/area/space)
 "kXX" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -52159,7 +52176,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "whitebluefull"
 	},
 /area/station/medical/morgue)
 "nTC" = (
@@ -52266,6 +52283,10 @@
 	icon_state = "whitecorner"
 	},
 /area/station/hallway/primary/port)
+"nVm" = (
+/obj/item/weapon/ore/glass,
+/turf/environment/space,
+/area/space)
 "nVF" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -56152,7 +56173,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "bluechoco"
 	},
 /area/station/medical/morgue)
 "oWA" = (
@@ -70805,7 +70826,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "bluechoco"
 	},
 /area/station/medical/morgue)
 "sHG" = (
@@ -94289,7 +94310,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "whitebluefull"
 	},
 /area/station/medical/morgue)
 "yeP" = (
@@ -94613,7 +94634,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "bluechoco"
 	},
 /area/station/medical/morgue)
 "yhK" = (
@@ -104369,7 +104390,7 @@ iHz
 iHz
 iHz
 iHz
-iHz
+boV
 iHz
 iHz
 iHz
@@ -104855,7 +104876,7 @@ wNc
 iHz
 bJe
 iHz
-iHz
+kXV
 iHz
 bJe
 bJe
@@ -105603,7 +105624,7 @@ bJe
 bJe
 bJe
 bJe
-bJe
+gCW
 iHz
 iHz
 iHz
@@ -106870,7 +106891,7 @@ iHz
 iHz
 iHz
 iHz
-iHz
+kXV
 iHz
 iHz
 iHz
@@ -112761,7 +112782,7 @@ bJe
 bJe
 bJe
 bJe
-iHz
+boV
 iHz
 iHz
 bJe
@@ -113125,7 +113146,7 @@ bJe
 bJe
 iHz
 iHz
-iHz
+kXV
 bJe
 bJe
 bJe
@@ -123173,7 +123194,7 @@ iHz
 iHz
 iHz
 iHz
-bJe
+gCW
 bJe
 bJe
 bJe
@@ -124312,7 +124333,7 @@ bJe
 bJe
 bJe
 iHz
-iHz
+kXV
 iHz
 iHz
 bJe
@@ -131917,7 +131938,7 @@ bJe
 bJe
 bJe
 iHz
-bJe
+nVm
 bJe
 bJe
 bJe
@@ -135612,7 +135633,7 @@ bJe
 bJe
 iHz
 iHz
-iHz
+kXV
 iHz
 bJe
 bJe
@@ -143591,7 +143612,7 @@ bJe
 bJe
 bJe
 bJe
-iHz
+boV
 iHz
 iHz
 iHz
@@ -146540,7 +146561,7 @@ iHz
 bJe
 bJe
 iHz
-iHz
+kXV
 iHz
 bJe
 bJe
@@ -148559,7 +148580,7 @@ bJe
 bJe
 bJe
 bJe
-bJe
+nVm
 bJe
 bJe
 bJe
@@ -148752,7 +148773,7 @@ vfV
 bJe
 bJe
 iHz
-bJe
+nVm
 bJe
 bJe
 bJe
