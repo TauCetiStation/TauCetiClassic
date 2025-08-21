@@ -1,6 +1,6 @@
 /obj/structure/fence
 	name = "Undestructable Concrete Fence"
-	desc = "Спрячь за высоким забором таяру - выкраду вместе с забором!"
+	desc = "РЎРїСЂСЏС‡СЊ Р·Р° РІС‹СЃРѕРєРёРј Р·Р°Р±РѕСЂРѕРј С‚Р°СЏСЂСѓ - РІС‹РєСЂР°РґСѓ РІРјРµСЃС‚Рµ СЃ Р·Р°Р±РѕСЂРѕРј!"
 
 	icon = 'icons/obj/fence.dmi'
 	icon_state = "fence_concrete"
@@ -14,8 +14,8 @@
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 
-	anchored = TRUE //Забор всегда прикручен к тайлу.
-	var/screwed = TRUE //Подкручен и сломается если перелезть. Можно крутить.
+	anchored = TRUE //Р—Р°Р±РѕСЂ РІСЃРµРіРґР° РїСЂРёРєСЂСѓС‡РµРЅ Рє С‚Р°Р№Р»Сѓ.
+	var/screwed = TRUE //РџРѕРґРєСЂСѓС‡РµРЅ Рё СЃР»РѕРјР°РµС‚СЃСЏ РµСЃР»Рё РїРµСЂРµР»РµР·С‚СЊ. РњРѕР¶РЅРѕ РєСЂСѓС‚РёС‚СЊ.
 
 	var/cancover = TRUE
 
@@ -40,16 +40,16 @@
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(iswrenching(W))
 		if(W.use_tool(src, user, 50, volume = 50))
-			to_chat(user, "<span class='notice'>Вы демонтируете забор.</span>")
+			to_chat(user, "<span class='notice'>Р’С‹ РґРµРјРѕРЅС‚РёСЂСѓРµС‚Рµ Р·Р°Р±РѕСЂ.</span>")
 			deconstruct(TRUE)
 			return TRUE
 		return FALSE
 	else if(isscrewing(W))
 		if(W.use_tool(src, user, 50, volume = 50))
 			if(screwed)
-				to_chat(user, "<span class='notice'>Вы откручиваете забор.</span>")
+				to_chat(user, "<span class='notice'>Р’С‹ РѕС‚РєСЂСѓС‡РёРІР°РµС‚Рµ Р·Р°Р±РѕСЂ.</span>")
 			else
-				to_chat(user, "<span class='notice'>Вы прикручиваете забор.</span>")
+				to_chat(user, "<span class='notice'>Р’С‹ РїСЂРёРєСЂСѓС‡РёРІР°РµС‚Рµ Р·Р°Р±РѕСЂ.</span>")
 			screwed = !screwed
 			return TRUE
 		return FALSE
@@ -83,7 +83,7 @@
 	return TRUE
 
 /obj/structure/fence/verb/rotate()
-	set name = "Повернуть забор"
+	set name = "РџРѕРІРµСЂРЅСѓС‚СЊ Р·Р°Р±РѕСЂ"
 	set category = "Object"
 	set src in oview(1)
 
@@ -91,7 +91,7 @@
 		return
 
 	if(screwed)
-		to_chat(usr, "[src] прикручен к полу!")
+		to_chat(usr, "[src] РїСЂРёРєСЂСѓС‡РµРЅ Рє РїРѕР»Сѓ!")
 		return
 
 	set_dir(turn(dir, 90))
@@ -121,7 +121,7 @@
 
 /obj/structure/fence/wood
 	name = "wooden fence"
-	desc = "Деревянный забор."
+	desc = "Р”РµСЂРµРІСЏРЅРЅС‹Р№ Р·Р°Р±РѕСЂ."
 
 	icon_state = "fence_wood"
 
@@ -135,7 +135,7 @@
 
 /obj/structure/fence/metal
 	name = "railings"
-	desc = "Металлический забор."
+	desc = "РњРµС‚Р°Р»Р»РёС‡РµСЃРєРёР№ Р·Р°Р±РѕСЂ."
 
 	icon_state = "fence_metal"
 	cancover = FALSE
@@ -165,7 +165,7 @@
 	if(!W.can_use(user, 1))
 		return
 
-	var/new_color = input(user, "Выберите цвет!") as color|null
+	var/new_color = input(user, "Р’С‹Р±РµСЂРёС‚Рµ С†РІРµС‚!") as color|null
 
 	if(!new_color)
 		return
