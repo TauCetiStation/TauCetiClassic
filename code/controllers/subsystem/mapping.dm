@@ -316,7 +316,6 @@ SUBSYSTEM_DEF(mapping)
 	if(cached_nanomap_payload)
 		return cached_nanomap_payload.Copy()
 	var/list/data = list()
-	// TODO: Instead of mineZLevels and minemapname/stationmapname etc pack both name and map texture into a list
 
 	for(var/datum/space_level/space_level as anything in z_list)
 		var/list/level_data = list()
