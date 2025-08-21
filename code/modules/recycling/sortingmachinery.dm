@@ -1,12 +1,15 @@
 /obj/structure/bigDelivery
 	desc = "A big wrapped package."
 	name = "large parcel"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/package_wrap.dmi'
 	icon_state = "deliverycloset"
 	density = TRUE
 	var/sortTag = ""
 	var/lot_number = null
 	var/image/lot_lock_image
+	var/texture_name = "cardboard"
+	var/mutable_appearance/texture_overlay
+	var/mutable_appearance/details
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -63,14 +66,36 @@
 		var/obj/item/toy/crayon/Crayon = W
 		color = Crayon.colour
 
+/obj/structure/bigDelivery/update_icon()
+	cut_overlay(texture_overlay)
+
+	texture_overlay = mutable_appearance(icon = icon, icon_state = texture_name)
+	texture_overlay.blend_mode = BLEND_MULTIPLY
+	texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
+
+	add_overlay(texture_overlay)
+
+	var/details_state
+	if(texture_name == "present")
+		details_state = "bow"
+	cut_overlay(details)
+	if(!details_state)
+		return
+
+	details = mutable_appearance(icon = icon, icon_state = details_state)
+	add_overlay(details)
+
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
 	name = "small parcel"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/package_wrap.dmi'
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/lot_number = null
 	var/image/lot_lock_image
+	var/texture_name = "cardboard"
+	var/mutable_appearance/texture_overlay
+	var/mutable_appearance/details
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -129,12 +154,33 @@
 	else
 		return ..()
 
+/obj/item/smallDelivery/update_icon()
+	cut_overlay(texture_overlay)
+
+	texture_overlay = mutable_appearance(icon = icon, icon_state = texture_name)
+	texture_overlay.blend_mode = BLEND_MULTIPLY
+	texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
+
+	add_overlay(texture_overlay)
+
+	var/details_state
+	if(texture_name == "present")
+		details_state = "bow"
+	cut_overlay(details)
+	if(!details_state)
+		return
+
+	details = mutable_appearance(icon = icon, icon_state = details_state)
+	add_overlay(details)
+
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	w_class = SIZE_SMALL
 	var/amount = 25.0
+
+	var/texture_name = "cardboard"
 
 
 /obj/item/weapon/packageWrap/afterattack(atom/target, mob/user, proximity, params)
@@ -167,6 +213,7 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
+			P.texture_name = texture_name
 			var/i = round(I.w_class)
 			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
 				if(istype(I, /obj/item/pizzabox))
@@ -174,6 +221,7 @@
 					P.icon_state = "deliverypizza[length(B.boxes)]"
 				else
 					P.icon_state = "deliverycrate[i]"
+			P.update_icon()
 			I.loc = P
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
@@ -184,6 +232,8 @@
 		if (src.amount > 3 && !C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			P.icon_state = "deliverycrate"
+			P.texture_name = texture_name
+			P.update_icon()
 			C.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
@@ -198,6 +248,8 @@
 			return
 		else if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+			P.texture_name = texture_name
+			P.update_icon()
 			C.welded = 1
 			C.loc = P
 			src.amount -= 3
@@ -209,10 +261,42 @@
 		return
 	return
 
+/obj/item/weapon/packageWrap/attack(mob/target, mob/user)
+	if(!ishuman(target))
+		return ..()
+	var/mob/living/carbon/human/H = target
+
+	if(H.incapacitated())
+		if(src.amount > 3)
+			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(H.loc))
+			P.icon_state = "deliveryhuman"
+			P.texture_name = texture_name
+			P.update_icon()
+			src.amount -= 3
+
+			if(H.client)
+				H.client.perspective = EYE_PERSPECTIVE
+				H.client.eye = P
+
+			H.loc = P
+
+			H.log_combat(user, "wrapped with [name]")
+
+		else
+			to_chat(user, "<span class='notice'>You need more paper.</span>")
+	else
+		to_chat(user, "They are moving around too much. A straightjacket would help.")
+
 /obj/item/weapon/packageWrap/examine(mob/user)
 	..()
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
+
+/obj/item/weapon/packageWrap/present
+	name = "holiday package wrapper"
+	icon_state = "wrap_paper"
+
+	texture_name = "present"
 
 /obj/item/device/tagger
 	name = "tagger"
