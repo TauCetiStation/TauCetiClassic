@@ -70,7 +70,7 @@
 			if(mode==0) // It's off but still not unscrewed
 				mode=-1 // Set it to doubleoff l0l
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "Вы открутили винты у разьёма питания")
+				to_chat(user, "Вы открутили винты у разьёма питания.")
 				return
 			else if(mode==-1)
 				mode=0
