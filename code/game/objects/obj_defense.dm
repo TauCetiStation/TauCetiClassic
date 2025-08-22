@@ -66,6 +66,7 @@
 		playsound(loc, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/attack_animal(mob/living/simple_animal/user)
+	..()
 	if(!user.melee_damage) // TODO obj damage
 		user.me_emote("[user.friendly] [src].")
 		return FALSE

@@ -223,23 +223,33 @@
 	var/list/data = list()
 	data["activeCamera"] = null
 	if(!QDELETED(active_camera))
-		data["activeCamera"] = list(
-			name = active_camera.c_tag,
-			status = active_camera.status,
-		)
+		data["activeCamera"] = serialize_camera(active_camera)
 	return data
+
+/obj/machinery/computer/security/proc/serialize_camera(obj/machinery/camera/camera)
+	return list(
+		name = camera.c_tag,
+		x = camera.x,
+		y = camera.y,
+		z = camera.z,
+		status = camera.status
+	)
 
 /obj/machinery/computer/security/tgui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = map_name
+	// Map payload
+	data["stationMapName"] = SSmapping.station_image
+	if(length(SSmapping.mine_image))
+		data["mineMapName"] = SSmapping.mine_image
+	data["mineZLevels"] = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	// Cameras
 	var/list/cameras = get_cached_cameras()
 	data["cameras"] = list()
 	for(var/i in cameras)
 		var/obj/machinery/camera/C = cameras[i]
 		if(!QDELETED(C))
-			data["cameras"] += list(list(
-				name = C.c_tag,
-			))
+			data["cameras"] += list(serialize_camera(C))
 
 	return data
 

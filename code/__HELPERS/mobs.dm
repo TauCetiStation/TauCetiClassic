@@ -362,7 +362,7 @@
 	. = FALSE
 	if(!mind || !mind.assigned_job)
 		return
-	return mind.assigned_job.head_position
+	return (mind.assigned_job.title in SSjob.heads_positions)
 
 /mob/proc/IsClumsy()
 	return HAS_TRAIT(src, TRAIT_CLUMSY)

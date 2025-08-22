@@ -257,7 +257,7 @@
 				return FALSE
 		return TRUE
 
-/obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density
 
 // To be called from things that spill objects on the floor.

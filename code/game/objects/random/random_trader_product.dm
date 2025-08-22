@@ -100,7 +100,7 @@
 	/obj/item/stack/sheet/metal/fifty = 3,
 	/obj/item/stack/sheet/glass/fifty = 3,
 	/obj/item/weapon/rcd/ert = 3,
-	/obj/item/weapon/rcd_ammo/bluespace = 3,
+	/obj/item/weapon/rcd_ammo/huge = 3,
 	/obj/item/clothing/glasses/meson/gar = 3,
 	/obj/item/clothing/glasses/welding/superior = 5,
 	/obj/item/clothing/gloves/insulated = 5,
