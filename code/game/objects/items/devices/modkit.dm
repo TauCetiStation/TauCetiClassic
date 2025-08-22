@@ -17,7 +17,8 @@
 		return
 	if (!target_species)
 		return	//it shouldn't be null, okay?
-
+	if(!istype(target, /obj/item/clothing))
+		return
 	var/obj/item/clothing/I = target
 	if (I.can_be_modded == FALSE)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
