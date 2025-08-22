@@ -91,7 +91,7 @@
 					deconstruct(TRUE)
 				return
 			else
-				to_chat(user, "<span class='warning'>Вам не хватило сварочного топлива в вашем аппарате!</span>")
+				to_chat(user, "<span class='warning'>Недостаточно сварочного топлива!</span>")
 				return
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
