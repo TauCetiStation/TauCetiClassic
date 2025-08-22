@@ -142,7 +142,7 @@
 
 	user.drop_from_inventory(I, src)
 
-	user.visible_message("<span class='notice'>[user.name] ложит [CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>", self_message = "<span class='notice'>Вы положили [CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>")
+	user.visible_message("<span class='notice'>[user.name] кладёт [CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>", self_message = "<span class='notice'>Вы положили [CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>")
 
 	update()
 
