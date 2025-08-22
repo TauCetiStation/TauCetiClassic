@@ -36661,7 +36661,9 @@
 /obj/structure/closet/cabinet,
 /obj/item/weapon/storage/briefcase,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/weapon/storage/briefcase/crimekit,
+/obj/item/weapon/storage/box/swabs,
+/obj/item/weapon/forensic_sample_kit,
+/obj/item/weapon/forensic_sample_kit/powder,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmL" = (

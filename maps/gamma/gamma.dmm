@@ -63998,7 +63998,9 @@
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
-/obj/item/weapon/storage/briefcase/crimekit,
+/obj/item/weapon/forensic_sample_kit,
+/obj/item/weapon/forensic_sample_kit/powder,
+/obj/item/weapon/storage/box/swabs,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -105248,7 +105250,6 @@
 /area/station/construction/assembly_line)
 "tUo" = (
 /obj/structure/closet/secure_closet/forensics,
-/obj/item/weapon/storage/briefcase/crimekit,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteredfull"

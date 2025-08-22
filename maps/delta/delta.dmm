@@ -91966,7 +91966,9 @@
 	icon_state = "siding_wood_line"
 	},
 /obj/machinery/light/smart,
-/obj/item/weapon/storage/briefcase/crimekit,
+/obj/item/weapon/storage/box/swabs,
+/obj/item/weapon/forensic_sample_kit,
+/obj/item/weapon/forensic_sample_kit/powder,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "szt" = (

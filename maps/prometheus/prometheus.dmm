@@ -11621,7 +11621,6 @@
 	pixel_x = 28
 	},
 /obj/item/device/camera/polar,
-/obj/item/weapon/storage/briefcase/crimekit,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "cqC" = (
@@ -61058,7 +61057,9 @@
 	dir = 4;
 	pixel_x = 22
 	},
-/obj/item/weapon/storage/briefcase/crimekit,
+/obj/item/weapon/forensic_sample_kit/powder,
+/obj/item/weapon/forensic_sample_kit,
+/obj/item/weapon/storage/box/swabs,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "opA" = (
