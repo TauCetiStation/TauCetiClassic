@@ -506,7 +506,7 @@
 	var/obj/item/organ/external/DBP
 
 	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			if(BP.brute_dam)
 				DBP = BP
 			else if(BP.burn_dam)

@@ -317,7 +317,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/lungs/IO = H.organs_by_name[O_LUNGS]
 		if(istype(IO))
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				IO.damage = max(IO.damage - 0.7, 0)
 		switch(data["ticks"])
 			if(50 to 100)
@@ -585,7 +585,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(istype(IO))
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/imidazoline/on_diona_digest(mob/living/M)
@@ -629,13 +629,13 @@
 		var/damaged_organs = 0
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				damaged_organs++
 
 		if(!damaged_organs)
 			return
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
 
 /datum/reagent/peridaxon/on_diona_digest(mob/living/M)
@@ -998,11 +998,11 @@
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_artery_cut())
 					E.status &= ~ORGAN_ARTERY_CUT
-			if(IO.robotic == 1)
+			if(IO.is_robotic())
 				if(prob(75))
 					data["ticks"]--
 		if(200 to INFINITY)
-			if(IO.robotic != 2)
+			if(!IO.is_robotic())
 				IO.heart_stop()
 
 /datum/reagent/metatrombine/on_diona_digest(mob/living/M)
