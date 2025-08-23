@@ -115,7 +115,7 @@
 			var/mob/living/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
-			user.visible_message("<span class='red'>[user] засовывает [GM.name] в [CASE(src, NOMINATIVE_CASE)].</span>")
+			user.visible_message("<span class='red'>[user] засовывает [CASE(GM, ACCUSATIVE_CASE)] в [CASE(src, NOMINATIVE_CASE)].</span>")
 			if(G.use_tool(src, usr, 20, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				var/atom/old_loc = GM.loc
 				GM.forceMove(src)
