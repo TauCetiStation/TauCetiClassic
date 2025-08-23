@@ -2,7 +2,7 @@
 	var/required_money
 
 /datum/objective/make_money/New()
-	explanation_text = "Купите вещей на [required_money] кредитов. Покупайте у экипажа предметы, машинерию - все что угодно. Проверить стоимость и купить можно с помощью Экспорт Сканера барыги."
+	explanation_text = "Купите вещей как минимум на [required_money] кредитов. Покупайте у экипажа предметы, машинерию - все что угодно. Проверить стоимость и купить можно с помощью Экспорт Сканера барыги."
 
 /datum/objective/make_money/check_completion()
 	if(owner)
@@ -17,7 +17,7 @@
 	return OBJECTIVE_LOSS
 
 /datum/objective/make_money/faction/traders
-	required_money = 500000
+	required_money = 1000000
 
 
 /datum/objective/trader_purchase
