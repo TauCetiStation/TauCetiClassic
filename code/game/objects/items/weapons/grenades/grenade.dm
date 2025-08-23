@@ -19,6 +19,17 @@
 /datum/action/item_action/hands_free/activate_grenade
 	name = "Activate Grenade"
 
+/obj/item/weapon/grenade/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback)
+	. = ..()
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+	transform = turn(transform, rand(0,360))
+
+/obj/item/weapon/grenade/pickup()
+	. = ..()
+	transform = initial(transform)
+	update_icon()
+
 /obj/item/weapon/grenade/proc/clown_check(mob/living/user)
 	if(user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>Как эта штука работает?</span>")
