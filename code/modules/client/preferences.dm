@@ -92,6 +92,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/height = HUMANHEIGHT_MEDIUM		//height of character
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
+	var/undershirt_print = null
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
 	var/use_skirt = FALSE				//using skirt uniform version
@@ -520,20 +521,10 @@ var/global/list/datum/preferences/preferences_datums = list()
 		W.set_dir(character.dir)
 		W.buckle_mob(character)
 
-	if(underwear > underwear_m.len || underwear < 1)
-		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
 	character.underwear = underwear
-
-	if(undershirt > undershirt_t.len || undershirt < 1)
-		undershirt = 0
 	character.undershirt = undershirt
-
-	if(socks > socks_t.len || socks < 1)
-		socks = 0
 	character.socks = socks
-
-	if(backbag > 5 || backbag < 1)
-		backbag = 1 //Same as above
+	character.undershirt_print = undershirt_print
 	character.backbag = backbag
 	character.use_skirt = use_skirt
 
