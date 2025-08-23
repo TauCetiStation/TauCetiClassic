@@ -11,6 +11,7 @@
 	back = /obj/item/weapon/storage/backpack/satchel/norm
 
 	r_pocket = /obj/item/weapon/reagent_containers/spray/pepper
+	l_pocket = /obj/item/device/export_scanner
 
 /datum/outfit/space_trader/guard
 	name = "Space Trader Guard"

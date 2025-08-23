@@ -55,6 +55,8 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_say,			//admin-only ooc chat,
 	/client/proc/free_slot,			//frees slot for chosen job,
 	/client/proc/cmd_admin_change_custom_event,
+	/client/proc/stationdebt_change,
+	/client/proc/stationdebt_announce,
 	/client/proc/toggleattacklogs,
 	/client/proc/toggle_noclient_attacklogs,
 	/client/proc/toggledebuglogs,

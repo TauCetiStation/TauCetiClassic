@@ -42,6 +42,8 @@
 /mob/living/carbon/ian/price = 65000
 /mob/living/simple_animal/cat/dusty/price = 55000
 
+/obj/item/price = 5
+
 /obj/item/ammo_casing/price = 10
 /obj/item/ammo_casing/energy/price = 0
 /obj/item/ammo_casing/plasma/price = 0
@@ -298,6 +300,7 @@
 /obj/item/weapon/weldingtool/price = 120
 /obj/item/weapon/weldpack/price = 180
 
+/obj/machinery/price = 500
 /obj/machinery/deployable/barrier/price = 1500
 /obj/machinery/faxmachine/price = 19500
 /obj/machinery/flasher/portable/price = 400
@@ -315,11 +318,13 @@
 /obj/machinery/the_singularitygen/price = 25223
 /obj/machinery/vending/price = 1500
 
+/obj/mecha/price = 1000
 /obj/mecha/working/ripley/price = 40000
 /obj/mecha/working/hoverpod/price = 25000
 /obj/mecha/medical/odysseus/price = 30000
 /obj/mecha/combat/price = 70000
 
+/obj/structure/price = 100
 /obj/structure/closet/price = 200
 /obj/structure/device/piano/price = 10000
 /obj/structure/flora/price = 300
@@ -328,4 +333,5 @@
 /obj/structure/particle_accelerator/price = 20000
 /obj/structure/sign/price = 987
 /obj/structure/big_bell/price = 20000
+/obj/structure/AIcore/price = 1500
 /obj/structure/altar_of_gods/price = 15000

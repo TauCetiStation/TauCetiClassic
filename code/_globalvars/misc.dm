@@ -65,3 +65,6 @@ var/global/nuclear_siren_cooldown = 0
 
 var/global/station_disposal_count = 0
 var/global/station_chairs_count = 0
+
+var/global/donkandco_balance_sold = 0
+var/global/station_debt_cost = 1000000

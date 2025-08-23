@@ -2,7 +2,7 @@
 	var/required_money
 
 /datum/objective/make_money/New()
-	explanation_text = "Заработать [required_money] кредитов. В конце смены они должны находиться на вашем счёте."
+	explanation_text = "Купите вещей на [required_money] кредитов. Покупайте у экипажа предметы, машинерию - все что угодно. Проверить стоимость и купить можно с помощью Экспорт Сканера барыги."
 
 /datum/objective/make_money/check_completion()
 	if(owner)
@@ -12,17 +12,12 @@
 	return OBJECTIVE_LOSS
 
 /datum/objective/make_money/faction/check_completion()
-	if(faction)
-		var/total_money = 0
-		for(var/datum/role/R in faction.members)
-			var/datum/money_account/MA = get_account(R.antag.get_key_memory(MEM_ACCOUNT_NUMBER))
-			total_money += MA.money
-		if(total_money >= required_money)
-			return OBJECTIVE_WIN
+	if(global.donkandco_balance_sold >= required_money)
+		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
 /datum/objective/make_money/faction/traders
-	required_money = 20000
+	required_money = 500000
 
 
 /datum/objective/trader_purchase
@@ -91,7 +86,7 @@
 			var/mob/M = R.antag.current
 			if(!M || ((M.stat == DEAD) && !M.fake_death) || isbrain(M) || issilicon(M)) // alive?
 				continue
-			if(istype(get_area(M), /area/shuttle/trader/space)) // in space on shuttle?
+			if(istype(get_area(M), /area/shuttle/trader)) // in space on shuttle?
 				counter++
 		if(counter == mems.len) 	// ALL TRADERS ESCAPE ALIVE
 			return OBJECTIVE_WIN
