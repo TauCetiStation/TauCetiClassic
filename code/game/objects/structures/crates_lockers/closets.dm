@@ -190,7 +190,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())
 			return FALSE
-		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
+		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING))
 			if(opened)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")

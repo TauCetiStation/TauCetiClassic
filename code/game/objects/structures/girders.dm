@@ -46,13 +46,13 @@
 	else if(iswrenching(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
 			to_chat(user, "<span class='notice'>Вы разбираете каркас.</span>")
-			if(W.use_tool(src, user, 40, volume = 100))
+			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				if(!src) return
 				to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
 				deconstruct(TRUE)
 		else if(!anchored)
 			to_chat(user, "<span class='notice'>Вы фиксируете каркас.</span>")
-			if(W.use_tool(src, user, 40, volume = 100))
+			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				to_chat(user, "<span class='notice'>Вы зафиксировали каркас!</span>")
 				new/obj/structure/girder( src.loc )
 				qdel(src)
@@ -70,14 +70,14 @@
 
 	else if(isscrewing(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		to_chat(user, "<span class='notice'>Вы ослабляете кронштейны.</span>")
-		if(W.use_tool(src, user, 40, volume = 100))
+		if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы ослабили кронштейны!</span>")
 			state = 1
 
 	else if(iscutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 		to_chat(user, "<span class='notice'>Вы разбираете кронштейны.</span>")
-		if(W.use_tool(src, user, 40, volume = 100))
+		if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_CUTTING))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы разобрали кронштейны!</span>")
 			new/obj/structure/girder( src.loc )
@@ -85,7 +85,7 @@
 
 	else if(isprying(W) && state == 0 && anchored )
 		to_chat(user, "<span class='notice'>Вы делаете каркас подвижным.</span>")
-		if(W.use_tool(src, user, 40, volume = 100))
+		if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы сделали каркас подвижным!</span>")
 			new/obj/structure/girder/displaced( src.loc )

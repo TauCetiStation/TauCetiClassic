@@ -271,7 +271,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks, particle_type = null)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -302,6 +302,17 @@
 			progbar = new(user, delay, target)
 		else
 			progress = FALSE
+
+	var/obj/effect/abstract/particle_holder/Particle
+	if(!isnull(particle_type))
+		if(get_turf(target) == get_turf(user))
+			Particle = new(user, particle_type, PARTICLE_FADEOUT)
+			var/particles/Particle_Datum = Particle.get_particle()
+			Particle_Datum.change_dir(user.dir)
+		else
+			Particle = new(target, particle_type, PARTICLE_FADEOUT)
+			var/particles/Particle_Datum = Particle.get_particle()
+			Particle_Datum.change_dir(get_dir(get_turf(target), get_turf(user)))
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
@@ -349,6 +360,9 @@
 				if(user.get_active_hand() != holding)
 					. = FALSE
 					break
+
+	if(Particle)
+		Particle.delete_particle()
 
 	if(progress)
 		qdel(progbar)

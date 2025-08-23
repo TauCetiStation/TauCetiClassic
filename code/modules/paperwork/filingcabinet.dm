@@ -70,7 +70,7 @@
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 	else if(isscrewing(P))
-		if(P.use_tool(src, user, 15))
+		if(P.use_tool(src, user, 15, quality = QUALITY_SCREWING))
 			deconstruct(TRUE)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	else
