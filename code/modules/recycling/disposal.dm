@@ -121,7 +121,7 @@
 				GM.forceMove(src)
 				INVOKE_ASYNC(GM, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 				GM.instant_vision_update(1,src)
-				user.visible_message("<span class='danger'>[user] [user.gender == FEMALE ? "засунула" : "засунул"] [GM.name] в [CASE(src, ACCUSATIVE_CASE)].</span>")
+				user.visible_message("<span class='danger'>[user] засунул[VERB_RU(user)] [GM.name] в [CASE(src, ACCUSATIVE_CASE)].</span>")
 				qdel(G)
 
 				GM.log_combat(usr, "placed in disposals")
