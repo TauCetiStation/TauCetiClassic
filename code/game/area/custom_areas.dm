@@ -87,6 +87,13 @@
 	icon_state = "null"
 	dynamic_lighting = FALSE
 	requires_power = 0
+	looped_ambience = 'sound/ambience/wavesbeach.ogg'
+
+/area/custom/dressingroom
+	name = "Beach Dressing Room"
+	icon_state = "honk"
+	dynamic_lighting = FALSE
+	requires_power = 0
 
 //ENEMY
 /area/custom/abductor_ship

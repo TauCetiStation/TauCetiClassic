@@ -105,6 +105,7 @@ var/global/list/admin_verbs_sounds = list(
 	/client/proc/play_server_sound
 	)
 var/global/list/admin_verbs_fun = list(
+	/client/proc/seashell_count,
 	/client/proc/change_title_screen,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,

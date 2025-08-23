@@ -1,92 +1,98 @@
 #define JOB_MODIFICATION_MAP_NAME "Delta Station"
 
-/datum/job/hydro/New()
-	..()
-	MAP_JOB_CHECK
-	map_total_positions = 4
-	map_spawn_positions = 4
-
 /datum/job/atmos/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 4
-	map_spawn_positions = 4
+	map_total_positions = 0
+	map_spawn_positions = 0
 
 /datum/job/technical_assistant/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 5
-	map_spawn_positions = 5
+	map_total_positions = 0
+	map_spawn_positions = 0
+
+/datum/job/chief_engineer/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 0
+	map_spawn_positions = 0
 
 /datum/job/engineer/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 8
-	map_spawn_positions = 8
+	map_total_positions = 0
+	map_spawn_positions = 0
+
+/datum/job/captain/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 0
+	map_spawn_positions = 0
+
+/datum/job/blueshield/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 0
+	map_spawn_positions = 0
+
+/datum/job/qm/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 0
+	map_spawn_positions = 0
 
 /datum/job/mining/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 6
-	map_spawn_positions = 6
-
-/datum/job/cadet/New()
-	..()
-	MAP_JOB_CHECK
-	map_total_positions = 6
-	map_spawn_positions = 6
+	map_total_positions = 0
+	map_spawn_positions = 0
 
 /datum/job/cargo_tech/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 4
-	map_spawn_positions = 4
+	map_total_positions = 0
+	map_spawn_positions = 0
 
-/datum/job/recycler/New()
-	..()
-	MAP_JOB_CHECK
-	map_total_positions = 4
-	map_spawn_positions = 4
-
-/datum/job/librarian/New()
+/datum/job/officer/New()
 	..()
 	MAP_JOB_CHECK
 	map_total_positions = 2
 	map_spawn_positions = 2
 
-/datum/job/doctor/New()
+/datum/job/recycler/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 9
-	map_spawn_positions = 4
+	map_total_positions = 0
+	map_spawn_positions = 0
 
 /datum/job/geneticist/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 3
-	map_spawn_positions = 3
+	map_total_positions = 0
+	map_spawn_positions = 0
 
-/datum/job/intern/New()
+/datum/job/virologist/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 6
-	map_spawn_positions = 6
+	map_total_positions = 0
+	map_spawn_positions = 0
 
-/datum/job/scientist/New()
+/datum/job/bartender/New()
 	..()
 	MAP_JOB_CHECK
-	map_total_positions = 5
-	map_spawn_positions = 5
-
-/datum/job/research_assistant/New()
-	..()
-	MAP_JOB_CHECK
-	map_total_positions = 4
-	map_spawn_positions = 4
+	map_total_positions = 2
+	map_spawn_positions = 2
 
 /datum/job/cyborg/New()
 	..()
 	MAP_JOB_CHECK
-	map_spawn_positions = 4
+	map_spawn_positions = 0
+
+/datum/job/ai/New()
+	..()
+	MAP_JOB_CHECK
+	map_total_positions = 0
+	map_spawn_positions = 0
 
 #undef JOB_MODIFICATION_MAP_NAME

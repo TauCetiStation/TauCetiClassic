@@ -212,7 +212,7 @@
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
 	icon = 'icons/mob/carp.dmi'
 	icon_state = "purple_dead"
-	var/scale_icon = 0.5
+	var/scale_icon
 	var/meat_amount_max = 1
 	var/loot_amount = 1
 
@@ -221,9 +221,34 @@
 
 	update_icon()
 
+	var/size_caught = 0.4
+	var/fish_weight = pick(
+		30;"small",
+		30;"normal",
+		20;"big",
+		15;"large",
+		5;"enourmous"
+	)
+	switch(fish_weight)
+		if("small")
+			size_caught = 0.3
+		if("normal")
+			size_caught = 0.4
+		if("big")
+			size_caught = 0.5
+		if("large")
+			size_caught = 0.6
+		if("enourmous")
+			size_caught = 0.8
+	if(scale_icon)
+		size_caught = scale_icon
+	var/length_caught = size_caught * 100 + rand(1, 9)
+	name = name + " ([length_caught] cm)"
+	desc = "Карп длинной [length_caught] сантиметров."
+
 	appearance_flags |= PIXEL_SCALE
 	var/matrix/Mx = matrix()
-	Mx.Scale(scale_icon)
+	Mx.Scale(size_caught)
 	transform = Mx
 
 	if(catch_target_turf)
@@ -276,6 +301,10 @@
 	meat_amount_max = 4
 	loot_amount = 3
 
+/obj/item/fish_carp/mega/atom_init()
+	. = ..()
+	new /obj/item/stack/seashell(get_turf(src), 1)
+
 /obj/item/fish_carp/mega/update_icon()
 	return
 
@@ -284,7 +313,16 @@
 	meat_amount_max = 8
 	loot_amount = 6
 
+/obj/item/fish_carp/full_size/atom_init()
+	. = ..()
+	new /obj/item/stack/seashell(get_turf(src), 1)
+
 /obj/item/fish_carp/over_size
-	scale_icon = 2
+	name = "giant space carp"
+	scale_icon = 1.3
 	meat_amount_max = 16
 	loot_amount = 12
+
+/obj/item/fish_carp/over_size/atom_init()
+	. = ..()
+	new /obj/item/stack/seashell(get_turf(src), 1)

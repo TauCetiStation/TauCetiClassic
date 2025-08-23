@@ -187,6 +187,10 @@
 				icon_state = "martiniglass"
 				name = "Vodka martini"
 				desc ="A bastardisation of the classic martini. Still great."
+			if("pinacolada")
+				icon_state = "pinacolada"
+				name = "Pina Colada"
+				desc ="A fresh pineapple drink with coconut rum. Yum."
 			if("gargleblaster")
 				icon_state = "gargleblasterglass"
 				name = "Pan-Galactic Gargle Blaster"
