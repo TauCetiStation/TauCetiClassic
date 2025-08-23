@@ -160,6 +160,9 @@ var/global/list/admin_verbs_server = list(
 	/client/proc/adminchangemap,
 	/datum/admins/proc/show_lag_switch_panel,
 	/datum/admins/proc/toggle_deathmatch_arena,
+	/client/proc/stroechka_import,
+	/client/proc/stroechka_export,
+	/client/proc/stroechka_wipe,
 	)
 var/global/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
@@ -1279,3 +1282,27 @@ var/global/centcom_barriers_stat = 1
 
 	var/mob/living/L = mob
 	L.metabolism_debug()
+
+
+/client/proc/stroechka_import()
+	set name = "Stroechka Import"
+	set category = "Special Verbs"
+
+	var/file_to_import = input("Select a map for import to stroechka.") as null|file
+	fcopy(file_to_import, file("maps/stroechka/stroechka.dmm"))
+
+/client/proc/stroechka_export()
+	set name = "Stroechka Export"
+	set category = "Special Verbs"
+
+	var/file_for_export = input("Select a file for export stroechka.") as null|file
+	fcopy(file("maps/stroechka/stroechka.dmm"), file_for_export)
+
+/client/proc/stroechka_wipe()
+	set name = "Stroechka Wipe"
+	set category = "Special Verbs"
+
+	if(tgui_alert(mob, "Это сотрёт весь прогресс игроков на строечке!", "Вы уверены?", list("Да", "Нет")) != "Да")
+		return
+
+	fcopy(file("maps/stroechka/stroechka_clean.dmm"), file("maps/stroechka/stroechka.dmm"))

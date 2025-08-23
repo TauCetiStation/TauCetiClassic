@@ -136,6 +136,11 @@ SUBSYSTEM_DEF(ticker)
 					if(blackbox)
 						blackbox.save_all_data_to_sql()
 
+					if(station_name == "Hephaestus")
+						var/stroechka_text = maploader.write_map(locate(0, 0, 1), locate(255, 255, 1))
+
+						text2file(stroechka_text, "maps/stroechka/stroechka.dmm")
+
 					if(establish_db_connection("erro_round"))
 						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.get_mode_result())]' WHERE id = [global.round_id]")
 						query_round_game_mode.Execute()
