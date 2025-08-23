@@ -1289,14 +1289,14 @@ var/global/centcom_barriers_stat = 1
 	set category = "Special Verbs"
 
 	var/file_to_import = input("Select a map for import to stroechka.") as null|file
-	fcopy(file_to_import, file("maps/stroechka/stroechka.dmm"))
+	fcopy(file_to_import, "maps/stroechka/stroechka.dmm")
 
 /client/proc/stroechka_export()
 	set name = "Stroechka Export"
 	set category = "Special Verbs"
 
 	var/file_for_export = input("Select a file for export stroechka.") as null|file
-	fcopy(file("maps/stroechka/stroechka.dmm"), file_for_export)
+	fcopy("maps/stroechka/stroechka.dmm", file_for_export)
 
 /client/proc/stroechka_wipe()
 	set name = "Stroechka Wipe"
@@ -1305,4 +1305,4 @@ var/global/centcom_barriers_stat = 1
 	if(tgui_alert(mob, "Это сотрёт весь прогресс игроков на строечке!", "Вы уверены?", list("Да", "Нет")) != "Да")
 		return
 
-	fcopy(file("maps/stroechka/stroechka_clean.dmm"), file("maps/stroechka/stroechka.dmm"))
+	fcopy("maps/stroechka/stroechka_clean.dmm", "maps/stroechka/stroechka.dmm")
