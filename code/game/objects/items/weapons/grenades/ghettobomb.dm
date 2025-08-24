@@ -1,20 +1,20 @@
 /obj/item/weapon/grenade/cancasing
-	name 			 	 = "can explosive"
-	desc 				 = "Слабое, самодельное устройство."
-	w_class 			 = SIZE_TINY
-	icon 				 = 'icons/obj/makeshift.dmi'
-	icon_state 			 = "canbomb1"
+	name = "can explosive"
+	desc = "Слабое, самодельное устройство."
+	w_class = SIZE_TINY
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "canbomb1"
 	item_state_inventory = "canbomb1"
-	item_state_world	 = "canbomb1_inworld"
-	item_state 			 = "flashbang"
-	throw_speed 		 = 4
-	throw_range 		 = 20
-	flags 				 = CONDUCT
-	slot_flags 			 = SLOT_FLAGS_BELT
-	active 	 			 = FALSE
-	det_time 			 = 50
-	activate_sound 		 = 'sound/items/matchstick_light.ogg'
-	var/range 			 = 3
+	item_state_world = "canbomb1_inworld"
+	item_state = "flashbang"
+	throw_speed = 4
+	throw_range = 20
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	active = FALSE
+	det_time = 50
+	activate_sound = 'sound/items/matchstick_light.ogg'
+	var/range = 3
 	var/list/times
 
 /obj/item/weapon/grenade/cancasing/atom_init()
@@ -61,9 +61,9 @@
 	to_chat(user, "Вы не можете сказать, когда она взорвется!")
 
 /obj/item/weapon/grenade/cancasing/rag
-	icon_state 			 = "canbomb2"
+	icon_state = "canbomb2"
 	item_state_inventory = "canbomb2"
-	item_state_world 	 = "canbomb2_inworld"
+	item_state_world = "canbomb2_inworld"
 
 
 /obj/item/weapon/grenade/cancasing/rag/attack_self(mob/user)
