@@ -113,14 +113,14 @@
 	if(confirmed)
 		return ..()
 
-/obj/item/clothing/shoes/orange/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/clothing/shoes/orange/CanMouseDrop(atom/over, mob/user = usr)
+	. = ..()
+	if(!.)
+		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(chained && src == H.shoes)
-			if(src != over)
-				remove_outline()
-			return
-	. = ..()
+			return FALSE
 
 /obj/item/clothing/shoes/orange/candals/atom_init()
 	. = ..()
