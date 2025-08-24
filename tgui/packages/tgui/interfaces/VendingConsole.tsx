@@ -18,7 +18,7 @@ const pickColor = (machine: VendingObject) => {
     color = 'red';
   } else if (machine.load < 75) {
     color = 'yellow';
-  } else if (machine.load < 50)  {
+  } else if (machine.load < 50) {
     color = 'orange';
   } else if (machine.load < 25) {
     color = 'red';
@@ -40,26 +40,32 @@ const pauseEvent = (e: MouseEvent) => {
 };
 
 const tooltipForMachine = (machine: VendingObject) => (
-    <Box textAlign="center">
-      {<b>{machine.name}</b>}: {<i>{machine.status === 3
-                  ? 'Сломан'
-                  : machine.status === 2
-                  ? 'Обесточен' : 'Работает'}</i>}
-      {machine.status === 1 && (
-        <ProgressBar
-          ranges={{
-            green: [75, Infinity],
-            yellow: [50, 75],
-            orange: [25, 50],
-            red: [-Infinity, 25],
-          }}
-          minValue={0}
-          maxValue={100}
-          value={machine.load}
-        />
-      )}
-    </Box>
-  );
+  <Box textAlign="center">
+    {<b>{machine.name}</b>}:{' '}
+    {
+      <i>
+        {machine.status === 3
+          ? 'Сломан'
+          : machine.status === 2
+            ? 'Обесточен'
+            : 'Работает'}
+      </i>
+    }
+    {machine.status === 1 && (
+      <ProgressBar
+        ranges={{
+          green: [75, Infinity],
+          yellow: [50, 75],
+          orange: [25, 50],
+          red: [-Infinity, 25],
+        }}
+        minValue={0}
+        maxValue={100}
+        value={machine.load}
+      />
+    )}
+  </Box>
+);
 
 type Data = {
   vending_machines: VendingObject[];
@@ -81,11 +87,7 @@ export const VendingConsole = (_: any, context: any) => {
   });
 
   const { act, data } = useBackend<Data>(context);
-  const {
-    currentZ,
-    nanomapPayload,
-    vending_machines,
-  } = data;
+  const { currentZ, nanomapPayload, vending_machines } = data;
 
   const [zLevel, setZLevel] = useLocalState<number>(
     context,
@@ -93,9 +95,7 @@ export const VendingConsole = (_: any, context: any) => {
     currentZ
   );
 
-  const availableZLevels: number[] = [
-    currentZ,
-  ];
+  const availableZLevels: number[] = [currentZ];
 
   let trackData: NanoMapTrackData | undefined;
 
@@ -112,7 +112,7 @@ export const VendingConsole = (_: any, context: any) => {
             trackData={trackData}
             controlsOnTop>
             {vending_machines.map((machine: VendingObject) => {
-              let {color} = pickColor(machine);
+              let { color } = pickColor(machine);
               return (
                 <NanoMapMarkerIcon
                   key={machine.name}
