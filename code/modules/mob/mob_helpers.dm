@@ -570,3 +570,61 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			alert_overlay.appearance_flags |= TILE_BOUND
 		alert_overlay.plane = ABOVE_HUD_PLANE
 		alert.add_overlay(alert_overlay)
+
+/mob/proc/get_height_num()
+	var/height_num = w_class
+	if(lying || crawling)
+		height_num -= 3
+
+	return height_num
+
+/mob/living/carbon/human/get_height_num()
+	var/height_num = ..()
+
+	switch(height)
+		if(HUMANHEIGHT_SHORTEST)
+			height_num -= 0.5
+		if(HUMANHEIGHT_SHORT)
+			height_num -= 0.25
+		if(HUMANHEIGHT_TALL)
+			height_num += 0.25
+		if(HUMANHEIGHT_TALLEST)
+			height_num += 0.5
+
+	return height_num
+
+/proc/compare_mobs_height(mob/Mob1, mob/Mob2) //Attacker, Defender
+	var/Height1 = Mob1.get_height_num()
+	var/Height2 = Mob2.get_height_num()
+
+	switch(Height1 - Height2)
+		if(2 to 12)
+			return "Сильно сверху"
+		if(0.5 to 2)
+			return "Сверху"
+		if(-2 to -0.5)
+			return "Снизу"
+		if(-12 to -2)
+			return "Сильно снизу"
+
+	return "С одной высоты"
+
+/proc/check_projectile_hit_direction(mob/Mob, obj/item/projectile/P)
+	var/impact_direction = ""
+	var/distance = P.starting ? get_dist(P.starting.loc, Mob.loc) : 0
+
+	switch(distance)
+		if(0 to 1)
+			impact_direction += "Вплотную "
+		if(1 to 3)
+			impact_direction += "Близко "
+		else
+			impact_direction += "Далеко "
+
+	if(Mob.lying || Mob.crawling)
+		return impact_direction + "сверху"
+
+	if(is_the_opposite_dir(Mob.dir, P.dir))
+		return impact_direction + "сзади"
+
+	return impact_direction + "спереди"
