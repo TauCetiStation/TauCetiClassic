@@ -666,6 +666,7 @@
 	eyes_colorable_layer = null
 	eyes_static_layer = "skrell"
 	gender_body_icons = FALSE
+	fat_limb_icons = TRUE
 
 	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell
