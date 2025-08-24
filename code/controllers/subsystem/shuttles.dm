@@ -609,7 +609,6 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/start_transit()
 	SSticker.load_arena()
-	SSrating.start_rating_collection()
 
 /obj/effect/bgstar
 	name = "star"

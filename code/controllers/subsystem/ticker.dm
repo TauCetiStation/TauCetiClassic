@@ -117,13 +117,9 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_end
-			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+			if(!explosion_in_progress && mode_finished)
 
 				load_arena()
-
-				if(!SSrating.already_started)
-					start_rating_vote_if_unexpected_roundend()
-					return
 
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)

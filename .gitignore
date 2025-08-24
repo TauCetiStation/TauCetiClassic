@@ -15,3 +15,5 @@ keys/
 test_merge.txt
 #vscode stuff
 tools/midi2piano/midi2piano/obj/x86/Debug/
+code/controllers/subsystem/shuttles.dm
+code/controllers/subsystem/ticker.dm
