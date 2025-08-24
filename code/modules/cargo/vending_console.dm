@@ -2,7 +2,7 @@
 ADD_TO_GLOBAL_LIST(/obj/machinery/computer/vending, vending_consoles)
 /obj/machinery/computer/vending
 	name = "Vending monitoring console"
-	desc = "Используется для мониторинга наполнения вендинговых аппаратов."
+	desc = "РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РјРѕРЅРёС‚РѕСЂРёРЅРіР° РЅР°РїРѕР»РЅРµРЅРёСЏ РІРµРЅРґРёРЅРіРѕРІС‹С… Р°РїРїР°СЂР°С‚РѕРІ."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "vendomat"
 	state_broken_preset = "techb"
