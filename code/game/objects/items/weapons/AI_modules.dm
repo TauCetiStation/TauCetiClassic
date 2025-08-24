@@ -34,8 +34,7 @@ AI MODULES
 /obj/item/weapon/aiModule/proc/check_skills(mob/user)
 	if(isliving(user))
 		return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/command = SKILL_LEVEL_PRO))
-	else
-		return TRUE
+	return TRUE
 
 /obj/item/weapon/aiModule/proc/install(obj/machinery/computer/C)
 	if (istype(C, /obj/machinery/computer/aiupload))
