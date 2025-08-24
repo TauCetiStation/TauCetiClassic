@@ -5,6 +5,7 @@
 	var/max_amount = 0
 	var/price = 0
 
+ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -62,6 +63,10 @@
 
 	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
+	var/obj/item/device/camera/abstract/vendomat/camera
+	var/load = 0
+	var/max_load = 0
+
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -69,6 +74,8 @@
 	src.anchored = TRUE
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
+
+	camera = new(src)
 
 	slogan_list = splittext(product_slogans, ";")
 
@@ -89,6 +96,7 @@
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
+	QDEL_NULL(camera)
 	return ..()
 
 /obj/machinery/vending/RefreshParts()
@@ -133,9 +141,11 @@
 			emag_records += R
 		else
 			product_records += R
+			max_load += amount
 
 		var/atom/temp = typepath
 		R.product_name = initial(temp.name)
+	load = max_load
 	return
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, mob/user)  //Restocking from TG
@@ -165,6 +175,7 @@
 				to_chat(usr, "<span class='notice'>[restock] of [machine_content.product_name]</span>")
 			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
 				break
+	load += total
 	return total
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
@@ -274,6 +285,7 @@
 					safety--
 			if(safety <= 0)
 				break
+	load = 0
 	..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
@@ -555,6 +567,7 @@
 				continue
 			new dump_path(src.loc)
 			R.amount--
+			load--
 
 		//Dropping remaining items in a pack
 		var/refilling = 0
@@ -562,6 +575,7 @@
 			while(R.amount > 0)
 				refilling++
 				R.amount--
+				load--
 
 		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
 		Refill.charges = refilling
@@ -571,11 +585,19 @@
 				var/dump_path = R.product_path
 				new dump_path(src.loc)
 				R.amount--
+				load--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
 
+	send_emergency_photo()
+
 	return
+
+/obj/machinery/vending/proc/send_emergency_photo()
+	for(var/obj/machinery/computer/vending/Vend in global.vending_consoles)
+		var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo(Vend.loc)
+		Photo.construct(camera.captureimage(get_turf(src), src))
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
@@ -617,6 +639,8 @@
 /obj/machinery/vending/proc/give_out_product(datum/data/vending_product/VP)
 	playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 	VP.amount--
+	if(VP in product_records)
+		load--
 	if(VP == unstable_product)
 		unstable_product = null
 	updateUsrDialog()
