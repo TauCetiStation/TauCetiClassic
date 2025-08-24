@@ -7,7 +7,6 @@
 	var/sortTag = ""
 	var/lot_number = null
 	var/image/lot_lock_image
-	var/texture_name = "cardboard"
 	var/mutable_appearance/texture_overlay
 	var/mutable_appearance/details
 	flags = NOBLUDGEON
@@ -66,23 +65,22 @@
 		var/obj/item/toy/crayon/Crayon = W
 		color = Crayon.colour
 
-/obj/structure/bigDelivery/update_icon()
+/obj/structure/bigDelivery/proc/add_texture(new_texture, new_details = null)
 	cut_overlay(texture_overlay)
 
-	texture_overlay = mutable_appearance(icon = icon, icon_state = texture_name)
-	texture_overlay.blend_mode = BLEND_MULTIPLY
-	texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
+	if(new_texture)
+		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
+		texture_overlay.blend_mode = BLEND_MULTIPLY
+		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
 	add_overlay(texture_overlay)
 
-	var/details_state
-	if(texture_name == "present")
-		details_state = "bow"
-	cut_overlay(details)
-	if(!details_state)
-		return
 
-	details = mutable_appearance(icon = icon, icon_state = details_state)
+	cut_overlay(details)
+
+	if(new_details)
+		details = mutable_appearance(icon = icon, icon_state = new_details)
+
 	add_overlay(details)
 
 /obj/item/smallDelivery
@@ -154,33 +152,35 @@
 	else
 		return ..()
 
-/obj/item/smallDelivery/update_icon()
+/obj/item/smallDelivery/proc/add_texture(new_texture, new_details = null)
 	cut_overlay(texture_overlay)
 
-	texture_overlay = mutable_appearance(icon = icon, icon_state = texture_name)
-	texture_overlay.blend_mode = BLEND_MULTIPLY
-	texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
+	if(new_texture)
+		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
+		texture_overlay.blend_mode = BLEND_MULTIPLY
+		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
 	add_overlay(texture_overlay)
 
-	var/details_state
-	if(texture_name == "present")
-		details_state = "bow"
-	cut_overlay(details)
-	if(!details_state)
-		return
 
-	details = mutable_appearance(icon = icon, icon_state = details_state)
+	cut_overlay(details)
+
+	if(new_details)
+		details = mutable_appearance(icon = icon, icon_state = new_details)
+
 	add_overlay(details)
+
 
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
+	cases = list("упаковочная бумага", "упаковочной бумаги", "упаковочной бумаге", "упаковочную бумагу", "упаковочной бумагой", "упаковочной бумаге")
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	w_class = SIZE_SMALL
 	var/amount = 25.0
 
 	var/texture_name = "cardboard"
+	var/details_name = null
 
 
 /obj/item/weapon/packageWrap/afterattack(atom/target, mob/user, proximity, params)
@@ -213,7 +213,6 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
-			P.texture_name = texture_name
 			var/i = round(I.w_class)
 			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
 				if(istype(I, /obj/item/pizzabox))
@@ -221,7 +220,7 @@
 					P.icon_state = "deliverypizza[length(B.boxes)]"
 				else
 					P.icon_state = "deliverycrate[i]"
-			P.update_icon()
+			P.add_texture(texture_name, details_name)
 			I.loc = P
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
@@ -232,8 +231,7 @@
 		if (src.amount > 3 && !C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			P.icon_state = "deliverycrate"
-			P.texture_name = texture_name
-			P.update_icon()
+			P.add_texture(texture_name, details_name)
 			C.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
@@ -248,8 +246,7 @@
 			return
 		else if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.texture_name = texture_name
-			P.update_icon()
+			P.add_texture(texture_name, details_name)
 			C.welded = 1
 			C.loc = P
 			src.amount -= 3
@@ -264,28 +261,33 @@
 /obj/item/weapon/packageWrap/attack(mob/target, mob/user)
 	if(!ishuman(target))
 		return ..()
+
+	if(src.amount <= 3)
+		to_chat(user, "<span class='notice'>Нужно больше бумаги.</span>")
+		return
+
 	var/mob/living/carbon/human/H = target
+	if(!H.incapacitated())
+		to_chat(user, "[target] не даёт себя упаковать.")
+		return
 
-	if(H.incapacitated())
-		if(src.amount > 3)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(H.loc))
-			P.icon_state = "deliveryhuman"
-			P.texture_name = texture_name
-			P.update_icon()
-			src.amount -= 3
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(H.loc))
+	P.icon_state = "deliveryhuman"
+	P.add_texture(texture_name, details_name)
+	src.amount -= 3
 
-			if(H.client)
-				H.client.perspective = EYE_PERSPECTIVE
-				H.client.eye = P
+	if(H.client)
+		H.client.perspective = EYE_PERSPECTIVE
+		H.client.eye = P
+	H.loc = P
 
-			H.loc = P
+	H.log_combat(user, "завёрнут в [CASE(src, ACCUSATIVE_CASE)]")
 
-			H.log_combat(user, "wrapped with [name]")
-
-		else
-			to_chat(user, "<span class='notice'>You need more paper.</span>")
-	else
-		to_chat(user, "They are moving around too much. A straightjacket would help.")
+	if(amount <= 0)
+		new /obj/item/weapon/c_tube(loc)
+		qdel(src)
+		return
+	return
 
 /obj/item/weapon/packageWrap/examine(mob/user)
 	..()
@@ -294,9 +296,11 @@
 
 /obj/item/weapon/packageWrap/present
 	name = "holiday package wrapper"
+	cases = list("подарочная бумага", "подарочной бумаги", "подарочной бумаге", "подарочную бумагу", "подарочной бумагой", "подарочной бумаге")
 	icon_state = "wrap_paper"
 
 	texture_name = "present"
+	details_name = "bow"
 
 /obj/item/device/tagger
 	name = "tagger"
