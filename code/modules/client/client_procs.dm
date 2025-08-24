@@ -254,6 +254,9 @@ var/global/list/blacklisted_builds
 
 	global.ahelp_tickets?.ClientLogin(src)
 
+	log_game("[key_name(src)] connected.")
+	message_admins("[ADMIN_LOOKUPJMP(mob)] connected.")
+
 	if(!IsGuestKey(key))
 		update_supporter_status()
 
@@ -408,6 +411,9 @@ var/global/list/blacklisted_builds
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	log_game("[key_name(src)] disconnected.")
+	message_admins("[key_name(src)] [ADMIN_PPJMPFLW(mob)] disconnected.")
 
 	handle_leave()
 

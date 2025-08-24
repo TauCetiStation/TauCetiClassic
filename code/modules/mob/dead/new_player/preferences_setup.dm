@@ -14,9 +14,10 @@
 	randomize_hair_color("gradient")
 	randomize_eyes_color()
 	randomize_skin_color()
-	underwear = rand(1,underwear_m.len)
-	undershirt = rand(1,undershirt_t.len)
-	socks = rand(1,socks_t.len)
+	underwear = rand(0, underwear_t.len)
+	undershirt = rand(0, undershirt_t.len)
+	undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
+	socks = rand(0, socks_t.len)
 	backbag = 2
 	use_skirt = pick(TRUE, FALSE)
 	var/datum/species/S = all_species[species]

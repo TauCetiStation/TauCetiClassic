@@ -6,6 +6,7 @@
 	canmove = FALSE
 	anchored = TRUE // don't get pushed around
 	hud_possible = list()
+	ear_deaf = 1000 // so we don't hear unnecessary sounds
 
 	var/ready             = FALSE
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
@@ -68,6 +69,21 @@
 
 			stat("Players:", "[SSticker.totalPlayers]")
 			stat("Players Ready:", "[SSticker.totalPlayersReady]")
+			for(var/datum/job/J as anything in SSjob.active_occupations)
+				var/job_occupations = 0
+				for(var/mob/dead/new_player/player in global.new_player_list)
+					if((player.client == null) || (player.ready != TRUE))
+						continue
+					if((!istype(J, /datum/job/assistant)) && (player.client.prefs.job_preferences["Assistant"] != JP_LOW) && (player.client.prefs.job_preferences[J.title] == JP_HIGH))
+						job_occupations += 1
+					else if(istype(J, /datum/job/assistant) && (player.client.prefs.job_preferences[J.title] == JP_LOW)) // assistant > other jobs
+						job_occupations += 1
+				if(job_occupations >= 1)
+					if(J.total_positions == -1)
+						stat("[J.title]", "[job_occupations]/∞")
+					else
+						stat("[J.title]", "[job_occupations]/[J.total_positions]")
+
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr || !client)
@@ -231,7 +247,7 @@
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 		return 0
-	if(!SSjob.IsJobAvailable(client, rank))
+	if(!SSjob.IsJobAvailable(src, rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
 
@@ -331,7 +347,7 @@
 		var/department_data = ""
 		for(var/job_tag in SSjob.departments_occupations[department_tag])
 			var/datum/job/J = SSjob.name_occupations[job_tag]
-			if(!SSjob.IsJobAvailable(client, J.title))
+			if(!SSjob.IsJobAvailable(src, J.title))
 				continue
 
 			var/quota_class
