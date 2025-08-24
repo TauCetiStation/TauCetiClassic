@@ -325,7 +325,7 @@
 	target.add_overlay(welding_sparks)
 	INVOKE_ASYNC(src, PROC_REF(start_welding), target)
 	var/datum/callback/checks  = CALLBACK(src, PROC_REF(check_active_and_extra), extra_checks)
-	. = ..(target, user, delay, amount, volume, quality, extra_checks = checks, required_skills_override = required_skills_override, skills_speed_bonus = skills_speed_bonus, can_move, particle_type)
+	. = ..(target, user, delay, amount, volume, quality, checks, required_skills_override, skills_speed_bonus, can_move, particle_type)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
 
