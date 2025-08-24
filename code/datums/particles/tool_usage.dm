@@ -28,29 +28,8 @@
 	if(!newDir)
 		return
 
-	var/offsetX = 0
-	var/offsetY = 0
-	switch(newDir)
-		if(NORTH)
-			offsetY = 8
-		if(SOUTH)
-			offsetY = -8
-		if(EAST)
-			offsetX = 8
-		if(WEST)
-			offsetX = -8
-		if(NORTHEAST)
-			offsetX = 8
-			offsetY = 8
-		if(NORTHWEST)
-			offsetX = -8
-			offsetY = 8
-		if(SOUTHEAST)
-			offsetX = 8
-			offsetY = -8
-		if(SOUTHWEST)
-			offsetX = -8
-			offsetY = -8
+	var/offsetX = X_OFFSET(8, newDir)
+	var/offsetY = Y_OFFSET(8, newDir)
 
 	position = generator("box", list(-2 + offsetX, -4 + offsetY, 0), list(2 + offsetX, -0 + offsetY, 0))
 

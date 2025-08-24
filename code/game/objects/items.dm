@@ -762,13 +762,11 @@
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
 
-	var/particle_use_type
+	var/particle_use_type = /particles/tool/generic
 	if(particle_type)
 		particle_use_type = particle_type
 	else if(!isnull(quality))
 		particle_use_type = target.particles_by_quality[quality]
-	else
-		particle_use_type = /particles/tool/generic
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.

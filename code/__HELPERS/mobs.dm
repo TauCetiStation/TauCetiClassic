@@ -305,14 +305,12 @@
 
 	var/obj/effect/abstract/particle_holder/Particle
 	if(!isnull(particle_type))
-		if(get_turf(target) == get_turf(user))
-			Particle = new(user, particle_type, PARTICLE_FADEOUT)
-			var/particles/Particle_Datum = Particle.get_particle()
-			Particle_Datum.change_dir(user.dir)
-		else
-			Particle = new(target, particle_type, PARTICLE_FADEOUT)
-			var/particles/Particle_Datum = Particle.get_particle()
-			Particle_Datum.change_dir(get_dir(get_turf(target), get_turf(user)))
+		var/is_in_user = (get_turf(target) == get_turf(user))
+
+		Particle = new(is_in_user ? user : target, particle_type, PARTICLE_FADEOUT)
+
+		var/particles/particle_datum = Particle.get_particle()
+		particle_datum.change_dir(is_in_user ? user.dir : get_dir(get_turf(target), get_turf(user)))
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
