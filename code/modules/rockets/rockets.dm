@@ -175,9 +175,7 @@
 	if(iswallturf(target))
 		var/turf/simulated/wall/W = target
 		var/chance = (pierced_cap - pierced) / pierced_cap * 100 + (W.damage / W.damage_cap) * 100
-		if(istype(W, /obj/structure/window/thin/reinforced))
-			chance = chance * 0.25 // -75%
-		else if(istype(W, /turf/simulated/wall/r_wall))
+		if(istype(W, /turf/simulated/wall/r_wall))
 			chance = chance * 0.5 // -50%
 		if(prob(chance))
 			W.ChangeTurf(W.basetype)
