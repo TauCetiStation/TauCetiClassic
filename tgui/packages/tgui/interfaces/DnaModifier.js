@@ -50,13 +50,13 @@ export const DnaModifier = (props, context) => {
           </Tabs.Tab>
         </Tabs>
         <MainScreen />
-        {!!irradiating && (
-          <Dimmer textAlign="center">
-            <h1>Irradiating Subject</h1>
-            <h3>For {irradiating} seconds.</h3>
-          </Dimmer>
-        )}
       </Window.Content>
+      {!!irradiating && (
+        <Dimmer textAlign="center">
+          <h1>Irradiating Subject</h1>
+          <h3>For {irradiating} seconds.</h3>
+        </Dimmer>
+      )}
     </Window>
   );
 };
