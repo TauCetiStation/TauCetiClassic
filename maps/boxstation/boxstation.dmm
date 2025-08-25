@@ -39819,6 +39819,9 @@
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap/present{
+	pixel_x = 16
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},

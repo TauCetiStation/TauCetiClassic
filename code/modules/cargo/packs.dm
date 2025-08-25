@@ -112,9 +112,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/toy/crayon/spraycan,
 					/obj/item/toy/crayon/spraycan,
 					/obj/item/toy/crayon/spraycan,
-					/obj/item/weapon/wrapping_paper,
-					/obj/item/weapon/wrapping_paper,
-					/obj/item/weapon/wrapping_paper,
+					/obj/item/weapon/packageWrap/present,
+					/obj/item/weapon/packageWrap/present,
+					/obj/item/weapon/packageWrap/present,
 					/obj/item/weapon/paper_refill)
 	crate_name = "Arts and Crafts crate"
 	group = "Operations"
