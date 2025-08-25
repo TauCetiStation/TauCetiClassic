@@ -334,6 +334,10 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_GLOVES
 
+	/// Detective Work, used for allowing a given atom to leave its fibers/fingerprints on stuff.
+	var/can_leave_fibers = TRUE
+	var/can_leave_fingerprints = FALSE
+
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
