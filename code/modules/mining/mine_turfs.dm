@@ -230,7 +230,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 50, volume = 100))
+		if(P.use_tool(src, user, 50, volume = 100, particle_type = /particles/tool/digging))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
@@ -700,7 +700,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100))
+		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100, particle_type = /particles/tool/digging))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()

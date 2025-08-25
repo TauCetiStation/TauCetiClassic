@@ -223,7 +223,7 @@
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.use(0,user))
 				to_chat(user, "Welding the [nicetype] in place.")
-				if(W.use_tool(src, user, 20, volume = 50))
+				if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "The [nicetype] has been welded in place!")
 					update() // TODO: Make this neat
 					if(ispipe) // Pipe

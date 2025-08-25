@@ -152,7 +152,7 @@ var/global/loopModeNames=list(
 			return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
-		if(W.use_tool(src, user, 30, volume = 50))
+		if(W.use_tool(src, user, 30, volume = 50, quality = QUALITY_WRENCHING))
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
 			playing = emagged

@@ -57,7 +57,7 @@
 
 		if(!type) // should not happen
 			return
-		
+
 		if(!W.use_tool(src, user, 20, 2))
 			return
 
@@ -71,8 +71,8 @@
 			return
 
 		to_chat(user, "<span class='notice'>You begin disassembling \the [src].</span>")
-		
-		if(W.use_tool(src, user, 20))
+
+		if(W.use_tool(src, user, 20, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 
 		return

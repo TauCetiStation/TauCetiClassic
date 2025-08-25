@@ -22,7 +22,7 @@
 			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50))
+				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
@@ -32,14 +32,14 @@
 					to_chat(user, "The welder must be on for this task.")
 					return
 				if(user.is_busy(src)) return
-				if(WT.use_tool(src, user, 20, amount = 0, volume = 50))
+				if(WT.use_tool(src, user, 20, amount = 0, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					deconstruct(TRUE)
 		if(1)
 			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50))
+				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					anchored = FALSE
 					state = 0

@@ -293,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(I.use_tool(src, user, erase_time, volume = 50))
+	if(I.use_tool(src, user, erase_time, volume = 50, quality = QUALITY_PULSING))
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
 		disarm()
