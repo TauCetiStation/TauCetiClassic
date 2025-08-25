@@ -183,8 +183,8 @@
 			return FALSE
 	else if(isliving(target) && prob((pierced_cap - pierced) / pierced_cap * 100 + 50))
 		var/mob/living/L = target
-		L.adjustBruteLoss(40)
-		L.adjustFireLoss(20)
+		var/hit_damage = rand(10, 40)
+		L.take_bodypart_damage(hit_damage, hit_damage)
 		pierced += 0.75
 		return FALSE
 	else if(!(target.resistance_flags & INDESTRUCTIBLE) && prob((pierced_cap - pierced) / pierced_cap * 100 + 50))
