@@ -24,9 +24,7 @@ const pauseEvent = (e: MouseEvent) => {
 };
 
 const tooltipForDock = (dock: DockObject) => (
-  <Box textAlign="center">
-    {<b>{dock.name}</b>}
-  </Box>
+  <Box textAlign="center">{<b>{dock.name}</b>}</Box>
 );
 
 type Data = {
@@ -105,7 +103,7 @@ export const ShuttleConsole = (_: any, context: any) => {
         break;
     }
 
-    if(dock.dock_id === docked_to_id) {
+    if (dock.dock_id === docked_to_id) {
       icon = 'rocket';
     }
 
@@ -123,9 +121,14 @@ export const ShuttleConsole = (_: any, context: any) => {
   let trackData: NanoMapTrackData | undefined;
 
   return (
-    <Window title={"Консоль шаттла: " + shuttlename} width={700} height={500}>
+    <Window title={'Консоль шаттла: ' + shuttlename} width={700} height={500}>
       <Window.Content>
-        <Box width="30%" height="100%" overflow="hidden" left="0px" position="absolute">
+        <Box
+          width="30%"
+          height="100%"
+          overflow="hidden"
+          left="0px"
+          position="absolute">
           <Stack vertical fill>
             <Stack.Item textAlign="center" bold={1}>
               Список доступных секторов:
@@ -141,8 +144,7 @@ export const ShuttleConsole = (_: any, context: any) => {
                       'Button--fluid',
                       'Button--color--transparent',
                       'Button--ellipsis',
-                      birthplace.dock_id === docked_to_id &&
-                        'Button--selected',
+                      birthplace.dock_id === docked_to_id && 'Button--selected',
                     ])}
                     onClick={() =>
                       act('fly_to_dock', {
@@ -161,22 +163,27 @@ export const ShuttleConsole = (_: any, context: any) => {
                       'Button--fluid',
                       'Button--color--transparent',
                       'Button--ellipsis',
-                      level.z === currentZ &&
-                        'Button--selected',
+                      level.z === currentZ && 'Button--selected',
                     ])}
                     onClick={() =>
                       act('fly_to_level', {
                         level_id: level.z,
                       })
                     }>
-                    {level.name} {level.z === currentZ && (<Icon name='rocket'/>)} 
+                    {level.name}{' '}
+                    {level.z === currentZ && <Icon name="rocket" />}
                   </div>
                 ))}
               </Section>
             </Stack.Item>
           </Stack>
         </Box>
-        <Box width="70%" height="100%" overflow="hidden" right="0px" position="absolute">
+        <Box
+          width="70%"
+          height="100%"
+          overflow="hidden"
+          right="0px"
+          position="absolute">
           <NanoMap
             nanomapPayload={nanomapPayload}
             zLevel={zLevel}
