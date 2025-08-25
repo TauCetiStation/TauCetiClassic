@@ -71,3 +71,58 @@
 	l_ear = /obj/item/device/radio/headset/headset_eng
 
 	back_style = BACKPACK_STYLE_ENGINEERING
+
+
+
+/datum/outfit/job/chief_engineer/stroechka
+	belt = /obj/item/weapon/storage/belt/utility/advanced
+	gloves = /obj/item/clothing/gloves/insulated
+	suit = /obj/item/clothing/suit/hooded/wintercoat/engineering
+
+	r_pocket = /obj/item/device/radio/off
+
+	backpack_contents = list(
+		/obj/item/clothing/glasses/meson/gar,
+		/obj/item/clothing/glasses/welding/superior/cheif_eng,
+		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/device/flashlight/lantern)
+
+/datum/outfit/job/engineer/stroechka
+	belt = /obj/item/weapon/storage/belt/utility/advanced
+	gloves = /obj/item/clothing/gloves/insulated
+	suit = /obj/item/clothing/suit/hooded/wintercoat/engineering
+
+	r_pocket = /obj/item/device/radio/off
+
+	backpack_contents = list(
+		/obj/item/clothing/glasses/meson,
+		/obj/item/clothing/glasses/welding,
+		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/device/flashlight/lantern)
+
+/datum/outfit/job/atmos/stroechka
+	belt = /obj/item/weapon/storage/belt/utility/advanced
+	gloves = /obj/item/clothing/gloves/insulated
+	suit = /obj/item/clothing/suit/hooded/wintercoat/engineering
+
+	r_pocket = /obj/item/device/radio/off
+
+	backpack_contents = list(
+		/obj/item/clothing/glasses/meson,
+		/obj/item/clothing/glasses/welding,
+		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/device/flashlight/lantern)
+
+/datum/outfit/job/technical_assistant/stroechka
+	belt = /obj/item/weapon/storage/belt/utility/advanced
+	gloves = /obj/item/clothing/gloves/insulated
+	suit = /obj/item/clothing/suit/hooded/wintercoat/engineering
+
+	l_pocket = /obj/item/device/pda
+	r_pocket = /obj/item/device/radio/off
+
+	backpack_contents = list(
+		/obj/item/clothing/glasses/meson,
+		/obj/item/clothing/glasses/welding,
+		/obj/item/clothing/accessory/storage/brown_vest,
+		/obj/item/device/flashlight/lantern)

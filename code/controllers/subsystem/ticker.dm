@@ -117,13 +117,9 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_end
-			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+			if(!explosion_in_progress && mode_finished)
 
 				load_arena()
-
-				if(!SSrating.already_started)
-					start_rating_vote_if_unexpected_roundend()
-					return
 
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
@@ -135,6 +131,11 @@ SUBSYSTEM_DEF(ticker)
 
 					if(blackbox)
 						blackbox.save_all_data_to_sql()
+
+					if(station_name == "Hephaestus")
+						to_chat(world, "<span class='notice bold'>Строечка сохраняется!</span>")
+						maploader.save_map(locate(1, 1, 2), locate(100, 100, 2), "maps/stroechka/stroechka")
+						to_chat(world, "<span class='notice bold'>Строечка сохранена!</span>")
 
 					if(establish_db_connection("erro_round"))
 						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.get_mode_result())]' WHERE id = [global.round_id]")

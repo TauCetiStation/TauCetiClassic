@@ -118,17 +118,11 @@ move an amendment</a> to the drawing.</p>
 	if(length(str) > 50)
 		to_chat(usr, "<span class='warning'>Name too long.</span>")
 		return
-	var/area/A = new
+	var/area/blueprint/A = new
 	A.name = str
 	A.tag="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
 	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]"
-	A.power_equip = 0
-	A.power_light = 0
-	A.power_environ = 0
-	A.always_unpowered = 0
-	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
-	A.always_unpowered = 0
 	A.update_areasize()
 
 	spawn(5)
@@ -247,3 +241,11 @@ move an amendment</a> to the drawing.</p>
 					return ROOM_ERR_SPACE
 		found+=T
 	return found
+
+/area/blueprint
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
+	always_unpowered = 0
+	valid_territory = 0
+	always_unpowered = 0

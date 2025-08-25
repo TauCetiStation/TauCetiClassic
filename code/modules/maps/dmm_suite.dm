@@ -63,8 +63,8 @@ var/global/dmm_suite/maploader = new
 	// flags: Any, or a combination, of several bit flags (Optional, see documentation).
 
 // save_map is included as a legacy proc. Use write_map instead.
-/dmm_suite/proc/save_map(turf/t1 as turf, turf/t2 as turf, map_name as text, flags as num)
+/dmm_suite/proc/save_map(turf/t1 as turf, turf/t2 as turf, map_path as text, flags as num)
 	// t1: A turf representing one corner of a three dimensional grid (Required).
 	// t2: Another turf representing the other corner of the same grid (Required).
-	// map_name: A valid name for the map to be saved, such as "castle" (Required).
-	// flags: Any, or a combination, of several bit flags (Optional, see documentation).
+	// map_path: A valid path for the map to be saved, such as "maps/castle" (Required).
+	// flags: Any, or a combination, of several bit flags (Optional, see writer.dm).
