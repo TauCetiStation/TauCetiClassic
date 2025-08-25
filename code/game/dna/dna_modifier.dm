@@ -1,4 +1,6 @@
 #define DNA_BLOCK_SIZE 3
+#define MAX_RAD_DURATION 10
+#define MAX_RAD_INTENSITY 20
 
 // Buffer datatype flags.
 #define DNA2_BUF_UI 1
@@ -379,6 +381,8 @@
 		new_buffers += list(buf.GetData())
 	data["buffers"]=new_buffers
 
+	data["maxRadiationIntensity"] = MAX_RAD_INTENSITY
+	data["maxRadiationDuration"] = MAX_RAD_DURATION
 	data["radiationIntensity"] = radiation_intensity
 	data["radiationDuration"] = radiation_duration
 	data["irradiating"] = irradiating
@@ -774,3 +778,7 @@
 	SStgui.update_uis(src)
 
 /////////////////////////// DNA MACHINES
+
+#undef DNA_BLOCK_SIZE
+#undef MAX_RAD_DURATION
+#undef MAX_RAD_INTENSITY

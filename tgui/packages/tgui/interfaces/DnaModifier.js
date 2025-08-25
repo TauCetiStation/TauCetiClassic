@@ -160,6 +160,8 @@ const ScannerButtons = (props, context) => {
 const EmitterControls = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    maxRadiationIntensity,
+    maxRadiationDuration,
     radiationIntensity,
     radiationDuration,
     selectedUITarget,
@@ -172,7 +174,7 @@ const EmitterControls = (props, context) => {
       <Knob
         value={radiationDuration}
         minValue={2}
-        maxValue={20}
+        maxValue={maxRadiationDuration}
         stepPixelSize={4}
         size={2}
         mb={1}
@@ -196,7 +198,7 @@ const EmitterControls = (props, context) => {
       <Knob
         value={radiationIntensity}
         minValue={1}
-        maxValue={10}
+        maxValue={maxRadiationIntensity}
         stepPixelSize={4}
         size={2}
         mb={1}
