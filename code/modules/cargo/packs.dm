@@ -418,6 +418,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "40x46mm explosive grenades"
 	access = access_armory
+	hidden = TRUE
 	group = "Security"
 
 /datum/supply_pack/ballistic/m79
