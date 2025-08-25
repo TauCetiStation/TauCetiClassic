@@ -236,6 +236,22 @@
 
 	return C
 
+/datum/fort_console_lot/plasteel
+	name = "Plasteel 5x20"
+	desc = "5x20 plasteel lists"
+	price = 90
+
+	order = 14
+
+/datum/fort_console_lot/plasteel/purchase()
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
+	for(var/i in 1 to 5)
+		var/obj/item/stack/sheet/plasteel/S = new(C)
+		S.set_amount(20)
+
+	return C
+
+
 // 20-30
 /datum/fort_console_lot/rcd_ammo
 	name = "RCD ammunition 1x10"
