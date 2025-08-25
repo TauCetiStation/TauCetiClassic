@@ -3543,6 +3543,10 @@
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
 	},
+/obj/effect/docking_port{
+	dir = 1;
+	name = "Science Outpost"
+	},
 /turf/simulated/floor/grid_floor,
 /area/asteroid/research_outpost/entry)
 "hw" = (
@@ -4341,6 +4345,12 @@
 /obj/machinery/door/airlock,
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
+"iS" = (
+/obj/effect/landing_pad/size30{
+	name = "South-West of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
 "iT" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -11817,11 +11827,12 @@
 	},
 /area/asteroid/mine/production)
 "Af" = (
-/obj/machinery/computer/mine_sci_shuttle{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/computer/shuttle_console{
+	grid_id = "min_sci";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11906,6 +11917,10 @@
 	req_access = list(48)
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/docking_port{
+	dir = 1;
+	name = "Mining Outpost"
+	},
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/production)
 "Au" = (
@@ -12555,6 +12570,12 @@
 	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/iso1)
+"Eo" = (
+/obj/effect/landing_pad/size30{
+	name = "North-West of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
 "ED" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/turf_decal/set_burned,
@@ -12686,6 +12707,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
+"FX" = (
+/obj/effect/landing_pad/size30{
+	name = "North-East of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
 "Ga" = (
 /obj/structure/alien/weeds,
 /turf/simulated/floor{
@@ -13937,6 +13964,12 @@
 	},
 /turf/simulated/wall/r_wall/green,
 /area/asteroid/mine/dwarf)
+"SD" = (
+/obj/effect/landing_pad/size30{
+	name = "South-East of the asteroid"
+	},
+/turf/environment/space,
+/area/space)
 "Tb" = (
 /obj/structure/transit_tube/station,
 /obj/structure/sign/warning/securearea{
@@ -14257,7 +14290,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/computer/mine_sci_shuttle,
+/obj/machinery/computer/shuttle_console{
+	grid_id = "min_sci";
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17002,6 +17038,7 @@ aa
 aa
 aa
 aa
+Eo
 aa
 aa
 aa
@@ -17207,8 +17244,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+iS
 aa
 aa
 aa
@@ -69944,7 +69980,7 @@ aa
 aa
 aa
 aa
-aa
+FX
 aa
 aa
 aa
@@ -70150,7 +70186,7 @@ aa
 aa
 aa
 aa
-aa
+SD
 aa
 aa
 aa

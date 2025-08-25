@@ -4,6 +4,8 @@
 	var/list/climbers = list()
 	w_class = SIZE_MASSIVE
 
+	var/grid_id
+
 /obj/structure/atom_init()
 	. = ..()
 	if(smooth)
