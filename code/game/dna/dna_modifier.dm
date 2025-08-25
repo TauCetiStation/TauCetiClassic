@@ -482,12 +482,12 @@
 
 			connected.occupant.radiation += ((radiation_intensity * 3) + radiation_duration * 3)
 			connected.locked = lock_state
-//TODO: defines and export to tgui data
+
 		if ("radiationDuration")
-			radiation_duration = text2num(params["duration"])
+			radiation_duration = clamp(params["duration"], 1, MAX_RAD_DURATION)
 
 		if ("radiationIntensity")
-			radiation_intensity = params["intensity"]
+			radiation_intensity = clamp(params["intensity"], 1, MAX_RAD_INTENSITY)
 
 	 ////////////////////////////////////////////////////////
 
