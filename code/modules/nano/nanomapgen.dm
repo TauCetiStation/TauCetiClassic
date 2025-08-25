@@ -24,9 +24,11 @@
 		var/input_z = input(usr,"Enter the Z level to generate") as num
 		if(!input_z)
 			return
-		nanomapgen_DumpTile(1, 1, text2num(input_z))
+		var/choice = input(usr,"Show area color?") as null|anything in list("Yes","No")
+		var/showArea = choice == "Yes" ? TRUE : FALSE
+		nanomapgen_DumpTile(1, 1, text2num(input_z), showAreaColor = showArea)
 
-/client/proc/nanomapgen_DumpTile(startX = 1, startY = 1, currentZ = 1, endX = -1, endY = -1)
+/client/proc/nanomapgen_DumpTile(startX = 1, startY = 1, currentZ = 1, endX = -1, endY = -1, showAreaColor)
 
 	if (endX < 0 || endX > world.maxx)
 		endX = world.maxx
@@ -70,6 +72,14 @@
 			TurfIcon.Scale(NANOMAP_ICON_SIZE, NANOMAP_ICON_SIZE)
 
 			Tile.Blend(TurfIcon, ICON_OVERLAY, ((WorldX - 1) * NANOMAP_ICON_SIZE), ((WorldY - 1) * NANOMAP_ICON_SIZE))
+
+			if(showAreaColor)
+				var/area/Area = get_area(Turf)
+				Area.layer = TURF_LAYER
+				Area.plane = HUD_PLANE
+				var/icon/AreaIcon = new(Area.icon, Area.icon_state)
+				AreaIcon.Scale(NANOMAP_ICON_SIZE, NANOMAP_ICON_SIZE)
+				Tile.Blend(AreaIcon, ICON_OVERLAY, ((WorldX - 1) * NANOMAP_ICON_SIZE), ((WorldY - 1) * NANOMAP_ICON_SIZE))
 
 			count++
 

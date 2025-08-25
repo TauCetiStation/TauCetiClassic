@@ -61,6 +61,15 @@
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
+/datum/asset/simple/station_map
+	assets = list(
+		"nanomap_exodus_1_small.png" = 'nano/images/nanomap_exodus_1_small.png',
+		"nanomap_gamma_1_small.png" = 'nano/images/nanomap_gamma_1_small.png',
+		"nanomap_falcon_1_small.png" = 'nano/images/nanomap_falcon_1_small.png',
+		"nanomap_prometheus_1_small.png" = 'nano/images/nanomap_prometheus_1_small.png',
+		"nanomap_delta_1_small.png" = 'nano/images/nanomap_delta_1_small.png'
+	)
+
 /datum/asset/simple/newscaster
 	assets = list(
 		"like.png" = 'icons/newscaster_icons/like.png',
