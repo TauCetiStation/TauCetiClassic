@@ -115,7 +115,6 @@
 	desc = "Патрон 12-го калибра типа \"электрошок\"."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
-	pellets = 5
 	m_amt = 2500
 
 /obj/item/ammo_casing/shotgun/incendiary
