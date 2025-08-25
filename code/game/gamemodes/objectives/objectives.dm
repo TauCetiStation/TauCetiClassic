@@ -70,6 +70,6 @@
 	var/where = H.equip_in_one_of_slots(RE, slots)
 	H.update_icons()
 	if(where)
-		to_chat(H, "You have been given additional equipment for the mission.")
+		to_chat(H, "Вам выдано дополнительное снаряжение для выполнения миссии.")
 	else
-		to_chat(H, "Unfortunately you have lost additional equipment for the mission.")
+		to_chat(H, "К сожалению, вы потеряли дополнительное снаряжение для выполнения миссии.")

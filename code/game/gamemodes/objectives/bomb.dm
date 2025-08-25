@@ -1,5 +1,5 @@
 /datum/objective/bomb
-	explanation_text = "Detonate a bomb in one of the following compartments: Captain's office, armory, toxin storage, EVA, telecommunications, atmospherics."
+	explanation_text = "Взорвите бомбу в одном из следующих отсеков: капитанская рубка, оружейная, склад газов ОИР, хранилище ВКД, центр управления телекоммуникациями, атмосферный отдел."
 	required_equipment = /obj/item/device/radio/beacon/syndicate_bomb/objective
 	global_objective = TRUE
 	var/already_completed = FALSE
