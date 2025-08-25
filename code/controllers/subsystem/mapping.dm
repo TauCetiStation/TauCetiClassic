@@ -56,6 +56,8 @@ SUBSYSTEM_DEF(mapping)
 	// Space structures
 	spawn_space_structures()
 
+	add_landing_positions()
+
 	..()
 
 /datum/controller/subsystem/mapping/proc/load_map_module(module_name)
@@ -161,6 +163,63 @@ SUBSYSTEM_DEF(mapping)
 	message_admins("Couldn't find position for [structure.structure_id]")
 #endif
 	return null
+
+/datum/controller/subsystem/mapping/proc/add_landing_positions()
+	var/list/added_positions = list()
+	for(var/datum/reserved_space/S in reserved_space)
+		var/list/possible_positions = list()
+		var/datum/reserved_space/Landing1 = new
+		Landing1.z = S.z
+		Landing1.x1 = S.x1 + FLOOR(S.x2 - S.x1 / 2, 1) - 15
+		Landing1.y1 = S.y2 + 1
+		Landing1.x2 = Landing1.x1 + 30
+		Landing1.y2 = Landing1.y2 + 30
+		possible_positions += Landing1
+
+		var/datum/reserved_space/Landing2 = new
+		Landing2.z = S.z
+		Landing2.x1 = S.x2 + 1
+		Landing2.y1 = S.y1 + FLOOR(S.y2 - S.y1 / 2, 1) - 15
+		Landing2.x2 = Landing2.x1 + 30
+		Landing2.y2 = Landing2.y2 + 30
+		possible_positions += Landing2
+
+		var/datum/reserved_space/Landing3 = new
+		Landing3.z = S.z
+		Landing3.x1 = S.x1 + FLOOR(S.x2 - S.x1 / 2, 1) - 15
+		Landing3.y1 = S.y1 - 31
+		Landing3.x2 = Landing3.x1 + 30
+		Landing3.y2 = Landing3.y2 + 30
+		possible_positions += Landing3
+
+		var/datum/reserved_space/Landing4 = new
+		Landing4.z = S.z
+		Landing4.x1 = S.x1 - 31
+		Landing4.y1 = S.y1 + FLOOR(S.y2 - S.y1 / 2, 1) - 15
+		Landing4.x2 = Landing4.x1 + 30
+		Landing4.y2 = Landing4.y2 + 30
+		possible_positions += Landing4
+
+		check_positions:
+			for(var/datum/reserved_space/Position in possible_positions)
+				if(Position.x1 < TRANSITIONEDGE || Position.y1 < TRANSITIONEDGE || Position.x2 > (world.maxx - TRANSITIONEDGE) || Position.y2 > (world.maxy - TRANSITIONEDGE))
+					qdel(Position)
+					continue
+
+				for(var/datum/reserved_space/Structure in reserved_space + added_positions)
+					if(Structure.z != Position.z)
+						continue
+
+					if(Position.x1 < Structure.x2 && Position.y1 < Structure.y2 && Structure.x1 < Position.x2 && Structure.y1 < Position.y2)
+						qdel(Position)
+						continue check_positions
+
+				var/turf/T = locate(Position.x1, Position.y1, Position.z)
+				new /obj/effect/landing_pad/size30(T)
+				added_positions += Position
+
+	reserved_space += added_positions
+
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT

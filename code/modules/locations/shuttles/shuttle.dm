@@ -1,4 +1,6 @@
 #define SHUTTLE_RAM_DAMAGE 1
+#define SHUTTLE_FLYING_TIME 30 SECONDS
+#define SHUTTLE_DOCKING_TIME 3 SECONDS
 var/global/dock_ids = 1
 var/global/list/all_docking_ports = list() //Все докпорты и лендинги.
 var/global/list/all_transit_spaces = list() //Транзитные лендинги на цк используемые для перелётов между слоями.
@@ -6,7 +8,6 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 /datum/dock
 	var/name = "DockName"
 	var/dir
-	var/size = 1
 
 	var/bounds_x = 1
 	var/bounds_y = 1
@@ -99,17 +100,15 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		return FALSE
 
 	var/list/turfs_to_check = list(T)
-	if(size == 2)
-		switch(dir)
-			if(NORTH, SOUTH)
-				T = get_step(T, EAST)
-			if(EAST, WEST)
-				T = get_step(T, NORTH)
+	if(bounds_y > 1)
+		T = get_step(T, NORTH)
+	else if(bounds_x > 1)
+		T = get_step(T, EAST)
 
-		if(!T)
-			return FALSE
+	if(!T)
+		return FALSE
 
-		turfs_to_check += T
+	turfs_to_check += T
 
 
 	for(var/turf/Door_Turf in turfs_to_check)
@@ -153,7 +152,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 /proc/add_docking_port(name, dir, x, y, z, list/docks_list) //Здесь мы проверяем есть ли на этом месте рядом уже док и если есть, то вместо добавления нового дока мы расширяем старый. Сделано пока для двойных шлюзов.
 	for(var/datum/dock/port in docks_list)
-		if(port.dir != dir || port.size == 2)
+		if(port.dir != dir || port.bounds_x > 1 || port.bounds_y > 1)
 			continue
 
 		switch(dir)
@@ -161,7 +160,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 				if(!((port.landing_coords["x"] - x) in list(1, -1)))
 					continue
 
-				port.size = 2
+				port.bounds_x = 2
 				if(port.landing_coords["x"] > x)
 					port.landing_coords["x"] = x
 
@@ -171,7 +170,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 				if(!((port.landing_coords["y"] - y) in list(1, -1)))
 					continue
 
-				port.size = 2
+				port.bounds_y = 2
 				if(port.landing_coords["y"] > y)
 					port.landing_coords["y"] = y
 
@@ -424,58 +423,80 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	return TRUE
 
-/datum/shuttle/proc/fly_to_dock(datum/dock/DockBy, datum/dock/DockTo) //Перелёт до конкретного дока.
+/datum/shuttle/proc/fly_to_dock(datum/dock/DockTo) //Перелёт до конкретного дока.
 	if(!check_can_move(DockTo))
 		return FALSE
-	if(DockTo.landing_coords["z"] == DockBy.landing_coords["z"])
-		return try_move(DockBy, DockTo)
-	var/list/transit_spaces = list()
-	for(var/datum/dock/landing_pad/Transit in global.all_transit_spaces)
-		if(Transit.occupied || Transit.reserved)
-			continue
-		transit_spaces += Transit
-	if(!transit_spaces.len)
+	if(DockTo.landing_coords["z"] == z_level)
+		for(var/datum/dock/ShuttleDock in airlocks)
+			if(can_move_to(ShuttleDock, DockTo))
+				return try_move(ShuttleDock, DockTo)
 		return FALSE
-	var/datum/dock/Transit = pick(transit_spaces)
 
-	if(!can_move_to(DockBy, Transit) || !can_move_to(DockBy, DockTo))
+	var/datum/dock/Transit
+	for(var/datum/dock/landing_pad/Space in global.all_transit_spaces)
+		if(!check_can_move(Space))
+			continue
+		Transit = Space
+		break
+	if(!Transit)
+		return FALSE
+
+	var/datum/dock/DockBy
+	for(var/datum/dock/ShuttleDock in airlocks)
+		if(!can_move_to(ShuttleDock, Transit) || !can_move_to(ShuttleDock, DockTo))
+			continue
+		DockBy = ShuttleDock
+		break
+
+	if(!DockBy)
 		return FALSE
 
 	DockTo.reserved = TRUE
 
-	addtimer(CALLBACK(src,PROC_REF(end_transit), DockBy, DockTo), 30 SECONDS)
+	addtimer(CALLBACK(src,PROC_REF(end_transit), DockBy, DockTo), SHUTTLE_FLYING_TIME)
 
 	return try_move(DockBy, Transit)
 
-/datum/shuttle/proc/fly_to_z_level(datum/dock/DockBy, z_level) //Перелёт до любой посадочной площадки слоя.
-	var/list/dockports = all_docking_ports["[z_level]"]
+/datum/shuttle/proc/fly_to_z_level(z_lvl) //Перелёт до любой посадочной площадки слоя.
+	if(z_lvl == z_level)
+		return FALSE
+
+	var/list/dockports = all_docking_ports["[z_lvl]"]
 
 	var/list/landing_spaces = list()
 	for(var/datum/dock/landing_pad/Pad in dockports)
-		if(Pad.occupied || Pad.reserved)
+		if(!check_can_move(Pad))
 			continue
 		landing_spaces += Pad
 	if(!landing_spaces.len)
 		return FALSE
-	var/datum/dock/DockTo = pick(landing_spaces)
 
-	if(!check_can_move(DockTo))
-		return FALSE
-	var/list/transit_spaces = list()
-	for(var/datum/dock/landing_pad/Transit in global.all_transit_spaces)
-		if(Transit.occupied || Transit.reserved)
+	var/datum/dock/Transit
+	for(var/datum/dock/landing_pad/Space in global.all_transit_spaces)
+		if(!check_can_move(Space))
 			continue
-		transit_spaces += Transit
-	if(!transit_spaces.len)
+		Transit = Space
+		break
+	if(!Transit)
 		return FALSE
-	var/datum/dock/Transit = pick(transit_spaces)
 
-	if(!can_move_to(DockBy, Transit) || !can_move_to(DockBy, DockTo))
+	var/datum/dock/DockTo
+	var/datum/dock/DockBy
+	for(var/datum/dock/landing_pad/Pad in landing_spaces)
+		for(var/datum/dock/ShuttleDock in airlocks)
+			if(!can_move_to(ShuttleDock, Transit) || !can_move_to(ShuttleDock, Pad))
+				continue
+			DockBy = ShuttleDock
+			break
+		DockTo = Pad
+		break
+
+	if(!DockBy || !DockTo)
 		return FALSE
 
 	DockTo.reserved = TRUE
 
-	addtimer(CALLBACK(src,PROC_REF(end_transit), DockBy, DockTo), 30 SECONDS)
+	addtimer(CALLBACK(src,PROC_REF(end_transit), DockBy, DockTo), SHUTTLE_FLYING_TIME)
 
 	return try_move(DockBy, Transit)
 
@@ -485,7 +506,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		DockTo.reserved = FALSE
 
 		var/list/destination = pick(StoredDestinations)
-		fly_to_z_level(DockBy, destination["z"])
+		fly_to_z_level(destination["z"])
 
 
 /datum/shuttle/proc/can_move_to(datum/dock/DockBy, datum/dock/DockTo) //Проверка на то, можем ли мы пристыковаться к доку/площадке физически.
@@ -532,7 +553,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	DockTo.prepare_landing()
 
-	addtimer(CALLBACK(src,PROC_REF(shuttle_move), moving_order, rotation, DockBy, DockTo), 3 SECONDS)
+	addtimer(CALLBACK(src,PROC_REF(shuttle_move), moving_order, rotation, DockBy, DockTo), SHUTTLE_DOCKING_TIME)
 	return TRUE
 
 /datum/shuttle/proc/shuttle_move(list/moving_order, rotation, datum/dock/DockBy, datum/dock/DockTo) //Перемещение шаттла и всего что в нём к доку.
@@ -635,7 +656,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	z_level = DockTo.landing_coords["z"]
 
-	addtimer(CALLBACK(src,PROC_REF(dock), DockBy, DockTo), 3 SECONDS)
+	addtimer(CALLBACK(src,PROC_REF(dock), DockBy, DockTo), SHUTTLE_DOCKING_TIME)
 
 
 /datum/shuttle/proc/shake_mob(mob/M, fall_direction) //Дёргаем мобов торможением/разгоном.
@@ -694,10 +715,14 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	var/max_cords_holder = apply_rotation_to_relative_coordinates(max_cords, rotation)
 
 	if(max_cords_holder["x"] < min_cords_holder["x"])
+		var/hold = min_cords_holder["x"]
 		min_cords_holder["x"] = max_cords_holder["x"]
+		max_cords_holder["x"] = hold
 
 	if(max_cords_holder["y"] < min_cords_holder["y"])
+		var/hold = min_cords_holder["y"]
 		min_cords_holder["y"] = max_cords_holder["y"]
+		max_cords_holder["y"] = hold
 
 	var/turf/destination_turf = locate(LandOn.landing_coords["x"] + round((LandOn.bounds_x - bounds_x_holder) / 2) - min_cords_holder["x"], LandOn.landing_coords["y"] + round((LandOn.bounds_y - bounds_y_holder) / 2) - min_cords_holder["y"], LandOn.landing_coords["z"])
 	if(!destination_turf)
@@ -786,7 +811,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 
 /obj/effect/landing_pad //Мапперская заглушка для создания посадочной площадки.
-	name = "padName"
+	name = "Space"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "landing_pad"
 
@@ -1032,98 +1057,107 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/shuttle_console, shuttle_consoles)
 
 	ShuttleDock = Shuttle.dockedBy
 
-/obj/machinery/computer/shuttle_console/ui_interact(mob/user) //Наноуи это временно, простая заглушка, сделаю тгуи с картой слоя.
-	var/dat
-	var/list/docks_z_level = global.all_docking_ports["[z]"]
 
+/obj/machinery/computer/shuttle_console/ui_interact(mob/user)
 	if(!Shuttle)
 		try_find_shuttle()
 		if(!Shuttle)
 			to_chat(user, "Ведётся поиск шаттла...")
 			return
 
-	if(!Shuttle.is_moving)
-		var/Level_Name = null
-		for(var/list/destination in Shuttle.StoredDestinations)
-			if(destination["z"] == Shuttle.z_level)
-				Level_Name = destination["name"]
-				break
-		dat += "Shuttle Location: [Level_Name ? Level_Name : "Unknown"]<br>"
-		if(Shuttle.Birthplace)
-			dat += "<a href='byond://?src=\ref[src];return_home=1'>Return Home</a><br>"
-		dat += "<table><thead><tr>"
-		dat += "<th>Available destinations:</th>"
-		dat += "<th>Available docks:</th>"
-		dat += "<th>Available areas:</th></tr></thead>"
+	tgui_interact(user)
 
-		dat += "<tbody><tr><td>"
-		for(var/list/Destination in Shuttle.StoredDestinations)
-			dat += "<a href='byond://?src=\ref[src];destination=[Destination["z"]]'>Destination: [Destination["name"]]</a><br>"
-		dat += "</td><td>"
-		for(var/datum/dock/port in docks_z_level)
-			if(istype(port, /datum/dock/landing_pad))
-				continue
-			dat += "<a href='byond://?src=\ref[src];dock=[port.dock_id]'>[port.name]</a><br>"
+/obj/machinery/computer/shuttle_console/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 
-		dat += "</td><td>"
-		for(var/datum/dock/landing_pad/pad in docks_z_level)
-			dat += "<a href='byond://?src=\ref[src];dock=[pad.dock_id]'>[pad.name]</a><br>"
+	if(!ui)
+		ui = new(user, src, "ShuttleConsole", name)
+		ui.open()
 
-		dat += "</tr></td></tbody></table><br>Shuttle airlock:<br>"
-		for(var/datum/dock/airlock in Shuttle.airlocks)
-			if(airlock == ShuttleDock)
-				dat += "Direction: [airlock.dir]; Size: [airlock.size]; X: [airlock.landing_coords["x"]]; Y: [airlock.landing_coords["y"]]<br>"
-			else
-				dat += "<a href='byond://?src=\ref[src];airlock=[airlock.dock_id]'>Direction: [airlock.dir]; Size: [airlock.size]; X: [airlock.landing_coords["x"]]; Y: [airlock.landing_coords["y"]]</a><br>"
-	else
-		dat += "<h1>Shuttle is moving...</h1>"
+/obj/machinery/computer/shuttle_console/tgui_static_data(mob/user)
+	var/list/data = list()
+	data["nanomapPayload"] = SSmapping.tgui_nanomap_payload()
 
-	var/datum/browser/popup = new(user, "flightcomputer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 450, 400)
-	popup.set_content(dat)
-	popup.open()
+	var/list/birthplace_data = null
+	if(Shuttle.Birthplace)
+		birthplace_data = list("name" = Shuttle.Birthplace.name, "dir" = Shuttle.Birthplace.dir, "bounds_x" = Shuttle.Birthplace.bounds_x, "bounds_y" = Shuttle.Birthplace.bounds_y, "x" = Shuttle.Birthplace.landing_coords["x"], "y" = Shuttle.Birthplace.landing_coords["y"], "occupied" = Shuttle.Birthplace.occupied, "reserved" = Shuttle.Birthplace.reserved, "dock_id" = Shuttle.Birthplace.dock_id)
 
-/obj/machinery/computer/shuttle_console/Topic(href, href_list)
+	data["birthplace"] = birthplace_data
+
+	var/list/levels_data = list()
+	for(var/list/level in Shuttle.StoredDestinations)
+		levels_data += list(level)
+
+	data["levels"] = levels_data
+
+	data["shuttlename"] = Shuttle.name
+
+	return data
+
+/obj/machinery/computer/shuttle_console/tgui_data(mob/user)
+	var/list/data = list()
+	var/list/docks_data = list()
+	if(!is_centcom_level(z))
+		var/list/docks_z_level = global.all_docking_ports["[z]"]
+		for(var/datum/dock/Dock in docks_z_level)
+			docks_data += list(list("name" = Dock.name, "dir" = Dock.dir, "bounds_x" = Dock.bounds_x, "bounds_y" = Dock.bounds_y, "x" = Dock.landing_coords["x"], "y" = Dock.landing_coords["y"], "occupied" = Dock.occupied, "reserved" = Dock.reserved, "dock_id" = Dock.dock_id))
+
+	data["docks"] = docks_data
+
+	data["ismoving"] = Shuttle.is_moving
+
+	data["docked_to_id"] = Shuttle.dockedTo ? Shuttle.dockedTo.dock_id : 0
+
+	data["currentZ"] = z
+
+	return data
+
+/obj/machinery/computer/shuttle_console/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	var/result = FALSE
-	if(href_list["return_home"])
-		if(Shuttle.Birthplace == Shuttle.dockedTo)
-			to_chat(usr, "<span class='notice'>Шаттл уже пристыкован к выбранному шлюзу.</span>")
-			return
-		if(!Shuttle.fly_to_dock(ShuttleDock, Shuttle.Birthplace))
-			to_chat(usr, "Транзитные пути заняты")
-			return
-	if(href_list["destination"])
-		var/Destination_Num = text2num(href_list["destination"])
-		if(Destination_Num)
-			if(z == Destination_Num)
-				to_chat(usr, "<span class='notice'>Шаттл уже находится на этой локации.</span>")
-				return
-			if(!Shuttle.fly_to_z_level(ShuttleDock, Destination_Num))
-				to_chat(usr, "Транзитные пути заняты.")
-				return
-	else if(href_list["dock"])
-		var/DockNum = text2num(href_list["dock"])
-		if(DockNum)
-			var/list/docks_z_level = global.all_docking_ports["[z]"]
-			var/datum/dock/StationDock = get_dock_by_id(docks_z_level, DockNum)
-			if(Shuttle.dockedTo && StationDock == Shuttle.dockedTo)
-				to_chat(usr, "<span class='notice'>Шаттл уже пристыкован к выбранному шлюзу.</span>")
-				return
+	if(action == "fly_to_dock")
+		var/dock_id = text2num(params["dock_id"])
+		var/list/docks_z_level = global.all_docking_ports["[z]"]
+		if(!dock_id)
+			return FALSE
 
-			if(!Shuttle.fly_to_dock(ShuttleDock, StationDock))
-				to_chat(usr, "Невозможно пристыковаться к выбранному доку.")
-				return
-	else if(href_list["airlock"])
-		var/datum/dock/DockNum = text2num(href_list["airlock"])
-		if(DockNum)
-			ShuttleDock = get_dock_by_id(Shuttle.airlocks, DockNum)
-			to_chat(usr, "<span class='notice'>Выбран [ShuttleDock.size == 2 ? "двойной" : "одинарный"] стыковочный шлюз [dir2text(ShuttleDock.dir)].</span>")
+		var/datum/dock/DockTo = get_dock_by_id(docks_z_level, dock_id)
+		if(!DockTo)
+			return FALSE
 
-	if(result)
-		lastMove = world.time
-		to_chat(usr, "<span class='notice'>Шаттл получил запрос и будет отправлен в ближайшее время.</span>")
+		if(!Shuttle.fly_to_dock(DockTo))
+			to_chat(usr, "Невозможно пристыковаться к выбранному доку.")
 
-	updateUsrDialog()
+		return TRUE
+
+	if(action == "fly_to_level")
+		var/level_num = text2num(params["level_id"])
+		if(!level_num)
+			return FALSE
+
+		if(!Shuttle.fly_to_z_level(level_num))
+			to_chat(usr, "Транзитные пути заняты.")
+
+		return TRUE
+
+/obj/machinery/computer/shuttle_console/attackby(obj/item/I, mob/user)
+	if(!istype(I, /obj/item/weapon/disk/level_information))
+		return ..()
+
+	var/obj/item/weapon/disk/level_information/Disk = I
+
+	if(!Shuttle)
+		to_chat(user, "Нет шаттла для загрузки координат.")
+		return
+
+	Shuttle.StoredDestinations += list(Disk.sector_coordinates)
+	qdel(Disk)
+	to_chat(user, "Координаты сектора успешно загружены.")
+	return
+
+
+#undef SHUTTLE_DOCKING_TIME
+#undef SHUTTLE_FLYING_TIME
+#undef SHUTTLE_RAM_DAMAGE
