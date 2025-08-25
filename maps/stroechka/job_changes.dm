@@ -12,6 +12,7 @@
 	MAP_JOB_CHECK
 	minimal_player_ingame_minutes = 3600
 	skillsets = list("Chief Engineer" = /datum/skillset/stroechka/engineer)
+	outfit = /datum/outfit/job/chief_engineer/stroechka
 
 /datum/job/engineer/New()
 	..()
@@ -20,6 +21,7 @@
 	map_spawn_positions = 6
 	minimal_player_ingame_minutes = 600
 	skillsets = list("Station Engineer" = /datum/skillset/stroechka/engineer)
+	outfit = /datum/outfit/job/engineer/stroechka
 
 /datum/job/atmos/New()
 	..()
@@ -29,6 +31,7 @@
 	minimal_player_ingame_minutes = 600
 	access |= list(access_engine_equip)
 	skillsets = list("Station Engineer" = /datum/skillset/stroechka/engineer)
+	outfit = /datum/outfit/job/atmos/stroechka
 
 /datum/job/technical_assistant/New()
 	..()
@@ -37,6 +40,7 @@
 	map_spawn_positions = -1
 	access |= list(access_engine_equip, access_external_airlocks)
 	skillsets = list("Technical Assistant" = /datum/skillset/stroechka/engineer)
+	outfit = /datum/outfit/job/technical_assistant/stroechka
 
 MAP_REMOVE_JOB(clown)
 

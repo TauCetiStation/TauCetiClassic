@@ -19,6 +19,7 @@ Procs:
 - IsResearched
 - CanResearch
 - UnlockTechology
+- unlock_all
 - download_from: Unlocks all technologies from a different /datum/research and syncs experiment data
 - forget_techology
 - forget_random_technology
@@ -53,6 +54,11 @@ The tech datums are the actual "tech trees" that you improve through researching
 	var/datum/experiment_data/experiments
 
 	var/research_points = 0
+
+	var/init_researched = FALSE
+
+/datum/research/researched
+	init_researched = TRUE
 
 /datum/research/New()
 	for(var/D in subtypesof(/datum/design))
@@ -89,6 +95,9 @@ The tech datums are the actual "tech trees" that you improve through researching
 	experiments = new /datum/experiment_data()
 	// This is a science station. Most tech is already at least somewhat known.
 	experiments.init_known_tech()
+
+	if(init_researched)
+		unlock_all()
 
 /datum/research/proc/IsResearched(datum/technology/T)
 	return !!researched_tech[T.id]
@@ -163,6 +172,11 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	T.reliability_upgrade_cost = GetReliabilityUpgradeCost(T)
 	T.avg_reliability = GetAverageDesignReliability(T)
+
+/datum/research/proc/unlock_all()
+	for(var/tech_tree in tech_trees)
+		for(var/id in all_technologies[tech_tree])
+			UnlockTechology(all_technologies[tech_tree][id], TRUE)
 
 /datum/research/proc/UpgradeTechology(datum/technology/T, force = FALSE)
 	if(!IsResearched(T))

@@ -51,6 +51,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	var/selected_imprinter_category
 	var/search_text
 	var/sabotagable = TRUE // if traitor can sabotage it with disk
+	var/init_researched = FALSE
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -113,7 +114,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 
 /obj/machinery/computer/rdconsole/atom_init()
 	. = ..()
-	files = new /datum/research(src) //Setup the research data holder.
+	if(init_researched)
+		files = new /datum/research/researched(src)
+	else
+		files = new /datum/research(src) //Setup the research data holder.
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
@@ -698,6 +702,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 	name = "Core R&D Console"
 	id = DEFAULT_SCIENCE_CONSOLE_ID
 	can_research = TRUE
+
+/obj/machinery/computer/rdconsole/core/researched
+	init_researched = TRUE
 
 /obj/machinery/computer/rdconsole/mining
 	name = "Mining R&D Console"

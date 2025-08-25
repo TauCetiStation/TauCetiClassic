@@ -133,7 +133,9 @@ SUBSYSTEM_DEF(ticker)
 						blackbox.save_all_data_to_sql()
 
 					if(station_name == "Hephaestus")
-						maploader.save_map(locate(0, 255, 1), locate(255, 0, 1), "maps/stroechka/stroechka")
+						to_chat(world, "<span class='notice bold'>Строечка сохраняется!</span>")
+						maploader.save_map(locate(1, 1, 2), locate(100, 100, 2), "maps/stroechka/stroechka")
+						to_chat(world, "<span class='notice bold'>Строечка сохранена!</span>")
 
 					if(establish_db_connection("erro_round"))
 						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.get_mode_result())]' WHERE id = [global.round_id]")

@@ -198,3 +198,24 @@
 /obj/mecha/working/ripley/Destroy()
 	drop_cargo()
 	return ..()
+
+
+/obj/mecha/working/ripley/stroechka
+	step_in = 3
+
+/obj/mecha/working/ripley/stroechka/atom_init()
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/rcd(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
+	ME.attach(src)
+
+/obj/mecha/working/ripley/stroechka/add_cell(obj/item/weapon/stock_parts/cell/C = null)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+
+	cell = new /obj/item/weapon/stock_parts/cell/bluespace(src)
