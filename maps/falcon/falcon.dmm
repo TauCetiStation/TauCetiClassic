@@ -7421,7 +7421,6 @@
 /area/station/civilian/locker)
 "anY" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart,
 /obj/item/device/radio/intercom{
 	dir = 1;
