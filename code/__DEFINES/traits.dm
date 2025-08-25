@@ -233,6 +233,7 @@
 #define TRAIT_HUSK                "husk"
 /// no hair, scorched body
 #define TRAIT_BURNT               "burnt"
+#define TRAIT_VENTCRAWLER         "ventcrawler"
 
 
 
@@ -248,6 +249,7 @@
 #define ELEMENT_TRAIT_SKELETON    /datum/element/mutation/skeleton
 #define ELEMENT_TRAIT_SLIME       /datum/element/mutation/slime
 #define ELEMENT_TRAIT_ZOMBIE      /datum/element/mutation/zombie
+#define ELEMENT_TRAIT_SMOLL       /datum/element/mutation/smoll
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
