@@ -5939,6 +5939,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -27595,6 +27598,9 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "hks" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -31076,6 +31082,9 @@
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/chapel)
 "isD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor{
 	icon_state = "Stairs2_wide"
 	},
@@ -33568,6 +33577,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "jcz" = (
@@ -33635,6 +33645,9 @@
 "jdZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -35193,7 +35206,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "jAy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1447;
@@ -35206,6 +35218,7 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -43072,7 +43085,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+/obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -60170,7 +60183,6 @@
 	},
 /area/station/storage/primary)
 "qgD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1447;
@@ -60178,6 +60190,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -60681,12 +60694,14 @@
 /area/station/civilian/toilet)
 "qlk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 10
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -61019,7 +61034,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "qqV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -61441,7 +61456,9 @@
 /area/station/civilian/chapel/altar)
 "qws" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "Stairs_wide"
 	},
@@ -63476,13 +63493,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "rdE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -75675,9 +75692,6 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -78841,9 +78855,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
@@ -80253,6 +80264,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -80879,9 +80893,6 @@
 	},
 /area/station/medical/reception)
 "vnX" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
@@ -80890,6 +80901,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -83076,7 +83088,6 @@
 	req_access = list(61)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
@@ -83084,6 +83095,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/components/binary/pump/on,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -86639,9 +86651,6 @@
 /area/station/bridge/captain_quarters)
 "wBG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -92072,9 +92081,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -92083,6 +92089,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
