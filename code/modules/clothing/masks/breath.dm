@@ -21,14 +21,14 @@
 			src.hanging = !src.hanging
 			gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
 			flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
-			icon_state = "breathdown"
+			icon_state = "[initial(icon_state)]down"
 			to_chat(usr, "Your mask is now hanging on your neck.")
 
 		else
 			src.hanging = !src.hanging
 			gas_transfer_coefficient = 0.10
 			flags |= MASKCOVERSMOUTH | MASKINTERNALS
-			icon_state = "breath"
+			icon_state = initial(icon_state)
 			to_chat(usr, "You pull the mask up to cover your face.")
 		update_inv_mob()
 		update_item_actions()
@@ -36,6 +36,6 @@
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"
-	icon_state = "m_mask"
+	icon_state = "medical"
 	item_state = "m_mask"
 	permeability_coefficient = 0.01

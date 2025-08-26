@@ -122,7 +122,7 @@ var/global/can_call_ert
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 	if(H.species.flags[HAS_SKIN_TONE])
-		var/new_tone = input("Выберите цвет кожи", "Создание персонажа") in global.skin_tones_by_ru_name
+		var/new_tone = input(src, "Выберите цвет кожи", "Создание персонажа") in global.skin_tones_by_ru_name
 		var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
 		H.s_tone = T.name
 
