@@ -55,7 +55,7 @@ const pickTitleForTooltip = (status: number): string => {
 
 const tooltipForMachine = (machine: VendingObject) => (
   <Box textAlign="center">
-    <b>{machine.name}</b>: {pickTitleForTooltip(machine.status)}
+    <b>{machine.name}</b>: <i>{pickTitleForTooltip(machine.status)}</i>
     {machine.status === 1 && (
       <ProgressBar
         ranges={{
