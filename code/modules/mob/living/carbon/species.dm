@@ -489,8 +489,6 @@
 	)
 	flags = list(
 	,NO_DNA = TRUE
-	,HAS_SKIN_COLOR = TRUE
-	,HAS_HAIR_COLOR = TRUE
 	,HAS_UNDERWEAR = TRUE
 	)
 	min_age = 25
@@ -666,6 +664,7 @@
 	eyes_colorable_layer = null
 	eyes_static_layer = "skrell"
 	gender_body_icons = FALSE
+	fat_limb_icons = TRUE
 
 	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell

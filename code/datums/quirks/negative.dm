@@ -73,8 +73,12 @@
 	)
 
 /datum/quirk/fatness/on_spawn()
+	// todo: copypaste from human metabolism
+	// but for some reason not adds fat metabolism factor?
+	// anyway better to replace fat trait with element mutation
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_body()
+	H.update_underwear()
 	H.update_mutations()
 	H.update_inv_w_uniform()
 	H.update_inv_wear_suit()
