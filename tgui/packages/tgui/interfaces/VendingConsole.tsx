@@ -10,7 +10,7 @@ import {
   NanoMapTrackData,
 } from '../components/NanoMap';
 
-const pickColor = (machine: vendingObject): string => {
+const pickColor = (machine: VendingObject): string => {
   let color = 'green';
   if (machine.status === 2) {
     color = 'grey';
@@ -53,9 +53,9 @@ const pickTitleForTooltip = (status: number): string => {
   return text;
 };
 
-const tooltipForMachine = (machine: vendingObject) => (
+const tooltipForMachine = (machine: VendingObject) => (
   <Box textAlign="center">
-    {<b>{machine.name}</b>}:{pickTitleForTooltip(machine.status)}
+    <b>{machine.name}</b>: {pickTitleForTooltip(machine.status)}
     {machine.status === 1 && (
       <ProgressBar
         ranges={{
@@ -73,12 +73,12 @@ const tooltipForMachine = (machine: vendingObject) => (
 );
 
 type Data = {
-  vendingMachines: vendingObject[];
+  vendingMachines: VendingObject[];
   currentZ: number;
   nanomapPayload: NanoMapStaticPayload;
 };
 
-type vendingObject = {
+type VendingObject = {
   name: string;
   x: number;
   y: number;
@@ -113,7 +113,7 @@ export const VendingConsole = (_: any, context: any) => {
             availableZLevels={availableZLevels}
             pixelsPerTurf={2}
             controlsOnTop>
-            {vendingMachines.map((machine: vendingObject) => (
+            {vendingMachines.map((machine: VendingObject) => (
               <NanoMapMarkerIcon
                 key={machine.name}
                 x={machine.x}
