@@ -247,3 +247,39 @@ move an amendment</a> to the drawing.</p>
 					return ROOM_ERR_SPACE
 		found+=T
 	return found
+
+/obj/item/blueprints/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	if(!istype(target, /obj/machinery/door))
+		return
+
+	if(get_area_by_type()!=AREA_STATION)
+		to_chat(user, "<span class='notice'>Док можно создать только на станции.</span>")
+		return
+
+	var/decision = tgui_alert(user, "Создать док на этом месте?", "Подтвердите", list("Да", "Нет"))
+	if(decision == "Нет" || !target.Adjacent(user))
+		return
+
+	var/obj/machinery/door/Door = target
+	var/dock_dir
+	for(var/direction in global.cardinal)
+		var/turf/T = get_step(get_turf(Door), direction)
+		if(isenvironmentturf(T))
+			dock_dir = direction
+			break
+	if(!dock_dir)
+		to_chat(user, "<span class='notice'>Док должен смотреть наружу.</span>")
+		return
+
+	var/list/station_docks = global.all_docking_ports["[SSmapping.level_by_trait(ZTRAIT_STATION)]"]
+	var/datum/dock/NewDock = add_docking_port(Door.name, dock_dir, Door.x, Door.y, Door.z, station_docks)
+	if(!NewDock)
+		to_chat(user, "<span class='notice'>Док уже сущестует.</span>")
+		return
+
+	station_docks += NewDock
+	NewDock.undock()
+
+	to_chat(user, "<span class='notice'>Док успешно создан.</span>")

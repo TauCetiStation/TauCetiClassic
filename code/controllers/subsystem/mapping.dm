@@ -162,6 +162,38 @@ SUBSYSTEM_DEF(mapping)
 #endif
 	return null
 
+/datum/controller/subsystem/mapping/proc/add_landing_positions(datum/space_level/S)
+	var/landing_size = 30
+	var/x1 = TRANSITIONEDGE + 5
+	var/x2 = world.maxx - TRANSITIONEDGE - 5 - landing_size
+	var/y1 = TRANSITIONEDGE + 5
+	var/y2 = world.maxy - TRANSITIONEDGE - 5 - landing_size
+
+	var/list/mask = list(list(x1, y1, "South-West of the sector"), list(x2, y1, "South-East of the sector"), list(x1, y2, "North-West of the sector"), list(x2, y2, "North-East of the sector"))
+
+	for(var/list/M in mask)
+		var/turf/T = locate(M[1], M[2], S.z_value)
+		if(!T)
+			continue
+
+		var/datum/reserved_space/Landing = new
+		Landing.z = S.z_value
+		Landing.x1 = M[1]
+		Landing.y1 = M[2]
+		Landing.x2 = Landing.x1 + landing_size
+		Landing.y2 = Landing.y1 + landing_size
+		reserved_space += Landing
+
+		var/list/z_layer_docks = global.all_docking_ports["[S.z_value]"]
+		if(!z_layer_docks)
+			global.all_docking_ports["[S.z_value]"] = list()
+
+		var/datum/dock/landing_pad/New_Pad = new(M[3], NORTH, M[1], M[2], S.z_value, landing_size, landing_size)
+		New_Pad.transit = FALSE
+		global.all_docking_ports["[S.z_value]"] += New_Pad
+
+
+
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 
@@ -233,11 +265,13 @@ SUBSYSTEM_DEF(mapping)
 	if(global.config.load_space_levels)
 		while (space_levels_so_far < config.space_ruin_levels)
 			++space_levels_so_far
-			add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+			var/datum/space_level/S = add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+			add_landing_positions(S)
 
 		for (var/i in 1 to config.space_empty_levels)
 			++space_levels_so_far
-			add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+			var/datum/space_level/S = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+			add_landing_positions(S)
 
 	// load mining
 	if(global.config.load_mine)

@@ -383,6 +383,9 @@
 	icon_state = "shuttle"
 	parallax_movedir = NORTH
 
+/area/shuttle/new_shuttle
+	requires_power = 1
+
 //Shuttle lists, group by areas
 // CENTCOM
 var/global/list/centcom_shuttle_areas = list (

@@ -349,6 +349,7 @@
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
+	update_bloom_rotation()
 	if(.)
 		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 

@@ -241,3 +241,22 @@
 
 /obj/item/weapon/disk/smartlight_programm/neon_dark
 	light_mode = /datum/light_mode/neon_dark
+
+/obj/item/weapon/disk/level_information
+	name = "Sector Coordinates"
+	desc = "Координаты сектора для загрузки в консоль шаттла."
+	icon_state = "leveldisk"
+	item_state_world = "leveldisk_world"
+	item_state_inventory = "leveldisk"
+	w_class = SIZE_TINY
+	var/list/sector_coordinates = list("name" = "SectorName", "z" = 0)
+
+/obj/item/weapon/disk/level_information/random/atom_init()
+	. = ..()
+
+	var/list/structure = pick(SSmapping.spawned_structures)
+	if(!structure)
+		return
+
+	sector_coordinates["name"] = structure["desc"]
+	sector_coordinates["z"] = structure["z"]

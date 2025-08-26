@@ -60,6 +60,11 @@
 
 	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
 
+	var/grid_id
+
+	var/list/under_shuttle_turf_params //list("type", "icon", "icon_state", "dir", "decals")
+	var/area/under_shuttle_area
+
 /**
   * Turf Initialize
   *
@@ -373,6 +378,10 @@
 	var/old_flooded = flooded
 	var/obj/effect/fluid/F = locate() in src
 
+
+	var/list/old_under_shuttle_turf_params = under_shuttle_turf_params
+	var/old_under_shuttle_area = under_shuttle_area
+
 	var/list/temp_res = resources
 
 	var/old_can_block_air = can_block_air
@@ -438,6 +447,9 @@
 
 	W.can_block_air = old_can_block_air
 
+	W.under_shuttle_turf_params = old_under_shuttle_turf_params
+	W.under_shuttle_area = old_under_shuttle_area
+
 	W.levelupdate()
 
 	basetype = old_basetype
@@ -473,12 +485,60 @@
 /turf/proc/MoveTurf(turf/target, move_unmovable = 0)
 	if(type != basetype || move_unmovable)
 		. = target.ChangeTurf(src.type)
-		ChangeTurf(basetype)
+
+		if(!under_shuttle_turf_params)
+			ChangeTurf(basetype)
+			return
+
+		ChangeTurf(under_shuttle_turf_params["type"])
+		set_turf_from_undershuttle_params()
 	else
 		return target
 
 /turf/proc/BreakToBase()
-	ChangeTurf(basetype)
+	if(under_shuttle_area)
+		under_shuttle_area.contents += src
+		change_area(loc, under_shuttle_area)
+		under_shuttle_area = null
+
+	if(!under_shuttle_turf_params)
+		ChangeTurf(basetype)
+		return
+
+	if(grid_id)
+		var/datum/shuttle/Shuttle = get_shuttle_by_id(grid_id)
+		if(Shuttle)
+			Shuttle.tiles -= src
+			Shuttle.recalculate_bounds()
+	ChangeTurf(under_shuttle_turf_params["type"])
+	set_turf_from_undershuttle_params()
+
+/turf/proc/Shuttle_MoveTurf(turf/target)
+	if(!target.under_shuttle_area)
+		target.under_shuttle_area = target.loc
+
+	if(under_shuttle_area)
+		under_shuttle_area.contents += src
+		change_area(loc, under_shuttle_area)
+		under_shuttle_area = null
+
+	target.grid_id = src.grid_id
+	src.grid_id = null
+
+	return MoveTurf(target)
+
+/turf/proc/save_turf_to_undershuttle_params()
+	under_shuttle_turf_params = list("type" = type, "icon" = icon, "icon_state" = icon_state, "dir" = dir, "decals" = turf_decals)
+
+/turf/proc/set_turf_from_undershuttle_params()
+	icon = under_shuttle_turf_params["icon"]
+	icon_state = under_shuttle_turf_params["icon_state"]
+	dir = under_shuttle_turf_params["dir"]
+
+	for(var/decal in under_shuttle_turf_params["decals"])
+		add_turf_decal(decal)
+
+	under_shuttle_turf_params = null
 
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(basetype)

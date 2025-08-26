@@ -62,3 +62,9 @@
 	shelter_id = "shelter_gamma"
 	description = "Rare and expensive shelter. Hmm, maybe invite my friends to a party?"
 	mappath = "maps/templates/shelter_3.dmm"
+
+/datum/map_template/shelter/docking
+	name = "Shelter Dock"
+	shelter_id = "shelter_docking"
+	description = "An easy way to make a simple docking station in space."
+	mappath = "maps/templates/shelter_4.dmm"
