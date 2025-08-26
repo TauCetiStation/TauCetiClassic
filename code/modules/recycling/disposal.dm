@@ -65,7 +65,7 @@
 	if(mode<=0) // It's off
 		if(isscrewing(I))
 			if(contents.len > 0)
-				to_chat(user, "Вытащите содержимое из [CASE(src, GENITIVE_CASE)]!")
+				to_chat(user, "Необходимо вытащить содержимое из [CASE(src, GENITIVE_CASE)]!")
 				return
 			if(mode==0) // It's off but still not unscrewed
 				mode=-1 // Set it to doubleoff l0l
