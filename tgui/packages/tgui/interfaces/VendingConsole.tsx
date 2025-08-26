@@ -10,7 +10,7 @@ import {
   NanoMapTrackData,
 } from '../components/NanoMap';
 
-const pickColor = (machine: VendingObject) => {
+const pickColor = (machine: vendingObject): string => {
   let color = 'green';
   if (machine.status === 2) {
     color = 'grey';
@@ -24,7 +24,7 @@ const pickColor = (machine: VendingObject) => {
     color = 'red';
   }
 
-  return { color };
+  return color;
 };
 
 const pauseEvent = (e: MouseEvent) => {
@@ -39,18 +39,23 @@ const pauseEvent = (e: MouseEvent) => {
   return false;
 };
 
-const tooltipForMachine = (machine: VendingObject) => (
+const pickTitleForTooltip = (status: number): string => {
+  let text = 'Работает';
+  switch (status) {
+    case 3:
+      text = ' Сломан';
+      break;
+    case 2:
+      text = ' Обесточен';
+      break;
+  }
+
+  return text;
+};
+
+const tooltipForMachine = (machine: vendingObject) => (
   <Box textAlign="center">
-    {<b>{machine.name}</b>}:{' '}
-    {
-      <i>
-        {machine.status === 3
-          ? 'Сломан'
-          : machine.status === 2
-            ? 'Обесточен'
-            : 'Работает'}
-      </i>
-    }
+    {<b>{machine.name}</b>}:{pickTitleForTooltip(machine.status)}
     {machine.status === 1 && (
       <ProgressBar
         ranges={{
@@ -68,12 +73,12 @@ const tooltipForMachine = (machine: VendingObject) => (
 );
 
 type Data = {
-  vending_machines: VendingObject[];
+  vendingMachines: vendingObject[];
   currentZ: number;
   nanomapPayload: NanoMapStaticPayload;
 };
 
-type VendingObject = {
+type vendingObject = {
   name: string;
   x: number;
   y: number;
@@ -87,17 +92,15 @@ export const VendingConsole = (_: any, context: any) => {
   });
 
   const { act, data } = useBackend<Data>(context);
-  const { currentZ, nanomapPayload, vending_machines } = data;
+  const { currentZ, nanomapPayload, vendingMachines } = data;
 
   const [zLevel, setZLevel] = useLocalState<number>(
     context,
-    'crewMonitorZLevel',
+    'vendingConsoleZLevel',
     currentZ
   );
 
   const availableZLevels: number[] = [currentZ];
-
-  let trackData: NanoMapTrackData | undefined;
 
   return (
     <Window width={500} height={500}>
@@ -109,21 +112,17 @@ export const VendingConsole = (_: any, context: any) => {
             setZLevel={setZLevel}
             availableZLevels={availableZLevels}
             pixelsPerTurf={2}
-            trackData={trackData}
             controlsOnTop>
-            {vending_machines.map((machine: VendingObject) => {
-              let { color } = pickColor(machine);
-              return (
-                <NanoMapMarkerIcon
-                  key={machine.name}
-                  x={machine.x}
-                  y={machine.y}
-                  icon="circle"
-                  tooltip={tooltipForMachine(machine)}
-                  color={color}
-                />
-              );
-            })}
+            {vendingMachines.map((machine: vendingObject) => (
+              <NanoMapMarkerIcon
+                key={machine.name}
+                x={machine.x}
+                y={machine.y}
+                icon="circle"
+                tooltip={tooltipForMachine(machine)}
+                color={pickColor(machine)}
+              />
+            ))}
           </NanoMap>
         </Box>
       </Window.Content>

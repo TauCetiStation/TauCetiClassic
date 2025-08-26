@@ -186,6 +186,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(isprying(W))
 			default_deconstruction_crowbar(W)
 
+		if(istype(W, /obj/item/device/lens) && W.type != camera.lens)
+			var/obj/item/device/lens/CameraLens = camera.lens
+			CameraLens.forceMove(get_turf(src))
+			user.drop_from_inventory(W, camera)
+			if(!usr.get_active_hand())
+				user.put_in_hands(CameraLens)
+			camera.lens = W
+			return
+
 	if(isscrewing(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
@@ -566,16 +575,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			if(!R.amount)
 				continue
 			new dump_path(src.loc)
-			R.amount--
-			load--
+			substract_product(R)
 
 		//Dropping remaining items in a pack
 		var/refilling = 0
 		for(var/datum/data/vending_product/R in src.product_records)
 			while(R.amount > 0)
 				refilling++
-				R.amount--
-				load--
+				substract_product(R)
 
 		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
 		Refill.charges = refilling
@@ -584,8 +591,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			while(R.amount > 0)
 				var/dump_path = R.product_path
 				new dump_path(src.loc)
-				R.amount--
-				load--
+				substract_product(R)
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
@@ -636,11 +642,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			available_products += VP
 	return available_products
 
+/obj/machinery/vending/proc/substract_product(datum/data/vending_product/P)
+	P.amount--
+	if(P in product_records)
+		load--
+
 /obj/machinery/vending/proc/give_out_product(datum/data/vending_product/VP)
 	playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
-	VP.amount--
-	if(VP in product_records)
-		load--
+	substract_product(VP)
 	if(VP == unstable_product)
 		unstable_product = null
 	updateUsrDialog()

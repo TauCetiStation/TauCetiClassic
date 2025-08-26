@@ -45,6 +45,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/vending, vending_consoles)
 
 		vending_data += list(list("name" = Vend.name, "status" = vending_status, "load" = amount_percent, "x" = Vend.x, "y" = Vend.y))
 
-	data["vending_machines"] = vending_data
+	data["vendingMachines"] = vending_data
 
 	return data
