@@ -27478,6 +27478,7 @@
 "aWy" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/cakehat,
+/obj/item/station_map,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -46835,6 +46836,7 @@
 "bEU" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/trash/candle/red,
+/obj/item/station_map,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -64193,6 +64195,22 @@
 	},
 /obj/item/weapon/packageWrap{
 	pixel_y = 16
+	},
+/obj/item/station_map{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map{
+	pixel_x = 4;
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	dir = 0;

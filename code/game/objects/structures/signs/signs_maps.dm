@@ -17,23 +17,23 @@
 
 /obj/structure/sign/map/left
 	icon_state = "map-left"
-	nanomap_file = "nanomap_exodus_1_small.png"
+	nanomap_file = "nanomap_exodus_1_areas.png"
 
 /obj/structure/sign/map/right
 	icon_state = "map-right"
-	nanomap_file = "nanomap_exodus_1_small.png"
+	nanomap_file = "nanomap_exodus_1_areas.png"
 
 /obj/structure/sign/map/gamma_left
 	icon_state = "gammamap-left"
-	nanomap_file = "nanomap_gamma_1_small.png"
+	nanomap_file = "nanomap_gamma_1_areas.png"
 
 /obj/structure/sign/map/gamma_right
 	icon_state = "gammamap-right"
-	nanomap_file = "nanomap_gamma_1_small.png"
+	nanomap_file = "nanomap_gamma_1_areas.png"
 
 /obj/structure/sign/map/prometheus
 	icon_state = "prometheus"
-	nanomap_file = "nanomap_prometheus_1_small.png"
+	nanomap_file = "nanomap_prometheus_1_areas.png"
 
 /obj/structure/sign/directions/science
 	name = "science department"

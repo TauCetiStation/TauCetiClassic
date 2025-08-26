@@ -75,11 +75,27 @@
 
 			if(showAreaColor)
 				var/area/Area = get_area(Turf)
-				Area.layer = TURF_LAYER
-				Area.plane = HUD_PLANE
-				var/icon/AreaIcon = new(Area.icon, Area.icon_state)
-				AreaIcon.Scale(NANOMAP_ICON_SIZE, NANOMAP_ICON_SIZE)
-				Tile.Blend(AreaIcon, ICON_OVERLAY, ((WorldX - 1) * NANOMAP_ICON_SIZE), ((WorldY - 1) * NANOMAP_ICON_SIZE))
+				var/areaState
+				if(istype(Area, /area/station/security) && !istype(Area, /area/station/security/vacantoffice) && !istype(Area, /area/station/security/checkpoint))
+					areaState = "brig_base"
+				else if(istype(Area, /area/station/rnd))
+					areaState = "research_base"
+				else if(istype(Area, /area/station/medical))
+					areaState = "medical_base"
+				else if(istype(Area, /area/station/engineering))
+					areaState = "engineering_base"
+				else if(istype(Area, /area/station/cargo))
+					areaState = "cargo_base"
+				else if(istype(Area, /area/station/bridge))
+					areaState = "command_base"
+				else if(istype(Area, /area/station/hallway/secondary/exit))
+					areaState = "escape_base"
+				else if(istype(Area, /area/station/hallway/secondary/arrival))
+					areaState = "arrival_base"
+				if(areaState)
+					var/icon/AreaIcon = icon('icons/turf/areas.dmi', areaState)
+					AreaIcon.Scale(NANOMAP_ICON_SIZE, NANOMAP_ICON_SIZE)
+					Tile.Blend(AreaIcon, ICON_OVERLAY, ((WorldX - 1) * NANOMAP_ICON_SIZE), ((WorldY - 1) * NANOMAP_ICON_SIZE))
 
 			count++
 

@@ -63,11 +63,12 @@
 
 /datum/asset/simple/station_map
 	assets = list(
-		"nanomap_exodus_1_small.png" = 'nano/images/nanomap_exodus_1_small.png',
-		"nanomap_gamma_1_small.png" = 'nano/images/nanomap_gamma_1_small.png',
-		"nanomap_falcon_1_small.png" = 'nano/images/nanomap_falcon_1_small.png',
-		"nanomap_prometheus_1_small.png" = 'nano/images/nanomap_prometheus_1_small.png',
-		"nanomap_delta_1_small.png" = 'nano/images/nanomap_delta_1_small.png'
+		"nanomap_exodus_1_areas.png" = 'nano/images/nanomap_exodus_1_areas.png',
+		"nanomap_gamma_1_areas.png" = 'nano/images/nanomap_gamma_1_areas.png',
+		"nanomap_falcon_1_areas.png" = 'nano/images/nanomap_falcon_1_areas.png',
+		"nanomap_prometheus_1_areas.png" = 'nano/images/nanomap_prometheus_1_areas.png',
+		"nanomap_delta_1_areas.png" = 'nano/images/nanomap_delta_1_areas.png',
+		"nanomap_maplegend.png" = 'nano/images/nanomap_maplegend.png'
 	)
 
 /datum/asset/simple/newscaster
