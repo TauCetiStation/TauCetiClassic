@@ -56,8 +56,6 @@ SUBSYSTEM_DEF(mapping)
 	// Space structures
 	spawn_space_structures()
 
-	add_landing_positions()
-
 	..()
 
 /datum/controller/subsystem/mapping/proc/load_map_module(module_name)
@@ -164,61 +162,36 @@ SUBSYSTEM_DEF(mapping)
 #endif
 	return null
 
-/datum/controller/subsystem/mapping/proc/add_landing_positions()
-	var/list/added_positions = list()
-	for(var/datum/reserved_space/S in reserved_space)
-		var/list/possible_positions = list()
-		var/datum/reserved_space/Landing1 = new
-		Landing1.z = S.z
-		Landing1.x1 = S.x1 + FLOOR(S.x2 - S.x1 / 2, 1) - 15
-		Landing1.y1 = S.y2 + 1
-		Landing1.x2 = Landing1.x1 + 30
-		Landing1.y2 = Landing1.y2 + 30
-		possible_positions += Landing1
+/datum/controller/subsystem/mapping/proc/add_landing_positions(datum/space_level/S)
+	var/landing_size = 30
+	var/x1 = TRANSITIONEDGE + 5
+	var/x2 = world.maxx - TRANSITIONEDGE - 5 - landing_size
+	var/y1 = TRANSITIONEDGE + 5
+	var/y2 = world.maxy - TRANSITIONEDGE - 5 - landing_size
 
-		var/datum/reserved_space/Landing2 = new
-		Landing2.z = S.z
-		Landing2.x1 = S.x2 + 1
-		Landing2.y1 = S.y1 + FLOOR(S.y2 - S.y1 / 2, 1) - 15
-		Landing2.x2 = Landing2.x1 + 30
-		Landing2.y2 = Landing2.y2 + 30
-		possible_positions += Landing2
+	var/list/mask = list(list(x1, y1, "South-West of the sector"), list(x2, y1, "South-East of the sector"), list(x1, y2, "North-West of the sector"), list(x2, y2, "North-East of the sector"))
 
-		var/datum/reserved_space/Landing3 = new
-		Landing3.z = S.z
-		Landing3.x1 = S.x1 + FLOOR(S.x2 - S.x1 / 2, 1) - 15
-		Landing3.y1 = S.y1 - 31
-		Landing3.x2 = Landing3.x1 + 30
-		Landing3.y2 = Landing3.y2 + 30
-		possible_positions += Landing3
+	for(var/list/M in mask)
+		var/turf/T = locate(M[1], M[2], S.z_value)
+		if(!T)
+			continue
 
-		var/datum/reserved_space/Landing4 = new
-		Landing4.z = S.z
-		Landing4.x1 = S.x1 - 31
-		Landing4.y1 = S.y1 + FLOOR(S.y2 - S.y1 / 2, 1) - 15
-		Landing4.x2 = Landing4.x1 + 30
-		Landing4.y2 = Landing4.y2 + 30
-		possible_positions += Landing4
+		var/datum/reserved_space/Landing = new
+		Landing.z = S.z_value
+		Landing.x1 = M[1]
+		Landing.y1 = M[2]
+		Landing.x2 = Landing.x1 + landing_size
+		Landing.y2 = Landing.y1 + landing_size
+		reserved_space += Landing
 
-		check_positions:
-			for(var/datum/reserved_space/Position in possible_positions)
-				if(Position.x1 < TRANSITIONEDGE || Position.y1 < TRANSITIONEDGE || Position.x2 > (world.maxx - TRANSITIONEDGE) || Position.y2 > (world.maxy - TRANSITIONEDGE))
-					qdel(Position)
-					continue
+		var/list/z_layer_docks = global.all_docking_ports["[S.z_value]"]
+		if(!z_layer_docks)
+			global.all_docking_ports["[S.z_value]"] = list()
 
-				for(var/datum/reserved_space/Structure in reserved_space + added_positions)
-					if(Structure.z != Position.z)
-						continue
+		var/datum/dock/landing_pad/New_Pad = new(M[3], NORTH, M[1], M[2], S.z_value, landing_size, landing_size)
+		New_Pad.transit = FALSE
+		global.all_docking_ports["[S.z_value]"] += New_Pad
 
-					if(Position.x1 < Structure.x2 && Position.y1 < Structure.y2 && Structure.x1 < Position.x2 && Structure.y1 < Position.y2)
-						qdel(Position)
-						continue check_positions
-
-				var/turf/T = locate(Position.x1, Position.y1, Position.z)
-				new /obj/effect/landing_pad/size30(T)
-				added_positions += Position
-
-	reserved_space += added_positions
 
 
 /datum/controller/subsystem/mapping/Recover()
@@ -292,11 +265,13 @@ SUBSYSTEM_DEF(mapping)
 	if(global.config.load_space_levels)
 		while (space_levels_so_far < config.space_ruin_levels)
 			++space_levels_so_far
-			add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+			var/datum/space_level/S = add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+			add_landing_positions(S)
 
 		for (var/i in 1 to config.space_empty_levels)
 			++space_levels_so_far
-			add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+			var/datum/space_level/S = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+			add_landing_positions(S)
 
 	// load mining
 	if(global.config.load_mine)

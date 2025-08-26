@@ -283,6 +283,7 @@
 		EQUIPMENT("Space first-aid kit",			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1200),
 		EQUIPMENT("Standart capsule",				/obj/item/weapon/survivalcapsule,												1300),
 		EQUIPMENT("Improved capsule",				/obj/item/weapon/survivalcapsule/improved,										1900),
+		EQUIPMENT("Shuttle Dock capsule",			/obj/item/weapon/survivalcapsule/dock,											2500),
 		EQUIPMENT("Elite capsule(Bar)",				/obj/item/weapon/survivalcapsule/elite,											3000),
 	)
 	prize_list["Upgrades"] = list(

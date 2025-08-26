@@ -1,0 +1,18 @@
+"a" = (/turf/simulated/floor/pod,/area/space)
+"g" = (/obj/machinery/light/small{dir = 1},/obj/structure/stool,/turf/simulated/floor/pod,/area/space)
+"h" = (/obj/structure/inflatable/survival,/obj/structure/sign/mining,/turf/simulated/floor/pod,/area/space)
+"j" = (/obj/structure/inflatable/door/survival_pod,/obj/structure/fans/tiny,/obj/effect/docking_port{name = "Shelter North"; dir = 1},/turf/simulated/floor/pod,/area/space)
+"o" = (/obj/structure/inflatable/door/survival_pod,/obj/structure/fans/tiny,/obj/effect/docking_port{name = "Shelter West"; dir = 8},/turf/simulated/floor/pod,/area/space)
+"t" = (/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/space)
+"A" = (/obj/structure/sign/mining,/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/space)
+"B" = (/obj/structure/inflatable/door/survival_pod,/obj/structure/fans/tiny,/obj/effect/docking_port{name = "Shelter East"; dir = 4},/turf/simulated/floor/pod,/area/space)
+"I" = (/obj/structure/fans/tiny,/obj/structure/inflatable/door/survival_pod,/obj/effect/docking_port{name = "Shelter South"},/turf/simulated/floor/pod,/area/space)
+"U" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/mechanical,/turf/simulated/floor/pod,/area/space)
+
+(1,1,1) = {"
+thjtt
+tgaah
+oaaaB
+haaUt
+ttIAt
+"}

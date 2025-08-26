@@ -991,6 +991,15 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "engineering=5;bluespace=4"
 	template_id = "shelter_gamma"
 
+/obj/item/weapon/survivalcapsule/dock
+	name = "bluespace shuttle docking capsule"
+	desc = "Docking station in a small package."
+	icon_state = "capsule_dock"
+	icon = 'icons/obj/mining.dmi'
+	w_class = SIZE_MINUSCULE
+	origin_tech = "engineering=2;bluespace=1"
+	template_id = "shelter_docking"
+
 //Pod turfs and objects
 
 

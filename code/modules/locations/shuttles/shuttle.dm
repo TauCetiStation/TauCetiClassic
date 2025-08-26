@@ -25,21 +25,45 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 	var/reserved = FALSE //док зарезервирован и к нему летит шаттл.
 
+	var/shuttleDock = FALSE
+
 /datum/dock/landing_pad
 	name = "PadName"
 
 /datum/dock/proc/connect_to(list/Things)
+	for(var/thing in Things)
+		connected_things += thing
+		RegisterSignal(thing, list(COMSIG_PARENT_QDELETING), PROC_REF(thing_destroyed))
 	return
 
 /datum/dock/landing_pad/connect_to(list/Things)
 	connected_things = Things
 	for(var/obj/structure/landing_pole/Pole in connected_things)
-		RegisterSignal(Pole, list(COMSIG_PARENT_QDELETING), PROC_REF(pole_destroyed))
-		RegisterSignal(Pole, list(COMSIG_MOVABLE_MOVED), PROC_REF(pole_destroyed))
+		RegisterSignal(Pole, list(COMSIG_PARENT_QDELETING), PROC_REF(thing_destroyed), Pole)
+		RegisterSignal(Pole, list(COMSIG_MOVABLE_MOVED), PROC_REF(thing_destroyed))
 
 		Pole.connect_landing(src)
 
-/datum/dock/landing_pad/proc/pole_destroyed()
+/datum/dock/proc/thing_destroyed(atom/A)
+	connected_things -= A
+	if(shuttleDock)
+		return
+
+	for(var/atom/movable/thing in connected_things)
+		if(thing.x != landing_coords["x"] || thing.y != landing_coords["y"] || thing.z != landing_coords["z"])
+			thing.x = landing_coords["x"]
+			thing.y = landing_coords["y"]
+			thing.z = landing_coords["z"]
+
+		switch(dir)
+			if(NORTH, SOUTH)
+				bounds_x = 1
+			if(WEST, EAST)
+				bounds_y = 1
+		return
+	qdel(src)
+
+/datum/dock/landing_pad/thing_destroyed(atom/A)
 	for(var/obj/structure/landing_pole/Pole in connected_things)
 		Pole.landing_destroyed()
 		UnregisterSignal(Pole, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
@@ -95,39 +119,24 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	return bolt_unbolt(TRUE)
 
 /datum/dock/proc/bolt_unbolt(bolt = TRUE) //Открываем/Зкарываем двери дока. Немного костыльно, лучше переписать на коннект как у лендингов.
-	var/turf/T = locate(landing_coords["x"], landing_coords["y"], landing_coords["z"])
-	if(!T)
-		return FALSE
+	if(!connected_things.len)
+		return
 
-	var/list/turfs_to_check = list(T)
-	if(bounds_y > 1)
-		T = get_step(T, NORTH)
-	else if(bounds_x > 1)
-		T = get_step(T, EAST)
-
-	if(!T)
-		return FALSE
-
-	turfs_to_check += T
-
-
-	for(var/turf/Door_Turf in turfs_to_check)
-		for(var/obj/machinery/door/Door in Door_Turf)
-			if(istype(Door, /obj/machinery/door/airlock))
-				var/obj/machinery/door/airlock/canBeBolted = Door
-				if(bolt)
-					canBeBolted.close_unsafe(TRUE)
-					canBeBolted.bolt()
-				else
-					canBeBolted.unbolt()
-			else if(istype(Door, /obj/machinery/door/unpowered))
-				var/obj/machinery/door/unpowered/Unpowered = Door
-				if(bolt)
-					Unpowered.close()
-					Unpowered.locked = 1
-				else
-					Unpowered.locked = 0
-					Unpowered.open()
+	for(var/obj/machinery/door/Door in connected_things)
+		if(istype(Door, /obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/canBeBolted = Door
+			if(bolt)
+				canBeBolted.close_unsafe(TRUE)
+				canBeBolted.bolt()
+			else
+				canBeBolted.unbolt()
+		else if(istype(Door, /obj/machinery/door/unpowered))
+			var/obj/machinery/door/unpowered/Unpowered = Door
+			if(bolt)
+				Unpowered.close()
+				Unpowered.locked = 1
+			else
+				Unpowered.locked = 0
 
 	return TRUE
 
@@ -151,8 +160,17 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 
 
 /proc/add_docking_port(name, dir, x, y, z, list/docks_list) //Здесь мы проверяем есть ли на этом месте рядом уже док и если есть, то вместо добавления нового дока мы расширяем старый. Сделано пока для двойных шлюзов.
+	var/turf/T = locate(x, y, z)
+	if(!T)
+		return
+	var/airlock = locate(/obj/machinery/door) in T.contents
+	if(!airlock)
+		airlock = locate(/obj/structure/inflatable/door) in T.contents
+
 	for(var/datum/dock/port in docks_list)
-		if(port.dir != dir || port.bounds_x > 1 || port.bounds_y > 1)
+		if(port.landing_coords["x"] == x && port.landing_coords["y"] == y && port.landing_coords["z"] == z)
+			return FALSE
+		if(port.dir != dir)
 			continue
 
 		switch(dir)
@@ -160,23 +178,34 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 				if(!((port.landing_coords["x"] - x) in list(1, -1)))
 					continue
 
+				if(port.bounds_x > 1 || port.bounds_y > 1)
+					break
+
 				port.bounds_x = 2
 				if(port.landing_coords["x"] > x)
 					port.landing_coords["x"] = x
-
+				if(airlock)
+					port.connect_to(list(airlock))
 				return
 
 			if(EAST, WEST)
 				if(!((port.landing_coords["y"] - y) in list(1, -1)))
 					continue
 
+				if(port.bounds_x > 1 || port.bounds_y > 1)
+					break
+
 				port.bounds_y = 2
 				if(port.landing_coords["y"] > y)
 					port.landing_coords["y"] = y
-
+				if(airlock)
+					port.connect_to(list(airlock))
 				return
 
-	return new/datum/dock(name, dir, x, y, z)
+	var/datum/dock/newport = new/datum/dock(name, dir, x, y, z)
+	if(airlock)
+		newport.connect_to(list(airlock))
+	return newport
 
 /proc/get_shuttle_by_id(grid_id)
 	for(var/datum/shuttle/Shuttle in all_shuttles)
@@ -265,6 +294,30 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	bounds_x = max_cords["x"] - min_cords["x"] + 1
 	bounds_y = max_cords["y"] - min_cords["y"] + 1
 
+/datum/shuttle/proc/recalculate_bounds()
+	min_cords = list("x" = 0, "y" = 0)
+	max_cords = list("x" = 0, "y" = 0)
+
+	var/list/allthings = tiles + outer_shell
+
+	for(var/Thing in allthings)
+		var/list/thing_cordinates = allthings[Thing]
+
+		if(thing_cordinates["x"] > max_cords["x"])
+			max_cords["x"] = thing_cordinates["x"]
+
+		if(thing_cordinates["x"] < min_cords["x"])
+			min_cords["x"] = thing_cordinates["x"]
+
+		if(thing_cordinates["y"] > max_cords["y"])
+			max_cords["y"] = thing_cordinates["y"]
+
+		if(thing_cordinates["y"] < min_cords["y"])
+			min_cords["y"] = thing_cordinates["y"]
+
+	bounds_x = max_cords["x"] - min_cords["x"] + 1
+	bounds_y = max_cords["y"] - min_cords["y"] + 1
+
 /datum/shuttle/proc/check_tile_neighbours(turf/T, x_offset, y_offset, turf/Original) //Проходится по всем тайлам вокруг пока не добавит все тайлы, стены и докпорты.
 	var/turf/CheckingTurf
 
@@ -308,7 +361,52 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 			if(Airlock)
 				var/datum/dock/added = add_docking_port(name, mask_params[1], x_offset + Original.x, y_offset + Original.y, Original.z, airlocks)
 				if(added)
+					added.shuttleDock = TRUE
 					airlocks[added] = list("x" = x_offset, "y" = y_offset)
+
+/datum/shuttle/proc/regenerate_airlocks()
+	if(is_moving)
+		return
+	is_moving = TRUE
+	undock()
+
+	for(var/datum/dock/Dock in airlocks)
+		qdel(Dock)
+
+	airlocks = list()
+
+	for(var/turf/T in tiles)
+		check_for_airlocks(T)
+
+	check_docked()
+	is_moving = FALSE
+
+/datum/shuttle/proc/check_for_airlocks(turf/T, x_offset, y_offset, turf/Original)
+	var/turf/CheckingTurf
+
+	var/obj/machinery/door/Airlock = locate(/obj/machinery/door) in T.contents
+	if(!Airlock)
+		return
+
+	var/list/coords = tiles[T]
+
+	checking_directions:
+		for(var/list/mask_params in nearest_mask)
+			CheckingTurf = get_step(T, mask_params[1])
+
+			if(CheckingTurf in tiles)
+				continue
+
+			for(var/obj/structure/Struct in CheckingTurf.contents)
+				if(Struct in outer_shell)
+					continue checking_directions
+
+			var/datum/dock/added = add_docking_port(name, mask_params[1], x_offset + Original.x, y_offset + Original.y, Original.z, airlocks)
+			if(!added)
+				return
+
+			added.shuttleDock = TRUE
+			airlocks[added] = list("x" = coords["x"], "y" = coords["y"])
 
 
 /datum/shuttle/proc/create_shuttle_area() //Создаётся собственная область шаттла.
@@ -818,7 +916,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 	var/bounds_x = 0
 	var/bounds_y = 0
 
-	var/transit = TRUE
+	var/transit = FALSE
 
 /obj/effect/landing_pad/atom_init()
 	. = ..()
@@ -1010,7 +1108,7 @@ var/global/list/all_shuttles = list() //Все шаттлы.
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 
 		if(Landing)
-			Landing.pole_destroyed()
+			Landing.thing_destroyed(src)
 
 
 ADD_TO_GLOBAL_LIST(/obj/machinery/computer/shuttle_console, shuttle_consoles)
@@ -1026,8 +1124,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/shuttle_console, shuttle_consoles)
 	var/datum/shuttle/Shuttle
 	var/shuttleName = "Shuttle"
 
-	var/datum/dock/ShuttleDock
-
 	var/grid_id
 
 /obj/machinery/computer/shuttle_console/proc/generate_shuttle()
@@ -1035,7 +1131,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/shuttle_console, shuttle_consoles)
 	if(!T || !T.grid_id)
 		return
 
-	new /datum/shuttle(src, T.grid_id)
+	Shuttle = new /datum/shuttle(src, T.grid_id)
 
 /obj/machinery/computer/shuttle_console/proc/try_find_shuttle()
 	var/turf/T = get_turf(src)
@@ -1043,19 +1139,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/shuttle_console, shuttle_consoles)
 		return
 
 	var/id_holder = null
+	var/on_a_grid = FALSE
 
 	if(grid_id)
 		id_holder = grid_id
 	if(T.grid_id)
 		id_holder = T.grid_id
+		on_a_grid = TRUE
 
 	if(!id_holder)
 		return
 	Shuttle = get_shuttle_by_id(id_holder)
-	if(!Shuttle)
+	if(!(Shuttle && on_a_grid))
 		return
 
-	ShuttleDock = Shuttle.dockedBy
+	Shuttle.regenerate_airlocks()
 
 
 /obj/machinery/computer/shuttle_console/ui_interact(mob/user)

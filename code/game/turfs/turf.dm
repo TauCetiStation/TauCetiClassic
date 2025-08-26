@@ -505,6 +505,11 @@
 		ChangeTurf(basetype)
 		return
 
+	if(grid_id)
+		var/datum/shuttle/Shuttle = get_shuttle_by_id(grid_id)
+		if(Shuttle)
+			Shuttle.tiles -= src
+			Shuttle.recalculate_bounds()
 	ChangeTurf(under_shuttle_turf_params["type"])
 	set_turf_from_undershuttle_params()
 
