@@ -13,18 +13,9 @@ Format:
 	votable (is this map votable)
 endmap
 
-map boxstation
-	votable
-	default
-endmap
-
-map boxstation_snow
-	votable
-	voteweight 0.7
-endmap
-
 map gamma
 	votable
+	default
 endmap
 
 map gamma_snow
