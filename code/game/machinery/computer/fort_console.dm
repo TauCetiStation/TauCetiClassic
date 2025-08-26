@@ -251,7 +251,6 @@
 
 	return C
 
-
 // 20-30
 /datum/fort_console_lot/rcd_ammo
 	name = "RCD ammunition 1x10"
