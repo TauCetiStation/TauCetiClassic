@@ -9664,9 +9664,13 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "cHv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -27993,6 +27997,9 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -28666,12 +28673,14 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/sortjunction{
 	dir = 2;
 	icon_state = "pipe-j2s";
 	name = "CE Office";
 	sortType = "CE Office"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
@@ -30043,6 +30052,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
+"idq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "caution"
+	},
+/area/station/hallway/primary/aft)
 "idz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39019,6 +39037,13 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"kDm" = (
+/obj/effect/landmark/start/technical_assistant,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/aft)
 "kDn" = (
 /obj/machinery/telecomms/processor/preset_four,
 /turf/simulated/floor/bluegrid{
@@ -52921,6 +52946,15 @@
 	icon_state = "white"
 	},
 /area/station/rnd/hor)
+"okg" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellowcorner"
+	},
+/area/station/hallway/primary/aft)
 "okl" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
@@ -55539,6 +55573,16 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
+"oVy" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/aft)
 "oVG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -65897,6 +65941,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"rIr" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/aft)
 "rII" = (
 /obj/machinery/door/airlock/maintenance{
 	dir = 4;
@@ -70379,10 +70429,12 @@
 /turf/environment/space,
 /area/shuttle/mining/station)
 "sOF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/landmark/start/technical_assistant,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "sOG" = (
@@ -125195,7 +125247,7 @@ hjO
 tBW
 nzY
 dEp
-mzv
+okg
 mzv
 qWX
 xml
@@ -125203,21 +125255,21 @@ rKt
 egv
 fjB
 mzv
-mzv
+okg
 dTD
 mzv
 tBW
 fjB
-mzv
+okg
 mAt
 wOm
 mzv
 mzv
 dTD
 gyD
+rIr
 ugW
-ugW
-xPN
+kDm
 uqY
 svV
 vUG
@@ -125460,12 +125512,12 @@ rxc
 qGW
 rxc
 rxc
-fRH
+oVy
 fRH
 lrd
 hdh
 fRH
-fRH
+oVy
 fRH
 fRH
 fRH
@@ -125717,12 +125769,12 @@ nVN
 ktw
 vMf
 ihA
-pMW
+idq
 pMW
 epy
 art
 pMW
-pMW
+idq
 pMW
 pMW
 pMW
