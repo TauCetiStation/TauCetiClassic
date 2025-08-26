@@ -56,10 +56,6 @@ type LevelObject = {
 };
 
 export const ShuttleConsole = (_: any, context: any) => {
-  Byond.winget('mapwindow.map', 'style').then((style) => {
-    Byond.winset('Shuttle Console', 'style', style);
-  });
-
   const { act, data } = useBackend<Data>(context);
   const {
     shuttlename,
