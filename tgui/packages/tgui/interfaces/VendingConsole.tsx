@@ -43,10 +43,10 @@ const pickTitleForTooltip = (status: number): string => {
   let text = 'Работает';
   switch (status) {
     case 3:
-      text = ' Сломан';
+      text = 'Сломан';
       break;
     case 2:
-      text = ' Обесточен';
+      text = 'Обесточен';
       break;
   }
 
