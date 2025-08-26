@@ -87,10 +87,6 @@ type VendingObject = {
 };
 
 export const VendingConsole = (_: any, context: any) => {
-  Byond.winget('mapwindow.map', 'style').then((style) => {
-    Byond.winset('Vending Console', 'style', style);
-  });
-
   const { act, data } = useBackend<Data>(context);
   const { currentZ, nanomapPayload, vendingMachines } = data;
 
