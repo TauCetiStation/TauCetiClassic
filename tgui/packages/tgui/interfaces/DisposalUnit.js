@@ -76,7 +76,7 @@ export const DisposalUnit = (props, context) => {
               <Button
                 icon="toggle-on"
                 disabled={data.mode === -1}
-                content="Включить"
+                content="Вкл"
                 selected={data.mode ? 'selected' : null}
                 onClick={() => act('pump-1')}
               />
