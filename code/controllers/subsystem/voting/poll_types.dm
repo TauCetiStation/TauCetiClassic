@@ -271,7 +271,7 @@
 	// decrease weight for repeated maps
 
 	// last 1
-	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name) 
+	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name)
 	voteweights[map_name] = 1 - REPEATED_MAPS_FACTOR_DECREASE
 
 	// and 2 previous from DB history
@@ -296,6 +296,52 @@
 /datum/vote_choice/nextmap/on_win()
 	var/datum/map_config/VM = config.maplist[mapname]
 	SSmapping.changemap(VM)
+
+	var/datum/poll/env_poll = SSvote.possible_polls[/datum/poll/nextenvironment]
+	if(env_poll && env_poll.can_start())
+		SSvote.start_vote(env_poll)
+
+/*********************
+	Environment
+**********************/
+/datum/poll/nextenvironment
+	name = "Окружение карты на следующий раунд"
+	question = "Выберите окружение для следующего раунда"
+	choice_types = list()
+	minimum_voters = 0
+	only_admin = FALSE
+
+	multiple_votes = TRUE
+	can_revote = TRUE
+	can_unvote = TRUE
+	detailed_result = TRUE
+
+	vote_period = 300
+
+/datum/poll/nextenvironment/get_force_blocking_reason()
+	if(ZTRAIT_ENV_TYPE in SSmapping.next_map_config.traits) // do not override
+		return "У выбранной карты уже задано окружение."
+
+/datum/poll/nextenvironment/init_choices()
+	choices.Add(new /datum/vote_choice/nextenvironment/space)
+	choices.Add(new /datum/vote_choice/nextenvironment/snow)
+
+/datum/vote_choice/nextenvironment/on_win()
+	var/json = file("data/next_map.json")
+	json = file2text(json)
+	json = json_decode(json)
+
+	json["traits"] += list(ZTRAIT_ENV_TYPE = environment)
+	json = json_encode(json)
+	text2file(json, "data/next_map.json")
+
+/datum/vote_choice/nextenvironment/space
+	text = "Открытый космос"
+	var/environment = ENV_TYPE_SPACE
+
+/datum/vote_choice/nextenvironment/snow
+	text = "Снежная тайга"
+	var/environment = ENV_TYPE_SNOW
 
 /*********************
 	Custom
