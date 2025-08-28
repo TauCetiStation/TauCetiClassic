@@ -326,6 +326,9 @@
 	choices.Add(new /datum/vote_choice/nextenvironment/space)
 	choices.Add(new /datum/vote_choice/nextenvironment/snow)
 
+/datum/vote_choice/nextenvironment
+	var/environment = ZTRAIT_ENV_TYPE
+
 /datum/vote_choice/nextenvironment/on_win()
 	var/json = file("data/next_map.json")
 	json = file2text(json)
@@ -337,11 +340,11 @@
 
 /datum/vote_choice/nextenvironment/space
 	text = "Открытый космос"
-	var/environment = ENV_TYPE_SPACE
+	environment = ENV_TYPE_SPACE
 
 /datum/vote_choice/nextenvironment/snow
 	text = "Снежная тайга"
-	var/environment = ENV_TYPE_SNOW
+	environment = ENV_TYPE_SNOW
 
 /*********************
 	Custom
