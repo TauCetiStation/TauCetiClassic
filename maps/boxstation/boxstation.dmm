@@ -33530,9 +33530,10 @@
 "iZr" = (
 /obj/item/weapon/flora/monkey,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 8;
+	icon_state = "black"
 	},
-/area/station/civilian/bar)
+/area/station/hallway/primary/central)
 "iZC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
@@ -120659,7 +120660,7 @@ xSk
 aIP
 nOZ
 sCZ
-iZr
+xSk
 xSk
 xIw
 wuf
@@ -121173,7 +121174,7 @@ wuf
 wuf
 wRy
 sEm
-xRk
+iZr
 xRk
 iQz
 wuf
