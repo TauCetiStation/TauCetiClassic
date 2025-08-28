@@ -178,7 +178,15 @@ var/global/list/alldepartments = list("Central Command")
 /obj/item/weapon/paper/get_fax_info()
 	. = info
 	if(stamped && islist(stamped))
-		. += "\nStamps: [jointext(stamped, ", ")]"
+		var/list/stamp_names = list()
+		for(var/stamp_type in stamped)
+			var/obj/item/weapon/stamp/S = new stamp_type()
+			stamp_names += S.stamp_message
+			qdel(S)
+		. += "\nШтампы: " + jointext(stamp_names, ", ")
+
+	else if(stamp_text && stamp_text != "")
+		. += "\n[stamp_text]"
 
 /obj/item/weapon/photo/get_fax_info()
 	return desc
@@ -258,6 +266,9 @@ var/global/list/alldepartments = list("Central Command")
 		to_chat(C, msg)
 
 	send_fax(sender, P, "Central Command")
+	for(var/obj/machinery/faxmachine/F in allfaxes)
+		if(F.department == "Central Command" && !(F.stat & (BROKEN|NOPOWER)))
+			F.print_fax(P.get_fax_copy())
 
 	SSStatistics.add_communication_log(type = "fax-station", author = sender.name, content = item_info)
 
