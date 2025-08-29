@@ -9,7 +9,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	germ_level = 0
 
-	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART
 
 	// Strings.
 	var/parent_bodypart                // Bodypart holding this object.
