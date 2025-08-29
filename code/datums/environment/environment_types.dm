@@ -14,3 +14,10 @@
 	turf_type = /turf/environment/snow
 	gen_type = /datum/map_generator/snow
 	area_type = /area/space/snow
+
+/datum/environment/forest
+	name = ENV_TYPE_FOREST
+
+	turf_type = /turf/environment/grass
+	gen_type = /datum/map_generator/forest
+	area_type = /area/space/forest

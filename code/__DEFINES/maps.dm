@@ -39,6 +39,8 @@
     #define ENV_TYPE_HOLOSPACE "Holospace"
     // ENV_TYPE_SNOW - snow environment generation
     #define ENV_TYPE_SNOW "Snow"
+	// ENV_TYPE_SNOW - forest environment generation
+    #define ENV_TYPE_FOREST "Forest"
 
 // default trait definitions, used by SSmapping
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
