@@ -133,6 +133,16 @@
 	max_duration = 80
 
 /datum/surgery_step/brain/insert_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+
+	var/obj/item/organ/internal/I = tool
+	if(!(target.get_species() in I.compability))
+		user.visible_message ( "<span class='warning'> \The [I] not compability to [target]</span>")
+		return FALSE
+
+	if(I.requires_robotic_bodypart)
+		user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
+		return FALSE
+
 	return ..() && target.op_stage.skull == 1 && !target.has_brain()
 
 /datum/surgery_step/brain/insert_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
