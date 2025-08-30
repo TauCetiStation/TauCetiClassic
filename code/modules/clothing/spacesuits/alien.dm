@@ -103,16 +103,164 @@
 
 /obj/item/clothing/head/helmet/space/unathi/breacher
 	name = "breacher helm"
+	armor = list(melee = 80, bullet = 75, laser = 50, energy = 10, bomb = 35, bio = 30, rad = 30)
 	desc = "Weathered, ancient and battle-scarred. The helmet is too."
 	icon_state = "unathi_breacher"
 	item_state = "unathi_breacher"
 
 /obj/item/clothing/suit/space/unathi/breacher
 	name = "breacher chassis"
+	armor = list(melee = 60, bullet = 50, laser = 40, energy = 35, bomb = 35, bio = 100, rad = 30)
 	desc = "Huge, bulky and absurdly heavy. It must be like wearing a tank."
 	icon_state = "unathi_breacher"
 	item_state = "unathi_breacher"
-	slowdown = 0.5
+	slowdown = 0
+	flags = ONESIZEFITSALL
+
+/datum/outfit/event_unathi_elder
+	name = "EVENT: unathi elder - slave master"
+
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	shoes = /obj/item/clothing/shoes/boots/combat
+	gloves = /obj/item/clothing/gloves/combat
+	l_ear = /obj/item/device/radio/headset/syndicate
+	head = /obj/item/clothing/head/helmet/space/unathi/breacher
+	mask = /obj/item/clothing/mask/gas/coloured
+	suit = /obj/item/clothing/suit/space/unathi/breacher
+	suit_store = /obj/item/weapon/tank/oxygen/red
+	back = /obj/item/weapon/tank/jetpack/oxygen/harness
+
+	belt = /obj/item/weapon/storage/pouch/baton_holster
+	l_pocket = /obj/item/weapon/storage/pouch/pistol_holster
+	r_pocket = /obj/item/device/flash
+
+	l_hand = /obj/item/weapon/storage/backpack/dufflebag/marinad
+
+/datum/outfit/event_unathi_elder/post_equip(mob/living/carbon/human/H)
+	var/obj/item/weapon/storage/backpack/dufflebag/marinad/M = H.l_hand
+	new /obj/item/weapon/storage/box/handcuffs(M)
+	new /obj/item/device/megaphone(M)
+	new /obj/item/weapon/razor(M)
+	new /obj/item/weapon/legcuffs/bola(M)
+	new /obj/item/weapon/legcuffs/bola(M)
+	new /obj/item/weapon/card/emag(M)
+	new /obj/item/weapon/card/emag(M)
+	new /obj/item/weapon/plastique(M)
+	new /obj/item/weapon/plastique(M)
+
+	var/obj/item/weapon/storage/pouch/baton_holster/BH = H.belt
+	new /obj/item/weapon/melee/baton(BH)
+	BH.update_icon()
+
+	var/obj/item/weapon/storage/pouch/pistol_holster/PH = H.l_store
+	var/obj/item/weapon/gun/energy/taser/stunrevolver/SG = new /obj/item/weapon/gun/energy/taser/stunrevolver(PH)
+	SG.name = "ancient stungun"
+	SG.can_be_holstered = TRUE
+	PH.update_icon()
+
+
+	H.mind.skills.add_available_skillset(/datum/skillset/max)
+	H.mind.skills.maximize_active_skills()
+
+/datum/outfit/event_unathi_elder/fighter
+	name = "EVENT: unathi elder - fighter"
+	belt = /obj/item/weapon/storage/pouch/baton_holster
+	l_hand = /obj/item/weapon/storage/backpack/dufflebag/marinad
+
+/datum/outfit/event_unathi_elder/fighter/post_equip(mob/living/carbon/human/H)
+	var/obj/item/weapon/storage/backpack/dufflebag/marinad/M = H.l_hand
+	new /obj/item/weapon/card/emag(M)
+	new /obj/item/weapon/card/emag(M)
+	new /obj/item/weapon/card/emag(M)
+	new /obj/item/weapon/card/emag(M)
+	new /obj/item/weapon/plastique(M)
+	new /obj/item/weapon/plastique(M)
+	new /obj/item/weapon/plastique(M)
+	new /obj/item/weapon/plastique(M)
+	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat(M)
+	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat(M)
+
+	var/obj/item/weapon/storage/pouch/baton_holster/BH = H.belt
+	new /obj/item/weapon/melee/baton(BH)
+	BH.update_icon()
+
+	var/obj/item/weapon/storage/pouch/pistol_holster/PH = H.l_store
+	var/obj/item/weapon/gun/energy/laser/selfcharging/alien/SG = new /obj/item/weapon/gun/energy/laser/selfcharging/alien(PH)
+	SG.name = "ancient lasergun"
+	SG.can_be_holstered = TRUE
+	PH.update_icon()
+
+	H.mind.skills.add_available_skillset(/datum/skillset/max)
+	H.mind.skills.maximize_active_skills()
+
+/obj/mecha/combat/marauder/mauler/unathi
+	desc = "Some ancient mecha."
+	name = "Ancient Mecha"
+	icon = 'icons/event8064.dmi'
+	icon_state = "mecha"
+	initial_icon = "mecha"
+	operation_req_access = list()
+	wreckage = /obj/effect/decal/mecha_wreckage/mauler
+
+/obj/mecha/combat/marauder/mauler/unathi/atom_init()
+	. = ..()
+	pixel_x = -26
+
+/obj/effect/decal/mecha_wreckage/mauler/unathi
+	name = "Ancient Wreckage"
+	icon_state = "mauler-unathi-broken"
+	desc = "They won't be very happy about this..."
+
+/obj/structure/communication_blocker
+	name = "communication blocker"
+	desc = "Выглядит непрочным. Быть может, его можно сломать?"
+	density = TRUE
+	anchored = FALSE
+	icon = 'icons/event.dmi'
+	icon_state = "communication_blocker"
+	var/can_unwrench = TRUE
+	max_integrity = 400
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/communication_blocker/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W) && can_unwrench)
+		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
+		if(W.use_tool(src, user, 20, volume = 50))
+			anchored = !anchored
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+		return FALSE
+
+	. = ..()
+
+/obj/structure/communication_blocker/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/communication_blocker/attack_hand(mob/living/carbon/human/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	user.visible_message("<span class='userdanger'>[user] kicks [src] unsuccessfully.</span>")
+
+/obj/structure/communication_blocker/attack_paw(mob/living/user)
+	if(ishuman(user))
+		return attack_hand(user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+
+/obj/structure/eventbanner
+	name = "banner"
+	desc = "Слава ЯЩЕРАМ!"
+	density = TRUE
+	anchored = FALSE
+	icon = 'icons/event.dmi'
+	icon_state = "banner"
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
 
 // Vox space gear (vaccuum suit, low pressure armour)
 // Can't be equipped by any other species due to bone structure and vox cybernetics.
