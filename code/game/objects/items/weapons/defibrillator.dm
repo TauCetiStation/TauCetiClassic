@@ -398,6 +398,10 @@
 
 	if(IO.heart_status == HEART_FIBR)
 		if(H.stat == DEAD)
+			if((H.health < config.health_threshold_dead) || (H.suiciding))
+				make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
+				playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+				return
 			IO.heart_normalize()
 			H.reanimate_body(H)
 			H.stat = UNCONSCIOUS
@@ -411,11 +415,6 @@
 	else
 		H.adjustFireLoss(burn_damage_amt)
 	H.updatehealth()
-
-	if((H.health < config.health_threshold_dead) || (H.suiciding))
-		make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
-		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return
 
 	if(wet)
 		var/turf/T = get_turf(src)
