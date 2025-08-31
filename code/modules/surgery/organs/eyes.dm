@@ -97,7 +97,7 @@
 
 /obj/item/organ/internal/eyes/dark_vision
 	name = "shadow eyes"
-	desc = "A spooky set of eyes that can see in the dark."
+	desc = "A spooky set of eyes that can bit better see in the dark."
 	darksight = 8
 
 /obj/item/organ/internal/eyes/cybernetic

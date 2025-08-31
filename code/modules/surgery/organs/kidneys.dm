@@ -14,6 +14,7 @@
 	cases = list("фильтрующий пузырь", "фильтрующего пузыря", "фильтрующему пузырю", "фильтрующий пузырь", "фильтрующим пузырём", "фильтрующем пузыре")
 	icon = 'icons/obj/special_organs/vox.dmi'
 	compability = list(VOX)
+	parent_bodypart = BP_CHEST
 	sterile = TRUE
 
 /obj/item/organ/internal/kidneys/tajaran

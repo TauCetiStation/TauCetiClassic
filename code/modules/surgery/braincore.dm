@@ -52,7 +52,7 @@
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50,
 	)
-	allowed_species = list("exclude", IPC, DIONA)
+	allowed_species = list("exclude", IPC, DIONA, PODMAN)
 
 	min_duration = 80
 	max_duration = 100
@@ -105,13 +105,12 @@
 
 	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, target)
-	var/obj/item/organ/internal/brain/B
-	B = new(target.loc)
-	B.transfer_identity(target)
 
 	var/obj/item/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
-	target.organs -= IO
-	target.organs_by_name -= O_BRAIN // this is SOOO wrong.
+	IO.status |= ORGAN_CUT_AWAY
+	IO.remove(target)
+	IO.loc = get_turf(target)
+	IO.transfer_identity(target)
 	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 /datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -127,7 +126,7 @@
 	allowed_tools = list(
 	/obj/item/organ/internal/brain = 100
 	)
-	allowed_species = list("exclude", IPC, DIONA)
+	allowed_species = list("exclude", IPC, DIONA, PODMAN)
 
 	min_duration = 60
 	max_duration = 80
@@ -169,11 +168,11 @@
 		else
 			target.key = B.brainmob.key
 		target.dna = B.brainmob.dna
-	var/obj/item/organ/internal/brain/brain = new(null)
-	brain.insert_organ(target)
+	user.drop_from_inventory(tool)
+	B.insert_organ(target)
 	target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
 	ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT) // so they cannot be cloned
-	qdel(tool)
+
 
 /datum/surgery_step/brain/insert_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

@@ -148,12 +148,9 @@
 	desc = "A smallish looking brain."
 
 /obj/item/organ/internal/brain/vox
-	name = "cortical-stack"
-	desc = "A peculiarly advanced bio-electronic device that seems to hold the memories and identity of a Vox."
-	parent_bodypart = BP_CHEST
+//	name = "cortical-stack"
+//	desc = "A peculiarly advanced bio-electronic device that seems to hold the memories and identity of a Vox."
 	icon = 'icons/obj/special_organs/vox.dmi'
-	icon_state = "cortical-stack"
-	item_state_world = "cortical-stack_world"
 	compability = list(VOX)
 	sterile = TRUE
 

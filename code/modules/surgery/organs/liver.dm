@@ -26,6 +26,7 @@
 	cases = list("канал отходов", "канала отходов", "каналу отходов", "канал отходов", "каналом отходов", "канале отходов")
 	icon = 'icons/obj/special_organs/vox.dmi'
 	compability = list(VOX)
+	parent_bodypart = BP_CHEST
 	alcohol_intensity = 1.6
 	sterile = TRUE
 

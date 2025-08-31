@@ -6,7 +6,7 @@
 
 /datum/surgery_step/organ_manipulation
 	priority = 2
-	allowed_species = list("exclude", IPC, DIONA)
+	allowed_species = list("exclude", IPC, DIONA, PODMAN)
 	var/obj/item/organ/internal/I = null
 
 /datum/surgery_step/organ_manipulation/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

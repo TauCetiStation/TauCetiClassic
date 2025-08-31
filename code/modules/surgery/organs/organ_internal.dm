@@ -89,11 +89,11 @@
 	else
 		damage += amount
 
-		//only show this if the organ is not robotic
-		if(owner && parent_bodypart && amount > 0)
-			var/obj/item/organ/external/parent = owner.get_bodypart(parent_bodypart)
-			if(parent && !silent)
-				owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
+	//only show this if the organ is not robotic
+	if(owner && parent_bodypart && amount > 0)
+		var/obj/item/organ/external/parent = owner.get_bodypart(parent_bodypart)
+		if(parent && !silent)
+			owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
 	if(damage >= max_damage)
 		die()
 

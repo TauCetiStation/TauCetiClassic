@@ -53,7 +53,7 @@
 	priority = 3
 	can_infect = 0
 	blood_level = 1
-	allowed_species = list(DIONA, IPC, VOX) // Just so you can fail on fixing IPC's groin organs.
+	allowed_species = list(DIONA, IPC, VOX, PODMAN) // Just so you can fail on fixing IPC's groin organs.
 
 /datum/surgery_step/groin_organs/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
@@ -101,6 +101,9 @@
 			tool_name = "the bandaid"
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+		if(IO.status & ORGAN_DEAD)
+			user.visible_message("[target]'s [IO.name] is dead.")
+			return
 		if(IO && IO.damage > 0)
 			if(!IO.is_robotic())
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].",
@@ -127,6 +130,8 @@
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
+			if(IO.status & ORGAN_DEAD)
+				return
 			if(!IO.is_robotic())
 				user.visible_message("<span class='notice'>[user] treats damage to [target]'s [IO.name] with [tool_name].</span>",
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )

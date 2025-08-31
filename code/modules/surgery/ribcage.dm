@@ -227,6 +227,8 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
+			if(IO.status & ORGAN_DEAD)
+				user.visible_message("[target]'s [IO.name] is dead.")
 			if(!IO.is_robotic())
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].", \
 				"You start treating damage to [target]'s [IO.name] with [tool_name]." )
@@ -249,6 +251,8 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
+			if(IO.status & ORGAN_DEAD)
+				return
 			if(!IO.is_robotic())
 				user.visible_message("[user] treats damage to [target]'s [IO.name] with [tool_name].", \
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
@@ -347,7 +351,7 @@
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50
 	)
-	allowed_species = list(DIONA)
+	allowed_species = list(DIONA, PODMAN)
 
 	min_duration = 80
 	max_duration = 100
@@ -426,7 +430,7 @@
 	max_duration = 100
 
 /datum/surgery_step/ipc/ribcage/cut_posibrain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.ribcage == 2
+	return ..() && target.op_stage.ribcage == 2 && target.has_brain()
 
 /datum/surgery_step/ipc/ribcage/cut_posibrain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts cutting wires connecting [target]'s posi-brain with \the [tool].",
@@ -456,7 +460,7 @@
 	max_duration = 70
 
 /datum/surgery_step/ipc/ribcage/extract_posibrain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.chest_brain_op_stage == 1 && target.op_stage.ribcage == 2
+	return ..() && target.chest_brain_op_stage == 1 && target.has_brain() && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ipc/ribcage/extract_posibrain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts prying out [target]'s posi-brain from \his hatch with \the [tool].",
