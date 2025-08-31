@@ -52,7 +52,7 @@
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50,
 	)
-	allowed_species = list("exclude", IPC, DIONA, PODMAN)
+	allowed_species = list("exclude", IPC, DIONA)
 
 	min_duration = 80
 	max_duration = 100
@@ -126,7 +126,7 @@
 	allowed_tools = list(
 	/obj/item/organ/internal/brain = 100
 	)
-	allowed_species = list("exclude", IPC, DIONA, PODMAN)
+	allowed_species = list("exclude", IPC, DIONA)
 
 	min_duration = 60
 	max_duration = 80

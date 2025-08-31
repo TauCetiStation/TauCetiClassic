@@ -351,7 +351,7 @@
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50
 	)
-	allowed_species = list(DIONA, PODMAN)
+	allowed_species = list(DIONA)
 
 	min_duration = 80
 	max_duration = 100
