@@ -54490,7 +54490,7 @@
 /area/station/maintenance/engineering)
 "bTh" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},

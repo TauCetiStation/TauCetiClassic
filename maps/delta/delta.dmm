@@ -8780,7 +8780,7 @@
 /area/station/security/prison)
 "aoH" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "greenbluefull"
 	},
@@ -29936,7 +29936,7 @@
 /area/station/storage/tech)
 "dGo" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -31772,7 +31772,7 @@
 /area/station/rnd/chargebay)
 "eel" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/effect/decal/turf_decal/blue{
 	dir = 4;
 	icon_state = "siding_line"
