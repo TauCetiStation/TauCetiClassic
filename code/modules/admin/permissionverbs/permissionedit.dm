@@ -337,35 +337,34 @@ var elements = document.getElementsByName('rights');
 
 /client/proc/add_round_admin()
 	set category = "Admin"
-	set name = "Round Admin"
+	set name = "Round Admin / Event Maker"
 	set desc = "Add or remove temporary admin"
 
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND] rank for the duration of the round.") as null|anything in clients
+	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND]/[ADMIN_RANK_EVENT_MAKER] rank for the duration of the round.") as null|anything in clients
 
 	if(!target)
 		return
 
-	if(!target.hub_authenticated)
-		to_chat(usr, "<span class='alert'>Client is not authorized through the hub!</span>")
-		return
-
 	if(!target.holder)
-		var/confirm = tgui_alert(usr, "You want to grant permissions for [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
-		if (confirm != "Yes")
-			return
+		var/confirm = tgui_alert(usr, "Choose rank to give.", "Confirmation", list("Round Admin", "Event Maker"))
+		if (confirm == "Round Admin")
+			new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN | R_FUN | R_EVENT | R_SPAWN | R_BUILDMODE | R_SERVER | R_REJUVINATE), target.ckey)
+			target.holder = admin_datums[target.ckey]
+			target.holder.associate(target)
 
-		new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN), target.ckey)
-		target.holder = admin_datums[target.ckey]
-		target.holder.associate(target)
+		if (confirm == "Event Maker")
+			new /datum/admins(ADMIN_RANK_EVENT_MAKER, (R_ADMIN | R_BAN), target.ckey)
+			target.holder = admin_datums[target.ckey]
+			target.holder.associate(target)
 
 		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
 		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
 
-	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND)
-		var/confirm = tgui_alert(usr, "You want to remove [ADMIN_RANK_ROUND] permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
+	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND || ADMIN_RANK_EVENT_MAKER)
+		var/confirm = tgui_alert(usr, "You want to remove temporary permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
 		if (confirm != "Yes")
 			return
 
