@@ -335,42 +335,24 @@ var elements = document.getElementsByName('rights');
 			log_query.Execute()
 			to_chat(usr, "<span class='notice'>Admin rank changed.</span>")
 
-/client/proc/add_round_admin()
-	set category = "Admin"
-	set name = "Round Admin / Event Maker"
-	set desc = "Add or remove temporary admin"
-
+/client/proc/add_temp_admin(rank, flags)
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND]/[ADMIN_RANK_EVENT_MAKER] rank for the duration of the round.") as null|anything in clients
-
+	var/client/target = input("Select client to add/remove [rank] for the duration of the round.") as null|anything in clients
 	if(!target)
 		return
 
 	if(!target.holder)
-		var/confirm = tgui_alert(usr, "Choose rank to give.", "Confirmation", list("Round Admin", "Event Maker", "Return"))
-		if (confirm == "Round Admin")
-			new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN), target.ckey)
-			target.holder = admin_datums[target.ckey]
-			target.holder.associate(target)
+		new /datum/admins(rank, flags, target.ckey)
+		target.holder = admin_datums[target.ckey]
+		target.holder.associate(target)
 
-			message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
-			log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
+		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [rank]")
+		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [rank]")
 
-		if (confirm == "Event Maker")
-			new /datum/admins(ADMIN_RANK_EVENT_MAKER, (R_ADMIN | R_BAN | R_FUN | R_EVENT | R_SPAWN | R_BUILDMODE | R_SERVER | R_REJUVINATE), target.ckey)
-			target.holder = admin_datums[target.ckey]
-			target.holder.associate(target)
-
-			message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_EVENT_MAKER]")
-			log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_EVENT_MAKER]")
-
-		if (confirm == "Return")
-			return
-
-	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND || ADMIN_RANK_EVENT_MAKER)
-		var/confirm = tgui_alert(usr, "You want to remove temporary permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
+	else if(target.holder && target.holder.rank == rank)
+		var/confirm = tgui_alert(usr, "Remove temporary permissions from [target.ckey]?", "Confirmation", list("Yes", "No"))
 		if (confirm != "Yes")
 			return
 
@@ -378,7 +360,22 @@ var elements = document.getElementsByName('rights');
 		admin_datums -= target.ckey
 		D.disassociate()
 
-		message_admins("[key_name_admin(usr)] temporary permissions from [target.ckey]")
+		message_admins("[key_name_admin(usr)] removed temporary permissions from [target.ckey]")
 		log_admin("[key_name(usr)] removed temporary permissions from [target.ckey]")
 	else
 		to_chat(usr, "<span class='alert'>Wrong client!</span>")
+
+/client/proc/add_round_admin()
+	set category = "Admin"
+	set name = "Round Admin / Event Maker"
+	set desc = "Add or remove temporary admin"
+
+	var/choice = tgui_alert(usr, "Choose rank to give.", "Confirmation", list(ADMIN_RANK_ROUND, ADMIN_RANK_EVENT_MAKER, "Return"))
+	if(choice == "Return" || !choice)
+		return
+
+	switch(choice)
+		if("Round Admin")
+			add_temp_admin(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN), ADMIN_RANK_ROUND)
+		if("Event Maker")
+			add_temp_admin(ADMIN_RANK_EVENT_MAKER, (R_ADMIN | R_BAN | R_FUN | R_EVENT | R_SPAWN | R_BUILDMODE | R_SERVER | R_REJUVINATE), ADMIN_RANK_EVENT_MAKER)
