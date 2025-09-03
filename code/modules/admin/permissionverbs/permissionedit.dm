@@ -349,19 +349,25 @@ var elements = document.getElementsByName('rights');
 		return
 
 	if(!target.holder)
-		var/confirm = tgui_alert(usr, "Choose rank to give.", "Confirmation", list("Round Admin", "Event Maker"))
+		var/confirm = tgui_alert(usr, "Choose rank to give.", "Confirmation", list("Round Admin", "Event Maker", "Return"))
 		if (confirm == "Round Admin")
 			new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN | R_FUN | R_EVENT | R_SPAWN | R_BUILDMODE | R_SERVER | R_REJUVINATE), target.ckey)
 			target.holder = admin_datums[target.ckey]
 			target.holder.associate(target)
+
+			message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
+			log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
 
 		if (confirm == "Event Maker")
 			new /datum/admins(ADMIN_RANK_EVENT_MAKER, (R_ADMIN | R_BAN), target.ckey)
 			target.holder = admin_datums[target.ckey]
 			target.holder.associate(target)
 
-		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
-		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
+			message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_EVENT_MAKER]")
+			log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_EVENT_MAKER]")
+
+		if (confirm == "Return")
+			return
 
 	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND || ADMIN_RANK_EVENT_MAKER)
 		var/confirm = tgui_alert(usr, "You want to remove temporary permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
@@ -372,7 +378,7 @@ var elements = document.getElementsByName('rights');
 		admin_datums -= target.ckey
 		D.disassociate()
 
-		message_admins("[key_name_admin(usr)] removed [ADMIN_RANK_ROUND] [key_name_admin(target)] from the admins list")
-		log_admin("[key_name(usr)] removed [ADMIN_RANK_ROUND] [key_name(target)] from the admins list")
+		message_admins("[key_name_admin(usr)] temporary permissions from [target.ckey] from the admins list")
+		log_admin("[key_name(usr)] removed temporary permissions from [target.ckey]")
 	else
 		to_chat(usr, "<span class='alert'>Wrong client!</span>")
