@@ -54,9 +54,6 @@ SUBSYSTEM_DEF(job)
 			Debug("Job [job.title] not added because of map setup.")
 
 		name_occupations[job.title] = job
-		if(job.alt_titles && job.alt_titles.len)
-			for(var/alt_job_title in job.alt_titles)
-				name_occupations[alt_job_title] = job
 		for(var/department_title in job.departments)
 			departments_occupations[department_title] += job.title
 
