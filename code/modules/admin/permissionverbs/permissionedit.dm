@@ -360,8 +360,8 @@ var elements = document.getElementsByName('rights');
 		admin_datums -= target.ckey
 		D.disassociate()
 
-		message_admins("[key_name_admin(usr)] removed temporary permissions from [target.ckey]")
-		log_admin("[key_name(usr)] removed temporary permissions from [target.ckey]")
+		message_admins("[key_name_admin(usr)] removed temporary permissions ([rank]) from [target.ckey]")
+		log_admin("[key_name(usr)] removed temporary permissions ([rank]) from [target.ckey]")
 	else
 		to_chat(usr, "<span class='alert'>Wrong client!</span>")
 
