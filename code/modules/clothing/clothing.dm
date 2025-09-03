@@ -516,7 +516,7 @@ BLIND     // can't see anything
 		3 = Report location
 		*/
 	var/displays_id = 1
-	var/rolled_down = 0
+	var/rolled_down = FALSE
 	var/basecolor
 
 	var/fresh_laundered_until = 0
@@ -529,6 +529,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
+	rolled_down = FALSE
 	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
 		fresh_laundered_until = world.time
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
@@ -631,13 +632,12 @@ BLIND     // can't see anything
 	if(usr.incapacitated())
 		return
 
-	if(copytext(item_state,-2) != "_d")
-		basecolor = item_state
-	if(icon_exists('icons/mob/uniform.dmi', "[basecolor]_d"))
-		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
-		update_inv_mob()
+	if(rolled_down)
+		to_chat(usr, "<span class='notice'>Вы пытаетесь распахнуть униформу.</span>")
 	else
-		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
+		to_chat(usr, "<span class='notice'>Вы пытаетесь застягнуть униформу.</span>")
+	rolled_down = !rolled_down
+	update_inv_mob()
 
 /obj/item/clothing/under/wash_act(w_color)
 	. = ..()

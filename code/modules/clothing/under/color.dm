@@ -1,3 +1,72 @@
+
+/obj/item/clothing/under/colored
+	name = "colored uniform"
+	icon_state = "red"
+	item_state_inventory= "colored"
+	item_state_world = "colored_w"
+	item_state = "colored"
+	color = "#386b89"
+	flags = ONESIZEFITSALL
+	var/mutable_appearance/item_under_overlay
+
+// if needed, this can easily be changed to /obj/item/clothing/under
+// in case of adding support for /obj/item/clothing, this proc will require some tweaking
+/obj/item/clothing/under/colored/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	var/mutable_appearance/I = ..()
+
+	var/icon_path = def_icon_path
+	var/t_state = item_state ? item_state : icon_state
+
+	var/datum/species/S = H.species
+
+	if(S.sprite_sheets[sprite_sheet_slot])
+		icon_path = S.sprite_sheets[sprite_sheet_slot]
+
+	var/fem_appendix = ""
+
+	// we dont have female sprites for fat uniforms
+	if(H.gender == FEMALE && S.gender_limb_icons && sprite_sheet_slot != SPRITE_SHEET_UNIFORM_FAT)
+		fem_appendix = "_fem"
+
+	// checks if we have a colorless overlay we need to apply
+	if(rolled_down || !icon_exists(icon_path, "[t_state]_overlay[fem_appendix]"))
+		return I
+
+	// add the colorless overlay
+	I.cut_overlays()
+	var/mutable_appearance/under_mob_overlay = mutable_appearance(icon = icon_path, icon_state = "[t_state]_overlay[fem_appendix]")
+	under_mob_overlay.appearance_flags = RESET_COLOR
+	I.add_overlay(under_mob_overlay)
+
+	// re-apply blood & dirt
+	if(dirt_overlay && bloodied_icon_state)
+		var/mutable_appearance/bloodsies = mutable_appearance(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
+		bloodsies.color = dirt_overlay.color
+		I.add_overlay(bloodsies)
+
+	return I
+
+/obj/item/clothing/under/colored/update_icon()
+	..()
+
+	// add the colorless overlay
+	//var/mutable_appearance/under_overlay = mutable_appearance(icon, "[icon_state]_overlay")
+	//under_overlay.appearance_flags = RESET_COLOR
+	//add_overlay(under_overlay)
+
+/obj/item/clothing/under/colored/dropped()
+	. = ..()
+	update_world_icon()
+
+/obj/item/clothing/under/colored/update_world_icon()
+	..()
+
+	// add the colorless overlay
+	cut_overlay(item_under_overlay)
+	item_under_overlay = image(icon, "[icon_state]_overlay")
+	item_under_overlay.appearance_flags = RESET_COLOR
+	add_overlay(item_under_overlay)
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
