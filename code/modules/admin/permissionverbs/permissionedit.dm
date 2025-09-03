@@ -375,7 +375,7 @@ var elements = document.getElementsByName('rights');
 		return
 
 	switch(choice)
-		if("Round Admin")
+		if(ADMIN_RANK_ROUND)
 			add_temp_admin(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN))
-		if("Event Maker")
+		if(ADMIN_RANK_EVENT_MAKER)
 			add_temp_admin(ADMIN_RANK_EVENT_MAKER, (R_ADMIN | R_BAN | R_FUN | R_EVENT | R_SPAWN | R_BUILDMODE | R_SERVER | R_REJUVINATE))
