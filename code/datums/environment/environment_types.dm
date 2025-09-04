@@ -26,5 +26,5 @@
 	name = ENV_TYPE_DESERT
 
 	turf_type = /turf/environment/sand
-	gen_type = /datum/map_generator/forest
-	area_type = /area/space/forest
+	gen_type = /datum/map_generator/desert
+	area_type = /area/space/desert

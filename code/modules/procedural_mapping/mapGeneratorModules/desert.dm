@@ -6,10 +6,10 @@
 	switch(noise)
 		if (0 to 50)
 			result = "oasis"
-		if (51 to 180)
+		if (51 to 170)
 			if(prob(1))
 				result = "flora"
-		if (181 to 255)
+		if (171 to 255)
 			result = "rock"
 
 	switch(result)
@@ -42,4 +42,4 @@
 	return TRUE
 
 /datum/map_generator_module/border/rock
-	turf_type = /turf/unsimulated/wall/rock
+	spawnableTurfs = list(/turf/unsimulated/wall/rock = 100)

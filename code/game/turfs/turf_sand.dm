@@ -12,16 +12,18 @@
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
-	temperature = T50C
+	temperature = T150C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 12000
 
-	level_light_source = TRUE
+	light_color = COLOR_SUN
+	light_power = 2
+	light_range = 2
 
 /turf/environment/sand/atom_init(mapload)
 	. = ..()
 	if((type == /turf/environment/sand) && prob(10))
-		icon_state += "[rand(0,7)]"
+		icon_state += "[rand(0,4)]"
 
 /turf/environment/sand/Destroy()
 	SHOULD_CALL_PARENT(FALSE)
