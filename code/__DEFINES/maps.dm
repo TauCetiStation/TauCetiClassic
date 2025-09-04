@@ -41,6 +41,8 @@
     #define ENV_TYPE_SNOW "Snow"
 	// ENV_TYPE_SNOW - forest environment generation
     #define ENV_TYPE_FOREST "Forest"
+	// ENV_TYPE_SNOW - desert environment generation
+    #define ENV_TYPE_DESERT "Desert"
 
 // default trait definitions, used by SSmapping
 #define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)

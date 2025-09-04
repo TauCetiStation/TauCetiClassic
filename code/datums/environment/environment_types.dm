@@ -21,3 +21,10 @@
 	turf_type = /turf/environment/grass
 	gen_type = /datum/map_generator/forest
 	area_type = /area/space/forest
+
+/datum/environment/desert
+	name = ENV_TYPE_DESERT
+
+	turf_type = /turf/environment/sand
+	gen_type = /datum/map_generator/forest
+	area_type = /area/space/forest
