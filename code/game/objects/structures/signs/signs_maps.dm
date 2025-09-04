@@ -12,7 +12,7 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/station_map)
 		assets.send(user)
 		var/datum/browser/popup = new(user, "window=[name]", "[name]", nanomap_size-30, nanomap_size, ntheme = CSS_THEME_DARK)
-		popup.set_content("<img src='[nanomap_file]' style='height:100%;width:auto;-ms-interpolation-mode:nearest-neighbor'>")
+		popup.set_content("<img src='[nanomap_file]' style='height:100%;width:auto;-ms-interpolation-mode:nearest-neighbor'><img src='nanomap_maplegend.png' style='height:60px;width:auto;position:absolute;bottom:10px;left:10px;-ms-interpolation-mode:nearest-neighbor'>")
 		popup.open()
 
 /obj/structure/sign/map/left
