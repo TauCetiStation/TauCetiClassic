@@ -24,11 +24,10 @@
 		var/input_z = input(usr,"Enter the Z level to generate") as num
 		if(!input_z)
 			return
-		var/choice = input(usr,"Show area color?") as null|anything in list("Yes","No")
-		var/showArea = choice == "Yes" ? TRUE : FALSE
-		nanomapgen_DumpTile(1, 1, text2num(input_z), showAreaColor = showArea)
+		nanomapgen_DumpTile(1, 1, text2num(input_z))
+		nanomapgen_DumpTile(1, 1, text2num(input_z), showAreaColor = TRUE)
 
-/client/proc/nanomapgen_DumpTile(startX = 1, startY = 1, currentZ = 1, endX = -1, endY = -1, showAreaColor)
+/client/proc/nanomapgen_DumpTile(startX = 1, startY = 1, currentZ = 1, endX = -1, endY = -1, showAreaColor = FALSE)
 
 	if (endX < 0 || endX > world.maxx)
 		endX = world.maxx
@@ -103,7 +102,7 @@
 				world.log << "NanoMapGen: <B>[count] tiles done</B>"
 				sleep(1)
 
-	var/mapFilename = "nanomap_z[currentZ]-new.png"
+	var/mapFilename = "nanomap_z[currentZ][showAreaColor ? "-areas" : ""]-new.png"
 
 	world.log << "NanoMapGen: <B>sending [mapFilename] to client</B>"
 
