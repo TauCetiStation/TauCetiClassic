@@ -4,7 +4,7 @@
 	icon_state = "desert"
 	plane = FLOOR_PLANE
 
-	basetype = /turf/environment/grass
+	basetype = /turf/environment/sand
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
@@ -22,7 +22,7 @@
 
 /turf/environment/sand/atom_init(mapload)
 	. = ..()
-	if((type == /turf/environment/sand) && prob(10))
+	if(prob(10))
 		icon_state += "[rand(0,4)]"
 
 /turf/environment/sand/Destroy()
