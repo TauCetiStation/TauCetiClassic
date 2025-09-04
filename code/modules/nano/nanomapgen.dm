@@ -24,7 +24,7 @@
 		var/input_z = input(usr,"Enter the Z level to generate") as num
 		if(!input_z)
 			return
-		nanomapgen_DumpTile(1, 1, text2num(input_z))
+		nanomapgen_DumpTile(1, 1, text2num(input_z), showAreaColor = FALSE)
 		nanomapgen_DumpTile(1, 1, text2num(input_z), showAreaColor = TRUE)
 
 /client/proc/nanomapgen_DumpTile(startX = 1, startY = 1, currentZ = 1, endX = -1, endY = -1, showAreaColor = FALSE)
