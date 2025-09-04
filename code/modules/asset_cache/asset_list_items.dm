@@ -79,8 +79,9 @@
 		"prometheus" = "nanomap_prometheus_1_areas.png",
 		"delta" = "nanomap_delta_1_areas.png"
 	)
-
-	assets[cachekey[SSmapping.config.map_path]] = cache[SSmapping.config.map_path]
+	var/cached_map_file = cache[SSmapping.config.map_path]
+	if(cached_map_file)
+		assets[cachekey[SSmapping.config.map_path]] = cache[SSmapping.config.map_path]
 	assets["nanomap_maplegend.png"] =  'nano/images/nanomap_maplegend.png'
 
 	..()
