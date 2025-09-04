@@ -27478,7 +27478,7 @@
 "aWy" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/cakehat,
-/obj/item/station_map,
+/obj/item/station_map/box,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -32373,9 +32373,9 @@
 /area/station/medical/reception)
 "bfb" = (
 /obj/structure/table,
-/obj/item/station_map,
-/obj/item/station_map,
-/obj/item/station_map,
+/obj/item/station_map/box,
+/obj/item/station_map/box,
+/obj/item/station_map/box,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "bfc" = (
@@ -46836,7 +46836,7 @@
 "bEU" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/trash/candle/red,
-/obj/item/station_map,
+/obj/item/station_map/box,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -64196,19 +64196,19 @@
 /obj/item/weapon/packageWrap{
 	pixel_y = 16
 	},
-/obj/item/station_map{
+/obj/item/station_map/box{
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/station_map{
+/obj/item/station_map/box{
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/station_map{
+/obj/item/station_map/box{
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/station_map{
+/obj/item/station_map/box{
 	pixel_x = 4;
 	pixel_y = -2
 	},

@@ -15,6 +15,10 @@
 	popup.set_content("<img src='[nanomap_file]' style='height:100%;width:auto;-ms-interpolation-mode:nearest-neighbor'><img src='nanomap_maplegend.png' style='height:60px;width:auto;position:absolute;bottom:10px;left:10px;-ms-interpolation-mode:nearest-neighbor'>")
 	popup.open()
 
+/obj/item/station_map/box
+	icon_state = "station_map"
+	nanomap_file = "nanomap_exodus_1_areas.png"
+
 /obj/item/station_map/gamma
 	icon_state = "gamma"
 	nanomap_file = "nanomap_gamma_1_areas.png"

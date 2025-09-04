@@ -559,7 +559,7 @@ SUBSYSTEM_DEF(job)
 		var/obj/item/clothing/accessory/newbiebadge/badge = new(H)
 		H.equip_or_collect(badge, SLOT_NECK)
 		var/list/mapByType = list(
-			"boxstation" = /obj/item/station_map,
+			"boxstation" = /obj/item/station_map/box,
 			"gamma" = /obj/item/station_map/gamma,
 			"delta" = /obj/item/station_map/delta,
 			"falcon" = /obj/item/station_map/falcon,
