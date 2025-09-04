@@ -558,14 +558,7 @@ SUBSYSTEM_DEF(job)
 	if(Cl && Cl.player_ingame_age && isnum(Cl.player_ingame_age) && Cl.player_ingame_age < 3000)
 		var/obj/item/clothing/accessory/newbiebadge/badge = new(H)
 		H.equip_or_collect(badge, SLOT_NECK)
-		var/list/mapByType = list(
-			"boxstation" = /obj/item/station_map/box,
-			"gamma" = /obj/item/station_map/gamma,
-			"delta" = /obj/item/station_map/delta,
-			"falcon" = /obj/item/station_map/falcon,
-			"prometheus" = /obj/item/station_map/prometheus,
-		)
-		var/stationmap_type = mapByType[SSmapping.config.map_path]
+		var/stationmap_type = SSmapping.get_stationmap_type()
 		if(stationmap_type)
 			H.equip_or_collect(new stationmap_type(H), SLOT_R_STORE)
 
