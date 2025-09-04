@@ -58,6 +58,10 @@
 	. = ..()
 	update_world_icon()
 
+// cut_overlay just isnt fast enough for this, unfortunately.
+/obj/item/clothing/under/colored/putdown_animation()
+	return
+
 /obj/item/clothing/under/colored/update_world_icon()
 	..()
 
