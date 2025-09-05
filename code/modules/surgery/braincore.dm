@@ -158,10 +158,14 @@
 	if(!istype(tool, /obj/item/organ/internal/brain))
 		return
 
+	var/obj/item/organ/internal/brain/B = tool
+	if(target.get_int_organ(B))
+		user.visible_message ( "<span class='warning'> \The [target] already has [B].</span>")
+		return FALSE
+
 	//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 	if(target.key)//Revised. /N
 		target.ghostize()
-	var/obj/item/organ/internal/brain/B = tool
 	if(B.brainmob)
 		if(B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)

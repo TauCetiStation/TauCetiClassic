@@ -65,6 +65,9 @@
 
 /datum/surgery_step/organ_manipulation/place/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	I = tool
+	if(target.get_int_organ(I))
+		user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
+		return FALSE
 	user.drop_from_inventory(tool)
 	I.insert_organ(target)
 	user.visible_message("<span class='notice'> [user] has transplanted \the [tool] into [target].</span>", \
