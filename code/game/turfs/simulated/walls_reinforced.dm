@@ -129,7 +129,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0,user))
 			to_chat(user, "<span class='notice'>Вы начинаете ремонтировать укрепленную стену.</span>")
-			if(W.use_tool(src, user, max(5, damage / 5), volume = 100))
+			if(W.use_tool(src, user, max(5, damage / 5), volume = 100, quality = QUALITY_WELDING))
 				to_chat(user, "<span class='notice'>Вы закончили ремонтировать укрепленную стену.</span>")
 				take_damage(-damage)
 			return
@@ -168,7 +168,7 @@
 				to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие ряды.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_SCREWING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -196,7 +196,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
-					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -223,7 +223,7 @@
 		if(CUT_COVER)
 			if (isprying(W))
 				to_chat(user, "<span class='notice'>Вы пытаетесь отделить покрытие.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, quality = QUALITY_PRYING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -237,7 +237,7 @@
 			if (iswrenching(W))
 
 				to_chat(user, "<span class='notice'>Вы ослабляете болты, закрепляющие поддерживающие балки.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -253,7 +253,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
-					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, quality = QUALITY_WELDING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -284,7 +284,7 @@
 			if(isprying(W))
 
 				to_chat(user, "<span class='notice'>Вы отделяете внешнюю обшивку.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100, quality = QUALITY_PRYING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 

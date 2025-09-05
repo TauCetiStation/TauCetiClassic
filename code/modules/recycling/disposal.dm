@@ -85,7 +85,7 @@
 			if(W.use(0,user))
 				to_chat(user, "You start slicing the floorweld off the disposal unit.")
 
-				if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+				if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					deconstruct(TRUE)
 				return
@@ -889,7 +889,7 @@
 		if(W.use(0,user))
 			// check if anything changed over 2 seconds
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(W.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1345,7 +1345,7 @@
 		if(user.is_busy()) return
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(W.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1478,7 +1478,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
-			if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				transfer_fingerprints_to(C)
