@@ -79,6 +79,11 @@
 		if(M.get_inactive_hand())
 			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
 			return FALSE
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.can_use_two_hands())
+				to_chat(M, "<span class='notice'>Both of your hands must be functional to fire this weapon!</span>")
+				return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
