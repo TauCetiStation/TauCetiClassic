@@ -61,7 +61,28 @@
 	if(isnull(required_equipment))
 		return
 	var/mob/living/carbon/human/H = owner.current
-	var/RE = new required_equipment(H.loc)
+	var/atom/movable/RE = new required_equipment(H.loc)
+
+	for(var/size in RE.w_class to SIZE_NORMAL)
+		if(!global.roundstart_caches["[size]"])
+			continue
+		var/obj/item/weapon/storage/internal/cache_storage = pick(global.roundstart_caches["[size]"])
+		if(!cache_storage)
+			continue
+
+		global.roundstart_caches["[size]"] -= cache_storage
+
+		RE.forceMove(cache_storage)
+		var/turf/T = locate(/turf) in oview(1, get_turf(cache_storage))
+		var/obj/item/device/camera/abstract/Cam = new()
+		Cam.photo_size = 5
+		var/datum/picture/P = Cam.captureimage(T, "someone")
+
+		var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+		Photo.construct(P)
+		RE = Photo
+		break
+
 	var/list/slots = list(
 		"backpack" = SLOT_IN_BACKPACK,
 		"left hand" = SLOT_L_HAND,
