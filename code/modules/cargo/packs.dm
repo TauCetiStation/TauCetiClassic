@@ -2095,10 +2095,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(
 		/obj/item/weapon/disk/smartlight_programm/soft,
 		/obj/item/weapon/disk/smartlight_programm/hard,
-		/obj/item/weapon/disk/smartlight_programm/k3000,
 		/obj/item/weapon/disk/smartlight_programm/k4000,
+		/obj/item/weapon/disk/smartlight_programm/k4500,
 		/obj/item/weapon/disk/smartlight_programm/k5000,
-		/obj/item/weapon/disk/smartlight_programm/k6000,
+		/obj/item/weapon/disk/smartlight_programm/k5500,
 	)
 	additional_costs = 1000
 	group = "Operations"

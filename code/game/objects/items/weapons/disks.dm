@@ -209,17 +209,17 @@
 /obj/item/weapon/disk/smartlight_programm/hard
 	light_mode = /datum/light_mode/hard
 
-/obj/item/weapon/disk/smartlight_programm/k3000
-	light_mode = /datum/light_mode/k3000
-
 /obj/item/weapon/disk/smartlight_programm/k4000
 	light_mode = /datum/light_mode/k4000
+
+/obj/item/weapon/disk/smartlight_programm/k4500
+	light_mode = /datum/light_mode/k4500
 
 /obj/item/weapon/disk/smartlight_programm/k5000
 	light_mode = /datum/light_mode/k5000
 
-/obj/item/weapon/disk/smartlight_programm/k6000
-	light_mode = /datum/light_mode/k6000
+/obj/item/weapon/disk/smartlight_programm/k5500
+	light_mode = /datum/light_mode/k5500
 
 /obj/item/weapon/disk/smartlight_programm/shadows_soft
 	light_mode = /datum/light_mode/shadows_soft
