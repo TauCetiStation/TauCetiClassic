@@ -2,7 +2,7 @@
 	var/needed_amount = 100000
 
 /datum/objective/plunder/New()
-	explanation_text = "Plunder [needed_amount] credits!"
+	explanation_text = "Ограбьте станцию на [needed_amount] кредитов!"
 	..()
 
 /datum/objective/plunder/check_completion()

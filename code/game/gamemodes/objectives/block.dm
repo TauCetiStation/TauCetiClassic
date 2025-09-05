@@ -1,5 +1,5 @@
 /datum/objective/block
-	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
+	explanation_text = "Не позвольте никаким органическим формам жизни сбежать на шаттле живыми."
 
 /datum/objective/block/check_completion()
 	if(!issilicon(owner.current))
