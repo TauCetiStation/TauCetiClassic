@@ -8750,7 +8750,6 @@
 /area/station/civilian/chapel/mass_driver)
 "bfI" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -12121,7 +12120,6 @@
 /area/station/maintenance/brigright)
 "bLO" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
@@ -17157,7 +17155,6 @@
 	icon_state = "box_corners_white"
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -28087,7 +28084,6 @@
 "ePC" = (
 /obj/machinery/light/smart,
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39453,7 +39449,6 @@
 /area/station/maintenance/science)
 "gUJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -49187,7 +49182,6 @@
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -77775,7 +77769,6 @@
 /area/station/medical/cryo)
 "oAR" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -79655,7 +79648,6 @@
 	},
 /area/station/rnd/hallway/florahall)
 "oSY" = (
-/obj/item/weapon/storage/box/cups,
 /obj/structure/sign/poster/contraband/space_up{
 	pixel_x = 32
 	},
@@ -91436,8 +91428,6 @@
 /area/station/cargo/office)
 "rjR" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
@@ -93078,7 +93068,6 @@
 /area/station/civilian/janitor)
 "rAK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

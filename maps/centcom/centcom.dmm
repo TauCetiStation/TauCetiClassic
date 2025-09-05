@@ -6963,7 +6963,6 @@
 /area/space)
 "aqL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
