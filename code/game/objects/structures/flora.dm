@@ -325,6 +325,9 @@
 /obj/structure/flora/tree/jungle/small/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_TWO
 
+/obj/structure/flora/tree/jungle/unbreakable
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 // grass
 
 /obj/structure/flora/grass
