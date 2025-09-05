@@ -106697,7 +106697,7 @@
 	c_tag = "Cargo mail";
 	dir = 1
 	},
-/obj/item/weapon/wrapping_paper{
+/obj/item/weapon/packageWrap/present{
 	pixel_x = 4;
 	pixel_y = -1
 	},
