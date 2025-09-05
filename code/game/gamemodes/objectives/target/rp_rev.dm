@@ -1,5 +1,5 @@
 /datum/objective/target/rp_rev/format_explanation()
-	return "Захватите, обратите на свою сторону или изгоните со станции [target.current.real_name], [target.assigned_role]. Ликвидируйте [THEY_RU(target.current.real_name)], если у вас не будет выбора."
+	return "Захватите, обратите на свою сторону или изгоните со станции [target.current.real_name], [target.assigned_role]. Ликвидируйте, если у вас не будет иного выбора."
 
 // less violent rev objectives
 /datum/objective/target/rp_rev/check_completion()
