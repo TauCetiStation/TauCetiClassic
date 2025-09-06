@@ -1398,7 +1398,6 @@ Owl & Griffin toys
 	var/cardname = null
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
-	pixel_x = -5
 
 /obj/item/toy/singlecard/examine(mob/user)
 	..()
