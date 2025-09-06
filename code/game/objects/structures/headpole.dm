@@ -64,9 +64,22 @@
 		display_head = null
 	return ..()
 
-//obj/structure/headpole/with_head/atom_init()
-//	var/obj/item/weapon/organ/head/H = new (src)
-//	H.name = "head"
-//	spear = new (src)
-//	. = ..()
+/obj/structure/headpole/with_head/atom_init(mapload)
+	var/mob/living/carbon/human/tajaran/M = new (loc)
+	var/obj/item/organ/external/head/H = M.bodyparts_by_name[BP_HEAD]
+	H.droplimb(TRUE, null, DROPLIMB_EDGE)
+	H.forceMove(src)
+	H.name = "head"
+	display_head = new (src)
+	display_head.appearance = H.appearance
+	display_head.transform = matrix()
+	display_head.dir = SOUTH
+	display_head.pixel_y = -3
+	display_head.pixel_x = 1
+	display_head.layer = INFRONT_MOB_LAYER
+	display_head.plane = GAME_PLANE
+	add_overlay(display_head)
+	spear = new (src)
+	qdel(M)
+	. = ..()
 

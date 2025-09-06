@@ -4,7 +4,7 @@
 	desc = "It's full of a viscous liquid, but appears dark and silent."
 	icon = 'icons/obj/xenoarchaeology/artifacts_64x32.dmi'
 	icon_state = "autocloner_off"
-	var/spawn_type
+	var/spawn_type = /mob/living/simple_animal/hostile/xenomorph
 	var/time_spent_spawning = 0
 	var/time_per_spawn = 0
 	var/last_process= 0
@@ -19,32 +19,6 @@
 	. = ..()
 
 	time_per_spawn = rand(1200,3600)
-
-	// 33% chance to spawn nasties
-	if(prob(33))
-		spawn_type = pick(\
-		/mob/living/simple_animal/hostile/giant_spider/nurse,\
-		/mob/living/simple_animal/hostile/xenomorph,\
-		/mob/living/simple_animal/hostile/bear,\
-		/mob/living/simple_animal/hostile/creature,\
-		/mob/living/simple_animal/hostile/panther,\
-		/mob/living/simple_animal/hostile/snake\
-		)
-	else
-		spawn_type = pick(\
-		/mob/living/simple_animal/shiba,\
-		/mob/living/simple_animal/cat,\
-		/mob/living/simple_animal/corgi,\
-		/mob/living/simple_animal/corgi/puppy,\
-		/mob/living/simple_animal/chicken,\
-		/mob/living/simple_animal/cow,\
-		/mob/living/simple_animal/parrot,\
-		/mob/living/simple_animal/slime,\
-		/mob/living/simple_animal/crab,\
-		/mob/living/simple_animal/mouse,\
-		/mob/living/simple_animal/hostile/retaliate/goat,\
-		/mob/living/carbon/monkey\
-		)
 
 // todo: how the hell is the asteroid permanently powered?
 /obj/machinery/auto_cloner/process()
