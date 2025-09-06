@@ -471,7 +471,7 @@
 	else
 		//Smudge up dem prints some
 		if(fingerprintslast != M.key)
-			fingerprintshidden += "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]"
+			LAZYADD(fingerprintshidden,"\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
 			fingerprintslast = M.key
 
 	return
