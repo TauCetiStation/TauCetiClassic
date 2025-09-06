@@ -5317,11 +5317,23 @@
 /area/station/security/checkpoint)
 "ayy" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/weapon/crowbar,
 /obj/item/weapon/folder/red,
 /turf/simulated/floor{
 	dir = 5;
@@ -6213,6 +6225,10 @@
 /area/station/maintenance/science)
 "aFN" = (
 /obj/structure/table/woodentable/fancy/black,
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
 /obj/item/weapon/flora/deskleaf{
 	pixel_y = 7
 	},
@@ -23549,11 +23565,23 @@
 /area/station/security/blueshield)
 "dVq" = (
 /obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/device/analyzer,
 /obj/item/wallclock{
 	pixel_y = 24
 	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/weapon/wrench,
+/obj/item/device/analyzer,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -30450,7 +30478,18 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table,
-/obj/machinery/recharger,
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
 /obj/item/weapon/packageWrap{
 	pixel_x = -2;
 	pixel_y = 11
@@ -30458,6 +30497,7 @@
 /obj/item/toy/figure/hop{
 	pixel_x = 10
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -90699,6 +90739,10 @@
 	dir = 1;
 	icon_state = "spline_plain"
 	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -106653,7 +106697,7 @@
 	c_tag = "Cargo mail";
 	dir = 1
 	},
-/obj/item/weapon/wrapping_paper{
+/obj/item/weapon/packageWrap/present{
 	pixel_x = 4;
 	pixel_y = -1
 	},

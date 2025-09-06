@@ -558,6 +558,9 @@ SUBSYSTEM_DEF(job)
 	if(Cl && Cl.player_ingame_age && isnum(Cl.player_ingame_age) && Cl.player_ingame_age < 3000)
 		var/obj/item/clothing/accessory/newbiebadge/badge = new(H)
 		H.equip_or_collect(badge, SLOT_NECK)
+		var/stationmap_type = SSmapping.get_stationmap_type()
+		if(stationmap_type)
+			H.equip_or_collect(new stationmap_type(H), SLOT_R_STORE)
 
 //		H.update_icons()
 
@@ -655,13 +658,14 @@ SUBSYSTEM_DEF(job)
 		tmp_str += "HIGH=[high]|MEDIUM=[medium]|LOW=[low]|NEVER=[never]|BANNED=[banned]|YOUNG=[young]|-"
 		feedback_add_details("job_preferences",tmp_str)
 
-/datum/controller/subsystem/job/proc/IsJobAvailable(client/C, rank)
+/datum/controller/subsystem/job/proc/IsJobAvailable(mob/M, rank)
 	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job)
+	if(!job || !M.client)
 		return FALSE
+	var/client/C = M.client
 	if(!job.is_position_available())
 		return FALSE
-	if(jobban_isbanned(src, rank))
+	if(jobban_isbanned(M, rank))
 		return FALSE
 	if(!job.player_old_enough(C))
 		return FALSE
@@ -679,7 +683,7 @@ SUBSYSTEM_DEF(job)
 	var/count = 0
 	// Only players with the job assigned and AFK for less than 10 minutes count as active
 	// todo: store players in job datums for quick and easy loop
-	for(var/mob/M in player_list) 
+	for(var/mob/M in player_list)
 		if(M.mind?.assigned_role == rank && M.client?.inactivity <= 10 MINUTES)
 			count++
 	return count

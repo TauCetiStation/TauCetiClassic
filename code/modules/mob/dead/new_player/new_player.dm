@@ -247,7 +247,7 @@
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 		return 0
-	if(!SSjob.IsJobAvailable(client, rank))
+	if(!SSjob.IsJobAvailable(src, rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
 
@@ -347,7 +347,7 @@
 		var/department_data = ""
 		for(var/job_tag in SSjob.departments_occupations[department_tag])
 			var/datum/job/J = SSjob.name_occupations[job_tag]
-			if(!SSjob.IsJobAvailable(client, J.title))
+			if(!SSjob.IsJobAvailable(src, J.title))
 				continue
 
 			var/quota_class

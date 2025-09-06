@@ -74,6 +74,16 @@
 	var/can_block_air = FALSE // shared flag between /turf/s and /movable/s, you should use it only for movables
 	                          // if you want to set it true for object then remember to create CanPass or c_airblock methods or it will do nothing (pls refactor it)
 
+	var/list/particles_by_quality = list(
+											QUALITY_CUTTING = /particles/tool/cut,
+											QUALITY_PRYING = null,
+											QUALITY_WRENCHING = /particles/tool/wrench,
+											QUALITY_SCREWING = /particles/tool/screw,
+											QUALITY_WELDING = null,
+											QUALITY_PULSING = null,
+											QUALITY_SIGNALLING = null,
+										)
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
