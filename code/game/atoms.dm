@@ -4,8 +4,8 @@
 
 	var/flags = 0
 	var/flags_2 = 0
-	var/list/fingerprints
-	var/list/fingerprintshidden
+	var/list/fingerprints // For players to check
+	var/list/fingerprintshidden // For admins to check
 	var/fingerprintslast = null
 
 	var/list/blood_DNA      //forensic reasons
@@ -389,24 +389,9 @@
 /atom/proc/add_hiddenprint(mob/living/M)
 	if(!M || !M.key)
 		return
-	if (ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if (!istype(H.dna, /datum/dna))
-			return FALSE
-		if (H.gloves)
-			if(fingerprintslast != H.key)
-				LAZYADD(fingerprintshidden, "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]")
-				fingerprintslast = H.key
-			return FALSE
-		if (!fingerprints)
-			if(fingerprintslast != H.key)
-				LAZYADD(fingerprintshidden, "\[[time_stamp()]\] Real name: [H.real_name], Key: [H.key]")
-				fingerprintslast = H.key
-			return TRUE
-	else
-		if(fingerprintslast != M.key)
-			LAZYADD(fingerprintshidden, "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
-			fingerprintslast = M.key
+	if(fingerprintslast != M.key)
+		LAZYADD(fingerprintshidden, "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
+		fingerprintslast = M.key
 	return
 
 /atom/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
@@ -427,6 +412,12 @@
 			LAZYADD(fingerprintshidden, "(Mob has no fingerprints) Real name: [H.real_name], Key: [H.key]")
 			fingerprintslast = H.key
 			return FALSE
+
+		//Admins gotta know
+		if(fingerprintslast != M.key)
+			LAZYADD(fingerprintshidden,"\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
+			fingerprintslast = M.key
+
 		//First, make sure their DNA makes sense.
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
@@ -440,18 +431,8 @@
 			if(G.can_leave_fingerprints)
 				ignoregloves = TRUE
 
-		//Now, deal with gloves.
-		if(!ignoregloves)
-			if(H.gloves && H.gloves != src)
-				if(fingerprintslast != H.key)
-					LAZYADD(fingerprintshidden, "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]")
-					fingerprintslast = H.key
-				return FALSE
-
-		//More adminstuffz
-		if(fingerprintslast != H.key)
-			LAZYADD(fingerprintshidden, "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]")
-			fingerprintslast = H.key
+		if(!ignoregloves && H.gloves && H.gloves != src)
+			return FALSE
 
 		//Make the list if it does not exist.
 		if(!fingerprints)
@@ -468,12 +449,6 @@
 		else
 			fingerprints["Unrecognizable fingerprints"] = "Unrecognizable fingerprints"
 		return TRUE
-	else
-		//Smudge up dem prints some
-		if(fingerprintslast != M.key)
-			LAZYADD(fingerprintshidden,"\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
-			fingerprintslast = M.key
-
 	return
 
 
