@@ -93,7 +93,7 @@
 		BP.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
-/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
+/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage, impact_direction)
 	var/weapon_name
 
 	if(isatom(used_weapon))
@@ -102,23 +102,32 @@
 	else
 		weapon_name = used_weapon
 
-	var/datum/autopsy_data/W = autopsy_data[weapon_name + worldtime2text()]
+	var/datum/autopsy_data/W = autopsy_data[weapon_name + worldtime2text() + impact_direction]
 
 	if(!W)
 		W = new()
 		W.weapon = weapon_name
-		autopsy_data[weapon_name + worldtime2text()] = W
+		autopsy_data[weapon_name + worldtime2text() + impact_direction] = W
 
 	var/time = W.time_inflicted
 	if(time != worldtime2text())
 		W = new()
 		W.weapon = weapon_name
-		autopsy_data[weapon_name + worldtime2text()] = W
+		autopsy_data[weapon_name + worldtime2text() + impact_direction] = W
 
 	W.hits += 1
 	W.damage += damage
 	W.time_inflicted = worldtime2text()
+
+	if(istype(used_weapon, /obj/item/projectile))
+		var/obj/item/projectile/Proj = used_weapon
+		if(Proj.flag == BULLET)
+			type_damage = BULLET
+
 	W.type_damage = type_damage
+
+	if(impact_direction)
+		W.impact_direction = impact_direction
 
 // Takes care of bodypart and their organs related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_bodyparts()
