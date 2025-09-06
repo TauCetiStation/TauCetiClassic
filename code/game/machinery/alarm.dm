@@ -858,7 +858,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
-				if(W.use_tool(src, user, 20, volume = 50))
+				if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
 					to_chat(user, "You pry out the circuit!")
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
 					circuit.loc = user.loc
@@ -1056,7 +1056,7 @@ FIRE ALARM
 
 				else if(isprying(W))
 					to_chat(user, "You start prying out the circuit.")
-					if(W.use_tool(src, user, 20, volume = 50))
+					if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
 						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc

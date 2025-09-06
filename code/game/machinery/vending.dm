@@ -218,7 +218,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			if(!istype(src, /obj/machinery/vending) || !user || !W || !T)
 				return
 			if(user.loc == T && user.get_active_hand() == W)

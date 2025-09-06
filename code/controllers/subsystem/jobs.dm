@@ -558,6 +558,9 @@ SUBSYSTEM_DEF(job)
 	if(Cl && Cl.player_ingame_age && isnum(Cl.player_ingame_age) && Cl.player_ingame_age < 3000)
 		var/obj/item/clothing/accessory/newbiebadge/badge = new(H)
 		H.equip_or_collect(badge, SLOT_NECK)
+		var/stationmap_type = SSmapping.get_stationmap_type()
+		if(stationmap_type)
+			H.equip_or_collect(new stationmap_type(H), SLOT_R_STORE)
 
 //		H.update_icons()
 

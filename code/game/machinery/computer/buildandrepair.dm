@@ -49,7 +49,9 @@
 		return details
 
 /obj/item/weapon/circuitboard/proc/check_skill(mob/user)
-	return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED))
+	if(isliving(user))
+		return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED))
+	return TRUE
 
 /obj/item/weapon/circuitboard/turbine_computer
 	details = "circuit board (Turbine Computer)"
@@ -486,7 +488,7 @@
 		if(!dir_choise || !user || !(user in range(1, src)) || user.is_busy(src))
 			return
 
-		if(P.use_tool(src, user, 20, volume = 50) && src && P)
+		if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING) && src && P)
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
 			set_dir(text2dir(dir_choise))
 
@@ -497,7 +499,7 @@
 			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50))
+				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = TRUE
 					src.state = 1
@@ -505,7 +507,7 @@
 				var/obj/item/weapon/weldingtool/WT = P
 				if(WT.use(0, user))
 					to_chat(user, "<span class='notice'>You start deconstruct the frame.</span>")
-					if(WT.use_tool(src, user, 20, volume = 50))
+					if(WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 						to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 						new /obj/item/stack/sheet/metal( src.loc, 5 )
 						qdel(src)
@@ -513,7 +515,7 @@
 			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50))
+				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = FALSE
 					src.state = 0
@@ -634,6 +636,6 @@
 	if(!dir_choise || !usr || !(usr in range(1, src)) || usr.is_busy(src))
 		return
 
-	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
+	if(I.use_tool(src, usr, 20, volume = 50, quality = QUALITY_WRENCHING) && src && I)
 		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
 		set_dir(text2dir(dir_choise))
