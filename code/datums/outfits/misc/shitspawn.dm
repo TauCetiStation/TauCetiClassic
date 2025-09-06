@@ -347,7 +347,7 @@
 /datum/outfit/psyops_officer
 	name = "psyops officer"
 
-	uniform = /obj/item/clothing/under/darkred
+	uniform = /obj/item/clothing/under/color/darkred
 	head = /obj/item/clothing/head/helmet/psyamp
 	suit = /obj/item/clothing/suit/armor/vest/fullbody/psy_robe
 	shoes = /obj/item/clothing/shoes/boots/combat
@@ -492,7 +492,7 @@
 	id = /obj/item/weapon/card/id/centcom/special_ops
 
 /datum/outfit/wizard
-	uniform = /obj/item/clothing/under/lightpurple
+	uniform = /obj/item/clothing/under/color/lightpurple
 	shoes = /obj/item/clothing/shoes/sandal
 	l_ear = /obj/item/device/radio/headset
 	r_pocket = /obj/item/weapon/teleportation_scroll

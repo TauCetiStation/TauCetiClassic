@@ -643,6 +643,12 @@ BLIND     // can't see anything
 	. = ..()
 	fresh_laundered_until = world.time + 5 MINUTES
 
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
+	color = dye_type.color
+
+
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
 	. = ..()

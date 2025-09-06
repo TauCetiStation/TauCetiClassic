@@ -2,7 +2,7 @@
 	name = "Space Ninja"
 
 	uniform = /obj/item/clothing/under/color/black
-	uniform_f = /obj/item/clothing/under/color/blackf
+	uniform_f = /obj/item/clothing/under/blackf
 	shoes = /obj/item/clothing/shoes/space_ninja
 	suit = /obj/item/clothing/suit/space/space_ninja
 	gloves = /obj/item/clothing/gloves/space_ninja
