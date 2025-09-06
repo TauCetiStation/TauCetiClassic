@@ -495,12 +495,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Investigation Crate"
 	contains = list(/obj/item/weapon/autopsy_scanner,
 					/obj/item/weapon/scalpel,
-					/obj/item/device/detective_scanner,
 					/obj/item/device/taperecorder,
 					/obj/item/clothing/gloves/latex,
 					/obj/item/clothing/suit/storage/labcoat,
 					/obj/item/clothing/mask/surgical,
-					/obj/item/weapon/storage/box/evidence
+					/obj/item/weapon/storage/box/evidence,
+					/obj/item/weapon/storage/box/swabs,
+					/obj/item/weapon/forensic_sample_kit,
+					/obj/item/weapon/forensic_sample_kit/powder
 					 )
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Investigation Crate"
