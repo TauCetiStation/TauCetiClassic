@@ -337,7 +337,7 @@ This function restores all bodyparts.
 		damage *= blocked_mult(blocked)
 
 	if(!impact_direction && istype(used_weapon, /obj/item/projectile))
-		impact_direction = check_projectile_hit_direction(src, used_weapon)
+		impact_direction = get_projectile_hit_direction(used_weapon)
 
 	var/datum/wound/created_wound
 	damageoverlaytemp = 20

@@ -576,7 +576,7 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 	if(lying || crawling)
 		height_num -= 3
 
-	return height_num
+	return max(height_num, SIZE_MINUSCULE)
 
 /mob/living/carbon/human/get_height_num()
 	var/height_num = ..()
@@ -591,11 +591,11 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 		if(HUMANHEIGHT_TALLEST)
 			height_num += 0.5
 
-	return height_num
+	return max(height_num, SIZE_MINUSCULE)
 
-/proc/compare_mobs_height(mob/Mob1, mob/Mob2) //Attacker, Defender
-	var/Height1 = Mob1.get_height_num()
-	var/Height2 = Mob2.get_height_num()
+/mob/proc/get_impact_direction_from(mob/Attacker) //Attacker, Defender
+	var/Height1 = Attacker.get_height_num()
+	var/Height2 = get_height_num()
 
 	switch(Height1 - Height2)
 		if(2 to 12)
@@ -609,9 +609,9 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 
 	return "С одной высоты"
 
-/proc/check_projectile_hit_direction(mob/Mob, obj/item/projectile/P)
+/mob/proc/get_projectile_hit_direction(obj/item/projectile/P)
 	var/impact_direction = ""
-	var/distance = P.starting ? get_dist(P.starting.loc, Mob.loc) : 0
+	var/distance = P.starting ? get_dist(P.starting.loc, loc) : 0
 
 	switch(distance)
 		if(0 to 1)
@@ -621,10 +621,10 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 		else
 			impact_direction += "Далеко "
 
-	if(Mob.lying || Mob.crawling)
+	if(lying || crawling)
 		return impact_direction + "сверху"
 
-	if(is_the_opposite_dir(Mob.dir, P.dir))
+	if(!is_the_opposite_dir(dir, P.dir))
 		return impact_direction + "сзади"
 
 	return impact_direction + "спереди"
