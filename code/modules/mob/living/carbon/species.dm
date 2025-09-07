@@ -489,8 +489,6 @@
 	)
 	flags = list(
 	,NO_DNA = TRUE
-	,HAS_SKIN_COLOR = TRUE
-	,HAS_HAIR_COLOR = TRUE
 	,HAS_UNDERWEAR = TRUE
 	)
 	min_age = 25

@@ -58,7 +58,7 @@
 
 	if(isprying(W))
 		if(user.is_busy()) return
-		if(W.use_tool(src, user, 50, volume = 50))
+		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_PRYING))
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
 			deconstruct(TRUE)
