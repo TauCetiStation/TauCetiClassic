@@ -10,6 +10,11 @@
 
 	var/material = /obj/item/stack/sheet/metal
 
+/obj/structure/stool/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/hiding_cache, SIZE_TINY, /obj/item/taperoll)
+
 /obj/structure/stool/bar
 	name = "bar stool"
 	icon = 'icons/obj/objects.dmi'
