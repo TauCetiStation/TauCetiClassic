@@ -1197,7 +1197,8 @@ Owl & Griffin toys
 
 /obj/item/toy/cards
 	name = "deck of cards"
-	desc = "A deck of space-grade playing cards."
+	cases = list("колода карт", "колоды карт", "колоде карт", "колоду карт", "колодой карт", "колоде карт")
+	desc = "Колода игральных карт."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "deck"
 	w_class = SIZE_TINY
@@ -1245,14 +1246,19 @@ Owl & Griffin toys
 	fill_deck(2, 10)
 	integrity += cards
 
+/obj/item/toy/cards/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		if(cards.len)
+			to_chat(user, "<span class='notice'>There are [cards.len] cards in the deck.</span>")
+		else
+			to_chat(user, "<span class='notice'>There are no cards in the deck.</span>")
+
 /obj/item/toy/cards/attack_hand(mob/user)
 	if(cards.len == 0)
 		to_chat(user, "<span class='notice'>There are no more cards to draw.</span>")
 		return
-	var/obj/item/toy/singlecard/H = remove_card()
-	H.pickup(user)
-	user.put_in_active_hand(H)
-	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
+	try_remove_card(user)
 	update_icon()
 
 /obj/item/toy/cards/proc/remove_card()
@@ -1263,19 +1269,84 @@ Owl & Griffin toys
 	cards -= choice
 	return H
 
+/obj/item/toy/cards/proc/try_remove_card(mob/user)
+	var/list/selection_types = list(
+		"pick from top" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_from_top"),
+		"pick from bottom" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_from_bottom"),
+		"pick up all" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		)
+
+	var/selection = show_radial_menu(user, src, selection_types, require_near = TRUE, tooltips = TRUE)
+
+	if(!selection)
+		return
+
+	var/choice
+
+	var/where
+	switch(selection)
+		if("pick from top")
+			choice = cards[cards.len]
+			where = "верха"
+		if("pick from bottom")
+			choice = cards[1]
+			where = "низа"
+		if("pick up all")
+			try_pickup(user)
+			return
+
+	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(loc)
+	H.cardname = choice
+	H.parentdeck = src
+	cards -= choice
+
+	user.put_in_hands(H)
+	user.visible_message("<span class='notice'>[user] берёт карту с [where] колоды.</span>", "<span class='notice'>Вы берёте карту с [where] колоды.</span>")
+
 /obj/item/toy/cards/attack_self(mob/user)
 	cards = shuffle(cards)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(user, 'sound/items/cardshuffle.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
 
+/obj/item/toy/cards/proc/try_put_thing(obj/item/I, mob/user)
+	var/list/things_to_put
+	if(istype(I, /obj/item/toy/singlecard))
+		var/obj/item/toy/singlecard/Card = I
+		things_to_put = list(Card.cardname)
+	else if(istype(I, /obj/item/toy/cardhand))
+		var/obj/item/toy/cardhand/Hand = I
+		things_to_put = Hand.currenthand
+	else
+		return
+
+	var/list/selection_types = list(
+		"put to top" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_to_top"),
+		"put to bottom" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_to_bottom"),
+		)
+
+	var/selection = show_radial_menu(user, src, selection_types, require_near = TRUE, tooltips = TRUE)
+
+	if(!selection || !things_to_put)
+		return
+
+	var/where
+	switch(selection)
+		if("put to top")
+			src.cards += things_to_put
+			where = "верх"
+		if("put to bottom")
+			src.cards.Insert(1, things_to_put)
+			where = "низ"
+
+	user.visible_message("<span class='notice'>[user] кладёт [CASE(I, ACCUSATIVE_CASE)] в [where] колоды.</span>","<span class='notice'>Вы кладёте [CASE(I, ACCUSATIVE_CASE)] в [where] колоды.</span>")
+	qdel(I)
+
 /obj/item/toy/cards/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/singlecard))
 		var/obj/item/toy/singlecard/C = I
 		if(C.parentdeck == src)
-			src.cards += C.cardname
-			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
-			qdel(C)
+			try_put_thing(C, user)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 		update_icon()
@@ -1283,9 +1354,7 @@ Owl & Griffin toys
 	else if(istype(I, /obj/item/toy/cardhand))
 		var/obj/item/toy/cardhand/C = I
 		if(C.parentdeck == src)
-			src.cards += C.currenthand
-			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
-			qdel(C)
+			try_put_thing(C, user)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
 		update_icon()
@@ -1296,7 +1365,11 @@ Owl & Griffin toys
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/M = usr
-	if(over_object == M && iscarbon(usr) && !usr.incapacitated())
+	if(over_object == M)
+		try_pickup(M)
+
+/obj/item/toy/cards/proc/try_pickup(mob/M)
+	if(iscarbon(M) && !M.incapacitated())
 		if(Adjacent(usr))
 			M.put_in_hands(src)
 		else
@@ -1307,7 +1380,8 @@ Owl & Griffin toys
 
 /obj/item/toy/cardhand
 	name = "hand of cards"
-	desc = "A number of cards not in a deck, customarily held in ones hand."
+	cases = list("пачка карт", "пачки карт", "пачке карт", "пачку карт", "пачкой карт", "пачке карт")
+	desc = "Несколько карт в руке."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "hand2"
 	w_class = SIZE_MINUSCULE
@@ -1391,14 +1465,14 @@ Owl & Griffin toys
 
 /obj/item/toy/singlecard
 	name = "card"
-	desc = "A card."
+	cases = list("игральная карта", "игральной карты", "игральной карте", "игральную карту", "игральной картой", "игральной карте")
+	desc = "Игральная карта."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "singlecard_down"
 	w_class = SIZE_MINUSCULE
 	var/cardname = null
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
-	pixel_x = -5
 
 /obj/item/toy/singlecard/examine(mob/user)
 	..()
@@ -1424,12 +1498,10 @@ Owl & Griffin toys
 		else
 			src.icon_state = "sc_Ace of Spades"
 			src.name = "What Card"
-		src.pixel_x = 5
 	else if(flipped)
 		src.flipped = 0
 		src.icon_state = "singlecard_down"
 		src.name = "card"
-		src.pixel_x = -5
 
 /obj/item/toy/singlecard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/singlecard))
