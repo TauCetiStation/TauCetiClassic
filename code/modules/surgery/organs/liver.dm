@@ -9,7 +9,7 @@
 	min_bruised_damage = 25
 	min_broken_damage = 45
 	max_damage = 70
-	process_accuracy = 10
+	process_accuracy = 4
 
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
