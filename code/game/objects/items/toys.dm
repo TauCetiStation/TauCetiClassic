@@ -1333,10 +1333,10 @@ Owl & Griffin toys
 	var/where
 	switch(selection)
 		if("put to top")
-			src.cards += things_to_put
+			cards += things_to_put
 			where = "верх"
 		if("put to bottom")
-			src.cards.Insert(1, things_to_put)
+			cards.Insert(1, things_to_put)
 			where = "низ"
 
 	user.visible_message("<span class='notice'>[user] кладёт [CASE(I, ACCUSATIVE_CASE)] в [where] колоды.</span>","<span class='notice'>Вы кладёте [CASE(I, ACCUSATIVE_CASE)] в [where] колоды.</span>")
