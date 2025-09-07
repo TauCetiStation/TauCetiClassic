@@ -17,6 +17,7 @@
 	name = "first-aid kit"
 	icon_state = "bezerk"
 	item_state = "firstaid-syndi"
+	item_state_world = "bezerk_w"
 	desc = "I hope you've got insurance."
 	max_w_class = SIZE_SMALL
 
