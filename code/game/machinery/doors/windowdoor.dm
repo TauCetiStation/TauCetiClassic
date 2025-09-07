@@ -276,7 +276,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 				if(user.is_busy(src)) return
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")
-				if(I.use_tool(src, user, 40, volume = 100))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
 					if(src.p_open && !src.density && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)

@@ -24,9 +24,10 @@
 		var/input_z = input(usr,"Enter the Z level to generate") as num
 		if(!input_z)
 			return
-		nanomapgen_DumpTile(1, 1, text2num(input_z))
+		nanomapgen_DumpTile(1, 1, text2num(input_z), showAreaColor = FALSE)
+		nanomapgen_DumpTile(1, 1, text2num(input_z), showAreaColor = TRUE)
 
-/client/proc/nanomapgen_DumpTile(startX = 1, startY = 1, currentZ = 1, endX = -1, endY = -1)
+/client/proc/nanomapgen_DumpTile(startX = 1, startY = 1, currentZ = 1, endX = -1, endY = -1, showAreaColor = FALSE)
 
 	if (endX < 0 || endX > world.maxx)
 		endX = world.maxx
@@ -71,13 +72,37 @@
 
 			Tile.Blend(TurfIcon, ICON_OVERLAY, ((WorldX - 1) * NANOMAP_ICON_SIZE), ((WorldY - 1) * NANOMAP_ICON_SIZE))
 
+			if(showAreaColor)
+				var/area/Area = get_area(Turf)
+				var/areaState
+				if(istype(Area, /area/station/security) && !istype(Area, /area/station/security/vacantoffice) && !istype(Area, /area/station/security/checkpoint))
+					areaState = "brig_base"
+				else if(istype(Area, /area/station/rnd))
+					areaState = "research_base"
+				else if(istype(Area, /area/station/medical))
+					areaState = "medical_base"
+				else if(istype(Area, /area/station/engineering))
+					areaState = "engineering_base"
+				else if(istype(Area, /area/station/cargo))
+					areaState = "cargo_base"
+				else if(istype(Area, /area/station/bridge))
+					areaState = "command_base"
+				else if(istype(Area, /area/station/hallway/secondary/exit))
+					areaState = "escape_base"
+				else if(istype(Area, /area/station/hallway/secondary/arrival))
+					areaState = "arrival_base"
+				if(areaState)
+					var/icon/AreaIcon = icon('icons/turf/areas.dmi', areaState)
+					AreaIcon.Scale(NANOMAP_ICON_SIZE, NANOMAP_ICON_SIZE)
+					Tile.Blend(AreaIcon, ICON_OVERLAY, ((WorldX - 1) * NANOMAP_ICON_SIZE), ((WorldY - 1) * NANOMAP_ICON_SIZE))
+
 			count++
 
 			if (count % 8000 == 0)
 				world.log << "NanoMapGen: <B>[count] tiles done</B>"
 				sleep(1)
 
-	var/mapFilename = "nanomap_z[currentZ]-new.png"
+	var/mapFilename = "nanomap_z[currentZ][showAreaColor ? "-areas" : ""]-new.png"
 
 	world.log << "NanoMapGen: <B>sending [mapFilename] to client</B>"
 

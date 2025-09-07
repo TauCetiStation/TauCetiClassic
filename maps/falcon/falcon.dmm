@@ -5608,12 +5608,16 @@
 /area/station/maintenance/escape)
 "ake" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/fancy/crayons{
-	pixel_y = 5
-	},
 /obj/structure/mirror{
 	pixel_x = -28;
 	pixel_y = -2
+	},
+/obj/item/station_map/falcon{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/fancy/crayons{
+	pixel_y = 5
 	},
 /obj/item/weapon/razor,
 /obj/item/weapon/haircomb,
@@ -21282,6 +21286,14 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
+/obj/item/station_map/falcon{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/station_map/falcon{
+	pixel_x = 6;
+	pixel_y = 8
+	},
 /turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
 "lem" = (
@@ -23014,12 +23026,6 @@
 /area/station/engineering/atmos)
 "mPz" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/folder/blue{
-	pixel_y = 4
-	},
-/obj/item/toy/figure/ian{
-	pixel_y = 6
-	},
 /obj/structure/sign/poster/official/ian{
 	pixel_x = 32
 	},
@@ -23030,6 +23036,24 @@
 /obj/item/device/microphone/hop{
 	pixel_x = -7;
 	pixel_y = 10
+	},
+/obj/item/station_map/falcon{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/station_map/falcon{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/station_map/falcon{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/weapon/folder/blue{
+	pixel_y = 4
+	},
+/obj/item/toy/figure/ian{
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
