@@ -318,7 +318,7 @@ var/global/list/turret_icons
 			//try and salvage its components
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
-			if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
+			if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50, quality = QUALITY_PRYING))
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
@@ -349,7 +349,7 @@ var/global/list/turret_icons
 				"<span class='warning'>[user] begins [anchored ? "un" : ""]securing the turret.</span>", \
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
-		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_WRENCHING))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
 				anchored = TRUE
@@ -784,7 +784,7 @@ var/global/list/turret_icons
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 					return
 				if(user.is_busy(src)) return
-				if(I.use_tool(src, user, 20, amount = 5, volume = 50))
+				if(I.use_tool(src, user, 20, amount = 5, volume = 50, quality = QUALITY_WELDING))
 					build_step = 1
 					to_chat(user, "You remove the turret's interior metal armor.")
 					new /obj/item/stack/sheet/metal(loc, 2)
@@ -856,7 +856,7 @@ var/global/list/turret_icons
 				if(WT.get_fuel() < 5)
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 				if(user.is_busy(src)) return
-				if(WT.use_tool(src, user, 30, amount = 5, volume = 50))
+				if(WT.use_tool(src, user, 30, amount = 5, volume = 50, quality = QUALITY_WELDING))
 					build_step = 8
 					to_chat(user, "<span class='notice'>You weld the turret's armor down.</span>")
 

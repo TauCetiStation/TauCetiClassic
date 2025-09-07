@@ -93,7 +93,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(O.use_tool(src, user, 10 SECONDS, volume = 100))
+			if(O.use_tool(src, user, 10 SECONDS, volume = 100, quality = QUALITY_CUTTING))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
@@ -107,7 +107,7 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(O.use_tool(src, user, 10 SECONDS, volume = 100))
+			if(O.use_tool(src, user, 10 SECONDS, volume = 100, quality = QUALITY_WELDING))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \

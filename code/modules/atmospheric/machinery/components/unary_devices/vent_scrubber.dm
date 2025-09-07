@@ -278,7 +278,7 @@
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
-		if(!WT.use_tool(src, user, 20, volume = 50))
+		if(!WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 			to_chat(user, "<span class='notice'>You must remain close to finish this task.</span>")
 			return
 
