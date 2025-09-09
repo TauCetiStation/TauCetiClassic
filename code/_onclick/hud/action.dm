@@ -59,8 +59,9 @@
 	return
 
 /datum/action/proc/Remove(mob/T)
-	if(button && T.client)
-		T.client.screen -= button
+	if(button)
+		if(T.client)
+			T.client.screen -= button
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null
@@ -300,8 +301,6 @@
 	return TRUE
 
 /datum/action/item_action/CheckRemoval(mob/user)
-	if(!user)
-		return FALSE
 	return !(target in user)
 
 /datum/action/item_action/hands_free
