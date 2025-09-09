@@ -83827,7 +83827,7 @@
 /area/station/rnd/tox_launch)
 "pMv" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -84082,7 +84082,7 @@
 	},
 /area/station/medical/hallway)
 "pOr" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table,
 /obj/structure/sign/poster/random{
 	pixel_x = -32
@@ -109017,7 +109017,7 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "uDn" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "bar"
