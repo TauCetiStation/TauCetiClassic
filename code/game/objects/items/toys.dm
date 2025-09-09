@@ -1198,7 +1198,7 @@ Owl & Griffin toys
 /obj/item/toy/cards
 	name = "deck of cards"
 	cases = list("колода карт", "колоды карт", "колоде карт", "колоду карт", "колодой карт", "колоде карт")
-	desc = "Колода игральных карт."
+	desc = "Колода дешёвых игральных карт. На обратной стороне надпись: 'Made in Venera'."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "deck"
 	w_class = SIZE_TINY
@@ -1250,13 +1250,13 @@ Owl & Griffin toys
 	..()
 	if(src in view(1, user))
 		if(cards.len)
-			to_chat(user, "<span class='notice'>There are [cards.len] cards in the deck.</span>")
+			to_chat(user, "<span class='notice'>В колоде [cards.len] [pluralize_russian(cards.len, "карта", "карты", "карт")].</span>")
 		else
-			to_chat(user, "<span class='notice'>There are no cards in the deck.</span>")
+			to_chat(user, "<span class='notice'>Колода пуста.</span>")
 
 /obj/item/toy/cards/attack_hand(mob/user)
 	if(cards.len == 0)
-		to_chat(user, "<span class='notice'>There are no more cards to draw.</span>")
+		to_chat(user, "<span class='notice'>Колода пуста.</span>")
 		return
 	try_remove_card(user)
 	update_icon()
@@ -1271,9 +1271,9 @@ Owl & Griffin toys
 
 /obj/item/toy/cards/proc/try_remove_card(mob/user)
 	var/list/selection_types = list(
-		"pick from top" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_from_top"),
-		"pick from bottom" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_from_bottom"),
-		"pick up all" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		"взять с верха колоды" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_from_top"),
+		"взять с низа колоды" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_from_bottom"),
+		"подобрать колоду" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
 		)
 
 	var/selection = show_radial_menu(user, src, selection_types, require_near = TRUE, tooltips = TRUE)
@@ -1285,13 +1285,13 @@ Owl & Griffin toys
 
 	var/where
 	switch(selection)
-		if("pick from top")
+		if("взять с верха колоды")
 			choice = cards[cards.len]
 			where = "верха"
-		if("pick from bottom")
+		if("взять с низа колоды")
 			choice = cards[1]
 			where = "низа"
-		if("pick up all")
+		if("подобрать колоду")
 			try_pickup(user)
 			return
 
@@ -1307,7 +1307,7 @@ Owl & Griffin toys
 	cards = shuffle(cards)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(user, 'sound/items/cardshuffle.ogg', VOL_EFFECTS_MASTER)
-	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
+	user.visible_message("<span class='notice'>[user] тасует колоду.</span>", "<span class='notice'>Вы тасуете колоду.</span>")
 
 /obj/item/toy/cards/proc/try_put_thing(obj/item/I, mob/user)
 	var/list/things_to_put
@@ -1321,8 +1321,8 @@ Owl & Griffin toys
 		return
 
 	var/list/selection_types = list(
-		"put to top" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_to_top"),
-		"put to bottom" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_to_bottom"),
+		"положить в верх колоды" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_to_top"),
+		"положить в низ колоды" = image(icon = 'icons/hud/radial.dmi', icon_state = "cards_to_bottom"),
 		)
 
 	var/selection = show_radial_menu(user, src, selection_types, require_near = TRUE, tooltips = TRUE)
@@ -1332,10 +1332,10 @@ Owl & Griffin toys
 
 	var/where
 	switch(selection)
-		if("put to top")
+		if("положить в верх колоды")
 			cards += things_to_put
 			where = "верх"
-		if("put to bottom")
+		if("положить в низ колоды")
 			cards.Insert(1, things_to_put)
 			where = "низ"
 
@@ -1348,7 +1348,7 @@ Owl & Griffin toys
 		if(C.parentdeck == src)
 			try_put_thing(C, user)
 		else
-			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
+			to_chat(user, "<span class='notice'>Нельзя смешивать карты из разных колод.</span>")
 		update_icon()
 
 	else if(istype(I, /obj/item/toy/cardhand))
@@ -1356,7 +1356,7 @@ Owl & Griffin toys
 		if(C.parentdeck == src)
 			try_put_thing(C, user)
 		else
-			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
+			to_chat(user, "<span class='notice'>Нельзя смешивать карты из разных колод.</span>")
 		update_icon()
 
 	else
@@ -1373,15 +1373,15 @@ Owl & Griffin toys
 		if(Adjacent(usr))
 			M.put_in_hands(src)
 		else
-			to_chat(usr, "<span class='notice'>You can't reach it from here.</span>")
+			to_chat(usr, "<span class='notice'>Вы не дотягиваетесь.</span>")
 
 	if(M.l_hand == src || M.r_hand == src)
-		to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
+		to_chat(usr, "<span class='notice'>Вы берёте колоду.</span>")
 
 /obj/item/toy/cardhand
 	name = "hand of cards"
 	cases = list("пачка карт", "пачки карт", "пачке карт", "пачку карт", "пачкой карт", "пачке карт")
-	desc = "Несколько карт в руке."
+	desc = "Несколько игральных карт в руке."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "hand2"
 	w_class = SIZE_MINUSCULE
@@ -1395,10 +1395,10 @@ Owl & Griffin toys
 	interact(user)
 
 /obj/item/toy/cardhand/interact(mob/user)
-	var/dat = "You have:<BR>"
+	var/dat = "В руке:<BR>"
 	for(var/t in currenthand)
 		dat += "<A href='byond://?src=\ref[src];pick=[t]'>A [t]</a><BR>"
-	dat += "Which card will you remove next?"
+	dat += "Какую карту взять?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
 	popup.set_content(dat)
 	popup.open()
@@ -1419,7 +1419,7 @@ Owl & Griffin toys
 			C.cardname = choice
 			C.pickup(cardUser)
 			cardUser.put_in_any_hand_if_possible(C)
-			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from \his hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
+			cardUser.visible_message("<span class='notice'>[cardUser] тянет карту с руки.</span>", "<span class='notice'>Вы тянете [C.cardname] с руки.</span>")
 
 			interact(cardUser)
 
@@ -1437,7 +1437,7 @@ Owl & Griffin toys
 				cardUser.remove_from_mob(src)
 				N.pickup(cardUser)
 				cardUser.put_in_any_hand_if_possible(N)
-				to_chat(cardUser, "<span class='notice'>You also take [currenthand[1]] and hold it.</span>")
+				to_chat(cardUser, "<span class='notice'>Остался [currenthand[1]].</span>")
 				cardUser << browse(null, "window=cardhand")
 				qdel(src)
 		return
@@ -1447,7 +1447,7 @@ Owl & Griffin toys
 		var/obj/item/toy/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.visible_message("<span class='notice'>[user] adds a card to their hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
+			user.visible_message("<span class='notice'>[user] добавляет карту в руку.</span>", "<span class='notice'>Вы добавляете [C.cardname] в руку.</span>")
 			interact(user)
 			if(currenthand.len > 4)
 				src.icon_state = "hand5"
@@ -1457,7 +1457,7 @@ Owl & Griffin toys
 				src.icon_state = "hand3"
 			qdel(C)
 		else
-			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
+			to_chat(user, "<span class='notice'>Нельзя смешивать карты из разных колод.</span>")
 	else
 		return ..()
 
@@ -1466,7 +1466,7 @@ Owl & Griffin toys
 /obj/item/toy/singlecard
 	name = "card"
 	cases = list("игральная карта", "игральной карты", "игральной карте", "игральную карту", "игральной картой", "игральной карте")
-	desc = "Игральная карта."
+	desc = "Дешёвая на ощупь игральная карта. Номинал написан на иностранном языке."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "singlecard_down"
 	w_class = SIZE_MINUSCULE
@@ -1479,9 +1479,9 @@ Owl & Griffin toys
 	if((src in user) && ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.get_item_by_slot(SLOT_L_HAND) == src || cardUser.get_item_by_slot(SLOT_R_HAND) == src)
-			cardUser.visible_message("<span class='notice'>[cardUser] checks \his card.</span>", "<span class='notice'>The card reads: [src.cardname]</span>")
+			cardUser.visible_message("<span class='notice'>[cardUser] проверяет карту.</span>", "<span class='notice'>Ваша карта: [src.cardname]</span>")
 		else
-			to_chat(cardUser, "<span class='notice'>You need to have the card in your hand to check it.</span>")
+			to_chat(cardUser, "<span class='notice'>Нужно взять карту в руки чтобы посмотреть её достоинство.</span>")
 
 
 /obj/item/toy/singlecard/verb/Flip()
@@ -1514,18 +1514,18 @@ Owl & Griffin toys
 			user.remove_from_mob(C)
 			H.pickup(user)
 			user.put_in_active_hand(H)
-			to_chat(user, "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>")
+			to_chat(user, "<span class='notice'>Вы собираете [C.cardname] и [src.cardname] в руку.</span>")
 			qdel(C)
 			qdel(src)
 		else
-			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
+			to_chat(user, "<span class='notice'>Нельзя смешивать карты из разных колод.</span>")
 
 	else if(istype(I, /obj/item/toy/cardhand))
 		var/obj/item/toy/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
 			user.remove_from_mob(src)
-			user.visible_message("<span class='notice'>[user] adds a card to \his hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
+			user.visible_message("<span class='notice'>[user] добавляет карту в руку.</span>", "<span class='notice'>Вы добавляете [cardname] в руку.</span>")
 			H.interact(user)
 			if(H.currenthand.len > 4)
 				H.icon_state = "hand5"
@@ -1535,7 +1535,7 @@ Owl & Griffin toys
 				H.icon_state = "hand3"
 			qdel(src)
 		else
-			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
+			to_chat(user, "<span class='notice'>Нельзя смешивать карты из разных колод.</span>")
 
 	else
 		return ..()
