@@ -114,7 +114,7 @@
 			if(user.is_busy(src))
 				return
 			to_chat(user, "You begin deconstructing [src].")
-			if(!W.use_tool(src, usr, 30, volume = 75))
+			if(!W.use_tool(src, usr, 30, volume = 75, quality = QUALITY_WRENCHING))
 				return
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
@@ -132,7 +132,7 @@
 	if(iscutter(W))
 		if (stage != STAGE_COILED)
 			return
-		if(!W.use_tool(src, usr, 30, volume = 75))
+		if(!W.use_tool(src, usr, 30, volume = 75, quality = QUALITY_CUTTING))
 			return
 		stage = STAGE_START
 		switch(fitting)
@@ -164,7 +164,7 @@
 	if(isscrewing(W))
 		if (stage != STAGE_COILED)
 			return
-		if(!W.use_tool(src, usr, 30, volume = 75))
+		if(!W.use_tool(src, usr, 30, volume = 75, quality = QUALITY_SCREWING))
 			return
 
 		user.visible_message("[user.name] closes [src]'s casing.", \
@@ -183,7 +183,7 @@
 		return
 	..()
 
-/obj/machinery/light_construct/deconstruct(disassembled) 
+/obj/machinery/light_construct/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
 

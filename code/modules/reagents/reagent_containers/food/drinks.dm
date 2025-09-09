@@ -220,6 +220,12 @@
 	item_state = "carton"
 	list_reagents = list("milk" = 50)
 
+/obj/item/weapon/reagent_containers/food/drinks/milk/update_icon()
+	if(!reagents.total_volume)
+		icon_state = "milk_empty"
+	else
+		icon_state = "milk"
+
 /* Flour is no longer a reagent
 /obj/item/weapon/reagent_containers/food/drinks/flour
 	name = "flour sack"
@@ -242,11 +248,23 @@
 	item_state = "carton"
 	list_reagents = list("soymilk" = 50)
 
+/obj/item/weapon/reagent_containers/food/drinks/soymilk/update_icon()
+	if(!reagents.total_volume)
+		icon_state = "soymilk_empty"
+	else
+		icon_state = "soymilk"
+
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
 	list_reagents = list("coffee" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/coffee/update_icon()
+	if(!reagents.total_volume)
+		icon_state = "coffee_empty"
+	else
+		icon_state = "coffee"
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
@@ -272,6 +290,12 @@
 	item_state = "coffee"
 	list_reagents = list("hot_coco" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/update_icon()
+	if(!reagents.total_volume)
+		icon_state = "hot_coco_empty"
+	else
+		icon_state = "hot_coco"
+
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Dosi Ramen"
 	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
@@ -287,26 +311,6 @@
 	else
 		icon_state = "ramen_open"
 
-/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/update_icon()
-	if(!reagents.total_volume)
-		icon_state = "hot_coco_empty"
-	else
-		icon_state = "hot_coco"
-
-/obj/item/weapon/reagent_containers/food/drinks/coffee/update_icon()
-	if(!reagents.total_volume)
-		icon_state = "coffee_empty"
-	else
-		icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
-	if (!is_open_container())
-		flags |= OPENCONTAINER
-		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
-		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-		to_chat(user, "<span class='notice'>You open the [src].</span>")
-		update_icon()
-
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/on_reagent_change()
 	// Don't trust total_volume before all reactions end
 	if(!reagents.total_volume && !reagents.is_reaction_in_proccessing())
@@ -318,6 +322,14 @@
 		return
 	update_icon()
 	..()
+
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
+	if (!is_open_container())
+		flags |= OPENCONTAINER
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
+		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+		to_chat(user, "<span class='notice'>You open the [src].</span>")
+		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen
 	name = "Dosi Ramen (Spicy)"
