@@ -5382,7 +5382,7 @@
 	icon_state = "2,0"
 	},
 /turf/environment/space,
-/area/shuttle/escape_pod6/transit)
+/area/shuttle/escape_pod2/station)
 "azw" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -42218,7 +42218,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/shuttle/escape_pod6/transit)
+/area/station/bridge/captain_quarters)
 "hzK" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/cargo{
@@ -108080,7 +108080,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/shuttle/escape_pod6/transit)
+/area/station/bridge/captain_quarters)
 "usu" = (
 /obj/machinery/light/small{
 	dir = 8
