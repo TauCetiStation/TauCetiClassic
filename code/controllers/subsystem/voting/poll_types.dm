@@ -271,7 +271,7 @@
 	// decrease weight for repeated maps
 
 	// last 1
-	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name) 
+	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name)
 	voteweights[map_name] = 1 - REPEATED_MAPS_FACTOR_DECREASE
 
 	// and 2 previous from DB history
@@ -302,7 +302,7 @@
 **********************/
 /datum/poll/custom
 	name = "Пользовательское"
-	question = "Почему здесь нет текста?"
+	question = "И тут тоже!"
 	choice_types = list()
 
 	only_admin = TRUE
@@ -317,6 +317,8 @@
 	can_unvote = FALSE
 	see_votes = TRUE
 
+
+	name = sanitize(input("Укажите заголовок голосования.", "Пользовательское голосование", "Вопрос пользовательского голосования"))
 	question = sanitize(input("Какой вопрос голосования?", "Пользовательское голосование", "Вопрос пользовательского голосования"))
 
 	var/choice_text = ""
