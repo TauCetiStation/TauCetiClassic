@@ -94,7 +94,7 @@
 			if (B)
 				var/datum/disease2/disease/virus = locate(params["index"])
 				virus2 = virus.getcopy()
-				isolating = 20
+				isolating = 5
 				update_icon()
 			return TRUE
 		if ("antibody")
