@@ -31651,6 +31651,9 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "uqq" = (

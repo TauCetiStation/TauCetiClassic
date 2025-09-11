@@ -208,3 +208,107 @@ var/global/online_shop_profits = 0
 /proc/add_order_and_offer(Name, Text)
 	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = Name, "description" = Text, "time" = worldtime2text())
 	global.orders_and_offers_number++
+
+
+
+/proc/get_item_shop_category(obj/target)
+	if(istype(target, /obj/item/weapon/reagent_containers/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage))
+		return "Наборы"
+	else if(istype(target, /obj/item/weapon))
+		return "Инструменты"
+	else if(istype(target, /obj/item/clothing))
+		return "Одежда"
+	else if(istype(target, /obj/item/device))
+		return "Устройства"
+	else if(istype(target, /obj/item/stack))
+		return "Ресурсы"
+	else
+		return "Разное"
+
+/obj/random_shop_item
+	name = "Random Gruztorg item"
+	desc = "Случайный товар для грузторга."
+	icon = 'icons/obj/package_wrap.dmi'
+	icon_state = "deliverycrateSmall"
+	flags = ABSTRACT
+
+/obj/random_shop_item/atom_init()
+	. = ..()
+
+	generate_shop_item()
+
+	return INITIALIZE_HINT_QDEL
+
+/obj/random_shop_item/proc/generate_shop_item()
+	var/item_path = PATH_OR_RANDOM_PATH(/obj/random/trader_product)
+
+	if(!item_path)
+		return
+
+	var/obj/item/Item = new item_path(loc)
+
+	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
+	var/new_price = market_price ? round(market_price * 1.1) : 50
+
+	Item.price_tag = list("description" = Item.desc, "price" = new_price, "category" = get_item_shop_category(Item), "account" = global.cargo_account)
+	Item.verbs += /obj/proc/remove_price_tag
+
+	Item.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+
+	var/lot_name = Item.name
+	var/lot_desc = Item.price_tag["description"]
+	var/lot_price = Item.price_tag["price"]
+	var/lot_category = Item.price_tag["category"]
+	var/lot_account = Item.price_tag["account"]
+	var/item_icon = bicon(Item)
+
+	if (isitem(Item))
+		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(loc)
+		P.w_class = Item.w_class
+		var/i = round(Item.w_class)
+		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+			if(istype(Item, /obj/item/pizzabox))
+				var/obj/item/pizzabox/B = Item
+				P.icon_state = "deliverypizza[length(B.boxes)]"
+			else
+				P.icon_state = "deliverycrate[i]"
+			P.lot_lock_image = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
+			P.lot_lock_image.appearance_flags = RESET_COLOR
+			P.add_overlay(P.lot_lock_image)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		Item.loc = P
+		Item = P
+	else
+		return
+
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", market_price)
+
+	var/static/list/category2color = list(
+		"Еда" = "#ff9300",
+		"Одежда" = "#a8e61d",
+		"Устройства" = "#da00ff",
+		"Инструменты" = "#da0000",
+		"Ресурсы" = "#00b7ef",
+		"Наборы" = "#fff200",
+		// "Разное" = no colour,
+	)
+
+	if(category2color[lot_category])
+		Item.color = category2color[lot_category]
+
+	global.shop_categories[lot_category]++
+
+	Item.name = "Посылка номер: [global.online_shop_number]"
+	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
+
+	var/obj/item/smallDelivery/Package = Item
+	Package.lot_number = Lot.number
+
+	Item.pixel_x = rand(-10, 10)
+	Item.pixel_y = rand(-10, 10)
