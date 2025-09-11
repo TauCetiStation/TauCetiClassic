@@ -71,6 +71,7 @@ var/global/list/admin_cooldowns_list = list(
 #define R_HOST			65535
 
 #define ADMIN_RANK_ROUND   "Temporary Round Admin"
+#define ADMIN_RANK_EVENT_MAKER "Event Maker"
 #define ADMIN_RANK_SANDBOX "Sandbox Admin"
 #define ADMIN_RANK_REMOVED "Removed"
 

@@ -27478,6 +27478,7 @@
 "aWy" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/cakehat,
+/obj/item/station_map/box,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -28850,13 +28851,13 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aYX" = (
-/obj/structure/sign/map/left,
-/turf/simulated/wall,
-/area/station/storage/primary)
-"aYY" = (
 /obj/structure/sign/map/right,
 /turf/simulated/wall,
-/area/station/storage/primary)
+/area/station/hallway/secondary/arrival)
+"aYY" = (
+/obj/structure/sign/map/left,
+/turf/simulated/wall,
+/area/station/hallway/secondary/arrival)
 "aYZ" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
@@ -32372,6 +32373,9 @@
 /area/station/medical/reception)
 "bfb" = (
 /obj/structure/table,
+/obj/item/station_map/box,
+/obj/item/station_map/box,
+/obj/item/station_map/box,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "bfc" = (
@@ -36180,7 +36184,9 @@
 	c_tag = "Cargo Office";
 	dir = 8
 	},
-/obj/structure/table,
+/obj/machinery/computer/vending{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -39819,6 +39825,9 @@
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap/present{
+	pixel_x = 16
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -46832,6 +46841,7 @@
 "bEU" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/trash/candle/red,
+/obj/item/station_map/box,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -54490,7 +54500,7 @@
 /area/station/maintenance/engineering)
 "bTh" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -64190,6 +64200,22 @@
 	},
 /obj/item/weapon/packageWrap{
 	pixel_y = 16
+	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	dir = 0;
@@ -76301,9 +76327,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jOv" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 4
-	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -77732,6 +77756,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"llJ" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "lmg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -93729,10 +93759,10 @@ bWt
 bWt
 bWt
 bWt
-iur
+odL
 iCC
 aGY
-iur
+odL
 aaa
 aaa
 aaa
@@ -97070,7 +97100,7 @@ aGy
 aGy
 aaa
 aaa
-odL
+aYY
 aGU
 aIm
 odL
@@ -97327,10 +97357,10 @@ bWt
 bWt
 bWt
 bWt
-iur
+aYX
 iCC
 aGY
-iur
+odL
 aaa
 aaa
 aaa
@@ -100680,7 +100710,7 @@ bkW
 uMv
 buD
 cri
-bkW
+llJ
 jOv
 qlZ
 qlZ
@@ -107351,7 +107381,7 @@ akR
 aJk
 aVl
 aWI
-aYX
+aFL
 bdv
 bdZ
 ipb
@@ -107608,7 +107638,7 @@ aSr
 aTN
 aVm
 aWK
-aYY
+aFL
 bdv
 coa
 tpw

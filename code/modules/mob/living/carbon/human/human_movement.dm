@@ -149,6 +149,9 @@
 	if(HAS_TRAIT(src, TRAIT_AUTOFIRE_SHOOTS)) // so that you can’t run at full speed and shoot everyone and everything
 		tally += 0.75
 
+	if(HAS_TRAIT(src, TRAIT_BAD_BACK) && istype(back, /obj/item/weapon/storage))
+		tally += 1
+
 	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
