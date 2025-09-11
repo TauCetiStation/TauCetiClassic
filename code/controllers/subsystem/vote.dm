@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(vote)
 		var/datum/poll/poll_inst = possible_polls[poll_path]
 
 		var/list/poll = list(
-			"name" = poll_inst.name,
+			"name" = initial(poll_inst.name),
 			"type" = "[poll_path]", // i hate every line of that
 			"adminOnly" = poll_inst.only_admin,
 			"canStart" = poll_inst.can_start(),
