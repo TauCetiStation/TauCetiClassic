@@ -190,7 +190,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			var/obj/item/device/lens/CameraLens = camera.lens
 			CameraLens.forceMove(get_turf(src))
 			user.drop_from_inventory(W, camera)
-			if(!usr.get_active_hand())
+			if(!user.get_active_hand())
 				user.put_in_hands(CameraLens)
 			camera.lens = W
 			return
