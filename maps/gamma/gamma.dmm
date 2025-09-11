@@ -105466,6 +105466,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/machinery/computer/vending,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"

@@ -36184,7 +36184,9 @@
 	c_tag = "Cargo Office";
 	dir = 8
 	},
-/obj/structure/table,
+/obj/machinery/computer/vending{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -76325,9 +76327,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jOv" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 4
-	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -77756,6 +77756,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"llJ" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "lmg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -100704,7 +100710,7 @@ bkW
 uMv
 buD
 cri
-bkW
+llJ
 jOv
 qlZ
 qlZ
