@@ -15,7 +15,9 @@
 	var/storage_w_class
 	var/storage_sound
 
-/datum/component/hiding_cache/Initialize(w_size = SIZE_TINY, item_needed = null, use_sound = null)
+	var/datum/callback/parent_open_check
+
+/datum/component/hiding_cache/Initialize(w_size = SIZE_TINY, item_needed = null, use_sound = null, datum/callback/_parent_open_check = null)
 	parent_object = parent
 
 	if(item_needed)
@@ -28,9 +30,11 @@
 	var/datum/mechanic_tip/hiding_cache/cache_tip = new(src)
 	parent.AddComponent(/datum/component/mechanic_desc, list(cache_tip), CALLBACK(src, PROC_REF(can_show_cache_tip)))
 
-	RegisterSignal(parent_object, list(COMSIG_PARENT_CTRLSHIFTCLICKED), PROC_REF(try_open_cache))
+	if(_parent_open_check)
+		parent_open_check = _parent_open_check
 
 	RegisterSignal(parent_object, list(COMSIG_PARENT_QDELETING), PROC_REF(on_destroyed))
+	RegisterSignal(parent_object, list(COMSIG_PARENT_CTRLSHIFTCLICKED), PROC_REF(try_open_cache))
 
 /datum/component/hiding_cache/proc/setup_cache(w_size, use_sound)
 	cache_storage = new(parent_object)
@@ -44,6 +48,9 @@
 
 /datum/component/hiding_cache/proc/try_open_cache(datum/source, mob/user)
 	if(user.is_busy(parent_object) || user.incapacitated() || !parent_object.Adjacent(user))
+		return
+
+	if(parent_open_check && !parent_open_check.Invoke())
 		return
 
 	user.visible_message("<span class='danger'>[user] возится с [parent_object]...</span>")
