@@ -8780,7 +8780,7 @@
 /area/station/security/prison)
 "aoH" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "greenbluefull"
 	},
@@ -29960,7 +29960,7 @@
 /area/station/storage/tech)
 "dGo" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -31796,7 +31796,7 @@
 /area/station/rnd/chargebay)
 "eel" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/effect/decal/turf_decal/blue{
 	dir = 4;
 	icon_state = "siding_line"
@@ -47232,6 +47232,15 @@
 	icon_state = "blackchoco"
 	},
 /area/station/bridge/cmf_room)
+"hLM" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/obj/effect/landmark/start/cargo_technician,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
+/area/station/cargo/storage)
 "hLO" = (
 /obj/effect/landmark/start/paramedic,
 /obj/structure/cable{
@@ -82049,6 +82058,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/gloves/black,
+/obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -86040,8 +86050,7 @@
 	},
 /area/station/hallway/primary/port)
 "rcy" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/belt/utility,
+/obj/machinery/computer/vending,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -157855,8 +157864,8 @@ xuQ
 ojt
 ojm
 rcy
+hLM
 dSx
-igK
 xkd
 nEo
 xYB

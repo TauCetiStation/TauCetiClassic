@@ -8128,13 +8128,15 @@
 	},
 /area/asteroid/mine/eva)
 "apz" = (
-/obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Cargo Office";
 	dir = 8
 	},
 /obj/machinery/requests_console/cargo_bay{
 	pixel_x = 30
+	},
+/obj/machinery/computer/vending{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;

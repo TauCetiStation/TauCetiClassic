@@ -91,6 +91,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, max_per_turf = 1, build_outline = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)),
 	new/datum/stack_recipe("windowsill", /obj/structure/windowsill, 2, max_per_turf = 1, build_outline = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED), time = 20),
 	new/datum/stack_recipe("fence", /obj/structure/fence/metal, 2, time = 25, max_per_turf = 4, build_outline = TRUE),
+	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin, 2, max_per_turf = 1, build_outline = TRUE)
 )
 
 /obj/item/stack/sheet/metal

@@ -306,6 +306,9 @@
 /obj/item/weapon/circuitboard/computer/cargo/qm
 	details = "circuit board (QM Supply shuttle console)"
 	build_path = /obj/machinery/computer/cargo/qm
+/obj/item/weapon/circuitboard/computer/vending
+	details = "circuit board (Supply ordering console)"
+	build_path = /obj/machinery/computer/vending
 /*/obj/item/weapon/circuitboard/research_shuttle
 	details = "circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
