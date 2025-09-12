@@ -44,6 +44,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
+	var/list/mail_orders = list() //list("sender", "type", "receiver_account")
 		//shuttle movement
 	var/at_station = TRUE
 	var/movetime = 1200
@@ -448,7 +449,7 @@ SUBSYSTEM_DEF(shuttle)
 
 //Buyin
 /datum/controller/subsystem/shuttle/proc/buy()
-	if(!shoppinglist.len)
+	if(!shoppinglist.len && !mail_orders.len)
 		return
 
 	var/shuttle_at
@@ -494,8 +495,77 @@ SUBSYSTEM_DEF(shuttle)
 		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
+	if(mail_orders.len && clear_turfs.len)
+		var/i = rand(1,clear_turfs.len)
+		var/turf/pickedloc = clear_turfs[i]
+		clear_turfs.Cut(i,i+1)
+
+		var/obj/structure/closet/crate/mailcrate/Crate = new(pickedloc)
+		for(var/list/order in mail_orders)
+			var/obj/item/Item = generate_mail_item(order, pickedloc)
+			if(Item)
+				Item.forceMove(Crate)
+
+			mail_orders -= order
+
 	SSshuttle.shoppinglist.Cut()
 	return
+
+/datum/controller/subsystem/shuttle/proc/generate_mail_item(list/order, turf/pickedloc)
+	var/itemType = order["type"]
+
+	var/sender = order["sender"]
+	var/datum/money_account/receiver_account = get_account(order["receiver_account"])
+	if(!receiver_account || !sender || !itemType)
+		return
+
+	var/receiver = receiver_account.owner_name
+
+	var/obj/item/Item = new itemType(pickedloc)
+
+	var/lot_name = "Посылка для [receiver]"
+	var/lot_desc = "Отправитель - [sender]"
+	var/lot_price = 5
+	var/lot_category = "Разное"
+	var/lot_account = cargo_account.account_number
+	var/item_icon
+
+	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(pickedloc)
+	P.w_class = Item.w_class
+	var/i = round(Item.w_class)
+	if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+		if(istype(Item, /obj/item/pizzabox))
+			var/obj/item/pizzabox/B = Item
+			P.icon_state = "deliverypizza[length(B.boxes)]"
+		else
+			P.icon_state = "deliverycrate[i]"
+
+		item_icon = bicon(P)
+		P.lot_lock_image = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
+	P.modify_max_integrity(75)
+	P.atom_fix()
+	P.damage_deflection = 25
+	Item.loc = P
+	Item = P
+
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", lot_price)
+
+	Item.color = "white"
+
+	global.shop_categories[lot_category]++
+
+	Item.name = "Посылка номер: [global.online_shop_number]"
+	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
+
+	var/obj/item/smallDelivery/Package = Item
+	Package.lot_number = Lot.number
+
+	order_onlineshop_item(receiver, receiver_account, Lot, station_name_ru())
+	receiver_account.shopping_cart["[Lot.number]"] = Lot.to_list()
+
+	return Item
 
 
 /datum/controller/subsystem/shuttle/proc/incall(coeff = 1)
