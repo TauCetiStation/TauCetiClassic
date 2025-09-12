@@ -29,25 +29,25 @@
 		var/list/available_types = list()
 
 		if(members & FAMILY_GRANDMOTHER)
-			available_types += list(list("Бабушка", /obj/random/family/grandma))
+			available_types += list(list("Р‘Р°Р±СѓС€РєР°", /obj/random/family/grandma))
 
 		if(members & FAMILY_GRANDFATHER)
-			available_types += list(list("Дедушка", /obj/random/family/grandpa))
+			available_types += list(list("Р”РµРґСѓС€РєР°", /obj/random/family/grandpa))
 
 		if(members & FAMILY_MOTHER)
-			available_types += list(list("Мама", /obj/random/family/mother))
+			available_types += list(list("РњР°РјР°", /obj/random/family/mother))
 
 		if(members & FAMILY_FATHER)
-			available_types += list(list("Папа", /obj/random/family/father))
+			available_types += list(list("РџР°РїР°", /obj/random/family/father))
 
 		if(members & FAMILY_BROTHERS)
-			available_types += list(list("Брат", /obj/random/family/brother))
+			available_types += list(list("Р‘СЂР°С‚", /obj/random/family/brother))
 
 		if(members & FAMILY_SISTERS)
-			available_types += list(list("Сестра", /obj/random/family/sister))
+			available_types += list(list("РЎРµСЃС‚СЂР°", /obj/random/family/sister))
 
 		if(members & FAMILY_PARTNER)
-			available_types += list(list("Партнер", /obj/random/family/partner))
+			available_types += list(list("РџР°СЂС‚РЅРµСЂ", /obj/random/family/partner))
 
 		if(!available_types.len)
 			continue
