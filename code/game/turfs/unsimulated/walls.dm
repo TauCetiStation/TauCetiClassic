@@ -58,3 +58,8 @@
 /turf/unsimulated/wall/like_a_normal/beige
 	icon = 'icons/turf/walls/has_false_walls/wall_beige.dmi'
 
+/turf/unsimulated/wall/rock
+	name = "Rock"
+	icon = 'icons/turf/asteroid.dmi'
+	icon_state = "rock-dark"
+	smooth = FALSE
