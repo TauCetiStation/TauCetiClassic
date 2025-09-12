@@ -524,7 +524,7 @@
 		lot_description = target.desc
 
 	if(autocategory)
-		lot_category = get_category(target)
+		lot_category = global.get_item_shop_category(target)
 
 	if(!lot_account_number)
 		if(ishuman(user))
@@ -565,24 +565,6 @@
 	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
 						 "<span class='notice'>You label [target] as [label].</span>")
 	target.name = "[target.name] ([label])"
-
-/obj/item/device/tagger/proc/get_category(obj/target)
-	if(istype(target, /obj/item/weapon/reagent_containers/food))
-		return "Еда"
-	else if(istype(target, /obj/item/weapon/storage/food))
-		return "Еда"
-	else if(istype(target, /obj/item/weapon/storage))
-		return "Наборы"
-	else if(istype(target, /obj/item/weapon))
-		return "Инструменты"
-	else if(istype(target, /obj/item/clothing))
-		return "Одежда"
-	else if(istype(target, /obj/item/device))
-		return "Устройства"
-	else if(istype(target, /obj/item/stack))
-		return "Ресурсы"
-	else
-		return "Разное"
 
 
 /obj/machinery/disposal/deliveryChute
