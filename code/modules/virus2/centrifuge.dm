@@ -94,11 +94,11 @@
 			if (B)
 				var/datum/disease2/disease/virus = locate(params["index"])
 				virus2 = virus.getcopy()
-				isolating = 40
+				isolating = 5
 				update_icon()
 			return TRUE
 		if ("antibody")
-			var/delay = 20
+			var/delay = 10
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
 			if (!B)
 				state("\The [src] buzzes, \"No antibody carrier detected.\"", "blue")
