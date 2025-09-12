@@ -137,7 +137,7 @@ var/global/online_shop_profits = 0
 
 	return Lot
 
-/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination)
+/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination, forced = FALSE)
 	if(!Lot)
 		return FALSE
 
@@ -146,7 +146,7 @@ var/global/online_shop_profits = 0
 		return FALSE
 
 	var/delivery_cost = Lot.get_delivery_cost()
-	if(delivery_cost > MA.money)
+	if(!forced && (delivery_cost > MA.money))
 		return FALSE
 
 	Lot.sold = TRUE

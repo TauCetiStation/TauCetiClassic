@@ -562,7 +562,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/item/smallDelivery/Package = Item
 	Package.lot_number = Lot.number
 
-	order_onlineshop_item(receiver, receiver_account, Lot, station_name_ru())
+	order_onlineshop_item(receiver, receiver_account.account_number, Lot, station_name_ru(), forced = TRUE)
 	receiver_account.shopping_cart["[Lot.number]"] = Lot.to_list()
 
 	return Item

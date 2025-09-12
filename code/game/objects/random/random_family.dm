@@ -57,6 +57,7 @@
 						/obj/random/cloth/tie,\
 						/obj/random/tools/toolbox,\
 						/obj/random/misc/cigarettes,\
+						/obj/random/misc/musical,\
 					)
 
 /obj/random/family/brother
