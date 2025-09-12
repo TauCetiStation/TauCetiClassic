@@ -205,3 +205,18 @@
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/red,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/yellow,
 	)
+
+/obj/random/foods/flowers
+	name = "Random Flower"
+	desc = "This is a random flower."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "poppy"
+
+/obj/random/foods/flowers/item_to_spawn()
+	return pick(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella,
+		/obj/item/weapon/grown/sunflower,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poppy,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
+	)
