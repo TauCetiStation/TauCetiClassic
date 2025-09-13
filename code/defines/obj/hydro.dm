@@ -906,15 +906,35 @@
 		mutatelist = list(/obj/item/seeds/jupitercup)
 		tray.mutatespecie()
 
-/obj/item/seeds/towermycelium
-	name = "pack of tower-cap mycelium"
-	cases = list("мицелий башенного гриба", "мицелия башенного гриба", "мицелию башенного гриба", "мицелий башенного гриба", "мицелием башенного гриба", "мицелие башенного гриба")
+
+/obj/item/seeds/fungiwood
+	name = "pack of fungiwood"
+	cases = list("мицелий грибесины", "мицелия грибесины", "мицелию грибесины", "мицелий грибесины", "мицелием грибесины", "мицелие грибесины")
 	desc = "Из этого мицелия вырастают башенные грибы."
 	icon_state = "mycelium-tower"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "towercap"
-	plantname = "Tower Caps"
+	plantname = "fungi wood"
 	product_type = /obj/item/weapon/grown/log
+	lifespan = 80
+	endurance = 50
+	maturation = 15
+	production = 1
+	yield = 5
+	potency = 1
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+	mutatelist = list(/obj/item/seeds/towermycelium)
+
+/obj/item/seeds/towermycelium
+	name = "pack of tower-cap mycelium"
+	desc = "Из этого мицелия вырастают ОГРОМНЫЕ башенные грибы."
+	icon_state = "seed-bungopit"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	species = "towercap"
+	plantname = "Tower Caps"
+	product_type = /obj/item/weapon/grown/towermycelium
 	lifespan = 80
 	endurance = 50
 	maturation = 15
@@ -1665,6 +1685,86 @@
 		return FALSE
 	return ..()
 
+/obj/item/weapon/grown/towermycelium
+	name = "seeds tower mycelium"
+	desc = "Боб огромного гриба"
+	w_class = SIZE_SMALL
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "bungopit"
+	seed_type = /obj/item/seeds/towermycelium
+	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	var/growing = FALSE
+
+/obj/item/weapon/grown/towermycelium/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/grown/towermycelium/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/grown/towermycelium/process()
+	if(growing)
+		return
+
+	var/turf/T = get_turf(src)
+	if(istype(T, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in T))
+		growing = TRUE
+		visible_message("<span class='notice'>[src] начинает пускать корни в воде...</span>")
+		addtimer(CALLBACK(src, .proc/grow_into_tree), 5 SECONDS)
+
+/obj/item/weapon/grown/towermycelium/attack_self(mob/user)
+	if(!user)
+		return
+
+	var/turf/user_turf = get_turf(user)
+	var/valid_water = istype(user_turf, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in user_turf)
+	if(!valid_water)
+		to_chat(user, "<span class='warning'>Боб нужно сажать на воду (лужу или мелкий водоём)! Иначе они не прорастут!</span>")
+		return
+
+	to_chat(user, "<span class='notice'>Вы начинаете сажать боб в воду, чтобы вырастить огромный гриб...</span>")
+
+	if(!user.is_busy() && do_after(user, 2 SECONDS, target = user))
+		grow_into_tree()
+
+/obj/item/weapon/grown/towermycelium/proc/grow_into_tree()
+	var/turf/original_T = get_turf(src)
+	if(!original_T)
+		return
+
+	var/obj/structure/flora/tree/towermycelium/existing_tree = locate() in original_T
+	if(existing_tree)
+		var/list/possible_turfs = list()
+		for(var/dir in cardinal)
+			var/turf/adjacent_T = get_step(original_T, dir)
+			if(adjacent_T && !(locate(/obj/structure/flora/tree/towermycelium) in adjacent_T) && (istype(adjacent_T, /turf/simulated/floor/beach/water/waterpool) || (locate(/obj/effect/fluid) in adjacent_T)))
+				possible_turfs += adjacent_T
+
+		if(possible_turfs.len)
+			forceMove(pick(possible_turfs))
+		else
+			growing = FALSE
+			return
+
+	var/turf/growth_T = get_turf(src)
+	if(!growth_T)
+		growing = FALSE
+		return
+
+	if(locate(/obj/structure/flora/tree/towermycelium) in growth_T)
+		growing = FALSE
+		return
+
+	new /obj/structure/flora/tree/towermycelium(growth_T)
+	qdel(src)
+
+/obj/item/weapon/grown/towermycelium/water_act(amount)
+	. = ..()
+	if(amount >= 5 && !growing)
+		growing = TRUE
+		visible_message("<span class='notice'>[src] начинает пускать корни в воде...</span>")
+		addtimer(CALLBACK(src, .proc/grow_into_tree), 5 SECONDS)
 
 /obj/item/weapon/grown/sunflower
 	name = "sunflower"

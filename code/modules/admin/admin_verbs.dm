@@ -62,6 +62,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggledrones,
 	/client/proc/man_up,
 	/client/proc/global_man_up,
+	/client/proc/switch_mushrooms_release_toxic_gas,
 	/client/proc/response_team, // Response Teams admin verb,
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
@@ -1081,6 +1082,17 @@ var/global/list/admin_verbs_hideable = list(
 	machine_interactive_ghost = AI_Interact
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+
+/client/proc/switch_mushrooms_release_toxic_gas()
+	set category = "Event"
+	set name = "EVENT: Start or stop mushrooms releasing toxic gas"
+	set desc = "Tells everyone to man up and deal with it."
+
+	global.mushrooms_release_toxic_gas = !global.mushrooms_release_toxic_gas
+	log_admin("[key_name(usr)] switched mushrooms releasing toxic gas to [global.mushrooms_release_toxic_gas].")
+	message_admins("<span class='warning'>[key_name_admin(usr)] switched mushrooms releasing toxic gas to [global.mushrooms_release_toxic_gas].</span>")
+
 
 /client/proc/admin_crew_salary()
 	set name = "Salary"
