@@ -151,8 +151,6 @@
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> dashes forward!</span>")
 		playsound(usr,  'sound/effects/hunter.ogg', VOL_EFFECTS_MASTER)
 		if(failure)
-			usr.Weaken(5)
-			usr.Stun(5)
 			usr.visible_message("<span class='warning'> \the [usr] attempts to dash away but was interrupted!</span>",
 								"<span class='warning'>You attempt to dash but suddenly interrupted!</span>",
 								"<span class='notice'>You hear the flexing of powerful muscles and suddenly a crash as a body hits the floor.</span>")
@@ -191,9 +189,6 @@
 					if(istype(T,/turf/simulated/wall/r_wall))
 						playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 						hit = 1
-						H.Stun(5)
-						H.Weaken(10)
-						H.take_overall_damage(25, used_weapon = "reinforced wall")
 					else
 						playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 						if(i > 20)
@@ -203,13 +198,9 @@
 							else
 								hit = 1
 								W.take_damage(50)
-								H.Stun(2)
-								H.Weaken(5)
 						else
 							hit = 1
 							W.take_damage(25)
-							H.Stun(2)
-							H.Weaken(5)
 			if(i > 20)
 				usr.canmove = 0
 				usr.density = FALSE
@@ -227,19 +218,13 @@
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 							BP.take_damage(20, used_weapon = "Hulk Shoulder")
 							BP.fracture()
-							M.Weaken(5)
-							M.Stun(5)
 						else
-							M.Weaken(5)
-							M.Stun(5)
 							M.take_overall_damage(40, used_weapon = "Hulk Foot")
-						M.throw_at(target, 200, 100)
+						//M.throw_at(target, 200, 100)
 						break
 			else if(i > 6)
 				for(var/mob/living/M in T.contents)
 					playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-					M.Stun(2)
-					M.Weaken(5)
 			if(usr.lying)
 				break
 			if(hit)
@@ -279,8 +264,6 @@
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You dash and slam your head against the inside of [container]! Ouch!</span>")
-		usr.AdjustParalysis(3)
-		usr.AdjustWeakened(5)
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6

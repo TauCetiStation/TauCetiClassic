@@ -219,7 +219,7 @@
 	description = "Space spores."
 	reagent_state = LIQUID
 	color = "#2b4100"
-	toxpwr = 0.5
+	toxpwr = 0
 
 /datum/reagent/toxin/spores/on_general_digest(mob/living/M)
 	. = ..()

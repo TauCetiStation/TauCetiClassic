@@ -49,8 +49,8 @@
 		H.underwear = 0
 		H.socks = 0
 
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand(H), SLOT_L_HAND)
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right(H), SLOT_R_HAND)
 
 		H.remove_from_mob(H.wear_mask)
 		H.remove_from_mob(H.head)
