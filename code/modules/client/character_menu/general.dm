@@ -32,7 +32,8 @@
 	. += 						"[submenu_type=="body"?"<b>Body</b>":"<a href=\"byond://?src=\ref[user];preference=body\">Body</a>"] - "
 	. += 						"[submenu_type=="organs"?"<b>Organs</b>":"<a href=\"byond://?src=\ref[user];preference=organs\">Organs</a>"] - "
 	. += 						"[submenu_type=="appearance"?"<b>Appearance</b>":"<a href=\"byond://?src=\ref[user];preference=appearance\">Appearance</a>"] - "
-	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond://?src=\ref[user];preference=gear\">Gear</a>"]"
+	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond://?src=\ref[user];preference=gear\">Gear</a>"] - "
+	. +=						"[submenu_type=="family"?"<b>Family</b>":"<a href=\"byond://?src=\ref[user];preference=family\">Family</a>"]"
 	. += 						"</center>"
 	. += 						"<br>"
 	. += 						"<table border width='100%' background='opacity7.png' bordercolor='5A6E7D' cellspacing='0'>"	//Submenu table start
@@ -137,6 +138,17 @@
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
+
+		//Family
+		if("family")
+			. += "<b>Choose alive family members:</b><br>"
+			. += "Grandmother: <a href='byond://?_src_=prefs;preference=family_member;family_type=grandma;task=input'><b>[family_members & FAMILY_GRANDMOTHER ? "Yes" : "No"]</b></a><br>"
+			. += "Grandfather: <a href='byond://?_src_=prefs;preference=family_member;family_type=grandfa;task=input'><b>[family_members & FAMILY_GRANDFATHER ? "Yes" : "No"]</b></a><br>"
+			. += "Mother: <a href='byond://?_src_=prefs;preference=family_member;family_type=mother;task=input'><b>[family_members & FAMILY_MOTHER ? "Yes" : "No"]</b></a><br>"
+			. += "Father: <a href='byond://?_src_=prefs;preference=family_member;family_type=father;task=input'><b>[family_members & FAMILY_FATHER ? "Yes" : "No"]</b></a><br>"
+			. += "Brothers: <a href='byond://?_src_=prefs;preference=family_member;family_type=brothers;task=input'><b>[family_members & FAMILY_BROTHERS ? "Yes" : "No"]</b></a><br>"
+			. += "Sisters: <a href='byond://?_src_=prefs;preference=family_member;family_type=sisters;task=input'><b>[family_members & FAMILY_SISTERS ? "Yes" : "No"]</b></a><br>"
+			. += "Partner: <a href='byond://?_src_=prefs;preference=family_member;family_type=partner;task=input'><b>[family_members & FAMILY_PARTNER ? "Yes" : "No"]</b></a><br>"
 
 	. += 								"</td>"
 	. += 							"</tr>"
@@ -258,6 +270,8 @@
 					use_skirt = pick(TRUE, FALSE)
 				if("ringtone")
 					chosen_ringtone = pick(global.ringtones_by_names)
+				if("family")
+					family_members = rand(0, 127)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -620,6 +634,51 @@
 					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
 					h_style = random_hair_style(gender, species, ipc_head)
 
+				if("family_member")
+					var/family_member = href_list["family_type"]
+					switch(family_member)
+						if("grandma")
+							if(family_members & FAMILY_GRANDMOTHER)
+								family_members &= FAMILY_GRANDMOTHER
+							else
+								family_members |= FAMILY_GRANDMOTHER
+
+						if("grandfa")
+							if(family_members & FAMILY_GRANDFATHER)
+								family_members &= FAMILY_GRANDFATHER
+							else
+								family_members |= FAMILY_GRANDFATHER
+
+						if("mother")
+							if(family_members & FAMILY_MOTHER)
+								family_members &= FAMILY_MOTHER
+							else
+								family_members |= FAMILY_MOTHER
+
+						if("father")
+							if(family_members & FAMILY_FATHER)
+								family_members &= FAMILY_FATHER
+							else
+								family_members |= FAMILY_FATHER
+
+						if("brothers")
+							if(family_members & FAMILY_BROTHERS)
+								family_members &= FAMILY_BROTHERS
+							else
+								family_members |= FAMILY_BROTHERS
+
+						if("sisters")
+							if(family_members & FAMILY_SISTERS)
+								family_members &= FAMILY_SISTERS
+							else
+								family_members |= FAMILY_SISTERS
+
+						if("partner")
+							if(family_members & FAMILY_PARTNER)
+								family_members &= FAMILY_PARTNER
+							else
+								family_members |= FAMILY_PARTNER
+
 		else
 			switch(href_list["preference"])
 				if("gender")
@@ -654,6 +713,9 @@
 
 				if("gear")
 					submenu_type = "gear"
+
+				if("family")
+					submenu_type = "family"
 
 /datum/preferences/proc/get_valid_styles_from_cache(list/styles_cache)
 	var/hash = "[species][gender][species == IPC ? ipc_head : ""]"

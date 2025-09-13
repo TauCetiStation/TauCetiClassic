@@ -55,3 +55,11 @@
 
 //recommened client FPS
 #define RECOMMENDED_FPS 100
+
+#define FAMILY_GRANDMOTHER (1<<0)
+#define FAMILY_GRANDFATHER (1<<1)
+#define FAMILY_MOTHER (1<<2)
+#define FAMILY_FATHER (1<<3)
+#define FAMILY_BROTHERS (1<<4)
+#define FAMILY_SISTERS (1<<5)
+#define FAMILY_PARTNER (1<<6)
