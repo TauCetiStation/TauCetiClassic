@@ -149,7 +149,7 @@
 			failure = 1
 
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> dashes forward!</span>")
-		playsound(usr, 'sound/effects/hunter.ogg', VOL_EFFECTS_MASTER)
+		playsound(usr,  'sound/effects/hunter.ogg', VOL_EFFECTS_MASTER)
 		if(failure)
 			usr.Weaken(5)
 			usr.Stun(5)
