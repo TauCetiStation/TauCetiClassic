@@ -208,8 +208,6 @@ var/global/list/wedge_image_cache = list()
 			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/device/detective_scanner))
-		return
 	if(src.operating)
 		return
 	if(src.density && hasPower() && istype(I, /obj/item/weapon/melee/energy/blade))
