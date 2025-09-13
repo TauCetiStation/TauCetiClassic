@@ -519,6 +519,17 @@
 	else
 		cut_overlay(armrest)
 
+/obj/structure/stool/bed/chair/comfy/attackby(obj/item/W, mob/user)
+	..()
+	if(isscrewing(W))
+		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
+		if(anchored == TRUE)
+			to_chat(user, "<span class='notice'>Вы откручиваете кресло от пола.</span>")
+			anchored = FALSE
+		else
+			to_chat(user, "<span class='notice'>Вы прикручиваете кресло к полу.</span>")
+			anchored = TRUE
+
 /obj/structure/stool/bed/chair/comfy/black
 	icon_state = "comfychair_black"
 
