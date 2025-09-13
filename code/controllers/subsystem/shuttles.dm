@@ -565,6 +565,9 @@ SUBSYSTEM_DEF(shuttle)
 	order_onlineshop_item(receiver, receiver_account.account_number, Lot, station_name_ru(), forced = TRUE)
 	receiver_account.shopping_cart["[Lot.number]"] = Lot.to_list()
 
+	Item.pixel_x = rand(-10, 10)
+	Item.pixel_y = rand(-10, 10)
+
 	return Item
 
 
