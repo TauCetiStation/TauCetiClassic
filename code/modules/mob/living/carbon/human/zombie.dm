@@ -270,7 +270,7 @@ var/global/list/zombie_list = list()
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/acid)
 	else
 		H.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/hulk_dash)
-		playsound(src, 'sound/effects/Tank_breathe_05.ogg', VOL_EFFECTS_MASTER)
+		playsound(H, 'sound/effects/Tank_breathe_05.ogg', VOL_EFFECTS_MASTER)
 
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
