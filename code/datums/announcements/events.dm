@@ -9,7 +9,7 @@
 
 /datum/announcement/centcomm/access_override
 	name = "Secret: Egalitarian"
-	message = "Центком перегрузил контроль доступа шлюзов. Воспользуйтесь этим временем для знакомства с вашими коллегами."
+	message = "ЦентКом перегрузил контроль доступа шлюзов. Воспользуйтесь этим временем для знакомства с вашими коллегами."
 	sound = "access_override"
 
 /datum/announcement/centcomm/anomaly/radstorm
