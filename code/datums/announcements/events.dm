@@ -22,7 +22,7 @@
 	name = "Anomaly: Radiation Belt Passed"
 	message = "Станция прошла опасную зону. " + \
 			"Обратитесь в медотсек, если у вас возникнут необычные симптомы. " + \
-			"Вскоре общий доступ к техническим туннелям будет аннулирован.."
+			"Вскоре общий доступ к техническим туннелям будет аннулирован."
 	sound = "radpassed"
 
 /datum/announcement/centcomm/anomaly/istorm
@@ -196,7 +196,7 @@
 	subtitle = "Системы Электропитания в Норме"
 	sound = "poweron2"
 /datum/announcement/centcomm/grid_quick/New()
-	message = "Все СМЭХи на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
+	message = "Все СПИНы на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
 
 /datum/announcement/centcomm/irod
 	name = "Event: Immovable Rod"
