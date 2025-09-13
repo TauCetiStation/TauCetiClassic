@@ -203,7 +203,7 @@
 	else if(is_skeleton)
 		return null
 	else if(is_zombie)
-		return "#4a730c"
+		return "#385032"
 	else if(is_burnt)
 		return "#333333"
 	else if(is_husk || status & ORGAN_DEAD)
@@ -1135,9 +1135,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(owner)
 			if(HAS_TRAIT(owner, TRAIT_PLUVIAN_BLESSED))
 				eyes_colorable_layer.color = "#00ffff"
-			else if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner) || HAS_TRAIT(owner, TRAIT_CULT_EYES)) // todo: red eyes trait
+			else if((HULK in owner.mutations) || (LASEREYES in owner.mutations)|| HAS_TRAIT(owner, TRAIT_CULT_EYES)) // todo: red eyes trait
 				eyes_colorable_layer.color = "#ff0000"
-
+			else if(iszombie(owner))
+				eyes_colorable_layer.color = "#000000"
 			if(HAS_TRAIT(owner, TRAIT_GLOWING_EYES))
 				eyes_colorable_layer.plane = LIGHTING_LAMPS_PLANE
 				eyes_colorable_layer.layer = ABOVE_LIGHTING_LAYER

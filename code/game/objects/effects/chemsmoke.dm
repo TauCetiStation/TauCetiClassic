@@ -196,6 +196,7 @@
 	smoke.set_dir(pick(cardinal))
 	smoke.pixel_x = -32 + rand(-8,8)
 	smoke.pixel_y = -32 + rand(-8,8)
+	smoke.alpha = 50
 	walk_to(smoke, T)
 	sleep(150+rand(0,20))	// turning it off before it is deleted results in cleaner
 	fadeOut(smoke)

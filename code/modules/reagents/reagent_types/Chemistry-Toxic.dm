@@ -213,12 +213,42 @@
 	toxpwr = 2
 	flags = list(IS_ORGANIC = TRUE)
 
+/datum/reagent/toxin/spores
+	name = "Spores"
+	id = "spores"
+	description = "Space spores."
+	reagent_state = LIQUID
+	color = "#2b4100"
+	toxpwr = 0.5
+
+/datum/reagent/toxin/spores/on_general_digest(mob/living/M)
+	. = ..()
+	if(!.)
+		return
+
+	if(data["ticks"])
+		data["ticks"]++
+	else
+		data["ticks"] = 1
+
+	if(data["ticks"] < 5)
+		return
+
+	if(data["ticks"] == 5)
+		to_chat(M, "Вы чувствуете, как споры грибов попадают в ваши легкие...")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = TRUE)
+
+/datum/reagent/toxin/spores/on_diona_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	id = "zombiepowder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	reagent_state = SOLID
-	color = "#669900" // rgb: 102, 153, 0
+	color = "#7a993c" // rgb: 102, 153, 0
 	toxpwr = 0.5
 
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)

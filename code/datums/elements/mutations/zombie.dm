@@ -10,11 +10,21 @@
 		TRAIT_VIRUS_IMMUNE,
 		TRAIT_NO_EMBED,
 		TRAIT_EMOTIONLESS,
-		TRAIT_GLOWING_EYES,
 		TRAIT_NIGHT_EYES,
 	)
 
 #define ZOMBIE_MOOD_EVENT "zombie"
+
+/obj/item/clothing/head/zombie_hat
+	name = "disgusting fungus"
+	desc = "Отвратительного вида шапка из грибов."
+	icon_state = "zombie_hat"
+	color = "#a77f35"
+
+/obj/item/clothing/head/zombie_hat/attack_hand(mob/user)
+	. = ..()
+	if(!canremove)
+		to_chat(user, "<span class='warning'>You cant take it off!</span>")
 
 /datum/element/mutation/zombie/on_gain(mob/living/L)
 
@@ -35,9 +45,19 @@
 
 		H.drop_l_hand()
 		H.drop_r_hand()
+		H.undershirt = 0
+		H.underwear = 0
+		H.socks = 0
 
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+
+		H.remove_from_mob(H.wear_mask)
+		H.remove_from_mob(H.head)
+		H.remove_from_mob(H.wear_suit)
+		var/obj/item/clothing/head/zombie_hat/zombiehat = new /obj/item/clothing/head/zombie_hat
+		zombiehat.canremove = FALSE
+		H.equip_to_slot_if_possible(zombiehat, SLOT_HEAD)
 
 		var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
 		if(O)

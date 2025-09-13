@@ -325,6 +325,173 @@
 /obj/structure/flora/tree/jungle/small/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_TWO
 
+/obj/structure/flora/tree/towermycelium
+	name = "tower mycelium"
+	desc = "A towering fungal growth, pulsating with eerie energy. Each specimen is subtly different."
+	icon = 'icons/obj/flora/towermycelium.dmi'
+	icon_state = "one"
+	pixel_x = -33
+	drop_on_destroy = list(
+		/obj/item/weapon/grown/log = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = 2
+	)
+
+	var/list/vines = list()
+	var/vine_spawn_chance = 30
+	var/max_vine_distance = 2
+	var/pulse_speed = 3 SECONDS
+	var/pulse_power = 1.15
+	var/min_pulse_time = 2 SECONDS
+	var/max_pulse_time = 4 SECONDS
+	var/shake_chance = 10
+	var/shake_power = 1.5
+	COOLDOWN_DECLARE(toxic_gas_cooldown)
+
+/obj/structure/flora/tree/towermycelium/atom_init()
+	. = ..()
+
+	COOLDOWN_START(src, toxic_gas_cooldown, 2 MINUTES)
+
+	apply_random_variations()
+
+	pulse_speed = rand(min_pulse_time, max_pulse_time)
+	pulse_power = 1.10 + rand() * 0.10 // 1.10 - 1.20
+	start_pulse()
+
+/obj/structure/flora/tree/towermycelium/proc/start_pulse()
+	addtimer(CALLBACK(src, .proc/create_vines), 5)
+
+	if(COOLDOWN_FINISHED(src, toxic_gas_cooldown))
+		release_toxic_gas()
+		COOLDOWN_START(src, toxic_gas_cooldown, 3 MINUTES)
+
+	var/time_up = pulse_speed * 0.5 * (0.9 + rand() * 0.2)
+	var/time_down = pulse_speed * 0.5 * (0.9 + rand() * 0.2)
+
+	animate(
+		src,
+		transform = transform * pulse_power,
+		time = time_up,
+		easing = SINE_EASING | EASE_OUT,
+		flags = ANIMATION_PARALLEL
+	)
+	animate(
+		transform = transform * (1/pulse_power),
+		time = time_down,
+		easing = SINE_EASING | EASE_IN,
+		flags = ANIMATION_PARALLEL
+	)
+
+	if(prob(shake_chance))
+		addtimer(CALLBACK(src, .proc/do_shake), rand(0, pulse_speed))
+
+	addtimer(CALLBACK(src, .proc/start_pulse), 15 SECONDS + rand(-1 SECONDS, 1 SECONDS))
+
+/obj/structure/flora/tree/towermycelium/proc/do_shake()
+	var/matrix/M = transform
+	animate(
+		src,
+		transform = M.Turn(rand(-shake_power, shake_power)) * 1.01,
+		time = 0.2 SECONDS,
+		easing = ELASTIC_EASING
+	)
+	animate(
+		transform = M,
+		time = 0.3 SECONDS,
+		easing = BOUNCE_EASING
+	)
+
+/obj/structure/flora/tree/towermycelium/proc/apply_random_variations()
+	if(prob(50))
+		icon_state = "two"
+
+	var/scale_x = 0.9 + rand() * 0.2
+	var/scale_y = 0.9 + rand() * 0.2
+	transform = transform.Scale(scale_x, scale_y)
+
+	color = rgb(
+		186 + rand(-15, 15),
+		160 + rand(-15, 15),
+		100 + rand(-15, 15)
+	)
+
+	set_light(1.5, 1, color)
+
+	pixel_x += rand(-1, 1)
+	pixel_y += rand(-1, 1)
+
+/obj/structure/flora/tree/towermycelium/proc/create_vines()
+	if(!locate(/obj/structure/spacevine/biomass) in loc)
+		var/obj/structure/spacevine/biomass/SV_base = new(loc)
+		SV_base.color = color
+		vines += SV_base
+
+	for(var/turf/T in RANGE_TURFS(max_vine_distance, src))
+		if(T == loc) continue
+		if(prob(vine_spawn_chance) && !T.density && !locate(/obj/structure/spacevine/biomass) in T)
+			var/obj/structure/spacevine/biomass/SV = new(T)
+			SV.color = color
+			SV.icon_state = pick("stage1", "stage1", "stage1", "stage2", "stage2", "stage3", "mist")
+			vines += SV
+
+/obj/structure/flora/tree/towermycelium/proc/clear_vines()
+	for(var/obj/structure/spacevine/biomass/V in vines)
+		qdel(V)
+	vines.Cut()
+
+/obj/structure/flora/tree/towermycelium/proc/release_toxic_gas()
+	if(!global.mushrooms_release_toxic_gas)
+		return
+	var/datum/effect/effect/system/smoke_spread/chem/S = new()
+	var/datum/reagents/R = new/datum/reagents(2700)
+	R.my_atom = src
+	R.add_reagent("spores", 900)
+	S.set_up(R, 10, 0, loc, 60)
+	S.start()
+
+	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
+
+/obj/structure/flora/tree/towermycelium/Destroy()
+	clear_vines()
+	return ..()
+
+/obj/structure/spacevine/biomass
+	name = "biomass"
+	desc = "Space barf from another dimension. It just keeps spreading!"
+	icon = 'icons/obj/biomass.dmi'
+	icon_state = "stage1"
+	layer = TURF_LAYER
+
+
+/obj/structure/spacevine/biomass/atom_init()
+	. = ..()
+	update_overlays_full()
+
+/obj/structure/spacevine/biomass/Destroy()
+	. = ..()
+	update_overlays_full()
+
+/obj/structure/spacevine/biomass/proc/update_overlays()
+	cut_overlays()
+	var/turf/T
+	for(var/direction_to_check in alldirs)
+		T = get_step(src, direction_to_check)
+		var/obj/structure/spacevine/biomass/B = locate(/obj/structure/spacevine/biomass) in T
+		if(!B)
+			var/image/I = image(icon, "biomass_overlay[direction_to_check]")
+			I.pixel_x = X_OFFSET(32, direction_to_check)
+			I.pixel_y = Y_OFFSET(32, direction_to_check)
+			add_overlay(I)
+
+/obj/structure/spacevine/biomass/proc/update_overlays_full()
+	var/turf/T
+	for(var/direction_to_check in alldirs)
+		T = get_step(src, direction_to_check)
+		var/obj/structure/spacevine/biomass/B = locate(/obj/structure/spacevine/biomass) in T
+		if(B)
+			B.update_overlays()
+	update_overlays()
+
 // grass
 
 /obj/structure/flora/grass

@@ -309,7 +309,7 @@
 		if(8 to 9)
 			myseed = new /obj/item/seeds/chantermycelium
 		if(6 to 7)
-			myseed = new /obj/item/seeds/towermycelium
+			myseed = new /obj/item/seeds/fungiwood
 		if(4 to 5)
 			myseed = new /obj/item/seeds/plumpmycelium
 		else

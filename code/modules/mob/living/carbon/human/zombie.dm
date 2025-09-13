@@ -233,7 +233,7 @@
 	holder.effect = Z
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	if(fast)
-		holder.chance = 100
+		holder.chance = 90
 	D.addeffect(holder)
 	D.uniqueID = rand(0,10000)
 	D.infectionchance = 100
@@ -264,15 +264,52 @@ var/global/list/zombie_list = list()
 	var/datum/faction/zombie/Z = create_uniq_faction(/datum/faction/zombie)
 	add_faction_member(Z, H, FALSE)
 
+
+	var/choice = tgui_alert(H,"Выберите тип зомби","Эволюция", list("Зомби Халк","Зомби Плеватель"))
+	if(choice == "Зомби Плеватель")
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/acid)
+	else
+		H.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/hulk_dash)
+		playsound(src, 'sound/effects/Tank_breathe_05.ogg', VOL_EFFECTS_MASTER)
+
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
 	H.RemoveSpell(spell)
 	qdel(spell)
+	var/obj/effect/proc_holder/spell/aoe_turf/hulk_dash/spellH = locate() in H.spell_list
+	H.RemoveSpell(spellH)
+	qdel(spellH)
+	var/obj/effect/proc_holder/spell/targeted/projectile/acid/spellA = locate() in H.spell_list
+	H.RemoveSpell(spellA)
+	qdel(spellA)
 	zombie_list -= H
 
 	var/datum/role/R = H.mind.GetRole(ZOMBIE)
 	if(R)
 		R.Deconvert()
+
+/obj/effect/proc_holder/spell/targeted/projectile/acid
+	name = "Плюнуть ядом"
+	desc = "Выпускает яд"
+
+	charge_max = 350
+	range = 7
+
+	sound = 'sound/weapons/pierce.ogg'
+	proj_icon_state = "neurotoxin"
+	proj_name = "acid"
+	clothes_req = 0
+	proj_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/acid
+
+	proj_lifespan = 20
+	proj_step_delay = 2
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/acid
+	desc = "Токсичное вещество."
+	amt_stunned = 1
+	amt_weakened = 5
+	amt_dam_tox = 10
+	sound = 'sound/weapons/pierce.ogg'
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"
