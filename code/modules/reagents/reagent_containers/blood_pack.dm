@@ -3,6 +3,7 @@
 	desc = "Contains blood used for transfusion."
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "empty"
+	item_state_world = "empty_w"
 	volume = 200
 
 	var/blood_type = null
@@ -11,7 +12,7 @@
 	. = ..()
 	if(blood_type != null)
 		reagents.add_reagent("blood", 200, list("blood_type" = blood_type))
-		update_icon()
+	update_icon()
 
 /obj/item/weapon/reagent_containers/blood/on_reagent_change()
 	update_icon()
@@ -58,3 +59,4 @@
 	name = "empty bloodpack"
 	desc = "Seems pretty useless... Maybe if there were a way to fill it?"
 	icon_state = "empty"
+	item_state_world = "empty_w"
