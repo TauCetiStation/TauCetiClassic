@@ -234,6 +234,8 @@
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronrglass
 
+	hit_particle = /particles/tool/digging/glass/phoron
+
 /**
  * Fulltile reinforced tinted
  */

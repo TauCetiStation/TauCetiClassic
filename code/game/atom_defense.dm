@@ -17,7 +17,7 @@
 		return
 
 	if(hit_particle)
-		play_attack_particle()
+		play_attack_particle(attack_dir)
 
 	. = damage_amount
 
@@ -88,8 +88,12 @@
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/atom/proc/play_attack_particle()
-	new /obj/effect/abstract/particle_holder(get_turf(src), hit_particle, PARTICLE_FADEOUT|PARTICLE_FLICK)
+/atom/proc/play_attack_particle(attack_dir)
+	var/obj/effect/abstract/particle_holder/Particle = new(get_turf(src), hit_particle, PARTICLE_FADEOUT|PARTICLE_FLICK)
+
+	if(attack_dir)
+		var/particles/particle_datum = Particle.get_particle()
+		particle_datum.change_dir(attack_dir)
 
 ///Called to get the damage that hulks will deal to the atom.
 /atom/proc/hulk_damage()
