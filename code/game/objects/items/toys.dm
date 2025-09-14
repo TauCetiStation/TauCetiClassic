@@ -1399,7 +1399,7 @@ Owl & Griffin toys
 	for(var/t in currenthand)
 		dat += "<A href='byond://?src=\ref[src];pick=[t]'>A [t]</a><BR>"
 	dat += "Какую карту взять?"
-	var/datum/browser/popup = new(user, "cardhand", "Рука", 400, 240)
+	var/datum/browser/popup = new(user, "cardhand", "Карты на руках", 400, 240)
 	popup.set_content(dat)
 	popup.open()
 
