@@ -40,6 +40,9 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	on_move(parent, null, NORTH)
 
+	if(particle_flags & PARTICLE_FLICK)
+		addtimer(CALLBACK(src, PROC_REF(delete_particle)), 0.5 SECONDS)
+
 /obj/effect/abstract/particle_holder/proc/set_particle_effect(particle_path)
 	return new particle_path()
 

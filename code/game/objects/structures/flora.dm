@@ -256,6 +256,8 @@
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
+	hit_particle = /particles/tool/digging/wood
+
 /obj/structure/flora/tree/atom_init()
 	. = ..()
 	AddComponent(/datum/component/seethrough, get_seethrough_map())
@@ -539,6 +541,8 @@
 	density = TRUE
 	pixel_x = -16
 	pixel_y = -16
+
+	hit_particle = /particles/tool/digging
 
 /obj/structure/flora/rock/pile/largejungle/atom_init()
 	. = ..()

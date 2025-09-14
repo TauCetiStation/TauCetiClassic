@@ -16,6 +16,9 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_TAKE_DAMAGE, damage_amount, damage_type, damage_flag, sound_effect, attack_dir) & COMPONENT_NO_TAKE_DAMAGE)
 		return
 
+	if(hit_particle)
+		play_attack_particle()
+
 	. = damage_amount
 
 	update_integrity(atom_integrity - damage_amount, damage_flag)
@@ -84,6 +87,9 @@
 				playsound(src, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/atom/proc/play_attack_particle()
+	new /obj/effect/abstract/particle_holder(get_turf(src), hit_particle, PARTICLE_FADEOUT|PARTICLE_FLICK)
 
 ///Called to get the damage that hulks will deal to the atom.
 /atom/proc/hulk_damage()
