@@ -330,10 +330,10 @@ var/global/online_shop_profits = 0
 
 	Item = global.shop_object2package(Item)
 
-	if(!forceColor && global.shop_category2color[lot_category])
-		Item.color = global.shop_category2color[lot_category]
-	else if(forceColor)
+	if(forceColor)
 		Item.color = forceColor
+	else if(global.shop_category2color[lot_category])
+		Item.color = global.shop_category2color[lot_category]
 
 	global.create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
 
