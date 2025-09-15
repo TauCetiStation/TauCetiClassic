@@ -320,18 +320,20 @@ var/global/online_shop_profits = 0
 
 	return Item
 
-/proc/object2onlineshop_package(obj/Item)
+/proc/object2onlineshop_package(obj/Item, forceColor = null, forceIcon = null)
 	var/lot_name = Item.name
 	var/lot_desc = Item.price_tag["description"]
 	var/lot_price = Item.price_tag["price"]
 	var/lot_category = Item.price_tag["category"]
 	var/lot_account = Item.price_tag["account"]
-	var/item_icon = bicon(Item)
+	var/item_icon = forceIcon ? forceIcon : bicon(Item)
 
 	Item = global.shop_object2package(Item)
 
-	if(global.shop_category2color[lot_category])
+	if(!forceColor && global.shop_category2color[lot_category])
 		Item.color = global.shop_category2color[lot_category]
+	else if(forceColor)
+		Item.color = forceColor
 
 	global.create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
 
