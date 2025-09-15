@@ -5382,7 +5382,7 @@
 	icon_state = "2,0"
 	},
 /turf/environment/space,
-/area/shuttle/escape_pod6/transit)
+/area/shuttle/escape_pod2/station)
 "azw" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -42218,7 +42218,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/shuttle/escape_pod6/transit)
+/area/station/bridge/captain_quarters)
 "hzK" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/cargo{
@@ -83827,7 +83827,7 @@
 /area/station/rnd/tox_launch)
 "pMv" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -84082,7 +84082,7 @@
 	},
 /area/station/medical/hallway)
 "pOr" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table,
 /obj/structure/sign/poster/random{
 	pixel_x = -32
@@ -105466,6 +105466,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/machinery/computer/vending,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -108080,7 +108081,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/shuttle/escape_pod6/transit)
+/area/station/bridge/captain_quarters)
 "usu" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -109017,7 +109018,7 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "uDn" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "bar"

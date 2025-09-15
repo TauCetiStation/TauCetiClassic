@@ -52,7 +52,7 @@
 /obj/item/organ/external/stump/emp_act(severity)
 	return
 
-/obj/item/organ/external/stump/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+/obj/item/organ/external/stump/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
 	return
 
 /obj/item/organ/external/stump/heal_damage(brute, burn, internal = 0, robo_repair = 0)
