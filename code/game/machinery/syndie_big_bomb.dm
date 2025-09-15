@@ -36,7 +36,7 @@
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = !degutted && (active || ignore_active)
 	if(.)
-		explosion(loc, 4, 10, 22)
+		make_explosion(4, 10, 22)
 		degutted = TRUE // prevent double caboom
 		qdel(src)
 
@@ -190,7 +190,7 @@
 	detonate()
 
 /obj/item/weapon/syndicatebombcore/proc/detonate()
-	explosion(get_turf(loc), 2, 5, 11)
+	make_explosion(2, 5, 11)
 	if(loc && istype(loc, /obj/machinery/syndicatebomb))
 		qdel(loc) // delete machinery just in case
 	qdel(src)

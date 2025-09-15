@@ -56,7 +56,6 @@
 /obj/item/weapon/plastique/proc/prime_explosion(atom/target)
 	if(!target)
 		return
-	var/location = target
 	if(ismob(target) || isobj(target))
 		location = target.loc
 	if(iswallturf(target))
@@ -65,7 +64,7 @@
 	else
 		target.ex_act(EXPLODE_DEVASTATE)
 
-	explosion(location, 0, 0, 2, 3)
+	make_explosion(0, 0, 2, 3)
 	if(target && !QDELETED(target))
 		target.cut_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
 	if(src)

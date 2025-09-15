@@ -822,3 +822,7 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+/atom/proc/make_explosion(devastation_range, heavy_impact_range, light_impact_range, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = TRUE)
+	explosion(get_turf(src), devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, silent, smoke, src)
+	return

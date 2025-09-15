@@ -1883,7 +1883,7 @@
 	var/turf/T = get_turf(src.loc)
 	if(T)
 		T.hotspot_expose(700,125)
-		explosion(T, 0, 0, 1, rand(1,2))
+		make_explosion(0, 0, 1, rand(1,2))
 	return
 
 /obj/item/device/pda/proc/available_pdas()

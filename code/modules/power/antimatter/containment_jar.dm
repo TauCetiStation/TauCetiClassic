@@ -18,13 +18,13 @@
 /obj/item/weapon/am_containment/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
-			explosion(get_turf(src), 1, 2, 3, 5)//Should likely be larger but this works fine for now I guess
+			make_explosion(1, 2, 3, 5)//Should likely be larger but this works fine for now I guess
 			if(src)
 				qdel(src)
 			return
 		if(EXPLODE_HEAVY)
 			if(prob((fuel/10)-stability))
-				explosion(get_turf(src), 1, 2, 3, 5)
+				make_explosion(1, 2, 3, 5)
 				if(src)
 					qdel(src)
 				return

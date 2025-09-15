@@ -493,7 +493,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		user.drop_item()
 		target = target
 		loc = null
-		var/location
 		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
 		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось [timer] [PLUR_SECONDS_LEFT(timer)].</span>")
@@ -505,9 +504,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			if(target)
 
 				if(istype(target, /turf/simulated/mineral))
-					explosion(location, 0, 7, 4)
+					make_explosion(0, 7, 4)
 				else
-					explosion(location, 0, 0, 4)
+					make_explosion(0, 0, 4)
 
 				if(iswallturf(target))
 					var/turf/simulated/wall/W = target

@@ -1085,3 +1085,45 @@
 	. = ..()
 	var/mob/living/carbon/human/H = user
 	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)
+
+/obj/item/make_explosion(devastation_range, heavy_impact_range, light_impact_range, flash_range = null, flame_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = TRUE)
+	var/list/reduction_params = get_explosion_reduction()
+	var/explosionReductionMultiplier = reduction_params[1]
+	var/list/doubleTrouble = reduction_params[2]
+
+	if(doubleTrouble.len)
+		if(devastation_range) //Double trouble for a Hero
+			SSexplosions.high_mov_atom += doubleTrouble
+		else if(heavy_impact_range)
+			SSexplosions.med_mov_atom += doubleTrouble
+		else
+			SSexplosions.low_mov_atom += doubleTrouble
+
+	devastation_range = round(devastation_range * explosionReductionMultiplier)
+	heavy_impact_range = round(heavy_impact_range * explosionReductionMultiplier)
+	light_impact_range = round(light_impact_range * explosionReductionMultiplier)
+	flash_range = round(flash_range * explosionReductionMultiplier)
+	flame_range = round(flame_range * explosionReductionMultiplier)
+
+	..(devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range, adminlog, ignorecap, silent, smoke)
+
+/obj/item/proc/get_explosion_reduction()
+	var/blastProtectionMultiplier = 1
+	var/turf/epicenter = get_turf(src)
+	var/list/doubleTrouble = list()
+	for(var/mob/living/carbon/human/H in epicenter.contents)
+		if(!(H.lying && !H.timeofdeath) || H.layer < layer) //Mob is lying and is alive (Deadmen can't be heroes) and not under us somewhere (under the table)
+			continue
+
+		doubleTrouble += H //double trouble for heroes
+
+		if(src in H.l_hand || src in H.r_hand)
+			blastProtectionMultiplier -= 0.2 //Mob is holding the grenade under himself
+			doubleTrouble += H //tripple trouble for those heroes amongst heroes
+
+		blastProtectionMultiplier -= 0.3 //30% reduction for a single hero
+		if(blastProtectionMultiplier <= 0.6) //40% reduction max for balance purpose +20% if mob is holding the grenade in hands
+			blastProtectionMultiplier = 0.6
+			break
+
+	return list(blastProtectionMultiplier, doubleTrouble)
