@@ -21,7 +21,7 @@
 
 	var/savedByHero = FALSE
 	for(var/mob/living/carbon/human/H in flashbang_turf.contents)
-		if(!(H.lying && !H.timeofdeath)) //Mob is lying and is alive (Deadmen can't be heroes)
+		if(!(H.lying && !H.timeofdeath) || H.layer < layer) //Mob is lying and is alive (Deadmen can't be heroes) and not under us somewhere (under the table)
 			continue
 
 		savedByHero = TRUE

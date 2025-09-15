@@ -1111,18 +1111,21 @@
 	var/blastProtectionMultiplier = 1
 	var/turf/epicenter = get_turf(src)
 	var/list/doubleTrouble = list()
+	if(!isturf(loc))
+		doubleTrouble += loc
+		blastProtectionMultiplier -= 0.1 //Grenade is in something (bag, closet)
+
 	for(var/mob/living/carbon/human/H in epicenter.contents)
 		if(!(H.lying && !H.timeofdeath) || H.layer < layer) //Mob is lying and is alive (Deadmen can't be heroes) and not under us somewhere (under the table)
 			continue
 
 		doubleTrouble += H //double trouble for heroes
 
-		if(src in H.l_hand || src in H.r_hand)
+		if((src in H.l_hand) || (src in H.r_hand))
 			blastProtectionMultiplier -= 0.2 //Mob is holding the grenade under himself
-			doubleTrouble += H //tripple trouble for those heroes amongst heroes
 
-		blastProtectionMultiplier -= 0.3 //30% reduction for a single hero
-		if(blastProtectionMultiplier <= 0.6) //40% reduction max for balance purpose +20% if mob is holding the grenade in hands
+		blastProtectionMultiplier -= 0.3 //20% reduction for a single hero
+		if(blastProtectionMultiplier <= 0.6) //40% reduction max for balance purpose +10% if mob is holding the grenade in hands
 			blastProtectionMultiplier = 0.6
 			break
 
