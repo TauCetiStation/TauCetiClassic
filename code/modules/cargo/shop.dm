@@ -165,12 +165,8 @@ var/global/online_shop_profits = 0
 		if(istype(Console, /obj/machinery/computer/cargo/request))
 			continue
 
-		var/static/list/category2color = list(
-
-		)
-
 		var/color_string = ""
-		if(category2color[Lot.category])
+		if(global.shop_category2color[Lot.category])
 			color_string = " ([category2color[Lot.category]])"
 
 		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
