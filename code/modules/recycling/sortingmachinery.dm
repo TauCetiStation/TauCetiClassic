@@ -533,10 +533,7 @@
 			if(ID)
 				lot_account_number = ID.associated_account_number
 
-	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
-	target.verbs += /obj/proc/remove_price_tag
-
-	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+	target.add_price_tag(lot_description, lot_price, lot_category, lot_account_number)
 
 	if(next_instruction < world.time)
 		next_instruction = world.time + 30 SECONDS
