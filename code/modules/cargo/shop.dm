@@ -320,6 +320,23 @@ var/global/online_shop_profits = 0
 
 	return Item
 
+/proc/object2onlineshop_package(obj/Item)
+	var/lot_name = Item.name
+	var/lot_desc = Item.price_tag["description"]
+	var/lot_price = Item.price_tag["price"]
+	var/lot_category = Item.price_tag["category"]
+	var/lot_account = Item.price_tag["account"]
+	var/item_icon = bicon(Item)
+
+	Item = global.shop_object2package(Item)
+
+	if(global.shop_category2color[lot_category])
+		Item.color = global.shop_category2color[lot_category]
+
+	global.create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+
+	return Item
+
 var/global/list/random_gruztorg_items = list()
 ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 /obj/random_shop_item
@@ -343,19 +360,7 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 
 	Item.add_price_tag(Item.desc, new_price, get_item_shop_category(Item), global.cargo_account.account_number)
 
-	var/lot_name = Item.name
-	var/lot_desc = Item.price_tag["description"]
-	var/lot_price = Item.price_tag["price"]
-	var/lot_category = Item.price_tag["category"]
-	var/lot_account = Item.price_tag["account"]
-	var/item_icon = bicon(Item)
-
-	Item = global.shop_object2package(Item)
-
-	if(global.shop_category2color[lot_category])
-		Item.color = global.shop_category2color[lot_category]
-
-	global.create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+	Item = global.object2onlineshop_package(Item)
 
 	Item.pixel_x = rand(-10, 10)
 	Item.pixel_y = rand(-10, 10)

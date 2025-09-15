@@ -1059,19 +1059,7 @@
 	return ..()
 
 /obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, obj/Item)
-	var/lot_name = Item.name
-	var/lot_desc = Item.price_tag["description"]
-	var/lot_price = Item.price_tag["price"]
-	var/lot_category = Item.price_tag["category"]
-	var/lot_account = Item.price_tag["account"]
-	var/item_icon = bicon(Item)
-
-	Item = global.shop_object2package(Item)
-
-	if(global.shop_category2color[lot_category])
-		Item.color = global.shop_category2color[lot_category]
-
-	global.create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+	Item = global.object2onlineshop_package(Item)
 
 	Item.forceMove(H)
 
