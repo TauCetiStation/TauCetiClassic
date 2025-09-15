@@ -292,7 +292,8 @@
 
 	if(!breath)
 		var/static/datum/gas_mixture/vacuum //avoid having to create a new gas mixture for each breath in space
-		if(!vacuum) vacuum = new
+		if(!vacuum)
+			vacuum = new
 
 		breath = vacuum //still nothing? must be vacuum
 
