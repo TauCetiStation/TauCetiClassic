@@ -515,58 +515,39 @@ SUBSYSTEM_DEF(shuttle)
 	var/itemType = order["type"]
 
 	var/sender = order["sender"]
-	var/datum/money_account/receiver_account = get_account(order["receiver_account"])
+	var/receiver_number = order["receiver"]
+	var/datum/money_account/receiver_account = get_account(receiver_number)
 	if(!receiver_account || !sender || !itemType)
 		return
 
-	var/receiver = receiver_account.owner_name
+	var/receiver_name = receiver_account.owner_name
 
 	var/obj/item/Item = new itemType(pickedloc)
 
-	var/lot_name = "Посылка для [receiver]"
-	var/lot_desc = "Отправитель - [sender]"
-	var/lot_price = 5
-	var/lot_category = "Разное"
-	var/lot_account = cargo_account.account_number
-	var/item_icon
+	Item.add_price_tag("Отправитель - [sender]", 5, "Разное", global.cargo_account.account_number)
 
-	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(pickedloc)
-	P.w_class = Item.w_class
-	var/i = round(Item.w_class)
-	if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-		if(istype(Item, /obj/item/pizzabox))
-			var/obj/item/pizzabox/B = Item
-			P.icon_state = "deliverypizza[length(B.boxes)]"
-		else
-			P.icon_state = "deliverycrate[i]"
-
-		item_icon = bicon(P)
-		P.lot_lock_image = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
-		P.lot_lock_image.appearance_flags = RESET_COLOR
-		P.add_overlay(P.lot_lock_image)
-	P.modify_max_integrity(75)
-	P.atom_fix()
-	P.damage_deflection = 25
-	Item.loc = P
-	Item = P
-
-	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", lot_price)
-
-	Item.color = "white"
-
-	global.shop_categories[lot_category]++
-
-	Item.name = "Посылка номер: [global.online_shop_number]"
-	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
-
-	var/obj/item/smallDelivery/Package = Item
-	Package.lot_number = Lot.number
-
-	order_onlineshop_item(receiver, receiver_account.account_number, Lot, station_name_ru(), forced = TRUE)
-	receiver_account.shopping_cart["[Lot.number]"] = Lot.to_list()
+	Item = global.object2onlineshop_package(Item, forceColor = "white", hideIcon = TRUE)
 
 	Item.pixel_x = rand(-10, 10)
 	Item.pixel_y = rand(-10, 10)
+
+	var/lot_number
+	if(istype(Item, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/Delivery = Item
+		lot_number = Delivery.lot_number
+	else
+		var/obj/structure/bigDelivery/Delivery = Item
+		lot_number = Delivery.lot_number
+
+	if(!lot_number)
+		return Item
+
+	var/datum/shop_lot/Lot = global.online_shop_lots[lot_number]
+
+	order_onlineshop_item(receiver_name, receiver_number, Lot, station_name_ru(), forced = TRUE)
+	receiver_account.shopping_cart["[lot_number]"] = Lot.to_list()
+
+	Item.name = "Посылка для [receiver_name]"
 
 	return Item
 
