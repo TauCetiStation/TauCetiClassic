@@ -208,34 +208,27 @@
 	if (isitem(O))
 		var/obj/item/I = target
 		if (src.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))	//Aaannd wrap it up!
+			I.add_fingerprint(usr)
+			I = I.wrap_up(texture_name, details_name)
+			if(!I)
+				return
 			if(!istype(I.loc, /turf))
 				if(user.client)
 					user.client.screen -= I
-			P.w_class = I.w_class
-			var/i = round(I.w_class)
-			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-				if(istype(I, /obj/item/pizzabox))
-					var/obj/item/pizzabox/B = I
-					P.icon_state = "deliverypizza[length(B.boxes)]"
-				else
-					P.icon_state = "deliverycrate[i]"
-			P.add_texture(texture_name, details_name)
-			I.loc = P
-			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
 			add_fingerprint(usr)
 			src.amount -= 1
+
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
 		if (src.amount > 3 && !C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycrate"
-			P.add_texture(texture_name, details_name)
-			C.loc = P
+			if(!C.wrap_up(texture_name, details_name))
+				return
+
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
+
 	else if (istype (O, /obj/structure/closet))
 		var/obj/structure/closet/C = target
 		if(src.amount < 3)
@@ -245,10 +238,9 @@
 			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
 			return
 		else if (!C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.add_texture(texture_name, details_name)
-			C.welded = 1
-			C.loc = P
+			if(!C.wrap_up(texture_name, details_name))
+				return
+
 			src.amount -= 3
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
@@ -271,15 +263,10 @@
 		to_chat(user, "[target] не даёт себя упаковать.")
 		return
 
-	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(H.loc))
-	P.icon_state = "deliveryhuman"
-	P.add_texture(texture_name, details_name)
-	src.amount -= 3
+	if(!H.wrap_up(texture_name, details_name))
+		return
 
-	if(H.client)
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = P
-	H.loc = P
+	src.amount -= 3
 
 	H.log_combat(user, "завёрнут в [CASE(src, ACCUSATIVE_CASE)]")
 

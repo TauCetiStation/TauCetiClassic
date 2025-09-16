@@ -579,4 +579,7 @@
 			rad_power *= sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rad_power, distance_rad_signal)
 
+/atom/movable/proc/wrap_up(texture_name = "cardboard", details_name = null)
+	return FALSE
+
 #undef GEIGER_RANGE

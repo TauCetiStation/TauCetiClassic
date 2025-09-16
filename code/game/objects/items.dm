@@ -1085,3 +1085,18 @@
 	. = ..()
 	var/mob/living/carbon/human/H = user
 	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)
+
+/obj/item/wrap_up(texture_name = "cardboard", details_name = null)
+	var/i = round(w_class)
+	if(i < SIZE_MINUSCULE || i > SIZE_BIG)
+		return FALSE
+
+	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
+	P.w_class = w_class
+	P.icon_state = "deliverycrate[i]"
+
+	P.add_texture(texture_name, details_name)
+
+	forceMove(P)
+
+	return P

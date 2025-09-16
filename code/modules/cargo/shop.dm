@@ -249,67 +249,29 @@ var/global/online_shop_profits = 0
 /proc/shop_object2package(obj/Item)
 	var/itemPixelX = Item.pixel_x
 	var/itemPixelY = Item.pixel_y
-	if(isitem(Item))
-		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(Item.loc)
-		P.w_class = Item.w_class
-		var/i = round(Item.w_class)
-		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-			if(istype(Item, /obj/item/pizzabox))
-				var/obj/item/pizzabox/B = Item
-				P.icon_state = "deliverypizza[length(B.boxes)]"
-			else
-				P.icon_state = "deliverycrate[i]"
-			P.lot_lock_image = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
-			P.lot_lock_image.appearance_flags = RESET_COLOR
-			P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		Item.loc = P
-		Item = P
-	else if(istype(Item, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = Item
-		if(C.opened)
-			C.close()
-		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-		P.icon_state = "deliverycrate"
-		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycrate-shop")
+
+
+	var/obj/Package = Item.wrap_up()
+	if(!Package)
+		return
+
+	if(istype(Package, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/P = Package
+		P.lot_lock_image = image('icons/obj/package_wrap.dmi', "[P.icon_state]-shop")
 		P.lot_lock_image.appearance_flags = RESET_COLOR
 		P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		C.loc = P
-		Item = P
-	else if(istype(Item, /obj/structure/closet))
-		var/obj/structure/closet/C = Item
-		if(C.opened)
-			C.close()
-		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-		P.icon_state = "deliverycloset"
-		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycloset-shop")
-		P.lot_lock_image.appearance_flags = RESET_COLOR
-		P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		C.welded = 1
-		C.loc = P
-		Item = P
-	else if(istype(Item, /obj/structure))
-		var/obj/structure/S = Item
-		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
-		P.icon_state = "deliverystructure"
-		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverystructure-shop")
-		P.lot_lock_image.appearance_flags = RESET_COLOR
-		P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		S.loc = P
-		Item = P
 	else
-		return FALSE
+		var/obj/structure/bigDelivery/P = Package
+		P.lot_lock_image = image('icons/obj/package_wrap.dmi', "[P.icon_state]-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
+
+
+	Package.modify_max_integrity(75)
+	Package.atom_fix()
+	Package.damage_deflection = 25
+
+	Item = Package
 
 	Item.pixel_x = itemPixelX
 	Item.pixel_y = itemPixelY
