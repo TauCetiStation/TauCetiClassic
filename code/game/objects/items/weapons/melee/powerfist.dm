@@ -57,7 +57,7 @@
 		return ..()
 
 /obj/item/weapon/melee/powerfist/attack_self(mob/user)
-	//if (user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED))
+	//if (user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED))  //non tritor can effective use this if he is an engineer or atmostech
 		fisto_setting = 1 + (fisto_setting % 3)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]й режим.</span>")
@@ -95,7 +95,7 @@
 
 /obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user, def_zone)
 	if(!tank)
-		to_chat(user,"<span class='warning'>\The [src] can't operate without a source of gas!</span>") //нужно больше золота
+		to_chat(user,"<span class='warning'>Для работы нужен баллон с газом!</span>")
 		return FALSE
 
 	var/initial_pressure = tank.air_contents.return_pressure()
@@ -116,7 +116,7 @@
 		consumed_pressure = M.return_pressure()
 
 	if(consumed_pressure < POWERFIST_MIN_PRESSURE)
-		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")//нужно больше золота
+		to_chat(user,"<span class='warning'>Ударный поршень [CASE(src, GENITIVE_CASE)] тихо шипит, для его работы нужно больше газа в баллоне!</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 		return FALSE
 
@@ -143,7 +143,6 @@
 		if(INTENT_PUSH)
 			agony = 0.75 * force
 			force = 0.25 * force
-			//target.Weaken(0.5 * fisto_setting) //типо головокружение чтоб об стены бился, и чтоб не догнали
 			if(!(BP_L_ARM == def_zone) && !(BP_R_ARM == def_zone))
 				target.throw_at(throw_target,2 * fisto_setting + punch, 1)
 				target.MakeConfused(0.2 * fisto_setting)
@@ -151,9 +150,9 @@
 			agony = 0.25 * force
 			force = 0.5 * force
 			if(iscarbon(target))
-				target.crawling = 1
+				target.crawling = TRUE
 			else
-				target.Stun(0.3 * fisto_setting) //типо обездвижить чтобы не догнал Кравл
+				target.Stun(0.3 * fisto_setting)
 		if(INTENT_HARM)
 			agony = 0
 			target.throw_at(throw_target, fisto_setting - 1, 1)
@@ -177,19 +176,17 @@
 			hand_item = target.l_hand
 			if(hand_item && (user.a_intent == INTENT_PUSH))
 				target.drop_l_hand() // else not work
-				//target.visible_message("<span class='notice'>hand_item = [hand_item] ")
 				hand_item.throw_at(throw_target, fisto_setting ** 2 , 1)
 
 		if(BP_R_ARM)
 			hand_item = target.r_hand
 			if(hand_item && (INTENT_PUSH == user.a_intent))
 				target.drop_r_hand()
-				//target.visible_message("<span class='notice'>hand_item = [hand_item] ")
 				hand_item.throw_at(throw_target, fisto_setting ** 2 , 1)
 		if(BP_L_LEG)
-			target.crawling = 1  // need paralaze_leg or fake_break_leg
+			target.crawling = TRUE  // need paralaze_leg or fake_break_leg
 		if(BP_R_LEG)
-			target.crawling = 1
+			target.crawling = TRUE
 
 	var/success = ..()
 	//force = base_force
@@ -204,7 +201,6 @@
 		if(agony > 0)
 			target.apply_effect(agony, AGONY)
 
-		//target.throw_at(throw_target, 5 * punch, 1)
 		return TRUE
 	return FALSE
 
