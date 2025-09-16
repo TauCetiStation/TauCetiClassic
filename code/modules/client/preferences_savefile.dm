@@ -795,7 +795,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]         >> use_skirt
 	S["pda_ringtone"]      >> chosen_ringtone
 	S["pda_custom_melody"] >> custom_melody
-	S["family_members"]    >> family_members
 
 	//Load prefs
 	S["alternate_option"] >> alternate_option
@@ -882,7 +881,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
 	custom_melody = sanitize(custom_melody, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
-	family_members = sanitize_integer(family_members, 0, 127, initial(family_members))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
@@ -997,7 +995,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]             << use_skirt
 	S["pda_ringtone"]          << chosen_ringtone
 	S["pda_custom_melody"]     << custom_melody
-	S["family_members"]        << family_members
 	//Write prefs
 	S["alternate_option"]      << alternate_option
 	S["job_preferences"]       << job_preferences

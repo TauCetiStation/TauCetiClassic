@@ -189,8 +189,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/chosen_ringtone = "Flip-Flap"
 	var/custom_melody = "E7,E7,E7"
 
-	var/family_members = 12 //Mother and Father by default
-
 	var/datum/guard/guard = null
 
 /datum/preferences/New(client/C)
