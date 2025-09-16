@@ -251,7 +251,7 @@ var/global/online_shop_profits = 0
 	var/itemPixelY = Item.pixel_y
 
 
-	var/obj/Package = Item.wrap_up()
+	var/obj/Package = Item.try_wrap_up()
 	if(!Package)
 		return
 
@@ -288,7 +288,7 @@ var/global/online_shop_profits = 0
 	if(!hideIcon)
 		item_icon = bicon(Item)
 
-	Item = global.shop_object2package(Item)
+	Item = shop_object2package(Item)
 
 	if(forceColor)
 		Item.color = forceColor
@@ -298,7 +298,7 @@ var/global/online_shop_profits = 0
 	if(hideIcon)
 		item_icon = bicon(Item)
 
-	global.create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+	create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
 
 	return Item
 
@@ -322,10 +322,9 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
 	var/new_price = market_price ? round(market_price * pick(1.1, 1.2, 1.3)) : 50
 
-
 	Item.add_price_tag(Item.desc, new_price, get_item_shop_category(Item), global.cargo_account.account_number)
 
-	Item = global.object2onlineshop_package(Item)
+	Item = object2onlineshop_package(Item)
 
 	Item.pixel_x = rand(-10, 10)
 	Item.pixel_y = rand(-10, 10)

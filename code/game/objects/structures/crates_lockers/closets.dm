@@ -300,7 +300,7 @@
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
 
-/obj/structure/closet/wrap_up(texture_name = "cardboard", details_name = null)
+/obj/structure/closet/try_wrap_up(texture_name = "cardboard", details_name = null)
 	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
 	P.icon_state = "deliverycloset"
 	P.add_texture(texture_name, details_name)
