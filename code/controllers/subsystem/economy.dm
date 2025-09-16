@@ -93,8 +93,6 @@ SUBSYSTEM_DEF(economy)
 
 	monitor_cargo_shop()
 
-	generate_new_crew_mail()
-
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
 	announcer.config(list("Supply" = 1))
 	announcer.autosay("Выплата дивидендов через 1 минуту. Сконцентрируйте максимальное количество капитала на счету Карго к тому моменту.", "StockBond", "Supply", freq = radiochannels["Supply"])
