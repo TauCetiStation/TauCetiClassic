@@ -142,8 +142,6 @@
 		ground_zero.assume_air(air_contents)
 		ground_zero.hotspot_expose(1000, 125)
 
-	loc = null
-
 	if(master)
 		qdel(master)
 	qdel(src)
