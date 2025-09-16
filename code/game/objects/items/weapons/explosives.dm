@@ -58,13 +58,15 @@
 		return
 	if(ismob(target) || isobj(target))
 		location = target.loc
+
+	target.make_explosion(0, 0, 2, 3)
+
 	if(iswallturf(target))
 		var/turf/simulated/wall/W = target
 		W.dismantle_wall(1)
 	else
 		target.ex_act(EXPLODE_DEVASTATE)
 
-	make_explosion(0, 0, 2, 3)
 	if(target && !QDELETED(target))
 		target.cut_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
 	if(src)

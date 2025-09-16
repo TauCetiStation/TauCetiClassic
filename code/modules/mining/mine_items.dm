@@ -504,9 +504,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			if(target)
 
 				if(istype(target, /turf/simulated/mineral))
-					make_explosion(0, 7, 4)
+					target.make_explosion(0, 7, 4)
 				else
-					make_explosion(0, 0, 4)
+					target.make_explosion(0, 0, 4)
 
 				if(iswallturf(target))
 					var/turf/simulated/wall/W = target
