@@ -131,11 +131,9 @@
 
 	force = 0.5 * base_force + base_force * punch //harm 
 	
-	if((user == /mob/living/carbon && target == /mob/living/carbon/human/unathi) || (user == /mob/living/carbon && target == /mob/living/carbon/human/unathi))
-		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+	if((user.get_species() == HUMAN && target.get_species() == UNATHI) || (target.get_species() == HUMAN && user.get_species() == UNATHI))
 		playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")//нужно больше золота
+		force += 5
 	
 	switch(user.a_intent)
 		if(INTENT_HELP )
@@ -175,7 +173,7 @@
 				playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//звук поджопника
 			else if(isloyal(user) || isloyal(target))
 				playsound(src, 'sound/voice/mob/pain/female/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//элитный поджопник
-		if(BP_L_ARM)
+		if(BP_L_ARM)	// need paralaze_arm or fake_break_arm
 			hand_item = target.l_hand
 			if(hand_item && (user.a_intent == INTENT_PUSH))
 				target.drop_l_hand() // else not work
@@ -189,7 +187,7 @@
 				//target.visible_message("<span class='notice'>hand_item = [hand_item] ")
 				hand_item.throw_at(throw_target, fisto_setting ** 2 , 1)
 		if(BP_L_LEG)
-			target.crawling = 1  //или просто замедление ,паралич ноги
+			target.crawling = 1  // need paralaze_leg or fake_break_leg
 		if(BP_R_LEG)
 			target.crawling = 1
 
