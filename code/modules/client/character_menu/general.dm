@@ -138,7 +138,6 @@
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
-
 	. += 								"</td>"
 	. += 							"</tr>"
 	. += 						"</table>"	//Submenu table end
@@ -259,8 +258,6 @@
 					use_skirt = pick(TRUE, FALSE)
 				if("ringtone")
 					chosen_ringtone = pick(global.ringtones_by_names)
-				if("family")
-					family_members = rand(0, 127)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
