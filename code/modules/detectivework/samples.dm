@@ -54,41 +54,41 @@
 	inuse = TRUE
 	to_chat(user, "<span class='notice'>You start taking a sample from [H].</span>")
 	add_fingerprint(user)
-	if(do_after(user, 2 SECONDS, target = user))
-		if(!user.Adjacent(H))
-			to_chat(user, "<span class='warning'>They moved away!</span>")
-			inuse = FALSE
-			return
-		if(!BP || BP.is_stump)
-			to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
-			inuse = FALSE
-			return
-		var/obj/item/clothing/J = get_target_sample_protection(H, BP.body_part)
-		if(J)
-			to_chat(user, "<span class='warning'>[H] has [J] covering their [BP.name].</span>")
-			inuse = FALSE
-			return
-		var/target_dna = list()
-		user.visible_message("<span class='notice'>[user] takes a sample from [H] with a swab.</span>")
-		if(!H.dna || !H.dna.unique_enzymes)
-			target_dna = list()
-		else
-			target_dna[H.dna.unique_enzymes] = H.dna.b_type
-		if(!dispenser)
-			dna = target_dna
-			set_used(H)
-		else
-			var/obj/item/weapon/swab/S = new(get_turf(user))
-			S.dna = target_dna
-			S.set_used(H)
-			if(ismob(loc))
-				var/mob/N = loc
-				N.put_in_hands(S)
-		inuse = FALSE
-		return TRUE
-	else
+	if(!do_after(user, 2 SECONDS, target = user))
 		user.visible_message("<span class='warning'>[user] is trying to take a sample from [H], but fails.</span>")
+		inuse = FALSE
+		return
+	if(!user.Adjacent(H))
+		to_chat(user, "<span class='warning'>They moved away!</span>")
+		inuse = FALSE
+		return
+	if(!BP || BP.is_stump)
+		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
+		inuse = FALSE
+		return
+	var/obj/item/clothing/J = get_target_sample_protection(H, BP.body_part)
+	if(J)
+		to_chat(user, "<span class='warning'>[H] has [J] covering their [BP.name].</span>")
+		inuse = FALSE
+		return
+	var/target_dna = list()
+	user.visible_message("<span class='notice'>[user] takes a sample from [H] with a swab.</span>")
+	if(!H.dna || !H.dna.unique_enzymes)
+		target_dna = list()
+	else
+		target_dna[H.dna.unique_enzymes] = H.dna.b_type
+	if(!dispenser)
+		dna = target_dna
+		set_used(H)
+	else
+		var/obj/item/weapon/swab/S = new(get_turf(user))
+		S.dna = target_dna
+		S.set_used(H)
+		if(ismob(loc))
+			var/mob/N = loc
+			N.put_in_hands(S)
 	inuse = FALSE
+	return TRUE
 
 /obj/item/weapon/swab/afterattack(atom/A, mob/user, proximity)
 	if(!proximity || istype(A, /obj/machinery/microscope))

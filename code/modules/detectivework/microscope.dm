@@ -77,63 +77,63 @@
 	to_chat(user, "<span class='notice'>Microscope buzzes while you start analyzing the [sample].</span>")
 
 	scanning = TRUE
-	if(do_after(user, 2 SECONDS, target = user))
+	if(!do_after(user, 2 SECONDS, target = user))
 		scanning = FALSE
-		if(!sample)
-			to_chat(user, "<span class='warning'>There is no sample!</span>")
-			return
-		if(stat & NOPOWER)
-			to_chat(user, "<span class='warning'>There is no power!</span>")
-			return
-		visible_message("<span class='notice'>Microscope starts printing a report.</span>")
-		var/obj/item/weapon/paper/report = new(get_turf(src))
-		report_num++
+		return
+	scanning = FALSE
+	if(!sample)
+		to_chat(user, "<span class='warning'>There is no sample!</span>")
+		return
+	if(stat & NOPOWER)
+		to_chat(user, "<span class='warning'>There is no power!</span>")
+		return
+	visible_message("<span class='notice'>Microscope starts printing a report.</span>")
+	var/obj/item/weapon/paper/report = new(get_turf(src))
+	report_num++
 
-		if(istype(sample, /obj/item/weapon/swab))
-			var/obj/item/weapon/swab/swab = sample
+	if(istype(sample, /obj/item/weapon/swab))
+		var/obj/item/weapon/swab/swab = sample
 
-			report.name = ("Forensic Report №[report_num]: [swab.name]")
-			report.info = "<b>Object analyzed:</b><br>[swab.name]<br><br>"
-			//dna data itself
-			var/data = "No data to analyze."
-			if(swab.dna != null)
-				data = "Spectrometric analysis of the provided sample revealed the presence of DNA strands in the amount of [swab.dna.len].<br><br>"
-				for(var/blood in swab.dna)
-					data += "<span class='notice'>Blood type: [swab.dna[blood]]<br>\nDNA: [blood]</span><br><br>"
-			else
-				data += "\nNo DNA found.<br>"
-			report.info += data
-		else if(istype(sample, /obj/item/weapon/forensic_sample/fibers))
-			var/obj/item/weapon/forensic_sample/fibers/fibers = sample
-			report.name = ("Forensic Report №[report_num]: [fibers.name]")
-			report.info = "<b>Object analyzed:</b><br>[fibers.name]<br><br>"
-			if(fibers.evidence)
-				report.info += "<br>A molecular analysis of the provided sample revealed the presence of unique fiber strings.<br><br>"
-				for(var/fiber in fibers.evidence)
-					report.info += "<span class='notice'>The most likely match: [fiber]</span><br><br>"
-			else
-				report.info += "No fibers found."
-		else if(istype(sample, /obj/item/weapon/forensic_sample/print))
-			var/obj/item/weapon/forensic_sample/print/print = sample
-			report.name = ("Forensic Report №[report_num]: [print.name]")
-			report.info = "<b>Object analyzed:</b><br>[print.name]<br><br>"
-			if(print.evidence && print.evidence.len)
-				report.info += "<br>A surface analysis identified the following unique fingerprint strings:<br><br>"
-				for(var/prints in print.evidence)
-					report.info += "<span class='notice'>Fingerprint: </span>"
-					report.info += "[prints]"
-					report.info += "<br>"
-			else
-				report.info += "There is no information about the analysis."
+		report.name = ("Forensic Report №[report_num]: [swab.name]")
+		report.info = "<b>Object analyzed:</b><br>[swab.name]<br><br>"
+		//dna data itself
+		var/data = "No data to analyze."
+		if(swab.dna != null)
+			data = "Spectrometric analysis of the provided sample revealed the presence of DNA strands in the amount of [swab.dna.len].<br><br>"
+			for(var/blood in swab.dna)
+				data += "<span class='notice'>Blood type: [swab.dna[blood]]<br>\nDNA: [blood]</span><br><br>"
+		else
+			data += "\nNo DNA found.<br>"
+		report.info += data
+	else if(istype(sample, /obj/item/weapon/forensic_sample/fibers))
+		var/obj/item/weapon/forensic_sample/fibers/fibers = sample
+		report.name = ("Forensic Report №[report_num]: [fibers.name]")
+		report.info = "<b>Object analyzed:</b><br>[fibers.name]<br><br>"
+		if(fibers.evidence)
+			report.info += "<br>A molecular analysis of the provided sample revealed the presence of unique fiber strings.<br><br>"
+			for(var/fiber in fibers.evidence)
+				report.info += "<span class='notice'>The most likely match: [fiber]</span><br><br>"
+		else
+			report.info += "No fibers found."
+	else if(istype(sample, /obj/item/weapon/forensic_sample/print))
+		var/obj/item/weapon/forensic_sample/print/print = sample
+		report.name = ("Forensic Report №[report_num]: [print.name]")
+		report.info = "<b>Object analyzed:</b><br>[print.name]<br><br>"
+		if(print.evidence && print.evidence.len)
+			report.info += "<br>A surface analysis identified the following unique fingerprint strings:<br><br>"
+			for(var/prints in print.evidence)
+				report.info += "<span class='notice'>Fingerprint: </span>"
+				report.info += "[prints]"
+				report.info += "<br>"
+		else
+			report.info += "There is no information about the analysis."
 
-		if(report)
-			report.update_icon()
-		if(sample)
-			sample.forceMove(get_turf(src))
-			sample = null
-			update_icon()
-	else
-		scanning = FALSE
+	if(report)
+		report.update_icon()
+	if(sample)
+		sample.forceMove(get_turf(src))
+		sample = null
+		update_icon()
 
 /obj/machinery/microscope/proc/remove_sample(mob/living/remover)
 	if(!istype(remover) || remover.incapacitated() || !Adjacent(remover))
