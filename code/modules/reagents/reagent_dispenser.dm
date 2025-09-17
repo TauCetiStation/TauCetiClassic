@@ -277,6 +277,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 			add_overlay("cups-empty")
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
+	..()
 	to_chat(user, "<span class='notice'>There are [cups] cups left in [src].</span>")
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/user)
