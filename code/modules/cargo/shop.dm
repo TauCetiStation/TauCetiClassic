@@ -250,7 +250,6 @@ var/global/online_shop_profits = 0
 	var/itemPixelX = Item.pixel_x
 	var/itemPixelY = Item.pixel_y
 
-
 	var/obj/Package = Item.try_wrap_up()
 	if(!Package)
 		return
