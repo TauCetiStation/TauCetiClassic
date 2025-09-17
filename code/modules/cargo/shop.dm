@@ -265,7 +265,6 @@ var/global/online_shop_profits = 0
 		P.lot_lock_image.appearance_flags = RESET_COLOR
 		P.add_overlay(P.lot_lock_image)
 
-
 	Package.modify_max_integrity(75)
 	Package.atom_fix()
 	Package.damage_deflection = 25
