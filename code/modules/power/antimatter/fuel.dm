@@ -57,8 +57,6 @@
 		qdel(src)
 		return
 
-	var/turf/ground_zero = get_turf(loc)
-
 	var/ground_zero_range = round(strength / 387)
 	make_explosion(ground_zero_range, ground_zero_range*2, ground_zero_range*3, ground_zero_range*4)
 

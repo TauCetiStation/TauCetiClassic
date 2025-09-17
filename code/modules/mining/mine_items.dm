@@ -493,7 +493,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		user.drop_item()
 		target = target
 		loc = null
-		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
 		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось [timer] [PLUR_SECONDS_LEFT(timer)].</span>")
 		spawn(timer*10)

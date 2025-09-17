@@ -56,8 +56,6 @@
 /obj/item/weapon/plastique/proc/prime_explosion(atom/target)
 	if(!target)
 		return
-	if(ismob(target) || isobj(target))
-		location = target.loc
 
 	target.make_explosion(0, 0, 2, 3)
 
