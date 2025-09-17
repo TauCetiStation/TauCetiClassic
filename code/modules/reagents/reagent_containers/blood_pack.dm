@@ -4,6 +4,7 @@
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "empty"
 	item_state_world = "empty_w"
+	item_state_inventory = "empty"
 	volume = 200
 
 	var/blood_type = null
@@ -22,12 +23,15 @@
 	switch(percent)
 		if(0 to 9)			
 			icon_state = "empty"
+			item_state_inventory = "empty"
 			item_state_world = "empty_w"
 		if(10 to 50) 		
 			icon_state = "half"
+			item_state_inventory = "half"
 			item_state_world = "half_w"
 		if(51 to INFINITY)	
 			icon_state = "full"
+			item_state_inventory = "full"
 			item_state_world = "full_w"
 	update_world_icon()
 
