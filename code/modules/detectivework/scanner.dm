@@ -230,6 +230,3 @@
 		log += "&nbsp;&nbsp;[msg]"
 	else
 		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
-
-/proc/get_timestamp()
-	return time2text(world.time + 432000, ":ss")

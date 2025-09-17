@@ -16,6 +16,16 @@
 	var/used = FALSE
 	var/inuse = FALSE
 
+/obj/item/weapon/swab/proc/get_target_sample_protection(mob/living/carbon/human/H, body_part)
+	var/list/protective_gear = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
+	for(var/obj/item/clothing/C in protective_gear)
+		if(body_part == HEAD) // we dont check C.body_parts_covered because some masks have it set to FALSE
+			if(C.flags & HEADCOVERSMOUTH || C.flags & MASKCOVERSMOUTH)
+				return C
+		else if(C.body_parts_covered & body_part)
+			return C
+	return FALSE
+
 /obj/item/weapon/swab/attack(mob/living/M, mob/user)
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is already used.</span>")
@@ -34,7 +44,7 @@
 	if(!BP || BP.is_stump)
 		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 		return
-	var/obj/item/clothing/C = H.can_take_sample(BP.body_part)
+	var/obj/item/clothing/C = get_target_sample_protection(H, BP.body_part)
 	if(C)
 		to_chat(user, "<span class='warning'>[H] has [C] covering their [BP.name].</span>")
 		return
@@ -53,7 +63,7 @@
 			to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 			inuse = FALSE
 			return
-		var/obj/item/clothing/J = H.can_take_sample(BP.body_part)
+		var/obj/item/clothing/J = get_target_sample_protection(H, BP.body_part)
 		if(J)
 			to_chat(user, "<span class='warning'>[H] has [J] covering their [BP.name].</span>")
 			inuse = FALSE
@@ -61,7 +71,7 @@
 		var/target_dna = list()
 		user.visible_message("<span class='notice'>[user] takes a sample from [H] with a swab.</span>")
 		if(!H.dna || !H.dna.unique_enzymes)
-			target_dna = null
+			target_dna = list()
 		else
 			target_dna[H.dna.unique_enzymes] = H.dna.b_type
 		if(!dispenser)
@@ -183,7 +193,6 @@
 		take_sample(user, A)
 	else
 		to_chat(user, "<span class='warning'>There is no [evidence_type] to sample from [A].</span>")
-	return
 
 /obj/item/weapon/forensic_sample_kit/powder
 	name = "fingerprint powder"
@@ -203,8 +212,8 @@
 	w_class = SIZE_MINUSCULE
 	var/list/evidence = list()
 
-/obj/item/weapon/forensic_sample/New(newloc, atom/supplied)
-	..(newloc)
+/obj/item/weapon/forensic_sample/atom_init(mapload, atom/supplied)
+	..(mapload)
 	if(supplied)
 		copy_evidence(supplied)
 		name = "[initial(name)] (\the [supplied])"

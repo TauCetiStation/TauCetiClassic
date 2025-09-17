@@ -9,7 +9,7 @@
 	idle_power_usage = 40
 
 	var/obj/item/sample = null
-	var/report_num = FALSE
+	var/report_num = 0
 	var/scanning = FALSE
 
 /obj/machinery/microscope/atom_init(mapload)
@@ -24,7 +24,7 @@
 	update_icon()
 
 /obj/machinery/microscope/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/swab)|| istype(O, /obj/item/weapon/forensic_sample/fibers) || istype(O, /obj/item/weapon/forensic_sample/print))
+	if(istype(O, /obj/item/weapon/swab) || istype(O, /obj/item/weapon/forensic_sample/fibers) || istype(O, /obj/item/weapon/forensic_sample/print))
 		if(panel_open)
 			to_chat(user, "<span class='warning'>The panel is open!</span>")
 			return
@@ -108,7 +108,7 @@
 			report.name = ("Forensic Report №[report_num]: [fibers.name]")
 			report.info = "<b>Object analyzed:</b><br>[fibers.name]<br><br>"
 			if(fibers.evidence)
-				report.info = "A molecular analysis of the provided sample revealed the presence of unique fiber strings.<br><br>"
+				report.info += "<br>A molecular analysis of the provided sample revealed the presence of unique fiber strings.<br><br>"
 				for(var/fiber in fibers.evidence)
 					report.info += "<span class='notice'>The most likely match: [fiber]</span><br><br>"
 			else
@@ -166,4 +166,9 @@
 /obj/machinery/microscope/power_change()
 	..()
 	update_icon()
-	return
+
+/obj/machinery/microscope/Destroy()
+	. = ..()
+	if(sample)
+		sample.forceMove(get_turf(src))
+		sample = null
