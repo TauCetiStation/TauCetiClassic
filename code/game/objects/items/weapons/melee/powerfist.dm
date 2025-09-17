@@ -2,7 +2,7 @@
 
 /obj/item/weapon/melee/powerfist
 	name = "power-fist"
-	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch. Definitely stolen from Unathi."
+	desc = "Металлическая перчатка с ударным поршневым механизмом наверху для дополнительной силы удара. Точно украдено у Унатхов."
 	cases = list("силовой кастет","силового кастета","силовому кастету","силовой кастет","силовым кастетом","силовом кастете")
 	icon_state = "powerfist_1"
 	item_state = "powerfist"
