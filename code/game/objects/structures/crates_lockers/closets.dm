@@ -305,7 +305,7 @@
 	P.icon_state = "deliverycloset"
 	P.add_texture(texture_name, details_name)
 
-	welded = 1
+	welded = TRUE
 
 	forceMove(P)
 
