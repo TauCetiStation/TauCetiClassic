@@ -29,48 +29,48 @@
 /obj/item/weapon/swab/attack(mob/living/M, mob/user)
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is already used.</span>")
-		return
+		return FALSE
 	if(inuse)
 		to_chat(user, "<span class='warning'>[src] is being used.</span>")
-		return
+		return FALSE
 	if(!ishuman(M))
 		to_chat(user, "<span class='warning'>You can't take a sample from [M] with [src].</span>")
-		return
+		return FALSE
 	var/mob/living/carbon/human/H = M
 	var/target_zone = user.get_targetzone()
 	if(!target_zone)
-		return
+		return FALSE
 	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 	if(!BP || BP.is_stump)
 		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
-		return
+		return FALSE
 	var/obj/item/clothing/C = get_target_sample_protection(H, BP.body_part)
 	if(C)
 		to_chat(user, "<span class='warning'>[H] has [C] covering their [BP.name].</span>")
-		return
+		return FALSE
 	if(H.isSynthetic(target_zone))
 		to_chat(user, "<span class='warning'>[H]'s [target_zone] is synthetic.</span>")
-		return
+		return FALSE
 	inuse = TRUE
 	to_chat(user, "<span class='notice'>You start taking a sample from [H].</span>")
 	add_fingerprint(user)
 	if(!do_after(user, 2 SECONDS, target = user))
 		user.visible_message("<span class='warning'>[user] is trying to take a sample from [H], but fails.</span>")
 		inuse = FALSE
-		return
+		return FALSE
 	if(!user.Adjacent(H))
 		to_chat(user, "<span class='warning'>They moved away!</span>")
 		inuse = FALSE
-		return
+		return FALSE
 	if(!BP || BP.is_stump)
 		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 		inuse = FALSE
-		return
+		return FALSE
 	var/obj/item/clothing/J = get_target_sample_protection(H, BP.body_part)
 	if(J)
 		to_chat(user, "<span class='warning'>[H] has [J] covering their [BP.name].</span>")
 		inuse = FALSE
-		return
+		return FALSE
 	var/target_dna = list()
 	user.visible_message("<span class='notice'>[user] takes a sample from [H] with a swab.</span>")
 	if(!H.dna || !H.dna.unique_enzymes)
@@ -213,7 +213,7 @@
 	var/list/evidence = list()
 
 /obj/item/weapon/forensic_sample/atom_init(mapload, atom/supplied)
-	..(mapload)
+	. = ..()
 	if(supplied)
 		copy_evidence(supplied)
 		name = "[initial(name)] (\the [supplied])"

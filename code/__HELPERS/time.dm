@@ -104,6 +104,3 @@ var/global/rollovercheck_last_timeofday = 0
 
 /proc/is_leap_year(year)
 	return (year && isnum(year) && (((year % 400) == 0) || ((year % 100 != 0) && (year % 4 == 0))))
-
-/proc/get_timestamp()
-	return time2text(world.time + 432000, ":ss")
