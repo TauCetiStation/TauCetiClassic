@@ -347,5 +347,9 @@
 	if(tgui_alert(usr, "Завершить создание голосования?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		choices.Cut()
 
+/datum/poll/custom/on_end()
+	..()
+	name = initial(name)
+
 /datum/vote_choice/custom
 	text = "Вариант ответа"
