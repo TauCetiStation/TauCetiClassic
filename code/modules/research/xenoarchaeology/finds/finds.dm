@@ -56,7 +56,7 @@
 	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(WT.use_tool(src, user, 20, volume = 50))
+		if(WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 			if(WT.isOn())
 				if(WT.get_fuel() >= 4)
 					if(inside)

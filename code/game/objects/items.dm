@@ -731,7 +731,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE, particle_type = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -762,6 +762,12 @@
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
 
+	var/particle_use_type = /particles/tool/generic
+	if(particle_type)
+		particle_use_type = particle_type
+	else if(!isnull(quality))
+		particle_use_type = target.particles_by_quality[quality]
+
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
@@ -771,7 +777,7 @@
 				return
 
 		else
-			if(!do_after(user, delay, target=target, can_move = can_move, extra_checks = tool_check))
+			if(!do_after(user, delay, target=target, can_move = can_move, extra_checks = tool_check, particle_type = particle_use_type))
 				return
 	else
 		// Invoke the extra checks once, just in case.

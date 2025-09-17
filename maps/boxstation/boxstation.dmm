@@ -9374,8 +9374,8 @@
 /obj/item/clothing/suit/batman,
 /obj/item/clothing/head/batman_helmet,
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
-	name = "3000k apc down";
+	custom_smartlight_preset = "default 4000k";
+	name = "4000k apc down";
 	pixel_y = -28
 	},
 /turf/simulated/floor/wood,
@@ -27474,6 +27474,7 @@
 "aWy" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/cakehat,
+/obj/item/station_map/box,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -28845,13 +28846,13 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aYX" = (
-/obj/structure/sign/map/left,
-/turf/simulated/wall,
-/area/station/storage/primary)
-"aYY" = (
 /obj/structure/sign/map/right,
 /turf/simulated/wall,
-/area/station/storage/primary)
+/area/station/hallway/secondary/arrival)
+"aYY" = (
+/obj/structure/sign/map/left,
+/turf/simulated/wall,
+/area/station/hallway/secondary/arrival)
 "aYZ" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
@@ -30444,9 +30445,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
+	custom_smartlight_preset = "default 4000k";
 	dir = 8;
-	name = "3000k apc left";
+	name = "4000k apc left";
 	pixel_x = -28
 	},
 /turf/simulated/floor/wood,
@@ -32102,9 +32103,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
+	custom_smartlight_preset = "default 4000k";
 	dir = 1;
-	name = "3000k apc top";
+	name = "4000k apc top";
 	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
@@ -32366,6 +32367,9 @@
 /area/station/medical/reception)
 "bfb" = (
 /obj/structure/table,
+/obj/item/station_map/box,
+/obj/item/station_map/box,
+/obj/item/station_map/box,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "bfc" = (
@@ -36174,7 +36178,9 @@
 	c_tag = "Cargo Office";
 	dir = 8
 	},
-/obj/structure/table,
+/obj/machinery/computer/vending{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -39813,6 +39819,9 @@
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap/present{
+	pixel_x = 16
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -46826,6 +46835,7 @@
 "bEU" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/trash/candle/red,
+/obj/item/station_map/box,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -54484,7 +54494,7 @@
 /area/station/maintenance/engineering)
 "bTh" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -64184,6 +64194,22 @@
 /obj/item/weapon/packageWrap{
 	pixel_y = 16
 	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/station_map/box{
+	pixel_x = 4;
+	pixel_y = -2
+	},
 /turf/simulated/floor{
 	dir = 0;
 	icon_state = "blue"
@@ -68836,8 +68862,8 @@
 "cKK" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
-	name = "3000k apc down";
+	custom_smartlight_preset = "default 4000k";
+	name = "4000k apc down";
 	pixel_y = -28
 	},
 /turf/simulated/floor/carpet/green,
@@ -76294,9 +76320,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jOv" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 4
-	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -77725,6 +77749,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"llJ" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "lmg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -93721,10 +93751,10 @@ bWt
 bWt
 bWt
 bWt
-iur
+odL
 iCC
 aGY
-iur
+odL
 aaa
 aaa
 aaa
@@ -97062,7 +97092,7 @@ aGy
 aGy
 aaa
 aaa
-odL
+aYY
 aGU
 aIm
 odL
@@ -97319,10 +97349,10 @@ bWt
 bWt
 bWt
 bWt
-iur
+aYX
 iCC
 aGY
-iur
+odL
 aaa
 aaa
 aaa
@@ -100672,7 +100702,7 @@ bkW
 uMv
 buD
 cri
-bkW
+llJ
 jOv
 qlZ
 qlZ
@@ -107343,7 +107373,7 @@ akR
 aJk
 aVl
 aWI
-aYX
+aFL
 bdv
 bdZ
 ipb
@@ -107600,7 +107630,7 @@ aSr
 aTN
 aVm
 aWK
-aYY
+aFL
 bdv
 coa
 tpw

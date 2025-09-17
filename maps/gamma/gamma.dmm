@@ -5317,11 +5317,23 @@
 /area/station/security/checkpoint)
 "ayy" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/crowbar,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/weapon/crowbar,
 /obj/item/weapon/folder/red,
 /turf/simulated/floor{
 	dir = 5;
@@ -5370,7 +5382,7 @@
 	icon_state = "2,0"
 	},
 /turf/environment/space,
-/area/shuttle/escape_pod6/transit)
+/area/shuttle/escape_pod2/station)
 "azw" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -6213,6 +6225,10 @@
 /area/station/maintenance/science)
 "aFN" = (
 /obj/structure/table/woodentable/fancy/black,
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
 /obj/item/weapon/flora/deskleaf{
 	pixel_y = 7
 	},
@@ -23546,11 +23562,23 @@
 /area/station/security/blueshield)
 "dVq" = (
 /obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/device/analyzer,
 /obj/item/wallclock{
 	pixel_y = 24
 	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/weapon/wrench,
+/obj/item/device/analyzer,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -30446,7 +30474,18 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table,
-/obj/machinery/recharger,
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/station_map/gamma{
+	pixel_x = 6;
+	pixel_y = 8
+	},
 /obj/item/weapon/packageWrap{
 	pixel_x = -2;
 	pixel_y = 11
@@ -30454,6 +30493,7 @@
 /obj/item/toy/figure/hop{
 	pixel_x = 10
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -42173,7 +42213,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/shuttle/escape_pod6/transit)
+/area/station/bridge/captain_quarters)
 "hzK" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/cargo{
@@ -83779,7 +83819,7 @@
 /area/station/rnd/tox_launch)
 "pMv" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -84034,7 +84074,7 @@
 	},
 /area/station/medical/hallway)
 "pOr" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table,
 /obj/structure/sign/poster/random{
 	pixel_x = -32
@@ -90690,6 +90730,10 @@
 /obj/effect/decal/turf_decal/metal{
 	dir = 1;
 	icon_state = "spline_plain"
+	},
+/obj/item/station_map/gamma{
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -105411,6 +105455,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/machinery/computer/vending,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -106642,7 +106687,7 @@
 	c_tag = "Cargo mail";
 	dir = 1
 	},
-/obj/item/weapon/wrapping_paper{
+/obj/item/weapon/packageWrap/present{
 	pixel_x = 4;
 	pixel_y = -1
 	},
@@ -108025,7 +108070,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/shuttle/escape_pod6/transit)
+/area/station/bridge/captain_quarters)
 "usu" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -108962,7 +109007,7 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "uDn" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "bar"

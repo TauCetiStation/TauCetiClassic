@@ -134,7 +134,6 @@
 /obj/item/weapon/holder/monkey
 	name = "monkey"
 	desc = "It's a monkey. Ook."
-	icon_state = "cat"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	flags = HEAR_PASS_SAY

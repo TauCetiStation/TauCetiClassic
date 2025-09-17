@@ -1,5 +1,31 @@
 //predominantly negative traits
 
+/datum/quirk/bad_back
+	name = QUIRK_BAD_BACK
+	desc = "Вам трудно носить на спине сумки и рюкзаки."
+	value = -2
+	mob_trait = TRAIT_BAD_BACK
+	gain_text = "<span class='danger'>Вам трудно переносить тяжести на спине.</span>"
+	lose_text = "<span class='notice'>Вы чувствуете, что ношение сумок и рюкзаков снова вам по плечу.</span>"
+
+
+
+/datum/quirk/fragile_bones
+	name = QUIRK_FRAGILE_BONES
+	desc = "Ваши кости в два раза хрупче обычного."
+	value = -3
+	mob_trait = TRAIT_FRAGILE_BONES
+	gain_text = "<span class='danger'>У вас очень хрупкие кости.</span>"
+	lose_text = "<span class='notice'>Ваши кости вновь крепки.</span>"
+	incompatible_species = list(IPC)
+
+/datum/quirk/fragile_bones/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		BP.min_broken_damage *= 0.5
+
+
+
 /datum/quirk/blindness
 	name = QUIRK_BLIND
 	desc = "Вы абсолютно слепы. Ничто не в силах это изменить."
@@ -73,8 +99,12 @@
 	)
 
 /datum/quirk/fatness/on_spawn()
+	// todo: copypaste from human metabolism
+	// but for some reason not adds fat metabolism factor?
+	// anyway better to replace fat trait with element mutation
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_body()
+	H.update_underwear()
 	H.update_mutations()
 	H.update_inv_w_uniform()
 	H.update_inv_wear_suit()
