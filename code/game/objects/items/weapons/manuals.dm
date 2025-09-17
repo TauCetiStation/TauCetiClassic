@@ -267,7 +267,7 @@
 	item_state = "book2"
 	author = "NanoTrasen"
 	title = "Proper Procedures for Investigations"
-	wiki_page = "Forensics_Guide"
+	wiki_page = "Guide_to_Forensics"
 
 //Civilian guides
 
