@@ -277,10 +277,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 			add_overlay("cups-empty")
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>There are [cups] cups left in [src].</span>"
+	to_chat(user, "<span class='notice'>There are [cups] cups left in [src].</span>")
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/user)
+	. = ..()
 	if(cups)
 		var/obj/item/weapon/reagent_containers/food/drinks/sillycup/cup = new /obj/item/weapon/reagent_containers/food/drinks/sillycup(get_turf(src))
 		user.put_in_hands(cup)
