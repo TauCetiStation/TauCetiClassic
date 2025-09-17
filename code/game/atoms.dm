@@ -398,28 +398,23 @@
 	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
 		return
 	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+
 		//Fibers~
-		add_fibers(M)
+		add_fibers(H)
+
+		//Hash this shit.
+		var/full_print = H.get_full_print()
 
 		//He has no prints!
-		if (FINGERPRINTS in M.mutations)
-			if(fingerprintslast != M.key)
-				LAZYADD(fingerprintshidden, "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]")
-				fingerprintslast = M.key
-			return FALSE		//Now, lets get to the dirty work.
-		var/mob/living/carbon/human/H = M
-		if(HAS_TRAIT(H, TRAIT_NO_FINGERPRINT)) // They don't leave readable fingerprints, but admins gotta know.
-			LAZYADD(fingerprintshidden, "(Mob has no fingerprints) Real name: [H.real_name], Key: [H.key]")
-			fingerprintslast = H.key
+		if (length(full_print) != 32 || (FINGERPRINTS in H.mutations) || HAS_TRAIT(H, TRAIT_NO_FINGERPRINT))
+			if(fingerprintslast != H.key) //Admins still gotta know
+				LAZYADD(fingerprintshidden, "(Has no fingerprints) Real name: [H.real_name], Key: [H.key]")
+				fingerprintslast = H.key
 			return FALSE
 
-		//Admins gotta know
-		if(fingerprintslast != M.key)
-			LAZYADD(fingerprintshidden,"\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
-			fingerprintslast = M.key
-
 		//First, make sure their DNA makes sense.
-		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
+		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 3*DNA_UI_LENGTH))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
 				H.dna.real_name = H.real_name
@@ -438,9 +433,6 @@
 		if(!fingerprints)
 			fingerprints = list()
 
-		//Hash this shit.
-		var/full_print = H.get_full_print()
-
 		// Add the fingerprints
 		if(prob(50)) // Has a probabilty to leave unrecognizable fingerprints
 			fingerprints[full_print] = full_print
@@ -450,7 +442,6 @@
 			fingerprints["Unrecognizable fingerprints"] = "Unrecognizable fingerprints"
 		return TRUE
 	return
-
 
 /atom/proc/transfer_fingerprints_to(atom/A)
 	// Make sure everything are lists.
