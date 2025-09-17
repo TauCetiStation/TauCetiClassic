@@ -33,6 +33,9 @@
 	new /obj/item/stack/medical/suture(src)
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit
+	item_state_world = null
+
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	name = "Combat first-aid small kit"
 	icon_state = "first_aid_kit_com"
