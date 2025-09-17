@@ -2100,7 +2100,6 @@
 /area/station/maintenance/atmos)
 "adv" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -8989,11 +8988,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
-"apc" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/cups,
-/turf/simulated/floor,
-/area/station/security/prison)
 "apd" = (
 /obj/structure/table,
 /turf/simulated/floor,
@@ -9867,7 +9861,6 @@
 /area/station/maintenance/auxsolarport)
 "aqz" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -16208,7 +16201,6 @@
 /area/station/civilian/gym)
 "aBl" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -52727,7 +52719,6 @@
 	c_tag = "Medbay Paramedic Dispatch";
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -55269,7 +55260,6 @@
 /area/station/engineering/minisat_secure_area)
 "jGn" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -93182,7 +93172,6 @@
 /area/station/engineering/minisat_secure_area)
 "sOe" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 5;
 	icon_state = "siding_wood_line"
@@ -104737,7 +104726,6 @@
 /area/station/aisat/teleport)
 "vNW" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -108499,7 +108487,6 @@
 /area/station/hallway/primary/central)
 "wLF" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -163540,7 +163527,7 @@ alo
 aoC
 ayU
 aoW
-apc
+apd
 apl
 apu
 uNs
