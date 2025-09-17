@@ -48289,7 +48289,7 @@
 /area/station/civilian/gym)
 "lhj" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -54637,7 +54637,6 @@
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/storage/box/cups,
 /obj/item/toy/plushie/tuxedo_cat,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
@@ -82201,8 +82200,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "tGv" = (
-/obj/structure/table,
-/obj/item/device/tagger/shop,
+/obj/machinery/computer/vending{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -86458,6 +86458,7 @@
 	pixel_y = 3;
 	stamp_message = "Cargo"
 	},
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},

@@ -9375,8 +9375,8 @@
 /obj/item/clothing/suit/batman,
 /obj/item/clothing/head/batman_helmet,
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
-	name = "3000k apc down";
+	custom_smartlight_preset = "default 4000k";
+	name = "4000k apc down";
 	pixel_y = -28
 	},
 /turf/simulated/floor/wood,
@@ -13911,7 +13911,6 @@
 /area/station/rnd/telesci)
 "axB" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
@@ -15582,7 +15581,6 @@
 /obj/structure/window/thin/reinforced,
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aAI" = (
@@ -20001,7 +19999,6 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/structure/bookcase/shelf{
 	pixel_y = 32
 	},
@@ -22073,7 +22070,6 @@
 	icon_state = "0-8"
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "apc right";
@@ -28346,7 +28342,6 @@
 /area/station/rnd/misc_lab)
 "aYb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "aYc" = (
@@ -29490,7 +29485,6 @@
 /area/station/bridge/ai_upload)
 "aZX" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurple"
@@ -30478,9 +30472,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
+	custom_smartlight_preset = "default 4000k";
 	dir = 8;
-	name = "3000k apc left";
+	name = "4000k apc left";
 	pixel_x = -28
 	},
 /turf/simulated/floor/wood,
@@ -32136,9 +32130,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
+	custom_smartlight_preset = "default 4000k";
 	dir = 1;
-	name = "3000k apc top";
+	name = "4000k apc top";
 	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
@@ -36211,7 +36205,9 @@
 	c_tag = "Cargo Office";
 	dir = 8
 	},
-/obj/structure/table,
+/obj/machinery/computer/vending{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -54526,7 +54522,7 @@
 /area/station/maintenance/engineering)
 "bTh" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -64111,7 +64107,6 @@
 /area/station/cargo/recycler)
 "cvb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -68895,8 +68890,8 @@
 "cKK" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	custom_smartlight_preset = "default 3000k";
-	name = "3000k apc down";
+	custom_smartlight_preset = "default 4000k";
+	name = "4000k apc down";
 	pixel_y = -28
 	},
 /turf/simulated/floor/carpet/green,
@@ -76353,9 +76348,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jOv" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 4
-	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -77784,6 +77777,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"llJ" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "lmg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -86455,7 +86454,6 @@
 /area/station/civilian/hydroponics)
 "vVm" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -100732,7 +100730,7 @@ bkW
 uMv
 buD
 cri
-bkW
+llJ
 jOv
 qlZ
 qlZ
