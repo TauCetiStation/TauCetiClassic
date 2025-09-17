@@ -165,7 +165,7 @@
 
 	max_integrity = 120
 
-	hit_particle = /particles/tool/digging/glass/phoron
+	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /obj/structure/window/thin/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)

@@ -87,7 +87,7 @@
 											QUALITY_SIGNALLING = null,
 										)
 
-	var/list/hit_particle = null
+	var/hit_particle_type = null
 
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()

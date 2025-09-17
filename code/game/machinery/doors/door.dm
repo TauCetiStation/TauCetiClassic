@@ -8,7 +8,7 @@ var/global/list/wedge_image_cache = list()
 	density = TRUE
 	can_block_air = TRUE
 
-	hit_particle = /particles/tool/digging/metal
+	hit_particle_type = /particles/tool/digging/metal
 
 	layer = DOOR_LAYER
 	var/base_layer = DOOR_LAYER

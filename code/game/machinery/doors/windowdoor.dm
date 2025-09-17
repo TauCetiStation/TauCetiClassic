@@ -15,7 +15,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	can_wedge_items = FALSE
 
-	hit_particle = /particles/tool/digging/glass
+	hit_particle_type = /particles/tool/digging/glass
 
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"

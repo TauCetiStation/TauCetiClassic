@@ -70,7 +70,7 @@ for reference:
 	anchored = TRUE
 	density = TRUE
 
-	hit_particle = /particles/tool/digging/wood
+	hit_particle_type = /particles/tool/digging/wood
 
 /obj/structure/barricade/wooden/deconstruct(disassembled)
 	new /obj/item/stack/sheet/wood(loc)

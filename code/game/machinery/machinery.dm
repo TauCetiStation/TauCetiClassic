@@ -112,7 +112,7 @@ Class Procs:
 	damage_deflection = 15
 	resistance_flags = CAN_BE_HIT
 
-	hit_particle = /particles/tool/digging/metal
+	hit_particle_type = /particles/tool/digging/metal
 
 	var/icon_state_active = 0
 	var/stat = 0

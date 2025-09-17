@@ -21,7 +21,7 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
-	hit_particle = /particles/tool/digging/metal
+	hit_particle_type = /particles/tool/digging/metal
 
 /obj/structure/windowsill/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))

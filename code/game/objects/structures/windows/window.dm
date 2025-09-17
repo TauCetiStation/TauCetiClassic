@@ -14,7 +14,7 @@
 	integrity_failure = 0.75
 	resistance_flags = CAN_BE_HIT
 
-	hit_particle = /particles/tool/digging/glass
+	hit_particle_type = /particles/tool/digging/glass
 
 	can_block_air = TRUE
 

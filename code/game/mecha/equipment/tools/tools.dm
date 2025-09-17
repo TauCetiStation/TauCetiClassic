@@ -125,8 +125,6 @@
 	particle_datum.change_dir(get_dir(get_turf(target), get_turf(src)))
 
 	if(do_after_cooldown(target))
-		Particle.delete_particle()
-
 		if(T == chassis.loc && src == chassis.selected)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
@@ -165,6 +163,7 @@
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
 
+	Particle.delete_particle()
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)

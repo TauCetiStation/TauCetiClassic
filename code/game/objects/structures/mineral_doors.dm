@@ -305,7 +305,7 @@
 	sheetType = /obj/item/stack/sheet/wood
 	operating_sound = 'sound/effects/doorcreaky.ogg'
 
-	hit_particle = /particles/tool/digging/wood
+	hit_particle_type = /particles/tool/digging/wood
 
 /obj/structure/mineral_door/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/fireaxe))

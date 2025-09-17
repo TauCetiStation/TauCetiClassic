@@ -152,7 +152,7 @@
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronglass
 
-	hit_particle = /particles/tool/digging/glass/phoron
+	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /**
  * Fulltile tinted
@@ -234,7 +234,7 @@
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronrglass
 
-	hit_particle = /particles/tool/digging/glass/phoron
+	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /**
  * Fulltile reinforced tinted

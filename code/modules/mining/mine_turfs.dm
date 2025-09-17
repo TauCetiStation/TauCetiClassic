@@ -37,7 +37,7 @@
 
 	var/global/list/rock_side_overlays
 
-	hit_particle = /particles/tool/digging
+	hit_particle_type = /particles/tool/digging
 
 /turf/simulated/mineral/atom_init(mapload)
 	. = ..()

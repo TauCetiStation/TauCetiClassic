@@ -16,7 +16,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_TAKE_DAMAGE, damage_amount, damage_type, damage_flag, sound_effect, attack_dir) & COMPONENT_NO_TAKE_DAMAGE)
 		return
 
-	if(hit_particle)
+	if(hit_particle_type)
 		play_attack_particle(attack_dir)
 
 	. = damage_amount
@@ -89,7 +89,7 @@
 			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /atom/proc/play_attack_particle(attack_dir)
-	var/obj/effect/abstract/particle_holder/Particle = new(get_turf(src), hit_particle, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	var/obj/effect/abstract/particle_holder/Particle = new(get_turf(src), hit_particle_type, PARTICLE_FADEOUT|PARTICLE_FLICK)
 
 	if(attack_dir)
 		var/particles/particle_datum = Particle.get_particle()
