@@ -141,6 +141,9 @@
 	#define EXAMINE_POSITION_AFTER_EVERYTHING 5
 	//End positions
 	#define COMPONENT_EXNAME_CHANGED 1
+
+/// from base of atom/CtrlShiftClick(): (mob/user)
+#define COMSIG_PARENT_CTRLSHIFTCLICKED "atom_ctrlshiftclicked"
 /// from base of atom/MouseDrop(): (/atom/over, /mob/user)
 #define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
 	#define COMPONENT_NO_MOUSEDROP 1
