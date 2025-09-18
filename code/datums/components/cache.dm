@@ -90,5 +90,5 @@
 	UnregisterSignal(parent_object, list(COMSIG_PARENT_CTRLSHIFTCLICKED, COMSIG_PARENT_QDELETING))
 
 	cache_storage.spill()
-	qdel(cache_storage)
+	QDEL_NULL(cache_storage)
 	return ..()
