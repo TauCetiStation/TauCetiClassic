@@ -404,7 +404,7 @@
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	WT.eyecheck(user)
-	if(WT.use_tool(src, user, 100, volume = 50))
+	if(WT.use_tool(src, user, 100, volume = 50, quality = QUALITY_WELDING))
 		return 1
 	return 0
 

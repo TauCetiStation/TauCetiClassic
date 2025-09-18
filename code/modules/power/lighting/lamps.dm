@@ -256,7 +256,7 @@
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(isscrewing(W))
-			if(W.use_tool(src, user, 20))
+			if(W.use_tool(src, user, 20, quality = QUALITY_SCREWING))
 				user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
 				deconstruct(TRUE)
