@@ -16,6 +16,7 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
+	item_state_world = "retractor_w"
 	m_amt = 10000
 	g_amt = 5000
 	flags = CONDUCT
@@ -31,6 +32,7 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
+	item_state_world = "hemostat_w"
 	m_amt = 5000
 	g_amt = 2500
 	flags = CONDUCT
@@ -47,6 +49,7 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
+	item_state_world = "cautery_w"
 	m_amt = 5000
 	g_amt = 2500
 	flags = CONDUCT
@@ -64,6 +67,7 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
+	item_state_world = "drill_w"
 	hitsound = list('sound/weapons/circsawhit.ogg')
 	m_amt = 15000
 	g_amt = 10000
@@ -88,6 +92,7 @@
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
+	item_state_world = "scalpel_w"
 	flags = CONDUCT
 	force = 10.0
 	sharp = 1
@@ -119,6 +124,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
 	icon_state = "scalpel_laser1_on"
+	item_state_world = "scalpel_laser1_on_w"
 	damtype = BURN
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	toolspeed = 1.2
@@ -127,6 +133,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks somewhat advanced."
 	icon_state = "scalpel_laser2_on"
+	item_state_world = "scalpel_laser2_on_w"
 	damtype = BURN
 	force = 12.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
@@ -135,6 +142,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks to be the pinnacle of precision energy cutlery!"
 	icon_state = "scalpel_laser3_on"
+	item_state_world = "scalpel_laser3_on_w"
 	damtype = BURN
 	force = 15.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
@@ -144,6 +152,7 @@
 	name = "incision management system"
 	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
 	icon_state = "scalpel_manager_on"
+	item_state_world = "scalpel_manager_on_w"
 	force = 7.5
 	toolspeed = 0.6
 	qualities = null
@@ -155,6 +164,7 @@
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
+	item_state_world = "saw_w"
 	hitsound = list('sound/weapons/circsawhit.ogg')
 	flags = CONDUCT
 	force = 15.0
@@ -177,6 +187,7 @@
 	name = "bone gel"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone-gel"
+	item_state_world = "bone-gel_w"
 	force = 0
 	w_class = SIZE_TINY
 	throwforce = 1.0
@@ -187,6 +198,7 @@
 	name = "FixOVein"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fixovein"
+	item_state_world = "fixovein_w"
 	force = 0
 	throwforce = 1.0
 	origin_tech = "materials=1;biotech=3"
@@ -199,6 +211,7 @@
 	name = "bone setter"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone setter"
+	item_state_world = "bone setter_w"
 	force = 8.0
 	throwforce = 9.0
 	throw_speed = 3
