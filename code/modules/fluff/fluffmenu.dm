@@ -327,7 +327,7 @@ var/global/list/editing_item_oldname_list = list()
 		if(icon_states.len == 0)
 			to_chat(user, "This icon has no states")
 			return
-		if(icon_states.len > 6)
+		if(icon_states.len > 12)
 			to_chat(user, "This icon has too many states")
 			return
 		if(I.Width() != 32 || I.Height() != 32)
