@@ -16,13 +16,14 @@ var/global/list/ventcrawl_machinery = list(
 
 	var/list/icon/pipes_shown = list()
 	var/is_ventcrawling = 0
+	// todo: replace with traits
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/next_play_vent = 0
 
 /mob/living/proc/can_ventcrawl()
 	if(!client)
 		return FALSE
-	if(!ventcrawler)
+	if(!ventcrawler && !HAS_TRAIT(src, TRAIT_VENTCRAWLER))
 		to_chat(src, "<span class='warning'>You don't possess the ability to ventcrawl!</span>")
 		return FALSE
 	if(incapacitated())
