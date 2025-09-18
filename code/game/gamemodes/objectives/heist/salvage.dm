@@ -2,18 +2,22 @@
 	var/str_target
 
 /datum/objective/heist/salvage/find_target()
+	var/loot = "an object"
 	switch(rand(1, 3))
 		if(1)
-			str_target = "metal"
+			str_target = /obj/item/stack/sheet/metal
 			target_amount = pick(150, 200)
+			loot = "металла"
 		if(2)
-			str_target = "glass"
+			str_target = /obj/item/stack/sheet/glass
 			target_amount = pick(150, 200)
+			loot = "стекла"
 		if(3)
-			str_target = "plasteel"
+			str_target = /obj/item/stack/sheet/plasteel
 			target_amount = pick(20, 30, 40, 50)
+			loot = "пластали"
 
-	explanation_text = "Ransack the station and escape with [target_amount] [str_target]."
+	explanation_text = "Разграбьте станцию и сбегите с [target_amount] листами [loot]."
 	return TRUE
 
 /datum/objective/heist/salvage/check_completion()
