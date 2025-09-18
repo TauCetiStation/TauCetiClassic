@@ -98,4 +98,3 @@
 			to_chat(user, "<span class='notice'>You have deactivated the collar.</span>")
 	else
 		to_chat(user, "<span class='warning'>You need to wear the collar around your neck to use it.</span>")
-	return
