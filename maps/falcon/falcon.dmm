@@ -22138,7 +22138,9 @@
 /turf/simulated/wall,
 /area/station/maintenance/science)
 "lVb" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
@@ -28079,7 +28081,9 @@
 	},
 /area/station/bridge/server)
 "qRj" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -34583,6 +34587,7 @@
 /area/station/maintenance/science)
 "xbK" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},

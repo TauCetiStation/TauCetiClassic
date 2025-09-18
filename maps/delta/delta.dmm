@@ -38317,6 +38317,7 @@
 "fJP" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},
@@ -93657,7 +93658,9 @@
 	},
 /area/station/rnd/mixing)
 "sVi" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -106557,7 +106560,9 @@
 	},
 /area/station/civilian/locker)
 "wln" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
