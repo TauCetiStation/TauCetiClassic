@@ -174,7 +174,7 @@
 
 			// We gathered everything. Display the results to the holder of the scanner.
 			var/found_something = FALSE
-			add_log("<B>[roundtimestamp()] - [target_name]</B>", FALSE)
+			add_log("<B>[worldtime2text()] - [target_name]</B>", FALSE)
 
 			// Fingerprints
 			if(length(fingerprints))
