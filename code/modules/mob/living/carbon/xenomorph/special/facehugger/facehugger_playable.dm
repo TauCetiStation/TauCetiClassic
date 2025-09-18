@@ -258,7 +258,7 @@ This is chestburster mechanic for damaging
 			qdel(src)
 		else
 			last_bite = world.time
-			M.adjustBruteLoss(rand(35, 65))
+			M.adjustBruteLoss(rand(150, 250))
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			M.Stun(8)
 			M.Weaken(8)
