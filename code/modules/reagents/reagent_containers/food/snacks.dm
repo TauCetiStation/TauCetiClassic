@@ -2581,10 +2581,6 @@
 	return ..()
 
 /obj/item/pizzabox/try_wrap_up(texture_name = "cardboard", details_name = null)
-	var/i = round(w_class)
-	if(i < SIZE_MINUSCULE || i > SIZE_BIG)
-		return FALSE
-
 	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
 	P.w_class = w_class
 	P.icon_state = "deliverypizza[length(boxes)]"
