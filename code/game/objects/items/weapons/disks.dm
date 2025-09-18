@@ -247,7 +247,6 @@
 /obj/item/weapon/disk/language
 	name = "language disk"
 	w_class = SIZE_TINY
-	var/obj/item/holder
 	var/language // the language we are adding using the language collar
 
 /obj/item/weapon/disk/language/atom_init()
@@ -256,11 +255,6 @@
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
 	. = ..()
-
-/obj/item/weapon/disk/language/Destroy()
-	. = ..()
-	QDEL_NULL(holder)
-	return
 
 /obj/item/weapon/disk/language/solcommon
 	name = "Sol Common Language Disk"

@@ -23,13 +23,11 @@
 			return
 		user.drop_from_inventory(I, src)
 		lang_disk = I
-		lang_disk.holder = src
 		to_chat(user, "<span class='notice'>You insert the [lang_disk] into [src]</span>")
 	else if(isscrewing(I))
 		if(!lang_disk)
 			to_chat(user, "<span class='notice'>There's no language disk to remove from the [src]</span>")
 			return
-		lang_disk.holder = null
 		if(!user.put_in_hands(lang_disk))
 			lang_disk.forceMove(get_turf(src))
 		lang_disk = null
@@ -63,6 +61,7 @@
 			M.take_damage(60, used_weapon = "Explosion")
 	explosion(get_turf(user), -1, -1, 2, 3)
 	qdel(src)
+
 /obj/item/clothing/neck/language_collar/proc/turn_off(mob/user)
 	if(working && lang_disk && lang_disk.language)
 		user.remove_language(lang_disk.language)
