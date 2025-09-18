@@ -1087,13 +1087,13 @@
 	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)
 
 /obj/item/try_wrap_up(texture_name = "cardboard", details_name = null)
-	var/i = round(w_class)
-	if(i < SIZE_MINUSCULE || i > SIZE_BIG)
+	var/size = round(w_class)
+	if(size < SIZE_MINUSCULE || size > SIZE_BIG)
 		return null
 
 	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
 	P.w_class = w_class
-	P.icon_state = "deliverycrate[i]"
+	P.icon_state = "deliverycrate[size]"
 
 	P.add_texture(texture_name, details_name)
 
