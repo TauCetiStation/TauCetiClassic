@@ -83,18 +83,15 @@
 /obj/item/clothing/neck/language_collar/attack_self(mob/user)
 	if(user.incapacitated())
 		return
-	if(!lang_disk || !lang_disk.language)
-		to_chat(user, "<span class='warning'>You need a language disk installed in the collar to use it.</span>")
-		return
-	if(slot_equipped == SLOT_NECK)
-		if(!working)
-			working = TRUE
-			old_default_language = user.default_language
-			user.add_language(lang_disk.language)
-			user.default_language = lang_disk.language
-			to_chat(user, "<span class='notice'>You have activated the collar.</span>")
-		else
-			turn_off(user)
-			to_chat(user, "<span class='notice'>You have deactivated the collar.</span>")
-	else
+	if(slot_equipped != SLOT_NECK && !language_collar)
 		to_chat(user, "<span class='warning'>You need to wear the collar around your neck to use it.</span>")
+		return
+	if(!working)
+		working = TRUE
+		old_default_language = user.default_language
+		user.add_language(lang_disk.language)
+		user.default_language = lang_disk.language
+		to_chat(user, "<span class='notice'>You have activated the collar.</span>")
+	else
+		turn_off(user)
+		to_chat(user, "<span class='notice'>You have deactivated the collar.</span>")
