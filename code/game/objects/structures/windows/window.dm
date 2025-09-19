@@ -14,6 +14,8 @@
 	integrity_failure = 0.75
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/glass
+
 	can_block_air = TRUE
 
 	var/list/drops = list(/obj/item/weapon/shard)

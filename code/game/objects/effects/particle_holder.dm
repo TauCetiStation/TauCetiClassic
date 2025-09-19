@@ -40,6 +40,9 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	on_move(parent, null, NORTH)
 
+	if(particle_flags & PARTICLE_FLICK)
+		addtimer(CALLBACK(src, PROC_REF(delete_particle)), isnum(particles.lifespan) ? particles.lifespan - 1 : 0.5 SECONDS) //Stopping the spawning right before the first particle dies. Doesn't work with generators.
+
 /obj/effect/abstract/particle_holder/proc/set_particle_effect(particle_path)
 	return new particle_path()
 
