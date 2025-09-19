@@ -33,7 +33,7 @@
 	global.pluvia_religion = src
 	all_religions += src
 
-	social_credit_threshold = (SSticker.totalPlayersReady/10) + 3
+	social_credit_threshold = (SSticker.totalPlayersReady/10) + 1
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	if(!ispluvian(H))
