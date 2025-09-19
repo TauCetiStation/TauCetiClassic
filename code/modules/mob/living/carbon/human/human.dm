@@ -2319,6 +2319,11 @@
 	if(blood_amount() > 0)
 		return ..()
 
+/mob/living/carbon/human/proc/get_full_print()
+	if(!dna || !dna.uni_identity)
+		return
+	return md5(dna.uni_identity)
+
 /mob/living/carbon/human/try_wrap_up(texture_name = "cardboard", details_name = null)
 	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
 	P.icon_state = "deliveryhuman"
