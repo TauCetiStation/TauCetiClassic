@@ -167,7 +167,7 @@ var/global/list/toilet_list = list()
 	message_admins("RoundStart Event: Water was spawned in all toilet rooms.")
 	log_game("RoundStart Event: Water was spawned in all toilet rooms.")
 
-	for(var/atom/A as anything in global.toilet_list)
+/*	for(var/atom/A as anything in global.toilet_list)
 		if(!is_station_level(A.z))
 			continue
 
@@ -176,7 +176,7 @@ var/global/list/toilet_list = list()
 			var/obj/effect/fluid/F = locate() in thing
 			if(!F)
 				F = new(thing)
-			F.set_depth(4000)
+			F.set_depth(4000)*/
 
 /datum/event/feature/bomb_journey/start()
 	for(var/obj/machinery/nuclearbomb/bomb in global.poi_list)

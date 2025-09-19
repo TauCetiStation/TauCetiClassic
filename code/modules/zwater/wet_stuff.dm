@@ -38,10 +38,10 @@
 	if(dry_inprocess < 1)
 		dry_inprocess = rand(4,8)
 		wet--
-		if(prob(15))
+/*		if(prob(15))
 			var/turf/T = get_turf(src)
 			if(T)
-				T.add_fluid(null, 15)
+				T.add_fluid(null, 15)*/
 		if(prob(20))
 			dry_discharge()
 	else
@@ -74,7 +74,7 @@
 	if(item_to_discharge)
 		var/turf/T = get_turf(src)
 		T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
-		var/obj/effect/fluid/F = locate() in T
+/*		var/obj/effect/fluid/F = locate() in T
 		if(F)
 			F.electrocute_act(120)
 		else if(isliving(loc))
@@ -82,4 +82,4 @@
 			L.apply_effect(120,AGONY,0)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
-			s.start()
+			s.start()*/

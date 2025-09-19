@@ -1228,9 +1228,9 @@ var/global/list/airlock_overlays = list()
 		STOP_PROCESSING(SSobj, src)
 		return
 	ticker++
-	var/spot = locate(/obj/effect/fluid) in loc
+/*	var/spot = locate(/obj/effect/fluid) in loc
 	if(spot)
-		ticker +=10
+		ticker +=10*/
 
 #undef AIRLOCK_POWERON_LIGHT_COLOR
 #undef AIRLOCK_BOLTS_LIGHT_COLOR

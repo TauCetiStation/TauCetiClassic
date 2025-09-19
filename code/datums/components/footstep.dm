@@ -104,13 +104,13 @@
 		return
 	var/mob/living/carbon/human/H = parent
 
-	var/obj/effect/fluid/F = locate(/obj/effect/fluid) in H.loc
+/*	var/obj/effect/fluid/F = locate(/obj/effect/fluid) in H.loc
 	if(F && F.fluid_amount > 0)
 		if(F.fluid_amount > 200)
 			playsound(T, pick(SOUNDIN_WATER_DEEP), VOL_EFFECTS_MASTER)
 			return
 		playsound(T, pick(SOUNDIN_WATER_SHALLOW), VOL_EFFECTS_MASTER)
-		return
+		return*/
 
 	if(H.shoes) //are we wearing shoes
 		playsound(T, pick(global.footstep[T.footstep][1]), VOL_EFFECTS_MASTER, global.footstep[T.footstep][2] * volume, TRUE, null, global.footstep[T.footstep][3] + e_range)

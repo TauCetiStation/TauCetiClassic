@@ -134,7 +134,10 @@ var/global/list/admin_verbs_fun = list(
 var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		//allows us to spawn instances,
 	/client/proc/respawn_character,
-	/datum/admins/proc/spawn_fluid_verb
+	/datum/admins/proc/spawn_fluid_verb,
+	/datum/admins/proc/spawn_fluid_source_verb,
+	/datum/admins/proc/jump_to_fluid_source,
+	/datum/admins/proc/jump_to_fluid_active
 	)
 var/global/list/admin_verbs_server = list(
 	/datum/admins/proc/startnow,

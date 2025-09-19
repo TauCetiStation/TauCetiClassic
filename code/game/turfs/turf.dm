@@ -371,7 +371,7 @@
 
 	var/old_basetype = basetype
 	var/old_flooded = flooded
-	var/obj/effect/fluid/F = locate() in src
+//	var/obj/effect/fluid/F = locate() in src
 
 	var/list/temp_res = resources
 
@@ -424,6 +424,8 @@
 		UnregisterSignal(target, signal_procs[target])
 	//END: ECS SHIT
 
+	REMOVE_ACTIVE_FLUID_SOURCE(src)
+
 	var/turf/W = new path(arglist(arguments))
 
 	W.has_resources = has_resources
@@ -458,14 +460,17 @@
 
 		recast_level_light()
 
-	if(F)
+		if(old_flooded != W.flooded)
+			set_flooded(old_flooded)
+
+/*	if(F)
 		F.forceMove(src)
 		F.start_loc = src
 		fluid_update()
 
 	if(old_flooded)
 		flooded = 1
-		update_icon()
+		update_icon()*/
 	SSdemo.mark_turf(W)
 
 	return W
@@ -524,14 +529,14 @@
 	ChangeTurf(/turf/environment/space)
 	return(2)
 
-/turf/update_icon()
+/*/turf/update_icon()
 	if(is_flooded(absolute = 1)) // wtf this doing here
 		if(!(locate(/obj/effect/flood) in contents))
 			new /obj/effect/flood(src)
 	else
 		if(locate(/obj/effect/flood) in contents)
 			for(var/obj/effect/flood/F in contents)
-				qdel(F)
+				qdel(F)*/
 
 /////////////////////
 // Tracks, cleanables

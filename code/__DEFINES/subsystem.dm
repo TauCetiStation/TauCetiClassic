@@ -94,10 +94,10 @@
 #define SS_WAIT_PARALLAX      2
 #define SS_WAIT_ORBIT         2
 #define SS_WAIT_FASTPROCESS   2
-#define SS_WAIT_FLUIDS        3
 #define SS_WAIT_GARBAGE       5
 #define SS_WAIT_SPACEDRIFT    5
 #define SS_WAIT_TGUI          9
+#define SS_WAIT_FLUIDS       10
 #define SS_WAIT_NANOUI       10
 #define SS_WAIT_SHUTTLES     10
 #define SS_WAIT_VOTE         10

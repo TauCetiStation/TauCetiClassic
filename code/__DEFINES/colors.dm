@@ -100,6 +100,10 @@
 #define LIGHT_COLOR_LIGHTNING	 "#5eacb6" // Used in lightning bolt projectiles
 #define LIGHT_COLOR_NUKE_OPS      "#00f397" // Used in nuclear operatives related things
 
+// Used by fluid system.
+#define COLOR_LIQUID_WATER "#99f5ff"
+#define COLOR_ICE          "#eef5ff"
+
 // Slime color matrices. Used for /datum/component/mob_modifier-s.
 #define SLIME_COLOR(r, g, b) list( \
 	0.3, 0.0, 0.0, 0.0, \
