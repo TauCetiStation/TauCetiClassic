@@ -97,7 +97,7 @@
 	return !loc
 
 /mob/living/carbon/proc/is_cant_breathe()
-	return handle_drowning() || health < 0
+	return /*handle_drowning() || */health < 0
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	return null
@@ -464,12 +464,12 @@
 	if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
 		return 0
 
-	var/turf/T = get_turf(src)
+/*	var/turf/T = get_turf(src)
 	var/obj/effect/fluid/F = locate() in T
 	if(F)
 		attack_log += "\[[time_stamp()]\]<font color='red'> [src] was shocked by the [source] and started chain-reaction with water!</font>"
 		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water!", src)
-		F.electrocute_act(shock_damage)
+		F.electrocute_act(shock_damage)*/
 
 	shock_damage *= siemens_coeff
 	if(shock_damage<1)

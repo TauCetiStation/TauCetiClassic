@@ -1,6 +1,15 @@
 var/global/const/TOUCH = 1
 var/global/const/INGEST = 2
 
+var/global/obj/temp_reagents_holder = new
+
+// (reagent, amount, list/data = null, safety = FALSE, datum/religion/_religion)
+/atom/proc/add_to_reagents(reagent_id, amount, data, safety = FALSE, datum/religion/_religion, defer_update = FALSE, phase = null)
+	return reagents?.add_reagent(reagent_id, amount, data, safety, _religion)
+
+/atom/proc/remove_any_reagents(amount = 1, defer_update = FALSE, removed_phases = NONE, skip_reagents = null)
+	return reagents?.remove_any(amount, defer_update, removed_phases)
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents
@@ -10,10 +19,12 @@ var/global/const/INGEST = 2
 	var/atom/my_atom = null
 	var/proccessing_reaction_count = 0
 
+	var/total_liquid_volume // Used to determine when to create fluids in the world and the like.
+
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
-/datum/reagents/proc/remove_any(amount=1)
+/datum/reagents/proc/remove_any(amount = 1, defer_update = FALSE, removed_phases = NONE)
 	var/total_transfered = 0
 	var/current_list_element = 1
 
@@ -55,11 +66,21 @@ var/global/const/INGEST = 2
 
 	return the_id
 
+/datum/reagents/proc/get_master_reagent()
+	var/the_reagent = null
+	var/the_volume = 0
+	for(var/datum/reagent/A in reagent_list)
+		if(A.volume > the_volume)
+			the_volume = A.volume
+			the_reagent = A
+
+	return the_reagent
+
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if (!target )
 		return
 	if(amount < 0) return
-	if(amount > 2000) return
+	//if(amount > 2000) return
 	if(total_volume == 0)
 		return
 	var/datum/reagents/R
@@ -99,7 +120,7 @@ var/global/const/INGEST = 2
 		return
 
 	if(amount < 0) return
-	if(amount > 2000) return
+	//if(amount > 2000) return
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
 	B.volume = maximum_volume
@@ -131,7 +152,7 @@ var/global/const/INGEST = 2
 	if(!target.reagents || src.total_volume<=0)
 		return
 	if(amount < 0) return
-	if(amount > 2000) return
+	//if(amount > 2000) return
 	var/datum/reagents/R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
@@ -155,7 +176,7 @@ var/global/const/INGEST = 2
 	if(src.total_volume<=0 || !get_reagent_amount(reagent))
 		return
 	if(amount < 0) return
-	if(amount > 2000) return
+	//if(amount > 2000) return
 
 	var/datum/reagents/R = null
 	if(istype(target, /datum/reagents))
@@ -349,10 +370,14 @@ var/global/const/INGEST = 2
 
 /datum/reagents/proc/update_total()
 	total_volume = 0
+	total_liquid_volume = 0
+
 	for(var/datum/reagent/R in reagent_list)
-		if(R.volume < 0.1)
+		if(R.volume < MINIMUM_CHEMICAL_VOLUME)
 			del_reagent(R.id)
 		else
+			if(R.reagent_state == LIQUID)
+				total_liquid_volume += R.volume
 			total_volume += R.volume
 	return 0
 
@@ -400,9 +425,19 @@ var/global/const/INGEST = 2
 						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 	return
 
+/* Holder-to-chemical */
+/datum/reagents/proc/handle_update(var/safety)
+	if(QDELETED(src))
+		return
+	SSfluids.holders_to_update -= src
+	update_total()
+	if(!safety)
+		handle_reactions()
+	my_atom?.try_on_reagent_change()
+
 // adds new reagent by ID, mix it with those already present if needed
 /datum/reagents/proc/add_reagent(reagent, amount, list/data = null, safety = FALSE, datum/religion/_religion)
-	if(!isnum(amount) || amount < 0 || amount > 2000)
+	if(!isnum(amount) || amount < 0)// || amount > 2000)
 		return FALSE
 
 	update_total()
@@ -472,7 +507,7 @@ var/global/const/INGEST = 2
 	return FALSE
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)//Added a safety check for the trans_id_to
-	if(!isnum(amount) || amount < 0 || amount > 2000)
+	if(!isnum(amount) || amount < 0)// || amount > 2000)
 		return FALSE
 
 	for(var/datum/reagent/R in reagent_list)
@@ -523,7 +558,7 @@ var/global/const/INGEST = 2
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount)) return 1
 	if(amount < 0) return 0
-	if(amount > 2000) return
+	//if(amount > 2000) return
 
 	var/has_removed_reagent = 0
 
@@ -644,3 +679,28 @@ var/global/const/INGEST = 2
 /atom/proc/create_reagents(max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
+
+/datum/reagents/proc/trans_to_turf(var/turf/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/defer_update = FALSE, var/transferred_phases = (MAT_PHASE_LIQUID | MAT_PHASE_SOLID))
+	if(!target?.simulated)
+		return 0
+
+/*
+	// If we're only dumping solids, and there's not enough liquid present on the turf to make a slurry, we dump the solids directly.
+	// This avoids creating an unnecessary reagent holder that won't be immediately deleted.
+	if((!(transferred_phases & MAT_PHASE_LIQUID) || !total_liquid_volume) && (target.reagents?.total_liquid_volume < FLUID_SLURRY))
+		var/datum/reagents/reagent = new /datum/reagents(amount, global.temp_reagents_holder)
+		. = trans_to_holder(reagent, amount, multiplier, copy, TRUE, defer_update = defer_update, transferred_phases = MAT_PHASE_SOLID)
+		reagent.touch_turf(target)
+		target.dump_solid_reagents(reagent)
+		qdel(reagent)
+		return*/
+
+	if(!target.reagents)
+		target.create_reagents(FLUID_MAX_DEPTH)
+
+	. = trans_to(target, amount, multiplier)
+	// . = trans_to_holder(target.reagents, amount, multiplier, copy, defer_update = defer_update, transferred_phases = transferred_phases)
+	// Deferred updates are presumably being done by SSfluids.
+	// Do an immediate fluid_act call rather than waiting for SSfluids to proc.
+	if(!defer_update && target.reagents.total_volume >= FLUID_PUDDLE)
+		target.fluid_act(target.reagents)

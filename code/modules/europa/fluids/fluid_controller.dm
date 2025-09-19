@@ -5,7 +5,8 @@ SUBSYSTEM_DEF(fluids)
 	priority      = SS_PRIORITY_FLUIDS
 	wait          = SS_WAIT_FLUIDS
 
-	flags = SS_NO_INIT | SS_BACKGROUND | SS_POST_FIRE_TIMING
+	flags = SS_NO_INIT | SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_SHOW_IN_MC_TAB
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // So we can flush our queued activity during lobby setup on ocean maps.
 
 	var/list/active_fluids = list()
 	var/list/water_sources = list()
