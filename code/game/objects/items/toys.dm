@@ -1198,7 +1198,7 @@ Owl & Griffin toys
 /obj/item/toy/cards
 	name = "deck of cards"
 	cases = list("колода карт", "колоды карт", "колоде карт", "колоду карт", "колодой карт", "колоде карт")
-	desc = "Колода дешёвых игральных карт. На обратной стороне надпись: 'Made in Venera'."
+	desc = "Колода голографических игральных карт. На обратной стороне надпись: 'Made in Venera'."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "deck"
 	w_class = SIZE_TINY
@@ -1466,7 +1466,7 @@ Owl & Griffin toys
 /obj/item/toy/singlecard
 	name = "card"
 	cases = list("игральная карта", "игральной карты", "игральной карте", "игральную карту", "игральной картой", "игральной карте")
-	desc = "Дешёвая на ощупь игральная карта. Достоинство написано на иностранном языке."
+	desc = "Голографическая игральная карта. Достоинство переливается на разных языках."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "singlecard_down"
 	w_class = SIZE_MINUSCULE
