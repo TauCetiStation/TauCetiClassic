@@ -1021,7 +1021,7 @@
 	addtimer(CALLBACK(src, PROC_REF(do_explosion), holder), 50)
 
 /datum/chemical_reaction/slimeexplosion/proc/do_explosion(datum/reagents/holder)
-	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
+	holder.my_atom.make_explosion(1 ,3, 6)
 	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Oil slime extract activated by [key_name(usr)]")
 

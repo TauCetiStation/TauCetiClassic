@@ -1160,7 +1160,7 @@ Owl & Griffin toys
 		var/turf/T = get_turf(loc)
 		if(T)
 			T.hotspot_expose(700,125)
-			explosion(T, 0, 0, 2, rand(1,2))
+			make_explosion(0, 0, 2, rand(1,2))
 		qdel(src)
 		return
 	icon_state = "nuketoycool"

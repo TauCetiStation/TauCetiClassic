@@ -123,7 +123,7 @@
 			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 		if(power_drained >= POWERSINK_MAX_POWER)
 			STOP_PROCESSING(SSobj, src)
-			explosion(src.loc, 3,6,9,12)
+			make_explosion(3,6,9,12)
 			qdel(src)
 
 

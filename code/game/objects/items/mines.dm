@@ -62,7 +62,7 @@
 			qdel(src)
 
 /obj/item/mine/proc/trigger_act(obj)
-	explosion(loc, 0, 1, 3)
+	make_explosion(0, 1, 3)
 
 /obj/item/mine/proc/try_disarm(obj/item/I, mob/user)
 	if((I && !ispulsing(I)) || !anchored)
@@ -113,7 +113,7 @@
 	icon_state = "incendiarymine"
 
 /obj/item/mine/incendiary/trigger_act(obj)
-	explosion(loc, 0, 0, 2)
+	make_explosion(0, 0, 2)
 	if(isliving(obj))
 		var/mob/living/M = obj
 		M.adjust_fire_stacks(10)

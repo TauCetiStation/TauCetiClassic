@@ -74,7 +74,7 @@
 
 /obj/item/weapon/grenade/cancasing/prime() // Blowing that can up
 	//update_mob()
-	explosion(loc, 0, 0, range)
+	make_explosion(0, 0, range)
 	qdel(src)
 
 /obj/item/weapon/grenade/cancasing/examine(mob/user)

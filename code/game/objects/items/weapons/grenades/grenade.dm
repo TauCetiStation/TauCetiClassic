@@ -94,5 +94,5 @@
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
 /obj/item/weapon/grenade/syndieminibomb/prime()
-	explosion(src.loc,1,2,4,5)
+	make_explosion(1,2,4,5)
 	qdel(src)

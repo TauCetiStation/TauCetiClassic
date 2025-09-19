@@ -745,7 +745,7 @@ steam.start() -- spawns the effect
 		for(var/mob/M in viewers(world.view, location))
 			to_chat(M, "<span class='red'>The solution violently explodes.</span>")
 
-		explosion(location, devastation, heavy, light, flash)
+		holder.make_explosion(devastation, heavy, light, flash)
 
 /datum/effect/effect/system/reagents_explosion/proc/holder_damage(atom/holder)
 	if(holder)
