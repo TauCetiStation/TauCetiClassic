@@ -12,7 +12,7 @@
 	var/use = 5
 	var/unlocked = FALSE
 	var/open = FALSE
-	var/brightness_on = 10
+	var/brightness_on = 8
 
 /obj/machinery/floodlight/atom_init()
 	cell = new(src)

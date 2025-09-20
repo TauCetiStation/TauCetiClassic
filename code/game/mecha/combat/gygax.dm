@@ -142,7 +142,8 @@
 /obj/mecha/combat/gygax/dyndomove(direction)
 	if(!..()) return
 	if(overload)
-		health--
+		if(prob(50))
+			health--
 		if(health < initial(health) - initial(health)/3)
 			overload = 0
 			step_in = initial(step_in)
@@ -181,7 +182,7 @@
 	desc = "If I'm going to die, I'm going to die historic, on the fury road!"
 	icon = 'icons/battlebus.dmi'
 	health = 500
-	step_in = 1
+	step_in = 0.6
 	deflect_chance = 25
 	damage_absorption = list(BRUTE=0.6,BURN=0.8,BULLET=0.6,LASER=0.5,ENERGY=0.65,BOMB=0.8)
 	max_temperature = 45000
@@ -192,23 +193,27 @@
 	step_energy_drain = 5
 
 /obj/mecha/combat/gygax/dark/battlebus/red
+	name = "Red Battle Bus"
 	icon_state = "darkgygax"
 	initial_icon = "darkgygax"
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus
 
 /obj/mecha/combat/gygax/dark/battlebus/blue
+	name = "Blue Battle Bus"
 	desc = "You will ride eternal, shiny and chrome!"
 	icon_state = "darkgygaxblue"
 	initial_icon = "darkgygaxblue"
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/blue
 
 /obj/mecha/combat/gygax/dark/battlebus/green
+	name = "Green Battle Bus"
 	desc = "Out here, everything hurts."
 	icon_state = "darkgygaxgreen"
 	initial_icon = "darkgygaxgreen"
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/green
 
 /obj/mecha/combat/gygax/dark/battlebus/yellow
+	name = "Yellow Battle Bus"
 	desc = "Oh, what a day! WHAT A LOVELY DAY!"
 	icon_state = "darkgygaxyellow"
 	initial_icon = "darkgygaxyellow"

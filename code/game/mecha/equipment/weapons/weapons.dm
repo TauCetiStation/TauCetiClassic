@@ -70,7 +70,7 @@
 	auto_rearm = 1
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 8
+	equip_cooldown = 1
 	name = "CH-PS \"Immolator\" Laser"
 	icon_state = "mecha_laser"
 	energy_drain = 30
@@ -78,7 +78,7 @@
 	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	equip_cooldown = 15
+	equip_cooldown = 1
 	name = "CH-LC \"Solaris\" Laser Cannon"
 	icon_state = "mecha_laser"
 	energy_drain = 60
@@ -86,7 +86,7 @@
 	fire_sound = 'sound/weapons/guns/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	equip_cooldown = 40
+	equip_cooldown = 1
 	name = "mkIV Ion Heavy Cannon"
 	icon_state = "mecha_ion"
 	energy_drain = 120
@@ -95,7 +95,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
-	equip_cooldown = 30
+	equip_cooldown = 1
 	name = "eZ-13 mk2 Heavy pulse rifle"
 	icon_state = "mecha_pulse"
 	energy_drain = 120
@@ -120,7 +120,7 @@
 	name = "PBT \"Pacifier\" Mounted Taser"
 	icon_state = "mecha_taser"
 	energy_drain = 20
-	equip_cooldown = 8
+	equip_cooldown = 1
 	projectile = /obj/item/projectile/beam/stun
 	fire_sound = 'sound/weapons/guns/gunpulse_Taser.ogg'
 
@@ -129,7 +129,7 @@
 	name = "HoNkER BlAsT 5000"
 	icon_state = "mecha_honker"
 	energy_drain = 200
-	equip_cooldown = 150
+	equip_cooldown = 2
 	range = RANGE_MELEE|RANGED
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
@@ -206,7 +206,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	name = "FNX-66 Carbine"
 	icon_state = "mecha_carbine"
-	equip_cooldown = 5
+	equip_cooldown = 1
 	projectile = /obj/item/projectile/bullet/incendiary
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 24
@@ -215,7 +215,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "LBX AC 10 \"Scattershot\""
 	icon_state = "mecha_scatter"
-	equip_cooldown = 20
+	equip_cooldown = 1
 	projectile = /obj/item/projectile/bullet/smg
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 40
@@ -226,7 +226,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "Ultra AC 2"
 	icon_state = "mecha_uac2"
-	equip_cooldown = 10
+	equip_cooldown = 1
 	projectile = /obj/item/projectile/bullet/smg
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	projectiles = 300
@@ -249,7 +249,7 @@
 	fire_sound = 'sound/mecha/mecha_bang-drop.ogg'
 	projectiles = 20
 	projectile_energy_cost = 50
-	equip_cooldown = 50
+	equip_cooldown = 20
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive/Fire(atom/movable/AM, atom/target, turf/aimloc)
 	var/obj/item/missile/M = AM
@@ -278,7 +278,7 @@
 	projectiles = 20
 	missile_speed = 1.5
 	projectile_energy_cost = 50
-	equip_cooldown = 50
+	equip_cooldown = 4
 	var/det_time = 20
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/Fire(atom/movable/AM, atom/target, turf/aimloc)
@@ -304,7 +304,7 @@
 	projectiles = 15
 	missile_speed = 1.5
 	projectile_energy_cost = 100
-	equip_cooldown = 20
+	equip_cooldown = 4
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(!istype(M))
@@ -315,7 +315,7 @@
 	name = "Mousetrap Mortar"
 	icon_state = "mecha_mousetrapmrtr"
 	projectile = /obj/item/device/assembly/mousetrap
-	equip_cooldown = 10
+	equip_cooldown = 4
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/mousetrap_mortar/Fire(atom/movable/AM, atom/target, turf/aimloc)
 	var/obj/item/device/assembly/mousetrap/M = AM
