@@ -59841,6 +59841,8 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -63019,6 +63021,8 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Bay Storage North"
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -85911,6 +85915,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 27
 	},
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
