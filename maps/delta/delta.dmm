@@ -53773,6 +53773,13 @@
 	dir = 1;
 	icon_state = "arrow"
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},

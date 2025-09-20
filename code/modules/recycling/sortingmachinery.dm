@@ -68,12 +68,12 @@
 /obj/structure/bigDelivery/proc/add_texture(new_texture, new_details = null)
 	cut_overlay(texture_overlay)
 
-	if(new_texture)
+	if(new_texture && new_texture != "blank")
 		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
 		texture_overlay.blend_mode = BLEND_MULTIPLY
 		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
-	add_overlay(texture_overlay)
+		add_overlay(texture_overlay)
 
 
 	cut_overlay(details)
@@ -81,7 +81,7 @@
 	if(new_details)
 		details = mutable_appearance(icon = icon, icon_state = new_details)
 
-	add_overlay(details)
+		add_overlay(details)
 
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
@@ -105,6 +105,9 @@
 			AM.add_fingerprint(user)
 		else
 			AM.forceMove(src.loc)
+		if(isitem(AM))
+			var/obj/item/I = AM
+			I.on_found(user)
 
 /obj/item/smallDelivery/Destroy()
 	dump()
@@ -155,12 +158,12 @@
 /obj/item/smallDelivery/proc/add_texture(new_texture, new_details = null)
 	cut_overlay(texture_overlay)
 
-	if(new_texture)
+	if(new_texture && new_texture != "blank")
 		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
 		texture_overlay.blend_mode = BLEND_MULTIPLY
 		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
-	add_overlay(texture_overlay)
+		add_overlay(texture_overlay)
 
 
 	cut_overlay(details)
@@ -168,7 +171,7 @@
 	if(new_details)
 		details = mutable_appearance(icon = icon, icon_state = new_details)
 
-	add_overlay(details)
+		add_overlay(details)
 
 
 /obj/item/weapon/packageWrap
@@ -208,34 +211,27 @@
 	if (isitem(O))
 		var/obj/item/I = target
 		if (src.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))	//Aaannd wrap it up!
+			I.add_fingerprint(usr)
+			I = I.try_wrap_up(texture_name, details_name)
+			if(!I)
+				return
 			if(!istype(I.loc, /turf))
 				if(user.client)
 					user.client.screen -= I
-			P.w_class = I.w_class
-			var/i = round(I.w_class)
-			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-				if(istype(I, /obj/item/pizzabox))
-					var/obj/item/pizzabox/B = I
-					P.icon_state = "deliverypizza[length(B.boxes)]"
-				else
-					P.icon_state = "deliverycrate[i]"
-			P.add_texture(texture_name, details_name)
-			I.loc = P
-			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
 			add_fingerprint(usr)
 			src.amount -= 1
+
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
 		if (src.amount > 3 && !C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycrate"
-			P.add_texture(texture_name, details_name)
-			C.loc = P
+			if(!C.try_wrap_up(texture_name, details_name))
+				return
+
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
+
 	else if (istype (O, /obj/structure/closet))
 		var/obj/structure/closet/C = target
 		if(src.amount < 3)
@@ -245,10 +241,9 @@
 			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
 			return
 		else if (!C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.add_texture(texture_name, details_name)
-			C.welded = 1
-			C.loc = P
+			if(!C.try_wrap_up(texture_name, details_name))
+				return
+
 			src.amount -= 3
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
@@ -271,15 +266,10 @@
 		to_chat(user, "[target] не даёт себя упаковать.")
 		return
 
-	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(H.loc))
-	P.icon_state = "deliveryhuman"
-	P.add_texture(texture_name, details_name)
-	src.amount -= 3
+	if(!H.try_wrap_up(texture_name, details_name))
+		return
 
-	if(H.client)
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = P
-	H.loc = P
+	src.amount -= 3
 
 	H.log_combat(user, "завёрнут в [CASE(src, ACCUSATIVE_CASE)]")
 
@@ -524,7 +514,7 @@
 		lot_description = target.desc
 
 	if(autocategory)
-		lot_category = get_category(target)
+		lot_category = get_item_shop_category(target)
 
 	if(!lot_account_number)
 		if(ishuman(user))
@@ -533,10 +523,7 @@
 			if(ID)
 				lot_account_number = ID.associated_account_number
 
-	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
-	target.verbs += /obj/proc/remove_price_tag
-
-	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+	target.add_price_tag(lot_description, lot_price, lot_category, lot_account_number)
 
 	if(next_instruction < world.time)
 		next_instruction = world.time + 30 SECONDS
@@ -565,24 +552,6 @@
 	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
 						 "<span class='notice'>You label [target] as [label].</span>")
 	target.name = "[target.name] ([label])"
-
-/obj/item/device/tagger/proc/get_category(obj/target)
-	if(istype(target, /obj/item/weapon/reagent_containers/food))
-		return "Еда"
-	else if(istype(target, /obj/item/weapon/storage/food))
-		return "Еда"
-	else if(istype(target, /obj/item/weapon/storage))
-		return "Наборы"
-	else if(istype(target, /obj/item/weapon))
-		return "Инструменты"
-	else if(istype(target, /obj/item/clothing))
-		return "Одежда"
-	else if(istype(target, /obj/item/device))
-		return "Устройства"
-	else if(istype(target, /obj/item/stack))
-		return "Ресурсы"
-	else
-		return "Разное"
 
 
 /obj/machinery/disposal/deliveryChute

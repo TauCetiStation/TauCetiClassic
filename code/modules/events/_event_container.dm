@@ -8,6 +8,7 @@
 #define ASSIGNMENT_MEDICAL   "Medical"
 #define ASSIGNMENT_SCIENTIST "Scientist"
 #define ASSIGNMENT_SECURITY  "Security"
+#define ASSIGNMENT_CARGO     "Cargo"
 
 #define ONESHOT  1
 #define DISABLED 0
@@ -192,6 +193,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",            /datum/event/wallrot,                                 0,    list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Xenohive",           /datum/event/feature/area/maintenance_spawn/xenohive, 300),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Camera Malfunction", /datum/event/camera_damage,                           200,  list(ASSIGNMENT_ENGINEER = 60)),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Cargo Mail",         /datum/event/cargo_mail,                                0,    list(ASSIGNMENT_CARGO = 30),       0, 1, 0, 25, 50),
 	)
 
 /datum/event_container/moderate

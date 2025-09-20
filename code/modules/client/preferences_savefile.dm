@@ -418,9 +418,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ipc_head = initial(ipc_head)
 		// fuck named hairstyles, we should just move it to indexes
 		var/static/list/ipc_hairstyles_reset = list(
-			"alien IPC screen", 
-			"double IPC screen", 
-			"pillar IPC screen", 
+			"alien IPC screen",
+			"double IPC screen",
+			"pillar IPC screen",
 			"human IPC screen"
 		)
 		if(h_style in ipc_hairstyles_reset)
