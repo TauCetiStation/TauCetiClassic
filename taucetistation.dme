@@ -1658,6 +1658,8 @@
 #include "code\modules\detectivework\detective_work.dm"
 #include "code\modules\detectivework\evidence.dm"
 #include "code\modules\detectivework\footprints_and_rag.dm"
+#include "code\modules\detectivework\microscope.dm"
+#include "code\modules\detectivework\samples.dm"
 #include "code\modules\detectivework\scanner.dm"
 #include "code\modules\economy\Accounts.dm"
 #include "code\modules\economy\Accounts_DB.dm"
