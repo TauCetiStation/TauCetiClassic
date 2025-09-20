@@ -128,7 +128,7 @@
 				occupant = occupant_body = C
 				break
 			if(isbrain(M))
-				var/obj/item/brain/B = M
+				var/obj/item/organ/internal/brain/B = M
 				occupant = B.brainmob
 				occupant_body = B
 				break

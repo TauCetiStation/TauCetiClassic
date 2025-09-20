@@ -487,12 +487,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 		//spread the infection to child and parent bodyparts
 		if (BP.children)
 			for (var/obj/item/organ/external/ChildBP in BP.children)
-				if (ChildBP.germ_level < BP.germ_level && !ChildBP.is_robotic())
+				if (ChildBP.germ_level < BP.germ_level && !ChildBP.is_robotic_part())
 					if (ChildBP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30))
 						ChildBP.germ_level++
 
 		if (BP.parent)
-			if (BP.parent.germ_level < BP.germ_level && !BP.parent.is_robotic())
+			if (BP.parent.germ_level < BP.germ_level && !BP.parent.is_robotic_part())
 				if (BP.parent.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30))
 					BP.parent.germ_level++
 
