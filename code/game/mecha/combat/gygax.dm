@@ -15,6 +15,7 @@
 	internal_damage_threshold = 35
 	max_equip = 3
 	var/overload = FALSE
+	COOLDOWN_DECLARE(overload_cooldown)
 
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 
@@ -90,7 +91,7 @@
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
 	ME.attach(src)
@@ -104,33 +105,39 @@
 		cell = C
 		return
 	cell = new(src)
-	cell.charge = 30000
-	cell.maxcharge = 30000
+	cell.charge = 1000000
+	cell.maxcharge = 1000000
 
 
 /obj/mecha/combat/gygax/proc/overload()
 	if(usr != src.occupant)
 		return
+	if(!COOLDOWN_FINISHED(src, overload_cooldown))
+		occupant_message("<font color='warning'>overload is still in cooldown.</font>")
+		return
 	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [overload? "en" : "dis"]able leg actuators overload.</span>"))
 		return
-	if(overload)
-		overload = 0
-		step_in = initial(step_in)
-		step_energy_drain = initial(step_energy_drain)
-		occupant_message("<font color='blue'>You disable leg actuators overload.</font>")
-		if(animated)
-			flick("ultra-gofasta-off",src)
-			reset_icon()
-	else
-		overload = 1
-		step_in = min(1, round(step_in/2))
-		step_energy_drain = step_energy_drain*overload_coeff
-		occupant_message("<font color='red'>You enable leg actuators overload.</font>")
-		if(animated)
-			flick("ultra-gofasta-on",src)
-			icon_state = "ultra-gofasta"
+	overload = 1
+	step_in = min(1, round(step_in/2))
+	step_energy_drain = step_energy_drain*overload_coeff
+	occupant_message("<font color='red'>You enable leg actuators overload.</font>")
+	if(animated)
+		flick("ultra-gofasta-on",src)
+		icon_state = "ultra-gofasta"
+	COOLDOWN_START(src, overload_cooldown, 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(overload_end)), 10 SECONDS)
 	log_message("Toggled leg actuators overload.")
 	return
+
+/obj/mecha/combat/gygax/proc/overload_end()
+	COOLDOWN_START(src, overload_cooldown, 20 SECONDS)
+	overload = 0
+	step_in = initial(step_in)
+	step_energy_drain = initial(step_energy_drain)
+	occupant_message("<font color='blue'>Overload turns off.</font>")
+	if(animated)
+		flick("ultra-gofasta-off",src)
+		reset_icon()
 
 /obj/mecha/combat/gygax/dyndomove(direction)
 	if(!..()) return
@@ -168,3 +175,41 @@
 	if (href_list["toggle_leg_overload"])
 		overload()
 	return
+
+/obj/mecha/combat/gygax/dark/battlebus
+	name = "Battle Bus"
+	desc = "If I'm going to die, I'm going to die historic, on the fury road!"
+	icon = 'icons/battlebus.dmi'
+	health = 500
+	step_in = 1
+	deflect_chance = 25
+	damage_absorption = list(BRUTE=0.6,BURN=0.8,BULLET=0.6,LASER=0.5,ENERGY=0.65,BOMB=0.8)
+	max_temperature = 45000
+	overload_coeff = 1
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus
+	dna_lockable = TRUE
+	max_equip = 4
+	step_energy_drain = 5
+
+/obj/mecha/combat/gygax/dark/battlebus/red
+	icon_state = "darkgygax"
+	initial_icon = "darkgygax"
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus
+
+/obj/mecha/combat/gygax/dark/battlebus/blue
+	desc = "You will ride eternal, shiny and chrome!"
+	icon_state = "darkgygaxblue"
+	initial_icon = "darkgygaxblue"
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/blue
+
+/obj/mecha/combat/gygax/dark/battlebus/green
+	desc = "Out here, everything hurts."
+	icon_state = "darkgygaxgreen"
+	initial_icon = "darkgygaxgreen"
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/green
+
+/obj/mecha/combat/gygax/dark/battlebus/yellow
+	desc = "Oh, what a day! WHAT A LOVELY DAY!"
+	icon_state = "darkgygaxyellow"
+	initial_icon = "darkgygaxyellow"
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/yellow

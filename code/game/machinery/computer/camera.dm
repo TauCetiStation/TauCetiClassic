@@ -392,7 +392,7 @@
 	state_broken_preset = "laptopb"
 	state_nopower_preset = "laptop0"
 	network = list("SECURITY UNIT")
-	req_one_access = list(access_hos)
+	req_one_access = list()
 	circuit = /obj/item/weapon/circuitboard/security/bodycam
 
 #undef DEFAULT_MAP_SIZE

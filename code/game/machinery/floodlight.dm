@@ -12,11 +12,16 @@
 	var/use = 5
 	var/unlocked = FALSE
 	var/open = FALSE
-	var/brightness_on = 7
+	var/brightness_on = 10
 
 /obj/machinery/floodlight/atom_init()
 	cell = new(src)
 	. = ..()
+	if(on)
+		set_light(brightness_on)
+	else
+		set_light(0)
+	update_icon()
 
 /obj/machinery/floodlight/proc/toggle(on = !on)
 	src.on = on

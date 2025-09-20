@@ -51,6 +51,12 @@
 		/mob/living/simple_animal/hostile/asteroid/goldgrub = 2
 	)
 
+/area/awaymission/chill
+	icon_state = "away3"
+	always_unpowered = 0
+	requires_power = 0
+	outdoors = TRUE
+
 /area/awaymission/junkyard/medium
 	mob_spawn_list = list(
 		/mob/living/simple_animal/hostile/asteroid/goliath = 3,

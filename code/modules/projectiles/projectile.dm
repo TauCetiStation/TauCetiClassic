@@ -50,7 +50,7 @@
 	var/impact_force = 0
 
 	var/hitscan = 0	// whether the projectile should be hitscan
-	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
+	var/step_delay = 0.2	// the delay between iterations if not a hitscan projectile
 
 	// effect types to be used
 	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact(unless they ask to not be deleted)

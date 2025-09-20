@@ -437,7 +437,8 @@
 
 /turf/simulated/floor/plating/ironsand/atom_init()
 	. = ..()
-	icon_state = "ironsand[rand(1,15)]"
+	if(icon_state != "asteroid")
+		icon_state = "ironsand[rand(1,15)]"
 
 /turf/simulated/floor/plating/snow
 	basetype = /turf/simulated/floor/plating/ironsand
