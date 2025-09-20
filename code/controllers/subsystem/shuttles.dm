@@ -482,9 +482,7 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
 			break
-		var/i = rand(1,clear_turfs.len)
-		var/turf/pickedloc = clear_turfs[i]
-		clear_turfs.Cut(i,i+1)
+		var/turf/pickedloc = pick_n_take(clear_turfs)
 
 		var/datum/supply_order/SO = S
 
@@ -496,9 +494,7 @@ SUBSYSTEM_DEF(shuttle)
 		CHECK_TICK
 
 	if(mail_orders.len && clear_turfs.len)
-		var/i = rand(1,clear_turfs.len)
-		var/turf/pickedloc = clear_turfs[i]
-		clear_turfs.Cut(i,i+1)
+		var/turf/pickedloc = pick_n_take(clear_turfs)
 
 		var/obj/structure/closet/crate/mailcrate/Crate = new(pickedloc)
 		for(var/list/order in mail_orders)

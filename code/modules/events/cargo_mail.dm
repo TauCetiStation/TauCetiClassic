@@ -42,7 +42,7 @@
 	var/mail_amount = rand(1, ceil(available_receivers.len * 0.3))
 
 	for(var/i = 1 to mail_amount)
-		var/mob/living/carbon/human/H = pick(available_receivers)
+		var/mob/living/carbon/human/H = pick_n_take(available_receivers)
 		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
 		var/itemType
 		var/senderInfo
@@ -76,4 +76,3 @@
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/love)
 
 		SSshuttle.add_mail(senderInfo, MA.account_number, itemType)
-		available_receivers -= H

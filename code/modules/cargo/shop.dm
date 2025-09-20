@@ -11,7 +11,7 @@ var/global/list/shop_category2color = list(
 		"Инструменты" = "red",
 		"Ресурсы" = "blue",
 		"Наборы" = "yellow",
-		"Разное" = "#cfb296",
+		"Разное" = "#b38050",
 	)
 
 var/global/list/orders_and_offers = list()
