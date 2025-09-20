@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
-	var/list/mail_orders = list() //list("sender", "type", "receiver_account")
+	var/list/mail_orders = list() //list("sender", "type", "receiver")
 		//shuttle movement
 	var/at_station = TRUE
 	var/movetime = 1200
@@ -511,6 +511,9 @@ SUBSYSTEM_DEF(shuttle)
 	SSshuttle.shoppinglist.Cut()
 	return
 
+/datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver, itemType)
+	mail_orders += list(list("sender" = sender, "type" = itemType, "receiver" = receiver))
+
 /datum/controller/subsystem/shuttle/proc/generate_mail_item(list/order, turf/pickedloc)
 	var/itemType = order["type"]
 
@@ -526,7 +529,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	Item.add_price_tag("Отправитель - [sender]", 5, "Разное", global.cargo_account.account_number)
 
-	Item = global.object2onlineshop_package(Item, forceColor = "white", hideIcon = TRUE)
+	Item = global.object2onlineshop_package(Item, forceColor = "white", hideInfo = TRUE)
 
 	Item.pixel_x = rand(-10, 10)
 	Item.pixel_y = rand(-10, 10)

@@ -11,7 +11,7 @@ var/global/list/shop_category2color = list(
 		"Инструменты" = "red",
 		"Ресурсы" = "blue",
 		"Наборы" = "yellow",
-		// "Разное" = no colour,
+		"Разное" = "#cfb296",
 	)
 
 var/global/list/orders_and_offers = list()
@@ -251,7 +251,7 @@ var/global/online_shop_profits = 0
 	var/itemPixelY = Item.pixel_y
 
 
-	var/obj/Package = Item.wrap_up()
+	var/obj/Package = Item.wrap_up(texture_name = "blank")
 	if(!Package)
 		return
 
@@ -278,14 +278,16 @@ var/global/online_shop_profits = 0
 
 	return Item
 
-/proc/object2onlineshop_package(obj/Item, forceColor = null, hideIcon = FALSE)
+/proc/object2onlineshop_package(obj/Item, forceColor = null, hideInfo = FALSE)
 	var/lot_name = Item.name
+	if(hideInfo)
+		lot_name = "Почтовое отправление"
 	var/lot_desc = Item.price_tag["description"]
 	var/lot_price = Item.price_tag["price"]
 	var/lot_category = Item.price_tag["category"]
 	var/lot_account = Item.price_tag["account"]
 	var/item_icon
-	if(!hideIcon)
+	if(!hideInfo)
 		item_icon = bicon(Item)
 
 	Item = global.shop_object2package(Item)
@@ -295,7 +297,7 @@ var/global/online_shop_profits = 0
 	else if(global.shop_category2color[lot_category])
 		Item.color = global.shop_category2color[lot_category]
 
-	if(hideIcon)
+	if(hideInfo)
 		item_icon = bicon(Item)
 
 	global.create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
