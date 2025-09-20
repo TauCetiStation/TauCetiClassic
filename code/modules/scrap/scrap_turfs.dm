@@ -63,6 +63,10 @@
 	LAZYSET(resources, "osmium", rand(0,2))
 	LAZYSET(resources, "hydrogen", rand(2,4))
 
+/turf/simulated/floor/plating/ironsand/battle
+	can_deconstruct = FALSE
+	icon_state = "asteroid"
+
 /turf/simulated/floor/plating/ironsand/junkyard
 	var/dug = 0
 	has_resources = 1

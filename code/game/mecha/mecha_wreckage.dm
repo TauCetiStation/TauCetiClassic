@@ -109,6 +109,20 @@
 	name = "Dark Gygax wreckage"
 	icon_state = "darkgygax-broken"
 
+/obj/effect/decal/mecha_wreckage/gygax/dark/battlebus
+	name = "Battle Bus wreckage"
+	icon = 'icons/battlebus.dmi'
+	icon_state = "darkgygax-broken"
+
+/obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/blue
+	icon_state = "darkgygaxblue-broken"
+
+/obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/green
+	icon_state = "darkgygaxgreen-broken"
+
+/obj/effect/decal/mecha_wreckage/gygax/dark/battlebus/yellow
+	icon_state = "darkgygaxyellow-broken"
+
 /obj/effect/decal/mecha_wreckage/gygax/ultra
 	name = "Gygax Ultra wreckage"
 	icon_state = "ultra-broken"

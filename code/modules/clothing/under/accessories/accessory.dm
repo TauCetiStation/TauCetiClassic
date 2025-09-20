@@ -365,26 +365,23 @@
 			var/obj/item/device/pda/pda = I
 			id_card = pda.id
 
-		if((access_security in id_card.access) || emagged)
-			to_chat(user, "You imprint your ID details onto the badge.")
-			stored_name = id_card.registered_name
-			name = "holobadge ([stored_name])"
-			desc = "This glowing blue badge marks [stored_name] as THE LAW. Also has an in-built camera."
+		to_chat(user, "You imprint your ID details onto the badge.")
+		stored_name = id_card.registered_name
+		name = "holobadge ([stored_name])"
+		desc = "This glowing blue badge marks [stored_name] as THE LAW. Also has an in-built camera."
 
-			if(stored_name && !camera)
-				camera = new /obj/machinery/camera(src)
-				camera.name = "bodycam"
-				camera.replace_networks(list("SECURITY UNIT"))
-				cameranet.removeCamera(camera)
-				camera.status = FALSE
-				if(has_suit)
-					camera.status = TRUE
-					to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
-			to_chat(user, "<span class='notice'>User registered as [stored_name].</span>")
-			if(camera)
-				camera.c_tag = "[stored_name] #[rand(999)]"
-		else
-			to_chat(user, "[src] rejects your insufficient access rights.")
+		if(stored_name && !camera)
+			camera = new /obj/machinery/camera(src)
+			camera.name = "bodycam"
+			camera.replace_networks(list("SECURITY UNIT"))
+			cameranet.removeCamera(camera)
+			camera.status = FALSE
+			if(has_suit)
+				camera.status = TRUE
+				to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
+		to_chat(user, "<span class='notice'>User registered as [stored_name].</span>")
+		if(camera)
+			camera.c_tag = "[stored_name] #[rand(999)]"
 		return TRUE
 	return FALSE
 

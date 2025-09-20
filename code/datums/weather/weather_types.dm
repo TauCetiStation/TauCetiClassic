@@ -94,7 +94,7 @@
 	immunity_type = "ash"
 	var/spawn_tornadoes = 1
 	var/list/tornados = list()
-	probability = 10
+	probability = 0
 
 /datum/weather/scrap_storm/proc/is_scrap_immune(mob/living/L)
 	if(istype(L.loc, /obj/mecha)) //Mechs are immune
@@ -142,7 +142,7 @@
 	weather_alpha = 250
 	aesthetic = TRUE
 	spawn_tornadoes = 0
-	probability = 60
+	probability = 0
 
 /datum/weather/rad_storm
 	name = "radiation storm"
@@ -255,7 +255,7 @@
 
 	immunity_type = "acid" // temp
 
-	probability = 30
+	probability = 0
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
