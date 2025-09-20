@@ -359,3 +359,65 @@
 	beakers += B1
 	beakers += B2
 	icon_state = initial(icon_state) +"_locked"
+
+///Mine
+/obj/item/weapon/grenade/chem_grenade/mine
+	name = "Mine"
+	desc = "Привет от синдиката."
+	path = 1
+	stage = 2
+
+/obj/item/weapon/grenade/chem_grenade/mine/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	if(rand(50))
+		B1.reagents.add_reagent("glycerol", 10)
+		B2.reagents.add_reagent("sacid", 10)
+		B2.reagents.add_reagent("pacid", 10)
+	else
+		B1.reagents.add_reagent("potassium", 30)
+		B2.reagents.add_reagent("phosphorus", 30)
+		B2.reagents.add_reagent("sugar", 30)
+
+		B1.reagents.add_reagent("impedrezene", 30)
+		B2.reagents.add_reagent("condensedcapsaicin", 30)
+
+	detonator = new/obj/item/device/assembly_holder/mousetrap_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"
+
+///Mine
+/obj/item/weapon/grenade/chem_grenade/prank
+	name = "Mine"
+	desc = "Вы не поймёте."
+	path = 1
+	stage = 2
+
+/obj/item/weapon/grenade/chem_grenade/prank/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	switch(pick(1,2,3))
+		if(1)
+			B1.reagents.add_reagent("sulfur", 30)
+			B2.reagents.add_reagent("aluminium", 30)
+			B2.reagents.add_reagent("potassium", 30)
+
+		if(2)
+			B1.reagents.add_reagent("sulfur", 30)
+			B2.reagents.add_reagent("aluminium", 30)
+			B2.reagents.add_reagent("potassium", 30)
+
+		if(3)
+			B1.reagents.add_reagent("sulfur", 30)
+			B2.reagents.add_reagent("aluminium", 30)
+			B2.reagents.add_reagent("potassium", 30)
+
+	detonator = new/obj/item/device/assembly_holder/mousetrap_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"

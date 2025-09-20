@@ -1,16 +1,16 @@
 /datum/event/cargo_mail
 	var/list/citizenship_to_type = list(
-	"Mars" = /obj/random/mail/mars,
-	"Venus" = /obj/random/mail/venus,
-	"Earth" = /obj/random/mail/earth,
-	"Bimna" = /obj/random/mail/bimna,
-	"Luthien" = /obj/random/mail/luthien,
-	"New Gibson" = /obj/random/mail/newgibson,
-	"Reed" = /obj/random/mail/reed,
-	"Argelius" = /obj/random/mail/argelius,
-	"Ahdomai" = /obj/random/mail/ahdomai,
-	"Moghes" = /obj/random/mail/moghes,
-	"Qerrbalak" = /obj/random/mail/qerrbalak,
+		"Mars" = /obj/random/mail/mars,
+		"Venus" = /obj/random/mail/venus,
+		"Earth" = /obj/random/mail/earth,
+		"Bimna" = /obj/random/mail/bimna,
+		"Luthien" = /obj/random/mail/luthien,
+		"New Gibson" = /obj/random/mail/newgibson,
+		"Reed" = /obj/random/mail/reed,
+		"Argelius" = /obj/random/mail/argelius,
+		"Ahdomai" = /obj/random/mail/ahdomai,
+		"Moghes" = /obj/random/mail/moghes,
+		"Qerrbalak" = /obj/random/mail/qerrbalak,
 	)
 
 	/*var/bible_by_name = list(
@@ -25,6 +25,11 @@
 		"Honkers" = /datum/bible_info/chaplain/scrapbook,
 		"Dialectic materialism group of Venera" = /datum/bible_info/chaplain/atheist,
 	)*/
+
+	var/list/job_to_mail = list(
+		JOB_VIROLOGIST = list("Венерианский Институт Вирусологии и Микологии", /obj/item/weapon/virusdish/random),
+		JOB_GENETICIST = list("Ассоциация Свободных Генетиков", /obj/random/meds/dna_injector),
+	)
 
 /datum/event/cargo_mail/start()
 	var/list/available_receivers = list()
@@ -47,7 +52,11 @@
 		var/itemType
 		var/senderInfo
 
-		switch(pick(1, 3, 4, 5, 6))
+		var/list/variants = list(1, 3, 4, 5, 6)
+		if(H.mind.assigned_role in job_to_mail)
+			variants += 7
+
+		switch(pick(variants))
 			if(1) //From Home with Love
 				senderInfo = H.client.prefs.citizenship
 				var/citizenshipType = citizenship_to_type[senderInfo]
@@ -74,5 +83,11 @@
 			if(6) //Lover
 				senderInfo = "<3"
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/love)
+
+			if(7) //Job related
+				var/list/data = job_to_mail[H.mind.assigned_role]
+				senderInfo = data[1]
+				itemType = PATH_OR_RANDOM_PATH(data[2])
+
 
 		SSshuttle.add_mail(senderInfo, MA.account_number, itemType)

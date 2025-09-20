@@ -105,6 +105,9 @@
 			AM.add_fingerprint(user)
 		else
 			AM.forceMove(src.loc)
+		if(isitem(AM))
+			var/obj/item/I = AM
+			I.on_found(user)
 
 /obj/item/smallDelivery/Destroy()
 	dump()

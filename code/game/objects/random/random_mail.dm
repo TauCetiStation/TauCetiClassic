@@ -56,6 +56,7 @@
 		/obj/random/guns/projectile_handgun,\
 		/obj/random/structures/critters_crate,\
 		/obj/random/tools/tech_supply,\
+		/obj/item/weapon/grenade/chem_grenade/mine,\
 	)
 
 /obj/random/mail/home
@@ -223,4 +224,15 @@
 		/obj/item/clothing/under/tactical/skrell,\
 		/obj/item/clothing/head/skrell_headwear,\
 		/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,\
+	)
+
+/obj/random/mail/prank
+	name = "Random prank item from clownco"
+	desc = "This is a random medical kit."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "firstaid"
+
+/obj/random/mail/prank/item_to_spawn()
+	return pick(\
+		/obj/item/weapon/grenade/chem_grenade/prank,\
 	)
