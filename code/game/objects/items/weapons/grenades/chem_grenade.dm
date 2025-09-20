@@ -403,18 +403,16 @@
 	switch(pick(1,2,3))
 		if(1)
 			B1.reagents.add_reagent("sulfur", 30)
-			B2.reagents.add_reagent("aluminium", 30)
+			B2.reagents.add_reagent("aluminum", 30)
 			B2.reagents.add_reagent("potassium", 30)
 
 		if(2)
-			B1.reagents.add_reagent("sulfur", 30)
-			B2.reagents.add_reagent("aluminium", 30)
-			B2.reagents.add_reagent("potassium", 30)
+			B1.reagents.add_reagent("redhairdye", 60)
+			B2.reagents.add_reagent("hair_growth_accelerator", 60)
 
 		if(3)
-			B1.reagents.add_reagent("sulfur", 30)
-			B2.reagents.add_reagent("aluminium", 30)
-			B2.reagents.add_reagent("potassium", 30)
+			B1.reagents.add_reagent("space_drugs", 60)
+			B2.reagents.add_reagent("condensedcapsaicin", 60)
 
 	detonator = new/obj/item/device/assembly_holder/mousetrap_igniter(src)
 

@@ -52,7 +52,7 @@
 		var/itemType
 		var/senderInfo
 
-		var/list/variants = list(1, 3, 4, 5, 6)
+		var/list/variants = list(1, 3, 4, 5, 6, 8)
 		if(H.mind.assigned_role in job_to_mail)
 			variants += 7
 
@@ -88,6 +88,10 @@
 				var/list/data = job_to_mail[H.mind.assigned_role]
 				senderInfo = data[1]
 				itemType = PATH_OR_RANDOM_PATH(data[2])
+
+			if(8)
+				senderInfo = pick(citizenship_to_type)
+				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/prank)
 
 
 		SSshuttle.add_mail(senderInfo, MA.account_number, itemType)
