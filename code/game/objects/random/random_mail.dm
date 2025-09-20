@@ -173,6 +173,12 @@
 		/obj/item/weapon/reagent_containers/food/snacks/el_ehum,\
 		/obj/item/clothing/suit/tajaran/furs,\
 		/obj/item/clothing/head/tajaran/scarf,\
+		/obj/item/stack/medical/bruise_pack/tajaran,\
+		/obj/item/stack/medical/ointment/tajaran,\
+		/obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash,\
+		/obj/item/weapon/reagent_containers/food/snacks/adjurahma,\
+		/obj/item/weapon/reagent_containers/food/snacks/jundarek,\
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha,\
 	)
 
 /obj/random/mail/reed
@@ -197,6 +203,12 @@
 		/obj/random/mail/home,\
 		/obj/item/weapon/reagent_containers/food/snacks/fasqhtongueslice,\
 		/obj/item/clothing/suit/unathi/robe,\
+		/obj/item/clothing/neck/unathi_mantle,\
+		/obj/item/weapon/reagent_containers/food/snacks/grown/gourd,\
+		/obj/item/weapon/hatchet/unathiknife,\
+		/obj/item/weapon/reagent_containers/food/snacks/kefeogeo,\
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue,\
+		/obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina,\
 	)
 
 /obj/random/mail/qerrbalak
@@ -208,4 +220,7 @@
 /obj/random/mail/qerrbalak/item_to_spawn()
 	return pick(\
 		/obj/random/mail/home,\
+		/obj/item/clothing/under/tactical/skrell,\
+		/obj/item/clothing/head/skrell_headwear,\
+		/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,\
 	)
