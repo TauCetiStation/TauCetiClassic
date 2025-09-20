@@ -71,7 +71,6 @@
 			user.default_language = null
 		old_default_language = null
 		working = FALSE
-	return
 
 /obj/item/clothing/neck/language_collar/dropped(mob/user)
 	..()
