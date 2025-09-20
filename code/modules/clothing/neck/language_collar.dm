@@ -84,7 +84,7 @@
 /obj/item/clothing/neck/language_collar/attack_self(mob/user)
 	if(user.incapacitated())
 		return
-	if(slot_equipped != SLOT_NECK || !lang_disk)
+	if(slot_equipped != SLOT_NECK || !lang_disk || !lang_disk.language)
 		to_chat(user, "<span class='warning'>You need to wear the collar around your neck to use it.</span>")
 		return
 	if(!working)
