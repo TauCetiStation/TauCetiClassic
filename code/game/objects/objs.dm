@@ -51,10 +51,10 @@
 	verbs -= /obj/proc/remove_price_tag
 
 /obj/proc/add_price_tag(description, price, category, account_num)
-	src.price_tag = list("description" = description, "price" = price, "category" = category, "account" = account_num)
-	src.verbs += /obj/proc/remove_price_tag
+	price_tag = list("description" = description, "price" = price, "category" = category, "account" = account_num)
+	verbs += /obj/proc/remove_price_tag
 
-	src.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+	underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
 /obj/proc/get_current_temperature()
 	/*

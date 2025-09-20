@@ -209,7 +209,7 @@
 		var/obj/item/I = target
 		if (src.amount > 1)
 			I.add_fingerprint(usr)
-			I = I.wrap_up(texture_name, details_name)
+			I = I.try_wrap_up(texture_name, details_name)
 			if(!I)
 				return
 			if(!istype(I.loc, /turf))
@@ -222,7 +222,7 @@
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
 		if (src.amount > 3 && !C.opened)
-			if(!C.wrap_up(texture_name, details_name))
+			if(!C.try_wrap_up(texture_name, details_name))
 				return
 
 			src.amount -= 3
@@ -238,7 +238,7 @@
 			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
 			return
 		else if (!C.opened)
-			if(!C.wrap_up(texture_name, details_name))
+			if(!C.try_wrap_up(texture_name, details_name))
 				return
 
 			src.amount -= 3
@@ -263,7 +263,7 @@
 		to_chat(user, "[target] не даёт себя упаковать.")
 		return
 
-	if(!H.wrap_up(texture_name, details_name))
+	if(!H.try_wrap_up(texture_name, details_name))
 		return
 
 	src.amount -= 3
@@ -511,7 +511,7 @@
 		lot_description = target.desc
 
 	if(autocategory)
-		lot_category = global.get_item_shop_category(target)
+		lot_category = get_item_shop_category(target)
 
 	if(!lot_account_number)
 		if(ishuman(user))

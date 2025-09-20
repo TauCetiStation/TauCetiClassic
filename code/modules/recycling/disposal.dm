@@ -1059,7 +1059,7 @@
 	return ..()
 
 /obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, obj/Item)
-	Item = global.object2onlineshop_package(Item)
+	Item = object2onlineshop_package(Item)
 
 	Item.forceMove(H)
 

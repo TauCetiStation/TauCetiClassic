@@ -613,7 +613,7 @@
 	icon_opened = "mailcrateopen"
 	icon_closed = "mailcrate"
 
-/obj/structure/closet/crate/wrap_up(texture_name = "cardboard", details_name = null)
+/obj/structure/closet/crate/try_wrap_up(texture_name = "cardboard", details_name = null)
 	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
 	P.icon_state = "deliverycrate"
 	P.add_texture(texture_name, details_name)
