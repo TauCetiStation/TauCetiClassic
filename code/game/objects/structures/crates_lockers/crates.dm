@@ -605,3 +605,12 @@
 							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
 						else if(length(danger_reagents))
 							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)
+
+/obj/structure/closet/crate/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliverycrate"
+	P.add_texture(texture_name, details_name)
+
+	forceMove(P)
+
+	return P
