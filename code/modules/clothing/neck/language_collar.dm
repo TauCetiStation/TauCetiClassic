@@ -33,6 +33,8 @@
 		lang_disk = null
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the language disk from the [src]</span>")
+	else
+		return ..()
 
 /obj/item/clothing/neck/language_collar/emag_act(mob/user)
 	.=..()
