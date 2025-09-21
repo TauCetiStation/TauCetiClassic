@@ -129,7 +129,7 @@
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-	force = 0.5 * base_force + base_force * punch //harm 
+	force = 1.5 ** (fisto_setting - 1) * base_force + base_force * punch //harm 
 	
 	if((user.get_species() == HUMAN && target.get_species() == UNATHI) || (target.get_species() == HUMAN && user.get_species() == UNATHI))
 		playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)
