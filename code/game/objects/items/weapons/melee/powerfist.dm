@@ -101,12 +101,12 @@
 	var/initial_pressure = tank.air_contents.return_pressure()
 	var/consumed_pressure = 0
 	if(initial_pressure >= POWERFIST_MIN_PRESSURE)
-#define K0 0.025//0.3	
-#define K1 0.025//0.115	
-#define K2 0//0.105	
+#define K0 0.15//0.3	
+#define K1 0.175//0.115	
+#define K2 0.075//0.105	
 		// fixed ratio pressure removal for balance I guess, corresponds to 30%, 50%, 90%
 		// to find coefficients use quadratic fit
-		// 5 15 30?
+		// 5 10 30?
 		//var/datum/gas_mixture/M = tank.air_contents.remove_ratio(fisto_setting ** 2 * K2 - fisto_setting * K1 + K0)
 		var/datum/gas_mixture/M = tank.air_contents.remove_ratio(fisto_setting ** 2 * K2 + fisto_setting * K1 + K0)
 #undef K0
