@@ -36,10 +36,10 @@
 
 /obj/random/mail/ntsupport/item_to_spawn()
 	return pick(\
-		/obj/random/foods/food_without_garbage,\
-		/obj/item/clothing/under/lightblue,\
-		/obj/random/misc/pack,\
-		/obj/item/weapon/spacecash/c100,\
+		prob(75);/obj/random/foods/food_with_garbage,\
+		prob(25);/obj/item/clothing/under/lightblue,\
+		prob(100);/obj/random/misc/pack,\
+		prob(50);/obj/item/weapon/spacecash/c100,\
 	)
 
 /obj/random/mail/wrongreceiver
@@ -50,14 +50,14 @@
 
 /obj/random/mail/wrongreceiver/item_to_spawn()
 	return pick(\
-		/obj/random/meds/pills,\
-		/obj/random/meds/syringe,\
-		/obj/random/meds/dna_injector,\
-		/obj/random/meds/chemical_bottle,\
-		/obj/random/guns/projectile_handgun,\
-		/obj/random/structures/critters_crate,\
-		/obj/random/tools/tech_supply/guaranteed,\
-		/obj/item/weapon/grenade/chem_grenade/mine,\
+		prob(100);/obj/random/meds/pills,\
+		prob(100);/obj/random/meds/syringe,\
+		prob(100);/obj/random/meds/dna_injector,\
+		prob(100);/obj/random/meds/chemical_bottle,\
+		prob(10);/obj/random/guns/projectile_handgun,\
+		prob(50);/obj/random/structures/critters_crate,\
+		prob(100);/obj/random/tools/tech_supply/guaranteed,\
+		prob(10);/obj/item/weapon/grenade/chem_grenade/mine,\
 	)
 
 /obj/random/mail/home
@@ -82,8 +82,8 @@
 
 /obj/random/mail/mars/item_to_spawn()
 	return pick(\
-		/obj/random/mail/home,\
-		/obj/item/globe,\
+		prob(100);/obj/random/mail/home,\
+		prob(10);/obj/item/globe,\
 	)
 
 /obj/random/mail/venus
@@ -94,8 +94,8 @@
 
 /obj/random/mail/venus/item_to_spawn()
 	return pick(\
-		/obj/random/mail/home,\
-		/obj/item/globe/venus,\
+		prob(100);/obj/random/mail/home,\
+		prob(10);/obj/item/globe/venus,\
 	)
 
 /obj/random/mail/earth
@@ -106,9 +106,9 @@
 
 /obj/random/mail/earth/item_to_spawn()
 	return pick(\
-		/obj/random/mail/home,\
-		/obj/random/cloth/masks,\
-		/obj/item/globe/earth,\
+		prob(100);/obj/random/mail/home,\
+		prob(20);/obj/random/cloth/masks,\
+		prob(10);/obj/item/globe/earth,\
 	)
 
 /obj/random/mail/bimna
@@ -174,18 +174,18 @@
 
 /obj/random/mail/ahdomai/item_to_spawn()
 	return pick(\
-		/obj/random/mail/home,\
-		/obj/item/weapon/reagent_containers/food/snacks/rraasi,\
-		/obj/item/weapon/reagent_containers/food/snacks/el_ehum,\
-		/obj/item/clothing/suit/tajaran/furs,\
-		/obj/item/clothing/head/tajaran/scarf,\
-		/obj/item/stack/medical/bruise_pack/tajaran,\
-		/obj/item/stack/medical/ointment/tajaran,\
-		/obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash,\
-		/obj/item/weapon/reagent_containers/food/snacks/adjurahma,\
-		/obj/item/weapon/reagent_containers/food/snacks/jundarek,\
-		/obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha,\
-		/obj/item/globe/adhomai,\
+		prob(100);/obj/random/mail/home,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/rraasi,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/el_ehum,\
+		prob(20);/obj/item/clothing/suit/tajaran/furs,\
+		prob(20);/obj/item/clothing/head/tajaran/scarf,\
+		prob(20);/obj/item/stack/medical/bruise_pack/tajaran,\
+		prob(20);/obj/item/stack/medical/ointment/tajaran,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/adjurahma,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/jundarek,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha,\
+		prob(10);/obj/item/globe/adhomai,\
 	)
 
 /obj/random/mail/moghes
@@ -196,16 +196,16 @@
 
 /obj/random/mail/moghes/item_to_spawn()
 	return pick(\
-		/obj/random/mail/home,\
-		/obj/item/weapon/reagent_containers/food/snacks/fasqhtongueslice,\
-		/obj/item/clothing/suit/unathi/robe,\
-		/obj/item/clothing/neck/unathi_mantle,\
-		/obj/item/weapon/reagent_containers/food/snacks/grown/gourd,\
-		/obj/item/weapon/hatchet/unathiknife,\
-		/obj/item/weapon/reagent_containers/food/snacks/kefeogeo,\
-		/obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue,\
-		/obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina,\
-		/obj/item/globe/moghes,\
+		prob(100);/obj/random/mail/home,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/fasqhtongueslice,\
+		prob(20);/obj/item/clothing/suit/unathi/robe,\
+		prob(20);/obj/item/clothing/neck/unathi_mantle,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/grown/gourd,\
+		prob(20);/obj/item/weapon/hatchet/unathiknife,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/kefeogeo,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue,\
+		prob(20);/obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina,\
+		prob(10);/obj/item/globe/moghes,\
 	)
 
 /obj/random/mail/qerrbalak
@@ -216,11 +216,11 @@
 
 /obj/random/mail/qerrbalak/item_to_spawn()
 	return pick(\
-		/obj/random/mail/home,\
-		/obj/item/clothing/under/tactical/skrell,\
-		/obj/item/clothing/head/skrell_headwear,\
-		/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,\
-		/obj/item/globe/yargon,\
+		prob(100);/obj/random/mail/home,\
+		prob(20);/obj/item/clothing/under/tactical/skrell,\
+		prob(20);/obj/item/clothing/head/skrell_headwear,\
+		prob(20);/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,\
+		prob(10);/obj/item/globe/yargon,\
 	)
 
 /obj/random/mail/prank
