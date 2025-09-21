@@ -380,8 +380,8 @@
 		B2.reagents.add_reagent("phosphorus", 30)
 		B2.reagents.add_reagent("sugar", 30)
 
-		B1.reagents.add_reagent("impedrezene", 30)
-		B2.reagents.add_reagent("condensedcapsaicin", 30)
+		B1.reagents.add_reagent("impedrezene", 15)
+		B1.reagents.add_reagent("condensedcapsaicin", 15)
 
 	detonator = new/obj/item/device/assembly_holder/mousetrap_igniter(src)
 
@@ -389,7 +389,7 @@
 	beakers += B2
 	icon_state = initial(icon_state) +"_locked"
 
-///Mine
+///Prank Mine
 /obj/item/weapon/grenade/chem_grenade/prank
 	name = "Mine"
 	desc = "Вы не поймёте."
@@ -407,7 +407,7 @@
 			B2.reagents.add_reagent("potassium", 30)
 
 		if(2)
-			B1.reagents.add_reagent("redhairdye", 60)
+			B1.reagents.add_reagent(pick("redhairdye", "greenhairdye", "bluehairdye"), 60)
 			B2.reagents.add_reagent("hair_growth_accelerator", 60)
 
 		if(3)
