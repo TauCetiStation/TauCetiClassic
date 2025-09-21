@@ -2580,6 +2580,17 @@
 		return
 	return ..()
 
+/obj/item/pizzabox/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
+	P.w_class = w_class
+	P.icon_state = "deliverypizza[length(boxes)]"
+
+	P.add_texture(texture_name, details_name)
+
+	forceMove(P)
+
+	return P
+
 /obj/item/pizzabox/margherita/atom_init()
 	. = ..()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita(src)

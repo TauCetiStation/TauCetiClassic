@@ -24895,6 +24895,7 @@
 /obj/structure/rack,
 /obj/random/science/circuit,
 /obj/effect/decal/cleanable/dirt,
+/obj/random_shop_item,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aSb" = (
@@ -26190,6 +26191,7 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
+/obj/item/weapon/disk/language/xenomorph,
 /obj/item/clothing/glasses/welding/superior,
 /obj/machinery/light/smart{
 	dir = 4
@@ -39732,6 +39734,8 @@
 /obj/structure/rack,
 /obj/random/tools/tool,
 /obj/effect/decal/cleanable/dirt,
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bsz" = (
@@ -71310,8 +71314,10 @@
 /area/station/engineering/chiefs_office)
 "eEb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/weapon/storage/box/language_disks{
+	pixel_y = 5
+	},
+/obj/item/weapon/screwdriver,
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -85477,6 +85483,8 @@
 /obj/structure/rack,
 /obj/random/cloth/randomsuit,
 /obj/effect/decal/cleanable/dirt,
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "tRb" = (
@@ -85696,7 +85704,9 @@
 /area/station/maintenance/engineering)
 "uhb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/folder/white,
+/obj/item/clothing/neck/language_collar{
+	pixel_y = 5
+	},
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
