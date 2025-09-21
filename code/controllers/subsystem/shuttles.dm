@@ -525,7 +525,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	Item.add_price_tag("Отправитель - [sender]", 5, "Разное", global.cargo_account.account_number)
 
-	Item = global.object2onlineshop_package(Item, forceColor = "white", hideInfo = TRUE)
+	Item = object2onlineshop_package(Item, forceColor = "white", hideInfo = TRUE)
 
 	Item.pixel_x = rand(-10, 10)
 	Item.pixel_y = rand(-10, 10)

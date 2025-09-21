@@ -1,6 +1,6 @@
 /obj/random/foods/flowers
 	name = "Random Flower"
-	desc = "This is a random flower."
+	desc = "Случайный цветок."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "poppy"
 
@@ -15,7 +15,7 @@
 
 /obj/random/mail/love
 	name = "Random item related with love"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет от воздыхателя."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -25,11 +25,12 @@
 		/obj/random/foods/candies,\
 		/obj/random/foods/flowers,\
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,\
+		/obj/item/jar/candy,\
 	)
 
 /obj/random/mail/ntsupport
 	name = "Random item related with nt support"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет социальной поддержки нт."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -43,7 +44,7 @@
 
 /obj/random/mail/wrongreceiver
 	name = "Random item related with wrong letter"
-	desc = "This is a random medical kit."
+	desc = "Случайный опасный предмет для посылки."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -55,13 +56,13 @@
 		/obj/random/meds/chemical_bottle,\
 		/obj/random/guns/projectile_handgun,\
 		/obj/random/structures/critters_crate,\
-		/obj/random/tools/tech_supply,\
+		/obj/random/tools/tech_supply/guaranteed,\
 		/obj/item/weapon/grenade/chem_grenade/mine,\
 	)
 
 /obj/random/mail/home
 	name = "Random item from home"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет из дома."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -70,33 +71,36 @@
 		/obj/random/foods/food_without_garbage,\
 		/obj/item/weapon/spacecash/c100,\
 		/obj/random/cloth/random_cloth_safe,\
+		/obj/item/jar/cookie,\
 	)
 
 /obj/random/mail/mars
 	name = "Random item from mars"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с марса."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
 /obj/random/mail/mars/item_to_spawn()
 	return pick(\
 		/obj/random/mail/home,\
+		/obj/item/globe,\
 	)
 
 /obj/random/mail/venus
 	name = "Random item from venus"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с венеры."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
 /obj/random/mail/venus/item_to_spawn()
 	return pick(\
 		/obj/random/mail/home,\
+		/obj/item/globe/venus,\
 	)
 
 /obj/random/mail/earth
 	name = "Random item from earth"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с земли."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -104,11 +108,12 @@
 	return pick(\
 		/obj/random/mail/home,\
 		/obj/random/cloth/masks,\
+		/obj/item/globe/earth,\
 	)
 
 /obj/random/mail/bimna
 	name = "Random item from bimna"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с бимны."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -119,7 +124,7 @@
 
 /obj/random/mail/luthien
 	name = "Random item from luthien"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с лютиэна."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -130,7 +135,7 @@
 
 /obj/random/mail/newgibson
 	name = "Random item from new gibson"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с нового гибсона."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -141,7 +146,7 @@
 
 /obj/random/mail/reed
 	name = "Random item from reed"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с рида."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -152,7 +157,7 @@
 
 /obj/random/mail/argelius
 	name = "Random item from argelius"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с аргеллиуса."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -163,7 +168,7 @@
 
 /obj/random/mail/ahdomai
 	name = "Random item from ahdomai"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с адомая."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -180,22 +185,12 @@
 		/obj/item/weapon/reagent_containers/food/snacks/adjurahma,\
 		/obj/item/weapon/reagent_containers/food/snacks/jundarek,\
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha,\
-	)
-
-/obj/random/mail/reed
-	name = "Random item from reed"
-	desc = "This is a random medical kit."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "firstaid"
-
-/obj/random/mail/reed/item_to_spawn()
-	return pick(\
-		/obj/random/mail/home,\
+		/obj/item/globe/adhomai,\
 	)
 
 /obj/random/mail/moghes
 	name = "Random item from moghes"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с могеса."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -210,11 +205,12 @@
 		/obj/item/weapon/reagent_containers/food/snacks/kefeogeo,\
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue,\
 		/obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina,\
+		/obj/item/globe/moghes,\
 	)
 
 /obj/random/mail/qerrbalak
 	name = "Random item from qerrbalak"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет с яргона-4"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 
@@ -224,11 +220,12 @@
 		/obj/item/clothing/under/tactical/skrell,\
 		/obj/item/clothing/head/skrell_headwear,\
 		/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,\
+		/obj/item/globe/yargon,\
 	)
 
 /obj/random/mail/prank
 	name = "Random prank item from clownco"
-	desc = "This is a random medical kit."
+	desc = "Случайный предмет-пранк для посылок."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 

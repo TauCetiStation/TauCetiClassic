@@ -29,12 +29,18 @@
 	var/list/job_to_mail = list(
 		JOB_VIROLOGIST = list("Венерианский Институт Вирусологии и Микологии", /obj/item/weapon/virusdish/random),
 		JOB_GENETICIST = list("Ассоциация Свободных Генетиков", /obj/random/meds/dna_injector),
+		JOB_ENGINEER = list("Профсоюз Инженеров и Атмостехов", /obj/random/tools/bettertool),
+		JOB_ATMOS = list("Профсоюз Инженеров и Атмостехов", /obj/random/tools/bettertool),
 	)
 
 /datum/event/cargo_mail/start()
 	var/list/available_receivers = list()
 	for(var/mob/living/carbon/human/H in player_list)
-		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+		var/datum/data/record/R = find_general_record("id", find_record_by_name(null, H.real_name))
+		if(!R)
+			continue
+
+		var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
 		if(!MA)
 			continue
 
@@ -46,7 +52,7 @@
 
 	var/mail_amount = rand(1, ceil(available_receivers.len * 0.3))
 
-	for(var/i = 1 to mail_amount)
+	for(var/i in 1 to mail_amount)
 		var/mob/living/carbon/human/H = pick_n_take(available_receivers)
 		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
 		var/itemType
@@ -61,7 +67,7 @@
 				senderInfo = H.client.prefs.citizenship
 				var/citizenshipType = citizenship_to_type[senderInfo]
 				if(!citizenshipType)
-					citizenshipType = citizenship_to_type[pick(citizenship_to_type)]
+					citizenshipType = /obj/random/mail/home
 				itemType = PATH_OR_RANDOM_PATH(citizenshipType)
 
 			/*if(2) //Religious spam

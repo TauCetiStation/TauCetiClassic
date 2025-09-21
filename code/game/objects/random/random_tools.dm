@@ -14,6 +14,19 @@
 						/obj/item/device/flashlight\
 					)
 
+/obj/random/tools/bettertool
+	name = "Random Better Tool"
+	desc = "This is a random good tool."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "welder"
+/obj/random/tools/bettertool/item_to_spawn()
+		return pick(\
+						/obj/item/weapon/weldingtool/hugetank,\
+						/obj/item/weapon/multi/hand_drill,\
+						/obj/item/weapon/multi/jaws_of_life,\
+						/obj/item/clothing/glasses/night,\
+					)
+
 
 /obj/random/tools/technology_scanner
 	name = "Random Scanner"
