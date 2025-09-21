@@ -523,7 +523,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/obj/item/Item = new itemType(pickedloc)
 
-	Item.add_price_tag("Отправитель - [sender]", 5, "Разное", global.cargo_account.account_number)
+	Item.add_price_tag("Отправитель - [sender]", 50, "Разное", global.cargo_account.account_number)
 
 	Item = object2onlineshop_package(Item, forceColor = "white", hideInfo = TRUE)
 
