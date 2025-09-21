@@ -31,6 +31,12 @@
 		JOB_GENETICIST = list("Ассоциация Свободных Генетиков", /obj/random/meds/dna_injector),
 		JOB_ENGINEER = list("Профсоюз Инженеров и Атмостехов", /obj/random/tools/bettertool),
 		JOB_ATMOS = list("Профсоюз Инженеров и Атмостехов", /obj/random/tools/bettertool),
+		JOB_DOCTOR = list("Фонд поддержки людей с ограниченными возможностями" , /obj/structure/stool/bed/chair/wheelchair),
+		JOB_PSYCHIATRIST = list("Коллегия Психиатрии и Маркетологии" , /obj/item/clothing/suit/straight_jacket),
+		JOB_MINER = list("Профсоюз работников отрасли добычи", /obj/item/weapon/gun/energy/laser/cutter),
+		JOB_RECYCLER = list("Профсоюз работников отрасли добычи", /obj/item/weapon/shovel/experimental),
+		JOB_HYDRO = list("Фонд развития ГМО", /obj/item/weapon/gun/energy/floragun),
+		JOB_JANITOR = list("САНМИНСОЛГОВ", /obj/item/weapon/holosign_creator),
 	)
 
 /datum/event/cargo_mail/start()
