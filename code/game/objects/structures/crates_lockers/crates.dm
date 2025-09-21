@@ -454,6 +454,8 @@
 	icon_opened = "woodseccrateopen"
 	icon_closed = "woodseccrate"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"

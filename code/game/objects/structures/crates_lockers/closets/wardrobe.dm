@@ -4,8 +4,6 @@
 	icon_state = "blue"
 	icon_closed = "blue"
 
-	hit_particle_type = /particles/tool/digging/wood
-
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
 	icon_state = "red"

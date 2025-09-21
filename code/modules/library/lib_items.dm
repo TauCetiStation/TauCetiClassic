@@ -22,6 +22,8 @@
 	max_integrity = 200
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
