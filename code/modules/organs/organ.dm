@@ -57,7 +57,7 @@
 	return icon('icons/mob/human.dmi',"blank")
 
 /obj/item/organ/proc/has_antibiotics()
-	if(owner.reagents.has_reagent("spaceacillin", 5) || owner.reagents.has_reagent("ethanol", 5) || owner.reagents.has_reagent("whiskey", 5) || owner.reagents.has_reagent("specialwhiskey", 5) || owner.reagents.has_reagent("vodka", 5) || owner.reagents.has_reagent("cognac", 5) || owner.reagents.has_reagent("absinthe", 5) || owner.reagents.has_reagent("moonshine", 5))
+	if(owner.reagents.has_reagent("spaceacillin", 5) || owner.reagents.has_reagent("ethanol", 25) || owner.reagents.has_reagent("whiskey", 25) || owner.reagents.has_reagent("specialwhiskey", 25) || owner.reagents.has_reagent("vodka", 25) || owner.reagents.has_reagent("cognac", 25) || owner.reagents.has_reagent("absinthe", 25) || owner.reagents.has_reagent("moonshine", 25))
 		return TRUE
 	return FALSE
 
