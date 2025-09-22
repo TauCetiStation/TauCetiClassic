@@ -56,11 +56,14 @@
 /obj/item/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
 	return icon('icons/mob/human.dmi',"blank")
 
+/obj/item/organ/proc/has_antibiotics()
+	if(owner.reagents.has_reagent("spaceacillin", 5) || owner.reagents.has_reagent("ethanol", 5) || owner.reagents.has_reagent("whiskey", 5) || owner.reagents.has_reagent("specialwhiskey", 5) || owner.reagents.has_reagent("vodka", 5) || owner.reagents.has_reagent("cognac", 5) || owner.reagents.has_reagent("absinthe", 5) || owner.reagents.has_reagent("moonshine", 5))
+		return TRUE
+	return FALSE
+
 //Germs
 /obj/item/organ/proc/handle_antibiotics()
-	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
-
-	if (!germ_level || antibiotics < 5)
+	if (!germ_level || antibiotics())
 		return
 
 	if (germ_level < INFECTION_LEVEL_ONE)
