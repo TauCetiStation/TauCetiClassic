@@ -1,3 +1,8 @@
+#define FENCE_NO_COVER 0
+#define FENCE_COVER 1
+#define FENCE_COVER_FULL 2
+#define FENCE_COVER_TALL 3
+
 /obj/structure/fence
 	name = "Undestructable Concrete Fence"
 	desc = "Спрячь за высоким забором таяру - выкраду вместе с забором!"
@@ -15,9 +20,9 @@
 	resistance_flags = FULL_INDESTRUCTIBLE
 
 	anchored = TRUE //Забор всегда прикручен к тайлу.
-	var/screwed = TRUE //Подкручен и сломается если перелезть. Можно крутить.
+	var/screwed = TRUE //Подкручен и сломается если перелезть.
 
-	var/cancover = TRUE
+	var/fence_cover = FENCE_COVER_FULL
 
 /obj/structure/fence/atom_init()
 	. = ..()
@@ -57,6 +62,8 @@
 	return ..()
 
 /obj/structure/fence/CanPass(atom/movable/mover, turf/target, height=0)
+	if((fence_cover > FENCE_NO_COVER) && istype(mover,/obj/item/projectile))
+		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
@@ -82,20 +89,6 @@
 
 	return TRUE
 
-/obj/structure/fence/verb/rotate()
-	set name = "Повернуть забор"
-	set category = "Object"
-	set src in oview(1)
-
-	if(isobserver(usr) || usr.incapacitated())
-		return
-
-	if(screwed)
-		to_chat(usr, "[src] прикручен к полу!")
-		return
-
-	set_dir(turn(dir, 90))
-
 /obj/structure/fence/on_climb(mob/living/climber, mob/living/user)
 	if(!screwed)
 		deconstruct(FALSE)
@@ -117,6 +110,36 @@
 
 	user.forceMove(T)
 
+/obj/structure/fence/proc/check_cover(obj/item/projectile/P, turf/from)
+	var/turf/cover = get_turf(src)
+	if(get_dist(P.starting, loc) <= 1) //Too close to cover
+		return TRUE
+
+	if(!((get_turf(P.original) == cover) && (get_dir(cover, from) == dir)) && !((get_turf(P.original) == get_step(cover, get_dir(from, cover))) && get_dir(from, cover) == dir)) //Dir can't cover
+		return TRUE
+
+	if(fence_cover == FENCE_COVER_TALL) //Tallest fence covers always even while standing
+		return FALSE
+
+	var/cover_chance = 20
+
+	if(fence_cover >= FENCE_COVER_FULL) //Full cover adds additional protection
+		cover_chance += 20
+
+	if(ismob(P.original))
+		var/mob/M = P.original
+		if(M.lying)
+			if(fence_cover >= FENCE_COVER_FULL) //Full cover fully covers lying mobs
+				return FALSE
+
+			cover_chance += 20
+
+
+	if(prob(cover_chance))
+		return FALSE
+
+	return TRUE
+
 
 
 /obj/structure/fence/wood
@@ -128,6 +151,8 @@
 	max_integrity = 5
 	resistance_flags = CAN_BE_HIT
 
+	fence_cover = FENCE_COVER
+
 /obj/structure/fence/wood/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/wood(loc, 2)
@@ -138,10 +163,11 @@
 	desc = "Металлический забор."
 
 	icon_state = "fence_metal"
-	cancover = FALSE
 
 	max_integrity = 10
 	resistance_flags = FIRE_PROOF | CAN_BE_HIT
+
+	fence_cover = FENCE_NO_COVER
 
 	var/mutable_appearance/Rail
 
@@ -184,3 +210,8 @@
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 2)
 	..()
+
+#undef FENCE_NO_COVER
+#undef FENCE_COVER
+#undef FENCE_COVER_FULL
+#undef FENCE_COVER_TALL
