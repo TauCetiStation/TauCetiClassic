@@ -63,7 +63,7 @@
 
 //Germs
 /obj/item/organ/proc/handle_antibiotics()
-	if (!germ_level || antibiotics())
+	if (!germ_level || has_antibiotics())
 		return
 
 	if (germ_level < INFECTION_LEVEL_ONE)
