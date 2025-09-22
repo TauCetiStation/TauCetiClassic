@@ -7425,7 +7425,6 @@
 /area/station/civilian/locker)
 "anY" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart,
 /obj/item/device/radio/intercom{
 	dir = 1;
@@ -12351,8 +12350,7 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "cMi" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -31651,6 +31649,9 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "uqq" = (

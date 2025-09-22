@@ -1,7 +1,3 @@
-
-//moved these here from code/defines/obj/weapon.dm
-//please preference put stuff where it's easy to find - C
-
 /obj/item/weapon/autopsy_scanner
 	name = "autopsy scanner"
 	desc = "Extracts information on wounds."

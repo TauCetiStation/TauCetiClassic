@@ -63,10 +63,10 @@ var/global/list/smartlight_presets
 
 	available_modes = list(
 		/datum/light_mode/default,
-		/datum/light_mode/k3000,
 		/datum/light_mode/k4000,
+		/datum/light_mode/k4500,
 		/datum/light_mode/k5000,
-		/datum/light_mode/k6000,
+		/datum/light_mode/k5500,
 		/datum/light_mode/soft,
 		/datum/light_mode/hard,
 	)
@@ -161,17 +161,17 @@ var/global/list/smartlight_presets
 
 	available_modes = list(/datum/light_mode/cargo)
 
-/datum/smartlight_preset/k3000
-	name = "default 3000k"
-	default_mode = /datum/light_mode/k3000
-	no_nightshift_mode = TRUE
-	available_modes = list(/datum/light_mode/k3000)
-
 /datum/smartlight_preset/k4000
 	name = "default 4000k"
 	default_mode = /datum/light_mode/k4000
 	no_nightshift_mode = TRUE
 	available_modes = list(/datum/light_mode/k4000)
+
+/datum/smartlight_preset/k4500
+	name = "default 4500k"
+	default_mode = /datum/light_mode/k4500
+	no_nightshift_mode = TRUE
+	available_modes = list(/datum/light_mode/k4500)
 
 /datum/smartlight_preset/k5000
 	name = "default 5000k"
@@ -179,12 +179,11 @@ var/global/list/smartlight_presets
 	no_nightshift_mode = TRUE
 	available_modes = list(/datum/light_mode/k5000)
 
-/datum/smartlight_preset/k6000
-	name = "default 6000k"
+/datum/smartlight_preset/k5500
+	name = "default 5500k"
+	default_mode = /datum/light_mode/k5500
 	no_nightshift_mode = TRUE
-	default_mode = /datum/light_mode/k6000
-	no_nightshift_mode = TRUE
-	available_modes = list(/datum/light_mode/k6000)
+	available_modes = list(/datum/light_mode/k5500)
 
 /datum/smartlight_preset/soft
 	name = "soft"

@@ -2,7 +2,7 @@ var/global/list/datum/light_mode/light_modes_by_type
 var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ in content from light_modes_by_type
 
 #define DEFAULT_RANGE 7
-#define DEFAULT_POWER 0.8
+#define DEFAULT_POWER 0.7
 
 /datum/light_mode
 	var/name
@@ -25,7 +25,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/default
 	name = "Default"
 
-	color = "#faf6ff"
+	color = "#fff4ed" // 6000k
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
@@ -68,7 +68,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/medbay
 	name = "MedBay"
 
-	color = "#e8e9ff"
+	color = "#e3e9ff"
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
@@ -106,7 +106,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/soft
 	name = "Soft"
 
-	color = "#ffe4c9"
+	color = "#ffd9ab" // 4200k
 	power = DEFAULT_POWER //todo: ex-nightshift, should we adapt another for day ?
 	range = DEFAULT_RANGE
 
@@ -117,31 +117,31 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
-/datum/light_mode/k3000
-	name = "3000k"
-
-	color = "#ffb46b"
-	power = DEFAULT_POWER
-	range = DEFAULT_RANGE
-
 /datum/light_mode/k4000
 	name = "4000k"
 
-	color = "#ffd1a3"
+	color = "#ffd5a1"
+	power = DEFAULT_POWER
+	range = DEFAULT_RANGE
+
+/datum/light_mode/k4500
+	name = "4500k"
+
+	color = "#ffdfb8"
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
 /datum/light_mode/k5000
 	name = "5000k"
 
-	color = "#ffe4ce"
+	color = "#ffe7cc"
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
-/datum/light_mode/k6000
-	name = "6000k"
+/datum/light_mode/k5500
+	name = "5500k"
 
-	color = "#fff3ef"
+	color = "#ffeede"
 	power = DEFAULT_POWER
 	range = DEFAULT_RANGE
 
@@ -162,9 +162,9 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/horror
 	name = "Horror"
 
-	color = "#e8e9ff"
+	color = "#61ffc8"
 	power = 0.5
-	range = 4
+	range = 5
 
 /datum/light_mode/code_red
 	name = "Code Red"
@@ -179,8 +179,8 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 
 	//color = "#22566a"
 	color = "#b7ebff"
-	power = DEFAULT_POWER
-	range = DEFAULT_RANGE
+	power = 0.6
+	range = 6
 
 /datum/light_mode/soft_blue
 	name = "Soft Blue"

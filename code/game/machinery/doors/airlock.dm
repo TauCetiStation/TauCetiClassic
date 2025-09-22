@@ -898,7 +898,7 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
+	if(istype(C, /obj/item/taperoll))
 		return
 
 	if(iswelding(C) && !(operating > 0))
@@ -1188,6 +1188,7 @@ var/global/list/airlock_overlays = list()
 
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
+		ae.item_state_inventory = "door_electronics_smoked"
 		ae.item_state_world = "door_electronics_smoked_w"
 		ae.broken = TRUE
 		operating = 0
