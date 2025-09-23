@@ -20,6 +20,8 @@
 	resistance_flags = FULL_INDESTRUCTIBLE
 
 	anchored = TRUE //Забор всегда прикручен к тайлу.
+
+	var/can_be_screwed = FALSE
 	var/screwed = TRUE //Подкручен и сломается если перелезть.
 
 	var/fence_cover = FENCE_COVER_FULL
@@ -49,7 +51,7 @@
 			deconstruct(TRUE)
 			return TRUE
 		return FALSE
-	else if(isscrewing(W))
+	else if(can_be_screwed && isscrewing(W))
 		if(W.use_tool(src, user, 50, volume = 50))
 			if(screwed)
 				to_chat(user, "<span class='notice'>Вы откручиваете забор.</span>")
@@ -153,6 +155,8 @@
 
 	fence_cover = FENCE_COVER
 
+	can_be_screwed = TRUE
+
 /obj/structure/fence/wood/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/wood(loc, 2)
@@ -168,6 +172,8 @@
 	resistance_flags = FIRE_PROOF | CAN_BE_HIT
 
 	fence_cover = FENCE_NO_COVER
+
+	can_be_screwed = TRUE
 
 	var/mutable_appearance/Rail
 
@@ -209,6 +215,26 @@
 /obj/structure/fence/metal/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 2)
+	..()
+
+
+/obj/structure/fence/sandbags
+	name = "sandbags"
+	desc = "Хорошее укрытие."
+
+	icon_state = "sandbags"
+
+	max_integrity = 150
+	resistance_flags = CAN_BE_HIT
+
+	fence_cover = FENCE_COVER_FULL
+
+/obj/structure/fence/sandbags/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			new /obj/item/stack/sheet/sandbag(loc, 1)
+		else
+			new /obj/item/weapon/ore/glass(loc)
 	..()
 
 #undef FENCE_NO_COVER
