@@ -134,6 +134,12 @@
 	if((user.get_species() == HUMAN && target.get_species() == UNATHI) || (target.get_species() == HUMAN && user.get_species() == UNATHI))
 		playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)
 		force += 5
+
+	var/throw_debuff 
+	if(( check_shield_dir(target, get_dir(src, target))))
+		throw_debuff = 3
+	else
+		throw_debuff = 1
 	
 	switch(user.a_intent)
 		if(INTENT_HELP )
@@ -144,15 +150,17 @@
 			agony = 0.75 * force
 			force = 0.25 * force
 			if(!(BP_L_ARM == def_zone) && !(BP_R_ARM == def_zone))
-				target.throw_at(throw_target,2 * fisto_setting + punch, 1)
+				target.throw_at(throw_target,2 * fisto_setting / throw_debuff + punch, 1)
 				target.MakeConfused(0.2 * fisto_setting)
 		if(INTENT_GRAB)
 			agony = 0.25 * force
 			force = 0.5 * force
+			
 			if(iscarbon(target))
-				target.crawling = TRUE
+				if(!check_shield_dir(target, get_dir(src, target)))
+					target.crawling = TRUE
 			else
-				target.Stun(0.3 * fisto_setting)
+				target.Stun(0.5 * fisto_setting)
 		if(INTENT_HARM)
 			agony = 0
 			target.throw_at(throw_target, fisto_setting - 1, 1)
