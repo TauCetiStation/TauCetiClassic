@@ -258,7 +258,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 
 
 var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
-	new/datum/stack_recipe("fence", /obj/structure/fence/sandbags, 1, time = 25, max_per_turf = 4, build_outline = TRUE),
+	new/datum/stack_recipe("fence", /obj/structure/fence/sandbags, 1, time = 25, max_per_turf = 1, build_outline = TRUE, dir_sensitive = TRUE),
 )
 
 /obj/item/stack/sheet/sandbag	//Sandbags
