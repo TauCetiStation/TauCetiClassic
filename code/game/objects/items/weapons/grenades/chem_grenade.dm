@@ -371,17 +371,24 @@
 	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
-	if(rand(50))
-		B1.reagents.add_reagent("glycerol", 10)
-		B2.reagents.add_reagent("sacid", 10)
-		B2.reagents.add_reagent("pacid", 10)
-	else
-		B1.reagents.add_reagent("potassium", 30)
-		B2.reagents.add_reagent("phosphorus", 30)
-		B2.reagents.add_reagent("sugar", 30)
 
-		B1.reagents.add_reagent("impedrezene", 15)
-		B1.reagents.add_reagent("condensedcapsaicin", 15)
+	switch(pick(1,2,3))
+		if(1)
+			B1.reagents.add_reagent("glycerol", 10)
+			B2.reagents.add_reagent("sacid", 10)
+			B2.reagents.add_reagent("pacid", 10)
+
+		if(2)
+			B1.reagents.add_reagent("potassium", 30)
+			B2.reagents.add_reagent("phosphorus", 30)
+			B2.reagents.add_reagent("sugar", 30)
+
+			B1.reagents.add_reagent("impedrezene", 15)
+			B1.reagents.add_reagent("condensedcapsaicin", 15)
+
+		if(3)
+			B1.reagents.add_reagent("uranium", 60)
+			B2.reagents.add_reagent("iron", 60)
 
 	detonator = new/obj/item/device/assembly_holder/mousetrap_igniter(src)
 
@@ -411,7 +418,7 @@
 			B2.reagents.add_reagent("hair_growth_accelerator", 60)
 
 		if(3)
-			B1.reagents.add_reagent("space_drugs", 60)
+			B1.reagents.add_reagent("lube", 60)
 			B2.reagents.add_reagent("condensedcapsaicin", 60)
 
 	detonator = new/obj/item/device/assembly_holder/mousetrap_igniter(src)

@@ -64,12 +64,12 @@
 		var/itemType
 		var/senderInfo
 
-		var/list/variants = list(1, 3, 4, 5, 6, 8)
+		var/list/variants = list("FromHome", "NTSocial", "WrongMail", "WannaKnowMore?", "Love", "Prank")
 		if(H.mind.assigned_role in job_to_mail)
-			variants += 7
+			variants += "JobItem"
 
 		switch(pick(variants))
-			if(1) //From Home with Love
+			if("FromHome") //From Home with Love
 				senderInfo = H.client.prefs.citizenship
 				var/citizenshipType = citizenship_to_type[senderInfo]
 				if(!citizenshipType)
@@ -80,28 +80,28 @@
 				senderInfo = pick(bible_by_name)
 				itemType = bible_by_name[senderInfo]*/
 
-			if(3) //NT Support
+			if("NTSocial") //NT Support
 				senderInfo = "Отдел социальной поддержки персонала НаноТрейзен"
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/ntsupport)
 
-			if(4) //Wrong Receiver
+			if("WrongMail") //Wrong Receiver
 				senderInfo = pick(citizenship_to_type)
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/wrongreceiver)
 
-			if(5) //Wanna know more?
+			if("WannaKnowMore?") //Wanna know more?
 				senderInfo = "Хочешь знать больше?"
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/misc/book)
 
-			if(6) //Lover
+			if("Love") //Lover
 				senderInfo = "<3"
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/love)
 
-			if(7) //Job related
+			if("JobItem") //Job related
 				var/list/data = job_to_mail[H.mind.assigned_role]
 				senderInfo = data[1]
 				itemType = PATH_OR_RANDOM_PATH(data[2])
 
-			if(8)
+			if("Prank") //Prank
 				senderInfo = pick(citizenship_to_type)
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/prank)
 
