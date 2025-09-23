@@ -1154,5 +1154,5 @@ var/global/list/contributor_names
 		var/area/A = get_area(src)
 		var/datum/weakref/PWeakref = WEAKREF(src)
 		global.inventoryPapers += PWeakref.resolve()
-		src.name += A.name
+		name += A.name
 		inventoryTag = A.name
