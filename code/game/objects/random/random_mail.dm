@@ -35,12 +35,12 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/ntsupport/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/foods/food_with_garbage = 75,
 		/obj/item/clothing/under/lightblue = 25,
 		/obj/random/misc/pack = 100,
 		/obj/item/weapon/spacecash/c100 = 50,
-	)
+	))
 
 /obj/random/mail/wrongreceiver
 	name = "Random item related with wrong letter"
@@ -49,7 +49,7 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/wrongreceiver/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/meds/pills = 100,
 		/obj/random/meds/syringe = 100,
 		/obj/random/meds/dna_injector = 100,
@@ -58,7 +58,7 @@
 		/obj/random/structures/critters_crate = 50,
 		/obj/random/tools/tech_supply/guaranteed = 100,
 		/obj/item/weapon/grenade/chem_grenade/mine = 10,
-	)
+	))
 
 /obj/random/mail/home
 	name = "Random item from home"
@@ -81,10 +81,10 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/mars/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/mail/home = 100,
 		/obj/item/globe = 10,
-	)
+	))
 
 /obj/random/mail/venus
 	name = "Random item from venus"
@@ -93,10 +93,10 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/venus/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/mail/home = 100,
 		/obj/item/globe/venus = 10,
-	)
+	))
 
 /obj/random/mail/earth
 	name = "Random item from earth"
@@ -105,11 +105,11 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/earth/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/mail/home = 100,
 		/obj/random/cloth/masks = 20,
 		/obj/item/globe/earth = 10,
-	)
+	))
 
 /obj/random/mail/bimna
 	name = "Random item from bimna"
@@ -173,7 +173,7 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/ahdomai/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/mail/home = 100,
 		/obj/item/weapon/reagent_containers/food/snacks/rraasi = 20,
 		/obj/item/weapon/reagent_containers/food/snacks/el_ehum = 20,
@@ -186,7 +186,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/jundarek = 20,
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha = 20,
 		/obj/item/globe/adhomai = 10,
-	)
+	))
 
 /obj/random/mail/moghes
 	name = "Random item from moghes"
@@ -195,7 +195,7 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/moghes/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/mail/home = 100,
 		/obj/item/weapon/reagent_containers/food/snacks/fasqhtongueslice = 20,
 		/obj/item/clothing/suit/unathi/robe = 20,
@@ -206,7 +206,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue = 20,
 		/obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina = 20,
 		/obj/item/globe/moghes = 10,
-	)
+	))
 
 /obj/random/mail/qerrbalak
 	name = "Random item from qerrbalak"
@@ -215,13 +215,13 @@
 	icon_state = "firstaid"
 
 /obj/random/mail/qerrbalak/item_to_spawn()
-	return pickweight(
+	return pickweight(list(
 		/obj/random/mail/home = 100,
 		/obj/item/clothing/under/tactical/skrell = 20,
 		/obj/item/clothing/head/skrell_headwear = 20,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 20,
 		/obj/item/globe/yargon = 10,
-	)
+	))
 
 /obj/random/mail/prank
 	name = "Random prank item from clownco"
