@@ -50,7 +50,7 @@
 		if(!MA)
 			continue
 
-		available_receivers += H
+		available_receivers += list(list(H, MA))
 
 	if(!available_receivers.len)
 		return
@@ -59,8 +59,13 @@
 	var/mail_amount = rand(1, ceil(available_receivers.len * 0.3))
 
 	for(var/i in 1 to mail_amount)
-		var/mob/living/carbon/human/H = pick_n_take(available_receivers)
-		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+		if(!available_receivers.len)
+			break
+
+		var/list/receiversData = pick_n_take(available_receivers)
+		var/mob/living/carbon/human/H = receiversData[1]
+		var/datum/money_account/MA = receiversData[2]
+
 		var/itemType
 		var/senderInfo
 

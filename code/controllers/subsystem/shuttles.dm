@@ -464,20 +464,20 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/clear_turfs = list()
 
-	for(var/turf/T in shuttle)
-		if(T.density)
-			continue
-		var/contcount
-		for(var/atom/A in T.contents)
-			if(!A.simulated)
+	checking_turfs:
+		for(var/turf/T in shuttle)
+			if(T.density)
 				continue
-			if(istype(A, /obj/machinery/light))
-				continue
-			contcount++
-		if(contcount)
-			continue
-		clear_turfs += T
-		CHECK_TICK
+
+			for(var/atom/A in T.contents)
+				if(!A.simulated)
+					continue
+				if(istype(A, /obj/machinery/light))
+					continue
+
+				continue checking_turfs
+			clear_turfs += T
+			CHECK_TICK
 
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
