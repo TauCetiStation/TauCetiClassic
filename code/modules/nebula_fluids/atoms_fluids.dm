@@ -12,9 +12,6 @@
 /atom/proc/check_fluid_depth(var/min = 1)
 	return 0
 
-/atom/proc/CanFluidPass(var/coming_from)
-	return TRUE
-
 /atom/movable/proc/try_fluid_push(volume, strength)
 	return simulated && !anchored
 

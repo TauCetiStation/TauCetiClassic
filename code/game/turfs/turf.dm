@@ -426,6 +426,8 @@
 
 	REMOVE_ACTIVE_FLUID_SOURCE(src)
 
+	QDEL_NULL(fluid_overlay)
+
 	var/turf/W = new path(arglist(arguments))
 
 	W.has_resources = has_resources

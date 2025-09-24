@@ -2161,6 +2161,7 @@
 #include "code\modules\nebula_fluids\atoms_fluids.dm"
 #include "code\modules\nebula_fluids\atoms_movable_fluids.dm"
 #include "code\modules\nebula_fluids\fluid.dm"
+#include "code\modules\nebula_fluids\fluid_canpass.dm"
 #include "code\modules\nebula_fluids\fluid_flood.dm"
 #include "code\modules\nebula_fluids\fluid_mapped.dm"
 #include "code\modules\nebula_fluids\fluids_admin.dm"
