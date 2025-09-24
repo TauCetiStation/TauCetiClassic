@@ -1,7 +1,7 @@
 #define HIDINGCACHE_TIP "Тайник."
 
 /datum/mechanic_tip/hiding_cache
-	tip_name = HIDINGCACHE_TIP
+	tip_name
 
 /datum/mechanic_tip/hiding_cache/New(datum/component/hiding_cache/HC)
 	description = "Вы можете проверить тайник кликнув CTRL+SHIFT+LMB на [HC.parent]."
@@ -17,7 +17,12 @@
 
 	var/datum/callback/parent_open_check
 
+	var/datum/mechanic_tip/hiding_cache/cache_tip
+
 /datum/component/hiding_cache/Initialize(w_size = SIZE_TINY, item_needed = null, use_sound = null, datum/callback/_parent_open_check = null)
+	if(!isobj(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	parent_object = parent
 
 	if(item_needed)
@@ -27,13 +32,14 @@
 	else
 		setup_cache(w_size, use_sound)
 
-	var/datum/mechanic_tip/hiding_cache/cache_tip = new(src)
+	cache_tip = new(src)
+	cache_tip.tip_name = "<a href=byond://?_src_=usr;lookcache=\ref[src]>[HIDINGCACHE_TIP]</a>"
 	parent.AddComponent(/datum/component/mechanic_desc, list(cache_tip), CALLBACK(src, PROC_REF(can_show_cache_tip)))
 
 	if(_parent_open_check)
 		parent_open_check = _parent_open_check
 
-	RegisterSignal(parent_object, list(COMSIG_PARENT_QDELETING), PROC_REF(on_destroyed))
+	RegisterSignal(parent_object, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_cache))
 	RegisterSignal(parent_object, list(COMSIG_PARENT_CTRLSHIFTCLICKED), PROC_REF(try_open_cache))
 
 /datum/component/hiding_cache/proc/setup_cache(w_size, use_sound)
@@ -82,13 +88,17 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	cache_storage.open(user)
 
-/datum/component/hiding_cache/proc/on_destroyed()
-	qdel(src)
+/datum/component/hiding_cache/proc/destroy_cache()
+	cache_storage.spill()
+	QDEL_NULL(cache_storage)
 
 /datum/component/hiding_cache/Destroy()
 	SEND_SIGNAL(parent_object, COMSIG_TIPS_REMOVE, list(HIDINGCACHE_TIP))
 	UnregisterSignal(parent_object, list(COMSIG_PARENT_CTRLSHIFTCLICKED, COMSIG_PARENT_QDELETING))
 
-	cache_storage.spill()
-	QDEL_NULL(cache_storage)
+	SEND_SIGNAL(parent_object, COMSIG_TIPS_REMOVE, list(cache_tip.tip_name))
+
+	if(cache_storage)
+		destroy_cache()
+
 	return ..()
