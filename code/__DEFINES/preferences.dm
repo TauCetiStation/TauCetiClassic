@@ -1,3 +1,8 @@
+//Two types of the supported client view
+#define WIDESCREEN_VIEWPORT_SIZE "17x15"
+#define SQUARE_VIEWPORT_SIZE "15x15"
+#define VIEWPORT_USE_PREF "use_pref"
+
 //Preference toggles (it had more bits, but updating player saves without wiping method is a bit more complex).
 #define SHOW_ANIMATIONS	16
 #define SHOW_PROGBAR	32
