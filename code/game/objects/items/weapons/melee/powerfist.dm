@@ -83,19 +83,19 @@
 
 /obj/item/weapon/melee/powerfist/proc/insertTank(obj/item/weapon/tank/thetank, mob/living/carbon/human/user)
 	if(tank)
-		to_chat(user,"<span class='warning'>У [CASE(src, ACCUSATIVE_CASE)] уже есть баллон.</span>")
+		to_chat(user,"<span class='warning'>В [CASE(src, PREPOSITIONAL_CASE)] уже есть баллон.</span>")
 		return
 
 	if(!user.unEquip(thetank))
 		return
 
-	to_chat(user,"<span class='notice'>Вы вкручиваете баллон в [CASE(src, ACCUSATIVE_CASE)].</span>")
+	to_chat(user,"<span class='notice'>Вы подключаете баллон в [CASE(src, ACCUSATIVE_CASE)].</span>")
 	tank = thetank
 	thetank.forceMove(src)
 
 /obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user, def_zone)
 	if(!tank)
-		to_chat(user,"<span class='warning'>Для работы нужен баллон с газом!</span>")
+		to_chat(user,"<span class='warning'>Для работы [CASE(src, GENITIVE_CASE)] нужен баллон с газом!</span>")
 		return FALSE
 
 	var/initial_pressure = tank.air_contents.return_pressure()
