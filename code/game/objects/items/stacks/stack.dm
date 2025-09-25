@@ -376,6 +376,8 @@
 	var/time = 0
 	/// Number of the resulting atoms is allowed per turf, 0 to disable limit
 	var/max_per_turf = 0
+	/// If dir is checked to count max_per_turf
+	var/dir_sensitive = FALSE
 	/// Enable or disable preview overlay
 	var/build_outline = FALSE
 	/// Restrict building only for these floor types
@@ -383,7 +385,7 @@
 	/// Skills to check for building time
 	var/list/required_skills
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, max_per_turf = 0, build_outline = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor))
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, max_per_turf = 0, build_outline = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor), dir_sensitive = FALSE)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -394,6 +396,7 @@
 	src.build_outline = build_outline
 	src.required_skills = required_skills
 	src.floor_path = floor_path
+	src.dir_sensitive = dir_sensitive
 
 /*
  * Recipe list datum

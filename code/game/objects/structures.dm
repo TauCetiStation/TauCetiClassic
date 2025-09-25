@@ -76,7 +76,7 @@
 	if(!climbable || !can_touch(user) || (!post_climb_check && (climber in climbers)))
 		return FALSE
 
-	if(climber.loc == loc)
+	if(climber.loc == loc && flags & ~ON_BORDER)
 		return FALSE
 
 	if(user.incapacitated())
