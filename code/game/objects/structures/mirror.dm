@@ -12,6 +12,10 @@
 	integrity_failure = 0.5
 	resistance_flags = UNACIDABLE | CAN_BE_HIT
 
+/obj/structure/mirror/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/hiding_cache, SIZE_MINUSCULE)
 
 /obj/structure/mirror/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

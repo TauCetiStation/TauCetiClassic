@@ -366,6 +366,9 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_PARENT_CTRLSHIFTCLICKED, user) & COMPONENT_CANCEL_CLICK)
+		return
+
 	return
 
 /*
