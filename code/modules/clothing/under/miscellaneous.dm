@@ -769,3 +769,14 @@
 	name = "pluvia suit"
 	icon_state = "pluviaGold"
 	item_state = "pluviaGold"
+
+/obj/item/clothing/under/blackf
+	name = "feminine black jumpsuit"
+	desc = "It's very smart and in a ladies-size!"
+	icon_state = "black"
+	item_state = "blackf"
+
+/obj/item/clothing/under/psyche
+	name = "psychedelic"
+	desc = "Groovy!"
+	icon_state = "psyche"

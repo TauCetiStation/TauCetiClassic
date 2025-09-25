@@ -2492,8 +2492,8 @@
 /area/awaymission/academy/academyaft)
 "gM" = (
 /obj/machinery/door/airlock/gold{
-	locked = 1;
-	dir = 4
+	dir = 4;
+	locked = 1
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2942,7 +2942,7 @@
 /area/awaymission/academy/academyaft)
 "hN" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/clothing/shoes/sandal,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -2957,7 +2957,7 @@
 /area/awaymission/academy/academyaft)
 "hQ" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/weapon/staff,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -2975,7 +2975,7 @@
 /area/awaymission/academy/academyaft)
 "hT" = (
 /obj/structure/closet,
-/obj/item/clothing/under/purple,
+/obj/item/clothing/under/color/purple,
 /obj/item/weapon/poster/contraband,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
