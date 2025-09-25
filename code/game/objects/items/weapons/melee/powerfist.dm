@@ -150,7 +150,7 @@
 			agony = 0.75 * force
 			force = 0.25 * force
 			if(!(BP_L_ARM == def_zone) && !(BP_R_ARM == def_zone))
-				target.throw_at(throw_target,(2 * fisto_setting + punch) / 3 ** block_throw, 1)
+				target.throw_at(throw_target,(2 * fisto_setting + punch) / 3 ** (1 - block_throw), 1)
 				target.MakeConfused(0.2 * fisto_setting)
 		if(INTENT_GRAB)
 			agony = 0.25 * force
