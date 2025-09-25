@@ -1,5 +1,5 @@
 /datum/objective/heist/inviolate_crew
-	explanation_text = "Do not leave any Vox behind, alive or dead."
+	explanation_text = "Ни один Вокс на станции не должен остаться, ни живой, ни мертвый."
 
 /datum/objective/heist/inviolate_crew/check_completion()
 	var/datum/faction/heist/H = faction
