@@ -101,9 +101,9 @@
 	var/initial_pressure = tank.air_contents.return_pressure()
 	var/consumed_pressure = 0
 	if(initial_pressure >= POWERFIST_MIN_PRESSURE)
-#define K0 0.15//0.3	
-#define K1 0.175//0.115	
-#define K2 0.075//0.105	
+#define K0 0.15//0.3
+#define K1 0.175//0.115
+#define K2 0.075//0.105
 		// fixed ratio pressure removal for balance I guess, corresponds to 30%, 50%, 90%
 		// to find coefficients use quadratic fit
 		// 5 10 30?
@@ -128,19 +128,19 @@
 #undef  PRACTICAL_MAX_CONSUMED
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+	//harm
+	force = 1.5 ** (fisto_setting - 1) * base_force// + base_force * punch
 
-	force = 1.5 ** (fisto_setting - 1) * base_force + base_force * punch //harm 
-	
 	if((user.get_species() == HUMAN && target.get_species() == UNATHI) || (target.get_species() == HUMAN && user.get_species() == UNATHI))
 		playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)
 		force += 5
 
-	var/throw_debuff 
+	var/throw_debuff
 	if(( check_shield_dir(target, get_dir(src, target))))
 		throw_debuff = 3
 	else
 		throw_debuff = 1
-	
+
 	switch(user.a_intent)
 		if(INTENT_HELP )
 			agony = 1.5 * force
@@ -155,7 +155,7 @@
 		if(INTENT_GRAB)
 			agony = 0.25 * force
 			force = 0.5 * force
-			
+
 			if(iscarbon(target))
 				if(!check_shield_dir(target, get_dir(src, target)))
 					target.crawling = TRUE
@@ -174,7 +174,7 @@
 			target.MakeConfused(0.05 * fisto_setting)
 		if(BP_CHEST)
 			force = 1.25 * force
-		if(BP_GROIN) 
+		if(BP_GROIN)
 			agony = agony + 0.5 * base_force * punch
 			if(user.IsClumsy() || target.IsClumsy())
 				playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//звук поджопника
