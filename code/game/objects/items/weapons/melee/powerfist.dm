@@ -135,22 +135,22 @@
 		playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)
 		force += 5
 
-	var/throw_debuff
+	var/block_throw
 	if(( check_shield_dir(target, get_dir(src, target))))
-		throw_debuff = 3
+		block_throw = 0 //blocked
 	else
-		throw_debuff = 1
+		block_throw = 1
 
 	switch(user.a_intent)
 		if(INTENT_HELP )
 			agony = 1.5 * force
 			force = 1
-			target.throw_at(throw_target, fisto_setting - 1, 1)
+			target.throw_at(throw_target, (fisto_setting - 1) * block_throw, 1)
 		if(INTENT_PUSH)
 			agony = 0.75 * force
 			force = 0.25 * force
 			if(!(BP_L_ARM == def_zone) && !(BP_R_ARM == def_zone))
-				target.throw_at(throw_target,2 * fisto_setting / throw_debuff + punch, 1)
+				target.throw_at(throw_target,(2 * fisto_setting + punch) * block_throw, 1)
 				target.MakeConfused(0.2 * fisto_setting)
 		if(INTENT_GRAB)
 			agony = 0.25 * force
@@ -163,7 +163,7 @@
 				target.Stun(0.5 * fisto_setting)
 		if(INTENT_HARM)
 			agony = 0
-			target.throw_at(throw_target, fisto_setting - 1, 1)
+			target.throw_at(throw_target, (fisto_setting - 1) * block_throw, 1)
 
 	var/atom/movable/hand_item
 														//obj/item/weapon/melee/powerfist/
