@@ -46,6 +46,15 @@
 	points = 1
 	refined_type = /obj/item/stack/sheet/glass
 
+/obj/item/weapon/ore/glass/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/sheet/cloth))
+		if(!I.use_tool(src, user, 20, 1))
+			return
+		new /obj/item/stack/sheet/sandbag(loc, 1, TRUE)
+		qdel(src)
+	else
+		return ..()
+
 /obj/item/weapon/ore/phoron
 	name = "phoron crystals"
 	icon_state = "Phoron ore"
