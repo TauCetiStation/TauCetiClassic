@@ -44,6 +44,14 @@
 	// By how much should mob's permeability be multiplied.
 	var/permeability_multiplier = 1.0
 
+	/// How transparent can fluids be?
+	var/min_fluid_opacity = FLUID_MIN_ALPHA
+	/// How opaque can fluids be?
+	var/max_fluid_opacity = FLUID_MAX_ALPHA
+	var/slipperiness = 0
+	var/slippery_amount = 1
+	var/opacity = 1.0
+
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!isliving(M))
 		return FALSE

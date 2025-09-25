@@ -39,7 +39,7 @@
 
 /datum/reagent/water/reaction_turf(turf/simulated/T, volume)
 	. = ..()
-	spawn_fluid(T, volume) // so if will spawn even in space, just for pure visuals
+//	spawn_fluid(T, volume) // so if will spawn even in space, just for pure visuals
 	if(!istype(T))
 		return
 	src = null

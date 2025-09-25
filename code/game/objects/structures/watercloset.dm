@@ -88,7 +88,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		STOP_PROCESSING(SSobj, src)
 		return
 
-	spawn_fluid(loc, 20)
+//	spawn_fluid(loc, 20)
 
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[lid_open][cistern_open]"
@@ -619,7 +619,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
-			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/fluid))
+			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))/* && !istype(E, /obj/effect/fluid)*/)
 				qdel(E)
 
 /obj/machinery/shower/process()
@@ -631,7 +631,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	else
 		payed_time--
 
-	spawn_fluid(loc, 15)
+//	spawn_fluid(loc, 15)
 
 	if(!mobpresent) return
 
