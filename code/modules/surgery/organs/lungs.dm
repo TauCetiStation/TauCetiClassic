@@ -226,6 +226,7 @@
 
 	if(owner.species && HAS_TRAIT(owner, TRAIT_NO_BREATHE))
 		return
+
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(!owner.reagents.has_reagent("dextromethorphan") && prob(5))
 			owner.emote("cough")		//respitory tract infection
@@ -236,7 +237,7 @@
 			owner.drip(10)
 		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_EXTERNAL_VENTILATION))
 			owner.emote("gasp")
-			owner.losebreath += 15
+			owner.losebreath += 10
 
 
 /obj/item/organ/internal/lungs/vox

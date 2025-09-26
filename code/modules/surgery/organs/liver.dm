@@ -106,20 +106,20 @@
 
 	// Blood regeneration if there is some space:
 	if(blood_total < BLOOD_VOLUME_NORMAL)
-		var/change_volume = 0.1 // Regenerate blood VERY slowly
+		var/change_volume = 0.1 * process_accuracy // Regenerate blood VERY slowly
 		if (owner.reagents.has_reagent("nutriment")) // Getting food speeds it up
-			change_volume += 0.4
-			owner.reagents.remove_reagent("nutriment", 0.1)
+			change_volume += 0.4 * process_accuracy
+			owner.reagents.remove_reagent("nutriment", 0.1 * process_accuracy)
 		if (owner.reagents.has_reagent("copper") && owner.get_species(owner) == SKRELL) // skrell blood base on copper
-			change_volume += 1
-			owner.reagents.remove_reagent("copper", 0.1)
+			change_volume += 1 * process_accuracy
+			owner.reagents.remove_reagent("copper", 0.1 * process_accuracy)
 		if (owner.reagents.has_reagent("iron")) // Hematogen candy anyone?
 			if(owner.get_species(owner) == SKRELL) // a little more toxins when trying to restore blood with iron
 				var/mob/living/carbon/human/H = owner
-				H.adjustToxLoss(1)
+				H.adjustToxLoss(1 * process_accuracy)
 			else
-				change_volume += 0.8
-				owner.reagents.remove_reagent("iron", 0.1)
+				change_volume += 0.8 * process_accuracy
+				owner.reagents.remove_reagent("iron", 0.1 * process_accuracy)
 		owner.blood_add(change_volume)
 		blood_total += change_volume
 
@@ -137,9 +137,9 @@
 	var/blood_volume = owner.get_blood_oxygenation()
 	if(blood_volume < BLOOD_VOLUME_SAFE_P)
 		if(owner.nutrition >= 300)
-			owner.nutrition -= 10
+			owner.nutrition -= 10 * process_accuracy
 		else if(owner.nutrition >= 200)
-			owner.nutrition -= 3
+			owner.nutrition -= 3 * process_accuracy
 
 /obj/item/organ/internal/liver/process()
 	..()
