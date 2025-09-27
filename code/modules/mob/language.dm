@@ -35,6 +35,10 @@
 	if(!istype(M))
 		return
 
+	if(!(src in M.languages))
+		to_chat(M, "<span class='warning'>You do not know this language.</span>")
+		return
+
 	// Can't speak and not native.
 	if(M.languages[src] == LANGUAGE_CAN_UNDERSTAND)
 		return
