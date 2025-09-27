@@ -146,8 +146,8 @@
 	layer = FLY_LAYER
 	move_to_delay = 8
 
-	maxHealth = 50
-	health = 50
+	maxHealth = 40
+	health = 40
 	melee_damage = 6
 	turns_per_move = 1
 	speed = 2
@@ -164,8 +164,8 @@
 	pixel_x = -16
 	layer = FLY_LAYER
 
-	maxHealth = 40
-	health = 40
+	maxHealth = 35
+	health = 35
 	melee_damage = 4
 	move_to_delay = 6
 	turns_per_move = 1
@@ -215,7 +215,7 @@
 	name = "ужасающий портал"
 	desc = "Кажется, если ударить его - портал можно разрушить."
 	icon = 'icons/obj/cult.dmi'
-	light_color = null
+	light_color = "#ff0000"
 	icon_state = "portal"
 	layer = INFRONT_MOB_LAYER
 
@@ -296,7 +296,7 @@
 /obj/effect/anomaly/bluespace/hell_portal/proc/disable()
 	icon_state = "portal_weak"
 	spawns = 0
-	COOLDOWN_START(src, hell_disabled_cd, 3 MINUTES)
+	COOLDOWN_START(src, hell_disabled_cd, 4 MINUTES)
 	enabled = FALSE
 
 /obj/effect/anomaly/bluespace/hell_portal/attack_hand(mob/living/user)
@@ -318,7 +318,7 @@
 
 /datum/event/portalstohell
 	announceWhen = 5
-	endWhen      = 60
+	endWhen      = 40
 	announcement = new /datum/announcement/centcomm/hellportals
 
 	var/list/pick_turfs = list()
