@@ -170,7 +170,7 @@
 /proc/pick_n_take(list/listfrom)
 	if (listfrom.len > 0)
 		var/picked = pick(listfrom)
-		listfrom -= picked
+		listfrom -= list(picked)
 		return picked
 	return null
 
