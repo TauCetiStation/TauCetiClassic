@@ -59,6 +59,12 @@
 	sound = "wormholes"
 	message = "На станции была обнаружена пространственно-временная аномалия. Рекомендуется исключить контакты с необычными явлениями и подозрительными вещами. Дополнительные данные отсутствуют."
 
+/datum/announcement/centcomm/hellportals
+	name = "Event: Hell Portals"
+	subtitle = "Тревога! Открыты неизвестные порталы"
+	sound = "wormholes"
+	message = "На станции была обнаружена пространственно-временная аномалия. Мы фиксируем огромное количество порталов зоне вашей станции."
+
 /datum/announcement/centcomm/anomaly/bluespace
 	name = "Anomaly: Bluespace"
 	sound = "bluspaceanom"
