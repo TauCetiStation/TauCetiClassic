@@ -1,7 +1,7 @@
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
-	damage = 60
+	damage = 20
 	damage_type = BRUTE
 	nodamage = 0
 	flag = BULLET
@@ -35,7 +35,7 @@
 
 /obj/item/projectile/bullet/slug
 	name = "shotgun slug"
-	damage = 30
+	damage = 20
 	armor_multiplier = 0.4
 
 /obj/item/projectile/bullet/pellet
@@ -56,21 +56,21 @@
 	agony = 55
 
 /obj/item/projectile/bullet/smg //.45 ACP
-	damage = 20
+	damage = 10
 
 /obj/item/projectile/bullet/smg_hp
 	name = "high power bullet"
-	damage = 35
+	damage = 20
 
 /obj/item/projectile/bullet/smg_imp
 	name = "impact bullet"
-	damage = 20
+	damage = 10
 	impact_force = 1
 	stoping_power = 4
 
 /obj/item/projectile/bullet/smg_hv
 	name = "high velocity bullet"
-	damage = 20
+	damage = 15
 	hitscan = 1
 	armor_multiplier = 0.7
 
@@ -87,33 +87,33 @@
 
 /obj/item/projectile/bullet/peabullet/virus
 	name = "virus pea bullet"
-	damage = 15
+	damage = 10
 	agony = 15
 	weaken = 1
 
 /obj/item/projectile/bullet/peabullet/virus/in_fire
-	damage = 18
+	damage = 11
 	agony = 20
 	stun = 3
 	incendiary = 5
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
-	damage = 25
+	damage = 15
 
 /obj/item/projectile/bullet/revbullet //.357
-	damage = 35
+	damage = 20
 	armor_multiplier = 0.6
 
 /obj/item/projectile/bullet/rifle1
-	damage = 40
+	damage = 15
 	embed = 0
 
 /obj/item/projectile/bullet/rifle2
-	damage = 45
+	damage = 25
 	embed = 0
 
 /obj/item/projectile/bullet/rifle3
-	damage = 35
+	damage = 20
 	embed = 0
 
 /obj/item/projectile/bullet/pulserifle
@@ -202,7 +202,7 @@
 	beakers += B2
 
 /obj/item/projectile/bullet/chem/Exp
-	damage = 20
+	damage = 10
 	stun = 5
 
 /obj/item/projectile/bullet/chem/Exp/atom_init()
@@ -220,7 +220,7 @@
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
-	damage = 20
+	damage = 10
 	damage_type = OXY
 
 /obj/item/projectile/bullet/suffocationbullet/atom_init()
@@ -229,7 +229,7 @@
 
 /obj/item/projectile/bullet/cyanideround
 	name = "poison bullet"
-	damage = 40
+	damage = 20
 	damage_type = TOX
 
 /obj/item/projectile/bullet/cyanideround/atom_init()
@@ -238,7 +238,7 @@
 
 /obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
 	name = "exploding bullet"
-	damage = 20
+	damage = 10
 	embed = 0
 	edge = 1
 
@@ -260,12 +260,12 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
-	damage = 30
+	damage = 15
 	embed = 0
 
 /obj/item/projectile/bullet/incendiary
 	name = "incendiary bullet"
-	damage = 20
+	damage = 10
 	incendiary = 10
 
 /obj/item/projectile/bullet/incendiary/buckshot
@@ -284,7 +284,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/midbullet3
-	damage = 35
+	damage = 25
 
 /obj/item/projectile/bullet/flare
 	name = "flare"

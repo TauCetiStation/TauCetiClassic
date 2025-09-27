@@ -131,7 +131,7 @@
 /obj/item/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
-	damage = 10
+	damage = 5
 	damage_type = BRUTE
 	nodamage = 0
 	light_color = LIGHT_COLOR_FIRE
@@ -140,8 +140,7 @@
 	if(isliving(target))
 		var/mob/living/M = target
 		M.fire_act()
-		M.adjust_fire_stacks(5)
-	explosion(get_turf(target), 0, 0, 1, adminlog = FALSE)
+		M.adjust_fire_stacks(2)
 	return ..()
 
 ///////////////////////////////////////////

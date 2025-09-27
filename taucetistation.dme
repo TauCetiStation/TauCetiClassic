@@ -2132,6 +2132,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\carp.dm"
 #include "code\modules\mob\living\simple_animal\hostile\creature.dm"
 #include "code\modules\mob\living\simple_animal\hostile\cyber_horror.dm"
+#include "code\modules\mob\living\simple_animal\hostile\doom.dm"
 #include "code\modules\mob\living\simple_animal\hostile\faithless.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hivebot.dm"
