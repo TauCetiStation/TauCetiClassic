@@ -1,6 +1,6 @@
 /obj/item/clothing/neck/language_collar
 	name = "language collar"
-	desc = "A collar designed to allow the wearer to understand and speak multiple languages. It has a slot for a language cartridge, which can be removed with a screwdriver."
+	desc = "A collar designed to allow the wearer to understand and speak multiple languages. It has a slot for a language disk, which can be removed with a screwdriver."
 	icon_state = "langcollar"
 	item_state = "langcollar"
 	item_state_world = "langcollar_w"
@@ -28,6 +28,7 @@
 		if(!lang_disk)
 			to_chat(user, "<span class='notice'>There's no language disk to remove from the [src]</span>")
 			return
+		turn_off(user)
 		if(!user.put_in_hands(lang_disk))
 			lang_disk.forceMove(get_turf(src))
 		lang_disk = null
@@ -84,8 +85,11 @@
 /obj/item/clothing/neck/language_collar/attack_self(mob/user)
 	if(user.incapacitated())
 		return
-	if(slot_equipped != SLOT_NECK || !lang_disk || !lang_disk.language)
+	if(slot_equipped != SLOT_NECK)
 		to_chat(user, "<span class='warning'>You need to wear the collar around your neck to use it.</span>")
+		return
+	if(!lang_disk || !lang_disk.language)
+		to_chat(user, "<span class='warning'>You need to insert a language disk to use the collar.</span>")
 		return
 	if(!working)
 		working = TRUE
