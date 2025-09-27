@@ -2,6 +2,7 @@
 // Traitor's item to nearly mute everything in one tile
 /obj/item/clothing/gloves/black/silence
 	siemens_coefficient = 0.2
+	can_leave_fibers = FALSE
 	var/distance = 1
 	var/sound_coefficient = 0.9
 	var/hide_radius_timer

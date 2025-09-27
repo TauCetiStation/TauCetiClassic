@@ -54,12 +54,14 @@
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	germ_level = 0
+	can_leave_fingerprints = TRUE
 
 /obj/item/clothing/gloves/latex/nitrile
 	name = "nitrile gloves"
 	desc = "Sterile nitrile gloves"
 	icon_state = "nitrile"
 	item_state = "ngloves"
+	can_leave_fingerprints = FALSE
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
@@ -89,6 +91,7 @@
 	species_restricted = list("exclude", VOX_ARMALIS)
 	species_restricted_locked = FALSE
 	clipped = TRUE
+	can_leave_fingerprints = TRUE
 
 	dyed_type = DYED_FINGERLESS_GLOVES
 
@@ -138,9 +141,19 @@
 	desc = "The left one of a pair of black gloves. Wonder where the other one went..."
 	icon_state = "left_glove"
 	item_state = "left_glove"
+	can_leave_fingerprints = TRUE
 
 /obj/item/clothing/gloves/combat/police
 	desc = "Fist of the Law."
 	name = "police gloves"
 	icon_state = "police_gloves"
 	item_state = "police_gloves"
+
+/obj/item/clothing/gloves/forensics
+	name = "forensic gloves"
+	desc = "These high-tech gloves don't leave any material traces on objects they touch. Perfect for leaving crime scenes undisturbed."
+	icon_state = "forensics"
+	item_state_inventory = "forensics"
+	item_state_world = "forensics_world"
+	item_state = "forensics"
+	can_leave_fibers = FALSE

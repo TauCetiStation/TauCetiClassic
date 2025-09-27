@@ -292,6 +292,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	..()
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
+	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/pai_cable))
 		return
 	if(busy)
