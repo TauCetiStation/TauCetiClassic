@@ -680,26 +680,14 @@ var/global/obj/temp_reagents_holder = new
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
 
-/datum/reagents/proc/trans_to_turf(var/turf/target, var/amount = 1, var/multiplier = 1, var/copy = 0, var/defer_update = FALSE, var/transferred_phases = (MAT_PHASE_LIQUID | MAT_PHASE_SOLID))
+/datum/reagents/proc/trans_to_turf(turf/target, amount = 1, multiplier = 1, copy = 0, defer_update = FALSE)
 	if(!target?.simulated)
 		return 0
-
-/*
-	// If we're only dumping solids, and there's not enough liquid present on the turf to make a slurry, we dump the solids directly.
-	// This avoids creating an unnecessary reagent holder that won't be immediately deleted.
-	if((!(transferred_phases & MAT_PHASE_LIQUID) || !total_liquid_volume) && (target.reagents?.total_liquid_volume < FLUID_SLURRY))
-		var/datum/reagents/reagent = new /datum/reagents(amount, global.temp_reagents_holder)
-		. = trans_to_holder(reagent, amount, multiplier, copy, TRUE, defer_update = defer_update, transferred_phases = MAT_PHASE_SOLID)
-		reagent.touch_turf(target)
-		target.dump_solid_reagents(reagent)
-		qdel(reagent)
-		return*/
 
 	if(!target.reagents)
 		target.create_reagents(FLUID_MAX_DEPTH)
 
 	. = trans_to(target, amount, multiplier)
-	// . = trans_to_holder(target.reagents, amount, multiplier, copy, defer_update = defer_update, transferred_phases = transferred_phases)
 	// Deferred updates are presumably being done by SSfluids.
 	// Do an immediate fluid_act call rather than waiting for SSfluids to proc.
 	if(!defer_update && target.reagents.total_volume >= FLUID_PUDDLE)

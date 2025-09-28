@@ -48,14 +48,12 @@
 		REMOVE_ACTIVE_FLUID_SOURCE(src)
 		fluid_update() // We are now floodable, so wake up our neighbors.
 
-/turf/is_flooded(var/lying_mob, var/absolute)
+/turf/is_flooded(lying_mob, absolute)
 	if(flooded)
 		return TRUE
 	if(absolute)
 		return FALSE
 	var/required_depth = lying_mob ? FLUID_OVER_MOB_HEAD : FLUID_DEEP
-	//if(get_supporting_platform()) // Increase required depth if we are over the water.
-	//	required_depth -= get_physical_height() // depth is negative, -= to increase required depth.
 	return check_fluid_depth(required_depth)
 
 /turf/check_fluid_depth(var/min = 1)
@@ -64,9 +62,6 @@
 /turf/get_fluid_depth()
 	if(is_flooded(absolute=1))
 		return FLUID_MAX_DEPTH
-	//var/obj/structure/glass_tank/aquarium = locate() in contents
-	//if(aquarium)
-	//	return aquarium.reagents?.total_volume * TANK_WATER_MULTIPLIER
 	return reagents?.total_volume || 0
 
 /turf/fluid_update(var/ignore_neighbors)
@@ -118,9 +113,6 @@
 	if(!(. = ..()))
 		return
 
-	if(reagents?.total_liquid_volume < FLUID_SLURRY)
-		dump_solid_reagents()
-
 	if(reagents?.total_volume > FLUID_QDEL_POINT)
 		ADD_ACTIVE_FLUID(src)
 		var/datum/reagent/primary_reagent = reagents.get_master_reagent()//reagents.get_primary_reagent_decl()
@@ -145,26 +137,3 @@
 		var/turf/neighbor = get_step(src, checkdir)
 		if(neighbor?.reagents?.total_volume > FLUID_QDEL_POINT)
 			ADD_ACTIVE_FLUID(neighbor)
-
-/turf/proc/dump_solid_reagents(datum/reagents/solids)
-	return
-/*	if(!istype(solids))
-		solids = reagents
-	if(LAZYLEN(solids?.solid_volumes))
-		var/list/matter_list = list()
-		for(var/decl/material/reagent as anything in solids.solid_volumes)
-			var/reagent_amount = solids.solid_volumes[reagent]
-			matter_list[reagent.type] = round(reagent_amount/REAGENT_UNITS_PER_MATERIAL_UNIT)
-			solids.remove_reagent(reagent, reagent_amount, defer_update = TRUE, removed_phases = MAT_PHASE_SOLID)
-
-		var/obj/item/debris/scraps/chemical/scraps = locate() in contents
-		if(!istype(scraps) || scraps.get_total_matter() >= MAX_SCRAP_MATTER)
-			scraps = new(src)
-		if(!LAZYLEN(scraps.matter))
-			scraps.matter = matter_list
-		else
-			for(var/mat_type in matter_list)
-				scraps.matter[mat_type] += matter_list[mat_type]
-
-		scraps.update_primary_material()
-		solids.handle_update()*/

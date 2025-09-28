@@ -124,11 +124,6 @@ SUBSYSTEM_DEF(fluids)
 			current_fluid_holder.remove_fluids(min(current_depth, 1), defer_update = TRUE)
 			current_depth = current_fluid_holder.get_fluid_depth()
 
-		// Mimimum liquid depth for creation of slurries. Do this after evaporation since it may change the total depth.
-		if(reagent_holder?.total_liquid_volume < FLUID_SLURRY)
-			current_fluid_holder.dump_solid_reagents()
-			current_depth = current_fluid_holder.get_fluid_depth()
-
 		if(current_depth <= FLUID_QDEL_POINT)
 			current_fluid_holder.reagents?.clear_reagents()
 			REMOVE_ACTIVE_FLUID(current_fluid_holder)
@@ -137,28 +132,17 @@ SUBSYSTEM_DEF(fluids)
 		// Wash our turf.
 		current_fluid_holder.fluid_act(reagent_holder)
 
-		if(isspaceturf(current_fluid_holder) || (isfloorturf(current_fluid_holder) && (current_fluid_holder.turf_flags & TURF_FLAG_ABSORB_LIQUID) && (current_fluid_holder.reagents?.total_volume/* + current_fluid_holder.get_physical_height()*/) > 0))
+		if(isspaceturf(current_fluid_holder) || (isfloorturf(current_fluid_holder) && (current_fluid_holder.turf_flags & TURF_FLAG_ABSORB_LIQUID) && (current_fluid_holder.reagents?.total_volume) > 0))
 			removing = round(current_depth * 0.5)
 			if(removing > 0)
 				current_fluid_holder.remove_fluids(removing, defer_update = TRUE)
 			else
-				// Dump any solids in case there were any in slurry.
-				current_fluid_holder.dump_solid_reagents()
 				reagent_holder.clear_reagents()
 			current_depth = current_fluid_holder.get_fluid_depth()
 			if(current_depth <= FLUID_QDEL_POINT)
 				current_fluid_holder.reagents?.clear_reagents()
 				REMOVE_ACTIVE_FLUID(current_fluid_holder)
 				continue
-
-		/* z-level stuff - if(!(current_fluid_holder.fluid_blocked_dirs & DOWN) && current_fluid_holder.CanFluidPass(DOWN) && current_fluid_holder.is_open() && current_fluid_holder.has_gravity())
-			other_fluid_holder = GetBelow(current_fluid_holder)
-			if(other_fluid_holder)
-				UPDATE_FLUID_BLOCKED_DIRS(other_fluid_holder)
-				if(!(other_fluid_holder.fluid_blocked_dirs & UP) && other_fluid_holder.CanFluidPass(UP))
-					if(!QDELETED(other_fluid_holder) && other_fluid_holder.reagents?.total_volume < FLUID_MAX_DEPTH)
-						current_fluid_holder.transfer_fluids_to(other_fluid_holder, min(floor(current_depth*0.5), FLUID_MAX_DEPTH - other_fluid_holder.reagents?.total_volume))
-						current_depth = current_fluid_holder.get_fluid_depth()*/
 
 		// Flow into the lowest level neighbor.
 		lowest_neighbor_depth = INFINITY
