@@ -6,6 +6,8 @@
 	color = "#0064c8" // rgb: 0, 100, 200
 	custom_metabolism = 0.01
 	taste_message = null
+	slipperiness = WATER_FLOOR
+	slippery_amount = 5
 
 	toxin_absorption = 0.5
 

@@ -115,22 +115,22 @@
 
 	if(reagents?.total_volume > FLUID_QDEL_POINT)
 		ADD_ACTIVE_FLUID(src)
-		var/datum/reagent/primary_reagent = reagents.get_master_reagent()//reagents.get_primary_reagent_decl()
-		if(primary_reagent && primary_reagent.volume >= primary_reagent.slippery_amount)//(REAGENT_VOLUME(reagents, primary_reagent) >= primary_reagent.slippery_amount))
+		var/datum/reagent/primary_reagent = reagents.get_master_reagent()
+		if(primary_reagent && primary_reagent.volume >= primary_reagent.slippery_amount)
 			last_slipperiness = primary_reagent.slipperiness
 		else
 			last_slipperiness = 0
 		if(!fluid_overlay)
 			fluid_overlay = new(src, TRUE)
 		fluid_overlay.update_icon()
-		make_dry_floor()//unwet_floor(FALSE)
+		make_dry_floor()
 	else
 		QDEL_NULL(fluid_overlay)
 		reagents?.clear_reagents()
 		REMOVE_ACTIVE_FLUID(src)
 		SSfluids.pending_flows -= src
 		if(last_slipperiness > 0)
-			make_wet_floor()//wet_floor(last_slipperiness)
+			make_wet_floor(last_slipperiness)
 		last_slipperiness = 0
 
 	for(var/checkdir in global.cardinal)

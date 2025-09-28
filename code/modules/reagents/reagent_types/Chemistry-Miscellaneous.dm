@@ -73,6 +73,7 @@
 	color = "#009ca8" // rgb: 0, 156, 168
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "oil"
+	slipperiness = LUBE_FLOOR
 
 	needed_aspects = list(ASPECT_WACKY = 1)
 
@@ -167,6 +168,7 @@
 	color = "#660000" // rgb: 102, 0, 0
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "motor oil"
+	slipperiness = WATER_FLOOR
 
 /datum/reagent/fuel/reaction_obj(obj/O, volume)
 	var/turf/the_turf = get_turf(O)

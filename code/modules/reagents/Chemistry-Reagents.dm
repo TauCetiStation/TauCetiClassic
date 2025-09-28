@@ -48,7 +48,7 @@
 	var/min_fluid_opacity = FLUID_MIN_ALPHA
 	/// How opaque can fluids be?
 	var/max_fluid_opacity = FLUID_MAX_ALPHA
-	var/slipperiness = 0
+	var/slipperiness = DRY_FLOOR
 	var/slippery_amount = 1
 	var/opacity = 1.0
 
