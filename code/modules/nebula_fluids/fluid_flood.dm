@@ -26,4 +26,3 @@ var/global/list/flood_type_overlay_cache = list()
 	density           = FALSE
 	anchored          = TRUE
 	mouse_opacity     = MOUSE_OPACITY_TRANSPARENT
-	//is_spawnable_type = FALSE

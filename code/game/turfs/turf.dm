@@ -371,7 +371,6 @@
 
 	var/old_basetype = basetype
 	var/old_flooded = flooded
-//	var/obj/effect/fluid/F = locate() in src
 
 	var/list/temp_res = resources
 
@@ -465,14 +464,6 @@
 		if(old_flooded != W.flooded)
 			set_flooded(old_flooded)
 
-/*	if(F)
-		F.forceMove(src)
-		F.start_loc = src
-		fluid_update()
-
-	if(old_flooded)
-		flooded = 1
-		update_icon()*/
 	SSdemo.mark_turf(W)
 
 	return W

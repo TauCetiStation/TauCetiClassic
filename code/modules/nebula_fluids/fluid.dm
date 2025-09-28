@@ -9,15 +9,10 @@
 	layer             = FLY_LAYER
 	alpha             = 0
 	color             = COLOR_LIQUID_WATER
-//	is_spawnable_type = FALSE
 	appearance_flags  = KEEP_TOGETHER
 	var/last_update_depth
 	var/updating_edge_mask
 	var/force_flow_direction
-
-//obj/effect/fluid_overlay/on_turf_height_change(new_height)
-//	update_icon()
-//	return TRUE
 
 /obj/effect/fluid_overlay/update_icon()
 
@@ -42,7 +37,8 @@
 	if(color != new_color)
 		color = new_color
 
-	cut_overlays()
+	cut_overlays() //- unless someone redesigns overlays system so that it doesn't add existing overlay over and over thru add_overlay() without pre-clearing list
+
 	// Update alpha.
 	if(reagent_volume)
 
@@ -69,7 +65,8 @@
 		else
 			add_overlay("ocean")
 	//else
-	//	cut_overlays()
+	//	cut_overlays()  //- unless someone redesigns overlays system so that it doesn't add existing overlay over and over without pre-clearing list
+
 // Define FLUID_AMOUNT_DEBUG before this to get a handy overlay of fluid amounts.
 #ifdef FLUID_AMOUNT_DEBUG
 	var/image/I = new()
@@ -78,7 +75,6 @@
 	I.appearance_flags |= KEEP_APART
 	add_overlay(I)
 #endif
-	//compile_overlays()
 
 	if((last_update_depth > FLUID_PUDDLE) != (reagent_volume > FLUID_PUDDLE))
 
@@ -89,12 +85,6 @@
 				neighbor.fluid_overlay.update_alpha_mask()
 		if(!updating_edge_mask)
 			update_alpha_mask()
-
-		// Update everything on our atom too.
-		/*if(length(loc?.contents) && (last_update_depth > FLUID_PUDDLE && last_update_depth <= FLUID_SHALLOW) != (reagent_volume <= FLUID_SHALLOW))
-			for(var/atom/movable/AM in loc.contents)
-				if(AM.simulated)
-					AM.update_turf_alpha_mask()*/
 
 	last_update_depth = reagent_volume
 
