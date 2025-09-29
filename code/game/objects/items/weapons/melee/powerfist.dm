@@ -47,7 +47,7 @@
 	else if(iswrenching(I))
 		fisto_setting = 1 + (fisto_setting % 3)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]й режим.</span>")
+		to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]-й режим.</span>")
 		update_icon()
 
 	else if(isscrewing(I))
@@ -59,7 +59,7 @@
 /obj/item/weapon/melee/powerfist/attack_self(mob/user)
 	fisto_setting = 1 + (fisto_setting % 3)
 	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-	to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]й режим.</span>")
+	to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]-й режим.</span>")
 	update_icon()
 
 /obj/item/weapon/melee/powerfist/AltClick(mob/user)
