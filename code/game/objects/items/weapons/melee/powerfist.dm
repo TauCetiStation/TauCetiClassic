@@ -128,11 +128,6 @@
 		force += 5
 
 	var/block_throw = check_shield_dir(target, get_dir(src, target))
-	var/block_throw
-	if(( check_shield_dir(target, get_dir(src, target))))
-		block_throw = 0 //blocked
-	else
-		block_throw = 1
 
 	switch(user.a_intent)
 		if(INTENT_HELP)
