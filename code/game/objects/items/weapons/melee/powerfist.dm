@@ -156,7 +156,6 @@
 				target.throw_at(throw_target, (fisto_setting - 1), 1)
 
 	var/atom/movable/hand_item
-														//obj/item/weapon/melee/powerfist/
 	switch(def_zone)
 		if(BP_HEAD, O_EYES, O_MOUTH)
 			agony = 0.9 * agony
