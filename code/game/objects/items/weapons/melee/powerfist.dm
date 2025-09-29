@@ -187,7 +187,6 @@
 			target.crawling = TRUE
 
 	var/success = ..()
-	//force = base_force
 
 	if (success)
 		target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>",
