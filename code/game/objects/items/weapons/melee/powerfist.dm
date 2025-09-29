@@ -57,21 +57,14 @@
 		return ..()
 
 /obj/item/weapon/melee/powerfist/attack_self(mob/user)
-	//if (user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED))  //non tritor can effective use this if he is an engineer or atmostech
-		fisto_setting = 1 + (fisto_setting % 3)
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]й режим.</span>")
-		update_icon()
-/*	else
-		to_chat(user,"<span class='notice'>Вы не знаете как повернуть клапан у [CASE(src, GENITIVE_CASE)] без гаечного ключа.</span>")
-*/
+	fisto_setting = 1 + (fisto_setting % 3)
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]й режим.</span>")
+	update_icon()
+
 /obj/item/weapon/melee/powerfist/AltClick(mob/user)
-	//if (user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED))
 	if(tank)
 		removeTank(user)
-/*	else
-		to_chat(user,"<span class='notice'>Вы не знаете как отсоединить баллон без отвертки.</span>")
-*/
 
 /obj/item/weapon/melee/powerfist/proc/removeTank(mob/living/carbon/human/user)
 	if(!tank)
