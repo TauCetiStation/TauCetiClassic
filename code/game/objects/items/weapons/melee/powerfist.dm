@@ -169,7 +169,7 @@
 				playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//звук поджопника
 			else if(isloyal(user) || isloyal(target))
 				playsound(src, 'sound/voice/mob/pain/female/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//элитный поджопник
-		if(BP_L_ARM)	// need paralaze_arm or fake_break_arm
+		if(BP_L_ARM)
 			hand_item = target.l_hand
 			if(hand_item && (user.a_intent == INTENT_PUSH))
 				target.drop_l_hand() // else not work
@@ -181,7 +181,7 @@
 				target.drop_r_hand()
 				hand_item.throw_at(throw_target, fisto_setting ** 2 , 1)
 		if(BP_L_LEG)
-			target.crawling = TRUE  // need paralaze_leg or fake_break_leg
+			target.crawling = TRUE
 		if(BP_R_LEG)
 			target.crawling = TRUE
 
