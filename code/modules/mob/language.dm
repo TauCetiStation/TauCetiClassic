@@ -35,7 +35,7 @@
 	if(!istype(M))
 		return
 
-	if(!(src in M.languages))
+	if(isnull(M.languages[src]))
 		to_chat(M, "<span class='warning'>You do not know this language.</span>")
 		return
 
