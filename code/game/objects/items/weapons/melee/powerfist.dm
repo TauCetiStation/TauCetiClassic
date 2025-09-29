@@ -125,9 +125,9 @@
 	force = 1.5 ** (fisto_setting - 1) * base_force// + base_force * punch
 
 	if((user.get_species() == HUMAN && target.get_species() == UNATHI) || (target.get_species() == HUMAN && user.get_species() == UNATHI))
-		playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)
 		force += 5
 
+	var/block_throw = check_shield_dir(target, get_dir(src, target))
 	var/block_throw
 	if(( check_shield_dir(target, get_dir(src, target))))
 		block_throw = 0 //blocked
@@ -135,28 +135,30 @@
 		block_throw = 1
 
 	switch(user.a_intent)
-		if(INTENT_HELP )
+		if(INTENT_HELP)
 			agony = 1.5 * force
 			force = 1
-			target.throw_at(throw_target, (fisto_setting - 1) * block_throw, 1)
+			if(!block_throw)
+				target.throw_at(throw_target, (fisto_setting - 1), 1)
 		if(INTENT_PUSH)
 			agony = 0.75 * force
 			force = 0.25 * force
-			if(!(BP_L_ARM == def_zone) && !(BP_R_ARM == def_zone))
-				target.throw_at(throw_target,(2 * fisto_setting + punch) / 3 ** (1 - block_throw), 1)
-				target.MakeConfused(0.2 * fisto_setting)
+			if(!(def_zone in list(BP_L_ARM, BP_R_ARM)))
+				if(!block_throw)
+					target.throw_at(throw_target,(2 * fisto_setting + punch), 1)
+					target.MakeConfused(0.2 * fisto_setting)
 		if(INTENT_GRAB)
 			agony = 0.25 * force
 			force = 0.5 * force
-
 			if(iscarbon(target))
-				if(!check_shield_dir(target, get_dir(src, target)))
+				if(!block_throw)
 					target.crawling = TRUE
 			else
 				target.Stun(0.5 * fisto_setting)
 		if(INTENT_HARM)
 			agony = 0
-			target.throw_at(throw_target, (fisto_setting - 1) * block_throw, 1)
+			if(!block_throw)
+				target.throw_at(throw_target, (fisto_setting - 1), 1)
 
 	var/atom/movable/hand_item
 														//obj/item/weapon/melee/powerfist/
