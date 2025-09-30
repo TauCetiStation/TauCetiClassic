@@ -180,19 +180,10 @@
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
 
-	for(var/obj/structure/window/thin/W in src)
-		if(!W.CanAStarPass(ID, adir))
-			return TRUE
-
-	for(var/obj/machinery/door/window/W in src)
-		if(!W.CanAStarPass(ID, adir))
-			return TRUE
-
-	for(var/obj/structure/fence/W in src)
-		if(!W.CanAStarPass(ID, adir))
-			return TRUE
-
 	for(var/obj/O in T)
+		if((O.flags & ON_BORDER) && !O.CanAStarPass(ID, adir))
+			return TRUE
+
 		if(!O.CanAStarPass(ID, rdir, origin))
 			return TRUE
 

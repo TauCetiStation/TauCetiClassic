@@ -4,7 +4,7 @@
 #define FENCE_COVER_TALL 3
 
 /obj/structure/fence
-	name = "Undestructable Concrete Fence"
+	name = "Indestructible Concrete Fence"
 	desc = "Спрячь за высоким забором таяру - выкраду вместе с забором!"
 
 	icon = 'icons/obj/fence.dmi'
@@ -95,20 +95,7 @@
 		climber.throw_at(get_step(user, dir), 2, 2)
 		return
 
-	var/turf/T
-	if(get_turf(climber) == get_turf(src))
-		T = get_step(get_turf(src), dir)
-	else
-		T = get_turf(src)
-	if(T.density)
-		return
-	for(var/atom/A in T)
-		if(A == src)
-			continue
-		if(!A.CanPass(climber, T))
-			return
-
-	user.forceMove(T)
+	. = ..()
 
 /obj/structure/fence/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = get_turf(src)

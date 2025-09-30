@@ -76,7 +76,7 @@
 	if(!climbable || !can_touch(user) || (!post_climb_check && (climber in climbers)))
 		return FALSE
 
-	if(climber.loc == loc && flags & ~ON_BORDER)
+	if((climber.loc == loc) && !(flags & ON_BORDER)) //You can't climb something you are already standing on, except if this thing is on border (fence).
 		return FALSE
 
 	if(user.incapacitated())
@@ -104,14 +104,38 @@
 	if(user.is_busy())
 		return FALSE
 
-	var/obj/occupied = turf_is_crowded()
+	var/obj/occupied = turf_is_crowded(climber)
 	if(occupied)
 		to_chat(user, "<span class='danger'>There's \a [occupied] in the way.</span>")
 		return FALSE
 
+	if(flags & ON_BORDER)
+		var/turf/T
+		if(get_turf(climber) == get_turf(src))
+			T = get_step(get_turf(src), dir)
+		else
+			T = get_turf(src)
+
+		if(T.density)
+			to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
+			return FALSE
+
+		for(var/atom/movable/somethingInTheWay in T) //yeah, mmm
+			if(somethingInTheWay == src)
+				continue
+
+			if(istype(somethingInTheWay, /obj/structure))
+				var/obj/structure/S = somethingInTheWay
+				if(S.climbable)
+					continue
+
+			if(!somethingInTheWay.CanPass(climber, T))
+				to_chat(user, "<span class='danger'>There's \a [somethingInTheWay] in the way.</span>")
+				return FALSE
+
 	return TRUE
 
-/obj/structure/proc/turf_is_crowded()
+/obj/structure/proc/turf_is_crowded(mob/living/climber)
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))
 		return null
@@ -123,6 +147,8 @@
 				continue
 
 		if(O && O.density)
+			if((O.flags & ON_BORDER) && (O.dir != get_dir(get_turf(src), get_turf(climber))))
+				continue
 			return O
 
 	return null
@@ -168,6 +194,22 @@
 	climbers -= climber
 
 /obj/structure/proc/on_climb(mob/living/climber, mob/living/user)
+	if(flags & ON_BORDER)
+		var/turf/T
+		if(get_turf(climber) == get_turf(src))
+			T = get_step(get_turf(src), dir)
+		else
+			T = get_turf(src)
+
+		climber.forceMove(T)
+
+		if(climber == user)
+			user.visible_message("<span class='warning'>[user] перелезает через [src]!</span>")
+		else
+			user.visible_message("<span class='warning'>[user] перетаскивает [climber] через [src]!</span>")
+		return
+
+
 	climber.forceMove(get_turf(src))
 
 	if(get_turf(climber) == get_turf(src))

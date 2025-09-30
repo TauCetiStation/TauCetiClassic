@@ -74,9 +74,9 @@
 		. = FALSE
 
 	if(from_recipe.max_per_turf == 1)
-		if(from_recipe.dir_sensitive)
+		if(from_recipe.result_type::flags & ON_BORDER)
 			for(var/atom/A in here)
-				if(!istype(A, from_recipe.result_type))
+				if(!(A.flags & ON_BORDER))
 					continue
 
 				if(A.dir == build_direction)
@@ -93,11 +93,6 @@
 		for(var/type in here)
 			if(!istype(type, from_recipe.result_type))
 				continue
-
-			if(from_recipe.dir_sensitive && isatom(type))
-				var/atom/A = type
-				if(A.dir != build_direction)
-					continue
 
 			already_have++
 
