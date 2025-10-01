@@ -261,23 +261,19 @@
 /datum/weather/acid_rain/impact(mob/living/L)
 	if(!isturf(L.loc))
 		return
-	//L.water_act(5)
 	if(!prob(L.getarmor(null, BIO)))
 		L.adjustFireLoss(1)
 
 /datum/weather/acid_rain/additional_action() //Proc for other actions?
 	if(!prob(15))
 		return
-/*	for(var/area/impact_area as anything in impacted_areas)
+	for(var/area/impact_area as anything in impacted_areas)
 		var/list/turfs = get_area_turfs(impact_area, FALSE)
 		for(var/i = 1 to turfs.len / 400)
 			var/turf/wheretospawn = pick(turfs)
 			if(wheretospawn.density)
 				continue
-			var/obj/effect/fluid/F = locate() in wheretospawn
-			if(!F)
-				F = new(wheretospawn)
-				F.set_depth(5)*/
+			wheretospawn.add_to_reagents("water", FLUID_PUDDLE) // water until other types tested
 
 /datum/weather/snow_storm
 	name = "snow storm"

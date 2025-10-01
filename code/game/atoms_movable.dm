@@ -146,6 +146,11 @@
 	for(var/datum/light_source/L as anything in light_sources)
 		L.source_atom.update_light()
 
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.reagents?.total_volume && submerged())
+			fluid_act(T.reagents)
+
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
@@ -580,3 +585,6 @@
 			counter.recieve_rad_signal(rad_power, distance_rad_signal)
 
 #undef GEIGER_RANGE
+
+/atom/movable/immune_to_floor_hazards()
+	return ..() || !!throwing

@@ -211,10 +211,7 @@
 	return
 
 /atom/proc/on_reagent_change()
-/*	SHOULD_CALL_PARENT(TRUE)
-	if(storage && reagents?.total_volume)
-		for(var/obj/item/thing in get_stored_inventory())
-			thing.fluid_act(reagents)*/
+	SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
 /atom/proc/Bumped(AM)
@@ -737,6 +734,12 @@
 					L += get_contents(AM)
 		return L
 
+/// Return a list of all simulated atoms inside this one.
+/atom/proc/get_contained_external_atoms()
+	for(var/atom/movable/AM in contents)
+		if(!QDELETED(AM) && AM.simulated)
+			LAZYADD(., AM)
+
 // Called after we wrench/unwrench this object
 /obj/proc/wrenched_change()
 	return
@@ -826,3 +829,6 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+/atom/proc/immune_to_floor_hazards()
+	return !simulated || !has_gravity(src)

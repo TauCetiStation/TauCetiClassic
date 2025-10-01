@@ -1555,3 +1555,7 @@
 
 /mob/living/proc/get_trail_state()
 	return null
+
+// We are jumping, levitating or being thrown.
+/mob/living/immune_to_floor_hazards()
+	. = ..() || floating

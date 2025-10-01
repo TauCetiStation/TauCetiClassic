@@ -1,18 +1,18 @@
-/atom/proc/CanFluidPass(var/coming_from)
+/atom/proc/CanFluidPass(coming_from)
 	return TRUE
 
-/obj/machinery/door/CanFluidPass(var/coming_from)
+/obj/machinery/door/CanFluidPass(coming_from)
 	return !density
 
-/obj/machinery/door/window/CanFluidPass(var/coming_from)
+/obj/machinery/door/window/CanFluidPass(coming_from)
 	if(get_dir(loc, coming_from) & dir)
 		return !density
 	return TRUE
 
-/obj/structure/girder/CanFluidPass(var/coming_from)
+/obj/structure/girder/CanFluidPass(coming_from)
 	return TRUE
 
-/obj/structure/inflatable/CanFluidPass(var/coming_from)
+/obj/structure/inflatable/CanFluidPass(coming_from)
 	return !density
 
 /obj/structure/mineral_door/CanFluidPass(coming_from)
@@ -26,7 +26,7 @@
 		return !density
 	return TRUE
 
-/turf/CanFluidPass(var/coming_from)
+/turf/CanFluidPass(coming_from)
 	if(flooded || density)
 		return FALSE
 	if(isnull(fluid_can_pass))

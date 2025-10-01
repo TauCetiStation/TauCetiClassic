@@ -163,8 +163,9 @@
 		put_out()
 		adjust_fuel_timer(fuel)
 
-//obj/structure/fireplace/water_act()
-//	extinguish()
+/obj/structure/fireplace/fluid_act(datum/reagents/fluids)
+	..()
+	extinguish()
 
 /obj/structure/fireplace/proc/adjust_fuel_timer(amount)
 	if(lit)
