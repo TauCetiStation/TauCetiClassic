@@ -120,7 +120,7 @@
 			to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
 			return FALSE
 
-		for(var/atom/movable/somethingInTheWay in T) //yeah, mmm
+		for(var/atom/movable/somethingInTheWay in T)
 			if(somethingInTheWay == src)
 				continue
 
