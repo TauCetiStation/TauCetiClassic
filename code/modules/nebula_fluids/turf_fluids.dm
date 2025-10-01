@@ -64,7 +64,7 @@
 		return FLUID_MAX_DEPTH
 	return reagents?.total_volume || 0
 
-/turf/fluid_update(var/ignore_neighbors)
+/turf/fluid_update(ignore_neighbors)
 	fluid_blocked_dirs = null
 	fluid_can_pass = null
 	if(!ignore_neighbors)
@@ -86,14 +86,14 @@
 		create_reagents(FLUID_MAX_DEPTH)
 	return ..()
 
-/turf/proc/remove_fluids(var/amount, var/defer_update)
+/turf/proc/remove_fluids(amount, defer_update)
 	if(!reagents?.total_liquid_volume)
 		return
 	remove_any_reagents(amount, defer_update = defer_update, removed_phases = MAT_PHASE_LIQUID)
 	if(defer_update && !QDELETED(reagents))
 		SSfluids.holders_to_update[reagents] = TRUE
 
-/turf/proc/transfer_fluids_to(var/turf/target, var/amount, var/defer_update = TRUE)
+/turf/proc/transfer_fluids_to(turf/target, amount, defer_update = TRUE)
 	// No flowing of reagents without liquids, but this proc should not be called if liquids are not present regardless.
 	if(!reagents?.total_liquid_volume)
 		return
