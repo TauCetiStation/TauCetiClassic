@@ -56148,6 +56148,7 @@
 /area/station/hallway/primary/central)
 "kka" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},
@@ -62224,7 +62225,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "lvq" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -70882,7 +70885,9 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "nhd" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
