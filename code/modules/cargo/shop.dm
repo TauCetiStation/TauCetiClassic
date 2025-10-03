@@ -312,9 +312,10 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 	flags = ABSTRACT
 
 /obj/random_shop_item/proc/generate_shop_item()
-	var/item_path = PATH_OR_RANDOM_PATH(/obj/random/trader_product)
+	var/item_path = PATH_OR_RANDOM_PATH(/obj/random/trader_product_safer)
 
 	if(!item_path)
+		qdel(src)
 		return
 
 	var/obj/item/Item = new item_path(loc)

@@ -990,6 +990,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eyes_blue"]             << b_eyes
 	S["underwear"]             << underwear
 	S["undershirt"]            << undershirt
+	S["undershirt_print"]      << undershirt_print
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt
