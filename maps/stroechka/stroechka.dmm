@@ -3707,6 +3707,7 @@
 /area/station/rnd/chargebay)
 "hX" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(71)
 	},
@@ -6817,7 +6818,9 @@
 	},
 /area/station/engineering/equip)
 "FY" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -7821,7 +7824,9 @@
 	},
 /area/station/cargo/storage)
 "Nf" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},

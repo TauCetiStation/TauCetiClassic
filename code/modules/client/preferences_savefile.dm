@@ -418,9 +418,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ipc_head = initial(ipc_head)
 		// fuck named hairstyles, we should just move it to indexes
 		var/static/list/ipc_hairstyles_reset = list(
-			"alien IPC screen", 
-			"double IPC screen", 
-			"pillar IPC screen", 
+			"alien IPC screen",
+			"double IPC screen",
+			"pillar IPC screen",
 			"human IPC screen"
 		)
 		if(h_style in ipc_hairstyles_reset)
@@ -990,6 +990,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eyes_blue"]             << b_eyes
 	S["underwear"]             << underwear
 	S["undershirt"]            << undershirt
+	S["undershirt_print"]      << undershirt_print
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt
