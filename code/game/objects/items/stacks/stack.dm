@@ -376,8 +376,6 @@
 	var/time = 0
 	/// Number of the resulting atoms is allowed per turf, 0 to disable limit
 	var/max_per_turf = 0
-	/// If dir is checked to count max_per_turf
-	var/dir_sensitive = FALSE
 	/// Enable or disable preview overlay
 	var/build_outline = FALSE
 	/// Restrict building only for these floor types
