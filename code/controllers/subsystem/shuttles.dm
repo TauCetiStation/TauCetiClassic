@@ -446,6 +446,16 @@ SUBSYSTEM_DEF(shuttle)
 	centcom_message = msg
 	//log_investigate("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
+/datum/controller/subsystem/shuttle/proc/is_turf_clear(turf/T)
+	for(var/atom/A in T.contents)
+		if(!A.simulated)
+			continue
+		if(istype(A, /obj/machinery/light))
+			continue
+
+		return FALSE
+
+	return TRUE
 
 //Buyin
 /datum/controller/subsystem/shuttle/proc/buy()
@@ -464,20 +474,15 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/clear_turfs = list()
 
-	checking_turfs:
-		for(var/turf/T in shuttle)
-			if(T.density)
-				continue
+	for(var/turf/T in shuttle)
+		if(T.density)
+			continue
 
-			for(var/atom/A in T.contents)
-				if(!A.simulated)
-					continue
-				if(istype(A, /obj/machinery/light))
-					continue
+		if(!is_turf_clear(T))
+			continue
 
-				continue checking_turfs
-			clear_turfs += T
-			CHECK_TICK
+		clear_turfs += T
+		CHECK_TICK
 
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
