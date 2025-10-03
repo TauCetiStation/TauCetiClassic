@@ -109,29 +109,28 @@
 		to_chat(user, "<span class='danger'>There's \a [occupied] in the way.</span>")
 		return FALSE
 
-	if(flags & ON_BORDER)
-		var/turf/T
-		if(get_turf(climber) == get_turf(src))
-			T = get_step(get_turf(src), dir)
-		else
-			T = get_turf(src)
+	var/turf/T
+	if(get_turf(climber) == get_turf(src))
+		T = get_step(get_turf(src), dir)
+	else
+		T = get_turf(src)
 
-		if(T.density)
-			to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
-			return FALSE
+	if(T.density)
+		to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
+		return FALSE
 
-		for(var/atom/movable/somethingInTheWay in T)
-			if(somethingInTheWay == src)
+	for(var/atom/movable/something_in_the_way in T)
+		if(something_in_the_way == src)
+			continue
+
+		if(istype(something_in_the_way, /obj/structure))
+			var/obj/structure/S = something_in_the_way
+			if(S.climbable)
 				continue
 
-			if(istype(somethingInTheWay, /obj/structure))
-				var/obj/structure/S = somethingInTheWay
-				if(S.climbable)
-					continue
-
-			if(!somethingInTheWay.CanPass(climber, T))
-				to_chat(user, "<span class='danger'>There's \a [somethingInTheWay] in the way.</span>")
-				return FALSE
+		if(!something_in_the_way.CanPass(climber, T))
+			to_chat(user, "<span class='danger'>There's \a [something_in_the_way] in the way.</span>")
+			return FALSE
 
 	return TRUE
 
@@ -147,7 +146,8 @@
 				continue
 
 		if(O && O.density)
-			if((O.flags & ON_BORDER) && (O.dir != get_dir(get_turf(src), get_turf(climber))))
+			var/on_border_stuff_in_the_way = (O.flags & ON_BORDER) && (O.dir != get_dir(get_turf(src), get_turf(climber)))
+			if(on_border_stuff_in_the_way)
 				continue
 			return O
 

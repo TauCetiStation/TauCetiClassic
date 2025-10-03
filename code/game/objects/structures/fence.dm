@@ -44,13 +44,13 @@
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(iswrenching(W))
-		if(W.use_tool(src, user, 50, volume = 50))
+		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			to_chat(user, "<span class='notice'>Вы демонтируете забор.</span>")
 			deconstruct(TRUE)
 			return TRUE
 		return FALSE
 	else if(isscrewing(W))
-		if(W.use_tool(src, user, 50, volume = 50))
+		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
 			if(screwed)
 				to_chat(user, "<span class='notice'>Вы откручиваете забор.</span>")
 			else
@@ -74,10 +74,7 @@
 	return TRUE
 
 /obj/structure/fence/CanAStarPass(obj/item/weapon/card/id/ID, to_dir)
-	if(dir == to_dir)
-		return FALSE
-
-	return TRUE
+	return (dir != to_dir)
 
 /obj/structure/fence/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && O.checkpass(PASSTABLE))
@@ -95,7 +92,7 @@
 		climber.throw_at(get_step(user, dir), 2, 2)
 		return
 
-	. = ..()
+	return ..()
 
 /obj/structure/fence/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = get_turf(src)
