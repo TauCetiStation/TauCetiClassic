@@ -182,6 +182,8 @@
 	return failed_breath
 
 /obj/item/organ/internal/lungs/proc/handle_failed_breath()
+	if(owner.reagents.has_reagent("inaprovaline") || HAS_TRAIT(src, TRAIT_EXTERNAL_VENTILATION))
+		return
 	if(prob(15))
 		if(!owner.species.flags[IS_SYNTHETIC])
 			if(active_breathing)
@@ -232,12 +234,9 @@
 			owner.emote("cough")		//respitory tract infection
 
 	if(is_bruised())
-		if(prob(2))
+		if(prob(4))
 			owner.emote("cough")
 			owner.drip(10)
-		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_EXTERNAL_VENTILATION))
-			owner.emote("gasp")
-			owner.losebreath += 10
 
 
 /obj/item/organ/internal/lungs/vox

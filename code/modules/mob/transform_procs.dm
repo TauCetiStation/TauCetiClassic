@@ -309,6 +309,9 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
+	if(organs_by_name[O_BRAIN])
+		var/obj/item/organ/internal/brain/IO = organs_by_name[O_BRAIN]
+		IO.destroyit = TRUE
 	notransform = TRUE
 	canmove = 0
 	icon = null

@@ -264,6 +264,11 @@ var/global/list/frozen_items = list()
 			visible_message("<span class='notice'>The crypod hums and hisses as it moves [occupant.real_name] into storage.</span>", 3)
 
 			// Delete the mob.
+			if(ishuman(occupant))
+				var/mob/living/carbon/human/H = occupant
+				if(H.organs_by_name[O_BRAIN])
+					var/obj/item/organ/internal/brain/IO = H.organs_by_name[O_BRAIN]
+					IO.destroyit = TRUE
 			qdel(occupant)
 			occupant = null
 

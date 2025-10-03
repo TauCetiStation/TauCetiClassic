@@ -12,6 +12,7 @@
 	min_broken_damage = 75
 	min_bruised_damage = 25
 	tough = TRUE // TC This is a temporary solution, so as not to complicate life
+	var/destroyit = FALSE
 
 	var/can_use_mmi = TRUE
 	var/oxygen_reserve = 6
@@ -35,6 +36,26 @@
 	spawn(5)
 		brainmob?.client?.screen.len = null //clear the hud
 
+/obj/item/organ/internal/brain/remove(mob/living/user)
+
+	if(!owner)
+		return ..() // Probably a redundant removal; just bail
+
+	if(name == initial(name))
+		name = "\the [owner.real_name]'s [initial(name)]"
+
+	var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
+
+	if(borer)
+		borer.detatch() //Should remove borer if the brain is removed - RR
+
+	if(destroyit)
+		return
+
+
+	transfer_identity(owner)
+
+	..()
 
 /obj/item/organ/internal/brain/process()
 
@@ -112,6 +133,25 @@
 
 	..()
 
+/obj/item/organ/internal/brain/proc/transfer_identity(mob/living/carbon/H)
+	name = "[H]'s brain"
+	brainmob = new(src)
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna.Clone()
+	brainmob.timeofhostdeath = H.timeofdeath
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
+
+/obj/item/organ/internal/brain/examine(mob/user) // -- TLE
+	..()
+	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
+		to_chat(user, "You can feel the small spark of life still left in this one.")
+	else
+		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
+
 
 /obj/item/organ/internal/brain/proc/handle_damage_effects()
 	if(owner.stat)
@@ -159,23 +199,6 @@
 	icon = 'icons/obj/special_organs/skrell.dmi'
 	desc = "A brain with a odd division in the middle."
 
-/obj/item/organ/internal/brain/remove(mob/living/user)
-
-	if(!owner)
-		return ..() // Probably a redundant removal; just bail
-
-	if(name == initial(name))
-		name = "\the [owner.real_name]'s [initial(name)]"
-
-	var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
-
-	if(borer)
-		borer.detatch() //Should remove borer if the brain is removed - RR
-
-	transfer_identity(owner)
-
-	..()
-
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
 	cases = list("позитронный мозг", "позитронного мозга", "позитронному мозгу", "позитронный мозг", "позитронным мозгом", "позитронном мозге")
@@ -204,22 +227,3 @@
 	name = "deformed brain"
 	cases = list("деформированный мозг", "деформированного мозга", "деформированному мозгу", "деформированный мозг", "деформированным мозгом", "деформированном мозге")
 	parent_bodypart = BP_CHEST
-
-/obj/item/organ/internal/brain/proc/transfer_identity(mob/living/carbon/H)
-	name = "[H]'s brain"
-	brainmob = new(src)
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna.Clone()
-	brainmob.timeofhostdeath = H.timeofdeath
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
-
-	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
-
-/obj/item/organ/internal/brain/examine(mob/user) // -- TLE
-	..()
-	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		to_chat(user, "You can feel the small spark of life still left in this one.")
-	else
-		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
