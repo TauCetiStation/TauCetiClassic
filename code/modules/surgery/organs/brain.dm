@@ -12,7 +12,6 @@
 	min_broken_damage = 75
 	min_bruised_damage = 25
 	tough = TRUE // TC This is a temporary solution, so as not to complicate life
-	var/destroyit = FALSE
 
 	var/can_use_mmi = TRUE
 	var/oxygen_reserve = 6
@@ -48,10 +47,6 @@
 
 	if(borer)
 		borer.detatch() //Should remove borer if the brain is removed - RR
-
-	if(destroyit)
-		return
-
 
 	transfer_identity(owner)
 
