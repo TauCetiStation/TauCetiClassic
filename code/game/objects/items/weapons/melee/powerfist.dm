@@ -63,8 +63,9 @@
 	update_icon()
 
 /obj/item/weapon/melee/powerfist/AltClick(mob/user)
-	if(tank)
-		removeTank(user)
+	if(Adjacent(user))
+		if(tank)
+			removeTank(user)
 
 /obj/item/weapon/melee/powerfist/proc/removeTank(mob/living/carbon/human/user)
 	if(!tank)
