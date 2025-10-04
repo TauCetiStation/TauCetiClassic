@@ -34,7 +34,6 @@
 	icon_state = "shieldon"
 
 	var/list/covered_turfs = get_shielded_turfs()
-	to_chat(world, get_shielded_turfs())
 	var/turf/T = get_turf(src)
 	if(T in covered_turfs)
 		covered_turfs.Remove(T)
