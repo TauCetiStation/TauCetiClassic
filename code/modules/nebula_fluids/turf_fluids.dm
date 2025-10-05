@@ -56,7 +56,7 @@
 	var/required_depth = lying_mob ? FLUID_OVER_MOB_HEAD : FLUID_DEEP
 	return check_fluid_depth(required_depth)
 
-/turf/check_fluid_depth(var/min = 1)
+/turf/check_fluid_depth(min = 1)
 	. = (get_fluid_depth() >= min)
 
 /turf/get_fluid_depth()

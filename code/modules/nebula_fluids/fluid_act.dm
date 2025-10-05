@@ -155,7 +155,7 @@
 		"arms" = THERMAL_PROTECTION_ARM_LEFT + THERMAL_PROTECTION_ARM_RIGHT
 		)
 
-	for(var/obj/item/clothing/C in src.get_equipped_items())
+	for(var/obj/item/clothing/C in get_equipped_items())
 		if(C.permeability_coefficient == 1 || !C.body_parts_covered)
 			continue
 		if(C.body_parts_covered & HEAD)
