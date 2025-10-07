@@ -613,7 +613,7 @@
 		return dat.Join()
 
 /mob/living/carbon/human/proc/pulse()
-	if (stat == DEAD)
+	if(stat == DEAD)
 		return PULSE_NONE
 	var/obj/item/organ/internal/heart/H = organs_by_name[O_HEART]
 	return H ? H.pulse : PULSE_NONE

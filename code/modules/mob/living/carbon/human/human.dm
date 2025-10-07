@@ -1803,10 +1803,7 @@
 	return MA
 
 /mob/living/carbon/human/proc/need_breathe()
-	if(!species.breathing_organ && should_have_organ(species.breathing_organ))
-		return TRUE
-	else
-		return FALSE
+	return !species.breathing_organ && should_have_organ(species.breathing_organ)
 
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
