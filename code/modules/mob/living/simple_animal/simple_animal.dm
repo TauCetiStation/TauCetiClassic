@@ -70,6 +70,8 @@
 	// used for growing creatures
 	var/evolv_stage = 0
 
+	var/is_aquatic = FALSE
+
 /mob/living/simple_animal/atom_init()
 	if(!moveset_type)
 		if(animalistic)
@@ -82,6 +84,17 @@
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
+
+	if(is_aquatic)
+		min_oxy = 0
+		max_oxy = 0
+		min_tox = 0
+		max_tox = 0
+		min_co2 = 0
+		max_co2 = 0
+		min_n2 = 0
+		max_n2 = 0
+		minbodytemp = 0
 
 /mob/living/simple_animal/LateLogin()
 	. = ..()
@@ -147,6 +160,9 @@
 		handle_regular_hud_updates()
 
 	// Movement
+	if(is_aquatic && !submerged())
+		death() // should be paralyze if implemented
+
 	if(!client && !stop_automated_movement && wander && !anchored)
 		if(isturf(src.loc) && !buckled && canmove) // This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++

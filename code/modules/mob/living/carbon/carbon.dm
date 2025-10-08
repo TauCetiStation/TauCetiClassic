@@ -97,7 +97,7 @@
 	return !loc
 
 /mob/living/carbon/proc/is_cant_breathe()
-	return /*handle_drowning() || */health < 0
+	return handle_drowning() || health < 0
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	return null

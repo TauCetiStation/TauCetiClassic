@@ -59,10 +59,24 @@
 /turf/check_fluid_depth(min = 1)
 	. = (get_fluid_depth() >= min)
 
+/turf/proc/get_fluid_name()
+	var/datum/reagent/mat = reagents?.get_master_reagent()
+	return mat.name || "liquid"
+
 /turf/get_fluid_depth()
 	if(is_flooded(absolute=1))
 		return FLUID_MAX_DEPTH
 	return reagents?.total_volume || 0
+
+/turf/proc/show_bubbles()
+	set waitfor = FALSE
+	// TODO: make flooding show bubbles.
+	if(!flooded && fluid_overlay)
+		var/image/I = image(fluid_overlay.icon, src, "bubbles", fluid_overlay.layer - 0.1)
+		I.plane = fluid_overlay.plane
+		//flick("bubbles", fluid_overlay) - doesn't work unless KEEP_TOGETHER removed from fluid_overlay
+		add_overlay(I)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), I), 26, TIMER_CLIENT_TIME)
 
 /turf/fluid_update(ignore_neighbors)
 	fluid_blocked_dirs = null
