@@ -36,7 +36,7 @@
 				if(can_operate(H, user))
 					do_surgery(H, user, src)
 				else
-					to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than [src]!</span>")
+					to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than \a [src]!</span>")
 				return
 
 			var/time = 20 //2/3rds the time of a syringe

@@ -268,7 +268,7 @@
 // Initial blood volume.
 #define SPECIES_BLOOD_DEFAULT 560
 
-//Blood levels. These are percentages based on the species blood_volume far.
+//Blood levels. These are percentages based on the species blood_volume var.
 #define BLOOD_VOLUME_FULL_P    100
 #define BLOOD_VOLUME_SAFE_P    85
 #define BLOOD_VOLUME_OKAY_P    70

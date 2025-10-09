@@ -868,9 +868,9 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(!IO)
-			visible_message("<span class='warning'>[M] hasn't been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
-			to_chat(M, "<span class='warning'>[user] try stabs you in the eye with [src]!</span>")
-			to_chat(user, "<span class='warning'>You try stab [M] in the eye with [src]!</span>")
+			visible_message("<span class='warning'>[user] tried to stab [M] in the eyes with [src].</span>", ignored_mobs = list(user, M))
+			to_chat(M, "<span class='warning'>[user] tries to stab you in the eye with [src]!</span>")
+			to_chat(user, "<span class='warning'>You try to stab [M] in the eye with [src]!</span>")
 			return
 		IO.damage += rand(force * 0.5, force)
 		if(M != user)
