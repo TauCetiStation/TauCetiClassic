@@ -274,7 +274,7 @@
 			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
-				if(!pulse())
+				if(!get_pulse())
 					to_chat(user, "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>")
 				else
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
@@ -612,7 +612,7 @@
 	if(dat.len)
 		return dat.Join()
 
-/mob/living/carbon/human/proc/pulse()
+/mob/living/carbon/human/proc/get_pulse()
 	if (stat == DEAD)
 		return PULSE_NONE
 	var/obj/item/organ/internal/heart/H = organs_by_name[O_HEART]

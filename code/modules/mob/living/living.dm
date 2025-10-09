@@ -636,7 +636,7 @@
 	if(istype(BP))
 		BP.disfigured = FALSE
 
-	op_stage = new()
+	reset_op_stage()
 
 	for (var/obj/item/organ/external/head/H in lost_heads_list) // damn son, where'd you get this?
 		if(H.brainmob)
@@ -645,6 +645,10 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
+
+/mob/living/carbon/human/proc/reset_op_stage()
+    op_stage = new()
+
 /mob/living/proc/UpdateDamageIcon()
 	return
 

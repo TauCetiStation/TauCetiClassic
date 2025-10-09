@@ -197,7 +197,7 @@
 		if(!HAS_TRAIT(occupant, TRAIT_NO_BLOOD))
 			bloodData["hasBlood"] = TRUE
 			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
-			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
+			bloodData["pulse"] = occupant.get_pulse_number(GETPULSE_TOOL)
 			bloodData["bloodLevel"] = occupant.blood_amount()
 			bloodData["bloodNormal"] = BLOOD_VOLUME_NORMAL
 		occupantData["blood"] = bloodData

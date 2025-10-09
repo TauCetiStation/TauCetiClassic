@@ -1383,7 +1383,7 @@
 		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
-	if(pulse())
+	if(get_pulse())
 		to_chat(usr, "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>")
 	else
 		to_chat(usr, "<span class='warning'>[src] has no pulse!</span>")//it is REALLY UNLIKELY that a dead person would check his own pulse
@@ -1395,7 +1395,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		to_chat(usr, "You moved while counting. Try again.")
 	else
-		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse(GETPULSE_HAND)].</span>")
+		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse_number(GETPULSE_HAND)].</span>")
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
 	var/datum/species/old_species = species
@@ -2333,9 +2333,9 @@
 		return ..()
 
 //generates realistic-ish pulse output based on preset levels
-/mob/living/carbon/human/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
+/mob/living/carbon/human/get_pulse_number(method)	//method 0 is for hands, 1 is for machines, more accurate
 	var/temp = 0								//see setup.dm:694
-	switch(pulse())
+	switch(get_pulse())
 		if(PULSE_NONE)
 			return "0"
 		if(PULSE_SLOW)

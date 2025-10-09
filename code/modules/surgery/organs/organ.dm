@@ -38,10 +38,10 @@
 
 	owner.organs -= src
 
-	loc = get_turf(owner)
+	forceMove(get_turf(owner))
 	START_PROCESSING(SSobj, src)
 
-	if(owner && vital) // I'd do another check for species or whatever so that you couldn't "kill" an IPC by removing a human head from them, but it doesn't matter since they'll come right back from the dead
+	if(owner && vital)
 		owner.death()
 	owner = null
 
@@ -162,8 +162,8 @@
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
 
-	var/obj/item/organ/internal/liver/LIVER = organs_by_name[O_LIVER]
-	if(!LIVER)
+	var/obj/item/organ/internal/liver/L = organs_by_name[O_LIVER]
+	if(!L)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			// Ethanol and all drinks are so bad
 			if(istype(R, /datum/reagent/consumable/ethanol))

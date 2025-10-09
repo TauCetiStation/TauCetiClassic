@@ -285,6 +285,14 @@
 	durability = 0.8
 	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 
+/obj/item/organ/internal/lungs/cybernetic/insert_organ(mob/living/carbon/human/H, surgically, datum/species/S)
+
+	..()
+
+	if(owner)
+		breath_type = owner.species.inhale_type
+		poison_type = owner.species.poison_type
+
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
 	cases = list("охлаждающий элемент", "охлаждающего элемента", "охлаждающему элементу", "охлаждающий элемент", "охлаждающим элементом", "охлаждающем элементе")

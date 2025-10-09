@@ -350,6 +350,12 @@ var/global/list/tourette_bad_words= list(
 		var/obj/item/organ/internal/lungs/L = organs_by_name[species_organ]
 		if(L)
 			active_breaths = L.active_breathing
+
+		if (virus2.len > 0)
+			if (prob(10) && get_infection_chance(src))
+				for(var/mob/living/carbon/M in view(1,src))
+					spread_disease_to(M)
+
 		..(active_breaths)
 
 /mob/living/carbon/human/handle_breath(datum/gas_mixture/breath)
