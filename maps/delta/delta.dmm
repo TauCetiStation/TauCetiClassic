@@ -2100,7 +2100,6 @@
 /area/station/maintenance/atmos)
 "adv" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -8780,7 +8779,7 @@
 /area/station/security/prison)
 "aoH" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /turf/simulated/floor{
 	icon_state = "greenbluefull"
 	},
@@ -8987,11 +8986,6 @@
 	dir = 8;
 	icon_state = "siding_line"
 	},
-/turf/simulated/floor,
-/area/station/security/prison)
-"apc" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor,
 /area/station/security/prison)
 "apd" = (
@@ -9867,7 +9861,6 @@
 /area/station/maintenance/auxsolarport)
 "aqz" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -12941,36 +12934,32 @@
 /area/station/security/detectives_office)
 "avg" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
-	pixel_x = 3
-	},
 /obj/item/ashtray/bronze{
 	pixel_x = -7;
 	pixel_y = -13
+	},
+/obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
+/obj/item/clothing/mask/cigarette/cigar/cohiba{
+	pixel_x = 3
+	},
+/obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "avh" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
-/obj/item/device/taperecorder{
-	pixel_x = -8;
-	pixel_y = 5
-	},
 /obj/machinery/door_control{
 	id = "Detectives Lockdown";
 	name = "Detectives Lockdown";
 	pixel_y = 25
 	},
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "avi" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/microscope,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "avj" = (
@@ -13008,13 +12997,10 @@
 	},
 /area/station/security/forensic_office)
 "avn" = (
-/obj/machinery/computer/forensic_scanning,
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "bot_old"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -13596,6 +13582,10 @@
 /obj/item/device/flashlight/lamp{
 	pixel_x = -4;
 	pixel_y = 6
+	},
+/obj/item/device/taperecorder{
+	pixel_x = -8;
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
@@ -16208,7 +16198,6 @@
 /area/station/civilian/gym)
 "aBl" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -29960,7 +29949,7 @@
 /area/station/storage/tech)
 "dGo" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -31796,7 +31785,7 @@
 /area/station/rnd/chargebay)
 "eel" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/effect/decal/turf_decal/blue{
 	dir = 4;
 	icon_state = "siding_line"
@@ -38325,6 +38314,7 @@
 "fJP" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},
@@ -47232,6 +47222,15 @@
 	icon_state = "blackchoco"
 	},
 /area/station/bridge/cmf_room)
+"hLM" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/obj/effect/landmark/start/cargo_technician,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
+/area/station/cargo/storage)
 "hLO" = (
 /obj/effect/landmark/start/paramedic,
 /obj/structure/cable{
@@ -50147,11 +50146,11 @@
 /obj/structure/closet/cabinet,
 /obj/item/weapon/storage/briefcase,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/device/detective_scanner,
 /obj/item/weapon/folder/red,
 /obj/item/device/cardpay{
 	dir = 1
 	},
+/obj/item/toy/figure/assistant,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -50693,12 +50692,11 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/mass_driver)
 "iCW" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
 	icon_state = "siding_wood_line"
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "iDi" = (
@@ -52718,7 +52716,6 @@
 	c_tag = "Medbay Paramedic Dispatch";
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -53777,6 +53774,13 @@
 	dir = 1;
 	icon_state = "arrow"
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -55260,7 +55264,6 @@
 /area/station/engineering/minisat_secure_area)
 "jGn" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -82049,6 +82052,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/gloves/black,
+/obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -86040,8 +86044,7 @@
 	},
 /area/station/hallway/primary/port)
 "rcy" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/belt/utility,
+/obj/machinery/computer/vending,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -92042,12 +92045,14 @@
 	pixel_y = -32
 	},
 /obj/structure/table/woodentable,
-/obj/item/toy/figure/assistant,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
 	icon_state = "siding_wood_line"
 	},
 /obj/machinery/light/smart,
+/obj/item/weapon/storage/box/swabs,
+/obj/item/weapon/forensic_sample_kit,
+/obj/item/weapon/forensic_sample_kit/powder,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "szt" = (
@@ -93173,7 +93178,6 @@
 /area/station/engineering/minisat_secure_area)
 "sOe" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 5;
 	icon_state = "siding_wood_line"
@@ -93659,7 +93663,9 @@
 	},
 /area/station/rnd/mixing)
 "sVi" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -104728,7 +104734,6 @@
 /area/station/aisat/teleport)
 "vNW" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -106560,7 +106565,9 @@
 	},
 /area/station/civilian/locker)
 "wln" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
@@ -108490,7 +108497,6 @@
 /area/station/hallway/primary/central)
 "wLF" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -157855,8 +157861,8 @@ xuQ
 ojt
 ojm
 rcy
+hLM
 dSx
-igK
 xkd
 nEo
 xYB
@@ -163531,7 +163537,7 @@ alo
 aoC
 ayU
 aoW
-apc
+apd
 apl
 apu
 uNs

@@ -66,6 +66,7 @@
 				return
 
 			user.drop_from_inventory(W, src)
+			add_fingerprint(user)
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
@@ -91,6 +92,7 @@
 
 	if(charging)
 		usr.put_in_hands(charging)
+		add_fingerprint(user)
 		charging.add_fingerprint(user)
 		charging.updateicon()
 

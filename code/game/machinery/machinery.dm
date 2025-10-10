@@ -411,6 +411,7 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user)
 	if(!can_interact_with(user))
 		return TRUE
+	add_fingerprint(user)
 	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
 		if(prob(75))
 			to_chat(user, "<span class='notice'>Your fingers are slipping.</span>")

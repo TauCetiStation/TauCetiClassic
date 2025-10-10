@@ -10051,7 +10051,6 @@
 	},
 /area/station/medical/reception)
 "bSy" = (
-/obj/machinery/computer/forensic_scanning,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -10062,6 +10061,7 @@
 	c_tag = "Forensic's Office";
 	network = list("SS13","Security")
 	},
+/obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -16692,14 +16692,13 @@
 /turf/environment/space,
 /area/space)
 "dCP" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/security/wooden_tv,
 /obj/structure/noticeboard{
 	pixel_y = 28
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "dDf" = (
@@ -48290,7 +48289,7 @@
 /area/station/civilian/gym)
 "lhj" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -48704,29 +48703,10 @@
 /turf/simulated/floor/carpet/black,
 /area/station/tcommsat/computer)
 "lmm" = (
-/obj/structure/cable,
-/obj/structure/table/glass,
-/obj/item/device/reagent_scanner{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/weapon/storage/fancy/vials{
-	pixel_x = 6
-	},
-/obj/item/weapon/reagent_containers/syringe{
-	pixel_y = 8
-	},
-/obj/item/weapon/reagent_containers/dropper{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/device/mass_spectrometer{
-	pixel_x = -4;
-	pixel_y = 3
-	},
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -49013,12 +48993,20 @@
 	},
 /area/station/security/checkpoint)
 "lqd" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/machinery/light/small,
 /obj/machinery/alarm{
 	pixel_y = -32
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/obj/item/station_map/prometheus{
+	pixel_x = 10;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "whitered"
@@ -49371,6 +49359,7 @@
 /area/station/civilian/kitchen)
 "lut" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},
@@ -54649,7 +54638,6 @@
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/storage/box/cups,
 /obj/item/toy/plushie/tuxedo_cat,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
@@ -55291,7 +55279,9 @@
 	},
 /area/station/engineering/monitoring)
 "mQq" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
@@ -59854,6 +59844,8 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -61061,7 +61053,6 @@
 /area/station/security/blueshield/shuttle)
 "ooQ" = (
 /obj/structure/table/woodentable,
-/obj/item/device/detective_scanner,
 /obj/machinery/windowtint{
 	id = "privateoffice";
 	pixel_y = 28
@@ -61070,6 +61061,9 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/weapon/forensic_sample_kit/powder,
+/obj/item/weapon/forensic_sample_kit,
+/obj/item/weapon/storage/box/swabs,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "opA" = (
@@ -63030,6 +63024,8 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Bay Storage North"
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -69214,8 +69210,7 @@
 	},
 /area/station/engineering/atmos)
 "qrN" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "qrZ" = (
@@ -71295,7 +71290,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "qVa" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -73191,15 +73188,25 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rsR" = (
+/obj/structure/cable,
 /obj/structure/table/glass,
-/obj/item/weapon/paper_bin{
+/obj/item/device/reagent_scanner{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/fancy/vials{
+	pixel_x = 6
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/dropper{
+	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/obj/item/station_map/prometheus{
-	pixel_y = 6
+/obj/item/device/mass_spectrometer{
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -76249,11 +76256,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
 "sgm" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
+/obj/structure/table/woodentable,
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "sgo" = (
@@ -82202,8 +82209,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "tGv" = (
-/obj/structure/table,
-/obj/item/device/tagger/shop,
+/obj/machinery/computer/vending{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -85282,10 +85290,10 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "utU" = (
-/obj/machinery/computer/secure_data,
 /obj/machinery/requests_console/forensic{
 	pixel_y = 28
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -85912,6 +85920,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 27
 	},
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -86459,6 +86468,7 @@
 	pixel_y = 3;
 	stamp_message = "Cargo"
 	},
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},

@@ -945,3 +945,12 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic = 2,
 							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
 							/obj/item/stack/cable_coil = 2)
+
+/obj/item/weapon/circuitboard/microscope
+	name = "circuit board (Microscope)"
+	build_path = /obj/machinery/microscope
+	board_type = "machine"
+	origin_tech = "programming=2;biotech=2"
+	req_components = list(
+		/obj/item/weapon/stock_parts/micro_laser = 1,
+		/obj/item/weapon/stock_parts/manipulator = 1)

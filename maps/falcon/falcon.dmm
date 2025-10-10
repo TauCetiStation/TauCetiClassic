@@ -7425,7 +7425,6 @@
 /area/station/civilian/locker)
 "anY" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/light/smart,
 /obj/item/device/radio/intercom{
 	dir = 1;
@@ -8128,13 +8127,15 @@
 	},
 /area/asteroid/mine/eva)
 "apz" = (
-/obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Cargo Office";
 	dir = 8
 	},
 /obj/machinery/requests_console/cargo_bay{
 	pixel_x = 30
+	},
+/obj/machinery/computer/vending{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -12349,8 +12350,7 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "cMi" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -22137,7 +22137,9 @@
 /turf/simulated/wall,
 /area/station/maintenance/science)
 "lVb" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
@@ -28078,7 +28080,9 @@
 	},
 /area/station/bridge/server)
 "qRj" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -31649,6 +31653,9 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "uqq" = (
@@ -34582,6 +34589,7 @@
 /area/station/maintenance/science)
 "xbK" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(31)
 	},
