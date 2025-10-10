@@ -307,6 +307,16 @@
 /datum/fort_console_lot/rocket_piercing/purchase()
 	. = new /obj/structure/storage_box/rocket/piercing
 
+/datum/fort_console_lot/shieldgen
+	name = "Shield Generator"
+	desc = "Crate containing a shield generator capable of protecting a 5x5 area from missiles. Does not interfere with the movement of humans. Explode when struck by an EMP."
+	price = 250
+
+	order = 35
+
+/datum/fort_console_lot/shieldgen/purchase()
+	. = new /obj/machinery/forts_shieldgen
+
 // 50-60
 /datum/fort_console_lot/drill
 	name = "Drill set"
