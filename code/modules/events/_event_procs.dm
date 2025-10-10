@@ -31,6 +31,7 @@
 	active_with_role["Janitor"] = 0
 	active_with_role["Clown"] = 0
 	active_with_role["Botanist"] = 0
+	active_with_role["Cargo"] = 0
 	active_with_role["Any"] = player_list.len
 
 	for(var/mob/M in player_list)
@@ -77,6 +78,9 @@
 
 		if(M.mind.assigned_role == "Botanist")
 			active_with_role["Botanist"]++
+
+		if(M.mind.assigned_role in list("Quartermaster", "Cargo Technician"))
+			active_with_role["Cargo"]++
 
 	return active_with_role
 

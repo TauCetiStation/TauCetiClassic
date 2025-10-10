@@ -411,6 +411,7 @@
 	hide_from(usr)
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T, NoUpdate = TRUE)
+		I.on_found(usr)
 	finish_bulk_removal()
 
 /obj/item/weapon/storage/emp_act(severity)
