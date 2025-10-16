@@ -167,7 +167,7 @@
 			if(user.IsClumsy() || target.IsClumsy())
 				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
 			if(isloyal(user) || isloyal(target))
-				playsound(src, 'sound/voice/mob/pain/female/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//элитный поджопник
+				playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(BP_L_ARM)
 			hand_item = target.l_hand
 			if(hand_item && (user.a_intent == INTENT_PUSH))
