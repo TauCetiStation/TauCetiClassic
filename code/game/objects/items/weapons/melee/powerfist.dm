@@ -165,8 +165,8 @@
 		if(BP_GROIN)
 			agony = agony + 0.5 * base_force * punch
 			if(user.IsClumsy() || target.IsClumsy())
-				playsound(src, 'sound/voice/mob/pain/male/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//звук поджопника
-			else if(isloyal(user) || isloyal(target))
+				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+			if(isloyal(user) || isloyal(target))
 				playsound(src, 'sound/voice/mob/pain/female/passive_whiner_4.ogg', VOL_EFFECTS_MASTER)//элитный поджопник
 		if(BP_L_ARM)
 			hand_item = target.l_hand
