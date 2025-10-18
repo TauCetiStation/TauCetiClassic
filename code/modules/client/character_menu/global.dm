@@ -55,6 +55,10 @@
 	. += 					"<td><a href='byond://?_src_=prefs;preference=see_looc'><b>[(chat_toggles & CHAT_LOOC) ? "Shown" : "Hidden"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Widescreen (Wider view size):</td>"
+	. += 					"<td><a href='byond://?_src_=prefs;preference=widescreenpref'><b>[widescreenpref ? "Enabled" : "Disabled"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Parallax (Fancy Space)</td>"
 	. += 					"<td><b><a href='byond://?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"byond://?_src_=prefs;preference=parallaxup\";return false;'>"
 	switch (parallax)
@@ -141,7 +145,7 @@
 
 		if("tgui_lock")
 			tgui_lock = !tgui_lock
-		
+
 		if("window_scale")
 			window_scale = !window_scale
 
@@ -188,6 +192,11 @@
 			if(isnewplayer(user))
 				var/mob/dead/new_player/M = user
 				M.show_titlescreen()
+
+		if("widescreenpref")
+			widescreenpref = !widescreenpref
+			if(parent)
+				parent.view_size?.setDefault(VIEWPORT_USE_PREF)
 
 		if("auto_fit_viewport")
 			auto_fit_viewport = !auto_fit_viewport

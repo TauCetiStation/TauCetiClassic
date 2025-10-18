@@ -113,7 +113,8 @@
 /mob/camera/eminence/can_use_topic(src_object)
 	if(!client)
 		return STATUS_CLOSE
-	if(get_dist(src_object, src) <= client.view)
+	var/clientviewlist = getviewsize(client.view)
+	if(get_dist(src_object, src) < max(clientviewlist[1], clientviewlist[2]))
 		return STATUS_INTERACTIVE
 
 	return STATUS_CLOSE

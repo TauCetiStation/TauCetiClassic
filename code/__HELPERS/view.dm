@@ -1,4 +1,4 @@
-/proc/getviewsize(view)
+/proc/getviewsize(view = world.view)
 	var/viewX
 	var/viewY
 	if(isnum(view))

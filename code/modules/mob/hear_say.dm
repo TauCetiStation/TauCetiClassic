@@ -107,7 +107,7 @@
 				H.remove_language(L.name)
 
 	if(!(sdisabilities & DEAF) && !ear_deaf)
-		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
+		if (speech_sound && (get_dist(speaker, src) <= SOUND_RANGE && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 

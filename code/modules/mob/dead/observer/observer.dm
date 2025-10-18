@@ -735,6 +735,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM])
 		return
 
-	client.change_view("[viewx]x[viewy]")
+	client.view_size?.setDefault("[viewx]x[viewy]")
 	if(client.prefs.auto_fit_viewport)
 		client.fit_viewport()

@@ -47,7 +47,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	if(!turf_source) // In null space, no one can hear you scream.
 		return
 
-	var/max_distance = (world.view + extrarange) * 3
+	var/max_distance = (SOUND_RANGE + extrarange) * 3
 
 	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
@@ -99,7 +99,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		//sound volume falloff with distance
 		var/distance = get_dist(T, turf_source) * distance_multiplier
 
-		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
+		S.volume -= max(distance - SOUND_RANGE, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
 		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls
 			return

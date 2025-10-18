@@ -1271,8 +1271,9 @@ var/global/list/WALLITEMS = typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	var/list/actual_view = getviewsize(world.view)
+	tX = clamp(origin.x + text2num(tX) - actual_view[1] - 1, 1, world.maxx)
+	tY = clamp(origin.y + text2num(tY) - actual_view[2] - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)

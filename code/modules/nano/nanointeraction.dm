@@ -41,7 +41,8 @@
 	if(custom_state && (custom_state.flags & NANO_IGNORE_DISTANCE))
 		return STATUS_INTERACTIVE
 	// robots can interact with things they can see within their view range
-	if((src_object in view(src)) && get_dist(src_object, src) <= client.view)
+	var/clientviewlist = getviewsize(client.view)
+	if((src_object in view(src)) && get_dist(src_object, src) <= max(clientviewlist[1], clientviewlist[2]))
 		return STATUS_INTERACTIVE	// interactive (green visibility)
 	return STATUS_DISABLED			// no updates, completely disabled (red visibility)
 
@@ -75,13 +76,14 @@
 		return STATUS_INTERACTIVE
 
 	// If we're installed in a chassi, rather than transfered to an inteliCard or other container, then check if we have camera view
+	var/clientviewlist = getviewsize(client.view)
 	if(is_in_chassis())
 		//stop AIs from leaving windows open and using then after they lose vision
 		//apc_override is needed here because AIs use their own APC when powerless
 		if(cameranet && !cameranet.checkTurfVis(get_turf(src_object)))
 			return apc_override ? STATUS_INTERACTIVE : STATUS_CLOSE
 		return STATUS_INTERACTIVE
-	else if(get_dist(src_object, src) <= client.view)	// View does not return what one would expect while installed in an inteliCard
+	else if(get_dist(src_object, src) <= max(clientviewlist[1], clientviewlist[2]))	// View does not return what one would expect while installed in an inteliCard
 		return STATUS_INTERACTIVE
 
 	return 	STATUS_CLOSE

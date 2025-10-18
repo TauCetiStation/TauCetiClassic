@@ -424,7 +424,8 @@
 		if(M.eyecheck() > 0 && dist > 0)
 			continue
 		M.flash_eyes()
-		if(dist < world.view)
+		var/list/actual_view = getviewsize(world.view)
+		if(dist < actual_view[1])
 			var/duration = floor(sqrt(created_volume) / 2) / sqrt(dist + 1)
 			M.Stun(duration)
 			M.Weaken(duration * 1.2)

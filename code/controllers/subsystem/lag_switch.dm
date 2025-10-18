@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(lag_switch)
 		if(DISABLE_GHOST_ZOOM)
 			if(state)
 				for(var/mob/user as anything in global.observer_list)
-					user.client?.change_view(world.view)
+					user.client?.view_size?.setDefault(VIEWPORT_USE_PREF)
 				to_chat(observer_list, "<span class='bold notice'>Observer zoom has been disabled.</span>")
 			else
 				to_chat(observer_list, "<span class='bold notice'>Observer zoom has been enabled.</span>")

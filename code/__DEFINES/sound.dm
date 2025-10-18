@@ -18,6 +18,9 @@
 #define VOL_LINEAR_TO_NON(vol_raw) ((20 ** clamp(vol_raw * 0.01, 0, 1.0)) - 0.99) / (20 - 0.99) // this converts byond's linear volume into non linear (don't change anything without heavy testing with debug, even 0.01 difference may break the sound or functions that connects with this).
 #define SANITIZE_VOL(vol) vol * 0.5 // environment setting can overload sound that use 100% volume (0.5 actually is max, if you want pure sound with anything).
 
+// default sound range
+#define SOUND_RANGE 17
+
 //sound channels, max is 1024
 #define CHANNEL_AMBIENT 1
 #define CHANNEL_AMBIENT_LOOP 2
