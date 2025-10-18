@@ -19,6 +19,7 @@
 	var/requires_robotic_bodypart = FALSE
 	var/sterile = FALSE
 	var/durability = 1 // Damage multiplier for organs, that have damage values.
+	var/can_relocate = FALSE
 
 /obj/item/organ/internal/New(mob/living/carbon/holder)
 	if(istype(holder))
@@ -168,6 +169,28 @@
 			take_damage(20, 1)
 		if(2)
 			take_damage(7, 1)
+
+/obj/item/organ/internal/proc/toggle_parent_bodypart(mob/living/user)
+	if(!is_robotic())
+		return
+	if(parent_bodypart == BP_CHEST)
+		parent_bodypart = BP_GROIN
+		compability = list(VOX)
+		to_chat(user, "<span class='notice'>You reconfigure this organ for groin placement.</span>")
+	else
+		parent_bodypart = BP_CHEST
+		compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+		to_chat(user, "<span class='notice'>You reconfigure this organ for chest placement.</span>")
+
+/obj/item/organ/internal/attackby(obj/item/I, mob/living/user, params)
+
+	if(!is_robotic())
+		return
+
+	if(iswrenching(I) && can_relocate)
+		toggle_parent_bodypart(user)
+
+	return ..()
 
 /obj/item/organ/internal/proc/bruise()
 	damage = max(damage, min_bruised_damage)

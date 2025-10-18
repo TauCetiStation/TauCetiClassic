@@ -283,7 +283,12 @@
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
 	durability = 0.8
-	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+	can_relocate = TRUE
+
+/obj/item/organ/internal/lungs/cybernetic/voxc
+	parent_bodypart = BP_GROIN
+	compability = list(VOX)
 
 /obj/item/organ/internal/lungs/cybernetic/insert_organ(mob/living/carbon/human/H, surgically, datum/species/S)
 

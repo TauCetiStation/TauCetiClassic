@@ -54,7 +54,12 @@
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
 	durability = 0.8
-	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+	can_relocate = TRUE
+
+/obj/item/organ/internal/liver/cybernetic/voxc
+	compability = list(VOX)
+	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"

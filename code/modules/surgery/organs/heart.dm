@@ -250,7 +250,12 @@
 	base_icon_state = "heart-prosthetic"
 	status = ORGAN_ROBOT
 	durability = 0.8
-	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+	can_relocate = TRUE
+
+/obj/item/organ/internal/heart/cybernetic/voxc
+	parent_bodypart = BP_GROIN
+	compability = list(VOX)
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
