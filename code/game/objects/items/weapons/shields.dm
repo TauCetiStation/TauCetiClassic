@@ -5,7 +5,7 @@
 	var/saved_dir = 0
 
 /obj/item/weapon/shield/atom_init()
-	..()
+	. = ..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf)
 
@@ -18,8 +18,6 @@
 	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
 	AddComponent(/datum/component/swiping, SCB)
-
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/weapon/shield/proc/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
 	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
@@ -160,8 +158,8 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-/obj/item/weapon/shield/riot/atom_init_late()
-	AddComponent(/datum/component/serialNumber, src)
+/obj/item/weapon/shield/riot/atom_init()
+	AddComponent(/datum/component/serial_number, src)
 
 /obj/item/weapon/shield/riot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/melee/baton))

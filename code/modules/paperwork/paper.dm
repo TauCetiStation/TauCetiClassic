@@ -1146,13 +1146,13 @@ var/global/list/contributor_names
 /obj/item/weapon/paper/inventory
 	name = "Inventory for "
 	info = "<h1>Опись:</h1><br>"
-	var/inventoryTag
+	var/inventory_tag
 
 /obj/item/weapon/paper/inventory/atom_init()
 	. = ..()
 	if(SSticker.current_state <= GAME_STATE_SETTING_UP)
 		var/area/A = get_area(src)
-		var/datum/weakref/PWeakref = WEAKREF(src)
-		global.inventoryPapers += PWeakref.resolve()
+		var/datum/weakref/p_weakref = WEAKREF(src)
+		global.inventory_papers += p_weakref.resolve()
 		name += A.name
-		inventoryTag = A.name
+		inventory_tag = A.name

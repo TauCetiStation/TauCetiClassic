@@ -17,11 +17,8 @@
 	can_suicide_with = FALSE
 
 /obj/item/weapon/gun/syringe/atom_init()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/weapon/gun/syringe/atom_init_late()
-	AddComponent(/datum/component/serialNumber, src)
+	. = ..()
+	AddComponent(/datum/component/serial_number, src)
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()

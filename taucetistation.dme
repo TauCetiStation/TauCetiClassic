@@ -354,7 +354,7 @@
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\seethrough.dm"
-#include "code\datums\components\serialNumber.dm"
+#include "code\datums\components\serial_number.dm"
 #include "code\datums\components\silence.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\smooth_tunes.dm"

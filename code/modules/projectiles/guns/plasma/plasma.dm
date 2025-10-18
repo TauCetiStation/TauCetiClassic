@@ -56,7 +56,7 @@
 	max_projectile_per_fire = 5
 
 /obj/item/weapon/gun/plasma/atom_init()
-	..()
+	. = ..()
 	if(fullauto)
 		AddComponent(/datum/component/automatic_fire, fire_delay)
 	magazine = new initial_mag(src)
@@ -65,10 +65,7 @@
 		ammo_type[i] = new path(src)
 
 	update_icon()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/weapon/gun/plasma/atom_init_late()
-	AddComponent(/datum/component/serialNumber, src)
+	AddComponent(/datum/component/serial_number, src)
 
 /obj/item/weapon/gun/plasma/Destroy()
 	QDEL_LIST_ASSOC_VAL(ammo_type)
