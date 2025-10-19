@@ -19,7 +19,7 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash10"
 
-/obj/random/trader_product/item_to_spawn()
+/obj/random/trader_product_safer/item_to_spawn()
 	return pickweight(list(
 	/obj/random/trader_product/civ = 40,
 	/obj/random/trader_product/med = 30,
