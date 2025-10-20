@@ -2,20 +2,17 @@
 	var/serial_number
 
 /datum/component/serial_number/Initialize(atom/target)
+	serial_number = generate_serial_number()
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
-		qdel(src)
-		return
+		RegisterSignal(target, COMSIG_TICKER_ROUND_STARTING, PROC_REF(register_in_inventory))
 
-	RegisterSignal(target, COMSIG_TICKER_ROUND_STARTING, PROC_REF(register_in_inventory))
-
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/serial_number/proc/register_in_inventory(atom/target)
 	var/area/A = get_area(target)
-	serial_number = generate_serial_number()
 	if(A)
 		var/obj/item/weapon/paper/P = A?.inventory_paper?.resolve()
 		P?.info += "<hr><b>[target.name]</b><br><u>Серийный номер: [serial_number]</u><br>"
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/serial_number/proc/generate_serial_number()
 	serial_number = "[rand(0, 999999)]"
