@@ -34,6 +34,7 @@ LOG_ASSET
 LOG_TGUI
 # LOG_JS_ERROR
 # LOG_HREFS
+# LOG_ICON_LOOKUP
 # LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## sql switching
@@ -88,8 +89,11 @@ ALLOW_AI 1
 ## set a hosted by name for unix platforms
 #HOSTEDBY yournamehere
 
-## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
-GUEST_BAN
+## Level of access for people connecting to your server with guest account (without a registered ckey, i.e. guest-*)
+## 0 - blocked
+## 1 - lobby only (for alternative login methods like server password)
+## 2 - game access
+GUEST_MODE 0
 
 ## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
@@ -222,9 +226,6 @@ REQ_CULT_GHOSTWRITER 6
 
 ## Your link to donat informations
 #DONATE_INFO_URL http://you-url
-
-## Uncomment this to enable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
-# CHECK_RANDOMIZER
 
 ##BYOND version restrictions
 ##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned

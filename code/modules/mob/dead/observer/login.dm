@@ -1,4 +1,4 @@
-/mob/dead/observer/Login()
+/mob/dead/observer/LateLogin()
 	..()
 
 	if(check_rights(R_ADMIN, 0))

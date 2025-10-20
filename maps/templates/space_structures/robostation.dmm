@@ -175,7 +175,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "aJ" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table/woodentable,
 /obj/item/toy/waterflower,
 /turf/simulated/floor/carpet,

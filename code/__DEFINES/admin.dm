@@ -71,6 +71,7 @@ var/global/list/admin_cooldowns_list = list(
 #define R_HOST			65535
 
 #define ADMIN_RANK_ROUND   "Temporary Round Admin"
+#define ADMIN_RANK_EVENT_MAKER "Event Maker"
 #define ADMIN_RANK_SANDBOX "Sandbox Admin"
 #define ADMIN_RANK_REMOVED "Removed"
 
@@ -83,6 +84,7 @@ var/global/list/admin_cooldowns_list = list(
 #define ADMIN_TP(user) "(<a href='byond://?_src_=holder;traitor=\ref[user]'>TP</a>)"
 #define ADMIN_KICK(user) "(<a href='byond://?_src_=holder;boot2=\ref[user]'>KICK</a>)"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
+#define ADMIN_LOOKUPJMP(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_JMP(user)]"
 #define ADMIN_PPJMPFLW(user) "[ADMIN_PP(user)] [ADMIN_FLW(user)] [ADMIN_JMP(user)]"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)]"
 

@@ -24,8 +24,7 @@
 	return ..()
 
 /datum/bodypart_controller/proc/adjust_pumped(value, cap=null)
-	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
-	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX)))
+	if(!BP.species.flags[HAS_MUSCLES])
 		return 0
 
 	if(isnull(cap) || cap > BP.max_pumped)
@@ -65,7 +64,7 @@
 // Paincrit knocks someone down once they hit 60 shock_stage, so by default make it so that close to 100 additional damage needs to be dealt,
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
-/datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+/datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
 	brute = round(brute * BP.owner.mob_brute_mod.Get(), 0.1)
 	burn = round(burn * BP.owner.mob_burn_mod.Get(), 0.1)
 
@@ -100,11 +99,11 @@
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
-			BP.add_autopsy_data(used_weapon, brute, type_damage = BRUTE)
+			BP.add_autopsy_data(used_weapon, brute, type_damage = BRUTE, impact_direction = impact_direction)
 		else if(brute == 0 && burn > 0)
-			BP.add_autopsy_data(used_weapon, burn, type_damage = BURN)
+			BP.add_autopsy_data(used_weapon, burn, type_damage = BURN, impact_direction = impact_direction)
 		else if(brute > 0 && burn > 0)
-			BP.add_autopsy_data(used_weapon, brute + burn, type_damage = "mixed")
+			BP.add_autopsy_data(used_weapon, brute + burn, type_damage = "mixed", impact_direction = impact_direction)
 
 	var/can_cut = (prob(brute * 2) || sharp) && (bodypart_type != BODYPART_ROBOTIC)
 
@@ -276,10 +275,10 @@ This function completely restores a damaged organ to perfect condition.
 		IO.rejuvenate()
 
 	// remove embedded objects and drop them on the floor
-	for(var/obj/implanted_object in BP.implants)
+	for(var/obj/implanted_object in BP.embedded_objects)
 		if(!istype(implanted_object,/obj/item/weapon/implant))	// We don't want to remove REAL implants. Just shrapnel etc.
 			implanted_object.forceMove(BP.owner.loc)
-			BP.implants -= implanted_object
+			BP.embedded_objects -= implanted_object
 
 	BP.owner.updatehealth()
 	BP.owner.sec_hud_set_implants()

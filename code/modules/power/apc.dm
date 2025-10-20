@@ -431,7 +431,7 @@
 			if(user.is_busy(src))
 				return
 			to_chat(user, "Вы пытаетесь извлечь плату...") // lpeters - fixed grammar issues
-			if(W.use_tool(src, user, 50, volume = 50))
+			if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_PRYING))
 				has_electronics = 0
 				area.poweralert(FALSE, src)
 				if((stat & BROKEN) || malfhack)
@@ -452,7 +452,7 @@
 	else if(isprying(W) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
 			user.visible_message("<span class='warning'>[user.name] пытается открыть крышку [CASE(src, GENITIVE_CASE)].</span>", "<span class='notice'>Вы пытаетесь открыть крышку [CASE(src, GENITIVE_CASE)].</span>")
-			if(W.use_tool(src, user, 25, volume = 25))
+			if(W.use_tool(src, user, 25, volume = 25, quality = QUALITY_PRYING))
 				opened = APC_COVER_OPENED
 				locked = FALSE
 				if(cell)
@@ -472,7 +472,7 @@
 	else if(iswrenching(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
 		if(coverlocked)
 			to_chat(user, "<span class='notice'>Вы откручиваете защитные болты.</span>")
-			if(W.use_tool(src, user, 5, volume = 5))
+			if(W.use_tool(src, user, 5, volume = 5, quality = QUALITY_WRENCHING))
 				coverlocked = FALSE
 				update_icon()
 		else
@@ -609,7 +609,7 @@
 			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 			return
 		to_chat(user, "Вы режете корпус [CASE(src, GENITIVE_CASE)].")
-		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
+		if(WT.use_tool(src, user, 50, amount = 3, volume = 50, quality = QUALITY_WELDING))
 			deconstruct(TRUE, user)
 			return
 

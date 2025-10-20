@@ -264,26 +264,6 @@
 	updateinfolinks()
 	update_icon()
 
-/obj/item/weapon/paper/proc/create_self_copy()
-	var/obj/item/weapon/paper/P = new
-
-	P.name       = name
-	P.info       = info
-	P.info_links = info_links
-	P.stamp_text = stamp_text
-	P.fields     = fields
-	P.sfields    = sfields
-	P.stamped    = LAZYCOPY(stamped)
-	P.ico        = LAZYCOPY(ico)
-	P.offset_x   = LAZYCOPY(offset_x)
-	P.offset_y   = LAZYCOPY(offset_y)
-	P.copy_overlays(src, TRUE)
-
-	P.updateinfolinks()
-	P.update_icon()
-
-	return P
-
 /obj/item/weapon/paper/proc/get_signature(obj/item/weapon/pen/P, mob/user)
 	if(P && istype(P, /obj/item/weapon/pen))
 		return P.get_signature(user)

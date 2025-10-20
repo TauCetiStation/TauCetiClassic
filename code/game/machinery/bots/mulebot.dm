@@ -462,8 +462,6 @@
 		var/speed = (wires.motor1() ? 1 : 0) + (wires.motor2() ? 2 : 0)
 		//world << "speed: [speed]"
 		switch(speed)
-			if(0)
-				// do nothing
 			if(1)
 				process_bot()
 				spawn(2)

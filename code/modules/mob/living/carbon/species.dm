@@ -399,6 +399,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,HAS_MUSCLES = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
@@ -430,6 +431,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,HAS_MUSCLES = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
@@ -454,8 +456,8 @@
 	icobase = 'icons/mob/human/pluvian.dmi'
 	deformed = null
 	skeleton = null
-	eyes_colorable_layer = null
-	eyes_static_layer = "blessed_pluvian"
+	eyes_colorable_layer = "pluvian_colorable"
+	eyes_static_layer = "pluvian"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
 
@@ -483,11 +485,10 @@
 		TRAIT_NEVER_FAT,
 		TRAIT_NO_MESSY_GIBS,
 		TRAIT_GLOWING_EYES,
+		TRAIT_PLUVIAN_BLESSED,
 	)
 	flags = list(
 	,NO_DNA = TRUE
-	,HAS_SKIN_COLOR = TRUE
-	,HAS_HAIR_COLOR = TRUE
 	,HAS_UNDERWEAR = TRUE
 	)
 	min_age = 25
@@ -538,6 +539,7 @@
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,HAS_MUSCLES = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
 	)
@@ -626,6 +628,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,HAS_HAIR = TRUE
+	,HAS_MUSCLES = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
 	,FUR = TRUE
@@ -633,7 +636,7 @@
 
 	flesh_color = "#afa59e"
 	default_skin_color = "#bbbbbb"
-	default_eyes_color = "#1ec81e" 
+	default_eyes_color = "#1ec81e"
 
 	min_age = 25
 	max_age = 85
@@ -661,6 +664,7 @@
 	eyes_colorable_layer = null
 	eyes_static_layer = "skrell"
 	gender_body_icons = FALSE
+	fat_limb_icons = TRUE
 
 	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell
@@ -684,6 +688,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,HAS_MUSCLES = TRUE
 	,IS_SOCIAL = TRUE
 	)
 
@@ -751,6 +756,7 @@
 		,FACEHUGGABLE = TRUE
 		,HAS_TAIL = TRUE
 		,HAS_HAIR_COLOR = TRUE
+		,HAS_MUSCLES = TRUE
 		,IS_SOCIAL = TRUE
 		,NO_GENDERS = TRUE
 	)

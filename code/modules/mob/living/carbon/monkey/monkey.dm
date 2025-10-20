@@ -267,8 +267,6 @@
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 			if (prob(50))
 				Paralyse(10)
-		else
-	return
 
 /mob/living/carbon/monkey/blob_act()
 	if (stat != DEAD)

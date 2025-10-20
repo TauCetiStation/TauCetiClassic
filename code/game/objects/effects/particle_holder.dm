@@ -30,7 +30,7 @@
 	// Mouse opacity can get set to opaque by some objects when placed into the object's contents (storage containers).
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	src.particle_flags = particle_flags
-	particles = get_particle_effect(particle_path)
+	particles = set_particle_effect(particle_path)
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
 	var/atom/movable/lie_about_areas = parent
 	lie_about_areas.vis_contents += src
@@ -40,8 +40,19 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	on_move(parent, null, NORTH)
 
-/obj/effect/abstract/particle_holder/proc/get_particle_effect(particle_path)
+/obj/effect/abstract/particle_holder/proc/set_particle_effect(particle_path)
 	return new particle_path()
+
+/obj/effect/abstract/particle_holder/proc/get_particle()
+	return particles
+
+/obj/effect/abstract/particle_holder/proc/delete_particle()
+	if(particle_flags & PARTICLE_FADEOUT)
+		particles.spawning = 0
+		QDEL_IN(src, PARTICLE_FADEOUT_SECONDS)
+		return
+
+	qdel(src)
 
 /obj/effect/abstract/particle_holder/Destroy(force)
 	QDEL_NULL(particles)
@@ -51,7 +62,7 @@
 /// Non movables don't delete contents on destroy, so we gotta do this
 /obj/effect/abstract/particle_holder/proc/parent_deleted(datum/source)
 	SIGNAL_HANDLER
-	qdel(src)
+	delete_particle()
 
 /// signal called when a parent that's been hooked into this moves
 /// does a variety of checks to ensure overrides work out properly

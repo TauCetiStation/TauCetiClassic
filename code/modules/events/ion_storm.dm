@@ -24,6 +24,14 @@
 			if(prob(botEmagChance))
 				bot.emag_act()
 
+	var/list/fabricators = list()
+	for(var/obj/machinery/drone_fabricator/DF in machines)
+		if(!DF.emagged)
+			fabricators += DF
+	if(fabricators.len)
+		var/obj/machinery/drone_fabricator/DF = pick(fabricators)
+		DF.emag_act()
+
 /mob/living/silicon/ai/proc/overload_ai_system()
 	var/ion_law = generate_ion_law()
 	to_chat(src, "<b>&@&%**ВНИМА^$E. ПЕРЕГРУЗКА СИСТЕМ ИИ.</b>")

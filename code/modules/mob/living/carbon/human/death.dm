@@ -26,9 +26,6 @@
 	P.real_name = dna.real_name
 	P.dna = dna.Clone()
 	P.UpdateAppearance()
-	P.b_eyes = 200
-	P.g_eyes = 255
-	P.r_eyes = 255
 	P.regenerate_icons(update_body_preferences = TRUE)
 	P.my_corpse = src
 	mind.transfer_to(P)
@@ -110,11 +107,8 @@
 		return
 
 	//Handle brain slugs.
-	var/mob/living/simple_animal/borer/B
+	var/mob/living/simple_animal/borer/B = locate(/mob/living/simple_animal/borer) in BP.embedded_objects
 
-	for(var/I in BP.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
-			B = I
 	if(B)
 		if(!B.ckey && ckey && B.controlling)
 			B.ckey = ckey

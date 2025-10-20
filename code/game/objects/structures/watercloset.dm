@@ -94,26 +94,27 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "toilet[lid_open][cistern_open]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	. = ..()
-	if(.)
+	if(iswrenching(I))
+		if(broken)
+			to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
+			if(I.use_tool(src, user, 60, volume = 100, quality = QUALITY_WRENCHING))
+				broken = FALSE
+				to_chat(user, "<span class='notice'>You fixed \the [src].</span>")
+		else
+			default_unfasten_wrench(user, I)
 		return
-	if(iswrenching(I) && broken) // we don't have any plunger around, so wrench is good
-		to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
-		if(I.use_tool(src, user, 60, volume = 100))
-			broken = FALSE
-			to_chat(user, "<span class='notice'>You fixed \the [src].</span>")
-		return
-	else if(isprying(I))
+
+	if(isprying(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
-		if(I.use_tool(src, user, 30, volume = 0))
+		if(I.use_tool(src, user, 30, volume = 0, quality = QUALITY_PRYING))
 			user.visible_message("<span class='notice'>[user] [cistern_open ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
 			cistern_open = !cistern_open
 			update_icon()
-			return
+		return
 
-	else if(istype(I, /obj/item/weapon/grab))
+	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 
 		if(isliving(G.affecting))
@@ -422,7 +423,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	else if(iswrenching(I))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
-		if(I.use_tool(src, user, 50, volume = 100))
+		if(I.use_tool(src, user, 50, volume = 100, quality = QUALITY_WRENCHING))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"

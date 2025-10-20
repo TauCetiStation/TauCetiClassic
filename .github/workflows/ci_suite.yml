@@ -7,9 +7,10 @@ on:
     branches:
       - master
 env:
-  BYOND_MAJOR: 515
-  BYOND_MINOR: 1647
-  SPACEMAN_DMM_VERSION: suite-1.8
+  BYOND_MAJOR: 516
+  BYOND_MINOR: 1663
+  SPACEMAN_DMM_VERSION: suite-1.10
+  OPENDREAM_RELEASE_VERSION: latest
 jobs:
   DreamChecker:
     runs-on: ubuntu-22.04
@@ -31,6 +32,25 @@ jobs:
         if: always()
         with:
           outputFile: output-annotations.txt
+  OpenDream:
+    name: OpenDream Linting
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.x
+      - name: Install OpenDream
+        if: steps.cache-od.outputs.cache-hit != 'true'
+        uses: robinraju/release-downloader@v1.12
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: ${{ env.OPENDREAM_RELEASE_VERSION }}
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - name: Run OpenDream
+        run: ./DMCompiler_linux-x64/DMCompiler taucetistation.dme --suppress-unimplemented --define=CIBUILDING | bash scripts/annotate_od.sh
   Code:
     name: Code and Map Linting
     runs-on: ubuntu-22.04

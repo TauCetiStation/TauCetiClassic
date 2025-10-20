@@ -72,7 +72,7 @@
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs, mob/user)
 	if (src.chained)
 		return
-	user.drop_from_inventory(cuffs, loc)
+	user.drop_from_inventory(cuffs, src)
 	chained = cuffs
 	slowdown = 7
 	name = "shackles"
@@ -82,7 +82,7 @@
 /obj/item/clothing/shoes/orange/proc/remove_cuffs()
 	if (!src.chained)
 		return
-	chained.loc = get_turf(src)
+	chained.forceMove(get_turf(src))
 	slowdown = initial(slowdown)
 	name = initial(name)
 	icon_state = "orange"
@@ -100,18 +100,27 @@
 	return ..()
 
 /obj/item/clothing/shoes/orange/attack_hand(mob/user)
-	var/confirmed = 1
+	var/confirmed = TRUE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(chained && src == H.shoes)
 			if(user.is_busy()) return
-			confirmed = 0
+			confirmed = FALSE
 			H.visible_message("<span class='notice'>[H] attempts to remove the [src]!</span>",
 			"<span class='notice'>You attempt to remove the [src]. (This will take around 2 minutes and you need to stand still)</span>")
 			if(do_after(user,1200,target = usr))
-				confirmed = 1
+				confirmed = TRUE
 	if(confirmed)
 		return ..()
+
+/obj/item/clothing/shoes/orange/CanMouseDrop(atom/over, mob/user = usr)
+	. = ..()
+	if(!.)
+		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(chained && src == H.shoes)
+			return FALSE
 
 /obj/item/clothing/shoes/orange/candals/atom_init()
 	. = ..()

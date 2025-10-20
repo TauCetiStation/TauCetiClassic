@@ -3,6 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	item_state = "magboots"
+	item_state_world = "magboots0_w"
 	var/magpulse = 0
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2
@@ -20,14 +21,21 @@
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		slowdown = SHOES_SLOWDOWN
 		magpulse = 0
+		playsound(src, 'sound/effects/magb4.ogg', VOL_EFFECTS_MASTER, 100)
 		icon_state = "[magboot_state]0"
+		item_state_world = "[magboot_state]0_w"
+		item_state_inventory = "[magboot_state]0"
 		to_chat(user, "You disable the mag-pulse traction system.")
 	else
 		flags |= NOSLIP | AIR_FLOW_PROTECT
 		slowdown = slowdown_off
 		magpulse = 1
+		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
 		icon_state = "[magboot_state]1"
+		item_state_world = "[magboot_state]1_w"
+		item_state_inventory = "[magboot_state]1"
 		to_chat(user, "You enable the mag-pulse traction system.")
+
 	update_inv_mob()
 	update_item_actions()
 	user.update_gravity(user.mob_has_gravity())

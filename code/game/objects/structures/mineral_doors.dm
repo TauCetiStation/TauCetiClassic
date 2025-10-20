@@ -142,7 +142,7 @@
 			return
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start dissassembling the [name].</span>")
-			if(W.use_tool(src, user, 40, volume = 100))
+			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				to_chat(user, "<span class='notice'>You dissassembled the [name]!</span>")
 				anchored = FALSE
 				name = "disassembled [name]"
@@ -152,7 +152,7 @@
 				set_opacity(FALSE)
 		else
 			to_chat(user, "<span class='notice'>You start assembling the [name]!</span>")
-			if(W.use_tool(src, user, 40, volume = 100))
+			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				to_chat(user, "<span class='notice'>You assembled the [name]!</span>")
 				anchored = TRUE
 				name = initial(name)
@@ -229,7 +229,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			to_chat(user, "<span class='notice'>You start dissassembling the [name] to the metal sheets.</span>")
-			if(WT.use_tool(src, user, 60, volume = 100))
+			if(WT.use_tool(src, user, 60, volume = 100, quality = QUALITY_WELDING))
 				to_chat(user, "<span class='notice'>You dissassembled the [name] to the metal sheets!</span>")
 				deconstruct(TRUE)
 		else

@@ -88,6 +88,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define REQUIRE_LIGHT      "require_light"
 #define IS_SYNTHETIC       "is_synthetic"
 #define HAS_HAIR           "has_hair"
+#define HAS_MUSCLES        "has_muscles"
 #define FACEHUGGABLE       "facehuggable"
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
@@ -168,19 +169,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ESSENCE_POINT 128
 #define ESSENCE_EMOTE 256
 #define ESSENCE_ALL 511
-
-// Jobs flags
-#define JOB_FLAG_SECURITY 1
-#define JOB_FLAG_COMMAND 2
-#define JOB_FLAG_ENGINEERING 4
-#define JOB_FLAG_MEDBAY 8
-#define JOB_FLAG_CIVIL 16
-#define JOB_FLAG_CARGO 32
-#define JOB_FLAG_SCIENCE 64
-#define JOB_FLAG_NON_HUMAN 128
-#define JOB_FLAG_HEAD_OF_STAFF 256
-#define JOB_FLAG_BLUESHIELD_PROTEC 512
-#define JOB_FLAG_CENTCOMREPRESENTATIVE 1024
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise

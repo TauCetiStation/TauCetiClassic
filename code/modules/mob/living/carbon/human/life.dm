@@ -244,7 +244,7 @@ var/global/list/tourette_bad_words= list(
 						if(1)
 							say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
 						if(2)
-							say(pick("Как минять руки?","ебучие фурри!", "Подебил", "Проклятые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
+							say(pick("Как минять руки?","ебучие фурри!", "Подебил", "Проклятые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!", "Это протёк?"))
 						if(3)
 							emote("drool")
 
@@ -712,7 +712,11 @@ var/global/list/tourette_bad_words= list(
 	else
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
-
+		if(prob(1) && !species.flags[IS_SYNTHETIC] && stat == CONSCIOUS)
+			if(nutrition < NUTRITION_LEVEL_HUNGRY)
+				to_chat(src, "<span class='warning'>[pick("You're starving!", "You feel extremely hungry!", "You're really hungry.", "Your stomach aches with intense hunger.", "You're starving right now.")]</span>")
+			else if(nutrition < NUTRITION_LEVEL_FED)
+				to_chat(src, "<span class='notice'>[pick("You feel hungry.", "You feel like you could eat something right now.", "You start to feel hungry.", "You could really go for a bite.")]</span>")
 	if(species.flags[REQUIRE_LIGHT])
 		if(nutrition < 200)
 			take_overall_damage(2,0)
@@ -810,7 +814,7 @@ var/global/list/tourette_bad_words= list(
 			var/list/E
 			E = get_visible_implants(0)
 			if(!E.len)
-				embedded_flag = 0
+				embedded_flag = FALSE
 
 
 		//Eyes

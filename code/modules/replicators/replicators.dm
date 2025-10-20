@@ -297,7 +297,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	indicator.color = state2color[state]
 	overlays += indicator
 
-/mob/living/simple_animal/hostile/replicator/Login()
+/mob/living/simple_animal/hostile/replicator/LateLogin()
 	..()
 
 	if(leader)

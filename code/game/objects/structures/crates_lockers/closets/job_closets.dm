@@ -35,6 +35,8 @@
 	icon_closed = "mixed"
 
 /obj/structure/closet/jcloset/PopulateContents()
+	new /obj/item/weapon/reagent_containers/food/snacks/soap(src)
+	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/black(src)

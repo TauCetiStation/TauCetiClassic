@@ -24,10 +24,10 @@
 #define BELT_LAYER            13 //Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER      12
 #define BACK_LAYER            11
-#define HAIR_LAYER            10
-#define FACEMASK_LAYER        9
-#define HEAD_LAYER            8
-#define NECK_LAYER            7
+#define NECK_LAYER            10
+#define HAIR_LAYER            9
+#define FACEMASK_LAYER        8
+#define HEAD_LAYER            7
 #define HANDCUFF_LAYER        6
 #define LEGCUFF_LAYER         5
 #define L_HAND_LAYER          4

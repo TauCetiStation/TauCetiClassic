@@ -20,17 +20,12 @@
 	//Handle items on mob
 
 	//first implants
-	var/list/stored_implants = list()
+	var/list/stored_implants
 
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/IMP in src)
-			stored_implants += IMP
-			IMP.loc = null
-			IMP.imp_in = null
-			IMP.implanted = FALSE
-			if(IMP.part)
-				IMP.part.implants -= src
-				IMP.part = null
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(implants))
+		stored_implants = implants.Copy()
+		for(var/obj/item/weapon/implant/IMP as anything in implants)
+			IMP.eject()
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items()
@@ -95,11 +90,9 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/Y in stored_implants)
-			var/obj/item/weapon/implant/IMP = Y
-			IMP.stealth_inject(O)
-		O.sec_hud_set_implants()
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(stored_implants))
+		for(var/obj/item/weapon/implant/IMP as anything in stored_implants)
+			IMP.inject(O)
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -139,17 +132,12 @@
 	//Handle items on mob
 
 	//first implants
-	var/list/stored_implants = list()
+	var/list/stored_implants
 
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/IMP in src)
-			stored_implants += IMP
-			IMP.loc = null
-			IMP.imp_in = null
-			IMP.implanted = FALSE
-			if(IMP.part)
-				IMP.part.implants -= src
-				IMP.part = null
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(implants))
+		stored_implants = implants.Copy()
+		for(var/obj/item/weapon/implant/IMP as anything in implants)
+			IMP.eject()
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in get_equipped_items())
@@ -215,13 +203,9 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/Y in stored_implants)
-			var/obj/item/weapon/implant/IMP = Y
-			var/obj/item/organ/external/BP = pick(O.bodyparts)
-			if(BP)
-				IMP.inject(O, BP)
-		O.sec_hud_set_implants()
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(stored_implants))
+		for(var/obj/item/weapon/implant/IMP as anything in stored_implants)
+			IMP.inject(O)
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)

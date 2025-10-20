@@ -303,15 +303,21 @@
 *   SmartFridge Menu
 ********************/
 
-/obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	var/is_secure = istype(src,/obj/machinery/smartfridge/secure)
+/obj/machinery/smartfridge/ui_interact(mob/user)
+	tgui_interact(user)
 
-	var/data[0]
-	data["contents"] = null
-	data["electrified"] = seconds_electrified > 0
-	data["shoot_inventory"] = shoot_inventory
-	data["locked"] = locked
-	data["secure"] = is_secure
+/obj/machinery/smartfridge/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SmartFridge", name)
+		ui.open()
+
+/obj/machinery/smartfridge/tgui_data(mob/user)
+	var/list/data = list(
+	"contents" = null,
+	"locked" = locked,
+	"secure" = istype(src,/obj/machinery/smartfridge/secure)
+	)
 
 	var/list/items[0]
 	for (var/i=1 to length(item_quants))
@@ -322,29 +328,16 @@
 
 	if (items.len > 0)
 		data["contents"] = items
+	return data
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "smartfridge.tmpl", src.name, 400, 500)
-		ui.set_initial_data(data)
-		ui.open()
-
-/obj/machinery/smartfridge/Topic(href, href_list)
+/obj/machinery/smartfridge/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	var/mob/user = usr
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-
-	if (href_list["close"])
-		user.unset_machine()
-		ui.close()
-		return FALSE
-
-	if (href_list["vend"])
-		var/index = text2num(href_list["vend"])
-		var/amount = text2num(href_list["amount"])
+	if (action == "vend")
+		var/index = text2num(params["index"])
+		var/amount = text2num(params["amount"])
 		var/K = item_quants[index]
 		var/count = item_quants[K]
 
@@ -399,8 +392,8 @@
 *   Secure SmartFridges
 *************************/
 
-/obj/machinery/smartfridge/secure/Topic(href, href_list)
-	if(!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
+/obj/machinery/smartfridge/secure/tgui_act(action, params)
+	if(!allowed(usr) && !emagged && locked != -1 && action == "vend")
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE
 	return ..()

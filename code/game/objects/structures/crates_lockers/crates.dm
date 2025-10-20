@@ -323,7 +323,7 @@
 
 /obj/structure/closet/crate/rcd/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/rcd_ammo(src)
+		new /obj/item/weapon/rcd_ammo/huge(src)
 	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/solar
@@ -393,7 +393,7 @@
 	icon_state = "syndicrate"
 	icon_opened = "syndicrateopen"
 	icon_closed = "syndicrate"
-	
+
 /obj/structure/closet/crate/surplus_crate_team
 	icon_state = "gorlexcrate"
 	icon_opened = "gorlexcrateopen"
@@ -605,3 +605,12 @@
 							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
 						else if(length(danger_reagents))
 							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)
+
+/obj/structure/closet/crate/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliverycrate"
+	P.add_texture(texture_name, details_name)
+
+	forceMove(P)
+
+	return P

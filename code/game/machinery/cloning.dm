@@ -81,24 +81,6 @@
 
 	return selected
 
-//Health Tracker Implant
-
-/obj/item/weapon/implant/health
-	name = "health implant"
-	cases = list("имплант здоровья", "импланта здоровья", "импланту здоровья", "имплант здоровья", "имплантом здоровья", "импланте здоровья")
-	var/healthstring = ""
-
-/obj/item/weapon/implant/health/proc/sensehealth()
-	if (!src.implanted)
-		return "ERROR"
-	else
-		if(isliving(src.implanted))
-			var/mob/living/L = src.implanted
-			src.healthstring = "[round(L.getOxyLoss())] - [round(L.getFireLoss())] - [round(L.getToxLoss())] - [round(L.getBruteLoss())]"
-		if (!src.healthstring)
-			src.healthstring = "ERROR"
-		return src.healthstring
-
 /obj/machinery/clonepod/examine(mob/user)
 	if(..(user, 3))
 		if ((isnull(occupant)) || (stat & NOPOWER))

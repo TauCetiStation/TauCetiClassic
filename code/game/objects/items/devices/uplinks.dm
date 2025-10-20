@@ -132,7 +132,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // If true, it accesses trigger() and returns 1. If it fails, it returns false. Use this to see if you need to close the
 // current item's menu.
 /obj/item/device/uplink/hidden/proc/check_trigger(mob/user, value, target)
-	if(value == target)
+	if(value == target) // lol
 		trigger(user)
 		return 1
 	return 0

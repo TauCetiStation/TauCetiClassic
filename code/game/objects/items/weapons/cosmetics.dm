@@ -209,7 +209,7 @@
 	edge = 1
 	var/list/bald_hair_styles_list = list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears")
 	var/list/shaved_facial_hair_styles_list = list("Shaved")
-	var/list/allowed_races = list(HUMAN, UNATHI, TAJARAN)
+	var/list/allowed_races = list(HUMAN, UNATHI, TAJARAN, PLUVIAN)
 	var/mob/living/carbon/human/barber = null
 	var/mob/living/carbon/human/barbertarget = null
 	var/selectedhairstyle = null

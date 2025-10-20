@@ -107,9 +107,6 @@
 		return
 
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
-	beamplant.imp_in = scientist
-	beamplant.implanted = 1
-	beamplant.implanted(scientist)
 	for(var/obj/machinery/abductor/console/console in range(2, scientist))
 		console.gizmo = G
 		G.console = console

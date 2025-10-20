@@ -24,7 +24,7 @@
 		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
-		nanomanager.update_uis(src)
+		SStgui.update_uis(src)
 		return
 
 	attack_hand(user)
@@ -34,8 +34,17 @@
 	if(! (stat & (BROKEN|NOPOWER)) && (isolating || curing))
 		icon_state = "centrifuge_moving"
 
-/obj/machinery/computer/centrifuge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	var/data[0]
+/obj/machinery/computer/centrifuge/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/computer/centrifuge/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "IsolationCentrifuge", name)
+		ui.open()
+
+/obj/machinery/computer/centrifuge/tgui_data(mob/user)
+	var/list/data = list()
 	data["antibodies"] = null
 	data["pathogens"] = null
 	data["is_antibody_sample"] = null
@@ -64,55 +73,30 @@
 			else
 				var/datum/reagent/antibodies/A = locate(/datum/reagent/antibodies) in sample.reagents.reagent_list
 				data["antibodies"] = A && A.data["antibodies"] ? antigens2string(A.data["antibodies"]) : null
-				data["is_antibody_sample"] = 1
+				data["is_antibody_sample"] = TRUE
+	return data
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "isolation_centrifuge.tmpl", src.name, 400, 500)
-		ui.set_initial_data(data)
-		ui.open()
-
-/obj/machinery/computer/centrifuge/process()
-	..()
-	if (stat & (NOPOWER|BROKEN)) return
-
-	if (curing)
-		curing -= 1
-		if (curing == 0)
-			cure()
-
-	if (isolating)
-		isolating -= 1
-		if(isolating == 0)
-			isolate()
-
-/obj/machinery/computer/centrifuge/Topic(href, href_list)
-	var/mob/user = usr
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-
-	if(href_list["close"])
-		user.unset_machine(src)
-		ui.close()
-		return FALSE
-
+/obj/machinery/computer/centrifuge/tgui_act(action, list/params, datum/tgui/ui)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	if(href_list["print"])
-		print(user)
-		return TRUE
+	var/mob/user = ui.user
+	if(isnull(user))
+		return
 
-	if(href_list["isolate"])
-		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
-		if (B)
-			var/datum/disease2/disease/virus = locate(href_list["isolate"])
-			virus2 = virus.getcopy()
-			isolating = 40
-			update_icon()
-		return TRUE
-
-	switch(href_list["action"])
+	switch(action)
+		if("print")
+			print(user)
+			return TRUE
+		if("isolate")
+			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
+			if (B)
+				var/datum/disease2/disease/virus = locate(params["index"])
+				virus2 = virus.getcopy()
+				isolating = 40
+				update_icon()
+			return TRUE
 		if ("antibody")
 			var/delay = 20
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
@@ -133,14 +117,27 @@
 			playsound(src, 'sound/machines/juicer.ogg', VOL_EFFECTS_MASTER)
 			update_icon()
 			return TRUE
-
 		if("sample")
 			if(sample)
-				sample.loc = src.loc
+				sample.forceMove(loc)
 				sample = null
 			return TRUE
 
 	return FALSE
+
+/obj/machinery/computer/centrifuge/process()
+	..()
+	if (stat & (NOPOWER|BROKEN)) return
+
+	if (curing)
+		curing -= 1
+		if (curing == 0)
+			cure()
+
+	if (isolating)
+		isolating -= 1
+		if(isolating == 0)
+			isolate()
 
 /obj/machinery/computer/centrifuge/proc/cure()
 	if (!sample) return
@@ -152,7 +149,7 @@
 	sample.reagents.remove_reagent("blood", amt)
 	sample.reagents.add_reagent("antibodies", amt, data)
 
-	nanomanager.update_uis(src)
+	SStgui.update_uis(src)
 	update_icon()
 	ping("\The [src] pings, \"Antibody isolated.\"")
 
@@ -162,7 +159,7 @@
 	dish.virus2 = virus2
 	virus2 = null
 
-	nanomanager.update_uis(src)
+	SStgui.update_uis(src)
 	update_icon()
 	ping("\The [src] pings, \"Pathogen isolated.\"")
 

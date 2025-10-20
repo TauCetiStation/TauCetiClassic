@@ -28,6 +28,7 @@ import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings } from './actions';
 import { FONTS, SETTINGS_TABS } from './constants';
 import { selectActiveTab, selectSettings } from './selectors';
+import { storage } from 'common/storage';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -72,9 +73,21 @@ export const SettingsGeneral = (props, context) => {
     highlightColor,
     matchWord,
     matchCase,
+    chatSaving,
   } = useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
   const [freeFont, setFreeFont] = useLocalState(context, 'freeFont', false);
+
+  const updateChatSaving = (value) => {
+    const boolValue = value === true;
+    dispatch(
+      updateSettings({
+        chatSaving: boolValue,
+      })
+    );
+    storage.set('chat-saving-enabled', boolValue);
+  };
+
   return (
     <Section>
       <LabeledList>
@@ -237,9 +250,24 @@ export const SettingsGeneral = (props, context) => {
         </Box>
       </Box>
       <Divider />
-      <Button icon="save" onClick={() => dispatch(saveChatToDisk())}>
-        Save chat log
-      </Button>
+      <Stack>
+        <Stack.Item grow>
+          <Button
+            content="Save chat log"
+            icon="save"
+            tooltip="Export current tab history into HTML file"
+            onClick={() => dispatch(saveChatToDisk())}
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button.Checkbox
+            checked={chatSaving === true}
+            content="Persistent Chat"
+            tooltip="Enable chat persistence"
+            onClick={() => updateChatSaving(!chatSaving)}
+          />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

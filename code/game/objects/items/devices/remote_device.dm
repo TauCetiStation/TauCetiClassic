@@ -133,7 +133,7 @@
 /obj/item/device/remote_device/head_of_personal
 	name = "civillian door remote"
 	icon_state = "rdc_hop"
-	region_access = list(6, 7, 57)
+	region_access = list(6, 7)
 
 /obj/item/device/remote_device/no_access
 	region_access = list()

@@ -263,7 +263,7 @@ var/global/list/scrap_base_cache = list()
 		do_dig = 50
 	if(do_dig  && !user.is_busy())
 		user.do_attack_animation(src)
-		if(W.use_tool(src, user, do_dig))
+		if(W.use_tool(src, user, do_dig, particle_type = /particles/tool/digging/trash))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)

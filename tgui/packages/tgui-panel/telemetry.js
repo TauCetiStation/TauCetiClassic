@@ -64,12 +64,14 @@ export const telemetryMiddleware = (store) => {
       const charset = document.defaultCharset;
       const connections = telemetry.connections.slice(0, limits.connections);
       const localTime = new Date().getTimezoneOffset() * -60;
+      const pixelRatio = window.devicePixelRatio;
       Byond.sendMessage({
         type: 'telemetry',
         payload: {
           charset,
           connections,
           localTime,
+          pixelRatio,
         },
       });
       return;

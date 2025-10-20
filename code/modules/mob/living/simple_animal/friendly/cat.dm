@@ -162,6 +162,7 @@ var/global/cat_number = 0
 	name = "Runtime"
 	desc = "Мурлыкающая жертва экспериментов. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
 	icon_state = "runtimecat"
+	icon_living = "runtimecat"
 	density = FALSE
 	universal_speak = TRUE
 	can_be_pulled = FALSE
