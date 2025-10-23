@@ -95,7 +95,7 @@
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, quality = QUALITY_SCREWING))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -108,7 +108,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, quality = QUALITY_SCREWING))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return

@@ -131,6 +131,8 @@ var/global/initial_station_money = 7500
 	var/DD = time2text(world.timeofday, "DD")
 	current_date_string = "[DD].[MM].[game_year]"
 
+	setup_shop()
+
 	economy_init = TRUE
 	return 1
 
@@ -209,3 +211,7 @@ var/global/initial_station_money = 7500
 	department_account.transaction_log.Add(T)
 
 	department_accounts[department] = department_account
+
+/proc/setup_shop()
+	for(var/obj/random_shop_item/Item in global.random_gruztorg_items)
+		Item.generate_shop_item()

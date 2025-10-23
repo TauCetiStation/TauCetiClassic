@@ -171,7 +171,7 @@
 		return
 	if(isscrewing(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
-		if(I.use_tool(src, user, 20, volume = 50))
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_SCREWING))
 			deconstruct(TRUE)
 	if(iswrenching(I))
 		if(user.is_busy(src))
@@ -186,7 +186,7 @@
 		if(!dir_choise || !user || !(user in range(1, src)) || user.is_busy(src))
 			return
 
-		if(I.use_tool(src, user, 20, volume = 50) && src && I)
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING) && src && I)
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
 			set_dir(text2dir(dir_choise))
 
@@ -221,7 +221,7 @@
 	if(!dir_choise || !usr || !(usr in range(1, src)) || usr.is_busy(src))
 		return
 
-	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
+	if(I.use_tool(src, usr, 20, volume = 50, quality = QUALITY_WRENCHING) && src && I)
 		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>","<span class='notice'>You turn \the [src] [dir_choise].</span>")
 		set_dir(text2dir(dir_choise))
 

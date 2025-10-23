@@ -69,7 +69,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
-	if(I.use_tool(src, user, 40, volume = 50))
+	if(I.use_tool(src, user, 40, volume = 50, quality = QUALITY_PULSING))
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
 		disarm()

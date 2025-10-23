@@ -194,7 +194,7 @@
 	START_PROCESSING(SSobj, src)
 	RegisterSignal(implanted_mob, COMSIG_MOB_EXAMINED, PROC_REF(on_examine))
 
-/obj/item/weapon/implant/eject()
+/obj/item/weapon/implant/blueshield/eject()
 	UnregisterSignal(implanted_mob, COMSIG_MOB_EXAMINED)
 	. = ..()
 

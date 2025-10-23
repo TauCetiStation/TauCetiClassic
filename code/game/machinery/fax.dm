@@ -177,8 +177,7 @@ var/global/list/alldepartments = list("Central Command")
 
 /obj/item/weapon/paper/get_fax_info()
 	. = info
-	if(stamped && islist(stamped))
-		. += "\nStamps: [jointext(stamped, ", ")]"
+	. += stamp_text
 
 /obj/item/weapon/photo/get_fax_info()
 	return desc

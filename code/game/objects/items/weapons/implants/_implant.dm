@@ -131,8 +131,9 @@
 	if(implanted_mob)
 		RegisterSignal(implanted_mob, COMSIG_MOB_EMOTE, PROC_REF(on_emote), override = TRUE)
 
-/obj/item/weapon/implant/proc/on_emote(emote, intentional)
+/obj/item/weapon/implant/proc/on_emote(datum/source, emote, intentional)
 	SHOULD_CALL_PARENT(TRUE)
+	SIGNAL_HANDLER
 
 	if(!activation_emote || emote != activation_emote)
 		return FALSE

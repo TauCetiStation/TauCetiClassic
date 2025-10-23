@@ -1,5 +1,8 @@
 /// Quirk names defines. To ease keeping track.
 // positive quirks.
+#define QUIRK_ADAMANTIUM_SKELETON "Адамантиевый Скелет"
+#define QUIRK_CAVE_EXPLORER "Исследователь Пещер"
+#define QUIRK_SHIFTY "Изворотливый"
 #define QUIRK_MULTITASKING "Многозадачность"
 #define QUIRK_CHILD_OF_NATURE "Дитя Природы"
 #define QUIRK_STRONG_MIND "Психологическая Устойчивость"
@@ -17,6 +20,8 @@
 #define QUIRK_DALTONISM "Дальтонизм"
 
 // negative quirks.
+#define QUIRK_BAD_BACK "Слабая Спина"
+#define QUIRK_FRAGILE_BONES "Хрупкие Кости"
 #define QUIRK_BLIND "Слепота"
 #define QUIRK_COUGHING "Кашель"
 #define QUIRK_DEAF "Глухота"

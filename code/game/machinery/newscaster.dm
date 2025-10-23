@@ -953,7 +953,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
-		if(I.use_tool(src, user, 60, volume = 50))
+		if(I.use_tool(src, user, 60, volume = 50, quality = QUALITY_WRENCHING))
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			deconstruct(TRUE)
 		return

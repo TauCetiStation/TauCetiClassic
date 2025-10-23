@@ -506,7 +506,7 @@
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
 	filling_color = "#ffdf78"
-	bitesize = 1
+	bitesize = 4
 	list_reagents = list("nutriment" = 3, "sodiumchloride" = 1, "blackpepper" = 1, "egg" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg
@@ -515,6 +515,7 @@
 	icon_state = "egg"
 	item_state_world = "egg_world"
 	filling_color = "#ffffff"
+	bitesize = 3
 	list_reagents = list("nutriment" = 2, "vitamin" = 1, "egg" = 5)
 	var/egg_color = "" // default egg color is white, can be changed with crayons
 
@@ -618,6 +619,7 @@
 	icon_state = "tofurkey"
 	filling_color = "#fffee0"
 	bitesize = 3
+	trash = /obj/item/trash/tray
 	list_reagents = list("nutriment" = 12, "stoxin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/stuffing
@@ -870,7 +872,7 @@
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
 	filling_color = "#fff9a8"
-	bitesize = 1
+	bitesize = 4
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
@@ -1129,7 +1131,7 @@
 	desc = "What is in this anyways?"
 	icon_state = "chinese1"
 	trash = /obj/item/trash/chinese1
-	list_reagents = list("nutriment" = 1, "beans" = 3, "sugar" = 2)
+	list_reagents = list("nutriment" = 3, "sugar" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball
 	name = "Sweet & Sour Chicken Balls"
@@ -1691,7 +1693,6 @@
 	name = "Sandwich"
 	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
 	icon_state = "sandwich"
-	trash = /obj/item/trash/plate
 	filling_color = "#d9be29"
 	bitesize = 2
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
@@ -1700,7 +1701,6 @@
 	name = "Toasted Sandwich"
 	desc = "Now if you only had a pepper bar."
 	icon_state = "toastedsandwich"
-	trash = /obj/item/trash/plate
 	filling_color = "#d9be29"
 	bitesize = 2
 	list_reagents = list("nutriment" = 6, "carbon" = 2)
@@ -1709,7 +1709,6 @@
 	name = "Grilled Cheese Sandwich"
 	desc = "Goes great with Tomato soup!"
 	icon_state = "toastedsandwich"
-	trash = /obj/item/trash/plate
 	filling_color = "#d9be29"
 	bitesize = 2
 	list_reagents = list("nutriment" = 7, "vitamin" = 1)
@@ -1918,6 +1917,7 @@
 	icon_state = "mint"
 	filling_color = "#f2f2f2"
 	bitesize = 1
+	trash = /obj/item/trash/plate
 	list_reagents = list("minttoxin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
@@ -2071,8 +2071,7 @@
 	slices_num = 5
 	filling_color = "#ffe396"
 	bitesize = 2
-	list_reagents = list("nutriment" = 10, "bread" = 10)
-
+	list_reagents = list("nutriment" = 12)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
@@ -2135,7 +2134,7 @@
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/spider
 	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5, "toxin" = 15)
-	food_type = VERY_TASTY_FOOD
+	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/spider
@@ -2581,6 +2580,17 @@
 		return
 	return ..()
 
+/obj/item/pizzabox/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
+	P.w_class = w_class
+	P.icon_state = "deliverypizza[length(boxes)]"
+
+	P.add_texture(texture_name, details_name)
+
+	forceMove(P)
+
+	return P
+
 /obj/item/pizzabox/margherita/atom_init()
 	. = ..()
 	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita(src)
@@ -2891,7 +2901,7 @@
 	desc = "Musical fruit in a slightly less musical container."
 	icon_state = "beans"
 	bitesize = 2
-	list_reagents = list("nutriment" = 10, "vitamin" = 3, "beans" = 10)
+	list_reagents = list("nutriment" = 10, "vitamin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap
 	name = "egg wrap"
@@ -2949,6 +2959,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	slices_num = 6
 	bitesize = 3
+	trash = /obj/item/trash/tray
 	list_reagents = list("protein" = 24, "nutriment" = 18, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
@@ -2966,7 +2977,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#76b87f"
 	bitesize = 3
-	list_reagents = list("nutriment" = 8)
+	list_reagents = list("nutriment" = 4, "vitamin" = 3, "plantmatter" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burrito
 	name = "Burrito"
@@ -2975,7 +2986,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#a36a1f"
 	bitesize = 1
-	list_reagents = list("protein" = 5)
+	list_reagents = list("protein" = 8, "nutriment" = 6, "capsaicin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/raw_bacon
 	name = "raw bacon"
@@ -3721,7 +3732,7 @@
 	icon_state = "fushstvessina"
 	bitesize = 5
 	trash = /obj/item/trash/snack_bowl
-	list_reagents = list("protein" = 8, "vitamin" = 4, "rice" = 3)
+	list_reagents = list("protein" = 2, "nutriment" = 2, "rice" = 3, "plantmatter" = 2, "capsaicin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/adjurahma
 	name = "Adjurah'Ma"
@@ -3738,12 +3749,27 @@
 	trash = /obj/item/trash/snack_bowl
 	list_reagents = list("nutriment" = 2, "water" = 8, "protein" = 3, "vitamin" = 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/fasqhtongue
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue
 	name = "Fasqh'tongue"
 	desc = "A dried and cured sissalika tongue cured in vinegar. Usually seasoned with something spicy. It is usually served straight in its entirety, occupying a good half a meter on the table."
 	icon_state = "fasqhtongue"
+	item_state = "fasqhtongue"
+	item_state_world = "fasqhtongue_world"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/fasqhtongueslice
+	slices_num = 5
 	bitesize = 5
-	list_reagents = list("protein" = 4, "plantmatter" = 6, "blackpepper" = 3, "vitamin" = 2)
+	trash = /obj/item/trash/tray
+	list_reagents = list("protein" = 24, "blackpepper" = 3, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/fasqhtongueslice
+	name = "Fasqh'tongue slice"
+	desc = "A slice of a spicy alien tongue. Smells like Moghes!"
+	icon_state = "fasqhtongueslice"
+	item_state = "fasqhtongueslice_world"
+	item_state_world = "fasqhtongueslice_world"
+	trash = /obj/item/trash/plate
+	filling_color = "#bf6655"
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/kefeogeo
 	name = "Kefeogeo"
@@ -3751,5 +3777,5 @@
 	icon_state = "kefeogeo"
 	bitesize = 4
 	food_type = NATURAL_FOOD
-	list_reagents = list("protein" = 7, "plantmatter" = 3, "sodiumchloride" = 1, "blackpepper" = 1)
+	list_reagents = list("protein" = 5, "plantmatter" = 3, "sodiumchloride" = 1, "blackpepper" = 1)
 

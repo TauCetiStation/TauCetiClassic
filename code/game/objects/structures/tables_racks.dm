@@ -209,7 +209,7 @@
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 	return FALSE
@@ -534,12 +534,12 @@
 		if(WT.use(0, user))
 			if(status == 2)
 				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>You have weakened \the [src].</span>")
 					src.status = 1
 			else
 				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>You have strengthened \the [src].</span>")
 					src.status = 2
 			return TRUE
@@ -549,7 +549,7 @@
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 

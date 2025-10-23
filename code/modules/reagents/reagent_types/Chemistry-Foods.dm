@@ -153,7 +153,7 @@
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
-	nutriment_factor = 0.5
+	nutriment_factor = 0.1
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
@@ -382,7 +382,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 0.5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -516,23 +516,3 @@
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
-
-/datum/reagent/consumable/beans
-	name = "Refried beans"
-	id = "beans"
-	description = "A dish made of mashed beans cooked with lard."
-	reagent_state = LIQUID
-	nutriment_factor = 1
-	color = "#684435"
-	taste_message = "burritos"
-	diet_flags = DIET_MEAT
-
-/datum/reagent/consumable/bread
-	name = "Bread"
-	id = "bread"
-	description = "Bread! Yep, bread."
-	reagent_state = SOLID
-	nutriment_factor = 1
-	color = "#9c5013"
-	taste_message = "bread"
-	diet_flags = DIET_PLANT

@@ -53,6 +53,7 @@
 
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
+	add_fingerprint(user)
 	if(!allowed(usr))
 		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
 		return FALSE
@@ -70,7 +71,7 @@
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 	else if(isscrewing(P))
-		if(P.use_tool(src, user, 15))
+		if(P.use_tool(src, user, 15, quality = QUALITY_SCREWING))
 			deconstruct(TRUE)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	else
@@ -86,6 +87,7 @@
 	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
+	add_fingerprint(user)
 	if(!allowed(usr))
 		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
 		return FALSE

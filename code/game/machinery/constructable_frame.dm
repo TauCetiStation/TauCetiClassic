@@ -97,7 +97,7 @@
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50, quality = QUALITY_SCREWING))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						deconstruct(TRUE)
@@ -106,7 +106,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75, quality = QUALITY_WRENCHING))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
@@ -115,7 +115,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
@@ -945,3 +945,12 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic = 2,
 							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
 							/obj/item/stack/cable_coil = 2)
+
+/obj/item/weapon/circuitboard/microscope
+	name = "circuit board (Microscope)"
+	build_path = /obj/machinery/microscope
+	board_type = "machine"
+	origin_tech = "programming=2;biotech=2"
+	req_components = list(
+		/obj/item/weapon/stock_parts/micro_laser = 1,
+		/obj/item/weapon/stock_parts/manipulator = 1)
