@@ -14,6 +14,8 @@
 	TCB.force_unwielded = 2
 	AddComponent(/datum/component/twohanded, TCB)
 
+	AddComponent(/datum/component/hiding_cache, SIZE_TINY, null, SOUNDIN_RAKE)
+
 /obj/item/weapon/flora/random/atom_init()
 	. = ..()
 	var/newtype = pick(subtypesof(/obj/item/weapon/flora/pottedplant))
