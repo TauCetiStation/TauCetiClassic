@@ -19,8 +19,7 @@
 			if(prob(20))
 				return FALSE
 
-			var/grass
-			grass = pick(/obj/structure/flora/ausbushes/fullgrass, /obj/structure/flora/ausbushes/sparsegrass)
+			var/grass = pick(/obj/structure/flora/ausbushes/fullgrass, /obj/structure/flora/ausbushes/sparsegrass)
 
 			var/bush = pick(typesof(/obj/structure/flora/ausbushes) - list(/obj/structure/flora/ausbushes/fullgrass, /obj/structure/flora/ausbushes/sparsegrass) + typesof(/obj/structure/flora/junglebush) + /obj/structure/flora/rock/jungle)
 
