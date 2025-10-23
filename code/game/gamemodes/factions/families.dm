@@ -87,13 +87,13 @@
 	name = "Ballas"
 	gang_id = "B"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/purple,
-							/obj/item/clothing/under/lightpurple,
+							/obj/item/clothing/under/color/lightpurple,
 							/obj/item/clothing/mask/scarf/violet,
 							/obj/item/clothing/gloves/purple,
 							/obj/item/clothing/mask/bandana/skull,
 							/obj/item/clothing/under/color/pink)
 
-	free_clothes = list(/obj/item/clothing/under/lightpurple,
+	free_clothes = list(/obj/item/clothing/under/color/lightpurple,
 						/obj/item/clothing/gloves/purple,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective_type = /datum/objective/gang/protect_security
@@ -102,12 +102,12 @@
 	name = "Grove Street Families"
 	gang_id = "GSF"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/green,
-							/obj/item/clothing/under/lightgreen,
+							/obj/item/clothing/under/color/lightgreen,
 							/obj/item/clothing/mask/scarf/green,
 							/obj/item/clothing/suit/poncho/green,
 							/obj/item/clothing/mask/bandana/green)
 	free_clothes = list(/obj/item/clothing/mask/bandana/green,
-						/obj/item/clothing/under/lightgreen,
+						/obj/item/clothing/under/color/lightgreen,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective_type = /datum/objective/gang/capture_station
 
