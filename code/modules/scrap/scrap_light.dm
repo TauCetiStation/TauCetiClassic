@@ -198,8 +198,8 @@
 		extinguish()
 		return
 	Burn()
-/obj/structure/bonfire/water_act()
-	extinguish()
+//obj/structure/bonfire/water_act()
+//	extinguish()
 
 /obj/structure/bonfire/proc/extinguish()
 	if(burning)

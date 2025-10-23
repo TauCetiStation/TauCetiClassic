@@ -253,6 +253,11 @@
 	if(SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate) & COMSIG_STORAGE_PROHIBIT)
 		return
 
+	if(reagents?.total_volume)
+		W.fluid_act(reagents)
+		if(QDELETED(W))
+			return FALSE
+
 	if(usr && W.loc == usr)
 		usr.remove_from_mob(W, src)
 	else
@@ -532,3 +537,10 @@
 			qdel(A)
 		else
 			remove_from_storage(A, T)
+
+/obj/item/weapon/storage/on_reagent_change()
+	. = ..()
+	if(reagents?.total_volume)
+		for(var/obj/item/thing in contents)
+			if(!QDELETED(thing) && thing.simulated)
+				thing.fluid_act(reagents)

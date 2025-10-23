@@ -390,6 +390,29 @@ var/global/list/slot_equipment_priority = list(
 		if(SLOT_S_STORE) return s_store
 	return null
 
+/mob/proc/get_item_fluid_height_slot(slot)
+	switch(slot)
+		if(SLOT_L_EAR, SLOT_R_EAR)
+			return (FLUID_SHALLOW * 0.25 + FLUID_OVER_MOB_HEAD * 0.75) // 3/4 of the way between waist-level and the top of your head
+		if(SLOT_GLASSES)
+			return (FLUID_SHALLOW * 0.25 + FLUID_OVER_MOB_HEAD * 0.75) // 3/4 of the way between waist-level and the top of your head
+		if(SLOT_HEAD)
+			return FLUID_OVER_MOB_HEAD
+		if(SLOT_SHOES)
+			return 3
+		if(SLOT_WEAR_ID)
+			return (FLUID_SHALLOW + FLUID_OVER_MOB_HEAD) / 2 // halfway between waist and top of head, so roughly chest level
+		if(SLOT_BACK)
+			return (FLUID_SHALLOW + FLUID_OVER_MOB_HEAD) / 2 // halfway between waist and top of head, so roughly chest level
+		if(SLOT_WEAR_MASK)
+			return (FLUID_SHALLOW * 0.25 + FLUID_OVER_MOB_HEAD * 0.75) // 3/4 of the way between waist-level and the top of your head
+		if(SLOT_S_STORE)
+			return (FLUID_SHALLOW + FLUID_OVER_MOB_HEAD) / 2 // halfway between waist and top of head, so roughly chest level
+	return FLUID_SHALLOW // we're treating FLUID_SHALLOW as waist level, basically
+
+/mob/living/silicon/get_item_fluid_height_slot(slot) // gripper
+	return (FLUID_SHALLOW + FLUID_OVER_MOB_HEAD) / 2 // halfway between waist and top of head, so roughly chest level, reasoning that you can just hold it up out of the water
+
 /mob/proc/get_equipped_items()
 	return null
 

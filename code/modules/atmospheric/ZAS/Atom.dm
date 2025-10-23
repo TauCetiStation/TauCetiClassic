@@ -46,6 +46,7 @@
 	for(var/turf/simulated/turf in locs)
 		SSair.mark_for_update(turf)
 
+	fluid_update()
 	return TRUE
 
 //Basically another way of calling CanPass(null, other, 0, 0).

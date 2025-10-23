@@ -107,6 +107,7 @@ What is the naming convention for planes or layers?
   #define POWER_TERMINAL                  2.6
   #define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
   #define CONTAINER_STRUCTURE_LAYER       2.8   // Layer for closets, crates, bags, racks, tables
+  #define SHALLOW_FLUID_LAYER             2.81
   #define DOOR_LAYER                      2.82
   #define BELOW_MACHINERY_LAYER           2.83  // Currently for grilles only, because they should be below machinery
   #define DEFAULT_MACHINERY_LAYER         2.85  // Every /obj/machinery by default have this layer
@@ -119,6 +120,7 @@ What is the naming convention for planes or layers?
   #define SIGN_LAYER                      3.4   // Default value for /obj/structure/sign
   #define BELOW_MOB_LAYER                 3.7   // Currently used only by fluff struct in bluespace shelter
   //efine MOB_LAYER                       4     // For easy recordkeeping; this is a byond define
+  #define DEEP_FLUID_LAYER                4.15
   #define BELL_LAYER                      4.20
   #define INFRONT_MOB_LAYER               4.25
   //efine FLY_LAYER                       5     // For easy recordkeeping; this is a byond define

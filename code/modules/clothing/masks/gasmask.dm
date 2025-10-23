@@ -13,6 +13,8 @@
 	siemens_coefficient = 0.9
 	var/gas_filter_strength = 1			//For gas mask filters
 	var/filter = list("phoron", "sleeping_agent", "fractol")
+	var/clogged
+	var/filter_water
 
 // **** Welding gas mask ****
 

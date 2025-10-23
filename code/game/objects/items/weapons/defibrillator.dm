@@ -419,12 +419,12 @@
 	if(wet)
 		var/turf/T = get_turf(src)
 		T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
-		var/obj/effect/fluid/F = locate() in T
+/*		var/obj/effect/fluid/F = locate() in T
 		if(F)
 			F.electrocute_act(150)
 		else
 			user.Stun(6)
-			user.Weaken(6)
+			user.Weaken(6)*/
 
 	make_announcement("pings, \"Defibrillation successful.\"")
 	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)

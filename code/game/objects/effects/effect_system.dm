@@ -38,7 +38,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/effect/water/Bump(atom/A)
 	if(reagents)
-		reagents.reaction(A)
+		A.fluid_act(reagents)
 	return ..()
 
 

@@ -193,12 +193,12 @@
 		if(!istype(C))	//is this necessary?
 			continue
 		else if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-			if(C.wet)
+/*			if(C.wet)
 				siemens_coefficient = 3.0
 				var/turf/T = get_turf(src)
 				var/obj/effect/fluid/F = locate() in T
 				if(F)
-					F.electrocute_act(60)
+					F.electrocute_act(60)*/
 			siemens_coefficient *= C.siemens_coefficient
 	if(HAS_TRAIT(src, TRAIT_CONDUCT))
 		siemens_coefficient++

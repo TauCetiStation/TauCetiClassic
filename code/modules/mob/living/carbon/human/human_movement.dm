@@ -138,8 +138,8 @@
 					tally += 2
 
 	var/turf/T = get_turf(src)
-	if(T && (get_species() != SKRELL || shoes))
-		tally += T.get_fluid_depth() * 0.0075 // in basic, waterpool have 800 depth
+//	if(T && (get_species() != SKRELL || shoes))
+//		tally += T.get_fluid_depth() * 0.0075 // in basic, waterpool have 800 depth
 	if(T.slowdown)
 		tally += T.slowdown
 
