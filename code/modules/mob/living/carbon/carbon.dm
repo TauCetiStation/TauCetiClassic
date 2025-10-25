@@ -244,12 +244,12 @@
 
 	breath.update_values()
 
-/mob/living/carbon/proc/breathe()
+/mob/living/carbon/proc/breathe(active_breathe = TRUE)
 	if(is_skip_breathe())
 		return null
 
 	//First, check if we can breathe at all
-	if(suiciding || is_cant_breathe())
+	if(suiciding || is_cant_breathe() || !active_breathe)
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath > 0) //Suffocating so do not take a breath
@@ -290,10 +290,13 @@
 
 		handle_external_pre_breathing(breath)
 
-	if(!breath || (breath.total_moles <= 0))
-		handle_suffocating()
-		inhale_alert = TRUE
-		return
+	if(!breath)
+		var/static/datum/gas_mixture/vacuum //avoid having to create a new gas mixture for each breath in space
+		if(!vacuum)
+			vacuum = new
+
+		breath = vacuum //still nothing? must be vacuum
+
 
 	breath.volume = BREATH_VOLUME
 
@@ -302,6 +305,10 @@
 	loc.assume_air(breath)
 
 	return breath
+
+
+/mob/living/carbon/proc/get_breath_volume()
+	return BREATH_VOLUME
 
 /mob/living/carbon/calculate_affecting_pressure(pressure)
 	return pressure
@@ -636,7 +643,7 @@
 						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
 							var/mob/living/carbon/human/H = src
 							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
-							if(BP && BP.is_robotic())
+							if(BP && BP.is_robotic_part())
 								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 								sparks.set_up(3, 0, get_turf(H))
 								sparks.start()
@@ -815,7 +822,7 @@
 	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
-/mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
+/mob/living/carbon/proc/get_pulse_number(method)	//method 0 is for hands, 1 is for machines, more accurate
 	var/temp = 0								//see setup.dm:694
 	switch(src.pulse)
 		if(PULSE_NONE)
@@ -1182,10 +1189,6 @@
 
 	sight = initial(sight)
 	var/new_lighting_alpha = initial(lighting_alpha)
-
-	var/datum/species/S = all_species[get_species()]
-	if(S)
-		see_in_dark = S.darksight
 
 	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 

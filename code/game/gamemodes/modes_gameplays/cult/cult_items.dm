@@ -88,7 +88,8 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			var/obj/item/organ/internal/eyes/E = H.organs_by_name[O_EYES]
-			E.damage += rand(4, 8)
+			if(E)
+				E.damage += rand(4, 8)
 		L.flash_eyes()
 		L.drop_item()
 		return FALSE

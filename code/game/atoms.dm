@@ -228,6 +228,9 @@
 	return flags & INSERT_CONTAINER
 */
 
+/atom/proc/return_air_for_internal_lifeform()
+	return return_air()
+
 /atom/proc/allow_drop()
 	return 1
 
