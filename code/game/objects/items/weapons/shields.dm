@@ -159,6 +159,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 /obj/item/weapon/shield/riot/atom_init()
+	. = ..()
 	AddComponent(/datum/component/serial_number, src)
 
 /obj/item/weapon/shield/riot/attackby(obj/item/I, mob/user, params)
