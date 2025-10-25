@@ -27,20 +27,3 @@
 	description = "<span class='bold nicegreen'>This food tastes just divine!</span>"
 	mood_change = 4
 	timeout = 5 MINUTES
-
-
-//well it's bascially their need to see heads of staff i guess
-/datum/mood_event/blueshield
-	description = "<span class='warning'>Нужно проверить моих подопечных.</span>"
-	mood_change = -6
-
-/datum/mood_event/blueshield/add_effects()
-	var/list/to_protect = list()
-	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.mind && (player.mind.assigned_role in protected_by_blueshield_list))
-			to_protect += player.mind
-
-	if(!to_protect.len)
-		mood_change = 0
-		description = "<span class='notice'>А где главы?</span>"
-

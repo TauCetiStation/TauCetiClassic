@@ -49,6 +49,7 @@
 
 	var/underwear = /datum/preferences::underwear   //Which underwear the player wants
 	var/undershirt = /datum/preferences::undershirt  //Which undershirt the player wants.
+	var/undershirt_print = /datum/preferences::undershirt_print
 	var/socks = /datum/preferences::socks       //Which socks the player wants.
 	var/backbag = /datum/preferences::backbag     //Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 	var/use_skirt = /datum/preferences::use_skirt

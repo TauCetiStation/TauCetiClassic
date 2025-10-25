@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(ticker)
 
 	msg_lobby = "Запускаем сверхточные атомные часы..."
 
-	var/const/restart_timeout = 600
+	var/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
 
 	var/datum/modesbundle/bundle = null
@@ -25,6 +25,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/admin_delayed = 0						//if set to nonzero, the round will not restart on it's own
 
+	// todo: move it to round aspects
 	var/triai = 0							//Global holder for Triumvirate
 
 	var/timeLeft = 1800						//pregame timer
@@ -35,6 +36,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
+	var/datum/map_template/post_round_arena/arena = null
 	var/list/medal_list = list()
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
@@ -116,6 +118,8 @@ SUBSYSTEM_DEF(ticker)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_end
 			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+
+				load_arena()
 
 				if(!SSrating.already_started)
 					start_rating_vote_if_unexpected_roundend()
@@ -322,7 +326,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(totalPlayersReady <= 10)
 		is_lowpop = TRUE
-		to_chat(world, "<span class='notice'>Система штрафов и бонусов от умений персонажа отключена.</span>")
+		to_chat(world, "<span class='notice'>Система штрафов от умений персонажа отключена.</span>")
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()
@@ -602,7 +606,8 @@ SUBSYSTEM_DEF(ticker)
 		for(var/mob/M as anything in global.player_list)
 			H.add_hud_to(M)
 
-	teleport_players_to_eorg_area()
+	if(arena)
+		teleport_players_to_eorg_area()
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()
@@ -619,16 +624,61 @@ SUBSYSTEM_DEF(ticker)
 	if(config.allow_drone_spawn)
 		create_spawner(/datum/spawner/drone)
 
-/datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
+/datum/controller/subsystem/ticker/proc/pick_arena()
+	var/online = global.player_list.len
+	var/list/arenas = list()
+
+	for(var/datum/map_template/post_round_arena/A as anything in subtypesof(/datum/map_template/post_round_arena))
+		if(A.spawners && (A.spawners >= (online - 5)) && (A.spawners <= (online + 5)))
+			arenas += A
+
+	var/datum/map_template/post_round_arena/picked_arena = /datum/map_template/post_round_arena/four_biomes
+	if(arenas.len)
+		picked_arena = pick(arenas)
+
+	return(picked_arena)
+
+/datum/controller/subsystem/ticker/proc/load_arena()
+	if(arena || !config.deathmatch_arena)
+		return
+
+	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
+	arena = pick_arena()
+	arena = new arena
+
+	if(!arena.load(arena_location, centered = TRUE))
+		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
+
+/datum/controller/subsystem/ticker/proc/load_arena_admin(datum/map_template/post_round_arena/new_arena)
 	if(!config.deathmatch_arena)
 		return
-	for(var/mob/living/M in global.player_list)
-		if(!M.client.prefs.eorg_enabled)
+
+	if(arena) // clear arena if it was previously loaded
+		for(var/turf/T in block(locate(arena.bounds[MAP_MINX], arena.bounds[MAP_MINY], arena.bounds[MAP_MINZ]),
+	                   		   locate(arena.bounds[MAP_MAXX], arena.bounds[MAP_MAXY], arena.bounds[MAP_MAXZ])))
+			for(var/obj/O in T)
+				if(!istype(O, /obj/effect/landmark/post_round_dm/arena))
+					qdel(O)
+
+	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)
+	arena = new new_arena
+
+	if(!arena.load(arena_location, centered = TRUE))
+		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
+
+/datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
+	restart_timeout *= sqrt(1 + global.player_list.len / 15) // at 45 online the deathmatch time will double
+
+	for(var/mob/M in global.player_list)
+		if(!M.client || !M.client.prefs.eorg_enabled)
 			continue
-		spawn_gladiator(M)
+		if(M.mind)
+			spawn_gladiator(M)
+		else
+			spawn_gladiator(M, FALSE)
 
 /datum/controller/subsystem/ticker/proc/spawn_gladiator(mob/M, transfer_mind = TRUE)
-	var/mob/living/carbon/human/L = new(pick_landmarked_location("eorgwarp"))
+	var/mob/living/carbon/human/L = new(pick_landmarked_location("Gladiator"))
 	if(transfer_mind)
 		M.mind.transfer_to(L)
 	else

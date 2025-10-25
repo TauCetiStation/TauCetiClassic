@@ -411,6 +411,7 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user)
 	if(!can_interact_with(user))
 		return TRUE
+	add_fingerprint(user)
 	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
 		if(prob(75))
 			to_chat(user, "<span class='notice'>Your fingers are slipping.</span>")
@@ -522,7 +523,7 @@ Class Procs:
 	if(iswrenching(I) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(I.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		if(I.use_tool(src, user, time, volume = 50, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

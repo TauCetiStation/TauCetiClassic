@@ -453,7 +453,6 @@
 	client.prefs.selected_quality_name = null
 	M.key = key
 	M.name = M.key
-//	M.Login()	//wat
 	return
 
 /mob/verb/cancel_camera()
@@ -711,7 +710,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(Master)
 						stat(null)
 						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							if(SS.flags & SS_SHOW_IN_MC_TAB)
+							if(client.holder.MC_ss_show_all || SS.flags & SS_SHOW_IN_MC_TAB)
 								SS.stat_entry()
 					cameranet.stat_entry()
 
@@ -963,11 +962,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			if(selection in limb.implants)
+			if(selection in limb.embedded_objects)
 				BP = limb
 				break
 
-		BP.implants -= selection
+		BP.embedded_objects -= selection
 		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection

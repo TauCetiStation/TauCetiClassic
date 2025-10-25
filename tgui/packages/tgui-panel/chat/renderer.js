@@ -436,7 +436,7 @@ class ChatRenderer {
     });
   }
 
-  saveToDisk() {
+  async saveToDisk() {
     // Compile currently loaded stylesheets as CSS text
     let cssText = '';
     const styleSheets = document.styleSheets;
@@ -479,7 +479,12 @@ class ChatRenderer {
       .substring(0, 19)
       .replace(/[-:]/g, '')
       .replace('T', '-');
-    window.navigator.msSaveBlob(blob, `ss13-chatlog-${timestamp}.html`);
+    const logFile = await window.showSaveFilePicker({
+      suggestedName: `ss13-chatlog-${timestamp}.html`,
+    });
+    const writable = await logFile.createWritable();
+    await writable.write(blob);
+    await writable.close();
   }
 }
 

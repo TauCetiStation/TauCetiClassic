@@ -1,12 +1,14 @@
 /obj/structure/bigDelivery
 	desc = "A big wrapped package."
 	name = "large parcel"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/package_wrap.dmi'
 	icon_state = "deliverycloset"
 	density = TRUE
 	var/sortTag = ""
 	var/lot_number = null
 	var/image/lot_lock_image
+	var/mutable_appearance/texture_overlay
+	var/mutable_appearance/details
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -63,14 +65,35 @@
 		var/obj/item/toy/crayon/Crayon = W
 		color = Crayon.colour
 
+/obj/structure/bigDelivery/proc/add_texture(new_texture, new_details = null)
+	cut_overlay(texture_overlay)
+
+	if(new_texture)
+		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
+		texture_overlay.blend_mode = BLEND_MULTIPLY
+		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
+
+	add_overlay(texture_overlay)
+
+
+	cut_overlay(details)
+
+	if(new_details)
+		details = mutable_appearance(icon = icon, icon_state = new_details)
+
+	add_overlay(details)
+
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
 	name = "small parcel"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/package_wrap.dmi'
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/lot_number = null
 	var/image/lot_lock_image
+	var/texture_name = "cardboard"
+	var/mutable_appearance/texture_overlay
+	var/mutable_appearance/details
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -129,12 +152,35 @@
 	else
 		return ..()
 
+/obj/item/smallDelivery/proc/add_texture(new_texture, new_details = null)
+	cut_overlay(texture_overlay)
+
+	if(new_texture)
+		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
+		texture_overlay.blend_mode = BLEND_MULTIPLY
+		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
+
+	add_overlay(texture_overlay)
+
+
+	cut_overlay(details)
+
+	if(new_details)
+		details = mutable_appearance(icon = icon, icon_state = new_details)
+
+	add_overlay(details)
+
+
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
+	cases = list("упаковочная бумага", "упаковочной бумаги", "упаковочной бумаге", "упаковочную бумагу", "упаковочной бумагой", "упаковочной бумаге")
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	w_class = SIZE_SMALL
 	var/amount = 25.0
+
+	var/texture_name = "cardboard"
+	var/details_name = null
 
 
 /obj/item/weapon/packageWrap/afterattack(atom/target, mob/user, proximity, params)
@@ -162,32 +208,27 @@
 	if (isitem(O))
 		var/obj/item/I = target
 		if (src.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))	//Aaannd wrap it up!
+			I.add_fingerprint(usr)
+			I = I.try_wrap_up(texture_name, details_name)
+			if(!I)
+				return
 			if(!istype(I.loc, /turf))
 				if(user.client)
 					user.client.screen -= I
-			P.w_class = I.w_class
-			var/i = round(I.w_class)
-			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-				if(istype(I, /obj/item/pizzabox))
-					var/obj/item/pizzabox/B = I
-					P.icon_state = "deliverypizza[length(B.boxes)]"
-				else
-					P.icon_state = "deliverycrate[i]"
-			I.loc = P
-			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
 			add_fingerprint(usr)
 			src.amount -= 1
+
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
 		if (src.amount > 3 && !C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycrate"
-			C.loc = P
+			if(!C.try_wrap_up(texture_name, details_name))
+				return
+
 			src.amount -= 3
 		else if(src.amount < 3)
 			to_chat(user, "<span class='notice'>You need more paper.</span>")
+
 	else if (istype (O, /obj/structure/closet))
 		var/obj/structure/closet/C = target
 		if(src.amount < 3)
@@ -197,9 +238,9 @@
 			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
 			return
 		else if (!C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			C.welded = 1
-			C.loc = P
+			if(!C.try_wrap_up(texture_name, details_name))
+				return
+
 			src.amount -= 3
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
@@ -209,10 +250,44 @@
 		return
 	return
 
+/obj/item/weapon/packageWrap/attack(mob/target, mob/user)
+	if(!ishuman(target))
+		return ..()
+
+	if(src.amount <= 3)
+		to_chat(user, "<span class='notice'>Нужно больше бумаги.</span>")
+		return
+
+	var/mob/living/carbon/human/H = target
+	if(!H.incapacitated())
+		to_chat(user, "[target] не даёт себя упаковать.")
+		return
+
+	if(!H.try_wrap_up(texture_name, details_name))
+		return
+
+	src.amount -= 3
+
+	H.log_combat(user, "завёрнут в [CASE(src, ACCUSATIVE_CASE)]")
+
+	if(amount <= 0)
+		new /obj/item/weapon/c_tube(loc)
+		qdel(src)
+		return
+	return
+
 /obj/item/weapon/packageWrap/examine(mob/user)
 	..()
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
+
+/obj/item/weapon/packageWrap/present
+	name = "holiday package wrapper"
+	cases = list("подарочная бумага", "подарочной бумаги", "подарочной бумаге", "подарочную бумагу", "подарочной бумагой", "подарочной бумаге")
+	icon_state = "wrap_paper"
+
+	texture_name = "present"
+	details_name = "bow"
 
 /obj/item/device/tagger
 	name = "tagger"
@@ -436,7 +511,7 @@
 		lot_description = target.desc
 
 	if(autocategory)
-		lot_category = get_category(target)
+		lot_category = get_item_shop_category(target)
 
 	if(!lot_account_number)
 		if(ishuman(user))
@@ -445,10 +520,7 @@
 			if(ID)
 				lot_account_number = ID.associated_account_number
 
-	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
-	target.verbs += /obj/proc/remove_price_tag
-
-	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+	target.add_price_tag(lot_description, lot_price, lot_category, lot_account_number)
 
 	if(next_instruction < world.time)
 		next_instruction = world.time + 30 SECONDS
@@ -477,24 +549,6 @@
 	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
 						 "<span class='notice'>You label [target] as [label].</span>")
 	target.name = "[target.name] ([label])"
-
-/obj/item/device/tagger/proc/get_category(obj/target)
-	if(istype(target, /obj/item/weapon/reagent_containers/food))
-		return "Еда"
-	else if(istype(target, /obj/item/weapon/storage/food))
-		return "Еда"
-	else if(istype(target, /obj/item/weapon/storage))
-		return "Наборы"
-	else if(istype(target, /obj/item/weapon))
-		return "Инструменты"
-	else if(istype(target, /obj/item/clothing))
-		return "Одежда"
-	else if(istype(target, /obj/item/device))
-		return "Устройства"
-	else if(istype(target, /obj/item/stack))
-		return "Ресурсы"
-	else
-		return "Разное"
 
 
 /obj/machinery/disposal/deliveryChute
@@ -556,11 +610,11 @@
 
 	var/obj/structure/disposalholder/H = new(null, contents, new /datum/gas_mixture)
 
-	if(!trunk)
+	if(!checkTrunk())
 		expel(H)
-		return
+	else
+		H.start(trunk) // start the holder processing movement
 
-	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
@@ -588,7 +642,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")
-			if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "You sliced the floorweld off the delivery chute.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute

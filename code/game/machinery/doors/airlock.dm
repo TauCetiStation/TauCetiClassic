@@ -139,7 +139,7 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/proc/isElectrified()
@@ -898,7 +898,7 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
+	if(istype(C, /obj/item/taperoll))
 		return
 
 	if(iswelding(C) && !(operating > 0))
@@ -908,7 +908,7 @@ var/global/list/airlock_overlays = list()
 				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100))
+			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100, quality = QUALITY_WELDING))
 				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
@@ -938,7 +938,7 @@ var/global/list/airlock_overlays = list()
 		if(beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
+			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_PRYING))
 				deconstruct(TRUE, user)
 				return
 		else if(hasPower())
@@ -1188,6 +1188,7 @@ var/global/list/airlock_overlays = list()
 
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
+		ae.item_state_inventory = "door_electronics_smoked"
 		ae.item_state_world = "door_electronics_smoked_w"
 		ae.broken = TRUE
 		operating = 0

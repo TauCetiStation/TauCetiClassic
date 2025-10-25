@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 54
+#define SAVEFILE_VERSION_MAX 56
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -119,61 +119,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			player_alt_titles -= J.title
 
 	if(current_version < 27)
+		// before there was migration for old job preferences but we dropped it
+		// 5 years is enough
 		job_preferences = list() //It loaded null from nonexistant savefile field.
-		var/job_civilian_high = 0
-		var/job_civilian_med = 0
-		var/job_civilian_low = 0
-
-		var/job_medsci_high = 0
-		var/job_medsci_med = 0
-		var/job_medsci_low = 0
-
-		var/job_engsec_high = 0
-		var/job_engsec_med = 0
-		var/job_engsec_low = 0
-
-		S["job_civilian_high"] >> job_civilian_high
-		S["job_civilian_med"]  >> job_civilian_med
-		S["job_civilian_low"]  >> job_civilian_low
-		S["job_medsci_high"]   >> job_medsci_high
-		S["job_medsci_med"]    >> job_medsci_med
-		S["job_medsci_low"]    >> job_medsci_low
-		S["job_engsec_high"]   >> job_engsec_high
-		S["job_engsec_med"]    >> job_engsec_med
-		S["job_engsec_low"]    >> job_engsec_low
-
-		//Can't use SSjob here since this happens right away on login
-		for(var/job in subtypesof(/datum/job))
-			var/datum/job/J = job
-			var/new_value
-			var/fval = initial(J.flag)
-			switch(initial(J.department_flag))
-				if(CIVILIAN)
-					if(job_civilian_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_civilian_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_civilian_low & fval)
-						new_value = JP_LOW
-				if(MEDSCI)
-					if(job_medsci_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_medsci_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_medsci_low & fval)
-						new_value = JP_LOW
-				if(ENGSEC)
-					if(job_engsec_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_engsec_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_engsec_low & fval)
-						new_value = JP_LOW
-			if(new_value)
-				job_preferences[initial(J.title)] = new_value
 		S["job_preferences"] << job_preferences
 
 	if(current_version < 28)
@@ -470,9 +418,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ipc_head = initial(ipc_head)
 		// fuck named hairstyles, we should just move it to indexes
 		var/static/list/ipc_hairstyles_reset = list(
-			"alien IPC screen", 
-			"double IPC screen", 
-			"pillar IPC screen", 
+			"alien IPC screen",
+			"double IPC screen",
+			"pillar IPC screen",
 			"human IPC screen"
 		)
 		if(h_style in ipc_hairstyles_reset)
@@ -527,12 +475,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			else
 				s_tone = initial(s_tone)
 
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 55)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 56)
+		underwear = /datum/preferences::underwear
+		undershirt = /datum/preferences::undershirt
+		undershirt_print = /datum/preferences::undershirt_print
+		socks = /datum/preferences::socks
+
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
 	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
 		if(species != HUMAN)
-			for(var/datum/job/job in SSjob.occupations)
+			for(var/datum/job/job as anything in SSjob.all_occupations)
 				if(!job.is_species_permitted(species))
 					SetJobPreferenceLevel(job, 0)
 			S["job_preferences"] << job_preferences
@@ -828,6 +789,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eyes_blue"]         >> b_eyes
 	S["underwear"]         >> underwear
 	S["undershirt"]        >> undershirt
+	S["undershirt_print"]  >> undershirt_print
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
 	S["use_skirt"]         >> use_skirt
@@ -911,9 +873,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
 	g_eyes			= sanitize_integer(g_eyes, 0, 255, initial(g_eyes))
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
-	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
-	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
-	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
+	underwear		= sanitize_integer(underwear, 0, underwear_t.len, initial(underwear))
+	undershirt		= sanitize_integer(undershirt, 0, undershirt_t.len, initial(undershirt))
+	undershirt_print = sanitize_inlist(undershirt_print, undershirt_prints_t, null)
+	socks			= sanitize_integer(socks, 0, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
@@ -1027,6 +990,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eyes_blue"]             << b_eyes
 	S["underwear"]             << underwear
 	S["undershirt"]            << undershirt
+	S["undershirt_print"]      << undershirt_print
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt

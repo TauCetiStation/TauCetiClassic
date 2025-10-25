@@ -1,3 +1,7 @@
+#define TYPE_PAPER 1
+#define TYPE_PHOTO 2
+#define TYPE_BUNDLE 3
+
 var/global/list/obj/machinery/faxmachine/allfaxes = list()
 var/global/list/alldepartments = list("Central Command")
 
@@ -38,119 +42,110 @@ var/global/list/alldepartments = list("Central Command")
 	QDEL_NULL(tofax)
 	return ..()
 
+/obj/machinery/faxmachine/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Fax", name)
+		ui.open()
+
+/obj/machinery/faxmachine/tgui_data(mob/user)
+	var/list/data = list(
+		"scan" = scan?.name,
+		"authenticated" = authenticated,
+		"sendCooldown" = sendcooldown,
+		"paperName" = tofax?.name,
+		"paper" = tofax,
+		"destination" = dptdest
+	)
+	if(isnull(tofax))
+		data["paperType"] = 0
+	else if(istype(tofax, /obj/item/weapon/paper))
+		data["paperType"] = TYPE_PAPER
+	else if(istype(tofax, /obj/item/weapon/photo))
+		data["paperType"] = TYPE_PHOTO
+	else if(istype(tofax, /obj/item/weapon/paper_bundle))
+		data["paperType"] = TYPE_BUNDLE
+	else
+		data["paperType"] = 0
+
+	return data
+
+/obj/machinery/faxmachine/tgui_static_data(mob/user)
+	return list("allDepartments" = alldepartments)
+
 /obj/machinery/faxmachine/ui_interact(mob/user)
-	var/dat
-
-	var/scan_name
-	if(scan)
-		scan_name = scan.name
-	else
-		scan_name = "--------"
-
-	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
-
-	if(authenticated)
-		dat += "<a href='byond://?src=\ref[src];logout=1'>Log Out</a>"
-	else
-		dat += "<a href='byond://?src=\ref[src];auth=1'>Log In</a>"
-
-	dat += "<hr>"
-
-	if(authenticated)
-		dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
-
-		if(tofax)
-			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
-
-			if(sendcooldown)
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-			else
-				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
-				dat += "<b>Currently sending:</b> [tofax.name]<br>"
-				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
-		else
-			dat += "Please insert paper, photo or bundle to send via secure connection.<br><br>"
-			if(sendcooldown)
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-	else
-		dat += "Proper authentication is required to use this device.<br><br>"
-		if(tofax)
-			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Item</a><br>"
-
-	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
-	popup.set_content(dat)
-	popup.open()
+	tgui_interact(user)
 
 /obj/machinery/faxmachine/is_operational()
 	return TRUE
 
-/obj/machinery/faxmachine/Topic(href, href_list)
+/obj/machinery/faxmachine/tgui_act(action, params, obj/item/O)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	if(href_list["send"])
-		if(sendcooldown)
-			return
+	switch(action)
+		if("send")
+			if(sendcooldown)
+				return
 
-		if(tofax)
-			if(dptdest == "Central Command")
-				sendcooldown = 1800
-				centcomm_fax(usr, tofax, src)
+			if(tofax)
+				if(dptdest == "Central Command")
+					sendcooldown = 1800
+					centcomm_fax(usr, tofax, src)
+				else
+					sendcooldown = 600
+					send_fax(usr, tofax, dptdest)
+
+				audible_message("Message transmitted successfully.")
+				spawn(sendcooldown) // cooldown time
+					sendcooldown = 0
+
+		if("paperinteraction")
+			if(tofax)
+				if(usr.Adjacent(loc))
+					tofax.loc = usr.loc
+					usr.put_in_hands(tofax)
+				else
+					tofax.forceMove(loc)
+
+				to_chat(usr, "<span class='notice'>You take the item out of \the [src].</span>")
+				tofax = null
 			else
-				sendcooldown = 600
-				send_fax(usr, tofax, dptdest)
+				var/obj/item/I = usr.get_active_hand()
+				if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
+					usr.drop_from_inventory(I, src)
+					tofax = I
 
-			audible_message("Message transmitted successfully.")
-			spawn(sendcooldown) // cooldown time
-				sendcooldown = 0
 
-	if(href_list["remove"])
-		if(tofax)
-			if(usr.Adjacent(loc))
-				tofax.loc = usr.loc
-				usr.put_in_hands(tofax)
-			else
-				tofax.forceMove(loc)
+		if("scan")
+			if (scan)
+				if(ishuman(usr) && usr.Adjacent(loc))
+					scan.loc = usr.loc
+					if(!usr.get_active_hand())
+						usr.put_in_hands(scan)
+					scan = null
+				else
+					scan.loc = src.loc
+					scan = null
+			else if(ishuman (usr))
+				var/obj/item/I = usr.get_active_hand()
+				if (istype(I, /obj/item/weapon/card/id))
+					usr.drop_from_inventory(I, src)
+					scan = I
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.sec_hud_set_ID()
+			authenticated = 0
 
-			to_chat(usr, "<span class='notice'>You take the item out of \the [src].</span>")
-			tofax = null
-
-	if(href_list["scan"])
-		if (scan)
-			if(ishuman(usr) && usr.Adjacent(loc))
-				scan.loc = usr.loc
-				if(!usr.get_active_hand())
-					usr.put_in_hands(scan)
-				scan = null
-			else
-				scan.loc = src.loc
-				scan = null
-		else if(ishuman (usr))
-			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/card/id))
-				usr.drop_from_inventory(I, src)
-				scan = I
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			H.sec_hud_set_ID()
-		authenticated = 0
-
-	if(href_list["dept"])
-		var/new_dep_dest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
-		if(!new_dep_dest || !can_still_interact_with(usr))
-			return
-		dptdest = new_dep_dest
-
-	if(href_list["auth"])
-		if ( (!( authenticated ) && (scan)) )
 			if (check_access(scan))
 				authenticated = 1
 
-	if(href_list["logout"])
-		authenticated = 0
-
-	updateUsrDialog()
+		if("setDestination")
+			var/new_dep_dest = params["to"]
+			if(!new_dep_dest || !(new_dep_dest in alldepartments))
+				return
+			dptdest = new_dep_dest
 
 /obj/machinery/faxmachine/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))
@@ -159,7 +154,7 @@ var/global/list/alldepartments = list("Central Command")
 			tofax = O
 			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
 			flick("faxsend", src)
-			updateUsrDialog()
+			SStgui.update_uis(src)
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/card/id))
@@ -168,6 +163,9 @@ var/global/list/alldepartments = list("Central Command")
 			usr.drop_from_inventory(idcard, src)
 			idcard.loc = src
 			scan = idcard
+			if ( (!( authenticated ) && (scan)) )
+				if (check_access(scan))
+					authenticated = 1
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
@@ -179,8 +177,7 @@ var/global/list/alldepartments = list("Central Command")
 
 /obj/item/weapon/paper/get_fax_info()
 	. = info
-	if(stamped && islist(stamped))
-		. += "\nStamps: [jointext(stamped, ", ")]"
+	. += stamp_text
 
 /obj/item/weapon/photo/get_fax_info()
 	return desc
@@ -294,3 +291,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	P.loc = loc
 	audible_message("Received message.")
+
+#undef TYPE_PAPER
+#undef TYPE_PHOTO
+#undef TYPE_BUNDLE

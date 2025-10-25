@@ -51,7 +51,7 @@
 ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon
 	name = "pylon"
-	desc = "A floating crystal that hums with an unearthly energy."
+	desc = "Летающий кристалл, излучающий таинственную энергию."
 	icon_state = "pylon"
 	light_color = "#ff9595"
 	light_power = 2

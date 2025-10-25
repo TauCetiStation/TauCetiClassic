@@ -81,7 +81,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/airlock_electronics,          CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/airalarm_electronics,         CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/firealarm_electronics,        CATEGORY_ENGINEERING),
-	R(/obj/item/weapon/rcd_ammo,                     CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/rcd_ammo/small,               CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/rcd_ammo/medium,              CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/camera_assembly,              CATEGORY_ENGINEERING),
 	R(/obj/item/conveyor_construct,                  CATEGORY_ENGINEERING),
 	R(/obj/item/conveyor_switch_construct,           CATEGORY_ENGINEERING),
@@ -291,6 +292,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	..()
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
+	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/pai_cable))
 		return
 	if(busy)

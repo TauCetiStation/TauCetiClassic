@@ -52,7 +52,12 @@
 	telemetry_analyzed_at = world.time
 	if(!payload)
 		return
-	
+
+	// todo: not telemetry, can be moved to a better place
+	var/payload_pixelratio = payload["pixelRatio"]
+	if(isnum(payload_pixelratio))
+		client.update_pixel_ratio(payload_pixelratio)
+
 	var/payload_charset = payload["charset"]
 	if(istext(payload_charset))
 		client.prefs.guard.chat_data["charset"] = ckey(payload_charset)

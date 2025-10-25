@@ -9,7 +9,7 @@
 
 /datum/announcement/centcomm/access_override
 	name = "Secret: Egalitarian"
-	message = "Центком перегрузил контроль доступа шлюзов. Воспользуйтесь этим временем для знакомства с вашими коллегами."
+	message = "ЦентКом перегрузил контроль доступа шлюзов. Воспользуйтесь этим временем для знакомства с вашими коллегами."
 	sound = "access_override"
 
 /datum/announcement/centcomm/anomaly/radstorm
@@ -22,7 +22,7 @@
 	name = "Anomaly: Radiation Belt Passed"
 	message = "Станция прошла опасную зону. " + \
 			"Обратитесь в медотсек, если у вас возникнут необычные симптомы. " + \
-			"Вскоре общий доступ к техническим туннелям будет аннулирован.."
+			"Вскоре общий доступ к техническим туннелям будет аннулирован."
 	sound = "radpassed"
 
 /datum/announcement/centcomm/anomaly/istorm
@@ -196,7 +196,7 @@
 	subtitle = "Системы Электропитания в Норме"
 	sound = "poweron2"
 /datum/announcement/centcomm/grid_quick/New()
-	message = "Все СМЭХи на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
+	message = "Все СПИНы на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
 
 /datum/announcement/centcomm/irod
 	name = "Event: Immovable Rod"
@@ -280,3 +280,22 @@
 	subtitle = "Космоторговцы."
 	message = "Мы получили и одобрили запрос на стыковку от группы космоторговцев. " + \
 			"У них кончаются припасы и есть товары для продажи. Ожидайте гостей."
+
+/datum/announcement/centcomm/egghunt/pre
+	name = "Egg Hunt will Start soon!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"
+	message = "Исход! В рамках программы по повышению стрессоустойчивости персонала мы проводим пасхальную охоту за яйцами! " + \
+			"Подготовьтесь, через минуту вам потребуется искать цветные яйца, которые мы спрятали по станции, и класть их к себе в рюкзак. " + \
+			"Спустя еще 30 минут таймер подойдет к концу и будут объявлены победители!"
+
+/datum/announcement/centcomm/egghunt/start
+	name = "Egg Hunt Starts!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"
+	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 30 минут объявим победителей "
+
+/datum/announcement/centcomm/egghunt/finish
+	name = "Egg Hunt Ends!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"

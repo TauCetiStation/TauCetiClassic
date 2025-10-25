@@ -11,15 +11,15 @@
 /datum/job/cyborg/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 0
-	spawn_positions = 1
+	map_total_positions = 0
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 2400
 
 /datum/job/ai/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 3600
 
 /datum/job/rd/New()
@@ -31,18 +31,18 @@
 /datum/job/scientist/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_robotics)
-	total_positions = 1
-	spawn_positions = 1
+	access |= list(access_robotics)
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 1200
 	skillsets = list("Scientist" = /datum/skillset/falcon/scientist)
 
 /datum/job/research_assistant/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_tox, access_xenoarch)
-	total_positions = 1
-	spawn_positions = 1
+	access |= list(access_tox, access_xenoarch)
+	map_total_positions = 1
+	map_spawn_positions = 1
 	skillsets = list("Research Assistant" = /datum/skillset/falcon/scientist)
 
 /datum/job/captain/New()
@@ -66,25 +66,25 @@
 /datum/job/detective/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 1800
 	skillsets = list("Detective" = /datum/skillset/falcon/detective)
 
 /datum/job/officer/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 1800
 	skillsets = list("Security Officer" = /datum/skillset/falcon/officer)
 
 /datum/job/cadet/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_security)
-	total_positions = 1
-	spawn_positions = 1
+	access |= list(access_security)
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 600
 	skillsets = list("Security Cadet" = /datum/skillset/falcon/officer)
 
@@ -97,18 +97,18 @@
 /datum/job/doctor/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_engineering_lobby)
-	total_positions = 1
-	spawn_positions = 1
+	access |= list(access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_engineering_lobby)
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 900
 	skillsets = list("Medical Doctor" = /datum/skillset/falcon/doctor)
 
 /datum/job/intern/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
-	total_positions = 1
-	spawn_positions = 1
+	access |= list(access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
+	map_total_positions = 1
+	map_spawn_positions = 1
 	skillsets = list("Medical Intern" = /datum/skillset/falcon/doctor)
 
 /datum/job/chief_engineer/New()
@@ -120,33 +120,33 @@
 /datum/job/engineer/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 600
 	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
 
 /datum/job/technical_assistant/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_engine, access_engine_equip, access_external_airlocks)
-	total_positions = 1
-	spawn_positions = 1
+	access |= list(access_engine, access_engine_equip, access_external_airlocks)
+	map_total_positions = 1
+	map_spawn_positions = 1
 	skillsets = list("Technical Assistant" = /datum/skillset/falcon/engineer)
 
 /datum/job/chef/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_engine, access_engine_equip, access_external_airlocks)
-	total_positions = 1
-	spawn_positions = 1
+	access |= list(access_engine, access_engine_equip, access_external_airlocks)
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 120
 	skillsets = list("Chef" = /datum/skillset/falcon/chef)
 
 /datum/job/chaplain/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 240
 	skillsets = list("Chaplain" = /datum/skillset/falcon/chaplain)
 
@@ -159,16 +159,16 @@
 /datum/job/mining/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 600
 	skillsets = list("Shaft Miner" = /datum/skillset/falcon/miner)
 
 /datum/job/recycler/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	map_total_positions = 1
+	map_spawn_positions = 1
 	minimal_player_ingame_minutes = 300
 	skillsets = list("Recycler" = /datum/skillset/falcon/recycler)
 

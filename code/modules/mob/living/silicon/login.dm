@@ -1,4 +1,4 @@
-/mob/living/silicon/Login()
+/mob/living/silicon/LateLogin()
 	..()
 	if(mind && SSticker && SSticker.mode)
 		for(var/role in list(CULTIST, REV, HEADREV))

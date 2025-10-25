@@ -230,7 +230,8 @@
 /obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
 	if(id == "turnoff" && ((current_scene && id == current_scene.holoscene_id) || !current_scene))
 		return
-	if(id in restricted_programs && !safety_disabled) return
+	if((id in restricted_programs) && !safety_disabled)
+		return
 	current_scene = holoscene_templates[id]
 	loadProgram()
 

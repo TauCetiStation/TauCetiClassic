@@ -334,6 +334,10 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_GLOVES
 
+	/// Detective Work, used for allowing a given atom to leave its fibers/fingerprints on stuff.
+	var/can_leave_fibers = TRUE
+	var/can_leave_fingerprints = FALSE
+
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
@@ -570,51 +574,51 @@ BLIND     // can't see anything
 		if(A.flags & (HEAR_TALK | HEAR_PASS_SAY | HEAR_TA_SAY))
 			A.hear_talk(M, text, verb, speaking)
 
-/obj/item/clothing/under/proc/set_sensors(mob/usr)
-	var/mob/M = usr
+/obj/item/clothing/under/proc/set_sensors(mob/user)
+	var/mob/M = user
 	if (istype(M, /mob/dead)) return
-	if (usr.incapacitated())
+	if (user.incapacitated())
 		return
 	if(has_sensor >= 2)
-		to_chat(usr, "The controls are locked.")
+		to_chat(user, "The controls are locked.")
 		return 0
 	if(has_sensor <= 0)
-		to_chat(usr, "This suit does not have any sensors.")
+		to_chat(user, "This suit does not have any sensors.")
 		return 0
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
-	if(get_dist(usr, src) > 1)
-		to_chat(usr, "You have moved too far away.")
+	if(get_dist(user, src) > 1)
+		to_chat(user, "You have moved too far away.")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if (loc == user)
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
-				to_chat(usr, "You disable your suit's remote sensing equipment.")
+				to_chat(user, "You disable your suit's remote sensing equipment.")
 			if(SUIT_SENSOR_BINARY)
-				to_chat(usr, "Your suit will now report whether you are live or dead.")
+				to_chat(user, "Your suit will now report whether you are live or dead.")
 			if(SUIT_SENSOR_VITAL)
-				to_chat(usr, "Your suit will now report your vital lifesigns.")
+				to_chat(user, "Your suit will now report your vital lifesigns.")
 			if(SUIT_SENSOR_TRACKING)
-				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
+				to_chat(user, "Your suit will now report your vital lifesigns as well as your coordinate position.")
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.update_suit_sensors()
 
-	else if (istype(src.loc, /mob))
+	else if (istype(loc, /mob))
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
-				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)
+				M.visible_message("<span class='warning'>[user] disables [loc]'s remote sensing equipment.</span>", viewing_distance = 1)
 			if(SUIT_SENSOR_BINARY)
-				M.visible_message("[usr] turns [src.loc]'s remote sensors to binary.", viewing_distance = 1)
+				M.visible_message("[user] turns [loc]'s remote sensors to binary.", viewing_distance = 1)
 			if(SUIT_SENSOR_VITAL)
-				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
+				M.visible_message("[user] sets [loc]'s sensors to track vitals.", viewing_distance = 1)
 			if(SUIT_SENSOR_TRACKING)
-				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/C = src.loc
+				M.visible_message("[user] sets [loc]'s sensors to maximum.", viewing_distance = 1)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
 			C.update_suit_sensors()
 
 /obj/item/clothing/under/verb/toggle()

@@ -185,11 +185,6 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 	LAZYINITLIST(user.next_emote_use)
 	set_cooldown(user.next_emote_use, cooldown, intentional)
 
-	for(var/obj/item/weapon/implant/I in user)
-		if(!I.implanted)
-			continue
-		I.trigger(emote_key, user)
-
 	var/msg_1p = get_emote_message_1p(user)
 	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view

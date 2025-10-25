@@ -15,6 +15,7 @@ var/global/gc_log
 var/global/sql_error_log
 var/global/asset_log
 var/global/tgui_log
+var/global/icon_lookup_log
 
 var/global/list/jobMax = list()
 var/global/list/bombers = list(  )

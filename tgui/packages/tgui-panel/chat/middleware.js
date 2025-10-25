@@ -28,6 +28,12 @@ import { selectChat, selectCurrentChatPage } from './selectors';
 const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
 
 const saveChatToStorage = async (store) => {
+  // Early return if chat saving is disabled
+  const chatSavingEnabled = await storage.get('chat-saving-enabled');
+  if (chatSavingEnabled === false) {
+    return;
+  }
+
   const state = selectChat(store.getState());
   const fromIndex = Math.max(
     0,
@@ -41,6 +47,13 @@ const saveChatToStorage = async (store) => {
 };
 
 const loadChatFromStorage = async (store) => {
+  // Early return if chat saving is disabled
+  const chatSavingEnabled = await storage.get('chat-saving-enabled');
+  if (chatSavingEnabled === false) {
+    store.dispatch(loadChat());
+    return;
+  }
+
   const [state, messages] = await Promise.all([
     storage.get('chat-state'),
     storage.get('chat-messages'),

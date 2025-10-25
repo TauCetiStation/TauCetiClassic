@@ -23,23 +23,26 @@
 	else if(screen == 1)
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/Tr = null
-		for(var/obj/item/weapon/implant/chem/C in implant_list)
+		for(var/obj/item/weapon/implant/chem/C in global.implant_list)
+			if(!C.implanted_mob)
+				continue
 			Tr = get_turf(C)
-			if((Tr) && (Tr.z != src.z))	continue//Out of range
-			if(!C.implanted) continue
-			dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
-			dat += "<A class='red' href='byond://?src=\ref[src];inject1=\ref[C]'>1</A>"
-			dat += "<A class='red' href='byond://?src=\ref[src];inject5=\ref[C]'>5</A>"
-			dat += "<A class='red' href='byond://?src=\ref[src];inject10=\ref[C]'>10</A><BR>"
+			if(!Tr || Tr.z != src.z) // Out of range
+				continue
+			dat += "[C.implanted_mob.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
+			dat += "<A class='red' href='byond://?src=\ref[src];inject=\ref[C];amount=1'>1</A>"
+			dat += "<A class='red' href='byond://?src=\ref[src];inject=\ref[C];amount=5'>5</A>"
+			dat += "<A class='red' href='byond://?src=\ref[src];inject=\ref[C];amount=10'>10</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
-		for(var/obj/item/weapon/implant/tracking/T in implant_list)
+		for(var/obj/item/weapon/implant/tracking/T in global.implant_list)
+			if(!T.implanted_mob)
+				continue
 			Tr = get_turf(T)
-			if((Tr) && (Tr.z != src.z))	continue//Out of range
-			if(!T.implanted) continue
+			if(!Tr || Tr.z != src.z) // Out of range
+				continue
 			var/loc_display = "Unknown"
-			var/mob/living/carbon/M = T.imp_in
-			var/turf/mob_loc = get_turf_loc(M)
+			var/turf/mob_loc = get_turf_loc(T.implanted_mob)
 			if(!isenvironmentturf(mob_loc))
 				loc_display = mob_loc.loc
 			if(T.malfunction)
@@ -64,17 +67,36 @@
 	. = ..()
 	if(!.)
 		return
-	if(href_list["inject1"])
-		var/obj/item/weapon/implant/I = locate(href_list["inject1"])
-		if(I)	I.activate(1)
 
-	else if(href_list["inject5"])
-		var/obj/item/weapon/implant/I = locate(href_list["inject5"])
-		if(I)	I.activate(5)
+	if(href_list["inject"])
+		var/obj/item/weapon/implant/chem/I = locate(href_list["inject"])
+		if(!istype(I) || !I.implanted_mob)
+			return
 
-	else if(href_list["inject10"])
-		var/obj/item/weapon/implant/I = locate(href_list["inject10"])
-		if(I)	I.activate(10)
+		var/turf/T = get_turf(I.implanted_mob)
+
+		if(!T || T.z != src.z)
+			return
+
+		var/amount = clamp(text2num(href_list["amount"]), 1, 10)
+
+		I.use_implant(amount)
+
+	else if(href_list["warn"])
+		var/warning = sanitize(input(usr,"Message:","Enter your message here!",""))
+		if(!warning)
+			return
+
+		var/obj/item/weapon/implant/tracking/I = locate(href_list["warn"])
+		if(!istype(I) || !I.implanted_mob)
+			return
+
+		var/turf/T = get_turf(I.implanted_mob)
+
+		if(!T || T.z != src.z)
+			return
+
+		to_chat(I.implanted_mob, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
 	else if(href_list["lock"])
 		if(allowed(usr))
@@ -82,12 +104,5 @@
 		else
 			to_chat(usr, "Unauthorized Access.")
 
-	else if(href_list["warn"])
-		var/warning = sanitize(input(usr,"Message:","Enter your message here!",""))
-		if(!warning) return
-		var/obj/item/weapon/implant/I = locate(href_list["warn"])
-		if((I)&&(I.imp_in))
-			var/mob/living/carbon/R = I.imp_in
-			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
 	updateUsrDialog()

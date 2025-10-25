@@ -172,24 +172,23 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in implant_list)
-			if (!I.implanted || !ismob(I.loc))
+		for (var/obj/item/weapon/implant/tracking/I in global.implant_list)
+			if (!I.implanted_mob)
 				continue
-			else
-				var/mob/M = I.loc
-				if (M.stat == DEAD)
-					if (M.timeofdeath + 6000 < world.time)
-						continue
-				var/turf/T = get_turf(M)
-				if(!T)	continue
-				if(is_centcom_level(T.z))
+
+			var/mob/M = I.loc
+			if (M.stat == DEAD)
+				if (M.timeofdeath + 6000 < world.time)
 					continue
-				var/tmpname = M.real_name
-				if(areaindex[tmpname])
-					tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else
-					areaindex[tmpname] = 1
-				L[tmpname] = I
+			var/turf/T = get_turf(M)
+			if(!T || is_centcom_level(T.z))
+				continue
+			var/tmpname = M.real_name
+			if(areaindex[tmpname])
+				tmpname = "[tmpname] ([++areaindex[tmpname]])"
+			else
+				areaindex[tmpname] = 1
+			L[tmpname] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") in L
 		if(!can_still_interact_with(user))

@@ -1,0 +1,2738 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bf" = (
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"bT" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"co" = (
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/airlock/medical,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"dL" = (
+/obj/random/guns/set_special,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"dW" = (
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"dZ" = (
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"eH" = (
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"fk" = (
+/obj/random/guns/set_special,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"fv" = (
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"fw" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"fy" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"fF" = (
+/obj/random/cloth/helmet,
+/obj/structure/table/glass,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"fJ" = (
+/obj/random/cloth/armor,
+/obj/structure/table/glass,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"fV" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/unsimulated/floor{
+	icon_state = "bcircuit"
+	},
+/area/custom/arena)
+"gr" = (
+/obj/structure/table,
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"gD" = (
+/obj/structure/rack,
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"gK" = (
+/obj/machinery/door/firedoor,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"gR" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"hr" = (
+/obj/machinery/atmospherics/pipe/manifold/visible,
+/obj/effect/landmark/post_round_dm/gladiator{
+	name = "Gladiator"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"hC" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
+	},
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"hK" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"hQ" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Surgery2";
+	name = "Surgery Shutters";
+	opacity = 0
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"hU" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"ih" = (
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"is" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"iS" = (
+/obj/structure/stool/bed/roller,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"ke" = (
+/obj/machinery/life_assist/cardiopulmonary_bypass,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"kN" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"lc" = (
+/obj/structure/table/glass,
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"le" = (
+/obj/machinery/optable,
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"lj" = (
+/turf/unsimulated/wall/like_a_normal,
+/area/custom/arena)
+"lL" = (
+/turf/unsimulated/floor{
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"mD" = (
+/obj/structure/table/glass,
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"mN" = (
+/obj/structure/table/glass,
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"mO" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"nd" = (
+/obj/item/weapon/grenade/syndieminibomb,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"ni" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"nn" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"ol" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/structure/table,
+/obj/item/weapon/grenade/syndieminibomb,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"on" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"oF" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"pi" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"pn" = (
+/obj/structure/table/glass,
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"pR" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"qg" = (
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"qB" = (
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"qN" = (
+/obj/machinery/computer/crew,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"rc" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"rh" = (
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"rs" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"sf" = (
+/obj/machinery/atmospherics/pipe/manifold/visible,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"sh" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/random/guns/set_special,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"sN" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"sO" = (
+/obj/structure/table/glass,
+/obj/random/meds/medkit,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"sQ" = (
+/obj/structure/table/glass,
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"ty" = (
+/obj/structure/table/glass,
+/obj/random/melee,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"tG" = (
+/obj/structure/rack,
+/obj/random/guns/set_special,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"tS" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/effect/decal/turf_decal{
+	dir = 9;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"tU" = (
+/obj/effect/landmark/post_round_dm/gladiator{
+	name = "Gladiator"
+	},
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"ub" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"up" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"uF" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"uR" = (
+/obj/machinery/door/airlock/medical,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"vh" = (
+/obj/structure/rack,
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"vk" = (
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"vo" = (
+/obj/structure/rack,
+/obj/item/weapon/reagent_containers/spray/lube,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"vq" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"vT" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"vY" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"wf" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"wk" = (
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"wo" = (
+/obj/structure/rack,
+/obj/random/guns/set_special,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"wK" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"xH" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"xM" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"yp" = (
+/obj/machinery/vending/blood,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"yC" = (
+/obj/machinery/door/airlock/medical{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"yG" = (
+/obj/machinery/vending/medical,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"zd" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"zI" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"zK" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"zT" = (
+/obj/machinery/vending/coffee,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"Ah" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Aj" = (
+/obj/machinery/vending/medical,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Aw" = (
+/obj/machinery/chem_master,
+/obj/effect/decal/turf_decal{
+	dir = 9;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"AL" = (
+/obj/structure/stool/bed/roller,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Bb" = (
+/obj/machinery/door/airlock/medical,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"Bc" = (
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"BD" = (
+/obj/structure/closet/secure_closet/medical1,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"BL" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"BT" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Cw" = (
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"CS" = (
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Di" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Dp" = (
+/obj/effect/landmark/post_round_dm/gladiator{
+	name = "Gladiator"
+	},
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"DF" = (
+/obj/machinery/door/firedoor,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"DP" = (
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Em" = (
+/obj/structure/table/woodentable,
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Ey" = (
+/obj/structure/table/woodentable,
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"EA" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"EH" = (
+/obj/structure/table/woodentable,
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"ET" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"EU" = (
+/obj/structure/stool/bed/chair/metal/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"FM" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"FZ" = (
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"Gs" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"GU" = (
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Ha" = (
+/obj/structure/closet/l3closet/general,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Ho" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"HA" = (
+/obj/structure/stool/bed/roller,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"HF" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/item/weapon/grenade/syndieminibomb,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"HG" = (
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"HP" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Id" = (
+/turf/unsimulated/floor{
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"Im" = (
+/obj/structure/stool/bed/chair/comfy/green{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Io" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"IM" = (
+/obj/structure/stool/bed/chair/comfy/green{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"IQ" = (
+/obj/machinery/door/airlock/medical/glass,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Jd" = (
+/obj/machinery/clonepod,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Jk" = (
+/obj/machinery/computer/cloning,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"JH" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"JX" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"Kn" = (
+/obj/machinery/chem_dispenser,
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/random/meds/chemical_bottle,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Kr" = (
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Kx" = (
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "warn"
+	},
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Lk" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"Lp" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Ly" = (
+/obj/machinery/door/airlock/medical/glass,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"LK" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"LU" = (
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Mg" = (
+/obj/machinery/door/airlock/medical{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Mi" = (
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Mr" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Mz" = (
+/obj/item/weapon/grenade/syndieminibomb,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"MN" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"Ne" = (
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Ng" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"NI" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"NX" = (
+/obj/random/cloth/helmet,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Oc" = (
+/obj/machinery/door/airlock/maintenance{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"Og" = (
+/obj/structure/table,
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Os" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Ow" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Ox" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"PB" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"PR" = (
+/obj/effect/landmark/post_round_dm/gladiator{
+	name = "Gladiator"
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"PS" = (
+/obj/machinery/vending/firstaid,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Qa" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Qu" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/obj/random/melee,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Qw" = (
+/obj/machinery/body_scanconsole,
+/obj/machinery/door_control{
+	id = "Medical_Surgery2";
+	name = "Privacy Shutters";
+	pixel_y = 25
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Qy" = (
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Qz" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"QJ" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"QU" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Rc" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"RA" = (
+/obj/structure/table,
+/obj/item/weapon/grenade/syndieminibomb,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"RF" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"RN" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"RU" = (
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"RY" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"SA" = (
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"SY" = (
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"Tg" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"Th" = (
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Tq" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Tr" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"Tu" = (
+/obj/structure/rack,
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"TC" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"TJ" = (
+/obj/effect/landmark/post_round_dm/gladiator{
+	name = "Gladiator"
+	},
+/turf/unsimulated/floor/carpet/green,
+/area/custom/arena)
+"TM" = (
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"TU" = (
+/obj/structure/table/glass,
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Up" = (
+/obj/structure/stool/bed/psych,
+/obj/item/weapon/bedsheet/psych,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Uq" = (
+/obj/effect/landmark/post_round_dm/gladiator{
+	name = "Gladiator"
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"Uv" = (
+/obj/structure/rack,
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"UR" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/obj/structure/stool/bed/roller,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Vm" = (
+/obj/structure/rack,
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"Vo" = (
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"VI" = (
+/obj/machinery/computer/scan_consolenew,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Wh" = (
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Ws" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"WD" = (
+/obj/machinery/computer/med_data,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Xa" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Xm" = (
+/obj/random/cloth/armor,
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"XE" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/grenade/syndieminibomb,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"XN" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"XT" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita{
+	pixel_y = 7
+	},
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"XZ" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Yd" = (
+/obj/random/melee,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Yk" = (
+/obj/random/guns/projectile_handgun,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Yo" = (
+/turf/unsimulated/floor/carpet/green,
+/area/custom/arena)
+"Yv" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Yx" = (
+/obj/structure/flora/ausbushes/ywflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"YD" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"YE" = (
+/obj/machinery/dna_scannernew,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"YU" = (
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"YX" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"YY" = (
+/obj/structure/flora/ausbushes/ywflowers{
+	layer = 2.7
+	},
+/obj/structure/flora/tree/jungle/small,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Zi" = (
+/obj/random/guns/energy_weapon,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"Zp" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"ZK" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/stool/bed/roller,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"ZN" = (
+/obj/machinery/bodyscanner,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"ZQ" = (
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+
+(1,1,1) = {"
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+"}
+(2,1,1) = {"
+lj
+Bc
+Bc
+vY
+Bc
+Bc
+gK
+dL
+Bc
+lj
+Tg
+Bc
+Bc
+vk
+Bc
+lj
+kN
+fk
+Vo
+lj
+YU
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+lj
+Bc
+Tg
+Bc
+Bc
+lj
+"}
+(3,1,1) = {"
+lj
+Tg
+Bc
+Bc
+QJ
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Uq
+Bc
+Bc
+XN
+kN
+qg
+Vo
+XN
+Bc
+Bc
+vk
+Bc
+lj
+lj
+Bc
+dL
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(4,1,1) = {"
+lj
+Bc
+Bc
+Uq
+Bc
+Bc
+lj
+Bc
+YU
+Bc
+bf
+Bc
+vY
+Bc
+QJ
+lj
+kN
+qg
+GU
+lj
+Tg
+Bc
+Bc
+QJ
+gK
+Bc
+Bc
+Bc
+lj
+Bc
+vY
+Uq
+Bc
+vk
+lj
+"}
+(5,1,1) = {"
+lj
+bf
+Bc
+Bc
+Bc
+Bc
+lj
+lj
+lj
+lj
+lj
+lj
+Oc
+lj
+lj
+lj
+DP
+qg
+Vo
+lj
+lj
+Bc
+Uq
+lj
+lj
+Bc
+YU
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(6,1,1) = {"
+lj
+lj
+lj
+Bc
+vk
+Bc
+Bc
+lj
+mD
+rc
+rh
+vq
+rh
+zT
+lj
+Di
+kN
+PR
+Vo
+Im
+lj
+Bc
+Bc
+Bc
+lj
+lj
+Oc
+lj
+lj
+lj
+lj
+bf
+QJ
+Bc
+lj
+"}
+(7,1,1) = {"
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Mz
+lj
+XT
+rc
+tU
+rh
+rh
+rh
+Bb
+Wh
+Qa
+qg
+Vo
+Io
+lj
+bf
+vY
+Bc
+lj
+YD
+xM
+YX
+UR
+lj
+Bc
+Bc
+Bc
+lj
+lj
+"}
+(8,1,1) = {"
+lj
+Bc
+dL
+Bc
+lj
+Bc
+Bc
+XN
+rh
+rh
+rh
+rh
+zd
+rh
+JX
+Wh
+Mr
+qg
+hK
+IM
+lj
+Bc
+Bc
+Bc
+lj
+YY
+HF
+YD
+YD
+lj
+Bc
+Bc
+Bc
+dL
+lj
+"}
+(9,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+lj
+ni
+HG
+ub
+rh
+rh
+MN
+lj
+Aj
+kN
+qg
+Vo
+lj
+lj
+Oc
+lj
+lj
+lj
+ZK
+dZ
+Yx
+xM
+lj
+YU
+Bc
+Bc
+Bc
+lj
+"}
+(10,1,1) = {"
+lj
+bT
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+JX
+yC
+lj
+lj
+lj
+lj
+EA
+Gs
+gR
+lj
+Jd
+Ne
+QU
+lj
+lj
+lj
+SA
+JX
+lj
+lj
+lj
+lj
+lj
+Tr
+lj
+"}
+(11,1,1) = {"
+lj
+QJ
+vk
+Bc
+lj
+Lp
+Lp
+lj
+tS
+rs
+RU
+Th
+Mi
+AL
+iS
+lj
+kN
+qg
+Vo
+lj
+Jk
+Mi
+RF
+lj
+VI
+BT
+TC
+TC
+TU
+pn
+lj
+Bc
+Bc
+Tg
+lj
+"}
+(12,1,1) = {"
+lj
+Bc
+Bc
+vY
+XN
+HP
+hr
+lj
+ol
+pR
+Ow
+Qa
+qg
+qg
+Xm
+DF
+kN
+nd
+Vo
+JX
+YE
+PR
+Vo
+lj
+YE
+Zi
+qg
+qg
+qg
+Vo
+lj
+Bc
+Uq
+Bc
+lj
+"}
+(13,1,1) = {"
+lj
+Bc
+Uq
+Bc
+lj
+fv
+hC
+co
+on
+sf
+Ow
+kN
+PR
+qg
+Vo
+DF
+kN
+qg
+Vo
+Ly
+Mr
+qg
+RN
+uR
+kN
+qg
+qg
+PR
+qg
+Vo
+XN
+vY
+Bc
+Bc
+lj
+"}
+(14,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+wo
+hU
+lj
+wf
+pR
+Yv
+kN
+qg
+qg
+hK
+DF
+kN
+qg
+Vo
+lj
+kN
+qg
+Xm
+lj
+kN
+wk
+Id
+oF
+oF
+Ng
+lj
+bf
+Bc
+QJ
+lj
+"}
+(15,1,1) = {"
+lj
+bf
+Tg
+lj
+lj
+lj
+lj
+lj
+pi
+sN
+up
+ZQ
+ke
+vo
+BD
+lj
+kN
+SY
+Vo
+lj
+lj
+JX
+lj
+lj
+Xa
+oF
+Yd
+lj
+lj
+lj
+lj
+lj
+Bc
+Bc
+lj
+"}
+(16,1,1) = {"
+lj
+lj
+Oc
+lj
+fV
+LK
+mO
+lj
+lj
+sh
+uF
+lj
+lj
+JX
+JX
+lj
+kN
+qg
+Vo
+lj
+Ha
+Wh
+RY
+lj
+lj
+SA
+JX
+lj
+Wh
+HA
+HA
+lj
+Oc
+lj
+lj
+"}
+(17,1,1) = {"
+lj
+TC
+TC
+fy
+TC
+TC
+ih
+TC
+TC
+TC
+TC
+vT
+TC
+TC
+TC
+TC
+ET
+qg
+Ho
+TC
+TC
+TC
+TC
+TC
+vT
+TC
+TC
+TC
+Os
+TC
+TC
+Yk
+TC
+TC
+lj
+"}
+(18,1,1) = {"
+lj
+qg
+JH
+qg
+PR
+qg
+qg
+qg
+qg
+qg
+qg
+wK
+nd
+qg
+SY
+qg
+qg
+FZ
+qg
+qg
+SY
+qg
+nd
+qg
+wK
+qg
+fk
+qg
+qg
+qg
+PR
+qg
+wk
+qg
+lj
+"}
+(19,1,1) = {"
+lj
+oF
+eH
+oF
+oF
+oF
+is
+oF
+qB
+oF
+oF
+PB
+oF
+oF
+oF
+oF
+FM
+qg
+Id
+oF
+oF
+oF
+oF
+oF
+PB
+oF
+oF
+oF
+oF
+Rc
+oF
+oF
+eH
+oF
+lj
+"}
+(20,1,1) = {"
+lj
+lj
+Oc
+lj
+lj
+lj
+Mg
+Mg
+JX
+lj
+lj
+lj
+uF
+uF
+lj
+lj
+kN
+qg
+Vo
+lj
+lj
+JX
+SA
+lj
+lj
+lj
+JX
+JX
+Mg
+lj
+lj
+lj
+Oc
+lj
+lj
+"}
+(21,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+PS
+TC
+TC
+TC
+sO
+lj
+xH
+TC
+TC
+BL
+lj
+kN
+SY
+Vo
+lj
+Aw
+RU
+qg
+Uv
+lj
+Th
+TC
+TC
+TC
+Tq
+lj
+vk
+vY
+Bc
+lj
+"}
+(22,1,1) = {"
+lj
+Bc
+Bc
+YU
+lj
+fF
+qg
+qg
+qg
+sQ
+lj
+TM
+SY
+qg
+Cw
+lj
+kN
+qg
+Vo
+lj
+Kn
+NI
+qg
+lL
+lj
+kN
+EU
+dW
+Ws
+Vo
+lj
+Bc
+Bc
+bf
+lj
+"}
+(23,1,1) = {"
+lj
+lj
+lj
+Bc
+XN
+kN
+qg
+PR
+qg
+Vo
+JX
+kN
+qg
+qg
+Vo
+DF
+kN
+qg
+Vo
+JX
+Kx
+Qu
+PR
+lL
+lj
+nn
+mN
+Dp
+dW
+Ah
+lj
+lj
+Uq
+Bc
+lj
+"}
+(24,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+kN
+qg
+qg
+qg
+Vo
+uR
+kN
+qg
+qg
+Vo
+DF
+kN
+nd
+Vo
+Ly
+qg
+qg
+qg
+lL
+lj
+qN
+Zp
+dW
+dW
+Vo
+XN
+Bc
+Bc
+Bc
+lj
+"}
+(25,1,1) = {"
+lj
+QJ
+vk
+lj
+lj
+fJ
+lc
+oF
+oF
+ty
+lj
+kN
+zI
+Zi
+Vo
+DF
+kN
+qg
+Vo
+lj
+Lk
+Lk
+Tu
+Vm
+lj
+WD
+oF
+oF
+zK
+vh
+lj
+QJ
+Bc
+Tg
+lj
+"}
+(26,1,1) = {"
+lj
+Bc
+Bc
+vY
+lj
+lj
+hQ
+hQ
+Mg
+lj
+lj
+NX
+qg
+qg
+Vo
+lj
+EA
+Gs
+gR
+lj
+lj
+Qy
+lj
+lj
+lj
+lj
+lj
+Oc
+lj
+lj
+lj
+lj
+bT
+lj
+lj
+"}
+(27,1,1) = {"
+lj
+bf
+Uq
+Bc
+lj
+gr
+Og
+TC
+TC
+RA
+lj
+yp
+qg
+PR
+Vo
+lj
+kN
+qg
+Vo
+lj
+LU
+Kr
+Kr
+EH
+XE
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+lj
+"}
+(28,1,1) = {"
+lj
+Bc
+Bc
+Tg
+lj
+ZN
+qg
+qg
+qg
+Vo
+lj
+yG
+zK
+oF
+CS
+lj
+kN
+Zi
+Vo
+IQ
+Kr
+Yo
+Yo
+Yo
+Kr
+XN
+vk
+Bc
+vY
+Bc
+Tg
+gK
+Bc
+dL
+lj
+"}
+(29,1,1) = {"
+lj
+lj
+lj
+bT
+lj
+Qw
+PR
+le
+qg
+Vo
+lj
+lj
+Oc
+lj
+lj
+lj
+kN
+qg
+hK
+lj
+Em
+Yo
+TJ
+Yo
+XZ
+lj
+Bc
+Bc
+Uq
+Bc
+Bc
+lj
+Bc
+Bc
+lj
+"}
+(30,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+kN
+qg
+qg
+Zi
+Vo
+lj
+Bc
+Bc
+vY
+Bc
+lj
+NX
+PR
+Vo
+lj
+Ey
+Qz
+Up
+fw
+Ox
+lj
+Bc
+Bc
+Bc
+Bc
+bf
+lj
+Bc
+Bc
+lj
+"}
+(31,1,1) = {"
+lj
+Bc
+Mz
+Bc
+lj
+gD
+oF
+oF
+oF
+tG
+lj
+bf
+Bc
+Bc
+Bc
+XN
+Qa
+qg
+Vo
+lj
+lj
+Oc
+lj
+lj
+lj
+lj
+Bc
+Bc
+QJ
+Bc
+Bc
+lj
+lj
+Bc
+lj
+"}
+(32,1,1) = {"
+lj
+Bc
+Bc
+lj
+lj
+lj
+Oc
+lj
+lj
+lj
+lj
+lj
+Bc
+Uq
+Bc
+lj
+kN
+qg
+Xm
+lj
+Tg
+Bc
+lj
+QJ
+Bc
+lj
+lj
+bT
+lj
+lj
+lj
+lj
+Bc
+Bc
+lj
+"}
+(33,1,1) = {"
+lj
+Bc
+QJ
+Bc
+vY
+Bc
+Tg
+Bc
+Bc
+lj
+Bc
+Tg
+Bc
+Bc
+Bc
+lj
+kN
+qg
+Vo
+XN
+bf
+Bc
+Uq
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Mz
+Bc
+lj
+"}
+(34,1,1) = {"
+lj
+Bc
+vk
+Bc
+Uq
+bf
+lj
+Bc
+dL
+gK
+Bc
+Bc
+QJ
+Bc
+vk
+lj
+kN
+fk
+Vo
+lj
+Bc
+vk
+Bc
+Bc
+vY
+gK
+dL
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(35,1,1) = {"
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+"}

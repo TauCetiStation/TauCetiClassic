@@ -365,7 +365,7 @@
 /atom/proc/auto_turn()
 	//Automatically turns based on nearby walls.
 	var/turf/simulated/wall/T = null
-	for(var/i = 1, i <= 8; i += i)
+	for(var/i = 1, i <= 8, i += i)
 		T = get_ranged_target_turf(src, i, 1)
 		if(istype(T))
 			//If someone knows a better way to do this, let me know. -Giacom
@@ -404,7 +404,7 @@
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	WT.eyecheck(user)
-	if(WT.use_tool(src, user, 100, volume = 50))
+	if(WT.use_tool(src, user, 100, volume = 50, quality = QUALITY_WELDING))
 		return 1
 	return 0
 

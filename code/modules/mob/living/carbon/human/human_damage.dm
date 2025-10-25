@@ -140,17 +140,17 @@
 // =============================================
 
 /mob/living/carbon/human/Stun(amount, ignore_canstun = FALSE)
-	if(HULK in mutations && !ignore_canstun)
+	if((HULK in mutations) && !ignore_canstun)
 		return SetStunned(0)
 	..()
 
 /mob/living/carbon/human/Weaken(amount, ignore_canstun = FALSE)
-	if(HULK in mutations && !ignore_canstun)
+	if((HULK in mutations) && !ignore_canstun)
 		return SetWeakened(0)
 	..()
 
 /mob/living/carbon/human/Paralyse(amount, ignore_canstun = FALSE)
-	if(HULK in mutations && !ignore_canstun)
+	if((HULK in mutations) && !ignore_canstun)
 		return SetParalysis(0)
 	..()
 
@@ -308,7 +308,7 @@ This function restores all bodyparts.
 
 	return bodyparts_by_name[zone]
 
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
+/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null, impact_direction = null)
 	if(damagetype == HALLOSS && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return FALSE
 
@@ -336,13 +336,16 @@ This function restores all bodyparts.
 	if(blocked)
 		damage *= blocked_mult(blocked)
 
+	if(!impact_direction && istype(used_weapon, /obj/item/projectile))
+		impact_direction = get_projectile_hit_direction(used_weapon)
+
 	var/datum/wound/created_wound
 	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
-			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
+			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon, impact_direction = impact_direction)
 		if(BURN)
-			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
+			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon, impact_direction = impact_direction)
 	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
 		BP.status &= ~ORGAN_SPLINTED
 		playsound(src, 'sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)

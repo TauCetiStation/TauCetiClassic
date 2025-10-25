@@ -423,10 +423,9 @@
 	if(!do_after(user, 5 SECONDS, FALSE, target))
 		return FALSE
 
-	if(target.ismindprotect())
-		for(var/obj/item/weapon/implant/mind_protect/L in target)
-			if(L.implanted)
-				qdel(L)
+	if(ismindprotect(target))
+		for(var/obj/item/weapon/implant/mind_protect/L in target.implants)
+			L.meltdown(harmful = FALSE)
 		target.sec_hud_set_implants()
 
 	var/converted = iscultist(target)

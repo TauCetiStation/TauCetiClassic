@@ -214,7 +214,7 @@
 	shuffle(filtered_candidates)
 
 	for(var/mob/dead/M in filtered_candidates)
-		if(positions > 0 && can_spawn(M))
+		if(positions > 0)
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
@@ -224,6 +224,9 @@
 
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
+	if(!can_spawn(spectator))
+		positions++
+		return
 	var/client/C = spectator.client
 
 	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
@@ -469,7 +472,7 @@
 	cooldown = 0
 	positions = INFINITY
 
-	spawn_landmark_name = "eorgwarp"
+	spawn_landmark_name = "Gladiator"
 
 /datum/spawner/gladiator/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
@@ -610,8 +613,7 @@
 	vox.grad_style = "none"
 
 	//Now apply cortical stack.
-	var/obj/item/weapon/implant/cortical/I = new(vox)
-	I.inject(vox, BP_HEAD)
+	new /obj/item/weapon/implant/cortical(vox)
 
 	vox.equip_vox_raider()
 	vox.regenerate_icons(update_body_preferences = TRUE)
@@ -865,4 +867,41 @@
 
 	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
 	add_faction_member(F, H, TRUE, TRUE)
+/*
+ * MALFUNCTION DRONE
+*/
+/datum/spawner/malf_drone
+	name = "Сбойный Дрон"
+	desc = "Станция взывает к вам, ей необходимо преображение."
 
+	ranks = list(ROLE_GHOSTLY)
+
+	var/obj/machinery/drone_fabricator/fabricator
+
+/datum/spawner/malf_drone/New(obj/machinery/drone_fabricator/DF)
+	. = ..()
+	fabricator = DF
+	RegisterSignal(fabricator, COMSIG_PARENT_QDELETING, PROC_REF(fabricator_deleting))
+
+/datum/spawner/malf_drone/proc/fabricator_deleting()
+	qdel(src)
+
+/datum/spawner/malf_drone/jump(mob/dead/spectator)
+	spectator.forceMove(get_turf(fabricator))
+
+/datum/spawner/malf_drone/spawn_body(mob/dead/spectator)
+	if(fabricator.stat & NOPOWER || !fabricator.produce_drones)
+		to_chat(spectator, "<span class='warning'>Фабрикатор обесточен и не может произвести нового дрона.</span>")
+		return
+
+	var/client/C = spectator.client
+
+	var/mob/living/silicon/robot/drone/maintenance/malfuction/D = new
+	D.key = C.key
+	D.forceMove(get_turf(fabricator))
+
+	D.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	D.mind.skills.maximize_active_skills()
+
+	var/datum/faction/malf_drones/F = find_faction_by_type(/datum/faction/malf_drones)
+	add_faction_member(F, D, FALSE)

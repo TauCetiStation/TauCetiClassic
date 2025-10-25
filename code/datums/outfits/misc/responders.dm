@@ -28,6 +28,7 @@
 
 		var/obj/item/weapon/card/id/centcom/ert/W = H.wear_id
 		W.assignment = assignment
+		W.sec_hud_icon = "Centcom"
 		W.rank = "Emergency Response Team"
 		W.assign(H.real_name)
 

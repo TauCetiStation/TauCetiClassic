@@ -6,41 +6,61 @@ SUBSYSTEM_DEF(job)
 	flags = SS_NO_FIRE
 	msg_lobby = "Размещаем вакансии..."
 
-	var/list/occupations = list()		//List of all jobs
-	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
-	var/list/type_occupations = list()	//Dict of al jobs, keys are types
-	var/list/unassigned = list()		//Players who need jobs
-	var/list/job_debug = list()			//Debug info
+	// list of all jobs
+	var/list/datum/job/all_occupations = list()
+	// list of map active jobs
+	var/list/datum/job/active_occupations = list()
+	// dictionary of all jobs, keys are titles
+	var/list/name_occupations = list()
+
+	// list of all departments
+	var/list/datum/department/departments = list()
+	// dictionary of all departments, keys are titles
+	var/list/name_departments = list()
+
+	// sorted list of all departments and related occupations (titles)
+	var/list/departments_occupations = list()
+	// sorted list of heads (titles) and associated departments (objects)
+	var/list/heads_positions = list()
+
+	// temporary list of players who needs jobs, for round setup
+	var/list/unassigned = list()
+	// debug info
+	var/list/job_debug = list()
+
 	var/obj/effect/landmark/start/fallback_landmark
 
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
-	init_joblist()
-	SetupOccupations()
-	LoadJobs("config/jobs.txt")
+	InitLists()
 	..()
 
+/datum/controller/subsystem/job/proc/InitLists()
+	for(var/D in subtypesof(/datum/department))
+		var/datum/department/department = new D()
+		departments += department
+		name_departments[department.title] = department
+		if(department.head)
+			heads_positions[department.head] = department
+		departments_occupations[department.title] = list()
 
-/datum/controller/subsystem/job/proc/SetupOccupations(faction = "Station")
-	occupations = list()
-	var/list/all_jobs = typesof(/datum/job)
-	if(!all_jobs.len)
-		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
-		return FALSE
-
-	for(var/J in all_jobs)
+	for(var/J in subtypesof(/datum/job))
 		var/datum/job/job = new J()
-		if(!job)
-			continue
-		if(job.faction != faction)
-			continue
-		occupations += job
+		all_occupations += job
+		if(job.map_check())
+			active_occupations += job
+		else
+			Debug("Job [job.title] not added because of map setup.")
+
 		name_occupations[job.title] = job
-		type_occupations[J] = job
+		for(var/department_title in job.departments)
+			departments_occupations[department_title] += job.title
 
-	return TRUE
-
+	sortTim(departments_occupations, GLOBAL_PROC_REF(cmp_department_titles))
+	for(var/dep in departments_occupations)
+		sortTim(departments_occupations[dep], GLOBAL_PROC_REF(cmp_job_titles))
+	sortTim(heads_positions, GLOBAL_PROC_REF(cmp_job_titles))
 
 /datum/controller/subsystem/job/proc/Debug(text)
 	if(!Debug2)
@@ -48,26 +68,14 @@ SUBSYSTEM_DEF(job)
 	job_debug.Add(text)
 	return TRUE
 
+/datum/controller/subsystem/job/proc/GetHumanJobs()
+	return name_occupations - list(JOB_AI, JOB_CYBORG)
+
+
 /datum/controller/subsystem/job/proc/GetJob(rank)
-	if(!occupations.len)
-		SetupOccupations()
+	if(!initialized)
+		CRASH("GetJob called before SSjob initialization!")
 	return name_occupations[rank]
-
-/datum/controller/subsystem/job/proc/GetJobByAltTitle(rank)
-	if(!occupations.len)
-		SetupOccupations()
-	for(var/job_name in name_occupations)
-		var/datum/job/J = name_occupations[job_name]
-		if(!J.alt_titles)
-			continue
-		if(rank in J.alt_titles)
-			return J
-	return null
-
-/datum/controller/subsystem/job/proc/GetJobType(jobtype)
-	if(!occupations.len)
-		SetupOccupations()
-	return type_occupations[jobtype]
 
 /datum/controller/subsystem/job/proc/GetPlayerAltTitle(mob/dead/new_player/player, rank)
 	return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
@@ -130,20 +138,17 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player)
 	Debug("GRJ Giving random job, Player: [player]")
-	for(var/datum/job/job in shuffle(occupations))
+	for(var/datum/job/job as anything in shuffle(active_occupations))
 		if(!job)
 			continue
 
 		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
 			continue
 
-		if(job.title in command_positions) //If you want a command position, select it!
+		if(job.title in heads_positions) //If you want a command position, select it!
 			continue
 
 		if(!job.is_species_permitted(player.client.prefs.species))
-			continue
-
-		if(!job.map_check())
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -172,17 +177,30 @@ SUBSYSTEM_DEF(job)
 			player.mind.assigned_role = null
 			player.mind.assigned_job = null
 			player.mind.special_role = null
-	SetupOccupations()
-	unassigned = list()
-	return
 
+	for(var/datum/job/J as anything in active_occupations)
+		J.current_positions = initial(J.current_positions)
+
+		if(!isnull(J.map_spawn_positions))
+			J.spawn_positions = J.map_spawn_positions
+		else
+			J.spawn_positions = initial(J.spawn_positions)
+
+		if(!isnull(J.map_total_positions))
+			J.total_positions = J.map_total_positions
+		else
+			J.total_positions = initial(J.total_positions)
+
+		J.quota = initial(J.quota)
+
+	unassigned = list()
 
 //This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/controller/subsystem/job/proc/FillHeadPosition()
 	for(var/level in JP_LEVELS)
-		for(var/command_position in command_positions)
+		for(var/command_position in heads_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)
 				continue
@@ -200,7 +218,7 @@ SUBSYSTEM_DEF(job)
 //This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
 //This is also to ensure we get as many heads as possible
 /datum/controller/subsystem/job/proc/CheckHeadPositions(level)
-	for(var/command_position in command_positions)
+	for(var/command_position in heads_positions)
 		var/datum/job/job = GetJob(command_position)
 		if(!job)
 			continue
@@ -259,13 +277,12 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
-	SetupOccupations()
 
 	//Holder for Triumvirate is stored in the ticker, this just processes it
-	if(SSticker)
-		for(var/datum/job/ai/A in occupations)
-			if(SSticker.triai)
-				A.spawn_positions = 3
+	// todo: make it round aspect
+	if(SSticker && SSticker.triai)
+		var/datum/job/ai/A = name_occupations[JOB_AI]
+		A?.spawn_positions = 3
 
 	//Get the players who are ready
 	for(var/mob/dead/new_player/player in player_list)
@@ -319,7 +336,7 @@ SUBSYSTEM_DEF(job)
 	// Hopefully this will add more randomness and fairness to job giving.
 
 	// Loop through all levels from high to low
-	var/list/shuffledoccupations = shuffle(occupations)
+	var/list/shuffledoccupations = shuffle(active_occupations)
 	for(var/level in JP_LEVELS)
 		//Check the head jobs first each level
 		CheckHeadPositions(level)
@@ -328,7 +345,7 @@ SUBSYSTEM_DEF(job)
 		for(var/mob/dead/new_player/player in unassigned)
 
 			// Loop through all jobs
-			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
+			for(var/datum/job/job as anything in shuffledoccupations) // SHUFFLE ME BABY
 				if(!job)
 					continue
 
@@ -339,10 +356,6 @@ SUBSYSTEM_DEF(job)
 				if(!job.player_old_enough(player.client))
 					Debug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
-
-				if(!job.map_check())
-					continue
-
 
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.job_preferences[job.title] == level)
@@ -477,22 +490,12 @@ SUBSYSTEM_DEF(job)
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, startingMoney, job.department_stocks)	//starting funds = salary
 
 	// If they're head, give them the account info for their department
-	if(H.mind && job.head_position)
-		var/remembered_info = ""
-		var/datum/money_account/department_account = department_accounts[job.department]
+	if(H.mind && (job.title in heads_positions))
+		var/datum/department/D = heads_positions[job.title]
+		if(D.station_account)
+			SSeconomy.add_account_knowledge(H, D.title)
 
-		if(department_account)
-			remembered_info += "<b>Your department's account number is:</b> #[department_account.account_number]<br>"
-			remembered_info += "<b>Your department's account pin is:</b> [department_account.remote_access_pin]<br>"
-			remembered_info += "<b>Your department's account funds are:</b> $[department_account.money]<br>"
-
-		H.mind.store_memory(remembered_info)
-
-		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_NUMBER, department_account.account_number)
-		H.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_PIN, department_account.remote_access_pin)
-
-	spawn(0)
-		to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
+	to_chat(H, "<span class='notice'><b>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</b></span>")
 
 	var/alt_title = null
 	if(H.mind)
@@ -513,6 +516,11 @@ SUBSYSTEM_DEF(job)
 	if(SSholiday.holidays[VALENTINES])
 		for(var/obj/item/weapon/storage/backpack/BACKP in H)
 			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
+
+	// Kulich for everyone!
+	if(SSholiday.holidays[EASTER])
+		for(var/obj/item/weapon/storage/backpack/BACKP in H)
+			new /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/kulich(BACKP)
 
 	//Give custom items
 	give_custom_items(H, job)
@@ -550,6 +558,9 @@ SUBSYSTEM_DEF(job)
 	if(Cl && Cl.player_ingame_age && isnum(Cl.player_ingame_age) && Cl.player_ingame_age < 3000)
 		var/obj/item/clothing/accessory/newbiebadge/badge = new(H)
 		H.equip_or_collect(badge, SLOT_NECK)
+		var/stationmap_type = SSmapping.get_stationmap_type()
+		if(stationmap_type)
+			H.equip_or_collect(new stationmap_type(H), SLOT_R_STORE)
 
 //		H.update_icons()
 
@@ -559,11 +570,7 @@ SUBSYSTEM_DEF(job)
 	if(!H)	return FALSE
 	var/obj/item/weapon/card/id/C = null
 
-	var/datum/job/job = null
-	for(var/datum/job/J in occupations)
-		if(J.title == rank)
-			job = J
-			break
+	var/datum/job/job = name_occupations[rank]
 
 	if(job)
 		if(job.title == "Cyborg")
@@ -584,8 +591,12 @@ SUBSYSTEM_DEF(job)
 			if(MA)
 				C.associated_account_number = MA.account_number
 				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
-				MA.owner_preferred_insurance_type = job.is_head ? SSeconomy.insurance_quality_decreasing[1] : H.roundstart_insurance
-				MA.owner_max_insurance_payment = job.is_head ? SSeconomy.roundstart_insurance_prices[MA.owner_preferred_insurance_type] : SSeconomy.roundstart_insurance_prices[H.roundstart_insurance]
+				if(job.title in heads_positions)
+					MA.owner_preferred_insurance_type = SSeconomy.insurance_quality_decreasing[1]
+					MA.owner_max_insurance_payment = SSeconomy.roundstart_insurance_prices[MA.owner_preferred_insurance_type]
+				else
+					MA.owner_preferred_insurance_type = H.roundstart_insurance
+					MA.owner_max_insurance_payment = SSeconomy.roundstart_insurance_prices[H.roundstart_insurance]
 				var/insurance_type = get_next_insurance_type(H.roundstart_insurance, MA, SSeconomy.roundstart_insurance_prices)
 				H.roundstart_insurance = insurance_type
 				var/med_account_number = global.department_accounts["Medical"].account_number
@@ -616,42 +627,8 @@ SUBSYSTEM_DEF(job)
 
 	return TRUE
 
-/datum/controller/subsystem/job/proc/LoadJobs(jobsfile)
-	if(!config.load_jobs_from_txt)
-		return FALSE
-
-	var/list/jobEntries = file2list(jobsfile)
-
-	for(var/job in jobEntries)
-
-		if(!job)
-			continue
-
-		job = trim(job)
-		if (!length(job))
-			continue
-
-		var/pos = findtext(job, "=")
-		var/name = null
-		var/value = null
-
-		if(pos)
-			name = copytext(job, 1, pos)
-			value = copytext(job, pos + 1)
-		else
-			continue
-
-		if(name && value)
-			var/datum/job/J = GetJob(name)
-			if(!J)	continue
-			J.total_positions = text2num(value)
-			J.spawn_positions = text2num(value)
-			if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
-				J.total_positions = 0
-	return TRUE
-
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
-	for(var/datum/job/job in occupations)
+	for(var/datum/job/job as anything in active_occupations)
 		var/tmp_str = "|[job.title]|"
 
 		var/high = 0
@@ -681,70 +658,32 @@ SUBSYSTEM_DEF(job)
 		tmp_str += "HIGH=[high]|MEDIUM=[medium]|LOW=[low]|NEVER=[never]|BANNED=[banned]|YOUNG=[young]|-"
 		feedback_add_details("job_preferences",tmp_str)
 
+/datum/controller/subsystem/job/proc/IsJobAvailable(mob/M, rank)
+	var/datum/job/job = SSjob.GetJob(rank)
+	if(!job || !M.client)
+		return FALSE
+	var/client/C = M.client
+	if(!job.is_position_available())
+		return FALSE
+	if(jobban_isbanned(M, rank))
+		return FALSE
+	if(!job.player_old_enough(C))
+		return FALSE
+	if(!job.map_check())
+		return FALSE
+	if(!job.is_species_permitted(C.prefs.species))
+		var/datum/quality/quality = SSqualities.qualities_by_name[C.prefs.selected_quality_name]
+		//skip check by quality
+		if(istype(quality, /datum/quality/quirkieish/unrestricted))
+			return TRUE
+		return FALSE
+	return TRUE
 
-/proc/show_location_blurb(client/C)
-	set waitfor = FALSE
-
-	if(!C)
-		return
-
-	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
-	var/obj/effect/overlay/blurb/B = new()
-
-	var/list/style_for_line[4]
-	var/list/lines[4]
-
-	var/age
-	if(ishuman(C.mob))
-		var/mob/living/carbon/human/H = C.mob
-		age += ", [H.age] years old"
-
-	lines[1] = "[C.mob.real_name][age]"
-
-	if(length(C.mob.mind.antag_roles))
-		lines[2] = C.mob.mind.antag_roles[1]
-		style_for_line[2] = "color:red;"
-	else
-		lines[2] = C.mob.mind.role_alt_title
-
-	var/station_name
-	if(is_station_level(C.mob.z))
-		station_name = "[station_name()], "
-
-	var/area/A = get_area(C.mob)
-	lines[3] = "[station_name][A.name]"
-
-	lines[4] = "[current_date_string], [worldtime2text()]"
-
-	C.screen += B
-
-	var/newline_flag = TRUE
-	for(var/j in 1 to lines.len)
-		var/new_line = uppertext(lines[j])
-		var/old_line = j > 1 ? "<span style=\"[style_for_line[j - 1]]\">[uppertext(lines[j - 1])]</span>" : null
-		animate(B, alpha = 255, time = 10)
-		newline_flag = !newline_flag
-		for(var/i = 2 to length_char(new_line) + 1)
-			var/cur_line = "<span style=\"[style_for_line[j]]\">[copytext_char(new_line, 1, i)]</span>"
-			if(newline_flag)
-				B.maptext = "<div style=\"[style]\">[old_line]<br>[cur_line]</div>"
-			else
-				B.maptext = "<div style=\"line-height: 0.9;[style]\">[cur_line]</div><br><br></br>"
-			sleep(1)
-		if(newline_flag || j == lines.len)
-			sleep(15)
-			animate(B, alpha = 0, time = 15)
-			sleep(15)
-
-	if(C)
-		C.screen -= B
-	qdel(B)
-
-/obj/effect/overlay/blurb
-	maptext_height = 64
-	maptext_width = 512
-	layer = FLOAT_LAYER
-	plane = HUD_PLANE
-	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "LEFT+1,BOTTOM+2"
+/datum/controller/subsystem/job/proc/GetActiveCount(rank)
+	var/count = 0
+	// Only players with the job assigned and AFK for less than 10 minutes count as active
+	// todo: store players in job datums for quick and easy loop
+	for(var/mob/M in player_list)
+		if(M.mind?.assigned_role == rank && M.client?.inactivity <= 10 MINUTES)
+			count++
+	return count

@@ -162,7 +162,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	return findtext(key, "Guest-", 1, 7) == 1
+	if(findtext(key, "Guest-", 1, 7) != 1)
+		return FALSE
+
+	var/i, ch, len = length(key)
+
+	for(i = 7, i <= len, ++i) //we know the first 6 chars are Guest-
+		ch = text2ascii(key, i)
+		if (ch < 48 || ch > 57) //0-9
+			return FALSE
+	return TRUE
 
 //Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(f)

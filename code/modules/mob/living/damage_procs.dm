@@ -8,7 +8,7 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
+/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
 	if(!damage || (blocked >= 100))
 		return FALSE
 

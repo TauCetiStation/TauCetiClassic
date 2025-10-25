@@ -333,12 +333,6 @@
 	global.washing_items_list -= /obj/item/clothing/head/helmet
 	global.washing_items_list -= /obj/item/clothing/gloves/pipboy
 
-/proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
-	//List of job. I can't believe this was calculated multiple times per tick!
-	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
-		var/datum/job/J = new T
-		joblist[J.title] = J
-
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

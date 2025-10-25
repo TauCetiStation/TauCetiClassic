@@ -1,7 +1,4 @@
 /datum/preferences/proc/ShowOccupation(mob/user)
-	var/limit = 22	//The amount of jobs allowed per column. Defaults to 19 to make it look nice.
-	var/list/splitJobs = list("Chief Medical Officer")	//Allows you split the table by job. You can make different tables for each department by including their heads.
-														//Defaults to CMO to make it look nice.
 	if(!SSjob)
 		return
 	. = "<tt><center>"
@@ -20,80 +17,74 @@
 		. += "<br><span style='color: red; font-style: italic; font-size: 12px;'>If you are experienced SS13 player, you can ask admins about the possibility of skipping minutes restriction for jobs.</span>"
 
 	. += "<table width='100%' cellpadding='1' cellspacing='0' style='margin-top:10px'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
-	. += "<table width='100%' cellpadding='1' cellspacing='0'>"
-	var/index = -1
+	. += "<div width='100%' style='column-count: 2'>"
 
-	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
-	var/datum/job/lastJob
-	if (!SSjob)		return
-	for(var/datum/job/job in SSjob.occupations)
+	if (!SSjob.initialized)
+		return
+	//for(var/datum/job/job as anything in SSjob.all_occupations)
+	for(var/department_tag in SSjob.departments_occupations)
+		. += "<div style='break-inside: avoid;'>"
+		for(var/job_tag in SSjob.departments_occupations[department_tag])
+			var/datum/job/job = SSjob.name_occupations[job_tag]
+			if((department_tag == DEP_COMMAND) && length(job.departments) > 1)
+				// show heads in related department, except if it's captain
+				continue
 
-		index += 1
-		if((index >= limit) || (job.title in splitJobs))
-			if((index < limit) && (lastJob != null))
-				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-				//the last job's selection color. Creating a rather nice effect.
-				for(var/i = 0, i < (limit - index), i += 1)
-					. += "<tr bgcolor='[lastJob.selection_color]'><td width='75%' align='right'><a>&nbsp;</a></td><td width='25%'><a>&nbsp;</a></td></tr>"
-			. += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
-			index = 0
-
-		. += "<tr bgcolor='[job.selection_color]'>"
-		. += "<td width='75%' align='right'>"
-		var/rank = job.title
-		lastJob = job
-		if(!job.map_check())
-			. += "<del>[rank]</del></td><td><b> \[DISABLED]</b></td></tr>"
-			continue
-		if(jobban_isbanned(user, rank))
-			. += "<del>[rank]</del></td><td><b><a href='byond://?_src_=prefs;preference=open_jobban_info;position=[rank]'> \[BANNED]</a></b></td></tr>"
-			continue
-		if(!job.player_old_enough(user.client))
-			if(config.use_ingame_minutes_restriction_for_jobs)
-				var/available_in_minutes = job.available_in_real_minutes(user.client)
-				. += "<del>[rank]</del></td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
+			. += "<div width='50%' style='background-color: [job.selection_color]; padding: 2px 0; display: flow-root;'>"
+			var/rank = job.title
+			if(!job.map_check())
+				. += "<del>[rank]</del><b> \[DISABLED]</b></div>"
+				continue
+			if(jobban_isbanned(user, rank))
+				. += "<del>[rank]</del><b><a href='byond://?_src_=prefs;preference=open_jobban_info;position=[rank]'> \[BANNED]</a></b></div>"
+				continue
+			if(!job.player_old_enough(user.client))
+				if(config.use_ingame_minutes_restriction_for_jobs)
+					var/available_in_minutes = job.available_in_real_minutes(user.client)
+					. += "<del>[rank]</del> \[IN [(available_in_minutes)] MINUTES]</div>"
+				else
+					var/available_in_days = job.available_in_days(user.client)
+					. += "<del>[rank]</del> \[IN [(available_in_days)] DAYS]</div>"
+				continue
+			if(!job.is_species_permitted(user.client.prefs.species))
+				. += "<del>[rank]</del><b> \[SPECIES RESTRICTED]</b></div>"
+				continue
+			if(job_preferences["Assistant"] == JP_LOW && (rank != "Assistant"))
+				. += "<font color=orange>[rank]</font></div>"
+				continue
+			if((rank in SSjob.heads_positions) || (rank == JOB_AI))//Bold head jobs
+				. += "<b>[rank]</b>"
 			else
-				var/available_in_days = job.available_in_days(user.client)
-				. += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
-			continue
-		if(!job.is_species_permitted(user.client.prefs.species))
-			. += "<del>[rank]</del></td><td><b> \[SPECIES RESTRICTED]</b></td></tr>"
-			continue
-		if(job_preferences["Assistant"] == JP_LOW && (rank != "Assistant"))
-			. += "<font color=orange>[rank]</font></td><td></td></tr>"
-			continue
-		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-			. += "<b>[rank]</b>"
-		else
-			. += "[rank]"
+				. += "[rank]"
 
-		. += "</td><td width='25%'>"
-
-		. += "<a class='white' href='byond://?_src_=prefs;preference=job;task=setJobLevel;dir=higher;text=[rank]' oncontextmenu='window.location.href=\"byond://?_src_=prefs;preference=job;task=setJobLevel;text=[rank]\";return false;'>"
-
-		if(rank =="Assistant")//Assistant is special
-			if(job_preferences["Assistant"])
-				. += " <font color=green size=2>Yes</font>"
-			else
-				. += " <font color=red size=2>No</font>"
-			. += "</a></td></tr>"
 			if(job.alt_titles)
-				. += "<tr bgcolor='[lastJob.selection_color]'><td width='75%' align='right'><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td><td width='25%'><a>&nbsp;</a></td></tr>"
-			continue
+				. += " (<a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">[GetPlayerAltTitle(job)]</a>)"
 
-		if(job_preferences[job.title] == JP_HIGH)
-			. += " <font color=blue size=2>High</font>"
-		else if(job_preferences[job.title] == JP_MEDIUM)
-			. += " <font color=green size=2>Medium</font>"
-		else if(job_preferences[job.title] == JP_LOW)
-			. += " <font color=orange size=2>Low</font>"
-		else
-			. += " <font color=red size=2>NEVER</font>"
-		. += "</a></td></tr>"
-		if(job.alt_titles)
-			. += "<tr bgcolor='[lastJob.selection_color]'><td width='75%' align='right'><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td><td><a>&nbsp;</a></td></tr>"
+			. += "<a class='white' style='display: inline-block; float: right;' href='byond://?_src_=prefs;preference=job;task=setJobLevel;dir=higher;text=[rank]' oncontextmenu='window.location.href=\"byond://?_src_=prefs;preference=job;task=setJobLevel;text=[rank]\";return false;'>"
 
-	. += "</table></table>"
+			if(rank =="Assistant")//Assistant is special
+				if(job_preferences["Assistant"])
+					. += "<font color=green size=2>Yes</font>"
+				else
+					. += "<font color=red size=2>No</font>"
+				. += "</a>"
+				. += "</div>"
+				continue
+
+			if(job_preferences[job.title] == JP_HIGH)
+				. += "<font color=blue size=2>High</font>"
+			else if(job_preferences[job.title] == JP_MEDIUM)
+				. += "<font color=green size=2>Medium</font>"
+			else if(job_preferences[job.title] == JP_LOW)
+				. += "<font color=orange size=2>Low</font>"
+			else
+				. += "<font color=red size=2>NEVER</font>"
+			. += "</a>"
+			. += "</div>"
+		
+		. += "</div>"
+
+	. += "</div></table>"
 
 	. += "</center></tt>"
 

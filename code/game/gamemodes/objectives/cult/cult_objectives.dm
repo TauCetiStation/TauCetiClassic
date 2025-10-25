@@ -82,13 +82,14 @@
 	weight = 1.0
 
 /datum/objective/cult/job_convert/New()
-	var/list/all_jobs = list() + engineering_positions + medical_positions + science_positions + civilian_positions - command_positions
 	var/list/possible_jobs = list()
-	for(var/I in all_jobs)
-		var/datum/job/J = SSjob.GetJob(I)
-		if(J.current_positions > 1)
-			possible_jobs += I
-	if(!possible_jobs.len)
+	var/excluded_departments = list(DEP_COMMAND, DEP_SILICON)
+	for(var/datum/job/J as anything in SSjob.active_occupations)
+		if(length(J.departments & excluded_departments))
+			continue
+		if(J.current_positions >= 2)
+			possible_jobs += J
+	if(!length(possible_jobs))
 		explanation_text = "Свободная задача"
 		convertees_needed = 0
 		return

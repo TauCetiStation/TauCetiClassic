@@ -459,7 +459,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	update_icon()
 	levelupdate()
 
-//Proc for make turf into plating 
+//Proc for make turf into plating
 /turf/simulated/floor/proc/remove_floor(obj/item/C, mob/user)
 	if(broken || burnt)
 		to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
@@ -638,7 +638,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				"<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>",
 				"<span class='warning'>Вы слышите звуки будто разрезают обшивку! По ту сторону должен быть открытый космос!</span>",
 				viewing_distance = 5)
-			if(W.use_tool(src, user, 100, 3, 100))
+			if(W.use_tool(src, user, 100, 3, 100, quality = QUALITY_WELDING))
 				user.visible_message(
 					"<span class='warning'><B>[user]</B> завершает разборку обшивки!</span>",
 					"<span class='warning'>Вы разобрали обшивку!</span>",

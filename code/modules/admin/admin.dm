@@ -499,7 +499,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/change_crew_salary()
 
-	var/list/crew = my_subordinate_staff("Admin")
+	var/list/crew = SSeconomy.my_subordinate_staff("Admin")
 	var/dat
 
 	dat += "<A href='byond://?src=\ref[src];global_salary=1'>Globally change crew salaries</A><br>"
@@ -989,15 +989,22 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/toggleguests()
 	set category = "Server"
-	set desc="Guests can't enter"
-	set name="Toggle guests"
-	guests_allowed = !( guests_allowed )
-	if (!( guests_allowed ))
-		to_chat(world, "<B>Guests may no longer enter the game.</B>")
-	else
-		to_chat(world, "<B>Guests may now enter the game.</B>")
-	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
+	set name="Guests mode"
+
+	var/current
+	for(var/desc in guest_modes)
+		if(guest_modes[desc] == config.guest_mode)
+			current = desc
+			break
+
+	var/new_mode = input(usr, "Выберите режим для гостевых аккаунтов.", "Режим для гостей", current) in guest_modes
+
+	config.guest_mode = guest_modes[new_mode]
+
+	global_ooc_info("Вход для гостевых аккаунтов переключен в режим \"[new_mode]\"")
+
+	log_admin("[key_name(usr)] toggled guests mode to [config.guest_mode].")
+	message_admins("[key_name_admin(usr)] toggled guests mode to [config.guest_mode].")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()

@@ -49,9 +49,14 @@
 	log_game("[key_name(user)] attached \the [A] to \the [src].")
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM)
-	if (istype(AM, /obj/effect/beam))	return
-	if (AM.move_speed < 12)	sense()
-	return
+	if(istype(AM, /obj/effect/beam))
+		return
+	if(ismob(AM) && !isliving(AM))
+		return
+	if(AM.move_speed >= 12)
+		return
+
+	sense()
 
 /obj/item/device/assembly/prox_sensor/proc/sense()
 	var/turf/mainloc = get_turf(src)

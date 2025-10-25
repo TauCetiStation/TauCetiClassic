@@ -74,14 +74,14 @@
 			return
 
 		if (isscrewing(I))
-			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
+			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50, quality = QUALITY_SCREWING))
 				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 		if ((ispulsing(I)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
-			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50))
+			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50, quality = QUALITY_PULSING))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0

@@ -6,6 +6,7 @@
 	canmove = FALSE
 	anchored = TRUE // don't get pushed around
 	hud_possible = list()
+	ear_deaf = 1000 // so we don't hear unnecessary sounds
 
 	var/ready             = FALSE
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
@@ -67,8 +68,22 @@
 			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
+			stat("Players Ready:", "[SSticker.totalPlayersReady]")
+			for(var/datum/job/J as anything in SSjob.active_occupations)
+				var/job_occupations = 0
+				for(var/mob/dead/new_player/player in global.new_player_list)
+					if((player.client == null) || (player.ready != TRUE))
+						continue
+					if((!istype(J, /datum/job/assistant)) && (player.client.prefs.job_preferences["Assistant"] != JP_LOW) && (player.client.prefs.job_preferences[J.title] == JP_HIGH))
+						job_occupations += 1
+					else if(istype(J, /datum/job/assistant) && (player.client.prefs.job_preferences[J.title] == JP_LOW)) // assistant > other jobs
+						job_occupations += 1
+				if(job_occupations >= 1)
+					if(J.total_positions == -1)
+						stat("[J.title]", "[job_occupations]/∞")
+					else
+						stat("[J.title]", "[job_occupations]/[J.total_positions]")
+
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr || !client)
@@ -76,6 +91,11 @@
 
 	if(href_list["lobby_changelog"])
 		client.changes()
+		return
+
+	if(href_list["lobby_profile"])
+		var/datum/profile_settings/profile = new()
+		profile.tgui_interact(src)
 		return
 
 	if(href_list["lobby_setup"])
@@ -87,6 +107,8 @@
 	if(href_list["lobby_ready"])
 		if(config.alt_lobby_menu)
 			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
@@ -97,6 +119,8 @@
 
 	if(href_list["lobby_be_special"])
 		if(config.alt_lobby_menu)
+			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
 			return
 		if(client.prefs.selected_quality_name)
 			var/datum/quality/quality = SSqualities.qualities_by_type[SSqualities.registered_clients[client.ckey]]
@@ -116,6 +140,8 @@
 		return
 
 	if(href_list["lobby_observe"])
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
 			return
@@ -132,6 +158,8 @@
 	if(href_list["lobby_join"])
 		if(config.alt_lobby_menu)
 			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
 		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
@@ -146,6 +174,8 @@
 
 	if(href_list["event_join"])
 		if(!config.alt_lobby_menu)
+			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
 			return
 		if(!spawners_menu)
 			spawners_menu = new()
@@ -177,26 +207,6 @@
 	else
 		to_chat(src, "Locked! You are ready.")
 		return
-
-/mob/dead/new_player/proc/IsJobAvailable(rank)
-	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job)
-		return FALSE
-	if(!job.is_position_available())
-		return FALSE
-	if(jobban_isbanned(src, rank))
-		return FALSE
-	if(!job.player_old_enough(client))
-		return FALSE
-	if(!job.map_check())
-		return FALSE
-	if(!job.is_species_permitted(client.prefs.species))
-		var/datum/quality/quality = SSqualities.qualities_by_name[client.prefs.selected_quality_name]
-		//skip check by quality
-		if(istype(quality, /datum/quality/quirkieish/unrestricted))
-			return TRUE
-		return FALSE
-	return TRUE
 
 /mob/dead/new_player/proc/spawn_as_observer()
 	var/mob/dead/observer/observer = new()
@@ -237,7 +247,7 @@
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 		return 0
-	if(!IsJobAvailable(rank))
+	if(!SSjob.IsJobAvailable(src, rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
 
@@ -331,96 +341,41 @@
 					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 				else if(SSshuttle.alert == 1) // Crew transfer initiated
 					dat += "<div class='notice red'>The station is currently undergoing crew transfer procedures.</div><br>"
-	var/available_job_count = 0
-	var/number_of_extra_line_breaks = 0 // We will need it in the end.
-	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
-			available_job_count++
 
-	if(!available_job_count)
-		dat += "<div class='notice red'>There are currently no open positions!</div>"
-	else
-		dat += "<div class='clearBoth'>Choose from the following open positions:</div>"
-		var/list/categorizedJobs = list(
-			"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
-			"NT Representatives" = list(jobs = list(), titles = centcom_positions, color = "#6c7391"),
-			"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
-			"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
-			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
-			"Synthetic" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
-			"Service" = list(jobs = list(), titles = civilian_positions, color = "#cccccc"),
-			"Medical" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = TRUE),
-			"Science" = list(jobs = list(), titles = science_positions, color = "#e6b3e6"),
-		)
-
-		for(var/datum/job/job in SSjob.occupations)
-			if(job && IsJobAvailable(job.title))
-				var/categorized = FALSE
-				for(var/jobcat in categorizedJobs)
-					var/list/jobs = categorizedJobs[jobcat]["jobs"]
-					if(job.title in categorizedJobs[jobcat]["titles"])
-						categorized = TRUE
-						if(jobcat == "Command")
-
-							if(job.title == "Captain") // Put captain at top of command jobs
-								jobs.Insert(1, job)
-							else
-								jobs += job
-						else // Put heads at top of non-command jobs
-							if(job.title in command_positions)
-								jobs.Insert(1, job)
-							else
-								jobs += job
-				if(!categorized)
-					categorizedJobs["Miscellaneous"]["jobs"] += job
-
-
-		dat += "<table><tr><td valign='top'>"
-		for(var/jobcat in categorizedJobs)
-			if(categorizedJobs[jobcat]["colBreak"])
-				dat += "</td><td valign='top'>"
-			if(!length(categorizedJobs[jobcat]["jobs"]))
+	var/job_data = ""
+	for(var/department_tag in SSjob.departments_occupations)
+		var/department_data = ""
+		for(var/job_tag in SSjob.departments_occupations[department_tag])
+			var/datum/job/J = SSjob.name_occupations[job_tag]
+			if(!SSjob.IsJobAvailable(src, J.title))
 				continue
-			var/color = categorizedJobs[jobcat]["color"]
-			dat += "<fieldset style='border: 2px solid [color]; display: inline'>"
-			dat += "<legend align='center' style='color: [color]'>[jobcat]</legend>"
-			for(var/datum/job/job in categorizedJobs[jobcat]["jobs"])
-				var/position_class = "otherPosition"
-				if(job.title in command_positions)
-					position_class = "commandPosition"
-				var/active = 0
-				if(job.current_positions) // If theres any people on this job already, we check if they are active and display it
-					for(var/mob/M in player_list) // Only players with the job assigned and AFK for less than 10 minutes count as active
-						if(M.mind && M.client && M.mind.assigned_role == job.title && M.client.inactivity <= 10 * 60 * 10)
-							active++
-				var/priority = 0
-				var/priorityMessage = ""
-				var/priority_color = "#ffffff"
-				switch(job.quota)
-					if(QUOTA_WANTED)
-						priority = "!+"
-						priority_color = "#83bf47"
-						priorityMessage = "Требуется"
-					if(QUOTA_UNWANTED)
-						priority = "¡-"
-						priority_color = "#ee0000"
-						priorityMessage = "Не требуется"
-				if(job.current_positions && active < job.current_positions)
-					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])<br><i>(Active: [active])</i></a>"
-					number_of_extra_line_breaks++
-				else
-					dat += "<a class='[position_class]' style='display:block;width:190px;color:[priority_color];font-weight:[priority ? "bold" : "normal"]' title='[priorityMessage]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[priority ? priority : ""] [job.title] ([job.current_positions])</a>"
-				categorizedJobs[jobcat]["jobs"] -= job
 
-			dat += "</fieldset><br>"
-		dat += "</td></tr></table>"
-		dat += "</div></div>"
+			var/quota_class
+			switch(J.quota)
+				if(QUOTA_WANTED)
+					quota_class = "jobPosition--wanted"
+				if(QUOTA_UNWANTED)
+					quota_class = "jobPosition--unwanted"
 
-	// Added the new browser window method
-	var/accurate_length = 600
-	if(number_of_extra_line_breaks) // We will expand window length for each <br>(Active: [active]) until its reaches 700 (worst cases)
-		accurate_length = min(700, accurate_length + (number_of_extra_line_breaks * 8))
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, accurate_length)
+			var/head_class
+			if(J.title in SSjob.heads_positions)
+				head_class = "jobPosition--command"
+
+			department_data += "<a class='jobPosition [quota_class] [head_class]' href='byond://?src=\ref[src];SelectedJob=[J.title]'>[J.title]"
+			if(J.current_positions)
+				department_data += " ([J.current_positions])<br><i>(Active: [SSjob.GetActiveCount(J.title)])</i>"
+			department_data += "</a>"
+		if(length(department_data))
+			var/datum/department/D = SSjob.name_departments[department_tag]
+			job_data += "<fieldset class='jobsColumn' style='border: 2px solid [D.color];'><legend align='center' style='color: [D.color]'>[D.title]</legend>[department_data]</fieldset>"
+
+	if(length(job_data))
+		dat += "<div class='clearBoth'>Choose from the following open positions:</div>"
+		dat += "<div class='jobsTable'>[job_data]</div>"
+	else
+		dat += "<div class='notice red'>There are currently no open positions!</div>"
+
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, 700)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
 	popup.open()
@@ -465,7 +420,7 @@
 	new_character.dna.original_character_name = new_character.real_name
 
 	// little randomize hunger parameters
-	new_character.nutrition = rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_WELL_FED)
+	new_character.nutrition = rand(NUTRITION_LEVEL_NORMAL, NUTRITION_LEVEL_WELL_FED)
 	// random individual metabolism mod from -10% to +10%
 	// so people don't get hungry at the same time
 	// but it affects all metabolism including chemistry, so i don't know if we need it

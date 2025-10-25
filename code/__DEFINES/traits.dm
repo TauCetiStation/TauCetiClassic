@@ -144,8 +144,8 @@
 #define TRAIT_EPILEPSY            "epilepsy"
 /// mob is fat and should use fat icons if possible
 #define TRAIT_FAT                 "fatness"
-/// can't become fat, should prevent previous trait 
-/// note: you can screw things up if you give TRAIT_FAT 
+/// can't become fat, should prevent previous trait
+/// note: you can screw things up if you give TRAIT_FAT
 /// without checking TRAIT_NEWER_FAT first
 #define TRAIT_NEVER_FAT           "never_fat"
 #define TRAIT_HIGH_PAIN_THRESHOLD "high_pain_threshold"
@@ -156,6 +156,11 @@
 #define TRAIT_NERVOUS             "nervous"
 #define TRAIT_STRESS_EATER        "stresseater"
 #define TRAIT_MULTITASKING        "multitasking"
+#define TRAIT_CAVE_EXPLORER       "cave_explorer"
+#define TRAIT_SHIFTY              "shifty"
+#define TRAIT_ADAMANTIUM_SKELETON "adamantium_skeleton"
+#define TRAIT_FRAGILE_BONES       "fragile_bones"
+#define TRAIT_BAD_BACK            "bad_back"
 #define TRAIT_NATURECHILD         "child_of_nature"
 #define TRAIT_MUTE                "mute"
 #define TRAIT_STRONGMIND          "strong_mind"
@@ -181,6 +186,7 @@
 #define TRAIT_PICKY_EATER         "picky_eater"
 #define TRAIT_CULT_EYES           "cult_eyes"
 #define TRAIT_CULT_HALO           "cult_halo"
+#define TRAIT_PLUVIAN_BLESSED     "pluvian_blessed"
 #define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
 #define TRAIT_HEMOCOAGULATION     "hemocoagulation"
 #define TRAIT_CLUMSY              "clumsy"
@@ -192,11 +198,6 @@
 #define TRAIT_ARIBORN             "ariborn"
 #define TRAIT_NO_CRAWL            "nocrawl"
 #define TRAIT_HIDDEN_TRASH_GUN    "hidden_trash_gun"
-#define TRAIT_VISUAL_MINDSHIELD   "visual_mindshield"
-#define TRAIT_VISUAL_LOYAL        "visual_loyal"
-#define TRAIT_VISUAL_OBEY         "visual_obey"
-#define TRAIT_VISUAL_CHEM         "visual_chem"
-#define TRAIT_VISUAL_TRACK        "visual_track"
 #define TRAIT_HEMOPHILIAC         "hemophiliac"
 #define TRAIT_NO_DISPOSALS_DAMAGE "no_disposals_damage"
 #define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
@@ -204,7 +205,6 @@
 #define TRAIT_FAST_WALKER         "fast_walker"
 #define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
 #define TRAIT_MIMING              "miming"
-#define TRAIT_WILLPOWER_IMPLANT   "willpower_implant"
 #define TRAIT_CAN_LEAP            "can_leap"
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
@@ -242,7 +242,7 @@
 
 
 /*
- * Elements traits - these will attach trait and corresponding /datum/element 
+ * Elements traits - these will attach trait and corresponding /datum/element
  * to the object, and detach element when no trait sources left
  * useful for elements with multiple sources
  * (similar to AddElementTrait() on tg, easier to manage but no support for arguments)

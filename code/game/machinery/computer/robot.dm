@@ -58,6 +58,7 @@
 				else
 					dat += " Operating Normally |"
 				if (!R.canmove)
+					EMPTY_BLOCK_GUARD
 				else if(R.cell)
 					dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
 				else
