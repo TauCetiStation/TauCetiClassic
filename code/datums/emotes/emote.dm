@@ -117,14 +117,20 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 	return sound
 
 /datum/emote/proc/play_sound(mob/user, intentional, emote_sound)
-	var/sound_frequency = null
+	var/volume = 100
+	var/sound_frequency = 1
+
 	if(age_variations && ishuman(user))
 		// TO-DO: add get_min_age, get_max_age to all mobs? ~Luduk
 		var/mob/living/carbon/human/H = user
 		var/voice_frequency = TRANSLATE_RANGE(H.age, H.species.min_age, H.species.max_age, 0.85, 1.05)
 		sound_frequency = 1.05 - (voice_frequency - 0.85)
 
-	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
+	if(HAS_TRAIT(user, ELEMENT_TRAIT_SMOLL))
+		sound_frequency *= 2
+		volume *= 0.6
+
+	playsound(user, emote_sound, VOL_EFFECTS_MASTER, volume, FALSE, sound_frequency)
 
 /datum/emote/proc/can_emote(mob/user, intentional)
 	if(!check_cooldown(user.next_emote_use, intentional))
