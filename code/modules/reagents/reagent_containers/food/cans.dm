@@ -10,8 +10,13 @@
 		verbs -= /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/update_world_icon()
-	cut_overlays()
-	return ..()
+	. = ..()
+
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
+		update_icon()
+	else
+		cut_overlays()
+
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/update_icon()
 	. = ..()
@@ -23,7 +28,7 @@
 		item_state_world = "[initial(item_state_world)]_empty"
 	else
 		item_state_world = initial(item_state_world)
-	update_world_icon()
+
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
