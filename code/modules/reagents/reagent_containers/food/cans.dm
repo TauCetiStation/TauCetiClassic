@@ -9,6 +9,10 @@
 		flags &= ~OPENCONTAINER
 		verbs -= /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 
+/obj/item/weapon/reagent_containers/food/drinks/cans/update_world_icon()
+	cut_overlays()
+	return ..()
+
 /obj/item/weapon/reagent_containers/food/drinks/cans/update_icon()
 	. = ..()
 	if(canopened)
@@ -19,15 +23,7 @@
 		item_state_world = "[initial(item_state_world)]_empty"
 	else
 		item_state_world = initial(item_state_world)
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/dropped()
-	update_icon()
-	cut_overlays()
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/drinks/cans/mob_pickup(mob/user, hand_index)
-	. = ..()
-	update_icon()
+	update_world_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
