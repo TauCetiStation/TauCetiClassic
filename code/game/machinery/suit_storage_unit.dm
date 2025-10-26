@@ -96,7 +96,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 			add_overlay("suit")
 		if(HELMET)
 			add_overlay("helmet")
-	 	if(BOOTS)
+		if(BOOTS)
 			add_overlay("boots")
 	else
 		var/obj/item/clothing/suit/space/rig/RIG_SUIT = SUIT
