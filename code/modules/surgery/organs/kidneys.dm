@@ -6,6 +6,7 @@
 	min_bruised_damage = 25
 	min_broken_damage = 45
 	max_damage = 70
+	cybernetic_version = /obj/item/organ/internal/kidneys/cybernetic
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_GROIN
 
@@ -16,6 +17,7 @@
 	compability = list(VOX)
 	parent_bodypart = BP_CHEST
 	sterile = TRUE
+	cybernetic_version = /obj/item/organ/internal/kidneys/cybernetic/voxc
 
 /obj/item/organ/internal/kidneys/tajaran
 	name = "tajaran kidneys"

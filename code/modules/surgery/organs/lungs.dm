@@ -8,6 +8,7 @@
 	min_bruised_damage = 25
 	min_broken_damage = 45
 	max_damage = 70
+	cybernetic_version = /obj/item/organ/internal/lungs/cybernetic
 	var/exhale_type = "carbon_dioxide"
 	var/breath_type = "oxygen"
 	var/has_gills = FALSE
@@ -249,7 +250,7 @@
 	sterile = TRUE
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
-
+	cybernetic_version = /obj/item/organ/internal/lungs/cybernetic/voxc
 
 /obj/item/organ/internal/lungs/tajaran
 	name = "tajaran lungs"

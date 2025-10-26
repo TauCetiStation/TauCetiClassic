@@ -9,6 +9,7 @@
 	max_damage = 45
 	min_bruised_damage = 15
 	min_broken_damage = 35
+	cybernetic_version = /obj/item/organ/internal/heart/cybernetic
 	var/heart_beat
 	var/pulse = PULSE_NORM
 	var/base_icon_state = "heart"
@@ -303,6 +304,7 @@
 	parent_bodypart = BP_GROIN
 	compability = list(VOX)
 	sterile = TRUE
+	cybernetic_version = /obj/item/organ/internal/heart/cybernetic/voxc
 
 /obj/item/organ/internal/heart/tajaran
 	name = "tajaran heart"

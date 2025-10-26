@@ -9,6 +9,7 @@
 	min_bruised_damage = 25
 	min_broken_damage = 45
 	max_damage = 70
+	cybernetic_version = /obj/item/organ/internal/liver/cybernetic
 	process_accuracy = 4
 
 /obj/item/organ/internal/liver/diona
@@ -29,6 +30,7 @@
 	parent_bodypart = BP_CHEST
 	alcohol_intensity = 1.6
 	sterile = TRUE
+	cybernetic_version = /obj/item/organ/internal/liver/cybernetic/voxc
 
 /obj/item/organ/internal/liver/tajaran
 	name = "tajaran liver"

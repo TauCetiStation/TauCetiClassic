@@ -8,6 +8,7 @@
 	max_damage = 45
 	min_bruised_damage = 15
 	min_broken_damage = 35
+	cybernetic_version = /obj/item/organ/internal/eyes/cybernetic
 	var/r_eyes = 0
 	var/g_eyes = 0
 	var/b_eyes = 0

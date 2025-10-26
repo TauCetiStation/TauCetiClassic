@@ -506,40 +506,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 			new_BP.insert_organ(character)
 
 		else if(status == "cybernetic" && IO)
-			if(IO)
-				qdel(IO)
-			switch(name)
-				if(O_HEART)
-					if(species == VOX)
-						var/obj/item/organ/internal/heart/cybernetic/voxc/C = new(null)
-						C.insert_organ(character)
-					else
-						var/obj/item/organ/internal/heart/cybernetic/C = new(null)
-						C.insert_organ(character)
-				if(O_KIDNEYS)
-					if(species == VOX)
-						var/obj/item/organ/internal/kidneys/cybernetic/voxc/C = new(null)
-						C.insert_organ(character)
-					else
-						var/obj/item/organ/internal/kidneys/cybernetic/C = new(null)
-						C.insert_organ(character)
-				if(O_LIVER)
-					if(species == VOX)
-						var/obj/item/organ/internal/liver/cybernetic/voxc/C = new(null)
-						C.insert_organ(character)
-					else
-						var/obj/item/organ/internal/liver/cybernetic/C = new(null)
-						C.insert_organ(character)
-				if(O_LUNGS)
-					if(species == VOX)
-						var/obj/item/organ/internal/lungs/cybernetic/voxc/C = new(null)
-						C.insert_organ(character)
-					else
-						var/obj/item/organ/internal/lungs/cybernetic/C = new(null)
-						C.insert_organ(character)
-				if(O_EYES)
-					var/obj/item/organ/internal/eyes/cybernetic/C = new(null)
-					C.insert_organ(character)
+			IO.mechanize()
 		else
 			continue
 

@@ -20,6 +20,7 @@
 	var/sterile = FALSE
 	var/durability = 1 // Damage multiplier for organs, that have damage values.
 	var/can_relocate = FALSE
+	var/cybernetic_version
 
 /obj/item/organ/internal/New(mob/living/carbon/holder)
 	if(istype(holder))
@@ -194,3 +195,9 @@
 
 /obj/item/organ/internal/proc/bruise()
 	damage = max(damage, min_bruised_damage)
+
+/obj/item/organ/internal/proc/mechanize()
+	if(cybernetic_version)
+		var/holder = owner
+		qdel(src)
+		new cybernetic_version(holder)
