@@ -3835,11 +3835,11 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "le" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
 	},
+/obj/machinery/suit_storage_unit/medical/medic/full,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lf" = (
@@ -3860,11 +3860,11 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lh" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
 	},
+/obj/machinery/suit_storage_unit/science/scientist/full,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "li" = (
@@ -3895,19 +3895,19 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "ll" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/machinery/suit_storage_unit/engine/atmos/full,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lm" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/machinery/suit_storage_unit/security/officer/full,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "ln" = (
@@ -3956,19 +3956,19 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "lu" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/machinery/suit_storage_unit/engine/engineer/full,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lv" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
 	},
+/obj/machinery/suit_storage_unit/security/officer/full,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lz" = (
