@@ -3494,9 +3494,6 @@
 /obj/item/device/suit_cooling_unit{
 	pixel_y = -4
 	},
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -3680,10 +3677,6 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/abandoned)
 "jL" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/mining,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/mining,
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
@@ -3692,6 +3685,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/machinery/suit_storage_unit/globose/mining/full,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brownchoco"
@@ -4224,6 +4218,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "li" = (
@@ -6727,16 +6722,7 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "sW" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
-	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
-	},
-/obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
-	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
-	},
+/obj/machinery/suit_storage_unit/wizard,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sX" = (
@@ -8253,13 +8239,10 @@
 	},
 /area/asteroid/mine/living_quarters)
 "xn" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/mining,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/mining,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/machinery/suit_storage_unit/globose/mining/full,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brownchoco"
@@ -9397,14 +9380,10 @@
 /turf/simulated/wall/yellow,
 /area/asteroid/mine/production)
 "AW" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/science,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/suit_storage_unit/science/scientist/full,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "AY" = (
@@ -10330,6 +10309,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "FH" = (
@@ -11263,18 +11243,13 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "JF" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/science,
-/obj/item/clothing/shoes/magboots,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/light/smart{
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "JI" = (
@@ -12238,15 +12213,10 @@
 	},
 /area/asteroid/research_outpost/entry)
 "Nr" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/globose/science,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Nt" = (
@@ -13359,12 +13329,6 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
 "Sx" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/globose/science,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/device/radio/intercom{
 	name = "Asteroid Intercom (General)";
 	pixel_y = 24
@@ -13372,6 +13336,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Sy" = (
