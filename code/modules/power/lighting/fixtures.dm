@@ -47,7 +47,7 @@
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
-	if (usr.is_busy() || !do_after(usr, 30, target = on_wall))
+	if (usr.is_busy() || !do_after(usr, 10, target = on_wall))
 		return
 
 	var/obj/machinery/light_construct/construct
@@ -114,7 +114,7 @@
 			if(user.is_busy(src))
 				return
 			to_chat(user, "You begin deconstructing [src].")
-			if(!W.use_tool(src, usr, 30, volume = 75, quality = QUALITY_WRENCHING))
+			if(!W.use_tool(src, usr, 5, volume = 75, quality = QUALITY_WRENCHING))
 				return
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
@@ -132,7 +132,7 @@
 	if(iscutter(W))
 		if (stage != STAGE_COILED)
 			return
-		if(!W.use_tool(src, usr, 30, volume = 75, quality = QUALITY_CUTTING))
+		if(!W.use_tool(src, usr, 5, volume = 75, quality = QUALITY_CUTTING))
 			return
 		stage = STAGE_START
 		switch(fitting)
@@ -149,7 +149,7 @@
 	if(iscoil(W))
 		if (stage != STAGE_START)
 			return
-		if(!W.use_tool(src, usr, 30, amount = 1, volume = 75))
+		if(!W.use_tool(src, usr, 5, amount = 1, volume = 75))
 			return
 		switch(fitting)
 			if(LAMP_FITTING_BULB)
@@ -164,7 +164,7 @@
 	if(isscrewing(W))
 		if (stage != STAGE_COILED)
 			return
-		if(!W.use_tool(src, usr, 30, volume = 75, quality = QUALITY_SCREWING))
+		if(!W.use_tool(src, usr, 5, volume = 75, quality = QUALITY_SCREWING))
 			return
 
 		user.visible_message("[user.name] closes [src]'s casing.", \
