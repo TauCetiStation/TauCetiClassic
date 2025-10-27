@@ -23,10 +23,10 @@ components:
 
   ## Иконки ##
   icons/:
-    /sprites-department
+    TauCetiStation/sprites-department
 
   ## Карты ##
-  maps/boxstation/: /maps-department
+  maps/boxstation/: TauCetiStation/maps-department
   #maps/delta/: Deahaka
   #maps/falcon/: Tap0r
   #maps/gamma/: AgRevol
@@ -41,7 +41,7 @@ components:
   "*.py": volas
   "*.sh": volas
 
-  .github/: /maintainers
+  .github/: TauCetiStation/maintainers
 
 ignored-authors:
   - dependabot

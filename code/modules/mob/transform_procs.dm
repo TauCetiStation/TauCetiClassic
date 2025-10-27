@@ -20,17 +20,12 @@
 	//Handle items on mob
 
 	//first implants
-	var/list/stored_implants = list()
+	var/list/stored_implants
 
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/IMP in src)
-			stored_implants += IMP
-			IMP.loc = null
-			IMP.imp_in = null
-			IMP.implanted = FALSE
-			if(IMP.part)
-				IMP.part.implants -= src
-				IMP.part = null
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(implants))
+		stored_implants = implants.Copy()
+		for(var/obj/item/weapon/implant/IMP as anything in implants)
+			IMP.eject()
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items()
@@ -90,16 +85,14 @@
 		O.adjustCloneLoss(getCloneLoss())
 		O.adjustFireLoss(getFireLoss())
 		O.adjustBrainLoss(getBrainLoss())
-		O.adjustHalLoss()
+		O.adjustHalLoss(getHalLoss())
 		O.updatehealth()
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/Y in stored_implants)
-			var/obj/item/weapon/implant/IMP = Y
-			IMP.stealth_inject(O)
-		O.sec_hud_set_implants()
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(stored_implants))
+		for(var/obj/item/weapon/implant/IMP as anything in stored_implants)
+			IMP.inject(O)
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -116,13 +109,7 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		var/datum/role/changeling/C = O.mind.GetRoleByType(/datum/role/changeling)
-		if(C)
-			C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-			O.changeling_update_languages(C.absorbed_languages)
-			for(var/mob/living/parasite/essence/M in src)
-				M.transfer(O)
-	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE, O)
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
@@ -145,17 +132,12 @@
 	//Handle items on mob
 
 	//first implants
-	var/list/stored_implants = list()
+	var/list/stored_implants
 
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/IMP in src)
-			stored_implants += IMP
-			IMP.loc = null
-			IMP.imp_in = null
-			IMP.implanted = FALSE
-			if(IMP.part)
-				IMP.part.implants -= src
-				IMP.part = null
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(implants))
+		stored_implants = implants.Copy()
+		for(var/obj/item/weapon/implant/IMP as anything in implants)
+			IMP.eject()
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in get_equipped_items())
@@ -216,18 +198,14 @@
 		O.adjustCloneLoss(getCloneLoss())
 		O.adjustFireLoss(getFireLoss())
 		O.adjustBrainLoss(getBrainLoss())
-		O.adjustHalLoss()
+		O.adjustHalLoss(getHalLoss())
 		O.updatehealth()
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/Y in stored_implants)
-			var/obj/item/weapon/implant/IMP = Y
-			var/obj/item/organ/external/BP = pick(O.bodyparts)
-			if(BP)
-				IMP.inject(O, BP)
-		O.sec_hud_set_implants()
+	if ((tr_flags & TR_KEEPIMPLANTS) && length(stored_implants))
+		for(var/obj/item/weapon/implant/IMP as anything in stored_implants)
+			IMP.inject(O)
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -244,19 +222,13 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C)
-			O.changeling_update_languages(C.absorbed_languages)
-			for(var/mob/living/parasite/essence/M in src)
-				M.transfer(O)
-
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
 	. = O
+	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE, O)
 	qdel(src)
-	SEND_SIGNAL(O, COMSIG_MONKEY_HUMANIZE)
 
 /mob/dead/new_player/AIize()
 	spawning = 1
@@ -332,12 +304,11 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/crewsimov, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -390,7 +361,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -421,7 +391,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -457,7 +426,6 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null
@@ -488,7 +456,6 @@
 	for(var/obj/item/W in src)
 		drop_from_inventory(W)
 
-	regenerate_icons()
 	notransform = TRUE
 	canmove = 0
 	icon = null

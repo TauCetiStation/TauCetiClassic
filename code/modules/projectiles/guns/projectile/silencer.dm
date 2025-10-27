@@ -8,6 +8,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 	desc = "Универсальный глушитель для стрелкового оружия."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silencer"
+	item_state_world = "silencer_w"
 	w_class = SIZE_TINY
 
 /obj/item/weapon/gun/projectile/automatic/proc/install_silencer(obj/item/I, mob/user)

@@ -73,7 +73,7 @@
 /obj/item/organ/external/chest/robot
 	name = "robotic chest"
 
-	icon = 'icons/mob/human_races/robotic.dmi'
+	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "chest_m"
 
 	controller_type = /datum/bodypart_controller/robot
@@ -84,7 +84,7 @@
 /obj/item/organ/external/head/robot
 	name = "robotic head"
 
-	icon = 'icons/mob/human_races/robotic.dmi'
+	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "head_m"
 
 	controller_type = /datum/bodypart_controller/robot
@@ -95,7 +95,7 @@
 /obj/item/organ/external/groin/robot
 	name = "robotic groin"
 
-	icon = 'icons/mob/human_races/robotic.dmi'
+	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "groin_m"
 
 	controller_type = /datum/bodypart_controller/robot
@@ -106,7 +106,7 @@
 /obj/item/organ/external/l_arm/robot
 	name = "robotic left arm"
 
-	icon = 'icons/mob/human_races/robotic.dmi'
+	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "l_arm"
 
 	controller_type = /datum/bodypart_controller/robot
@@ -117,7 +117,7 @@
 /obj/item/organ/external/r_arm/robot
 	name = "robotic right arm"
 
-	icon = 'icons/mob/human_races/robotic.dmi'
+	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "r_arm"
 
 	controller_type = /datum/bodypart_controller/robot
@@ -128,7 +128,7 @@
 /obj/item/organ/external/r_leg/robot
 	name = "robotic right leg"
 
-	icon = 'icons/mob/human_races/robotic.dmi'
+	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "r_leg"
 
 	controller_type = /datum/bodypart_controller/robot
@@ -139,7 +139,7 @@
 /obj/item/organ/external/l_leg/robot
 	name = "robotic left leg"
 
-	icon = 'icons/mob/human_races/robotic.dmi'
+	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "l_leg"
 
 	controller_type = /datum/bodypart_controller/robot

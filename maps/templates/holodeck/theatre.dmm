@@ -69,7 +69,7 @@
 /area/station/civilian/holodeck/source_theatre)
 "g" = (
 /obj/structure/rack/holorack,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/under/suit_jacket,
 /obj/item/clothing/head/that,
 /obj/item/clothing/glasses/monocle,

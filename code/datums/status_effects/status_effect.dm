@@ -88,8 +88,8 @@ var/global/list/spawnable_status_effects = list(
 ////////////////
 
 /atom/movable/screen/alert/status_effect
-	name = "Curse of Mundanity"
-	desc = "You don't feel any different..."
+	name = "Проклятие обыденности"
+	desc = "Вы не чувствуете никакой разницы..."
 	var/datum/status_effect/attached_effect
 
 /atom/movable/screen/alert/status_effect/Destroy()

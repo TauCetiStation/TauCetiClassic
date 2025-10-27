@@ -75,7 +75,7 @@
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
 		user.attack_log += "\[[time_stamp()]\]<font color='red'>used a Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 		//send message for AI
-		to_chat(user.connected_ai, "<span class='info'>HARM ALARM used by <a href=?src=\ref[user.connected_ai];track=\ref[user]>[user]</span>")
+		to_chat(user.connected_ai, "<span class='info'>HARM ALARM used by <a href=byond://?src=\ref[user.connected_ai];track=\ref[user]>[user]</span>")
 	else
 		user.audible_message("<span class='userdanger'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</span>")
 		playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, 100)
@@ -134,8 +134,8 @@
 		if(!M.IsSleeping())
 			if(M.crawling)
 				M.SetCrawling(FALSE)
-		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M.gender)] up!</span>", \
-							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
+		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M)] up!</span>", \
+							"<span class='notice'>You shake [M] trying to wake [P_THEM(M)] up!</span>")
 	else
 		if(!M.IsSleeping())
 			if(M.has_bodypart(BP_HEAD) && (user.get_targetzone() == BP_HEAD))
@@ -143,10 +143,10 @@
 									"<span class='notice'>You bop [M] on the head!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] hugs [M] in a firm bear-hug!</span>", \
-								"<span class='notice'>You hug [M] firmly to make [P_THEM(M.gender)] feel better!</span>")
+								"<span class='notice'>You hug [M] firmly to make [P_THEM(M)] feel better!</span>")
 		else
-			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [P_THEM(M.gender)] up!</span>", \
-								"<span class='notice'>You gently touch [M] trying to wake [P_THEM(M.gender)] up!</span>")
+			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [P_THEM(M)] up!</span>", \
+								"<span class='notice'>You gently touch [M] trying to wake [P_THEM(M)] up!</span>")
 	M.AdjustSleeping(-10 SECONDS)
 	M.AdjustParalysis(-3)
 	M.AdjustStunned(-3)

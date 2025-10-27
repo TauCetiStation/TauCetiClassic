@@ -87,3 +87,30 @@
 	. = find_faction_by_type(faction_type)
 	if(!.)
 		. = create_faction(faction_type, post_setup, give_objectives)
+
+// create faction with custom parameters
+// can be used before ticker initialization
+/proc/create_custom_faction(name, id, logo, objective)
+	var/datum/faction/F = new /datum/faction/custom
+
+	if(name)
+		F.name = name
+
+	if(id)
+		F.ID = id
+
+	if(logo)
+		F.logo_state = logo
+
+	if(objective)
+		var/datum/objective/custom/C = new /datum/objective/custom
+		C.explanation_text = objective
+		F.AppendObjective(C)
+
+	if(SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
+		SSticker.mode.factions += F
+	else
+		// gamemode will check this list at Setup and register these factions
+		LAZYADD(preinit_factions, F)
+
+	return F

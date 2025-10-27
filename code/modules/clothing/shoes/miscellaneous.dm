@@ -64,7 +64,6 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN + 1.0
 
 /obj/item/clothing/shoes/clown_shoes/Destroy()
 	if(slot_equipped == SLOT_SHOES)
@@ -74,12 +73,9 @@
 	return ..()
 
 /obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
-	if(user.IsClumsy())
-		slowdown = SHOES_SLOWDOWN
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 
 /obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)
-	slowdown = SHOES_SLOWDOWN + 1.0
 	qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
@@ -201,6 +197,8 @@
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	slowdown_off = 1
+	item_state_world =  "syndiemag0_w"
+	item_state = "syndiemag"
 
 /obj/item/clothing/shoes/magboots/ert
 	name = "advanced magboots"
@@ -208,6 +206,8 @@
 	slowdown_off = 1
 	icon_state = "advmag0"
 	magboot_state = "advmag"
+	item_state_world =  "advmag0_w"
+	item_state = "advmag"
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"

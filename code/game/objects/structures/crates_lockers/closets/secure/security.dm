@@ -10,6 +10,18 @@
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel/cap(src)
+
+
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		new /obj/item/weapon/gun/projectile/revolver/detective(src)
+		new /obj/item/ammo_box/speedloader/c38(src)
+		new /obj/item/ammo_box/speedloader/c38m(src)
+
+	else
+		new /obj/item/weapon/gun/energy/gun/head(src)
+
+	new /obj/item/clothing/accessory/armor(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/suit/captunic/capjacket(src)
 	new /obj/item/clothing/head/helmet/cap(src)
@@ -20,15 +32,15 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/device/radio/headset/heads/captain(src)
 	new /obj/item/clothing/gloves/captain(src)
-	new /obj/item/weapon/gun/energy/gun/head(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
 	new /obj/item/device/remote_device/captain(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/captain(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 		new /obj/item/clothing/head/santa(src)
@@ -56,7 +68,10 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/weapon/storage/briefcase/centcomm(src)
-	new /obj/item/device/radio/headset/headset_int(src)
+	for(var/i in 1 to 2)
+		new /obj/item/device/radio/headset/headset_int(src)
+		new /obj/item/clothing/glasses/sunglasses/big(src)
+		new /obj/item/device/flash(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
@@ -66,6 +81,14 @@
 	icon_opened = "hopsecure_open"
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		new /obj/item/weapon/gun/projectile/revolver/detective(src)
+		new /obj/item/ammo_box/speedloader/c38(src)
+
+	else
+		new /obj/item/weapon/gun/energy/gun/head(src)
+
 	new /obj/item/device/remote_device/head_of_personal(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/suit/armor/vest(src)
@@ -76,12 +99,13 @@
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/box/ids(src)
 
-	new /obj/item/weapon/gun/energy/gun/head(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/device/flash(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hop(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
+	new /obj/item/weapon/storage/pouch/large_generic(src)
 
 /obj/structure/closet/secure_closet/hop2
 	name = "Head of Personnel's Attire"
@@ -120,8 +144,20 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(src)
+		for (var/i in 1 to 2)
+			new /obj/item/ammo_box/magazine/glock/extended/rubber(src)
+		new /obj/item/ammo_box/magazine/glock/extended(src)
+
+	else
+		new /obj/item/weapon/gun/energy/gun/hos(src)
+		new /obj/item/weapon/gun/energy/taser(src)
+
 	new /obj/item/clothing/accessory/armor/dermal(src)
 	new /obj/item/clothing/head/hos_peakedcap(src)
+	new /obj/item/clothing/head/hos_hat(src)
 	new /obj/item/device/remote_device/head_of_security(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security(src)
@@ -139,14 +175,13 @@
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/melee/telebaton(src)
-	new /obj/item/weapon/gun/energy/gun/hos(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/weapon/storage/lockbox/medal/hos(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -165,16 +200,36 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		new /obj/item/clothing/suit/armor/vest/fullbody(src)
+		new /obj/item/device/radio/headset/headset_sec/nt_pmc(src)
+		new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
+		new /obj/item/clothing/head/soft/nt_pmc_cap(src)
+		new /obj/item/clothing/under/tactical(src)
+	else
+		new /obj/item/clothing/head/beret/sec/warden(src)
+		new /obj/item/clothing/under/rank/warden(src)
+		new /obj/item/clothing/under/rank/warden_fem(src)
+		new /obj/item/clothing/suit/storage/flak/warden(src)
+		new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
+
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		new /obj/item/weapon/gun/projectile/automatic/l13(src)
+		for (var/i in 1 to 2)
+			new /obj/item/ammo_box/magazine/l13(src) //rubber
+
+	else if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
+		new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
+
+	else
+		new /obj/item/weapon/gun/energy/taser(src)
+
 	new /obj/item/clothing/head/helmet/warden(src)
-	new /obj/item/clothing/head/beret/sec/warden(src)
-	new /obj/item/clothing/under/rank/warden(src)
-	new /obj/item/clothing/under/rank/warden_fem(src)
 	new /obj/item/clothing/suit/storage/flak(src)
-	new /obj/item/clothing/suit/storage/flak/warden(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash(src)
@@ -186,8 +241,8 @@
 	new /obj/item/device/hailer(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/weapon/storage/box/mines/shock(src)
+	new /obj/item/weapon/storage/pouch/ammo(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -208,24 +263,42 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 
-	new /obj/item/clothing/gloves/security(src)
-	new /obj/item/clothing/suit/storage/flak(src)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/clothing/suit/armor/vest/fullbody(src)
+		new /obj/item/device/radio/headset/headset_sec/nt_pmc(src)
+		new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
+	else
+		new /obj/item/clothing/gloves/security(src)
+		new /obj/item/clothing/suit/storage/flak(src)
+		new /obj/item/device/radio/headset/headset_sec(src)
+		new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
+
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
+		for (var/i in 1 to 3)
+			new /obj/item/ammo_box/magazine/glock/rubber(src)
+
+	else if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
+		new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
+
+	else
+		new /obj/item/weapon/gun/energy/taser(src)
+
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/device/hailer(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/energy/taser(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -270,7 +343,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/under/det(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		new /obj/item/weapon/gun/energy/taser(src)
@@ -339,7 +413,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
 
@@ -351,8 +426,20 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	icon_opened = "syndicatealtsecure_open"
 
 /obj/structure/closet/secure_closet/pistols/PopulateContents()
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		for (var/i in 1 to 3)
+			new /obj/item/weapon/gun/projectile/automatic/l13(src)
+		for (var/i in 1 to 3)
+			new /obj/item/ammo_box/magazine/l13(src) //rubber
+
+	else if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
+		for (var/i in 1 to 3)
+			new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
+
+	else
+		for (var/i in 1 to 3)
+			new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
 
 /obj/structure/closet/secure_closet/usp_cartridges
 	name = "USP cartridges Secure Closet"
@@ -391,15 +478,21 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	icon_opened = "blueshieldsecure_open"
 
 /obj/structure/closet/secure_closet/blueshield/PopulateContents()
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
+		new /obj/item/weapon/gun/energy/gun/nuclear(src)
+
+	else
+		new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(src)
+		for (var/i in 1 to 4)
+			new /obj/item/ammo_box/magazine/glock/extended/rubber(src)
+		for (var/i in 1 to 2)
+			new /obj/item/ammo_box/magazine/glock/extended(src)
+
 	new /obj/item/clothing/head/helmet/blueshield(src)
 	new /obj/item/clothing/suit/storage/flak/blueshield(src)
 
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(src)
-	for (var/i in 1 to 4)
-		new /obj/item/ammo_box/magazine/glock/extended/rubber(src)
-	for (var/i in 1 to 2)
-		new /obj/item/ammo_box/magazine/glock/extended(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/belt/security(src)
 
@@ -409,3 +502,4 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
+	new	/obj/item/clothing/gloves/latex/nitrile(src)

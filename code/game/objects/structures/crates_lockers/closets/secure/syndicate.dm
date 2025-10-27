@@ -14,6 +14,7 @@
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/kitchenknife/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
 
 /obj/structure/closet/secure_closet/syndicate/commander
 	name = "commander secure closet"
@@ -27,4 +28,6 @@
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/kitchenknife/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)
-	new /obj/item/device/radio/uplink(src)
+	new /obj/item/device/radio/uplink/nukeop_leader(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
+	new /obj/item/weapon/storage/pouch/large_generic(src)

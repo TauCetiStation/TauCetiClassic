@@ -56,7 +56,7 @@
 	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(WT.use_tool(src, user, 20, volume = 50))
+		if(WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 			if(WT.isOn())
 				if(WT.get_fuel() >= 4)
 					if(inside)
@@ -356,7 +356,7 @@
 			var/spawn_type = pick(
 			/obj/item/weapon/gun/energy/sniperrifle/rails,
 			/obj/item/weapon/gun/tesla/rifle,
-			/obj/item/weapon/gun/energy/laser/scatter/alien,
+			/obj/item/weapon/gun/energy/laser/scatter_alien,
 			/obj/item/weapon/gun/energy/laser/selfcharging/alien)
 			if(spawn_type && spawn_type != /obj/item/weapon/gun/tesla/rifle)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(loc)

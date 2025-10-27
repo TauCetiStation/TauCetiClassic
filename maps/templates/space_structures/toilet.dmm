@@ -10,7 +10,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "d" = (
 /obj/structure/toilet{
@@ -24,7 +24,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "g" = (
 /obj/machinery/door/window/southright,
@@ -34,10 +34,10 @@
 "k" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "l" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 
 (1,1,1) = {"

@@ -1,94 +1,6 @@
 /*
  * Holds procs designed to change one type of value, into another.
- * Contains:
- *			hex2num & num2hex
- *			file2list
- *			angle2dir
- *			angle2text
- *			worldtime2text
  */
-
-//Returns an integer given a hex input
-/proc/hex2num(hex)
-	if (!( istext(hex) ))
-		return
-
-	var/num = 0
-	var/power = 0
-	var/i = null
-	i = length(hex)
-	while(i > 0)
-		var/char = copytext(hex, i, i + 1)
-		switch(char)
-			if("0")
-				//Apparently, switch works with empty statements, yay! If that doesn't work, blame me, though. -- Urist
-			if("9", "8", "7", "6", "5", "4", "3", "2", "1")
-				num += text2num(char) * 16 ** power
-			if("a", "A")
-				num += 16 ** power * 10
-			if("b", "B")
-				num += 16 ** power * 11
-			if("c", "C")
-				num += 16 ** power * 12
-			if("d", "D")
-				num += 16 ** power * 13
-			if("e", "E")
-				num += 16 ** power * 14
-			if("f", "F")
-				num += 16 ** power * 15
-			else
-				return
-		power++
-		i--
-	return num
-
-//Returns the hex value of a number given a value assumed to be a base-ten value
-/proc/num2hex(num, placeholder)
-
-	if (placeholder == null)
-		placeholder = 2
-	if (!( isnum(num) ))
-		return
-
-	var/hex = ""
-	if (num)
-		var/i = 0
-		while(16 ** i < num)
-			i++
-		var/power = null
-		power = i - 1
-		while(power >= 0)
-			var/val = round(num / 16 ** power)
-			num -= val * 16 ** power
-			switch(val)
-				if(9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0)
-					hex += text("[]", val)
-				if(10.0)
-					hex += "A"
-				if(11.0)
-					hex += "B"
-				if(12.0)
-					hex += "C"
-				if(13.0)
-					hex += "D"
-				if(14.0)
-					hex += "E"
-				if(15.0)
-					hex += "F"
-				else
-			power--
-	while(length(hex) < placeholder)
-		hex = text("0[]", hex)
-	return hex
-
-/proc/numlist2hex(list/numlist)
-	var/hex = "#"
-	for(var/col_num in 1 to 3)
-		var/col_hex = num2hex(numlist[col_num])
-		while(length(col_hex) < 2)
-			col_hex = text("0[]", col_hex) // Takes care of leading zeroes.
-		hex += col_hex
-	return hex
 
 /proc/text2numlist(text, delimiter="\n")
 	var/list/num_list = list()
@@ -107,8 +19,7 @@
 	return splittext(trim(return_file_text(filename)),seperator)
 
 
-//Turns a direction into text
-
+//Turns a direction into text (what?)
 /proc/num2dir(direction)
 	switch(direction)
 		if(1.0) return NORTH
@@ -117,8 +28,6 @@
 		if(8.0) return WEST
 		else
 			world.log << "UNKNOWN DIRECTION: [direction]"
-
-
 
 //Turns a direction into text
 /proc/dir2text(direction)
@@ -139,8 +48,6 @@
 			return "northwest"
 		if(10.0)
 			return "southwest"
-		else
-	return
 
 //Turns text into proper directions
 /proc/text2dir(direction)
@@ -161,8 +68,6 @@
 			return 6
 		if("SOUTHWEST")
 			return 10
-		else
-	return
 
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(degree)
@@ -177,7 +82,6 @@
 	return NORTH|WEST
 
 //returns the north-zero clockwise angle in degrees, given a direction
-
 /proc/dir2angle(D)
 	switch(D)
 		if(NORTH)		return 0

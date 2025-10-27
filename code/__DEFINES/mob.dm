@@ -31,6 +31,8 @@
 #define BP_R_LEG  "r_leg"
 #define BP_ACTIVE_ARM "active_arm"
 #define BP_INACTIVE_ARM "inactive_arm"
+#define BP_TAIL "tail"
+#define BP_WINGS "wings"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -76,30 +78,25 @@
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
-#define HUMAN          	 "Human"
-#define UNATHI         	 "Unathi"
-#define TAJARAN        	 "Tajaran"
-#define SKRELL         	 "Skrell"
-#define DIONA          	 "Diona"
-#define PODMAN         	 "Podman"
-#define IPC            	 "Machine"
-#define VOX            	 "Vox"
-#define VOX_ARMALIS    	 "Vox Armalis"
-#define ABDUCTOR       	 "Abductor"
-#define SKELETON       	 "Skeleton"
-#define SKELETON_UNATHI	 "Skeleton Unathi"
-#define SKELETON_TAJARAN "Skeleton Tajaran"
-#define SKELETON_SKRELL	 "Skeleton Skrell"
-#define SKELETON_VOX	 "Skeleton Vox"
-#define SHADOWLING     	 "Shadowling"
-#define GOLEM          	 "Adamantine Golem"
-#define HOMUNCULUS     	 "Homunculus"
-#define ZOMBIE         	 "Zombie"
-#define ZOMBIE_TAJARAN 	 "Zombie Tajaran"
-#define ZOMBIE_SKRELL  	 "Zombie Skrell"
-#define ZOMBIE_UNATHI  	 "Zombie Unathi"
-#define SLIME          	 "Slime"
-#define ABOMINATION    	 "disgusting abomination"
+#define HUMAN            "Human"
+#define PLUVIAN          "Pluvian"
+#define PLUVIAN_SPIRIT   "Pluvian Spirit"
+#define UNATHI           "Unathi"
+#define TAJARAN          "Tajaran"
+#define SKRELL           "Skrell"
+#define DIONA            "Diona"
+#define PODMAN           "Podman"
+#define IPC              "Machine"
+#define VOX              "Vox"
+#define VOX_ARMALIS      "Vox Armalis"
+#define ABDUCTOR         "Abductor"
+#define SHADOWLING       "Shadowling"
+#define GOLEM            "Adamantine Golem"
+#define HOMUNCULUS       "Homunculus"
+#define ABOMINATION      "Disgusting abomination"
+#define SERPENTID        "Serpentid"
+#define MOTH             "Moth"
+
 
 #define MONKEY         	 "Monkey"
 
@@ -134,6 +131,8 @@
 #define SPIRIT_LOW 25
 #define SPIRIT_BAD 0
 
+#define MOOD_PROB_MULTIPLIER 0.2
+
 //Telekinesis.
 #define TK_MAXRANGE 15
 
@@ -147,10 +146,8 @@
 #define TK_LEVEL_NORMAL 1
 #define TK_LEVEL_SKRELL 2
 
-// Being drugged improves your telekinesis by a level.
-#define TK_BONUS_DRUGGED 1
-// Being very desperate/angry/upset improves your telekinesis by a level.
-#define TK_BONUS_UPSET 1
+// Being drugged improves your telekinesis by two levels.
+#define TK_BONUS_DRUGGED 2
 
 // How much resource should be wasted per tile of distance to target.
 #define TK_MANA_PER_TILE 1
@@ -158,16 +155,20 @@
 #define TK_MANA_PER_W_CLASS(cl) (2**cl)
 
 //Nutrition levels for humans.
-#define NUTRITION_LEVEL_FAT 600
+#define NUTRITION_LEVEL_FAT 660
 #define NUTRITION_LEVEL_FULL 550
-#define NUTRITION_LEVEL_WELL_FED 450
-#define NUTRITION_LEVEL_NORMAL 400
-#define NUTRITION_LEVEL_FED 350
-#define NUTRITION_LEVEL_HUNGRY 250
-#define NUTRITION_LEVEL_STARVING 150
+#define NUTRITION_LEVEL_WELL_FED 440
+#define NUTRITION_LEVEL_NORMAL 330
+#define NUTRITION_LEVEL_FED 220
+#define NUTRITION_LEVEL_HUNGRY 110
+#define NUTRITION_LEVEL_STARVING 50
 
 #define NUTRITION_PERCENT_MAX 120
 #define NUTRITION_PERCENT_ZERO 0
+
+#define OVEREATDURATION_SLIM 100
+#define OVEREATDURATION_FAT 500
+#define OVEREATDURATION_CAP 600
 
 // Drunknenness levels and their effects.
 #define DRUNKENNESS_SLUR 30
@@ -181,9 +182,6 @@
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
-
-// Factor of how fast mob nutrition decreases
-#define METABOLISM_FACTOR 1 // standart (for humans, other)
 
 // Taste sensitivity - the more the more reagents you'll taste
 #define TASTE_SENSITIVITY_NORMAL 1
@@ -228,7 +226,6 @@
 // Defibrillation
 #define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
 #define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
-#define MAX_BRAIN_DAMAGE  80
 
 // Awareness about syndicate, it`s agents and equipment
 #define SYNDICATE_UNAWARE  0
@@ -259,3 +256,11 @@
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
 #define LOGOUT_SWAP 4 // not so safe, check other things if available
+
+// traumatic shock levels
+#define TRAUMATIC_SHOCK_MINOR           10
+#define TRAUMATIC_SHOCK_SERIOUS         30
+#define TRAUMATIC_SHOCK_INTENSE         50
+#define TRAUMATIC_SHOCK_MIND_SHATTERING 80
+#define TRAUMATIC_SHOCK_CRITICAL        100
+

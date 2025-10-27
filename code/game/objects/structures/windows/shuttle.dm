@@ -4,8 +4,8 @@
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
-	desc = "It looks rather strong. Might take a few good hits to shatter it."
-
+	cases = list("окно шаттла", "окна шаттла", "окну шаттлу", "окно шаттла", "окном шаттла", "окне шаттла")
+	desc = "Оно выглядит довольно прочным. Потребуется несколько сильных ударов, чтобы разбить его."
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 
@@ -24,7 +24,7 @@
 
 /obj/structure/window/shuttle/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 
 	return ..()
 

@@ -38,6 +38,11 @@
 			return
 	return ..()
 
+/obj/item/weapon/spacecash/get_current_temperature()
+	if(is_burning)
+		return 1000
+	return ..()
+
 /obj/item/weapon/spacecash/process()
 	var/turf/location = get_turf(src)
 	if(location)

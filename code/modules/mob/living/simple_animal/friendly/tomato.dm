@@ -19,6 +19,9 @@
 
 	has_head = TRUE
 
+/mob/living/simple_animal/hostile/tomato/tomato_agrosphere
+	faction = "tomato"
+
 /mob/living/simple_animal/hostile/tomato/atom_init(mapload, potency)
 	. = ..()
 	melee_damage = round(potency / 13) //max 7, min 0
@@ -37,3 +40,4 @@
 	melee_damage = 15
 	maxHealth = 40
 	health = maxHealth
+

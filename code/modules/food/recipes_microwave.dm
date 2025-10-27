@@ -8,6 +8,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/dough
 
+/datum/recipe/microwave/blin
+	reagents = list("flour" = 5, "milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/blin
+
 /datum/recipe/microwave/boiledegg
 	reagents = list("water" = 5)
 	items = list(
@@ -84,18 +91,17 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/choco
 
 /datum/recipe/microwave/donut/chaos
-	reagents = list("sugar" = 5, "sodiumchloride" = 5, "water" = 5, "fuel" = 5, "toxin" = 5, "anti_toxin" = 5, "coffee" = 5, "stoxin" = 5)
+	reagents = list("sugar" = 5, "sodiumchloride" = 5, "fuel" = 5, "toxin" = 5, "anti_toxin" = 5, "coffee" = 5, "stoxin" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/classic,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/banana,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/berry,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/choco
-
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
-
 /datum/recipe/microwave/human/burger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
@@ -248,6 +254,13 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/popcorn
+
+/datum/recipe/microwave/cornflakesbox
+	reagents = list("honey" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cornflakesbox
 
 /datum/recipe/microwave/spacylibertyduff
 	reagents = list("water" = 5, "vodka" = 5)
@@ -759,22 +772,22 @@
 	reagents = list("water" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash
 
 /datum/recipe/microwave/ajurahma
 	reagents = list("water" = 10, "sugar" = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/adjurahma
 
 /datum/recipe/microwave/fushstvessina
-	reagents = list("water" = 10)
+	reagents = list("water" = 10, "capsaicin" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina

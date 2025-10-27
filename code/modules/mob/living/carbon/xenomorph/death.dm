@@ -40,7 +40,7 @@
 	return ..(gibbed)
 
 /mob/living/carbon/xenomorph/spawn_gibs()
-	xgibs(loc)
+	new /obj/effect/gibspawner/xeno(get_turf(loc), src)
 
 /mob/living/carbon/xenomorph/gib()
 	var/atom/movable/overlay/animation = new(loc)

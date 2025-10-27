@@ -232,15 +232,12 @@ Class Procs:
 				continue
 			else
 				target = C
-	if(target && !target.buckled)
+	if(target && !target.buckled && Adjacent(target))
 		if(target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		occupant = target
-		target.loc = src
-		target.stop_pulling()
-		if(target.pulledby)
-			target.pulledby.stop_pulling()
+		target.forceMove(src, keep_grabs = FALSE)
 	updateUsrDialog()
 	update_icon()
 
@@ -414,6 +411,7 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user)
 	if(!can_interact_with(user))
 		return TRUE
+	add_fingerprint(user)
 	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
 		if(prob(75))
 			to_chat(user, "<span class='notice'>Your fingers are slipping.</span>")
@@ -440,6 +438,8 @@ Class Procs:
 	RefreshParts()
 
 /obj/machinery/proc/RefreshParts()
+	SHOULD_CALL_PARENT(TRUE)
+
 	var/caprat = 0
 	var/binrat = 0
 
@@ -459,9 +459,19 @@ Class Procs:
 	for(var/obj/item/weapon/stock_parts/scanning_module/C in component_parts)
 		scanrat += C.rating
 
-	idle_power_usage = initial(idle_power_usage) * caprat * CAPACITOR_POWER_MULTIPLIER * binrat * MATTERBIN_POWER_MULTIPLIER
-	active_power_usage = initial(active_power_usage) * manrat * MANIPULATOR_POWER_MULTIPLIER * lasrat * LASER_POWER_MULTIPLIER * scanrat * SCANER_POWER_MULTIPLIER
-	return
+	idle_power_usage = initial(idle_power_usage)
+	if(caprat)
+		idle_power_usage *= caprat * CAPACITOR_POWER_MULTIPLIER
+	if(binrat)
+		idle_power_usage *= binrat * MATTERBIN_POWER_MULTIPLIER
+
+	active_power_usage = initial(active_power_usage)
+	if(manrat)
+		active_power_usage *= manrat * MANIPULATOR_POWER_MULTIPLIER
+	if(lasrat)
+		active_power_usage *= lasrat * LASER_POWER_MULTIPLIER
+	if(scanrat)
+		active_power_usage *= scanrat * SCANER_POWER_MULTIPLIER
 
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
@@ -513,7 +523,7 @@ Class Procs:
 	if(iswrenching(I) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(I.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		if(I.use_tool(src, user, time, volume = 50, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

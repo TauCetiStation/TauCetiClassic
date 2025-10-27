@@ -30,7 +30,7 @@ var/global/list/ventcrawl_machinery = list(
 		return FALSE
 	return ventcrawl_carry()
 
-/mob/living/Login()
+/mob/living/LateLogin()
 	. = ..()
 	//login during ventcrawl
 	if(is_ventcrawling && istype(loc, /obj/machinery/atmospherics)) //attach us back into the pipes

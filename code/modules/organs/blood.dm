@@ -12,7 +12,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human
 	var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
-	var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
+	var/pale = FALSE
 
 
 // Initializes blood vessels
@@ -49,7 +49,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 //				B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = FALSE)
 
 /mob/living/carbon/human/proc/blood_amount(exact = FALSE)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return 0
 
 	var/volume = vessel.get_reagent_amount("blood")
@@ -59,7 +59,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	return volume
 
 /mob/living/carbon/human/proc/blood_add(amount, list/add_data = null)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return FALSE
 	if(amount < 0)
 		return FALSE
@@ -72,7 +72,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		fixblood(add_data == null)
 
 /mob/living/carbon/human/proc/blood_remove(amount)
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		return FALSE
 	if(amount < 0)
 		return FALSE
@@ -126,16 +126,14 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_volume *= 0.3
 
 	// Effects of bloodloss
-	if(!HAS_TRAIT(src, TRAIT_CPB))
+	if(!HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))
 		switch(blood_volume)
 			if(BLOOD_VOLUME_SAFE to 10000)
 				if(pale)
 					pale = FALSE
-					update_body()
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(!pale)
 					pale = TRUE
-					update_body()
 					var/word = pick("dizzy", "woosey", "faint")
 					to_chat(src, "<span class='warning'>You feel [word]</span>")
 				if(prob(1))
@@ -146,7 +144,6 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				if(!pale)
 					pale = TRUE
-					update_body()
 				blurEyes(6)
 				if(oxyloss < 50)
 					oxyloss += 10
@@ -256,7 +253,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	if(organs_by_name[O_HEART] && blood_remove(amt))
-		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
+		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = get_blood_datum())
 
 /proc/blood_splatter(target, datum/reagent/blood/source, large, spray_dir, basedatum)
 	var/obj/effect/decal/cleanable/blood/B
@@ -454,35 +451,52 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!istype(injected))
 		return
 
-	if(species && species.flags[NO_BLOOD])
+	if(HAS_TRAIT(src, TRAIT_NO_BLOOD))
 		reagents.add_reagent("blood", amount, injected.data)
 		return
 
 	blood_add(amount, injected.data)
 	var/datum/reagent/blood/our = blood_get()
 
-	if(blood_incompatible(injected.data["blood_type"], our.data["blood_type"]))
+	if(!blood_compatible(injected.data["blood_type"], our.data["blood_type"]))
 		reagents.add_reagent("toxin", amount * 0.5)
 	..()
 
-/proc/blood_incompatible(donor, receiver)
-	if(!donor || !receiver)
-		return FALSE
-	var/donor_antigen = copytext(donor, 1, -1)
-	var/receiver_antigen = copytext(receiver, 1, -1)
-	var/donor_rh = (findtext(donor, "+") > 0)
-	var/receiver_rh = (findtext(receiver, "+") > 0)
-	if(donor_rh && !receiver_rh) // Bad: "+" -> "-". Other combinations is ok
-		return TRUE
-	switch(receiver_antigen)
-		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O")
-				return TRUE
-		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O")
-				return TRUE
-		if("O")
-			if(donor_antigen != "O")
-				return TRUE
-		// AB is a universal receiver
-	return FALSE
+/proc/blood_compatible(blood_donor, blood_recipient)
+	var/static/list/blood_recipient_can_receive = list(
+		BLOOD_A_PLUS = list(
+			BLOOD_A_PLUS = TRUE, BLOOD_A_MINUS = TRUE,
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_A_MINUS = list(
+			BLOOD_A_MINUS = TRUE,
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_B_PLUS = list(
+			BLOOD_B_PLUS = TRUE, BLOOD_B_MINUS = TRUE,
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_B_MINUS = list(
+			BLOOD_B_MINUS = TRUE,
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_O_PLUS = list(
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_O_MINUS = list(
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_AB_PLUS = list(
+			BLOOD_A_PLUS  = TRUE, BLOOD_A_MINUS  = TRUE,
+			BLOOD_B_PLUS  = TRUE, BLOOD_B_MINUS  = TRUE,
+			BLOOD_O_PLUS  = TRUE, BLOOD_O_MINUS  = TRUE,
+			BLOOD_AB_PLUS = TRUE, BLOOD_AB_MINUS = TRUE
+			),
+		BLOOD_AB_MINUS = list(
+			BLOOD_A_MINUS  = TRUE,
+			BLOOD_B_MINUS  = TRUE,
+			BLOOD_O_MINUS  = TRUE,
+			BLOOD_AB_MINUS = TRUE
+			)
+		)
+	return blood_recipient_can_receive[blood_recipient][blood_donor]

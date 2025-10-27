@@ -13,7 +13,7 @@
  *
  * @returns {any[]}
  */
-export const toArray = collection => {
+export const toArray = (collection) => {
   if (Array.isArray(collection)) {
     return collection;
   }
@@ -72,7 +72,7 @@ export const toKeyedArray = (obj, keyProp = 'key') => {
  *
  * @returns {any[]}
  */
-export const filter = iterateeFn => collection => {
+export const filter = (iterateeFn) => (collection) => {
   if (collection === null || collection === undefined) {
     return collection;
   }
@@ -99,7 +99,7 @@ export const filter = iterateeFn => collection => {
  *
  * @returns {any[]}
  */
-export const map = iterateeFn => collection => {
+export const map = (iterateeFn) => (collection) => {
   if (collection === null || collection === undefined) {
     return collection;
   }
@@ -148,28 +148,30 @@ const COMPARATOR = (objA, objB) => {
  *
  * @returns {any[]}
  */
-export const sortBy = (...iterateeFns) => array => {
-  if (!Array.isArray(array)) {
-    return array;
-  }
-  let length = array.length;
-  // Iterate over the array to collect criteria to sort it by
-  let mappedArray = [];
-  for (let i = 0; i < length; i++) {
-    const value = array[i];
-    mappedArray.push({
-      criteria: iterateeFns.map(fn => fn(value)),
-      value,
-    });
-  }
-  // Sort criteria using the base comparator
-  mappedArray.sort(COMPARATOR);
-  // Unwrap values
-  while (length--) {
-    mappedArray[length] = mappedArray[length].value;
-  }
-  return mappedArray;
-};
+export const sortBy =
+  (...iterateeFns) =>
+  (array) => {
+    if (!Array.isArray(array)) {
+      return array;
+    }
+    let length = array.length;
+    // Iterate over the array to collect criteria to sort it by
+    let mappedArray = [];
+    for (let i = 0; i < length; i++) {
+      const value = array[i];
+      mappedArray.push({
+        criteria: iterateeFns.map((fn) => fn(value)),
+        value,
+      });
+    }
+    // Sort criteria using the base comparator
+    mappedArray.sort(COMPARATOR);
+    // Unwrap values
+    while (length--) {
+      mappedArray[length] = mappedArray[length].value;
+    }
+    return mappedArray;
+  };
 
 export const sort = sortBy();
 
@@ -183,15 +185,14 @@ export const range = (start: number, end: number): number[] =>
 /**
  * A fast implementation of reduce.
  */
-export const reduce = (reducerFn, initialValue) => array => {
+export const reduce = (reducerFn, initialValue) => (array) => {
   const length = array.length;
   let i;
   let result;
   if (initialValue === undefined) {
     i = 1;
     result = array[0];
-  }
-  else {
+  } else {
     i = 0;
     result = initialValue;
   }
@@ -212,41 +213,37 @@ export const reduce = (reducerFn, initialValue) => array => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-/* eslint-disable indent */
-export const uniqBy = <T extends unknown>(
-  iterateeFn?: (value: T) => unknown
-) => (array: T[]) => {
-  const { length } = array;
-  const result = [];
-  const seen = iterateeFn ? [] : result;
-  let index = -1;
-  outer:
-  while (++index < length) {
-    let value: T | 0 = array[index];
-    const computed = iterateeFn ? iterateeFn(value) : value;
-    value = value !== 0 ? value : 0;
-    if (computed === computed) {
-      let seenIndex = seen.length;
-      while (seenIndex--) {
-        if (seen[seenIndex] === computed) {
-          continue outer;
+export const uniqBy =
+  <T extends unknown>(iterateeFn?: (value: T) => unknown) =>
+  (array: T[]) => {
+    const { length } = array;
+    const result = [];
+    const seen = iterateeFn ? [] : result;
+    let index = -1;
+    outer: while (++index < length) {
+      let value: T | 0 = array[index];
+      const computed = iterateeFn ? iterateeFn(value) : value;
+      value = value !== 0 ? value : 0;
+      if (computed === computed) {
+        let seenIndex = seen.length;
+        while (seenIndex--) {
+          if (seen[seenIndex] === computed) {
+            continue outer;
+          }
         }
+        if (iterateeFn) {
+          seen.push(computed);
+        }
+        result.push(value);
+      } else if (!seen.includes(computed)) {
+        if (seen !== result) {
+          seen.push(computed);
+        }
+        result.push(value);
       }
-      if (iterateeFn) {
-        seen.push(computed);
-      }
-      result.push(value);
     }
-    else if (!seen.includes(computed)) {
-      if (seen !== result) {
-        seen.push(computed);
-      }
-      result.push(value);
-    }
-  }
-  return result;
-};
-/* eslint-enable indent */
+    return result;
+  };
 
 export const uniq = uniqBy();
 
@@ -283,6 +280,8 @@ export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
  *
  * @returns {any[]}
  */
-export const zipWith = iterateeFn => (...arrays) => {
-  return map(values => iterateeFn(...values))(zip(...arrays));
-};
+export const zipWith =
+  (iterateeFn) =>
+  (...arrays) => {
+    return map((values) => iterateeFn(...values))(zip(...arrays));
+  };

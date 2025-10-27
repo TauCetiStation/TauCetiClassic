@@ -586,7 +586,6 @@
 			return 6
 		if("SOUTHWEST", "SW")
 			return 10
-		else
 	return 0
 
 
@@ -611,8 +610,7 @@
 			return "NW"
 		if(10)
 			return "SW"
-		else
-	return
+	return null
 
 /obj/structure/transit_tube_pod/proc/dir2angle()
 	var/angle = 0

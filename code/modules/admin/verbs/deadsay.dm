@@ -7,7 +7,7 @@
 		return
 	if(!src.mob)
 		return
-	if(prefs.muted & MUTE_DEADCHAT)
+	if(prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(src, ADMIN_CD_OOC))
 		to_chat(src, "<span class='warning'>You cannot send DSAY messages (muted).</span>")
 		return
 
@@ -15,7 +15,7 @@
 		to_chat(src, "<span class='warning'>You have deadchat muted.</span>")
 		return
 
-	if (handle_spam_prevention(msg,MUTE_DEADCHAT))
+	if (handle_spam_prevention(msg,ADMIN_CD_OOC))
 		return
 
 	var/stafftype = null

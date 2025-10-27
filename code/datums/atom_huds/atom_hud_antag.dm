@@ -15,9 +15,19 @@
 	hud_icons = list(ANTAG_HUD)
 	var/self_visible = TRUE
 	var/icon_color //will set the icon color to this
+	var/background_state
+
+/datum/atom_hud/antag/team
+	hud_icons = list(ANTAG_HUD)
 
 /datum/atom_hud/antag/hidden
 	self_visible = FALSE
+
+/datum/atom_hud/antag/bg_red
+	background_state = "hud_team_bg_red"
+
+/datum/atom_hud/antag/bg_blue
+	background_state = "hud_team_bg_blue"
 
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	if(!istype(M))
@@ -51,10 +61,19 @@
 	var/datum/atom_hud/antag/specific_hud = hudindex ? global.huds[hudindex] : null
 	if(holder)
 		holder.icon_state = new_icon_state
-		holder.color = specific_hud?.icon_color
+		if(specific_hud)
+			if(specific_hud.icon_color)
+				holder.color = specific_hud.icon_color
+			if(specific_hud.background_state) // idk if it's ok and maybe should be two different huds but i don't understant huds
+				var/image/underlay = image('icons/hud/hud.dmi', specific_hud.background_state)
+				holder.underlays += underlay
+
 	if(M.mind || new_icon_state) //in mindless mobs, only null is acceptable, otherwise we're antagging a mindless mob, meaning we should runtime
 		M.mind.antag_hud_icon_state = new_icon_state
-
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		holder.pixel_y = H.species.hud_offset_y
+		holder.pixel_x = H.species.hud_offset_x
 
 //MIND PROCS
 //these are called by mind.transfer_to()

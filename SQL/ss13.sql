@@ -55,12 +55,15 @@ CREATE TABLE `erro_ban` (
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `erro_connection_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datetime` datetime DEFAULT NULL,
+  `datetime` datetime NOT NULL,
   `serverip` varchar(32) NOT NULL,
-  `ckey` varchar(45) DEFAULT NULL,
+  `ckey` varchar(45) NOT NULL,
   `ip` varchar(32) NOT NULL,
-  `computerid` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `computerid` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_uniq_history` (`ckey`,`datetime`,`computerid`,`ip`),
+  KEY `idx_history_cid` (`computerid`,`ckey`),
+  KEY `idx_history_ip` (`ip`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -96,6 +99,30 @@ CREATE TABLE `erro_player` (
   `ingameage` varchar(32) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `erro_password` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `password` char(128) DEFAULT NULL,
+  `hash` char(64) NOT NULL,
+  `last_change` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `version` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ckey` (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `erro_auth_token` (
+  `token` char(64) NOT NULL,
+  `ckey` varchar(32) NOT NULL,
+  `ip` varchar(18) NOT NULL,
+  `computerid` varchar(32) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  PRIMARY KEY (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

@@ -151,7 +151,7 @@
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
 	// Approximate text height
-	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[text]</span>"
+	var/complete_text = MAPTEXT("<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[text]</span>")
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, RUNECHAT_MESSAGE_WIDTH))
 	if(!owner.client)
 		qdel(src)
@@ -192,7 +192,7 @@
 	message.maptext_width = RUNECHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight
 	message.maptext_x = (RUNECHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
-	message.maptext = MAPTEXT(complete_text)
+	message.maptext = complete_text
 
 	// View the message
 	LAZYADDASSOCLIST(owned_by.seen_messages, message_loc, src)

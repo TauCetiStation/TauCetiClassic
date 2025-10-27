@@ -118,6 +118,9 @@
 			flick("pdoorc1", src)
 	return
 
+/obj/machinery/door/poddoor/emag_act(mob/user)
+	return FALSE
+
 /obj/machinery/door/poddoor/mafia
 	name = "Station Night Shutters"
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream."

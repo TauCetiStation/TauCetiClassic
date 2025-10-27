@@ -14,7 +14,6 @@
 #define F_FAMILIES           "Families"
 #define F_HEIST              "Vox Shoal"
 #define F_HIVEMIND           "Changeling Hivemind"
-#define F_IMPOSTERS          "Imposters"
 #define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
 #define F_SYNDIOPS           "Syndicate Operatives"
@@ -26,6 +25,8 @@
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
+#define F_MALF_DRONES		 "Malf Drones"
+#define F_SPACE_TRADERS      "Space Traders"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -44,7 +45,6 @@
 #define GANGSTER_LEADER "Gangster Leader"
 #define GANGSTER_DEALER "Gangster Dealer"
 #define HEADREV "Head Revolutionary"
-#define IMPOSTER "Imposter"
 #define MALF "Malf AI"
 #define MALFBOT "Malf-Slaved Cyborg"
 #define NUKE_OP "Nuclear Operative"
@@ -69,6 +69,10 @@
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
 #define PRISONER "Prisoner"
+#define MALF_DRONE "Malf Drone"
+#define SPACE_TRADER "Space Trader"
+#define THIEF "Thief"
+#define ZOMBIE "Zombie"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

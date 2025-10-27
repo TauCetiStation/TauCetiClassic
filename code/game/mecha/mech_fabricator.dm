@@ -56,6 +56,10 @@
 	New_parts()
 	files = new /datum/research(src) //Setup the research data holder.
 
+/obj/machinery/mecha_part_fabricator/process()
+	if(being_built)
+		playsound(src, pick(FABRICATOR), VOL_EFFECTS_MASTER, vary = FALSE)
+
 /obj/machinery/mecha_part_fabricator/proc/New_parts()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
@@ -117,7 +121,7 @@
 			if(!(set_name in D.category))
 				continue
 			var/resources_available = check_resources(D)
-			output += "<div class='part'>[output_part_info(D)]<br>\[[resources_available?"<a href='?src=\ref[src];part=[D.id]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
+			output += "<div class='part'>[output_part_info(D)]<br>\[[resources_available?"<a href='byond://?src=\ref[src];part=[D.id]'>Build</a> | ":null]<a href='byond://?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='byond://?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D)
@@ -139,7 +143,7 @@
 		var/amount = min(res_max_amount, resources[resource])
 		output += "<span class=\"res_name\">[resource]: </span>[amount] cm&sup3;"
 		if(amount>0)
-			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
+			output += "<span style='font-size:80%;'>- Remove \[<a href='byond://?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='byond://?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='byond://?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
@@ -227,7 +231,7 @@
 		if(!check_resources(D))
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Not enough resources. Queue processing stopped.\"")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
-						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
+						<a href='byond://?src=\ref[src];process_queue=1'>Try again</a> | <a href='byond://?src=\ref[src];clear_temp=1'>Return</a><a>"}
 			return 0
 		remove_from_queue(1)
 		build_part(D)
@@ -244,10 +248,10 @@
 		for(var/datum/design/D in queue)
 			i++
 			var/obj/part = D.build_path
-			output += "<li[!check_resources(D)?" style='color: #f00;'":null]>[initial(part.name)] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
+			output += "<li[!check_resources(D)?" style='color: #f00;'":null]>[initial(part.name)] - [i>1?"<a href='byond://?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='byond://?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='byond://?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
 
 		output += "</ol>"
-		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
+		output += "\[<a href='byond://?src=\ref[src];process_queue=1'>Process queue</a> | <a href='byond://?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/update_tech()
@@ -290,13 +294,13 @@
 		temp = "Processed equipment designs.<br>"
 		//check if the tech coefficients have changed
 		temp += update_tech()
-		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
+		temp += "<a href='byond://?src=\ref[src];clear_temp=1'>Return</a>"
 
 		updateUsrDialog()
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Successfully synchronized with R&D server.\"")
 		return
 
-	temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+	temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='byond://?src=\ref[src];clear_temp=1'>Return</a>"
 	updateUsrDialog()
 	return
 
@@ -323,12 +327,12 @@
 		switch(screen)
 			if("main")
 				left_part = output_available_resources()+"<hr>"
-				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
+				left_part += "<a href='byond://?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
 				for(var/part_set in part_sets)
-					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
+					left_part += "<a href='byond://?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='byond://?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
 			if("parts")
 				left_part += output_parts_list(part_set)
-				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
+				left_part += "<hr><a href='byond://?src=\ref[src];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
 			  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -343,6 +347,7 @@
 				html, body {padding: 0px; margin: 0px;}
 				h1 {font-size: 18px; margin: 5px 0px;}
 				</style>
+				[get_browse_zoom_style(user.client)]
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
 				</script>
@@ -360,13 +365,16 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mecha_fabricator;size=1000x430")
+	user << browse(dat, "window=mecha_fabricator;[get_browse_size_parameter(user.client, 1000, 430)]")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
+
+	if(href_list)
+		playsound(src, 'sound/machines/select.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["part_set"])
@@ -440,7 +448,7 @@
 					var/obj/part = D.build_path
 					temp = {"<h1>[initial(part.name)] description:</h1>
 								[initial(part.desc)]<br>
-								<a href='?src=\ref[src];clear_temp=1'>Return</a>
+								<a href='byond://?src=\ref[src];clear_temp=1'>Return</a>
 								"}
 					break
 
@@ -455,7 +463,8 @@
 			temp = "Not enough [material] to produce a sheet."
 		else
 			temp = "Ejected [removed] of [material]"
-		temp += "<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+			playsound(src, 'sound/machines/material_eject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+		temp += "<br><a href='byond://?src=\ref[src];clear_temp=1'>Return</a>"
 
 	updateUsrDialog()
 
@@ -555,6 +564,7 @@
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
+			playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			sleep(10)
 			updateUsrDialog()
 			cut_overlay("fab-load-[material]") //No matter what the overlay shall still be deleted

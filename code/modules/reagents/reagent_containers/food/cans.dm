@@ -127,6 +127,12 @@
 	icon_state = "cola"
 	list_reagents = list("cola" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi
+	name = "Brepsi"
+	desc = "Three or four sips of an absolutely refreshing drink."
+	icon_state = "brepsi"
+	list_reagents = list("cola" = 30)
+
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle
 	name = "Bottled Water"
 	desc = "Introduced to the vending machines by Skrellian request, this water comes straight from the Martian poles."

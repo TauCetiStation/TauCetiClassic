@@ -92,6 +92,12 @@
 	name = "fried rice"
 	icon_state = "chinese4"
 
+/obj/item/trash/lunarice
+	name = "empty lunarice`s plate"
+	cases = list("Тарелка", "Тарелки", "Тарелке", "Тарелку", "Тарелкой", "Тарелке")
+	icon_state = "lunarice"
+	item_state_world = "lunarice_world"
+
 /obj/item/trash/fries
 	name = "Space Fries"
 	icon_state = "fries"

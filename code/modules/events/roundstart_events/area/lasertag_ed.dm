@@ -3,7 +3,7 @@
 
 /datum/event/feature/area/lasertag_ed/start()
 	for(var/area/target_area in targeted_areas)
-		var/list/all_turfs = get_area_turfs(target_area, black_list=list(/turf/simulated/wall/r_wall, /turf/simulated/wall))
+		var/list/all_turfs = get_area_turfs(target_area, ignore_blocked = TRUE)
 
 		var/turf/T1 = pick(all_turfs)
 		var/turf/T2 = pick(all_turfs)

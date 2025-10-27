@@ -41,7 +41,7 @@ def main():
 		for filename in files:
 			if filename.endswith('.dm') or filename.endswith('.dmm'):
 				file_path = path.join(root, filename)
-				with open(file_path, 'rb') as file:
+				with open(file_path, 'r', encoding="utf-8") as file:
 					bad_hex_by_line = get_bad_hex_lines_in_file(file)
 					if len(bad_hex_by_line) > 0:
 						bad_hexes_by_path[file_path] = bad_hex_by_line

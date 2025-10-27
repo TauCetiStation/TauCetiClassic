@@ -90,12 +90,11 @@
 			var/pain_amount = BP.adjust_pumped(1)
 			pedaler.apply_effect(pain_amount, AGONY, 0)
 			SEND_SIGNAL(pedaler, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
-			pedaler.update_body()
 
 	buckled_mob.nutrition -= 0.5
 
 	pedal_left_leg = !pedal_left_leg
-	if(buckled_mob.halloss > 80)
+	if(buckled_mob.getHalLoss() > 80)
 		to_chat(user, "You pushed yourself too hard.")
 		buckled_mob.apply_effect(24,AGONY,0)
 		unbuckle_mob()
@@ -161,13 +160,6 @@
 			M.pixel_y = new_pixel_y
 	else
 		animate(M, pixel_x = M.default_pixel_x, pixel_y = M.default_pixel_y, 2, 1, LINEAR_EASING)
-
-/obj/structure/stool/bed/chair/pedalgen/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(buckled_mob)
-		if(prob(85))
-			return buckled_mob.bullet_act(Proj)
-	visible_message("<span class='warning'>[Proj] ricochets off the [src]!</span>")
-	return ..()
 
 /obj/structure/stool/bed/chair/pedalgen/Destroy()
 	qdel(Generator)

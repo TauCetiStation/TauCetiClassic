@@ -29,7 +29,7 @@ var/global/const/MINING_DRILL_WIRES_PROTECTOR_DISABLE = 16
 	var/obj/machinery/mining/drill/D = holder
 	return D.panel_open
 
-/datum/wires/mining_drill/update_cut(index, mended)
+/datum/wires/mining_drill/update_cut(index, mended, mob/user)
 	var/obj/machinery/mining/drill/D = holder
 
 	switch(index)

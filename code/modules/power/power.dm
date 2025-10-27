@@ -150,7 +150,7 @@
 
 		var/turf/T = user.loc
 
-		if(T.intact || !isfloorturf(T))
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
 			return
 
 		if(!Adjacent(user))

@@ -1,5 +1,12 @@
 import { useBackend } from '../../backend';
-import { Box, Section, LabeledList, Button, AnimatedNumber, ProgressBar } from '../../components';
+import {
+  Box,
+  Section,
+  LabeledList,
+  Button,
+  AnimatedNumber,
+  ProgressBar,
+} from '../../components';
 
 export const PortableBasicInfo = (props, context) => {
   const { act, data } = useBackend(context);
@@ -19,27 +26,25 @@ export const PortableBasicInfo = (props, context) => {
     <>
       <Section
         title="Status"
-        buttons={(
+        buttons={
           <Button
             icon={on ? 'power-off' : 'times'}
             content={on ? 'On' : 'Off'}
             selected={on}
-            onClick={() => act('power')} />
-        )}>
+            onClick={() => act('power')}
+          />
+        }>
         <LabeledList>
           <LabeledList.Item label="Pressure">
             <AnimatedNumber value={pressure} />
             {' kPa'}
           </LabeledList.Item>
-          <LabeledList.Item
-            label="Port"
-            color={connected ? 'good' : 'average'}>
+          <LabeledList.Item label="Port" color={connected ? 'good' : 'average'}>
             {connected ? 'Connected' : 'Not Connected'}
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section
-        title="Cell" >
+      <Section title="Cell">
         <LabeledList>
           <LabeledList.Item label="Load">
             <AnimatedNumber value={power_draw} />
@@ -48,39 +53,36 @@ export const PortableBasicInfo = (props, context) => {
           <LabeledList.Item label="Charge">
             <ProgressBar
               ranges={{
-                bad: [-Infinity, .1],
-                average: [.1, .6],
-                good: [.6, Infinity],
+                bad: [-Infinity, 0.1],
+                average: [0.1, 0.6],
+                good: [0.6, Infinity],
               }}
-              value={cell_chargepercent} />
+              value={cell_chargepercent}
+            />
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section
         title="Holding Tank"
         minHeight="82px"
-        buttons={(
+        buttons={
           <Button
             icon="eject"
             content="Eject"
             disabled={!holding}
-            onClick={() => act('eject')} />
-        )}>
+            onClick={() => act('eject')}
+          />
+        }>
         {holding ? (
           <LabeledList>
-            <LabeledList.Item label="Label">
-              {holding.name}
-            </LabeledList.Item>
+            <LabeledList.Item label="Label">{holding.name}</LabeledList.Item>
             <LabeledList.Item label="Pressure">
-              <AnimatedNumber
-                value={holding.pressure} />
+              <AnimatedNumber value={holding.pressure} />
               {' kPa'}
             </LabeledList.Item>
           </LabeledList>
         ) : (
-          <Box color="average">
-            No holding tank
-          </Box>
+          <Box color="average">No holding tank</Box>
         )}
       </Section>
     </>

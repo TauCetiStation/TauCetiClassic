@@ -1,12 +1,12 @@
 /datum/action/zoom
 	name = "Toggle Zoom"
 	action_type = AB_INNATE
-	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_LYING | AB_CHECK_INSIDE | AB_CHECK_ACTIVE
+	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_INSIDE | AB_CHECK_ACTIVE
 	button_icon_state = "zoom"
 
 /datum/action/zoom/Activate()
 	SEND_SIGNAL(target, COMSIG_ZOOM_TOGGLE, owner)
-	
+
 /datum/component/zoom
 	var/zoom_view_range
 	var/can_move
@@ -16,7 +16,7 @@
 /datum/component/zoom/Initialize(_zoom_view_range, _can_move = FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	zoom_view_range = _zoom_view_range
 	can_move = _can_move
 	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), PROC_REF(on_equip))
@@ -57,7 +57,7 @@
 	else
 		reset_zoom()
 	to_chat(user, "<font color='[zoomer ? "notice" : "rose"]'>Zoom mode [zoomer ? "en" : "dis"]abled.</font>")
-	
+
 /datum/component/zoom/proc/reset_zoom()
 	SIGNAL_HANDLER
 	if(!zoomer)

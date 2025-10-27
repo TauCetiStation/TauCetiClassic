@@ -8,5 +8,5 @@
 	minimum_players_bundles = 20
 
 /datum/game_mode/changeling/announce()
-	to_chat(world, "<B>The current game mode is - Changeling!</B>")
-	to_chat(world, "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>")
+	to_chat(world, "<B>Текущий режим игры - Генокрад!</B>")
+	to_chat(world, "<B>На станции находятся генокрады. Не дайте им добиться успеха!</B>")

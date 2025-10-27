@@ -177,12 +177,12 @@ var/global/regex/code_response_highlight_rule
 	*/
 
 /proc/set_languge_lists()
-	global.rus_nouns = file2list("config/names/rus_nouns.txt")
-	global.rus_adjectives = file2list("config/names/rus_adjectives.txt")
-	global.rus_verbs = file2list("config/names/rus_verbs.txt")
-	global.rus_occupations = file2list("config/names/rus_occupations.txt")
-	global.rus_bays = file2list("config/names/rus_bays.txt")
-	global.rus_local_terms = file2list("config/names/rus_local_terms.txt")
+	global.rus_nouns = file2list("static/names/rus_nouns.txt")
+	global.rus_adjectives = file2list("static/names/rus_adjectives.txt")
+	global.rus_verbs = file2list("static/names/rus_verbs.txt")
+	global.rus_occupations = file2list("static/names/rus_occupations.txt")
+	global.rus_bays = file2list("static/names/rus_bays.txt")
+	global.rus_local_terms = file2list("static/names/rus_local_terms.txt")
 
 //Proc is used for phrase and response in subsystem init.
 /proc/generate_code_phrase()

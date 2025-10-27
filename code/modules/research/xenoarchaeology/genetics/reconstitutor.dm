@@ -141,9 +141,9 @@
 			var/this_genome_slot = manually_placed_genomes[sequence_num][curindex]
 			if(!this_genome_slot)
 				this_genome_slot = "- - - - -"
-			dat += "<td><a href='?src=\ref[src];sequence_num=[sequence_num];insertpos=[curindex]' style='background-color:[bgcolour]'>[this_genome_slot]</a></td>"
-		dat += "<td><a href='?src=\ref[src];reset=1;sequence_num=[sequence_num]'>Reset</a></td>"
-		//dat += "<td><a href='?src=\ref[src];clone=1;sequence_num=[sequence_num]'>Clone</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];sequence_num=[sequence_num];insertpos=[curindex]' style='background-color:[bgcolour]'>[this_genome_slot]</a></td>"
+		dat += "<td><a href='byond://?src=\ref[src];reset=1;sequence_num=[sequence_num]'>Reset</a></td>"
+		//dat += "<td><a href='byond://?src=\ref[src];clone=1;sequence_num=[sequence_num]'>Clone</a></td>"
 		dat += "</tr>"
 
 	//completed gene sequences
@@ -153,8 +153,8 @@
 		for(var/curindex = 1, curindex <= 5, curindex++)
 			var/this_genome_slot = cur_genesequence.full_genome_sequence[curindex]
 			dat += "<td style='background-color:#008000'>[this_genome_slot]</td>"
-		dat += "<td><a href='?src=\ref[src];wipe=1;sequence_num=[sequence_num]'>Wipe</a></td>"
-		dat += "<td><a href='?src=\ref[src];clone=1;sequence_num=[sequence_num]'>Clone</a></td>"
+		dat += "<td><a href='byond://?src=\ref[src];wipe=1;sequence_num=[sequence_num]'>Wipe</a></td>"
+		dat += "<td><a href='byond://?src=\ref[src];clone=1;sequence_num=[sequence_num]'>Clone</a></td>"
 		dat += "</tr>"
 
 	dat += "</table>"
@@ -293,7 +293,7 @@
 
 
 /obj/item/weapon/circuitboard/reconstitutor
-	name = "Circuit board (Flora Reconstitution Console)"
+	details = "circuit board (Flora Reconstitution Console)"
 	build_path = /obj/machinery/computer/reconstitutor
 	origin_tech = "programming=2;biotech=4;materials=6"
 	frame_desc = "Requires 2 Advanced Scanning Module, 1 Nano Manipulator, 1 Matter Bin and 1 Advanced Capacitor."
@@ -304,7 +304,7 @@
 							/obj/item/weapon/stock_parts/capacitor/adv = 1)
 
 /obj/item/weapon/circuitboard/reconstitutor/animal
-	name = "Circuit board (Fauna Reconstitution Console)"
+	details = "circuit board (Fauna Reconstitution Console)"
 	build_path = /obj/machinery/computer/reconstitutor/animal
 	origin_tech = "programming=2;biotech=4;materials=6"
 	frame_desc = "Requires 2 Advanced Scanning Module, 1 Nano Manipulator, 1 Matter Bin and 1 Advanced Capacitor."

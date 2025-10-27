@@ -4,7 +4,8 @@
 	icon_state = "bio"
 	desc = "A hood that protects the head and face from biological comtaminants."
 	permeability_coefficient = 0.01
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR|PHORONGUARD
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|PHORONGUARD
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	body_parts_covered = HEAD|FACE|EYES
@@ -26,7 +27,8 @@
 	slowdown = 0.1
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	render_flags = parent_type::render_flags | HIDE_TAIL
 	siemens_coefficient = 0.4
 	unacidable = TRUE
 

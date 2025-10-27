@@ -121,6 +121,7 @@
 		/obj/item/clothing/mask/balaclava/richard = 1,
 		/obj/item/clothing/mask/balaclava/don_juan = 1,
 		/obj/item/clothing/mask/balaclava/rasmus = 1,
+		/obj/item/toy/foamblade = 1,
 	)
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
@@ -215,7 +216,7 @@
 		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
-		/obj/item/weapon/kitchenknife/butch = 2,		
+		/obj/item/weapon/kitchenknife/butch = 2,
 	)
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,
@@ -399,8 +400,8 @@
 		/obj/item/weapon/storage/fancy/candle_box/red = 25,
 		/obj/item/clothing/accessory/metal_cross = 10,
 		/obj/item/clothing/accessory/bronze_cross = 10,
-		/obj/item/clothing/mask/tie/silver_cross = 5,
-		/obj/item/clothing/mask/tie/golden_cross = 5,
+		/obj/item/clothing/neck/silver_cross = 5,
+		/obj/item/clothing/neck/golden_cross = 5,
 		/obj/item/clothing/shoes/jolly_gravedigger = 4,
 	)
 	contraband = list(
@@ -413,8 +414,8 @@
 		/obj/item/weapon/nullrod = 400,
 		/obj/item/clothing/accessory/metal_cross = 40,
 		/obj/item/clothing/accessory/bronze_cross = 80,
-		/obj/item/clothing/mask/tie/silver_cross = 400,
-		/obj/item/clothing/mask/tie/golden_cross = 1000,
+		/obj/item/clothing/neck/silver_cross = 400,
+		/obj/item/clothing/neck/golden_cross = 1000,
 		/obj/item/clothing/shoes/jolly_gravedigger = 200,
 	)
 	private = TRUE

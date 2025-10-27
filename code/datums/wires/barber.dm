@@ -20,7 +20,7 @@ var/global/const/COLOR_MIXER_OUTPUT_SAFETY = 32
 	. += "The blue light is [is_index_cut(COLOR_MIXER_TANK_3) ? "off" : "on"]"
 	. += "The light under output beaker is [is_index_cut(COLOR_MIXER_TANK_OUTPUT) ? "off" : "on"]"
 
-/datum/wires/color_mixer/update_cut(index, mended)
+/datum/wires/color_mixer/update_cut(index, mended, mob/user)
 	var/obj/machinery/color_mixer/CM = holder
 
 	switch(index)

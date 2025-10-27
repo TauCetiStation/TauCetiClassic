@@ -1,7 +1,7 @@
 // Circuit boards, spare parts, etc.
 
 /datum/export/solar/assembly
-	cost = 10
+	cost = 50
 	unit_name = "solar panel assembly"
 	export_types = list(/obj/item/solar_assembly)
 

@@ -7,9 +7,9 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/input = sanitize(input(usr, "Enter the description of the custom event. Be descriptive. To cancel the event, make this blank or hit cancel.", "Custom Event", input_default(custom_event_msg)) as message|null, MAX_BOOK_MESSAGE_LEN, extra = FALSE)
+	var/input = sanitize(input(usr, "Enter the description of the custom event. Be descriptive. To cancel the event, make this blank or hit cancel.", "Custom Event", input_default(SSevents.custom_event_msg)) as message|null, MAX_BOOK_MESSAGE_LEN, extra = FALSE)
 	if(!input || input == "")
-		custom_event_msg = null
+		SSevents.setup_custom_event(null, null)
 		log_admin("[key_name(usr)] has cleared the custom event text.")
 		message_admins("[key_name_admin(usr)] has cleared the custom event text.")
 		return
@@ -17,35 +17,19 @@
 	log_admin("[key_name(usr)] has changed the custom event text.")
 	message_admins("[key_name_admin(usr)] has changed the custom event text.")
 
-	custom_event_msg = input
+	SSevents.setup_custom_event(input, "Event")
 
-	to_chat(world, "<h1 class='alert'>Custom Event</h1>")
-	to_chat(world, "<h2 class='alert'>A custom event is starting. OOC Info:</h2>")
-	to_chat(world, "<span class='alert'>[custom_event_msg]</span>")
-	to_chat(world, "<br>")
-
-
-	if(config.chat_bridge && custom_event_msg && \
-		tgui_alert(usr, "Do you want to make an announcement to chat conference?", "Chat announcement", list("Yes", "No, I don't want these people at my party")) == "Yes")
-		world.send2bridge(
-			type = list(BRIDGE_ANNOUNCE),
-			attachment_title = "Custom Event",
-			attachment_msg = custom_event_msg + "\nJoin now: <[BYOND_JOIN_LINK]>",
-			attachment_color = BRIDGE_COLOR_ANNOUNCE,
-			mention = BRIDGE_MENTION_EVENT,
-		)
+	if(tgui_alert(usr, "Do you want to make an announcement to chat conference?", "Chat announcement", list("Yes", "No, I don't want these people at my party")) == "Yes")
+		SSevents.custom_event_announce_bridge()
 
 // normal verb for players to view info
 /client/verb/cmd_view_custom_event()
 	set category = "OOC"
 	set name = "Custom Event Info"
 
-	if(!custom_event_msg || custom_event_msg == "")
+	if(!SSevents.custom_event_msg)
 		to_chat(src, "There currently is no known custom event taking place.")
 		to_chat(src, "Keep in mind: it is possible that an admin has not properly set this.")
 		return
 
-	to_chat(src, "<h1 class='alert'>Custom Event</h1>")
-	to_chat(src, "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>")
-	to_chat(src, "<span class='alert'>[custom_event_msg]</span>")
-	to_chat(src, "<br>")
+	SSevents.custom_event_announce(src)

@@ -4,7 +4,7 @@
 /datum/event/feature/area/minefield/start()
 	var/list/types = list(/obj/item/mine/emp/anchored, /obj/item/mine/incendiary/anchored, /obj/item/mine/shock/anchored, /obj/item/mine/anchored)
 	for(var/area/target_area in targeted_areas)
-		var/list/all_turfs = get_area_turfs(target_area, black_list=list(/turf/simulated/wall/r_wall, /turf/simulated/wall))
+		var/list/all_turfs = get_area_turfs(target_area, ignore_blocked = TRUE)
 		for(var/i in 1 to rand(1, 2))
 			var/turf/T = pick_n_take(all_turfs)
 			var/type = pick(types)

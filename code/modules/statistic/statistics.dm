@@ -64,6 +64,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	// array of objects
 	var/list/datum/stat/achievement/achievements = list()
 	// array of objects
+	var/list/datum/stat/medal/medals = list()
+	// array of objects
 	var/list/datum/stat/communication_log/communication_logs = list()
 
 	// New data
@@ -128,8 +130,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 		leave_stats += global.disconnected_ckey_by_stat[ckey]
 
 /datum/stat_collector/proc/save_manifest_entries()
-	var/list/white_assigned_roles = get_all_jobs_with_silicons() + get_all_centcom_jobs() + get_all_velocity_jobs()
-	white_assigned_roles += "MODE" // non station roles
 	var/list/white_special_roles = get_roles_with_interesting_names() // roles with interesting names, like xenomorphs and blobs
 	var/regex/is_drone = regex(@"maintenance drone \(\d+\)")
 
@@ -138,7 +138,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 			continue
 		if(M.name == "unknown") // useless data
 			continue
-		if(!(M.assigned_role in white_assigned_roles))
+		if(!((M.assigned_role in SSjob.name_occupations) || M.assigned_role == "MODE"))
 			continue
 		if(M.special_role && !(M.special_role in white_special_roles))
 			continue

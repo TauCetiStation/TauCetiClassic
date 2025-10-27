@@ -122,7 +122,7 @@
 
 
 /datum/faction/infestation/proc/count_alien_percent()
-	var/total_human = check_crew()
+	var/total_human = check_crew(for_alien = TRUE)
 	var/total_alien = count_hive_power()
 	var/alien_percent = 0
 	if(total_human && total_alien)

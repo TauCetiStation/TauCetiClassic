@@ -64,9 +64,6 @@ Passive gate is similar to the regular pump except:
 		add_underlay(T, NODE1, turn(dir, 180))
 		add_underlay(T, NODE2, dir)
 
-/obj/machinery/atmospherics/components/binary/passive_gate/hide(i)
-	update_underlays()
-
 /obj/machinery/atmospherics/components/binary/passive_gate/process_atmos()
 	last_flow_rate = 0
 	last_power_draw = 0

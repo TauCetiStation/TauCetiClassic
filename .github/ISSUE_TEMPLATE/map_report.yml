@@ -1,0 +1,34 @@
+name: "Сообщить о проблеме на карте"
+title: "[Название карты или локации] "
+description: "Если что-то не так с картой"
+labels: ["Bug", "Map Issue"]
+body:
+  - type: dropdown
+    id: location
+    validations:
+      required: true
+    attributes:
+      label: "В какой локации это произошло?"
+      description: "Укажите станцию или локацию на которой вы нашли мапперскую ошибку. Если из перечисленных карт нет нужной, выберите 'другое' и укажите ниже о какой карте идёт речь"
+      options:
+        - BoxStation
+        - Gamma
+        - Delta
+        - Falcon
+        - Prometheus
+        - Stroecka
+        - Centcomm
+        - Asteroid
+        - Prometheus Asteroid
+        - Forts
+        - Другое
+
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: "Описание"
+      description: "Опишите обнаруженную вами проблему на одной из локаций"
+      placeholder: |
+        На аванпост шахтёров невозможно попасть из-за стены в шлюзах доков

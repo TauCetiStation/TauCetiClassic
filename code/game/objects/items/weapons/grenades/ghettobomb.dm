@@ -1,6 +1,6 @@
 /obj/item/weapon/grenade/cancasing
 	name = "can explosive"
-	desc = "A weak, improvised incendiary device."
+	desc = "Слабое, самодельное устройство."
 	w_class = SIZE_TINY
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "can_grenade_preview"
@@ -79,7 +79,7 @@
 
 /obj/item/weapon/grenade/cancasing/examine(mob/user)
 	..()
-	to_chat(user, "You can't tell when it will explode!")
+	to_chat(user, "Вы не можете сказать, когда она взорвется!")
 
 /obj/item/weapon/grenade/cancasing/rag
 	icon_state = "can_grenade_rag_preview"
@@ -131,7 +131,7 @@
 	if(!clown_check(user))
 		return ..()
 
-	user.visible_message("<span class='warning'>[bicon(src)] [user] lights up \the [src] with \the [I]!</span>", "<span class='warning'>[bicon(src)] You light \the [name] with \the [I]!</span>")
+	user.visible_message("<span class='warning'>[bicon(src)] [user] Поджигает [CASE(src, ACCUSATIVE_CASE)] при помощи [CASE(I, GENITIVE_CASE)]!</span>", "<span class='warning'>[bicon(src)] Вы поджигаете [CASE(src, ACCUSATIVE_CASE)] при помощи [CASE(I, GENITIVE_CASE)]!</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user) && istype(user.get_inactive_hand(), src))

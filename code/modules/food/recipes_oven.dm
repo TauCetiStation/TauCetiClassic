@@ -448,7 +448,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
 		/obj/item/weapon/grown/log,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha
@@ -467,3 +467,11 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/el_ehum
+
+/datum/recipe/oven/kulich
+	reagents = list("milk" = 5, "sugar" = 20)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/kulich

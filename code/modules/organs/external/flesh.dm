@@ -24,8 +24,7 @@
 	return ..()
 
 /datum/bodypart_controller/proc/adjust_pumped(value, cap=null)
-	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
-	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX)))
+	if(!BP.species.flags[HAS_MUSCLES])
 		return 0
 
 	if(isnull(cap) || cap > BP.max_pumped)
@@ -35,12 +34,19 @@
 
 	var/old_pumped = BP.pumped
 	BP.pumped = min(BP.pumped + value, cap)
-	BP.update_sprite()
+
+	// trigger body update only when we passed threshold in any direction
+	var/before_pumped = old_pumped > BP.pumped_threshold
+	var/after_pumped = BP.pumped > BP.pumped_threshold
+	if(before_pumped != after_pumped)
+		BP.owner.update_body(BP.body_zone)
 
 	if(BP.pumped <= 0 && old_pumped > 0)
-		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
+		BP.owner.mob_metabolism_mod.RemoveMods(BP)
 	else
-		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.0005 * BP.pumped)
+		// gives us 0%-1% additive mod for metabolism per pumped bodypart, for every bodypart 6% total
+		var/pump_mod = LERP(0, 0.01, BP.pumped / BP.max_pumped)
+		BP.owner.mob_metabolism_mod.ModAdditive(pump_mod, BP)
 
 	return BP.pumped - old_pumped
 
@@ -58,9 +64,9 @@
 // Paincrit knocks someone down once they hit 60 shock_stage, so by default make it so that close to 100 additional damage needs to be dealt,
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
-/datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
-	brute = round(brute * BP.owner.species.brute_mod, 0.1)
-	burn = round(burn * BP.owner.species.burn_mod, 0.1)
+/datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
+	brute = round(brute * BP.owner.mob_brute_mod.Get(), 0.1)
+	burn = round(burn * BP.owner.mob_burn_mod.Get(), 0.1)
 
 	if((brute <= 0) && (burn <= 0))
 		return 0
@@ -93,11 +99,11 @@
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
-			BP.add_autopsy_data(used_weapon, brute, type_damage = BRUTE)
+			BP.add_autopsy_data(used_weapon, brute, type_damage = BRUTE, impact_direction = impact_direction)
 		else if(brute == 0 && burn > 0)
-			BP.add_autopsy_data(used_weapon, burn, type_damage = BURN)
+			BP.add_autopsy_data(used_weapon, burn, type_damage = BURN, impact_direction = impact_direction)
 		else if(brute > 0 && burn > 0)
-			BP.add_autopsy_data(used_weapon, brute + burn, type_damage = "mixed")
+			BP.add_autopsy_data(used_weapon, brute + burn, type_damage = "mixed", impact_direction = impact_direction)
 
 	var/can_cut = (prob(brute * 2) || sharp) && (bodypart_type != BODYPART_ROBOTIC)
 
@@ -130,7 +136,7 @@
 	var/spillover = cur_damage + damage_amt + BP.burn_dam + burn - BP.max_damage // excess damage goes off into shock_stage, this var also can prevent dismemberment, if result is negative.
 
 	if(spillover > 0 && !BP.species.flags[IS_SYNTHETIC])
-		BP.owner.shock_stage += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
+		BP.owner.adjustHalLoss(spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER)
 
 	// sync the organ's damage with its wounds
 	BP.update_damages()
@@ -269,10 +275,10 @@ This function completely restores a damaged organ to perfect condition.
 		IO.rejuvenate()
 
 	// remove embedded objects and drop them on the floor
-	for(var/obj/implanted_object in BP.implants)
+	for(var/obj/implanted_object in BP.embedded_objects)
 		if(!istype(implanted_object,/obj/item/weapon/implant))	// We don't want to remove REAL implants. Just shrapnel etc.
 			implanted_object.forceMove(BP.owner.loc)
-			BP.implants -= implanted_object
+			BP.embedded_objects -= implanted_object
 
 	BP.owner.updatehealth()
 	BP.owner.sec_hud_set_implants()
@@ -494,7 +500,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (!(BP.status & ORGAN_DEAD))
 			BP.status |= ORGAN_DEAD
 			to_chat(BP.owner, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
-			BP.owner.update_body()
+			BP.owner.update_body(BP.body_zone)
 
 		BP.germ_level++
 		BP.owner.adjustToxLoss(1)
@@ -586,7 +592,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.fracture()
 
 /datum/bodypart_controller/proc/damage_state_color()
-	return BP.species.blood_datum.color
+	var/datum/dirt_cover/blood_datum = BP.owner.get_blood_datum()
+	return blood_datum::color
 
 /datum/bodypart_controller/proc/sever_artery()
 	if(HAS_TRAIT(BP.owner, TRAIT_HEMOCOAGULATION))
@@ -608,7 +615,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"<span class='warning'><b>Something feels like it shattered in your [BP.name]!</b></span>",
 		"You hear a sickening crack.")
 
-	if(BP.owner.species && !BP.owner.species.flags[NO_PAIN])
+	if(!HAS_TRAIT(BP.owner, TRAIT_NO_PAIN))
 		BP.owner.emote("scream")
 
 	if((HULK in BP.owner.mutations) && BP.owner.hulk_activator == ACTIVATOR_BROKEN_BONE)
@@ -616,7 +623,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 	BP.status |= ORGAN_BROKEN
-	BP.broken_description = pick("broken", "fracture", "hairline fracture")
+	BP.broken_description = pick("перелом", "трещина")
 	BP.perma_injury = BP.brute_dam
 
 	// Fractures have a chance of getting you out of restraints
@@ -654,7 +661,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.germ_level >= INFECTION_LEVEL_THREE)
 		STOP_PROCESSING(SSobj, BP)
 		BP.status |= ORGAN_DEAD
-		BP.update_sprite()
+		BP.apply_appearance() // regenerate appearance with new color
 
 // Runs once when attached
 /datum/bodypart_controller/proc/check_rejection()
@@ -664,7 +671,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.owner.species.name != BP.species.name)
 		chances *= 0.02
 
-	if(blood_incompatible(BP.owner.dna.b_type, BP.b_type))
+	if(!blood_compatible(BP.owner.dna.b_type, BP.b_type))
 		chances *= 0.4
 
 	if(prob(chances))

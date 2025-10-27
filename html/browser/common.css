@@ -646,3 +646,52 @@ body.theme_abductor {
 	margin-right: auto;
 	width: 50%;
 }
+
+body.sticker_theme_yellow {
+	background-color: #fcf7be;
+	background-image:none;
+	color: #000000;
+}
+
+.sticker_theme_yellow .uiTitle {
+	border-bottom: 2px solid #f6d896;
+	background: #fcf7be;
+	color: #30373d;
+}
+
+body.sticker_theme_red {
+	background-color: #ffe0b7;
+	background-image:none;
+	color: #000000;
+}
+
+.sticker_theme_red .uiTitle {
+	border-bottom: 2px solid #fca570;
+	background: #ffe0b7;
+	color: #30373d;
+}
+
+body.sticker_theme_green {
+	background-color: #b5e7cb;
+	background-image:none;
+	color: #000000;
+}
+
+.sticker_theme_green .uiTitle {
+	border-bottom: 2px solid #86c69a;
+	background: #b5e7cb;
+	color: #30373d;
+}
+
+body.sticker_theme_blue {
+	background-color: #42bfe8;
+	background-image:none;
+	color: #000000;
+}
+
+.sticker_theme_blue .uiTitle {
+	border-bottom: 2px solid #2789cd;
+	background: #42bfe8;
+	color: #30373d;
+}
+

@@ -101,7 +101,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
-		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls 
+		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls
 			return
 
 		//sound volume falloff with pressure
@@ -276,7 +276,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 			prefs.snd_jukebox_vol = vol
 
-			if(istype(media)) // will be updated in "/mob/living/Login()" if changed in lobby.
+			if(istype(media)) // will be updated in "/mob/living/LateLogin()" if changed in lobby.
 				media.update_volume()
 
 				if(!vol && old_vol) // only play/stop if last change is a mute or unmute state.
@@ -418,7 +418,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 						<input type="range" class="volume_slider" min="0" max="100" value="[slider_value]" id="[slider_id]" onchange="updateVolume([slider_id])">
 					</td>
 					<td>
-						<p><b><center><a href='?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
+						<p><b><center><a href='byond://?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
 					</td>
 				</tr>
 			"}

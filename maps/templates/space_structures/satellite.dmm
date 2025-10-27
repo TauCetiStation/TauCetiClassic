@@ -167,8 +167,7 @@
 	dir = 8
 	},
 /obj/structure/survivor_cryopod/nasa{
-	dir = 4;
-	fixed_name = "Major Tom"
+	dir = 4
 	},
 /turf/simulated/shuttle/floor,
 /area/space_structures/nasa_satellite)

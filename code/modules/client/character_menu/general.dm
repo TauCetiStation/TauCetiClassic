@@ -9,16 +9,16 @@
 	. += 				"<tr valign='top'>"
 	. += 					"<td colspan='2'>"
 	. += 						"<b>Name:</b> "
-	. += 						"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
-	. += 						"<br>(<a href='?_src_=prefs;preference=name;task=random'>Random Name</a>)"
-	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
-	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+	. += 						"<a href='byond://?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
+	. += 						"<br>(<a href='byond://?_src_=prefs;preference=name;task=random'>Random Name</a>)"
+	. += 						"(<a href='byond://?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
+	. += 						"<br><b>Age:</b> <a href='byond://?_src_=prefs;preference=age;task=input'>[age]</a>"
 	if(!specie_obj.flags[NO_GENDERS])
-		. += 					"<br><b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
+		. += 					"<br><b>Gender:</b> <a href='byond://?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	if(species == IPC)  // only ipc can change their voice at this moment
-		. += 					"<br><b>Voice:</b> <a href='?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
-	. += 						"<br><b>Height:</b> <a href='?_src_=prefs;preference=height;task=input'>[height]</a>"
-	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
+		. += 					"<br><b>Voice:</b> <a href='byond://?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
+	. += 						"<br><b>Height:</b> <a href='byond://?_src_=prefs;preference=height;task=input'>[height]</a>"
+	. += 						"<br><b>Randomized Character Slot:</b> <a href='byond://?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
 	. += 					"</td>"
 	. += 				"</tr>"
@@ -42,14 +42,13 @@
 	switch(submenu_type)	//Submenu
 		//Body
 		if("body")
-			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
+			. += "Body: <a href='byond://?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
 			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
-			if(!specie_obj.flags[NO_BLOOD])
-				. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
-				. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
+				var/datum/skin_tone/tone = global.skin_tones_by_name[s_tone]
+				. += "<br>Skin Tone: <a href='byond://?_src_=prefs;preference=s_tone;task=input'>[CASE(tone, NOMINATIVE_CASE)]</a>"
 
 		//Organs
 		if("organs")
@@ -106,38 +105,38 @@
 				. += "<b>Hair</b>"
 			. += "<br>"
 			if(specie_obj.flags[HAS_HAIR_COLOR])
-				. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> [color_square(r_hair, g_hair, b_hair)]"
-				. += " Style: <a class='white' href='?_src_=prefs;preference=h_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=h_style_right;task=input'>></a> <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+				. += "<a href='byond://?_src_=prefs;preference=hair;task=input'>Change Color</a> [color_square(r_hair, g_hair, b_hair)]"
+				. += " Style: <a class='white' href='byond://?_src_=prefs;preference=h_style_left;task=input'><</a> <a class='white' href='byond://?_src_=prefs;preference=h_style_right;task=input'>></a> <a href='byond://?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 				. += "<b>Gradient</b>"
-				. += "<br><a href='?_src_=prefs;preference=grad_color;task=input'>Change Color</a> [color_square(r_grad, g_grad, b_grad)] "
-				. += " Style: <a class='white' href='?_src_=prefs;preference=grad_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=grad_style_right;task=input'>></a> <a href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a><br>"
+				. += "<br><a href='byond://?_src_=prefs;preference=grad_color;task=input'>Change Color</a> [color_square(r_grad, g_grad, b_grad)] "
+				. += " Style: <a class='white' href='byond://?_src_=prefs;preference=grad_style_left;task=input'><</a> <a class='white' href='byond://?_src_=prefs;preference=grad_style_right;task=input'>></a> <a href='byond://?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a><br>"
 			else
-				. += " Style: <a class='white' href='?_src_=prefs;preference=h_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=h_style_right;task=input'>></a> <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+				. += " Style: <a class='white' href='byond://?_src_=prefs;preference=h_style_left;task=input'><</a> <a class='white' href='byond://?_src_=prefs;preference=h_style_right;task=input'>></a> <a href='byond://?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 			. += "<b>Facial</b>"
-			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> [color_square(r_facial, g_facial, b_facial)]"
-			. += " Style: <a class='white' href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
+			. += "<br><a href='byond://?_src_=prefs;preference=facial;task=input'>Change Color</a> [color_square(r_facial, g_facial, b_facial)]"
+			. += " Style: <a class='white' href='byond://?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='byond://?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='byond://?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 			. += "<b>Eyes</b>"
-			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> [color_square(r_eyes, g_eyes, b_eyes)]<br>"
+			. += "<br><a href='byond://?_src_=prefs;preference=eyes;task=input'>Change Color</a> [color_square(r_eyes, g_eyes, b_eyes)]<br>"
 
 			if(specie_obj.flags[HAS_SKIN_COLOR])
 				. += "<b>Body Color</b>"
-				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]<br>"
+				. += "<br><a href='byond://?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]<br>"
 			if(species == UNATHI)
 				. += "<b>Belly & Jaw Color</b>"
-				. += "<br><a href='?_src_=prefs;preference=belly;task=input'>Change Color</a> [color_square(r_belly, g_belly, b_belly)]"
+				. += "<br><a href='byond://?_src_=prefs;preference=belly;task=input'>Change Color</a> [color_square(r_belly, g_belly, b_belly)]"
 
 		//Gear
 		if("gear")
 			. += "<b>Gear:</b><br>"
 			if(specie_obj.flags[HAS_UNDERWEAR])
-				if(gender == MALE)
-					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
-				else
-					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
-				. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
-				. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
-			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
-			. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a>"
+				. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear ? underwear_t[underwear] : "None"]</a><br>"
+				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt ? undershirt_t[undershirt] : "None"]</a><br>"
+				if(undershirt)
+					. += "Undershirt print: <a href='byond://?_src_=prefs;preference=undershirt_print;task=input'>[undershirt_print ? undershirt_print : "None"]</a><br>"
+				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
+			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
+			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
+			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
 	. += 							"</tr>"
@@ -155,7 +154,7 @@
 
 	//Backstory
 	. += 						"<b>Background information:</b>"
-	. += 						"<br>Nanotrasen Relation: <a href ='?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a>"
+	. += 						"<br>Nanotrasen Relation: <a href ='byond://?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a>"
 	. += 						"<br>Home system: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a>"
 	. += 						"<br>Citizenship: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a>"
 	. += 						"<br>Faction: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a>"
@@ -236,14 +235,13 @@
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					if(gender == MALE)
-						underwear = rand(1, underwear_m.len)
-					else
-						underwear = rand(1, underwear_f.len)
+					underwear = rand(0, underwear_t.len)
 				if("undershirt")
-					undershirt = rand(1,undershirt_t.len)
+					undershirt = rand(0, undershirt_t.len)
+				if("undershirt_print")
+					undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
 				if("socks")
-					socks = rand(1,socks_t.len)
+					socks = rand(0, socks_t.len)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -258,6 +256,8 @@
 					backbag = rand(1, backbaglist.len)
 				if("use_skirt")
 					use_skirt = pick(TRUE, FALSE)
+				if("ringtone")
+					chosen_ringtone = pick(global.ringtones_by_names)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -327,14 +327,6 @@
 				if("insurance")
 					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
 
-
-				if("b_type")
-					if(specie_obj.flags[NO_BLOOD])
-						return
-					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Blood-type", b_type) as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
-					if(new_b_type)
-						b_type = new_b_type
-
 				if("hair")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])
 						return
@@ -346,16 +338,22 @@
 
 				if("h_style")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
+					if(!length(valid_hairstyles))
+						return
 					var/new_h_style = input(user, "Choose your character's hair style:", "Character Hair Style", h_style) as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
 
 				if("h_style_left")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
+					if(!length(valid_hairstyles))
+						return
 					h_style = valid_hairstyles[h_style][LEFT]
 
 				if("h_style_right")
 					var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache)
+					if(!length(valid_hairstyles))
+						return
 					h_style = valid_hairstyles[h_style][RIGHT]
 
 				if("grad_color")
@@ -392,44 +390,57 @@
 
 				if("f_style")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
+					if(!length(valid_facialhairstyles))
+						return
 					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character facial-hair style", f_style) as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
 
 				if("f_style_left")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
+					if(!length(valid_facialhairstyles))
+						return
 					f_style = valid_facialhairstyles[f_style][LEFT]
 
 				if("f_style_right")
 					var/list/valid_facialhairstyles = get_valid_styles_from_cache(facial_hairs_cache)
+					if(!length(valid_facialhairstyles))
+						return
 					f_style = valid_facialhairstyles[f_style][RIGHT]
 
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
 						return
-					var/list/underwear_options
-					if(gender == MALE)
-						underwear_options = underwear_m
-					else
-						underwear_options = underwear_f
-
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear]) as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear ? underwear_t[underwear] : "None") as null|anything in list("None") + underwear_t
 					if(new_underwear)
-						underwear = underwear_options.Find(new_underwear)
+						if(new_underwear == "None")
+							underwear = 0
+						else
+							underwear = underwear_t.Find(new_underwear)
 
 				if("undershirt")
-					var/list/undershirt_options
-					undershirt_options = undershirt_t
-
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt ? undershirt_t[undershirt] : "None") as null|anything in list("None") + undershirt_t
 					if (new_undershirt)
-						undershirt = undershirt_options.Find(new_undershirt)
+						if(new_undershirt == "None")
+							undershirt = 0
+						else
+							undershirt = undershirt_t.Find(new_undershirt)
+
+				if("undershirt_print")
+					var/new_undershirt_print = input(user, "Choose your undershirt print:", "Character Preference", undershirt_print ? undershirt_print : "None") as null|anything in list("None") + undershirt_prints_t
+					if (new_undershirt_print)
+						if(new_undershirt_print == "None")
+							undershirt_print = null
+						else
+							undershirt_print = new_undershirt_print
+
 				if("socks")
-					var/list/socks_options
-					socks_options = socks_t
-					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks_options[socks]) as null|anything in socks_options
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks ? socks_t[socks] : "None") as null|anything in list("None") + socks_t
 					if(new_socks)
-						socks = socks_options.Find(new_socks)
+						if(new_socks == "None")
+							socks = 0
+						else
+							socks = socks_t.Find(new_socks)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", rgb(r_eyes, g_eyes, b_eyes)) as color|null
@@ -441,9 +452,9 @@
 				if("s_tone")
 					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35 - s_tone ) as num|null
-					if(new_s_tone)
-						s_tone = 35 - max(min( round(new_s_tone), 220),1)
+					var/new_tone = input("Выберите цвет кожи", "Character Preference") in global.skin_tones_by_ru_name
+					var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+					s_tone = T.name
 
 				if("skin")
 					if(!specie_obj.flags[HAS_SKIN_COLOR])
@@ -465,6 +476,19 @@
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag]) as null|anything in backbaglist
 					if(new_backbag)
 						backbag = backbaglist.Find(new_backbag)
+
+				if("ringtone")
+					var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
+					var/Tone = input(user, "Выберите рингтон:", "Character Preference", chosen_ringtone) as null|anything in pref_ringtones
+					if(!Tone)
+						return
+					if(Tone == CUSTOM_RINGTONE_NAME)
+						var/t = sanitize(input(user, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
+						if (!t)
+							return
+						custom_melody = t
+
+					chosen_ringtone = Tone
 
 				if("use_skirt")
 					use_skirt = !use_skirt
@@ -592,7 +616,7 @@
 									organ_data[organ] = "mechanical"
 				// Choosing a head for an IPC
 				if("ipc_head")
-					var/list/ipc_heads = list("Default", "Alien", "Double", "Pillar", "Human")
+					var/list/ipc_heads = list("Default", "Cobalt", "Cathod", "Thorax", "Axon")
 					ipc_head = input("Please select a head type", "Character Generation", null) in ipc_heads
 					h_style = random_hair_style(gender, species, ipc_head)
 

@@ -17,11 +17,12 @@
 /obj/structure/closet/gmcloset/PopulateContents()
 	new /obj/item/clothing/head/hairflower(src)
 	new /obj/item/clothing/under/dress/dress_saloon(src)
+	new /obj/item/clothing/under/rank/bartender_fem(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/head/that(src)
-		new /obj/item/clothing/under/sl_suit(src)
+		new /obj/item/clothing/under/rank/bartender/alt(src)
 		new /obj/item/clothing/under/rank/bartender(src)
-		new /obj/item/clothing/suit/wcoat(src)
+		new /obj/item/clothing/accessory/tie/waistcoat(src)
 		new /obj/item/clothing/shoes/black(src)
 
 /*
@@ -34,6 +35,8 @@
 	icon_closed = "mixed"
 
 /obj/structure/closet/jcloset/PopulateContents()
+	new /obj/item/weapon/reagent_containers/food/snacks/soap(src)
+	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/black(src)
@@ -100,7 +103,7 @@
 			new choice(src)
 			new /obj/item/clothing/glasses/sunglasses/blindfold(src)
 		if (7)
-			new /obj/item/clothing/suit/wcoat(src)
+			new /obj/item/clothing/accessory/tie/waistcoat(src)
 			new /obj/item/clothing/under/suit_jacket(src)
 			new /obj/item/clothing/head/that(src)
 		if (8)
@@ -113,7 +116,7 @@
 			new /obj/item/clothing/under/kilt(src)
 			new /obj/item/clothing/head/beret/red(src)
 		if (10)
-			new /obj/item/clothing/suit/wcoat(src)
+			new /obj/item/clothing/accessory/tie/waistcoat(src)
 			new /obj/item/clothing/glasses/monocle(src)
 			var/choice = pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
 			new choice(src)

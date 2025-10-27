@@ -109,7 +109,7 @@
 				user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>",
 				"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
 
-	if(target.species && target.species.flags[NO_PAIN])
+	if(HAS_TRAIT(target, TRAIT_NO_PAIN))
 		to_chat(target, "You notice slight movement in your groin.")
 	else
 		target.custom_pain("The pain in your groin is living hell!",1)
@@ -187,7 +187,7 @@
 			user.visible_message("[user] starts mending the mechanisms on [target]'s [IO] with \the [tool].",
 			"You start mending the mechanisms on [target]'s [IO] with \the [tool]." )
 			continue
-	if(target.species && target.species.flags[NO_PAIN])
+	if(HAS_TRAIT(target, TRAIT_NO_PAIN))
 		to_chat(target, "You notice slight movement in your groin.")
 	else
 		target.custom_pain("The pain in your groin is living hell!",1)

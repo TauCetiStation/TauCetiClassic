@@ -81,6 +81,10 @@
 	if(stat == CONSCIOUS)
 		handle_combat_ai()
 
+//Check the ability to attack
+/mob/living/simple_animal/hostile/proc/allowAttackTarget()
+	return TRUE
+
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	var/list/L = list()
@@ -137,6 +141,8 @@
 		if(L in friends)
 			return FALSE
 		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
+			return FALSE
+		if(!allowAttackTarget(L))
 			return FALSE
 		return TRUE
 	if(isobj(the_target))
@@ -300,6 +306,12 @@
 			if(iswallturf(T) || istype(T, /turf/simulated/mineral))
 				if(T.Adjacent(src))
 					T.attack_animal(src)
+			for(var/obj/structure/grille/G in T)
+				G.attack_animal(src)
+				return
+			for(var/obj/structure/windowsill/WS in T)
+				WS.attack_animal(src)
+				return
 			for(var/obj/structure/window/fulltile/W in T)
 				W.attack_animal(src)
 				return
@@ -310,7 +322,7 @@
 			for(var/atom/A in T)
 				if(!A.Adjacent(src))
 					continue
-				if(istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
+				if(istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
 					A.attack_animal(src)
 				if(istype(A, /obj/item/tape))
 					var/obj/item/tape/Tp = A

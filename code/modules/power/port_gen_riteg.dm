@@ -39,9 +39,9 @@
 
 	var/dat = ""
 	if (active)
-		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
+		dat += text("Generator: <A href='byond://?src=\ref[src];action=disable'>On</A><br>")
 	else
-		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
+		dat += text("Generator: <A href='byond://?src=\ref[src];action=enable'>Off</A><br>")
 	dat += text("Power output: [power_gen * power_output]<br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 

@@ -163,7 +163,7 @@
 	// for some reason name is not set at this stage and if I don't do this the emote message will be nameless
 	H.name = H.real_name
 	H.emote("scream")
-	H.update_body()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), PROC_REF(battlecry))
 
@@ -174,8 +174,7 @@
 	requirement = "Нет."
 
 /datum/quality/quirkieish/kamikaze/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/implant/dexplosive/DE = new(H)
-	DE.stealth_inject(H)
+	new /obj/item/weapon/implant/dexplosive(H)
 
 
 /datum/quality/quirkieish/obedient
@@ -189,9 +188,7 @@
 	return !(H.mind.assigned_role in funpolice)
 
 /datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/implant/obedience/O = new(H)
-	O.stealth_inject(H)
-
+	new /obj/item/weapon/implant/obedience(H)
 
 
 /datum/quality/quirkieish/jack_of_all_trades
@@ -315,18 +312,17 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
-	H.set_species(GOLEM)
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
+	H.set_species(GOLEM)
 	H.flavor_text = ""
-	H.regenerate_icons()
 
 	// In case the golem is evil don't make him a loyal dog of NT.
 	if(isanyantag(H))
 		return
 	if(prob(10))
 		return
-	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new()
 	L.inject(H, BP_CHEST)
 
 
@@ -339,11 +335,7 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
-	H.set_species(SLIME)
-	H.f_style = "Shaved"
-	H.h_style = "Bald"
-	H.regenerate_icons()
-
+	ADD_TRAIT(H, ELEMENT_TRAIT_SLIME, INNATE_TRAIT)
 
 /datum/quality/quirkieish/very_special
 	name = "Very Special"
@@ -365,7 +357,7 @@
 	name = "Prisoner"
 	desc = "Ты загремел в каталажку за какое-то серьёзное преступление и, конечно, не собираешься исправляться."
 
-	requirement = "Подопытный."
+	requirement = "Подопытный. Включённая опция \"Быть предателем\"."
 
 /datum/quality/quirkieish/prisoner/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.role_alt_title == "Test Subject"
@@ -406,13 +398,13 @@
 	create_and_setup_role(/datum/role/prisoner, H)
 	H.sec_hud_set_security_status()
 
-/datum/quality/unrestricted
+/datum/quality/quirkieish/unrestricted
 	name = "Unrestricted"
 	desc = "В качестве особого эксперимента, НТ позволило вам занять любую должность на станции."
 	requirement = "Прибыть на станцию после начала смены."
 	max_amount = 1
 
-/datum/quality/unrestricted/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/quirkieish/unrestricted/add_effect(mob/living/carbon/human/H, latespawn)
 	//only for latespawners
 	if(!latespawn)
 		return
@@ -426,3 +418,21 @@
 	var/obj/item/weapon/stamp/centcomm/S = new
 	S.stamp_paper(P)
 	H.equip_or_collect(P, SLOT_L_HAND)
+
+/datum/quality/quirkieish/thief
+	name = "Thief"
+	desc = "Ты задумал кое-что украсть..."
+	requirement = "Все, кроме охраны и глав. Включённая опция \"Быть предателем\"."
+	var/list/restricted_jobs = list("Security Officer", "Security Cadet", "Head of Security", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel", "Blueshield Officer", "Research Director", "Chief Engineer", "Chief Medical Officer", "Internal Affairs Agent")
+
+/datum/quality/quirkieish/thief/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in restricted_jobs)
+
+/datum/quality/quirkieish/thief/add_effect(mob/living/carbon/human/H, latespawn)
+	if(jobban_isbanned(H, "Syndicate") || !(ROLE_TRAITOR in H.client.prefs.be_role))
+		return
+
+	create_and_setup_role(/datum/role/thief, H)
+
+	to_chat(H, "<span class='notice'>В твоей сумке лежат особые перчатки, они позволят тебе незаметно красть вещи у людей.</span>")
+	H.equip_or_collect(new /obj/item/clothing/gloves/black/strip(H), SLOT_IN_BACKPACK)

@@ -11,7 +11,6 @@
 /obj/item/organ/external/chest/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
-	color = original_color
 
 /obj/item/organ/external/head/robot/ipc
 	name = "ipc head"
@@ -32,19 +31,18 @@
 /obj/item/organ/external/head/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]_[ipc_head]"
-	color = original_color
 
-/obj/item/organ/external/head/robot/ipc/alien
-	ipc_head = "Alien"
+/obj/item/organ/external/head/robot/ipc/cobalt
+	ipc_head = "Cobalt"
 
-/obj/item/organ/external/head/robot/ipc/double
-	ipc_head = "Double"
+/obj/item/organ/external/head/robot/ipc/cathod
+	ipc_head = "Cathod"
 
-/obj/item/organ/external/head/robot/ipc/pillar
-	ipc_head = "Pillar"
+/obj/item/organ/external/head/robot/ipc/thorax
+	ipc_head = "Thorax"
 
-/obj/item/organ/external/head/robot/ipc/human
-	ipc_head = "Human"
+/obj/item/organ/external/head/robot/ipc/axon
+	ipc_head = "Axon"
 
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"
@@ -54,7 +52,6 @@
 /obj/item/organ/external/groin/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
-	color = original_color
 
 /obj/item/organ/external/l_arm/robot/ipc
 	name = "left ipc arm"
@@ -64,7 +61,6 @@
 /obj/item/organ/external/l_arm/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
-	color = original_color
 
 /obj/item/organ/external/r_arm/robot/ipc
 	name = "right ipc arm"
@@ -74,7 +70,6 @@
 /obj/item/organ/external/r_arm/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
-	color = original_color
 
 /obj/item/organ/external/r_leg/robot/ipc
 	name = "right ipc leg"
@@ -84,7 +79,6 @@
 /obj/item/organ/external/r_leg/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
-	color = original_color
 
 /obj/item/organ/external/l_leg/robot/ipc
 	name = "left ipc leg"
@@ -94,4 +88,3 @@
 /obj/item/organ/external/l_leg/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
-	color = original_color

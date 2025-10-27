@@ -1,9 +1,9 @@
 /mob/living/carbon/human/spawn_gibs()
-	if(!species.flags[NO_BLOOD_TRAILS])
-		hgibs(loc, dna, species.flesh_color, species.blood_datum)
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
+		new /obj/effect/gibspawner/human(get_turf(loc), src)
 
 /mob/living/carbon/human/gib()
-	if(!species.flags[NO_BLOOD_TRAILS])
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
 		var/atom/movable/overlay/animation = new (loc)
 		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
 		QDEL_IN(animation, 2 SECOND)
@@ -15,6 +15,36 @@
 			BP.droplimb(TRUE, null, DROPLIMB_EDGE)
 
 	..()
+
+/mob/living/carbon/human/proc/reborn()
+	var/target = pick_landmarked_location("Heaven")
+	var/mob/living/carbon/human/pluvian_spirit/P = new /mob/living/carbon/human/pluvian_spirit(target)
+	for(var/obj/effect/proc_holder/spell/S in spell_list)
+		if(!istype(S,/obj/effect/proc_holder/spell/create_bless_vote))
+			P.spells_to_remember.Add(S)
+	global.pluvia_religion.remove_member(src, HOLY_ROLE_PRIEST)
+	P.real_name = dna.real_name
+	P.dna = dna.Clone()
+	P.UpdateAppearance()
+	P.regenerate_icons(update_body_preferences = TRUE)
+	P.my_corpse = src
+	mind.transfer_to(P)
+	P.hud_used.set_parallax(PARALLAX_HEAVEN)
+	for(var/obj/item/I in contents)
+		I.remove_item_actions(P)
+	for(var/obj/effect/proc_holder/spell/S in P.spell_list)
+		P.RemoveSpell(S)
+	message_admins("Pluvian [key_name_admin(P)] went to heaven!")
+	log_admin("Pluvian [key_name(P)] went to heaven!")
+
+/mob/living/carbon/human/proc/pluvian_reborn_if_worthy()
+	if(iscultist(src) ||  ischangeling(src) || isshadowthrall(src) || isshadowling(src) || !mind)
+		return
+	if(mind.pluvian_blessed || mind.pluvian_social_credit >= global.pluvia_religion.social_credit_threshold)
+		reborn()
+	else
+		to_chat(src, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
+		playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /mob/living/carbon/human/dust()
 	new /obj/effect/decal/cleanable/ash(loc)
@@ -48,9 +78,6 @@
 
 		update_canmove()
 
-		if(is_infected_with_zombie_virus())
-			handle_infected_death(src)
-
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	if(SSticker && SSticker.mode)
@@ -62,7 +89,7 @@
 		my_master.my_golem = null
 		my_master = null
 
-	if(isshadowling(src))
+	if(isshadowling(src)) // todo: move it to shadowling code, listen to COMSIG_MOB_DIED
 		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		for(var/datum/role/thrall/T in faction.members)
 			if(!T.antag.current)
@@ -72,7 +99,6 @@
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
 	..(gibbed)
-
 	SSStatistics.add_death_stat(src)
 
 // Called right after we will lost our head
@@ -81,11 +107,8 @@
 		return
 
 	//Handle brain slugs.
-	var/mob/living/simple_animal/borer/B
+	var/mob/living/simple_animal/borer/B = locate(/mob/living/simple_animal/borer) in BP.embedded_objects
 
-	for(var/I in BP.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
-			B = I
 	if(B)
 		if(!B.ckey && ckey && B.controlling)
 			B.ckey = ckey
@@ -99,7 +122,7 @@
 		verbs -= /mob/living/carbon/proc/release_control
 
 
-	organ_head_list += BP
+	lost_heads_list += BP
 
 	if(ischangeling(src))
 		var/datum/role/changeling/Host = mind.GetRoleByType(/datum/role/changeling)
@@ -107,6 +130,8 @@
 			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 				crab.sting_action(src)
 			return
+	if(ispluvian(src))
+		pluvian_reborn_if_worthy()
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)
@@ -133,40 +158,8 @@
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
-
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (isskeleton(src)))
+	if(HAS_TRAIT_FROM(src, ELEMENT_TRAIT_SKELETON, INNATE_TRAIT))
 		return
-	if(f_style)
-		f_style = "Shaved"
-	if(h_style)
-		h_style = "Bald"
-	set_species(species.skeleton_type)
-	add_status_flags(DISFIGURED)
-	regenerate_icons()
-	return
 
-/mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)
-		return
-	if(species.flags[HAS_HAIR])
-		if(f_style)
-			f_style = "Shaved" // we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-		if(h_style)
-			h_style = "Bald"
-	else if(species.name == SKRELL)
-		r_hair = 85
-		g_hair = 85 // grey
-		b_hair = 85
-
-	mutations.Add(HUSK)
-	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
-	update_hair()
-	update_body()
-
-/mob/living/carbon/human/proc/Drain()
-	if(fake_death)
-		fake_death = 0
-	ChangeToHusk()
-	mutations.Add(NOCLONE)
-	return
+	ADD_TRAIT(src, ELEMENT_TRAIT_SKELETON, INNATE_TRAIT)

@@ -1,3 +1,6 @@
+/obj
+	var/oldificated = FALSE
+
 /obj/proc/make_old(change_looks = TRUE)
 	color = pick("#996633", "#663300", "#666666")
 	light_color = color
@@ -21,6 +24,7 @@
 	if(prob(50))
 		crit_fail = 1
 	update_icon()
+	oldificated = TRUE
 
 /obj/item/make_old()
 	..()
@@ -134,7 +138,6 @@
 	if(prob(35))
 		contaminate()
 	if(prob(75))
-		generate_blood_overlay()
 		add_dirt_cover(pick(global.all_dirt_covers))
 	..()
 
@@ -237,3 +240,7 @@
 
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8
+	oldificated = TRUE
+
+/obj/machinery/kitchen_machine/microwave/make_old()
+	broken = 2

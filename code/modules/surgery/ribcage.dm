@@ -64,10 +64,10 @@
 	var/msg = "[user] starts to force open the ribcage in [target]'s torso with \the [tool]."
 	var/self_msg = "You start to force open the ribcage in [target]'s torso with \the [tool]."
 	user.visible_message(msg, self_msg)
-	if(!(target.species && target.species.flags[NO_PAIN]))
-		target.custom_pain("Something hurts horribly in your chest!",1)
-	else
+	if(HAS_TRAIT(target, TRAIT_NO_PAIN))
 		target.custom_pain("You notice movement inside your chest!",1)
+	else
+		target.custom_pain("Something hurts horribly in your chest!",1)
 	..()
 
 /datum/surgery_step/ribcage/retract_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -157,7 +157,7 @@
 
 	target.op_stage.ribcage = 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.open = 1
+	BP.open = 2
 
 //////////////////////////////////////////////////////////////////
 //					ALIEN EMBRYO SURGERY						//
@@ -307,7 +307,7 @@
 			user.visible_message("[user] starts mending the mechanisms on [target]'s [IO] with \the [tool].",
 			"You start mending the mechanisms on [target]'s [IO] with \the [tool]." )
 			continue
-	if(target.species && target.species.flags[NO_PAIN])
+	if(HAS_TRAIT(target, TRAIT_NO_PAIN))
 		target.custom_pain("You notice slight movement in your chest.",1)
 	else
 		target.custom_pain("The pain in your chest is a living hell!",1)

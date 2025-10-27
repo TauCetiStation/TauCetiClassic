@@ -30,12 +30,11 @@
 
 /datum/asset/simple/fontawesome
 	assets = list(
-		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
-		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
-		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
-		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
-		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css',
-		"font-awesome.css"    = 'html/font-awesome/css/all.min.css'
+		"fa-regular-400.ttf"     = 'html/font-awesome/webfonts/fa-regular-400.ttf',
+		"fa-solid-900.ttf"       = 'html/font-awesome/webfonts/fa-solid-900.ttf',
+		"fa-v4compatibility.ttf" = 'html/font-awesome/webfonts/fa-v4compatibility.ttf',
+		"v4shim.css"             = 'html/font-awesome/css/v4-shims.min.css',
+		"font-awesome.css"       = 'html/font-awesome/css/all.min.css'
 	)
 
 /datum/asset/simple/spider_os
@@ -61,6 +60,31 @@
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
+
+/datum/asset/simple/station_map
+
+/datum/asset/simple/station_map/New()
+	var/list/cache = list(
+		"box" = 'nano/images/nanomap_exodus_1_areas.png',
+		"gamma" = 'nano/images/nanomap_gamma_1_areas.png',
+		"falcon" = 'nano/images/nanomap_falcon_1_areas.png',
+		"prometheus" = 'nano/images/nanomap_prometheus_1_areas.png',
+		"delta" = 'nano/images/nanomap_delta_1_areas.png'
+	)
+
+	var/list/cachekey = list(
+		"box" = "nanomap_exodus_1_areas.png",
+		"gamma" = "nanomap_gamma_1_areas.png",
+		"falcon" = "nanomap_falcon_1_areas.png",
+		"prometheus" = "nanomap_prometheus_1_areas.png",
+		"delta" = "nanomap_delta_1_areas.png"
+	)
+	var/cached_map_file = cache[SSmapping.config.map_path]
+	if(cached_map_file)
+		assets[cachekey[SSmapping.config.map_path]] = cache[SSmapping.config.map_path]
+	assets["nanomap_maplegend.png"] =  'nano/images/nanomap_maplegend.png'
+
+	..()
 
 /datum/asset/simple/newscaster
 	assets = list(
@@ -90,7 +114,9 @@
 		"WK.png" = 'icons/obj/chess/board_WK.png',
 		"WP.png" = 'icons/obj/chess/board_WP.png',
 		"CB.png" = 'icons/obj/chess/board_CB.png',
-		"CR.png" = 'icons/obj/chess/board_CR.png',
+		"CW.png" = 'icons/obj/chess/board_CW.png',
+		"KB.png" = 'icons/obj/chess/board_CB_king.png',
+		"KW.png" = 'icons/obj/chess/board_CW_king.png',
 		"none.png" = 'icons/obj/chess/board_none.png'
 	)
 

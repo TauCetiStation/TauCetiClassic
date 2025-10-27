@@ -1,12 +1,11 @@
 #define FLUFF_FILE_PATH "data/customItemsCache_halloween.sav"
 
-// not BLOCKHEADHAIR/BLOCKHAIR for savefile in case someone change them
-// feel free to rename if more flags needed
+// we don't use existing bitfields for savefile in case if someone changes them
 #define FLUFF_HAIR_HIDE_NONE 0
-#define FLUFF_HAIR_HIDE_HEAD 1 // BLOCKHEADHAIR
-#define FLUFF_HAIR_HIDE_ALL 2 // BLOCKHAIR
+#define FLUFF_HAIR_HIDE_HEAD 1 // HIDE_TOP_HAIR
+#define FLUFF_HAIR_HIDE_ALL 2 // HIDE_ALL_HAIR
 
-#define FLUFF_HAIR_HIDE_FLAG_TO_TEXT(flag) (flag == 1 && "Head Hair" || flag == 2 && "Head & Face Hair" || "None")
+#define FLUFF_HAIR_HIDE_FLAG_TO_TEXT(flag) (flag == FLUFF_HAIR_HIDE_HEAD && "Head Hair" || flag == FLUFF_HAIR_HIDE_ALL && "Head & Face Hair" || "None")
 
 // items
 #define FLUFF_TYPE_NORMAL "normal"
@@ -22,11 +21,12 @@
 #define FLUFF_TYPE_ACCESSORY "accessory"
 #define FLUFF_TYPE_LABCOAT "labcoat"
 #define FLUFF_TYPE_BACKPACK "backpack"
+#define FLUFF_TYPE_TIE  "tie"
 // other
 //#define FLUFF_TYPE_ROBOT "robot"
 #define FLUFF_TYPE_GHOST "ghost"
 
-#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST)
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE)
 
 
 /obj/item/customitem
@@ -73,6 +73,8 @@
 /obj/item/weapon/storage/backpack/custom
 	name = "Custom backpack"
 
+/obj/item/clothing/neck/custom
+	name = "Custom tie"
 
 /datum/custom_item
 	var/item_type // FLUFF_TYPES_LIST
@@ -285,6 +287,8 @@
 				item = new /obj/item/clothing/shoes/custom()
 			if(FLUFF_TYPE_BACKPACK)
 				item = new /obj/item/weapon/storage/backpack/custom()
+			if(FLUFF_TYPE_TIE)
+				item = new /obj/item/clothing/neck/custom()
 			if(FLUFF_TYPE_ACCESSORY)
 				var/obj/item/clothing/accessory/custom/accessory = new /obj/item/clothing/accessory/custom()
 				accessory.inv_overlay = image("icon" = custom_item_info.icon, "icon_state" = "[custom_item_info.icon_state]_inv")
@@ -309,9 +313,9 @@
 
 		switch(custom_item_info.hair_flags)
 			if(FLUFF_HAIR_HIDE_HEAD)
-				item.flags |= BLOCKHEADHAIR
+				item.render_flags |= HIDE_TOP_HAIR
 			if(FLUFF_HAIR_HIDE_ALL)
-				item.flags |= BLOCKHAIR
+				item.render_flags |= HIDE_ALL_HAIR
 
 		if(custom_item_info.item_type == FLUFF_TYPE_SMALL)
 			item.w_class = SIZE_TINY

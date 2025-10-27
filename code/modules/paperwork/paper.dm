@@ -44,6 +44,10 @@
 	///Last world.time tick the contents of this paper was changed.
 	var/last_info_change = 0
 
+	var/windowWidth = 425
+	var/windowHeight = 600
+	var/windowTheme = CSS_THEME_LIGHT
+
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/atom_init()
@@ -58,9 +62,9 @@
 
 /obj/item/weapon/paper/update_icon()
 	if(info)
-		icon_state = "paper_words"
+		icon_state = "[initial(icon_state)]_words"
 		return
-	icon_state = "paper"
+	icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/paper/proc/update_space(new_text)
 	if(!new_text)
@@ -91,7 +95,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", 425, 600, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", windowWidth, windowHeight, ntheme = windowTheme)
 		popup.set_content(data)
 		popup.open()
 
@@ -105,7 +109,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
@@ -120,7 +124,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!crumpled)
@@ -189,7 +193,7 @@
 			if(H == user)
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
@@ -197,7 +201,7 @@
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
-					H.update_body()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /obj/item/weapon/paper/proc/addtofield(id, text, links = 0, type = "paper")
 	var/locid = 0
@@ -241,10 +245,10 @@
 	info_links = info
 	var/i = 0
 	for(i = 1, i <= fields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i]'>write</A></font>", 1)
 	for(i = 1, i <= sfields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
-	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
+	info_links = info_links + " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -259,26 +263,6 @@
 	cut_overlays()
 	updateinfolinks()
 	update_icon()
-
-/obj/item/weapon/paper/proc/create_self_copy()
-	var/obj/item/weapon/paper/P = new
-
-	P.name       = name
-	P.info       = info
-	P.info_links = info_links
-	P.stamp_text = stamp_text
-	P.fields     = fields
-	P.sfields    = sfields
-	P.stamped    = LAZYCOPY(stamped)
-	P.ico        = LAZYCOPY(ico)
-	P.offset_x   = LAZYCOPY(offset_x)
-	P.offset_y   = LAZYCOPY(offset_y)
-	P.copy_overlays(src, TRUE)
-
-	P.updateinfolinks()
-	P.update_icon()
-
-	return P
 
 /obj/item/weapon/paper/proc/get_signature(obj/item/weapon/pen/P, mob/user)
 	if(P && istype(P, /obj/item/weapon/pen))
@@ -319,6 +303,7 @@
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sfield\]", "<span class=\"sign_field\"></span>")
 	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
+	t = replacetext(t, "\[sname\]", station_name_ru())
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
@@ -352,6 +337,7 @@
 		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
 		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
+		\[sname\] : Inserts the current station name. <br>
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
@@ -377,7 +363,7 @@
 
 		for(var/premade_form in predefined_forms_list[department]["content"])
 			var/datum/form/form = new premade_form
-			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<tr><th style='background-color:[color];'><A href='byond://?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
 			dat += "<th> [form.name]</th></tr>"
 		dat +="</tbody></table>"
 
@@ -587,6 +573,14 @@
 	else if(istype(I, /obj/item/weapon/lighter))
 		burnpaper(I, user)
 
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed))
+		var/obj/item/clothing/mask/cigarette/Cig = new(get_turf(src))
+		I.reagents.trans_to(Cig, 15)
+		qdel(I)
+		qdel(src)
+
 	else
 		return ..()
 
@@ -668,7 +662,7 @@
 
 /obj/item/weapon/paper/brig_arsenal/atom_init()
 	. = ..()
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY)|| HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY) || HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		info = "A program is underway to re-equip NanoTrasen security. The current list has not yet been compiled, we apologize."
 
 /obj/item/weapon/paper/firing_range
@@ -986,3 +980,145 @@ var/global/list/contributor_names
 	Stamp2.stamp_paper(src)
 
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/item/weapon/paper/Morse
+	name = "Strange note"
+
+/obj/item/weapon/paper/Morse/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/Morse/atom_init_late()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/Morse/proc/write_info()
+	info = ""
+	info += "I. Знаки, присвоенные флагам и буквам <br>"
+	info += "А • — <br>"
+	info += "Б — • • • <br>"
+	info += "В • — — <br>"
+	info += "Г — — • <br>"
+	info += "Д — • • <br>"
+	info += "Е • <br>"
+	info += "Ж • • • — <br>"
+	info += "3 — — • • <br>"
+	info += "И • • <br>"
+	info += "Й • — — — <br>"
+	info += "К — • — <br>"
+	info += "Л • — • • <br>"
+	info += "М — — <br>"
+	info += "Н — • <br>"
+	info += "О — — — <br>"
+	info += "П • — — • <br>"
+	info += "Р • — • <br>"
+	info += "С • • • <br>"
+	info += "Т — <br>"
+	info += "У • • — <br>"
+	info += "Ф • • — • <br>"
+	info += "Х • • • • <br>"
+	info += "Ц — • — • <br>"
+	info += "Ч — — — • <br>"
+	info += "Ш — — — — <br>"
+	info += "Щ — — • — <br>"
+	info += "Ъ • — — • — • <br>"
+	info += "Ы — • — — <br>"
+	info += "Ь — • • — <br>"
+	info += "Э • • • — • • • <br>"
+	info += "Ю • • — — <br>"
+	info += "Я • — • — <br>"
+
+	info += "II. Цифры <br>"
+	info += "1 • — — — — <br>"
+	info += "2 • • — — — <br>"
+	info += "3 • • • — — <br>"
+	info += "4 • • • • — <br>"
+	info += "5 • • • • • <br>"
+	info += "6 — • • • • <br>"
+	info += "7 — — • • • <br>"
+	info += "8 — — — • • <br>"
+	info += "9 — — — — • <br>"
+	info += "0 — — — — — <br>"
+
+	info += "III. Служебные знаки <br>"
+	info += "• • • • • • Знак ошибки <br>"
+	info += "— — • • — Знак исполнительный <br>"
+	info += "• • — • Знак отменительный <br>"
+	info += "— • • • — Знак разделительный <br>"
+	info += "— — — — — — — — — — Знак молчания <br>"
+	info += "• — • • • Знак ожидания <br>"
+	info += "— • • — • Знак номера <br>"
+	info += "— — — • —Знак—не могу читать вашей передачи <br>"
+	info += "• — • — — — Знак — сигнал принял ясно, но расшифровать не могу. Проверьте кодирование. <br>"
+
+	info += "Примечание. <br>"
+	info += "Знак ошибки (• • • • • •) делается вслед за ошибочно переданным словом клера или сигнальным сочетанием. После знака ошибки повторяется в исправленном виде переданный ранее текст. <br>"
+	info += "Знак исполнительный (— — • • —) или исполнительный огонь (красный клотик) на закрытых рейдах делается после светограммы, требующей одновременного исполнения приказания. <br>"
+	info += "Знак отменительный (• • — •) делается после знака общего вызова или позывных при необходимости отмены только что переданной светограммы. <br>"
+	info += "Знак разделительный (— • • • —) делается для отделения одного сигнального сочетания от другого. <br>"
+	info += "Знак молчания (— — — — — — — — — —) делается в тех случаях, когда необходимо, чтобы всякие переговоры световыми средствами были немедленно прекращены. <br>"
+	info += "Вновь переговоры могут быть начаты после знака отменительного (• • — •). <br>"
+	info += "Знак ожидания (• — • • •) делается в тех случаях, когда внезапно требуется на время прервать передачу или прием. <br>"
+	info += "Знак окончания (• — • — •) делается при окончании передачи, если не требуется ответа. <br>"
+
+/obj/item/weapon/paper/old_station_note_one
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_one/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_one/proc/write_info()
+	info = ""
+	info += "20.08.2221. Из-за аномалии, станция переместилась на неизвестные координаты. Связаться с ЦК невозможно.<br>"
+	info += "21.08.2221. Экипаж продолжает работать в штатном режиме. Учёные начинают проводить эксперименты над образцами ксеноморфов, которые были обнаружены на планете Лутиэн.<br>"
+	info += "25.08.2221. В инженерный отсек врезался небольшой метеор. Инженеры начали ремонт отсека.<br>"
+	info += "26.08.2221. Ремонт завершён.<br>"
+	info += "3.09.2221. На станцию попытался проникнуть разведчик Синдиката. Турели нейтрализовали врага, его снаряжение было передано научному персоналу.<br>"
+	info += "<i>Похоже, это был не самый ценный кадр, раз его послали почти без оружия и в древнем как мир скафандре.</i><br>"
+
+/obj/item/weapon/paper/old_station_note_two
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_two/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_two/proc/write_info()
+	info = ""
+	info += "10.09.2221. На станцию напал отряд подготовленных оперативников Синдиката. Атака была отбита.<br>"
+	info += "<i>Если на эту проклятую станцию попытались напасть, значит, о ней кто-то да знает. Эвакуация - это просто вопрос времени.</i> <br>"
+	info += "13.09.2221. Экипаж начинает замышлять что-то неладное. Некоторые считают, что всё, что произошло на этой станции за последние две недели - один большой эксперимент НТ.<br>"
+	info += "15.09.2221. Очередной метеор повредил обшивку в научном отделе.<br>"
+
+/obj/item/weapon/paper/old_station_note_three
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_three/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_three/proc/write_info()
+	info = ""
+	info += "16.09.2221. По окончанию ремонта обнаружилась пропажа нескольких образцов ксенофауны.<br>"
+	info += "17.09.2221. В дормиториях был найден д-р █████ со вспоротым брюхом, жуткое зрелище.<br>"
+	info += "20.09.2221. Эти ксенотвари обосновались в телекомах и успели схватить нескольких уч#<br>"
+
+/obj/item/weapon/paper/old_station_note_syndispacesuit
+	name = "Object #8123"
+	info = "Устаревшая модель боевого скафандра, который использовали \"Мародёры Горлекса\" в 2190-тых годах."
+
+/obj/item/weapon/paper/old_station_note_medhud
+	name = "Object #8124"
+	info = "Продвинутый медицинский интерфейс с встроенным прибором ночного видения."
+
+/obj/item/weapon/paper/old_station_note_egun
+	name = "Object #2921"
+	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."

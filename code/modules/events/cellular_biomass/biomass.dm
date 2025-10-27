@@ -114,7 +114,7 @@
 	if(isfloorturf(step))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/biomass,F))
-			if(F.Enter(src))
+			if(can_enter_turf(src, F))
 				if(master)
 					master.spawn_biomass_piece( F )
 					return 1

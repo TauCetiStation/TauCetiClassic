@@ -28,7 +28,7 @@
 /area/space)
 "ag" = (
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkgreenfull"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
@@ -48,8 +48,11 @@
 "aj" = (
 /obj/machinery/sleeper,
 /obj/effect/decal/remains/human,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/abandoned_ship)
 "ak" = (
@@ -57,8 +60,11 @@
 	dir = 1
 	},
 /obj/machinery/vending/medical,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/abandoned_ship)
 "al" = (
@@ -89,7 +95,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/abandoned_ship)
 "aq" = (
@@ -103,7 +109,8 @@
 /obj/item/weapon/bonegel,
 /obj/item/weapon/bonesetter,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "darkgreen"
 	},
 /area/space_structures/abandoned_ship)
 "ar" = (
@@ -113,7 +120,9 @@
 /area/space_structures/abandoned_ship)
 "as" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
@@ -137,19 +146,20 @@
 "aw" = (
 /obj/machinery/bodyscanner,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 10;
+	icon_state = "darkgreen"
 	},
 /area/space_structures/abandoned_ship)
 "ax" = (
 /obj/machinery/body_scanconsole,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkgreen"
 	},
 /area/space_structures/abandoned_ship)
 "ay" = (
 /obj/item/weapon/scalpel,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkgreen"
 	},
 /area/space_structures/abandoned_ship)
 "az" = (
@@ -159,7 +169,10 @@
 /area/space_structures/abandoned_ship)
 "aA" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/space_structures/abandoned_ship)
 "aB" = (
 /turf/simulated/floor{
@@ -174,7 +187,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "aD" = (
@@ -189,20 +202,26 @@
 	name = "Hibernation Pods"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkgreen"
 	},
 /area/space_structures/abandoned_ship)
 "aF" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/space_structures/abandoned_ship)
 "aG" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "aH" = (
@@ -210,7 +229,7 @@
 /obj/effect/decal/cleanable/cobweb2,
 /obj/item/device/guitar,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "aI" = (
@@ -221,7 +240,7 @@
 "aJ" = (
 /obj/item/device/multitool,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackcorner"
 	},
 /area/space_structures/abandoned_ship)
 "aK" = (
@@ -230,7 +249,7 @@
 	maxcharge = 15000
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "black"
 	},
 /area/space_structures/abandoned_ship)
 "aL" = (
@@ -238,7 +257,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "black"
 	},
 /area/space_structures/abandoned_ship)
 "aM" = (
@@ -249,11 +268,15 @@
 "aN" = (
 /obj/machinery/light/small,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/space_structures/abandoned_ship)
 "aO" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
@@ -268,19 +291,19 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "aR" = (
 /obj/structure/table,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "aS" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "aT" = (
@@ -302,13 +325,16 @@
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "graychoco"
 	},
 /area/space_structures/abandoned_ship)
 "aW" = (
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "graychoco"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
@@ -327,7 +353,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "aZ" = (
@@ -352,13 +378,13 @@
 "bb" = (
 /obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "graychoco"
 	},
 /area/space_structures/abandoned_ship)
 "bc" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "graychoco"
 	},
 /area/space_structures/abandoned_ship)
 "bd" = (
@@ -368,15 +394,13 @@
 "be" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/retro,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/glass/airless,
 /area/space_structures/abandoned_ship)
 "bf" = (
 /obj/structure/table,
 /obj/item/clothing/accessory/medal/gold/captain,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluechoco"
 	},
 /area/space_structures/abandoned_ship)
 "bg" = (
@@ -391,7 +415,8 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "black"
 	},
 /area/space_structures/abandoned_ship)
 "bi" = (
@@ -424,9 +449,7 @@
 /obj/structure/table,
 /obj/item/device/analyzer,
 /obj/item/weapon/disk/research_points,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/glass/airless,
 /area/space_structures/abandoned_ship)
 "bo" = (
 /obj/effect/decal/remains/human,
@@ -435,7 +458,7 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluechoco"
 	},
 /area/space_structures/abandoned_ship)
 "bp" = (
@@ -455,6 +478,9 @@
 /area/space_structures/abandoned_ship)
 "br" = (
 /obj/machinery/light/small,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -465,21 +491,25 @@
 	},
 /area/space)
 "bt" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
 /area/space)
 "bu" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "bv" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
@@ -493,15 +523,13 @@
 "bx" = (
 /obj/structure/table,
 /obj/item/clothing/accessory/medal/silver/security,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/glass/airless,
 /area/space_structures/abandoned_ship)
 "by" = (
 /obj/structure/table,
 /obj/item/clothing/accessory/medal/gold/heroism,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluechoco"
 	},
 /area/space_structures/abandoned_ship)
 "bz" = (
@@ -537,14 +565,17 @@
 "bC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/abandoned_ship)
 "bD" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "bE" = (
@@ -558,22 +589,26 @@
 	},
 /area/space_structures/abandoned_ship)
 "bG" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
 /area/space)
 "bH" = (
-/obj/item/weapon/table_parts,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space)
 "bI" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
@@ -585,14 +620,17 @@
 	},
 /obj/machinery/vending/sovietsoda,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "bK" = (
 /obj/machinery/light/small,
 /obj/structure/dispenser/oxygen,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "graychoco"
 	},
 /area/space_structures/abandoned_ship)
 "bL" = (
@@ -615,18 +653,18 @@
 	icon_state = "medium"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "bP" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "bQ" = (
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s10"
@@ -638,7 +676,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "bS" = (
@@ -647,7 +685,7 @@
 	},
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/abandoned_ship)
 "bT" = (
@@ -660,7 +698,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "bU" = (
@@ -670,13 +708,13 @@
 /obj/item/clothing/mask/breath,
 /obj/item/weapon/storage/toolbox/emergency,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "bV" = (
 /obj/machinery/vending/engivend,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "bW" = (
@@ -694,12 +732,15 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "black"
 	},
 /area/space_structures/abandoned_ship)
 "bX" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
@@ -711,7 +752,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 6;
+	icon_state = "brown"
 	},
 /area/space_structures/abandoned_ship)
 "bZ" = (
@@ -748,7 +790,8 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/space_structures/abandoned_ship)
 "cd" = (
@@ -758,7 +801,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "ce" = (
@@ -772,7 +815,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "cf" = (
@@ -783,12 +826,15 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "blackcorner"
 	},
 /area/space_structures/abandoned_ship)
 "cg" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
@@ -799,13 +845,13 @@
 	id = "oldship_gun"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "ci" = (
 /obj/machinery/vending/tool,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "cj" = (
@@ -816,7 +862,7 @@
 /obj/item/device/radio/off,
 /obj/item/weapon/circuitboard/security,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "ck" = (
@@ -824,7 +870,181 @@
 /obj/machinery/constructable_frame/machine_frame,
 /obj/structure/cable,
 /turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space_structures/abandoned_ship)
+"cX" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"da" = (
+/obj/machinery/door/unpowered/shuttle,
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"dH" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blackcorner"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/abandoned_ship)
+"ev" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swallc1";
+	dir = 9
+	},
+/area/space_structures/abandoned_ship)
+"fk" = (
+/obj/item/weapon/table_parts,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ft" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"ge" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkbluecorners"
+	},
+/area/space_structures/abandoned_ship)
+"hE" = (
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/abandoned_ship)
+"hI" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/abandoned_ship)
+"hT" = (
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space_structures/abandoned_ship)
+"iC" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/abandoned_ship)
+"jK" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/space_structures/abandoned_ship)
+"kc" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/abandoned_ship)
+"km" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/structure/closet/crate/large,
+/obj/item/weapon/fuel_assembly/tritium,
+/obj/item/weapon/fuel_assembly/tritium,
+/obj/item/weapon/fuel_assembly/tritium,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ky" = (
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/space_structures/abandoned_ship)
+"lw" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"lD" = (
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/abandoned_ship)
+"mX" = (
+/turf/simulated/floor{
+	icon_state = "darkbluechoco"
+	},
+/area/space_structures/abandoned_ship)
+"nq" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"oH" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"oJ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "blackcorner"
+	},
+/area/space_structures/abandoned_ship)
+"pr" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brownchoco"
 	},
 /area/space_structures/abandoned_ship)
 "qs" = (
@@ -832,7 +1052,368 @@
 	dir = 4
 	},
 /turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space_structures/abandoned_ship)
+"qW" = (
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/abandoned_ship)
+"rd" = (
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space_structures/abandoned_ship)
+"rC" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/space_structures/abandoned_ship)
+"so" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"sW" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/space_structures/abandoned_ship)
+"tZ" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkbluecorners"
+	},
+/area/space_structures/abandoned_ship)
+"uj" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"zU" = (
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/space_structures/abandoned_ship)
+"Bz" = (
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/space_structures/abandoned_ship)
+"BB" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/space_structures/abandoned_ship)
+"Ck" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"CD" = (
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space_structures/abandoned_ship)
+"FL" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"FV" = (
+/obj/machinery/light/small,
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"FZ" = (
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
+	},
+/area/space_structures/abandoned_ship)
+"Gf" = (
+/turf/simulated/floor/glass/airless,
+/area/space_structures/abandoned_ship)
+"Gr" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
+/area/space_structures/abandoned_ship)
+"GE" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space_structures/abandoned_ship)
+"GK" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"HD" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
+/area/space_structures/abandoned_ship)
+"HO" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space_structures/abandoned_ship)
+"Ik" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"Io" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"IH" = (
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/abandoned_ship)
+"IJ" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"IP" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"IU" = (
+/turf/simulated/floor{
+	icon_state = "darkgreen"
+	},
+/area/space_structures/abandoned_ship)
+"Jf" = (
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/abandoned_ship)
+"Jq" = (
+/obj/structure/stool/bed/chair/metal/red,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/space_structures/abandoned_ship)
+"Kc" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkgreen"
+	},
+/area/space_structures/abandoned_ship)
+"Kr" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkgreen"
+	},
+/area/space_structures/abandoned_ship)
+"Ks" = (
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"KE" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blackcorner"
+	},
+/area/space_structures/abandoned_ship)
+"MN" = (
+/obj/machinery/door/airlock/glass{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/space_structures/abandoned_ship)
+"OQ" = (
+/obj/item/weapon/stock_parts/cell{
+	charge = 100;
+	maxcharge = 15000
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space_structures/abandoned_ship)
+"OT" = (
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"PS" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
+	},
+/area/space_structures/abandoned_ship)
+"PT" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"Qh" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"QU" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"RJ" = (
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space_structures/abandoned_ship)
+"SX" = (
+/turf/simulated/floor{
+	icon_state = "yellowfull"
+	},
+/area/space_structures/abandoned_ship)
+"Tj" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space_structures/abandoned_ship)
+"TD" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brownchoco"
+	},
+/area/space_structures/abandoned_ship)
+"UM" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"Wt" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/space_structures/abandoned_ship)
+"Ww" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"Wy" = (
+/turf/simulated/floor{
+	icon_state = "black"
+	},
+/area/space_structures/abandoned_ship)
+"Xi" = (
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "loadingarea";
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"Xn" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkgreen"
+	},
+/area/space_structures/abandoned_ship)
+"YH" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blackcorner"
 	},
 /area/space_structures/abandoned_ship)
 
@@ -890,15 +1471,15 @@ aa
 aa
 ab
 ar
-aB
+GE
 aQ
-ah
-ah
+Gf
+Gf
 be
 bn
 bx
-ah
-ah
+Gf
+Gf
 bO
 bQ
 am
@@ -913,16 +1494,16 @@ aa
 af
 ab
 ar
-aB
-ah
-ah
-ah
-ah
+GE
+Tj
+Tj
+Gf
+Gf
 bf
 bo
 by
-ah
-ah
+Gf
+Gf
 bP
 bR
 ad
@@ -939,14 +1520,14 @@ ao
 am
 aC
 aG
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Tj
+Tj
+ge
+mX
+mX
+mX
+Tj
+Tj
 bP
 bS
 ac
@@ -960,19 +1541,19 @@ aa
 aa
 ac
 ap
-bB
-al
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-aT
+qW
+HO
+Tj
+Tj
+Tj
+Tj
+ge
+mX
+tZ
+Tj
+Tj
+Tj
+kc
 ar
 qs
 ao
@@ -983,31 +1564,31 @@ af
 (7,1,1) = {"
 ab
 ag
-ah
+Xn
 aw
 ac
 aH
 aR
 aR
-aX
-ah
-ah
-ah
+hT
+Tj
+mX
+Tj
 aY
 bJ
-aT
+kc
 ar
-aB
-ah
+CD
+rd
 ch
-bB
+Jf
 bF
 aa
 "}
 (8,1,1) = {"
 ac
-ah
-ah
+FZ
+Kr
 ax
 ad
 aI
@@ -1015,39 +1596,39 @@ aI
 aI
 aI
 aD
-qs
+MN
 aD
 aI
 aI
 ar
-aB
-ah
-ah
-ah
-ah
+CD
+sW
+jK
+rC
+rd
 ac
 aa
 "}
 (9,1,1) = {"
 ac
-ai
-ah
-ah
+PS
+Kr
+IU
 aD
 aJ
-ah
-ah
-ah
-aS
-ah
-ah
-ah
-ah
+nq
+nq
+nq
+Ww
+Tj
+nq
+nq
+oJ
 ac
 bT
-ah
-aS
-ah
+Wt
+pr
+Bz
 ci
 ac
 aa
@@ -1055,23 +1636,23 @@ aa
 (10,1,1) = {"
 ac
 aj
-ah
-ah
+Kr
+IU
 aD
-ah
-ah
-ah
+Wy
+Tj
+Tj
 aY
-ah
-ah
-ah
-ah
-ah
+Tj
+Tj
+Tj
+Tj
+Qh
 ac
 bU
-ah
-ah
-ah
+Wt
+TD
+Bz
 cj
 ac
 aa
@@ -1079,21 +1660,21 @@ aa
 (11,1,1) = {"
 ac
 ak
-ah
+Kr
 ay
 aD
 aK
-ah
+Tj
 aT
 aI
 aI
 aI
 aI
-al
-ah
+HO
+Qh
 ac
 bV
-ah
+Gr
 cc
 bY
 ck
@@ -1102,25 +1683,25 @@ aa
 "}
 (12,1,1) = {"
 ad
-al
-ah
-ah
+RJ
+Kr
+IU
 ac
-ah
-ah
+Wy
+Tj
 aU
 ah
 ah
 ah
 bz
 ac
-ah
-ad
-al
-ah
+Qh
+ac
+Jq
+rd
 cd
-ah
-aT
+rd
+hE
 am
 aa
 "}
@@ -1128,10 +1709,10 @@ aa
 ae
 am
 aq
-ah
+Kc
 ac
-ah
-ah
+Wy
+Tj
 ac
 aZ
 bg
@@ -1139,8 +1720,8 @@ bi
 bA
 ac
 bh
-bB
-ao
+ev
+aI
 aI
 ce
 az
@@ -1151,21 +1732,21 @@ aa
 (14,1,1) = {"
 aa
 ad
-al
-ah
+RJ
+FZ
 aE
-ah
-ah
+Tj
+Tj
 ac
 ba
 ah
 aX
 ah
 aU
-ah
-ah
+ft
+nq
 bW
-bY
+Io
 cf
 ad
 am
@@ -1180,17 +1761,17 @@ az
 am
 aL
 aS
-bB
+iC
 aI
 aI
 aI
 aI
-aB
-ah
-ah
-ah
-ah
-aT
+GE
+Tj
+Tj
+Tj
+uj
+dH
 ar
 aP
 aa
@@ -1202,18 +1783,18 @@ aa
 ae
 ar
 am
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Wy
+Tj
+Tj
+Tj
+Tj
+Tj
+Tj
+Tj
+Tj
 aS
-aK
-aT
+OQ
+dH
 ar
 bE
 aa
@@ -1226,17 +1807,17 @@ aa
 aa
 ae
 am
-ah
-ah
-ah
-aX
-ah
-ah
-ah
-ah
-ah
-ah
-br
+YH
+cX
+cX
+OT
+cX
+Tj
+cX
+cX
+cX
+cX
+KE
 ad
 bE
 aa
@@ -1273,18 +1854,18 @@ aa
 aa
 ab
 as
-aA
+so
 aN
 ac
 aV
-ah
-ah
-ah
-ah
-ah
+ky
+zU
+SX
+BB
+ky
 bK
 ac
-aA
+so
 aA
 cg
 bF
@@ -1296,21 +1877,21 @@ aa
 aa
 ab
 as
-aA
+UM
 aF
 aO
 ar
 aW
 bb
-ah
-ah
-ah
-ah
-aT
+zU
+SX
+BB
+ky
+IH
 ar
 bX
 aF
-aA
+UM
 cg
 bF
 aa
@@ -1326,10 +1907,10 @@ ac
 ae
 am
 bc
-ah
-aS
-ah
-ah
+zU
+HD
+BB
+ky
 ad
 bE
 ac
@@ -1350,10 +1931,10 @@ aP
 aa
 ad
 aW
-ah
-ah
-ah
-aT
+zU
+SX
+BB
+IH
 am
 aa
 ae
@@ -1374,9 +1955,9 @@ aa
 aa
 ae
 ar
-aW
-ah
-aT
+lD
+SX
+hI
 ar
 bE
 aa
@@ -1399,7 +1980,7 @@ aa
 aa
 ae
 ar
-bq
+da
 ar
 bE
 aa
@@ -1423,7 +2004,7 @@ aa
 aa
 aa
 ac
-br
+FV
 ac
 aa
 aa
@@ -1447,7 +2028,7 @@ aa
 aa
 ab
 ar
-bq
+da
 ar
 bF
 aa
@@ -1494,7 +2075,7 @@ aa
 aa
 aa
 ac
-bh
+Ks
 ah
 br
 ac
@@ -1518,9 +2099,9 @@ aa
 aa
 aa
 ac
+Ck
 ah
-ah
-ah
+Ck
 ac
 aa
 aa
@@ -1542,9 +2123,9 @@ aa
 aa
 aa
 ac
+IJ
 ah
-ah
-ah
+Xi
 ac
 aa
 aa
@@ -1566,9 +2147,9 @@ aa
 aa
 aa
 ac
-bi
+GK
 ah
-ah
+Xi
 ac
 aa
 aa
@@ -1590,9 +2171,9 @@ aa
 aa
 aa
 ac
+IJ
 ah
-ah
-ah
+Xi
 ac
 aa
 aa
@@ -1614,9 +2195,9 @@ aa
 aa
 aa
 ac
+Ck
 ah
-ah
-ah
+Ck
 ac
 aa
 aa
@@ -1638,7 +2219,7 @@ aa
 aa
 aa
 ac
-bh
+Ks
 ah
 bC
 ac
@@ -1808,7 +2389,7 @@ aa
 aa
 bk
 bt
-bu
+QU
 bG
 bM
 aa
@@ -1831,9 +2412,9 @@ aa
 aa
 aa
 bl
-bu
-bu
-bu
+fk
+QU
+FL
 bl
 aa
 aa
@@ -1855,9 +2436,9 @@ aa
 aa
 aa
 bl
-bu
-bu
-bu
+km
+QU
+oH
 bl
 aa
 aa
@@ -1879,9 +2460,9 @@ aa
 aa
 aa
 bl
-bu
-bu
-bu
+km
+QU
+IP
 bl
 aa
 aa
@@ -1904,8 +2485,8 @@ aa
 aa
 bl
 bu
-bu
-bu
+Ik
+lw
 bl
 aa
 aa
@@ -1928,7 +2509,7 @@ aa
 aa
 bl
 bu
-bu
+Ik
 bH
 bl
 aa
@@ -1951,9 +2532,9 @@ aa
 aa
 aa
 bl
-bu
-bu
-bu
+PT
+Ik
+bH
 bl
 aa
 aa
@@ -1975,9 +2556,9 @@ aa
 aa
 aa
 bl
-bu
-bu
-bu
+PT
+Ik
+bH
 bl
 aa
 aa
@@ -2000,7 +2581,7 @@ aa
 aa
 bk
 bv
-bu
+Ik
 bI
 bM
 aa

@@ -11,11 +11,11 @@
 
 /datum/faction/wizards/can_setup(num_players)
 	max_roles = max(1, round(num_players/20))
-	return (..() && wizardstart.len != 0)
+	return (..() && length(landmarks_list["Wizard"]))
 
 /datum/faction/wizards/OnPostSetup()
 	for(var/datum/role/R in members)
-		R.antag.current.forceMove(pick(wizardstart))
+		R.antag.current.forceMove(pick_landmarked_location("Wizard"))
 	return ..()
 
 /datum/faction/wizards/check_win()

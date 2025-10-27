@@ -169,7 +169,7 @@
 	if(isfloorturf(step))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/structure/spacevine,F))
-			if(F.Enter(src))
+			if(can_enter_turf(src, F))
 				if(master)
 					master.spawn_spacevine_piece( F )
 

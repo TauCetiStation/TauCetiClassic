@@ -1,15 +1,33 @@
-var/global/list/datum/spawners = list()
-var/global/list/datum/spawners_cooldown = list()
-
 // Don't call this proc directly! Use defines create_spawner and create_spawners
 /proc/_create_spawners(type, num, list/arguments)
-	// arguments must have at least 1 element due to the use of arglist
-	if(!arguments.len)
+	if(!ispath(type, /datum/spawner))
+		CRASH("Attempted to create a spawner with wrong type: [type]")
+
+	var/datum/spawner/spawner
+
+	var/need_update = FALSE
+	// check if we should just update existing spawner
+	if(!length(arguments))
+		for(var/datum/spawner/S in SSrole_spawners.spawners)
+			if(S.type == type && !S.should_be_unique)
+				spawner = S
+
+		// arguments must have at least 1 element due to the use of arglist
 		arguments += null
 
-	for(var/i in 1 to num)
-		var/datum/spawner/spawner = new type(arglist(arguments))
-		spawner.add_to_global_list()
+	if(!spawner)
+		spawner = new type(arglist(arguments))
+		need_update = TRUE
+
+	if(spawner.should_be_unique && num > 1)
+		stack_trace("Attempted to create unique spawner with multiple positions: [type]")
+	else
+		spawner.positions += num
+
+	if(!need_update)
+		return
+
+	SSrole_spawners.add_to_list(spawner)
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
@@ -21,11 +39,14 @@ var/global/list/datum/spawners_cooldown = list()
 
 		to_chat(ghost, "<span class='ghostalert'>Доступны новые роли в меню возрождения!</span>")
 
+	return spawner
+
 /datum/spawner
 	// Name of spawner, wow
 	var/name
-	// Uniq category of spawner to sorting in spawner_menu
-	var/id
+
+	// Priority of spawner, affects position in menu and roll order for lobby spawners (lesser means higher priority/order)
+	var/priority = 100
 
 	// In interface: "Описание: "
 	var/desc
@@ -34,167 +55,286 @@ var/global/list/datum/spawners_cooldown = list()
 	// In interface: "Ссылка на вики: "
 	var/wiki_ref
 
+	// Name of landmark in landmarks_list that should be used as spawn point
+	// you can left it empty and use own methonds in jump() and spawn_body()
+	var/spawn_landmark_name
+
 	// Roles and jobs that will be checked for jobban and minutes
 	var/list/ranks
-	// Delete spawner after use
-	var/infinity = FALSE
+
+	// How many times can be used, number or INFINITY
+	var/positions = 0
+	// Flag if spawner should not be created with multile positions
+	var/should_be_unique = FALSE
+
+	// Flag if you want to temporary block spawner for use
+	var/blocked = FALSE
+
+	// Flag if it's awaylable only for applications first, and will be rolled for spawn later
+	var/register_only = FALSE
+
+	// Flag if it's supports multiple selection
+	var/multideclare = FALSE
+
+	// List of clients who checked for spawner
+	var/list/registered_candidates = list()
+
+	// Automatically roll for registred clients at round start, autosets register_only
+	var/lobby_spawner = FALSE // todo: maybe use -1 for time_for_registration as roll mode
+
+	// Time for clients for registration before spawn will be automatically rolled
+	// Can be zero if you want to trigger roll manually or use as lobby spawner
+	var/time_for_registration
+
+	// Time for spawner to be active, spawner will be deleted after time ends
+	var/time_while_available
+
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
+	// Set this if you want to share cooldown between several spawners, can be type or unique key
+	var/cooldown_type
 
-	// Time to del the spawner
-	var/time_to_del
-	// Private, store id of timer
-	var/timer_to_expiration
+	// optionally you can link faction for additional field in meny "playing"
+	var/datum/faction/faction // todo: print faction logo in spawn menu?
+
+	// id of timers
+	var/registration_timer_id
+	var/availability_timer_id
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
-	if(time_to_del)
-		timer_to_expiration = QDEL_IN(src, time_to_del)
+	if(SSticker.current_state >= GAME_STATE_PLAYING)
+		start_timers()
+	else
+		if(lobby_spawner)
+			register_only = TRUE
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(start_timers))
+
+/datum/spawner/proc/start_timers()
+	// todo: should we start del timer, if registration timer is active?
+	if(register_only && time_for_registration && !lobby_spawner)
+		registration_timer_id = addtimer(CALLBACK(src, PROC_REF(roll_registrations)), time_for_registration, TIMER_STOPPABLE)
+	if(time_while_available)
+		availability_timer_id = QDEL_IN(src, time_while_available)
+
 
 /datum/spawner/Destroy()
-	remove_from_global_list()
+	SSrole_spawners.remove_from_list(src)
 
-	deltimer(timer_to_expiration)
+	spawn_landmark_name = null
+
+	deltimer(registration_timer_id)
+	deltimer(availability_timer_id)
+
+	if(length(registered_candidates))
+		for(var/mob/dead/M in registered_candidates)
+			M.registered_spawners -= src
+		registered_candidates = null
 
 	return ..()
 
-/datum/spawner/proc/add_to_global_list()
-	LAZYADDASSOCLIST(global.spawners, id, src)
-
-	for(var/mob/dead/observer/ghost in observer_list)
-		if(!ghost.client)
-			continue
-
-		if(ghost.spawners_menu)
-			SStgui.update_uis(ghost.spawners_menu)
-
-/datum/spawner/proc/remove_from_global_list()
-	LAZYREMOVEASSOC(global.spawners, id, src)
-
-	for(var/mob/dead/observer/ghost in observer_list)
-		if(!ghost.client)
-			continue
-
-		if(ghost.spawners_menu)
-			SStgui.update_uis(ghost.spawners_menu)
-
 /datum/spawner/proc/add_client_cooldown(client/C)
 	if(cooldown)
-		if(!global.spawners_cooldown[C.ckey])
-			global.spawners_cooldown[C.ckey] = list()
-		var/list/ckey_cooldowns = global.spawners_cooldown[C.ckey]
-		ckey_cooldowns[type] = world.time + cooldown
+		if(!SSrole_spawners.spawners_cooldown[C.ckey])
+			SSrole_spawners.spawners_cooldown[C.ckey] = list()
+		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[C.ckey]
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		ckey_cooldowns[cooldown_key] = world.time + cooldown
 
-/datum/spawner/proc/check_cooldown(mob/dead/observer/ghost)
-	if(global.spawners_cooldown[ghost.ckey])
-		var/list/ckey_cooldowns = global.spawners_cooldown[ghost.ckey]
-		if(world.time < ckey_cooldowns[type])
-			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
-			to_chat(ghost, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
+/datum/spawner/proc/check_cooldown(mob/dead/spectator)
+	if(SSrole_spawners.spawners_cooldown[spectator.ckey])
+		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[spectator.ckey]
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		if(world.time < ckey_cooldowns[cooldown_key])
+			var/timediff = round((ckey_cooldowns[cooldown_key] - world.time) * 0.1)
+			to_chat(spectator, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
 	return TRUE
 
-/datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
-	if(!can_spawn(ghost))
+/datum/spawner/proc/registration(mob/dead/spectator)
+	if(blocked)
 		return
 
-	if(!infinity)
-		remove_from_global_list()
+	if(!spectator.client || spectator.client.is_in_spawner)
+		return
 
-	var/client/C = ghost.client
-	spawn_ghost(ghost)
+	if(!register_only)
+		if(positions < 1)
+			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
+		else
+			positions--
+			do_spawn(spectator)
+		return
 
-	// check if the ghost really become a role
-	if(ghost.client == C)
-		if(!infinity)
-			add_to_global_list()
+	if(spectator in registered_candidates)
+		cancel_registration(spectator)
+		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
+		return
+
+	if(!can_spawn(spectator))
+		return
+
+	if(!multideclare)
+		spectator.clear_spawner_registration()
+	else if(spectator.registered_spawners.len)
+		for(var/datum/spawner/S as anything in spectator.registered_spawners)
+			if(!S.multideclare)
+				S.cancel_registration(spectator)
+
+	registered_candidates += spectator
+	spectator.registered_spawners += src
+
+	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
+
+/datum/spawner/proc/cancel_registration(mob/dead/spectator)
+	registered_candidates -= spectator
+	spectator.registered_spawners -= src
+
+/datum/spawner/proc/roll_registrations()
+	register_only = FALSE
+
+	if(!length(registered_candidates))
+		return
+
+	var/list/filtered_candidates = list()
+
+	// possible some candidates already spawned
+	// todo: control of this should be part of subsystem
+	for(var/mob/dead/M in registered_candidates)
+		if(M.client)
+			filtered_candidates += M
+
+	registered_candidates.Cut()
+
+	if(!length(filtered_candidates))
+		return
+
+	shuffle(filtered_candidates)
+
+	for(var/mob/dead/M in filtered_candidates)
+		if(positions > 0)
+			positions--
+			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
+			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
+			M.clear_spawner_registration()
+		else
+			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
+
+
+/datum/spawner/proc/do_spawn(mob/dead/spectator)
+	if(!can_spawn(spectator))
+		positions++
+		return
+	var/client/C = spectator.client
+
+	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
+	// we should fight it and first spawn user, so he can't access spawn menu anymore,
+	// and only then allow costumization in separated thread
+	C.is_in_spawner = TRUE
+
+	if(isnewplayer(spectator))
+		var/mob/dead/new_player/NP = spectator
+		spectator = NP.spawn_as_observer() // need to check if we can skip this step
+
+	spawn_body(spectator)
+
+	C.is_in_spawner = FALSE
+	// check if the spectator really moved to a new body
+	if(spectator.client == C)
+		positions++
 		return
 
 	message_admins("[C.ckey] as \"[name]\" has spawned at [COORD(C.mob)] [ADMIN_JMP(C.mob)] [ADMIN_FLW(C.mob)].")
 	add_client_cooldown(C)
 
-	if(!infinity)
+	if(positions < 1)
 		qdel(src)
 
-/datum/spawner/proc/can_spawn(mob/dead/observer/ghost)
-	if(!check_cooldown(ghost))
+/datum/spawner/proc/can_spawn(mob/dead/spectator)
+	if(!check_cooldown(spectator))
 		return FALSE
 	if(!ranks)
 		return TRUE
-	if(jobban_isbanned(ghost, "Syndicate"))
-		to_chat(ghost, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
-		return FALSE
 	for(var/rank in ranks)
-		if(jobban_isbanned(ghost, rank))
-			to_chat(ghost, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
+		if(jobban_isbanned(spectator, rank))
+			to_chat(spectator, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
 			return FALSE
-		if(role_available_in_minutes(ghost, rank))
-			to_chat(ghost, "<span class='danger'>У Вас не хватает минут, чтобы зайди за роль \"[name]\". Чтобы её разблокировать вам нужно просто играть!</span>")
+		if(role_available_in_minutes(spectator, rank))
+			to_chat(spectator, "<span class='danger'>У Вас не хватает минут, чтобы зайди за роль \"[name]\". Чтобы её разблокировать вам нужно просто играть!</span>")
 			return FALSE
 	return TRUE
 
-/datum/spawner/proc/spawn_ghost(mob/dead/observer/ghost)
+/datum/spawner/proc/pick_spawn_location()
+	if(!length(landmarks_list[spawn_landmark_name]))
+		CRASH("[src.type] attempts to pick spawn location \"[spawn_landmark_name]\", but can't find one!")
+
+	return pick_landmarked_location(spawn_landmark_name)
+
+/datum/spawner/proc/spawn_body(mob/dead/spectator)
 	return
 
-/datum/spawner/proc/jump(mob/dead/observer/ghost)
-	return
+/datum/spawner/proc/jump(mob/dead/spectator)
+	if(!length(landmarks_list[spawn_landmark_name]))
+		to_chat(spectator, "<span class='notice'>У этой роли нет предустановленных локаций для спавна.</span>")
+		return
+	var/jump_to = pick(landmarks_list[spawn_landmark_name])
+	spectator.forceMove(get_turf(jump_to))
 
 /*
  * Families
 */
 /datum/spawner/dealer
 	name = "Контрабандист"
-	id = "dealer"
 	desc = "Вы появляетесь в космосе вблизи со станцией."
 	wiki_ref = "Families"
 
 	ranks = list(ROLE_FAMILIES)
 
-/datum/spawner/dealer/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = pick(dealerstart)
-	dealerstart -= spawnloc
+	spawn_landmark_name = "Dealer" // /obj/effect/landmark/dealer_spawn
 
-	var/client/C = ghost.client
+/datum/spawner/dealer/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+
+	var/client/C = spectator.client
 
 	var/mob/living/carbon/human/H = new(null)
 	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
 
-/datum/spawner/dealer/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(dealerstart)
-	ghost.forceMove(get_turf(jump_to))
-
 /datum/spawner/cop
 	name = "Офицер ОБОП"
-	id = "cop"
-	desc = "Вы появляетесь на ЦК в полном обмундирование с целью прилететь на станцию и задержать всех бандитов."
+	desc = "Вы появляетесь на ЦК в полном обмундировании с целью прилететь на станцию и задержать всех бандитов."
 	wiki_ref = "Families"
 
 	ranks = list(ROLE_FAMILIES)
 
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
 	var/roletype
 	var/list/prefixes = list("Officer")
 
-/datum/spawner/cop/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = pick(copsstart)
-	copsstart -= spawnloc
+	spawn_landmark_name = "Space Cops" // /obj/effect/landmark/cops_spawn
 
-	var/client/C = ghost.client
+/datum/spawner/cop/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+
+	var/client/C = spectator.client
 
 	var/mob/living/carbon/human/cop = new(null)
 
 	var/new_name = "[pick(prefixes)] [pick(last_names)]"
 	C.create_human_apperance(cop, new_name)
 
-	cop.loc = spawnloc
 	cop.key = C.key
+	cop.forceMove(spawnloc)
 
 	//Give antag datum
 	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
@@ -205,35 +345,26 @@ var/global/list/datum/spawners_cooldown = list()
 	var/obj/item/weapon/card/id/W = cop.wear_id
 	W.assign(cop.real_name)
 
-/datum/spawner/cop/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(copsstart)
-	ghost.forceMove(get_turf(jump_to))
-
 /datum/spawner/cop/beatcop
 	name = "Офицер ОБОП"
-	id = "c_beatcop"
 	roletype = /datum/role/cop/beatcop
 
 /datum/spawner/cop/armored
 	name = "Вооруженный Офицер ОБОП"
-	id = "c_armored"
 	roletype = /datum/role/cop/beatcop/armored
 
 /datum/spawner/cop/swat
 	name = "Боец Тактической Группы ОБОП"
-	id = "c_swat"
 	roletype = /datum/role/cop/beatcop/swat
 	prefixes = list("Sergeant", "Captain")
 
 /datum/spawner/cop/fbi
 	name = "Инспектор ОБОП"
-	id = "c_fbi"
 	roletype = /datum/role/cop/beatcop/fbi
 	prefixes = list("Inspector")
 
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
-	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
 	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
 
@@ -242,40 +373,45 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/blob_event
 	name = "Блоб"
-	id = "blob_event"
 	desc = "Вы появляетесь в случайной точки станции в виде блоба."
 	wiki_ref = "Blob"
 
 	ranks = list(ROLE_BLOB)
-	time_to_del = 3 MINUTES
 
-/datum/spawner/blob_event/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(blobstart)
-	ghost.forceMove(get_turf(jump_to))
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
 
-/datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
-	var/turf/spawn_turf = pick(blobstart)
-	new /obj/structure/blob/core(spawn_turf, ghost.client, 120)
+	time_while_available = 3 MINUTES
+
+	spawn_landmark_name = "blobstart"
+
+/datum/spawner/blob_event/spawn_body(mob/dead/spectator)
+	var/turf/spawn_turf = pick_spawn_location()
+	new /obj/structure/blob/core(spawn_turf, spectator.client, 120)
 
 /*
  * Ninja
 */
 /datum/spawner/ninja_event
 	name = "Космический Ниндзя"
-	id = "ninja_event"
 	desc = "Вы появляетесь в додзё. Из него вы можете телепортироваться на станцию."
 	wiki_ref = "Space_Ninja"
 
 	ranks = list(ROLE_NINJA)
-	time_to_del = 3 MINUTES
 
-/datum/spawner/ninja_event/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(ninjastart)
-	ghost.forceMove(get_turf(jump_to))
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
 
-/datum/spawner/ninja_event/spawn_ghost(mob/dead/observer/ghost)
-	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
-	new_ninja.key = ghost.key
+	time_while_available = 3 MINUTES
+
+	spawn_landmark_name = "ninja"
+
+/datum/spawner/ninja_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	if(!spawnloc)
+		spawnloc = latejoin
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(spawnloc)
+	new_ninja.key = spectator.key
 
 	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
@@ -287,342 +423,144 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/borer_event
 	name = "Изначальный Борер"
-	id = "borer_event"
 	desc = "Вы появляетесь где-то в вентиляции на станции."
 	wiki_ref = "Cortical_Borer"
 
 	ranks = list(ROLE_GHOSTLY)
-	time_to_del = 3 MINUTES
 
-/datum/spawner/borer_event/spawn_ghost(mob/dead/observer/ghost)
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 3 MINUTES
+
+/datum/spawner/borer_event/spawn_body(mob/dead/spectator)
 	var/list/vents = get_vents()
 	var/obj/vent = pick_n_take(vents)
 	var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
-	B.transfer_personality(ghost.client)
+	B.transfer_personality(spectator.client)
 
 /*
  * Aliens
 */
 /datum/spawner/alien_event
 	name = "Изначальный Лицехват"
-	id = "alien_event"
 	desc = "Вы появляетесь где-то в вентиляции станции и должны развить потомство."
 	wiki_ref = "Xenomorph"
 
 	ranks = list(ROLE_ALIEN)
-	time_to_del = 3 MINUTES
 
-/datum/spawner/alien_event/spawn_ghost(mob/dead/observer/ghost)
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 3 MINUTES
+
+/datum/spawner/alien_event/spawn_body(mob/dead/spectator)
 	var/list/vents = get_vents()
 	var/obj/vent = pick(vents)
 	var/mob/living/carbon/xenomorph/facehugger/new_xeno = new(vent.loc)
-	new_xeno.key = ghost.key
+	new_xeno.key = spectator.key
 
 /*
  * Other
 */
 /datum/spawner/gladiator
 	name = "Гладиатор"
-	id = "gladiator"
 	desc = "Вы появляетесь на арене и должны выжить."
 	wiki_ref = "Starter_Guide#Арена"
 
 	ranks = list(ROLE_GHOSTLY)
 	cooldown = 0
-	infinity = TRUE
+	positions = INFINITY
 
-/datum/spawner/gladiator/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(eorgwarp)
-	ghost.forceMove(get_turf(jump_to))
+	spawn_landmark_name = "Gladiator"
 
-/datum/spawner/gladiator/spawn_ghost(mob/dead/observer/ghost)
-	SSticker.spawn_gladiator(ghost, FALSE)
+/datum/spawner/gladiator/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	SSticker.spawn_gladiator(spectator, FALSE, spawnloc)
 
 /datum/spawner/mouse
 	name = "Мышь"
-	id = "mouse"
 	desc = "Вы появляетесь в суровом мире людей и должны выжить."
 	wiki_ref = "Mouse"
 
-	ranks = list("Mouse")
-	infinity = TRUE
+	priority = 1000
 
-/datum/spawner/mouse/can_spawn(mob/dead/observer/ghost)
+	ranks = list("Mouse")
+	positions = INFINITY
+
+/datum/spawner/mouse/can_spawn(mob/dead/spectator)
 	if(config.disable_player_mice)
-		to_chat(ghost, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
+		to_chat(spectator, "<span class='warning'>Spawning as a mouse is currently disabled.</span>")
 		return FALSE
 	return ..()
 
-/datum/spawner/mouse/spawn_ghost(mob/dead/observer/ghost)
-	ghost.mousize()
+/datum/spawner/mouse/spawn_body(mob/dead/spectator)
+	spectator.mousize()
 
 /datum/spawner/space_bum
 	name = "Космо-бомж"
-	id = "space_bum"
 	desc = "Вы появляетесь где-то на свалке."
 	wiki_ref = "Junkyard"
 
-	infinity = TRUE
+	positions = INFINITY
 
-/datum/spawner/space_bum/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(junkyard_bum_list)
-	ghost.forceMove(get_turf(jump_to))
+	spawn_landmark_name = "Junkyard Bum" // /obj/effect/landmark/junkyard_bum
 
-/datum/spawner/space_bum/spawn_ghost(mob/dead/observer/ghost)
-	ghost.make_bum()
+/datum/spawner/space_bum/spawn_body(mob/dead/spectator)
+	spectator.make_bum()
 
 /datum/spawner/drone
 	name = "Дрон"
-	id = "drone"
 	desc = "Вы появляетесь на дронстанции и обязаны ремонтировать станцию."
 	wiki_ref = "Drone"
 
+	priority = 1000
+
 	ranks = list(ROLE_DRONE)
 
-	infinity = TRUE
+	positions = INFINITY
 
-/datum/spawner/drone/can_spawn(mob/dead/observer/ghost)
+/datum/spawner/drone/can_spawn(mob/dead/spectator)
 	if(!config.allow_drone_spawn)
-		to_chat(ghost, "<span class='warning'>That verb is not currently permitted.</span>")
+		to_chat(spectator, "<span class='warning'>That verb is not currently permitted.</span>")
 		return FALSE
 	return ..()
 
-/datum/spawner/drone/jump(mob/dead/observer/ghost)
+/datum/spawner/drone/jump(mob/dead/spectator)
 	var/obj/machinery/drone_fabricator/DF = locate() in global.machines
-	ghost.forceMove(get_turf(DF))
+	spectator.forceMove(get_turf(DF))
 
-/datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
-	ghost.dronize()
-
-/datum/spawner/living
-	name = "Свободное тело"
-	id = "living"
-	desc = "Продолжи его дело!"
-
-	ranks = list(ROLE_GHOSTLY)
-
-	var/mob/living/mob
-
-/datum/spawner/living/New(mob/living/_mob)
-	. = ..()
-
-	mob = _mob
-	add_mob_roles()
-
-	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), PROC_REF(self_qdel))
-
-/datum/spawner/living/Destroy()
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
-	mob = null
-	return ..()
-
-/datum/spawner/living/proc/add_mob_roles()
-	ranks |= mob.job
-
-	if(!mob.mind)
-		return
-
-	var/datum/mind/mind = mob.mind
-	ranks |= mind.antag_roles
-
-/datum/spawner/living/proc/self_qdel()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/spawner/living/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(mob))
-
-/datum/spawner/living/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
-	mob.key = ghost.key
-
-/datum/spawner/living/podman
-	name = "Подмена"
-	id = "podman"
-	desc = "Подмена умерла, да здравствует подмена."
-	wiki_ref = "Podmen"
-
-	var/replicant_memory
-
-/datum/spawner/living/podman/New(mob/_mob, _replicant_memory)
-	replicant_memory = _replicant_memory
-	. = ..(_mob)
-
-/datum/spawner/living/podman/spawn_ghost(mob/dead/observer/ghost)
-	..()
-
-	if(replicant_memory)
-		mob.mind.memory = replicant_memory
-
-	to_chat(mob, greet_message())
-
-/datum/spawner/living/podman/proc/greet_message()
-	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	. += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
-	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-
-/datum/spawner/living/podman/podkid
-	name = "Подкидыш"
-	id = "podkid"
-	desc = "Человечка вырастили на грядке."
-
-/datum/spawner/living/podman/podkid/greet_message()
-	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	. += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
-	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-
-/datum/spawner/living/podman/nymph
-	name = "Нимфа Дионы"
-	id = "nymph_pod"
-	desc = "Диону вырастили на грядке."
-	wiki_ref = "Dionaea"
-
-/datum/spawner/living/podman/nymph/can_spawn(mob/dead/observer/ghost)
-	if(is_alien_whitelisted_banned(ghost, DIONA) || !is_alien_whitelisted(ghost, DIONA))
-		to_chat(ghost, "<span class='warning'>Вы не можете играть за дион.</span>")
-		return FALSE
-
-	return ..()
-
-/datum/spawner/living/podman/nymph/greet_message()
-	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	. += "<B>You are now one of the Dionaea, or were you always one of us? Welcome to the Gestalt, we see you now, again.</B><BR>"
-	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-
-/datum/spawner/living/podman/fake_nymph
-	name = "Нимфа Дионы"
-	id = "fake_nymph_pod"
-	desc = "Диону вырастили на грядке."
-
-/datum/spawner/living/podman/fake_nymph/greet_message()
-	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	. += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
-	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-
-/datum/spawner/living/borer
-	name = "Борер"
-	id = "borer"
-	desc = "Вы становитесь очередным отпрыском бореров."
-	wiki_ref = "Cortical_Borer"
-
-/datum/spawner/living/borer/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
-	mob.transfer_personality(ghost.client)
-
-/*
- * Robots
-*/
-/datum/spawner/living/robot
-	name = "Киборг"
-	id = "robot"
-	desc = "Перезагрузка позитронного мозга."
-	wiki_ref = "Cyborg"
-
-/datum/spawner/living/robot/syndi
-	name = "Киборг синдиката"
-	id = "robot_syndi"
-	ranks = list(ROLE_OPERATIVE)
-
-/datum/spawner/living/robot/drone
-	name = "Дрон"
-	id = "l_drone"
-	wiki_ref = "Maintenance_drone"
-	ranks = list(ROLE_DRONE)
-
-/*
- * Religion
-*/
-/datum/spawner/living/religion_familiar
-	name = "Фамильяр Религии"
-	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
-	cooldown = 2 MINUTES
-
-	var/datum/religion/religion
-
-/datum/spawner/living/religion_familiar/New(mob/_mob, datum/religion/_religion)
-	. = ..(_mob)
-	religion = _religion || mob.my_religion
-
-	id = "[mob.name]/[religion.name]"
-	desc = "Вы появляетесь в виде [mob.name] в подчинении [religion.name]."
-
-/datum/spawner/living/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
-	..()
-	religion.add_member(mob, HOLY_ROLE_PRIEST)
-
-
-/datum/spawner/living/eminence
-	name = "Возвышенный культа"
-	id = "eminence"
-	desc = "Вы станете Возвышенным - ментором и неформальным лидером всего культа."
-	ranks = list(ROLE_CULTIST, ROLE_GHOSTLY)
-
-/datum/spawner/living/mimic
-	name = "Оживлённый предмет"
-	id = "mimic"
-	desc = "Вы магическим образом ожили на станции"
-	cooldown = 1 MINUTES
-
-/datum/spawner/living/evil_shade
-	name = "Злой Дух"
-	id = "evil_shade"
-	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
-	cooldown = 2 MINUTES
-
-/datum/spawner/living/evil_shade/spawn_ghost(mob/dead/observer/ghost)
-	..()
-	create_and_setup_role(/datum/role/evil_shade, mob)
-
-/datum/spawner/living/rat
-	name = "Крыса"
-	id = "rat"
-	desc = "Вы появляетесь в своём новом доме"
-
-/datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
-	. = ..()
-	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
-	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
-
-/*
- * Heist
-*/
-/datum/spawner/living/vox
-	name = "Вокс-Налётчик"
-	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
-	wiki_ref = "Vox_Raider"
-	id = "vox"
-
-/datum/spawner/living/abductor
-	name = "Похититель"
-	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
-	wiki_ref = "Abductor"
-	id = "abductor"
+/datum/spawner/drone/spawn_body(mob/dead/spectator)
+	spectator.dronize()
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
-	id = "spy"
 	desc = "Вы появляетесь на аванпосте прослушки Синдиката."
 
 	ranks = list(ROLE_GHOSTLY)
 
-/datum/spawner/spy/can_spawn(mob/dead/observer/ghost)
+	register_only = TRUE
+	time_for_registration = 1 MINUTES
+
+	spawn_landmark_name = "Espionage Agent Start" // /obj/effect/landmark/espionage_start
+
+/datum/spawner/spy/can_spawn(mob/dead/spectator)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(ghost, "<span class='notice'>Please wait till round start!</span>")
+		to_chat(spectator, "<span class='notice'>Please wait till round start!</span>")
 		return FALSE
 	return ..()
 
-/datum/spawner/spy/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = pick(espionageagent_start)
-	espionageagent_start -= spawnloc
+/datum/spawner/spy/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
 
-	var/client/C = ghost.client
+	var/client/C = spectator.client
 
-	var/mob/living/carbon/human/H = new(null)
+	var/mob/living/carbon/human/H = new()
 	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 	H.equipOutfit(/datum/outfit/spy)
 	H.mind.skills.add_available_skillset(/datum/skillset/max)
 	H.mind.skills.maximize_active_skills()
@@ -635,33 +573,35 @@ var/global/list/datum/spawners_cooldown = list()
 		to_chat(H, "<B>Сегодня очередной рабочий день. Ничего из ряда вон выходящего произойти не должно, так что можно расслабиться.</B>")
 	to_chat(H, "<B>Вы ни в коем случае не должны покидать свой пост! Невыполнение своих задач приведёт к увольнению.</B>")
 
-/datum/spawner/spy/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(espionageagent_start)
-	ghost.forceMove(get_turf(jump_to))
-
 /datum/spawner/vox
 	name = "Вокс-Налётчик"
 	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
 	wiki_ref = "Vox_Raider"
 
 	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
-	time_to_del = 5 MINUTES
-	id = "vox"
 
-/datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = pick(global.heiststart)
-	global.heiststart -= spawnloc
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 5 MINUTES
+
+	spawn_landmark_name = "Heist"
+
+/datum/spawner/vox/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
 
 	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
-	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
+	var/mob/living/carbon/human/vox/event/vox = new()
 
-	vox.key = ghost.client.key
+	vox.key = spectator.client.key
+	vox.forceMove(spawnloc)
 
 	var/sounds = rand(2, 8)
 	var/newname = ""
 	for(var/i in 1 to sounds)
 		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
+	// todo: maybe we need to add a randomize argument for set_species
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	vox.age = rand(5, 15) // its fucking lore
@@ -673,17 +613,12 @@ var/global/list/datum/spawners_cooldown = list()
 	vox.grad_style = "none"
 
 	//Now apply cortical stack.
-	var/obj/item/weapon/implant/cortical/I = new(vox)
-	I.inject(vox, BP_HEAD)
+	new /obj/item/weapon/implant/cortical(vox)
 
 	vox.equip_vox_raider()
-	vox.regenerate_icons()
+	vox.regenerate_icons(update_body_preferences = TRUE)
 
 	add_faction_member(faction, vox)
-
-/datum/spawner/vox/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(global.heiststart)
-	ghost.forceMove(jump_to)
 
 /datum/spawner/abductor
 	name = "Похититель"
@@ -691,63 +626,69 @@ var/global/list/datum/spawners_cooldown = list()
 	wiki_ref = "Abductor"
 
 	ranks = list(ROLE_ABDUCTOR, ROLE_GHOSTLY)
-	time_to_del = 5 MINUTES
-	id = "abductor"
 
-/datum/spawner/abductor/spawn_ghost(mob/dead/observer/ghost)
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 5 MINUTES
+
+/datum/spawner/abductor/spawn_body(mob/dead/spectator)
 	// One team. Working together
 	var/datum/faction/abductors/team_fac = create_uniq_faction(/datum/faction/abductors)
 	//Nullspace for spawning and assigned key causes image freeze, so move body to non-playing area
 	var/mob/living/carbon/human/abductor/event/body_abductor = new(pick(newplayer_start))
-	body_abductor.key = ghost.client.key
+	body_abductor.key = spectator.client.key
 	add_faction_member(team_fac, body_abductor, team_fac.get_needed_teamrole())
 
-/datum/spawner/abductor/jump(mob/dead/observer/ghost)
+/datum/spawner/abductor/jump(mob/dead/spectator)
 	var/obj/effect/landmark/L = scientist_landmarks[1]
-	ghost.forceMove(L.loc)
+	spectator.forceMove(L.loc)
 
-/datum/spawner/abductor/check_cooldown(mob/dead/observer/ghost)
+/datum/spawner/abductor/check_cooldown(mob/dead/spectator)
 	return TRUE
 
 /datum/spawner/survival
-	name = "Выживший"
-	id = "survival"
+	name = "Выживший (Инженер)"
 	desc = "Вы просыпаетесь на заброшенной станции. Адаптируйтесь, выживайте и всё такое."
 	var/outfit = /datum/outfit/survival/engineer
 	var/skillset = /datum/skillset/survivalist_engi
 
 	ranks = list(ROLE_GHOSTLY)
 
-/datum/spawner/survival/can_spawn(mob/dead/observer/ghost)
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "Survivalist Start"
+
+/datum/spawner/survival/can_spawn(mob/dead/spectator)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(ghost, "<span class='notice'>Please wait till round start!</span>")
+		to_chat(spectator, "<span class='notice'>Please wait till round start!</span>")
 		return FALSE
 	return ..()
 
-/datum/spawner/survival/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = pick(survivalist_start)
-	survivalist_start -= spawnloc
+/datum/spawner/survival/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
 
-	var/client/C = ghost.client
+	var/client/C = spectator.client
 
 	var/mob/living/carbon/human/H = new(null)
 	C.create_human_apperance(H)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 	H.equipOutfit(outfit)
 	H.mind.skills.add_available_skillset(skillset)
 	H.mind.skills.maximize_active_skills()
+	show_location_blurb(C)
 
-	to_chat(H, "<B>Ваша голова раскалывается...Вы просыпаетесь в старом криоподе.</B>")
-	to_chat(H, "<B>Вы - <span class='boldwarning'>были работником передовой Космической Научной Станции Нанотрасен LCR</span>, что уже как год считается уничтоженной.</B>")
-	to_chat(H, "<B>Станция заброшена, никто, кроме вас и вашего товарища в соседней криокамере, не выжил. Вы вольны делать здесь что угодно. Можете попытаться всё починить, а можете просто улететь в поисках лучшей жизни. Выбор за вами.</B>")
-
-/datum/spawner/survival/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(survivalist_start)
-	ghost.forceMove(get_turf(jump_to))
+	to_chat(H, "<B>Ваша голова раскалывается... Вы просыпаетесь в старом криоподе.</B>")
+	to_chat(H, "<B>Вы - <span class='boldwarning'>работник передовой Космической Научной Станции Нанотрасен \"Сизиф\"</span>.</B>")
+	to_chat(H, "<B>Вы и ваш коллега ушли в криосон. Похоже, пока вы спали, <span class='boldwarning'>что-то пошло не так...</span></B>")
+	to_chat(H, "<B>Вы вольны делать здесь что угодно. Можете попытаться всё починить, а можете просто улететь в поисках лучшей жизни. Выбор за вами.</B>")
 
 /datum/spawner/survival/med
+	name = "Выживший (Медик)"
+
 	outfit = /datum/outfit/survival/medic
 	skillset = /datum/skillset/survivalist_medic
 
@@ -756,22 +697,211 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/lone_op_event
 	name = "Оперативник Синдиката"
-	id = "lone_op_event"
 	desc = "Вы появляетесь на малой базе Синдиката с невероятно сложным заданием."
 	wiki_ref = "Syndicate_Guide"
+
 	ranks = list(ROLE_GHOSTLY)
 
-/datum/spawner/lone_op_event/spawn_ghost(mob/dead/observer/ghost)
-	var/spawnloc = pick(loneopstart)
-	loneopstart -= spawnloc
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
 
-	var/client/C = ghost.client
+	spawn_landmark_name = "Solo operative"
+
+/datum/spawner/lone_op_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+
+	var/client/C = spectator.client
 
 	var/mob/living/carbon/human/H = new(null)
 	var/new_name = "Gorlex Maradeurs Operative"
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)
+
+/*
+ * Midround wizard
+*/
+/datum/spawner/wizard_event
+	name = "Маг"
+	desc = "Вы просыпаетесь в Логове Волшебника, с неотложным заданием от Федерации магов."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "Wizard"
+
+/datum/spawner/wizard_event/New()
+	. = ..()
+	desc = "Вы просыпаетесь в [pick("Логове Волшебника", "Убежище мага", "Винтерхолде", "Башне мага")] с неотложным заданием от Федерации магов."
+
+/datum/spawner/wizard_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = "Wizard The Unbenannt"
+	INVOKE_ASYNC(spectator.client, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
+
+	H.key = spectator.client.key
+	H.forceMove(spawnloc)
+
+	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
+	R.rename = FALSE
+	setup_role(R, TRUE)
+
+/*
+ * Midround replicator
+*/
+/datum/spawner/replicator_event
+	name = "Репликатор"
+	desc = "Вы попали сюда через оставшийся блюспейс коридор. Потреблять. Потреблять."
+
+	ranks = list(ROLE_REPLICATOR, ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "replicator"
+
+/datum/spawner/replicator_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/mob/living/simple_animal/hostile/replicator/H = new(spawnloc)
+	H.key = spectator.client.key
+
+/*
+ * SPACE TRADERS
+*/
+/datum/spawner/space_trader
+	name = "Космический торговец"
+	desc = "Космический торговец."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	multideclare = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 4 MINUTES
+	var/money = 100
+	var/outfit
+	var/skillset
+
+/datum/spawner/space_trader/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new
+	C.create_human_apperance(H)
+	H.key = C.key
+	H.forceMove(spawnloc)
+	equip(H)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	add_faction_member(F, H, TRUE, TRUE)
+
+/datum/spawner/space_trader/proc/equip(mob/living/carbon/human/H)
+	H.equipOutfit(outfit)
+	H.mind.skills.add_available_skillset(skillset)
+	H.mind.skills.maximize_active_skills()
+
+	var/datum/money_account/MA = create_random_account_and_store_in_mind(H, money)
+	var/obj/item/weapon/card/id/cargo/C = new(H)
+	C.rank = "Space Trader"
+	C.assignment = C.rank
+	C.assign(H.real_name)
+	C.access = list(access_space_traders)
+	C.associated_account_number = MA.account_number
+	H.equip_or_collect(C, SLOT_WEAR_ID)
+
+	var/obj/item/device/pda/pda = new(H)
+	pda.assign(H.real_name)
+	pda.ownrank = C.rank
+	pda.owner_account = MA.account_number
+	pda.owner_fingerprints += C.fingerprint_hash
+	MA.owner_PDA = pda
+	H.equip_or_collect(pda, SLOT_R_STORE)
+
+/datum/spawner/space_trader/dealer
+	name = "Космоторговец барыга"
+	desc = "Барыга, владеющий торговым судном и товаром на нём. Заработайте столько денег, сколько сможете увезти!"
+	spawn_landmark_name = "Space Trader Dealer"
+	money = 200
+	outfit = /datum/outfit/space_trader/dealer
+	skillset = /datum/skillset/quartermaster
+
+/datum/spawner/space_trader/guard
+	name = "Космоторговец охранник"
+	desc = "ЧОПовец, нанятый барыгой для охраны судна и товара на нём от станционных воришек и космических пиратов."
+	spawn_landmark_name = "Space Trader Guard"
+	outfit = /datum/outfit/space_trader/guard
+	skillset = /datum/skillset/officer
+
+/datum/spawner/space_trader/porter
+	name = "Космоторговец посыльный"
+	desc = "Таяран грузчик, работающий на барыгу. Таскайте грузы, выставляйте товары на продажу, помогите барыге обогатиться и не забудьте спросить свою долю!"
+	spawn_landmark_name = "Space Trader Porter"
+	money = 20
+	outfit = /datum/outfit/space_trader/porter
+	skillset = /datum/skillset/cargotech
+
+/datum/spawner/space_trader/porter/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H
+	var/new_name
+
+	if(is_alien_whitelisted_banned(spectator, TAJARAN) || !is_alien_whitelisted(spectator, TAJARAN))
+		H = new
+	else
+		H = new(null, TAJARAN)
+		new_name = capitalize(pick(global.tajaran_male_first)) + " " + capitalize(pick(global.last_names))
+
+	C.create_human_apperance(H, new_name)
+	H.key = C.key
+	H.forceMove(spawnloc)
+	equip(H)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	add_faction_member(F, H, TRUE, TRUE)
+/*
+ * MALFUNCTION DRONE
+*/
+/datum/spawner/malf_drone
+	name = "Сбойный Дрон"
+	desc = "Станция взывает к вам, ей необходимо преображение."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/obj/machinery/drone_fabricator/fabricator
+
+/datum/spawner/malf_drone/New(obj/machinery/drone_fabricator/DF)
+	. = ..()
+	fabricator = DF
+	RegisterSignal(fabricator, COMSIG_PARENT_QDELETING, PROC_REF(fabricator_deleting))
+
+/datum/spawner/malf_drone/proc/fabricator_deleting()
+	qdel(src)
+
+/datum/spawner/malf_drone/jump(mob/dead/spectator)
+	spectator.forceMove(get_turf(fabricator))
+
+/datum/spawner/malf_drone/spawn_body(mob/dead/spectator)
+	if(fabricator.stat & NOPOWER || !fabricator.produce_drones)
+		to_chat(spectator, "<span class='warning'>Фабрикатор обесточен и не может произвести нового дрона.</span>")
+		return
+
+	var/client/C = spectator.client
+
+	var/mob/living/silicon/robot/drone/maintenance/malfuction/D = new
+	D.key = C.key
+	D.forceMove(get_turf(fabricator))
+
+	D.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	D.mind.skills.maximize_active_skills()
+
+	var/datum/faction/malf_drones/F = find_faction_by_type(/datum/faction/malf_drones)
+	add_faction_member(F, D, FALSE)

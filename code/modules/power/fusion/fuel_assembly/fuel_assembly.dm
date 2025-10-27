@@ -2,7 +2,7 @@
 	name = "fuel rod assembly"
 	icon = 'icons/obj/machines/power/fusion.dmi'
 	icon_state = "fuel_assembly"
-	layer = 4
+	layer = MOB_LAYER // idk why
 
 	var/percent_depleted = 1
 	var/list/rod_quantities = list()

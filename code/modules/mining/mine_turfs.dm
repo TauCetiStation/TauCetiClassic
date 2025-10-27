@@ -53,6 +53,9 @@
 	return .
 
 /turf/simulated/mineral/atom_init_late()
+	if(!istype(src)) // someone already made us as cave turf
+		return
+	..()
 	MineralSpread()
 	update_overlays()
 
@@ -227,7 +230,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 50, volume = 100))
+		if(P.use_tool(src, user, 50, volume = 100, particle_type = /particles/tool/digging))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
@@ -457,7 +460,16 @@
 	. = ..()
 
 /turf/simulated/mineral/random/caves
+	mineralChance = 5
+
+/turf/simulated/mineral/random/caves/high_chance
+	icon_state = "rock_cave_highchance"
 	mineralChance = 25
+	mineralSpawnChanceList = list("Phoron" = 25, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5, "Diamond" = 10)
+
+/turf/simulated/mineral/random/caves/high_chance/atom_init()
+	icon_state = "rock"
+	return ..()
 
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
@@ -648,6 +660,7 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
+	..()
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
@@ -687,7 +700,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100))
+		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100, particle_type = /particles/tool/digging))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()
@@ -716,20 +729,6 @@
 	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
-
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
-	..()
-	if(isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
-			else
-				return
 
 #undef MIN_TUNNEL_LENGTH
 #undef MAX_TUNNEL_LENGTH

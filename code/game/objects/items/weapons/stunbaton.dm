@@ -72,6 +72,9 @@
 	if(!status)
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 		return
+	// Make hit harm-sound for enabled baton
+	if(user.a_intent == INTENT_HARM)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	//Help for administration
 	M.log_combat(user, "stunned (attempt) with [name]")
 	if(charges < 0)

@@ -148,7 +148,7 @@
 					/obj/item/weapon/aiModule/tyrant,\
 					/obj/item/weapon/aiModule/paladin,\
 					/obj/item/weapon/aiModule/oxygen,\
-					/obj/item/weapon/aiModule/oneHuman\
+					/obj/item/weapon/aiModule/onentemploye\
 				)
 
 /obj/random/science/circuit

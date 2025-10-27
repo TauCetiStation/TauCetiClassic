@@ -1,4 +1,4 @@
-var/global/list/preferences_datums = list()
+var/global/list/datum/preferences/preferences_datums = list()
 
 #define MAX_SAVE_SLOTS 10
 #define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
@@ -6,6 +6,10 @@ var/global/list/preferences_datums = list()
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
+
+// this datum keeps preferences and some random client things we need to keep persistent
+// because byond client object is too fickle https://www.byond.com/forum/post/2927086
+// todo: after moving preferences to new datumized system we should rename this to something like client_data
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -14,17 +18,19 @@ var/global/list/preferences_datums = list()
 	var/savefile_version = 0
 
 	//non-preference stuff
-	var/permamuted = 0
-	var/muted = 0
+	var/muted = MUTE_NONE // cache for chat bans, you should not touch it outside bans
 	var/last_ip
 	var/last_id
 	var/menu_type = "general"
 	var/submenu_type = "body"
 	var/list/ignore_question = list()		//For roles which getting player_saves with question system
 
+	var/list/admin_cooldowns
+
 	//account data
-	var/list/cid_list = list()
-	var/ignore_cid_warning = 0
+	var/cid_count = 0
+	var/admin_cid_request_cache
+	var/admin_ip_request_cache
 
 	//game-preferences
 	var/UI_style = null
@@ -60,6 +66,7 @@ var/global/list/preferences_datums = list()
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
+	var/window_scale = TRUE
 
 	//sound volume preferences
 	var/snd_music_vol = 100
@@ -83,9 +90,9 @@ var/global/list/preferences_datums = list()
 	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
 	var/height = HUMANHEIGHT_MEDIUM		//height of character
-	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
+	var/undershirt_print = null
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
 	var/use_skirt = FALSE				//using skirt uniform version
@@ -101,16 +108,16 @@ var/global/list/preferences_datums = list()
 	var/r_facial = 0					//Face hair color
 	var/g_facial = 0					//Face hair color
 	var/b_facial = 0					//Face hair color
-	var/s_tone = 0						//Skin tone
-	var/r_skin = 0						//Skin color
-	var/g_skin = 0						//Skin color
-	var/b_skin = 0						//Skin color
+	var/s_tone = HUMAN_DEFAULT_SKIN_TONE //Skin tone
+	var/r_skin = 255					//Skin color
+	var/g_skin = 255					//Skin color
+	var/b_skin = 255					//Skin color
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
-	var/r_belly = 0
-	var/g_belly = 0
-	var/b_belly = 0
+	var/r_belly = 255
+	var/g_belly = 255
+	var/b_belly = 255
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
 	var/insurance = INSURANCE_NONE
@@ -171,17 +178,28 @@ var/global/list/preferences_datums = list()
 	var/glowlevel = GLOW_MED // or bloom
 	var/lampsexposure = TRUE // idk how we should name it
 	var/lampsglare = FALSE // aka lens flare
+	//Impacts performance clientside
+	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
 	var/list/custom_items = list()
 
+	var/chosen_ringtone = "Flip-Flap"
+	var/custom_melody = "E7,E7,E7"
+
+	var/datum/guard/guard = null
+
 /datum/preferences/New(client/C)
 	parent = C
+
+	guard = new(parent)
+	if(!parent.holder)
+		init_chat_bans()
+
 	UI_style = global.available_ui_styles[1]
 	custom_emote_panel = global.emotes_for_emote_panel
-	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -193,38 +211,65 @@ var/global/list/preferences_datums = list()
 	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
 
+// reattach existing datum to client if client was disconnected and connects again
+/datum/preferences/proc/reattach_to_client(client/client)
+	parent = client
+	guard.holder = client
+
+/datum/preferences/proc/init_chat_bans()
+	if(!config.sql_enabled)
+		return
+
+	if(!establish_db_connection("erro_ban"))
+		return
+
+	// todo: rename job column
+	var/DBQuery/query = dbcon.NewQuery("SELECT job FROM erro_ban WHERE ckey = '[ckey(parent.ckey)]' AND (bantype = 'CHAT_PERMABAN'  OR (bantype = 'CHAT_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	if(!query.Execute())
+		return
+	muted = MUTE_NONE
+	while(query.NextRow())
+		muted |= mute_ban_bitfield[query.item[1]]
+
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+	dat += "<meta http-equiv='X-UA-Compatible' content='IE=edge'>"
+	dat += get_browse_zoom_style(user.client)
+	dat += "</head>"
 	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style type='text/css'>a.white:hover{background: #dddddd}</style>"
 	dat += "<style type='text/css'>a.disabled{background:#999999!important;text-decoration: none;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style type='text/css'>a.fluid{display:block;margin-left:0;margin-right:0;text-align:center;}</style>"
-	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;background-attachment: fixed;}</style>"
+	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;background-attachment: fixed;background-size:cover}</style>"
 	dat += "<style>.main_menu{margin-left:150px;margin-top:135px;}</style>"
 
+	dat += "<div class='main_menu'>"
+
 	if(path)
-		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
 		dat += "[menu_type=="load_slot"?"<b>Load slot</b>":"<a href=\"byond://?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
 		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a><br>"
-		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
-		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
-		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
-		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
-		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
-		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
-		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
-		dat += "</div>"
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
 	else
-		dat += "Please create an account to save your preferences."
+		dat += "<span color='#FF4444'>Please create an account if you want to save your preferences.</span>"
+
+	dat += "<br>"
+
+	dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
+	dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
+	dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
+	dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
+	dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
+	dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
+	dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
+	dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
+	dat += "<br><a href='byond://?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
+	dat += "</div>"
 
 	dat += "</center><hr width='535'>"
 	switch(menu_type)
@@ -250,6 +295,8 @@ var/global/list/preferences_datums = list()
 
 	winshow(user, "preferences_window", TRUE)
 	user << browse(dat, "window=preferences_browser")
+	winset(user, "preferences_window", get_browse_size_parameter(user.client, 810, 770))
+	winset(user, "character_preview_map", get_browse_size_parameter(user.client, 195, 770))
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
@@ -338,7 +385,7 @@ var/global/list/preferences_datums = list()
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -367,9 +414,6 @@ var/global/list/preferences_datums = list()
 	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height
-	character.b_type = b_type
-
-	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
@@ -377,17 +421,17 @@ var/global/list/preferences_datums = list()
 			if("Default")
 				var/obj/item/organ/external/head/robot/ipc/H = new(null)
 				H.insert_organ(character)
-			if("Alien")
-				var/obj/item/organ/external/head/robot/ipc/alien/H = new(null)
+			if("Cobalt")
+				var/obj/item/organ/external/head/robot/ipc/cobalt/H = new(null)
 				H.insert_organ(character)
-			if("Double")
-				var/obj/item/organ/external/head/robot/ipc/double/H = new(null)
+			if("Cathod")
+				var/obj/item/organ/external/head/robot/ipc/cathod/H = new(null)
 				H.insert_organ(character)
-			if("Pillar")
-				var/obj/item/organ/external/head/robot/ipc/pillar/H = new(null)
+			if("Thorax")
+				var/obj/item/organ/external/head/robot/ipc/thorax/H = new(null)
 				H.insert_organ(character)
-			if("Human")
-				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
+			if("Axon")
+				var/obj/item/organ/external/head/robot/ipc/axon/H = new(null)
 				H.insert_organ(character)
 		var/obj/item/organ/internal/eyes/ipc/IO = new(null)
 		IO.insert_organ(character)
@@ -469,9 +513,6 @@ var/global/list/preferences_datums = list()
 		else
 			continue
 
-	// Apply skin color
-	character.apply_recolor()
-
 	// Wheelchair necessary?
 	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
@@ -480,27 +521,14 @@ var/global/list/preferences_datums = list()
 		W.set_dir(character.dir)
 		W.buckle_mob(character)
 
-	if(underwear > underwear_m.len || underwear < 1)
-		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
 	character.underwear = underwear
-
-	if(undershirt > undershirt_t.len || undershirt < 1)
-		undershirt = 0
 	character.undershirt = undershirt
-
-	if(socks > socks_t.len || socks < 1)
-		socks = 0
-
 	character.socks = socks
-
-	if(backbag > 5 || backbag < 1)
-		backbag = 1 //Same as above
+	character.undershirt_print = undershirt_print
 	character.backbag = backbag
 	character.use_skirt = use_skirt
 
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
+	character.regenerate_icons(update_body_preferences = TRUE)
 
 //for the 'occupation' and 'roles' panels
 /datum/preferences/proc/open_jobban_info(mob/user, rank)
@@ -514,7 +542,7 @@ var/global/list/preferences_datums = list()
 		if(user.client.jobbancache[rank]["rid"])
 			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
 
-		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+		if(user.client.jobbancache[rank]["bantype"] == BANTYPE_JOB_TEMP)
 			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
 			dat += "<hr>"
 			dat += "<br>"

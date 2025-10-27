@@ -6,7 +6,7 @@
 /area/awaymission
 	name = "Strange Location"
 	icon_state = "away"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 //Example map
 /area/awaymission/example
@@ -195,5 +195,5 @@
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "null"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = FALSE
 	requires_power = 0

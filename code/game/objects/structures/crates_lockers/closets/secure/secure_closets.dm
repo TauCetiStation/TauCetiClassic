@@ -89,7 +89,7 @@
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
-	else if(istype(W,/obj/item/weapon/packageWrap) || iswelding(W))
+	else if(istype(W,/obj/item/weapon/packageWrap) || iswelding(W) || istype(W, /obj/item/weapon/paper/sticker))
 		return ..(W,user)
 	else
 		togglelock(user)
@@ -154,3 +154,10 @@
 	else
 		add_overlay(overlay_unlocked)
 
+
+/obj/structure/closet/secure_closet/psycho
+	name = "Psychiatrist's Locker"
+	req_access = list(access_psychiatrist)
+
+/obj/structure/closet/secure_closet/psycho/PopulateContents()
+	new /obj/item/device/healthanalyzer/psychology(src)

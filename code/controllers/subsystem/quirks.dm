@@ -25,7 +25,8 @@ SUBSYSTEM_DEF(quirks)
 		list(QUIRK_LIGHT_DRINKER, QUIRK_ALCOHOL_TOLERANCE),
 		list(QUIRK_STRONG_MIND, QUIRK_TOURETTE),
 		list(QUIRK_BLIND, QUIRK_NEARSIGHTED),
-		list(QUIRK_LOW_PAIN_THRESHOLD, QUIRK_HIGH_PAIN_THRESHOLD)
+		list(QUIRK_LOW_PAIN_THRESHOLD, QUIRK_HIGH_PAIN_THRESHOLD),
+		list(QUIRK_FRAGILE_BONES, QUIRK_ADAMANTIUM_SKELETON)
 		)
 
 	..()
@@ -50,7 +51,7 @@ SUBSYSTEM_DEF(quirks)
 		if(QDELETED(thing))
 			processing -= thing
 		else
-			thing.process()
+			thing.process(wait * 0.1)
 
 		if (MC_TICK_CHECK)
 			return

@@ -129,7 +129,7 @@
 	var/speed = min(PNEUMATIC_SPEED_CAP, ((fire_pressure*tank.volume)/object.w_class)/PNEUMATIC_SPEED_DIVISOR) //projectile speed.
 
 	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -2)
-	user.visible_message("<span class='danger'>[user] выстреливает [object] по [target] из пневматической пушки!</span>","<span class='danger'>Вы стреляете [object] по [target] из пневматической пушки!</span>")
+	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
 	remove_from_storage(object,user.loc)
 	object.throw_at(target, speed + 1, speed, user)

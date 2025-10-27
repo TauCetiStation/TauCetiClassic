@@ -21,7 +21,7 @@ var/global/const/CAMERA_WIRE_NOTHING2 = 32
 	var/obj/machinery/camera/C = holder
 	return C.panel_open
 
-/datum/wires/camera/update_cut(index, mended)
+/datum/wires/camera/update_cut(index, mended, mob/user)
 	var/obj/machinery/camera/C = holder
 
 	switch(index)

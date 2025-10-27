@@ -40,5 +40,6 @@
 	name = "The Lens of Truesight"
 	desc = "I can see forever!"
 	icon_state = "monocle"
+	item_state_world = "monocle_w"
 	item_state = "headset"
 	toggleable = 0

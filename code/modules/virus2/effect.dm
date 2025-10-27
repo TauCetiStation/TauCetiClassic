@@ -7,19 +7,37 @@
 	var/ticks = 0
 	var/cooldownticks = 0
 
+/datum/disease2/effectholder/proc/on_process(datum/disease2/disease/virus, atom/host)
+	return effect.on_process(virus, host, src)
+
 /datum/disease2/effectholder/proc/runeffect(atom/host, datum/disease2/disease/disease)
 	if(cooldownticks > 0)
 		cooldownticks -= 1 * disease.cooldown_mul
 	if(prob(chance))
+		ticks += 1
 		if(ticks > stage * 10 && prob(50) && stage < effect.max_stage)
 			stage++
 		if(cooldownticks <= 0)
 			cooldownticks = effect.cooldown
-			if(ismob(host))
+			on_process(disease, host)
+			if(!effect.effect_active)
+				return
+			if(!check_conditions(host, disease, src))
+				return
+			if(isliving(host))
 				effect.activate_mob(host, src, disease)
 			if(istype(host, /obj/machinery/hydroponics))
 				effect.activate_plant(host, src, disease)
-		ticks += 1
+
+//If false, disables effects
+/datum/disease2/effectholder/proc/check_conditions(atom/host, datum/disease2/disease/disease)
+	//bloodloss = cell loss. Programs suspended
+	if(ishuman(host) && effect.effect_type & MICROBIOLOGY_NANITE)
+		var/mob/living/carbon/human/H = host
+		var/probability_denied = clamp(BLOOD_VOLUME_OKAY - H.blood_amount(), 0, 100)
+		if(prob(probability_denied))
+			return FALSE
+	return effect.check_conditions(host, disease, src)
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////EFFECTS/////////////////////////////////
@@ -34,11 +52,60 @@
 	var/max_stage = 1
 	var/cooldown = 0
 	var/pools = list()
+	var/effect_active = TRUE
+	var/effect_type = 0
+	//The following vars are customizable
+	var/use_rate = 0 			//Amount of cells used while active
+	var/program_flags = NONE
+	var/list/rogue_mutate_type = list(/*datum/disease2/effect/confusion*/) //What this can turn into if it glitches.
 
 /datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
+
+/datum/disease2/effect/proc/check_conditions(atom/host, datum/disease2/disease/disease, datum/disease2/effectholder/holder)
+	return TRUE
+
+/datum/disease2/effect/proc/on_process(datum/disease2/disease/virus, atom/host, datum/disease2/effectholder/holder)
+	var/consume_success = consume_cells(use_rate, FALSE, virus, host)
+	if(!consume_success && effect_active)
+		deactivate(host, holder, virus)
+	effect_active = check_conditions(host, virus) && consume_success
+
+/datum/disease2/effect/proc/consume_cells(amount, force = FALSE, datum/disease2/disease/virus, atom/host)
+	return virus.consume_cells(amount, force, host)
+
+/datum/disease2/effect/proc/on_death(datum/disease2/disease/virus, atom/host, gibbed)
+	return
+
+/datum/disease2/effect/proc/software_error(type, atom/host, datum/disease2/disease/virus)
+	if(!type)
+		type = rand(1,5)
+	switch(type)
+		if(1)
+			virus.dead = TRUE
+		if(2)
+			virus.cooldown_mul /= 2
+		if(3)
+			virus.stage = min(1, virus.stage - 1)
+		if(4)
+			virus.regen_rate = 0
+		if(5) //Effect breakes and does something different
+			var/rogue_type = pick(rogue_mutate_type)
+			var/datum/disease2/effect/rogue = new rogue_type
+			for(var/datum/disease2/effectholder/ef_holder as anything in virus.effects)
+				if(ef_holder.effect == src)
+					virus.remove_effect(ef_holder.effect)
+			virus.addeffect(virus.get_new_effectholder(rogue))
+
+/datum/disease2/effect/proc/on_emp(datum/disease2/disease/virus, atom/host, severity)
+	if((effect_type & MICROBIOLOGY_NANITE) && (program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
+		software_error(null, host, virus)
+
+/datum/disease2/effect/proc/on_shock(datum/disease2/disease/virus, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
+	if((effect_type & MICROBIOLOGY_NANITE) && !(program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
+		software_error(1, host, virus)
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
@@ -61,6 +128,8 @@
 
 /datum/disease2/effect/heal/activate_mob(mob/living/carbon/H, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(holder.stage != 2)
+		return
+	if(!ishuman(H))
 		return
 	var/effectiveness = can_heal(H, disease)
 	if(effectiveness)
@@ -102,69 +171,90 @@
 	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
 
 /datum/disease2/effect/zombie/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(iszombie(H))
-			disease.dead = TRUE
-			return
+	if(!ishuman(A))
+		return
+	var/mob/living/carbon/human/H = A
+	if(iszombie(H) || activated)
+		disease.dead = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+		return
 
-		if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
-			return
+	if(!(H.can_zombified()))
+		return
 
-		if(infected_organ == null && holder.ticks == 0)
-			var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
-			organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
+	if(infected_organ == null && holder.ticks == 0)
+		var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
+		organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
+		for(var/o in organs)
+			var/obj/item/organ/external/BP = H.get_bodypart(o)
+			if(BP && BP.is_flesh() && BP.is_usable())
+				infected_organ = BP
+				break
 
-			for(var/o in organs)
-				var/obj/item/organ/external/BP = H.get_bodypart(o)
-				if(BP && BP.is_flesh() && BP.is_usable())
-					infected_organ = BP
-					break
+	if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump || !infected_organ.is_attached())
+		disease.dead = TRUE
+		UnregisterSignal(A, COMSIG_MOB_DIED)
+		to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
+		return
 
-		if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump || !infected_organ.is_attached())
-			disease.dead = TRUE
-			to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
-			return
+	var/tox_damage = 0
+	var/messages_pool = list()
 
-		switch(holder.stage)
-			if(1,2,3) //increased hunger
-				H.nutrition = max(H.nutrition - 20, 0)
-				if(prob(1)) //might never happen and its fine
-					to_chat(H, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>")
-			if(4,5,6) //some random stuff
-				H.adjustToxLoss(1)
-				if(prob(70))
-					H.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
-				else
-					to_chat(H, "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>")
-			if(7,8) //pain
-				to_chat(H, "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>")
-				H.apply_effect(20, AGONY, 0)
-				H.adjustBrainLoss(5)
-				H.adjustToxLoss(3)
-			if(9) //IT HURTS
-				if(prob(33))
-					to_chat(H, "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>")
-					H.adjustBruteLoss(rand(2, 5))
-					H.apply_effect(50, AGONY, 0)
-				else if(prob(33) && H.stat == CONSCIOUS)
-					to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
-					H.adjustOxyLoss(rand(10, 40))
-				else
-					to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
-					H.Stun(4)
-			if(10) //rip
-				if(!activated)
-					activated = TRUE
-					H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
-					H.SetSleeping(600 SECONDS)
-					handle_infected_death(H)
-					H.update_canmove()
-					disease.dead = TRUE
+	H.nutrition = max(H.nutrition - 20, 0)
+	messages_pool += "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>"
+	if(holder.stage > 3) //some random stuff
+		tox_damage += 1
+		if(prob(10))
+			H.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
+		messages_pool += "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>"
+	if(holder.stage > 6) //pain
+		messages_pool += "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>"
+		H.adjustBrainLoss(5)
+		tox_damage += 2
+	if(holder.stage > 8) //IT HURTS
+		if(prob(33))
+			messages_pool += "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>"
+			H.adjustBruteLoss(20)
+			H.apply_effect(20, AGONY, 0)
+		else if(prob(33) && H.stat == CONSCIOUS)
+			messages_pool += "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>"
+			H.adjustOxyLoss(10)
+			H.losebreath = 5
+		else
+			messages_pool += "<span class='danger'>Your body is paralyzed.</span>"
+			H.Stun(4)
+
+	H.adjustToxLoss(tox_damage)
+	if(prob(50))
+		to_chat(H, pick(messages_pool))
+
+	if(holder.stage > 9) //rip
+		activated = TRUE
+		H.suiciding = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+		H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
+		H.updatehealth()
+		disease.dead = TRUE
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 	var/datum/disease2/effect/zombie/Z = effect_old
 	infected_organ = Z.infected_organ
+
+/datum/disease2/effect/zombie/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	. = ..()
+	if(ishuman(A))
+		UnregisterSignal(A, COMSIG_MOB_DIED)
+
+/datum/disease2/effect/zombie/proc/handle_infected_death(mob/user)
+	SIGNAL_HANDLER
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 600)
+		to_chat(H, "<span class='cult'>Твоё сердце останавливается, но вместе с этим просыпается ненасытный ГОЛОД... \
+				Вот только жизнь не покинула твоё бездыханное тело. \
+				Этот голод не отпускает тебя, ты ещё восстанешь, что бы распространять болезнь и сеять смерть!</span>")
+		activated = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
 
 ////////////////////////STAGE 4/////////////////////////////////
 
@@ -237,15 +327,17 @@
 	COOLDOWN_DECLARE(metabolicboost_message)
 
 /datum/disease2/effect/metabolism/activate_mob(mob/living/carbon/human/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(M.reagents)
-		M.reagents.metabolize(M) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	M.overeatduration = max(M.overeatduration - 2, 0)
-	var/lost_nutrition = 2
-	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
+	// i have no idea what is happening in diseases, this code is so old
+	M.mob_metabolism_mod.ModAdditive(1, src) // +100%
 	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
 		return
 	to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
+
+/datum/disease2/effect/metabolism/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(isliving(A))
+		var/mob/living/L = A
+		L.mob_metabolism_mod.RemoveMods(src)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustSpeedmultiplier(holder.stage)
@@ -283,7 +375,7 @@
 
 /datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
-	desc = "The virus synthesizes hydrogen sulphide in the bloodstream, damaging host's veins and arteries. In extreme cases, overdose of hydrogen sulphide may also cause host to explode in a shower of gore."
+	desc = "The virus synthesizes hydrogen sulphide or ammonium nitrate in the bloodstream, damaging host's veins and arteries. In extreme cases, overdose of hydrogen sulphide may also cause host to explode in a shower of gore."
 	level = 4
 	max_stage = 14
 	cooldown = 30
@@ -316,12 +408,19 @@
 			mob.make_jittery(50)
 			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, gib)), 50)
 
+/datum/disease2/effect/gibbingtons/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustHealth(holder.stage / 10)
+	A.myseed.react_to_disease_effect(A, src, holder)
+
 /datum/disease2/effect/vomit
 	name = "Haematemesis's Syndrome"
 	desc = "The virus introduces nanites into the host's digestive system, which multiply and begin to eat the body's tissues, causing bleeding with vomiting."
 	level = 4
 	max_stage = 3
 	cooldown = 60
+	use_rate = 1.5
+	rogue_mutate_type = list(/datum/disease2/effect/organs)
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/vomit/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -584,6 +683,11 @@
 		to_chat(mob, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
 		mob.emote("scream")
 
+/datum/disease2/effect/fire/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustSProduct(-(holder.stage / 3))
+	A.adjustSEnd(-(holder.stage / 3))
+	A.myseed.react_to_disease_effect(A, src, holder)
+
 /datum/disease2/effect/flesh_eating
 	name = "Necrotizing Fasciitis"
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
@@ -709,6 +813,7 @@
 
 /datum/disease2/effect/radian/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustMutationmod(holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
@@ -748,12 +853,44 @@
 			to_chat(mob, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
 			mob.adjustToxLoss(10)
 
+/datum/disease2/effect/nerve_decay
+	name = "Nerve Decay"
+	desc = "The virus produces nanites that attacks the host's nerves, causing lack of coordination and short bursts of paralysis."
+	level = 3
+	max_stage = 10
+	cooldown = 5
+	use_rate = 1
+	rogue_mutate_type = list(/datum/disease2/effect/flesh_eating)
+	effect_type = MICROBIOLOGY_NANITE
+	COOLDOWN_DECLARE(nerv_decay_message)
+
+/datum/disease2/effect/nerve_decay/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1 to 5)
+			if(COOLDOWN_FINISHED(src, nerv_decay_message))
+				to_chat(mob, "<span class='warning'>You feel unbalanced!</span>")
+				COOLDOWN_START(src, nerv_decay_message, 1 MINUTE)
+			mob.AdjustConfused(holder.stage)
+		if(6 to 9)
+			if(COOLDOWN_FINISHED(src, nerv_decay_message))
+				to_chat(mob, "<span class='warning'>You can't feel your hands!</span>")
+				COOLDOWN_START(src, nerv_decay_message, 1 MINUTE)
+			mob.drop_item()
+		else
+			if(COOLDOWN_FINISHED(src, nerv_decay_message))
+				to_chat(mob, "<span class='warning'>You can't feel your legs!</span>")
+				COOLDOWN_START(src, nerv_decay_message, 1 MINUTE)
+			mob.AdjustWeakened(7)
+
 /datum/disease2/effect/nerve_support
 	name = "Nerve Support"
 	desc = "The virus injects nanites into the host's body, which act as a secondary nervous system, protecting against nerve palsies."
 	level = 3
 	max_stage = 3
 	cooldown = 7
+	use_rate = 1.5
+	rogue_mutate_type = list(/datum/disease2/effect/nerve_decay, /datum/disease2/effect/giggle, /datum/disease2/effect/cough)
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(senses_message)
@@ -827,6 +964,9 @@
 	level = 3
 	max_stage = 7
 	cooldown = 10
+	use_rate = 0.5
+	rogue_mutate_type = list(/datum/disease2/effect/flesh_eating)
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/repairing/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -847,6 +987,25 @@
 		countBPhealed++
 		BP.heal_damage(1 / parts.len, 1 / parts.len, robo_repair = TRUE)
 
+/datum/disease2/effect/arousal
+	name = "Parasympathetic Arousal"
+	desc = "The virus leads to an increase in parasympathetic activity of the heart and restoration of host's homeostasis."
+	level = 3
+	max_stage = 10
+	cooldown = 5
+	pools = list(POOL_NEUTRAL_VIRUS)
+
+/datum/disease2/effect/arousal/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(holder.stage > 8)
+		mob.reagents.add_reagent("dexalin", holder.stage / 3)
+		return
+	var/random_syntesis = pick("nitrogen", "inaprovaline", "lexorin")
+	mob.reagents.add_reagent(random_syntesis, holder.stage / 3)
+
+/datum/disease2/effect/arousal/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustSPot(holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
+
 ////////////////////////STAGE 2/////////////////////////////////
 
 /datum/disease2/effect/beard
@@ -865,17 +1024,17 @@
 				to_chat(H, "<span class='warning'>Your chin itches.</span>")
 				if(H.f_style == "Shaved" && prob(30))
 					H.f_style = "Jensen Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(2)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard") && !(H.f_style == "Full Beard"))
 					to_chat(H, "<span class='warning'>You feel tough.</span>")
 					H.f_style = "Full Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(3)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard"))
 					to_chat(H, "<span class='warning'>You feel manly!</span>")
 					H.f_style = pick("Dwarf Beard", "Very Long Beard")
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/hallucinations
 	name = "Hallucinational Syndrome"
@@ -894,6 +1053,10 @@
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
 		mob.hallucination = max(mob.hallucination, 100)
+
+/datum/disease2/effect/hallucinations/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.mutate(lifemut = holder.stage, endmut = holder.stage, productmut = holder.stage, yieldmut = holder.stage, potmut = holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/deaf
 	name = "Hard of Hearing Syndrome"
@@ -1046,6 +1209,9 @@
 	level = 2
 	max_stage = 2
 	cooldown = 10
+	use_rate = 0.75
+	rogue_mutate_type = list(/datum/disease2/effect/mind, /datum/disease2/effect/drowsness, /datum/disease2/effect/confusion, /datum/disease2/effect/hallucinations)
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(mute_message)
@@ -1065,6 +1231,46 @@
 /datum/disease2/effect/mute/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	REMOVE_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
 	trait_added = FALSE
+
+/datum/disease2/effect/anti_toxins
+	name = "Aggresive Resistance"
+	desc = "The virus destroy toxins in host by locally burning them off."
+	level = 2
+	max_stage = 5
+	cooldown = 5
+	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
+	var/stop_creating_kudzu = FALSE
+
+/datum/disease2/effect/anti_toxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!mob.getToxLoss())
+		return
+	mob.take_bodypart_damage(brute = 0, burn = holder.stage / 2)
+	if(holder.stage > 2)
+		mob.adjustToxLoss(-holder.stage)
+
+/datum/disease2/effect/anti_toxins/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustToxic(-holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
+
+/datum/disease2/effect/bactericidal_tannins
+	name = "Bactericidal Tannins"
+	desc = "The virus can neutralize free radicals which cause different diseases in host."
+	level = 2
+	max_stage = 5
+	cooldown = 5
+	pools = list(POOL_POSITIVE_VIRUS)
+
+/datum/disease2/effect/bactericidal_tannins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!ishuman(mob))
+		mob.reagents.add_reagent("spaceacillin", holder.stage)
+		return
+	var/mob/living/carbon/human/H = mob
+	var/obj/item/organ/external/BP = pick(H.bodyparts)
+	BP.germ_level -= holder.stage
+
+/datum/disease2/effect/bactericidal_tannins/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustPests(-holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 ////////////////////////STAGE 1/////////////////////////////////
 
@@ -1252,7 +1458,7 @@
 			H.h_style = "Balding Hair"
 		else if(H.species.name == TAJARAN)
 			H.h_style = "Tajaran Ears"
-	H.update_hair()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/monitoring
 	name = "Monitoring"
@@ -1260,6 +1466,8 @@
 	level = 1
 	max_stage = 1
 	cooldown = 600
+	rogue_mutate_type = list(/datum/disease2/effect/toxins)
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS, POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/monitoring/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -1392,7 +1600,7 @@
 /datum/disease2/effect/headache/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.species && !H.species.flags[NO_PAIN])
+		if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 			if(prob(20) || holder.stage	== 1)
 				to_chat(H, "<span class = 'notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
 			else if(prob(20) || (holder.stage >= 2 && holder.stage <= 5))
@@ -1407,12 +1615,26 @@
 				else
 					H.apply_effect(10,AGONY,0)
 
+/datum/disease2/effect/suffocating
+	name = "Hypoxemia"
+	desc = "The virus producing nanites that prevent the host's blood from absorbing oxygen efficiently."
+	level = 1
+	max_stage = 3
+	use_rate = 0.75
+	effect_type = MICROBIOLOGY_NANITE
+
+/datum/disease2/effect/suffocating/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.losebreath += holder.stage
+
 /datum/disease2/effect/hemocoagulation
 	name = "Rapid Coagulation"
 	desc = "The virus producing nanites that rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
 	level = 1
 	max_stage = 2
 	cooldown = 40
+	use_rate = 0.10
+	rogue_mutate_type = list(/datum/disease2/effect/suffocating)
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(blood_add_message)
@@ -1443,3 +1665,38 @@
 /datum/disease2/effect/hemocoagulation/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	REMOVE_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
 	trait_added = FALSE
+
+/datum/disease2/effect/conductivity
+	name = "Electrical Conductivity"
+	desc = "The virus increase the amount of conductive reagents around all host's surfaces."
+	level = 1
+	max_stage = 4
+	cooldown = 20
+	pools = list(POOL_NEGATIVE_VIRUS, POOL_NEUTRAL_VIRUS)
+	var/trait_added = FALSE
+
+/datum/disease2/effect/conductivity/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(holder.stage >= 1)
+		var/turf/simulated/mob_turf = get_turf(mob)
+		if(!istype(mob_turf, /turf/simulated))
+			return
+		mob_turf.make_wet_floor()
+	if(holder.stage >= 3 && ishuman(mob))
+		var/mob/living/carbon/human/H = mob
+		var/obj/item/I = pick(H.get_all_slots())
+		if(!istype(I))
+			return
+		I.make_wet()
+	else if(holder.stage >= 2)
+		var/obj/item/I = mob.get_active_hand()
+		if(!istype(I))
+			return
+		I.make_wet()
+	if(holder.stage >= 4)
+		if(!trait_added)
+			trait_added = TRUE
+			ADD_TRAIT(mob, TRAIT_CONDUCT, VIRUS_TRAIT)
+
+/datum/disease2/effect/conductivity/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustWater(holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)

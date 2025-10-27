@@ -76,10 +76,10 @@
 
 	// guard
 	if(online_client)
-		if(!length(online_client.guard.short_report))
-			online_client.guard.prepare()
+		if(!length(online_client.prefs.guard.short_report))
+			online_client.prefs.guard.prepare()
 
-		message += "**Guard report**: [online_client.guard.short_report]"
+		message += "**Guard report**: [online_client.prefs.guard.short_report]"
 
 	else
 		message += "**Guard report**: not available for offline player"

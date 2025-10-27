@@ -69,7 +69,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
-	if(I.use_tool(src, user, 40, volume = 50))
+	if(I.use_tool(src, user, 40, volume = 50, quality = QUALITY_PULSING))
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
 		disarm()
@@ -128,7 +128,7 @@
 	icon_state = "empmine"
 
 /obj/item/mine/emp/trigger_act(obj)
-	empulse(src, 2, 3)
+	empulse(src, 2, 3, custom_effects = EMP_SEBB)
 
 /obj/item/mine/emp/anchored
 	anchored = TRUE

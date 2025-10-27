@@ -24,6 +24,14 @@
 /obj/item/mecha_parts/chassis/attack_hand()
 	return
 
+
+/obj/item/mecha_parts/dna_scanner
+	name = "Exosuit DNA scanner"
+	desc = "Device that allows locking exosuits by DNA."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "motion2"
+	origin_tech = "programming=3;biotech=3"
+
 /////////// Ripley
 
 /obj/item/mecha_parts/chassis/ripley
@@ -318,7 +326,8 @@
 /obj/item/weapon/circuitboard/mecha
 	name = "Exosuit Circuit board"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "std_mod"
+	icon_state = "exo_mod"
+	item_state_world = "exo_mod_w"
 	item_state = "electronic"
 	board_type = "other"
 	flags = CONDUCT
@@ -334,10 +343,12 @@
 /obj/item/weapon/circuitboard/mecha/ripley/peripherals
 	name = "Circuit board (Ripley Peripherals Control module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/ripley/main
 	name = "Circuit board (Ripley Central Control module)"
 	icon_state = "mainboard"
+	item_state_world = "mainboard_w"
 
 /obj/item/weapon/circuitboard/mecha/gygax
 	origin_tech = "programming=4"
@@ -345,15 +356,18 @@
 /obj/item/weapon/circuitboard/mecha/gygax/peripherals
 	name = "Circuit board (Gygax Peripherals Control module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/gygax/targeting
 	name = "Circuit board (Gygax Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 	origin_tech = "programming=4;combat=4"
 
 /obj/item/weapon/circuitboard/mecha/gygax/main
 	name = "Circuit board (Gygax Central Control module)"
 	icon_state = "mainboard"
+	item_state_world = "mainboard_w"
 
 /obj/item/weapon/circuitboard/mecha/ultra
 	origin_tech = "programming=4;combat=4"
@@ -361,14 +375,17 @@
 /obj/item/weapon/circuitboard/mecha/ultra/peripherals
 	name = "Circuit board (Gygax Ultra Peripherals Control module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/ultra/targeting
 	name = "Circuit board (Gygax Ultra Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/ultra/main
 	name = "Circuit board (Gygax Ultra Central Control module)"
 	icon_state = "mainboard"
+	item_state_world = "mainboard_w"
 
 /obj/item/weapon/circuitboard/mecha/durand
 	origin_tech = "programming=4"
@@ -376,15 +393,18 @@
 /obj/item/weapon/circuitboard/mecha/durand/peripherals
 	name = "Circuit board (Durand Peripherals Control module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/durand/targeting
 	name = "Circuit board (Durand Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 	origin_tech = "programming=4;combat=4"
 
 /obj/item/weapon/circuitboard/mecha/durand/main
 	name = "Circuit board (Durand Central Control module)"
 	icon_state = "mainboard"
+	item_state_world = "mainboard_w"
 
 /obj/item/weapon/circuitboard/mecha/vindicator
 	origin_tech = "programming=4;combat=4"
@@ -392,14 +412,17 @@
 /obj/item/weapon/circuitboard/mecha/vindicator/peripherals
 	name = "Circuit board (Vindicator Peripherals Control module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/vindicator/targeting
 	name = "Circuit board (Vindicator Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/vindicator/main
 	name = "Circuit board (Vindicator Central Control module)"
 	icon_state = "mainboard"
+	item_state_world = "mainboard_w"
 
 /obj/item/weapon/circuitboard/mecha/honker
 	origin_tech = "programming=4"
@@ -407,14 +430,17 @@
 /obj/item/weapon/circuitboard/mecha/honker/peripherals
 	name = "Circuit board (H.O.N.K Peripherals Control module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/honker/targeting
 	name = "Circuit board (H.O.N.K Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/honker/main
 	name = "Circuit board (H.O.N.K Central Control module)"
 	icon_state = "mainboard"
+	item_state_world = "mainboard_w"
 
 /obj/item/weapon/circuitboard/mecha/odysseus
 	origin_tech = "programming=3"
@@ -422,10 +448,12 @@
 /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
 	name = "Circuit board (Odysseus Peripherals Control module)"
 	icon_state = "mcontroller"
+	item_state_world = "mcontroller_w"
 
 /obj/item/weapon/circuitboard/mecha/odysseus/main
 	name = "Circuit board (Odysseus Central Control module)"
 	icon_state = "mainboard"
+	item_state_world = "mainboard_w"
 
 ////////////Vindicator
 

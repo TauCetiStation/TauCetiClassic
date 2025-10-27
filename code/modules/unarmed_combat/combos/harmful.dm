@@ -477,7 +477,7 @@
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
 
 				M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
-
+				SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, M)
 				M.throw_at(target, 6, 8, attacker)
 				apply_effect(3, STUN,  M, attacker, attack_obj=attack_obj, min_value=1)
 				apply_effect(7, WEAKEN, M, attacker, attack_obj=attack_obj, min_value=1)
@@ -530,32 +530,32 @@
 		var/i = 1
 		try_steps_loop:
 			for(var/try_step in 1 to try_steps)
+				var/atom/old_V_loc = victim.loc
+				var/turf/target_turf = get_step(get_turf(victim), kick_dir)
+				step(victim, kick_dir)
 
-			var/atom/old_V_loc = victim.loc
-			var/turf/target_turf = get_step(get_turf(victim), kick_dir)
-			step(victim, kick_dir)
+				if(old_V_loc == victim.loc)
+					var/list/candidates = target_turf.contents - list(victim)
+					new_movers:
+						for(var/mob/living/new_mover in candidates)
+							if(new_mover == attacker)
+								continue new_movers
+							if(new_mover in collected)
+								continue new_movers
+							if(new_mover.is_bigger_than(victim))
+								break try_steps_loop
+							if(!new_mover.anchored)
+								collected += new_mover
+								new_mover.Stun(1)
+								i++
+								movers["[i]"] = new_mover
+								prev_info["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y, "pass_flags" = new_mover.pass_flags)
+								new_mover.pixel_x += rand(-8, 8)
+								new_mover.pixel_y += rand(-8, 8)
+								new_mover.pass_flags |= PASSMOB|PASSCRAWL
 
-			if(old_V_loc == victim.loc)
-				var/list/candidates = target_turf.contents - list(victim)
-				new_movers:
-					for(var/mob/living/new_mover in candidates)
-						if(new_mover == attacker)
-							continue new_movers
-						if(new_mover in collected)
-							continue new_movers
-						if(new_mover.is_bigger_than(victim))
-							break try_steps_loop
-						if(!new_mover.anchored)
-							collected += new_mover
-							new_mover.Stun(1)
-							i++
-							movers["[i]"] = new_mover
-							prev_info["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y, "pass_flags" = new_mover.pass_flags)
-							new_mover.pixel_x += rand(-8, 8)
-							new_mover.pixel_y += rand(-8, 8)
-							new_mover.pass_flags |= PASSMOB|PASSCRAWL
+								event_log(new_mover, attacker, "Forced CQC kick Stun")
 
-							event_log(new_mover, attacker, "Forced CQC kick Stun")
 			attacker.waddle(pick(-14, 0, 14), 4)
 			apply_effect(3, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
 			apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)

@@ -83,7 +83,7 @@
 	device_type = /obj/item/weapon/mining_scanner
 	origin_tech = "magnets=2;programming=2;engineering=2"
 
-/obj/item/weapon/rcd/mounted/useResource(amount, mob/user)
+/obj/item/weapon/rcd/mounted/use(amount, mob/user)
 	var/cost = amount*70 //Arbitary number that hopefully gives it as many uses as a plain RCD.
 	if(istype(loc,/obj/item/rig_module))
 		var/obj/item/rig_module/module = loc
@@ -93,7 +93,7 @@
 				return TRUE
 	return FALSE
 
-/obj/item/weapon/rcd/mounted/checkResource(amount, mob/user)
+/obj/item/weapon/rcd/mounted/tool_start_check(mob/user, amount)
 	var/cost = amount*70
 	if(istype(loc,/obj/item/rig_module))
 		var/obj/item/rig_module/module = loc

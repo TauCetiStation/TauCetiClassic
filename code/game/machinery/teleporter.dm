@@ -65,15 +65,15 @@
 			data += "Calibration: <font color='red'>Sub-Optimal</font>"
 		data += "</div><BR>"
 
-		data += "<A href='?src=\ref[src];regimeset=1'>Change regime</A><BR>"
-		data += "<A href='?src=\ref[src];settarget=1'>Set target</A><BR>"
+		data += "<A href='byond://?src=\ref[src];regimeset=1'>Change regime</A><BR>"
+		data += "<A href='byond://?src=\ref[src];settarget=1'>Set target</A><BR>"
 		if(locked)
-			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
-			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
+			data += "<BR><A href='byond://?src=\ref[src];locked=1'>Get target from memory</A><BR>"
+			data += "<A href='byond://?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
 		else
 			data += "<BR><span class='disabled'>Get target from memory</span><BR>"
 			data += "<span class='disabled'>Eject GPS device</span><BR>"
-		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
+		data += "<BR><A href='byond://?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)
@@ -114,9 +114,11 @@
 	if(href_list["calibrate"])
 		if(!target)
 			to_chat(usr, "<span class='danger'>Error: No target set to calibrate to.</span>")
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			return FALSE
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
 			to_chat(usr, "<span class='warning'>Hub is already calibrated!</span>")
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			return FALSE
 		to_chat(usr, "<span class='notice'>Processing hub calibration to target...</span>")
 
@@ -126,8 +128,10 @@
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
 				to_chat(usr, "<span class='notice'>Calibration complete.</span>")
+				playsound(src, 'sound/machines/calibration_complete.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 			else
 				to_chat(usr, "<span class='danger'>Error: Unable to detect hub.</span>")
+				playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	updateDialog()
 
@@ -168,24 +172,23 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in implant_list)
-			if (!I.implanted || !ismob(I.loc))
+		for (var/obj/item/weapon/implant/tracking/I in global.implant_list)
+			if (!I.implanted_mob)
 				continue
-			else
-				var/mob/M = I.loc
-				if (M.stat == DEAD)
-					if (M.timeofdeath + 6000 < world.time)
-						continue
-				var/turf/T = get_turf(M)
-				if(!T)	continue
-				if(is_centcom_level(T.z))
+
+			var/mob/M = I.loc
+			if (M.stat == DEAD)
+				if (M.timeofdeath + 6000 < world.time)
 					continue
-				var/tmpname = M.real_name
-				if(areaindex[tmpname])
-					tmpname = "[tmpname] ([++areaindex[tmpname]])"
-				else
-					areaindex[tmpname] = 1
-				L[tmpname] = I
+			var/turf/T = get_turf(M)
+			if(!T || is_centcom_level(T.z))
+				continue
+			var/tmpname = M.real_name
+			if(areaindex[tmpname])
+				tmpname = "[tmpname] ([++areaindex[tmpname]])"
+			else
+				areaindex[tmpname] = 1
+			L[tmpname] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") in L
 		if(!can_still_interact_with(user))
@@ -411,15 +414,36 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(ispulsing(W) && !panel_open)
-		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-			if(linked_stations.len < efficiency)
-				linked_stations.Add(M.buffer)
-				M.buffer = null
-				to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
-			else
-				to_chat(user, "<span class='alert'>This station cant hold more information, try to use better parts.</span>")
+	if(ispulsing(W) && panel_open)
+		var/actions = list("Download data in buffer", "Load data from buffer", "Connect to nearby machinery")
+		var/choice = tgui_input_list(user, "Choose your action", "Action", actions)
+		if(!Adjacent(user))
+			return
+		switch(choice)
+			if("Download data in buffer")
+				var/obj/item/device/multitool/M = W
+				M.buffer = src
+				to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
+				return
+			if("Load data from buffer")
+				var/obj/item/device/multitool/M = W
+				if(istype(M))
+					if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
+						if(linked_stations.len < efficiency)
+							linked_stations.Add(M.buffer)
+							M.buffer = null
+							to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+						else
+							to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
+					else if(M.buffer == src)
+						to_chat(user, "<span class='alert'>You can't load information about the same station.</span>")
+					else
+						to_chat(user, "<span class='alert'>Something went wrong!</span>")
+			if("Connect to nearby machinery")
+				link_console_and_hub()
+				to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
+				return
+
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
@@ -428,17 +452,6 @@
 		return
 
 	default_deconstruction_crowbar(W)
-
-	if(panel_open)
-		if(ispulsing(W))
-			var/obj/item/device/multitool/M = W
-			M.buffer = src
-			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
-			return
-		if(iscutter(W))
-			link_console_and_hub()
-			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
-			return
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
 	. = ..()

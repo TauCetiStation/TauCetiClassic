@@ -11,6 +11,10 @@
 	deflect_chance = 15
 	step_energy_drain = 6
 
+/obj/mecha/medical/odysseus/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 800, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
 /obj/mecha/medical/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
@@ -29,3 +33,15 @@
 	if(.)
 		var/datum/atom_hud/hud = global.huds[DATA_HUD_MEDICAL]
 		hud.add_hud_to(M.brainmob)
+
+/obj/mecha/medical/odysseus/medical/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/sleeper(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/syringe_gun(src)
+	ME.attach(src)
+
+/obj/mecha/medical/odysseus/ert
+	dna_lockable = TRUE

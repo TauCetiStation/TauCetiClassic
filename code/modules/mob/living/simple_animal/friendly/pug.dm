@@ -44,3 +44,7 @@
 					sleep(1)
 	else
 		..()
+
+/mob/living/simple_animal/pug/pug_agrosphere
+	name = "El Muchacho"
+	faction = "tomato"

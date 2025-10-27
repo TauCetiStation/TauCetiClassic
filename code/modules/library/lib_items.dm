@@ -38,7 +38,7 @@
 		if(!newname)
 			return
 		else
-			name = ("bookcase ([sanitize(newname)])")
+			name = ("[initial(name)] ([sanitize(newname)])")
 	else
 		..()
 
@@ -86,6 +86,81 @@
 		icon_state = "book-[contents.len]"
 	else
 		icon_state = "book-5"
+
+/obj/structure/bookcase/shelf
+	name = "shelf"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shelf1-0"
+	anchored = TRUE
+	density = FALSE
+	opacity = 0
+
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
+	var/obj/item/placedItem
+	var/list/canBePlaced = list(
+		/obj/item/globe = list(5, -6),
+		/obj/item/newtons_pendulum = list(5, -8),
+		/obj/item/woodenclock = list(5, -5),
+		/obj/item/bust = list(4, -6)
+		)
+
+/obj/structure/bookcase/shelf/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/bookcase/shelf/atom_init_late()
+	var/turf/T = get_turf(src)
+	for(var/obj/item/I in T.contents)
+		if(is_type_in_list(I, canBePlaced))
+			I.forceMove(src)
+			placedItem = I
+			update_icon()
+			break
+
+/obj/structure/bookcase/shelf/attackby(obj/O, mob/user)
+	if(!placedItem && is_type_in_list(O, canBePlaced))
+		user.drop_from_inventory(O, src)
+		placedItem = O
+		update_icon()
+	else
+		..()
+
+/obj/structure/bookcase/shelf/attack_hand(mob/user)
+	if(contents.len)
+		var/obj/item/choice = input("Which item would you like to remove from the shelf?") in contents
+		if(choice)
+			if(usr.incapacitated() || !Adjacent(usr))
+				return
+			if(ishuman(user))
+				if(!user.get_active_hand())
+					user.put_in_hands(choice)
+			else
+				choice.loc = get_turf(src)
+
+			if(choice == placedItem)
+				placedItem = null
+			update_icon()
+
+/obj/structure/bookcase/shelf/update_icon()
+	cut_overlays()
+
+	var/shelficonstate = "shelf1"
+	if(placedItem)
+		shelficonstate = "shelf2"
+		placedItem.update_icon()
+
+		var/list/placedoffsets = canBePlaced[get_type_in_list(placedItem, canBePlaced)]
+		placedItem.pixel_x = placedoffsets[1]
+		placedItem.pixel_y = placedoffsets[2]
+
+		add_overlay(placedItem)
+
+	if((placedItem ? contents.len - 1 : contents.len) < 5)
+		icon_state = "[shelficonstate]-[placedItem ? contents.len - 1 : contents.len]"
+	else
+		icon_state = "[shelficonstate]-5"
 
 
 /obj/structure/bookcase/manuals/medical
@@ -140,7 +215,19 @@
 		new /obj/item/weapon/book/manual/wiki/security_space_law(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/book/manual/wiki/sop(src)
-	new /obj/item/weapon/book/manual/detective(src)
+	new /obj/item/weapon/book/manual/wiki/forensics(src)
+	update_icon()
+
+/obj/structure/bookcase/skills
+	name = "Professional manuals"
+
+/obj/structure/bookcase/skills/atom_init()
+	. = ..()
+
+	for(var/type in subtypesof(/obj/item/weapon/book/skillbook))
+		new type(src)
+		new type(src)
+
 	update_icon()
 
 /*
@@ -152,6 +239,7 @@
 	force = 1.0
 	hitsound = list('sound/items/misc/book-slap.ogg')
 	icon_state ="book"
+	item_state_world = "book_world"
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
@@ -170,21 +258,12 @@
 
 /obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
-		if(store)
-			to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
-			store.loc = get_turf(src.loc)
-			store = null
-			return
-		else
-			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
-			return
+		handle_carved(user)
+		return
 	if(src.dat)
 		if(istype(src, /obj/item/weapon/book/manual/wiki)) // wiki books has own styling so no browser/popup
-			var/window_size
-			if(window_width && window_height)
-				window_size = "[window_width]x[window_height]"
 			//<TT><I>Penned by [author].</I></TT> <BR> // <- no place for "penned"
-			user << browse(dat, "window=book[window_size != null ? ";size=[window_size]" : ""]")
+			user << browse(dat, "window=book[window_width && window_height ? get_browse_size_parameter(user.client, window_width, window_height) : ""]")
 		else
 			//var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
 			var/datum/browser/popup = new(user, "book", "Penned by [author].", window_width, window_height, ntheme = CSS_THEME_LIGHT)
@@ -193,7 +272,19 @@
 
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 	else
-		to_chat(user, "This book is completely blank!")
+		if(!istype(src, /obj/item/weapon/book/skillbook))
+			to_chat(user, "This book is completely blank!")
+
+/obj/item/weapon/book/proc/handle_carved(mob/user)
+	if(!carved)
+		return
+
+	if(store)
+		to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
+		store.loc = get_turf(src.loc)
+		store = null
+	else
+		to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(carved)
@@ -288,6 +379,8 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
+		if(!length(dat))
+			return
 		var/datum/browser/popup = new(M, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
 		popup.set_content("<TT><I>Penned by [author].</I></TT> <BR>[dat]")
 		popup.open()

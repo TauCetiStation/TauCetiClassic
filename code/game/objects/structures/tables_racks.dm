@@ -128,7 +128,9 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
-	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
+	// todo: we should not change mover properties here, this method is only for attempt to pass
+	// part of future mob layer / crawl refactoring
+	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 		return 1
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
@@ -141,23 +143,6 @@
 		else
 			return 1
 	return 0
-
-/obj/structure/table/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-
-	if(. == PROJECTILE_ABSORBED)
-		return
-
-	// try to shot mobs under table
-	var/list/mobs = list()
-	for(var/mob/living/M in get_turf(loc)) // todo: check only for crawling/lying
-		if(M in Proj.permutated)
-			continue
-		mobs += M
-
-	if(length(mobs))
-		var/mob/M = pick(mobs)
-		M.bullet_act(Proj, def_zone)
 
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
@@ -187,7 +172,7 @@
 /obj/structure/table/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
-	if(istype(O) && O.checkpass(PASSCRAWL))
+	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
 		O.layer = 4.0
 		return 1
 	if (flipped)
@@ -224,7 +209,7 @@
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 	return FALSE
@@ -453,6 +438,7 @@
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
 	victim.log_combat(assailant, "face-slammed against [name]")
+	SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER,victim)
 
 	if(prob(30) && ishuman(victim))
 		var/mob/living/carbon/human/H = victim
@@ -548,12 +534,12 @@
 		if(WT.use(0, user))
 			if(status == 2)
 				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>You have weakened \the [src].</span>")
 					src.status = 1
 			else
 				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>You have strengthened \the [src].</span>")
 					src.status = 2
 			return TRUE
@@ -563,7 +549,7 @@
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 
@@ -749,6 +735,18 @@
 	LH.pixel_y = p_y
 
 /*
+ * reinforced glass table
+ */
+
+/obj/structure/table/rglass
+	name = "reinforced glass table"
+	desc = "A reinforced version of the glass table"
+	icon = 'icons/obj/smooth_structures/rglass.dmi'
+	max_integrity = 100
+	parts = /obj/item/weapon/table_parts/rglass
+	flipable = FALSE
+
+/*
  * Racks
  */
 /obj/structure/rack // TODO subtype of table?
@@ -802,7 +800,7 @@
 		can_cut = HAS_TRAIT(D, TRAIT_DOUBLE_WIELDED)
 
 	if(!can_cut)
-		return ..()
+		return
 
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)

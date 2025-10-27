@@ -79,6 +79,8 @@
 	L.Stun(1)
 	L.Weaken(1)
 	L.adjust_bodytemperature(-300)
+	if(!L.reagents)
+		return
 	L.reagents.add_reagent("frostoil", 15)
 
 /obj/structure/trap/damage

@@ -87,5 +87,5 @@
 
 	if(messages.len)
 		if(add_link)
-			messages += "<a href=?_src_=usr;showalerts=1'>\[Show Alerts\]</a>"
+			messages += "<a href=byond://?_src_=usr;showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, jointext(messages, "<br>"))

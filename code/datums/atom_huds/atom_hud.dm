@@ -31,6 +31,8 @@ var/global/list/huds = list(
 	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag,
 	ANTAG_HUD_REPLICATOR = new/datum/atom_hud/antag/hidden,
 	ANTAG_HUD_PIRATES = new/datum/atom_hud/antag,
+	ANTAG_HUD_TEAMS_RED = new/datum/atom_hud/antag/bg_red,
+	ANTAG_HUD_TEAMS_BLUE = new/datum/atom_hud/antag/bg_blue,
 )
 
 /datum/atom_hud

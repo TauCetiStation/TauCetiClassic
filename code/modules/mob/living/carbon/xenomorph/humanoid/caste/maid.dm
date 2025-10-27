@@ -12,7 +12,7 @@
 						/obj/effect/proc_holder/spell/no_target/resin,
 						/obj/effect/proc_holder/spell/no_target/air_plant,
 						)
-	var/list/whitelist_items = list(/obj/item/weapon/reagent_containers/spray,
+	var/list/whitelist_items = list(/obj/item/weapon/reagent_containers/spray/maintenance,
 							/obj/item/weapon/mop,
 							/obj/item/weapon/storage/bag/trash,
 							/obj/item/device/lightreplacer,

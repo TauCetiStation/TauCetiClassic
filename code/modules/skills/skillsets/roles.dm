@@ -256,24 +256,35 @@
 		/datum/skill/construction = SKILL_LEVEL_MASTER,
 		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
 		/datum/skill/civ_mech = SKILL_LEVEL_PRO,
-		/datum/skill/medical = SKILL_LEVEL_TRAINED,
-		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
 		/datum/skill/research = SKILL_LEVEL_TRAINED,
-		/datum/skill/chemistry = SKILL_LEVEL_NOVICE,
-		/datum/skill/command = SKILL_LEVEL_PRO
+		/datum/skill/command = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/survivalist_medic
 	name = "Survivalist Medic"
 	initial_skills = list(
-		/datum/skill/engineering = SKILL_LEVEL_TRAINED,
-		/datum/skill/construction = SKILL_LEVEL_TRAINED,
-		/datum/skill/atmospherics = SKILL_LEVEL_NOVICE,
-		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
-		/datum/skill/combat_mech = SKILL_LEVEL_PRO,
+		/datum/skill/civ_mech = SKILL_LEVEL_PRO,
 		/datum/skill/medical = SKILL_LEVEL_MASTER,
 		/datum/skill/surgery = SKILL_LEVEL_MASTER,
 		/datum/skill/research = SKILL_LEVEL_MASTER,
 		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_TRAINED
+	)
+
+/datum/skillset/willpower
+	name = "Willpower"
+	initial_skills = list(
+		/datum/skill/police = SKILL_LEVEL_PRO,
+		/datum/skill/firearms = SKILL_LEVEL_PRO,
+		/datum/skill/melee = SKILL_LEVEL_PRO,
+		/datum/skill/engineering = SKILL_LEVEL_PRO,
+		/datum/skill/construction = SKILL_LEVEL_PRO,
+		/datum/skill/atmospherics = SKILL_LEVEL_PRO,
+		/datum/skill/civ_mech = SKILL_LEVEL_PRO,
+		/datum/skill/combat_mech = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/chemistry = SKILL_LEVEL_PRO,
+		/datum/skill/research = SKILL_LEVEL_PRO,
 		/datum/skill/command = SKILL_LEVEL_PRO
 	)

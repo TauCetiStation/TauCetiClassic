@@ -31,7 +31,7 @@
 	if(isscrewing(I))
 		if(mode == 0)
 			var/turf/T = loc
-			if(isturf(T) && !T.intact)
+			if(isturf(T) && T.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 				attached = locate() in T
 				if(!attached)
 					to_chat(user, "No exposed cable here to attach to.")

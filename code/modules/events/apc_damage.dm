@@ -3,17 +3,26 @@
 
 /datum/event/apc_damage/start()
 	var/obj/machinery/power/apc/A = acquire_random_apc()
-
-	var/severity_range = 0
-	switch(severity)
-		if(EVENT_LEVEL_MUNDANE)
-			severity_range = rand(0,7)
-		if(EVENT_LEVEL_MODERATE)
-			severity_range = rand(7,15)
-		if(EVENT_LEVEL_MAJOR)
-			severity_range = rand(15,23)
+	var/severity_range = rand(7,15)
+	if(severity == EVENT_LEVEL_MODERATE)
+		severity_range = rand(15,23)
 
 	for(var/obj/machinery/power/apc/apc in range(severity_range,A))
+		if(severity == EVENT_LEVEL_MUNDANE)
+			apc.aidisabled = TRUE
+			if(prob(50))
+				apc.disable_random_categories()
+
+			if(prob(50))
+				apc.disable_autocharge()
+			else if(prob(50))
+				apc.toggle_power_use()
+			else
+				apc.make_short_circuit()
+
+			apc.update()
+			apc.update_icon()
+			continue
 		if(is_valid_apc(apc))
 			apc.emagged = 1
 			apc.locked = FALSE

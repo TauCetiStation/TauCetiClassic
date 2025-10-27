@@ -1,6 +1,7 @@
 /obj/item/weapon/grenade/spawnergrenade
-	desc = "It is set to detonate in 5 seconds. It will unleash unleash an unspecified anomaly into the vicinity."
 	name = "delivery grenade"
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
+	desc = "Таймер установлен на 5 секунд. Она высвободит случайную аномалию поблизости."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "delivery"
 	item_state = "flashbang"

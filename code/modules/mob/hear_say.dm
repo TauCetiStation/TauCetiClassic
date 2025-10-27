@@ -57,7 +57,7 @@
 		if(speaker == src)
 			message = "<span class='warning'>You cannot hear yourself speak!</span>"
 		else
-			message = "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [P_THEM(speaker.gender)]."
+			message = "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [P_THEM(speaker)]."
 	else
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)
@@ -73,10 +73,10 @@
 	if(!client)
 		if(!remote_hearers)
 			return FALSE
-
+		var/runechat_message = message
 		message = process_speech(message, verb, language, alt_name, italics, speaker, used_radio, speech_sound, sound_vol)
 		if(message)
-			telepathy_eavesdrop(speaker, message, "has heard", language)
+			telepathy_eavesdrop(speaker, message, "has heard", language, runechat_message)
 
 		return FALSE
 

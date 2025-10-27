@@ -72,7 +72,7 @@
 
 /mob/living/silicon/robot/drone/syndi/proc/control(mob/living/carbon/human/M)
 	if(!laws.zeroth)
-		set_zeroth_law("Only [M.real_name] and people he designates as being such are Syndicate Agents.")
+		set_zeroth_law("Только [M.real_name] и люди, которых он называет таковыми, - агенты Синдиката.")
 	operator = M
 	operator_mind = M.mind
 	operator_health_last = M.health

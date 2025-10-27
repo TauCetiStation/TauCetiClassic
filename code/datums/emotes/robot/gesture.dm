@@ -8,9 +8,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/robot/salute
@@ -21,6 +19,4 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS

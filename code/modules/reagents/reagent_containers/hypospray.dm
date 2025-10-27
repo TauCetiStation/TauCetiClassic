@@ -47,6 +47,24 @@
 /obj/item/weapon/reagent_containers/hypospray/cmo
 	list_reagents = list("tricordrazine" = 30)
 
+/obj/item/weapon/reagent_containers/hypospray/cmo/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	if(istype(target, /obj/item/weapon/reagent_containers/glass))
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>The hypospray is full.</span>")
+			return
+		if(!target.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			return
+
+		if(!target.is_open_container())
+			to_chat(user, "<span class='warning'>Container is closed.</span>")
+			return
+
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+
+		to_chat(user, "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "inaprovaline autoinjector"

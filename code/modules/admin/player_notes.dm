@@ -1,18 +1,21 @@
-/proc/notes_add(key, note, client/admin, secret = 1)
+// just common methods to work with messages
+// can be called from bots so does not check permissions/etc.
+// you should do it yourself
+
+/proc/notes_add(key, note, admin_key, secret = 1)
+	if(!establish_db_connection("erro_messages"))
+		return
+
 	key = ckey(key)
 	note = sanitize(note)
+	admin_key = ckey(admin_key)
 
 	if (!key || !note)
 		return
 
-	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
-		return
+	if(!admin_key)
+		admin_key = "Adminbot"
 
-	
-	if(!establish_db_connection("erro_messages"))
-		return
-
-	var/admin_key = admin ? ckey(admin.ckey) : "Adminbot"
 	secret = !!secret
 
 	var/ingameage = 0
@@ -28,6 +31,34 @@
 	var/DBQuery/new_notes = dbcon.NewQuery(sql)
 	new_notes.Execute()
 
-	message_admins("[admin ? key_name_admin(admin) : "Adminbot"] has edited [key]'s notes.")
-	log_admin("[admin ? key_name(admin) : "Adminbot"] has edited [key]'s notes.")
-	admin_ticket_log(key, "<font color='green'>[admin ? key_name(admin) : "Adminbot"] has edited [key]'s notes: [note]</font>")
+	admin_ticket_log(key, "<font color='green'>[admin_key] has edited [key]'s notes: [note]</font>")
+
+/proc/notes_delete(id, admin_key)
+	if(!establish_db_connection("erro_messages"))
+		return
+
+	id = text2num(id)
+	admin_key = ckey(admin_key)
+
+	if(!id || !admin_key)
+		return
+
+	var/DBQuery/query = dbcon.NewQuery({"UPDATE erro_messages 
+		SET deleted = 1, deleted_ckey = '[admin_key]'
+		WHERE id = [id]"})
+	query.Execute()
+
+/proc/notes_edit(id, new_note)
+	if(!establish_db_connection("erro_messages"))
+		return
+
+	id = text2num(id)
+	new_note = sanitize(new_note)
+
+	if(!id || !new_note)
+		return
+
+	var/DBQuery/query = dbcon.NewQuery({"UPDATE erro_messages 
+		SET text = '[sanitize_sql(new_note)]'
+		WHERE id = [id]"})
+	query.Execute()

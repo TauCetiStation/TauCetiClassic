@@ -33,6 +33,8 @@
 	new /obj/item/taperoll/engineering(src)
 	new /obj/item/weapon/storage/pouch/engineering_supply(src)
 	new /obj/item/weapon/gun/energy/pyrometer/ce(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
+	new /obj/item/weapon/storage/pouch/engineering_tools(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
@@ -50,6 +52,8 @@
 		new /obj/item/weapon/module/power_control(src)
 	for (var/i in 1 to 3)
 		new /obj/item/device/multitool(src)
+
+	new /obj/item/weapon/storage/pouch/engineering_supply(src)
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "Welding Supplies"
@@ -92,6 +96,8 @@
 	new /obj/item/weapon/cartridge/engineering(src)
 	new /obj/item/taperoll/engineering(src)
 	new /obj/item/weapon/gun/energy/pyrometer/engineering(src)
+	if (prob(50))
+		new /obj/item/weapon/storage/pouch/engineering_tools(src)
 
 /obj/structure/closet/secure_closet/atmos_personal
 	name = "Technician's Locker"
@@ -120,3 +126,5 @@
 	new /obj/item/weapon/cartridge/atmos(src)
 	new /obj/item/taperoll/engineering(src)
 	new /obj/item/weapon/gun/energy/pyrometer/atmospherics(src)
+	if (prob(50))
+		new /obj/item/weapon/storage/pouch/engineering_tools(src)

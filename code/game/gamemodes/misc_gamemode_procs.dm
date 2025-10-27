@@ -56,16 +56,20 @@
 			else
 				intercepttext += "<b>[M.name]</b>, the <b>[M.mind.assigned_role]</b> <br>"
 
+	var/obj/item/weapon/stamp/centcomm/stamp = new
+
 	for (var/obj/machinery/computer/communications/comm in communications_list)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper(comm.loc)
 			intercept.name = "Cent. Com. Status Summary"
 			intercept.info = intercepttext
+			stamp.stamp_paper(intercept)
 			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 
+	qdel(stamp)
 	announcement_ping.play()
 
 

@@ -15,6 +15,7 @@ var/global/list/gurgles = list(
 	anchored = TRUE
 	density = FALSE
 	layer = TURF_LAYER+0.1
+	plane = FLOOR_PLANE
 	var/drainage = 0.5
 	var/last_gurgle = 0
 	var/welded

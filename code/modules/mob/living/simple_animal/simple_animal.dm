@@ -67,6 +67,8 @@
 
 	// See atom_init below.
 	moveset_type = null
+	// used for growing creatures
+	var/evolv_stage = 0
 
 /mob/living/simple_animal/atom_init()
 	if(!moveset_type)
@@ -81,7 +83,7 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
-/mob/living/simple_animal/Login()
+/mob/living/simple_animal/LateLogin()
 	. = ..()
 	stop_automated_movement = TRUE
 

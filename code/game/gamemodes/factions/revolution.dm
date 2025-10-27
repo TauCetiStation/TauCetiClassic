@@ -1,7 +1,7 @@
 /proc/get_living_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in heads_positions))
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in SSjob.heads_positions))
 			heads += player.mind
 	return heads
 
@@ -21,13 +21,10 @@
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
 
-	//associative
-	var/list/reasons = list()
-
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.mind && (player.mind.assigned_role in heads_positions))
+		if(player.mind && (player.mind.assigned_role in SSjob.heads_positions))
 			heads += player.mind
 	return heads
 
@@ -94,7 +91,7 @@
 	return dat
 
 /datum/faction/revolution/latespawn(mob/M)
-	if(M.mind.assigned_role in heads_positions)
+	if(M.mind.assigned_role in SSjob.heads_positions)
 		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 
 		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
@@ -135,14 +132,15 @@
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		command_report("Ваша низкая производительность вынуждает нас принять непростое решение о сокращении финансового обеспечения станции. В связи с этим вдвое уменьшены заработные платы всего персонала, за исключением сотрудников службы безопасности и командного состава.")
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
-		for(var/datum/job/J in SSjob.occupations)
-			if(J.title in excluded_rank)
+		var/list/excluded_departments = list(DEP_COMMAND, DEP_SECURITY, DEP_SILICON, DEP_SPECIAL)
+		for(var/datum/job/J as anything in SSjob.active_occupations)
+			if(length(J.departments & excluded_departments)) // in one of the excluded departments
 				continue
 			J.salary_ratio = 0.5	//halve the salary of all professions except leading
-		var/list/crew = my_subordinate_staff("Admin")
+		var/list/crew = SSeconomy.my_subordinate_staff("Admin")
 		for(var/person in crew)
-			if(person["rank"] in excluded_rank)
+			var/datum/job/J = SSjob.GetJob(person["rank"])
+			if(length(J.departments & excluded_departments))
 				continue
 
 			var/datum/money_account/account = get_account(person["account"])
@@ -162,16 +160,20 @@
 		last_command_report = 4
 
 /datum/faction/revolution/proc/command_report(message)
-	for (var/obj/machinery/computer/communications/comm in communications_list)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+	var/obj/item/weapon/stamp/centcomm/stamp = new
+
+	for(var/obj/machinery/computer/communications/comm in communications_list)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper(comm.loc)
 			intercept.name = "Cent. Com. Announcement"
 			intercept.info = message
+			stamp.stamp_paper(intercept)
 			intercept.update_icon()
 
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
+	qdel(stamp)
 	announcement_ping.play()
 
 /datum/faction/revolution/build_scorestat()
@@ -192,7 +194,7 @@
 	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(player.mind)
 			var/role = player.mind.assigned_role
-			if(role in global.command_positions)
+			if(role in SSjob.heads_positions)
 				if (player.stat == DEAD)
 					SSStatistics.score.deadcommand++
 
@@ -223,7 +225,7 @@
 		if(!player.mind)
 			continue
 		var/role = player.mind.assigned_role
-		if(role in global.command_positions)
+		if(role in SSjob.heads_positions)
 			if(player.stat != DEAD)
 				comcount++
 		else
@@ -232,71 +234,18 @@
 			loycount++
 
 	var/revpenalty = 10000
-	dat += {"<B><U>REVOLUTION STATS</U></B><BR>
-	<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>
-	<B>Number of Surviving Command Staff:</B> [comcount]<BR>
-	<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
-	<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
-	<B>Revolution Heads Arrested:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] Points)<BR>
-	<B>Revolution Heads Slain:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] Points)<BR>
-	<B>Command Staff Slain:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] Points)<BR>
-	<B>Revolution Successful:</B> [SSStatistics.score.traitorswon ? "Yes" : "No"] (-[SSStatistics.score.traitorswon * revpenalty] Points)<BR>
-	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
+	dat += {"<B><U>Революционная статистика</U></B><BR>
+	<B>Количество выживших глав революции:</B> [foecount]<BR>
+	<B>Количество выживших глав станции:</B> [comcount]<BR>
+	<B>Количество выживших революционеров:</B> [revcount]<BR>
+	<B>Количество выживших лоялистов:</B> [loycount]<BR><BR>
+	<B>Глав революции арестовано:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] очков)<BR>
+	<B>Глав революции убито:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] очков)<BR>
+	<B>Глав станции убито:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] очков)<BR>
+	<B>Революция преуспела:</B> [SSStatistics.score.traitorswon ? "Да" : "Нет"] (-[SSStatistics.score.traitorswon * revpenalty] очков)<BR>
+ 	<B>Все главы революции арестованы:</B> [SSStatistics.score.allarrested ? "Да (очки утроены)" : "Нет"]<BR>"}
 
 	return dat
-
-/datum/faction/revolution/GetScoreboard()
-	var/count = 1
-	var/score_results = ""
-	if(objective_holder.objectives.len > 0)
-		score_results += "<ul>"
-		var/custom_result = custom_result()
-		score_results += custom_result
-		score_results += "<br><br>"
-		for(var/datum/objective/objective in objective_holder.GetObjectives())
-			objective.extra_info()
-			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
-			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
-			count++
-			if(count <= objective_holder.objectives.len)
-				score_results += "<br>"
-		score_results += "</ul>"
-	score_results += "<ul>"
-
-	var/have_objectives = FALSE
-	var/have_reason_string = FALSE
-	if(reasons.len)
-		have_reason_string = TRUE
-
-	var/list/name_by_members = list()
-	score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
-	for(var/datum/role/R in members)
-		if(!name_by_members[R.name])
-			name_by_members[R.name] = list()
-		name_by_members[R.name] += R
-
-	for(var/name in name_by_members)
-		score_results += "<b>[name]:</b><ul>"
-		for(var/datum/role/R in name_by_members[name])
-			var/results = R.GetScoreboard()
-			if(results)
-				score_results += results
-				score_results += "<br>"
-				if(R.objectives.objectives.len)
-					have_objectives = TRUE
-			if(have_reason_string)
-				var/reason_string = reasons[R.antag.key]
-				if(reason_string)
-					score_results += "<DD><B>Reason to join the revolution:</B> [reason_string]</DD><BR>"
-
-		score_results += "</ul>"
-
-	score_results += "</ul>"
-
-	if(!have_objectives)
-		score_results += "<br>"
-
-	return score_results
 
 /datum/faction/revolution/proc/convert_revolutionare_by_invite(mob/possible_rev, mob/inviter)
 	if(!inviter)
@@ -304,12 +253,7 @@
 	var/datum/role/rev_leader/lead = get_member_by_mind(inviter.mind)
 	var/choice = tgui_alert(possible_rev, "Asked by [inviter]: Do you want to join the revolution?", "Join the Revolution!", list("No!","Yes!"))
 	if(choice == "Yes!")
-		var/reason_string = find_reason(possible_rev)
-		if(!reason_string)
-			to_chat(inviter, "<span class='bold warning'>[possible_rev] has no reason to support the revolution!</span>")
-			lead.rev_cooldown = world.time + 5 SECONDS
-			return FALSE
-		if(add_user_to_rev(possible_rev, reason_string))
+		if(add_user_to_rev(possible_rev))
 			to_chat(inviter, "<span class='bold_notice'>[possible_rev] has joined the revolution!</span>")
 			add_tc_to_headrev(inviter, lead)
 			return TRUE
@@ -321,24 +265,8 @@
 	lead.rev_cooldown = world.time + 5 SECONDS
 	return FALSE
 
-/datum/faction/revolution/proc/convert_revolutionare(mob/possible_rev)
-	var/reason_string = find_reason(possible_rev)
-	if(!reason_string)
-		return FALSE
-	if(add_user_to_rev(possible_rev, reason_string))
-		return TRUE
-	return FALSE
-
-/datum/faction/revolution/proc/find_reason(mob/user)
-	var/reason_string = sanitize_safe(input(user, "Please write the reason why you want to join the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
-	if(!reason_string)
-		to_chat(user, "<span class='warning'>You have no reason to join the revolution!</span>")
-		return null
-	return reason_string
-
-/datum/faction/revolution/proc/add_user_to_rev(mob/user, reason_string)
+/datum/faction/revolution/proc/add_user_to_rev(mob/user)
 	if(add_faction_member(src, user, TRUE))
-		reasons[user.mind.key] = reason_string
 		to_chat(user, "<span class='notice'>You join the revolution!</span>")
 		return TRUE
 	return FALSE

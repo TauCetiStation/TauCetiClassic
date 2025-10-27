@@ -21,7 +21,7 @@
 	frequency = 0
 	var/id = null
 
-	level = PIPE_HIDDEN_LEVEL
+	undertile = FALSE
 	layer = GAS_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
@@ -146,9 +146,6 @@
 
 	broadcast_status()
 	update_icon()
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/hide(i)
-	update_underlays()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	if(..())

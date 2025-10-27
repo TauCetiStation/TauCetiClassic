@@ -66,7 +66,7 @@ var/global/total_runtimes_skipped = 0
 			usrinfo += "  usr.loc: [locinfo]"
 			// Create a Dusty at the runtime location
 			var/static/cat_teleport = 0.0
-			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Dusty
+			if(usr.loc && prob(5) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of ~~Dusty~~ Runtimes
 				new /mob/living/simple_animal/cat/runtime(get_turf(usr), E.line)
 				cat_teleport = world.time
 

@@ -306,6 +306,8 @@
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
 	w_class = SIZE_NORMAL
+	m_amt = 1200
+	g_amt = 300
 	var/id = "" //inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
@@ -335,6 +337,8 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
 	w_class = SIZE_NORMAL
+	m_amt = 700
+	g_amt = 500
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/atom_init()

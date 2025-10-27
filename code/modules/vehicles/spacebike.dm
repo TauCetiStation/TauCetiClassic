@@ -18,22 +18,15 @@
 	var/space_speed = 1
 	var/bike_icon = "bike"
 	var/obj/item/weapon/key/spacebike/key
-	var/id = 0
+	var/id = "base id"
 
 	var/datum/effect/effect/system/ion_trail_follow/ion
 	var/kickstand = 1
 
 /obj/item/weapon/key/spacebike
-	name = "key"
 	desc = "A keyring with a small steel key."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys_bike"
-	w_class = SIZE_MINUSCULE
-	var/id = 0
-
-/obj/item/weapon/key/spacebike/examine(mob/user)
-	..()
-	to_chat(user, "There is a small tag reading [id].")
 
 /obj/vehicle/space/spacebike/atom_init()
 	. = ..()
@@ -129,6 +122,7 @@
 			visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 
 			L.log_combat(Driver, "driven over with [src]")
+			SEND_SIGNAL(Driver, COMSIG_HUMAN_HARMED_OTHER, L)
 
 			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			L.stop_pulling()

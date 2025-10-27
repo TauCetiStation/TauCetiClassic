@@ -149,6 +149,7 @@ var/global/list/uncommon_loot = list(
 		/obj/item/weapon/grenade/cancasing = 1,
 		/obj/item/weapon/melee/cattleprod = 1,
 		/obj/item/weapon/throwing_star = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1,
 		) = 8,
 
 	list(
@@ -182,9 +183,10 @@ var/global/list/uncommon_loot = list(
 		list(
 			/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 1,
 			/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 1,
+			/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi = 1,
 			) = 1,
 		list(
-			/obj/item/weapon/reagent_containers/spray = 1,
+			/obj/item/weapon/reagent_containers/spray/maintenance = 1,
 			/obj/item/weapon/reagent_containers/watertank_backpack = 1,
 			/obj/item/weapon/reagent_containers/watertank_backpack/janitor = 1,
 			) = 1,
@@ -210,6 +212,7 @@ var/global/list/oddity_loot = list(
 		/obj/item/clothing/suit/armor/vest/reactive = 1,
 		/obj/item/weapon/storage/pouch/medium_generic = 1,
 		/obj/item/weapon/storage/pouch/small_generic = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1,
 	)
 
 //Maintenance loot spawner pools

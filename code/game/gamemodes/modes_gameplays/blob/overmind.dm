@@ -31,7 +31,7 @@
 	updateallghostimages()
 	. = ..()
 
-/mob/camera/blob/Login()
+/mob/camera/blob/LateLogin()
 	..()
 	sync_mind()
 	update_health_hud()
@@ -66,10 +66,10 @@
 		return
 
 	if (src.client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,ADMIN_CD_IC))
 			return
 
 	if (stat != CONSCIOUS)

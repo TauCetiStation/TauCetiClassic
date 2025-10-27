@@ -63,7 +63,9 @@
 	},
 /area/space_structures/ghostship)
 "aj" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/structure/cellular_biomass/grass/meat,
 /obj/structure/cellular_biomass/core/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -89,7 +91,9 @@
 	},
 /area/space_structures/ghostship)
 "am" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	dir = 4;
@@ -161,7 +165,9 @@
 	},
 /area/space_structures/ghostship)
 "ax" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/structure/cellular_biomass/grass/meat,
 /obj/structure/cellular_biomass/core/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -180,7 +186,9 @@
 	},
 /area/space_structures/ghostship)
 "az" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -394,7 +402,7 @@
 /area/space_structures/ghostship)
 "bl" = (
 /obj/structure/cellular_biomass/grass/meat,
-/mob/living/simple_animal/hostile/cellular/meat/creep_standing,
+/obj/effect/spawner/mob_spawn/cellular/meat/creep_standing,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "bm" = (

@@ -191,6 +191,19 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple
 
+/datum/recipe/candy/sucker_mystery
+	reagents = list("anti_toxin" = 5, "stoxin" = 5, "toxin" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/green,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/red,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/blue,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/orange,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/yellow,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery
+
 // ***********************************************************
 // Cotton Candy Recipes (flavored)
 // ***********************************************************
@@ -364,6 +377,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/purple
 
+/datum/recipe/candy/gummyworm_pink
+	reagents = list("watermelonjuice" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/pink
+
 /datum/recipe/candy/gummyworm_wtf
 	reagents = list("space_drugs" = 5)
 	items = list(
@@ -377,6 +397,19 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf
+
+/datum/recipe/candy/gummyworm_rainbow
+	reagents = list()
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/blue,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/green,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/yellow,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/orange,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/purple,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/pink,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/rainbow
 
 // ***********************************************************
 // Jelly Bean Recipes (flavored)
@@ -439,13 +472,6 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/cola
 
-/datum/recipe/candy/jellybean_popcorn
-	reagents = list()
-	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/popcorn,
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/popcorn
-
 /datum/recipe/candy/jellybean_coffee
 	reagents = list("coffee" = 5)
 	items = list(
@@ -459,6 +485,14 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/cola
+
+/datum/recipe/candy/jellybean_popcorn
+	reagents = list()
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean,
+		/obj/item/weapon/reagent_containers/food/snacks/popcorn,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/popcorn
 
 /datum/recipe/candy/jellybean_wtf
 	reagents = list("space_drugs" = 5)

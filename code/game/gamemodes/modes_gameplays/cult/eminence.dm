@@ -1,7 +1,7 @@
 //The Eminence is a unique mob that functions like the leader of the cult. It's incorporeal but can interact with the world in several ways.
 /mob/camera/eminence
-	name = "\the Eminence"
-	real_name = "\the Eminence"
+	name = "the Eminence"
+	real_name = "the Eminence"
 	desc = "The leader-elect of the servants of Nar-Sie."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "eminence"
@@ -46,7 +46,7 @@
 		if(min(prob(166 - (get_dist(src, TT) * 33)), 75))
 			TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
 
-/mob/camera/eminence/Login()
+/mob/camera/eminence/LateLogin()
 	..()
 	sync_mind()
 	var/datum/religion/cult/R = global.cult_religion
@@ -96,10 +96,10 @@
 
 /mob/camera/eminence/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if(!(ignore_spam || forced) && client.handle_spam_prevention(message,MUTE_IC))
+		if(!(ignore_spam || forced) && client.handle_spam_prevention(message,ADMIN_CD_IC))
 			return
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
@@ -280,9 +280,8 @@
 				continue
 			if(L.reagents)
 				L.reagents.clear_reagents()
-			L.beauty.AddModifier("stat", additive=L.beauty_living)
-			L.setOxyLoss(0)
-			L.setHalLoss(0)
+			L.resetOxyLoss()
+			L.resetHalLoss()
 			L.SetParalysis(0)
 			L.SetStunned(0)
 			L.SetWeakened(0)
@@ -298,7 +297,6 @@
 			L.SetDrunkenness(0)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				C.shock_stage = 0
 				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					H.restore_blood()

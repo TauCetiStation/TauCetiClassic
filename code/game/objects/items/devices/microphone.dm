@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/item/device/microphone, all_command_microphones)
+
 /obj/item/device/microphone
 	name = "Microphone"
 	desc = "Микрофон для озвучивания объявлений отдела"
@@ -10,8 +12,8 @@
 	var/department_genitive = "Nothing's"
 	var/datum/announcement/station/command/department/announcement = new
 
-	var/last_announce = 0
-	var/announce_cooldown = 10 SECONDS
+	var/next_announce = 0
+	var/announce_cooldown = 5 MINUTES
 
 /obj/item/device/microphone/atom_init(mapload)
 	. = ..()
@@ -36,7 +38,7 @@
 		to_chat(user, "<span class='userdange'>Вы немы.</span>")
 		return FALSE
 
-	if(last_announce + announce_cooldown > world.time)
+	if(next_announce > world.time)
 		to_chat(user, "<span class='userdange'>Микрофон перезаряжается.</span>")
 		return FALSE
 
@@ -53,8 +55,8 @@
 	if(!can_use(user) || !length(new_message))
 		return
 
-	last_announce = world.time
-	announcement.play(department_genitive, new_message)
+	next_announce = world.time + announce_cooldown
+	announcement.play(department_genitive, new_message, user)
 	message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
 
 // Heads

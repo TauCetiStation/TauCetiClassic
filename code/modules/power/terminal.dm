@@ -7,32 +7,20 @@
 	name = "terminal"
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
-	level = 1
 	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = TRUE
-	layer = 2.6 // a bit above wires
-
+	layer = POWER_TERMINAL
 
 /obj/machinery/power/terminal/atom_init()
 	. = ..()
-	var/turf/T = src.loc
-	if(level == 1)
-		hide(T.intact)
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)
 		master.disconnect_terminal()
 	return ..()
-
-/obj/machinery/power/terminal/hide(i)
-	if(i)
-		invisibility = 101
-		icon_state = "term-f"
-	else
-		invisibility = 0
-		icon_state = "term"
-
 
 /obj/machinery/power/proc/can_terminal_dismantle()
 	. = 0
@@ -51,7 +39,7 @@
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user)
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
-		if(T.intact)
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, "<span class='alert'>You must first expose the power terminal!</span>")
 			return
 

@@ -1,4 +1,3 @@
-
 /mob/living/simple_animal/bee
 	name = "bees"
 	icon = 'icons/obj/apiary_bees_etc.dmi'
@@ -11,7 +10,7 @@
 	var/turf/target_turf
 	var/mob/target_mob
 	var/obj/machinery/apiary/parent
-	pass_flags = PASSTABLE
+	pass_flags = PASSMOB | PASSTABLE
 	turns_per_move = 6
 	w_class = SIZE_MINUSCULE
 	var/obj/machinery/hydroponics/my_hydrotray
@@ -126,10 +125,8 @@
 						qdel(src)
 						return
 					src.icon_state = "bees[B.strength]"
-					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
 					density = TRUE
-					if(T.Enter(src, get_turf(src)))
-						src.loc = T
+					step(src, pick(NORTH,SOUTH,EAST,WEST))
 					density = FALSE
 				break
 

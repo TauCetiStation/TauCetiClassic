@@ -143,7 +143,7 @@
 		//Relaymoves
 		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 			return mob.pulledby.relaymove(mob, direct)
-		
+
 		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
@@ -173,8 +173,7 @@
 							. = ..()
 							if (isturf(M.loc))
 								var/diag = get_dir(mob, M)
-								if ((diag - 1) & diag)
-								else
+								if (!((diag - 1) & diag))
 									diag = null
 								if ((get_dist(mob, M) > 1 || diag))
 									step(M, get_dir(M.loc, T))
@@ -381,19 +380,17 @@
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)
 	SEND_SIGNAL(src, COMSIG_MOB_SLIP, weaken_duration, slipped_on, lube)
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
 	if(!loc.handle_slip(src, weaken_duration, slipped_on, lube))
 		return FALSE
 
-	..()
-
-/mob/living/carbon/slime/slip()
-	..()
-	return FALSE
+	return ..()
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
+	if(species.flags[NO_SLIP])
+		return FALSE
 	if(!(lube & GALOSHES_DONT_HELP))
 		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP) || (get_species() == SKRELL && !shoes)))
 			return FALSE
@@ -553,3 +550,9 @@
 
 	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
 	selector.set_selected_zone(BP_L_LEG, mob)
+
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
+// at this moment we need it only for clients, so it will not be called for clientless mobs
+/mob/proc/update_z(new_z)
+	last_z = new_z
+	SEND_SIGNAL(src, COMSIG_MOB_Z_CHANGED, new_z)

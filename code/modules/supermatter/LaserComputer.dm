@@ -31,9 +31,9 @@
 	var/t = "<TT>"
 	for(var/obj/machinery/zero_point_emitter/laser in lasers)
 		t += "Zero Point Laser<br>"
-		t += "Power level: <A href = '?src=\ref[laser];input=-0.005'>-</A> <A href = '?src=\ref[laser];input=-0.001'>-</A> <A href = '?src=\ref[laser];input=-0.0005'>-</A> <A href = '?src=\ref[laser];input=-0.0001'>-</A> [laser.energy]MeV <A href = '?src=\ref[laser];input=0.0001'>+</A> <A href = '?src=\ref[laser];input=0.0005'>+</A> <A href = '?src=\ref[laser];input=0.001'>+</A> <A href = '?src=\ref[laser];input=0.005'>+</A><BR>"
-		t += "Frequency: <A href = '?src=\ref[laser];freq=-10000'>-</A> <A href = '?src=\ref[laser];freq=-1000'>-</A> [laser.freq] <A href = '?src=\ref[laser];freq=1000'>+</A> <A href = '?src=\ref[laser];freq=10000'>+</A><BR>"
-		t += "Output: [laser.active ? "<B>Online</B> <A href = '?src=\ref[laser];online=1'>Offline</A>" : "<A href = '?src=\ref[laser];online=1'>Online</A> <B>Offline</B> "]<BR>"
+		t += "Power level: <A href = 'byond://?src=\ref[laser];input=-0.005'>-</A> <A href = 'byond://?src=\ref[laser];input=-0.001'>-</A> <A href = 'byond://?src=\ref[laser];input=-0.0005'>-</A> <A href = 'byond://?src=\ref[laser];input=-0.0001'>-</A> [laser.energy]MeV <A href = 'byond://?src=\ref[laser];input=0.0001'>+</A> <A href = 'byond://?src=\ref[laser];input=0.0005'>+</A> <A href = 'byond://?src=\ref[laser];input=0.001'>+</A> <A href = 'byond://?src=\ref[laser];input=0.005'>+</A><BR>"
+		t += "Frequency: <A href = 'byond://?src=\ref[laser];freq=-10000'>-</A> <A href = 'byond://?src=\ref[laser];freq=-1000'>-</A> [laser.freq] <A href = 'byond://?src=\ref[laser];freq=1000'>+</A> <A href = 'byond://?src=\ref[laser];freq=10000'>+</A><BR>"
+		t += "Output: [laser.active ? "<B>Online</B> <A href = 'byond://?src=\ref[laser];online=1'>Offline</A>" : "<A href = 'byond://?src=\ref[laser];online=1'>Online</A> <B>Offline</B> "]<BR>"
 	t += "<hr>"
 
 	var/datum/browser/popup = new(user, "laser_control", "Laser status monitor", 500, 800)

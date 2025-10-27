@@ -27,19 +27,10 @@
 
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-	var/list/clients_in_contents
 	var/freeze_movement = FALSE
 
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
-
-/atom/movable/atom_init(mapload, ...)
-	. = ..()
-
-	if (can_block_air && isturf(loc))
-		var/turf/T = loc
-		if(!T.can_block_air)
-			T.can_block_air = TRUE
 
 /atom/movable/Destroy()
 
@@ -55,6 +46,9 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		on_area_sensitive_trait_loss()
+
 	. = ..()
 
 	loc = null
@@ -66,7 +60,10 @@
 			T.reconsider_lights()
 
 	vis_locs = null //clears this atom out of all viscontents
-	vis_contents.Cut()
+
+	// world from tg: checking length(vis_contents) before cutting has significant speed benefits
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -130,6 +127,7 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	if(!ISDIAGONALDIR(Dir))
+		// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 
 		if(moving_diagonally)
@@ -144,6 +142,10 @@
 
 	update_parallax_contents()
 
+	 // Cycle through the light sources on this atom and tell them to update.
+	for(var/datum/light_source/L as anything in light_sources)
+		L.source_atom.update_light()
+
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
@@ -151,8 +153,8 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return
 
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 /atom/movable/proc/locMoved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
 	for(var/atom/movable/AM in contents)
@@ -167,43 +169,40 @@
 	if(A && non_native_bump)
 		A.Bumped(src)
 
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE, keep_grabs = TRUE)
+	if(!destination)
+		return
+	if(pulledby && !keep_pulling)
+		pulledby.stop_pulling()
+	var/atom/oldloc = loc
+	var/same_loc = (oldloc == destination)
+	var/area/old_area = get_area(oldloc)
+	var/area/destarea = get_area(destination)
+	loc = destination
+	if(!keep_moving_diagonally)
+		moving_diagonally = FALSE
+	if(!same_loc)
+		if(oldloc)
+			oldloc.Exited(src, destination)
+			if(old_area && old_area != destarea)
+				old_area.Exited(src, destination)
+		for(var/atom/movable/AM in oldloc)
+			AM.Uncrossed(src)
+		destination.Entered(src, oldloc)
+		if(destarea && old_area != destarea)
+			destarea.Entered(src, oldloc)
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
-	if(destination)
-		if(pulledby && !keep_pulling)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = (oldloc == destination)
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
+		for(var/atom/movable/AM in destination)
+			if(AM == src)
+				continue
+			AM.Crossed(src, oldloc)
+	Moved(oldloc, 0)
 
-		loc = destination
-
-		if(!keep_moving_diagonally)
-			moving_diagonally = FALSE
-
-		if(!same_loc)
-			if(oldloc)
-				oldloc.Exited(src, destination)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
-
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
-		Moved(oldloc, 0)
-		return TRUE
-	return FALSE
-
-/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE, keep_grabs = TRUE)
 	if(!keep_pulling)
 		stop_pulling()
+	if(!keep_grabs)
+		StopGrabs()
 	if(buckled && !keep_buckled)
 		buckled.unbuckle_mob()
 	. = ..()
@@ -212,7 +211,7 @@
 		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled, keep_moving_diagonally, keep_grabs)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -223,6 +222,8 @@
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_PREHITBY, hit_atom, throwingdatum) & COMSIG_HIT_PREVENTED)
+		return FALSE
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
@@ -414,11 +415,6 @@
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVE(location.area_sensitive_contents, src)
 
-/atom/movable/Destroy()
-	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
-		on_area_sensitive_trait_loss()
-	return ..()
-
 /* Sizes stuff */
 
 /atom/movable/proc/get_size_flavor()
@@ -582,5 +578,8 @@
 			var/rad_power = rad_dose
 			rad_power *= sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+/atom/movable/proc/try_wrap_up(texture_name = "cardboard", details_name = null)
+	return null
 
 #undef GEIGER_RANGE

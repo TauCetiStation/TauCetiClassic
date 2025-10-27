@@ -45,9 +45,14 @@
 		return
 
 	if(has_extinguisher)
-		user.put_in_hands(has_extinguisher)
-		user.visible_message("<span class='notice'>[user] takes \the [has_extinguisher] from \the [src].</span>", "<span class='notice'>You take \the [has_extinguisher] from \the [src].</span>")
-		has_extinguisher = null
+		if(usr.Adjacent(loc))
+			user.put_in_hands(has_extinguisher)
+			user.visible_message("<span class='notice'>[user] takes \the [has_extinguisher] from \the [src].</span>", "<span class='notice'>You take \the [has_extinguisher] from \the [src].</span>")
+			has_extinguisher = null
+		else
+			has_extinguisher.forceMove(loc)
+			visible_message("<span class='notice'>[src] opens and \the [has_extinguisher] falls out!</span>")
+			has_extinguisher = null
 		opened = TRUE
 	else
 		opened = !opened

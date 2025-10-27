@@ -176,6 +176,12 @@
 	..()
 	status_alarm("alert")
 
+/datum/weather/rad_storm/start()
+	..()
+
+	for(var/Z in SSmapping.levels_by_trait(target_ztrait))
+		var/datum/space_level/SL = SSmapping.get_level(Z)
+		SL.set_level_light(new /datum/level_lighting_effect/random_aurora(weather_duration))
 
 /datum/weather/rad_storm/impact(mob/living/L)
 	var/resist = L.getarmor(null, "rad")

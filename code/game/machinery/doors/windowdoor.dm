@@ -88,6 +88,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		ae.unres_sides = unres_sides
 		if(operating == -1)
 			ae.icon_state = "door_electronics_smoked"
+			ae.item_state_inventory = "door_electronics_smoked"
+			ae.item_state_world = "door_electronics_smoked_w"
 			ae.broken = TRUE
 			operating = 0
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
@@ -155,7 +157,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		return turn(dir,180) & unres_sides
 	return ..()
 
-/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
@@ -214,7 +216,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 	return ..()
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
@@ -275,7 +277,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 				if(user.is_busy(src)) return
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")
-				if(I.use_tool(src, user, 40, volume = 100))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
 					if(src.p_open && !src.density && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
@@ -308,7 +310,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 							else if(req_one_access.len)
 								ae.conf_access = req_one_access
 								ae.one_access = 1
-							else
 						else
 							ae = electronics
 							electronics = null
@@ -317,6 +318,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 						if(operating == -1)
 							ae.icon_state = "door_electronics_smoked"
+							ae.item_state_inventory = "door_electronics_smoked"
+							ae.item_state_world = "door_electronics_smoked_w"
 							ae.broken = TRUE
 							operating = 0
 

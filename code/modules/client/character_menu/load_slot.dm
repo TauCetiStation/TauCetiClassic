@@ -11,5 +11,5 @@
 				name = "Character [i]"
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			. += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
+			. += "<a href='byond://?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 	. += "</center>"

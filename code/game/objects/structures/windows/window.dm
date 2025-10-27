@@ -95,6 +95,7 @@
 					visible_message("<span class='danger'>[A] slams [M] against \the [src]!</span>")
 
 					M.log_combat(user, "slammed against [name]")
+					SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 				if(2)
 					if (prob(50))
 						M.Stun(1)
@@ -103,6 +104,7 @@
 					take_damage(9, BRUTE, MELEE)
 					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
 					M.log_combat(user, "bashed against [name]")
+					SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 				if(3)
 					M.Stun(5)
 					M.Weaken(5)
@@ -110,6 +112,7 @@
 					take_damage(12, BRUTE, MELEE)
 					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
 					M.log_combat(user, "crushed against [name]")
+					SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 		return
 
 	return ..()

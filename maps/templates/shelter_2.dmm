@@ -97,7 +97,7 @@
 /turf/simulated/floor/carpet/blue,
 /area/custom/survivalpod)
 "F" = (
-/obj/structure/stool/bed/chair/comfy/beige,
+/obj/structure/stool/bed/chair/comfy/white,
 /turf/simulated/floor/carpet/blue,
 /area/custom/survivalpod)
 "G" = (
@@ -125,7 +125,7 @@
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "W" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue,

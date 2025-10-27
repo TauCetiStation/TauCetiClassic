@@ -214,16 +214,12 @@
 /obj/structure/safe/floor
 	name = "floor safe"
 	icon_state = "floorsafe"
-	level = 1
 	density = FALSE
 	layer = SAFEDOOR_LAYER
 
 /obj/structure/safe/floor/atom_init()
 	. = ..()
-	var/turf/T = loc
-	hide(T.intact)
 
-/obj/structure/safe/floor/hide(intact)
-	invisibility = intact ? 101 : 0
+	AddElement(/datum/element/undertile)
 
 #undef SOUND_CHANCE

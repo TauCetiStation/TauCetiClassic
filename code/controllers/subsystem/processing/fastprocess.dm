@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(fastprocess)
 		currentrun.len--
 
 		if(!QDELETED(thing))
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			SSfastprocess.processing -= thing
 

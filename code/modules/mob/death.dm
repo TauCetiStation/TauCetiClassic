@@ -1,5 +1,5 @@
 /mob/proc/spawn_gibs()
-	gibs(loc, dna)
+	new /obj/effect/gibspawner/generic(get_turf(loc), src)
 
 //This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
@@ -26,7 +26,6 @@
 /mob/proc/dust()
 	new /obj/effect/decal/cleanable/ash(loc)
 	dust_process()
-	
 
 /mob/proc/death(gibbed)
 	SEND_SIGNAL(src, COMSIG_MOB_DIED, gibbed)

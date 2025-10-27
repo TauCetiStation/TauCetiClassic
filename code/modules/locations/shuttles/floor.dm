@@ -71,16 +71,3 @@
 	icon_state = "floor"
 	nitrogen = 103.984
 	oxygen = 0
-
-//Временный и очень грубый костыль для космоса, в шаттлконтроллере он не заменяется на движущийся.
-//Скоро бэй обновит шаттлконтроллеры, там и сделаем по человечески.
-//======
-//Привет! Как дела?
-//======
-//Привет! Как дела?
-/turf/environment/space/shuttle
-	icon = 'icons/locations/shuttles/space.dmi'
-	icon_state = "1swall_s"
-
-/turf/environment/space/shuttle/New()
-	icon_state = "[rand(1,4)]swall_s"

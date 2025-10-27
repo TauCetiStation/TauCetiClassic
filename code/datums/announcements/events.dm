@@ -9,7 +9,7 @@
 
 /datum/announcement/centcomm/access_override
 	name = "Secret: Egalitarian"
-	message = "Центком перегрузил контроль доступа шлюзов. Воспользуйтесь этим временем для знакомства с вашими коллегами."
+	message = "ЦентКом перегрузил контроль доступа шлюзов. Воспользуйтесь этим временем для знакомства с вашими коллегами."
 	sound = "access_override"
 
 /datum/announcement/centcomm/anomaly/radstorm
@@ -22,7 +22,7 @@
 	name = "Anomaly: Radiation Belt Passed"
 	message = "Станция прошла опасную зону. " + \
 			"Обратитесь в медотсек, если у вас возникнут необычные симптомы. " + \
-			"Вскоре общий доступ к техническим туннелям будет аннулирован.."
+			"Вскоре общий доступ к техническим туннелям будет аннулирован."
 	sound = "radpassed"
 
 /datum/announcement/centcomm/anomaly/istorm
@@ -35,8 +35,9 @@
 	message = "Тревога! Обнаружен огонь блюспейс артиллерии. Приготовиться к удару."
 	sound = "artillery"
 /datum/announcement/centcomm/bsa/play(area/A)
+	subtitle = "Сенсоры [station_name_ru()]"
 	if(A)
-		message = "Тревога! Обнаружен огонь блюспейс артиллерии на [A.name]. Приготовиться к удару."
+		message = "Тревога! Обнаружен огонь блюспейс артиллерии по [CASE(A, DATIVE_CASE)]. Приготовиться к удару."
 	..()
 
 /datum/announcement/centcomm/aliens
@@ -64,7 +65,7 @@
 	message = "На станции обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: неизвестно."
 /datum/announcement/centcomm/anomaly/bluespace/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/massive_portals
@@ -83,7 +84,7 @@
 	sound = "fluxanom"
 /datum/announcement/centcomm/anomaly/flux/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] зафиксирован гиперэнерегетический волновой поток. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] зафиксирован гиперэнерегетический волновой поток. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/gravity
@@ -92,7 +93,15 @@
 	sound = "gravanom"
 /datum/announcement/centcomm/anomaly/gravity/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] обнаружена гравитационная аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] обнаружена гравитационная аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
+	..()
+
+/datum/announcement/centcomm/anomaly/gas
+	name = "Anomaly: Gravitational"
+	message = "На станции обнаружена газовая аномалия. Ожидаемое местоположение: неизвестно."
+/datum/announcement/centcomm/anomaly/gas/play(area/A)
+	if(A)
+		message = "На [station_name_ru()] обнаружена газовая аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/pyro
@@ -101,7 +110,7 @@
 	sound = "pyroanom"
 /datum/announcement/centcomm/anomaly/pyro/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] обнаружена пирокластическая аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] обнаружена пирокластическая аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/vortex
@@ -110,7 +119,7 @@
 	sound = "vortexanom"
 /datum/announcement/centcomm/anomaly/vortex/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] зафиксирована вихревая аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] зафиксирована вихревая аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/brand
@@ -141,6 +150,11 @@
 	always_random = TRUE
 /datum/announcement/centcomm/comms_blackout/New()
 	message = "Обнаружена ионносферная аномалия. Временный сбой связи неизбежен. Пожалуйста, свяжитесь с ваши*%фж00)`5вц-БЗЗТ"
+
+/datum/announcement/centcomm/comms_blackout_traitor
+	name = "Event: Traitor Communication Blackout"
+	message = "Зафиксирован несанкционированный доступ к хранилищу данных центрального узла телеко%ци˝ ВРА^ж<.3-БЗЗЗЗЗЗТ"
+	sound = "commandreport"
 
 /datum/announcement/centcomm/dust
 	name = "Event: Sand Storm"
@@ -182,7 +196,7 @@
 	subtitle = "Системы Электропитания в Норме"
 	sound = "poweron2"
 /datum/announcement/centcomm/grid_quick/New()
-	message = "Все СМЭХи на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
+	message = "Все СПИНы на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
 
 /datum/announcement/centcomm/irod
 	name = "Event: Immovable Rod"
@@ -260,3 +274,28 @@
 	name = "Event: Icarus Recovered"
 	subtitle = "Тревога. Сбойные дроны"
 	message = "Контроль дронов ВКН Икар разочарован в потере боевого крыла. Выжившие дроны будут восстановлены."
+
+/datum/announcement/centcomm/space_traders
+	name = "Event: Space Traders"
+	subtitle = "Космоторговцы."
+	message = "Мы получили и одобрили запрос на стыковку от группы космоторговцев. " + \
+			"У них кончаются припасы и есть товары для продажи. Ожидайте гостей."
+
+/datum/announcement/centcomm/egghunt/pre
+	name = "Egg Hunt will Start soon!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"
+	message = "Исход! В рамках программы по повышению стрессоустойчивости персонала мы проводим пасхальную охоту за яйцами! " + \
+			"Подготовьтесь, через минуту вам потребуется искать цветные яйца, которые мы спрятали по станции, и класть их к себе в рюкзак. " + \
+			"Спустя еще 30 минут таймер подойдет к концу и будут объявлены победители!"
+
+/datum/announcement/centcomm/egghunt/start
+	name = "Egg Hunt Starts!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"
+	message = "Охота за яйцами началась! Они могут быть где угодно, будьте внимательны! Через 30 минут объявим победителей "
+
+/datum/announcement/centcomm/egghunt/finish
+	name = "Egg Hunt Ends!"
+	subtitle = "Ежегодная охота за яйцами"
+	sound = "commandreport"

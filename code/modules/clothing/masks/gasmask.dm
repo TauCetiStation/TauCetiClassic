@@ -71,7 +71,7 @@
 	name = "security gas mask"
 	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	icon_state = "secmask"
-	item_state = "gas_alt"
+	item_state = "secmask"
 	var/cooldown = 0
 	var/last_phrase_text = ""
 	var/shitcurity_mode = FALSE
@@ -104,7 +104,7 @@
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
 		var/obj/item/weapon/screwdriver/S = I
-		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40))
+		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40, quality = QUALITY_SCREWING))
 			shitcurity_mode = !shitcurity_mode
 			to_chat(user, "<span class='notice'>Вы подкрутили встроенный Compli-o-nator 3000.</span>")
 	else
@@ -139,7 +139,7 @@
 			cooldown = world.time + 2 SECOND
 		last_phrase_text = phrase_text
 
-		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE)
+		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE, falloff = 5)
 		usr.visible_message("[usr] compli-o-nator, <font color='red' size='4'><b>\"[phrase_text]\"</b></font>")
 
 /obj/item/clothing/mask/gas/sechailer/police

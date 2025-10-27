@@ -5,8 +5,6 @@
 	var/turf/environment/turf_type
 	// Environment generator type
 	var/datum/map_generator/gen_type
-	// Light color of environment turfs
-	var/turf_light_color
 	// Area to replace /area/space (null means /area/space)
 	var/area/area_type
 	// Whether to process environment in SSweather

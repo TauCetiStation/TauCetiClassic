@@ -85,7 +85,7 @@
 		to_chat(user, "<span class='warning'>You can't buckle [M] while doing something.</span>")
 		return FALSE
 
-	if(isconstruct(M))
+	if(isconstruct(M) || isshade(M))
 		to_chat(user, "<span class='warning'>The [M] is floating in the air and can't be buckled.</span>")
 		return FALSE
 

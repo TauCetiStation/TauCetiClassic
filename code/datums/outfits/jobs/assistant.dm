@@ -2,8 +2,12 @@
 /datum/outfit/job/assistant
 	name = OUTFIT_JOB_NAME("Assistant Gear")
 
-	uniform = /obj/item/clothing/under/test_subject
+	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/black
+
+/datum/outfit/job/assistant/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(SSholiday.holidays[APRIL_FOOLS])
+		H.equip_or_collect(new /obj/item/toy/balloon/arrest(H), SLOT_IN_BACKPACK)
 
 /datum/outfit/job/assistant/lawyer
 	name = OUTFIT_JOB_NAME("Lawyer")
@@ -22,13 +26,15 @@
 	suit = /obj/item/clothing/suit/leathercoat
 	l_pocket = /obj/item/weapon/lighter/zippo
 
-/datum/outfit/job/assistant/reporter
-	name = OUTFIT_JOB_NAME("Reporter")
+/datum/outfit/job/assistant/journalist
+	name = OUTFIT_JOB_NAME("Journalist")
 
-	uniform = /obj/item/clothing/under/lawyer/black
+	uniform = /obj/item/clothing/under/lawyer/red
 	shoes = /obj/item/clothing/shoes/black
 	belt = /obj/item/device/pda/reporter
-	l_pocket = /obj/item/device/camera/polar
+	l_pocket = /obj/item/weapon/spacecash/c10
+	r_pocket = /obj/item/weapon/spacecash/c10
+	backpack_contents = list(/obj/item/device/camera)
 
 /datum/outfit/job/assistant/test_subject
 	name = OUTFIT_JOB_NAME("Test Subject")

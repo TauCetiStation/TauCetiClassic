@@ -250,7 +250,7 @@
 	new /obj/structure/spider/spiderling(src.loc)
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/On_Consume(usr)
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackberry/On_Consume(user)
 	var/nasty_text = pick("Oh god! Tastes horrible!", "Damn, [src] tastes awful!", "Disgusting! Why did I even put it in my mouth?", "Ew! [src] tastes like rubber with liquid trash")
-	to_chat(usr, "<span class='rose'>[nasty_text]</span>")
+	to_chat(user, "<span class='rose'>[nasty_text]</span>")
 	..()

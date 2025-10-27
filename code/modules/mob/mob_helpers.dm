@@ -22,51 +22,6 @@
 /mob/living/silicon/isSynthetic()
 	return TRUE
 
-/proc/hsl2rgb(h, s, l)
-	return
-
-/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isloyal()
-	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/ismindprotect()
-	for(var/obj/item/weapon/implant/mind_protect/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedobedience()
-	for(var/obj/item/weapon/implant/obedience/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedblueshield()
-	for(var/obj/item/weapon/implant/blueshield/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedchem()
-	for(var/obj/item/weapon/implant/chem/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedtrack()
-	for(var/obj/item/weapon/implant/tracking/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
@@ -111,43 +66,32 @@
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
-	if(!target.buckled && !target.lying)
-		var/miss_chance = 10
-		switch(zone)
-			if(BP_HEAD)
-				miss_chance = 50
-			if(BP_GROIN)
-				miss_chance = 50
-			if(BP_L_ARM)
-				miss_chance = 60
-			if(BP_R_ARM)
-				miss_chance = 60
-			if(BP_L_LEG)
-				miss_chance = 60
-			if(BP_R_LEG)
-				miss_chance = 60
-		if(prob(max(miss_chance + miss_chance_mod, 0)))
-			if(prob(max(20, (miss_chance/2))))
-				return null
-			else
-				var/t = rand(1, 100)
-				switch(t)
-					if(1 to 65)
-						return BP_CHEST
-					if(66 to 75)
-						return BP_HEAD
-					if(76 to 80)
-						return BP_L_ARM
-					if(81 to 85)
-						return BP_R_ARM
-					if(86 to 90)
-						return BP_R_LEG
-					if(91 to 95)
-						return BP_L_LEG
-					if(96 to 100)
-						return BP_GROIN
+	if(target.buckled || target.lying)
+		return zone
 
-	return zone
+	var/miss_chance = 10
+	switch(zone)
+		if(BP_HEAD, BP_GROIN)
+			miss_chance = 50
+		if(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
+			miss_chance = 60
+
+	if(!prob(miss_chance + miss_chance_mod)) // chance to hit
+		return zone
+
+	if(prob(max(20, miss_chance / 2))) // chance to fully miss
+		return null
+
+	// redirecting
+	return pickweight(list(
+		BP_CHEST = 65,
+		BP_HEAD  = 10,
+		BP_L_ARM = 5,
+		BP_R_ARM = 5,
+		BP_L_LEG = 5,
+		BP_R_LEG = 5,
+		BP_GROIN = 5,
+	))
 
 /proc/get_zone_with_probabilty(zone, probability = 80)
 
@@ -183,7 +127,7 @@
 		else
 			new_text += letter
 
-	return new_text
+	return html_encode(capitalize(new_text))
 
 /proc/slur(text)
 
@@ -227,7 +171,7 @@
 			if(10)
 				new_letter += "'"
 			if(11 to 15)
-				SWITCH_PASS
+				EMPTY_BLOCK_GUARD
 
 		new_text += new_letter
 
@@ -263,7 +207,7 @@
 
 		new_text += new_letter
 
-	return html_encode(new_text)
+	return html_encode(capitalize(new_text))
 
 /proc/Gibberish(text, p) // Any value higher than 70 for p will cause letters to be replaced instead of added
 	text = html_decode(text)
@@ -402,16 +346,13 @@ var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА",
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
-		return 1
+	if(full_body && ((l_hand.flags & ABSTRACT) || (r_hand && !(r_hand.flags & ABSTRACT)) || back || wear_mask))
+		return TRUE
 
-	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
-		return 1
+	if((l_hand && !(l_hand.flags & ABSTRACT)) || (r_hand && !(r_hand.flags & ABSTRACT)))
+		return TRUE
 
-	if(l_hand && !(l_hand.flags & ABSTRACT) || r_hand && !(r_hand.flags & ABSTRACT))
-		return 1
-
-	return 0
+	return FALSE
 
 //converts intent-strings into numbers and back
 var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
@@ -629,3 +570,61 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			alert_overlay.appearance_flags |= TILE_BOUND
 		alert_overlay.plane = ABOVE_HUD_PLANE
 		alert.add_overlay(alert_overlay)
+
+/mob/proc/get_height_num()
+	var/height_num = w_class
+	if(lying || crawling)
+		height_num -= 3
+
+	return max(height_num, SIZE_MINUSCULE)
+
+/mob/living/carbon/human/get_height_num()
+	var/height_num = ..()
+
+	switch(height)
+		if(HUMANHEIGHT_SHORTEST)
+			height_num -= 0.5
+		if(HUMANHEIGHT_SHORT)
+			height_num -= 0.25
+		if(HUMANHEIGHT_TALL)
+			height_num += 0.25
+		if(HUMANHEIGHT_TALLEST)
+			height_num += 0.5
+
+	return max(height_num, SIZE_MINUSCULE)
+
+/mob/proc/get_impact_direction_from(mob/Attacker) //Attacker, Defender
+	var/Height1 = Attacker.get_height_num()
+	var/Height2 = get_height_num()
+
+	switch(Height1 - Height2)
+		if(2 to 12)
+			return "Сильно сверху"
+		if(0.5 to 2)
+			return "Сверху"
+		if(-2 to -0.5)
+			return "Снизу"
+		if(-12 to -2)
+			return "Сильно снизу"
+
+	return "С одной высоты"
+
+/mob/proc/get_projectile_hit_direction(obj/item/projectile/P)
+	var/impact_direction = ""
+	var/distance = P.starting ? get_dist(P.starting.loc, loc) : 0
+
+	switch(distance)
+		if(0 to 1)
+			impact_direction += "Вплотную "
+		if(1 to 3)
+			impact_direction += "Близко "
+		else
+			impact_direction += "Далеко "
+
+	if(lying || crawling)
+		return impact_direction + "сверху"
+
+	if(!is_the_opposite_dir(dir, P.dir))
+		return impact_direction + "сзади"
+
+	return impact_direction + "спереди"

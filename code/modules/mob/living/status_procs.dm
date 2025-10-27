@@ -23,22 +23,8 @@
 
 /mob/proc/cure_nearsighted(source)
 	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		clear_fullscreen("nearsighted")
 
 /mob/proc/become_nearsighted(source)
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
-
-/mob/living/carbon/human/become_nearsighted(source)
-	if(glasses)
-		var/obj/item/clothing/glasses/G = glasses
-		if(G.prescription)
-			ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
-			return
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /* STUN */

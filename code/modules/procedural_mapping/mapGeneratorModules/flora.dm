@@ -1,13 +1,4 @@
-/proc/get_raw_2d_noise(width, height)
-	var/list/raw_noise = new/list(width, height)
-
-	for (var/i in 1 to width)
-		for (var/j in 1 to height)
-			raw_noise[i][j] = rand()
-
-	return raw_noise
-
-/proc/get_smooth_noise(list/raw_noise, width, height, octave)
+/proc/get_smooth_noise(seed, width, height, octave)
 	var/list/smooth = new/list(width, height)
 
 	var/samplePeriod = 1 << octave
@@ -23,22 +14,22 @@
 			var/_j1 = (_j0 + samplePeriod) % height
 			var/v_blend = (l - _j0) * sampleFreq
 
-			var/top = raw_noise[_i0+1][_j0+1] * (1 - h_blend) + h_blend * raw_noise[_i1+1][_j0+1]
-			var/bottom = raw_noise[_i0+1][_j1+1] * (1 - h_blend) + h_blend * raw_noise[_i1+1][_j1+1]
+			var/top = noise_hash(seed, _i0+1, _j0+1) * (1 - h_blend) + h_blend * noise_hash(seed, _i1+1, _j0+1)
+			var/bottom = noise_hash(seed, _i0+1, _j1+1) * (1 - h_blend) + h_blend * noise_hash(seed, _i1+1, _j1+1)
 
 			smooth[k][l] = FLOOR((top * (1 - v_blend) + v_blend * bottom) * 255, 1)
 
 	return smooth
 
 // Noise source: codepen.io/yutt/pen/rICHm
-/proc/get_perlin_noise(list/raw_noise, width, height, persistance = 0.5, amplitude = 1.0, octave = 6)
+/proc/get_perlin_noise(seed, width, height, persistance = 0.5, amplitude = 1.0, octave = 6)
 	var/list/perlin_noise = new/list(width, height)
 
 	var/totalAmp = 0.0
 	var/list/smooth
 
 	for(var/o in octave to 1 step -1)
-		smooth = get_smooth_noise(raw_noise, width, height, o)
+		smooth = get_smooth_noise(seed, width, height, o)
 		amplitude = amplitude * persistance
 		totalAmp += amplitude
 		for(var/i in 1 to width)
@@ -65,7 +56,7 @@
 /datum/map_generator_module/flora/New()
 	var/width = world.maxx
 	var/height = world.maxy
-	perlin_map = get_perlin_noise(get_raw_2d_noise(width, height), width, height, persistance)
+	perlin_map = get_perlin_noise(rand(), width, height, persistance)
 
 /datum/map_generator_module/flora/checkPlaceAtom(turf/T)
 	if(!istype(T, turf_type))
