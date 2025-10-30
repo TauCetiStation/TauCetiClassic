@@ -9,7 +9,6 @@
 	layer = LOW_OBJ_LAYER
 	pass_flags = PASSTABLE | PASSGRILLE
 
-	var/energy = 0
 	var/obj/effect/meatvine_controller/master = null
 
 	var/feromone_weight = 1
@@ -126,7 +125,7 @@
 		to_chat(M, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 
 /obj/structure/meatvine/proc/grow()
-	if(!master)
+	if(!master || master.isdying)
 		return
 	var/turf/T = src.loc
 	if(prob(feromone_weight))
@@ -157,11 +156,14 @@
 	return
 
 /obj/structure/meatvine/heavy/grow()
+	if(master.isdying)
+		return
+
 	var/obj/machinery/atmospherics/components/unary/Vent = locate(/obj/machinery/atmospherics/components/unary/vent_pump) in loc.contents
 	if(!Vent)
 		Vent = locate(/obj/machinery/atmospherics/components/unary/vent_scrubber) in loc.contents
 	if(!Vent)
-		return
+		return ..()
 
 
 	var/list/vents = list()
@@ -171,7 +173,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in entry_vent_parent.other_atmosmch)
 		vents.Add(temp_vent)
 	if(!vents.len)
-		return
+		return ..()
 
 	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 	var/obj/structure/meatvine/Vine = locate() in exit_vent.loc.contents
@@ -182,7 +184,7 @@
 	return
 
 /obj/structure/meatvine/lair/grow()
-	if(!Mob)
+	if(!Mob && !master.isdying)
 		var/mobtype = pick(/mob/living/simple_animal/hostile/meatvine, /mob/living/simple_animal/hostile/meatvine/range)
 		Mob = new mobtype(loc)
 		current_beam = new(src, Mob, time = INFINITY, beam_icon_state = "meat", btype = /obj/effect/ebeam/meat)
@@ -204,7 +206,7 @@
 		return
 
 	var/datum/gas_mixture/environment = T.return_air()
-	pressure = round(environment.return_pressure())
+	var/pressure = round(environment.return_pressure())
 
 	if(pressure < ONE_ATMOSPHERE * 0.90)
 		environment.adjust_multi_temp("oxygen", MOLES_CELLSTANDARD / 2 * O2STANDARD, T20C, "nitrogen", MOLES_CELLSTANDARD / 2 * N2STANDARD, T20C)
@@ -250,6 +252,9 @@
 	damage_type = BRUTE
 
 /obj/structure/meatvine/proc/spread()
+	if(master.isdying)
+		return
+
 	var/turf/T = src.loc
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
@@ -274,6 +279,7 @@
 	var/list/growth_queue = list()
 	var/reached_collapse_size
 	var/reached_slowdown_size
+	var/isdying = FALSE
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
