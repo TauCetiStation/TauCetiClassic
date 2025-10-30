@@ -1732,6 +1732,7 @@
 #include "code\modules\events\cellular_biomass\cellular_controller_generic.dm"
 #include "code\modules\events\cellular_biomass\cellular_lair.dm"
 #include "code\modules\events\cellular_biomass\cellular_structures.dm"
+#include "code\modules\events\cellular_biomass\meat.dm"
 #include "code\modules\events\cellular_biomass\spacevines.dm"
 #include "code\modules\events\roundstart_events\misc_events.dm"
 #include "code\modules\events\roundstart_events\roundstart.dm"

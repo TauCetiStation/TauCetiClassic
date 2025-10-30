@@ -1555,3 +1555,17 @@
 
 /mob/living/proc/get_trail_state()
 	return null
+
+/mob/living/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliverycrate5"
+
+	P.add_texture(texture_name, details_name)
+
+	if(client)
+		client.perspective = EYE_PERSPECTIVE
+		client.eye = P
+
+	forceMove(P)
+
+	return P

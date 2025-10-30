@@ -12,10 +12,13 @@
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
+	var/list/destroy_sounds
+
 	var/state = 2
 	var/ini_dir = null
 
 /obj/structure/window/thin/atom_init()
+	destroy_sounds = SOUNDIN_SHATTER
 	ini_dir = dir
 	color = SSstation_coloring.get_default_color()
 
@@ -137,7 +140,7 @@
 
 /obj/structure/window/thin/Destroy()
 	density = FALSE
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	playsound(src, pick(destroy_sounds), VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/structure/window/thin/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
