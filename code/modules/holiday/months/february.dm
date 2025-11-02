@@ -4,12 +4,7 @@
 	end_day = 15
 	begin_month = FEBRUARY
 
-	staffwho_group_name = list(
-		SW_ADMINS     = "Cherubs",
-		SW_MENTORS    = "Cupids",
-		SW_XENOVISORS = "Xeno-lovers",
-		SW_DEVELOPERS = "Love-makers",
-	)
+	staffwho_group_name = list("Cherubs", "Cupids", "Xeno-lovers", "Love-makers")
 	staffwho_prefixs = list("Loving", "adorable", "Thoughtful", "ERP", "Amiable", "Amorous", "Horny", "Devoted", "Sentimental", "Adoring", "Warmhearted", "Charming", "Beautiful", "Tenderhearted", "Enchanting", "Romantic", "Intimate", "Incel", "Loner")
 	staffwho_no_staff = "THERE IS NO LOVE HERE"
 
