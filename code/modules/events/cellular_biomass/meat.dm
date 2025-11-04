@@ -384,7 +384,8 @@
 
 /obj/structure/meatvine/lair/rot()
 	..()
-	qdel(Mob.GetComponent(/datum/component/bounded))
+	if(Mob)
+		qdel(Mob.GetComponent(/datum/component/bounded))
 	QDEL_NULL(current_beam)
 	Mob = null
 
