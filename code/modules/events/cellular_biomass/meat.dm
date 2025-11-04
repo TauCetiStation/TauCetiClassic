@@ -42,7 +42,7 @@
 	layer = LOW_OBJ_LAYER
 	pass_flags = PASSTABLE | PASSGRILLE
 
-	armor = list(MELEE = 50, BULLET = 30, LASER = 0, ENERGY = 100, BOMB = -10, BIO = 100, FIRE = -100, ACID = -200)
+	armor = list(MELEE = 10, BULLET = 30, LASER = -10, ENERGY = 100, BOMB = -10, BIO = 100, FIRE = -200, ACID = -300)
 
 	var/obj/effect/meatvine_controller/master = null
 
@@ -137,7 +137,7 @@
 	master.die()
 	STOP_PROCESSING(SSobj, src)
 	qdel(Particle)
-	..()
+	return ..()
 
 /obj/structure/meatvine/papameat/process()
 	var/integrity_percent = round(get_integrity()/max_integrity)
@@ -172,11 +172,21 @@
 	return
 
 /obj/structure/meatvine/proc/puff_gas(big = FALSE)
-	if(big)
-		reagents.add_reagent_list(list("thermopsis" = 301, "potassium" = 33, "sugar" = 33, "phosphorus" = 33))
+	if(!prob(50))
 		return
 
-	reagents.add_reagent_list(list("thermopsis" = 140, "potassium" = 20, "sugar" = 20, "phosphorus" = 20))
+	reagents.add_reagent(pick(list("thermopsis", "condensedcapsaicin", "tramadol", "tricordrazine", "blood", "nicotine", "space_drugs")), 50)
+
+
+	var/turf/T = get_turf(src)
+	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+	S.attach(T)
+	S.set_up(reagents, big ? 100 : 50, 0, T)
+	playsound(T, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+	spawn(0)
+		S.start()
+
+	reagents.clear_reagents()
 	return
 
 /obj/structure/meatvine/floor/atom_init()
@@ -222,13 +232,13 @@
 
 	can_block_air = TRUE
 
-/obj/structure/meatvineborder/heavy/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/meatvine/heavy/CanPass(atom/movable/mover, turf/target, height=0)
 	return FALSE
 
-/obj/structure/meatvineborder/heavy/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
+/obj/structure/meatvine/heavy/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return FALSE
 
-/obj/structure/meatvineborder/heavy/CheckExit(atom/movable/O, target)
+/obj/structure/meatvine/heavy/CheckExit(atom/movable/O, target)
 	return FALSE
 
 /obj/structure/meatvine/lair
@@ -252,7 +262,7 @@
 /obj/structure/meatvine/lair/Destroy()
 	puff_gas(TRUE)
 
-	..()
+	return ..()
 
 /obj/structure/meatvine/atom_init()
 	. = ..()
@@ -295,6 +305,9 @@
 	. = ..()
 	if(.)
 		to_chat(M, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
+
+	if(prob(5))
+		M.try_wrap_up("meat", "meatthings")
 
 /obj/structure/meatvine/proc/grow()
 	if(!master)
@@ -420,7 +433,7 @@
 	w_class = SIZE_HUMAN
 	health = 60
 	maxHealth = 60
-	melee_damage = 30
+	melee_damage = 25
 	move_speed = 0
 	see_in_dark = 10
 
@@ -432,14 +445,34 @@
 
 	pass_flags = PASSTABLE
 
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/kabob = 1)
+
 /mob/living/simple_animal/hostile/meatvine/death()
 	var/datum/reagents/R = new/datum/reagents(200)
 	reagents = R
 	R.my_atom = src
 
-	R.add_reagent_list(list("thermopsis" = 140, "potassium" = 20, "sugar" = 20, "phosphorus" = 20))
+	puff_gas()
 
 	return ..()
+
+/mob/living/simple_animal/hostile/meatvine/proc/puff_gas()
+	if(!prob(50))
+		return
+
+	reagents.add_reagent(pick(list("thermopsis", "condensedcapsaicin", "tramadol", "tricordrazine", "blood", "nicotine", "space_drugs")), 50)
+
+
+	var/turf/T = get_turf(src)
+	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+	S.attach(T)
+	S.set_up(reagents, 50, 0, T)
+	playsound(T, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+	spawn(0)
+		S.start()
+
+	reagents.clear_reagents()
+	return
 
 
 /mob/living/simple_animal/hostile/meatvine/range
@@ -454,7 +487,7 @@
 
 /obj/item/projectile/meatbullet
 	icon_state = "meat"
-	damage = 25
+	damage = 20
 	damage_type = BRUTE
 
 /obj/structure/meatvine/proc/spread()
