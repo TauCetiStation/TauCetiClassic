@@ -519,10 +519,7 @@
 	if(reached_collapse_size)
 		length = 25
 	else if(reached_slowdown_size)
-		if(!prob(25))
-			length = min( slowdown_size , vines.len / 10 )
-		else
-			length = 0
+		length = min( slowdown_size , vines.len / 10 )
 
 	if(!length)
 		return
