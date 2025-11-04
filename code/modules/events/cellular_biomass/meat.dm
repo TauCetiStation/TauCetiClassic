@@ -58,13 +58,13 @@
 	var/list/borders_overlays = list()
 
 /obj/structure/meatvine/proc/rot()
-	color = "#55FFFF"
+	color = "#55ffff"
 	master = null
 
 	var/turf/T = get_turf(src)
 
 	for(var/obj/structure/meatvineborder/Vine in T)
-		Vine.color = "#55FFFF"
+		Vine.color = "#55ffff"
 
 /obj/structure/meatvine/update_icon()
 	for(var/overlay in borders_overlays)
@@ -130,7 +130,7 @@
 
 	Particle = new(src, /particles/papameat)
 
-	set_light(3, 1, "#FF6533")
+	set_light(3, 1, "#ff6533")
 
 /obj/structure/meatvine/papameat/Destroy()
 	puff_gas(TRUE)
@@ -247,7 +247,7 @@
 	. = ..()
 	icon_state = pick(list("lair_1", "lair_2", "lair_3"))
 
-	set_light(2, 1, "#FF6533")
+	set_light(2, 1, "#ff6533")
 
 /obj/structure/meatvine/lair/Destroy()
 	puff_gas(TRUE)
