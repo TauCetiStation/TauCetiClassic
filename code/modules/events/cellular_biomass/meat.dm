@@ -56,6 +56,15 @@
 
 	var/list/borders_overlays = list()
 
+/obj/structure/meatvine/proc/rot()
+	color = "#55FFFF"
+	master = null
+
+	var/turf/T = get_turf(src)
+
+	for(var/obj/structure/meatvineborder/Vine in T)
+		Vine.color = "#55FFFF"
+
 /obj/structure/meatvine/update_icon()
 	for(var/overlay in borders_overlays)
 		cut_overlay(overlay)
@@ -282,7 +291,7 @@
 	if(prob(feromone_weight))
 		master.spawn_spacevine_piece(T, /obj/structure/meatvine/heavy)
 		qdel(src)
-	else if(prob(0.1))
+	else if(prob(1))
 		master.spawn_spacevine_piece(T, /obj/structure/meatvine/lair)
 		qdel(src)
 	else
@@ -337,7 +346,13 @@
 	return
 
 /obj/structure/meatvine/lair/grow()
-	if(!Mob && !master.isdying)
+	if(!master)
+		return
+
+	if(master.isdying)
+		return
+
+	if(!Mob)
 		var/mobtype = pick(/mob/living/simple_animal/hostile/meatvine, /mob/living/simple_animal/hostile/meatvine/range)
 		Mob = new mobtype(loc)
 		current_beam = new(src, Mob, time = INFINITY, beam_icon_state = "meat", btype = /obj/effect/ebeam/meat)
@@ -347,6 +362,7 @@
 		return
 
 	if(Mob.stat == DEAD)
+		qdel(Mob.GetComponent(/datum/component/bounded))
 		QDEL_NULL(current_beam)
 		Mob = null
 		return
@@ -365,6 +381,12 @@
 	if(pressure < ONE_ATMOSPHERE * 0.90)
 		environment.adjust_multi_temp("oxygen", MOLES_CELLSTANDARD / 2 * O2STANDARD, T20C, "nitrogen", MOLES_CELLSTANDARD / 2 * N2STANDARD, T20C)
 		puff_gas()
+
+/obj/structure/meatvine/lair/rot()
+	..()
+	qdel(Mob.GetComponent(/datum/component/bounded))
+	QDEL_NULL(current_beam)
+	Mob = null
 
 /obj/effect/ebeam/meat
 	name = "meat"
@@ -482,7 +504,7 @@
 	vines += SV
 
 /obj/effect/meatvine_controller/process()
-	if(!vines)
+	if(!vines.len)
 		qdel(src) //space  vines exterminated. Remove the controller
 		return
 	if(!growth_queue)
@@ -513,8 +535,7 @@
 		growth_queue -= SV
 
 		if(isdying)
-			SV.color = "#55FFFF"
-			SV.master = null
+			SV.rot()
 			vines -= SV
 		else
 			queue_end += SV
