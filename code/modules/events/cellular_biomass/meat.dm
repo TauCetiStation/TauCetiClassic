@@ -10,12 +10,13 @@
 
 	flags = ON_BORDER
 
+	can_block_air = TRUE
+
 
 /obj/structure/meatvineborder/CanPass(atom/movable/mover, turf/target, height=0)
 	if(get_dir(loc, target) & dir)
 		return FALSE
-	else
-		return TRUE
+	return TRUE
 
 /obj/structure/meatvineborder/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	if(dir == to_dir)
@@ -129,6 +130,8 @@
 
 	Particle = new(src, /particles/papameat)
 
+	set_light(3, 1, "#FF6533")
+
 /obj/structure/meatvine/papameat/Destroy()
 	puff_gas(TRUE)
 	master.die()
@@ -217,6 +220,17 @@
 	max_integrity = 50
 	resistance_flags = CAN_BE_HIT
 
+	can_block_air = TRUE
+
+/obj/structure/meatvineborder/heavy/CanPass(atom/movable/mover, turf/target, height=0)
+	return FALSE
+
+/obj/structure/meatvineborder/heavy/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
+	return FALSE
+
+/obj/structure/meatvineborder/heavy/CheckExit(atom/movable/O, target)
+	return FALSE
+
 /obj/structure/meatvine/lair
 	icon_state = "lair_1"
 	density = FALSE
@@ -232,6 +246,8 @@
 /obj/structure/meatvine/lair/atom_init()
 	. = ..()
 	icon_state = pick(list("lair_1", "lair_2", "lair_3"))
+
+	set_light(2, 1, "#FF6533")
 
 /obj/structure/meatvine/lair/Destroy()
 	puff_gas(TRUE)
