@@ -458,6 +458,7 @@
 #include "code\datums\outfits\misc\spy.dm"
 #include "code\datums\outfits\misc\survivalists.dm"
 #include "code\datums\particles\fire.dm"
+#include "code\datums\particles\papameat.dm"
 #include "code\datums\particles\tool_usage.dm"
 #include "code\datums\qualities\negativeish.dm"
 #include "code\datums\qualities\positiveish.dm"

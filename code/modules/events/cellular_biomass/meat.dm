@@ -1,4 +1,36 @@
-// SPACE VINES (Note that this code is very similar to Biomass code)
+/obj/structure/meatvineborder
+	name = "meat clump"
+	desc = "What is that?!"
+	icon = 'icons/obj/cellular/meat.dmi'
+	icon_state = "border"
+
+	anchored = TRUE
+	density = TRUE
+	opacity = TRUE
+
+	flags = ON_BORDER
+
+
+/obj/structure/meatvineborder/CanPass(atom/movable/mover, turf/target, height=0)
+	if(get_dir(loc, target) & dir)
+		return FALSE
+	else
+		return TRUE
+
+/obj/structure/meatvineborder/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
+	if(dir == to_dir)
+		return FALSE
+
+	return TRUE
+
+/obj/structure/meatvineborder/CheckExit(atom/movable/O, target)
+	if(get_dir(O.loc, target) == dir)
+		return FALSE
+	return TRUE
+
+
+
+
 /obj/structure/meatvine
 	name = "meat clump"
 	desc = "What is that?!"
@@ -8,6 +40,8 @@
 	density = FALSE
 	layer = LOW_OBJ_LAYER
 	pass_flags = PASSTABLE | PASSGRILLE
+
+	armor = list(MELEE = 50, BULLET = 30, LASER = 0, ENERGY = 100, BOMB = -10, BIO = 100, FIRE = -100, ACID = -200)
 
 	var/obj/effect/meatvine_controller/master = null
 
@@ -20,6 +54,119 @@
 
 	var/list/meat_side_overlays
 
+	var/list/borders_overlays = list()
+
+/obj/structure/meatvine/update_icon()
+	for(var/overlay in borders_overlays)
+		cut_overlay(overlay)
+
+	var/turf/T = get_turf(src)
+
+	for(var/direction in alldirs)
+		var/turf/step = get_step(T, direction)
+		var/obj/structure/meatvine/Vine = locate(/obj/structure/meatvine, step)
+
+		if(Vine)
+			continue
+
+		var/image/Overlay = image(icon = 'icons/obj/cellular/meat.dmi', icon_state = "tile_edge", dir = direction)
+		Overlay.pixel_x = X_OFFSET(32, direction)
+		Overlay.pixel_y = Y_OFFSET(32, direction)
+
+		borders_overlays += Overlay
+		add_overlay(Overlay)
+
+/obj/structure/meatvine/proc/update_borders()
+	update_icon()
+
+	var/turf/T = get_turf(src)
+
+	for(var/direction in alldirs)
+		var/turf/step = get_step(T, direction)
+		var/obj/structure/meatvine/Vine = locate(/obj/structure/meatvine, step)
+
+		if(!Vine)
+			continue
+
+		Vine.update_icon()
+
+/obj/structure/meatvine/papameat
+	name = "papa meat"
+	desc = "You feel a combination of fear and disgust, just by looking at that thing."
+	icon = 'icons/obj/cellular/papameat.dmi'
+	icon_state = "papameat"
+	density = TRUE
+
+	pass_flags = PASSTABLE
+
+	max_integrity = 1000
+
+	pixel_x = -48
+	pixel_y = -48
+
+	var/healed = FALSE
+
+	var/obj/effect/abstract/particle_holder/Particle
+
+/obj/structure/meatvine/papameat/update_icon()
+	return
+
+/obj/structure/meatvine/papameat/atom_init()
+	. = ..()
+
+	master = new(loc)
+
+	START_PROCESSING(SSobj, src)
+
+	Particle = new(src, /particles/papameat)
+
+/obj/structure/meatvine/papameat/Destroy()
+	puff_gas(TRUE)
+	master.die()
+	STOP_PROCESSING(SSobj, src)
+	qdel(Particle)
+	..()
+
+/obj/structure/meatvine/papameat/process()
+	var/integrity_percent = round(get_integrity()/max_integrity)
+
+	switch(integrity_percent)
+		if(75)
+			if(prob(10))
+				transfer_feromones(2)
+
+		if(50)
+			if(prob(10))
+				transfer_feromones(5)
+
+			if(prob(1))
+				var/mobtype = pick(/mob/living/simple_animal/hostile/meatvine, /mob/living/simple_animal/hostile/meatvine/range)
+				new mobtype(loc)
+
+			if(healed && (master.vines.len <= master.collapse_size) && master.reached_collapse_size)
+				master.reached_collapse_size = FALSE
+
+		if(25)
+			if(prob(20))
+				puff_gas(TRUE)
+			if(healed && (master.vines.len >= master.slowdown_size) && master.reached_slowdown_size)
+				master.reached_slowdown_size = FALSE
+
+	if(!healed)
+		if(!repair_damage(10))
+			healed = TRUE
+
+/obj/structure/meatvine/papameat/grow()
+	return
+
+/obj/structure/meatvine/proc/puff_gas(big = FALSE)
+	if(big)
+		reagents.add_reagent_list(list("thermopsis" = 301, "potassium" = 33, "sugar" = 33, "phosphorus" = 33))
+		return
+
+	reagents.add_reagent_list(list("thermopsis" = 140, "potassium" = 20, "sugar" = 20, "phosphorus" = 20))
+	return
+
 /obj/structure/meatvine/floor/atom_init()
 	. = ..()
 
@@ -27,7 +174,8 @@
 
 /obj/structure/meatvine/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
 	. = ..()
-	transfer_feromones(3)
+	if(damage_type != BURN)
+		transfer_feromones(3)
 
 /obj/structure/meatvine/proc/transfer_feromones(amount)
 	if(prob(5))
@@ -76,19 +224,10 @@
 	. = ..()
 	icon_state = pick(list("lair_1", "lair_2", "lair_3"))
 
-/obj/structure/window/thin/meatvine
-	name = "meat clump"
-	desc = "What is that?!"
+/obj/structure/meatvine/lair/Destroy()
+	puff_gas(TRUE)
 
-	icon = 'icons/obj/cellular/meat.dmi'
-	icon_state = "border"
-	opacity = TRUE
-
-	drops = null
-	destroy_sounds = list('sound/effects/blobattack.ogg')
-
-	flags = ON_BORDER
-	can_be_unanchored = FALSE
+	..()
 
 /obj/structure/meatvine/atom_init()
 	. = ..()
@@ -104,11 +243,19 @@
 	for(var/obj/structure/closet/Closet in src.loc.contents)
 		Closet.try_wrap_up("meat", "meatthings")
 
+	var/datum/reagents/R = new/datum/reagents(400)
+	reagents = R
+	R.my_atom = src
+
+	update_borders()
+
 /obj/structure/meatvine/Destroy()
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
 		master = null
+
+	update_borders()
 	return ..()
 
 /obj/structure/meatvine/can_buckle(mob/living/M)
@@ -125,8 +272,12 @@
 		to_chat(M, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 
 /obj/structure/meatvine/proc/grow()
-	if(!master || master.isdying)
+	if(!master)
 		return
+
+	if(master.isdying)
+		return
+
 	var/turf/T = src.loc
 	if(prob(feromone_weight))
 		master.spawn_spacevine_piece(T, /obj/structure/meatvine/heavy)
@@ -156,6 +307,8 @@
 	return
 
 /obj/structure/meatvine/heavy/grow()
+	if(!master)
+		return
 	if(master.isdying)
 		return
 
@@ -190,6 +343,7 @@
 		current_beam = new(src, Mob, time = INFINITY, beam_icon_state = "meat", btype = /obj/effect/ebeam/meat)
 		INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
 		Mob.AddComponent(/datum/component/bounded, src, 0, 3)
+		puff_gas()
 		return
 
 	if(Mob.stat == DEAD)
@@ -210,6 +364,7 @@
 
 	if(pressure < ONE_ATMOSPHERE * 0.90)
 		environment.adjust_multi_temp("oxygen", MOLES_CELLSTANDARD / 2 * O2STANDARD, T20C, "nitrogen", MOLES_CELLSTANDARD / 2 * N2STANDARD, T20C)
+		puff_gas()
 
 /obj/effect/ebeam/meat
 	name = "meat"
@@ -219,9 +374,9 @@
 	name = "Horrible creature"
 	desc = "What is that?!"
 	icon = 'icons/obj/cellular/meat.dmi'
-	icon_state = "mob"
-	icon_living = "mob"
-	icon_dead = "mob_dead"
+	icon_state = "mob1"
+	icon_living = "mob1"
+	icon_dead = "mob1_dead"
 	faction = "meat"
 	w_class = SIZE_HUMAN
 	health = 60
@@ -238,8 +393,20 @@
 
 	pass_flags = PASSTABLE
 
+/mob/living/simple_animal/hostile/meatvine/death()
+	var/datum/reagents/R = new/datum/reagents(200)
+	reagents = R
+	R.my_atom = src
+
+	R.add_reagent_list(list("thermopsis" = 140, "potassium" = 20, "sugar" = 20, "phosphorus" = 20))
+
+	return ..()
+
 
 /mob/living/simple_animal/hostile/meatvine/range
+	icon_state = "mob2"
+	icon_living = "mob2"
+	icon_dead = "mob2_dead"
 	ranged = TRUE
 	projectilesound = 'sound/effects/blobattack.ogg'
 	projectiletype = /obj/item/projectile/meatbullet
@@ -252,7 +419,7 @@
 	damage_type = BRUTE
 
 /obj/structure/meatvine/proc/spread()
-	if(master.isdying)
+	if(!master || master.isdying)
 		return
 
 	var/turf/T = src.loc
@@ -267,11 +434,11 @@
 					return
 	else
 		var/obstructed_dir = get_dir(T, step)
-		for(var/obj/structure/window/thin/meatvine/Vine in T)
+		for(var/obj/structure/meatvineborder/Vine in T)
 			if(Vine.dir == obstructed_dir)
 				return
 
-		var/obj/structure/window/thin/meatvine/Vine = new /obj/structure/window/thin/meatvine(src.loc)
+		var/obj/structure/meatvineborder/Vine = new /obj/structure/meatvineborder(src.loc)
 		Vine.dir = obstructed_dir
 
 /obj/effect/meatvine_controller
@@ -291,8 +458,19 @@
 	if(!isfloorturf(loc))
 		return INITIALIZE_HINT_QDEL
 
-	spawn_spacevine_piece(src.loc)
+	var/obj/structure/meatvine/SV = locate() in src.loc
+	if(!SV)
+		spawn_spacevine_piece(src.loc)
+	else
+		SV.master = src
+		growth_queue += SV
+		vines += SV
+
 	START_PROCESSING(SSobj, src)
+
+/obj/effect/meatvine_controller/proc/die()
+	isdying = TRUE
+	STOP_PROCESSING(SSobj, src)
 
 /obj/effect/meatvine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -300,9 +478,9 @@
 
 /obj/effect/meatvine_controller/proc/spawn_spacevine_piece(turf/location, piece_type = /obj/structure/meatvine/floor)
 	var/obj/structure/meatvine/SV = new piece_type(location)
+	SV.master = src
 	growth_queue += SV
 	vines += SV
-	SV.master = src
 
 /obj/effect/meatvine_controller/process()
 	if(!vines)
@@ -313,7 +491,7 @@
 		return
 	if(vines.len >= collapse_size && !reached_collapse_size)
 		reached_collapse_size = 1
-	if(vines.len >= slowdown_size && !reached_slowdown_size )
+	if(vines.len >= slowdown_size && !reached_slowdown_size)
 		reached_slowdown_size = 1
 
 	var/length = min( slowdown_size , vines.len)
