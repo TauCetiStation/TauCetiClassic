@@ -315,7 +315,7 @@
 			var/atom/thing = locate(generator_type, T)
 			if(!thing)
 				continue
-			if(istype(thing, /mob/living))
+			if(isliving(thing))
 				var/mob/living/Mob = thing
 
 				if(Mob.stat != DEAD || istype(Mob, /mob/living/simple_animal/hostile/meatvine))
