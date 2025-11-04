@@ -24,6 +24,11 @@
 
 	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 
+/obj/item/organ/internal/heart/Destroy()
+	owner?.mob_metabolism_mod.RemoveMods(src) // where is remove_organ()
+	QDEL_NULL(heart_metabolism_mod)
+	return ..()
+
 /obj/item/organ/internal/heart/update_icon()
 	if(beating)
 		item_state_world = "[base_icon_state]-on_world"
