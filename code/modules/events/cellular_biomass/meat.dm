@@ -381,7 +381,7 @@
 	w_class = SIZE_HUMAN
 	health = 60
 	maxHealth = 60
-	melee_damage = 15
+	melee_damage = 30
 	move_speed = 0
 	see_in_dark = 10
 
@@ -415,7 +415,7 @@
 
 /obj/item/projectile/meatbullet
 	icon_state = "meat"
-	damage = 10
+	damage = 25
 	damage_type = BRUTE
 
 /obj/structure/meatvine/proc/spread()
@@ -470,7 +470,6 @@
 
 /obj/effect/meatvine_controller/proc/die()
 	isdying = TRUE
-	STOP_PROCESSING(SSobj, src)
 
 /obj/effect/meatvine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -511,23 +510,29 @@
 
 	for( var/obj/structure/meatvine/SV in growth_queue )
 		i++
-		queue_end += SV
 		growth_queue -= SV
-		if(prob(20))
-			SV.grow()
-			continue
-		else //If tile is fully grown
-			if(prob(25))
-				var/mob/living/carbon/C = locate() in SV.loc
-				if(C)
-					if(!C.buckled)
-						SV.buckle_mob(C)
-					else
-						C.try_wrap_up("meat", "meatthings")
+
+		if(isdying)
+			SV.color = "#55FFFF"
+			SV.master = null
+			vines -= SV
+		else
+			queue_end += SV
+			if(prob(20))
+				SV.grow()
+				continue
+			else //If tile is fully grown
+				if(prob(25))
+					var/mob/living/carbon/C = locate() in SV.loc
+					if(C)
+						if(!C.buckled)
+							SV.buckle_mob(C)
+						else
+							C.try_wrap_up("meat", "meatthings")
 
 
-		if(!reached_collapse_size)
-			SV.spread()
+			if(!reached_collapse_size)
+				SV.spread()
 		if(i >= length)
 			break
 
