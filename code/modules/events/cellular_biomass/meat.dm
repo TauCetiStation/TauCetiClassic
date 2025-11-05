@@ -98,7 +98,7 @@
 		if(!Vine)
 			continue
 
-		Vine.update_icon()
+		addtimer(CALLBACK(Vine, TYPE_PROC_REF(/atom, update_icon)), 5)
 
 /obj/structure/meatvine/papameat
 	name = "papa meat"
@@ -317,6 +317,10 @@
 		return
 
 	var/turf/T = src.loc
+	if(!isfloorturf(T) || locate(/obj/effect/decal/cleanable/liquid_fuel) in T)
+		rot()
+		return
+
 	if(prob(feromone_weight))
 		master.spawn_spacevine_piece(T, /obj/structure/meatvine/heavy)
 		qdel(src)
@@ -350,6 +354,11 @@
 	if(master.isdying)
 		return
 
+	var/turf/T = get_turf(src)
+	if(!isfloorturf(T) || locate(/obj/effect/decal/cleanable/liquid_fuel) in T)
+		rot()
+		return
+
 	var/obj/machinery/atmospherics/components/unary/Vent = locate(/obj/machinery/atmospherics/components/unary/vent_pump) in loc.contents
 	if(!Vent)
 		Vent = locate(/obj/machinery/atmospherics/components/unary/vent_scrubber) in loc.contents
@@ -381,6 +390,11 @@
 	if(master.isdying)
 		return
 
+	var/turf/T = get_turf(src)
+	if(!isfloorturf(T) || locate(/obj/effect/decal/cleanable/liquid_fuel) in T)
+		rot()
+		return
+
 	if(!Mob)
 		var/mobtype = pick(/mob/living/simple_animal/hostile/meatvine, /mob/living/simple_animal/hostile/meatvine/range)
 		Mob = new mobtype(loc)
@@ -400,7 +414,6 @@
 	Mob.adjustToxLoss(-5)
 	Mob.adjustOxyLoss(-5)
 
-	var/turf/T = get_turf(src)
 	if(isspaceturf(T) || !istype(T, /turf/simulated))
 		return
 
@@ -447,12 +460,32 @@
 
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/kabob = 1)
 
-/mob/living/simple_animal/hostile/meatvine/death()
+/mob/living/simple_animal/hostile/meatvine/atom_init()
+	. = ..()
+
 	var/datum/reagents/R = new/datum/reagents(200)
 	reagents = R
 	R.my_atom = src
 
+/mob/living/simple_animal/hostile/meatvine/Destroy()
 	puff_gas()
+	reagents.add_reagent("blood", 30)
+	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+	steam.set_up(5, 0, get_turf(src))
+	steam.attach(src)
+	steam.start()
+
+	for(var/atom/A in view(2, src.loc))
+		if( A == src ) continue
+		reagents.reaction(A, 1, 10)
+
+	return ..()
+
+/mob/living/simple_animal/hostile/meatvine/death()
+	puff_gas()
+
+
+	QDEL_IN(src, rand(60, 120) SECONDS)
 
 	return ..()
 
@@ -460,13 +493,13 @@
 	if(!prob(50))
 		return
 
-	reagents.add_reagent(pick(list("thermopsis", "condensedcapsaicin", "tramadol", "tricordrazine", "blood", "nicotine", "space_drugs")), 50)
+	reagents.add_reagent(pick(list("thermopsis", "condensedcapsaicin", "tramadol", "tricordrazine", "blood", "nicotine", "space_drugs")), 30)
 
 
 	var/turf/T = get_turf(src)
 	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 	S.attach(T)
-	S.set_up(reagents, 50, 0, T)
+	S.set_up(reagents, 20, 0, T)
 	playsound(T, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	spawn(0)
 		S.start()
