@@ -73,7 +73,7 @@
 */
 /mob/living/carbon/human/proc/apply_pressure(mob/living/user, target_zone)
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
-	if(!BP || !(BP.status & ORGAN_BLEEDING) || BP.is_robotic())
+	if(!BP || !(BP.status & ORGAN_BLEEDING) || BP.is_robotic_part())
 		return FALSE
 
 	if(user.is_busy())
