@@ -261,7 +261,7 @@
 	durability = 0.8
 	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 	can_relocate = TRUE
-	bloodlose_multiplier = 0.8
+	bloodlose_multiplier = 0.75
 
 /obj/item/organ/internal/heart/cybernetic/voxc
 	parent_bodypart = BP_GROIN
