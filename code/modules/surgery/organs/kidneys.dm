@@ -45,7 +45,7 @@
 /obj/item/organ/internal/kidneys/cybernetic
 	name = "cybernetic kidneys"
 	icon_state = "kidneys-prosthetic"
-	desc = "An electronic device designed to mimic the functions of human kidneys. It fights toxins in the blood much better than regular kidneys."
+	desc = "An electronic device designed to mimic the functions of human kidneys. They clear toxins in the blood much better than regular kidneys."
 	item_state_world = "kidneys-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
