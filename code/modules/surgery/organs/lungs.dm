@@ -278,7 +278,7 @@
 
 /obj/item/organ/internal/lungs/cybernetic
 	name = "cybernetic lungs"
-	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
+	desc = "A cybernetic version of the lungs found in traditional humanoid entities. They have increased durability compared to organic lungs."
 	icon_state = "lungs-prosthetic"
 	item_state_world = "lungs-prosthetic_world"
 	origin_tech = "biotech=4"

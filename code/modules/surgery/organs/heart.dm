@@ -17,6 +17,7 @@
 	var/fibrillation_timer_id = null
 	var/failing_interval = 1 MINUTE
 	var/beating = 0
+	var/bloodlose_multiplier = 1
 
 	var/list/external_pump
 
@@ -175,6 +176,8 @@
 	if(owner.reagents.has_reagent("inaprovaline"))
 		blood_max *= 0.8
 
+	blood_max *= bloodlose_multiplier
+
 	if(!isturf(owner.loc)) // No floor to drip on
 		owner.blood_remove(blood_max)
 		return
@@ -250,7 +253,7 @@
 
 /obj/item/organ/internal/heart/cybernetic
 	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. It has a built-in coagulator that slows bleeding."
 	icon_state = "heart-prosthetic"
 	item_state_world = "heart-prosthetic_world"
 	base_icon_state = "heart-prosthetic"
@@ -258,6 +261,7 @@
 	durability = 0.8
 	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 	can_relocate = TRUE
+	bloodlose_multiplier = 0.8
 
 /obj/item/organ/internal/heart/cybernetic/voxc
 	parent_bodypart = BP_GROIN
