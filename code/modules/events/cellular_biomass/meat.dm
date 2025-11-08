@@ -12,6 +12,10 @@
 
 	can_block_air = TRUE
 
+	armor = list(MELEE = 10, BULLET = 30, LASER = -10, ENERGY = 100, BOMB = -10, BIO = 100, FIRE = -200, ACID = -300)
+	max_integrity = 10
+	resistance_flags = CAN_BE_HIT
+
 
 /obj/structure/meatvineborder/CanPass(atom/movable/mover, turf/target, height=0)
 	if(get_dir(loc, target) & dir)
@@ -56,6 +60,10 @@
 	var/list/meat_side_overlays
 
 	var/list/borders_overlays = list()
+
+/obj/structure/meatvine/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if((exposed_temperature > T0C+100) && prob(10))
+		qdel(src)
 
 /obj/structure/meatvine/proc/rot()
 	color = "#55ffff"
@@ -369,9 +377,11 @@
 	var/list/vents = list()
 	var/datum/pipeline/entry_vent_parent = Vent.PARENT1
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
-		vents.Add(temp_vent)
+		if(!temp_vent.welded)
+			vents.Add(temp_vent)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in entry_vent_parent.other_atmosmch)
-		vents.Add(temp_vent)
+		if(!temp_vent.welded)
+			vents.Add(temp_vent)
 	if(!vents.len)
 		return ..()
 
