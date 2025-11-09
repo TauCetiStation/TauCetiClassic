@@ -502,24 +502,35 @@ SUBSYSTEM_DEF(shuttle)
 		var/turf/pickedloc = pick_n_take(clear_turfs)
 
 		var/obj/structure/closet/crate/mailcrate/Crate = new(pickedloc)
-		for(var/list/order in mail_orders)
-			var/obj/item/Item = generate_mail_item(order, pickedloc)
+		for(var/datum/mail_order/Order in mail_orders)
+			var/obj/item/Item = generate_mail_item(Order, pickedloc)
 			if(Item)
 				Item.forceMove(Crate)
 
-			mail_orders -= order
+			mail_orders -= Order
 
 	SSshuttle.shoppinglist.Cut()
 	return
 
+/datum/mail_order
+	var/sender
+	var/itemType
+	var/receiver
+
+/datum/mail_order/New(sender, itemType, receiver)
+	src.sender = sender
+	src.itemType = itemType
+	src.receiver = receiver
+
 /datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver, itemType)
-	mail_orders += list(list("sender" = sender, "type" = itemType, "receiver" = receiver))
+	var/datum/mail_order/Order = new /datum/mail_order(sender, itemType, receiver)
+	mail_orders += Order
 
-/datum/controller/subsystem/shuttle/proc/generate_mail_item(list/order, turf/pickedloc)
-	var/itemType = order["type"]
+/datum/controller/subsystem/shuttle/proc/generate_mail_item(datum/mail_order/Order, turf/pickedloc)
+	var/itemType = Order.itemType
 
-	var/sender = order["sender"]
-	var/receiver_number = order["receiver"]
+	var/sender = Order.sender
+	var/receiver_number = Order.receiver
 	var/datum/money_account/receiver_account = get_account(receiver_number)
 	if(!receiver_account || !sender || !itemType)
 		return
