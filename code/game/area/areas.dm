@@ -151,7 +151,7 @@ var/global/list/ghostteleportlocs = list()
 		luminosity = 1
 		add_overlay(area_unsimulated_light_mask)
 
-	area_inventory_tag = src.name
+	area_inventory_tag = area_inventory_tag ? area_inventory_tag : src.name
 	for(var/obj/item/weapon/paper/inventory/P as anything in global.inventory_papers)
 		if(P.inventory_tag == area_inventory_tag)
 			inventory_paper = WEAKREF(P)
