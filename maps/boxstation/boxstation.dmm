@@ -4048,7 +4048,7 @@
 /obj/item/toy/cards{
 	layer = 4.1
 	},
-/obj/item/weapon/paper/inventory/brig_armory,
+/obj/item/weapon/paper/inventory/brig_armoury,
 /obj/item/device/megaphone,
 /obj/item/weapon/storage/box/handcuffs{
 	pixel_y = 3

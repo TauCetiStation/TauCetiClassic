@@ -13077,7 +13077,7 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/paper/inventory/brig_armory,
+/obj/item/weapon/paper/inventory/brig_armoury,
 /obj/item/weapon/pen/red,
 /turf/simulated/floor{
 	icon_state = "dark"

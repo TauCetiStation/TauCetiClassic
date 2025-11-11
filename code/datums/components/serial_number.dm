@@ -95,5 +95,5 @@
 	inventory_data.Cut()
 	processing = FALSE
 
-/obj/item/weapon/paper/inventory/brig_armory
+/obj/item/weapon/paper/inventory/brig_armoury
 	inventory_area = list(/area/station/security/armoury)
