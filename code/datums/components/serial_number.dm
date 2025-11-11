@@ -1,27 +1,22 @@
 /datum/component/serial_number
 	var/serial_number
-	var/atom/target_item
 
-/datum/component/serial_number/Initialize(atom/target)
-	serial_number = generate_serial_number()
-	target_item = target
+/datum/component/serial_number/Initialize()
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	serial_number = add_zero("[rand(0, 999999)]", 6)
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(register_in_inventory))
 
-	RegisterSignal(target_item, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/serial_number/proc/register_in_inventory()
-	var/area/A = get_area(target_item)
+	var/atom/movable/I = parent
+	var/area/A = get_area(I)
 	if(A)
 		var/obj/item/weapon/paper/P = A?.inventory_paper?.resolve()
-		P?.info += "<hr><b>[target_item.name]</b><br><u>Серийный номер: [serial_number]</u><br>"
-
-/datum/component/serial_number/proc/generate_serial_number()
-	serial_number = "[rand(0, 999999)]"
-	while(length(serial_number) < 6)
-		serial_number = "0" + serial_number
-
-	return serial_number
+		P?.info += "<hr><b>[I.name]</b><br><u>Серийный номер: [serial_number]</u><br>"
 
 /datum/component/serial_number/proc/on_examine(datum/source, mob/user)
 	SIGNAL_HANDLER
