@@ -21,7 +21,7 @@
 	if(!suitable_mags.len)
 		suitable_mags += initial_mag
 	chamber_round()
-	AddComponent(/datum/component/serial_number, src)
+	AddComponent(/datum/component/serial_number)
 	update_icon()
 
 /obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1, no_casing = 0)

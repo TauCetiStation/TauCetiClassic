@@ -26672,7 +26672,7 @@
 	},
 /area/station/medical/virology)
 "fQI" = (
-/obj/item/weapon/paper/brig_arsenal,
+/obj/item/weapon/paper/inventory/brig_armory,
 /obj/item/toy/cards{
 	layer = 4.1
 	},

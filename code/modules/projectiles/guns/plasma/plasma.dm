@@ -65,7 +65,7 @@
 		ammo_type[i] = new path(src)
 
 	update_icon()
-	AddComponent(/datum/component/serial_number, src)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/plasma/Destroy()
 	QDEL_LIST_ASSOC_VAL(ammo_type)

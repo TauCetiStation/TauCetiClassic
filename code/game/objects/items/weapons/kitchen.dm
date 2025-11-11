@@ -195,7 +195,7 @@
 
 /obj/item/weapon/kitchenknife/combat/atom_init()
 	. = ..()
-	AddComponent(/datum/component/serial_number, src)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/kitchenknife/throwing
 	name = "throwing knife"

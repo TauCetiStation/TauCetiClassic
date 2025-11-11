@@ -29,7 +29,7 @@
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	update_icon()
-	AddComponent(/datum/component/serial_number, src)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()

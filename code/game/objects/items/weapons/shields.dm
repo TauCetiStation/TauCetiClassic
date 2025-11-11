@@ -160,7 +160,7 @@
 
 /obj/item/weapon/shield/riot/atom_init()
 	. = ..()
-	AddComponent(/datum/component/serial_number, src)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/shield/riot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/melee/baton))

@@ -15,7 +15,7 @@
 
 /obj/item/weapon/gun/grenadelauncher/atom_init()
 	. = ..()
-	AddComponent(/datum/component/serial_number, src)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/grenadelauncher/attack_hand(mob/user)
 	if(loc == user)

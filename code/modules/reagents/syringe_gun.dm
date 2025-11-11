@@ -18,7 +18,7 @@
 
 /obj/item/weapon/gun/syringe/atom_init()
 	. = ..()
-	AddComponent(/datum/component/serial_number, src)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
