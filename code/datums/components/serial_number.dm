@@ -66,7 +66,7 @@
 
 	inventory_data[area_name][item_name] += serial_number
 
-/obj/item/weapon/paper/inventory/show_content()
+/obj/item/weapon/paper/inventory/show_content(mob/user, forceshow = FALSE, forcestars = FALSE, infolinks = FALSE, view = TRUE)
 	// need to compile data once after all initializations
 	// can't hook it at init/signals because of races with all other stuff (area init, items init, component init and component signal handler)
 	if(info == initial(info) && SSticker.current_state >= GAME_STATE_PLAYING && length(inventory_data))
