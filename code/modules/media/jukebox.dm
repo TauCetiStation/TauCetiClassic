@@ -51,12 +51,8 @@
 		str += "Untitled"
 	return str
 
-
-var/global/loopModeNames=list(
-	JUKEMODE_SHUFFLE = "Shuffle",
-	JUKEMODE_REPEAT_SONG = "Single",
-	JUKEMODE_PLAY_ONCE= "Once",
-)
+// Order is important. JUKEMODE_SHUFFLE, JUKEMODE_REPEAT_SONG, JUKEMODE_PLAY_ONCE
+var/global/loopModeNames=list("Shuffle", "Single", "Once")
 /obj/machinery/media/jukebox
 	name = "Jukebox"
 	desc = "A jukebox used for parties and shit."

@@ -22,11 +22,12 @@
 #define FLUFF_TYPE_LABCOAT "labcoat"
 #define FLUFF_TYPE_BACKPACK "backpack"
 #define FLUFF_TYPE_TIE  "tie"
+#define FLUFF_TYPE_BEDSHEET "bedsheet"
 // other
 //#define FLUFF_TYPE_ROBOT "robot"
 #define FLUFF_TYPE_GHOST "ghost"
 
-#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE)
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE, FLUFF_TYPE_BEDSHEET)
 
 
 /obj/item/customitem
@@ -75,6 +76,9 @@
 
 /obj/item/clothing/neck/custom
 	name = "Custom tie"
+
+/obj/item/weapon/bedsheet/custom
+	name = "Custom bedsheet"
 
 /datum/custom_item
 	var/item_type // FLUFF_TYPES_LIST
@@ -272,9 +276,15 @@
 			if(FLUFF_TYPE_HAT)
 				item = new /obj/item/clothing/head/custom()
 			if(FLUFF_TYPE_UNIFORM)
-				item = new /obj/item/clothing/under/custom()
+				var/obj/item/clothing/under/custom/U = new /obj/item/clothing/under/custom()
+				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
+					U.flags |= ONESIZEFITSALL
+				item = U
 			if(FLUFF_TYPE_SUIT)
-				item = new /obj/item/clothing/suit/custom()
+				var/obj/item/clothing/suit/custom/S = new /obj/item/clothing/suit/custom()
+				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
+					S.flags |= ONESIZEFITSALL
+				item = S
 			if(FLUFF_TYPE_MASK)
 				item = new /obj/item/clothing/mask/custom()
 			if(FLUFF_TYPE_GLASSES)
@@ -297,6 +307,8 @@
 					labcoat.can_button_up = FALSE
 				labcoat.base_icon_state = custom_item_info.icon_state
 				item = labcoat
+			if(FLUFF_TYPE_BEDSHEET)
+				item = new /obj/item/weapon/bedsheet/custom()
 
 		if(!item)
 			continue
@@ -308,6 +320,9 @@
 		item.icon_custom = custom_item_info.icon
 		item.icon_state = custom_item_info.icon_state
 		item.item_state = custom_item_info.icon_state
+		if("[custom_item_info.icon_state]_w" in icon_states(custom_item_info.icon))
+			item.item_state_inventory = custom_item_info.icon_state
+			item.item_state_world = "[custom_item_info.icon_state]_w"
 
 		switch(custom_item_info.hair_flags)
 			if(FLUFF_HAIR_HIDE_HEAD)

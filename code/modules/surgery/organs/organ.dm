@@ -6,9 +6,10 @@
 
 /obj/item/organ
 	name = "organ"
+	icon = 'icons/obj/surgery.dmi'
 	germ_level = 0
 
-	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART
 
 	// Strings.
 	var/parent_bodypart                // Bodypart holding this object.
@@ -25,21 +26,36 @@
 
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
+	var/max_damage = 0				   // Damage cap
 
 /obj/item/organ/Destroy()
 	owner = null
 	return ..()
+
+/obj/item/organ/proc/remove(mob/living/user)
+	if(!istype(owner))
+		return
+
+	owner.organs -= src
+
+	forceMove(get_turf(owner))
+	START_PROCESSING(SSobj, src)
+
+	if(owner && vital)
+		owner.death()
+	owner = null
 
 /obj/item/organ/proc/set_owner(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 	loc = null
 	owner = H
 
+/obj/item/organ/process()
+	return FALSE
+
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	SHOULD_CALL_PARENT(TRUE)
 	set_owner(H)
-
-	STOP_PROCESSING(SSobj, src)
 
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
@@ -149,6 +165,16 @@
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
 
+	var/obj/item/organ/internal/liver/L = organs_by_name[O_LIVER]
+	if(!L)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			// Ethanol and all drinks are so bad
+			if(istype(R, /datum/reagent/consumable/ethanol))
+				adjustToxLoss(2,5)
+			// Can't cope with toxins at all
+			if(istype(R, /datum/reagent/toxin))
+				adjustToxLoss(5)
+
 	handle_stance()
 
 	if(!force_process && !bad_bodyparts.len)
@@ -244,3 +270,8 @@
 				break
 		if(!has_arm) //need atleast one hand to crawl
 			Stun(5)
+
+/obj/item/organ/proc/is_robotic()
+	if(status & ORGAN_ROBOT)
+		return TRUE
+	return FALSE

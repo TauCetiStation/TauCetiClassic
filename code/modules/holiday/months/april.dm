@@ -3,12 +3,9 @@
 	begin_month = APRIL
 	begin_day = 1
 
-	staffwho_group_name = list(
-		SW_ADMINS     = "ClownAdmins",
-		SW_MENTORS    = "Mimes",
-		SW_XENOVISORS = "Honkovisors",
-		SW_DEVELOPERS = "Janitors",
-	)
+	// Order is important. SW_ADMINS, SW_MENTORS, SW_XENOVISORS, SW_DEVELOPERS
+	staffwho_group_name = list("ClownAdmins", "Mimes", "Honkovisors", "Janitors")
+
 	staffwho_prefixs = list("Bored", "Boring", "Funny", "Not Funny", "Cute", "Ugly", "Evil", "Despot", "Sad", "Kind", "Smart", "Wise", "Stupid", "Dumb", "III", "Shit Spawner", "Confused", "Chaotic", "Toxic", "SSD", "Insane", "", "Golden", "Tiny", "Furry", "Holy", "Unholy", "Looser", "Foolish", "Red", "Blue", "ERP")
 	staffwho_no_staff = "No Clowns Online"
 
@@ -20,12 +17,8 @@
 	begin_day = 12
 	begin_month = APRIL
 
-	staffwho_group_name = list(
-		SW_ADMINS     = "Astronauts",
-		SW_MENTORS    = "Cosmonauts",
-		SW_XENOVISORS = "Space-observers",
-		SW_DEVELOPERS = "Houstons",
-	)
+	// Order is important. SW_ADMINS, SW_MENTORS, SW_XENOVISORS, SW_DEVELOPERS
+	staffwho_group_name = list("Astronauts", "Cosmonauts", "Space-observers", "Houstons")
 	staffwho_prefixs = list("Spaced", "Frozen", "Alien", "Comrade", "Dog", "Flying", "Galactical", "Puzzled", "Decompressed", "Amazed", "Ready", "Proud", "Space Erp", "Xenos", "Pilot", "Astronaut", "Cosmonavt")
 	staffwho_no_staff = "Space is empty"
 
