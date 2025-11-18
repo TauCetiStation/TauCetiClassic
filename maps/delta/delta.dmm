@@ -20313,7 +20313,7 @@
 "btq" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clothing/under/lightred,
+/obj/item/clothing/under/color/lightred,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -55965,7 +55965,7 @@
 "jNK" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clothing/under/yellowgreen,
+/obj/item/clothing/under/color/yellowgreen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -63145,7 +63145,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clothing/under/brown,
+/obj/item/clothing/under/color/brown,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -63466,7 +63466,7 @@
 "lCO" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clothing/under/lightbrown,
+/obj/item/clothing/under/color/lightbrown,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -94772,7 +94772,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clothing/under/aqua,
+/obj/item/clothing/under/color/aqua,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -103479,7 +103479,7 @@
 "vwV" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clothing/under/darkred,
+/obj/item/clothing/under/color/darkred,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
