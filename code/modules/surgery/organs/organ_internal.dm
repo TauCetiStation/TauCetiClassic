@@ -139,21 +139,18 @@
 		//** Handle antibiotics and curing infections
 		handle_antibiotics()
 
-		//** Handle the effects of infections
-		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
-
 		if (germ_level > 0 && germ_level < INFECTION_LEVEL_ONE/2 && prob(30))
 			germ_level--
 
 		if (germ_level >= INFECTION_LEVEL_ONE/2)
 			//aiming for germ level to go from ambient to INFECTION_LEVEL_TWO in an average of 15 minutes
-			if(antibiotics < 5 && prob(round(germ_level/6)))
+			if((has_antibiotics() == HAS_ANTIBIOTICS) && prob(round(germ_level/6)))
 				germ_level++
 
 		if (germ_level >= INFECTION_LEVEL_TWO)
 			var/obj/item/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 			//spread germs
-			if (antibiotics < 5 && BP.germ_level < germ_level && ( BP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
+			if ((has_antibiotics() == HAS_ANTIBIOTICS) && BP.germ_level < germ_level && ( BP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
 				BP.germ_level++
 
 			if (prob(3))	//about once every 30 seconds

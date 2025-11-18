@@ -433,21 +433,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 		handle_germ_effects()
 
 /datum/bodypart_controller/proc/handle_germ_sync()
-	var/antibiotics = BP.owner.reagents.get_reagent_amount("spaceacillin")
 	for(var/datum/wound/W in BP.wounds)
 		//Open wounds can become infected
 		if (BP.owner.germ_level > W.germ_level && W.infection_check())
 			W.germ_level++
 
-	if (antibiotics < 5)
+	if (BP.has_antibiotics() == HAS_ANTIBIOTICS)
 		for(var/datum/wound/W in BP.wounds)
 			//Infected wounds raise the organ's germ level
 			if (W.germ_level > BP.germ_level)
 				BP.germ_level = min(W.amount + BP.germ_level, W.germ_level) //faster infections from dirty wounds, but not faster than natural wound germification.
 
 /datum/bodypart_controller/proc/handle_germ_effects()
-	var/antibiotics = BP.owner.reagents.get_reagent_amount("spaceacillin")
-
 	if (BP.germ_level > 0 && BP.germ_level < INFECTION_LEVEL_ONE && prob(60))	//this could be an else clause, but it looks cleaner this way
 		BP.germ_level--	//since germ_level increases at a rate of 1 per second with dirty wounds, prob(60) should give us about 5 minutes before level one.
 
@@ -458,13 +455,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.owner.adjust_bodytemperature((fever_temperature - T20C) / BODYTEMP_COLD_DIVISOR + 1, BP.owner.bodytemperature, fever_temperature)
 
 		if(prob(round(BP.germ_level/10)))
-			if (antibiotics < 5)
+			if (BP.has_antibiotics() == HAS_ANTIBIOTICS)
 				BP.germ_level++
 
 			if (prob(10))	//adjust this to tweak how fast people take toxin damage from infections
 				BP.owner.adjustToxLoss(1)
 
-	if(BP.germ_level >= INFECTION_LEVEL_TWO && antibiotics < 5)
+	if(BP.germ_level >= INFECTION_LEVEL_TWO && (BP.has_antibiotics() == HAS_ANTIBIOTICS))
 		//spread the infection to organs
 		var/obj/item/organ/internal/target_organ = null	//make organs become infected one at a time instead of all at once
 		for (var/obj/item/organ/internal/IO in BP.bodypart_organs)
@@ -496,7 +493,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if (BP.parent.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30))
 					BP.parent.germ_level++
 
-	if(BP.germ_level >= INFECTION_LEVEL_THREE && antibiotics < 30)	//overdosing is necessary to stop severe infections
+	if(BP.germ_level >= INFECTION_LEVEL_THREE && (BP.has_antibiotics() == HAS_SPACEACILLIN_OVERDOSE))	//overdosing is necessary to stop severe infections
 		if (!(BP.status & ORGAN_DEAD))
 			BP.status |= ORGAN_DEAD
 			to_chat(BP.owner, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
