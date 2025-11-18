@@ -305,7 +305,7 @@
 	origin_tech = "materials=1;engineering=1"
 
 	var/mode = 1
-	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
+	var/list/modes = list("Метка", "Ценник", "Бирка")
 
 	var/lot_description = "Это что-то"
 	var/lot_account_number = null
@@ -341,7 +341,7 @@
 	desc = "Используется для наклейки ценников и бирок."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
-	modes = list(1 = "Ценник", 2 = "Бирка")
+	modes = list("Ценник", "Бирка")
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"

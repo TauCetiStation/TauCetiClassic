@@ -3197,6 +3197,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/weapon/paper/inventory,
 /turf/simulated/floor,
 /area/station/security/armoury)
 "aft" = (
@@ -4044,10 +4045,10 @@
 "agS" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/paper/brig_arsenal,
 /obj/item/toy/cards{
 	layer = 4.1
 	},
+/obj/item/weapon/paper/inventory/brig_armoury,
 /obj/item/device/megaphone,
 /obj/item/weapon/storage/box/handcuffs{
 	pixel_y = 3
