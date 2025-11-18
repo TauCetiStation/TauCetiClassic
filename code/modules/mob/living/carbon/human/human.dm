@@ -930,6 +930,11 @@
 	if (href_list["lookmob"])
 		var/mob/M = locate(href_list["lookmob"])
 		usr.examinate(M)
+
+	if(href_list["lookcache"])
+		var/datum/component/hiding_cache/Comp = locate(href_list["lookcache"])
+		Comp.try_open_cache(null, usr)
+
 	..()
 	return
 
