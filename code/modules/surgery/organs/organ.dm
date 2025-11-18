@@ -1,3 +1,6 @@
+#define HAS_ANTIBIOTICS 1
+#define HAS_SPACEACILLIN_OVERDOSE 2
+
 /mob/living/carbon/human
 	var/list/obj/item/organ/external/bodyparts = list()
 	var/list/obj/item/organ/external/bodyparts_by_name = list()
@@ -73,13 +76,15 @@
 	return icon('icons/mob/human.dmi',"blank")
 
 /obj/item/organ/proc/has_antibiotics()
+	if(owner.reagents.has_reagent("spaceacillin", 30))
+		return HAS_SPACEACILLIN_OVERDOSE
 	if(owner.reagents.has_reagent("spaceacillin", 5) || owner.reagents.has_reagent("ethanol", 25) || owner.reagents.has_reagent("whiskey", 25) || owner.reagents.has_reagent("specialwhiskey", 25) || owner.reagents.has_reagent("vodka", 25) || owner.reagents.has_reagent("cognac", 25) || owner.reagents.has_reagent("absinthe", 25) || owner.reagents.has_reagent("moonshine", 25))
-		return TRUE
+		return HAS_ANTIBIOTICS
 	return FALSE
 
 //Germs
 /obj/item/organ/proc/handle_antibiotics()
-	if (!germ_level || has_antibiotics())
+	if (!germ_level || (has_antibiotics() == HAS_ANTIBIOTICS))
 		return
 
 	if (germ_level < INFECTION_LEVEL_ONE)
