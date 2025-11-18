@@ -165,13 +165,33 @@
 
 #define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
-#define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
+#define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS
 
-#define isitem(A) (istype(A, /obj/item))
+#define isitem(A)		(istype(A, /obj/item))
 
-#define isunder(A) (istype(A, /obj/item/clothing/under))
+#define isunder(A)		 istype(A, /obj/item/clothing/under)
+
+#define isspacesuit(A) 	 istype(A, /obj/item/clothing/suit/space)
+
+#define isspacehelmet(A) istype(A,/obj/item/clothing/head/helmet/space)
+
+#define ishardsuit(A) 	 istype(A, /obj/item/clothing/suit/space/rig)
+
+#define ishardhelmet(A)  istype(A,/obj/item/clothing/head/helmet/space/rig)
+
+#define isbreathmask(A)  istype(A,/obj/item/clothing/mask)
+
+#define ismagboots(A)	 istype(A, /obj/item/clothing/shoes/magboots)
+
+#define istank(A) 		 istype(A, /obj/item/weapon/tank)
+
+#define issuitcooling(A) istype(A, /obj/item/device/suit_cooling_unit)
+
+#define ismedical(A)	 istype(A, /obj/item/weapon/storage/firstaid)
+
+#define iscanister(A)	 istype(A, /obj/machinery/portable_atmospherics/canister)
 
 // ROLES / ANTAG
 
