@@ -73,28 +73,14 @@
 		to_chat(M, "<span class='warning'>Too many items on the tile!</span>")
 		. = FALSE
 
-	if(from_recipe.max_per_turf == 1)
-		if(from_recipe.result_type::flags & ON_BORDER)
-			for(var/atom/A in here)
-				if(!(A.flags & ON_BORDER))
-					continue
-
-				if(A.dir == build_direction)
-					to_chat(M, "<span class='warning'>There is another [from_recipe.title] here!</span>")
-					. = FALSE
-					break
-
-		else if(locate(from_recipe.result_type) in here)
-			to_chat(M, "<span class='warning'>There is another [from_recipe.title] here!</span>")
-			. = FALSE
-
+	if(from_recipe.max_per_turf == 1 && (locate(from_recipe.result_type) in here))
+		to_chat(M, "<span class='warning'>There is another [from_recipe.title] here!</span>")
+		. = FALSE
 	else if (from_recipe.max_per_turf)
 		var/already_have = 0
 		for(var/type in here)
-			if(!istype(type, from_recipe.result_type))
-				continue
-
-			already_have++
+			if(istype(type, from_recipe.result_type))
+				already_have++
 
 		if(already_have >= from_recipe.max_per_turf)
 			to_chat(M, "<span class='warning'>You can't build another [from_recipe.title] here!</span>")

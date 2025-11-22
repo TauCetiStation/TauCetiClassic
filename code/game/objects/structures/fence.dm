@@ -1,8 +1,3 @@
-#define FENCE_NO_COVER 0
-#define FENCE_COVER 1
-#define FENCE_COVER_FULL 2
-#define FENCE_COVER_TALL 3
-
 /obj/structure/fence
 	name = "Indestructible Concrete Fence"
 	desc = "Спрячь за высоким забором таяру - выкраду вместе с забором!"
@@ -22,7 +17,9 @@
 	anchored = TRUE //Забор всегда прикручен к тайлу.
 	var/screwed = TRUE //Подкручен и сломается если перелезть.
 
-	var/fence_cover = FENCE_COVER_FULL
+
+	var/fence_full = TRUE
+	var/fence_cover_chance = 40
 
 /obj/structure/fence/atom_init()
 	. = ..()
@@ -62,7 +59,7 @@
 	return ..()
 
 /obj/structure/fence/CanPass(atom/movable/mover, turf/target, height=0)
-	if((fence_cover > FENCE_NO_COVER) && istype(mover,/obj/item/projectile))
+	if(fence_cover_chance && istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
@@ -108,18 +105,15 @@
 	if(!first && !second) //Dir can't cover
 		return TRUE
 
-	if(fence_cover == FENCE_COVER_TALL) //Tallest fence covers always even while standing
+	if(fence_cover_chance >= 100)
 		return FALSE
 
-	var/cover_chance = 20
-
-	if(fence_cover >= FENCE_COVER_FULL) //Full cover adds additional protection
-		cover_chance += 20
+	var/cover_chance = fence_cover_chance
 
 	if(ismob(P.original))
 		var/mob/M = P.original
 		if(M.lying)
-			if(fence_cover >= FENCE_COVER_FULL) //Full cover fully covers lying mobs
+			if(fence_full) //Full cover fully covers lying mobs
 				return FALSE
 
 			cover_chance += 20
@@ -141,7 +135,8 @@
 	max_integrity = 5
 	resistance_flags = CAN_BE_HIT
 
-	fence_cover = FENCE_COVER
+	fence_full = FALSE
+	fence_cover_chance = 20
 
 /obj/structure/fence/wood/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
@@ -157,7 +152,8 @@
 	max_integrity = 10
 	resistance_flags = FIRE_PROOF | CAN_BE_HIT
 
-	fence_cover = FENCE_NO_COVER
+	fence_full = FALSE
+	fence_cover_chance = 0
 
 	var/mutable_appearance/Rail
 
@@ -203,8 +199,3 @@
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 2)
 	..()
-
-#undef FENCE_NO_COVER
-#undef FENCE_COVER
-#undef FENCE_COVER_FULL
-#undef FENCE_COVER_TALL
