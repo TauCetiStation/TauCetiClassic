@@ -2,7 +2,8 @@
 
 /obj/item/weapon/melee/powerfist
 	name = "power-fist"
-	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch. Definitely stolen from Unathi."
+	desc = "Металлическая перчатка с ударным поршневым механизмом наверху для дополнительной силы удара. Точно украдено у Унатхов."
+	cases = list("силовой кастет","силового кастета","силовому кастету","силовой кастет","силовым кастетом","силовом кастете")
 	icon_state = "powerfist_1"
 	item_state = "powerfist"
 	flags = CONDUCT
@@ -10,9 +11,10 @@
 	force = 20
 	throwforce = 10
 	throw_range = 7
-	w_class = SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "combat=5;powerstorage=3;syndicate=3"
 	can_embed = FALSE
+	var/agony = 0
 	var/base_force = 0
 	var/fisto_setting = 1
 	var/damage_mult_per_stage = 3
@@ -25,10 +27,10 @@
 /obj/item/weapon/melee/powerfist/examine(mob/user)
 	..()
 	if(!in_range(user, src))
-		to_chat(user,"<span class='notice'>You'll need to get closer to see any more.</span>")
+		to_chat(user,"<span class='notice'>Чтобы осмотреть манометр, нужно подойти поближе.</span>")
 		return
 	if(tank)
-		to_chat(user,"<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
+		to_chat(user,"<span class='notice'>Манометр показывает [tank.air_contents.return_pressure()] кПа внутри баллона.</span>")// initial_pressure
 
 
 /obj/item/weapon/melee/powerfist/attackby(obj/item/I, mob/user, params)
@@ -45,7 +47,7 @@
 	else if(iswrenching(I))
 		fisto_setting = 1 + (fisto_setting % 3)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user,"<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
+		to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]-й режим.</span>")
 		update_icon()
 
 	else if(isscrewing(I))
@@ -54,39 +56,51 @@
 	else
 		return ..()
 
+/obj/item/weapon/melee/powerfist/attack_self(mob/user)
+	fisto_setting = 1 + (fisto_setting % 3)
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user,"<span class='notice'>Вы поворачиваете клапан [CASE(src, DATIVE_CASE)] в [fisto_setting]-й режим.</span>")
+	update_icon()
+
+/obj/item/weapon/melee/powerfist/AltClick(mob/user)
+	if(Adjacent(user))
+		if(tank)
+			removeTank(user)
+
 /obj/item/weapon/melee/powerfist/proc/removeTank(mob/living/carbon/human/user)
 	if(!tank)
-		to_chat(user,"<span class='notice'>\The [src] currently has no tank attached to it.</span>")
+		to_chat(user,"<span class='notice'>Нечего отсоединять от [CASE(src, GENITIVE_CASE)].</span>")
 		return
-	to_chat(user,"<span class='notice'>You detach \the [tank] from \the [src].</span>")
+	to_chat(user,"<span class='notice'>Вы отсоединили баллон от [CASE(src, ACCUSATIVE_CASE)].</span>")
 	user.put_in_hands(tank)
 	tank = null
 
 /obj/item/weapon/melee/powerfist/proc/insertTank(obj/item/weapon/tank/thetank, mob/living/carbon/human/user)
 	if(tank)
-		to_chat(user,"<span class='warning'>\The [src] already has a tank.</span>")
+		to_chat(user,"<span class='warning'>В [CASE(src, PREPOSITIONAL_CASE)] уже есть баллон.</span>")
 		return
 
 	if(!user.unEquip(thetank))
 		return
 
-	to_chat(user,"<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
+	to_chat(user,"<span class='notice'>Вы подключаете баллон в [CASE(src, ACCUSATIVE_CASE)].</span>")
 	tank = thetank
 	thetank.forceMove(src)
 
 /obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user, def_zone)
 	if(!tank)
-		to_chat(user,"<span class='warning'>\The [src] can't operate without a source of gas!</span>")
+		to_chat(user,"<span class='warning'>Для работы [CASE(src, GENITIVE_CASE)] нужен баллон с газом!</span>")
 		return FALSE
+
 	var/initial_pressure = tank.air_contents.return_pressure()
 	var/consumed_pressure = 0
 	if(initial_pressure >= POWERFIST_MIN_PRESSURE)
-#define K0 0.3
-#define K1 0.115
-#define K2 0.105
-		// fixed ratio pressure removal for balance I guess, corresponds to 30%, 50%, 90%
+#define K0 0.02
+#define K1 0.025
+#define K2 0.005
+		// fixed ratio pressure removal for balance I guess, corresponds to 1%, 5%, 10%
 		// to find coefficients use quadratic fit
-		var/datum/gas_mixture/M = tank.air_contents.remove_ratio(fisto_setting ** 2 * K2 - fisto_setting * K1 + K0)
+		var/datum/gas_mixture/M = tank.air_contents.remove_ratio(fisto_setting ** 2 * K2 + fisto_setting * K1 + K0)
 #undef K0
 #undef K1
 #undef K2
@@ -94,7 +108,7 @@
 		consumed_pressure = M.return_pressure()
 
 	if(consumed_pressure < POWERFIST_MIN_PRESSURE)
-		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
+		to_chat(user,"<span class='warning'>Ударный поршень [CASE(src, GENITIVE_CASE)] тихо шипит, для его работы нужно больше газа в баллоне!</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 		return FALSE
 
@@ -105,9 +119,43 @@
 	var/punch = consumed_pressure / PRACTICAL_MAX_CONSUMED * damage_mult_per_stage
 #undef  PRACTICAL_MAX_CONSUMED
 
-	force = base_force * punch
+	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+	//harm
+	force = 1.5 ** (fisto_setting - 1) * base_force// + base_force * punch
+
+	if((user.get_species() == HUMAN && target.get_species() == UNATHI) || (target.get_species() == HUMAN && user.get_species() == UNATHI))
+		force += 5
+
+	var/block_throw = check_shield_dir(target, get_dir(src, target))
+
+	switch(user.a_intent)
+		if(INTENT_HELP)
+			agony = 1.5 * force
+			force = 0
+			if(!block_throw)
+				target.throw_at(throw_target, (fisto_setting - 1), 1)
+		if(INTENT_PUSH)
+			agony = 0.75 * force
+			force = 0.25 * force
+			if(!(def_zone in list(BP_L_ARM, BP_R_ARM)))
+				if(!block_throw)
+					target.throw_at(throw_target,(2 * fisto_setting + punch), 1)
+					target.MakeConfused(0.2 * fisto_setting)
+		if(INTENT_GRAB)
+			agony = 0.25 * force
+			force = 0.5 * force
+			if(iscarbon(target))
+				if(!block_throw)
+					target.crawling = TRUE
+			else
+				target.Stun(0.5 * fisto_setting)
+		if(INTENT_HARM)
+			agony = 0
+			if(!block_throw)
+				target.throw_at(throw_target, (fisto_setting - 1), 1)
+
 	var/success = ..()
-	force = base_force
+
 	if (success)
 		target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>",
 								"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
@@ -115,8 +163,9 @@
 		playsound(src, 'sound/weapons/guns/resonator_blast.ogg', VOL_EFFECTS_MASTER)
 		playsound(src, 'sound/weapons/genhit2.ogg', VOL_EFFECTS_MASTER)
 
-		var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-		target.throw_at(throw_target, 5 * punch, 1)
+		if(agony > 0)
+			target.apply_effect(agony, AGONY)
+
 		return TRUE
 	return FALSE
 
@@ -125,7 +174,7 @@
 
 /obj/item/weapon/melee/powerfist/with_tank/atom_init()
 	. = ..()
-	var/obj/item/weapon/tank/emergency_oxygen/double/new_tank = new(src)
+	var/obj/item/weapon/tank/oxygen/new_tank = new(src)
 	tank = new_tank
 
 #undef POWERFIST_MIN_PRESSURE
