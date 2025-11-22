@@ -72,7 +72,6 @@
 	else if(here.contents.len > 15) //we don't want for() thru tons of atoms.
 		to_chat(M, "<span class='warning'>Too many items on the tile!</span>")
 		. = FALSE
-
 	if(from_recipe.max_per_turf == 1 && (locate(from_recipe.result_type) in here))
 		to_chat(M, "<span class='warning'>There is another [from_recipe.title] here!</span>")
 		. = FALSE
@@ -81,7 +80,6 @@
 		for(var/type in here)
 			if(istype(type, from_recipe.result_type))
 				already_have++
-
 		if(already_have >= from_recipe.max_per_turf)
 			to_chat(M, "<span class='warning'>You can't build another [from_recipe.title] here!</span>")
 			. = FALSE
