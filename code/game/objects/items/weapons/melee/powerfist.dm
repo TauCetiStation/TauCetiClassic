@@ -154,36 +154,6 @@
 			if(!block_throw)
 				target.throw_at(throw_target, (fisto_setting - 1), 1)
 
-	var/atom/movable/hand_item
-	switch(def_zone)
-		if(BP_HEAD, O_EYES, O_MOUTH)
-			agony = 0.9 * agony
-			force = 0.9 * force
-			target.MakeConfused(0.05 * fisto_setting)
-		if(BP_CHEST)
-			force = 1.25 * force
-		if(BP_GROIN)
-			agony = agony + 0.5 * base_force * punch
-			if(user.IsClumsy() || target.IsClumsy())
-				playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-			if(isloyal(user) || isloyal(target))
-				playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
-		if(BP_L_ARM)
-			hand_item = target.l_hand
-			if(hand_item && (user.a_intent == INTENT_PUSH))
-				target.drop_l_hand() // else not work
-				hand_item.throw_at(throw_target, fisto_setting ** 2 , 1)
-
-		if(BP_R_ARM)
-			hand_item = target.r_hand
-			if(hand_item && (INTENT_PUSH == user.a_intent))
-				target.drop_r_hand()
-				hand_item.throw_at(throw_target, fisto_setting ** 2 , 1)
-		if(BP_L_LEG)
-			target.crawling = TRUE
-		if(BP_R_LEG)
-			target.crawling = TRUE
-
 	var/success = ..()
 
 	if (success)
