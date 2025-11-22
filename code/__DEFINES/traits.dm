@@ -234,6 +234,7 @@
 #define TRAIT_GLOWING_EYES        "glowing_eyes"
 // todo: this enables night vision filter, but we also need to set see_in_dark for it to work in the dark, need to rework or rename this trait
 #define TRAIT_NIGHT_EYES          "night_eyes"
+#define TRAIT_CYBER_NIGHT_EYES    "cyber_night_eyes"
 /// grayscale body and white hair, for changeling victims
 #define TRAIT_HUSK                "husk"
 /// no hair, scorched body

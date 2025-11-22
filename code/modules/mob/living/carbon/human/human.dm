@@ -1270,7 +1270,7 @@
 /mob/living/carbon/human/proc/rupture_lung()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 
-	if(!IO)
+	if(!IO || IO.is_robotic()) //robotics lungs are durable and don't tear.
 		return
 
 	if(!IO.is_bruised())

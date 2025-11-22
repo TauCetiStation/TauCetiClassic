@@ -6,6 +6,7 @@
 	organ_tag = O_LIVER
 	parent_bodypart = BP_GROIN
 	var/alcohol_intensity = 1
+	var/toxins_threshold = 60 //after this amount of toxdamage has passed, the liver begins to suffer damage
 	min_bruised_damage = 25
 	min_broken_damage = 45
 	max_damage = 70
@@ -51,11 +52,12 @@
 /obj/item/organ/internal/liver/cybernetic
 	name = "cybernetic liver"
 	icon_state = "liver-prosthetic"
-	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	desc = "An electronic device designed to mimic the functions of a human liver. It has better resistance to toxins compared to organic liver."
 	item_state_world = "liver-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
 	durability = 0.8
+	toxins_threshold = 100
 	compability = list(HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
 	can_relocate = TRUE
 
@@ -95,7 +97,7 @@
 		src.damage = 0
 
 	//High toxins levels are dangerous
-	if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+	if(owner.getToxLoss() >= toxins_threshold && !owner.reagents.has_reagent("anti_toxin"))
 		//Healthy liver suffers on its own
 		if (src.damage < min_broken_damage)
 			src.damage += 0.2 * process_accuracy
@@ -127,6 +129,9 @@
 			else
 				change_volume += 0.8 * process_accuracy
 				owner.reagents.remove_reagent("iron", 0.1 * process_accuracy)
+		if(is_robotic())
+			change_volume *= 1.25
+
 		owner.blood_add(change_volume)
 		blood_total += change_volume
 

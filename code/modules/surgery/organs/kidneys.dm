@@ -45,7 +45,7 @@
 /obj/item/organ/internal/kidneys/cybernetic
 	name = "cybernetic kidneys"
 	icon_state = "kidneys-prosthetic"
-	desc = "An electronic device designed to mimic the functions of human kidneys. It has no benefits over a pair of organic kidneys, but is easy to produce."
+	desc = "An electronic device designed to mimic the functions of human kidneys. They clear toxins in the blood much better than regular kidneys."
 	item_state_world = "kidneys-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
@@ -75,6 +75,9 @@
 
 	if(!owner)
 		return
+
+	if(is_robotic() && (!is_bruised() || !is_broken()))
+		owner.adjustToxLoss(-0.25)
 
 	// Coffee is really bad for you with busted kidneys.
 	// This should probably be expanded in some way, but fucked if I know
