@@ -1103,6 +1103,9 @@
 
 	P.add_texture(texture_name, details_name)
 
+	P.pixel_x = pixel_x
+	P.pixel_y = pixel_y
+
 	forceMove(P)
 
 	return P
