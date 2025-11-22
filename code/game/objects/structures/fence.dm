@@ -15,7 +15,7 @@
 
 	climbable = TRUE
 
-	throwpass = 1
+	throwpass = TRUE
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 
@@ -52,9 +52,9 @@
 	else if(isscrewing(W))
 		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
 			if(screwed)
-				to_chat(user, "<span class='notice'>Вы откручиваете забор.</span>")
+				to_chat(user, "<span class='notice'>Вы подкручиваете забор, чтобы он стал хлипким.</span>")
 			else
-				to_chat(user, "<span class='notice'>Вы прикручиваете забор.</span>")
+				to_chat(user, "<span class='notice'>Вы подкручиваете забор, чтобы он был крепким.</span>")
 			screwed = !screwed
 			return TRUE
 		return FALSE
@@ -69,6 +69,9 @@
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(loc, target) & dir)
+		if(!screwed && prob(5)) //5% chance that it won't stop us from going through.
+			deconstruct(FALSE)
+
 		return FALSE
 
 	return TRUE
@@ -99,7 +102,10 @@
 	if(get_dist(P.starting, loc) <= 1) //Too close to cover
 		return TRUE
 
-	if(!((get_turf(P.original) == cover) && (get_dir(cover, from) == dir)) && !((get_turf(P.original) == get_step(cover, get_dir(from, cover))) && get_dir(from, cover) == dir)) //Dir can't cover
+	var/first = ((get_turf(P.original) == cover) && (get_dir(cover, from) == dir)) //Projectile shot to the turf our cover is in and direction of cover covers from said projectile.
+	var/second = ((get_turf(P.original) == get_step(cover, get_dir(from, cover))) && get_dir(from, cover) == dir) //Projectile shot to the turf behind our cover and direction of cover covers from said projectile.
+
+	if(!first && !second) //Dir can't cover
 		return TRUE
 
 	if(fence_cover == FENCE_COVER_TALL) //Tallest fence covers always even while standing
@@ -164,7 +170,10 @@
 
 /obj/structure/fence/metal/proc/change_color(new_color)
 	cut_overlay(Rail)
-	Rail = mutable_appearance(icon, "fence_metal_color")
+
+	if(!Rail)
+		Rail = mutable_appearance(icon, "fence_metal_color")
+
 	Rail.color = new_color
 	add_overlay(Rail)
 

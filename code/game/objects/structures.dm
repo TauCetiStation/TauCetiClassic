@@ -146,8 +146,8 @@
 				continue
 
 		if(O && O.density)
-			var/on_border_stuff_in_the_way = (O.flags & ON_BORDER) && (O.dir != get_dir(get_turf(src), get_turf(climber)))
-			if(on_border_stuff_in_the_way)
+			var/climb_dir = get_dir(get_turf(src), get_turf(climber))
+			if((O.flags & ON_BORDER) && (O.dir != climb_dir)) //If ON_BORDER stuff blocks our way - check its dir if it actually blocks our way.
 				continue
 			return O
 
@@ -194,29 +194,22 @@
 	climbers -= climber
 
 /obj/structure/proc/on_climb(mob/living/climber, mob/living/user)
+	var/list/message_parts = list("залезает", "на")
+	var/turf/T = get_turf(src)
+
 	if(flags & ON_BORDER)
-		var/turf/T
+		message_parts = list("перелезает", "через")
+
 		if(get_turf(climber) == get_turf(src))
 			T = get_step(get_turf(src), dir)
-		else
-			T = get_turf(src)
 
-		climber.forceMove(T)
+	climber.forceMove(T)
 
+	if(get_turf(climber) == T)
 		if(climber == user)
-			user.visible_message("<span class='warning'>[user] перелезает через [src]!</span>")
+			user.visible_message("<span class='warning'>[user] [message_parts[1] + message_parts[2]] [src]!</span>")
 		else
-			user.visible_message("<span class='warning'>[user] перетаскивает [climber] через [src]!</span>")
-		return
-
-
-	climber.forceMove(get_turf(src))
-
-	if(get_turf(climber) == get_turf(src))
-		if(climber == user)
-			user.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
-		else
-			user.visible_message("<span class='warning'>[user] pulls [climber] up onto \the [src]!</span>")
+			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [message_parts[2]] [src]!</span>")
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)

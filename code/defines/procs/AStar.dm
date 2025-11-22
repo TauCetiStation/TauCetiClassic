@@ -181,10 +181,9 @@
 	var/rdir = get_dir(T, src)
 
 	for(var/obj/O in T)
-		if((O.flags & ON_BORDER) && !O.CanAStarPass(ID, adir))
-			return TRUE
-
-		if(!O.CanAStarPass(ID, rdir, origin))
-			return TRUE
+		if((O.flags & ON_BORDER))
+			return !O.CanAStarPass(ID, adir)
+		else
+			return !O.CanAStarPass(ID, rdir, origin)
 
 	return FALSE
