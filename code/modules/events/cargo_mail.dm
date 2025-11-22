@@ -13,19 +13,6 @@
 		"Qerrbalak" = /obj/random/mail/qerrbalak,
 	)
 
-	/*var/bible_by_name = list(
-		"Church of Christ" = /datum/bible_info/chaplain/bible,
-		"Church of Satan" = /datum/bible_info/chaplain/satanism,
-		"Church of Yog'Sotherie" = /datum/bible_info/chaplain/necronomicon,
-		"Church of Chaos" = /datum/bible_info/chaplain/book_of_lorgar,
-		"Church of Imperium" = /datum/bible_info/chaplain/book_of_lorgar/imperial_truth,
-		"Toolboxia" = /datum/bible_info/chaplain/toolbox,
-		"MG1M0" = /datum/bible_info/chaplain/science,
-		"F1ZTEH" = /datum/bible_info/chaplain/techno,
-		"Honkers" = /datum/bible_info/chaplain/scrapbook,
-		"Dialectic materialism group of Venera" = /datum/bible_info/chaplain/atheist,
-	)*/
-
 	var/list/job_to_mail = list(
 		JOB_VIROLOGIST = list("Венерианский Институт Вирусологии и Микологии", /obj/item/weapon/virusdish/random),
 		JOB_GENETICIST = list("Ассоциация Свободных Генетиков", /obj/random/meds/dna_injector),
@@ -41,16 +28,15 @@
 
 /datum/event/cargo_mail/start()
 	var/list/available_receivers = list()
-	for(var/mob/living/carbon/human/H in player_list)
-		var/datum/data/record/R = find_general_record("id", find_record_by_name(null, H.real_name))
+
+	for(var/datum/data/record/R in data_core.general)
 		if(!R)
 			continue
-
-		var/datum/money_account/MA = get_account(R.fields["insurance_account_number"])
+		var/datum/money_account/MA = get_account(R.fields["acc_number"])
 		if(!MA)
 			continue
 
-		available_receivers += list(list(H, MA))
+		available_receivers += list(list(R.fields["name"], R.fields["citizenship"], R.fields["rank"], R.fields["acc_number"]))
 
 	if(!available_receivers.len)
 		return
@@ -63,27 +49,25 @@
 			break
 
 		var/list/receiversData = pick_n_take(available_receivers)
-		var/mob/living/carbon/human/H = receiversData[1]
-		var/datum/money_account/MA = receiversData[2]
+		var/receiver_name = receiversData[1]
+		var/citizenship = receiversData[2]
+		var/receiver_rank = receiversData[3]
+		var/receiver_account = receiversData[4]
 
 		var/itemType
 		var/senderInfo
 
 		var/list/variants = list("FromHome", "NTSocial", "WrongMail", "WannaKnowMore?", "Love", "Prank")
-		if(H.mind.assigned_role in job_to_mail)
+		if(receiver_rank in job_to_mail)
 			variants += "JobItem"
 
 		switch(pick(variants))
 			if("FromHome") //From Home with Love
-				senderInfo = H.client.prefs.citizenship
+				senderInfo = citizenship
 				var/citizenshipType = citizenship_to_type[senderInfo]
 				if(!citizenshipType)
 					citizenshipType = /obj/random/mail/home
 				itemType = PATH_OR_RANDOM_PATH(citizenshipType)
-
-			/*if(2) //Religious spam
-				senderInfo = pick(bible_by_name)
-				itemType = bible_by_name[senderInfo]*/
 
 			if("NTSocial") //NT Support
 				senderInfo = "Отдел социальной поддержки персонала НаноТрейзен"
@@ -102,7 +86,7 @@
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/love)
 
 			if("JobItem") //Job related
-				var/list/data = job_to_mail[H.mind.assigned_role]
+				var/list/data = job_to_mail[receiver_rank]
 				senderInfo = data[1]
 				itemType = PATH_OR_RANDOM_PATH(data[2])
 
@@ -111,4 +95,4 @@
 				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/prank)
 
 
-		SSshuttle.add_mail(senderInfo, MA.account_number, itemType)
+		SSshuttle.add_mail(senderInfo, receiver_name, receiver_account, itemType)

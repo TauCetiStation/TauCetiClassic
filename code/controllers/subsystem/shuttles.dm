@@ -515,27 +515,28 @@ SUBSYSTEM_DEF(shuttle)
 /datum/mail_order
 	var/sender
 	var/itemType
-	var/receiver
+	var/receiver_name
+	var/receiver_acc
 
-/datum/mail_order/New(sender, itemType, receiver)
+/datum/mail_order/New(sender, itemType, receiver_name, receiver_acc)
 	src.sender = sender
 	src.itemType = itemType
-	src.receiver = receiver
+	src.receiver_name = receiver_name
+	src.receiver_acc = receiver_acc
 
-/datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver, itemType)
-	var/datum/mail_order/Order = new /datum/mail_order(sender, itemType, receiver)
+/datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver_name, receiver_acc, itemType)
+	var/datum/mail_order/Order = new /datum/mail_order(sender, itemType, receiver_name, receiver_acc)
 	mail_orders += Order
 
 /datum/controller/subsystem/shuttle/proc/generate_mail_item(datum/mail_order/Order, turf/pickedloc)
 	var/itemType = Order.itemType
 
 	var/sender = Order.sender
-	var/receiver_number = Order.receiver
+	var/receiver_name = Order.receiver_name
+	var/receiver_number = Order.receiver_acc
 	var/datum/money_account/receiver_account = get_account(receiver_number)
 	if(!receiver_account || !sender || !itemType)
 		return
-
-	var/receiver_name = receiver_account.owner_name
 
 	var/obj/item/Item = new itemType(pickedloc)
 
