@@ -44,6 +44,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
+	var/list/mail_orders = list() //list("sender", "type", "receiver")
 		//shuttle movement
 	var/at_station = TRUE
 	var/movetime = 1200
@@ -445,10 +446,20 @@ SUBSYSTEM_DEF(shuttle)
 	centcom_message = msg
 	//log_investigate("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
+/datum/controller/subsystem/shuttle/proc/is_turf_clear(turf/T)
+	for(var/atom/A in T.contents)
+		if(!A.simulated)
+			continue
+		if(istype(A, /obj/machinery/light))
+			continue
+
+		return FALSE
+
+	return TRUE
 
 //Buyin
 /datum/controller/subsystem/shuttle/proc/buy()
-	if(!shoppinglist.len)
+	if(!shoppinglist.len && !mail_orders.len)
 		return
 
 	var/shuttle_at
@@ -466,24 +477,17 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/turf/T in shuttle)
 		if(T.density)
 			continue
-		var/contcount
-		for(var/atom/A in T.contents)
-			if(!A.simulated)
-				continue
-			if(istype(A, /obj/machinery/light))
-				continue
-			contcount++
-		if(contcount)
+
+		if(!is_turf_clear(T))
 			continue
+
 		clear_turfs += T
 		CHECK_TICK
 
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
 			break
-		var/i = rand(1,clear_turfs.len)
-		var/turf/pickedloc = clear_turfs[i]
-		clear_turfs.Cut(i,i+1)
+		var/turf/pickedloc = pick_n_take(clear_turfs)
 
 		var/datum/supply_order/SO = S
 
@@ -494,8 +498,74 @@ SUBSYSTEM_DEF(shuttle)
 		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
+	if(mail_orders.len && clear_turfs.len)
+		var/turf/pickedloc = pick_n_take(clear_turfs)
+
+		var/obj/structure/closet/crate/mailcrate/Crate = new(pickedloc)
+		for(var/datum/mail_order/Order in mail_orders)
+			var/obj/item/Item = generate_mail_item(Order, pickedloc)
+			if(Item)
+				Item.forceMove(Crate)
+
+			mail_orders -= Order
+
 	SSshuttle.shoppinglist.Cut()
 	return
+
+/datum/mail_order
+	var/sender
+	var/itemType
+	var/receiver_name
+	var/receiver_acc
+
+/datum/mail_order/New(sender, itemType, receiver_name, receiver_acc)
+	src.sender = sender
+	src.itemType = itemType
+	src.receiver_name = receiver_name
+	src.receiver_acc = receiver_acc
+
+/datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver_name, receiver_acc, itemType)
+	var/datum/mail_order/Order = new /datum/mail_order(sender, itemType, receiver_name, receiver_acc)
+	mail_orders += Order
+
+/datum/controller/subsystem/shuttle/proc/generate_mail_item(datum/mail_order/Order, turf/pickedloc)
+	var/itemType = Order.itemType
+
+	var/sender = Order.sender
+	var/receiver_name = Order.receiver_name
+	var/receiver_number = Order.receiver_acc
+	var/datum/money_account/receiver_account = get_account(receiver_number)
+	if(!receiver_account || !sender || !itemType)
+		return
+
+	var/obj/item/Item = new itemType(pickedloc)
+
+	Item.add_price_tag("Отправитель - [sender]", 50, "Разное", global.cargo_account.account_number)
+
+	Item = object2onlineshop_package(Item, forceColor = "white", hideInfo = TRUE)
+
+	Item.pixel_x = rand(-10, 10)
+	Item.pixel_y = rand(-10, 10)
+
+	var/lot_number
+	if(istype(Item, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/Delivery = Item
+		lot_number = Delivery.lot_number
+	else
+		var/obj/structure/bigDelivery/Delivery = Item
+		lot_number = Delivery.lot_number
+
+	if(!lot_number)
+		return Item
+
+	var/datum/shop_lot/Lot = global.online_shop_lots[lot_number]
+
+	order_onlineshop_item(receiver_name, receiver_number, Lot, station_name_ru(), forced = TRUE)
+	receiver_account.shopping_cart["[lot_number]"] = Lot.to_list()
+
+	Item.name = "Посылка для [receiver_name]"
+
+	return Item
 
 
 /datum/controller/subsystem/shuttle/proc/incall(coeff = 1)
