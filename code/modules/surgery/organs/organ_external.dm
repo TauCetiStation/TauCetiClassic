@@ -1127,6 +1127,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(owner && HAS_TRAIT(owner, TRAIT_PLUVIAN_BLESSED))
 			eyes_static_layer.color = "#88ffff"
 
+		if(owner && HAS_TRAIT(owner, TRAIT_CYBER_NIGHT_EYES))
+			eyes_static_layer.color = "#ecdd06" //catlike
+
 		. += eyes_static_layer
 
 	if(species.eyes_colorable_layer)
