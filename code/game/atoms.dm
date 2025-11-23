@@ -84,6 +84,8 @@
 											QUALITY_SIGNALLING = null,
 										)
 
+	var/hit_particle_type = null
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -227,6 +229,9 @@
 /atom/proc/can_add_container()
 	return flags & INSERT_CONTAINER
 */
+
+/atom/proc/return_air_for_internal_lifeform()
+	return return_air()
 
 /atom/proc/allow_drop()
 	return 1

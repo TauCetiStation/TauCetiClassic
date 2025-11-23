@@ -77,6 +77,8 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/theatrecloset/PopulateContents()
 	switch (rand(1, 21))
 		if (1)
