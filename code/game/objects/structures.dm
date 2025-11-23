@@ -194,11 +194,9 @@
 	climbers -= climber
 
 /obj/structure/proc/on_climb(mob/living/climber, mob/living/user)
-	var/list/message_parts = list("залезает", "на")
 	var/turf/T = get_turf(src)
 
 	if(flags & ON_BORDER)
-		message_parts = list("перелезает", "через")
 
 		if(get_turf(climber) == get_turf(src))
 			T = get_step(get_turf(src), dir)
@@ -207,9 +205,9 @@
 
 	if(get_turf(climber) == T)
 		if(climber == user)
-			user.visible_message("<span class='warning'>[user] [message_parts[1] + message_parts[2]] [src]!</span>")
+			user.visible_message("<span class='warning'>[user] [flags & ON_BORDER ? "перелезает через" : "залезает на"] [src]!</span>")
 		else
-			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [message_parts[2]] [src]!</span>")
+			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [flags & ON_BORDER ? "через" : "на"] [src]!</span>")
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
