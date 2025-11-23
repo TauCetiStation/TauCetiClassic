@@ -49,9 +49,9 @@
 	else if(isscrewing(W))
 		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
 			if(screwed)
-				to_chat(user, "<span class='notice'>Вы подкручиваете забор, чтобы он стал хлипким.</span>")
+				to_chat(user, "<span class='notice'>Вы подкрутили забор, чтобы он стал хлипким и сломался от нагрузок.</span>")
 			else
-				to_chat(user, "<span class='notice'>Вы подкручиваете забор, чтобы он был крепким.</span>")
+				to_chat(user, "<span class='notice'>Вы подкрутили забор, чтобы он вновь стал крепким.</span>")
 			screwed = !screwed
 			return TRUE
 		return FALSE
