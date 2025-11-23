@@ -209,7 +209,7 @@
 		if(climber == user)
 			user.visible_message("<span class='warning'>[user] [message_parts[1] + message_parts[2]] [src]!</span>")
 		else
-			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [message_parts[2]] [src]!</span>")
+			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [flags & ON_BORDER ? "через" : "на"] [src]!</span>")
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
