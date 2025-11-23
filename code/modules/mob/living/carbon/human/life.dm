@@ -1064,6 +1064,12 @@ var/global/list/tourette_bad_words= list(
 	else
 		sightglassesmod = null
 
+	if(HAS_TRAIT(src, TRAIT_CYBER_NIGHT_EYES))
+		if(sightglassesmod)
+			sightglassesmod = "nightsight_glasses"
+		else
+			sightglassesmod =  "yellow_cyber_nv"
+
 	if(HAS_TRAIT(src, TRAIT_NIGHT_EYES))
 		var/light_amount = 0
 		var/turf/T = get_turf(src)

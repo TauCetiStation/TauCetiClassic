@@ -104,12 +104,24 @@
 /obj/item/organ/internal/eyes/cybernetic
 	name = "cybernetic eyes"
 	icon_state = "eyes-prosthetic"
-	desc = "An electronic device designed to mimic the functions of a pair of human eyes. It has no benefits over organic eyes, but is easy to produce."
+	desc = "An electronic device designed to mimic the functions of a pair of human eyes. Have a built-in basic night vision device."
 	item_state_world = "eyes-prosthetic_world"
 	origin_tech = "biotech=4"
 	status = ORGAN_ROBOT
 	durability = 0.8
 	compability = list(VOX, HUMAN, PLUVIAN, UNATHI, TAJARAN, SKRELL)
+
+/obj/item/organ/internal/eyes/cybernetic/insert_organ(mob/living/carbon/human/M)
+	..()
+	M.AddSpell(new /obj/effect/proc_holder/spell/no_target/cybernetic_nightvision)
+
+/obj/item/organ/internal/eyes/cybernetic/remove(mob/living/carbon/human/M)
+	M.RemoveSpell(new /obj/effect/proc_holder/spell/no_target/cybernetic_nightvision)
+	if(HAS_TRAIT(M, TRAIT_CYBER_NIGHT_EYES))
+		REMOVE_TRAIT(M, TRAIT_CYBER_NIGHT_EYES, GENERIC_TRAIT)
+		M.update_body(BP_HEAD)
+		M.clear_fullscreen("cy_impaired")
+	..()
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"

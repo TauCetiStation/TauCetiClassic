@@ -15,7 +15,6 @@
 	resistance_flags = FULL_INDESTRUCTIBLE
 
 	anchored = TRUE //Забор всегда прикручен к тайлу.
-
 	var/can_be_screwed = FALSE
 	var/screwed = TRUE //Подкручен и сломается если перелезть.
 
@@ -51,9 +50,9 @@
 	else if(can_be_screwed && isscrewing(W))
 		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
 			if(screwed)
-				to_chat(user, "<span class='notice'>Вы подкрутили забор, чтобы он стал хлипким и сломался от нагрузок.</span>")
+				to_chat(user, "<span class='notice'>Вы ослабили крепления, забор не выдержит нагрузок.</span>")
 			else
-				to_chat(user, "<span class='notice'>Вы подкрутили забор, чтобы он вновь стал крепким.</span>")
+				to_chat(user, "<span class='notice'>Вы подкрутили крепления, чтобы забор вновь стал крепким.</span>")
 			screwed = !screwed
 			return TRUE
 		return FALSE
