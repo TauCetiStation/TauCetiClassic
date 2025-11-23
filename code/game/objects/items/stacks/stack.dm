@@ -144,17 +144,16 @@
 	 // don't forget to copypaste checks to /datum/craft_or_build/proc/can_build
 	if(src.amount < (R.req_amount*multiplier))
 		if (R.req_amount*multiplier>1)
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
+			to_chat(user, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
+			to_chat(user, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return
 
 	if (R.build_outline)
-		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
+		user.client.cob.turn_on_build_overlay(user.client, R, src)
 		return
 
-	var/atom/build_loc = loc
-	if(!R.can_place(build_loc, user.dir))
+	if(!R.can_place(get_turf(user), user.dir))
 		to_chat(usr, "<span class='warning'>You can't build another [R.title] here!</span>")
 		return
 
@@ -167,13 +166,15 @@
 
 	if(!use(R.req_amount*multiplier))
 		return
+
+	var/atom/build_loc = loc
 	var/atom/movable/O = new R.result_type(build_loc)
 	user.try_take(O, build_loc)
-	O.set_dir(usr.dir)
+	O.set_dir(user.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
 		new_item.amount = R.res_amount*multiplier
-	O.add_fingerprint(usr)
+	O.add_fingerprint(user)
 	//BubbleWrap - so newly formed boxes are empty
 	if ( istype(O, /obj/item/weapon/storage) )
 		for (var/obj/item/I in O)
