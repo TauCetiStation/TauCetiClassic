@@ -13,6 +13,8 @@
 	max_integrity = 20
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	var/destroyed = 0
 	var/damaged = FALSE
 

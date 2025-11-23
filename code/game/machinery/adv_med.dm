@@ -197,7 +197,7 @@
 		if(!HAS_TRAIT(occupant, TRAIT_NO_BLOOD))
 			bloodData["hasBlood"] = TRUE
 			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
-			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
+			bloodData["pulse"] = occupant.get_pulse_number(GETPULSE_TOOL)
 			bloodData["bloodLevel"] = occupant.blood_amount()
 			bloodData["bloodNormal"] = BLOOD_VOLUME_NORMAL
 		occupantData["blood"] = bloodData
@@ -237,7 +237,7 @@
 			var/list/organStatus = list()
 			if(E.status & ORGAN_BROKEN)
 				organStatus["broken"] = capitalize(E.broken_description)
-			if(E.is_robotic())
+			if(E.is_robotic_part())
 				organStatus["robotic"] = TRUE
 			if(E.status & ORGAN_SPLINTED)
 				organStatus["splinted"] = TRUE
@@ -277,8 +277,7 @@
 			organData["maxHealth"] = I.min_broken_damage
 			organData["bruised"] = I.is_bruised()
 			organData["broken"] = I.is_broken()
-			organData["assisted"] = I.robotic == 1
-			organData["robotic"] = I.robotic == 2
+			organData["robotic"] = I.is_robotic()
 			organData["dead"] = (I.status & ORGAN_DEAD)
 
 			intOrganData.Add(list(organData))
@@ -399,7 +398,7 @@
 			bled = "Кровотечение:"
 		if(BP.status & ORGAN_BROKEN)
 			AN = "[capitalize(BP.broken_description)]:"
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			robot = "Протез:"
 		if(BP.open)
 			open = "Вскрытое:"
@@ -435,9 +434,7 @@
 		var/mech = "Органическое:"
 		var/organ_status = ""
 		var/infection = ""
-		if(IO.robotic == 1)
-			mech = "Со вспомогательными средствами:" // sounds weird
-		if(IO.robotic == 2)
+		if(IO.is_robotic())
 			mech = "Механическое:"
 
 		if(istype(IO, /obj/item/organ/internal/heart))

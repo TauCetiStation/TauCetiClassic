@@ -4774,6 +4774,7 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
+/obj/item/weapon/paper/inventory,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -13076,7 +13077,7 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/paper/brig_arsenal,
+/obj/item/weapon/paper/inventory/brig_armoury,
 /obj/item/weapon/pen/red,
 /turf/simulated/floor{
 	icon_state = "dark"

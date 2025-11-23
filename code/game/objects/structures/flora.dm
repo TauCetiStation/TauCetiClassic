@@ -256,6 +256,8 @@
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/flora/tree/atom_init()
 	. = ..()
 	AddComponent(/datum/component/seethrough, get_seethrough_map())
@@ -324,6 +326,9 @@
 
 /obj/structure/flora/tree/jungle/small/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_TWO
+
+/obj/structure/flora/tree/jungle/unbreakable
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 // grass
 
@@ -539,6 +544,8 @@
 	density = TRUE
 	pixel_x = -16
 	pixel_y = -16
+
+	hit_particle_type = /particles/tool/digging
 
 /obj/structure/flora/rock/pile/largejungle/atom_init()
 	. = ..()

@@ -339,6 +339,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	new /obj/item/clothing/under/det(src)
 	new /obj/item/weapon/storage/box/evidence(src)
@@ -402,6 +404,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_locked = "cabinetsecure_locked"
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
+
+	hit_particle_type = /particles/tool/digging/wood
 
 /obj/structure/closet/secure_closet/forensics/PopulateContents()
 	new /obj/item/clothing/under/rank/forensic_technician(src)

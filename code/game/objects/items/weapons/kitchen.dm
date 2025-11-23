@@ -193,6 +193,10 @@
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
 
+/obj/item/weapon/kitchenknife/combat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/serial_number)
+
 /obj/item/weapon/kitchenknife/throwing
 	name = "throwing knife"
 	desc = "A blade designed to be apparently useless for normal melee combat, but very useful for throwing."
