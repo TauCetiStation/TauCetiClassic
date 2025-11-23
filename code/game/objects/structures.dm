@@ -194,7 +194,6 @@
 	climbers -= climber
 
 /obj/structure/proc/on_climb(mob/living/climber, mob/living/user)
-	var/list/message_parts = list("залезает", "на")
 	var/turf/T = get_turf(src)
 
 	if(flags & ON_BORDER)
