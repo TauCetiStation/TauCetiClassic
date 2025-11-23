@@ -90,6 +90,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	null,
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, max_per_place = 1, build_outline = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)),
 	new/datum/stack_recipe("windowsill", /obj/structure/windowsill, 2, max_per_place = 1, build_outline = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED), time = 20),
+	new/datum/stack_recipe("fence", /obj/structure/fence/metal, 2, time = 25, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin, 2, max_per_place = 1, build_outline = TRUE)
 )
 
@@ -161,6 +162,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, time = 2 SECONDS, max_per_place = 1, build_outline = TRUE), \
 	new/datum/stack_recipe("painting easel", /obj/structure/easel, 4, time = 15, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("grave marker", /obj/structure/gravemarker/cross, 2, time = 5, max_per_place = 1, build_outline = TRUE),
+	new/datum/stack_recipe("fence", /obj/structure/fence/wood, 2, time = 25, max_per_place = 1, build_outline = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, max_per_place = FALSE, build_outline = FALSE)
 	)
 
