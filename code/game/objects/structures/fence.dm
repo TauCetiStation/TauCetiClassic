@@ -1,10 +1,5 @@
-#define FENCE_NO_COVER 0
-#define FENCE_COVER 1
-#define FENCE_COVER_FULL 2
-#define FENCE_COVER_TALL 3
-
 /obj/structure/fence
-	name = "Undestructable Concrete Fence"
+	name = "Indestructible Concrete Fence"
 	desc = "Спрячь за высоким забором таяру - выкраду вместе с забором!"
 
 	icon = 'icons/obj/fence.dmi'
@@ -15,7 +10,7 @@
 
 	climbable = TRUE
 
-	throwpass = 1
+	throwpass = TRUE
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 
@@ -24,7 +19,9 @@
 	var/can_be_screwed = FALSE
 	var/screwed = TRUE //Подкручен и сломается если перелезть.
 
-	var/fence_cover = FENCE_COVER_FULL
+
+	var/fence_full = TRUE
+	var/fence_cover_chance = 40
 
 /obj/structure/fence/atom_init()
 	. = ..()
@@ -45,18 +42,18 @@
 	update_layer()
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(iswrenching(W))
-		if(W.use_tool(src, user, 50, volume = 50))
+	if(!(resistance_flags & FULL_INDESTRUCTIBLE) && iswrenching(W))
+		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			to_chat(user, "<span class='notice'>Вы демонтируете забор.</span>")
 			deconstruct(TRUE)
 			return TRUE
 		return FALSE
 	else if(can_be_screwed && isscrewing(W))
-		if(W.use_tool(src, user, 50, volume = 50))
+		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
 			if(screwed)
-				to_chat(user, "<span class='notice'>Вы откручиваете забор.</span>")
+				to_chat(user, "<span class='notice'>Вы подкрутили забор, чтобы он стал хлипким и сломался от нагрузок.</span>")
 			else
-				to_chat(user, "<span class='notice'>Вы прикручиваете забор.</span>")
+				to_chat(user, "<span class='notice'>Вы подкрутили забор, чтобы он вновь стал крепким.</span>")
 			screwed = !screwed
 			return TRUE
 		return FALSE
@@ -64,22 +61,22 @@
 	return ..()
 
 /obj/structure/fence/CanPass(atom/movable/mover, turf/target, height=0)
-	if((fence_cover > FENCE_NO_COVER) && istype(mover,/obj/item/projectile))
+	if(fence_cover_chance && istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(loc, target) & dir)
+		if(!screwed && prob(5)) //5% chance that it won't stop us from going through.
+			deconstruct(FALSE)
+
 		return FALSE
 
 	return TRUE
 
 /obj/structure/fence/CanAStarPass(obj/item/weapon/card/id/ID, to_dir)
-	if(dir == to_dir)
-		return FALSE
-
-	return TRUE
+	return (dir != to_dir)
 
 /obj/structure/fence/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && O.checkpass(PASSTABLE))
@@ -97,41 +94,28 @@
 		climber.throw_at(get_step(user, dir), 2, 2)
 		return
 
-	var/turf/T
-	if(get_turf(climber) == get_turf(src))
-		T = get_step(get_turf(src), dir)
-	else
-		T = get_turf(src)
-	if(T.density)
-		return
-	for(var/atom/A in T)
-		if(A == src)
-			continue
-		if(!A.CanPass(climber, T))
-			return
-
-	user.forceMove(T)
+	return ..()
 
 /obj/structure/fence/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = get_turf(src)
 	if(get_dist(P.starting, loc) <= 1) //Too close to cover
 		return TRUE
 
-	if(!((get_turf(P.original) == cover) && (get_dir(cover, from) == dir)) && !((get_turf(P.original) == get_step(cover, get_dir(from, cover))) && get_dir(from, cover) == dir)) //Dir can't cover
+	var/first = ((get_turf(P.original) == cover) && (get_dir(cover, from) == dir)) //Projectile shot to the turf our cover is in and direction of cover covers from said projectile.
+	var/second = ((get_turf(P.original) == get_step(cover, get_dir(from, cover))) && get_dir(from, cover) == dir) //Projectile shot to the turf behind our cover and direction of cover covers from said projectile.
+
+	if(!first && !second) //Dir can't cover
 		return TRUE
 
-	if(fence_cover == FENCE_COVER_TALL) //Tallest fence covers always even while standing
+	if(fence_cover_chance >= 100)
 		return FALSE
 
-	var/cover_chance = 20
-
-	if(fence_cover >= FENCE_COVER_FULL) //Full cover adds additional protection
-		cover_chance += 20
+	var/cover_chance = fence_cover_chance
 
 	if(ismob(P.original))
 		var/mob/M = P.original
 		if(M.lying)
-			if(fence_cover >= FENCE_COVER_FULL) //Full cover fully covers lying mobs
+			if(fence_full) //Full cover fully covers lying mobs
 				return FALSE
 
 			cover_chance += 20
@@ -153,7 +137,8 @@
 	max_integrity = 5
 	resistance_flags = CAN_BE_HIT
 
-	fence_cover = FENCE_COVER
+	fence_full = FALSE
+	fence_cover_chance = 20
 
 	can_be_screwed = TRUE
 
@@ -171,7 +156,8 @@
 	max_integrity = 10
 	resistance_flags = FIRE_PROOF | CAN_BE_HIT
 
-	fence_cover = FENCE_NO_COVER
+	fence_full = FALSE
+	fence_cover_chance = 0
 
 	can_be_screwed = TRUE
 
@@ -186,7 +172,10 @@
 
 /obj/structure/fence/metal/proc/change_color(new_color)
 	cut_overlay(Rail)
-	Rail = mutable_appearance(icon, "fence_metal_color")
+
+	if(!Rail)
+		Rail = mutable_appearance(icon, "fence_metal_color")
+
 	Rail.color = new_color
 	add_overlay(Rail)
 
@@ -217,7 +206,6 @@
 		new /obj/item/stack/sheet/metal(loc, 2)
 	..()
 
-
 /obj/structure/fence/sandbags
 	name = "sandbags"
 	desc = "Хорошее укрытие."
@@ -227,7 +215,8 @@
 	max_integrity = 150
 	resistance_flags = CAN_BE_HIT
 
-	fence_cover = FENCE_COVER_FULL
+	fence_full = TRUE
+	fence_cover_chance = 50
 
 /obj/structure/fence/sandbags/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
@@ -236,8 +225,3 @@
 		else
 			new /obj/item/weapon/ore/glass(loc)
 	..()
-
-#undef FENCE_NO_COVER
-#undef FENCE_COVER
-#undef FENCE_COVER_FULL
-#undef FENCE_COVER_TALL

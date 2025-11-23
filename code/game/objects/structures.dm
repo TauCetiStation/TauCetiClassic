@@ -76,7 +76,7 @@
 	if(!climbable || !can_touch(user) || (!post_climb_check && (climber in climbers)))
 		return FALSE
 
-	if(climber.loc == loc && flags & ~ON_BORDER)
+	if((climber.loc == loc) && !(flags & ON_BORDER)) //You can't climb something you are already standing on, except if this thing is on border (fence).
 		return FALSE
 
 	if(user.incapacitated())
@@ -104,14 +104,37 @@
 	if(user.is_busy())
 		return FALSE
 
-	var/obj/occupied = turf_is_crowded()
+	var/obj/occupied = turf_is_crowded(climber)
 	if(occupied)
 		to_chat(user, "<span class='danger'>There's \a [occupied] in the way.</span>")
 		return FALSE
 
+	var/turf/T
+	if(get_turf(climber) == get_turf(src))
+		T = get_step(get_turf(src), dir)
+	else
+		T = get_turf(src)
+
+	if(T.density)
+		to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
+		return FALSE
+
+	for(var/atom/movable/something_in_the_way in T)
+		if(something_in_the_way == src)
+			continue
+
+		if(istype(something_in_the_way, /obj/structure))
+			var/obj/structure/S = something_in_the_way
+			if(S.climbable)
+				continue
+
+		if(!something_in_the_way.CanPass(climber, T))
+			to_chat(user, "<span class='danger'>There's \a [something_in_the_way] in the way.</span>")
+			return FALSE
+
 	return TRUE
 
-/obj/structure/proc/turf_is_crowded()
+/obj/structure/proc/turf_is_crowded(mob/living/climber)
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))
 		return null
@@ -123,6 +146,9 @@
 				continue
 
 		if(O && O.density)
+			var/climb_dir = get_dir(get_turf(src), get_turf(climber))
+			if((O.flags & ON_BORDER) && (O.dir != climb_dir)) //If ON_BORDER stuff blocks our way - check its dir if it actually blocks our way.
+				continue
 			return O
 
 	return null
@@ -168,13 +194,20 @@
 	climbers -= climber
 
 /obj/structure/proc/on_climb(mob/living/climber, mob/living/user)
-	climber.forceMove(get_turf(src))
+	var/turf/T = get_turf(src)
 
-	if(get_turf(climber) == get_turf(src))
+	if(flags & ON_BORDER)
+
+		if(get_turf(climber) == get_turf(src))
+			T = get_step(get_turf(src), dir)
+
+	climber.forceMove(T)
+
+	if(get_turf(climber) == T)
 		if(climber == user)
-			user.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
+			user.visible_message("<span class='warning'>[user] [flags & ON_BORDER ? "перелезает через" : "залезает на"] [src]!</span>")
 		else
-			user.visible_message("<span class='warning'>[user] pulls [climber] up onto \the [src]!</span>")
+			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [flags & ON_BORDER ? "через" : "на"] [src]!</span>")
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
