@@ -205,7 +205,7 @@
 
 	if(get_turf(climber) == T)
 		if(climber == user)
-			user.visible_message("<span class='warning'>[user] [message_parts[1] + message_parts[2]] [src]!</span>")
+			user.visible_message("<span class='warning'>[user] [flags & ON_BORDER ? "перелезает через" : "залезает на"] [src]!</span>")
 		else
 			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [flags & ON_BORDER ? "через" : "на"] [src]!</span>")
 
