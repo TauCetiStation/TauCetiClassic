@@ -197,7 +197,6 @@
 	var/turf/T = get_turf(src)
 
 	if(flags & ON_BORDER)
-		message_parts = list("перелезает", "через")
 
 		if(get_turf(climber) == get_turf(src))
 			T = get_step(get_turf(src), dir)
