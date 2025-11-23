@@ -1261,10 +1261,17 @@
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+
+	if(!IO)
+		return
+
 	return IO.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+
+	if(!IO)
+		return
 
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)
@@ -1352,7 +1359,7 @@
 				to_chat(src, msg)
 
 				BP.take_damage(rand(1,3), 0, 0)
-				if(!BP.is_robotic()) //There is no blood in protheses.
+				if(!BP.is_robotic_part()) //There is no blood in protheses.
 					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
 						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
@@ -1376,7 +1383,7 @@
 		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
-	if(src.pulse)
+	if(get_pulse())
 		to_chat(usr, "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>")
 	else
 		to_chat(usr, "<span class='warning'>[src] has no pulse!</span>")//it is REALLY UNLIKELY that a dead person would check his own pulse
@@ -1388,7 +1395,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		to_chat(usr, "You moved while counting. Try again.")
 	else
-		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse(GETPULSE_HAND)].</span>")
+		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse_number(GETPULSE_HAND)].</span>")
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
 	var/datum/species/old_species = species
@@ -1775,7 +1782,7 @@
 	var/mutable_appearance/MA = new()
 	MA.appearance_flags = KEEP_TOGETHER
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
+		if(BP.is_stump || BP.is_robotic_part() || !BP.species.skeleton)
 			continue
 		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
 		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
@@ -1795,6 +1802,9 @@
 	MA = update_height(MA)
 	return MA
 
+/mob/living/carbon/human/proc/need_breathe()
+	return !species.breathing_organ && should_have_organ(species.breathing_organ)
+
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SKELETON))
@@ -1806,7 +1816,7 @@
 	else if(organ_check in list(O_LIVER, O_KIDNEYS))
 		BP = bodyparts_by_name[BP_GROIN]
 
-	if(BP && BP.is_robotic())
+	if(BP && BP.is_robotic_part())
 		return FALSE
 	return species.has_organ[organ_check]
 
@@ -2318,6 +2328,28 @@
 /mob/living/carbon/human/get_trail_state()
 	if(blood_amount() > 0)
 		return ..()
+
+//generates realistic-ish pulse output based on preset levels
+/mob/living/carbon/human/get_pulse_number(method)	//method 0 is for hands, 1 is for machines, more accurate
+	var/temp = 0								//see setup.dm:694
+	switch(get_pulse())
+		if(PULSE_NONE)
+			return "0"
+		if(PULSE_SLOW)
+			temp = rand(40, 60)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_NORM)
+			temp = rand(60, 90)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_FAST)
+			temp = rand(90, 120)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_2FAST)
+			temp = rand(120, 160)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_THREADY)
+			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
+//			output for machines^	^^^^^^^output for people^^^^^^^^^
 
 /mob/living/carbon/human/proc/get_full_print()
 	if(!dna || !dna.uni_identity)

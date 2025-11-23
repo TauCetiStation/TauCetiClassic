@@ -144,41 +144,37 @@
 	 // don't forget to copypaste checks to /datum/craft_or_build/proc/can_build
 	if(src.amount < (R.req_amount*multiplier))
 		if (R.req_amount*multiplier>1)
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
+			to_chat(user, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
+			to_chat(user, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return
+
 	if (R.build_outline)
-		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
+		user.client.cob.turn_on_build_overlay(user.client, R, src)
 		return
-	if (R.max_per_turf)
-		if(R.max_per_turf == 1 && (locate(R.result_type) in usr.loc))
-			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
-			return
-		else
-			var/already_have = 0
-			for(var/type in usr.loc)
-				if(istype(type, R.result_type))
-					already_have++
-			if(already_have >= R.max_per_turf)
-				to_chat(usr, "<span class='warning'>You can't build another [R.title] here!</span>")
-				return
+
+	if(!R.can_place(get_turf(user), user.dir))
+		to_chat(usr, "<span class='warning'>You can't build another [R.title] here!</span>")
+		return
+
 	if (R.time)
-		if(usr.is_busy())
+		if(user.is_busy())
 			return
-		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-		if (!do_skilled(usr, usr, R.time, R.required_skills, -0.2))
+		to_chat(user, "<span class='notice'>Building [R.title] ...</span>")
+		if (!do_skilled(user, user, R.time, R.required_skills, -0.2))
 			return
-	var/atom/build_loc = loc
+
 	if(!use(R.req_amount*multiplier))
 		return
+
+	var/atom/build_loc = loc
 	var/atom/movable/O = new R.result_type(build_loc)
 	user.try_take(O, build_loc)
-	O.set_dir(usr.dir)
+	O.set_dir(user.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
 		new_item.amount = R.res_amount*multiplier
-	O.add_fingerprint(usr)
+	O.add_fingerprint(user)
 	//BubbleWrap - so newly formed boxes are empty
 	if ( istype(O, /obj/item/weapon/storage) )
 		for (var/obj/item/I in O)
@@ -375,9 +371,7 @@
 	/// How long it takes to make, base value. Can vary based on required_skills
 	var/time = 0
 	/// Number of the resulting atoms is allowed per turf, 0 to disable limit
-	var/max_per_turf = 0
-	/// If dir is checked to count max_per_turf
-	var/dir_sensitive = FALSE
+	var/max_per_place = 0
 	/// Enable or disable preview overlay
 	var/build_outline = FALSE
 	/// Restrict building only for these floor types
@@ -385,18 +379,46 @@
 	/// Skills to check for building time
 	var/list/required_skills
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, max_per_turf = 0, build_outline = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor), dir_sensitive = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, max_per_place = 0, build_outline = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor))
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
 	src.res_amount = res_amount
 	src.max_res_amount = max_res_amount
 	src.time = time
-	src.max_per_turf = max_per_turf
+	src.max_per_place = max_per_place
 	src.build_outline = build_outline
 	src.required_skills = required_skills
 	src.floor_path = floor_path
-	src.dir_sensitive = dir_sensitive
+
+/datum/stack_recipe/proc/can_place(turf/here, build_direction)
+	if(!max_per_place)
+		return TRUE
+
+	if(max_per_place == 1)
+		if(result_type::flags & ON_BORDER)
+			for(var/atom/A in here)
+				if(!(A.flags & ON_BORDER))
+					continue
+
+				if(A.dir == build_direction)
+					return FALSE
+
+		else if(locate(result_type) in here)
+			return FALSE
+
+	else
+		var/already_have = 0
+		for(var/type in here)
+			if(!istype(type, result_type))
+				continue
+
+			already_have++
+
+		if(already_have >= max_per_place)
+			return FALSE
+
+	return TRUE
 
 /*
  * Recipe list datum

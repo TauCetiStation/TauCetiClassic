@@ -341,7 +341,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                 )}
                 {reduceOrganStatus([
                   !!o.status.splinted && <Box color="good">Наложена шина</Box>,
-                  !!o.status.robotic && <Box color="label">Протез</Box>,
+                  !!o.robotic && <Box color="label">Протез</Box>,
                 ])}
               </Box>
             </Table.Cell>
@@ -404,9 +404,6 @@ const BodyScannerMainOrgansInternal = (props) => {
                 </Box>
                 {reduceOrganStatus([
                   !!o.robotic && <Box color="label">Протез</Box>,
-                  !!o.assisted && (
-                    <Box color="label">Вспомогательный имплант</Box>
-                  ),
                   !!o.dead && (
                     <Box color="bad" bold>
                       Отказ
