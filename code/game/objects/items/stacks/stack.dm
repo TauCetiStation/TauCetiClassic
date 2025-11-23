@@ -158,10 +158,10 @@
 		return
 
 	if (R.time)
-		if(usr.is_busy())
+		if(user.is_busy())
 			return
-		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-		if (!do_skilled(usr, usr, R.time, R.required_skills, -0.2))
+		to_chat(user, "<span class='notice'>Building [R.title] ...</span>")
+		if (!do_skilled(user, user, R.time, R.required_skills, -0.2))
 			return
 
 	if(!use(R.req_amount*multiplier))
