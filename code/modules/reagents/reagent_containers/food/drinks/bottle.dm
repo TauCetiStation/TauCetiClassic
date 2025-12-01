@@ -459,7 +459,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer
 	name = "Space Beer"
-	desc = "Contains only water, malt and hops."
+	desc = "Contains only water, malt, hops and antibiotics."
 	icon_state = "beer"
-	list_reagents = list("beer" = 100)
+	list_reagents = list("beer" = 90, "spaceacillin" = 10)
 
