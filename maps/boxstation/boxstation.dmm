@@ -5181,6 +5181,14 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/obj/structure/fence/metal{
+	dir = 4;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "aiG" = (
@@ -5552,6 +5560,10 @@
 /obj/structure/cable,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -8178,6 +8190,10 @@
 	},
 /area/station/security/brig)
 "anq" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/dormitory)
 "anr" = (
@@ -18174,6 +18190,10 @@
 "aFF" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "red"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -32847,6 +32867,10 @@
 /obj/item/weapon/storage/box/contraband{
 	icon_state = "box_of_doom"
 	},
+/obj/structure/fence/metal{
+	dir = 4;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bfL" = (
@@ -35229,6 +35253,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -38239,6 +38266,9 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort1"
 	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -39677,6 +39707,14 @@
 "bss" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/fence/metal{
+	dir = 4;
+	color = "red"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "red"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bst" = (
@@ -41164,6 +41202,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -41217,6 +41259,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -41672,6 +41715,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "bvP" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/chapel)
 "bvQ" = (
@@ -50599,6 +50646,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purplecorner"
@@ -55651,6 +55701,10 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/fence/metal{
+	dir = 1;
+	color = "red"
+	},
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -58318,6 +58372,13 @@
 /obj/machinery/conveyor_switch{
 	id = "stationscrap"
 	},
+/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cfT" = (
@@ -59344,6 +59405,10 @@
 /area/station/cargo/recycler)
 "ciQ" = (
 /obj/machinery/light/small,
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ciR" = (
@@ -66393,6 +66458,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cBQ" = (
@@ -66410,6 +66479,10 @@
 "cBR" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 4;
+	color = "yellow"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -67685,6 +67758,10 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -69903,10 +69980,21 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
+"cZq" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "red"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "cZM" = (
 /obj/structure/grille,
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -70060,6 +70148,21 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"djb" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 4;
+	color = "yellow"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "dka" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
@@ -71247,6 +71350,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
+"ezD" = (
+/obj/structure/fence/metal{
+	dir = 1;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "eAb" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -72070,6 +72180,14 @@
 "fAb" = (
 /obj/machinery/camera{
 	c_tag = "Recycler External South"
+	},
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -73242,6 +73360,12 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"gKI" = (
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "gKX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -75164,6 +75288,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"iFo" = (
+/obj/structure/fence/metal{
+	dir = 1;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/chapel)
 "iFS" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,3"
@@ -76394,6 +76525,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
+"jPH" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "jPO" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -78453,6 +78591,21 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"lUE" = (
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "lVb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -28
@@ -79936,6 +80089,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/reception)
+"nyN" = (
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "nzb" = (
 /obj/structure/sign/warning/securearea,
 /obj/machinery/door/firedoor,
@@ -80278,6 +80438,21 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/fitness)
+"nVA" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "nVQ" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -80331,6 +80506,13 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"nYC" = (
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -80737,6 +80919,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/genetics_cloning)
+"oux" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "ovb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -81660,6 +81849,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/incinerator)
+"pDI" = (
+/obj/structure/fence/metal{
+	dir = 1;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "pDK" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -83189,6 +83385,13 @@
 	icon_state = "vaultfull"
 	},
 /area/station/medical/virology)
+"rmk" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "rnb" = (
 /obj/structure/table/glass,
 /obj/machinery/kitchen_machine/microwave,
@@ -83966,6 +84169,14 @@
 	dir = 10;
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "sdb" = (
@@ -84201,6 +84412,14 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/obj/structure/fence/metal{
+	dir = 4;
+	color = "yellow"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "sob" = (
@@ -84363,6 +84582,10 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -84540,6 +84763,16 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"sEt" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "red"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redcorner"
+	},
+/area/station/hallway/secondary/entry)
 "sFb" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
@@ -85292,6 +85525,21 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"tBm" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 8;
+	color = "yellow"
+	},
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "yellow"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "tCO" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -85822,6 +86070,10 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "urb" = (
+/obj/structure/fence/metal{
+	dir = 2;
+	color = "red"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -85847,6 +86099,16 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
+"usJ" = (
+/obj/machinery/door/firedoor,
+/obj/structure/fence/metal{
+	dir = 1;
+	color = "red"
+	},
+/turf/simulated/floor{
+	icon_state = "escape"
+	},
+/area/station/hallway/secondary/entry)
 "uul" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -86221,6 +86483,16 @@
 /obj/structure/closet/toolcloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"vmS" = (
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "vmY" = (
 /obj/machinery/door/firedoor,
 /obj/structure/barricade/wooden,
@@ -86242,6 +86514,13 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"vsk" = (
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal,
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "vsv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -103802,8 +104081,8 @@ bne
 bvO
 aLC
 aqN
-atE
-atE
+cZq
+cZq
 boh
 bss
 bWx
@@ -104060,11 +104339,11 @@ aJL
 ajR
 atL
 btF
-aUO
+sEt
 bud
 bhj
 bhj
-aWv
+usJ
 aYU
 bbd
 aCe
@@ -110013,14 +110292,14 @@ xWb
 xXb
 lxb
 fBb
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
-bZZ
+nyN
+nyN
+nyN
+nyN
+nyN
+nyN
+nyN
+nyN
 ciQ
 cap
 aah
@@ -111036,11 +111315,11 @@ aSM
 aSM
 aSM
 cbS
-bZZ
+vmS
 cbS
-bZZ
+vsk
 cbS
-bZZ
+gKI
 bZZ
 ciP
 cbB
@@ -111566,7 +111845,7 @@ bZZ
 cpv
 cap
 cFt
-bQl
+oux
 aah
 aah
 aah
@@ -116234,7 +116513,7 @@ aaa
 aah
 aaa
 oyb
-dih
+nVA
 aah
 aaa
 aaa
@@ -116491,7 +116770,7 @@ pZm
 qsw
 aaa
 aaa
-dih
+nVA
 aaa
 aaa
 aag
@@ -116748,7 +117027,7 @@ ceQ
 cCz
 qsw
 aah
-dih
+nVA
 aaa
 aah
 aaa
@@ -117006,7 +117285,7 @@ ceQ
 jrS
 aaa
 siG
-mTm
+lUE
 aah
 aaa
 aaa
@@ -117520,7 +117799,7 @@ ceQ
 jrS
 aaa
 aaa
-dih
+nVA
 amx
 amx
 aah
@@ -117778,7 +118057,7 @@ qWt
 ceQ
 aaa
 sLS
-lxr
+tBm
 amx
 aah
 aaa
@@ -118292,7 +118571,7 @@ jrS
 ceQ
 aaa
 sRI
-kbw
+djb
 amx
 aaa
 aaa
@@ -118548,7 +118827,7 @@ ceQ
 jrS
 aaa
 aaa
-dih
+nVA
 amx
 amx
 aaa
@@ -119318,7 +119597,7 @@ ceQ
 qFq
 wfH
 aah
-dih
+nVA
 aah
 aaa
 aaa
@@ -119575,7 +119854,7 @@ nYr
 wfH
 aaa
 aaa
-dih
+nVA
 aaa
 aaa
 aaa
@@ -119832,7 +120111,7 @@ aaa
 aah
 aaa
 oyb
-dih
+nVA
 aah
 aaa
 aaa
@@ -125978,9 +126257,9 @@ bVI
 bVI
 bVI
 aaa
-ceQ
+ezD
 rby
-ceQ
+jPH
 aaa
 aaa
 aaa
@@ -130848,7 +131127,7 @@ bFo
 bFo
 bFo
 bFo
-ceQ
+nYC
 ceQ
 aaa
 aaa
@@ -138753,7 +139032,7 @@ aEd
 bae
 bnF
 buF
-bvP
+iFo
 bxO
 bvP
 aaa
@@ -138790,9 +139069,9 @@ nHY
 bWu
 aTX
 bWu
-cak
+pDI
 aUX
-cak
+rmk
 bqR
 bFz
 bqV
