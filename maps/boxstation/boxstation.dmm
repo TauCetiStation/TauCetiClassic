@@ -18191,10 +18191,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/structure/fence/metal{
-	dir = 2;
-	color = "red"
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -39707,14 +39703,6 @@
 "bss" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/fence/metal{
-	dir = 4;
-	color = "red"
-	},
-/obj/structure/fence/metal{
-	dir = 2;
-	color = "red"
-	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bst" = (
@@ -55701,10 +55689,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/fence/metal{
-	dir = 1;
-	color = "red"
-	},
 /turf/simulated/floor{
 	icon_state = "escape"
 	},
@@ -58373,9 +58357,6 @@
 	id = "stationscrap"
 	},
 /obj/structure/fence/metal,
-/obj/structure/fence/metal{
-	dir = 1
-	},
 /obj/structure/fence/metal{
 	dir = 4
 	},
@@ -69981,12 +69962,10 @@
 	},
 /area/station/security/brig)
 "cZq" = (
-/obj/structure/fence/metal{
-	dir = 2;
-	color = "red"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/obj/structure/disposalpipe/segment,
+/obj/structure/fence/metal,
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "cZM" = (
 /obj/structure/grille,
 /obj/effect/decal/turf_decal{
@@ -84764,15 +84743,14 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "sEt" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "red"
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "redcorner"
-	},
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "sFb" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
@@ -86070,10 +86048,6 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "urb" = (
-/obj/structure/fence/metal{
-	dir = 2;
-	color = "red"
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -86099,16 +86073,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
-"usJ" = (
-/obj/machinery/door/firedoor,
-/obj/structure/fence/metal{
-	dir = 1;
-	color = "red"
-	},
-/turf/simulated/floor{
-	icon_state = "escape"
-	},
-/area/station/hallway/secondary/entry)
 "uul" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -86484,9 +86448,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "vmS" = (
-/obj/structure/fence/metal{
-	dir = 1
-	},
 /obj/structure/fence/metal,
 /obj/structure/fence/metal{
 	dir = 4
@@ -86515,9 +86476,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "vsk" = (
-/obj/structure/fence/metal{
-	dir = 1
-	},
 /obj/structure/fence/metal,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -104081,8 +104039,8 @@ bne
 bvO
 aLC
 aqN
-cZq
-cZq
+atE
+atE
 boh
 bss
 bWx
@@ -104339,11 +104297,11 @@ aJL
 ajR
 atL
 btF
-sEt
+aUO
 bud
 bhj
 bhj
-usJ
+aWv
 aYU
 bbd
 aCe
@@ -110804,7 +110762,7 @@ xYb
 bZZ
 bZZ
 bZZ
-xYb
+sEt
 bZZ
 bZZ
 cbC
@@ -111060,9 +111018,9 @@ bzc
 bzf
 bzf
 bzf
-bzf
+cZq
 xZb
-bZZ
+gKI
 bZZ
 cbB
 ciP
