@@ -66,7 +66,7 @@
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(loc, target) & dir)
-		if(!screwed && prob(5)) //5% chance that it won't stop us from going through.
+		if(!screwed && prob(10)) //10% chance that it won't stop us from going through.
 			deconstruct(FALSE)
 
 		return FALSE
@@ -82,14 +82,18 @@
 	if(istype(O) && HAS_TRAIT(O, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(O.loc, target) == dir)
+		if(!screwed && prob(10)) //10% chance that it won't stop us from going through.
+			deconstruct(FALSE)
+
 		return FALSE
 
 	return TRUE
 
 /obj/structure/fence/on_climb(mob/living/climber, mob/living/user)
 	if(!screwed)
+		var/throw_dir = get_turf(climber) == get_turf(src) ? dir : get_dir(get_turf(climber), get_turf(src))
 		deconstruct(FALSE)
-		climber.throw_at(get_step(user, dir), 2, 2)
+		climber.throw_at(get_step(climber, throw_dir), 2, 2)
 		return
 
 	return ..()
