@@ -70,31 +70,16 @@ const setupApp = () => {
   // Subscribe for Redux state updates
   store.subscribe(renderApp);
 
-  // Subscribe for bankend updates
-  window.update = msg => store.dispatch(Byond.parseJson(msg));
-
-  // Process the early update queue
-  while (true) {
-    const msg = window.__updateQueue__.shift();
-    if (!msg) {
-      break;
-    }
-    window.update(msg);
-  }
+  // Dispatch incoming messages as store actions
+  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
   // Unhide the panel
-  Byond.winset('output', {
-    'is-visible': false,
-  });
-  Byond.winset('browseroutput', {
-    'is-visible': true,
-    'is-disabled': false,
-    'pos': '0x0',
-    'size': '0x0',
+  Byond.winset('legacy_output_selector', {
+    left: 'output_browser',
   });
 
   // Resize the panel to match the non-browser output
-  Byond.winget('output').then(output => {
+  Byond.winget('legacy_output_selector').then((output) => {
     Byond.winset('browseroutput', {
       'size': output.size,
     });
@@ -103,18 +88,21 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept([
-      './chat',
-      './game',
-      './Notifications',
-      './Panel',
-      './ping',
-      './settings',
-      './telemetry',
-      './emotes',
-    ], () => {
-      renderApp();
-    });
+    module.hot.accept(
+      [
+        './chat',
+        './game',
+        './Notifications',
+        './Panel',
+        './ping',
+        './settings',
+        './telemetry',
+        './emotes',
+      ],
+      () => {
+        renderApp();
+      }
+    );
   }
 };
 

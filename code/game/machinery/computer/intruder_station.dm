@@ -38,8 +38,8 @@
 	for(var/datum/intruder_tools/T in tools)
 		dat += "[T.name] ([T.cost]):"
 		var/buyable = (stored_uplink && stored_uplink.hidden_uplink && available_telecrystalls >= T.cost)
-		dat += "<a [!buyable ? "class='disabled'" : null] href ='?src=\ref[src];buy=\ref[T]'>Buy</a> | "
-		dat += "<a href ='?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
+		dat += "<a [!buyable ? "class='disabled'" : null] href ='byond://?src=\ref[src];buy=\ref[T]'>Buy</a> | "
+		dat += "<a href ='byond://?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
 		if(show_tool_desc == T)
 			dat += "[T.desc]<BR>"
 		dat += "<BR>"

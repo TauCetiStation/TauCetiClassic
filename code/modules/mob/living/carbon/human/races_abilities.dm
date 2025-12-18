@@ -219,10 +219,10 @@
 				b_hair = HEX_VAL_BLUE(new_hair)
 
 		h_style = new_h_style
-	if(h_style == "IPC off screen")
+	if(h_style == /datum/sprite_accessory/hair/ipc_screen_off::name)
 		random_hair_style(gender, get_species(), BP.ipc_head)
 
-	update_hair()
+	update_body(BP_HEAD, update_preferences = TRUE)
 
 /mob/living/carbon/human/proc/IPC_toggle_screen()
 	set category = "IPC"
@@ -246,8 +246,8 @@
 		b_hair = 15
 		set_light(0)
 		if(BP.ipc_head == "Default")
-			h_style = "IPC off screen"
-		update_hair()
+			h_style = /datum/sprite_accessory/hair/ipc_screen_off::name
+		update_body(BP_HEAD, update_preferences = TRUE)
 
 /mob/living/carbon/human/proc/IPC_display_text()
 	set category = "IPC"
@@ -280,7 +280,7 @@
 
 	BP.display_text = S
 	h_style = "IPC text screen"
-	update_hair()
+	update_body(BP_HEAD, update_preferences = TRUE)
 
 	var/skipface = FALSE
 	if(head)

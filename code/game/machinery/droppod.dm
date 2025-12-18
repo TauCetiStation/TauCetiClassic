@@ -535,10 +535,10 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(get_stats_html(), "window=droppod")
+	intruder << browse(get_stats_html(intruder.client), "window=droppod")
 	return
 
-/obj/structure/droppod/proc/get_stats_html()
+/obj/structure/droppod/proc/get_stats_html(client/user)
 	var/output = {"<html>
 				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[name] data</title>
 				<style>
@@ -552,6 +552,7 @@
 				.visible {display: block;}
 				.hidden {display: none;}
 				</style>
+				[get_browse_zoom_style(user)]
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
 				[js_dropdowns]
@@ -600,22 +601,22 @@
 	var/output = {"<div class='wr'>
 				<div class='header'>Commands</div>
 				<div class='links'>
-				<a href='?src=\ref[src];start_aiming=1'>Aim</a><br>
-				[select_target ? "<a href='?src=\ref[src];select_target=1'>Select Target</a><br>" : null]</a><br>
-				<a href='?src=\ref[src];locked=1'>Pod is [(stat_flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
-				[ishuman(intruder) ? "<a href='?src=\ref[src];set_dna=1'>[stored_dna ? "un" : ""]set Dna</a><br>" : null]</a><br>
+				<a href='byond://?src=\ref[src];start_aiming=1'>Aim</a><br>
+				[select_target ? "<a href='byond://?src=\ref[src];select_target=1'>Select Target</a><br>" : null]</a><br>
+				<a href='byond://?src=\ref[src];locked=1'>Pod is [(stat_flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
+				[ishuman(intruder) ? "<a href='byond://?src=\ref[src];set_dna=1'>[stored_dna ? "un" : ""]set Dna</a><br>" : null]</a><br>
 				</div>
 				</div>
 				<hr>
 				<div class='wr'>
 				<div class='header'>Storage</div>
 				<div class='links'>
-				<a href='?src=\ref[src];eject_items=1'>Eject Items<br>
-				[Stored_Nuclear ? "<a href='?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
-				[second_intruder ? "<a href='?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
+				<a href='byond://?src=\ref[src];eject_items=1'>Eject Items<br>
+				[Stored_Nuclear ? "<a href='byond://?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
+				[second_intruder ? "<a href='byond://?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
 				</div>
 				</div>
-				<a href='?src=\ref[src];eject=1'><span id='eject'>Eject</span></a><br>
+				<a href='byond://?src=\ref[src];eject=1'><span id='eject'>Eject</span></a><br>
 				"}
 	return output
 

@@ -1,7 +1,7 @@
 var/global/const/SAFETY_COOLDOWN = 100
 
 /obj/item/weapon/circuitboard/recycler
-	name = "Circuit board (Recycler)"
+	details = "circuit board (Recycler)"
 	board_type = "machine"
 	build_path = /obj/machinery/recycler
 	origin_tech = "engineering = 3"

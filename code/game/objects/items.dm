@@ -2,7 +2,7 @@
 	name = "item"
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_SMALL
-	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
+	var/mutable_appearance/blood_overlay = null // current blood splatter overlay
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
@@ -35,7 +35,9 @@
 	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc. Do not mistake it with render_flags, while flags_inv affects other items accessibility, render_flags affects render. Helmet can have transparent visor so we still need to render face.
+	var/render_flags = 0
+
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -509,7 +511,7 @@
 			if(SLOT_BELT)
 				if(H.belt)
 					return 0
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
@@ -557,7 +559,7 @@
 			if(SLOT_WEAR_ID)
 				if(H.wear_id)
 					return 0
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return 0
@@ -620,7 +622,7 @@
 						return 1
 				return 0
 			if(SLOT_TIE)
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_SYNTHETIC])
 					if(!disable_warning)
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE
@@ -729,7 +731,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE, particle_type = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -760,6 +762,12 @@
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
 
+	var/particle_use_type = /particles/tool/generic
+	if(particle_type)
+		particle_use_type = particle_type
+	else if(!isnull(quality))
+		particle_use_type = target.particles_by_quality[quality]
+
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
@@ -769,7 +777,7 @@
 				return
 
 		else
-			if(!do_after(user, delay, target=target, can_move = can_move, extra_checks = tool_check))
+			if(!do_after(user, delay, target=target, can_move = can_move, extra_checks = tool_check, particle_type = particle_use_type))
 				return
 	else
 		// Invoke the extra checks once, just in case.
@@ -855,22 +863,28 @@
 	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 
 	add_fingerprint(user)
-	if(M != user)
-		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
-		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
-		to_chat(user, "<span class='warning'>You stab [M] in the eye with [src]!</span>")
-	else
-		user.visible_message( \
-			"<span class='warning'>[user] has stabbed themself with [src]!</span>", \
-			"<span class='warning'>You stab yourself in the eyes with [src]!</span>" \
-		)
+
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		if(!IO)
+			visible_message("<span class='warning'>[user] tried to stab [M] in the eyes with [src].</span>", ignored_mobs = list(user, M))
+			to_chat(M, "<span class='warning'>[user] tries to stab you in the eye with [src]!</span>")
+			to_chat(user, "<span class='warning'>You try to stab [M] in the eye with [src]!</span>")
+			return
 		IO.damage += rand(force * 0.5, force)
+		if(M != user)
+			visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
+			to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
+			to_chat(user, "<span class='warning'>You stab [M] in the eye with [src]!</span>")
+		else
+			user.visible_message( \
+				"<span class='warning'>[user] has stabbed themself with [src]!</span>", \
+				"<span class='warning'>You stab yourself in the eyes with [src]!</span>" \
+			)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
-				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
+				if(!IO.is_robotic()) //robot eyes bleeding might be a bit silly
 					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
 			if(prob(10 * force))
 				if(H.stat != DEAD)
@@ -908,8 +922,9 @@
 		return
 	if(blood_overlay && blood_overlay.color == dirt_overlay.color)
 		return
-	generate_blood_overlay()
 	cut_overlay(blood_overlay)
+	blood_overlay = mutable_appearance('icons/effects/blood.dmi', "itemblood") // maybe need to move it to upper layer
+	blood_overlay.blend_mode = BLEND_INSET_OVERLAY
 	blood_overlay.color = dirt_overlay.color
 	add_overlay(blood_overlay)
 	update_inv_mob()
@@ -924,24 +939,8 @@
 	update_inv_mob() // if item on mob, update mob's icon too.
 	return 1 //we applied blood to the item
 
-/obj/item/proc/generate_blood_overlay()
-	var/static/list/items_blood_overlay_by_type = list()
-
-	if(blood_overlay)
-		return
-
-	if(items_blood_overlay_by_type[type])
-		blood_overlay = items_blood_overlay_by_type[type]
-		return
-
-	var/image/blood = image(icon = 'icons/effects/blood.dmi', icon_state = "itemblood") // Needs to be a new one each time since we're slicing it up with filters.
-	blood.filters += filter(type = "alpha", icon = icon(icon, icon_state)) // Same, this filter is unique for each blood overlay per type
-	items_blood_overlay_by_type[type] = blood
-
-	blood_overlay = blood
-
 /obj/item/proc/showoff(mob/user)
-	user.visible_message("[user] holds up [src]. <a HREF=?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
+	user.visible_message("[user] holds up [src]. <a href=byond://?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"
@@ -1092,3 +1091,18 @@
 	. = ..()
 	var/mob/living/carbon/human/H = user
 	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)
+
+/obj/item/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/size = round(w_class)
+	if(size < SIZE_MINUSCULE || size > SIZE_BIG)
+		return null
+
+	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
+	P.w_class = w_class
+	P.icon_state = "deliverycrate[size]"
+
+	P.add_texture(texture_name, details_name)
+
+	forceMove(P)
+
+	return P

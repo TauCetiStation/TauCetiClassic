@@ -147,20 +147,22 @@
 	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
+/client/proc/cmd_admin_godmode(mob/living/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(M.status_flags & GODMODE)
-		M.remove_status_flags(GODMODE)
+	var/godmode = HAS_TRAIT_FROM(M, ELEMENT_TRAIT_GODMODE, ADMIN_TRAIT)
+	if(godmode)
+		REMOVE_TRAIT(M, ELEMENT_TRAIT_GODMODE, ADMIN_TRAIT)
 	else
-		M.add_status_flags(GODMODE)
-	to_chat(usr, "<span class='notice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>")
+		ADD_TRAIT(M, ELEMENT_TRAIT_GODMODE, ADMIN_TRAIT)
+	godmode = !godmode
+	to_chat(usr, "<span class='notice'>Toggled [godmode ? "ON" : "OFF"]</span>")
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s God Mode to [godmode ? "On" : "Off"]")
+	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s God Mode to [godmode ? "On" : "Off"]")
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_add_random_ai_law()
@@ -604,7 +606,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(SSjob)
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job as anything in SSjob.active_occupations)
 			to_chat(src, "[job.title]: [job.total_positions]")
 	feedback_add_details("admin_verb","LFS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -654,9 +656,47 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at [COORD(O)]")
 		feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_burn(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
 		return
+
+	if(HAS_TRAIT(H, TRAIT_BURNT))
+		REMOVE_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
 	else
+		ADD_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
+
+	H.update_body()
+
+	log_admin("[key_name(usr)] toggled burn skin for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] toggled burn skin for [key_name_admin(H)]")
+
+/client/proc/cmd_admin_husk(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
 		return
+
+	if(HAS_TRAIT(H, TRAIT_HUSK))
+		REMOVE_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+	else
+		ADD_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+
+	H.update_body()
+
+	log_admin("[key_name(usr)] toggled husk skin for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] toggled husk skin for [key_name_admin(H)]")
+
+/client/proc/cmd_admin_electrocute(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/duration = input("Choice duration for electrocute animation (seconds).", "Electrocute duration") as null|num
+
+	if(!duration)
+		return
+
+	H.electrocution_animation(duration SECONDS)
+
+	log_admin("[key_name(usr)] added [duration] seconds electrocute animation for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] added [duration] seconds electrocute animation for [key_name_admin(H)]")
 
 /client/proc/cmd_admin_gib(mob/M as mob in mob_list)
 	set category = "Special Verbs"
@@ -674,7 +714,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
 	if(isobserver(M))
-		gibs(M.loc)
+		new /obj/effect/gibspawner/generic(get_turf(M.loc))
 		return
 
 	M.gib()

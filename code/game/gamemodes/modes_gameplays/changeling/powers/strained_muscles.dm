@@ -47,7 +47,7 @@
 			C.strained_muscles = 0
 			active = !active
 
-		if(owner.stat != CONSCIOUS || owner.halloss >= 90)
+		if(owner.stat != CONSCIOUS || owner.getHalLoss() >= 90)
 			active = !active
 			to_chat(owner,"<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			owner.Stun(2)

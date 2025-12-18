@@ -1,25 +1,28 @@
 /mob/living/carbon/human
+
+	/* prefs copypaste */
+
 	//Hair colour and style
-	var/r_hair = 0
-	var/g_hair = 0
-	var/b_hair = 0
-	var/h_style = "Bald"
+	var/r_hair = /datum/preferences::r_hair
+	var/g_hair = /datum/preferences::g_hair
+	var/b_hair = /datum/preferences::b_hair
+	var/h_style = /datum/preferences::h_style
 
 	var/dyed_r_hair = 0
 	var/dyed_g_hair = 0
 	var/dyed_b_hair = 0
 	var/hair_painted = FALSE
 
-	var/r_grad = 0
-	var/g_grad = 0
-	var/b_grad = 0
-	var/grad_style = "none"
+	var/r_grad = /datum/preferences::r_grad
+	var/g_grad = /datum/preferences::g_grad
+	var/b_grad = /datum/preferences::b_grad
+	var/grad_style = /datum/preferences::grad_style
 
 	//Facial hair colour and style
-	var/r_facial = 0
-	var/g_facial = 0
-	var/b_facial = 0
-	var/f_style = "Shaved"
+	var/r_facial = /datum/preferences::r_facial
+	var/g_facial = /datum/preferences::g_facial
+	var/b_facial = /datum/preferences::b_facial
+	var/f_style = /datum/preferences::f_style
 
 	var/dyed_r_facial = 0
 	var/dyed_g_facial = 0
@@ -27,38 +30,39 @@
 	var/facial_painted = FALSE
 
 	//Eye colour
-	var/r_eyes = 0
-	var/g_eyes = 0
-	var/b_eyes = 0
+	var/r_eyes = /datum/preferences::r_eyes
+	var/g_eyes = /datum/preferences::g_eyes
+	var/b_eyes = /datum/preferences::b_eyes
 
-	var/s_tone = 0  //Skin tone
+	var/s_tone = /datum/preferences::s_tone
 
 	//Skin colour
-	var/r_skin = 0
-	var/g_skin = 0
-	var/b_skin = 0
+	var/r_skin = /datum/preferences::r_skin
+	var/g_skin = /datum/preferences::g_skin
+	var/b_skin = /datum/preferences::b_skin
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
 
-	var/age = 30                //Player's age (pure fluff)
-	var/height = HUMANHEIGHT_MEDIUM  //Player's height
+	var/age = /datum/preferences::age //Player's age (pure fluff)
+	var/height = /datum/preferences::height //Player's height
 
-	var/underwear = 1   //Which underwear the player wants
-	var/undershirt = 0  //Which undershirt the player wants.
-	var/socks = 0       //Which socks the player wants.
-	var/backbag = 2     //Which backpack type the player has chosen. Nothing, Satchel or Backpack.
-	var/use_skirt = FALSE
+	var/underwear = /datum/preferences::underwear   //Which underwear the player wants
+	var/undershirt = /datum/preferences::undershirt  //Which undershirt the player wants.
+	var/undershirt_print = /datum/preferences::undershirt_print
+	var/socks = /datum/preferences::socks       //Which socks the player wants.
+	var/backbag = /datum/preferences::backbag     //Which backpack type the player has chosen. Nothing, Satchel or Backpack.
+	var/use_skirt = /datum/preferences::use_skirt
 	// General information
-	var/home_system = ""
-	var/citizenship = ""
-	var/roundstart_insurance = ""
-	var/personal_faction = ""
-	var/religion = ""
-	var/vox_rank = ""
-	var/r_belly = 0
-	var/g_belly = 0
-	var/b_belly = 0
+	var/roundstart_insurance = /datum/preferences::insurance
+	var/home_system = /datum/preferences::home_system
+	var/citizenship = /datum/preferences::citizenship
+	var/personal_faction = /datum/preferences::faction
+	var/religion = /datum/preferences::religion
+	var/vox_rank = /datum/preferences::vox_rank
+	var/r_belly = /datum/preferences::r_belly
+	var/g_belly = /datum/preferences::g_belly
+	var/b_belly = /datum/preferences::b_belly
 
 	//Equipment slots
 	var/obj/item/wear_suit = null

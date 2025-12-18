@@ -59,7 +59,4 @@
 	if(mixedcolor<0x00 || mixedcolor>0xFF)
 		return 0
 
-	var/finalcolor = num2hex(mixedcolor)
-	while(length(finalcolor)<2)
-		finalcolor = text("0[]",finalcolor) //Takes care of leading zeroes
-	return finalcolor
+	return num2hex(mixedcolor, 2)

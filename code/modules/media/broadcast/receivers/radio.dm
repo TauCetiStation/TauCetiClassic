@@ -16,7 +16,7 @@
 /obj/machinery/media/receiver/boombox/ui_interact(mob/user)
 	var/dat = "<TT>"
 	dat += {"
-				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
+				Power: <a href="byond://?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
 				Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>
 				"}
 	dat+={"</TT>"}

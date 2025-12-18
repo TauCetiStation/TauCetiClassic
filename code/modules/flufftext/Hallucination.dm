@@ -297,7 +297,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/item/weap = null
 	var/image/currentimage = null
 	var/icon/base = null
-	var/s_tone
 	var/mob/living/clone = null
 	var/image/left
 	var/image/right
@@ -397,14 +396,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /proc/fake_blood(mob/living/carbon/human/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 
-	var/datum/dirt_cover/D = new(target.species.blood_datum)
-	O.name = D.name
-	O.color = D.color
+	var/datum/dirt_cover/blood_typepath = target.get_blood_datum()
+	O.name = blood_typepath::name
+	O.color = blood_typepath::color
 
 	var/image/I = image('icons/effects/blood.dmi',O,"mfloor[rand(1,7)]",O.dir,1)
 	target << I
-	spawn(300)
-		qdel(O)
+	QDEL_IN(O, 300)
 	return
 
 var/global/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/speedloader/a357,\

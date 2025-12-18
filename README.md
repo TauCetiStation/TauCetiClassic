@@ -14,7 +14,7 @@
 ### CONTRIBUTING
 
 > [!IMPORTANT]
-> Tau Ceti - один из старейших активных форков Space Station 13 для русскоязычной аудитори, и всегда нуждается в новых контрибьютерах и мейнтейнерах!
+> Tau Ceti - один из старейших активных форков Space Station 13 для русскоязычной аудитории, и всегда нуждается в новых контрибьютерах и мейнтейнерах!
 
 Если вы хотите сделать вклад в билд, обязательно прочитайте **[CONTRIBUTING](/.github/CONTRIBUTING.md)**.
 
@@ -22,8 +22,10 @@
 
 * **Общее:**
   - [Contribution Guide](/.github/CONTRIBUTING.md)
-  - [Соглашения о коде](/.github/wiki/CODE_CONVENTION.md)
+  - [Code convention или Соглашение о коде](/.github/wiki/CODE_CONVENTION.md)
   - [Оформление PR-ов](/.github/wiki/STYLING_OF_PR.md)
+  - [Быстрый старт](https://wiki.taucetistation.org/Git)
+
 * **Код:**
   - [DM Reference (byond)](https://www.byond.com/docs/ref/)
   - [New(), atom_init()](/.github/wiki/ABOUT_INIT.md)
@@ -31,9 +33,11 @@
   - [Сигналы, компоненты, элементы (hackmd)](https://hackmd.io/@tgstation/SignalsComponentsElements)
   - [Сборщик мусора, Destroy, Harddeletes](/.github/wiki/HARDDELETES.md)
   - [Переводы на русский](/.github/wiki/TRANSLATION.md)
+* **Игра:**
+  - [Разрушаемость](/.github/wiki/OBJ_DESTRUCTION.md)
 * **Карта:**
   - [F.A.Q. по работе с картой](/.github/wiki/WORK_WITH_MAP.md)
-  - [Вводный курс (форум)](https://forum.taucetistation.org/t/gajd-na-maping-i-kak-etim-voobshhe-zanimatsya/32439)
+  - [Вводный курс (wiki)](https://wiki.taucetistation.org/Guide_to_Mapping)
   - [Добавление своей станции](/.github/wiki/HOW_ADD_STATION.md)
   - [Работа со светом](/.github/wiki/MAP_LIGHT.md)
 * **Звуки:**

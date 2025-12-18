@@ -1,12 +1,18 @@
 /mob/living/carbon/human/spawn_gibs()
-	if(!species.flags[NO_BLOOD_TRAILS])
-		hgibs(loc, dna, species.flesh_color, species.blood_datum)
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
+		new /obj/effect/gibspawner/human(get_turf(loc), src)
 
 /mob/living/carbon/human/gib()
-	if(!species.flags[NO_BLOOD_TRAILS])
+	if(!HAS_TRAIT(src, TRAIT_NO_MESSY_GIBS))
 		var/atom/movable/overlay/animation = new (loc)
 		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
 		QDEL_IN(animation, 2 SECOND)
+
+	for(var/obj/item/organ/internal/IO in organs)
+		if(prob(33))
+			IO.remove(src)
+			IO.forceMove(get_turf(src))
+			IO.throw_at(get_edge_target_turf(loc, pick(alldirs)), rand(1, 3), throw_speed)
 
 	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
@@ -26,10 +32,7 @@
 	P.real_name = dna.real_name
 	P.dna = dna.Clone()
 	P.UpdateAppearance()
-	P.b_eyes = 200
-	P.g_eyes = 255
-	P.r_eyes = 255
-	P.regenerate_icons()
+	P.regenerate_icons(update_body_preferences = TRUE)
 	P.my_corpse = src
 	mind.transfer_to(P)
 	P.hud_used.set_parallax(PARALLAX_HEAVEN)
@@ -77,6 +80,7 @@
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
+
 		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
@@ -92,7 +96,7 @@
 		my_master.my_golem = null
 		my_master = null
 
-	if(isshadowling(src))
+	if(isshadowling(src)) // todo: move it to shadowling code, listen to COMSIG_MOB_DIED
 		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		for(var/datum/role/thrall/T in faction.members)
 			if(!T.antag.current)
@@ -110,11 +114,8 @@
 		return
 
 	//Handle brain slugs.
-	var/mob/living/simple_animal/borer/B
+	var/mob/living/simple_animal/borer/B = locate(/mob/living/simple_animal/borer) in BP.embedded_objects
 
-	for(var/I in BP.implants)
-		if(istype(I,/mob/living/simple_animal/borer))
-			B = I
 	if(B)
 		if(!B.ckey && ckey && B.controlling)
 			B.ckey = ckey
@@ -128,7 +129,7 @@
 		verbs -= /mob/living/carbon/proc/release_control
 
 
-	organ_head_list += BP
+	lost_heads_list += BP
 
 	if(ischangeling(src))
 		var/datum/role/changeling/Host = mind.GetRoleByType(/datum/role/changeling)
@@ -164,40 +165,8 @@
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
-
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (isskeleton(src)))
+	if(HAS_TRAIT_FROM(src, ELEMENT_TRAIT_SKELETON, INNATE_TRAIT))
 		return
-	if(f_style)
-		f_style = "Shaved"
-	if(h_style)
-		h_style = "Bald"
-	set_species(species.skeleton_type)
-	add_status_flags(DISFIGURED)
-	regenerate_icons()
-	return
 
-/mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)
-		return
-	if(species.flags[HAS_HAIR])
-		if(f_style)
-			f_style = "Shaved" // we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-		if(h_style)
-			h_style = "Bald"
-	else if(species.name == SKRELL)
-		r_hair = 85
-		g_hair = 85 // grey
-		b_hair = 85
-
-	mutations.Add(HUSK)
-	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
-	update_hair()
-	update_body()
-
-/mob/living/carbon/human/proc/Drain()
-	if(fake_death)
-		fake_death = 0
-	ChangeToHusk()
-	mutations.Add(NOCLONE)
-	return
+	ADD_TRAIT(src, ELEMENT_TRAIT_SKELETON, INNATE_TRAIT)

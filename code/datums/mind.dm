@@ -145,7 +145,7 @@
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];job_edit=1'>Edit</a><br>"
+	out += "Assigned role: [assigned_role]. <a href='byond://?src=\ref[src];job_edit=1'>Edit</a><br>"
 
 	var/list/sections = list(
 		"implant",
@@ -158,15 +158,15 @@
 	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
-			if(H.ismindshielded())
-				text += "Mind Shield Implant:<a href='?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
+			if(ismindshielded(H))
+				text += "Mind Shield Implant:<a href='byond://?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
-				text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=m_add'>Implant him!</a></br>"
+				text += "Mind Shield Implant:<b>No Implant</b>|<a href='byond://?src=\ref[src];implant=m_add'>Implant him!</a></br>"
 
-			if(H.isloyal())
-				text += "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
+			if(isloyal(H))
+				text += "Loyalty Implant:<a href='byond://?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
-				text += "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
+				text += "Loyalty Implant:<b>No Implant</b>|<a href='byond://?src=\ref[src];implant=add'>Implant him!</a></br>"
 		else
 			text = "Loyalty Implant: Don't implant that monkey!</br>"
 		sections["implant"] = text
@@ -185,7 +185,7 @@
 			var/datum/role/R = antag_roles[role]
 			text += R.GetMemory(src, TRUE) //allowing edits
 
-	text += "<br><a href='?src=\ref[src];add_role=1'>(add a new role)</a>"
+	text += "<br><a href='byond://?src=\ref[src];add_role=1'>(add a new role)</a>"
 	sections["prefs"] = text
 
 	for(var/i in sections)
@@ -194,8 +194,8 @@
 
 	out += "<b>Memory:</b><br>"
 	out += memory
-	out += "<br><a href='?src=\ref[src];memory_edit=1'>Edit memory</a><br>"
-	out += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
+	out += "<br><a href='byond://?src=\ref[src];memory_edit=1'>Edit memory</a><br>"
+	out += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
 
 	var/datum/browser/popup = new(usr, "window=edit_memory", "Memory", 700, 700)
 	popup.set_content(out)
@@ -212,7 +212,7 @@
 	if(!length(skills.available_skillsets))
 		out +="<i>This mob has no skillsets.</i><br>"
 	for(var/datum/skillset/skillset in skills.available_skillsets)
-		out +="<i>[skillset]</i><a href='?src=\ref[src];delete_skillset=[skillset]'>-</a><br>"
+		out +="<i>[skillset]</i><a href='byond://?src=\ref[src];delete_skillset=[skillset]'>-</a><br>"
 	out += "<B>Maximum skill values:</B><br><table>"
 	var/sorted_max = list()
 	for(var/skill_type in all_skills)
@@ -227,10 +227,10 @@
 		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill.type)])</td>"
 		row++
 	out +="</table>"
-	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
-	out += "<a href='?src=\ref[src];maximize_skills=1'>Set current skills equal to available skills</a><br>"
-	out += "<a href='?src=\ref[src];add_max=1'>Add maximal skillset</a><br>"
-	out += "<a href='?src=\ref[src];refresh=2'>Refresh</a>"
+	out += "<br><a href='byond://?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
+	out += "<a href='byond://?src=\ref[src];maximize_skills=1'>Set current skills equal to available skills</a><br>"
+	out += "<a href='byond://?src=\ref[src];add_max=1'>Add maximal skillset</a><br>"
+	out += "<a href='byond://?src=\ref[src];refresh=2'>Refresh</a>"
 	var/datum/browser/popup = new(usr, "window=edit_skills", "Skills", 700, 700)
 	popup.set_content(out)
 	popup.open()
@@ -244,7 +244,7 @@
 		return
 
 	if (href_list["job_edit"])
-		var/new_job = input("Select new job", "Assigned job", assigned_role) as null|anything in get_all_jobs()
+		var/new_job = input("Select new job", "Assigned job", assigned_role) as null|anything in SSjob.name_occupations
 		if (!new_job)
 			return
 		assigned_role = new_job
@@ -475,35 +475,18 @@
 			href_list["implant"] = copytext(href_list["implant"], 3)
 		if(href_list["implant"] == "remove")
 			if(is_mind_shield)
-				for(var/obj/item/weapon/implant/mind_protect/mindshield/I in H.contents)
-					if(I.implanted)
-						qdel(I)
+				for(var/obj/item/weapon/implant/mind_protect/mindshield/I in H.implants)
+					qdel(I)
 			else
-				for(var/obj/item/weapon/implant/mind_protect/loyalty/I in H.contents)
-					if(I.implanted)
-						qdel(I)
+				for(var/obj/item/weapon/implant/mind_protect/loyalty/I in H.implants)
+					qdel(I)
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
-			var/obj/item/weapon/implant/mind_protect/mindshield/L
 			if(is_mind_shield)
-				L = new(H)
-				L.inject(H)
+				new /obj/item/weapon/implant/mind_protect/mindshield(H)
 			else
-				L = new /obj/item/weapon/implant/mind_protect/loyalty(H)
-				L.inject(H)
-
-			H.sec_hud_set_implants()
-			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
-			 and it just activated!</B></FONT></span>")
-			for(var/type in list(TRAITOR, CULTIST, HEADREV, REV))
-				if(is_mind_shield && (type == HEADREV || type == TRAITOR))
-					continue
-				var/datum/role/R = GetRole(type)
-				if(R)
-					R.Deconvert()
-
-			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
+				new /obj/item/weapon/implant/mind_protect/loyalty(H)
 
 	else if (href_list["common"])
 		switch(href_list["common"])
@@ -787,7 +770,7 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
-	
+
 	//Pluvia social credit system
 	mind.pluvian_social_credit = species.pluvian_social_credit
 	if(mind.assigned_job)

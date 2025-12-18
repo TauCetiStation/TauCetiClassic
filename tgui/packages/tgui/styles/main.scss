@@ -47,7 +47,6 @@
 @include meta.load-css('./interfaces/IntegratedCircuit.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/CardPay.scss');
-@include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');
 @include meta.load-css('./interfaces/ExperimentConfigure.scss');
@@ -69,7 +68,7 @@
 // NT Theme
 .Layout__content {
   background-image: url('../assets/bg-nanotrasen.svg');
-  background-size: 70%;
+  background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;
 }

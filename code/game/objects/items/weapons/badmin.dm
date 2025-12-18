@@ -24,28 +24,26 @@
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
 
-		if(ismob(A))
-			var/mob/M = A
-			M.remove_status_flags(GODMODE)
+		if(isliving(A))
+			var/mob/living/L = A
+			L.mob_general_damage_mod.RemoveMods(src)
 
 /obj/item/weapon/pedalbag/attack()
 	return
 
-/obj/item/weapon/pedalbag/afterattack(atom/target, mob/user, proximity, params)
-	if((!proximity) || (!ismob(target)) || (user in src))
+/obj/item/weapon/pedalbag/afterattack(mob/living/M, mob/user, proximity, params)
+	if((!proximity) || (!istype(M)) || (user in src))
 		return
-	var/mob/M = target
 	if(M == user)
 		to_chat(user, "<font class='warning'>You don't want to do that.</font>")
 		return
 
-	user.do_attack_animation(target)
+	user.do_attack_animation(M)
 	user.visible_message("<font class='artefact'>[user] put \the [src] on [M]!</font>")
 	playsound(user, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 	M.forceMove(src)
-	M.add_status_flags(GODMODE)
-
+	M.mob_general_damage_mod.ModMultiplicative(0, src)
 
 /obj/item/weapon/pedalbag/santabag
 	name = "Santa's Gift Bag"

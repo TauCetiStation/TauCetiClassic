@@ -379,10 +379,10 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aM" = (
-/obj/machinery/space_heater,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "aN" = (
@@ -634,8 +634,8 @@
 /area/station/engineering/engine)
 "bn" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	dir = 4
+	dir = 4;
+	name = "Escape Airlock"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -1242,9 +1242,9 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -1677,9 +1677,9 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	name = "Engineering largecell apc down";
-	pixel_y = -27;
-	custom_smartlight_preset = "Engineering"
+	pixel_y = -27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
@@ -1871,9 +1871,9 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
 	dir = 4;
 	name = "Cargo largecell apc right";
-	custom_smartlight_preset = "Cargo";
 	pixel_x = 27
 	},
 /turf/simulated/floor/plating,
@@ -2191,7 +2191,7 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/obj/machinery/space_heater,
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "dS" = (
@@ -2320,8 +2320,8 @@
 /area/station/hallway/secondary/exit)
 "ee" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall";
-	dir = 4
+	dir = 4;
+	name = "Escape Hall"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2777,6 +2777,9 @@
 /area/station/cargo/recycler)
 "eZ" = (
 /obj/machinery/vending/coffee,
+/obj/machinery/atm{
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2867,7 +2870,7 @@
 /area/station/hallway/secondary/arrival)
 "fi" = (
 /obj/machinery/light/smart,
-/obj/machinery/space_heater,
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -2938,11 +2941,11 @@
 	},
 /obj/machinery/door/airlock/mining{
 	autoclose = 0;
+	dir = 4;
 	frequency = 1379;
 	id_tag = "recucler_airlock_interior";
 	locked = 1;
-	name = "Recucler Internal Airlock";
-	dir = 4
+	name = "Recucler Internal Airlock"
 	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -3563,7 +3566,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 6
 	},
-/obj/machinery/space_heater,
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
@@ -3581,7 +3584,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
-/obj/machinery/space_heater,
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "black"
@@ -3662,9 +3665,9 @@
 /area/space)
 "hK" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Mech Bay";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -3704,6 +3707,7 @@
 /area/station/rnd/chargebay)
 "hX" = (
 /obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
 	name = "Supply Dock Airlock";
 	req_access = list(71)
 	},
@@ -3838,10 +3842,10 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD largecell apc top";
-	pixel_y = 27;
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
@@ -4433,10 +4437,10 @@
 	icon_state = "damaged_4"
 	},
 /obj/machinery/power/apc{
-	name = "Engineering left APC";
 	custom_smartlight_preset = "Engineering";
-	pixel_x = -27;
-	dir = 8
+	dir = 8;
+	name = "Engineering left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -4510,12 +4514,12 @@
 /area/shuttle/supply/station)
 "oR" = (
 /obj/structure/table,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
+/obj/item/weapon/rcd_ammo/huge,
 /obj/item/weapon/rcd,
 /obj/structure/cable{
 	d2 = 8;
@@ -4529,9 +4533,9 @@
 	pixel_y = 5
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -4964,7 +4968,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/space_heater,
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5131,6 +5135,9 @@
 /area/station/engineering/engine)
 "vb" = (
 /obj/structure/closet/wardrobe/engineering_yellow,
+/obj/machinery/atm{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "black"
@@ -5311,14 +5318,14 @@
 	},
 /area/station/hallway/secondary/arrival)
 "vT" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "arrival_escape";
-	locked = 1;
-	name = "Escape Airlock";
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "escape_shuttle";
+	locked = 1;
+	name = "Escape Airlock"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5397,6 +5404,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
+"wF" = (
+/obj/machinery/build_crane,
+/turf/environment/space,
+/area/space)
 "wI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
@@ -5584,9 +5595,9 @@
 /area/station/engineering/equip)
 "yW" = (
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering EVA";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5622,6 +5633,10 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"zn" = (
+/obj/machinery/space_heater/upgraded,
+/turf/environment/space,
+/area/space)
 "zp" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -6103,6 +6118,7 @@
 "Cw" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/engineering/chief,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/item/clothing/mask/breath,
@@ -6187,56 +6203,49 @@
 /area/station/maintenance/auxsolarport)
 "CY" = (
 /obj/structure/rack,
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = -4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = -4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = -4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = -4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = -4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = -4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = 4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = 4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = 4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = 4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = 4
 	},
-/obj/item/weapon/rcd_ammo{
+/obj/item/weapon/rcd_ammo/huge{
 	pixel_x = 4
 	},
 /obj/item/weapon/rcd{
 	pixel_y = 6
 	},
-/obj/item/weapon/rcd,
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/rcd/atmos,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6310,9 +6319,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -6372,8 +6381,8 @@
 /area/station/hallway/secondary/arrival)
 "DJ" = (
 /obj/machinery/door/airlock/glass{
-	name = "Escape Hall";
-	dir = 4
+	dir = 4;
+	name = "Escape Hall"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -6517,9 +6526,9 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 8;
 	name = "Engineering largecell apc left";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -6664,9 +6673,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engine Room";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -6688,7 +6697,7 @@
 /area/station/rnd/chargebay)
 "Fw" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_1";
+	dock_tag = "arrival_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
 	},
@@ -6809,7 +6818,9 @@
 	},
 /area/station/engineering/equip)
 "FY" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -6932,9 +6943,9 @@
 /area/station/hallway/primary/central)
 "GM" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7273,7 +7284,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "HO" = (
-/obj/machinery/space_heater,
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7813,7 +7824,9 @@
 	},
 /area/station/cargo/storage)
 "Nf" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
@@ -7854,7 +7867,6 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "NM" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
@@ -7862,6 +7874,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8466,9 +8479,9 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
 	dir = 4;
 	name = "Engineering largecell apc right";
-	custom_smartlight_preset = "Engineering";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -8491,9 +8504,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
 	dir = 4;
 	name = "RnD largecell apc right";
-	custom_smartlight_preset = "RnD";
 	pixel_x = 27
 	},
 /turf/simulated/floor{
@@ -8735,6 +8748,20 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/atmos)
+"US" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "escape_shuttle";
+	locked = 1;
+	name = "Escape Airlock"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal{
@@ -8943,9 +8970,9 @@
 /area/shuttle/supply/station)
 "Wn" = (
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering";
-	req_access = list(71);
-	dir = 4
+	req_access = list(71)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -9135,6 +9162,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 5
 	},
+/obj/item/clothing/under/rank/atmospheric_technician,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "XW" = (
@@ -9496,6 +9524,7 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "ZY" = (
+/obj/machinery/space_heater/upgraded,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -30664,7 +30693,7 @@ as
 as
 QW
 vT
-vT
+US
 XB
 vT
 vT
@@ -38898,9 +38927,9 @@ MC
 MC
 MC
 MC
-MC
-MC
-MC
+zn
+zn
+zn
 wQ
 fE
 wQ
@@ -40184,7 +40213,7 @@ hz
 hz
 hz
 hz
-MC
+wF
 MC
 MC
 MC
@@ -40441,7 +40470,7 @@ kw
 fL
 fQ
 hz
-MC
+wF
 MC
 MC
 MC

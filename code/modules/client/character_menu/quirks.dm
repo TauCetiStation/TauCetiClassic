@@ -14,7 +14,7 @@
 	. += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
 	. += "<center>[all_quirks.len] / [MAX_QUIRKS] max quirks<br>"
 	. += "<b>Quirk balance remaining:</b> [GetQuirkBalance()]<br>"
-	. += "<a href='?_src_=prefs;preference=quirk;task=reset'>Reset Quirks</a></center>"
+	. += "<a href='byond://?_src_=prefs;preference=quirk;task=reset'>Reset Quirks</a></center>"
 	. += "<table bgcolor='#ffeef0' align='center' width='570px' cellspacing='0'>"
 	for(var/Q in allowed_quirks)
 		var/datum/quirk/T = SSquirks.quirks[Q]
@@ -44,7 +44,7 @@
 			. += "<td nowrap style='vertical-align:top'><font color='red'><b>LOCKED</b></font></td>"
 			. += "<td><font size=2><font color='red'>[lock_reason]</font></font></td>"
 		else
-			. += "<tr style='vertical-align:top'><td width=15%><a href='?_src_=prefs;preference=quirk;task=update;quirk=[quirk_name]' style='color: [has_quirk ? "silver" : font_color];'><b>[quirk_name]</b></a></td>"
+			. += "<tr style='vertical-align:top'><td width=15%><a href='byond://?_src_=prefs;preference=quirk;task=update;quirk=[quirk_name]' style='color: [has_quirk ? "silver" : font_color];'><b>[quirk_name]</b></a></td>"
 			. += "<td nowrap style='vertical-align:top'>[quirk_cost] pts.</a></td>"
 			. += "<td><font size=2><i>[initial(T.desc)]</i></font></td>"
 			. += "</tr>"

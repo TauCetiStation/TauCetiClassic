@@ -40,3 +40,11 @@
 /area/space/snow
 	name = "Snow field"
 	cases = list("снежное поле", "снежного поля", "снежному полю", "снежное поле", "снежным полем", "снежном поле")
+
+/area/space/forest
+	name = "Forest"
+	cases = list("лес", "леса", "лесу", "лес", "лесом", "лесе")
+
+/area/space/desert
+	name = "Desert"
+	cases = list("пустыня", "пустыни", "пустыне", "пустыню", "пустыней", "пустыне")

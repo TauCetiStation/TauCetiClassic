@@ -1026,7 +1026,7 @@
 		return
 	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to open exosuit stats.</span>"))
 		return
-	occupant << browse(get_stats_html(), "window=exosuit")
+	occupant << browse(get_stats_html(occupant.client), "window=exosuit")
 	return
 
 /obj/mecha/proc/eject()

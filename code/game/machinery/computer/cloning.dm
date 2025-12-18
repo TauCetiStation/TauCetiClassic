@@ -145,15 +145,8 @@
 				dat += "<span class='red'>Ошибка: запись не обнаружена.</span>"
 			else
 				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Удалить запись</a></font><br>
-					<b>Name:</b> [src.active_record.dna.real_name]<br>"}
-				var/obj/item/weapon/implant/health/H = null
-				if(src.active_record.implant)
-					H=locate(src.active_record.implant)
-
-				if ((H) && (istype(H)))
-					dat += "<b>Health:</b> [H.sensehealth()] | АСФ-ОЖОГ-ТОКС-МЕХАН<br>"
-				else
-					dat += "<span class='red'>Невозможно обнаружить имплант.</span><br>"
+					<b>Имя:</b> [src.active_record.dna.real_name]<br>"}
+				dat += "<b>Датчики формы:</b> [get_human_sensor_status(active_record.dna.real_name)]<br>"
 
 				if (!isnull(src.diskette))
 					dat += "<a href='byond://?src=\ref[src];disk=load'>Загрузить информацию с диска.</a>"
@@ -186,6 +179,31 @@
 	popup.set_content(dat)
 	popup.open()
 	return
+
+/obj/machinery/computer/cloning/proc/get_human_sensor_status(real_name)
+
+	. = "Неизвестно"
+
+	for(var/mob/living/carbon/human/H as anything in human_list)
+		if(H.real_name != real_name)
+			continue
+
+		if(!isunder(H.w_uniform))
+			continue
+
+		var/obj/item/clothing/under/C = H.w_uniform
+
+		if(!C.has_sensor || C.sensor_mode == SUIT_SENSOR_OFF)
+			continue
+
+		if(C.sensor_mode >= SUIT_SENSOR_BINARY)
+			if(H.stat >= DEAD)
+				. = "Мертв"
+			else
+				. = "Жив"
+		if(C.sensor_mode >= SUIT_SENSOR_VITAL)
+			. = " ([round(H.getOxyLoss())] - [round(H.getFireLoss())] - [round(H.getToxLoss())] - [round(H.getBruteLoss())] | АСФ-ОЖОГ-ТОКС-МЕХАН)"
+		return .
 
 /obj/machinery/computer/cloning/Topic(href, href_list)
 	. = ..()
@@ -342,13 +360,13 @@
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/subject)
 	if(ishuman(subject))
 		var/mob/living/carbon/human/Hsubject = subject
-		if(!Hsubject.has_brain() || Hsubject.species.flags[NO_SCAN])
+		if(!Hsubject.has_brain())
 			scantemp = "Ошибка: не обнаружено следов разума."
 			return
 	else if(!isbrain(subject))
 		scantemp = "Ошибка: структура тела пациента не поддерживается."
 		return
-	if(!subject.dna)
+	if(!subject.dna || HAS_TRAIT(subject, TRAIT_INCOMPATIBLE_DNA))
 		scantemp = "Ошибка: невозможно получить ДНК пациента."
 		return
 	if(subject.suiciding)
@@ -357,7 +375,7 @@
 	if((!subject.ckey) || (!subject.client))
 		scantemp = "Ошибка: сканирование не удалось."
 		return
-	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
+	if(((NOCLONE in subject.mutations) && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
 		scantemp = "<span class='bad'>Геном пациента повреждён и не пригоден для клонирования.</span>"
 		return
 	if(!isnull(find_record(subject.ckey)))
@@ -379,17 +397,6 @@
 		var/datum/quirk/T = V
 		R.quirks += T.type
 	R.quirks += /datum/quirk/genetic_degradation // clones cannot be cloned
-
-	//Add an implant if needed
-	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
-	if (isnull(imp))
-		imp = new /obj/item/weapon/implant/health(subject)
-		imp.implanted = subject
-		subject.sec_hud_set_implants()
-		R.implant = "\ref[imp]"
-	//Update it if needed
-	else
-		R.implant = "\ref[imp]"
 
 	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.mind = "\ref[subject.mind]"

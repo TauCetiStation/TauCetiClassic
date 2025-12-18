@@ -22,6 +22,8 @@
 	max_integrity = 200
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
@@ -215,7 +217,7 @@
 		new /obj/item/weapon/book/manual/wiki/security_space_law(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/book/manual/wiki/sop(src)
-	new /obj/item/weapon/book/manual/detective(src)
+	new /obj/item/weapon/book/manual/wiki/forensics(src)
 	update_icon()
 
 /obj/structure/bookcase/skills
@@ -262,11 +264,8 @@
 		return
 	if(src.dat)
 		if(istype(src, /obj/item/weapon/book/manual/wiki)) // wiki books has own styling so no browser/popup
-			var/window_size
-			if(window_width && window_height)
-				window_size = "[window_width]x[window_height]"
 			//<TT><I>Penned by [author].</I></TT> <BR> // <- no place for "penned"
-			user << browse(dat, "window=book[window_size != null ? ";size=[window_size]" : ""]")
+			user << browse(dat, "window=book[window_width && window_height ? get_browse_size_parameter(user.client, window_width, window_height) : ""]")
 		else
 			//var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
 			var/datum/browser/popup = new(user, "book", "Penned by [author].", window_width, window_height, ntheme = CSS_THEME_LIGHT)

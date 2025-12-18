@@ -9,56 +9,72 @@ export const Wires = (props, context) => {
   return (
     <Window
       width={350}
-      height={45 + wires.length * 25
-        + (statuses.length > 0 ? 35 : 0) + statuses.length * 12}>
+      height={
+        45 +
+        wires.length * 25 +
+        (statuses.length > 0 ? 35 : 0) +
+        statuses.length * 12
+      }>
       <Window.Content>
         <Section>
           <LabeledList>
-            {wires.map(wire => (
+            {wires.map((wire) => (
               <LabeledList.Item
                 key={wire.color}
                 className="candystripe"
-                label={wire.label ? wire.label : "Провода"}
+                label={wire.label ? wire.label : 'Провода'}
                 labelColor={wire.color}
                 color={wire.color}
-                buttons={(
+                buttons={
                   <>
                     <Button
                       content={wire.cut ? 'Соединить' : 'Перерезать'}
-                      onClick={() => act('cut', {
-                        wire: wire.wire,
-                      })} />
+                      onClick={() =>
+                        act('cut', {
+                          wire: wire.wire,
+                        })
+                      }
+                    />
                     <Button
                       content="Пульс"
-                      onClick={() => act('pulse', {
-                        wire: wire.wire,
-                      })} />
+                      onClick={() =>
+                        act('pulse', {
+                          wire: wire.wire,
+                        })
+                      }
+                    />
                     <Button
                       content={wire.attached ? 'Отсоединить' : 'Присоединить'}
-                      onClick={() => act('attach', {
-                        wire: wire.wire,
-                      })} />
+                      onClick={() =>
+                        act('attach', {
+                          wire: wire.wire,
+                        })
+                      }
+                    />
                   </>
-                )} />
+                }
+              />
             ))}
           </LabeledList>
         </Section>
         {!!statuses.length && (
           <Section>
-            {statuses.map(status => (
-              (typeof status === "string")
-                ? (
-                  <Box key={status}>
-                    {status}
-                  </Box>
-                )
-                : (
-                  <Button
-                    content={status.label}
-                    onClick={() => act(status.act,
-                      status.act_params ? status.act_params : undefined)} />
-                )
-            ))}
+            {statuses.map((status) =>
+              typeof status === 'string' ? (
+                <Box key={status}>{status}</Box>
+              ) : (
+                <Button
+                  key={status}
+                  content={status.label}
+                  onClick={() =>
+                    act(
+                      status.act,
+                      status.act_params ? status.act_params : undefined
+                    )
+                  }
+                />
+              )
+            )}
           </Section>
         )}
       </Window.Content>

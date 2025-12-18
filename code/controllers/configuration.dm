@@ -23,6 +23,7 @@ var/global/bridge_secret = null
 	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs runtimes to round log folder
+	var/log_icon_lookup = 0				// logs icon_exists bad lookups
 	var/log_sql_error = 0				// same but for sql errors
 	var/log_js_error = 0				   // same but for client side js errors
 	var/log_initialization = 0			// same but for debug init logs
@@ -58,7 +59,6 @@ var/global/bridge_secret = null
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/afk_time_bracket = 6000 // 10 minutes
-	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	// If true - disable OOC for the duration of a round.
@@ -83,11 +83,13 @@ var/global/bridge_secret = null
 	var/disable_player_mice = 0
 	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
-	var/deathtime_required = 18000	//30 minutes
+	var/deathtime_required = 6000	//10 minutes
 
 	var/usealienwhitelist = 0
 	var/use_alien_job_restriction = 0
 	var/list/whitelisted_species_by_time = list()
+
+	var/guest_mode = GUEST_FORBIDDEN
 
 	var/server
 	var/banappeals
@@ -141,20 +143,17 @@ var/global/bridge_secret = null
 	var/expected_round_length = 90 MINUTES
 	// If the first delay has a custom start time
 	// No custom time
-	var/list/event_first_run = list(EVENT_LEVEL_FEATURE = null,
-									EVENT_LEVEL_MUNDANE = null,
-									EVENT_LEVEL_MODERATE = null,
-									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
+
+	// Order is important. EVENT_LEVEL_FEATURE, EVENT_LEVEL_MUNDANE, EVENT_LEVEL_MODERATE, EVENT_LEVEL_MAJOR.
+	var/list/event_first_run = list(null, null, null, list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
+
 	// The lowest delay until next event
-	var/list/event_delay_lower = list(EVENT_LEVEL_FEATURE = null,
-									  EVENT_LEVEL_MUNDANE  = 10 MINUTES,
-									  EVENT_LEVEL_MODERATE = 30 MINUTES,
-									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
+	// Order is important. EVENT_LEVEL_FEATURE, EVENT_LEVEL_MUNDANE, EVENT_LEVEL_MODERATE, EVENT_LEVEL_MAJOR.
+	var/list/event_delay_lower = list(null, 10 MINUTES, 30 MINUTES, 50 MINUTES)
+
 	// The upper delay until next event
-	var/list/event_delay_upper = list(EVENT_LEVEL_FEATURE = null,
-									  EVENT_LEVEL_MUNDANE  = 15 MINUTES,
-									  EVENT_LEVEL_MODERATE = 45 MINUTES,
-									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
+	// Order is important. EVENT_LEVEL_FEATURE, EVENT_LEVEL_MUNDANE, EVENT_LEVEL_MODERATE, EVENT_LEVEL_MAJOR.
+	var/list/event_delay_upper = list(null, 15 MINUTES, 45 MINUTES, 70 MINUTES)
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
@@ -171,12 +170,11 @@ var/global/bridge_secret = null
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
+	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python3" on unix
 	var/github_token = "" // todo: move this to globals for security
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/check_randomizer = 0
 
 	var/guard_email = null
 	var/guard_enabled = FALSE
@@ -341,6 +339,9 @@ var/global/bridge_secret = null
 				if ("log_sql_error")
 					config.log_sql_error = 1
 
+				if ("log_icon_lookup")
+					config.log_icon_lookup = 1
+
 				if ("log_js_error")
 					config.log_js_error = 1
 
@@ -410,8 +411,8 @@ var/global/bridge_secret = null
 				if ("forumurl")
 					config.forumurl = value
 
-				if ("guest_ban")
-					guests_allowed = 0
+				if ("guest_mode")
+					config.guest_mode = text2num(value)
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
@@ -460,9 +461,6 @@ var/global/bridge_secret = null
 
 				if ("afk_time_bracket")
 					config.afk_time_bracket = (text2num(value) MINUTES)
-
-				if("load_jobs_from_txt")
-					load_jobs_from_txt = 1
 
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
@@ -533,7 +531,7 @@ var/global/bridge_secret = null
 						config.python_path = value
 					else
 						if(world.system_type == UNIX)
-							config.python_path = "/usr/bin/env python2"
+							config.python_path = "/usr/bin/env python3"
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
 
@@ -597,9 +595,6 @@ var/global/bridge_secret = null
 
 				if("chat_bridge")
 					config.chat_bridge = value
-
-				if("check_randomizer")
-					config.check_randomizer = value
 
 				if("guard_email")
 					config.guard_email = value

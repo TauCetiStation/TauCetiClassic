@@ -129,9 +129,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return destination
 
-/proc/sign(x)
-	return x!=0?x/abs(x):0
-
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	var/px=M.x		//starting x
 	var/py=M.y
@@ -140,8 +137,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/dy=N.y-py
 	var/dxabs=abs(dx)//Absolute value of x distance
 	var/dyabs=abs(dy)
-	var/sdx=sign(dx)	//Sign of x distance (+ or -)
-	var/sdy=sign(dy)
+	var/sdx=SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdy=SIGN(dy)
 	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
 	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
 	var/j			//Generic integer for counting
@@ -165,7 +162,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	return findtext(key, "Guest-", 1, 7) == 1
+	if(findtext(key, "Guest-", 1, 7) != 1)
+		return FALSE
+
+	var/i, ch, len = length(key)
+
+	for(i = 7, i <= len, ++i) //we know the first 6 chars are Guest-
+		ch = text2ascii(key, i)
+		if (ch < 48 || ch > 57) //0-9
+			return FALSE
+	return TRUE
 
 //Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(f)
@@ -439,7 +445,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(key)
 		if(include_link && C)
-			. += "<a href='?priv_msg=\ref[C][reply ? ";ahelp_reply=[reply]" : ""][mentor_pm ? ";mentor_pm=1" : ""]'>"
+			. += "<a href='byond://?priv_msg=\ref[C][reply ? ";ahelp_reply=[reply]" : ""][mentor_pm ? ";mentor_pm=1" : ""]'>"
 
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
@@ -1208,10 +1214,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return 0
 
 //check if mob is lying down on something we can operate him on.
-/proc/can_operate(mob/living/carbon/M)
+/proc/can_operate(mob/living/carbon/M, mob/user)
 	if(locate(/obj/machinery/optable, M.loc) && M.crawling)
 		return TRUE
-	if((M.buckled || M.incapacitated()) && prob(get_surg_chance(M.loc)))
+	if((M.buckled || M.incapacitated()) && user.mood_prob(get_surg_chance(M.loc)))
 		return TRUE
 	return FALSE
 

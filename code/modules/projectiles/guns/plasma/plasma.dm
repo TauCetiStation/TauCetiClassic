@@ -16,7 +16,7 @@
 	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	fire_delay = 0
+	fire_delay = 2
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
@@ -58,12 +58,14 @@
 /obj/item/weapon/gun/plasma/atom_init()
 	. = ..()
 	if(fullauto)
-		AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+		AddComponent(/datum/component/automatic_fire, fire_delay)
 	magazine = new initial_mag(src)
 	for(var/i in ammo_type)
 		var/path = ammo_type[i]
 		ammo_type[i] = new path(src)
+
 	update_icon()
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/plasma/Destroy()
 	QDEL_LIST_ASSOC_VAL(ammo_type)

@@ -32,7 +32,7 @@
 
 /obj/structure/window/thin/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 
 	return ..()
 
@@ -44,7 +44,7 @@
 	else
 		return TRUE
 
-/obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	if(!density)
 		return TRUE
 	if(dir == to_dir)
@@ -164,6 +164,8 @@
 	drops = list(/obj/item/weapon/shard/phoron)
 
 	max_integrity = 120
+
+	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /obj/structure/window/thin/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)

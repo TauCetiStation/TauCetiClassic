@@ -146,6 +146,9 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+	// by default hud looks for icon by assignment/rank, this allows to override it with custom icon
+	var/sec_hud_icon
+
 /obj/item/weapon/card/id/atom_init()
 	. = ..()
 
@@ -481,6 +484,7 @@
 	assignment = "General"
 	rank = "NanoTrasen Representative"
 	customizable_view = TRAITOR_VIEW
+	sec_hud_icon = "Centcom"
 
 /obj/item/weapon/card/id/centcom/atom_init()
 	. = ..()
@@ -541,6 +545,7 @@
 
 	icon_state = "ert"
 	item_state_world = "ert_world"
+	sec_hud_icon = "Centcom"
 
 /obj/item/weapon/card/id/space_police/atom_init()
 	. = ..()

@@ -117,15 +117,15 @@
 		t += "<div class='Section'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
 		if(inserted_gps)
-			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
-			t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
+			t += "<A href='byond://?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
+			t += "<A href='byond://?src=\ref[src];setMemory=1'>Set GPS memory</A>"
 		else
 			t += "<span class='disabled'>Eject GPS</span>"
 			t += "<span class='disabled'>Set GPS memory</span>"
 		t += "<div class='Section'>[temp_msg]</div><BR>"
-		t += "<A href='?src=\ref[src];setx=1'>Set X</A>"
+		t += "<A href='byond://?src=\ref[src];setx=1'>Set X</A>"
 		t += "<div class='Section'>[cord_x]</div>"
-		t += "<A href='?src=\ref[src];sety=1'>Set Y</A>"
+		t += "<A href='byond://?src=\ref[src];sety=1'>Set Y</A>"
 		t += "<div class='Section'>[cord_y]</div>"
 		t += "<span class='selected'>Set Power</span>"
 		t += "<div class='Section'>"
@@ -134,17 +134,17 @@
 			if(power == power_options[i])
 				t += "<span class='selected'>[power_options[i]]</span>"
 				continue
-			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
+			t += "<A href='byond://?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
 		t += "</div>"
 
-		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
+		t += "<A href='byond://?src=\ref[src];setz=1'>Set Sector</A>"
 		t += "<div class='Section'>[z_co ? z_co : "NULL"]</div>"
 
 		if(active_wormhole)
-			t += "<BR><span class='disabled'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
+			t += "<BR><span class='disabled'>Open Wormhole</span><A href='byond://?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
 		else
-			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='disabled'>Close Wormhole</span>"
-		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+			t += "<BR><A href='byond://?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='disabled'>Close Wormhole</span>"
+		t += "<BR><A href='byond://?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='byond://?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
 		t += "<BR><div class='Section'>"

@@ -36,10 +36,9 @@
 				if(3)
 					if(U.stat==DEAD||U.health<=0)
 						to_chat(U, "<span class='warning'><B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...</span>")
-						unlock_suit()
+						unlock_suit(U)
 						break
 					lock_suit(U, TRUE)//Check for icons.
-					U.regenerate_icons()
 					to_chat(U, "<span class='notice'>Linking neural-net interface...\nPattern <B>GREEN</B>, continuing operation.</span>")
 				if(4)
 					to_chat(U, "<span class='notice'>VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>")
@@ -97,8 +96,7 @@
 					to_chat(U, "<span class='notice'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>")
 					blade_check(U,2)
 					remove_equip_verbs()
-					unlock_suit()
-					U.regenerate_icons()
+					unlock_suit(U)
 			sleep(delay)
 		s_busy = 0
 	return

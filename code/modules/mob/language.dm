@@ -35,6 +35,10 @@
 	if(!istype(M))
 		return
 
+	if(isnull(M.languages[src]))
+		to_chat(M, "<span class='warning'>You do not know this language.</span>")
+		return
+
 	// Can't speak and not native.
 	if(M.languages[src] == LANGUAGE_CAN_UNDERSTAND)
 		return
@@ -430,7 +434,7 @@
 			link_class = "class='good'"
 
 		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
-			lang_name = "<a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
+			lang_name = "<a href='byond://?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
 
 		dat += "<b>[lang_name] "
 		for(var/l_key in L.key)

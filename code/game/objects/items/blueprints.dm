@@ -54,12 +54,12 @@
 		if (AREA_SPACE)
 			text += {"
 <p>According the blueprints, you are now in <b>outer space</b>.  Hold your breath.</p>
-<p><a href='?src=\ref[src];action=create_area'>Mark this place as new area</a></p>
+<p><a href='byond://?src=\ref[src];action=create_area'>Mark this place as new area</a></p>
 "}
 		if (AREA_STATION)
 			text += {"
 <p>According the blueprints, you are now in <b>\"[A.name]\"</b>.</p>
-<p>You may <a href='?src=\ref[src];action=edit_area'>
+<p>You may <a href='byond://?src=\ref[src];action=edit_area'>
 move an amendment</a> to the drawing.</p>
 "}
 		if (AREA_SPECIAL)
@@ -239,6 +239,7 @@ move an amendment</a> to the drawing.</p>
 				if(BORDER_NONE)
 					pending+=NT
 				if(BORDER_BETWEEN)
+					EMPTY_BLOCK_GUARD
 					//do nothing, may be later i'll add 'rejected' list as optimization
 				if(BORDER_2NDTILE)
 					found+=NT //tile included to new area, but we dont seek more

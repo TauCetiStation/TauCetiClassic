@@ -52,10 +52,12 @@
 				continue
 			if(I.uplink_types.len && !(uplink.uplink_type in I.uplink_types))
 				continue
+			if(!I.special_conditions(uplink.uplink_type))
+				continue
 			if(I.last)
 				last += I
 				continue
-			if(uplink.uplink_type == "dealer" && I.need_wanted_level)
+			if(uplink.uplink_type == UPLINK_TYPE_DEALER && I.need_wanted_level)
 				var/datum/faction/cops/cops = find_faction_by_type(/datum/faction/cops)
 				if(cops && I.need_wanted_level > cops.wanted_level)
 					continue
@@ -95,6 +97,9 @@
 
 	// used for dealer items
 	var/need_wanted_level
+
+/datum/uplink_item/proc/special_conditions(uplink_type)
+	return TRUE
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 	if(item)
@@ -174,13 +179,13 @@
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 8
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/revolver/traitor
 	name = "TR-8-R Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers. This one looks like toy."
 	item = /obj/item/weapon/gun/projectile/revolver/traitor
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
@@ -188,14 +193,14 @@
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 	cost = 6
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/dangerous/deagle
 	name = "Desert Eagle"
 	desc = "A robust handgun that uses .50 AE ammo."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened
 	cost = 8
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 	need_wanted_level = 3
 
@@ -204,7 +209,7 @@
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened/gold
 	cost = 9
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 	need_wanted_level = 3
 
@@ -213,14 +218,14 @@
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires .45 ACP automatic rounds with a 20-round magazine. Has large variety of ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 10
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/mini_uzi
 	name = "Mac-10"
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
 	item = /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	cost = 12
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 	need_wanted_level = 3
 
@@ -229,7 +234,7 @@
 	desc = "Based on the classic 'Chicago Typewriter'. Uses .45 ACP rounds."
 	item = /obj/item/weapon/gun/projectile/automatic/tommygun
 	cost = 10
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 	need_wanted_level = 2
 
@@ -238,35 +243,35 @@
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
 	item = /obj/item/weapon/gun/projectile/automatic/bulldog
 	cost = 15
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 100-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 30
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/heavyrifle
 	name = "PTR-7 heavy rifle"
 	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
 	item = /obj/item/weapon/gun/projectile/heavyrifle
 	cost = 15
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/bazooka
 	name = "Goliath missile launcher"
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	item = /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	cost = 20
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/a74
 	name = "A74 Assault Rifle"
 	desc = "An automatic assault rifle. Great for ranged combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/a74
 	cost = 20
-	uplink_types = list("nuclear", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_DEALER)
 
 	need_wanted_level = 5
 
@@ -275,7 +280,7 @@
 	desc = "Semiauto assault rifle equipped with an underslung grenade launcher. Has a small mag full of high power ammo. Uses 12-round magazine of 12.7 ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/drozd
 	cost = 15
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -283,14 +288,7 @@
 	Its bolts stun enemies for short periods, and replenish automatically. This one looks like toy."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 7
-	uplink_types = list("traitor")
-/*
-/datum/uplink_item/dangerous/flamethrower
-	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen stations. Make a statement by roasting the filth in their own greed. Use with caution."
-	item = /obj/item/weapon/flamethrower/full/tank
-	cost = 6
-	uplink_types = list("nuclear") */
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -300,19 +298,19 @@
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/weapon/melee/powerfist
 	cost = 8
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
 	cost = 7
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/sword/traitor
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise. This one looks like toy."
 	item = /obj/item/weapon/melee/energy/sword/traitor
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/power_gloves
 	name = "Power Gloves"
@@ -323,28 +321,32 @@
 	They are disguised as heavy padded black gloves."
 	item = /obj/item/clothing/gloves/power
 	cost = 4
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades"
 	desc = "A box that contains an EMP grenades. Useful to disrupt communication and silicon lifeforms."
 	item = /obj/item/weapon/storage/box/emps
-	cost = 5
-	uplink_types = list("nuclear", "traitor")
+	cost = 3
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
+
+/datum/uplink_item/dangerous/emp/New()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost = 2
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 6
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
 	cost = 3
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 /*
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
@@ -352,7 +354,7 @@
 	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	cost = 10
-	uplink_types = list("nuclear") */
+	uplink_types = list(UPLINK_TYPE_NUCLEAR) */
 
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
@@ -360,21 +362,30 @@
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark
 	cost = 40
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
+
+/datum/uplink_item/dangerous/gygax/special_conditions(uplink_type)
+	if(uplink_type == UPLINK_TYPE_NUCLEAR)
+		return TRUE
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS) && uplink_type == UPLINK_TYPE_TRAITOR)
+		cost = 20
+		return TRUE
+	return FALSE
+
 
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler
 	cost = 60
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/dangerous/syndieborg
 	name = "Syndicate Robot"
 	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
 	item = /obj/item/weapon/antag_spawner/borg_tele
 	cost = 25
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 //for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
@@ -387,11 +398,11 @@
 	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
 	cost = 4
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/light_armor/dealer
 	cost = 12
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 	need_wanted_level = 5
 
 /datum/uplink_item/dangerous/cheap_armor
@@ -399,21 +410,21 @@
 	desc = "A set of basic armor to protect against enemies"
 	item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
 	cost = 10
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/dangerous/mine
 	name = "High Explosive Mine"
 	desc = "A mine that explodes upon pressure. Use multitool to disarm it."
 	item = /obj/item/mine
 	cost = 3
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/incendiary_mine
 	name = "Incendiary Mine"
 	desc = "A variation of many different mines, this one will set on fire anyone unfortunate to step on it."
 	item = /obj/item/mine/incendiary
 	cost = 2
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 
 // AMMUNITION
@@ -426,7 +437,7 @@
 	desc = "A 40-round .45 magazine for use in Robot submachine gun."
 	item = /obj/item/ammo_box/magazine/borg45
 	cost = 2
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
@@ -434,153 +445,153 @@
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/stechkin/extended
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/ammo/revolver
 	name = "Speedloader-.357"
 	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/speedloader/a357
 	cost = 2
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
 	desc = "A 30-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/c20r
 	cost = 1
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/uzi
 	name = "9mm Mac-10 Magazine"
 	desc = "A 32-round 9mm magazine for use in the Mac-10."
 	item = /obj/item/ammo_box/magazine/mac10
 	cost = 3
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/ammo/tommygun
 	name = ".45 ACP Tommygun Magazine"
 	desc = "A 50-round .45 ACP magazine for use in the tommygun."
 	item = /obj/item/ammo_box/magazine/tommygun
 	cost = 4
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/ammo/deagle
 	name = "Ammo-.50 AE Magazine"
 	desc = "A 7-round .50 AE magazine for use in the desert eagle."
 	item = /obj/item/ammo_box/magazine/deagle/weakened
 	cost = 4
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/ammo/smg_hp
 	name = "Ammo-.45 ACP High Power"
 	desc = "A 20-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
 	item = /obj/item/ammo_box/magazine/c20r/hp
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/smg_hv
 	name = "Ammo-.45 ACP High Velocity"
 	desc = "A 20-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
 	item = /obj/item/ammo_box/magazine/c20r/hv
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/smg_imp
 	name = "Ammo-.45 ACP Impact"
 	desc = "A 20-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
 	item = /obj/item/ammo_box/magazine/c20r/imp
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/a74standart
 	name = "Ammo-7.74mm"
 	desc = "A 30-round 7.74 magazine for use in the A74 assault rifle."
 	item = /obj/item/ammo_box/magazine/a74
 	cost = 5
-	uplink_types = list("nuclear", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/ammo/bullbuck
 	name = "Ammo-12g Buckshot"
 	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/bulldog
 	cost = 3
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/bullstun
 	name = "Ammo-12g Stun Shot"
 	desc = "An alternative 8-round stun shot magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/bulldog/stun
 	cost = 1
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/bullincendiary
 	name = "Ammo-12g Incendiary"
 	desc = "An alternative 8-round incendiary magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/bulldog/incendiary
 	cost = 4
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62x51mm"
 	desc = "A 100-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/saw
 	cost = 10
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/drozd
 	name = "Ammo-12.7mm"
 	desc = "A 12-round magazine of 12.7 ammunition for use in the Drozd OTs-114 automatic rifle. Small and dangerous."
 	item = /obj/item/ammo_box/magazine/drozd
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/grenade_launcher
 	name = "Ammo-40x46mm (explosive)"
 	desc = "A single grenade for use in underslung grenade launcher. This one explodes."
 	item = /obj/item/ammo_casing/r4046/explosive
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/grenade_launcher_emp
 	name = "Ammo-40x46mm (EMP)"
 	desc = "A single grenade for use in underslung grenade launcher. This one creates EMP blast."
 	item = /obj/item/ammo_casing/r4046/chem/EMP
 	cost = 1
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/heavyrifle
 	name = "A 14.5mm shell."
 	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
 	item = /obj/item/ammo_casing/a145
 	cost = 1
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/rocket
 	name = "HE missile"
 	desc = "A high explosive missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket
 	cost = 5
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/rocket_emp
 	name = "EMP missile"
 	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/ammo/chemicals
 	name = "Chemical Warfare Tank"
 	desc = "A tank of chemicals to refuel your urge to deliver slow and painful death to others."
 	item = /obj/item/device/radio/beacon/syndicate_chemicals
 	cost = 10
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -626,48 +637,48 @@
 	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 /*
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Stetchkin Silencer"
 	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
 	item = /obj/item/weapon/silencer
 	cost = 2
-	uplink_types = list("nuclear") */
+	uplink_types = list(UPLINK_TYPE_NUCLEAR) */
 
 // STEALTHY TOOLS
 
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/stealthy_tools/switchblade
 	name = "Switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
 	item = /obj/item/weapon/switchblade
 	cost = 2
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/throwingknives
 	name = "Throwing Knives"
 	desc = "Belt with a bunch of deadly sharp throwing knives."
 	item = /obj/item/weapon/storage/belt/security/tactical/throwing
 	cost = 9
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/icepick
 	name = "Ice Pick"
 	desc = "Used for chopping ice. Also excellent for mafia esque murders."
 	item = /obj/item/weapon/melee/icepick
 	cost = 1
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/spraycan
 	name = "Spray Can"
 	desc = "It's like crayons, but better."
 	item = /obj/item/toy/crayon/spraycan
 	cost = 1
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/chameleon_kit
 	name = "Chameleon Kit"
@@ -688,14 +699,14 @@
 			known to survive intact even beyond the current shift. "
 	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 1
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification card"
@@ -756,14 +767,14 @@
 	desc = "A artisanally modified pinpointer for searching for items that your employers are interested in."
 	item = /obj/item/weapon/pinpointer/highriskitems
 	cost = 2
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/disk
 	name = "Diskette With Virus"
 	desc = "A floppy disk containing a virus to sabotage R&D systems. Insert this diskette into the R&D Server Controller to destroy scientific data."
 	item = /obj/item/weapon/disk/data/syndi
 	cost = 10
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
@@ -773,21 +784,21 @@
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/healthanalyzer/rad_laser
 	cost = 7
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 6
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
 	desc = "The syndicate toolbox is a suspicious black and red. Aside from tools, it comes with cable and a multitool. Insulated gloves are not included."
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Dufflebag"
@@ -795,21 +806,21 @@
 			a MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/surgery
 	cost = 2
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 5 C-4 plastic explosives."
 	item = /obj/item/weapon/storage/backpack/dufflebag/c4
 	cost = 4 //10% discount!
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
@@ -817,21 +828,21 @@
 	and other medical supplies helpful for a medical field operative.."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 10
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 2
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/bonepen
 	name = "Prototype Bone Repair Kit"
 	desc = "Stolen prototype bone repair nanites. Contains three nanocalcium autoinjectors."
 	item = /obj/item/weapon/storage/box/syndie_kit/bonepen
 	cost = 4
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
@@ -844,7 +855,7 @@
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -853,12 +864,12 @@
 	Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 5
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/thermal/dealer
 	item = /obj/item/clothing/glasses/thermal/dealer
 	cost = 8
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 	need_wanted_level = 3
 
@@ -874,7 +885,7 @@
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
 	cost = 1
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -882,35 +893,35 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/poster_kit
 	name = "Poster kit"
 	desc = "Box of illegal posters"
 	item = /obj/item/weapon/storage/box/syndie_kit/posters
 	cost = 1
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/headcan
 	name = "Biogel can"
 	desc = "Sophisticated device for sustaining life in head for a long period"
 	item = /obj/item/device/biocan
 	cost = 1
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
 	cost = 2
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/freeform/syndicate
 	cost = 12
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
@@ -918,7 +929,7 @@
 	It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power sink"
@@ -926,7 +937,7 @@
 	Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 12
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/syndcodebook
 	name = "Sy-Code Book"
@@ -934,7 +945,7 @@
 	This manual teaches you Sy-Code. Limited uses. Use :0 before saying something to speak in Sy-Code."
 	item = /obj/item/weapon/syndcodebook
 	cost = 1
-	uplink_types = list("traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/syndcodebook/rowena
 	name = "Rowena Ravenclaw Book"
@@ -942,7 +953,7 @@
 	In this guide, you will learn how to use a variety of languages. Usage is limited."
 	item = /obj/item/weapon/syndcodebook/rowena
 	cost = 1
-	uplink_types = list("traitor", "dealer")
+	uplink_types = list(UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
@@ -951,7 +962,7 @@
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/radio/beacon/syndicate
 	cost = 14
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
@@ -959,7 +970,7 @@
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/radio/beacon/syndicate_bomb
 	cost = 10
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -967,48 +978,48 @@
 	Useful for when speed matters or you wish to synchronize multiple bomb blasts. Be sure to stand clear of the blast radius before using the detonator."
 	item = /obj/item/device/syndicatedetonator
 	cost = 2
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
 	item = /obj/item/weapon/shield/energy
 	cost = 12
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/device_tools/traitor_caller
 	name = "Traitor Caller"
 	desc = "Allows you to request an additional agent selected from the stealthy traitors."
 	item = /obj/item/device/traitor_caller
 	cost = 35
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/device_tools/syndidrone
 	name = "Syndicate drone"
 	desc = "A remote control drone disguised as a NT maintenance drone. Comes with a RC interface."
 	item = /obj/item/weapon/storage/box/syndie_kit/drone
 	cost = 14
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/device_tools/fake_nuke
 	name = "Fake Nuke"
 	desc = "The most common nuclear bomb. With one but: it doesn't explode. You can <activate> it by double deploying."
 	item = /obj/machinery/nuclearbomb/fake
 	cost = 6
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/device_tools/nuke_teleporter
 	name = "Nuke Recaller"
 	desc = "A device that can teleport a nuclear bomb directly to the user. It takes a lot of time to activate. There will be an announce upon activation."
 	item = /obj/item/nuke_teleporter
 	cost = 17
-	uplink_types = list("nuclear")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 // IMPLANTS
 
 /datum/uplink_item/implants
 	category = "Implants"
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -1018,7 +1029,7 @@
 
 /datum/uplink_item/implants/freedom/dealer
 	cost = 10
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
@@ -1027,7 +1038,7 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 13
 	cant_discount = TRUE
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/implants/storage
 	name = "Compressed Implant"
@@ -1043,7 +1054,7 @@
 
 /datum/uplink_item/implants/adrenaline/dealer
 	cost = 20
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/implants/emp
 	name = "EMP Implant"
@@ -1051,9 +1062,13 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
 
+/datum/uplink_item/implants/emp/New()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost = 1
+
 /datum/uplink_item/implants/emp/dealer
 	cost = 14
-	uplink_types = list("dealer")
+	uplink_types = list(UPLINK_TYPE_DEALER)
 	need_wanted_level = 2
 
 /datum/uplink_item/implants/explosive
@@ -1090,7 +1105,7 @@
 
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
@@ -1159,29 +1174,34 @@
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
 	cant_discount = TRUE
-	uplink_types = list("traitor")
+	uplink_types = list(UPLINK_TYPE_TRAITOR)
 	var/crate_value = 40
+	var/crate_type = /obj/structure/closet/crate/surplus_crate
 
 /datum/uplink_item/badass/surplus_crate/team
 	name = "Syndicate Team Surplus Crate"
 	desc = "A crate containing 80 telecrystals worth of random syndicate leftovers. Don't fight with your partner!"
 	cost = 30
 	crate_value = 80
+	crate_type = /obj/structure/closet/crate/surplus_crate_team
 
 /datum/uplink_item/badass/surplus_crate/super
 	name = "Syndicate Super Surplus Crate"
 	desc = "A crate containing 160 telecrystals worth of random syndicate leftovers. For badass coopers!"
 	cost = 50
 	crate_value = 160
+	crate_type = /obj/structure/closet/crate/surplus_crate_super
 
 /datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/temp_uplink_list = get_uplink_items(U)
 	var/list/buyable_items = list()
+
 	for(var/category in temp_uplink_list)
 		buyable_items += temp_uplink_list[category]
 
 	var/list/bought_items = list()
 	var/remaining_TC = crate_value
+
 	while(remaining_TC > 0)
 		var/datum/uplink_item/I = pick(buyable_items)
 		if(I.cost > remaining_TC)
@@ -1191,7 +1211,7 @@
 		bought_items += I.item
 		remaining_TC -= I.cost
 
-	var/obj/structure/closet/crate/C = new(loc)
+	var/obj/structure/closet/crate/C = new crate_type(loc)
 	for(var/item in bought_items)
 		new item(C)
 
@@ -1199,7 +1219,7 @@
 
 /datum/uplink_item/revolution
 	category = "Revolution!"
-	uplink_types = list("rev")
+	uplink_types = list(UPLINK_TYPE_REVOLUTION)
 
 /datum/uplink_item/revolution/derringer
 	name = "Derringer Pistol"

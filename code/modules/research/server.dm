@@ -243,10 +243,10 @@
 					continue
 				dat += "<table><tr>"
 				dat += "<td>[S.name]</td>"
-				dat += "<td><A href='?src=\ref[src];access=[S.server_id]'>Access Rights</A></td>"
-				dat += "<td><A href='?src=\ref[src];data=[S.server_id]'>Data Management</A></td>"
+				dat += "<td><A href='byond://?src=\ref[src];access=[S.server_id]'>Access Rights</A></td>"
+				dat += "<td><A href='byond://?src=\ref[src];data=[S.server_id]'>Data Management</A></td>"
 				if(badmin)
-					dat += "<td><A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A></td>"
+					dat += "<td><A href='byond://?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A></td>"
 				dat += "</tr></table>"
 				dat += "<BR>"
 
@@ -255,7 +255,7 @@
 			dat += "Consoles with Upload Access<BR>"
 			for(var/obj/machinery/computer/rdconsole/C as anything in global.RDcomputer_list)
 				var/turf/console_turf = get_turf(C)
-				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
+				dat += "* <A href='byond://?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
 				if(C.id in temp_server.id_with_upload)
 					dat += "Remove</A><BR>"
 				else
@@ -263,12 +263,12 @@
 			dat += "Consoles with Download Access<BR>"
 			for(var/obj/machinery/computer/rdconsole/C as anything in global.RDcomputer_list)
 				var/turf/console_turf = get_turf(C)
-				dat += "* <A href='?src=\ref[src];download_toggle=[C.id]'>[console_turf.loc]"
+				dat += "* <A href='byond://?src=\ref[src];download_toggle=[C.id]'>[console_turf.loc]"
 				if(C.id in temp_server.id_with_download)
 					dat += "Remove</A><BR>"
 				else
 					dat += "Add</A><BR>"
-			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
+			dat += "<HR><A href='byond://?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(2) //Data Management menu
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
@@ -276,20 +276,20 @@
 			for(var/tech_tree in temp_server.files.tech_trees)
 				var/datum/tech/T = temp_server.files.tech_trees[tech_tree]
 				dat += "* [T.name] "
-				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
+				dat += "<A href='byond://?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
 			dat += "Known Technologies<BR>"
 			for(var/techology_id in temp_server.files.researched_tech)
 				var/datum/technology/T = temp_server.files.researched_tech[techology_id]
 				dat += "* [T.name] "
-				dat += "<A href='?src=\ref[src];reset_techology=[T.id]'>(Delete)</A><BR>"
-			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
+				dat += "<A href='byond://?src=\ref[src];reset_techology=[T.id]'>(Delete)</A><BR>"
+			dat += "<HR><A href='byond://?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(3) //Server Data Transfer
 			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += "Send Data to what server?<BR>"
 			for(var/obj/machinery/r_n_d/server/S in servers)
-				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
-			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
+				dat += "[S.name] <A href='byond://?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
+			dat += "<HR><A href='byond://?src=\ref[src];main=1'>Main Menu</A>"
 
 	var/datum/browser/popup = new(user, "server_control", "R&D Server Control", 575, 400)
 	popup.set_content(dat)

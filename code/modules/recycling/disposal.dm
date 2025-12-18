@@ -32,11 +32,13 @@
 	// find the attached trunk (if present) and init gas resvr.
 /obj/machinery/disposal/atom_init()
 	..()
+	if(is_station_level(z))
+		global.station_disposal_count++
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/disposal/atom_init_late()
 	trunk = locate() in src.loc
-	if(!trunk)
+	if(!checkTrunk())
 		mode = 0
 		flush = 0
 	else
@@ -46,6 +48,8 @@
 	update()
 
 /obj/machinery/disposal/Destroy()
+	if(is_station_level(z))
+		global.station_disposal_count--
 	eject()
 	if(trunk)
 		trunk.linked = null
@@ -81,7 +85,7 @@
 			if(W.use(0,user))
 				to_chat(user, "You start slicing the floorweld off the disposal unit.")
 
-				if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+				if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					deconstruct(TRUE)
 				return
@@ -127,8 +131,14 @@
 		for(var/mob/living/holdermob in I.contents)
 			holdermob.log_combat(usr, "placed in disposals")
 
+	if(istype(I, /obj/item/weapon/paper/sticker))
+		var/obj/item/weapon/paper/sticker/S = I
+		if (!S.crumpled)
+			return
+
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
+
 	user.drop_from_inventory(I, src)
 
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
@@ -236,7 +246,7 @@
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] () in disposals.</font>")
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
-		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		var/atom/old_loc = target.loc
 		target.forceMove(src)
@@ -483,13 +493,13 @@
 	if(wrapcheck == 1)
 		H.tomail = 1
 
-	if(!trunk)
+	if(!checkTrunk())
 		expel(H)
-		return
+	else
+		H.start(trunk) // start the holder processing movement
 
 	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
-	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
@@ -506,6 +516,13 @@
 	update()	// update icon
 	return
 
+// return TRUE if disposal has a functional trunk underneath
+/obj/machinery/disposal/proc/checkTrunk()
+	if(isnull(trunk) || isnull(trunk.loc))
+		return FALSE
+	if(trunk.loc != loc)
+		return FALSE
+	return TRUE
 
 // called when holder is expelled from a disposal
 // should usually only occur if the pipe network is modified
@@ -634,9 +651,6 @@
 
 		if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
 			active = 0
-			// find the fat guys
-			for(var/mob/living/carbon/human/H in src)
-
 			break
 		sleep(1)		// was 1
 		var/obj/structure/disposalpipe/curr = loc
@@ -872,7 +886,7 @@
 		if(W.use(0,user))
 			// check if anything changed over 2 seconds
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(W.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1042,102 +1056,7 @@
 	return ..()
 
 /obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, obj/Item)
-	var/lot_name = Item.name
-	var/lot_desc = Item.price_tag["description"]
-	var/lot_price = Item.price_tag["price"]
-	var/lot_category = Item.price_tag["category"]
-	var/lot_account = Item.price_tag["account"]
-	var/item_icon = bicon(Item)
-
-	if (isitem(Item))
-		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
-		P.w_class = Item.w_class
-		var/i = round(Item.w_class)
-		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-			if(istype(Item, /obj/item/pizzabox))
-				var/obj/item/pizzabox/B = Item
-				P.icon_state = "deliverypizza[length(B.boxes)]"
-			else
-				P.icon_state = "deliverycrate[i]"
-			P.lot_lock_image = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
-			P.lot_lock_image.appearance_flags = RESET_COLOR
-			P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		Item.loc = P
-		Item = P
-	else if (istype(Item, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = Item
-		if(C.opened)
-			C.close()
-		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-		P.icon_state = "deliverycrate"
-		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycrate-shop")
-		P.lot_lock_image.appearance_flags = RESET_COLOR
-		P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		C.loc = P
-		Item = P
-	else if (istype(Item, /obj/structure/closet))
-		var/obj/structure/closet/C = Item
-		if(C.opened)
-			C.close()
-		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-		P.icon_state = "deliverycloset"
-		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycloset-shop")
-		P.lot_lock_image.appearance_flags = RESET_COLOR
-		P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		C.welded = 1
-		C.loc = P
-		Item = P
-	else if (istype(Item, /obj/structure))
-		var/obj/structure/S = Item
-		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
-		P.icon_state = "deliverystructure"
-		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverystructure-shop")
-		P.lot_lock_image.appearance_flags = RESET_COLOR
-		P.add_overlay(P.lot_lock_image)
-		P.modify_max_integrity(75)
-		P.atom_fix()
-		P.damage_deflection = 25
-		S.loc = P
-		Item = P
-	else
-		return
-
-	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
-	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", market_price)
-
-	var/static/list/category2color = list(
-		"Еда" = "#ff9300",
-		"Одежда" = "#a8e61d",
-		"Устройства" = "#da00ff",
-		"Инструменты" = "#da0000",
-		"Ресурсы" = "#00b7ef",
-		"Наборы" = "#fff200",
-		// "Разное" = no colour,
-	)
-
-	if(category2color[lot_category])
-		Item.color = category2color[lot_category]
-
-	global.shop_categories[lot_category]++
-
-	Item.name = "Посылка номер: [global.online_shop_number]"
-	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
-
-	if(istype(Item, /obj/structure/bigDelivery))
-		var/obj/structure/bigDelivery/Package = Item
-		Package.lot_number = Lot.number
-	else
-		var/obj/item/smallDelivery/Package = Item
-		Package.lot_number = Lot.number
+	Item = object2onlineshop_package(Item)
 
 	Item.forceMove(H)
 
@@ -1268,7 +1187,7 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
+	var/obj/linked 	// the linked obj/machinery/disposal or /obj/structure/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/atom_init()
 	..()
@@ -1277,6 +1196,12 @@
 
 /obj/structure/disposalpipe/trunk/atom_init_late()
 	getlinked()
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if(istype(linked, /obj/machinery/disposal))
+		var/obj/machinery/disposal/D = linked
+		D.trunk = null
+	. = ..()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
@@ -1322,7 +1247,7 @@
 		if(user.is_busy()) return
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(W.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1455,7 +1380,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
-			if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				transfer_fingerprints_to(C)

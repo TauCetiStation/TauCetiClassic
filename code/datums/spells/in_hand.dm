@@ -423,12 +423,12 @@
 
 	Spell.charge_max = initial(Spell.charge_max) * power_of_spell // 20 - 140 (2:20)
 
-	var/level_info = "<b>Уровень [power_of_spell]</b> [src] now"
+	var/level_info = "<b>Уровень [power_of_spell]</b> [src]"
 	switch(power_of_spell)
 		if(2 to 3)
 			to_chat(user, "<span class='notice'>[level_info] <b> просто лечит</b>.</span>")
 		if(4)
-			to_chat(user, "<span class='notice'>[level_info] <b>исцеляет</b> любой <b>вирус</b>.</span>")
+			to_chat(user, "<span class='notice'>[level_info] <b>исцеляет</b> любой <b>вирус</b> и <b>артериальное кровотечение</b>.</span>")
 		if(5)
 			to_chat(user, "<span class='notice'>[level_info] <b>очищает</b> любую <b>мутацию</b>.</span>")
 		if(6)
@@ -467,6 +467,10 @@
 		if(4)
 			hamt *= 0.15
 			L.cure_all_viruses()
+			if(ishuman(L))
+				var/mob/living/carbon/human/M = L
+				for(var/obj/item/organ/external/E in M.bodyparts)
+					E.status &= ~ORGAN_ARTERY_CUT
 		if(5)
 			hamt *= 0.10
 			L.remove_any_mutations()

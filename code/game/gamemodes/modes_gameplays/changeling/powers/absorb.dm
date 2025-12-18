@@ -115,7 +115,10 @@
 	REMOVE_TRAIT(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT)
 	target.blood_remove(BLOOD_VOLUME_MAXIMUM) // We are vamplings, so we drink blood!
 	target.death(0)
-	target.Drain()
+	ADD_TRAIT(target, TRAIT_HUSK, GENERIC_TRAIT)
+	target.mutations.Add(NOCLONE) // todo: need to merge mutation with TRAIT_NO_CLONE
+	target.fake_death = 0
+	target.update_body()
 
 	changeling.handle_absorbing()
 	return TRUE
@@ -135,7 +138,7 @@
 
 		var/mob/living/carbon/human/T = C
 
-		if((NOCLONE in T.mutations) || (HUSK in T.mutations))
+		if((NOCLONE in T.mutations))
 			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
 			return FALSE
 
@@ -143,7 +146,7 @@
 			to_chat(U, "<span class='warning'>[T] is not compatible with our biology.</span>")
 			return FALSE
 
-		if(T.species.flags[NO_SCAN])
+		if(HAS_TRAIT(T, TRAIT_INCOMPATIBLE_DNA))
 			to_chat(src, "<span class='warning'>We do not know how to parse this creature's DNA!</span>")
 			return FALSE
 

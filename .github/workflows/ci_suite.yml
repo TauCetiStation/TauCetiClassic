@@ -7,20 +7,23 @@ on:
     branches:
       - master
 env:
-  BYOND_MAJOR: 515
-  BYOND_MINOR: 1637
-  SPACEMAN_DMM_VERSION: suite-1.8
+  BYOND_MAJOR: 516
+  BYOND_MINOR: 1663
+  SPACEMAN_DMM_VERSION: suite-1.10
+  OPENDREAM_RELEASE_VERSION: latest
 jobs:
   DreamChecker:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Cache
-        uses: actions/cache@v2
+      - uses: actions/checkout@v4
+      - name: Restore Cache
+        id: cache-dmm
+        uses: actions/cache@v4
         with:
-          path: $HOME/spaceman_dmm/$SPACEMAN_DMM_VERSION
+          path: ~/dreamchecker
           key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
       - name: Install Dreamchecker
+        if: steps.cache-dmm.outputs.cache-hit != 'true'
         run:  bash scripts/install-spaceman-dmm.sh dreamchecker
       - name: Run Dreamchecker
         run: ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
@@ -29,26 +32,40 @@ jobs:
         if: always()
         with:
           outputFile: output-annotations.txt
+  OpenDream:
+    name: OpenDream Linting
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.x
+      - name: Install OpenDream
+        if: steps.cache-od.outputs.cache-hit != 'true'
+        uses: robinraju/release-downloader@v1.12
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: ${{ env.OPENDREAM_RELEASE_VERSION }}
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - name: Run OpenDream
+        run: ./DMCompiler_linux-x64/DMCompiler taucetistation.dme --suppress-unimplemented --define=CIBUILDING | bash scripts/annotate_od.sh
   Code:
     name: Code and Map Linting
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Cache
-        uses: actions/cache@v2
-        with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - uses: actions/checkout@v4
       - name: Code and Map Linting
         env:
           TEST: LINTING
-          NODE_VERSION: 12
+          NODE_VERSION: 20
         run: |
           bash test/run-test.sh
           bash scripts/build_tgui.sh
   unit_tests:
     name: Unit Tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         include:
@@ -65,35 +82,41 @@ jobs:
           - map_meta: stroechka
             map_name: Stroecka Station
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Cache
-        uses: actions/cache@v2
+      - uses: actions/checkout@v4
+      - name: Restore Cache
+        id: cache-byond
+        uses: actions/cache@v4
         with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Install BYOND
+        if: steps.cache-byond.outputs.cache-hit != 'true'
+        run:  bash scripts/install-byond.sh
       - name: Unit Tests
         env:
           TEST: UNIT
           MAP_META: ${{ matrix.map_meta }}
           MAP_NAME: ${{ matrix.map_name }}
         run: |
-          bash scripts/install-byond.sh
-          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          source "$HOME/BYOND/byond/bin/byondsetup"
           bash test/run-test.sh
   compile_everything:
     name: Compile Everything
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Cache
-        uses: actions/cache@v2
+      - uses: actions/checkout@v4
+      - name: Restore Cache
+        id: cache-byond
+        uses: actions/cache@v4
         with:
-          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Install BYOND
+        if: steps.cache-byond.outputs.cache-hit != 'true'
+        run:  bash scripts/install-byond.sh
       - name: "Compile Everything"
         env:
           TEST: COMPILE
         run: |
-          bash scripts/install-byond.sh
-          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          source "$HOME/BYOND/byond/bin/byondsetup"
           bash test/run-test.sh

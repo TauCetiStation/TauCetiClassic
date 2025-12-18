@@ -14,7 +14,7 @@ body {
 
 body {
   background: #fff;
-  font-family: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Verdana, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 1.2;
   overflow-x: hidden;
@@ -88,13 +88,13 @@ a.popt {
   color: #333;
 }
 
-.popup input[type=text]:hover,
-.popup input[type=text]:active,
-.popup input[type=text]:focus {
+.popup input[type='text']:hover,
+.popup input[type='text']:active,
+.popup input[type='text']:focus {
   border-color: green;
 }
 
-.popup input[type=submit] {
+.popup input[type='submit'] {
   padding: 5px 10px;
   background: #999;
   color: #ddd;
@@ -103,9 +103,9 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type=submit]:hover,
-.popup input[type=submit]:focus,
-.popup input[type=submit]:active {
+.popup input[type='submit']:hover,
+.popup input[type='submit']:focus,
+.popup input[type='submit']:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -130,7 +130,7 @@ a.popt {
   text-align: center;
 }
 
-.highlightPopup input[type=text] {
+.highlightPopup input[type='text'] {
   display: block;
   width: 215px;
   text-align: left;
@@ -144,7 +144,6 @@ a.popt {
 .highlightPopup input.highlightTermSubmit {
   margin-top: 5px;
 }
-
 
 /* ADMIN CONTEXT MENU */
 
@@ -166,7 +165,6 @@ a.popt {
   background-color: #ccc;
 }
 
-
 /* ADMIN FILTER MESSAGES MENU */
 
 .filterMessages {
@@ -178,7 +176,8 @@ a.popt {
 }
 
 .filterMessages input,
-.filterMessages label {}
+.filterMessages label {
+}
 
 .icon-stack {
   height: 1em;
@@ -187,8 +186,6 @@ a.popt {
   vertical-align: middle;
   margin-top: -2px;
 }
-
-
 
 /*****************************************
 *
@@ -284,7 +281,8 @@ em {
 }
 
 /* Miscellaneous */
-.say {}
+.say {
+}
 
 .emote {
   font-style: italic;
@@ -299,7 +297,6 @@ em {
 .binarysay {
   display: block;
 }
-
 
 /* Game Messages */
 .userdanger {
@@ -379,7 +376,7 @@ em {
 
 /* Languages */
 .rough {
-  font-family: "Trebuchet MS", cursive, sans-serif;
+  font-family: 'Trebuchet MS', cursive, sans-serif;
 }
 
 .say_quote {
@@ -388,9 +385,8 @@ em {
 
 .ipc {
   font-weight: bold;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
 }
-
 
 /* Icons */
 .bridge_discord {
@@ -399,7 +395,7 @@ em {
   padding-left: 1em;
   height: 1em;
   overflow: hidden;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TxSL1A+xQxCFDdbIgKiJOWoUiVCi1QqsOJpd+QZOGJMXFUXAtOPixWHVwcdbVwVUQBD9A3NycFF2kxP8lhRYxHhz34929x907QKiXmWp2jAGqZhmpeEzMZFfFrlcE0It+hDEjMVOfSyYT8Bxf9/Dx9S7Ks7zP/Tl6lJzJAJ9IPMt0wyLeIJ7atHTO+8QhVpQU4nPiUYMuSPzIddnlN84FhwWeGTLSqXniELFYaGO5jVnRUIkniSOKqlG+kHFZ4bzFWS1XWfOe/IXBnLayzHWaQ4hjEUtIQoSMKkoow0KUVo0UEynaj3n4Bx1/klwyuUpg5FhABSokxw/+B7+7NfMT425SMAZ0vtj2xzDQtQs0arb9fWzbjRPA/wxcaS1/pQ5Mf5Jea2mRI6BvG7i4bmnyHnC5A4SfdMmQHMlPU8jngfcz+qYsMHALdK+5vTX3cfoApKmrxA1wcAiMFCh73ePdgfbe/j3T7O8HmEJytrSKdIIAAAAGYktHRACwAOoA9hkvsTQAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQflCA4RKhrVH+B2AAADHElEQVRIx8WWT2hcVRTGf9+daZLGzkzFNAmpiFAs2FrEIApZjAgujBIQMTrBlpQ4SaWxFVxH6KL7ghEUp4g11iRGdKMU/EcpgjsXhaAgNIuqLSVQ+95kOk3mveMiZJhM3nuxSuK3u+edd75zz98rEjA4aC3a7T3tpDxGHkjPlDJ9IIv+w1QY9X8ClmV2KXR2KbyZuzg3p+U4DkUJX3nNf0TORoDDwJ71FJpQaNfNsYeQDgkDFjEWzalbZqebzN0QfAL6cLqUmd/UgZeP+XkX2sU45/4DTKZnps9mfmgUuuaQu9De3wJyAJnsvaNHrS3WgdRu/yTwMFuH/Xda/PHIFBw5cv2elbb2K0AnW4vFVNvKvvOT93nrIrDc1n5sG8gBOmrVHcWmFJgEr7NNEBw/dcpc3YFCsfwU8BDbh32//l7O1x0w8SLbjDVOtxoSey5BtyrsZFqpHod7DPRNvFX7njDoTSvVIzQO3I5Pgw0A6NVi5f5AtasJ3fvWzAe5M2vH/hPWmqv6l4H9TZoLwa7MwbkzqpMWiv44sndjbQepvS5QrTcpVEHAucbzhUndwWw2QvWzRnKASlj9GLDYu6WDJ5xJhxL4a3jZ8sY/5UXk9K9mmfdAx21gJWkwOYXh3gSFdCpX7tuYavIbM7VR1nnVfxJoiS2Z0B50SN2J5epssjCy1LN2HBrzhiUGIjT7h8a8+oAZKpa75BLyvzp9OlUoehcQz27SNbeAHzG6EI9vMmZ+BrsG9AH3bmL367Rkadt8+eWA5//ZjrTeu5iJO5yhKv8bbMkRUb0NmAemkgZKwu0qGOeAXxJ2gu9cEEwI+y5Gpwvpt8DCg2Y2jOlTYCGmt231m6bNbNgFwSHQAha3YfVtTbW3VX9MFv0R4DQiqisuz5Syjza+HYL2nT0Elg1TyELntVQrf0xNdS/Vu2DUmzc4EGHrTzMmZs9mPgLZurIaPH5jl6vtfFOhvdHoiMHAbCn71d0kYGjMe8GMLxtE1wST6WrlnUZHI+u6/4S1ZqveSzIdRpRnStnBf1NihVHvC4NWyc4HN7OfRz3P/wZ4Qyo4eVSmOgAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TxSL1A+xQxCFDdbIgKiJOWoUiVCi1QqsOJpd+QZOGJMXFUXAtOPixWHVwcdbVwVUQBD9A3NycFF2kxP8lhRYxHhz34929x907QKiXmWp2jAGqZhmpeEzMZFfFrlcE0It+hDEjMVOfSyYT8Bxf9/Dx9S7Ks7zP/Tl6lJzJAJ9IPMt0wyLeIJ7atHTO+8QhVpQU4nPiUYMuSPzIddnlN84FhwWeGTLSqXniELFYaGO5jVnRUIkniSOKqlG+kHFZ4bzFWS1XWfOe/IXBnLayzHWaQ4hjEUtIQoSMKkoow0KUVo0UEynaj3n4Bx1/klwyuUpg5FhABSokxw/+B7+7NfMT425SMAZ0vtj2xzDQtQs0arb9fWzbjRPA/wxcaS1/pQ5Mf5Jea2mRI6BvG7i4bmnyHnC5A4SfdMmQHMlPU8jngfcz+qYsMHALdK+5vTX3cfoApKmrxA1wcAiMFCh73ePdgfbe/j3T7O8HmEJytrSKdIIAAAAGYktHRACwAOoA9hkvsTQAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQflCA4RKhrVH+B2AAADHElEQVRIx8WWT2hcVRTGf9+daZLGzkzFNAmpiFAs2FrEIApZjAgujBIQMTrBlpQ4SaWxFVxH6KL7ghEUp4g11iRGdKMU/EcpgjsXhaAgNIuqLSVQ+95kOk3mveMiZJhM3nuxSuK3u+edd75zz98rEjA4aC3a7T3tpDxGHkjPlDJ9IIv+w1QY9X8ClmV2KXR2KbyZuzg3p+U4DkUJX3nNf0TORoDDwJ71FJpQaNfNsYeQDgkDFjEWzalbZqebzN0QfAL6cLqUmd/UgZeP+XkX2sU45/4DTKZnps9mfmgUuuaQu9De3wJyAJnsvaNHrS3WgdRu/yTwMFuH/Xda/PHIFBw5cv2elbb2K0AnW4vFVNvKvvOT93nrIrDc1n5sG8gBOmrVHcWmFJgEr7NNEBw/dcpc3YFCsfwU8BDbh32//l7O1x0w8SLbjDVOtxoSey5BtyrsZFqpHod7DPRNvFX7njDoTSvVIzQO3I5Pgw0A6NVi5f5AtasJ3fvWzAe5M2vH/hPWmqv6l4H9TZoLwa7MwbkzqpMWiv44sndjbQepvS5QrTcpVEHAucbzhUndwWw2QvWzRnKASlj9GLDYu6WDJ5xJhxL4a3jZ8sY/5UXk9K9mmfdAx21gJWkwOYXh3gSFdCpX7tuYavIbM7VR1nnVfxJoiS2Z0B50SN2J5epssjCy1LN2HBrzhiUGIjT7h8a8+oAZKpa75BLyvzp9OlUoehcQz27SNbeAHzG6EI9vMmZ+BrsG9AH3bmL367Rkadt8+eWA5//ZjrTeu5iJO5yhKv8bbMkRUb0NmAemkgZKwu0qGOeAXxJ2gu9cEEwI+y5Gpwvpt8DCg2Y2jOlTYCGmt231m6bNbNgFwSHQAha3YfVtTbW3VX9MFv0R4DQiqisuz5Syjza+HYL2nT0Elg1TyELntVQrf0xNdS/Vu2DUmzc4EGHrTzMmZs9mPgLZurIaPH5jl6vtfFOhvdHoiMHAbCn71d0kYGjMe8GMLxtE1wST6WrlnUZHI+u6/4S1ZqveSzIdRpRnStnBf1NihVHvC4NWyc4HN7OfRz3P/wZ4Qyo4eVSmOgAAAABJRU5ErkJggg==');
   background-size: contain;
   background-position: bottom;
   background-repeat: no-repeat;
@@ -464,7 +460,7 @@ table.staffwho th {
 /* CLOWN */
 .clown {
   font-size: 160%;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   font-weight: bold;
 }
 

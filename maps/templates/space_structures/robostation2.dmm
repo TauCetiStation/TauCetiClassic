@@ -65,7 +65,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "cw" = (
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "cL" = (
@@ -944,7 +944,7 @@
 	},
 /area/space_structures/robostation2)
 "Ra" = (
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Rj" = (

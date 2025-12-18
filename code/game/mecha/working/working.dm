@@ -26,7 +26,7 @@
 	output += "<b>[src.name] Tools:</b><div style=\"margin-left: 15px;\">"
 	if(equipment.len)
 		for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-			output += "[selected==MT?"<b>":"<a href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
+			output += "[selected==MT?"<b>":"<a href='byond://?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
 	else
 		output += "None"
 	output += "</div>"

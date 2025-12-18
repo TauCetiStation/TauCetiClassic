@@ -177,10 +177,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					C.drop_from_inventory(src, get_turf(C))
 					to_chat(C, "<span class='notice'>Your [name] fell out from your mouth.</span>")
 			if (C.stat != DEAD)
-				if(ishuman(loc))
-					var/mob/living/carbon/human/H = loc
-					if(H.species.flags[NO_BREATHE])
-						return
+				if(HAS_TRAIT(C, TRAIT_NO_BREATHE))
+					return
+
 				if(C.reagents.has_reagent("nicotine"))
 					C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
 				else
@@ -387,7 +386,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("<span class='notice'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
 				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
-				if(prob(95))
+				if(user.mood_prob(95))
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")

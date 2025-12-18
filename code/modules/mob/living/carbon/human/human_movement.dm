@@ -1,3 +1,9 @@
+// some thought on how to make it less complicated:
+// several modvals for different types of movement speed (walking, running, crawling, flying)
+// move to modvals more constant modificators like from races, traits, mutations, items slowdown
+// still need to keep dynamic modificators like slowdown from damage or hunger out of modvals and calculate it here
+// ... or check tg datum system
+
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 	var/nullify_debuffs = FALSE
@@ -13,6 +19,7 @@
 
 	if(iszombie(src))
 		nullify_debuffs = TRUE
+		tally += 0.5
 
 	tally += species.speed_mod
 
@@ -30,7 +37,7 @@
 			tally += IO ? IO.damage / 5 : 20 // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
 
 		if(HAS_TRAIT(src, TRAIT_FAT))
-			tally += 1.5
+			tally += 0.9
 
 		if(embedded_flag)
 			handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
@@ -47,9 +54,12 @@
 
 	var/list/moving_bodyparts
 	if(buckled) // so, if we buckled we have large debuff
-		tally += 5.5
 		if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 			moving_bodyparts = list(BP_L_ARM , BP_R_ARM)
+
+		else
+			tally += 5.5
+
 
 	if(!moving_bodyparts)
 		if(lying)
@@ -81,7 +91,7 @@
 
 	// cola removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = nullify_debuffs
-	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
+	if(!HAS_TRAIT(src, TRAIT_NO_BLOOD) && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
 
 	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
@@ -138,6 +148,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_AUTOFIRE_SHOOTS)) // so that you can’t run at full speed and shoot everyone and everything
 		tally += 0.75
+
+	if(HAS_TRAIT(src, TRAIT_BAD_BACK) && istype(back, /obj/item/weapon/storage))
+		tally += 1
 
 	return (tally + config.human_delay)
 

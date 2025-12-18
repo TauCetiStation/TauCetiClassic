@@ -109,7 +109,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
@@ -124,7 +124,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!crumpled)
@@ -193,7 +193,7 @@
 			if(H == user)
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
@@ -201,7 +201,7 @@
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
-					H.update_body()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /obj/item/weapon/paper/proc/addtofield(id, text, links = 0, type = "paper")
 	var/locid = 0
@@ -245,10 +245,10 @@
 	info_links = info
 	var/i = 0
 	for(i = 1, i <= fields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i]'>write</A></font>", 1)
 	for(i = 1, i <= sfields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
-	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
+	info_links = info_links + " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -263,26 +263,6 @@
 	cut_overlays()
 	updateinfolinks()
 	update_icon()
-
-/obj/item/weapon/paper/proc/create_self_copy()
-	var/obj/item/weapon/paper/P = new
-
-	P.name       = name
-	P.info       = info
-	P.info_links = info_links
-	P.stamp_text = stamp_text
-	P.fields     = fields
-	P.sfields    = sfields
-	P.stamped    = LAZYCOPY(stamped)
-	P.ico        = LAZYCOPY(ico)
-	P.offset_x   = LAZYCOPY(offset_x)
-	P.offset_y   = LAZYCOPY(offset_y)
-	P.copy_overlays(src, TRUE)
-
-	P.updateinfolinks()
-	P.update_icon()
-
-	return P
 
 /obj/item/weapon/paper/proc/get_signature(obj/item/weapon/pen/P, mob/user)
 	if(P && istype(P, /obj/item/weapon/pen))
@@ -383,7 +363,7 @@
 
 		for(var/premade_form in predefined_forms_list[department]["content"])
 			var/datum/form/form = new premade_form
-			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<tr><th style='background-color:[color];'><A href='byond://?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
 			dat += "<th> [form.name]</th></tr>"
 		dat +="</tbody></table>"
 
@@ -675,15 +655,6 @@
 
 	update_icon()
 	updateinfolinks()
-
-/obj/item/weapon/paper/brig_arsenal
-	name = "Armory Inventory"
-	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Helmet<li>Riot Suit</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>8 Security Masks<br>3 Pistols Glock 17<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>2 Ion Rifle<br>3 Laser rifles <br>1 L10-c Carbine<br>1 104-sass Shotgun<br>2 Plasma weapon battery packs<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 teargas, 7 rounds)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 m79 Grenade Box (40x46 EMP, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
-
-/obj/item/weapon/paper/brig_arsenal/atom_init()
-	. = ..()
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY) || HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
-		info = "A program is underway to re-equip NanoTrasen security. The current list has not yet been compiled, we apologize."
 
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"

@@ -100,11 +100,6 @@
 #define LIGHT_COLOR_LIGHTNING	 "#5eacb6" // Used in lightning bolt projectiles
 #define LIGHT_COLOR_NUKE_OPS      "#00f397" // Used in nuclear operatives related things
 
-//Human organ color mods
-#define HULK_SKIN_TONE rgb(48, 224, 40) // human
-#define HULK_SKIN_COLOR RGB_CONTRAST(0, 180, 60) // xenos
-#define NECROSIS_COLOR_MOD list(0.33,0.33,0.33, 0.59,0.59,0.59, 0.11,0.11,0.11)
-
 // Slime color matrices. Used for /datum/component/mob_modifier-s.
 #define SLIME_COLOR(r, g, b) list( \
 	0.3, 0.0, 0.0, 0.0, \
@@ -119,22 +114,6 @@
 #define SLIME_COLOR_BLUE SLIME_COLOR(0.2, 0.2, 0.5)
 #define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
 #define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)
-
-#define SADNESS_COLOR(amount) list( \
-	0.3 + 0.7 * (1.0 - amount), \
-	0.3 - 0.3 * (1.0 - amount), \
-	0.2 - 0.2 * (1.0 - amount), \
-	0.7 - 0.7 * (1.0 - amount), \
-	0.6 + 0.4 * (1.0 - amount), \
-	0.5 - 0.5 * (1.0 - amount), \
-	0.1 - 0.1 * (1.0 - amount), \
-	0.1 - 0.1 * (1.0 - amount), \
-	0.1 + 0.9 * (1.0 - amount), \
-	0.0, \
-	0.0, \
-	0.0 \
-)
-
 
 // FILTER EFFECTS
 /* #define EFFECT_FILTER 	list(1, 0, 0, 0, \
@@ -216,3 +195,11 @@
                                     0,    0,    1.25,   0, \
                                     0,    0,    0,      1, \
                                     -0.05,-0.05,-0.05,  0)
+
+/// Adds/subtracts overall lightness
+/// 0 is identity, 1 makes everything white, -1 makes everything black
+#define COLOR_MATRIX_LIGHTNESS(power) list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, power,power,power,0)
+
+/// Changes distance colors have from rgb(127,127,127) grey
+/// 1 is identity. 0 makes everything grey >1 blows out colors and greys
+#define COLOR_MATRIX_CONTRAST(val) list(val,0,0,0, 0,val,0,0, 0,0,val,0, 0,0,0,1, (1-val)*0.5,(1-val)*0.5,(1-val)*0.5,0)

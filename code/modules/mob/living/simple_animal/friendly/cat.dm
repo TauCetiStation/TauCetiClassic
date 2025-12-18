@@ -95,9 +95,9 @@
 
 	var/dat
 	if(inventory_mouth)
-		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];remove_inv=mouth'>Remove</a>"
+		dat = "<br><b>Mouth:</b><a href='byond://?src=\ref[src];remove_inv=mouth'>Remove</a>"
 	else
-		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];add_inv=mouth'>Nothing</a>"
+		dat = "<br><b>Mouth:</b><a href='byond://?src=\ref[src];add_inv=mouth'>Nothing</a>"
 
 	var/datum/browser/popup = new(user, "mob[type]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
@@ -140,7 +140,7 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 /mob/living/simple_animal/cat/dusty
 	name = "Dusty"
-	desc = "Его шерсть на вид и ощупь напоминает бархат."
+	desc = "Шерсть этого зверька на вид и ощупь напоминает бархат."
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"
@@ -149,10 +149,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 	icon_living = "Syndicat"
 	icon_dead = "Syndicat_dead"
 	//gender = FEMALE
-	flags = list(
-	 IS_SYNTHETIC = TRUE
-	,NO_BREATHE = TRUE
-	)
 	faction = "syndicate"
 	//var/turns_since_scan = 0
 	//var/mob/living/simple_animal/mouse/movement_target
@@ -166,13 +162,13 @@ var/global/cat_number = 0
 	name = "Runtime"
 	desc = "Мурлыкающая жертва экспериментов. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
 	icon_state = "runtimecat"
+	icon_living = "runtimecat"
 	density = FALSE
 	universal_speak = TRUE
 	can_be_pulled = FALSE
 
 	a_intent = INTENT_HARM
 
-	status_flags = GODMODE // Bluespace cat
 	min_oxy = 0
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -189,6 +185,7 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/runtime/atom_init(mapload, runtime_line)
 	. = ..()
+	ADD_TRAIT(src, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
 	new /obj/effect/temp_visual/pulse(loc)
 	new /obj/effect/temp_visual/sparkles(loc)

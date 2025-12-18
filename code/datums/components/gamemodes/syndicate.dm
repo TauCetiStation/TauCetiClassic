@@ -4,7 +4,7 @@
 	var/total_TC = 0
 	var/spent_TC = 0
 	var/uplink_uses
-	var/uplink_type = "traitor"
+	var/uplink_type = UPLINK_TYPE_TRAITOR
 
 	// Dont uplink
 	var/syndicate_awareness = SYNDICATE_UNAWARE
@@ -225,10 +225,10 @@
 
 	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
 	if(guplink)
-		. += " - <a href='?src=\ref[role];mind=\ref[role.antag];role=\ref[src];telecrystalsSet=1;'>Telecrystals: [guplink.uses](Set telecrystals)</a>"
-		. += " - <a href='?src=\ref[role];mind=\ref[role.antag];role=\ref[src];removeuplink=1;'>(Remove uplink)</a>"
+		. += " - <a href='byond://?src=\ref[role];mind=\ref[role.antag];role=\ref[src];telecrystalsSet=1;'>Telecrystals: [guplink.uses](Set telecrystals)</a>"
+		. += " - <a href='byond://?src=\ref[role];mind=\ref[role.antag];role=\ref[src];removeuplink=1;'>(Remove uplink)</a>"
 	else
-		. = " - <a href='?src=\ref[role];mind=\ref[role.antag];role=\ref[src];giveuplink=1;'>(Give uplink)</a>"
+		. = " - <a href='byond://?src=\ref[role];mind=\ref[role.antag];role=\ref[src];giveuplink=1;'>(Give uplink)</a>"
 
 /datum/component/gamemode/syndicate/RoleTopic(datum/source, href, href_list, datum/mind/M, admin_auth)
 	if(!M || !M.current)

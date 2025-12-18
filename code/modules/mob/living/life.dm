@@ -14,7 +14,7 @@
 
 	handle_combat()
 
-	handle_nutrition()
+	handle_metabolism()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -142,5 +142,16 @@
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
-/mob/living/proc/handle_nutrition()
-	return
+/mob/living/proc/handle_metabolism()
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(stat == DEAD && !HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))
+		return FALSE
+
+	if(!mob_metabolism_mod.Get())
+		return FALSE
+
+	if(reagents && length(reagents.reagent_list))
+		reagents.metabolize(src)
+
+	return TRUE

@@ -134,13 +134,14 @@
 /obj/item/device/aicard/update_icon(mob/living/silicon/ai/A)
 	. = ..()
 	if(A)
-		icon_state = "aicard-full"
-		item_state_inventory = "aicard-full"
-		item_state_world = "aicard-full_world"
-	if(A.stat == DEAD)
-		icon_state = "aicard-404"
-		item_state_inventory = "aicard-404"
-		item_state_world = "aicard-404_world"
+		if(A.stat == DEAD)
+			icon_state = "aicard-404"
+			item_state_inventory = "aicard-404"
+			item_state_world = "aicard-404_world"
+		else
+			icon_state = "aicard-full"
+			item_state_inventory = "aicard-full"
+			item_state_world = "aicard-full_world"
 	else
 		icon_state = "aicard"
 		item_state_inventory = "aicard"

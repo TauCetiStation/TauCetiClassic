@@ -1,6 +1,6 @@
 /obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 
-	if(!(ishuman(M) && can_operate(M)))
+	if(!(ishuman(M) && can_operate(M, user)))
 		return ..()
 
 	if(user.get_targetzone() != part)
@@ -37,7 +37,7 @@
 				BP.take_damage(15)
 
 			BP.status = ORGAN_ROBOT // in this situtation, we can simply set exact flag.
-			H.update_body()
+			H.update_body(BP.body_zone)
 			M.updatehealth()
 			M.UpdateDamageIcon(BP)
 			qdel(src)

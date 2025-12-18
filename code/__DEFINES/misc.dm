@@ -11,12 +11,6 @@
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
-// Define for coders.
-// If you want switch conditions to be fully specified in the switch body
-// and at the same time the empty condition do nothing.
-#define SWITCH_PASS ;
-
-
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
 #define ENGINE_EJECT_Z		3 //Unused now
@@ -197,7 +191,8 @@
 #define WORLD_ICON_SIZE 32
 #define PIXEL_MULTIPLIER WORLD_ICON_SIZE/32
 
-// (Bay12 = -2), but we don't have that projectile code, so...
+// bullet_act() return values
+#define PROJECTILE_WEAKENED -2
 #define PROJECTILE_FORCE_MISS -1
 #define PROJECTILE_ACTED 0
 #define PROJECTILE_ABSORBED 2
@@ -233,6 +228,7 @@
 
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
+#define BRIDGE_JOIN_LINKS "Присоединиться: [BYOND_JOIN_LINK]"
 
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 
@@ -283,6 +279,8 @@
 #define REGION_COMMAND		7
 #define REGION_CENTCOMM		8
 
+// be wary this adds little overhead with additional proc calls
+// consider modifying existing atom_init/Destroy for atoms with numerous instances
 #define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
 	. = ..();\
 	global.##list += src;}\
@@ -420,3 +418,8 @@
 #define QUOTA_NEUTRAL 0
 #define QUOTA_WANTED 1
 #define QUOTA_UNWANTED 2
+
+#define UPLINK_TYPE_TRAITOR     "uplink_traitor"
+#define UPLINK_TYPE_NUCLEAR     "uplink_nuclear"
+#define UPLINK_TYPE_DEALER      "uplink_dealer"
+#define UPLINK_TYPE_REVOLUTION  "uplink_revolution"

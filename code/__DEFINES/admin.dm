@@ -71,18 +71,20 @@ var/global/list/admin_cooldowns_list = list(
 #define R_HOST			65535
 
 #define ADMIN_RANK_ROUND   "Temporary Round Admin"
+#define ADMIN_RANK_EVENT_MAKER "Event Maker"
 #define ADMIN_RANK_SANDBOX "Sandbox Admin"
 #define ADMIN_RANK_REMOVED "Removed"
 
-#define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
-#define ADMIN_FLW(target) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[target]'>FLW</a>)"
-#define ADMIN_JMP(target) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"
-#define ADMIN_VV(target) "(<a href='?_src_=vars;Vars=\ref[target]'>VV</a>)"
-#define ADMIN_PP(user)  "(<a href='?_src_=holder;adminplayeropts=\ref[user]'>PP</a>)"
-#define ADMIN_SM(user) "(<a href='?_src_=holder;subtlemessage=\ref[user]'>SM</a>)"
-#define ADMIN_TP(user) "(<a href='?_src_=holder;traitor=\ref[user]'>TP</a>)"
-#define ADMIN_KICK(user) "(<a href='?_src_=holder;boot2=\ref[user]'>KICK</a>)"
+#define ADMIN_QUE(user) "(<a href='byond://?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
+#define ADMIN_FLW(target) "(<a href='byond://?_src_=holder;adminplayerobservefollow=\ref[target]'>FLW</a>)"
+#define ADMIN_JMP(target) "(<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"
+#define ADMIN_VV(target) "(<a href='byond://?_src_=vars;Vars=\ref[target]'>VV</a>)"
+#define ADMIN_PP(user)  "(<a href='byond://?_src_=holder;adminplayeropts=\ref[user]'>PP</a>)"
+#define ADMIN_SM(user) "(<a href='byond://?_src_=holder;subtlemessage=\ref[user]'>SM</a>)"
+#define ADMIN_TP(user) "(<a href='byond://?_src_=holder;traitor=\ref[user]'>TP</a>)"
+#define ADMIN_KICK(user) "(<a href='byond://?_src_=holder;boot2=\ref[user]'>KICK</a>)"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
+#define ADMIN_LOOKUPJMP(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_JMP(user)]"
 #define ADMIN_PPJMPFLW(user) "[ADMIN_PP(user)] [ADMIN_FLW(user)] [ADMIN_JMP(user)]"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)]"
 
@@ -152,9 +154,5 @@ var/global/list/admin_cooldowns_list = list(
 #define SW_DEVELOPERS 4
 #define SW_ALL_GROUPS 4 //update this, if add more staff groups
 
-var/global/list/default_admin_names = list(
-	SW_ADMINS     = "Admins",
-	SW_MENTORS    = "Mentors",
-	SW_XENOVISORS = "Xenovisors",
-	SW_DEVELOPERS = "Developers",
-)
+// Order is important. SW_ADMINS, SW_MENTORS, SW_XENOVISORS, SW_DEVELOPERS
+var/global/list/default_admin_names = list("Admins", "Mentors", "Xenovisors", "Developers")

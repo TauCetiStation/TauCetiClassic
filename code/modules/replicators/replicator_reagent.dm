@@ -50,7 +50,10 @@
 		return
 
 /datum/reagent/prismaline/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	var/affect_amount = min(1.0, volume)
 	M.nutrition -= affect_amount
 

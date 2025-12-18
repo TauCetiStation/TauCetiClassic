@@ -31,7 +31,8 @@
 			return
 		if (anchored)
 			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
-			if (O.use_tool(src, user, 40, volume = 50))
+			if (O.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+				anchored = !anchored
 				user.visible_message(
 					"<span class='notice'>[user] loosens \the [src]'s casters.</span>",
 					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>",
@@ -39,14 +40,13 @@
 				)
 		else
 			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
-			if(O.use_tool(src, user, 20, volume = 50))
+			if(O.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+				anchored = !anchored
 				user.visible_message(
 					"<span class='notice'>[user] tightens \the [src]'s casters.</span>",
 					"<span class='notice'>You have tightened \the [src]'s casters. Now it can be played again.</span>",
 					"<span class='notice'>You hear ratchet.</span>"
 				)
-
-		anchored = !anchored
 	else
 		..()
 

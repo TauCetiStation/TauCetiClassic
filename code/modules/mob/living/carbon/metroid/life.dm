@@ -10,9 +10,6 @@
 	..()
 
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
 		handle_targets()
 
 		if (!ckey)
@@ -184,15 +181,6 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/slime/proc/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src)
-
-	updatehealth()
-
-	return //TODO: DEFERRED
-
-
 /mob/living/carbon/slime/proc/handle_regular_status_updates()
 
 	if(isslimeadult(src))
@@ -241,9 +229,6 @@
 			src.lying = 0
 			src.stat = CONSCIOUS
 
-	if (src.stuttering > 0)
-		setStuttering(0)
-
 	if (src.eye_blind)
 		src.eye_blind = 0
 		src.blinded = 1
@@ -274,7 +259,12 @@
 		Feedstop()
 	TargetAttack()
 	return
-/mob/living/carbon/slime/handle_nutrition()
+
+/mob/living/carbon/slime/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
+
 	if(prob(20))
 		if(isslimeadult(src)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
@@ -355,6 +345,7 @@
 				A.rabid = rabid
 				qdel(src)
 
+	updatehealth()
 
 /mob/living/carbon/slime/proc/handle_targets()
 	if(Tempstun)
@@ -414,7 +405,7 @@
 					if(L.get_species() == IPC) //Ignore IPC
 						continue
 
-					if(L.get_species() == SLIME || L.stat == DEAD) // Ignore other slimes and dead mobs
+					if(HAS_TRAIT(L, ELEMENT_TRAIT_SLIME) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
 
 					if(HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())

@@ -1,42 +1,49 @@
 import { Fragment } from 'inferno';
-import { useBackend } from "../backend";
-import { AnimatedNumber, Box, Button, Flex, Icon, LabeledList, ProgressBar, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
+import { Window } from '../layouts';
 
 const damageTypes = [
   {
-    label: "Асфиксия",
-    type: "oxyLoss",
+    label: 'Асфиксия',
+    type: 'oxyLoss',
   },
   {
-    label: "Интоксикация",
-    type: "toxLoss",
+    label: 'Интоксикация',
+    type: 'toxLoss',
   },
   {
-    label: "Механические",
-    type: "bruteLoss",
+    label: 'Механические',
+    type: 'bruteLoss',
   },
   {
-    label: "Термические",
-    type: "fireLoss",
+    label: 'Термические',
+    type: 'fireLoss',
   },
   {
-    label: "Генетические",
-    type: "cloneLoss",
+    label: 'Генетические',
+    type: 'cloneLoss',
   },
 ];
 
 const statNames = [
-  ["good", "В сознании"],
-  ["average", "Без сознания"],
-  ["bad", "Мёртв"],
+  ['good', 'В сознании'],
+  ['average', 'Без сознания'],
+  ['bad', 'Мёртв'],
 ];
 
 export const Cryo = (props, context) => {
   return (
-    <Window
-      width={400}
-      height={425}>
+    <Window width={400} height={425}>
       <Window.Content className="Layout__content--flexColumn">
         <CryoContent />
       </Window.Content>
@@ -61,18 +68,18 @@ const CryoContent = (props, context) => {
       <Section
         title="Пациент"
         flexGrow="1"
-        buttons={(
+        buttons={
           <Button
-            icon={isOpen ? "toggle-off" : "toggle-on"}
+            icon={isOpen ? 'toggle-off' : 'toggle-on'}
             onClick={() => act(isOpen ? 'close' : 'open')}
             selected={!isOpen}>
-            {isOpen ? "Открыто" : "Закрыто"}
+            {isOpen ? 'Открыто' : 'Закрыто'}
           </Button>
-        )}>
+        }>
         {hasOccupant ? (
           <LabeledList>
             <LabeledList.Item label="Пациент">
-              {occupant.name || "Неизвестно"}
+              {occupant.name || 'Неизвестно'}
             </LabeledList.Item>
             <LabeledList.Item label="Здоровье">
               <ProgressBar
@@ -80,8 +87,7 @@ const CryoContent = (props, context) => {
                 max={occupant.maxHealth}
                 value={occupant.health / occupant.maxHealth}
                 color={occupant.health > 0 ? 'good' : 'average'}>
-                <AnimatedNumber
-                  value={Math.round(occupant.health)} />
+                <AnimatedNumber value={Math.round(occupant.health)} />
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item
@@ -90,32 +96,27 @@ const CryoContent = (props, context) => {
               {statNames[occupant.stat][1]}
             </LabeledList.Item>
             <LabeledList.Item label="Температура">
-              <AnimatedNumber
-                value={Math.round(occupant.bodyTemperature)} />
+              <AnimatedNumber value={Math.round(occupant.bodyTemperature)} />
               {' K'}
             </LabeledList.Item>
             <LabeledList.Divider />
-            {(damageTypes.map(damageType => (
-              <LabeledList.Item
-                key={damageType.id}
-                label={damageType.label}>
+            {damageTypes.map((damageType) => (
+              <LabeledList.Item key={damageType.id} label={damageType.label}>
                 <ProgressBar
-                  value={occupant[damageType.type]/100}
+                  value={occupant[damageType.type] / 100}
                   ranges={{ bad: [0.25, Infinity] }}>
                   <AnimatedNumber
-                    value={Math.round(occupant[damageType.type])} />
+                    value={Math.round(occupant[damageType.type])}
+                  />
                 </ProgressBar>
               </LabeledList.Item>
-            )))}
+            ))}
           </LabeledList>
         ) : (
           <Flex height="100%" textAlign="center">
             <Flex.Item grow="1" align="center" color="label">
-              <Icon
-                name="user-slash"
-                mb="0.5rem"
-                size="5"
-              /><br />
+              <Icon name="user-slash" mb="0.5rem" size="5" />
+              <br />
               Пациент не обнаружен.
             </Flex.Item>
           </Flex>
@@ -123,14 +124,14 @@ const CryoContent = (props, context) => {
       </Section>
       <Section
         title="Капсула"
-        buttons={(
+        buttons={
           <Button
             icon="eject"
             onClick={() => act('ejectBeaker')}
             disabled={!isBeakerLoaded}>
             Извлечь сосуд
           </Button>
-        )}>
+        }>
         <LabeledList>
           <LabeledList.Item label="Питание">
             <Button
@@ -138,17 +139,20 @@ const CryoContent = (props, context) => {
               onClick={() => act(isOperating ? 'switchOff' : 'switchOn')}
               selected={isOperating}
               disabled={isOpen || !hasAir}>
-              {isOperating ? "Вкл" : "Выкл"}
+              {isOperating ? 'Вкл' : 'Выкл'}
             </Button>
           </LabeledList.Item>
           {hasAir ? (
-            <LabeledList.Item label="Температура воздуха" color={cellTemperatureStatus}>
+            <LabeledList.Item
+              label="Температура воздуха"
+              color={cellTemperatureStatus}>
               <AnimatedNumber value={cellTemperature} /> K
             </LabeledList.Item>
           ) : (
             <LabeledList.Item label="Состояние воздуха" color="bad">
               Нет воздуха
-            </LabeledList.Item>)}
+            </LabeledList.Item>
+          )}
           <LabeledList.Item label="Сосуд">
             <CryoBeaker />
           </LabeledList.Item>
@@ -160,27 +164,21 @@ const CryoContent = (props, context) => {
 
 const CryoBeaker = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    isBeakerLoaded,
-    beakerVolume,
-  } = data;
+  const { isBeakerLoaded, beakerVolume } = data;
   if (isBeakerLoaded) {
     return (
-      <Box color={!beakerVolume && "bad"}>
+      <Box color={!beakerVolume && 'bad'}>
         {beakerVolume ? (
           <AnimatedNumber
             value={beakerVolume}
-            format={v => Math.round(v) + " юнитов осталось"}
+            format={(v) => Math.round(v) + ' юнитов осталось'}
           />
-        ) : "Сосуд пуст"}
+        ) : (
+          'Сосуд пуст'
+        )}
       </Box>
     );
   } else {
-    return (
-      <Box color="average">
-        Отсутствует
-      </Box>
-    );
+    return <Box color="average">Отсутствует</Box>;
   }
 };
-

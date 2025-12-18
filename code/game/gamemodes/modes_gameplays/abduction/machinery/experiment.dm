@@ -38,6 +38,8 @@
 	if(state_open && !panel_open)
 		..(target)
 
+// todo: rewrite without blends, use organ/external/get_icon
+// currently this doesn't work properly and can cause lags
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/preview_icon = null
 
@@ -58,28 +60,20 @@
 		if((BP.status & ORGAN_CUT_AWAY) || (BP.is_stump))
 			continue
 		temp = new /icon(icobase, "[BP.body_zone]")
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-		preview_icon.Blend(temp, ICON_OVERLAY)
-
-	//Tail
-	if(H.species.tail && H.species.flags[HAS_TAIL])
-		temp = new/icon("icon" = 'icons/mob/species/tail.dmi', "icon_state" = H.species.tail)
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
 	if(H.species.flags[HAS_SKIN_TONE])
-		if (H.s_tone >= 0)
-			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
-		else
-			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+		preview_icon.Blend(global.skin_tones_by_name[H.s_tone], ICON_ADD)
 
 	// Skin color
 	if(H.species.flags[HAS_SKIN_TONE])
 		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			preview_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
-	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = H.species ? H.species.eyes : "eyes_s")
+	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human/eyes.dmi', "icon_state" = H?.species?.eyes_colorable_layer || "default")
 
 	eyes_s.Blend(rgb(H.r_eyes, H.g_eyes, H.b_eyes), ICON_ADD)
 
@@ -110,9 +104,9 @@
 		dat += "<table><tr><td>"
 		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
 		dat += "</td><td>"
-		dat += "<a href='?src=\ref[src];experiment=1'>Probe</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=2'>Dissect</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=3'>Analyze</a><br>"
+		dat += "<a href='byond://?src=\ref[src];experiment=1'>Probe</a><br>"
+		dat += "<a href='byond://?src=\ref[src];experiment=2'>Dissect</a><br>"
+		dat += "<a href='byond://?src=\ref[src];experiment=3'>Analyze</a><br>"
 		dat += "</td></tr></table>"
 	else
 		dat += "<span class='disabled'> Experiment </span>"
@@ -131,8 +125,8 @@
 	dat += "<br>"
 	dat += "[flash]"
 	dat += "<br>"
-	dat += "<a href='?src=\ref[src];refresh=1'>Scan</a>"
-	dat += "<a href='?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
+	dat += "<a href='byond://?src=\ref[src];refresh=1'>Scan</a>"
+	dat += "<a href='byond://?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
 
 	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)

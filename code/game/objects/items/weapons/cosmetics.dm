@@ -54,7 +54,7 @@
 								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
 			H.lip_style = "lipstick"
 			H.lip_color = colour
-			H.update_body()
+			H.update_body(BP_HEAD, update_preferences = TRUE)
 		else if(!user.is_busy())
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
 								 "<span class='notice'>You begin to apply \the [src].</span>")
@@ -63,7 +63,7 @@
 									 "<span class='notice'>You apply \the [src].</span>")
 				H.lip_style = "lipstick"
 				H.lip_color = colour
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 	else
 		to_chat(user, "<span class='notice'>Where are the lips on that?</span>")
 
@@ -78,7 +78,7 @@
 			if(H == user)
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
@@ -86,7 +86,7 @@
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
-					H.update_body()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 	else
 		..()
 
@@ -107,7 +107,7 @@
 		H.h_style = "Skinhead"
 	if(AH)
 		H.log_combat(AH, "shaved with [name]")
-	H.update_hair()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 	playsound(src, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 20)
 
 
@@ -148,7 +148,7 @@
 			if(!H.species.flags[HAS_HAIR])
 				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return
-			if((H.head && (H.head.flags & BLOCKHAIR)) || (H.head && (H.head.flags & HIDEEARS)))
+			if((H.head && (H.head.render_flags & HIDE_ALL_HAIR)) || (H.head && (H.head.flags & HIDEEARS)))
 				to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 				return
 			if(H.h_style == "Bald" || H.h_style == "Balding Hair" || H.h_style == "Skinhead")
@@ -209,7 +209,7 @@
 	edge = 1
 	var/list/bald_hair_styles_list = list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears")
 	var/list/shaved_facial_hair_styles_list = list("Shaved")
-	var/list/allowed_races = list(HUMAN, UNATHI, TAJARAN)
+	var/list/allowed_races = list(HUMAN, UNATHI, TAJARAN, PLUVIAN)
 	var/mob/living/carbon/human/barber = null
 	var/mob/living/carbon/human/barbertarget = null
 	var/selectedhairstyle = null
@@ -291,8 +291,9 @@
 	mannequin.undershirt = H.undershirt
 	mannequin.socks = H.socks
 
-	mannequin.update_body()
-	mannequin.update_hair()
+	mannequin.update_underwear()
+	mannequin.update_body(update_preferences = TRUE)
+
 	COMPILE_OVERLAYS(mannequin)
 	return mannequin
 
@@ -374,7 +375,7 @@
 	dat += "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>"
 	dat += haircutlist
 
-	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT, existing_container = "barber_window")
 	popup.set_content(dat)
 	popup.open()
 	return
@@ -394,7 +395,7 @@
 							   "<span class='notice'>You start cutting [barbertarget]'s facial hair with [src], this might take a minute...</span>")
 		if(do_after(barber, 100, target = barbertarget))
 			barbertarget.f_style = selectedhairstyle
-			barbertarget.update_hair()
+			barbertarget.update_body(BP_HEAD, update_preferences = TRUE)
 			barber.visible_message("<span class='notice'>[barber] finished cutting [barbertarget]'s facial hair</span>", \
 								   "<span class='notice'>You finished cutting [barbertarget]'s facial hair</span>")
 	else
@@ -402,7 +403,7 @@
 							   "<span class='notice'>You start cutting [barbertarget]'s hair with [src], this might take a minute...</span>")
 		if(do_after(barber, 100, target = barbertarget))
 			barbertarget.h_style = selectedhairstyle
-			barbertarget.update_hair()
+			barbertarget.update_body(BP_HEAD, update_preferences = TRUE)
 			barber.visible_message("<span class='notice'>[barber] finished cutting [barbertarget]'s hair</span>", \
 								   "<span class='notice'>You finished cutting [barbertarget]'s hair</span>")
 
@@ -447,7 +448,7 @@
 				return
 
 			if(H.species.name in allowed_races)
-				if(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS)))
+				if(H.head && ((H.head.render_flags & HIDE_ALL_HAIR) || (H.head.flags & HIDEEARS)))
 					to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 					return
 

@@ -1,3 +1,6 @@
+// todo: this also works as blood properties holder, this is dumb and we need to create separate blood datums
+// dirt can be handled by decals
+
 /datum/dirt_cover
 	var/name = "red blood"
 	var/color = "#a10808"
@@ -5,10 +8,36 @@
 
 /datum/dirt_cover/New(datum/dirt_cover/cover)
 	if(cover)
-		name = cover.name
-		color = cover.color
-		alpha = cover.alpha
+		// just to be safe, handle both object and typepath
+		// we need to rewrite these ancient datums anyway
+		if(ispath(cover))
+			name = cover::name
+			color = cover::color
+			alpha = cover::alpha
+		else
+			name = cover.name
+			color = cover.color
+			alpha = cover.alpha
 	..()
+
+// mix colors of old and new dirt
+/datum/dirt_cover/proc/add_dirt(datum/dirt_cover/cover)
+	var/list/added_color
+	var/added_alpha
+	if(ispath(cover))
+		added_color = rgb2num(cover::color)
+		added_alpha = cover::alpha
+	else
+		added_color = rgb2num(cover.color)
+		added_alpha = cover.alpha
+
+	var/list/current_color = rgb2num(color)
+
+	color = rgb((current_color[1] + added_color[1]) / 2, (current_color[2] + added_color[2]) / 2, (current_color[3] + added_color[3]) / 2)
+	alpha = (alpha + added_alpha) / 2
+
+	if(prob(50))
+		name = "mixed dirt"
 
 /datum/dirt_cover/dirt
 	name = "dirt"
@@ -63,15 +92,6 @@
 	name = "hemolymph"
 	color = "#525252"
 
-/datum/dirt_cover/proc/add_dirt(datum/dirt_cover/A)
-	var/red = (hex2num(copytext(color,2,4)) + hex2num(copytext(A.color,2,4))) / 2
-	var/green = (hex2num(copytext(color,4,6)) + hex2num(copytext(A.color,4,6))) / 2
-	var/blue = (hex2num(copytext(color,6,8)) + hex2num(copytext(A.color,6,8))) / 2
-	color = rgb(red,green,blue)
-	if(prob(50))      // lame but whatever
-		name = A.name //
-	if(alpha < A.alpha)
-		alpha = A.alpha
 /*
 /proc/get_dirt_mixed_color(list/dms)
 	if(!dms)

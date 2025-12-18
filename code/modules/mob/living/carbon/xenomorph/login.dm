@@ -1,4 +1,4 @@
-/mob/living/carbon/xenomorph/Login()
+/mob/living/carbon/xenomorph/LateLogin()
 	..()
 	update_hud()
 	if(!isturf(loc))

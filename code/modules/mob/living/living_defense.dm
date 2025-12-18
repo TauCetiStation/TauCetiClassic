@@ -25,7 +25,7 @@
 	return 0
 
 /mob/living/proc/is_impact_force_affected(impact_force, impact_dir)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_IMMOVABLE))
 		return FALSE
 	if(buckled || anchored)
 		return FALSE
@@ -263,7 +263,6 @@
 		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -271,7 +270,6 @@
 		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
 		fire_stacks = 0
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		update_fire()

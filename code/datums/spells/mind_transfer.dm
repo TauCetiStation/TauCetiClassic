@@ -57,14 +57,10 @@ Also, you never added distance checking after target is selected. I've went ahea
 			return
 
 	//If target has mindshield/loyalty implant we break it, adding some brainloss
-	if(target.ismindprotect())
+	if(ismindprotect(target))
 		to_chat(user, "Their mind seems to be protected, so you only manage to break it")
-		to_chat(target, "You feel a flash of pain in your head")
-		for(var/obj/item/weapon/implant/mind_protect/L in target)
-			if(L.implanted && L.imp_in == target)
-				qdel(L)
-		target.sec_hud_set_implants()
-		target.adjustBrainLoss(15)
+		for(var/obj/item/weapon/implant/mind_protect/L in target.implants)
+			L.meltdown()
 		user.Paralyse(paralysis_amount_caster)
 		target.Paralyse(paralysis_amount_victim)
 		return

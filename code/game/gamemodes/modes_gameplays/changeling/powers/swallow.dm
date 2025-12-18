@@ -35,7 +35,7 @@
 	if(T.species.flags[IS_SYNTHETIC] || T.species.flags[IS_PLANT])
 		to_chat(user, "<span class='warning'>[T] is not compatible with our biology.</span>")
 		return FALSE
-	if(T.species.flags[NO_SCAN])
+	if(HAS_TRAIT(T, TRAIT_INCOMPATIBLE_DNA))
 		to_chat(user, "<span class='warning'>We do not know how to digest this creature!</span>")
 		return FALSE
 	return TRUE

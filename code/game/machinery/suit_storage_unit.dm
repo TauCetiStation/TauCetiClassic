@@ -102,8 +102,8 @@
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<B>Maintenance panel controls</B><HR>"
 		dat+= "<span class='grey'>The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.</span><BR><BR>"
-		dat+= text("A small dial with a \"WARNING\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR><A class='blue' href='?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
-		dat+= text("A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.<BR><A class='blue' href='?src=\ref[];togglesafeties=1'>Press button</a>",(src.safetieson? "<span class='green'><B>GREEN</B></span>" : "<span class='red'><B>RED</B></span>"),src)
+		dat+= text("A small dial with a \"WARNING\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR><A class='blue' href='byond://?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
+		dat+= text("A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.<BR><A class='blue' href='byond://?src=\ref[];togglesafeties=1'>Press button</a>",(src.safetieson? "<span class='green'><B>GREEN</B></span>" : "<span class='red'><B>RED</B></span>"),src)
 	else if(src.isUV) //The thing is running its cauterisation cycle. You have to wait.
 		dat+= "<span class='red'><B>Unit is cauterising contents with selected UV ray intensity. Please wait.</span></B><BR>"
 	else
@@ -112,23 +112,23 @@
 			dat+= "<B>Welcome to the Unit control panel.</B><HR>"
 			dat+= text("Helmet storage compartment: <B>[]</B><BR>",(src.HELMET ? HELMET.name : "<span class='grey'>No helmet detected.</span>") )
 			if(HELMET && src.isopen)
-				dat+=text("<A href='?src=\ref[];dispense_helmet=1'>Dispense helmet</A><BR>",src)
+				dat+=text("<A href='byond://?src=\ref[];dispense_helmet=1'>Dispense helmet</A><BR>",src)
 			dat+= text("Suit storage compartment: <B>[]</B><BR>",(src.SUIT ? SUIT.name : "<span class='grey'>No exosuit detected.</span>") )
 			if(SUIT && src.isopen)
-				dat+=text("<A href='?src=\ref[];dispense_suit=1'>Dispense suit</A><BR>",src)
+				dat+=text("<A href='byond://?src=\ref[];dispense_suit=1'>Dispense suit</A><BR>",src)
 			dat+= text("Breathmask storage compartment: <B>[]</B><BR>",(src.MASK ? MASK.name : "<span class='grey'>No breathmask detected.</span>") )
 			if(MASK && src.isopen)
-				dat+=text("<A href='?src=\ref[];dispense_mask=1'>Dispense mask</A><BR>",src)
+				dat+=text("<A href='byond://?src=\ref[];dispense_mask=1'>Dispense mask</A><BR>",src)
 			if(src.OCCUPANT)
 				dat+= "<HR><B><span class='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></span><BR>"
-				dat+= "<A href='?src=\ref[src];eject_guy=1'>Eject extra load</A>"
-			dat+= text("<HR>Unit is: [] - <A href='?src=\ref[];toggle_open=1'>[] Unit</A> ",(src.isopen ? "Open" : "Closed"),src,(src.isopen ? "Close" : "Open"))
+				dat+= "<A href='byond://?src=\ref[src];eject_guy=1'>Eject extra load</A>"
+			dat+= text("<HR>Unit is: [] - <A href='byond://?src=\ref[];toggle_open=1'>[] Unit</A> ",(src.isopen ? "Open" : "Closed"),src,(src.isopen ? "Close" : "Open"))
 			if(src.isopen)
 				dat+="<HR>"
 			else
-				dat+= text(" - <A class='orange' href='?src=\ref[];toggle_lock=1'>*[] Unit*</A><HR>",src,(src.islocked ? "Unlock" : "Lock") )
+				dat+= text(" - <A class='orange' href='byond://?src=\ref[];toggle_lock=1'>*[] Unit*</A><HR>",src,(src.islocked ? "Unlock" : "Lock") )
 			dat+= text("Unit status: []",(src.islocked? "<span class='red'><B>**LOCKED**</B></span><BR>" : "<span class='green'><B>**UNLOCKED**</B></span><BR>") )
-			dat+= text("<A href='?src=\ref[];start_UV=1'>Start Disinfection cycle</A><BR>",src)
+			dat+= text("<A href='byond://?src=\ref[];start_UV=1'>Start Disinfection cycle</A><BR>",src)
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 			dat+= "<span class='red'><B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</span></B><BR><BR>"
 

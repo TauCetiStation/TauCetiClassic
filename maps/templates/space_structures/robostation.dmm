@@ -175,7 +175,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "aJ" = (
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/structure/table/woodentable,
 /obj/item/toy/waterflower,
 /turf/simulated/floor/carpet,
@@ -401,7 +401,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bC" = (
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bD" = (

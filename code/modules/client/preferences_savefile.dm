@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 52
+#define SAVEFILE_VERSION_MAX 57
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -119,61 +119,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			player_alt_titles -= J.title
 
 	if(current_version < 27)
+		// before there was migration for old job preferences but we dropped it
+		// 5 years is enough
 		job_preferences = list() //It loaded null from nonexistant savefile field.
-		var/job_civilian_high = 0
-		var/job_civilian_med = 0
-		var/job_civilian_low = 0
-
-		var/job_medsci_high = 0
-		var/job_medsci_med = 0
-		var/job_medsci_low = 0
-
-		var/job_engsec_high = 0
-		var/job_engsec_med = 0
-		var/job_engsec_low = 0
-
-		S["job_civilian_high"] >> job_civilian_high
-		S["job_civilian_med"]  >> job_civilian_med
-		S["job_civilian_low"]  >> job_civilian_low
-		S["job_medsci_high"]   >> job_medsci_high
-		S["job_medsci_med"]    >> job_medsci_med
-		S["job_medsci_low"]    >> job_medsci_low
-		S["job_engsec_high"]   >> job_engsec_high
-		S["job_engsec_med"]    >> job_engsec_med
-		S["job_engsec_low"]    >> job_engsec_low
-
-		//Can't use SSjob here since this happens right away on login
-		for(var/job in subtypesof(/datum/job))
-			var/datum/job/J = job
-			var/new_value
-			var/fval = initial(J.flag)
-			switch(initial(J.department_flag))
-				if(CIVILIAN)
-					if(job_civilian_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_civilian_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_civilian_low & fval)
-						new_value = JP_LOW
-				if(MEDSCI)
-					if(job_medsci_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_medsci_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_medsci_low & fval)
-						new_value = JP_LOW
-				if(ENGSEC)
-					if(job_engsec_high & fval)
-						// Since we can have only one high pref now, let the user pick which of the bunch they want.
-						new_value = JP_MEDIUM
-					else if(job_engsec_med & fval)
-						new_value = JP_MEDIUM
-					else if(job_engsec_low & fval)
-						new_value = JP_LOW
-			if(new_value)
-				job_preferences[initial(J.title)] = new_value
 		S["job_preferences"] << job_preferences
 
 	if(current_version < 28)
@@ -211,12 +159,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["citizenship"] << citizenship
 		S["faction"]     << faction
 		S["religion"]    << religion
-
-	if(current_version < 32)
-		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
-		organ_data = list()
-		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES))
-			organ_data[i] = null
 
 	if(current_version < 33)
 		S["parallax_theme"] << null
@@ -466,12 +408,92 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (pre_52_hairstyles_to_modern_ones[h_style])
 			h_style = pre_52_hairstyles_to_modern_ones[h_style]
 
+	if(current_version < 53)
+		ipc_head = initial(ipc_head)
+		// fuck named hairstyles, we should just move it to indexes
+		var/static/list/ipc_hairstyles_reset = list(
+			"alien IPC screen",
+			"double IPC screen",
+			"pillar IPC screen",
+			"human IPC screen"
+		)
+		if(h_style in ipc_hairstyles_reset)
+			h_style = /datum/sprite_accessory/hair/ipc_screen_alert::name
+
+	if(current_version < 54)
+		// cap dark colors for old preferences, should be part of pref sanitize but better to wait for datumized preferences
+		var/new_hex = color_luminance_min(rgb(r_skin, g_skin, b_skin), 10)
+		r_skin = HEX_VAL_RED(new_hex)
+		g_skin = HEX_VAL_GREEN(new_hex)
+		b_skin = HEX_VAL_BLUE(new_hex)
+
+		new_hex = color_luminance_min(rgb(r_belly, g_belly, b_belly), 10)
+		r_belly = HEX_VAL_RED(new_hex)
+		g_belly = HEX_VAL_GREEN(new_hex)
+		b_belly = HEX_VAL_BLUE(new_hex)
+
+		// converts old skin tone to approximate datum
+		switch(clamp(35 - s_tone, 1, 220))
+			if(1 to 14)
+				s_tone = /datum/skin_tone/albino::name
+			if(15 to 28)
+				s_tone = /datum/skin_tone/porcelain::name
+			if(29 to 41)
+				s_tone = /datum/skin_tone/ivory::name
+			if(42 to 55)
+				s_tone = /datum/skin_tone/light_peach::name
+			if(56 to 69)
+				s_tone = /datum/skin_tone/beige::name
+			if(70 to 83)
+				s_tone = /datum/skin_tone/light_brown::name
+			if(84 to 97)
+				s_tone = /datum/skin_tone/peach::name
+			if(98 to 110)
+				s_tone = /datum/skin_tone/light_beige::name
+			if(111 to 124)
+				s_tone = /datum/skin_tone/olive::name
+			if(125 to 138)
+				s_tone = /datum/skin_tone/chestnut::name
+			if(139 to 152)
+				s_tone = /datum/skin_tone/macadamia::name
+			if(153 to 165)
+				s_tone = /datum/skin_tone/walnut::name
+			if(166 to 179)
+				s_tone = /datum/skin_tone/coffee::name
+			if(180 to 193)
+				s_tone = /datum/skin_tone/brown::name
+			if(194 to 207)
+				s_tone = /datum/skin_tone/medium_brown::name
+			if(208 to 220)
+				s_tone = /datum/skin_tone/dark_brown::name
+			else
+				s_tone = initial(s_tone)
+
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 55)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 56)
+		underwear = /datum/preferences::underwear
+		undershirt = /datum/preferences::undershirt
+		undershirt_print = /datum/preferences::undershirt_print
+		socks = /datum/preferences::socks
+
+	if(current_version < 57)
+		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
+		organ_data = list()
+		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES, O_LUNGS))
+			organ_data[i] = null
+
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
 	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
 		if(species != HUMAN)
-			for(var/datum/job/job in SSjob.occupations)
+			for(var/datum/job/job as anything in SSjob.all_occupations)
 				if(!job.is_species_permitted(species))
 					SetJobPreferenceLevel(job, 0)
 			S["job_preferences"] << job_preferences
@@ -518,7 +540,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
 	There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences\n\
-	<a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
+	<a href='byond://?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, "<span class='userdanger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")
@@ -581,6 +603,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
 	S["tgui_lock"]		>> tgui_lock
+	S["window_scale"]	>> window_scale
 
 	//Sound preferences
 	S["snd_music_vol"]                      >> snd_music_vol
@@ -615,6 +638,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hotkeys 		= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
+	window_scale		= sanitize_integer(window_scale, 0, 1, initial(window_scale))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	glowlevel		= sanitize_integer(glowlevel, GLOW_HIGH, GLOW_DISABLE, initial(glowlevel))
@@ -705,6 +729,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
+	S["window_scale"]		<< window_scale
 
 	//Sound preferences
 	S["snd_music_vol"]                      << snd_music_vol
@@ -764,6 +789,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eyes_blue"]         >> b_eyes
 	S["underwear"]         >> underwear
 	S["undershirt"]        >> undershirt
+	S["undershirt_print"]  >> undershirt_print
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
 	S["use_skirt"]         >> use_skirt
@@ -837,7 +863,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	r_facial		= sanitize_integer(r_facial, 0, 255, initial(r_facial))
 	g_facial		= sanitize_integer(g_facial, 0, 255, initial(g_facial))
 	b_facial		= sanitize_integer(b_facial, 0, 255, initial(b_facial))
-	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
+	s_tone			= sanitize_inlist(s_tone, global.skin_tones_by_name, initial(s_tone))
 	r_skin			= sanitize_integer(r_skin, 0, 255, initial(r_skin))
 	g_skin			= sanitize_integer(g_skin, 0, 255, initial(g_skin))
 	b_skin			= sanitize_integer(b_skin, 0, 255, initial(b_skin))
@@ -847,9 +873,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
 	g_eyes			= sanitize_integer(g_eyes, 0, 255, initial(g_eyes))
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
-	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
-	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
-	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
+	underwear		= sanitize_integer(underwear, 0, underwear_t.len, initial(underwear))
+	undershirt		= sanitize_integer(undershirt, 0, undershirt_t.len, initial(undershirt))
+	undershirt_print = sanitize_inlist(undershirt_print, undershirt_prints_t, null)
+	socks			= sanitize_integer(socks, 0, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
@@ -963,6 +990,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eyes_blue"]             << b_eyes
 	S["underwear"]             << underwear
 	S["undershirt"]            << undershirt
+	S["undershirt_print"]      << undershirt_print
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt

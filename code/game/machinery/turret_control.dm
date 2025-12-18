@@ -145,15 +145,15 @@
 			</tr>
 		</table>"},
 
-		"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
-		"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
-		"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
-		"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
-		"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
-		"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
-		"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
-		"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
-		"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
+		"<A href='byond://?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+		"<A href='byond://?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
+		"<A href='byond://?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
+		"[(special_control && isAI(user)) ? "<A href='byond://?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
+		"<A href='byond://?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
+		"<A href='byond://?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
+		"<A href='byond://?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
+		"<A href='byond://?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
+		"<A href='byond://?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
 	var/datum/browser/popup = new(user, "window=autoseccontrol", "Turret Installation Controller", 400, 320)
 	popup.set_content(dat)

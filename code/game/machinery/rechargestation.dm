@@ -154,7 +154,7 @@
 			if(R.client)
 				R.client.eye = src
 				R.client.perspective = EYE_PERSPECTIVE
-			R.forceMove(src)
+			R.forceMove(src, keep_grabs = FALSE)
 			occupant = R
 			set_power_use(ACTIVE_POWER_USE)
 			add_fingerprint(R)

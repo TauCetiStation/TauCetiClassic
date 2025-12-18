@@ -37,6 +37,8 @@
 
 	var/global/list/rock_side_overlays
 
+	hit_particle_type = /particles/tool/digging
+
 /turf/simulated/mineral/atom_init(mapload)
 	. = ..()
 	icon_state = "rock"
@@ -200,8 +202,11 @@
 		if (!isturf(T))
 			return
 
+		var/particleType = /particles/tool/digging
+
 		var/obj/item/weapon/pickaxe/P = W
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
+			particleType = /particles/tool/drill_mineral
 			var/obj/item/weapon/pickaxe/drill/D = P
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
 				if(D.state)
@@ -230,7 +235,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 50, volume = 100))
+		if(P.use_tool(src, user, 50, volume = 100, particle_type = particleType))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
@@ -329,6 +334,7 @@
 
 
 /turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_coefficient = 1.0)
+	new /obj/effect/abstract/particle_holder(src, /particles/tool/digging, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
@@ -700,7 +706,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100))
+		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100, particle_type = /particles/tool/digging))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()

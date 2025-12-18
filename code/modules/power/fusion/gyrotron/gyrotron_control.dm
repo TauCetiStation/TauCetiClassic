@@ -31,9 +31,9 @@
 			dat += "<td><span style='color: red'>ERROR</span></td>"
 			dat += "<td><span style='color: red'>ERROR</span></td>"
 		else
-			dat += "<td><a href='?src=\ref[src];machine=\ref[G];toggle=1'>[G.active  ? "Emitting" : "Standing By"]</a></td>"
-			dat += "<td><a href='?src=\ref[src];machine=\ref[G];modifyrate=1'>[G.rate]</a></td>"
-			dat += "<td><a href='?src=\ref[src];machine=\ref[G];modifypower=1'>[G.mega_energy]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];machine=\ref[G];toggle=1'>[G.active  ? "Emitting" : "Standing By"]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];machine=\ref[G];modifyrate=1'>[G.rate]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];machine=\ref[G];modifypower=1'>[G.mega_energy]</a></td>"
 
 	dat += "</tr></table>"
 

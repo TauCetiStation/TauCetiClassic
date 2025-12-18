@@ -260,7 +260,7 @@
 // Gun procs.
 
 /obj/item/weapon/gun/proc/on_autofire_start(mob/living/shooter)
-	if(!ready_to_fire() || shooter.incapacitated())
+	if(shooter.incapacitated())
 		return FALSE
 	if(!can_fire())
 		shoot_with_empty_chamber(shooter)
@@ -275,11 +275,11 @@
 
 /obj/item/weapon/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
 	SIGNAL_HANDLER
-	if(!ready_to_fire() || shooter.incapacitated())
-		return NONE
+	if(shooter.incapacitated())
+		return FALSE
 	if(!can_fire())
 		shoot_with_empty_chamber(shooter)
-		return NONE
+		return FALSE
 	INVOKE_ASYNC(src, PROC_REF(do_autofire_shot), source, target, shooter, params)
 	return COMPONENT_AUTOFIRE_SHOT_SUCCESS //All is well, we can continue shooting.
 

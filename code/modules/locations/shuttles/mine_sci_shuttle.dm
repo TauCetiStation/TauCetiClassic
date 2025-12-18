@@ -39,9 +39,9 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		dat += "<ul><li>Местоположение: <b>[shuttle_location]</b></li>"
 		dat += {"<li>Готов лететь[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]</li>"}
 		dat += "</ul>"
-		dat += "<a href='?src=\ref[src];mine=1'>Шахтёрский аванпост</a> | "
-		dat += "<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> | "
-		dat += "<a href='?src=\ref[src];sci=1'>Научный аванпост</a><br>"
+		dat += "<a href='byond://?src=\ref[src];mine=1'>Шахтёрский аванпост</a> | "
+		dat += "<a href='byond://?src=\ref[src];station=1'>[station_name_ru()]</a> | "
+		dat += "<a href='byond://?src=\ref[src];sci=1'>Научный аванпост</a><br>"
 	else
 		dat = "Невозможно найти шаттл"
 
@@ -128,15 +128,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	if(moving)
 		var/area/transit_location = locate(/area/shuttle/mining/transit)
 
-		if(istype(mine_sci_curr_location, STATION_DOCK))
-			SSshuttle.undock_act(/area/station/hallway/secondary/mine_sci_shuttle, "stat_dock")
-			SSshuttle.undock_act(mine_sci_curr_location)
-		else if(istype(mine_sci_curr_location, MINE_DOCK))
-			SSshuttle.undock_act(/area/asteroid/mine/production, "mine_dock")
-			SSshuttle.undock_act(mine_sci_curr_location)
-		else if(istype(mine_sci_curr_location, SCI_DOCK))
-			SSshuttle.undock_act(/area/asteroid/research_outpost/entry, "sci_dock")
-			SSshuttle.undock_act(mine_sci_curr_location)
+		SSshuttle.undock_act(mine_sci_curr_location, "mining_shuttle")
 
 		transit_location.parallax_movedir = EAST
 		mine_sci_curr_location.move_contents_to(transit_location)
@@ -152,15 +144,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 		SSshuttle.shake_mobs_in_area(destination, EAST)
 
-		if(istype(destination, STATION_DOCK))
-			SSshuttle.dock_act(/area/station/hallway/secondary/mine_sci_shuttle, "stat_dock")
-			SSshuttle.dock_act(destination)
-		else if(istype(destination, MINE_DOCK))
-			SSshuttle.dock_act(/area/asteroid/mine/production, "mine_dock")
-			SSshuttle.dock_act(destination)
-		else if(istype(destination, SCI_DOCK))
-			SSshuttle.dock_act(/area/asteroid/research_outpost/entry, "sci_dock")
-			SSshuttle.dock_act(destination)
+		SSshuttle.dock_act(destination, "mining_shuttle")
 
 		mine_sci_curr_location = destination
 		moving = FALSE

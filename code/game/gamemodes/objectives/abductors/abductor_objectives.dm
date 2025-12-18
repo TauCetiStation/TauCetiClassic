@@ -40,12 +40,12 @@
 	explanation_text = "Capture"
 
 /datum/objective/abductee/capture/New()
-	var/list/jobs = get_job_datums()
-	for(var/datum/job/J in jobs)
-		if(J.current_positions < 1)
-			jobs -= J
-	if(jobs.len > 0)
-		var/datum/job/target = pick(jobs)
+	var/list/target_jobs = list()
+	for(var/datum/job/J as anything in SSjob.active_occupations)
+		if(J.current_positions >= 1)
+			target_jobs += J
+	if(length(target_jobs))
+		var/datum/job/target = pick(target_jobs)
 		explanation_text += " a [target.title]."
 	else
 		explanation_text += " someone."

@@ -11,6 +11,7 @@
 		new /obj/item/weapon/storage/backpack/satchel/norm(src)
 	new /obj/item/device/radio/headset(src)
 
+
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
@@ -25,6 +26,8 @@
 	overlay_locked = "cabinetsecure_locked"
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
+
+	hit_particle_type = /particles/tool/digging/wood
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)

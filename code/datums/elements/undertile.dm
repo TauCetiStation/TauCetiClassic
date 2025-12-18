@@ -58,14 +58,14 @@
 				source.alpha = ALPHA_UNDERTILE
 
 			if(invisibility_trait)
-				ADD_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
+				ADD_TRAIT(source, invisibility_trait, TRAIT_FROM_ELEMENT(src))
 
 	else
 		source.plane = initial(source.plane)
 		REMOVE_TRAIT(source, TRAIT_UNDERFLOOR, REF(src))
 
 		if(invisibility_trait)
-			REMOVE_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
+			REMOVE_TRAIT(source, invisibility_trait, TRAIT_FROM_ELEMENT(src))
 
 		if(tile_overlay)
 			T.overlays -= tile_overlay

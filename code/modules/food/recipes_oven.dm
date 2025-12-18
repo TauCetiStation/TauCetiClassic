@@ -385,7 +385,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
-		/obj/item/brain
+		/obj/item/organ/internal/brain
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/brain
 
@@ -467,3 +467,11 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/el_ehum
+
+/datum/recipe/oven/kulich
+	reagents = list("milk" = 5, "sugar" = 20)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/kulich

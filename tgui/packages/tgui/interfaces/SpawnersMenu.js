@@ -16,38 +16,45 @@ export const SpawnersMenu = (props, context) => {
               <Section>Ролей нет, но не печалься, они скоро будут!</Section>
             </Flex.Item>
           )}
-          {spawners.map(spawner => (
+          {spawners.map((spawner) => (
             <Flex.Item key={spawner.ref}>
               <Section
                 title={toTitleCase(spawner.name)}
-                buttons={(
+                buttons={
                   <>
                     <Button
                       content="Осмотреться"
                       onClick={() =>
                         act('jump', {
                           ref: spawner.ref,
-                        })}
+                        })
+                      }
                     />
                     <Button
-                      content={!spawner.register_only
-                        ? "Появиться"
-                        : (!spawner.checked ? "Заявить" : "Отменить")}
+                      content={
+                        !spawner.register_only
+                          ? 'Появиться'
+                          : !spawner.checked
+                            ? 'Заявить'
+                            : 'Отменить'
+                      }
                       selected={spawner.checked}
                       blocked={spawner.blocked}
                       onClick={() =>
                         act('spawn', {
                           ref: spawner.ref,
-                        })}
+                        })
+                      }
                     />
                   </>
-                )}>
+                }>
                 <LabeledList>
                   {spawner.time_left && (
                     <LabeledList.Item
-                      label={spawner.time_type === 1 ? "Регистрация" : "Доступно"}
-                      color={spawner.time_type === 1 ? "green" : "red"}
-                    >
+                      label={
+                        spawner.time_type === 1 ? 'Регистрация' : 'Доступно'
+                      }
+                      color={spawner.time_type === 1 ? 'green' : 'red'}>
                       {formatTime(spawner.time_left)}
                     </LabeledList.Item>
                   )}
@@ -74,7 +81,9 @@ export const SpawnersMenu = (props, context) => {
                   )}
                   {spawner.wiki_ref && (
                     <LabeledList.Item label="Вики">
-                      <a href="{spawner.wiki_ref}" target="_blank">{spawner.wiki_ref}</a>
+                      <a href="{spawner.wiki_ref}" target="_blank">
+                        {spawner.wiki_ref}
+                      </a>
                     </LabeledList.Item>
                   )}
                 </LabeledList>

@@ -124,11 +124,11 @@
 		return
 	var/dat = "<TT><B>Flamethrower "
 	if(lit)
-		dat += "<A class='red' HREF='?src=\ref[src];light=1'>Lit</a>"
+		dat += "<A class='red' href='byond://?src=\ref[src];light=1'>Lit</a>"
 	else
-		dat += "<A HREF='?src=\ref[src];light=1'>Unlit</a>"
+		dat += "<A href='byond://?src=\ref[src];light=1'>Unlit</a>"
 
-	dat += "</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A></TT>"
+	dat += "</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A href='byond://?src=\ref[src];amount=-100'>-</A> <A href='byond://?src=\ref[src];amount=-10'>-</A> <A href='byond://?src=\ref[src];amount=-1'>-</A> [throw_amount] <A href='byond://?src=\ref[src];amount=1'>+</A> <A href='byond://?src=\ref[src];amount=10'>+</A> <A href='byond://?src=\ref[src];amount=100'>+</A><BR>\n<A href='byond://?src=\ref[src];remove=1'>Remove phorontank</A></TT>"
 
 	var/datum/browser/popup = new(user, "flamethrower", null, 600, 300)
 	popup.set_content(dat)

@@ -54,5 +54,11 @@
 	if(default_event_message || default_event_name)
 		SSevents.setup_custom_event(default_event_message, default_event_name)
 
+// analogue of gamemodes can_start() for map modules, you can combine it with spawners lobby
+// you can check any conditions like necessary spawners registrations and prevent round start
+// returns FALSE for proper start or error message
+/datum/map_module/proc/prevent_start()
+	return FALSE
+
 /datum/map_module/proc/stat_entry(mob/M)
 	return

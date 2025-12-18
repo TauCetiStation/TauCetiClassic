@@ -132,9 +132,9 @@
 
 /datum/role/wizard/extraPanelButtons()
 	var/dat = ..()
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_tp=1;'>(Tp to base)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_name=1'>(Choose name)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_equip=1'>(Equip)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_tp=1;'>(Tp to base)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_name=1'>(Choose name)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_equip=1'>(Equip)</a>"
 	return dat
 
 /datum/role/wizard/RoleTopic(href, href_list, datum/mind/M, admin_auth)

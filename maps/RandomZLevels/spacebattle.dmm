@@ -7532,7 +7532,7 @@
 	},
 /area/awaymission/spacebattle/secret)
 "tg" = (
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/simulated/floor{
 	icon_state = "alienvault"
 	},

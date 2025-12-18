@@ -119,7 +119,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы начинаете удалять стержни.</span>")
-		if(C.use_tool(src, user, 30, volume = 80))
+		if(C.use_tool(src, user, 30, volume = 80, quality = QUALITY_WRENCHING))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src

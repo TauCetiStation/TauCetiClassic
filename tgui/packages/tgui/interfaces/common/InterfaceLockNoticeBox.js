@@ -28,9 +28,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
     return (
       <NoticeBox color="grey">
         <Flex align="center">
-          <Flex.Item>
-            Интерфейс:
-          </Flex.Item>
+          <Flex.Item>Интерфейс:</Flex.Item>
           <Flex.Item grow={1} />
           <Flex.Item>
             <Button
@@ -42,7 +40,8 @@ export const InterfaceLockNoticeBox = (props, context) => {
                 if (onLockStatusChange) {
                   onLockStatusChange(!locked);
                 }
-              }} />
+              }}
+            />
           </Flex.Item>
         </Flex>
       </NoticeBox>
@@ -51,8 +50,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
   // For everyone else
   return (
     <NoticeBox>
-      Проведите {accessText}{' '}
-      для {locked ? 'разблокировки' : 'блокировки'}.
+      Проведите {accessText} для {locked ? 'разблокировки' : 'блокировки'}.
     </NoticeBox>
   );
 };

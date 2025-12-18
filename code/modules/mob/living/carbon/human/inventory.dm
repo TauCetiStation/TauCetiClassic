@@ -188,6 +188,8 @@
 		return
 
 	W.update_inv_mob()
+	if(W.render_flags)
+		update_render_flags(W.render_flags)
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null
@@ -251,7 +253,6 @@
 				O.loc = src
 				src.r_ear = O
 				O.plane = ABOVE_HUD_PLANE
-				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 		if(SLOT_R_EAR)
 			src.r_ear = W
@@ -260,7 +261,6 @@
 				O.loc = src
 				src.l_ear = O
 				O.plane = ABOVE_HUD_PLANE
-				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 		if(SLOT_GLASSES)
 			src.glasses = W
@@ -313,9 +313,10 @@
 		W.update_inv_mob()
 
 	W.plane = ABOVE_HUD_PLANE
-	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
 	W.update_inv_mob()
+	if(W.render_flags)
+		update_render_flags(W.render_flags)
 
 /mob/living/carbon/human/put_in_l_hand(obj/item/W)
 	if(!has_bodypart(BP_L_ARM))

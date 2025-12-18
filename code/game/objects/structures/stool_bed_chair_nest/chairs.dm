@@ -15,10 +15,17 @@
 
 /obj/structure/stool/bed/chair/atom_init()
 	..()
+	if(is_station_level(z))
+		global.station_chairs_count++
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/stool/bed/chair/atom_init_late()
 	handle_rotation()
+
+/obj/structure/stool/bed/chair/Destroy()
+	if(is_station_level(z))
+		global.station_chairs_count--
+	return ..()
 
 /obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
@@ -424,7 +431,7 @@
 		var/obj/item/organ/external/BP = bm.bodyparts_by_name[BP_HEAD]
 		if(BP && !BP.is_stump)
 			if(bm.stat != DEAD)
-				if(!(NO_BREATH in bm.mutations))
+				if(!HAS_TRAIT(bm, TRAIT_NO_BREATHE))
 					bm.adjustOxyLoss(5)
 					if(prob(40))
 						bm.emote("gasp")

@@ -61,8 +61,10 @@
 	icon_state = "spikethrower[spikes]"
 
 /obj/item/weapon/spikethrower/afterattack(atom/target, mob/user, proximity, params)
-	if(proximity) return
+	if(proximity)
+		return
 	if(user && user.client && user.client.gun_mode && !(target in target))
+		EMPTY_BLOCK_GUARD
 		//TODO: Make this compatible with targetting (prolly have to actually make it a gun subtype, ugh.)
 		//PreFire(A,user,params)
 	else

@@ -343,74 +343,74 @@
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
-				dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Выйти из системы</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=logout'>Выйти из системы</A>"
 				if (src.authenticated==2)
-					dat += "<BR><A HREF='?src=\ref[src];operation=announce'>Сделать оповещение</A>"
+					dat += "<BR><A href='byond://?src=\ref[src];operation=announce'>Сделать оповещение</A>"
 					if(src.emagged == 0)
-						dat += "<BR><A HREF='?src=\ref[src];operation=MessageCentcomm'>Отправить экстренное сообщение Центкому</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=MessageCentcomm'>Отправить экстренное сообщение Центкому</A>"
 					else
-						dat += "<BR><A HREF='?src=\ref[src];operation=MessageSyndicate'>Отправить экстренное сообщение \[НЕИЗВЕСТНО\]</A>"
-						dat += "<BR><A HREF='?src=\ref[src];operation=RestoreBackup'>Восстановить резервные данные маршрутизации</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=MessageSyndicate'>Отправить экстренное сообщение \[НЕИЗВЕСТНО\]</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=RestoreBackup'>Восстановить резервные данные маршрутизации</A>"
 
-				dat += "<BR><A HREF='?src=\ref[src];operation=changeseclevel'>Сменить код тревоги</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=changeseclevel'>Сменить код тревоги</A>"
 				if(SSshuttle.location==0)
 					if (SSshuttle.online)
-						dat += "<BR><A HREF='?src=\ref[src];operation=cancelshuttle'>Отменить вызов шаттла</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=cancelshuttle'>Отменить вызов шаттла</A>"
 					else
-						dat += "<BR><A HREF='?src=\ref[src];operation=callshuttle'>Вызвать экстренный шаттл</A>"
+						dat += "<BR><A href='byond://?src=\ref[src];operation=callshuttle'>Вызвать экстренный шаттл</A>"
 
-				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Установить статус дисплея</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=status'>Установить статус дисплея</A>"
 			else
-				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Авторизоваться</A>"
-			dat += "<BR><A HREF='?src=\ref[src];operation=messagelist'>Список сообщений</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=login'>Авторизоваться</A>"
+			dat += "<BR><A href='byond://?src=\ref[src];operation=messagelist'>Список сообщений</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Вы уверены, что хотите вызвать шаттл? <A HREF='?src=\ref[src];operation=callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=main'>НЕТ</A>"
+			dat += "Вы уверены, что хотите вызвать шаттл? <A href='byond://?src=\ref[src];operation=callshuttle2'>ДА</A> | <A href='byond://?src=\ref[src];operation=main'>НЕТ</A>"
 		if(STATE_CANCELSHUTTLE)
-			dat += "Вы уверены, что хотите отозвать шаттл? <A HREF='?src=\ref[src];operation=cancelshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=main'>НЕТ</A>"
+			dat += "Вы уверены, что хотите отозвать шаттл? <A href='byond://?src=\ref[src];operation=cancelshuttle2'>ДА</A> | <A href='byond://?src=\ref[src];operation=main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Сообщения:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
-				dat += "<BR><A HREF='?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR><A HREF='?src=\ref[src];operation=delmessage'>Удалить"
+					dat += "<BR><BR><A href='byond://?src=\ref[src];operation=delmessage'>Удалить"
 			else
 				src.state = STATE_MESSAGELIST
 				attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
-				dat += "Вы уверены, что хотите удалить это сообщение? <A HREF='?src=\ref[src];operation=delmessage2'>ДА</A> | <A HREF='?src=\ref[src];operation=viewmessage'>НЕТ</A>"
+				dat += "Вы уверены, что хотите удалить это сообщение? <A href='byond://?src=\ref[src];operation=delmessage2'>ДА</A> | <A href='byond://?src=\ref[src];operation=viewmessage'>НЕТ</A>"
 			else
 				src.state = STATE_MESSAGELIST
 				attack_hand(user)
 				return
 		if(STATE_STATUSDISPLAY)
 			dat += "Установить текст на дисплеях<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>По умолчанию</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Расчетное время до прибытия шаттла</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Сообщение</A>"
-			dat += "<ul><li> Линия 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
-			dat += "<li> Линия 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += " Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Карантин</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая угроза</A><BR><HR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=default'>По умолчанию</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=shuttle'>Расчетное время до прибытия шаттла</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=message'>Сообщение</A>"
+			dat += "<ul><li> Линия 1: <A href='byond://?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
+			dat += "<li> Линия 2: <A href='byond://?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
+			dat += " Alert: <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Карантин</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая угроза</A><BR><HR>"
 		if(STATE_ALERT_LEVEL)
 			dat += "Текущий код тревоги: [code_name_ru[security_level]]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>Активирован механизм самоуничтожения. Деактивируйте механизм для снижения кода или эвакуируйтесь.</b></font>"
 			else
-				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Синий</A><BR>"
-				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Зелёный</A>"
+				dat += "<A href='byond://?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Синий</A><BR>"
+				dat += "<A href='byond://?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Зелёный</A>"
 		if(STATE_CONFIRM_LEVEL)
 			dat += "Текущий код тревоги: [code_name_ru[security_level]]<BR>"
 			dat += "Подтвердить смену кода тревоги на: [code_name_ru[tmp_alertlevel]]<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Проведите ID-картой</A> для смены кода.<BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=swipeidseclevel'>Проведите ID-картой</A> для смены кода.<BR>"
 
-	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Главное меню</A> | " : ""]"
+	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A href='byond://?src=\ref[src];operation=main'>Главное меню</A> | " : ""]"
 
 	var/datum/browser/popup = new(user, "communications", "Коммуникационная консоль", 400, 500)
 	popup.set_content(dat)
@@ -422,26 +422,26 @@
 	switch(src.aistate)
 		if(STATE_DEFAULT)
 			if(SSshuttle.location==0 && !SSshuttle.online)
-				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Вызвать экстренный шаттл</A>"
-			dat += "<BR><A HREF='?src=\ref[src];operation=ai-messagelist'>Список сообщений</A>"
-			dat += "<BR><A HREF='?src=\ref[src];operation=ai-status'>Установить текст на дисплеях</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=ai-callshuttle'>Вызвать экстренный шаттл</A>"
+			dat += "<BR><A href='byond://?src=\ref[src];operation=ai-messagelist'>Список сообщений</A>"
+			dat += "<BR><A href='byond://?src=\ref[src];operation=ai-status'>Установить текст на дисплеях</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Вы уверены, что хотите вызвать экстренный шаттл? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-main'>НЕТ</A>"
+			dat += "Вы уверены, что хотите вызвать экстренный шаттл? <A href='byond://?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A href='byond://?src=\ref[src];operation=ai-main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
-				dat += "<BR><A HREF='?src=\ref[src];operation=ai-viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];operation=ai-viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
 			if (src.aicurrmsg)
 				dat += "<B>[src.messagetitle[src.aicurrmsg]]</B><BR><BR>[src.messagetext[src.aicurrmsg]]"
-				dat += "<BR><BR><A HREF='?src=\ref[src];operation=ai-delmessage'>Удалить сообщение</A>"
+				dat += "<BR><BR><A href='byond://?src=\ref[src];operation=ai-delmessage'>Удалить сообщение</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
 				attack_hand(user)
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
-				dat += "Вы уверены, что хотите удалить это сообщение? <A HREF='?src=\ref[src];operation=ai-delmessage2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>НЕТ</A>"
+				dat += "Вы уверены, что хотите удалить это сообщение? <A href='byond://?src=\ref[src];operation=ai-delmessage2'>ДА</A> | <A href='byond://?src=\ref[src];operation=ai-viewmessage'>НЕТ</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
 				attack_hand(user)
@@ -449,19 +449,19 @@
 
 		if(STATE_STATUSDISPLAY)
 			dat += "Установить текст на дисплеях<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>Прилёт шаттла</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Время прибытия шаттла</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Режим передачи сообщений</A>"
-			dat += "<ul><li> Линия 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(пусто)"]</A>"
-			dat += "<li> Линия 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(пусто)"]</A></ul><br>"
-			dat += "Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>Стандартный режим</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Изоляция</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность</A><BR><HR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=default'>Прилёт шаттла</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=shuttle'>Время прибытия шаттла</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];operation=setstat;statdisp=message'>Режим передачи сообщений</A>"
+			dat += "<ul><li> Линия 1: <A href='byond://?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(пусто)"]</A>"
+			dat += "<li> Линия 2: <A href='byond://?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(пусто)"]</A></ul><br>"
+			dat += "Alert: <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>Стандартный режим</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Изоляция</A> |"
+			dat += " <A href='byond://?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность</A><BR><HR>"
 
 
-	dat += "<BR>[(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Главное меню</A> | " : ""]"
+	dat += "<BR>[(src.aistate != STATE_DEFAULT) ? "<A href='byond://?src=\ref[src];operation=ai-main'>Главное меню</A> | " : ""]"
 	return dat
 
 /proc/call_shuttle_proc(mob/user)
@@ -534,6 +534,11 @@
 	if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
 		to_chat(user, "Консоль не отвечает.")
 		return
+
+	if (SSshuttle.alert == 1)
+		to_chat(user, "Отказано в доступе: невозможно отозвать шаттл транспортировки экипажа")
+		return
+
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Шаттл близко. Отменять запрос уже поздно.")
 		return

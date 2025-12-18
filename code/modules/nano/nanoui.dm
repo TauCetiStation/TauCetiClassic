@@ -350,6 +350,8 @@ nanoui is used to open and update nano browser uis
 
 	for (var/filename in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'> "
+	
+	head_content += get_browse_zoom_style(user.client)
 
 	var/template_data_json = "{}" // An empty JSON object
 	if (templates.len > 0)
@@ -409,11 +411,8 @@ nanoui is used to open and update nano browser uis
 	if(!user.client)
 		return
 
-	var/window_size = ""
-	if (width && height)
-		window_size = "size=[width]x[height];"
 	update_status(0)
-	user << browse(get_html(), "window=[window_id];[window_size][window_options]")
+	user << browse(get_html(), "window=[window_id];[get_browse_size_parameter(user.client, width, height)];[window_options]")
 	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
 	on_close_winset()
 	//onclose(user, window_id)

@@ -257,6 +257,9 @@
 		if(BP && BP.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.name]!</span>\n"
 
+	if(pale)
+		msg += "<span class='warning'>[t_He] looks pale.</span>\n"
+
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
@@ -271,7 +274,7 @@
 			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
-				if(pulse == PULSE_NONE)
+				if(!get_pulse())
 					to_chat(user, "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>")
 				else
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
@@ -328,7 +331,7 @@
 					applying_pressure = "<span class='info'>[t_He] is applying pressure to [t_his] [BP.name].</span><br>"
 				else
 					applying_pressure = "<span class='info'>[BP.applied_pressure] is applying pressure to [t_his] [BP.name].</span><br>"
-			if(BP.is_robotic())
+			if(BP.is_robotic_part())
 				if(!(BP.brute_dam + BP.burn_dam))
 					if(!species.flags[IS_SYNTHETIC])
 						wound_flavor_text[BP_Name] = "<span class='warning'>[t_He] has a robot [BP.name]!</span>\n"
@@ -484,8 +487,11 @@
 		if(istype(BP) && BP.disfigured)
 			msg += "<span class='warning'><b>[t_His] face is violently disfigured!</b></span>\n"
 
-	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
-		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
+	if((!skipface || !skipjumpsuit || !skipgloves))
+		if(HAS_TRAIT(src, TRAIT_BURNT))
+			msg += "<span class='warning'><b>[t_His] skin looks burnt!</b></span>\n"
+		else if(HAS_TRAIT(src, TRAIT_HUSK))
+			msg += "<span class='warning'><b>[t_His] skin looks drained!</b></span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
@@ -512,8 +518,8 @@
 						if(R.fields["id"] == E.fields["id"])
 							criminal = R.fields["criminal"]
 
-			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-			msg += "<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
+			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='byond://?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+			msg += "<span class = 'deptradio'>Security records:</span> <a href='byond://?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='byond://?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
 
 	if(hasHUD(user,"medical"))
 		if(hasHUD(user,"security"))
@@ -538,29 +544,13 @@
 						medical = R.fields["p_stat"]
 						insurance_type = R.fields["insurance_type"]
 
-		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
-		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
+		msg += "<span class = 'deptradio'>Physical status:</span> <a href='byond://?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
+		msg += "<span class = 'deptradio'>Medical records:</span> <a href='byond://?src=\ref[src];medrecord=`'>\[View\]</a> <a href='byond://?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 		if(insurance_type)
 			msg += "<span class = 'deptradio'>Страховка: [insurance_type]</span>\n"
 		var/obj/item/clothing/under/C = w_uniform
 		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
 			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
-
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if(!skipface && mood)
-		switch(mood.shown_mood)
-			if(-INFINITY to MOOD_LEVEL_SAD4)
-				msg += "[t_He] appears to be depressed.\n"
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-				msg += "[t_He] appears to be very sad.\n"
-			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-				msg += "[t_He] appears to be a bit down.\n"
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-				msg += "[t_He] appears to be quite happy.\n"
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				msg += "[t_He] appears to be very happy.\n"
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				msg += "[t_He] appears to be ecstatic.\n"
 
 	if(w_class)
 		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
@@ -579,14 +569,6 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 
-	//someone here, but who?
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
-			for(var/obj/item/weapon/implant/blueshield/B in H)
-				B.last_examined = world.time
-			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)
 		if(isobserver(user))
@@ -600,6 +582,8 @@
 
 	to_chat(user, msg)
 
+	// todo: better names for signals
+	SEND_SIGNAL(user, COMSIG_MOB_EXAMINED, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
@@ -627,3 +611,9 @@
 			dat += "[E.examine_text]\n" //dat.Join("\n") doesn't work here, for some reason
 	if(dat.len)
 		return dat.Join()
+
+/mob/living/carbon/human/proc/get_pulse()
+	if (stat == DEAD)
+		return PULSE_NONE
+	var/obj/item/organ/internal/heart/H = organs_by_name[O_HEART]
+	return H ? H.pulse : PULSE_NONE

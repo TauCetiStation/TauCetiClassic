@@ -309,8 +309,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/implant/death_alarm/DA = new(H)
-	DA.stealth_inject(H)
+	new /obj/item/weapon/implant/death_alarm(H)
 
 
 /datum/quality/positiveish/anatomist
@@ -433,3 +432,18 @@
 
 /datum/quality/positiveish/fastwalker/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_FAST_WALKER, QUALITY_TRAIT)
+
+/datum/quality/positiveish/allchannels
+	name = "All Channels"
+	desc = "Информированным быть приятно - поэтому на чёрном рынке ты раздобыл ключ шифрования всех станционных каналов."
+	requirement = "Все, кроме охраны и глав."
+
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel", "Blueshield Officer",\
+								"Research Director", "Chief Medical Officer", "Chief Engineer")
+
+/datum/quality/positiveish/allchannels/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in funpolice)
+
+/datum/quality/positiveish/allchannels/add_effect(mob/living/carbon/human/H)
+	H.equip_or_collect(new /obj/item/device/encryptionkey/allchannels(H), SLOT_R_STORE)
+	to_chat(H, "<span class='notice'>Возможно, чтобы установить ключ шифрования, придётся расковырять наушник отверткой. Только не попадись охране!</span>")

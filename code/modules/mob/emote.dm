@@ -71,6 +71,7 @@
 		return
 
 	emo.do_emote(src, act, intentional)
+	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, intentional)
 
 // A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
 /mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional = FALSE)

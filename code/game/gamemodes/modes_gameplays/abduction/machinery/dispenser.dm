@@ -34,7 +34,7 @@
 	var/dat
 	dat += "<center>"
 	for(var/i in 1 to gland_colors.len)
-		dat += "<a style='background-color:[gland_colors[i]]' href='?src=\ref[src];dispense=[i]'>[amounts[i]]</a>"
+		dat += "<a style='background-color:[gland_colors[i]]' href='byond://?src=\ref[src];dispense=[i]'>[amounts[i]]</a>"
 		if(i % 3 == 0)
 			dat += "<br><br>"
 	dat += "</center>"

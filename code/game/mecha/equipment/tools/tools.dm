@@ -51,11 +51,18 @@
 		else if(istype(target, /obj/structure/scrap))
 			var/obj/structure/scrap/pile = target
 			playsound(target, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER)
+
+			var/obj/effect/abstract/particle_holder/Particle = new(pile, /particles/tool/squeeze_trash, PARTICLE_FADEOUT)
+			var/particles/particle_datum = Particle.get_particle()
+			particle_datum.change_dir(get_dir(get_turf(pile), get_turf(src)))
+
 			if(do_after_cooldown(pile))
 				occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
 				pile.make_cube()
 			else
 				occupant_message("<font color='red'>[target] is firmly secured.</font>")
+
+			Particle.delete_particle()
 		else if(istype(target, /obj/structure/droppod))
 			var/obj/structure/droppod/Drop = target
 			if(Drop.stat_flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
@@ -112,6 +119,11 @@
 	occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete
+
+	var/obj/effect/abstract/particle_holder/Particle = new(target, /particles/tool/drill_mineral, PARTICLE_FADEOUT)
+	var/particles/particle_datum = Particle.get_particle()
+	particle_datum.change_dir(get_dir(get_turf(target), get_turf(src)))
+
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
 			if(istype(target, /turf/simulated/wall/r_wall))
@@ -150,6 +162,8 @@
 
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
+
+	Particle.delete_particle()
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
@@ -271,7 +285,7 @@
 		update_equip_info()
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
-	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
+	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='byond://?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
 	return
@@ -390,7 +404,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
-	return "[..()] \[<a href='?src=\ref[src];mode=0'>D</a>|<a href='?src=\ref[src];mode=1'>C</a>|<a href='?src=\ref[src];mode=2'>A</a>\]"
+	return "[..()] \[<a href='byond://?src=\ref[src];mode=0'>D</a>|<a href='byond://?src=\ref[src];mode=1'>C</a>|<a href='byond://?src=\ref[src];mode=2'>A</a>\]"
 
 
 /********Teleporter********/
@@ -534,7 +548,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
-	return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=\ref[src];mode=1'>S</a>|<a href='?src=\ref[src];mode=2'>P</a>\]"
+	return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='byond://?src=\ref[src];mode=1'>S</a>|<a href='byond://?src=\ref[src];mode=2'>P</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/Topic(href, href_list)
 	..()
@@ -703,7 +717,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='byond://?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
@@ -825,7 +839,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='byond://?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
 	if(!chassis || chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
@@ -904,7 +918,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='byond://?src=\ref[src];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(target)
@@ -1119,7 +1133,7 @@
 /obj/item/mecha_parts/mecha_equipment/Drop_system/get_equip_info()
 	if(!chassis)
 		return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[name] - <a href='?src=\ref[src];start_drop=1'>Start Drop</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[name] - <a href='byond://?src=\ref[src];start_drop=1'>Start Drop</a>"
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/Select() // little copypaste from droppod code
 	if(aiming)

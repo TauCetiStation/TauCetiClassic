@@ -46,6 +46,7 @@
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "mininghud"
 	item_state = "mininghud"
+	item_state_world = "mininghud_w"
 	hud_types = list(DATA_HUD_MINER)
 
 /obj/item/clothing/glasses/hud/mining/meson
@@ -54,6 +55,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	item_state = "glasses"
 	icon_state = "mesonmininghud"
+	item_state_world = "mesonmininghud_w"
 	icon_custom = null
 	toggleable = TRUE
 	sightglassesmod = "yellow"
@@ -71,5 +73,6 @@
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_custom = 'icons/mob/eyes.dmi'
 	icon_state = "HUDmining"
-	item_state = "HUDmining"
+	item_state = "glasses"
+	item_state_world = "HUDmining_w"
 	vision_flags = SEE_MOBS

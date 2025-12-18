@@ -1,5 +1,5 @@
 /mob/proc/spawn_gibs()
-	gibs(loc, dna)
+	new /obj/effect/gibspawner/generic(get_turf(loc), src)
 
 //This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
