@@ -246,3 +246,22 @@
 				to_chat(usr, "<span class='notice'>Timer can't be [ntime<=0?"negative":"more than 1000 seconds"].</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while [usr.stat?"unconscious/dead":"restrained"].</span>")
+
+//********-Mousetrap
+/obj/item/device/assembly_holder/mousetrap_igniter
+	name = "mousetrap-igniter assembly"
+
+/obj/item/device/assembly_holder/mousetrap_igniter/atom_init()
+	. = ..()
+
+	var/obj/item/device/assembly/igniter/ign = new(src)
+	ign.secured = 1
+	ign.holder = src
+	var/obj/item/device/assembly/mousetrap/mous = new(src)
+	mous.armed = TRUE
+	mous.secured = 1
+	mous.holder = src
+	a_left = mous
+	a_right = ign
+	secured = 1
+	update_icon()

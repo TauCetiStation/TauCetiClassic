@@ -51,6 +51,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	else
 		dat += "<HR><B>Supply shuttle Location:</B> [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>"
 		if(!requestonly)
+			if(SSshuttle.mail_orders.len)
+				dat += "New mail for the station crew awaits at the supply dock!<BR>"
 			dat += "<HR>Cargo Dep credits: [global.cargo_account.money]$<BR>"
 			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
 			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"

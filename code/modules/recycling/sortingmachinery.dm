@@ -68,12 +68,12 @@
 /obj/structure/bigDelivery/proc/add_texture(new_texture, new_details = null)
 	cut_overlay(texture_overlay)
 
-	if(new_texture)
+	if(new_texture && new_texture != "blank")
 		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
 		texture_overlay.blend_mode = BLEND_MULTIPLY
 		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
-	add_overlay(texture_overlay)
+		add_overlay(texture_overlay)
 
 
 	cut_overlay(details)
@@ -81,7 +81,7 @@
 	if(new_details)
 		details = mutable_appearance(icon = icon, icon_state = new_details)
 
-	add_overlay(details)
+		add_overlay(details)
 
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
@@ -105,6 +105,9 @@
 			AM.add_fingerprint(user)
 		else
 			AM.forceMove(src.loc)
+		if(isitem(AM))
+			var/obj/item/I = AM
+			I.on_found(user)
 
 /obj/item/smallDelivery/Destroy()
 	dump()
@@ -155,12 +158,12 @@
 /obj/item/smallDelivery/proc/add_texture(new_texture, new_details = null)
 	cut_overlay(texture_overlay)
 
-	if(new_texture)
+	if(new_texture && new_texture != "blank")
 		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
 		texture_overlay.blend_mode = BLEND_MULTIPLY
 		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
-	add_overlay(texture_overlay)
+		add_overlay(texture_overlay)
 
 
 	cut_overlay(details)
@@ -168,7 +171,7 @@
 	if(new_details)
 		details = mutable_appearance(icon = icon, icon_state = new_details)
 
-	add_overlay(details)
+		add_overlay(details)
 
 
 /obj/item/weapon/packageWrap
