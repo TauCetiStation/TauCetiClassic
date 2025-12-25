@@ -252,3 +252,22 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 /obj/item/stack/sheet/cardboard/atom_init()
 	recipes = cardboard_recipes
 	. = ..()
+
+
+
+
+
+var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
+	new/datum/stack_recipe("fence", /obj/structure/fence/sandbags, 1, time = 25, max_per_place = 1, build_outline = TRUE),
+)
+
+/obj/item/stack/sheet/sandbag	//Sandbags
+	name = "sandbag"
+	desc = "Мешок с песком."
+	singular_name = "мешок с песком"
+	icon_state = "sheet-sandbag"
+	origin_tech = "materials=1"
+
+/obj/item/stack/sheet/sandbag/atom_init()
+	recipes = sandbag_recipes
+	. = ..()
