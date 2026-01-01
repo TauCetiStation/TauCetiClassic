@@ -18,7 +18,7 @@
 
 /obj/item/gang_induction_package/attack_self(mob/living/user)
 	..()
-	if(user.ismindprotect())
+	if(ismindprotect(user))
 		to_chat(user, "You attended a seminar on not signing up for a gang and are not interested.")
 		return
 	if(isanycop(user))

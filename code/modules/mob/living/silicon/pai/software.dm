@@ -152,6 +152,7 @@
 					#rightmenu a:active { color: #CCCCCC; }
 
 				</style>
+				[get_browse_zoom_style(usr)]
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
 				</script>
@@ -166,7 +167,7 @@
 				</div>
 			</body>
 			</html>"}
-	usr << browse(dat, "window=pai;size=685x449;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	usr << browse(dat, "window=pai;[get_browse_size_parameter(usr, 685, 449)];border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
 	return

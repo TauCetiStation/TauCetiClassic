@@ -123,7 +123,7 @@
 			INVOKE_ASYNC(src, PROC_REF(shake))
 			return
 
-		if(L.get_species() == SLIME) // Slimes are vulnerable to us and shouldn't be able to destroy us.
+		if(HAS_TRAIT(L, ELEMENT_TRAIT_SLIME)) // Slimes are vulnerable to us and shouldn't be able to destroy us.
 			L.Weaken(5)
 			L.adjustToxLoss(rand(15, 20))
 			return
@@ -157,7 +157,7 @@
 	for(var/atom/A in perform_on)
 		if(isliving(A))
 			var/mob/living/L = A
-			if(L.get_species() == SLIME) // If only ExtinguishMob wasn't so vague, this could be there.
+			if(HAS_TRAIT(L, ELEMENT_TRAIT_SLIME)) // If only ExtinguishMob wasn't so vague, this could be there.
 				L.adjustToxLoss(rand(15, 20))
 			L.ExtinguishMob()
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.

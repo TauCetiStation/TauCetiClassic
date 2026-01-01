@@ -8,61 +8,19 @@
 	if(isnull(full_prosthetic))
 		robolimb_count = 0
 		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.is_robotic())
+			if(BP.is_robotic_part())
 				robolimb_count++
 		full_prosthetic = (robolimb_count == bodyparts.len)
 
 	if(!full_prosthetic && target_zone)
 		var/obj/item/organ/external/BP = get_bodypart(target_zone)
 		if(BP)
-			return BP.is_robotic()
+			return BP.is_robotic_part()
 
 	return full_prosthetic
 
 /mob/living/silicon/isSynthetic()
 	return TRUE
-
-/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isloyal()
-	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/ismindprotect()
-	for(var/obj/item/weapon/implant/mind_protect/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedobedience()
-	for(var/obj/item/weapon/implant/obedience/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedblueshield()
-	for(var/obj/item/weapon/implant/blueshield/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedchem()
-	for(var/obj/item/weapon/implant/chem/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
-
-/mob/proc/isimplantedtrack()
-	for(var/obj/item/weapon/implant/tracking/L in src)
-		if(L.implanted)
-			return TRUE
-	return FALSE
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -213,7 +171,7 @@
 			if(10)
 				new_letter += "'"
 			if(11 to 15)
-				SWITCH_PASS
+				EMPTY_BLOCK_GUARD
 
 		new_text += new_letter
 
@@ -612,3 +570,61 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			alert_overlay.appearance_flags |= TILE_BOUND
 		alert_overlay.plane = ABOVE_HUD_PLANE
 		alert.add_overlay(alert_overlay)
+
+/mob/proc/get_height_num()
+	var/height_num = w_class
+	if(lying || crawling)
+		height_num -= 3
+
+	return max(height_num, SIZE_MINUSCULE)
+
+/mob/living/carbon/human/get_height_num()
+	var/height_num = ..()
+
+	switch(height)
+		if(HUMANHEIGHT_SHORTEST)
+			height_num -= 0.5
+		if(HUMANHEIGHT_SHORT)
+			height_num -= 0.25
+		if(HUMANHEIGHT_TALL)
+			height_num += 0.25
+		if(HUMANHEIGHT_TALLEST)
+			height_num += 0.5
+
+	return max(height_num, SIZE_MINUSCULE)
+
+/mob/proc/get_impact_direction_from(mob/Attacker) //Attacker, Defender
+	var/Height1 = Attacker.get_height_num()
+	var/Height2 = get_height_num()
+
+	switch(Height1 - Height2)
+		if(2 to 12)
+			return "Сильно сверху"
+		if(0.5 to 2)
+			return "Сверху"
+		if(-2 to -0.5)
+			return "Снизу"
+		if(-12 to -2)
+			return "Сильно снизу"
+
+	return "С одной высоты"
+
+/mob/proc/get_projectile_hit_direction(obj/item/projectile/P)
+	var/impact_direction = ""
+	var/distance = P.starting ? get_dist(P.starting.loc, loc) : 0
+
+	switch(distance)
+		if(0 to 1)
+			impact_direction += "Вплотную "
+		if(1 to 3)
+			impact_direction += "Близко "
+		else
+			impact_direction += "Далеко "
+
+	if(lying || crawling)
+		return impact_direction + "сверху"
+
+	if(!is_the_opposite_dir(dir, P.dir))
+		return impact_direction + "сзади"
+
+	return impact_direction + "спереди"

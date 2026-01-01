@@ -118,6 +118,14 @@
 	name = "Beam"
 	icon_state = "hair_beam"
 
+/datum/sprite_accessory/hair/beam2
+	name = "Beam 2"
+	icon_state = "hair_beam_2"
+
+/datum/sprite_accessory/hair/beam3
+	name = "Beam 3"
+	icon_state = "hair_beam_3"
+
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
 	icon_state = "hair_beehive"
@@ -134,6 +142,10 @@
 	name = "Bao 2"
 	icon_state = "hair_bao2"
 
+/datum/sprite_accessory/hair/bao3
+	name = "Bao 3"
+	icon_state = "hair_bao_3"
+
 /datum/sprite_accessory/hair/ponytail
 	name = "Ponytail"
 	icon_state = "hair_ponytail"
@@ -149,6 +161,10 @@
 /datum/sprite_accessory/hair/ponytailf
 	name = "Ponytail (f)"
 	icon_state = "hair_ponytailf"
+
+/datum/sprite_accessory/hair/pushponytail
+	name = "Push - Ponytail"
+	icon_state = "hair_push_ponytail"
 
 /datum/sprite_accessory/hair/spikyponytail
 	name = "Spiky - Ponytail"
@@ -250,6 +266,10 @@
 	name = "Fujiyabash - New Fashion"
 	icon_state = "hair_fash_fujiyabashi"
 
+/datum/sprite_accessory/hair/newfashionkanza
+	name = "Kanza - New Fashion"
+	icon_state = "hair_fash_kanza"
+
 /datum/sprite_accessory/hair/newfashionmodern
 	name = "Modern - New Fashion"
 	icon_state = "hair_fash_modern"
@@ -310,6 +330,10 @@
 	name = "Kitty - Short"
 	icon_state = "hair_kitty"
 
+/datum/sprite_accessory/hair/shortkitty2
+	name = "Kitty 2 - Short"
+	icon_state = "hair_kitty_2"
+
 /datum/sprite_accessory/hair/shortpear
 	name = "Pear - Short"
 	icon_state = "hair_pear"
@@ -338,6 +362,10 @@
 	name = "Chub - Short"
 	icon_state = "hair_chub"
 
+/datum/sprite_accessory/hair/shortmonk
+	name = "Monk - Short"
+	icon_state = "hair_monk"
+
 /datum/sprite_accessory/hair/shortcombf
 	name = "Combatant - Short"
 	icon_state = "hair_combf"
@@ -349,6 +377,14 @@
 /datum/sprite_accessory/hair/shortfujisaki
 	name = "Fujisaki - Short"
 	icon_state = "hair_fujisaki"
+
+/datum/sprite_accessory/hair/shortmorj
+	name = "Morj - Short"
+	icon_state = "hair_morj"
+
+/datum/sprite_accessory/hair/shortmorj2
+	name = "Morj 2 - Short"
+	icon_state = "hair_morj_2"
 
 /datum/sprite_accessory/hair/shortgentle
 	name = "Gentle - Short"
@@ -389,6 +425,10 @@
 /datum/sprite_accessory/hair/shortgamzee
 	name = "Gamzee - Short"
 	icon_state = "hair_gamzee"
+
+/datum/sprite_accessory/hair/shortgamzee2
+	name = "Gamzee 2 - Short"
+	icon_state = "hair_gamzee_2"
 
 /datum/sprite_accessory/hair/shortnepeta
 	name = "Nepeta - Short"
@@ -650,6 +690,10 @@
 	name = "Wild Princess - Movie"
 	icon_state = "hair_wild"
 
+/datum/sprite_accessory/hair/moviecostoledo
+	name = "Costoledo - Movie"
+	icon_state = "hair_costoledo"
+
 /datum/sprite_accessory/hair/movieofficer
 	name = "Officer Tacklberry - Movie"
 	icon_state = "hair_combed"
@@ -673,6 +717,10 @@
 /datum/sprite_accessory/hair/Topknot
 	name = "Chao Topknot - Gang"
 	icon_state = "hair_topknot"
+
+/datum/sprite_accessory/hair/ocelot
+	name = "Ocelot - Games"
+	icon_state = "hair_ocelot"
 
 //	name = "Modern"
 //	icon_state = "hair_modern"
@@ -731,6 +779,14 @@
 	icon_state = "bald"
 	gender = NEUTER
 	species_allowed = list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX, IPC, DIONA, PODMAN, PLUVIAN)
+
+/datum/sprite_accessory/facial_hair/fiveoclock
+	name = "Five o'Clock Shadow"
+	icon_state = "facial_fiveoclock"
+
+/datum/sprite_accessory/facial_hair/sevenoclock
+	name = "Seven o'Clock Shadow"
+	icon_state = "facial_sevenoclock"
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
@@ -795,10 +851,6 @@
 /datum/sprite_accessory/facial_hair/dwarf
 	name = "Dwarf Beard"
 	icon_state = "facial_dwarf"
-
-//datum/sprite_accessory/facial_hair/fiveoclock
-//	name = "Five o Clock Shadow"
-//	icon_state = "facial_fiveoclock"
 
 //datum/sprite_accessory/facial_hair/fu
 //	name = "Fu Manchu"
@@ -1823,20 +1875,3 @@
 	icon_state = "dio_brush"
 	do_colouration = FALSE
 	species_allowed = list(DIONA, PODMAN)
-
-/datum/sprite_accessory/wing
-	icon = 'icons/mob/species/wings/wings.dmi'
-	name = "none"
-	icon_state = "none"
-
-/datum/sprite_accessory/wing/atlas
-	name = "Atlas Wings"
-	icon_state = "atlas"
-
-/datum/sprite_accessory/wing/royal
-	name = "Royal Wings"
-	icon_state = "royal"
-
-/datum/sprite_accessory/wing/feathery
-	name = "Feathery Wings"
-	icon_state = "feathery"

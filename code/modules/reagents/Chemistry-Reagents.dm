@@ -164,13 +164,11 @@
 			. = on_diona_digest(M)
 		if(VOX, VOX_ARMALIS)
 			. = on_vox_digest(M)
-		if(SLIME, SLIME_UNATHI, SLIME_VOX, SLIME_TAJARAN, SLIME_SKRELL) // slime trait is coming
-			. = on_slime_digest(M)
 		if(SERPENTID)
 			. = on_serpentid_digest(M)
 		else
 			return TRUE
-	return TRUE
+	return .
 
 /datum/reagent/proc/on_skrell_digest(mob/living/M)
 	return TRUE
@@ -182,9 +180,6 @@
 	return TRUE
 
 /datum/reagent/proc/on_vox_digest(mob/living/M)
-	return TRUE
-
-/datum/reagent/proc/on_slime_digest(mob/living/M)
 	return TRUE
 
 // huh, serpentids can digest only one reagent

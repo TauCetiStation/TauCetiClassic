@@ -10,6 +10,7 @@
 	. += 				"<tr><td colspan='3'><a href='byond://?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
 	. +=				"<tr><td>TGUI Window Mode:</b> <a href='byond://?_src_=prefs;preference=tgui_fancy'><b>[tgui_fancy ? "Fancy (default)" : "Compatible (slower)"]</a></td></tr>"
 	. += 				"<tr><td>TGUI Window Placement:</b> <a href='byond://?_src_=prefs;preference=tgui_lock'><b>[tgui_lock ? "Primary Monitor" : "Free (default)"]</a></td></tr>"
+	. += 				"<tr><td>Browser Scaling:</b> <a href='byond://?_src_=prefs;preference=window_scale'><b>[window_scale ? "Larger windows (default)" : "Smaller zoom"]</a></td></tr>"
 	. += 				"<tr><td>Outline: <a href='byond://?_src_=prefs;preference=outline_enabled'>[outline_enabled ? "Enabled" : "Disabled"]</a><br>"
 	. += 				"<tr><td>Outline Color: <span style='border:1px solid #161616; background-color: [outline_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='byond://?_src_=prefs;preference=outline_color'>Change</a><BR>"
 	. += 				"<tr><td>FPS: <a href='byond://?_src_=prefs;preference=change_fps'>[clientfps]</a></td></tr>"
@@ -140,6 +141,9 @@
 
 		if("tgui_lock")
 			tgui_lock = !tgui_lock
+		
+		if("window_scale")
+			window_scale = !window_scale
 
 		if("tooltip_show")
 			parent?.toggle_tooltip()

@@ -31,7 +31,7 @@
 		if(user.is_busy(src)) return
 		user.visible_message("[user] cuts the wires from \the [src].", "You start to cut the wires from \the [src].")
 
-		if(C.use_tool(src, user, 40, volume = 100))
+		if(C.use_tool(src, user, 40, volume = 100, quality = QUALITY_CUTTING))
 			to_chat(user, "<span class='notice'>You cut the wires!</span>")
 			new /obj/item/stack/cable_coil/random(src.loc, 1)
 			wired = 0
@@ -57,7 +57,7 @@
 		if(WT.use(0, user))
 			user.visible_message("<span class='warning'>[user] dissassembles \the [src].</span>",
 			"You start to dissassemble \the [src].")
-			if(C.use_tool(src, user, 40, volume = 50))
+			if(C.use_tool(src, user, 40, volume = 50, quality = QUALITY_WELDING))
 				user.visible_message("<span class='warning'>[user] has dissassembled \the [src].</span>",
 									 "You have dissassembled \the [src].")
 				new /obj/item/stack/sheet/metal(src.loc, 2)

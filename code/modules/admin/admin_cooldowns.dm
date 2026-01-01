@@ -19,11 +19,11 @@
 	LAZYSET(P.admin_cooldowns, type, world.time + time)
 
 	if(ismob(by_who))
-		to_chat(M, "<span class='warning bold'>You have been placed on [restriction2human(type)] cooldown by [by_who] for [time] minute\s!</span>")
+		to_chat(M, "<span class='warning bold'>You have been placed on [restriction2human(type)] cooldown by [by_who] for [round(time / 600)] minute\s!</span>")
 		message_admins("<span class='notice'>[key_name_admin(by_who)] has placed [key_name_admin(M)] on [type] cooldown.</span>")
 		log_admin("[key_name(by_who)] has placed [key_name(M)] on [type] cooldown.")
 	else
-		to_chat(M, "<span class='warning bold'>You have been placed on [restriction2human(type)] cooldown by [by_who] for [time] minute\s!</span>")
+		to_chat(M, "<span class='warning bold'>You have been placed on [restriction2human(type)] cooldown by [by_who] for [round(time / 600)] minute\s!</span>")
 		message_admins("<span class='notice'>[by_who] has placed [key_name_admin(M)] on [type] cooldown.</span>")
 		log_admin("[by_who] has placed [key_name(M)] on [type] cooldown.")
 

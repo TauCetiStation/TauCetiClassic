@@ -303,9 +303,7 @@
 	output += "<tr><td width='50%' align='right'><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
 	output += "<td width='50%' align='right'><b>Job:</b><select name='dbbanaddjob'>"
 	output += "<option value=''>--</option>"
-	for(var/j in get_all_jobs())
-		output += "<option value='[j]'>[j]</option>"
-	for(var/j in nonhuman_positions)
+	for(var/j in SSjob.name_departments)
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_RAIDER, ROLE_CULTIST, ROLE_WIZARD, ROLE_ERT, ROLE_SHADOWLING, ROLE_ABDUCTOR, ROLE_FAMILIES, ROLE_NINJA, ROLE_BLOB, ROLE_MALF, ROLE_DRONE, ROLE_GHOSTLY, ROLE_REPLICATOR))
 		output += "<option value='[j]'>[j]</option>"

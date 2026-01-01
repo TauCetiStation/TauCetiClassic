@@ -6,10 +6,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
 
 
 /datum/emote/human/rock
@@ -20,10 +18,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
 
 /datum/emote/human/rock/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
@@ -38,10 +34,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
 
 /datum/emote/human/paper/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
@@ -56,10 +50,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
 
 /datum/emote/human/scissors/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
@@ -76,10 +68,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 /datum/emote/human/surrender/do_emote(mob/living/carbon/human/user)
 	. = ..()
@@ -98,13 +88,12 @@
 	sound = list('sound/misc/clap_1.ogg', 'sound/misc/clap_2.ogg', 'sound/misc/clap_3.ogg', 'sound/misc/clap_4.ogg')
 	soundless_for_mute = FALSE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
 
 /datum/emote/human/clap/get_sound(mob/living/carbon/human/user, intentional)
  	return pick(sound)
+
 
 /datum/emote/human/wave
 	key = "wave"
@@ -114,11 +103,9 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 
 /datum/emote/human/salute
@@ -132,8 +119,6 @@
 	sound = 'sound/misc/salute.ogg'
 	soundless_for_mute = FALSE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)

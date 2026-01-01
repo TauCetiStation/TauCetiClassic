@@ -12,41 +12,68 @@ var/global/list/image/splatter_cache=list()
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "mfloor1"
 	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
-	var/base_icon = 'icons/effects/blood.dmi'
+	var/base_icon = 'icons/effects/blood.dmi' // why we need it
 	blood_DNA = list()
 	var/datum/dirt_cover/basedatum = /datum/dirt_cover/red_blood // Color when wet.
+	var/fleshcolor = "#ffffff" // for gibs
 	var/list/datum/disease2/disease/virus2 = list()
 	var/amount = 5
-	var/drytime
+
+	var/should_merge = TRUE
+	var/should_dry = TRUE
 
 	beauty = -100
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	return ..()
 
-/obj/effect/decal/cleanable/blood/atom_init()
+/obj/effect/decal/cleanable/blood/atom_init(mapload, mob/living/M)
 	..()
 
+	if(istype(M))
+		if(HAS_TRAIT(M, TRAIT_NO_MESSY_GIBS))
+			return INITIALIZE_HINT_QDEL
+
+		basedatum = M.get_blood_datum()
+		fleshcolor = M.get_flesh_color()
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+			virus2 = virus_copylist(H.virus2)
+		else if(isalien(M))
+			blood_DNA["UNKNOWN DNA"] = "X*"
+		else if(!issilicon(M))
+			blood_DNA["Non-human DNA"] = BLOOD_A_PLUS // hardcoded so different mob remains got the same blood type (mob blood type when)
+
 	basedatum = new basedatum
+
+	update_icon()
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/decal/cleanable/blood/atom_init_late()
-	remove_ex_blood()
-	update_icon()
+	if(should_merge)
+		merge_blood()
 
-/obj/effect/decal/cleanable/blood/proc/remove_ex_blood() //removes existant blood on the turf
-	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
-		return // We handle our own drying.
+	if(should_dry)
+		addtimer(CALLBACK(src, PROC_REF(dry)), world.time + DRYING_TIME * (amount + 1))
+
+// merge same type old decals with us
+/obj/effect/decal/cleanable/blood/proc/merge_blood()
+	// todo: currently saves only DNA and ignores all other old properties like icon state and colors
+	// maybe we can stack appearances here, but idk how this impact performance
 
 	if(loc) // someone should make blood that drips thru closet or smth like that.
 		for(var/obj/effect/decal/cleanable/blood/B in loc)
 			if(B != src && B.type == type)
-				if (B.blood_DNA)
+				if(B.blood_DNA)
 					blood_DNA |= B.blood_DNA.Copy()
+				/* we can also merge basedatum's, but i'm affraid it will look weird
+				if(B.basedatum)
+					basedatum.add_dirt(B.basedatum)
+				*/
 				qdel(B)
-
-		drytime = world.time + DRYING_TIME * (amount + 1)
-		addtimer(CALLBACK(src, PROC_REF(dry)), drytime)
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = basedatum.color
@@ -159,7 +186,7 @@ var/global/list/image/splatter_cache=list()
 	drips |= icon_state
 
 /obj/effect/decal/cleanable/blood/writing
-	icon_state = "tracks"
+	icon_state = "writing1"
 	desc = "It looks like a writing in blood."
 	gender = NEUTER
 	random_icon_states = list("writing1","writing2","writing3","writing4","writing5")
@@ -179,8 +206,9 @@ var/global/list/image/splatter_cache=list()
 	..()
 	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"</font>")
 
+// trails from pulling bloody body
 /obj/effect/decal/cleanable/blood/trail_holder
-	name = "blood"
+	name = "bloody trails"
 	icon_state = "blank"
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
@@ -189,10 +217,49 @@ var/global/list/image/splatter_cache=list()
 	layer = 2
 	random_icon_states = null
 	amount = 3
-	var/list/existing_dirs = list()
 	blood_DNA = list()
 
+	var/list/current_trails = list()
+	var/static/list/trails_cache = list()
+
 	beauty = -50
+
+/obj/effect/decal/cleanable/blood/trail_holder/atom_init(mapload, mob/living/M, trail_type, trail_dir)
+	. = ..()
+
+	var/cache_string = "[trail_type]_[trail_dir]"
+
+	if(!(cache_string in trails_cache))
+		var/image/I = image(base_icon, trail_type, dir = trail_dir)
+		trails_cache[cache_string] = I
+
+	current_trails |= list(cache_string)
+
+/obj/effect/decal/cleanable/blood/trail_holder/merge_blood()
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/B in loc)
+		if(B == src)
+			continue
+
+		if(B.blood_DNA)
+			blood_DNA |= B.blood_DNA.Copy()
+
+		current_trails |= B.current_trails
+		basedatum.add_dirt(B.basedatum)
+
+		qdel(B)
+
+	update_icon()
+
+/obj/effect/decal/cleanable/blood/trail_holder/update_icon()
+	var/list/update_overlays = list()
+	for(var/cache_string in current_trails)
+		update_overlays += trails_cache[cache_string]
+
+	// why is there no replace overlays method
+	cut_overlays()
+	add_overlay(update_overlays)
+
+	color = basedatum.color
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
@@ -204,20 +271,21 @@ var/global/list/image/splatter_cache=list()
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbearcore"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
-	var/fleshcolor = "#ffffff"
+	should_merge = FALSE
+	should_dry = FALSE
+	var/mutable_appearance/flesh_overlay
 
-/obj/effect/decal/cleanable/blood/gibs/remove_ex_blood()
-	return
+/obj/effect/decal/cleanable/blood/gibs/atom_init()
+	. = ..()
+
+	// check if there is corresponding flesh overlay and apply it if exists
+	if(icon_exists(icon, "[icon_state]_flesh"))
+		flesh_overlay = mutable_appearance(base_icon, "[icon_state]_flesh")
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
-	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
-	giblets.color = fleshcolor
-	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	blood.Blend(basedatum.color, ICON_MULTIPLY)
-
-	icon = blood
-	cut_overlays()
-	add_overlay(giblets)
+	if(flesh_overlay)
+		flesh_overlay.color = fleshcolor
+	color = basedatum.color
 
 /obj/effect/decal/cleanable/blood/gibs/up
 	icon_state = "gibup1" // for mapeditor
@@ -241,17 +309,18 @@ var/global/list/image/splatter_cache=list()
 
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
-	spawn(0)
-		var/direction = pick(directions)
-		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-			sleep(3)
-			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
-				b.basedatum = new/datum/dirt_cover(src.basedatum)
-				b.update_icon()
+	set waitfor = FALSE
 
-				if (step_to(src, get_step(src, direction), 0))
-					break
+	var/direction = pick(directions)
+	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
+		sleep(3)
+		if (i > 0)
+			var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
+			b.basedatum = new/datum/dirt_cover(src.basedatum)
+			b.update_icon()
+
+			if (step_to(src, get_step(src, direction), 0))
+				break
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/AM)
 	if(isliving(AM) && has_gravity(loc))
@@ -271,13 +340,10 @@ var/global/list/image/splatter_cache=list()
 	random_icon_states = list("mucus")
 
 	var/list/datum/disease2/disease/virus2 = list()
-	var/dry = 0 // Keeps the lag down
+	//var/dry = FALSE // Keeps the lag down // todo: not used currently, i think it was supposed to work against viruses?
 
 	beauty = -50
 
-/obj/effect/decal/cleanable/mucus/atom_init()
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(set_dry), 1), DRYING_TIME * 2)
-
-/obj/effect/decal/cleanable/mucus/proc/set_dry(value) // just to change var using timer, we need a whole new proc :(
-	dry = value
+///obj/effect/decal/cleanable/mucus/atom_init()
+//	. = ..()
+//	VARSET_IN(src, dry, TRUE, DRYING_TIME * 2)

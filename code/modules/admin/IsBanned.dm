@@ -25,7 +25,7 @@
 	if(!real_bans_only && config.bunker_ban_mode && is_blocked_by_regisration_panic_bunker_ban_mode(ckey))
 		return list(BANKEY_REASON="", "desc"="[config.bunker_ban_mode_message]")
 	//Guest Checking
-	if(!real_bans_only && !guests_allowed && IsGuestKey(key))
+	if(!real_bans_only && config.guest_mode == GUEST_FORBIDDEN && IsGuestKey(key))
 		log_access("Failed Login: [ckey] - Guests not allowed")
 		message_admins("<span class='notice'>Failed Login: [ckey] - Guests not allowed</span>")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")

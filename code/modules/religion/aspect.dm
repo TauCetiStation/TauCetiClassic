@@ -69,7 +69,7 @@
 	else if(isbodypart(I))
 		return 50
 
-	else if(istype(I, /obj/item/brain))
+	else if(istype(I, /obj/item/organ/internal/brain))
 		return 100
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/meat))

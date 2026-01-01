@@ -111,7 +111,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
-	if(src in user && detonator)
+	if((src in user) && detonator)
 		to_chat(user, "С закрепленным [CASE(detonator, ABLATIVE_CASE)]")
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user)

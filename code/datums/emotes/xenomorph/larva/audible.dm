@@ -8,9 +8,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/larva/roar
 	key = "roar"
@@ -22,9 +21,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/larva/hiss
 	key = "hiss"
@@ -36,9 +34,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/larva/growl
 	key = "growl"
@@ -50,6 +47,4 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS

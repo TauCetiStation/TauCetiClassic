@@ -17,5 +17,5 @@
 	..()
 	if(container && isMMI(container))
 		qdel(container)//Gets rid of the MMI if there is one
-	if(istype(old_loc, /obj/item/brain))
+	if(istype(old_loc, /obj/item/organ/internal/brain))
 		qdel(old_loc)//Gets rid of the brain item

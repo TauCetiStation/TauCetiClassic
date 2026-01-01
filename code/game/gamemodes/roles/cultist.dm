@@ -4,7 +4,7 @@
 
 	required_pref = ROLE_CULTIST
 	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
-	restricted_species_flags = list(NO_BLOOD)
+	restricted_species_traits = list(TRAIT_NO_BLOOD)
 
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudcultist"

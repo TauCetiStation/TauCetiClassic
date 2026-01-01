@@ -179,7 +179,7 @@
 					return
 
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 5, volume = 50))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 5, volume = 50, quality = QUALITY_WELDING))
 					update_integrity(max_integrity)
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
 			else
@@ -235,13 +235,13 @@
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(iswrenching(I))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
+		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50, quality = QUALITY_WRENCHING))
 			playsound(loc, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 			deconstruct(TRUE)
 
 	else if(isprying(I) && electronics)
 		to_chat(user, "<span class='notice'>You start to remove the electronics from [src]...</span>")
-		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 100))
+		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 100, quality = QUALITY_PRYING))
 			to_chat(user, "<span class='notice'>You have removed the electronics from [src]!</span>")
 			electronics.forceMove(loc)
 			electronics = null

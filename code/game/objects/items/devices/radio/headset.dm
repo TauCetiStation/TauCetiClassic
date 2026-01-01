@@ -165,6 +165,9 @@
 	icon_state = "nt_pmc_earset"
 	item_state = "nt_pmc_earset"
 
+/obj/item/device/radio/headset/headset_sec/nt_pmc/hos
+	ks2type = /obj/item/device/encryptionkey/heads/hos
+
 /obj/item/device/radio/headset/headset_sec/marinad
 	name = "marine headset"
 	icon_state = "marinad"

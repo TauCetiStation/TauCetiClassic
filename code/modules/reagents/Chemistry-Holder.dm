@@ -426,7 +426,7 @@ var/global/const/INGEST = 2
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
 				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
-				R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
+				R.color = rgb(R.data["r_color"], R.data["g_color"], R.data["b_color"])
 
 			// Update:
 			update_total()
@@ -452,7 +452,7 @@ var/global/const/INGEST = 2
 				R.data["virus2"] |= virus_copylist(data["virus2"])
 
 		if(reagent == "customhairdye" || reagent == "paint_custom")
-			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
+			R.color = rgb(R.data["r_color"], R.data["g_color"], R.data["b_color"])
 
 		// Update:
 		R.on_new()

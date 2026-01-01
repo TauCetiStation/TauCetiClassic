@@ -241,6 +241,7 @@
 			return
 		switch(damage_type)
 			if(BRUTE, BURN)
+				EMPTY_BLOCK_GUARD
 			else
 				return
 		glass_health -= damage_amount

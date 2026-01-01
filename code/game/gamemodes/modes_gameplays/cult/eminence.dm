@@ -1,7 +1,7 @@
 //The Eminence is a unique mob that functions like the leader of the cult. It's incorporeal but can interact with the world in several ways.
 /mob/camera/eminence
-	name = "\the Eminence"
-	real_name = "\the Eminence"
+	name = "the Eminence"
+	real_name = "the Eminence"
 	desc = "The leader-elect of the servants of Nar-Sie."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "eminence"
@@ -46,7 +46,7 @@
 		if(min(prob(166 - (get_dist(src, TT) * 33)), 75))
 			TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
 
-/mob/camera/eminence/Login()
+/mob/camera/eminence/LateLogin()
 	..()
 	sync_mind()
 	var/datum/religion/cult/R = global.cult_religion
@@ -280,8 +280,8 @@
 				continue
 			if(L.reagents)
 				L.reagents.clear_reagents()
-			L.setOxyLoss(0)
-			L.setHalLoss(0)
+			L.resetOxyLoss()
+			L.resetHalLoss()
 			L.SetParalysis(0)
 			L.SetStunned(0)
 			L.SetWeakened(0)

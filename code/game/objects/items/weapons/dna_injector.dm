@@ -76,7 +76,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.flags[NO_DNA])
+		if(H.species.flags[NO_DNA] || HAS_TRAIT(H, TRAIT_NO_DNA_MUTATIONS))
 			return
 
 	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed

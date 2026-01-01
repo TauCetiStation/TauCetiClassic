@@ -97,24 +97,3 @@
 		to_chat(user, "[src] is empty.")
 		icon_state = "evidenceobj"
 	return
-
-/obj/item/weapon/f_card
-	name = "finger print card"
-	desc = "Used to take fingerprints."
-	icon = 'icons/obj/card.dmi'
-	icon_state = "fingerprint0"
-	item_state_world = "fingerprint0_world"
-	var/amount = 10.0
-	item_state = "paper"
-	throwforce = 1
-	w_class = SIZE_MINUSCULE
-	throw_speed = 3
-	throw_range = 5
-
-
-/obj/item/weapon/fcardholder
-	name = "fingerprint card case"
-	desc = "Apply finger print card."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "fcardholder0"
-	item_state = "clipboard"

@@ -237,6 +237,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cucumber/atom_init()
 	. = ..()
+	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	reagents.add_reagent("ethylredoxrazine", 1+round((potency / 10), 1))
 	bitesize = reagents.total_volume
 
@@ -1108,6 +1109,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/atom_init()
 	. = ..()
+	reagents.add_reagent("radium", 1+round((potency / 5), 1))
 	set_light(round(potency/10,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)

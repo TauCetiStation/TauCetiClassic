@@ -339,7 +339,7 @@
 		S = target.r_hand
 
 	if(S && prob(S.Get_shield_chance()))
-		user.visible_message("<span class='warning'>[user] knocks [target] down with \a [src]!</span>", "<span class='warning'>You knock [target] down with \a [src]!</span>")
+		user.visible_message("<span class='warning'>[user] knocks [target] down with \a [source]!</span>", "<span class='warning'>You knock [target] down with \a [source]!</span>")
 		if(target.buckled)
 			target.buckled.user_unbuckle_mob(target)
 

@@ -21,7 +21,7 @@
 	var/display_numbers = 0
 	var/ram_account = 0
 	var/reset = FALSE
-	var/noReset = FALSE
+	var/noResetChange = FALSE
 
 	var/image/holoprice
 
@@ -115,7 +115,7 @@
 	var/list/data = list()
 	data["numbers"] = display_numbers
 	data["reset_numbers"] = reset
-	data["noReset"] = noReset
+	data["noReset"] = noResetChange
 	data["mode"] = mode
 	return data
 
@@ -142,7 +142,7 @@
 			return TRUE
 
 		if("togglereset")
-			if(noReset)
+			if(noResetChange)
 				return
 			reset = !reset
 			if(reset)
@@ -181,6 +181,7 @@
 /obj/item/device/cardpay/proc/clear_numbers()
 	switch(mode)
 		if(CARDPAY_IDLEMODE)
+			EMPTY_BLOCK_GUARD
 		if(CARDPAY_PAYMODE, CARDPAY_REFUNDMODE)
 			if(!display_numbers)
 				pay_amount = 0
@@ -340,7 +341,8 @@
 /obj/item/device/cardpay/proc/reset_anything()
 	mode = CARDPAY_IDLEMODE
 	prevmode = CARDPAY_IDLEMODE
-	reset = FALSE
+	if(!noResetChange)
+		reset = FALSE
 	display_numbers = 0
 	pay_amount = 0
 	update_holoprice(clear = TRUE)
@@ -379,8 +381,8 @@
 	flick("[basic_icon_state]-complete", src)
 	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 
-	charge_to_account(Acc.account_number, "Терминал оплаты [D.owner_name] ([D.account_number])", "Возврат", src.name, -amount)
-	charge_to_account(linked_account, "Терминал оплаты [D.owner_name] ([D.account_number])", "Возврат", src.name, amount)
+	charge_to_account(Acc.account_number, "Терминал оплаты [D.owner_name] ([D.account_number])", "Возврат", src.name, amount)
+	charge_to_account(linked_account, "Терминал оплаты [D.owner_name] ([D.account_number])", "Возврат", src.name, -amount)
 
 	if(reset)
 		pay_amount = 0
@@ -419,7 +421,7 @@
 	w_class = SIZE_LARGE
 
 	reset = TRUE
-	noReset = TRUE
+	noResetChange = TRUE
 
 /obj/item/device/cardpay/casino/atom_init(mapload)
 	. = ..()

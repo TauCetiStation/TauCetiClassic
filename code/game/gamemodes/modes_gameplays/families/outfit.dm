@@ -80,13 +80,13 @@
 	belt = /obj/item/weapon/storage/belt/security/tactical/cops
 	gloves = /obj/item/clothing/gloves/combat/police
 	back = /obj/item/weapon/storage/backpack/satchel/sec/cops
+	suit_store = /obj/item/weapon/gun/projectile/automatic/a28
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/ammo_box/speedloader/a357 = 2,
 		/obj/item/weapon/gun/projectile/revolver/mateba = 1,
-		/obj/item/weapon/gun/projectile/automatic/a28 = 1,
 	)
 
 /datum/outfit/families_traitor

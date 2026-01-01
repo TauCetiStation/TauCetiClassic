@@ -94,7 +94,7 @@
 		clear_alert("blind")
 
 /mob/living/carbon/proc/is_skip_breathe()
-	return !loc || (flags & GODMODE)
+	return !loc
 
 /mob/living/carbon/proc/is_cant_breathe()
 	return handle_drowning() || health < 0
@@ -244,12 +244,12 @@
 
 	breath.update_values()
 
-/mob/living/carbon/proc/breathe()
+/mob/living/carbon/proc/breathe(active_breathe = TRUE)
 	if(is_skip_breathe())
 		return null
 
 	//First, check if we can breathe at all
-	if(suiciding || is_cant_breathe())
+	if(suiciding || is_cant_breathe() || !active_breathe)
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath > 0) //Suffocating so do not take a breath
@@ -290,10 +290,13 @@
 
 		handle_external_pre_breathing(breath)
 
-	if(!breath || (breath.total_moles <= 0))
-		handle_suffocating()
-		inhale_alert = TRUE
-		return
+	if(!breath)
+		var/static/datum/gas_mixture/vacuum //avoid having to create a new gas mixture for each breath in space
+		if(!vacuum)
+			vacuum = new
+
+		breath = vacuum //still nothing? must be vacuum
+
 
 	breath.volume = BREATH_VOLUME
 
@@ -302,6 +305,10 @@
 	loc.assume_air(breath)
 
 	return breath
+
+
+/mob/living/carbon/proc/get_breath_volume()
+	return BREATH_VOLUME
 
 /mob/living/carbon/calculate_affecting_pressure(pressure)
 	return pressure
@@ -324,7 +331,7 @@
 	if(!on_fire)
 		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-	if(flags & GODMODE)
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE)) // probably we need to create TRAIT_INGORE_ENVIRONMENT or something
 		return
 
 	switch(bodytemperature)
@@ -461,7 +468,8 @@
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(HAS_TRAIT(src, TRAIT_SHOCK_IMMUNE))
+		return 0
 
 	var/turf/T = get_turf(src)
 	var/obj/effect/fluid/F = locate() in T
@@ -635,7 +643,7 @@
 						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
 							var/mob/living/carbon/human/H = src
 							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
-							if(BP && BP.is_robotic())
+							if(BP && BP.is_robotic_part())
 								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 								sparks.set_up(3, 0, get_turf(H))
 								sparks.start()
@@ -814,7 +822,7 @@
 	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
-/mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
+/mob/living/carbon/proc/get_pulse_number(method)	//method 0 is for hands, 1 is for machines, more accurate
 	var/temp = 0								//see setup.dm:694
 	switch(src.pulse)
 		if(PULSE_NONE)
@@ -1045,21 +1053,19 @@
 
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
-		if(user.species && user.species.flags[NO_BREATHE])
-			to_chat(user, "<span class='notice bold'>Your species can not perform AV!</span>")
+		if(HAS_TRAIT(user, TRAIT_NO_BREATHE))
+			to_chat(user, "<span class='notice bold'>You don't need to breathe, so you can't perform AV!</span>")
 			return
 		if((user.head && (user.head.flags & HEADCOVERSMOUTH)) || (user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH)))
 			to_chat(user, "<span class='notice bold'>Remove your mask!</span>")
 			return
 
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(H.species && H.species.flags[NO_BREATHE])
-				to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
-				return
-			if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
-				to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
-				return
+		if(HAS_TRAIT(src, TRAIT_NO_BREATHE))
+			to_chat(user, "<span class='notice bold'>[src] doesn't need to breathe, so there is no point to try AV.</span>")
+			return
+		if(wear_mask && wear_mask.flags & MASKCOVERSMOUTH)
+			to_chat(user, "<span class='notice bold'>Remove [src] [wear_mask]!</span>")
+			return
 
 		if(head && head.flags & HEADCOVERSMOUTH)
 			to_chat(user, "<span class='notice bold'>Remove [src] [head]!</span>")
@@ -1184,10 +1190,6 @@
 	sight = initial(sight)
 	var/new_lighting_alpha = initial(lighting_alpha)
 
-	var/datum/species/S = all_species[get_species()]
-	if(S)
-		see_in_dark = S.darksight
-
 	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
 	if(changeling_aug)
@@ -1236,21 +1238,6 @@
 	var/retVerb = "attacks"
 	var/retSound = null
 	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
-
-	var/specie = get_species()
-	var/datum/species/S = all_species[specie]
-	if(S)
-		var/datum/unarmed_attack/attack = S.unarmed
-
-		retDam = 2 + attack.damage
-		retDamType = attack.damType
-		retFlags = attack.damage_flags()
-		retVerb = pick(attack.attack_verb)
-
-		if(length(attack.attack_sound))
-			retSound = pick(attack.attack_sound)
-
-		retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

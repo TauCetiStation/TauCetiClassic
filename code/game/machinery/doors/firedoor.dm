@@ -212,7 +212,7 @@
 		else if(!user.is_busy(src))
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
-			if(C.use_tool(src, user, 30, volume = 100))
+			if(C.use_tool(src, user, 30, volume = 100, quality = QUALITY_PRYING))
 				if(blocked && density && hatch_open)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
@@ -237,7 +237,7 @@
 		user.visible_message("<span class='warning'>\The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
-		if(C.use_tool(src, user, 30, volume = 50))
+		if(C.use_tool(src, user, 30, volume = 50, quality = QUALITY_PRYING))
 			if( isprying(C) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\

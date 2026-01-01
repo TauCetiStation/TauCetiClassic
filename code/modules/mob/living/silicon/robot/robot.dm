@@ -122,7 +122,7 @@
 
 	diag_hud_set_borgcell()
 
-/mob/living/silicon/robot/Login()
+/mob/living/silicon/robot/LateLogin()
 	..()
 	set_all_components(TRUE)
 

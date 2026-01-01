@@ -9,13 +9,14 @@ import { debounce } from 'common/timer';
 import { Component, createRef } from 'inferno';
 import { createLogger } from '../logging';
 import { computeBoxProps } from './Box';
+import { getPixelRatio } from '../drag';
 
 const logger = createLogger('ByondUi');
 
 // Stack of currently allocated BYOND UI element ids.
 const byondUiStack = [];
 
-const createByondUiElement = (elementId) => {
+const createByondUiElement = (elementId, phonehome = true) => {
   // Reserve an index in the stack
   const index = byondUiStack.length;
   byondUiStack.push(null);
@@ -26,11 +27,13 @@ const createByondUiElement = (elementId) => {
   return {
     render: (params) => {
       logger.log(`rendering '${id}'`);
+      if (phonehome) Byond.sendMessage('renderByondUi', { renderByondUi: id });
       byondUiStack[index] = id;
       Byond.winset(id, params);
     },
     unmount: () => {
       logger.log(`unmounting '${id}'`);
+      if (phonehome) Byond.sendMessage('unmountByondUi', { renderByondUi: id });
       byondUiStack[index] = null;
       Byond.winset(id, {
         parent: '',
@@ -56,7 +59,7 @@ window.addEventListener('beforeunload', () => {
 /**
  * Get the bounding box of the DOM element.
  */
-const getBoundingBox = (element) => {
+export const getBoundingBox = (element) => {
   const rect = element.getBoundingClientRect();
   return {
     pos: [rect.left, rect.top],
@@ -68,7 +71,10 @@ export class ByondUi extends Component {
   constructor(props) {
     super(props);
     this.containerRef = createRef();
-    this.byondUiElement = createByondUiElement(props.params?.id);
+    this.byondUiElement = createByondUiElement(
+      props.params?.id,
+      props.phonehome
+    );
     this.handleResize = debounce(() => {
       this.forceUpdate();
     }, 100);
@@ -96,8 +102,8 @@ export class ByondUi extends Component {
     this.byondUiElement.render({
       parent: Byond.windowId,
       ...params,
-      pos: box.pos[0] + ',' + box.pos[1],
-      size: box.size[0] + 'x' + box.size[1],
+      pos: box.pos[0] * getPixelRatio() + ',' + box.pos[1] * getPixelRatio(),
+      size: box.size[0] * getPixelRatio() + 'x' + box.size[1] * getPixelRatio(),
     });
   }
 

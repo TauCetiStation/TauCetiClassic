@@ -138,7 +138,6 @@
 	if(prob(35))
 		contaminate()
 	if(prob(75))
-		generate_blood_overlay()
 		add_dirt_cover(pick(global.all_dirt_covers))
 	..()
 

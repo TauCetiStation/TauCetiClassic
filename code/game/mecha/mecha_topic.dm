@@ -3,7 +3,7 @@
 ///// Rendering stats window ///////
 ////////////////////////////////////
 
-/obj/mecha/proc/get_stats_html()
+/obj/mecha/proc/get_stats_html(client/user)
 	var/output = {"<html>
 						<head>
 						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -19,6 +19,7 @@
 						.visible {display: block;}
 						.hidden {display: none;}
 						</style>
+						[get_browse_zoom_style(user)]
 						<script language='javascript' type='text/javascript'>
 						[js_byjax]
 						[js_dropdowns]
@@ -153,8 +154,8 @@
 		output += "</div></div>"
 	return output
 
-/obj/mecha/proc/get_log_html()
-	var/output = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
+/obj/mecha/proc/get_log_html(client/user)
+	var/output = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[src.name] Log</title>[get_browse_zoom_style(user)]</head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
 		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")] [game_year]</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
@@ -172,6 +173,7 @@
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						a {color:#0f0;}
 						</style>
+						[get_browse_zoom_style(user.client)]
 						</head>
 						<body>
 						<h1>Following keycodes are present in this system:</h1>"}
@@ -198,6 +200,7 @@
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						a {padding:2px 5px; background:#32CD32;color:#000;display:block;margin:2px;text-align:center;text-decoration:none;}
 						</style>
+						[get_browse_zoom_style(user.client)]
 						</head>
 						<body>
 						[add_req_access?"<a href='byond://?src=\ref[src];req_access=1;id_card=\ref[id_card];user=\ref[user]'>Edit operation keycodes</a>":null]
@@ -317,7 +320,7 @@
 		if(usr != src.occupant)
 			return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.occupant << browse(get_log_html(), "window=exosuit_log")
+		src.occupant << browse(get_log_html(src.occupant.client), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
 

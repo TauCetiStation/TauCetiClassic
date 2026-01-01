@@ -79,6 +79,11 @@
 		if(M.get_inactive_hand())
 			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
 			return FALSE
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.can_use_two_hands())
+				to_chat(M, "<span class='notice'>Both of your hands must be functional to fire this weapon!</span>")
+				return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
@@ -179,7 +184,7 @@
 				var/going_to_explode = 0
 				if(H.ClumsyProbabilityCheck(50))
 					going_to_explode = 1
-				if(chambered && chambered.crit_fail && prob(10))
+				if(chambered && chambered.crit_fail && !user.mood_prob(90))
 					going_to_explode = 1
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)

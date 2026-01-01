@@ -74,14 +74,14 @@
 			return
 
 		if (isscrewing(I))
-			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
+			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50, quality = QUALITY_SCREWING))
 				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 		if ((ispulsing(I)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
-			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50))
+			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50, quality = QUALITY_PULSING))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
@@ -157,6 +157,7 @@
 					overlays += image('icons/obj/storage.dmi', icon_opened)
 					code = null
 					playsound(src, 'sound/machines/bolts_up.ogg', VOL_EFFECTS_MASTER)
+					update_icon()
 				else
 					code = "ERROR"
 					playsound(src, 'sound/machines/buzz-two.ogg',  VOL_EFFECTS_MASTER)
@@ -167,6 +168,7 @@
 					overlays = null
 					code = null
 					close(usr)
+					update_icon()
 				else
 					if(length(code) < 5 && digit != "ERROR")
 						playsound(src, 'sound/machines/button_beep.ogg',  VOL_EFFECTS_MASTER)
@@ -174,6 +176,7 @@
 					if (length(code) > 5)
 						code = "ERROR"
 	add_fingerprint(usr)
+
 	return TRUE
 
 
@@ -216,9 +219,6 @@
 				close(M)
 	add_fingerprint(user)
 
-/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	update_icon()
 
 /obj/item/weapon/storage/secure/briefcase/update_icon()
 	if(!locked || emagged)

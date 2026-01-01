@@ -122,11 +122,9 @@ var/global/can_call_ert
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 	if(H.species.flags[HAS_SKIN_TONE])
-		var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=альбинос, 35=белый, 150=чёрный, 220='очень' чёрный)", "Создание персонажа")  as text
-		if (!new_tone)
-			new_tone = 35
-		H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-		H.s_tone = -H.s_tone + 35
+		var/new_tone = input(src, "Выберите цвет кожи", "Создание персонажа") in global.skin_tones_by_ru_name
+		var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+		H.s_tone = T.name
 
 	if(H.species.flags[HAS_SKIN_COLOR])
 		var/new_skin = input(src, "Выберите цвет кожи", "Xenos Skin") as null|color
@@ -162,9 +160,7 @@ var/global/can_call_ert
 	if(new_fstyle)
 		H.f_style = new_fstyle
 
-	H.apply_recolor()
-	H.update_hair()
-	H.update_body()
+	H.update_body(update_preferences = TRUE)
 	H.check_dna(H)
 
 	if(!_name)

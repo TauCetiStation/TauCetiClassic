@@ -5,6 +5,8 @@
 	icon_state = "densecrate"
 	density = TRUE
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/largecrate/attack_hand(mob/user)
 	to_chat(user, "<span class='notice'>You need a crowbar to pry this open!</span>")
 	return

@@ -91,9 +91,8 @@
 						return
 
 					if(ishuman(T))
-						var/mob/living/carbon/human/H = T
-						if(H.species && H.species.flags[NO_BLOOD])
-							H.reagents.trans_to(src,amount)
+						if(HAS_TRAIT(T, TRAIT_NO_BLOOD))
+							T.reagents.trans_to(src,amount)
 						else
 							T.take_blood(src,amount)
 					else

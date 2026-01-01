@@ -154,6 +154,7 @@
 		UpdateButtonIcon()
 		START_PROCESSING(SSfastprocess, src)
 
+// todo: instead of fastprocessing we can stack multiple maptext animation steps if it becomes problem
 /datum/action/process()
 	if(!owner)
 		button.maptext = ""

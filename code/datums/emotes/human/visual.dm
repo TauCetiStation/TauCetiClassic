@@ -6,10 +6,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 
 /datum/emote/human/yawn
@@ -22,10 +20,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 
 /datum/emote/human/blink
@@ -36,10 +32,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
 
 
 /datum/emote/human/wink
@@ -50,11 +44,9 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
+	blocklist_unintentional_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 
 /datum/emote/human/grin
@@ -65,10 +57,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
 
 
 /datum/emote/human/drool
@@ -79,10 +69,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
 
 
 /datum/emote/human/smile
@@ -93,10 +81,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
 
 
 /datum/emote/human/frown
@@ -107,10 +93,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
 
 
 /datum/emote/human/eyebrow
@@ -121,10 +105,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
 
 
 /datum/emote/human/shrug
@@ -135,10 +117,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 
 /datum/emote/human/nod
@@ -149,11 +129,9 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
+	blocklist_unintentional_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 
 /datum/emote/human/shake
@@ -163,11 +141,9 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
+	blocklist_unintentional_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 /datum/emote/human/shake/get_emote_message_3p(mob/living/carbon/human/user)
 	return "shakes [P_THEIR(user)] head."
@@ -181,9 +157,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/human/deathgasp
@@ -195,9 +169,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
-	)
+	required_intentional_stat = CONSCIOUS
 
 /datum/emote/human/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
 	return "seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."

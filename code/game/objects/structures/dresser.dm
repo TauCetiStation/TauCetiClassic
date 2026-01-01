@@ -27,26 +27,39 @@
 		add_fingerprint(H)
 		switch(choice)
 			if("Underwear")
-				var/list/underwear_options
-				if(gender == MALE)
-					underwear_options = underwear_m
-				else
-					underwear_options = underwear_f
-				var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
-				if(new_underwear && Adjacent(user))
-					H.underwear = underwear_options.Find(new_underwear)
-					H.update_body()
+				if(!H.species.flags[HAS_UNDERWEAR])
+					to_chat(H, "<span class='notice'>You can't find any suitable underwear for your species...</span>")
+					return
+
+				var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", H.underwear ? underwear_t[H.underwear] : "None") as null|anything in list("None") + underwear_t
+				if(new_underwear)
+					if(new_underwear == "None")
+						H.underwear = 0
+					else
+						H.underwear = underwear_t.Find(new_underwear)
+					H.update_underwear()
 			if("Undershirt")
-				var/list/undershirt_options
-				undershirt_options = undershirt_t
-				var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
-				if(new_undershirt && Adjacent(user))
-					H.undershirt = undershirt_options.Find(new_undershirt)
-					H.update_body()
+				var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", H.undershirt ? undershirt_t[H.undershirt] : "None") as null|anything in list("None") + undershirt_t
+				if (new_undershirt)
+					if(new_undershirt == "None")
+						H.undershirt = 0
+					else
+						H.undershirt = undershirt_t.Find(new_undershirt)
+					H.update_underwear()
+
+					if(H.undershirt)
+						var/new_undershirt_print = input(user, "Choose your undershirt print:", "Character Preference", H.undershirt_print ? H.undershirt_print : "None") as null|anything in list("None") + undershirt_prints_t
+						if (new_undershirt_print)
+							if(new_undershirt_print == "None")
+								H.undershirt_print = null
+							else
+								H.undershirt_print = new_undershirt_print
+							H.update_underwear()
 			if("Socks")
-				var/list/socks_options
-				socks_options = socks_t
-				var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_options
-				if(new_socks && Adjacent(user))
-					H.socks = socks_options.Find(new_socks)
-					H.update_body()
+				var/new_socks = input(user, "Choose your character's socks:", "Character Preference", H.socks ? socks_t[H.socks] : "None") as null|anything in list("None") + socks_t
+				if(new_socks)
+					if(new_socks == "None")
+						H.socks = 0
+					else
+						H.socks = socks_t.Find(new_socks)
+					H.update_underwear()

@@ -1,7 +1,7 @@
 /proc/CreateGeneralRecord()
 	var/datum/data/record/G = new /datum/data/record()
 	G.fields["name"] = "New Record"
-	G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+	G.fields["id"] = add_zero(num2hex(rand(1, 1.6777215E7), 6), 6)
 	G.fields["rank"] = "Unassigned"
 	G.fields["real_rank"] = "Unassigned"
 	G.fields["sex"] = "Male"
@@ -122,7 +122,7 @@
 		return
 	var/reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана")  as message)
 	if(used_by_computer)
-		if(user.incapacitated() || !(user.Adjacent(source) && isliving(user)))
+		if(user.incapacitated() || ((!user.Adjacent(source) || !isliving(user)) && !issilicon(user)))
 			return
 	S.fields["criminal"] = criminal_status
 	add_record(author, S, "Уголовный статус статус был изменен на <b>[criminal_status]</b><BR><b>Причина:</b> [reason]")

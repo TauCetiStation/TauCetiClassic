@@ -11,7 +11,8 @@
 /datum/role/rev/CanBeAssigned(datum/mind/M)
 	if(!..())
 		return FALSE
-	if(M.current.ismindprotect())
+	var/mob/living/L = M.current
+	if(istype(L) && ismindprotect(L))
 		return FALSE
 	return TRUE
 
@@ -97,7 +98,7 @@
 
 	if(isrevhead(M) || isrev(M))
 		to_chat(src, "<span class='bold warning'>[M] уже революционер!</span>")
-	else if(M.ismindprotect())
+	else if(ismindprotect(M))
 		to_chat(src, "<span class='bold warning'>[M] под влиянием импланта защиты разума - сначало нужно его извлечь!</span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='bold warning'>[M] в черном списке!</span>")

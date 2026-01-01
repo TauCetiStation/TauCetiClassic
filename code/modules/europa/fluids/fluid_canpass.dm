@@ -20,8 +20,11 @@
 /obj/structure/mineral_door/CanFluidPass(coming_from)
 	return !density
 
+/obj/structure/window/CanFluidPass(coming_from)
+	return !density
+
 /obj/structure/window/thin/CanFluidPass(coming_from)
-	if(coming_from == dir)
+	if(get_dir(loc, coming_from) & dir)
 		return !density
 	return TRUE
 
@@ -29,6 +32,6 @@
 	return !density
 
 /obj/machinery/door/window/CanFluidPass(coming_from)
-	if(coming_from == dir || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+	if(get_dir(loc, coming_from) & dir)
 		return !density
 	return TRUE

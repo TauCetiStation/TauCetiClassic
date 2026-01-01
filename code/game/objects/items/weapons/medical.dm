@@ -17,6 +17,7 @@
 	name = "first-aid kit"
 	icon_state = "bezerk"
 	item_state = "firstaid-syndi"
+	item_state_world = "bezerk_w"
 	desc = "I hope you've got insurance."
 	max_w_class = SIZE_SMALL
 
@@ -31,6 +32,9 @@
 	new /obj/item/weapon/storage/pill_bottle/tramadol(src)
 	new /obj/item/stack/medical/suture(src)
 	new /obj/item/device/healthanalyzer(src)
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit
+	item_state_world = null
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	name = "Combat first-aid small kit"

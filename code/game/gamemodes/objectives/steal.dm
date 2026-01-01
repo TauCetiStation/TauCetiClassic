@@ -30,6 +30,7 @@ ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher/golden)
 		"a Research Director's teleport armor" = /obj/item/clothing/suit/armor/vest/reactive,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer/advpinpointer,
 		"the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
+		"a Research Director's binary decoder" = /obj/item/device/binary_decoder,
 	)
 
 	var/static/possible_items_special[] = list(

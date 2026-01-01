@@ -58,7 +58,7 @@
 
 /obj/item/weapon/gun/dartgun/examine(mob/user)
 	..()
-	if (src in view(2, user) && beakers.len)
+	if ((src in view(2, user)) && beakers.len)
 		to_chat(user, "<span class='notice'>[src] contains:</span>")
 		for(var/obj/item/weapon/reagent_containers/glass/beaker/B in beakers)
 			if(B.reagents && B.reagents.reagent_list.len)

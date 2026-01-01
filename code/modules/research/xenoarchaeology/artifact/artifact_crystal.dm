@@ -37,7 +37,7 @@
 		if(wired)
 			user.visible_message("<span class='notice'>[user] starts cutting off the wiring of the [src].</span>",
                                  "<span class='notice'>You start cutting off the wiring of the [src].</span>")
-			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
+			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50, quality = QUALITY_CUTTING))
 				user.visible_message("<span class='notice'>[user] cuts off the wiring of the [src].</span>",
                                      "<span class='notice'>You cut off the wiring of the [src].</span>")
 				wired = FALSE

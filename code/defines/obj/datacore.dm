@@ -44,55 +44,40 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	for(var/datum/data/record/t in general)
 		var/name = sanitize(t.fields["name"])
 		var/rank = sanitize(t.fields["rank"])
-		var/real_rank = t.fields["real_rank"]
 		var/isactive = t.fields["p_stat"]
 
 		var/account_number = t.fields["acc_number"]
-		var/in_department = FALSE
 
-		if(real_rank in command_positions)
-			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = command_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(real_rank in centcom_positions)
-			centcom[++centcom.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = centcom_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(real_rank in security_positions)
-			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = security_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(real_rank in engineering_positions)
-			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = engineering_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(real_rank in medical_positions)
-			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = medical_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(real_rank in science_positions)
-			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(real_rank in civilian_positions)
-			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = civilian_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(real_rank in nonhuman_positions)
-			bot[++bot.len] = list("name" = name, "rank" = rank, "active" = isactive, "priority" = nonhuman_positions.Find(real_rank))
-			in_department = TRUE
-
-		if(!in_department)
+		var/datum/job/J = SSjob.GetJob(t.fields["real_rank"])
+		if(J)
+			var/list/entry = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = J.order)
+			if (DEP_COMMAND in J.departments)
+				heads[++heads.len] = entry
+			else if (DEP_SPECIAL in J.departments)
+				centcom[++centcom.len] = entry
+			else if (DEP_SECURITY in J.departments)
+				sec[++sec.len] = entry
+			else if (DEP_ENGINEERING in J.departments)
+				eng[++eng.len] = entry
+			else if (DEP_MEDICAL in J.departments)
+				med[++med.len] = entry
+			else if (DEP_SCIENCE in J.departments)
+				sci[++sci.len] = entry
+			else if (DEP_CIVILIAN in J.departments)
+				civ[++civ.len] = entry
+			else if (DEP_SILICON in J.departments)
+				bot[++bot.len] = entry
+		else
 			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 
-	sortTim(heads, GLOBAL_PROC_REF(cmp_job_titles), FALSE)
-	sortTim(centcom, GLOBAL_PROC_REF(cmp_job_titles), FALSE)
-	sortTim(sec,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
-	sortTim(eng,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
-	sortTim(med,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
-	sortTim(sci,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
-	sortTim(civ,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
-	sortTim(bot,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(heads, GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
+	sortTim(centcom, GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
+	sortTim(sec,   GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
+	sortTim(eng,   GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
+	sortTim(med,   GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
+	sortTim(sci,   GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
+	sortTim(civ,   GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
+	sortTim(bot,   GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
 
 	remove_priority_field(heads)
 	remove_priority_field(centcom)
@@ -144,7 +129,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			prio = 1
 		Silicon_Manifest[++Silicon_Manifest.len] = list("name" = name, "rank" = rank, "active" = is_active, "net" = net, "priority" = prio)
 
-	sortTim(Silicon_Manifest, GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(Silicon_Manifest, GLOBAL_PROC_REF(cmp_legacy_job_titles), FALSE)
 	remove_priority_field(Silicon_Manifest)
 
 /obj/effect/datacore/proc/get_manifest()
@@ -251,18 +236,12 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	var/real_title = assignment
 
 	for(var/datum/data/record/t in general)
-		if (t)
-			if(t.fields["name"] == name)
-				foundrecord = t
-				break
+		if(t.fields["name"] == name)
+			foundrecord = t
+			break
 
-	var/list/all_jobs = get_job_datums()
-
-	for(var/datum/job/J in all_jobs)
-		var/list/alttitles = get_alternate_titles(J.title)
-		if(!J)
-			continue
-		if(assignment in alttitles)
+	for(var/datum/job/J as anything in SSjob.active_occupations)
+		if(assignment in J.alt_titles)
 			real_title = J.title
 			break
 

@@ -24,7 +24,7 @@
 
 /obj/structure/window/shuttle/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS))
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 
 	return ..()
 

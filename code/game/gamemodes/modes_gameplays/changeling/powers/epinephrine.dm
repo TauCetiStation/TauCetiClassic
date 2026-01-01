@@ -23,7 +23,7 @@
 	user.reagents.add_reagent("toxin", 2)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.setHalLoss(0)
+		H.resetHalLoss()
 
 	feedback_add_details("changeling_powers","UNS")
 	return TRUE

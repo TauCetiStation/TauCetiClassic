@@ -25,9 +25,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target)
 	if(!action_checks(target))
 		return
-	var/turf/curloc = chassis.loc
 	var/turf/targloc = get_turf(target)
-	if(!curloc || !targloc)
+	if(!targloc)
 		return
 	chassis.use_power(energy_drain)
 	chassis.visible_message("<span class='warning'>[chassis] fires [src]!</span>")
@@ -36,9 +35,8 @@
 	set_ready_state(FALSE)
 	for(var/i = 1 to min(projectiles, projectiles_per_shot))
 		var/turf/aimloc = targloc
-		if(deviation)
-			aimloc = locate(targloc.x+GaussRandRound(deviation,1),targloc.y+GaussRandRound(deviation,1),targloc.z)
-		if(!aimloc || aimloc == curloc)
+		var/turf/curloc = chassis.loc
+		if(!curloc || !aimloc || aimloc == curloc)
 			break
 		playsound(chassis, fire_sound, VOL_EFFECTS_MASTER, fire_volume)
 		projectiles--
@@ -58,6 +56,7 @@
 	P.starting = P.loc
 	P.current = P.loc
 	P.firer = chassis.occupant
+	P.dispersion = deviation
 	if(isbrain(chassis.occupant))
 		P.def_zone = ran_zone()
 	else

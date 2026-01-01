@@ -5,7 +5,8 @@
 	flags = OPENCONTAINER
 	volume = 60
 	var/reagent = ""
-
+	resistance_flags = FULL_INDESTRUCTIBLE
+	fragile = FALSE
 
 /obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline
 	name = "internal inaprovaline bottle"

@@ -87,6 +87,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 6,
+		/obj/item/weapon/storage/food/normal/simple_waffles = 6,
 		/obj/item/weapon/storage/food/small/chips = 6,
 		/obj/item/weapon/storage/food/normal/chips = 6,
 		/obj/item/weapon/storage/food/normal/sosjerky = 6,
@@ -102,6 +103,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 25,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 25,
+		/obj/item/weapon/storage/food/normal/simple_waffles = 35,
 		/obj/item/weapon/storage/food/small/chips = 10,
 		/obj/item/weapon/storage/food/normal/chips = 20,
 		/obj/item/weapon/storage/food/big/chips = 50,
@@ -313,6 +315,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia = 5,
 	)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 3,
@@ -321,6 +324,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia = 3,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donut/syndie = 5,

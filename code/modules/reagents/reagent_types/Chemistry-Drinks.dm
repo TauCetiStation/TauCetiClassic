@@ -87,8 +87,6 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
-		if(1 to 20)
-			//nothing
 		if(21 to INFINITY)
 			if(prob(data["ticks"] - 10))
 				M.cure_nearsighted(EYE_DAMAGE_TRAIT)
@@ -777,8 +775,7 @@
 		return
 
 	M.adjustDrugginess(5)
-	if(!M.stuttering)
-		M.stuttering = 1
+	M.Stuttering(1)
 	if(volume >= overdose)
 		if(M.losebreath <= 3)
 			M.losebreath = max(0, M.losebreath + 3)

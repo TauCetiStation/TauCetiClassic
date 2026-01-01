@@ -335,9 +335,6 @@
 	if(!can_be_inserted(I))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/implanter/compressed))
-		return FALSE
-
 	if((istype(I, /obj/item/weapon/packageWrap) || istagger(I)) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 

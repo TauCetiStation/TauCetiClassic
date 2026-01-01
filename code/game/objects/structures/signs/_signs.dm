@@ -21,7 +21,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
-		if(W.use_tool(src, user, 40, volume = 50))
+		if(W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 			playsound(src, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
@@ -130,7 +130,7 @@
 /obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
 	if(iswelding(I))
 		if(I.use(0, user))
-			if(I.use_tool(src, user, 20, volume = 50))
+			if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
 				qdel(src)
 				return

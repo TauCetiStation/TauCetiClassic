@@ -6,6 +6,14 @@
 // Converts 255 RGB color values to float and returns that as matrix, where color applied into contrast row.
 #define RGB_CONTRAST(r, g, b) list(1,0,0, 0,1,0, 0,0,1, r/255, g/255, b/255)
 
+//Returns the hex value of a decimal number
+//len == length of returned string
+#define num2hex(X, len) num2text(X, len, 16)
+
+//Returns an integer given a hex input, supports negative values "-ff"
+//skips preceding invalid characters
+#define hex2num(X) text2num(X, 16)
+
 //"fancy" math for calculating time in ms from tick_usage percentage and the length of ticks
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)
 //collapsed to percent_of_tick_used * tick_lag
@@ -27,19 +35,13 @@
 
 #define CLAMP01(x) (clamp(x, 0, 1))
 
-#if DM_VERSION < 516
 /// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
-#define SIGN(x) ( ((x) > 0) - ((x) < 0) )
+#define SIGN(x) sign(x)
 
 // Performs a linear interpolation between a and b.
 // Note that amount=0 returns a, amount=1 returns b, and
 // amount=0.5 returns the mean of a and b.
-#define LERP(a, b, amount) ( amount ? ((a) + ((b) - (a)) * (amount)) : a )
-#else
-#define SIGN(x) sign(x)
-
 #define LERP(a, b, amount) lerp(a, b, amount)
-#endif
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 

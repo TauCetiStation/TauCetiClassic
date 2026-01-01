@@ -141,6 +141,7 @@
 					    font-size:15px;
 					}
 				</style>
+				[get_browse_zoom_style(user.client)]
 			</head>
 			<body>
 	"}

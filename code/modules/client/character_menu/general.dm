@@ -47,7 +47,8 @@
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
 			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
-				. += "<br>Skin Tone: <a href='byond://?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
+				var/datum/skin_tone/tone = global.skin_tones_by_name[s_tone]
+				. += "<br>Skin Tone: <a href='byond://?_src_=prefs;preference=s_tone;task=input'>[CASE(tone, NOMINATIVE_CASE)]</a>"
 
 		//Organs
 		if("organs")
@@ -79,18 +80,9 @@
 				else if(status == "amputated")
 					++ind
 					. += "<li>Amputated [organ_name]</li>"
-				else if(status == "mechanical")
+				else if(status == "cybernetic")
 					++ind
-					. += "<li>Mechanical [organ_name]</li>"
-				else if(status == "assisted")
-					++ind
-					switch(organ_name)
-						if("heart")
-							. += "<li>Pacemaker-assisted [organ_name]</li>"
-						if("eyes")
-							. += "<li>Retinal overlayed [organ_name]</li>"
-						else
-							. += "<li>Mechanically assisted [organ_name]</li>"
+					. += "<li>Cybernetical [organ_name]</li>"
 			if(species == IPC)
 				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
 
@@ -128,12 +120,11 @@
 		if("gear")
 			. += "<b>Gear:</b><br>"
 			if(specie_obj.flags[HAS_UNDERWEAR])
-				if(gender == MALE)
-					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
-				else
-					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
-				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
-				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
+				. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear ? underwear_t[underwear] : "None"]</a><br>"
+				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt ? undershirt_t[undershirt] : "None"]</a><br>"
+				if(undershirt)
+					. += "Undershirt print: <a href='byond://?_src_=prefs;preference=undershirt_print;task=input'>[undershirt_print ? undershirt_print : "None"]</a><br>"
+				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
@@ -235,14 +226,13 @@
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					if(gender == MALE)
-						underwear = rand(1, underwear_m.len)
-					else
-						underwear = rand(1, underwear_f.len)
+					underwear = rand(0, underwear_t.len)
 				if("undershirt")
-					undershirt = rand(1,undershirt_t.len)
+					undershirt = rand(0, undershirt_t.len)
+				if("undershirt_print")
+					undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
 				if("socks")
-					socks = rand(1,socks_t.len)
+					socks = rand(0, socks_t.len)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -412,26 +402,36 @@
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
 						return
-					var/list/underwear_options
-					if(gender == MALE)
-						underwear_options = underwear_m
-					else
-						underwear_options = underwear_f
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear]) as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear ? underwear_t[underwear] : "None") as null|anything in list("None") + underwear_t
 					if(new_underwear)
-						underwear = underwear_options.Find(new_underwear)
+						if(new_underwear == "None")
+							underwear = 0
+						else
+							underwear = underwear_t.Find(new_underwear)
+
 				if("undershirt")
-					var/list/undershirt_options
-					undershirt_options = undershirt_t
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt ? undershirt_t[undershirt] : "None") as null|anything in list("None") + undershirt_t
 					if (new_undershirt)
-						undershirt = undershirt_options.Find(new_undershirt)
+						if(new_undershirt == "None")
+							undershirt = 0
+						else
+							undershirt = undershirt_t.Find(new_undershirt)
+
+				if("undershirt_print")
+					var/new_undershirt_print = input(user, "Choose your undershirt print:", "Character Preference", undershirt_print ? undershirt_print : "None") as null|anything in list("None") + undershirt_prints_t
+					if (new_undershirt_print)
+						if(new_undershirt_print == "None")
+							undershirt_print = null
+						else
+							undershirt_print = new_undershirt_print
+
 				if("socks")
-					var/list/socks_options
-					socks_options = socks_t
-					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks_options[socks]) as null|anything in socks_options
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks ? socks_t[socks] : "None") as null|anything in list("None") + socks_t
 					if(new_socks)
-						socks = socks_options.Find(new_socks)
+						if(new_socks == "None")
+							socks = 0
+						else
+							socks = socks_t.Find(new_socks)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", rgb(r_eyes, g_eyes, b_eyes)) as color|null
@@ -443,9 +443,9 @@
 				if("s_tone")
 					if(!specie_obj.flags[HAS_SKIN_TONE])
 						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", 35 - s_tone ) as num|null
-					if(new_s_tone)
-						s_tone = 35 - max(min( round(new_s_tone), 220),1)
+					var/new_tone = input("Выберите цвет кожи", "Character Preference") in global.skin_tones_by_ru_name
+					var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+					s_tone = T.name
 
 				if("skin")
 					if(!specie_obj.flags[HAS_SKIN_COLOR])
@@ -585,7 +585,7 @@
 									organ_data[limb] = "cyborg"
 
 						if("Organs")
-							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes", "Lungs", "Liver", "Kidneys")
 							if(!organ_name) return
 
 							var/organ = null
@@ -594,17 +594,22 @@
 									organ = O_HEART
 								if("Eyes")
 									organ = O_EYES
+								if("Lungs")
+									organ = O_LUNGS
+								if("Liver")
+									organ = O_LIVER
+								if("Kidneys")
+									organ = O_KIDNEYS
 
-							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
+							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Cybernetic")
+
 							if(!new_state) return
 
 							switch(new_state)
 								if("Normal")
 									organ_data[organ] = null
-								if("Assisted")
-									organ_data[organ] = "assisted"
-								if("Mechanical")
-									organ_data[organ] = "mechanical"
+								if("Cybernetic")
+									organ_data[organ] = "cybernetic"
 				// Choosing a head for an IPC
 				if("ipc_head")
 					var/list/ipc_heads = list("Default", "Cobalt", "Cathod", "Thorax", "Axon")

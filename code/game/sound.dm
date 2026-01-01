@@ -276,7 +276,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 			prefs.snd_jukebox_vol = vol
 
-			if(istype(media)) // will be updated in "/mob/living/Login()" if changed in lobby.
+			if(istype(media)) // will be updated in "/mob/living/LateLogin()" if changed in lobby.
 				media.update_volume()
 
 				if(!vol && old_vol) // only play/stop if last change is a mute or unmute state.

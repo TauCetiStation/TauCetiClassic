@@ -37,7 +37,7 @@
 #define VE_DEBUG \
 	list("vars", "summon_type", "AI_Interact", "key", "ckey", "client")
 #define VE_FULLY_LOCKED \
-	list("holder", "glide_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "bound_x", "bound_y", "step_size", "bound_height", "bound_width", "bounds", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text", "proc_res")
+	list("holder", "glide_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "bound_x", "bound_y", "step_size", "bound_height", "bound_width", "bounds", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text", "proc_res", "account_authenticated", "hub_authenticated", "password_authenticated")
 
 
 /* massmodify protected */
@@ -47,7 +47,7 @@
 #define VE_MASS_DEBUG \
 	list("vars", "summon_type", "AI_Interact")
 #define VE_MASS_FULLY_LOCKED \
-	list("holder", "glide_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "bound_x", "bound_y", "step_size", "bound_height", "bound_width", "bounds", "key", "ckey", "client", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text", "proc_res")
+	list("holder", "glide_size", "player_next_age_tick", "player_ingame_age", "resize_rev", "step_x", "step_y", "bound_x", "bound_y", "step_size", "bound_height", "bound_width", "bounds", "key", "ckey", "client", "smooth_icon_initial", "current_power_usage", "current_power_area", "script", "command_text", "proc_res", "account_authenticated", "hub_authenticated", "password_authenticated")
 
 /* hidden variables */
 #define VE_HIDDEN_LOG \

@@ -10,14 +10,8 @@
 
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 
-var/global/list/blacklisted_builds = list(
-	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
-	"1434" = "bug turf images weren't reapplied properly when moving around the map",
-	"1468" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems",
-	"1469" = "bug with screen-loc mouse parameter (x and y axis were switched) and several mouse hit problems"
-	)
+// empty till new broken versions
+var/global/list/blacklisted_builds
 
 	/*
 	When somebody clicks a link in game, this Topic is called first.
@@ -202,15 +196,48 @@ var/global/list/blacklisted_builds = list(
 	//CONNECT//
 	///////////
 /client/New(TopicData)
-	// TODO: Remove with 516
-	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, "", "browser-options=byondstorage,refresh,find")
-
-	var/tdata = TopicData //save this for later use
-	TopicData = null							//Prevent calls to client.Topic from connect
-
-	if(connection != "seeker")					//Invalid connection type.
+	if(connection != "seeker") //Invalid connection type.
+		log_access("Debug: Client creation for [ckey] aborted because of wrong connection type [connection].")
 		return null
+
+	winset(src, "", "browser-options=byondstorage,refresh,find")
+
+	var/tdata
+	if(length(TopicData))
+		tdata = params2list(TopicData)
+		TopicData = null //Prevent calls to client.Topic from connect
+
+#ifndef OPENDREAM
+	if(!IsGuestKey(key) && authenticate)
+		hub_authenticated = TRUE
+#else
+	if(!IsGuestKey(key))
+		hub_authenticated = TRUE
+#endif
+
+	// check access token and associated ckey for guest accounts
+	if(IsGuestKey(key))
+		if(length(tdata) && tdata["password_token"])
+			var/associated_ckey = verify_access_token(tdata["password_token"])
+			if(associated_ckey)
+				log_access("Authorization: [ckey] logged as [associated_ckey] using a password.")
+				// if there is already a mob in the world with given ckey,
+				// then assigning this ckey to client calls this mob.Login()
+				// since we are in the /client/New, it's equivalent to calling ..()
+				// but mob.Login() works only once, so another call to ..() below does no harm
+				ckey = associated_ckey
+				password_authenticated = TRUE
+			else
+				log_access("Authorization: [ckey] provided invalid token.")
+				to_chat(src, "<span class='userdanger'>Токен аутентификации недействителен. Повторите ввод пароля.</span>")
+				handle_storage_access_token(remove_token = TRUE)
+		else
+			// checks byondstorage for token, reconnects with token data if found
+			handle_storage_access_token()
+
+	// calls mob.Login(), if it hasn't already been called by changing client ckey above
+	// if no mob is associated with client - creates default /world::mob first
+	. = ..()
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
@@ -227,28 +254,35 @@ var/global/list/blacklisted_builds = list(
 
 	global.ahelp_tickets?.ClientLogin(src)
 
-	//Admin Authorisation
-	holder = admin_datums[ckey]
+	log_game("[key_name(src)] connected.")
+	message_admins("[ADMIN_LOOKUPJMP(mob)] connected.")
 
-	if(config.sandbox)
-		var/sandbox_permissions = (R_HOST & ~(R_PERMISSIONS | R_DEBUG | R_BAN | R_LOG))
-		if(!holder)
-			new /datum/admins(ADMIN_RANK_SANDBOX, sandbox_permissions, ckey)
+	if(!IsGuestKey(key))
+		update_supporter_status()
+
+		// Admin authorization, first check if we can trust client with it
+		// todo: add 2fa like on para and allow password_authenticated
+		if(hub_authenticated)
+			// todo: should use associate() or some common procedure, multiple admin entrances are bad
 			holder = admin_datums[ckey]
-		else
-			holder.rights = (holder.rights | sandbox_permissions)
 
-	if(holder)
-		holder.owner = src
-		admins += src
-		if(holder.deadminned)
-			holder.disassociate()
-			verbs += /client/proc/readmin_self
+			if(config.sandbox)
+				var/sandbox_permissions = (R_HOST & ~(R_PERMISSIONS | R_DEBUG | R_BAN | R_LOG))
+				if(!holder)
+					new /datum/admins(ADMIN_RANK_SANDBOX, sandbox_permissions, ckey)
+					holder = admin_datums[ckey]
+				else
+					holder.rights = (holder.rights | sandbox_permissions)
 
-	if(ckey in mentor_ckeys)
-		mentors += src
+			if(holder)
+				holder.owner = src
+				admins += src
+				if(holder.deadminned)
+					holder.disassociate()
+					verbs += /client/proc/readmin_self
 
-	update_supporter_status()
+		if(ckey in mentor_ckeys)
+			mentors += src
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	if(preferences_datums[ckey])
@@ -266,13 +300,19 @@ var/global/list/blacklisted_builds = list(
 
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
-	. = ..()	//calls mob.Login()
+	mob.LateLogin()
 
 	if(SSinput.initialized)
 		set_macros()
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
+
+	tooltip = new /atom/movable/screen/tooltip()
+	if(prefs.tooltip)
+		tooltip.set_state(TRUE)
+
+	SSdemo.write_event_line("login [ckey]")
 
 	connection_time = world.time
 
@@ -303,17 +343,24 @@ var/global/list/blacklisted_builds = list(
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
 
-	log_client_to_db(tdata)
+	log_client_to_db()
 
 	send_resources()
 
 	generate_clickcatcher()
+
+	update_dpi()
 
 	// Set config based title for main window
 	if (config.server_name)
 		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
 	else
 		winset(src, "mainwindow", "title='[world.name]'")
+
+	// .reconnect keeps skins settings, so there is a chance our lobby browser is stuck
+	// todo: rewrite lobby and move it to client code?
+	if(!istype(mob, /mob/dead/new_player))
+		winset(src, "lobbybrowser", "is-disabled=true;is-visible=false")
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
@@ -338,10 +385,12 @@ var/global/list/blacklisted_builds = list(
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
 	handle_connect()
+	is_initialized = TRUE
 
 	spawn(50)//should wait for goonchat initialization for kick/redirect reasons
 		if(!handle_autokick_reasons())
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
+		src << browse(null, "window=storage_access_token") // cleanup
 
 	//////////////
 	//DISCONNECT//
@@ -362,6 +411,9 @@ var/global/list/blacklisted_builds = list(
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	log_game("[key_name(src)] disconnected.")
+	message_admins("[key_name(src)] [ADMIN_PPJMPFLW(mob)] disconnected.")
 
 	handle_leave()
 
@@ -395,17 +447,15 @@ var/global/list/blacklisted_builds = list(
 					SEND_LINK(src, config.client_limit_panic_bunker_link)
 					log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
 				else
-					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
 					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-					QDEL_IN(src, 2 SECONDS)
+					force_disconnect("Sorry, player limit is enabled. Try to connect later.")
 				return TRUE
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
-			to_chat(src, "<span class='danger'>Sorry, but server is currently not accepting new players. Try to connect later.</span>")
 			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-			QDEL_IN(src, 2 SECONDS)
+			force_disconnect("Sorry, but server is currently not accepting new players. Try to connect later.")
 			return TRUE
 
 	if(config.byond_version_min && byond_version < config.byond_version_min)
@@ -413,22 +463,22 @@ var/global/list/blacklisted_builds = list(
 		to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
 		if(!holder)
-			QDEL_IN(src, 2 SECONDS)
+			force_disconnect("You will be disconnected soon.")
 			return TRUE
 
 	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 		to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
 
-	if((byond_version >= 512 && (!byond_build || byond_build < 1421)) || (num2text(byond_build) in blacklisted_builds))
+	if(num2text(byond_build) in blacklisted_builds)
 		to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
 		message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
 		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
 		if(!holder)
-			QDEL_IN(src, 2 SECONDS)
+			force_disconnect("You will be disconnected soon.")
 			return TRUE
 
 
-/client/proc/log_client_to_db(connectiontopic)
+/client/proc/log_client_to_db()
 
 	if ( IsGuestKey(src.key) )
 		return
@@ -477,8 +527,6 @@ var/global/list/blacklisted_builds = list(
 	var/admin_rank = "Player"
 	if (src.holder)
 		admin_rank = src.holder.rank
-	else if (config.check_randomizer && check_randomizer(connectiontopic))
-		return
 
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
@@ -581,92 +629,6 @@ var/global/list/blacklisted_builds = list(
 
 	return ip_list
 
-/client/proc/check_randomizer(topic)
-	. = FALSE
-	if (connection != "seeker")
-		return
-	topic = params2list(topic)
-	var/static/cidcheck = list()
-	var/static/tokens = list()
-	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
-	var/static/cidcheck_spoofckeys = list()
-
-	var/oldcid = cidcheck[ckey]
-
-	if (oldcid)
-		if (!topic || !topic["token"] || !tokens[ckey] || topic["token"] != tokens[ckey])
-			if (!cidcheck_spoofckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
-				cidcheck_spoofckeys[ckey] = TRUE
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
-
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			qdel(src)
-			return TRUE
-
-		if (oldcid != computer_id) //IT CHANGED!!!
-			cidcheck -= ckey //so they can try again after removing the cid randomizer.
-
-			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
-			to_chat(src, "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>")
-
-			if (!cidcheck_failedckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				world.send2bridge(
-					type = list(BRIDGE_ADMINLOG),
-					attachment_title = "Cid Randomizer",
-					attachment_msg = "**[key_name(src)]** has been detected as using a cid randomizer. Connection rejected.",
-					attachment_color = BRIDGE_COLOR_ADMINLOG,
-				)
-
-				cidcheck_failedckeys[ckey] = TRUE
-				notes_add(ckey, "Detected as using a cid randomizer.")
-
-			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
-
-			qdel(src)
-			return TRUE
-		else
-			if (cidcheck_failedckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				world.send2bridge(
-					type = list(BRIDGE_ADMINLOG),
-					attachment_title = "Cid Randomizer",
-					attachment_msg = "**[key_name(src)]** has been allowed to connect after showing they removed their cid randomizer",
-					attachment_color = BRIDGE_COLOR_ADMINLOG,
-				)
-				cidcheck_failedckeys -= ckey
-			if (cidcheck_spoofckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
-				cidcheck_spoofckeys -= ckey
-			cidcheck -= ckey
-	else
-		var/sql_ckey = ckey(ckey)
-		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
-		query_cidcheck.Execute()
-
-		var/lastcid
-		if (query_cidcheck.NextRow())
-			lastcid = query_cidcheck.item[1]
-
-		if (computer_id != lastcid)
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
-
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			qdel(src)
-			return TRUE
-
-/client/proc/cid_check_reconnect()
-	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
-	. = token
-	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
-	var/url = winget(src, null, "url")
-	//special javascript to make them reconnect under a new window.
-	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
-
 /client/proc/log_client_ingame_age_to_db()
 	if ( IsGuestKey(src.key) )
 		return
@@ -719,6 +681,14 @@ var/global/list/blacklisted_builds = list(
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(getFilesSlow), src, SSassets.preload, FALSE), 5 SECONDS)
+
+/client/proc/update_pixel_ratio(number)
+	window_pixelratio = number
+
+/client/proc/update_dpi() // todo: remove me some time after 516
+	set waitfor = FALSE
+
+	dpi = text2num(winget(src, null, "dpi"))
 
 /client/proc/generate_clickcatcher()
 	if(!void)
@@ -850,6 +820,11 @@ var/global/list/disconnected_ckey_by_stat = list()
 	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
 
 	global.disconnected_ckey_by_stat[ckey] = stat
+
+/client/proc/force_disconnect(reason)
+	log_access("Debug: Client [ckey] force disconnected.")
+	to_chat(src, "<span class='userdanger'>[reason]</span>")
+	QDEL_IN(src, 2 SECONDS)
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

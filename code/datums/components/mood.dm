@@ -19,7 +19,6 @@
 	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(check_area_mood))
 	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, PROC_REF(on_revive))
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(modify_hud))
-	RegisterSignal(parent, COMSIG_MOB_SLIP, PROC_REF(on_slip))
 
 	var/mob/living/owner = parent
 	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
@@ -202,9 +201,6 @@
 		if(9)
 			setSpirit(spirit + 0.6*  seconds_per_tick, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 
-	HandleNutrition()
-	HandleShock()
-
 ///Sets spirit to the specified amount and applies effects.
 /datum/component/mood/proc/setSpirit(amount, minimum=SPIRIT_BAD, maximum=SPIRIT_HIGH)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
@@ -220,25 +216,18 @@
 
 	var/prev_spirit_level = spirit_level
 
-	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 6
 		if(SPIRIT_LOW to SPIRIT_POOR)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 4
 		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
-			master.mood_multiplicative_actionspeed_modifier = 0.0
 			spirit_level = 3
 		if(SPIRIT_NEUTRAL + 1 to SPIRIT_HIGH + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 2
 		if(SPIRIT_HIGH + 1 to INFINITY)
-			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
 
@@ -326,51 +315,6 @@
 		return
 	print_mood(user)
 
-/datum/component/mood/proc/HandleNutrition()
-	var/mob/living/L = parent
-
-	var/fullness = L.get_satiation()
-
-	switch(fullness)
-		if(NUTRITION_LEVEL_FAT to INFINITY)
-			add_event(null, "nutrition", /datum/mood_event/fat)
-
-		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FAT)
-			add_event(null, "nutrition", /datum/mood_event/wellfed)
-
-		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			add_event(null, "nutrition", /datum/mood_event/fed)
-
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			clear_event(null, "nutrition")
-
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			add_event(null, "nutrition", /datum/mood_event/hungry)
-
-		if(0 to NUTRITION_LEVEL_STARVING)
-			add_event(null, "nutrition", /datum/mood_event/starving)
-
-/datum/component/mood/proc/HandleShock()
-	if(!iscarbon(parent))
-		return
-	var/mob/living/carbon/C = parent
-
-	if(!C.traumatic_shock)
-		clear_event(null, "pain")
-		return
-
-	switch(C.traumatic_shock)
-		if(0 to TRAUMATIC_SHOCK_MINOR)
-			add_event(null, "pain", /datum/mood_event/mild_pain)
-		if(TRAUMATIC_SHOCK_MINOR  to TRAUMATIC_SHOCK_SERIOUS)
-			add_event(null, "pain", /datum/mood_event/moderate_pain)
-		if(TRAUMATIC_SHOCK_SERIOUS to TRAUMATIC_SHOCK_INTENSE)
-			add_event(null, "pain", /datum/mood_event/intense_pain)
-		if(TRAUMATIC_SHOCK_INTENSE to TRAUMATIC_SHOCK_MIND_SHATTERING)
-			add_event(null, "pain", /datum/mood_event/unspeakable_pain)
-		if(TRAUMATIC_SHOCK_MIND_SHATTERING to INFINITY)
-			add_event(null, "pain", /datum/mood_event/agony)
-
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
 	SIGNAL_HANDLER
 
@@ -415,8 +359,14 @@
 
 	setSpirit(spirit + amount)
 
-///Called when parent slips.
-/datum/component/mood/proc/on_slip(datum/source)
-	SIGNAL_HANDLER
-
-	add_event(null, "slipped", /datum/mood_event/slipped)
+// Modifying the prob according to the character's mood.
+// With force above 0 (default) should be used for success prob
+/mob/proc/mood_prob(value, force = MOOD_PROB_MULTIPLIER) // value - normal prob chance.
+	if(value >= 100) // i think if the chance is 100% or more, it should't be modified. for example, there should't be a chance to fail a surgical operation on the operating table.
+		return prob(value)
+	var/new_value = value
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
+	if(!mood)
+		return prob(new_value)
+	new_value += value * LERP(-1 * force, 1 * force, mood.spirit / SPIRIT_MAXIMUM)
+	return prob(new_value)

@@ -181,7 +181,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob
-	if(H.species.flags[NO_BLOOD] || jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate") || H.ismindprotect())
+	if(HAS_TRAIT(H, TRAIT_NO_BLOOD) || jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate") || ismindprotect(H))
 		if(user)
 			to_chat(user, "<span class='warning'>Неподходящее существо.</span>")
 		return FALSE

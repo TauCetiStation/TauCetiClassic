@@ -694,7 +694,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		":e Нет, черртежи я не прродам.",
 		":e Закажите ящик с перрчатками.",
 		":e Я ЖЕ ГОВОРРИЛ, НЕ ТРРОГАЙТЕ СУПЕРРМАТЕРИЮ РРУКАМИ!",
-		":e Да не нужны СМЕСЫ, мы напррямую подключим.",
+		":e Да не нужны СПИНы, мы напррямую подключим.",
 		":e Я много рраз так делал, все норрмально будет.",
 		":e Вы еще шалаш пострройте вокрруг бухломата.",
 		":e Мы - инженерр.",
@@ -784,13 +784,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	desc = "Обреченный бродить по Земле."
 	color = "#FFFFFF77"
 	speak_chance = 20
-	status_flags = GODMODE
 	incorporeal_move = 1
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/atom_init()
 	memory_saved = 1 //At this point nothing is saved
 	. = ..()
+	ADD_TRAIT(src, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 
 /mob/living/simple_animal/parrot/say(message)
 

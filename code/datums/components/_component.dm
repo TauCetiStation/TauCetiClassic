@@ -201,12 +201,11 @@
 	var/list/dc = datum_components
 	if(!dc)
 		return null
-	var/datum/component/C = dc[c_type]
-	if(C)
-		if(length(C))
-			C = C[1]
-		if(C.type == c_type)
-			return C
+	var/datum/component/C
+	if(length(dc))
+		C = dc[c_type]
+	if(C?.type == c_type)
+		return C
 	return null
 
 /datum/proc/GetComponents(c_type)

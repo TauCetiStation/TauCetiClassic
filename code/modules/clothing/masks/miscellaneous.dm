@@ -137,7 +137,7 @@
 	desc = "A rubber pig mask."
 	icon_state = "pig"
 	item_state = "pig"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
@@ -153,7 +153,7 @@
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
 	item_state = "horsehead"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 	w_class = SIZE_TINY
@@ -169,7 +169,7 @@
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
 	icon_state = "cowmask"
 	item_state = "cowmask"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 	w_class = SIZE_TINY
@@ -196,7 +196,7 @@
 	name = "chicken suit head"
 	desc = "Bkaw!"
 	icon_state = "chickenmask"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/mask/chicken/speechModification(message)

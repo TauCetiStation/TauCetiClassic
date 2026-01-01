@@ -24,8 +24,7 @@
 		var/turf/mobloc = get_turf(target.loc)
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)
 		holder.modifier_delay = movement_cooldown
-		target.ExtinguishMob()			//This spell can extinguish mob
-		target.add_status_flags(GODMODE) //Protection from any kind of damage, caused you in astral world
+		toggle_astral(target, TRUE)
 
 		var/remove_xray = FALSE
 		if(!(XRAY in target.mutations))
@@ -37,9 +36,7 @@
 		var/list/companions = handle_teleport_grab(holder, target)
 		if(companions)
 			for(var/M in companions)
-				var/mob/living/L = M
-				L.add_status_flags(GODMODE)
-				L.ExtinguishMob()
+				toggle_astral(M, TRUE)
 		var/image/I = image('icons/mob/blob.dmi', holder, "marker")
 		I.plane = HUD_PLANE
 		holder.indicator = I
@@ -64,16 +61,25 @@
 		if(target.client)
 			target.client.images -= I
 			target.client.eye = target
-		target.remove_status_flags(GODMODE)	//Turn off this cheat
+		toggle_astral(target, FALSE) //Turn off this cheat
 		if(remove_xray)
 			target.mutations -= XRAY
 			target.update_sight()
 		if(companions)
 			for(var/M in companions)
-				var/mob/living/L = M
-				L.remove_status_flags(GODMODE)
+				toggle_astral(M, FALSE)
 		target.eject_from_wall(gib = TRUE, companions = companions)
 		qdel(holder)
+
+// makes mob immune to damage while in astral form
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/toggle_astral(mob/living/L, on = TRUE)
+	if(!istype(L))
+		return
+	if(on)
+		L.ExtinguishMob() // This spell can extinguish mob
+		L.mob_general_damage_mod.ModMultiplicative(0, src)
+	else
+		L.mob_general_damage_mod.RemoveMods(src)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift
 	charge_max = 40 SECONDS

@@ -92,10 +92,15 @@
 	if(!istype(I, /obj/item/weapon/paper))
 		return ..()
 
+	if(amount >= 15)
+		to_chat(user, "<span class='notice'>Корзина для бумаг полна.</span>")
+		return ..()
+
 	user.drop_from_inventory(I, src)
 	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	papers.Add(I)
 	amount++
+	update_icon()
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()
@@ -106,7 +111,7 @@
 			to_chat(user, "<span class='notice'>There are no papers in the bin.</span>")
 
 /obj/item/weapon/paper_bin/update_icon()
-	var/icon_number = CEIL(amount/3)
+	var/icon_number = min(CEIL(amount/3), 5)
 	icon_state = "paper_bin_[icon_number]"
 
 /obj/item/weapon/paper_refill

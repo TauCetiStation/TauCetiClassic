@@ -123,12 +123,12 @@
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(VOX , VOX_ARMALIS, SLIME_VOX)
+	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
-	species_restricted = list(VOX , VOX_ARMALIS, SLIME_VOX)
+	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/head/helmet/space/vox/atom_init()
 	. = ..()
@@ -377,7 +377,7 @@
 
 /obj/item/clothing/under/vox
 	has_sensor = 0
-	species_restricted = list(VOX, SLIME_VOX)
+	species_restricted = list(VOX)
 
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
@@ -399,7 +399,7 @@
 	item_state = "gloves-vox"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	species_restricted = list(VOX , VOX_ARMALIS, SLIME_VOX)
+	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/shoes/magboots/vox
 	desc = "A pair of heavy, jagged armoured foot pieces, seemingly suitable for a velociraptor."
@@ -407,7 +407,7 @@
 	item_state = "boots-vox"
 	icon_state = "boots-vox"
 
-	species_restricted = list(VOX , VOX_ARMALIS, SLIME_VOX)
+	species_restricted = list(VOX , VOX_ARMALIS)
 	item_action_types = list(/datum/action/item_action/toggle_magclaws)
 
 /datum/action/item_action/toggle_magclaws

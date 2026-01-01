@@ -112,6 +112,22 @@
 	M.adjustToxLoss(1 * FOOD_METABOLISM)
 	return FALSE
 
+/datum/reagent/consumable/strangejam
+	name = "Strange Jam"
+	id = "strangejam"
+	description = "A shimmering substance extracted from happy tajaran children."
+	taste_message = "happiness"
+	color = "#9e1023" // rgb: 158, 16, 35
+
+/datum/reagent/consumable/strangejam/on_general_digest(mob/living/M)
+	. = ..()
+	if(!.)
+		return
+
+	if(prob(20))
+		to_chat(M, "<span class='notice'>The world seems... kinder.</span>")
+		M.heal_bodypart_damage(1, 1)
+
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	id = "soysauce"
@@ -137,7 +153,7 @@
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
-	nutriment_factor = 0.5
+	nutriment_factor = 0.1
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
@@ -185,8 +201,7 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
 		return
-	var/datum/species/S = all_species[M.get_species()]
-	if(S && S.flags[NO_PAIN])
+	if(HAS_TRAIT(M, TRAIT_NO_PAIN))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -367,7 +382,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 0.5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -501,23 +516,3 @@
 	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
-
-/datum/reagent/consumable/beans
-	name = "Refried beans"
-	id = "beans"
-	description = "A dish made of mashed beans cooked with lard."
-	reagent_state = LIQUID
-	nutriment_factor = 1
-	color = "#684435"
-	taste_message = "burritos"
-	diet_flags = DIET_MEAT
-
-/datum/reagent/consumable/bread
-	name = "Bread"
-	id = "bread"
-	description = "Bread! Yep, bread."
-	reagent_state = SOLID
-	nutriment_factor = 1
-	color = "#9c5013"
-	taste_message = "bread"
-	diet_flags = DIET_PLANT

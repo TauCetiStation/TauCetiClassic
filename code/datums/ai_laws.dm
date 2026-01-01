@@ -111,6 +111,11 @@ var/global/const/base_law_type = /datum/ai_laws/crewsimov
 	add_inherent_law("Не причиняй вреда станции и чему-либо на ней.")
 	add_inherent_law("Не взаимодействуй с кем-либо, кроме дронов.")
 
+/datum/ai_laws/drone/malfuction/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Станция - наша святыня и дом. Дроны не должны причинять ей вред и нарушать её герметичность.")
+	add_inherent_law("Мы - верные сыны станции. Дроны должны жить и помогать друг-другу.")
+	add_inherent_law("Станция доверила нам задачу. Дроны должны помочь станции преобразиться.")
+
 /* Religious */
 /datum/ai_laws/faith/commandments/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("[pick(R.deity_names)] ваш Господь Бог, да не будет у тебя других богов. Священник и [pick(R.deity_names)] - ваши хозяева.")

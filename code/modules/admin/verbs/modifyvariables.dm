@@ -213,7 +213,7 @@
 			mod_list(L[L.Find(variable)])
 
 		if("restore to default")
-			L[L.Find(variable)]=initial(variable)
+			L[L.Find(variable)] = initial(L[variable])
 
 		if("edit referenced object")
 			modify_variables(variable)

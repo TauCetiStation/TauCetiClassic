@@ -14,9 +14,7 @@
 
 	sound = 'sound/machines/twobeep.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/robot/ping
@@ -35,9 +33,7 @@
 
 	sound = 'sound/machines/ping.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/robot/buzz
@@ -56,9 +52,7 @@
 
 	sound = 'sound/machines/buzz-sigh.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/robot/law
@@ -77,10 +71,17 @@
 
 	sound = 'sound/voice/beepsky/iamthelaw.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(has_robot_module, /obj/item/weapon/robot_module/security),
-	)
+	required_stat = CONSCIOUS
+
+/datum/emote/robot/law/can_emote(mob/user, intentional)
+	var/mob/living/silicon/robot/R = user
+	if(!istype(R.module, /obj/item/weapon/robot_module/security))
+		if(intentional)
+			to_chat(R, "<span class='notice'>You do not have the required module for this emote.</span>")
+		return FALSE
+
+	return ..()
+
 
 /datum/emote/robot/confirm
 	key = "confirm"
@@ -98,9 +99,8 @@
 
 	sound = 'sound/machines/synth_yes.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/deny
 	key = "deny"
@@ -118,9 +118,8 @@
 
 	sound = 'sound/machines/synth_no.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/scary
 	key = "scary"
@@ -138,9 +137,8 @@
 
 	sound = 'sound/machines/synth_alert.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/woop
 	key = "woop"
@@ -158,9 +156,8 @@
 
 	sound = 'sound/machines/dwoop.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/boop
 	key = "boop"
@@ -178,9 +175,8 @@
 
 	sound = 'sound/machines/roboboop.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/robochirp
 	key = "chirp"
@@ -198,9 +194,8 @@
 
 	sound = 'sound/machines/robochirp.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/calling
 	key = "call"
@@ -218,6 +213,4 @@
 
 	sound = 'sound/machines/longwhistle_robot.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS

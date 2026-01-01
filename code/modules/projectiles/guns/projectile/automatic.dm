@@ -251,12 +251,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/a28
 	name = "A28 assault rifle"
-	desc = "Автоматическая винтовка типа булл-пап с воздушным охлаждением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Сэр, я заканчиваю этот бой'. Использует патроны калибра 5.56мм."
+	desc = "Автоматическая винтовка с воздушным охлаждением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Моя винтовка — мой лучший друг'. Использует патроны калибра 5.56мм."
 	icon_state = "a28"
 	item_state = "a28"
-	w_class = SIZE_SMALL
-	two_hand_weapon = DESIRABLE_TWOHAND
-	origin_tech = "combat=5;materials=4;syndicate=6"
+	w_class = SIZE_NORMAL
+	can_be_silenced = TRUE
+	two_hand_weapon = ONLY_TWOHAND
+	slot_flags = 0
+	origin_tech = "combat=5;materials=4"
 	initial_mag = /obj/item/ammo_box/magazine/a28
 	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal, /obj/item/ammo_box/magazine/a28/incendiary)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
@@ -269,12 +271,13 @@
 	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
-	name = "A28 assault rifle NL"
-	icon_state = "a28w"
-	item_state = "a28w"
-	silenced = TRUE
 	initial_mag = /obj/item/ammo_box/magazine/a28/nonlethal
-	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/a28/nonlethal/atom_init()
+	. = ..()
+	silenced = new /obj/item/weapon/silencer
+	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg' // once the silencer is removed, the weapon will use the standard gunshot sound.
+	update_icon() //adds silencer overlay
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"

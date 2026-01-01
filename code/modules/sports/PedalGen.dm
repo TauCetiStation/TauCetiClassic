@@ -90,12 +90,11 @@
 			var/pain_amount = BP.adjust_pumped(1)
 			pedaler.apply_effect(pain_amount, AGONY, 0)
 			SEND_SIGNAL(pedaler, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
-			pedaler.update_body()
 
 	buckled_mob.nutrition -= 0.5
 
 	pedal_left_leg = !pedal_left_leg
-	if(buckled_mob.halloss > 80)
+	if(buckled_mob.getHalLoss() > 80)
 		to_chat(user, "You pushed yourself too hard.")
 		buckled_mob.apply_effect(24,AGONY,0)
 		unbuckle_mob()

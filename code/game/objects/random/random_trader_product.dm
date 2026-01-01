@@ -13,6 +13,19 @@
 	/obj/random/trader_product/sec = 10,
 	/obj/random/trader_product/contraband = 10))
 
+/obj/random/trader_product_safer
+	name = "Random Safer Trader Product"
+	desc = "This is random safer trader product."
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "spacecash10"
+
+/obj/random/trader_product_safer/item_to_spawn()
+	return pickweight(list(
+	/obj/random/trader_product/civ = 40,
+	/obj/random/trader_product/med = 30,
+	/obj/random/trader_product/eng = 20,
+	/obj/random/trader_product/rnd = 10))
+
 /obj/random/trader_product/civ
 	name = "Random Civilian Trader Product"
 	desc = "This is random trader product."
@@ -100,7 +113,7 @@
 	/obj/item/stack/sheet/metal/fifty = 3,
 	/obj/item/stack/sheet/glass/fifty = 3,
 	/obj/item/weapon/rcd/ert = 3,
-	/obj/item/weapon/rcd_ammo/bluespace = 3,
+	/obj/item/weapon/rcd_ammo/huge = 3,
 	/obj/item/clothing/glasses/meson/gar = 3,
 	/obj/item/clothing/glasses/welding/superior = 5,
 	/obj/item/clothing/gloves/insulated = 5,

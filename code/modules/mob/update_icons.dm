@@ -61,11 +61,6 @@
 		else
 			..()
 
-/mob/living/carbon/human/update_inv_slot(slot)
-	..()
-	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD || slot == SLOT_WEAR_SUIT || slot == SLOT_W_UNIFORM)
-		update_hair()
-
 /obj/item/proc/update_inv_mob()
 	if(!slot_equipped || !ismob(loc))
 		return

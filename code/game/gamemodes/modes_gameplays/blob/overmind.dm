@@ -31,7 +31,7 @@
 	updateallghostimages()
 	. = ..()
 
-/mob/camera/blob/Login()
+/mob/camera/blob/LateLogin()
 	..()
 	sync_mind()
 	update_health_hud()

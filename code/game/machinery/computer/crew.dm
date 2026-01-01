@@ -7,12 +7,15 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/crew
-	var/obj/nano_module/crew_monitor/crew_monitor
+	var/obj/crew_monitor_module/crew_monitor
 
 /obj/machinery/computer/crew/atom_init()
 	crew_monitor = new(src)
 	. = ..()
 
 
-/obj/machinery/computer/crew/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	crew_monitor.ui_interact(user, ui_key, ui, force_open)
+/obj/machinery/computer/crew/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/computer/crew/tgui_interact(mob/user, datum/tgui/ui)
+	crew_monitor.tgui_interact(user, ui)

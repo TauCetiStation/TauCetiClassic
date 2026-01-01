@@ -429,7 +429,7 @@
 			feedback_add_details("admin_secrets_fun_used","RET")
 			for(var/mob/living/carbon/human/H in player_list)
 				to_chat(H, "<span class='warning'><B>You suddenly feel stupid.</B></span>")
-				H.setBrainLoss(60)
+				H.adjustBrainLoss(60)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 		// Make all items look like guns
 		if("fakeguns")
@@ -466,7 +466,7 @@
 			feedback_add_details("admin_secrets_fun_used","DF")
 			for(var/mob/living/carbon/human/H as anything in human_list)
 				H.f_style = "Dwarf Beard"
-				H.update_hair()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 		// Battle to the death (only one)
 		if("onlyone")
@@ -541,6 +541,7 @@
 	var/ok = 0
 	switch(href_list["secretsadmin"])
 		if("clear_bombs")
+			EMPTY_BLOCK_GUARD
 			//I do nothing
 		// Cure all diseases currently in existence
 		if("clear_virus")
@@ -619,9 +620,8 @@
 				for(var/line in SSjob.job_debug)
 					dat += "[line]<BR>"
 				dat+= "*******<BR><BR>"
-				for(var/datum/job/job in SSjob.occupations)
-					if(!job)	continue
-					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
+				for(var/datum/job/job as anything in SSjob.all_occupations)
+					dat += "job ([(job in SSjob.active_occupations) ? "active" : "inactive"]): [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 
 				var/datum/browser/popup = new(usr, "jobdebug", "Job Debug info", 600, 500)
 				popup.set_content(dat)

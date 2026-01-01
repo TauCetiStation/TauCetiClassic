@@ -116,7 +116,7 @@
 	if(user.is_busy(src))
 		return
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (W.use_tool(src, user, 40, volume = 50))
+	if (W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 		user.visible_message(
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",

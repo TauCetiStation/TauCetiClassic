@@ -223,7 +223,7 @@
 				choosen_gift = present
 	if(how_many_gifts)
 		var/obj/item/weapon/gift/G = choosen_gift
-		to_chat(user, "<span class='notice'>Looks like there is [how_many_gifts] gifts for you under \the tree!</span>")
+		to_chat(user, "<span class='notice'>Looks like there is [how_many_gifts] gifts for you under the tree!</span>")
 		visible_message("<span class='notice'>[H] takes a gift from \the [src].</span>",
 			"<span class='notice'>You take a gift from \the [src].</span>")
 		G.forceMove(H.loc)
@@ -245,7 +245,7 @@
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src].</span>")
 
 			var/bad_boy = 0
-			for(var/datum/job/job in SSjob.occupations)
+			for(var/datum/job/job in SSjob.all_occupations)
 				if(jobban_isbanned(C, job.title))
 					bad_boy += 1
 			if(!bad_boy)

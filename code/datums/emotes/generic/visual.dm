@@ -6,9 +6,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/pray/do_emote(mob/user, emote_key, intentional)
 	. = ..()
@@ -23,9 +21,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/shiver
@@ -36,9 +32,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/drool
@@ -49,9 +43,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/eyebrow
@@ -62,9 +54,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/nod
@@ -75,10 +65,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 
 /datum/emote/shake
@@ -88,10 +76,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 /datum/emote/shake/get_emote_message_3p(mob/user)
 	return "shakes [P_THEIR(user)] head."
@@ -105,9 +91,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/collapse
@@ -120,9 +104,7 @@
 
 	cooldown = 4 SECONDS
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/collapse/do_emote(mob/user, emote_key, intentional)
 	. = ..()
@@ -139,9 +121,7 @@
 
 	cooldown = 20 SECONDS
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/faint/do_emote(mob/user, emote_key, intentional)
 	. = ..()
@@ -159,9 +139,7 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
-	)
+	required_intentional_stat = CONSCIOUS
 
 /datum/emote/deathgasp/get_emote_message_3p(mob/user)
 	return "seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."

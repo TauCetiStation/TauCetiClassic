@@ -35,7 +35,7 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 /datum/level_lighting_effect/random_aurora/New(duration = 60 SECONDS)
 	var/transitions = ceil(duration/transition_delay)
 	for(var/i in 1 to transitions)
-		colors += list(color_lightness_max(random_color(), 0.70))
+		colors += list(color_luminance_max(random_color(), 70))
 
 /* Planetary lighting */
 /datum/level_lighting_effect/snow_map_random
@@ -48,3 +48,7 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 /datum/level_lighting_effect/junkyard
 	name = "junkyard"
 	colors = list("#5f5f5f") // junkyard is already colorful, gray to add darkness works better
+
+/datum/level_lighting_effect/rad_space
+	name = "radiation"
+	colors = list("#609659")

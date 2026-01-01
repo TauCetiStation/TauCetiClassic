@@ -32,7 +32,7 @@
 			M.SetParalysis(0)
 			M.dizziness = 0
 			M.drowsyness = 0
-			M.setStuttering(0)
+			M.resetStuttering()
 			M.SetDrunkenness(0)
 			M.SetConfused(0)
 			M.jitteriness = 0
@@ -252,10 +252,14 @@
 		return
 
 	M.heal_bodypart_damage(0,3 * REM)
-	if(volume >= overdose && (HUSK in M.mutations) && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.mutations.Remove(HUSK)
-		H.update_body()
+	var/mob/living/carbon/human/H = M
+	if(volume >= overdose && istype(H))
+		if(HAS_TRAIT_FROM(H, TRAIT_BURNT, GENERIC_TRAIT))
+			REMOVE_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
+			H.update_body()
+		if(HAS_TRAIT_FROM(H, TRAIT_HUSK, GENERIC_TRAIT)) // as husk is now a separate trait, we probably should move it from dermaline which is a burn medication
+			REMOVE_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+			H.update_body()
 
 /datum/reagent/dermaline/on_diona_digest(mob/living/M)
 	return FALSE
@@ -313,7 +317,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/lungs/IO = H.organs_by_name[O_LUNGS]
 		if(istype(IO))
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				IO.damage = max(IO.damage - 0.7, 0)
 		switch(data["ticks"])
 			if(50 to 100)
@@ -458,13 +462,13 @@
 		return
 
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM, 0, 1)
-	M.setCloneLoss(0)
-	M.setOxyLoss(0)
+	M.resetCloneLoss()
+	M.resetOxyLoss()
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5)
 	M.hallucination = 0
-	M.setBrainLoss(0)
+	M.resetBrainLoss()
 	M.disabilities = 0
 	M.sdisabilities = 0
 	M.setBlurriness(0)
@@ -475,7 +479,7 @@
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.setStuttering(0)
+	M.resetStuttering()
 	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
@@ -581,7 +585,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(istype(IO))
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/imidazoline/on_diona_digest(mob/living/M)
@@ -625,13 +629,13 @@
 		var/damaged_organs = 0
 		//Peridaxon is hard enough to get, it's probably fair to make this all organs
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				damaged_organs++
 
 		if(!damaged_organs)
 			return
 		for(var/obj/item/organ/internal/IO in H.organs)
-			if(IO.damage > 0 && IO.robotic < 2)
+			if(IO.damage > 0 && !IO.is_robotic())
 				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
 
 /datum/reagent/peridaxon/on_diona_digest(mob/living/M)
@@ -873,11 +877,10 @@
 		M.adjustFireLoss(-1)
 	/*if(M.nutrition < NUTRITION_LEVEL_WELL_FED) //we are making him WELL FED
 		M.nutrition += 30*/  //will remain commented until we can deal with fat
-	if(ishuman(M))
+	if(ishuman(M) && !HAS_TRAIT(M, TRAIT_NO_BLOOD)) // Do not restore blood on things with no blood by nature
 		var/mob/living/carbon/human/H = M
-		if(!(NO_BLOOD in H.species.flags)) // Do not restore blood on things with no blood by nature
-			if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
-				H.blood_add(0.5)
+		if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
+			H.blood_add(0.5)
 
 /datum/reagent/lipozine
 	name = "Lipozine" // The anti-nutriment.
@@ -995,11 +998,11 @@
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_artery_cut())
 					E.status &= ~ORGAN_ARTERY_CUT
-			if(IO.robotic == 1)
+			if(IO.is_robotic())
 				if(prob(75))
 					data["ticks"]--
 		if(200 to INFINITY)
-			if(IO.robotic != 2)
+			if(!IO.is_robotic())
 				IO.heart_stop()
 
 /datum/reagent/metatrombine/on_diona_digest(mob/living/M)

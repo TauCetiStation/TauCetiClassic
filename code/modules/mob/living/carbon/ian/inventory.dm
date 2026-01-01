@@ -69,7 +69,6 @@
 			return
 
 	W.plane = ABOVE_HUD_PLANE
-	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
 	W.update_inv_mob()
 
@@ -85,7 +84,6 @@
 		W.loc = src
 		mouth = W
 		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_MOUTH)
 		W.slot_equipped = SLOT_MOUTH
 		if(client)
@@ -117,7 +115,6 @@
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
 		W.slot_equipped = initial(W.slot_equipped)
 		return FALSE

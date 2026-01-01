@@ -166,6 +166,7 @@ export const backendMiddleware = (store) => {
       else if (fancyState !== fancy) {
         logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
+        setupDrag(fancy);
         Byond.winset(Byond.windowId, {
           titlebar: !fancy,
           'can-resize': !fancy,
@@ -180,7 +181,7 @@ export const backendMiddleware = (store) => {
       // Signal renderer that we have resumed
       resumeRenderer();
       // Setup drag
-      setupDrag();
+      setupDrag(payload.config?.window?.fancy);
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
       setTimeout(() => {
@@ -232,6 +233,7 @@ type BackendState<TData> = {
       size: [number, number];
       fancy: boolean;
       locked: boolean;
+      scale: boolean;
     };
     client: {
       ckey: string;

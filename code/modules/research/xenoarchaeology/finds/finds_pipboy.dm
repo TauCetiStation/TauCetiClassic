@@ -108,6 +108,7 @@
 		var/message = ""
 		if(!output_to_chat)
 			message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+			message += get_browse_zoom_style(user.client)
 			message += "<title>[M.name]'s scan results</title></head><BODY>"
 
 		message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
@@ -121,14 +122,14 @@
 			to_chat(user, message)
 			return
 		message += "</BODY></HTML>"
-		user << browse(message, "window=[M.name]_scan_report;size=400x400;can_resize=1")
+		user << browse(message, "window=[M.name]_scan_report;[get_browse_size_parameter(user.client, 400, 400)];can_resize=1")
 		onclose(user, "[M.name]_scan_report")
 		return
 	var/dat = health_analyze(M, user, TRUE, output_to_chat)
 	if(output_to_chat)
 		to_chat(user, dat)
 		return
-	user << browse(dat, "window=[M.name]_scan_report;size=400x400;can_resize=1")
+	user << browse(dat, "window=[M.name]_scan_report;[get_browse_size_parameter(user.client, 400, 400)];can_resize=1")
 	onclose(user, "[M.name]_scan_report")
 
 /obj/item/clothing/gloves/pipboy/attack_self(mob/user)
@@ -139,7 +140,7 @@
 	if(on)
 		if(profile_name)
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
-			var/dat = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'><body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
+			var/dat = "<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>[get_browse_zoom_style(user.client)]</head><body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
 					dat += "Hello, [profile_name]!<br>"

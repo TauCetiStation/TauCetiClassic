@@ -1,7 +1,7 @@
 #define HEATER_MODE_STANDBY	"standby"
 #define HEATER_MODE_HEAT	"heat"
 #define HEATER_MODE_COOL	"cool"
-
+#define HEATER_MODE_AUTO	"auto"
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -15,21 +15,27 @@
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
-	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
+	var/setMode = HEATER_MODE_AUTO // Anything other than "heat" or "cool" is considered auto.
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
 	var/efficiency = 20000
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
+	var/upgraded = FALSE
 
 /obj/machinery/space_heater/atom_init()
 	. = ..()
-	cell = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 3)
+	if(upgraded)
+		component_parts += new /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic(null)
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra(null)
+		cell = new /obj/item/weapon/stock_parts/cell/bluespace(src)
+	else
+		component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+		cell = new(src)
 	RefreshParts()
 	update_icon()
 
@@ -120,18 +126,25 @@
 	else
 		..()
 
-/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat != CONSCIOUS) // this probably handled by nano itself, a check would be nice.
-		return
-	var/data[0]
+/obj/machinery/space_heater/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/space_heater/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SpaceHeater", name)
+		ui.open()
+
+/obj/machinery/space_heater/tgui_data()
+	var/data = list()
 	data["open"] = panel_open
 	data["on"] = on
-	data["mode"] = setMode
+	data["mode"] = capitalize(setMode)
 	data["hasPowercell"] = !!cell
-	if(cell)
-		data["powerLevel"] = round(cell.percent(), 1)
+	data["powercellName"] = isnull(cell) ? "" : cell.name
+	data["powerLevel"] = isnull(cell) ? 0 : round(cell.percent(), 1)
 	data["targetTemp"] = round(targetTemperature - T0C, 1)
-	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
+	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB - T0C)
 	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
 
 	var/turf/simulated/L = get_turf(loc)
@@ -147,51 +160,39 @@
 	else
 		data["currentTemp"] = round(curTemp - T0C, 1)
 
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
-	if(!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "space_heater.tmpl", name, 490, 350)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
-		ui.open()
-		// Auto update every Master Controller tick
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
+	return data
 
-/obj/machinery/space_heater/is_operational()
-	return !(stat & BROKEN)
-
-/obj/machinery/space_heater/Topic(href, href_list)
+/obj/machinery/space_heater/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	if(href_list["power"])
-		on = !!text2num(href_list["power"])
-		mode = HEATER_MODE_STANDBY
-		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
-		update_icon()
-
-	else if(href_list["mode"])
-		setMode = href_list["mode"]
-
-	else if(href_list["temp"] && panel_open)
-		var/value
-		if(href_list["temp"] == "custom")
-			value = input("Please input the target temperature", name) as num|null
-			if(isnull(value) || !can_still_interact_with(usr))
+	switch(action)
+		if("power")
+			on = !on
+			mode = HEATER_MODE_STANDBY
+			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
+			update_icon()
+		if("mode")
+			switch(setMode)
+				if(HEATER_MODE_AUTO)
+					setMode = HEATER_MODE_HEAT
+				if(HEATER_MODE_HEAT)
+					setMode = HEATER_MODE_COOL
+				if(HEATER_MODE_COOL)
+					setMode = HEATER_MODE_AUTO
+		if("setTemp")
+			var/value = params["temperature"]
+			if(isnull(value))
 				return
 			value += T0C
-		else
-			value = targetTemperature + text2num(href_list["temp"])
+			var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
+			var/maxTemp = settableTemperatureMedian + settableTemperatureRange
+			targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
 
-		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
-		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
-
-	else if(href_list["cellremove"] && panel_open)
+	if(!panel_open)
+		return
+	if(action == "operateCell")
 		if(cell)
 			if(usr.get_active_hand())
 				to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
@@ -201,67 +202,75 @@
 			cell.add_fingerprint(usr)
 			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
 			cell = null
-
-	else if(href_list["cellinstall"] && panel_open)
-		if(!cell)
+		else
 			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 			if(istype(C))
 				if(!usr.drop_from_inventory(C, src))
 					return
 				cell = C
 				C.add_fingerprint(usr)
-
 				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
+
+
+/obj/machinery/space_heater/is_operational()
+	return !(stat & BROKEN)
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))
 		return
-
-	if(powered() || cell && cell.charge > 0)
-		var/datum/gas_mixture/env = loc.return_air()
-		if(env && abs(env.temperature - targetTemperature) <= 0.1)
-			mode = HEATER_MODE_STANDBY
-		else
-			var/transfer_moles = 0.25 * env.total_moles
-			var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
-			if(removed)
-				var/heat_transfer = removed.get_thermal_energy_change(targetTemperature)
-				var/power_draw
-				if(heat_transfer > 0)	//heating air
-					heat_transfer = min( heat_transfer , heatingPower ) //limit by the power rating of the heater
-
-					removed.add_thermal_energy(heat_transfer)
-					power_draw = heat_transfer
-				else	//cooling air
-					heat_transfer = abs(heat_transfer)
-
-					//Assume the heat is being pumped into the hull which is fixed at 20 C
-					var/cop = removed.temperature / T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
-					heat_transfer = min(heat_transfer, cop * heatingPower)	//limit heat transfer by available power
-
-					heat_transfer = removed.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
-
-					power_draw = abs(heat_transfer) / cop
-				if(!powered())
-					cell.use(power_draw * CELLRATE)
-				else
-					use_power(power_draw TAUCETI_POWER_DRAW_MOD)
-
-				if(heat_transfer > 0)
-					mode = HEATER_MODE_HEAT
-				else if(heat_transfer < 0)
-					mode = HEATER_MODE_COOL
-				else
-					mode = HEATER_MODE_STANDBY
-
-			env.merge(removed)
-	else
+	if(!powered() && (isnull(cell) || cell.charge <= 0))
 		on = FALSE
 		mode = HEATER_MODE_STANDBY
 		power_change()
+		update_icon()
+		return
+
+	var/datum/gas_mixture/env = loc.return_air()
+	var/tempDif = isnull(env) ? 0 : (env.temperature - targetTemperature)
+	if(abs(tempDif) <= 0.1 || (tempDif > 0 && setMode == HEATER_MODE_HEAT) || (tempDif < 0 && setMode == HEATER_MODE_COOL)) //Standby if dif is too small or if restricted by target mode, e.g. env. temp. is higher than target temp. and mode is heating
+		mode = HEATER_MODE_STANDBY
+	else
+		var/transfer_moles = 0.25 * env.total_moles
+		var/datum/gas_mixture/removed = env.remove(transfer_moles)
+
+		if(removed)
+			var/heat_transfer = removed.get_thermal_energy_change(targetTemperature)
+			var/power_draw
+			if(heat_transfer > 0)	//heating air
+				heat_transfer = min( heat_transfer , heatingPower ) //limit by the power rating of the heater
+
+				removed.add_thermal_energy(heat_transfer)
+				power_draw = heat_transfer
+			else	//cooling air
+				heat_transfer = abs(heat_transfer)
+
+				//Assume the heat is being pumped into the hull which is fixed at 20 C
+				var/cop = removed.temperature / T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
+				heat_transfer = min(heat_transfer, cop * heatingPower)	//limit heat transfer by available power
+
+				heat_transfer = removed.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
+
+				power_draw = abs(heat_transfer) / cop
+			if(!powered())
+				cell.use(power_draw * CELLRATE)
+			else
+				use_power(power_draw TAUCETI_POWER_DRAW_MOD)
+
+			if(heat_transfer > 0)
+				mode = HEATER_MODE_HEAT
+			else if(heat_transfer < 0)
+				mode = HEATER_MODE_COOL
+			else
+				mode = HEATER_MODE_STANDBY
+
+		env.merge(removed)
+
 	update_icon()
+
+/obj/machinery/space_heater/upgraded
+	upgraded = TRUE
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
 #undef HEATER_MODE_COOL
+#undef HEATER_MODE_AUTO

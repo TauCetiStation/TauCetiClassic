@@ -166,9 +166,15 @@
 	switch(multiple_sprites)
 		if(MANY_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
-			desc = "[initial(desc)] Осталось снарядов: [stored_ammo.len]"
+			if(item_state_world)
+				item_state_world = "[initial(item_state_world)]-[stored_ammo.len]"
+				item_state_inventory = "[initial(item_state_inventory)]-[stored_ammo.len]"
+			desc = "[initial(desc)] Осталось снарядов: [stored_ammo.len]."
 		if(TWO_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
+			if(item_state_world)
+				item_state_world = "[initial(item_state_world)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
+				item_state_inventory = "[initial(item_state_inventory)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
 			desc = "[initial(desc)] [get_ammo_count_description()]."
 
 //Behavior for magazines

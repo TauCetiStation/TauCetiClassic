@@ -8,6 +8,8 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	var/material = /obj/item/stack/sheet/metal
 
 /obj/structure/stool/bar

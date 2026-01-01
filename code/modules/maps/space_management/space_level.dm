@@ -28,6 +28,8 @@
 		level_lighting_type = /datum/level_lighting_effect/junkyard
 	else
 		level_lighting_type = /datum/level_lighting_effect/starlight
+		if(HAS_ROUND_ASPECT(ROUND_ASPECT_HIGH_SPACE_RADIATION))
+			level_lighting_type = /datum/level_lighting_effect/rad_space
 
 	set_level_light(new level_lighting_type)
 

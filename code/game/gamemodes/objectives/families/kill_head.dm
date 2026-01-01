@@ -9,7 +9,7 @@
 		return FALSE
 
 	for(var/datum/mind/M in possible_targets)
-		if(M.assigned_role in command_positions)
+		if(M.assigned_role in SSjob.heads_positions)
 			heads += M
 
 	if(heads.len)

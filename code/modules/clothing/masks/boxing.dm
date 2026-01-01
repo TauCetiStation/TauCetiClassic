@@ -3,7 +3,7 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = FACE
 	w_class = SIZE_TINY
@@ -13,7 +13,7 @@
 	desc = "Designed to both hide identities and keep your face comfy and warm."
 	icon_state = "swatclava"
 	item_state = "balaclava"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	w_class = SIZE_TINY
 
@@ -40,7 +40,7 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	item_state = "luchag"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE
 	w_class = SIZE_TINY

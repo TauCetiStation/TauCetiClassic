@@ -116,14 +116,14 @@
 	if(F.get("eject"))
 		go_out()
 	if(F.get("view_stats"))
-		chassis.occupant << browse(get_occupant_stats(),"window=msleeper")
+		chassis.occupant << browse(get_occupant_stats(chassis.occupant.client),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(F.get("inject"))
 		inject_reagent(F.getType("inject",/datum/reagent),F.getObj("source"))
 	return
 
-/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_stats()
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_stats(client/user)
 	if(!occupant)
 		return
 	return {"<html>
@@ -137,6 +137,7 @@
 				h3 {margin-bottom:2px;font-size:14px;}
 				#lossinfo, #reagents, #injectwith {padding-left:15px;}
 				</style>
+				[get_browse_zoom_style(user)]
 				</head>
 				<body>
 				<h3>Health statistics</h3>
@@ -166,10 +167,10 @@
 			t1 = "Unknown"
 	return {"<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.health]% ([t1])</font><br />
 				<font color="[occupant.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [src.occupant.bodytemperature-T0C]&deg;C ([src.occupant.bodytemperature*1.8-459.67]&deg;F)</font><br />
-				<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [occupant.getBruteLoss()]%</font><br />
-				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
-				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
-				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
+				<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [ceil(occupant.getBruteLoss())]%</font><br />
+				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [ceil(occupant.getOxyLoss())]%</font><br />
+				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [ceil(occupant.getToxLoss())]%</font><br />
+				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [ceil(occupant.getFireLoss())]%</font><br />
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_occupant_reagents()
@@ -531,7 +532,7 @@
 			log_message("Reagent processing started.")
 		return
 	if(F.get("show_reagents"))
-		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
+		chassis.occupant << browse(get_reagents_page(chassis.occupant.client),"window=msyringegun")
 	if(F.get("purge_reagent"))
 		var/reagent = F.get("purge_reagent")
 		if(reagent)
@@ -542,7 +543,7 @@
 		return
 	return
 
-/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_page()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_page(client/C)
 	var/output = {"<html>
 						<head>
 						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -556,6 +557,7 @@
 						form {width: 90%; margin:10px auto; border:1px dotted #999; padding:6px;}
 						#submit {margin-top:5px;}
 						</style>
+						[get_browse_zoom_style(C)]
 						</head>
 						<body>
 						<h3>Current reagents:</h3>

@@ -226,7 +226,16 @@
 	return 0
 
 /mob/proc/Life()
+	// SHOULD_CALL_PARENT(TRUE) // need to do a pass at every life() call and see if adding ..() everywhere can break something
 	set waitfor = 0
+
+	// forces a full overlay update
+	// todo: this flag is not actively used at this moment, maybe we should remove it or replace some regenerate_icons()-calls with it
+	// for humans direct parts update is more preferable than full regeneration (ex. update_body())
+	if(regenerate_icons_next_tick)
+		regenerate_icons_next_tick = FALSE
+		regenerate_icons()
+
 	return
 
 /mob/proc/incapacitated(restrained_type = ARMS)
@@ -444,7 +453,6 @@
 	client.prefs.selected_quality_name = null
 	M.key = key
 	M.name = M.key
-//	M.Login()	//wat
 	return
 
 /mob/verb/cancel_camera()
@@ -485,7 +493,7 @@
 /mob/proc/pull_damage()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if((H.health - H.halloss) <= config.health_threshold_softcrit)
+		if((H.health - H.getHalLoss()) <= config.health_threshold_softcrit)
 			for(var/bodypart_name in H.bodyparts_by_name)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				if(H.lying)
@@ -702,7 +710,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(Master)
 						stat(null)
 						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							if(SS.flags & SS_SHOW_IN_MC_TAB)
+							if(client.holder.MC_ss_show_all || SS.flags & SS_SHOW_IN_MC_TAB)
 								SS.stat_entry()
 					cameranet.stat_entry()
 
@@ -788,9 +796,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(!no_transform && lying != lying_prev)
 		update_transform()
-	if(update_icon)	//forces a full overlay update
-		update_icon = FALSE
-		regenerate_icons()
 
 
 /mob/proc/facedir(ndir)
@@ -840,8 +845,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
-	if(add_flags & GODMODE)
-		stuttering = 0
 	if(add_flags & FAKEDEATH)
 		update_canmove()
 	status_flags |= add_flags
@@ -872,20 +875,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 		clear_alert("high")
 
 // ========== STUTTERING ==========
+// todo: move it to status effects
 /mob/proc/Stuttering(amount)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering, amount, 0)
 
 /mob/proc/AdjustStuttering(amount)
-	if(status_flags & GODMODE)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering + amount, 0)
 
-/mob/proc/setStuttering(amount)
-	if(status_flags & GODMODE)
-		return
-	stuttering = max(amount, 0)
+/mob/proc/resetStuttering(amount)
+	stuttering = 0
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
@@ -960,11 +962,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			if(selection in limb.implants)
+			if(selection in limb.embedded_objects)
 				BP = limb
 				break
 
-		BP.implants -= selection
+		BP.embedded_objects -= selection
 		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection

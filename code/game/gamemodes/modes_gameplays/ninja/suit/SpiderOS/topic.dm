@@ -29,8 +29,9 @@
 		if("Close")
 			display_to << browse(null, "window=spideros")
 			return
-		if("Refresh")//Refresh, goes to the end of the proc.
-		if("Return")//Return
+		if("Refresh") //Refresh, goes to the end of the proc.
+			EMPTY_BLOCK_GUARD
+		if("Return") //Return
 			if(spideros<=9)
 				spideros=0
 			else

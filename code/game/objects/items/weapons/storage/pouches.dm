@@ -16,7 +16,7 @@
 
 /obj/item/weapon/storage/pouch/verb/toggle_slide()
 	set name = "Toggle Slide"
-	set desc = "Toggle the behavior of last item in [src] \"sliding\" into your hand."
+	set desc = "Toggle the behavior of last item in storage \"sliding\" into your hand."
 	set category = "Object"
 
 	sliding_behavior = !sliding_behavior
@@ -36,20 +36,20 @@
 
 /obj/item/weapon/storage/pouch/small_generic
 	name = "small generic pouch"
-	desc = "Can hold anything in it, but only about once."
+	desc = "Can hold anything in it, but only about five."
 	icon_state = "small_generic"
 	item_state = "small_generic"
 	storage_slots = null //Uses generic capacity
-	max_storage_space = SIZE_MINUSCULE * 3
+	max_storage_space = SIZE_MINUSCULE * 10
 	max_w_class = SIZE_TINY
 
 /obj/item/weapon/storage/pouch/medium_generic
 	name = "medium generic pouch"
-	desc = "Can hold anything in it, but only about twice."
+	desc = "Can hold anything in it, but only about eight."
 	icon_state = "medium_generic"
 	item_state = "medium_generic"
 	storage_slots = null //Uses generic capacity
-	max_storage_space = SIZE_MINUSCULE * 5
+	max_storage_space = SIZE_MINUSCULE * 14
 	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/pouch/large_generic
@@ -60,16 +60,16 @@
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT|SLOT_FLAGS_DENYPOCKET
 	storage_slots = null //Uses generic capacity
-	max_storage_space = SIZE_MINUSCULE * 10
+	max_storage_space = SIZE_MINUSCULE * 21
 	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/pouch/medical_supply
 	name = "medical supply pouch"
-	desc = "Can hold medical equipment. But only about three pieces of it."
+	desc = "Can hold medical equipment. But only about six pieces of it."
 	icon_state = "medical_supply"
 	item_state = "medical_supply"
 
-	storage_slots = 3
+	storage_slots = 6
 	max_w_class = SIZE_SMALL
 
 	can_hold = list(
@@ -98,11 +98,11 @@
 
 /obj/item/weapon/storage/pouch/engineering_tools
 	name = "engineering tools pouch"
-	desc = "Can hold small engineering tools. But only about three pieces of them."
+	desc = "Can hold small engineering tools. But only about six pieces of them."
 	icon_state = "engineering_tool"
 	item_state = "engineering_tool"
 
-	storage_slots = 3
+	storage_slots = 6
 	max_w_class = SIZE_SMALL
 
 	can_hold = list(
@@ -132,11 +132,11 @@
 
 /obj/item/weapon/storage/pouch/engineering_supply
 	name = "engineering supply pouch"
-	desc = "Can hold engineering equipment. But only about two pieces of it."
+	desc = "Can hold engineering equipment. But only about twenty one pieces of it."
 	icon_state = "engineering_supply"
 	item_state = "engineering_supply"
 
-	storage_slots = 2
+	storage_slots = 21
 	w_class = SIZE_SMALL
 	max_w_class = SIZE_SMALL
 
@@ -158,7 +158,7 @@
 	icon_state = "ammo"
 	item_state = "ammo"
 
-	storage_slots = 3
+	storage_slots = 6
 	w_class = SIZE_SMALL
 	max_w_class = SIZE_SMALL
 
