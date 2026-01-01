@@ -181,7 +181,7 @@
 
 	required_stat = CONSCIOUS
 
-	required_bodyparts = list(BP_HEADBP_R_LEG, BP_L_LEG)
+	required_bodyparts = list(BP_R_LEG, BP_L_LEG)
 
 
 /datum/emote/human/flip/do_emote(mob/living/carbon/human/user)
