@@ -179,11 +179,10 @@
 
 	message_type = SHOWMSG_VISUAL
 
-	state_checks = list(
-		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_R_LEG),
-		EMOTE_STATE(is_present_bodypart, BP_L_LEG),
-	)
+	required_stat = CONSCIOUS
+
+	required_bodyparts = list(BP_HEADBP_R_LEG, BP_L_LEG)
+
 
 /datum/emote/human/flip/do_emote(mob/living/carbon/human/user)
 	. = ..()
