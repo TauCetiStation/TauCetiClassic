@@ -1,6 +1,7 @@
 /obj/item/weapon/gun/projectile/automatic/pistol
 	name = "pistol"
 	can_be_holstered = TRUE
+	recoil = LOW_RECOIL
 	w_class = SIZE_SMALL
 
 /obj/item/weapon/gun/projectile/automatic/pistol/silenced
@@ -42,6 +43,7 @@
 	icon_state = "deagle"
 	item_state = "deagle"
 	force = 14.0
+	recoil = HEAVY_RECOIL
 	initial_mag = /obj/item/ammo_box/magazine/deagle
 	suitable_mags = list(/obj/item/ammo_box/magazine/deagle, /obj/item/ammo_box/magazine/deagle/weakened)
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
@@ -115,7 +117,7 @@
 	icon_state = "synderringer"
 	force = 5
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
-	recoil = 3
+	recoil = HEAVY_RECOIL
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/pistol/wjpp
