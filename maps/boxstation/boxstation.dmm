@@ -66431,10 +66431,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
-	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cBQ" = (
@@ -66452,10 +66448,6 @@
 "cBR" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
-	},
-/obj/structure/fence/metal{
-	dir = 4;
-	color = "yellow"
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)

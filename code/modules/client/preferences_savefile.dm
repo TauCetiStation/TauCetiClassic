@@ -875,7 +875,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
 	underwear		= sanitize_integer(underwear, 0, underwear_t.len, initial(underwear))
 	undershirt		= sanitize_integer(undershirt, 0, undershirt_t.len, initial(undershirt))
-	undershirt_print = sanitize_inlist(undershirt_print, undershirt_prints_t, null)
+	undershirt_print = sanitize_inlist(undershirt_print, undershirt_prints_t + null, null)
 	socks			= sanitize_integer(socks, 0, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
