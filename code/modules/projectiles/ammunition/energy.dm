@@ -62,6 +62,10 @@
 	e_cost = 75
 	select_name = "redtag"
 
+/obj/item/ammo_casing/energy/laser/devil_dagger
+	projectile_type = /obj/item/projectile/beam/lasertag/omni
+	select_name = "devil dagger"
+
 /obj/item/ammo_casing/energy/bolt
 	projectile_type = /obj/item/projectile/energy/bolt
 	select_name = "bolt"

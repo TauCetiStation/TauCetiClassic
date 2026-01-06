@@ -47,3 +47,15 @@
 
 /datum/status_effect/array_turn_back/on_apply()
 	return isreplicator(owner)
+
+
+/atom/movable/screen/alert/status_effect/instagib_spawned
+	name = "Возродившийся"
+	desc = "Только что возродившиеся игроки не получают и не приносят очков за убийства."
+	icon_state = "instagib"
+
+/datum/status_effect/instagib_spawned
+	id = "instagib_spawned"
+	duration = 1 SECOND
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /atom/movable/screen/alert/status_effect/instagib_spawned

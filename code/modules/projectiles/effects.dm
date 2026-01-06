@@ -229,3 +229,16 @@
 
 /obj/effect/projectile/pyrometer/impact
 	icon_state = "pyrometer_impact"
+
+//----------------------------
+// Devil Dagger
+//----------------------------
+/obj/effect/projectile/devil_dagger
+	deletes_itself = TRUE
+	time_to_live = 8
+
+/obj/effect/projectile/devil_dagger/tracer
+	icon_state = "devil_dagger_beam"
+
+/obj/effect/projectile/devil_dagger/impact
+	icon_state = "devil_dagger_impact"

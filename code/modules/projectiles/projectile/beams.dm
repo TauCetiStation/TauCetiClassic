@@ -199,3 +199,32 @@
 	if(istype(A, /mob/living/simple_animal/hostile/pylon/cult) || istype(A, /obj/structure/cult/pylon) || isconstruct(A) || istype(A, /obj/effect/anomaly/bluespace/cult_portal))
 		return FALSE
 	return ..()
+
+/obj/item/projectile/beam/devil_dagger
+	name = "devil dagger beam"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage = 0
+	damage_type = BURN
+	fake = TRUE
+	flag = LASER
+
+	muzzle_type = /obj/effect/projectile/devil_dagger/tracer
+	tracer_type = /obj/effect/projectile/devil_dagger/tracer
+	impact_type = /obj/effect/projectile/devil_dagger/impact
+
+/obj/item/projectile/beam/devil_dagger/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(!istype(shot_from, /obj/item/weapon/gun/energy/laser/devil_dagger))
+		return FALSE
+
+	var/obj/item/weapon/gun/energy/laser/devil_dagger/gun = shot_from
+
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(isrole(INSTAGIB_ROLE, H))
+			var/points = 1
+			if(original == target)
+				points = 2
+
+			gun.MM.kill(H, firer, points)
+
+	return TRUE

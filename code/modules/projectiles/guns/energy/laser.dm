@@ -144,3 +144,22 @@
 	item_state = "l_tag_red"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	lasertag_color = "red"
+
+
+/obj/item/weapon/gun/energy/laser/devil_dagger
+	name = "Devil Dagger"
+	icon_state = "devil_dagger100"
+	desc = "Кинжал грешника."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/devil_dagger)
+
+	var/datum/map_module/instagib/MM
+	flags = NODROP | ABSTRACT | DROPDEL
+
+/obj/item/weapon/gun/energy/laser/devil_dagger/atom_init()
+	. = ..()
+	MM = SSmapping.get_map_module(MAP_MODULE_INSTAGIB)
+	if(!MM)
+		qdel()
+
+/obj/item/weapon/gun/energy/laser/devil_dagger/afterattack(atom/target, mob/user, proximity, params)
+	to_chat(user, "afterattack")
