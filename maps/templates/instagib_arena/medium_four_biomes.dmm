@@ -1,0 +1,2884 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"aL" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "asteroid"
+	},
+/area/custom/arena)
+"aS" = (
+/turf/unsimulated/floor/carpet/green,
+/area/custom/arena)
+"aU" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "asteroid"
+	},
+/area/custom/arena)
+"bg" = (
+/obj/structure/flora/ausbushes/pointybush,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"bE" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"bX" = (
+/obj/structure/flora/tree/jungle,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"cf" = (
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"cp" = (
+/turf/unsimulated/beach/sand,
+/area/custom/arena)
+"cs" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"cM" = (
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"dL" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"dX" = (
+/obj/structure/cult{
+	icon_state = "gargoyle"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"ey" = (
+/obj/structure/cult{
+	icon_state = "shell"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"ez" = (
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"fw" = (
+/obj/structure/flora/grass/green,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"fR" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/beach/sand,
+/area/custom/arena)
+"gi" = (
+/obj/structure/flora/tree/dead,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"gK" = (
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"hl" = (
+/obj/effect/decal/turf_decal/alpha/dark_red{
+	icon_state = "religion_cult_of_blood"
+	},
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/cult,
+/area/custom/arena)
+"hs" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/rock/pile/largejungle{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"hw" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"if" = (
+/obj/structure/flora/grass/brown,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"iB" = (
+/obj/structure/torch_holder{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"kt" = (
+/obj/structure/flora/tree/jungle,
+/obj/structure/flora/ausbushes/ppflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"lp" = (
+/obj/structure/torch_holder,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"lB" = (
+/obj/structure/flora/ausbushes/ywflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"mi" = (
+/obj/structure/static_portal{
+	color = "#4572e3";
+	id = 2
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
+	icon_state = "center_8"
+	},
+/area/custom/arena)
+"mA" = (
+/obj/structure/lattice,
+/turf/environment/space/holospace,
+/area/custom/arena)
+"nP" = (
+/obj/structure/flora/rock/jungle{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"qj" = (
+/obj/structure/cult{
+	icon_state = "jew"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"rC" = (
+/obj/structure/bonfire,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"rX" = (
+/obj/structure/torch_holder{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"sf" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"sE" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "solarpanel"
+	},
+/area/custom/arena)
+"td" = (
+/obj/structure/flora/ausbushes/ppflowers{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"to" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"vp" = (
+/obj/structure/flora/ausbushes/lavendergrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"vw" = (
+/obj/structure/torch_holder,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"vH" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/carpet/black,
+/area/custom/arena)
+"vO" = (
+/obj/structure/scrap_cube,
+/turf/environment/space/holospace,
+/area/custom/arena)
+"vP" = (
+/turf/unsimulated/floor{
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"vZ" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/beach/sand,
+/area/custom/arena)
+"wB" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"wF" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"xM" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/junglebush/large,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"yj" = (
+/obj/structure/static_portal{
+	color = "#ff4100";
+	id = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
+	icon_state = "center_8"
+	},
+/area/custom/arena)
+"yk" = (
+/turf/unsimulated/floor/carpet/black,
+/area/custom/arena)
+"zg" = (
+/obj/structure/flora/junglebush/large,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Aw" = (
+/turf/unsimulated/floor{
+	icon_state = "asteroid"
+	},
+/area/custom/arena)
+"Bk" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
+	icon_state = "center_8"
+	},
+/area/custom/arena)
+"BE" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/lavendergrass{
+	layer = 2.7
+	},
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Cz" = (
+/obj/structure/torch_holder{
+	dir = 1
+	},
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"Da" = (
+/turf/unsimulated/wall/like_a_normal/red,
+/area/custom/arena)
+"DT" = (
+/turf/unsimulated/wall/cult/runed/anim,
+/area/custom/arena)
+"DV" = (
+/obj/structure/torch_holder{
+	dir = 4
+	},
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"DW" = (
+/obj/structure/window/fulltile,
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/arena)
+"DZ" = (
+/obj/structure/flora/ausbushes/ppflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Er" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"EX" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Fj" = (
+/obj/structure/flora/ausbushes,
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"FC" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/environment/space/holospace,
+/area/custom/arena)
+"FD" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/obj/structure/stool/bed/bench{
+	icon_state = "bench_2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"GJ" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/ppflowers{
+	layer = 2.7
+	},
+/obj/structure/stool/bed/bench,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Hj" = (
+/obj/structure/flora/grass/both,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"Ho" = (
+/turf/unsimulated/floor/cult,
+/area/custom/arena)
+"IB" = (
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"IP" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Je" = (
+/turf/environment/space,
+/area/space)
+"Jq" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"JG" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/catwalks.dmi';
+	icon_state = "catwalk0"
+	},
+/area/custom/arena)
+"Ka" = (
+/turf/unsimulated/floor{
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"Ki" = (
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Kk" = (
+/obj/structure/snowman,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"KJ" = (
+/turf/unsimulated/wall/like_a_normal,
+/area/custom/arena)
+"KN" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"KQ" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/carpet/green,
+/area/custom/arena)
+"KX" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"Li" = (
+/obj/structure/flora/tree/jungle,
+/obj/structure/flora/ausbushes/lavendergrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Lz" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "asteroid"
+	},
+/area/custom/arena)
+"LL" = (
+/obj/structure/flora/ausbushes/lavendergrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Ns" = (
+/obj/structure/flora/ausbushes,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Nz" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"NP" = (
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"OE" = (
+/turf/unsimulated/floor{
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"Qb" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"Qm" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"Qt" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"Qx" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"QN" = (
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Ra" = (
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"Rj" = (
+/turf/unsimulated/wall/log,
+/area/custom/arena)
+"Ru" = (
+/obj/structure/lattice,
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/environment/space/holospace,
+/area/custom/arena)
+"RM" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"RP" = (
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"RT" = (
+/turf/unsimulated/wall/like_a_normal/green,
+/area/custom/arena)
+"Sd" = (
+/obj/item/weapon/flora/random,
+/obj/structure/flora/ausbushes/lavendergrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"So" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Sp" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/ppflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"SK" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Tm" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
+	icon_state = "center_8"
+	},
+/area/custom/arena)
+"Ty" = (
+/turf/unsimulated/floor{
+	icon_state = "solarpanel"
+	},
+/area/custom/arena)
+"Tz" = (
+/obj/structure/pedestal/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/arena)
+"TW" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Uf" = (
+/obj/effect/landmark/blockway,
+/turf/unsimulated/beach/coastline,
+/area/custom/arena)
+"Uj" = (
+/turf/environment/space/holospace,
+/area/custom/arena)
+"UX" = (
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Vs" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"VO" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"WF" = (
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"WS" = (
+/obj/structure/flora/tree/jungle,
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"WZ" = (
+/obj/structure/flora/ausbushes,
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Xf" = (
+/turf/unsimulated/beach/water,
+/area/custom/arena)
+"Xj" = (
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/arena)
+"XA" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "blue"
+	},
+/area/custom/arena)
+"XD" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"XE" = (
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"XS" = (
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "darkred"
+	},
+/area/custom/arena)
+"XW" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/turf/unsimulated/beach/sand,
+/area/custom/arena)
+"Yx" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"YP" = (
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
+/area/custom/arena)
+"YR" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/lavendergrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"Zg" = (
+/obj/item/snowball{
+	throwforce = 20
+	},
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+
+(1,1,1) = {"
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+"}
+(2,1,1) = {"
+Je
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Da
+Da
+Da
+Da
+Da
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+Je
+"}
+(3,1,1) = {"
+Je
+Rj
+cf
+cf
+cf
+cM
+cf
+Rj
+cf
+cf
+cM
+cf
+cf
+KN
+cf
+cf
+KN
+cf
+cf
+Rj
+Tm
+Tm
+yj
+Tm
+Tm
+KJ
+JG
+mA
+mA
+JG
+Uj
+KJ
+Uj
+JG
+Uj
+Uj
+Ty
+JG
+Ty
+Uj
+Uj
+JG
+JG
+KJ
+Je
+"}
+(4,1,1) = {"
+Je
+Rj
+cf
+cf
+cf
+Nz
+KN
+Zg
+cf
+cf
+fw
+cf
+DV
+cf
+cf
+cf
+cM
+cf
+cf
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+Uj
+FC
+mA
+mA
+mA
+Uj
+mA
+mA
+KJ
+mA
+Ty
+JG
+Ty
+Ru
+mA
+JG
+Uj
+KJ
+Je
+"}
+(5,1,1) = {"
+Je
+Rj
+cf
+fw
+DV
+cf
+cf
+cf
+gi
+bg
+cf
+cf
+Rj
+cf
+Nz
+cf
+cf
+cf
+bg
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Uj
+mA
+mA
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+mA
+mA
+JG
+Uj
+Uj
+mA
+mA
+Uj
+KJ
+Je
+"}
+(6,1,1) = {"
+Je
+Rj
+Rj
+cf
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+if
+cf
+cf
+cM
+Hj
+cf
+cf
+cf
+cf
+cf
+Tm
+Tm
+Da
+Tm
+Tm
+mA
+Ty
+Ty
+Uj
+KJ
+RP
+Qx
+Qx
+VO
+KJ
+KJ
+KJ
+Xj
+KJ
+KJ
+JG
+Uj
+mA
+KJ
+Je
+"}
+(7,1,1) = {"
+Je
+Rj
+KN
+cf
+Rj
+IB
+iB
+IB
+IB
+Rj
+Kk
+cf
+cf
+cf
+cf
+cf
+cf
+cf
+KN
+cf
+Bk
+Tm
+Da
+Tm
+Tm
+Uj
+JG
+JG
+JG
+Xj
+Qt
+IP
+QN
+vP
+KJ
+WF
+wB
+wB
+Jq
+DW
+mA
+KJ
+mA
+KJ
+Je
+"}
+(8,1,1) = {"
+Je
+Rj
+bg
+KN
+Rj
+IB
+yk
+yk
+IB
+IB
+cf
+KN
+Zg
+cf
+cf
+cf
+cf
+cf
+cM
+cf
+Tm
+Tm
+Da
+Tm
+Tm
+Uj
+Ty
+Ty
+mA
+KJ
+Qt
+QN
+QN
+vP
+UX
+bE
+UX
+EX
+OE
+KJ
+mA
+Uj
+Uj
+KJ
+Je
+"}
+(9,1,1) = {"
+Je
+Rj
+cf
+cf
+IB
+IB
+vH
+yk
+IB
+IB
+cf
+cf
+cf
+cf
+gi
+DV
+cf
+cf
+cf
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Uj
+Uj
+mA
+DW
+Qt
+QN
+QN
+vP
+KJ
+bE
+UX
+UX
+OE
+Xj
+mA
+Uj
+JG
+KJ
+Je
+"}
+(10,1,1) = {"
+Je
+Rj
+cf
+cf
+IB
+IB
+yk
+yk
+vw
+Rj
+cM
+lp
+Rj
+Rj
+Rj
+Rj
+IB
+IB
+Rj
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+mA
+KJ
+mA
+KJ
+Ra
+Vs
+Vs
+XA
+KJ
+XS
+to
+to
+wF
+KJ
+KJ
+mA
+mA
+KJ
+Je
+"}
+(11,1,1) = {"
+Je
+Rj
+cf
+gi
+Rj
+IB
+IB
+IB
+IB
+Rj
+Hj
+cf
+rC
+Rj
+IB
+IB
+IB
+IB
+IB
+Rj
+Tm
+Da
+Da
+Da
+Tm
+KJ
+mA
+Uj
+mA
+KJ
+KJ
+Xj
+KJ
+KJ
+KJ
+KJ
+UX
+KJ
+KJ
+KJ
+Uj
+Uj
+Uj
+KJ
+Je
+"}
+(12,1,1) = {"
+Je
+Rj
+cf
+cf
+Rj
+Rj
+IB
+IB
+Rj
+Rj
+cf
+cf
+cf
+IB
+IB
+aS
+aS
+aS
+vw
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+mA
+mA
+mA
+JG
+Uj
+mA
+mA
+KJ
+XE
+Qb
+Qb
+KX
+KJ
+vO
+Ty
+sE
+Uj
+KJ
+Je
+"}
+(13,1,1) = {"
+Je
+Rj
+if
+cf
+cf
+cM
+cf
+Hj
+cf
+cf
+cf
+KN
+cf
+IB
+IB
+aS
+KQ
+aS
+IB
+Rj
+Tm
+Tm
+Bk
+Tm
+Tm
+KJ
+Uj
+Uj
+Uj
+mA
+FC
+Uj
+mA
+DW
+Yx
+QN
+QN
+Ka
+Xj
+JG
+JG
+JG
+Uj
+KJ
+Je
+"}
+(14,1,1) = {"
+Je
+Rj
+Nz
+Zg
+cf
+DV
+cf
+cf
+cf
+cf
+cf
+cM
+if
+Rj
+IB
+rX
+IB
+IB
+IB
+Rj
+Rj
+Tm
+Tm
+Tm
+KJ
+KJ
+Uj
+mA
+mA
+KJ
+KJ
+JG
+JG
+Xj
+Yx
+IP
+QN
+Ka
+KJ
+mA
+Ty
+Ty
+mA
+KJ
+Je
+"}
+(15,1,1) = {"
+Je
+Rj
+cf
+cf
+cf
+Rj
+Rj
+cf
+cf
+Zg
+Nz
+cf
+cf
+Rj
+Rj
+Rj
+IB
+IB
+Rj
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+KJ
+KJ
+Uj
+mA
+Uj
+Uj
+JG
+KJ
+YP
+Qm
+Qm
+Er
+KJ
+Uj
+mA
+mA
+JG
+KJ
+Je
+"}
+(16,1,1) = {"
+Je
+Rj
+cM
+cf
+KN
+cf
+cf
+cf
+cM
+cf
+cf
+cf
+cf
+cf
+cf
+cf
+Hj
+lp
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+mA
+mA
+mA
+mA
+Uj
+mA
+KJ
+KJ
+KJ
+Xj
+KJ
+KJ
+KJ
+mA
+Uj
+KJ
+KJ
+Je
+"}
+(17,1,1) = {"
+Je
+Rj
+fw
+cf
+cf
+if
+cf
+cf
+lp
+Rj
+cf
+KN
+cf
+cf
+cf
+cM
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Da
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+mA
+JG
+mA
+mA
+mA
+JG
+JG
+JG
+KJ
+mA
+JG
+mA
+JG
+Uj
+KJ
+Je
+"}
+(18,1,1) = {"
+Je
+Rj
+Cz
+cf
+cf
+KN
+cf
+bg
+cf
+Rj
+Cz
+cf
+fw
+cf
+Rj
+cf
+Tm
+Bk
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Bk
+Tm
+Uj
+KJ
+mA
+Uj
+Uj
+mA
+KJ
+Uj
+mA
+Uj
+Uj
+Uj
+mA
+Uj
+KJ
+Je
+"}
+(19,1,1) = {"
+Je
+Rj
+cf
+KN
+cf
+cf
+cf
+gi
+cf
+KN
+cf
+cf
+cf
+cf
+Rj
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+KJ
+JG
+Uj
+Uj
+JG
+Uj
+Uj
+JG
+Uj
+Ru
+mA
+mA
+mA
+KJ
+Je
+"}
+(20,1,1) = {"
+Je
+Rj
+Rj
+Rj
+Tm
+cf
+cf
+cf
+Tm
+Rj
+Rj
+Rj
+Rj
+Rj
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+Tm
+mA
+mA
+Uj
+Tm
+KJ
+KJ
+KJ
+Je
+"}
+(21,1,1) = {"
+Je
+Da
+Tm
+Tm
+Tm
+Tm
+Bk
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Rj
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Da
+Tm
+Tm
+Tm
+Da
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+KJ
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Je
+"}
+(22,1,1) = {"
+Je
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Je
+"}
+(23,1,1) = {"
+Je
+Da
+mi
+Tm
+Tm
+Da
+Da
+Da
+Tm
+Tm
+Da
+Tm
+Bk
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Bk
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Bk
+Tm
+Da
+Tm
+Tm
+Da
+Da
+Da
+Tm
+Tm
+mi
+Da
+Je
+"}
+(24,1,1) = {"
+Je
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Je
+"}
+(25,1,1) = {"
+Je
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Da
+Tm
+Tm
+Tm
+Da
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Bk
+Tm
+Tm
+Tm
+Tm
+Da
+Je
+"}
+(26,1,1) = {"
+Je
+DT
+DT
+DT
+Tm
+ez
+ez
+ez
+Tm
+DT
+DT
+DT
+DT
+DT
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+RT
+RT
+RT
+RT
+RT
+Tm
+Aw
+Aw
+bX
+Tm
+RT
+RT
+RT
+Je
+"}
+(27,1,1) = {"
+Je
+DT
+dX
+ez
+ez
+ez
+ez
+ez
+Tz
+DT
+ez
+ez
+ez
+ez
+DT
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+RT
+gK
+TW
+YR
+XD
+DZ
+DZ
+Aw
+Lz
+vp
+cp
+Uf
+Xf
+RT
+Je
+"}
+(28,1,1) = {"
+Je
+DT
+ez
+Ho
+Ho
+Ho
+ez
+Ho
+Ho
+DT
+ez
+Ho
+hl
+ez
+ez
+ez
+Tm
+Bk
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Bk
+Tm
+gK
+RT
+bX
+vp
+dL
+XD
+TW
+RT
+Aw
+Aw
+YR
+XW
+Uf
+Xf
+RT
+Je
+"}
+(29,1,1) = {"
+Je
+DT
+ez
+Ho
+hl
+Ho
+ez
+Ho
+ez
+ez
+ez
+ez
+ez
+Ho
+Ho
+ez
+ez
+Tm
+Tm
+Tm
+Tm
+Da
+Da
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Aw
+XD
+gK
+TW
+TW
+aj
+TW
+RT
+Aw
+zg
+TW
+cp
+Uf
+Xf
+RT
+Je
+"}
+(30,1,1) = {"
+Je
+DT
+ez
+Ho
+Ho
+Ho
+ez
+ez
+ez
+Ho
+ez
+Ho
+ez
+ez
+Tz
+DT
+ez
+ez
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+XD
+Ns
+Aw
+aL
+RT
+RT
+RT
+Ki
+Ki
+RT
+Aw
+DZ
+vZ
+cp
+Uf
+Xf
+RT
+Je
+"}
+(31,1,1) = {"
+Je
+DT
+ez
+ez
+ez
+ez
+ez
+DT
+DT
+Ho
+ez
+Ho
+DT
+DT
+ey
+Tz
+Ho
+ez
+DT
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+RT
+RT
+Ki
+TW
+Aw
+So
+Aw
+XD
+XD
+lB
+Aw
+aL
+TW
+fR
+cp
+Uf
+Xf
+RT
+Je
+"}
+(32,1,1) = {"
+Je
+DT
+DT
+DT
+DT
+ez
+DT
+DT
+Tz
+ez
+ez
+ez
+Tz
+DT
+DT
+ez
+Ho
+ez
+ez
+DT
+DT
+Tm
+Tm
+Tm
+RT
+RT
+DZ
+TW
+aj
+TW
+Aw
+Lz
+Aw
+gK
+hw
+Aw
+aL
+XD
+TW
+XW
+cp
+Uf
+Xf
+RT
+Je
+"}
+(33,1,1) = {"
+Je
+DT
+ez
+ez
+ez
+ez
+DT
+Tz
+ez
+Ho
+ez
+Ho
+ez
+Tz
+DT
+ez
+ez
+hl
+ez
+DT
+Tm
+Tm
+Bk
+Tm
+Tm
+RT
+DZ
+aj
+TW
+gK
+RM
+TW
+Aw
+Aw
+aL
+Aw
+Aw
+gK
+WZ
+cp
+cp
+Uf
+Xf
+RT
+Je
+"}
+(34,1,1) = {"
+Je
+DT
+ez
+Ho
+ez
+Ho
+Ho
+ez
+Ho
+ez
+ez
+ez
+Ho
+ez
+Ho
+Ho
+ez
+Ho
+ez
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+XD
+Ki
+NP
+XD
+gK
+TW
+GJ
+Aw
+Aw
+Aw
+gK
+gK
+WS
+vZ
+cp
+Uf
+Xf
+RT
+Je
+"}
+(35,1,1) = {"
+Je
+DT
+ey
+hl
+ez
+ez
+ez
+ez
+ez
+ez
+Ho
+ez
+ez
+ez
+ez
+ez
+ez
+ez
+ez
+DT
+Tm
+Da
+Da
+Da
+Tm
+RT
+XD
+XD
+XD
+RT
+RT
+DZ
+FD
+Aw
+aU
+vp
+gK
+RT
+So
+vZ
+cp
+Uf
+Xf
+RT
+Je
+"}
+(36,1,1) = {"
+Je
+DT
+ez
+Ho
+ez
+Ho
+Ho
+ez
+Ho
+ez
+ez
+ez
+Ho
+ez
+Ho
+Ho
+ez
+DT
+DT
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+RT
+RT
+RT
+RT
+lB
+Sp
+aL
+Aw
+TW
+YR
+vp
+RT
+RT
+RT
+cp
+Uf
+Xf
+RT
+Je
+"}
+(37,1,1) = {"
+Je
+DT
+ez
+ez
+ez
+ez
+DT
+Tz
+ez
+Ho
+ez
+Ho
+ez
+Tz
+DT
+ez
+ez
+Ho
+Tz
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+XD
+Sd
+TW
+TW
+XD
+aL
+Aw
+Aw
+kt
+TW
+XD
+gK
+TW
+XD
+cp
+Uf
+Xf
+RT
+Je
+"}
+(38,1,1) = {"
+Je
+DT
+DT
+DT
+DT
+ez
+DT
+DT
+Tz
+ez
+ez
+ez
+Tz
+DT
+DT
+ez
+Ho
+Ho
+ez
+ez
+Tm
+Tm
+Da
+Tm
+Tm
+gK
+td
+Li
+Aw
+Lz
+Aw
+Aw
+Aw
+XD
+XD
+td
+XD
+XD
+hs
+XD
+XW
+Uf
+Xf
+RT
+Je
+"}
+(39,1,1) = {"
+Je
+DT
+ez
+ez
+ez
+ez
+ez
+DT
+DT
+Ho
+ez
+Ho
+DT
+DT
+ez
+ez
+ez
+ez
+ez
+ez
+Tm
+Tm
+Da
+Tm
+Bk
+aL
+Aw
+gK
+Aw
+Aw
+Aw
+lB
+xM
+vp
+nP
+DZ
+RT
+gK
+gK
+gK
+cp
+Uf
+Xf
+RT
+Je
+"}
+(40,1,1) = {"
+Je
+DT
+ez
+Ho
+Ho
+Ho
+ez
+ez
+ez
+Ho
+ez
+Ho
+ez
+ez
+ez
+Ho
+Ho
+Ho
+ez
+ez
+Tm
+Tm
+Da
+Tm
+Tm
+aL
+Aw
+Lz
+XD
+LL
+RT
+gK
+TW
+BE
+aj
+XD
+RT
+gK
+TW
+cs
+vZ
+Uf
+Xf
+RT
+Je
+"}
+(41,1,1) = {"
+Je
+DT
+ez
+Ho
+hl
+Ho
+ez
+DT
+ez
+ez
+ez
+ez
+ez
+DT
+ez
+Ho
+hl
+Ho
+ez
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+XD
+TW
+sf
+XD
+RT
+SK
+gK
+gK
+XD
+So
+RT
+XD
+vp
+TW
+cp
+Uf
+Xf
+RT
+Je
+"}
+(42,1,1) = {"
+Je
+DT
+ez
+Ho
+Ho
+Ho
+ez
+DT
+ez
+Ho
+hl
+Ho
+ez
+DT
+ez
+Ho
+Ho
+Ho
+ez
+DT
+Tm
+Tm
+Tm
+Tm
+Tm
+RT
+Fj
+vp
+aj
+Ki
+RT
+gK
+SK
+XD
+XD
+TW
+TW
+TW
+vp
+vZ
+cp
+Uf
+Xf
+RT
+Je
+"}
+(43,1,1) = {"
+Je
+DT
+ez
+ez
+ez
+ez
+ez
+DT
+ez
+ez
+qj
+ez
+ez
+DT
+ez
+ez
+ez
+ez
+dX
+DT
+Tm
+Tm
+yj
+Tm
+Tm
+RT
+XD
+LL
+gK
+XD
+RT
+XD
+XD
+gK
+DZ
+DZ
+gK
+gK
+WS
+cp
+cp
+Uf
+Xf
+RT
+Je
+"}
+(44,1,1) = {"
+Je
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+DT
+Da
+Da
+Da
+Da
+Da
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+RT
+Je
+"}
+(45,1,1) = {"
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+Je
+"}

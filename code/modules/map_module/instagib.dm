@@ -31,10 +31,10 @@
 	var/list/arenas = list()
 
 	for(var/datum/map_template/arena/A as anything in subtypesof(/datum/map_template/arena/instagib))
-		if(A.spawners && (A.spawners >= (online - 5)) && (A.spawners <= (online + 5)))
+		if(A.spawners && (A.spawners >= (online - 4)) && (A.spawners <= (online + 8)))
 			arenas += A
 
-	var/datum/map_template/arena/instagib/arena = /datum/map_template/arena/instagib/agressor
+	var/datum/map_template/arena/instagib/arena = /datum/map_template/arena/instagib/four_biomes
 	if(arenas.len)
 		arena = pick(arenas)
 

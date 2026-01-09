@@ -1,71 +1,153 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
+/turf/environment/space/holospace,
+/area/space)
+"b" = (
+/turf/environment/space/holospace,
+/area/custom/arena)
+"c" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien5"
+	},
+/area/custom/arena)
+"d" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/custom/arena)
+"e" = (
 /turf/environment/space,
 /area/space)
-"d" = (
-/obj/effect/landmark/instagib_dm/sinner,
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/space)
 "f" = (
-/obj/effect/landmark/instagib_dm/sinner,
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/simulated/shuttle/floor/vox,
-/area/space)
+/area/custom/arena)
+"g" = (
+/obj/structure/window/fulltile/reinforced/indestructible{
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/custom/arena)
 "h" = (
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/space)
+/area/custom/arena)
 "i" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/environment/space,
-/area/space)
+/turf/environment/space/holospace,
+/area/custom/arena)
 "j" = (
-/obj/machinery/vending/cola,
-/turf/simulated/shuttle/floor/evac/eng2,
-/area/space)
+/turf/unsimulated/wall/rock,
+/area/custom/arena)
+"k" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien19"
+	},
+/area/custom/arena)
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/environment/space,
-/area/space)
+/turf/environment/space/holospace,
+/area/custom/arena)
+"m" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien13"
+	},
+/area/custom/arena)
+"n" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien17"
+	},
+/area/custom/arena)
 "o" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/shuttle/floor/vox,
-/area/space)
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien21"
+	},
+/area/custom/arena)
 "p" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/floor/evac,
-/area/space)
+/area/custom/arena)
+"q" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien20"
+	},
+/area/custom/arena)
 "r" = (
-/obj/effect/landmark/instagib_dm/sinner,
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/space)
+/area/custom/arena)
+"s" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien22"
+	},
+/area/custom/arena)
+"t" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien11"
+	},
+/area/custom/arena)
 "u" = (
 /turf/unsimulated/wall/like_a_normal/red,
-/area/space)
+/area/custom/arena)
 "v" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_l"
 	},
-/turf/environment/space,
+/turf/environment/space/holospace,
+/area/custom/arena)
+"w" = (
+/obj/effect/landmark/corpse/clown,
+/turf/environment/space/holospace,
 /area/space)
 "x" = (
 /obj/structure/shuttle/engine/propulsion,
+/turf/environment/space/holospace,
+/area/custom/arena)
+"y" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/environment/space/holospace,
+/area/custom/arena)
+"z" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien15"
+	},
+/area/custom/arena)
+"A" = (
+/obj/structure/static_portal{
+	color = "#ff4100";
+	id = 1
+	},
 /turf/environment/space,
-/area/space)
+/area/custom/arena)
+"B" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien24"
+	},
+/area/custom/arena)
+"C" = (
+/obj/structure/static_portal{
+	color = "#4572e3";
+	id = 2
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/custom/arena)
+"D" = (
+/turf/unsimulated/wall/abductor,
+/area/custom/arena)
 "E" = (
 /turf/simulated/shuttle/floor/vox,
-/area/space)
+/area/custom/arena)
 "F" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 4;
@@ -74,56 +156,104 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
+/area/custom/arena)
+"G" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien14"
+	},
+/area/custom/arena)
+"H" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/abductor,
+/area/custom/arena)
+"I" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = ""
+	},
 /area/space)
 "J" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
 	icon_state = "gr_window_reinforced"
 	},
-/turf/environment/space,
-/area/space)
+/turf/environment/space/holospace,
+/area/custom/arena)
 "K" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_r"
 	},
-/turf/environment/space,
-/area/space)
+/turf/environment/space/holospace,
+/area/custom/arena)
 "L" = (
-/obj/machinery/vending/cola,
-/turf/simulated/shuttle/floor/vox,
-/area/space)
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien23"
+	},
+/area/custom/arena)
 "M" = (
 /turf/simulated/shuttle/floor/evac/eng2,
-/area/space)
+/area/custom/arena)
+"N" = (
+/turf/unsimulated/floor/abductor,
+/area/custom/arena)
+"O" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien18"
+	},
+/area/custom/arena)
 "P" = (
-/obj/machinery/vending/chinese,
-/turf/simulated/shuttle/floor/vox,
-/area/space)
+/turf/environment/space,
+/area/custom/arena)
 "Q" = (
 /turf/simulated/shuttle/floor/evac/eng1,
-/area/space)
+/area/custom/arena)
+"R" = (
+/obj/structure/static_portal{
+	color = "#ff4100";
+	id = 1
+	},
+/turf/unsimulated/floor/abductor,
+/area/custom/arena)
 "S" = (
 /obj/structure/shuttle/engine/heater{
 	icon_state = "heater1"
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
-/area/space)
+/area/custom/arena)
 "T" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/shuttle/floor/evac/eng2,
-/area/space)
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien8"
+	},
+/area/custom/arena)
+"U" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien4"
+	},
+/area/custom/arena)
+"V" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien7"
+	},
+/area/custom/arena)
+"W" = (
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien9"
+	},
+/area/custom/arena)
 "X" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/environment/space,
-/area/space)
+/turf/environment/space/holospace,
+/area/custom/arena)
 "Y" = (
-/obj/machinery/vending/chinese,
-/turf/simulated/shuttle/floor/evac/eng2,
-/area/space)
+/obj/structure/static_portal{
+	color = "#4572e3";
+	id = 2
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/custom/arena)
 "Z" = (
 /turf/unsimulated/wall/like_a_normal,
-/area/space)
+/area/custom/arena)
 
 (1,1,1) = {"
 a
@@ -237,8 +367,8 @@ a
 a
 a
 a
-a
-a
+e
+I
 a
 a
 a
@@ -276,7 +406,7 @@ a
 a
 J
 M
-Y
+M
 M
 Z
 Z
@@ -518,19 +648,19 @@ M
 Z
 Z
 Z
-J
-J
-J
+g
+g
+g
 Z
 a
 a
 a
 a
 a
-a
-a
-a
-a
+j
+j
+j
+e
 a
 a
 a
@@ -573,11 +703,11 @@ Z
 Z
 Z
 Z
-a
-a
-a
-a
-a
+j
+j
+j
+j
+j
 u
 u
 a
@@ -613,18 +743,18 @@ Q
 Q
 Q
 Q
-M
-M
+d
+Q
 M
 M
 J
 S
 v
-a
-a
-a
-a
-a
+b
+A
+P
+j
+j
 u
 u
 a
@@ -661,17 +791,17 @@ Q
 Q
 Q
 Q
-d
+Q
 M
 M
 J
 S
 K
-a
-a
-a
-a
-a
+b
+P
+P
+b
+j
 u
 u
 a
@@ -713,11 +843,11 @@ M
 Z
 Z
 Z
-a
-a
-a
-a
-a
+b
+b
+y
+P
+b
 u
 u
 u
@@ -760,16 +890,16 @@ Z
 Z
 S
 v
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
 u
 u
 u
 a
-a
+w
 a
 u
 u
@@ -807,11 +937,11 @@ M
 J
 S
 x
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
 u
 u
 a
@@ -836,7 +966,7 @@ a
 a
 a
 J
-T
+C
 Q
 d
 M
@@ -849,16 +979,16 @@ Q
 Q
 Q
 Q
-Q
+d
 M
 J
 S
 x
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
 u
 u
 a
@@ -901,10 +1031,10 @@ M
 J
 S
 x
-a
-a
-a
-a
+b
+b
+b
+b
 u
 u
 u
@@ -948,10 +1078,10 @@ Z
 Z
 S
 K
-a
-a
-a
-a
+b
+b
+b
+b
 u
 u
 u
@@ -995,10 +1125,10 @@ M
 Z
 Z
 Z
-a
-a
-a
-a
+b
+b
+b
+b
 u
 u
 u
@@ -1037,15 +1167,15 @@ Q
 Q
 Q
 Q
-d
+Q
 M
 M
 J
 S
 v
-a
-a
-a
+b
+b
+b
 u
 u
 u
@@ -1083,15 +1213,15 @@ Q
 Q
 Q
 Q
-M
-M
+d
+Q
 M
 M
 J
 S
 K
-a
-a
+b
+b
 u
 u
 u
@@ -1130,18 +1260,18 @@ Z
 M
 M
 M
+Q
 M
-M
 Z
 Z
 Z
 Z
 Z
-a
-a
+y
+b
 J
 E
-L
+E
 u
 E
 E
@@ -1176,16 +1306,16 @@ M
 Z
 Z
 Z
-J
-J
-J
+M
+Q
+M
 Z
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
 J
 E
 h
@@ -1223,18 +1353,18 @@ M
 Z
 Z
 Z
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
+b
+b
+b
 u
 u
-E
+f
 h
 u
 E
@@ -1244,7 +1374,7 @@ E
 E
 u
 h
-E
+f
 u
 u
 a
@@ -1268,18 +1398,18 @@ Q
 Q
 Z
 Z
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-J
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+E
 E
 E
 h
@@ -1314,21 +1444,21 @@ d
 Q
 M
 J
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-J
-E
-E
+b
+b
+b
+b
+b
+b
+j
+j
+b
+b
+b
+b
+h
+h
+h
 h
 E
 u
@@ -1338,7 +1468,7 @@ u
 u
 E
 h
-f
+E
 E
 J
 a
@@ -1357,23 +1487,23 @@ a
 a
 J
 M
-M
+Q
 M
 M
 J
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-J
+b
+b
+y
+b
+b
+j
+j
+j
+b
+b
+b
+b
+E
 E
 E
 h
@@ -1404,21 +1534,21 @@ a
 a
 J
 M
-j
+Q
 M
 Z
 Z
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+j
+j
+j
+b
+b
+b
 u
 u
 u
@@ -1448,24 +1578,24 @@ a
 a
 a
 a
-a
+j
 Z
-J
-J
-J
+M
+Q
+M
 Z
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
+j
+j
+b
+b
+y
+b
 J
 E
 h
@@ -1474,7 +1604,7 @@ h
 h
 h
 h
-h
+r
 h
 h
 h
@@ -1494,25 +1624,25 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+j
+j
+b
+b
+b
+b
+b
+b
+b
+b
+b
+P
+P
+j
+b
+b
+b
+b
 J
 E
 h
@@ -1525,10 +1655,10 @@ h
 E
 u
 E
-E
+f
 h
 h
-o
+Y
 J
 a
 a
@@ -1541,25 +1671,25 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+j
+j
+b
+b
+b
+b
+b
+b
+b
+j
+b
+P
+P
+b
+b
+b
+b
+b
 J
 E
 h
@@ -1588,24 +1718,24 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+j
+j
+j
+b
+b
+b
+b
+b
+j
+j
+j
+P
+P
+b
+b
+b
+b
 u
 u
 u
@@ -1634,26 +1764,26 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-J
+j
+j
+j
+j
+j
+b
+b
+b
+b
+j
+j
+j
+j
+P
+P
+b
+b
+b
+b
+E
 E
 E
 h
@@ -1662,7 +1792,7 @@ E
 E
 u
 E
-r
+h
 E
 u
 E
@@ -1681,28 +1811,28 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-J
-E
-E
+j
+j
+j
+j
+j
+b
+b
+y
+b
+j
+j
+j
+j
+j
+j
+b
+b
+b
+b
+h
+h
+h
 h
 h
 E
@@ -1713,7 +1843,7 @@ h
 E
 u
 E
-f
+E
 h
 h
 E
@@ -1728,28 +1858,29 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-J
+j
+j
+j
+j
+j
+b
+b
+b
+b
+b
+b
+j
+j
+j
+b
+b
+b
+b
+b
 E
 E
+E
+r
 h
 h
 h
@@ -1761,8 +1892,7 @@ h
 h
 h
 h
-h
-h
+r
 E
 E
 J
@@ -1775,35 +1905,35 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+j
+j
+j
+j
+j
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 u
 u
 E
+h
+h
+h
+h
+h
+h
 r
-h
-h
-h
-h
-h
-h
 h
 h
 h
@@ -1822,26 +1952,26 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+e
+j
+j
+j
+j
+j
+P
+b
+b
+b
+b
+b
+y
+b
+b
+b
+b
+b
+b
+b
 J
 E
 E
@@ -1869,26 +1999,26 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+e
+j
+j
+j
+j
+j
+j
+j
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+y
+b
 u
 J
 J
@@ -1918,24 +2048,24 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+j
+j
+j
+j
+j
+G
+P
+P
+P
+P
+b
+b
+b
+b
+b
+b
+b
 u
 F
 F
@@ -1944,7 +2074,7 @@ J
 J
 u
 E
-P
+E
 E
 u
 J
@@ -1967,22 +2097,22 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+j
+q
+n
+N
+N
+N
+V
+D
+j
+P
+b
+P
+j
+j
+j
 u
 l
 i
@@ -2015,21 +2145,21 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+o
+N
+N
+N
+N
+N
+j
+j
+j
+j
+j
+j
+j
+j
 a
 a
 a
@@ -2063,19 +2193,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+s
+N
+N
+H
+N
+N
+j
+j
+j
+j
+j
+j
+j
 a
 a
 a
@@ -2110,18 +2240,18 @@ a
 a
 a
 a
+L
+N
+N
+N
+N
+N
+U
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+j
+j
+e
 a
 a
 a
@@ -2157,13 +2287,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+B
+O
+N
+R
+N
+T
+c
 a
 a
 a
@@ -2204,13 +2334,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
+e
+k
+z
+m
+t
+W
+e
 a
 a
 a
