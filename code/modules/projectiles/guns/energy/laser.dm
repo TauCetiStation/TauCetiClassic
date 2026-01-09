@@ -162,4 +162,7 @@
 		qdel()
 
 /obj/item/weapon/gun/energy/laser/devil_dagger/afterattack(atom/target, mob/user, proximity, params)
-	to_chat(user, "afterattack")
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(isrole(INSTAGIB_ROLE, H))
+			MM.kill(H, user, 3)
