@@ -29,7 +29,7 @@
 	if(!find_linked())
 		return
 
-	AM.forceMove(get_step(linked_portal, linked_portal.dir))
+	AM.forceMove(get_step(linked_portal, AM.dir))
 	playsound(src, pick(sounds), VOL_EFFECTS_MASTER, 25)
 	playsound(linked_portal, pick(sounds), VOL_EFFECTS_MASTER, 25)
 
