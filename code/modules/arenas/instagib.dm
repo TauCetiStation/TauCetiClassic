@@ -5,6 +5,9 @@
 /obj/effect/landmark/instagib_arena/sinner
 	name = "Sinner Spawn"
 
+/obj/effect/landmark/instagib_arena/winner
+	name = "Winner Spawn"
+
 
 /datum/map_template/arena/instagib/four_biomes
 	name = "Four Biomes - 40"
