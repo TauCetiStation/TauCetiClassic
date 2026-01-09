@@ -11,27 +11,27 @@
 	mappath = "maps/templates/instagib_arena/agressor.dmm"
 	spawners = 0
 
-/datum/map_template/arena/instagib/
+/datum/map_template/arena/instagib/four_biomes
 	name = "Agressor - 0"
 	mappath = "maps/templates/instagib_arena/agressor.dmm"
 	spawners = 0
 
-/datum/map_template/arena/instagib/
+/datum/map_template/arena/instagib/a
 	name = "Agressor - 0"
 	mappath = "maps/templates/instagib_arena/agressor.dmm"
 	spawners = 0
 
-/datum/map_template/arena/instagib/
+/datum/map_template/arena/instagib/b
 	name = "Agressor - 0"
 	mappath = "maps/templates/instagib_arena/agressor.dmm"
 	spawners = 0
 
-/datum/map_template/arena/instagib/
+/datum/map_template/arena/instagib/c
 	name = "Agressor - 0"
 	mappath = "maps/templates/instagib_arena/agressor.dmm"
 	spawners = 0
 
-/datum/map_template/arena/instagib/
+/datum/map_template/arena/instagib/d
 	name = "Agressor - 0"
 	mappath = "maps/templates/instagib_arena/agressor.dmm"
 	spawners = 0

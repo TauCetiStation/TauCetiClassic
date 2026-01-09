@@ -34,11 +34,11 @@
 		if(A.spawners && (A.spawners >= (online - 5)) && (A.spawners <= (online + 5)))
 			arenas += A
 
-	var/datum/map_template/arena/instagib/picked_arena = /datum/map_template/arena/instagib/four_biomes
+	var/datum/map_template/arena/instagib/arena = /datum/map_template/arena/instagib/agressor
 	if(arenas.len)
-		picked_arena = pick(arenas)
+		arena = pick(arenas)
 
-	picked_arena = new picked_arena
+	arena = new arena
 	var/turf/arena_location = pick_landmarked_location("Purgatory Spawn", least_used = FALSE)
 
 	if(!arena.load(arena_location, centered = TRUE))
