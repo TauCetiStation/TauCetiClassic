@@ -150,14 +150,14 @@
 	},
 /area/custom/arena)
 "hg" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /obj/structure/lattice,
 /turf/environment/space/holospace,
 /area/custom/arena)
 "hl" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /obj/effect/decal/turf_decal/alpha/dark_red{
@@ -166,7 +166,7 @@
 /turf/unsimulated/floor/cult,
 /area/custom/arena)
 "hn" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{
@@ -404,7 +404,7 @@
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
 "rO" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{
@@ -566,7 +566,7 @@
 	},
 /area/custom/arena)
 "yk" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{
@@ -737,7 +737,7 @@
 /turf/unsimulated/floor,
 /area/custom/arena)
 "EN" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /obj/structure/flora/ausbushes/fullgrass{
@@ -802,7 +802,7 @@
 /turf/unsimulated/beach/sand,
 /area/custom/arena)
 "He" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /obj/structure/flora/ausbushes/sparsegrass{
@@ -1179,7 +1179,7 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "TV" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor,
@@ -1240,7 +1240,7 @@
 	},
 /area/custom/arena)
 "Wf" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor/snow,
@@ -1300,7 +1300,7 @@
 	},
 /area/custom/arena)
 "XB" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{

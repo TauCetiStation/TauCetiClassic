@@ -68,7 +68,7 @@
 	},
 /area/custom/arena)
 "W" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{

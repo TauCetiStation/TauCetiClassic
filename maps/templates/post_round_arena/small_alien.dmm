@@ -17,7 +17,7 @@
 /turf/unsimulated/floor/fakealien,
 /area/custom/arena)
 "k" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor/fakealien,
@@ -54,7 +54,7 @@
 /turf/unsimulated/floor/fakealien,
 /area/custom/arena)
 "G" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor/fakealien/weednode,

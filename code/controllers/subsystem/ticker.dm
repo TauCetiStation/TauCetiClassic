@@ -649,7 +649,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!arena.load(arena_location, centered = TRUE))
 		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
 
-/datum/controller/subsystem/ticker/proc/load_arena_admin(datum/map_template/post_round_arena/new_arena)
+/datum/controller/subsystem/ticker/proc/load_arena_admin(datum/map_template/arena/post_round/new_arena)
 	if(!config.deathmatch_arena)
 		return
 
@@ -657,7 +657,7 @@ SUBSYSTEM_DEF(ticker)
 		for(var/turf/T in block(locate(arena.bounds[MAP_MINX], arena.bounds[MAP_MINY], arena.bounds[MAP_MINZ]),
 	                   		   locate(arena.bounds[MAP_MAXX], arena.bounds[MAP_MAXY], arena.bounds[MAP_MAXZ])))
 			for(var/obj/O in T)
-				if(!istype(O, /obj/effect/landmark/post_round_dm/arena))
+				if(!istype(O, /obj/effect/landmark/arenas/post_round/arena))
 					qdel(O)
 
 	var/turf/arena_location = pick_landmarked_location("Arena Spawn", least_used = FALSE)

@@ -1426,6 +1426,7 @@
 #include "code\modules\admin\verbs\striketeam.dm"
 #include "code\modules\admin\verbs\striketeam_syndicate.dm"
 #include "code\modules\admin\verbs\tripAI.dm"
+#include "code\modules\arenas\arenas.dm"
 #include "code\modules\arenas\instagib.dm"
 #include "code\modules\arenas\post_round.dm"
 #include "code\modules\assembly\assembly.dm"
