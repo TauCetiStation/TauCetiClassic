@@ -1,0 +1,736 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/environment/space,
+/area/space)
+"b" = (
+/turf/unsimulated/wall/like_a_normal,
+/area/custom/arena)
+"d" = (
+/turf/simulated/shuttle/floor/evac/sec1,
+/area/custom/arena)
+"e" = (
+/turf/simulated/shuttle/floor/evac,
+/area/custom/arena)
+"g" = (
+/turf/unsimulated/wall/like_a_normal/red,
+/area/custom/arena)
+"l" = (
+/turf/simulated/shuttle/floor/evac/sec2,
+/area/custom/arena)
+"m" = (
+/obj/structure/window/fulltile/reinforced/indestructible{
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/shuttle/floor/evac,
+/area/custom/arena)
+"n" = (
+/obj/structure/static_portal{
+	color = "#ff4100";
+	id = 1
+	},
+/turf/simulated/shuttle/floor/evac/sec1,
+/area/custom/arena)
+"o" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/simulated/shuttle/floor/evac,
+/area/custom/arena)
+"q" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/simulated/shuttle/floor/evac/sec2,
+/area/custom/arena)
+"s" = (
+/obj/structure/window/fulltile/reinforced/indestructible{
+	icon_state = "gr_window_reinforced"
+	},
+/turf/environment/space,
+/area/custom/arena)
+"u" = (
+/turf/unsimulated/floor{
+	icon_state = "darkstairs_wide"
+	},
+/area/custom/arena)
+"w" = (
+/obj/structure/static_portal{
+	color = "#4572e3";
+	id = 2
+	},
+/turf/simulated/shuttle/floor/evac/place2,
+/area/custom/arena)
+"x" = (
+/turf/unsimulated/floor{
+	icon_state = "darkstairs_middle"
+	},
+/area/custom/arena)
+"y" = (
+/turf/unsimulated/floor{
+	icon_state = "darkstairs2_wide"
+	},
+/area/custom/arena)
+"z" = (
+/turf/simulated/shuttle/floor/evac/place,
+/area/custom/arena)
+"E" = (
+/turf/unsimulated/wall/like_a_normal/green,
+/area/custom/arena)
+"F" = (
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/custom/arena)
+"H" = (
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/custom/arena)
+"I" = (
+/turf/simulated/shuttle/floor/evac/place2,
+/area/custom/arena)
+"J" = (
+/turf/simulated/shuttle/floor/evac/inv,
+/area/custom/arena)
+"K" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/custom/arena)
+"L" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkstairs2_wide"
+	},
+/area/custom/arena)
+"M" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_wide"
+	},
+/area/custom/arena)
+"N" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkstairs_middle"
+	},
+/area/custom/arena)
+"P" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkstairs_middle"
+	},
+/area/custom/arena)
+"R" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkstairs_wide"
+	},
+/area/custom/arena)
+"S" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/custom/arena)
+"T" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkstairs2_wide"
+	},
+/area/custom/arena)
+"V" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/simulated/shuttle/floor/evac/place,
+/area/custom/arena)
+"Z" = (
+/obj/structure/static_portal{
+	color = "#ff4100";
+	id = 1
+	},
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/custom/arena)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+b
+b
+m
+m
+m
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+b
+m
+m
+m
+b
+I
+I
+J
+I
+I
+b
+m
+m
+m
+b
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+b
+b
+e
+e
+e
+z
+e
+e
+e
+e
+e
+e
+V
+e
+e
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+a
+m
+e
+e
+e
+e
+z
+e
+e
+e
+e
+e
+e
+z
+e
+e
+e
+m
+a
+"}
+(6,1,1) = {"
+a
+a
+m
+e
+o
+e
+e
+E
+s
+s
+s
+L
+N
+R
+E
+z
+w
+z
+m
+a
+"}
+(7,1,1) = {"
+a
+g
+g
+d
+d
+g
+g
+E
+F
+F
+F
+F
+F
+F
+E
+E
+b
+b
+b
+a
+"}
+(8,1,1) = {"
+a
+m
+d
+l
+d
+d
+g
+F
+F
+H
+K
+H
+H
+F
+F
+m
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+m
+d
+l
+l
+d
+s
+F
+H
+H
+F
+F
+H
+H
+F
+m
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+m
+d
+d
+l
+d
+s
+F
+H
+F
+F
+F
+F
+H
+F
+m
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+g
+g
+g
+l
+d
+s
+F
+H
+F
+E
+E
+F
+H
+F
+E
+E
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+g
+d
+l
+d
+g
+F
+H
+F
+F
+F
+F
+H
+F
+F
+E
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+g
+d
+l
+l
+u
+H
+H
+F
+F
+F
+F
+H
+H
+F
+E
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+g
+n
+l
+q
+x
+H
+F
+F
+H
+H
+F
+S
+H
+Z
+E
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+g
+d
+l
+l
+y
+H
+H
+F
+F
+F
+F
+H
+H
+F
+E
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+g
+d
+l
+d
+g
+F
+H
+F
+F
+F
+F
+H
+F
+F
+E
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+g
+g
+g
+l
+d
+s
+F
+H
+F
+E
+E
+F
+H
+F
+E
+E
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+m
+d
+d
+l
+d
+s
+F
+H
+F
+F
+F
+F
+H
+F
+m
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+m
+d
+l
+l
+d
+s
+F
+H
+H
+F
+F
+H
+H
+F
+m
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+m
+d
+l
+d
+d
+g
+F
+F
+H
+K
+H
+H
+F
+F
+m
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+g
+g
+d
+d
+g
+g
+E
+F
+F
+F
+F
+F
+F
+E
+E
+b
+b
+b
+a
+"}
+(22,1,1) = {"
+a
+a
+m
+e
+o
+e
+e
+E
+s
+s
+s
+M
+P
+T
+E
+z
+w
+z
+m
+a
+"}
+(23,1,1) = {"
+a
+a
+m
+e
+e
+e
+e
+z
+e
+e
+e
+e
+e
+e
+z
+e
+e
+e
+m
+a
+"}
+(24,1,1) = {"
+a
+a
+b
+b
+e
+e
+e
+z
+e
+e
+e
+e
+e
+e
+V
+e
+e
+b
+b
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+b
+m
+m
+m
+b
+I
+I
+J
+I
+I
+b
+m
+m
+m
+b
+a
+a
+"}
+(26,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+b
+b
+m
+m
+m
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
