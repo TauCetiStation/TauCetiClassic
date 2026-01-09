@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
-	var/datum/map_template/post_round_arena/arena = null
+	var/datum/map_template/arena/post_round/arena = null
 	var/list/medal_list = list()
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
@@ -628,11 +628,11 @@ SUBSYSTEM_DEF(ticker)
 	var/online = global.player_list.len
 	var/list/arenas = list()
 
-	for(var/datum/map_template/post_round_arena/A as anything in subtypesof(/datum/map_template/post_round_arena))
+	for(var/datum/map_template/arena/A as anything in subtypesof(/datum/map_template/arena/post_round))
 		if(A.spawners && (A.spawners >= (online - 5)) && (A.spawners <= (online + 5)))
 			arenas += A
 
-	var/datum/map_template/post_round_arena/picked_arena = /datum/map_template/post_round_arena/four_biomes
+	var/datum/map_template/arena/post_round/picked_arena = /datum/map_template/arena/post_round/four_biomes
 	if(arenas.len)
 		picked_arena = pick(arenas)
 

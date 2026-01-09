@@ -18,10 +18,31 @@
 	..()
 	faction = create_custom_faction(INSTAGIB_FACTION, INSTAGIB_FACTION, "instagib", "Сражайтесь покуда бьётся сердце.")
 	spawner = create_spawner(/datum/spawner/instagib, src)
-	load_arena()
+
+	var newtime = 30 SECONDS
+	SSticker.timeLeft = newtime
+	to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
+	log_admin("Instagib Deathmatch set the pre-game delay to [newtime] seconds.")
+
+	addtimer(CALLBACK(src, PROC_REF(load_arena)), 20 SECONDS)
 
 /datum/map_module/instagib/proc/load_arena()
+	var/online = global.player_list.len
+	var/list/arenas = list()
+
+	for(var/datum/map_template/arena/A as anything in subtypesof(/datum/map_template/arena/instagib))
+		if(A.spawners && (A.spawners >= (online - 5)) && (A.spawners <= (online + 5)))
+			arenas += A
+
+	var/datum/map_template/arena/instagib/picked_arena = /datum/map_template/arena/instagib/four_biomes
+	if(arenas.len)
+		picked_arena = pick(arenas)
+
+	picked_arena = new picked_arena
 	var/turf/arena_location = pick_landmarked_location("Purgatory Spawn", least_used = FALSE)
+
+	if(!arena.load(arena_location, centered = TRUE))
+		CRASH("Loading arena map [arena.name] - [arena.mappath] failed!")
 
 /datum/map_module/instagib/proc/assign_to_faction(mob/living/carbon/human/H)
 	var/datum/role/old_role = H.mind.GetRoleByType(/datum/role/custom)
