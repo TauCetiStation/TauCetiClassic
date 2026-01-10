@@ -66,13 +66,12 @@
 		return
 
 	new /obj/effect/temp_visual/cult/blood(owner.loc)
-	owner.Stun(10, TRUE)
+	owner.Stun(1, TRUE)
 	owner.alpha = 55
 
 /datum/status_effect/instagib_killed/on_remove()
 	owner.alpha = 255
 	owner.apply_status_effect(STATUS_EFFECT_INSTAGIB_SPAWNED)
-	owner.SetStunned(0)
 	return ..()
 
 
