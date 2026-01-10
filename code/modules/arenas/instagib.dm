@@ -8,6 +8,8 @@
 /obj/effect/landmark/instagib_arena/winner
 	name = "Winner Spawn"
 
+/obj/effect/landmark/instagib_arena/looser
+	name = "Looser Spawn"
 
 /datum/map_template/arena/instagib/four_biomes
 	name = "Four Biomes - 40"

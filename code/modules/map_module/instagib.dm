@@ -83,6 +83,7 @@
 	instagib_sinner.skillset_type = /datum/skillset/jack_of_all_trades
 	instagib_sinner.AssignToFaction(faction)
 	instagib_sinner.AssignToRole(H.mind, msg_admins = FALSE)
+	instagib_sinner.AppendObjective(new /datum/objective/custom("Соверши как можно больше расправ над другими грешниками."))
 
 	sinners[H] = 0
 	H.playsound_music(music_loops[music_id], VOL_MUSIC, TRUE, null, CHANNEL_MUSIC)
@@ -91,10 +92,6 @@
 	// todo: wrap it somehow too
 	if(SSticker.current_state >= GAME_STATE_PLAYING)
 		setup_role(instagib_sinner)
-
-	var/datum/objective/custom/C = new /datum/objective/custom
-	C.explanation_text = "Убейте как можно больше других грешников."
-	instagib_sinner.AppendObjective(C)
 
 ////////////////////////////////////////
 //			STATS
@@ -116,11 +113,12 @@
 	victim.forceMove(pick_landmarked_location("Sinner Spawn"))
 	victim.apply_status_effect(STATUS_EFFECT_INSTAGIB_KILLED)
 
-	// No points for respawn kills.
-	if(victim.has_status_effect(STATUS_EFFECT_INSTAGIB_SPAWNED) || killer.has_status_effect(STATUS_EFFECT_INSTAGIB_SPAWNED))
+	// No points for respawn kills and suicide
+	if(victim == killer || victim.has_status_effect(STATUS_EFFECT_INSTAGIB_SPAWNED) || killer.has_status_effect(STATUS_EFFECT_INSTAGIB_SPAWNED))
 		return
 
 	sinners[killer] += points
+	sortTim(sinners, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 
 	switch(points)
 		if(1) // laser
@@ -148,6 +146,7 @@
 				"[killer] вскрыл череп [victim] своим лезвием."))
 
 /datum/map_module/instagib/proc/print_message(message)
+	notify_ghosts(message)
 	for(var/mob/living/carbon/human/sinner in sinners)
 		to_chat(sinner, message)
 
@@ -169,6 +168,29 @@
 		music_id = 1
 	stop_music()
 	play_music()
+
+////////////////////////////////////////
+//			END DEATHMATCH
+/datum/map_module/instagib/proc/end_dm()
+	var/list/mob/living/carbon/human/winners = list(sinners[1])
+	for(var/i in 2 to length(sinners))
+		if(sinners[sinners[i]] != sinners[sinners[i-1]])
+			break
+		winners += sinners[i]
+
+	sinners -= winners
+
+	for(var/mob/living/carbon/human/winner in winners)
+		winner.mind.GetRole(INSTAGIB_ROLE).GetObjectives()[1].completed = OBJECTIVE_WIN // )))))))))))))))
+		winner.forceMove(pick_landmarked_location("Winner Spawn"))
+		winner.equipOutfit(/datum/outfit/instagib/winner)
+
+	for(var/mob/living/carbon/human/looser in sinners)
+		var/turf/T = pick_landmarked_location("Looser Spawn")
+		new /obj/structure/big_rock(get_step(T, EAST))
+		looser.forceMove(T)
+		looser.equipOutfit(/datum/outfit/instagib/looser)
+
 
 ////////////////////////////////////////
 //			ADMIN VERBS

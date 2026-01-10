@@ -14,7 +14,7 @@
 /datum/spawner/instagib/New(datum/map_module/instagib/MM)
 	. = ..()
 	map_module = MM
-	sinner_outfits = subtypesof(/datum/outfit/instagib)
+	sinner_outfits = subtypesof(/datum/outfit/instagib/arena)
 
 /datum/spawner/instagib/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
