@@ -235,7 +235,7 @@
 //----------------------------
 /obj/effect/projectile/devil_dagger
 	deletes_itself = TRUE
-	time_to_live = 8
+	time_to_live = 2
 
 /obj/effect/projectile/devil_dagger/tracer
 	icon_state = "devil_dagger_beam"

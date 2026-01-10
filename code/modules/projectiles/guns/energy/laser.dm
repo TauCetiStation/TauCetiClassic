@@ -148,12 +148,12 @@
 
 /obj/item/weapon/gun/energy/laser/devil_dagger
 	name = "Devil Dagger"
-	icon_state = "devil_dagger100"
+	icon_state = "devil_dagger"
 	desc = "Кинжал грешника."
+	flags = NODROP | ABSTRACT
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/devil_dagger)
 
 	var/datum/map_module/instagib/MM
-	flags = NODROP | ABSTRACT | DROPDEL
 
 /obj/item/weapon/gun/energy/laser/devil_dagger/atom_init()
 	. = ..()
@@ -162,6 +162,13 @@
 		qdel()
 
 /obj/item/weapon/gun/energy/laser/devil_dagger/afterattack(atom/target, mob/user, proximity, params)
+	if(target == user)
+		return
+
+	user.nutrition -= 5
+	if(!proximity)
+		return ..()
+
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(isrole(INSTAGIB_ROLE, H))

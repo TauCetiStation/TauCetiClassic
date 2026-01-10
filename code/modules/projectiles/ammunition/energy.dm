@@ -63,8 +63,10 @@
 	select_name = "redtag"
 
 /obj/item/ammo_casing/energy/laser/devil_dagger
-	projectile_type = /obj/item/projectile/beam/lasertag/omni
+	projectile_type = /obj/item/projectile/beam/devil_dagger
 	select_name = "devil dagger"
+	fire_sound = 'sound/weapons/guns/gunpulse_devil_dagger.ogg'
+	e_cost = 0
 
 /obj/item/ammo_casing/energy/bolt
 	projectile_type = /obj/item/projectile/energy/bolt

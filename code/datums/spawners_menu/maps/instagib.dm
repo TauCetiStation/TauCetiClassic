@@ -6,6 +6,7 @@
 	spawn_landmark_name = "Sinner Spawn"
 	lobby_spawner = TRUE
 	positions = INFINITY
+	cooldown = 30 SECONDS
 
 	var/datum/map_module/instagib/map_module
 	var/list/sinner_outfits
@@ -19,6 +20,7 @@
 	var/spawnloc = pick_spawn_location()
 	var/client/C = spectator.client
 	var/mob/living/carbon/human/H = new(spawnloc)
+
 	H.key = C.key
 	H.real_name = C.key
 	H.name = C.key
@@ -28,4 +30,5 @@
 	H.makeSkeleton()
 	H.revive()
 	H.regenerate_icons()
+	ADD_TRAIT(H, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 	H.put_in_hands(new /obj/item/weapon/gun/energy/laser/devil_dagger)

@@ -19,19 +19,16 @@
 	faction = create_custom_faction(INSTAGIB_FACTION, INSTAGIB_FACTION, "instagib", "Сражайтесь покуда бьётся сердце.")
 	spawner = create_spawner(/datum/spawner/instagib, src)
 
-	var newtime = 30 SECONDS
-	SSticker.timeLeft = newtime
-	to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
-	log_admin("Instagib Deathmatch set the pre-game delay to [newtime] seconds.")
 
-	addtimer(CALLBACK(src, PROC_REF(load_arena)), 20 SECONDS)
+	log_admin("Не жмите Start Now.")
+	addtimer(CALLBACK(src, PROC_REF(load_arena)), 30 SECONDS)
 
 /datum/map_module/instagib/proc/load_arena()
 	var/online = global.player_list.len
 	var/list/arenas = list()
 
 	for(var/datum/map_template/arena/A as anything in subtypesof(/datum/map_template/arena/instagib))
-		if(A.spawners && (A.spawners <= (online + 10)))
+		if(A.spawners && (A.spawners > online) && (A.spawners <= (online + 10)))
 			arenas += A
 
 	var/datum/map_template/arena/instagib/arena = /datum/map_template/arena/instagib/four_biomes
@@ -71,6 +68,11 @@
 
 
 /datum/map_module/instagib/proc/kill(mob/living/victim, mob/living/killer, points)
+	if(!victim.client)
+		return
+
+	victim.nutrition = NUTRITION_LEVEL_NORMAL
+	killer.nutrition = NUTRITION_LEVEL_NORMAL
 	respawn(victim)
 	// No points for respawn kills.
 	if(victim.has_status_effect(STATUS_EFFECT_INSTAGIB_SPAWNED) || killer.has_status_effect(STATUS_EFFECT_INSTAGIB_SPAWNED))

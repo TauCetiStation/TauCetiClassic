@@ -37,7 +37,7 @@
 	if(linked_portal)
 		return TRUE
 	for(var/obj/structure/static_portal/SP in global.static_portal_list)
-		if(SP.id == id)
+		if(SP != src && SP.id == id)
 			linked_portal = SP
 			return TRUE
 	return FALSE
