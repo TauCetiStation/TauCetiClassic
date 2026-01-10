@@ -181,7 +181,10 @@
 	sinners -= winners
 
 	for(var/mob/living/carbon/human/winner in winners)
-		winner.mind.GetRole(INSTAGIB_ROLE).GetObjectives()[1].completed = OBJECTIVE_WIN // )))))))))))))))
+		var/datum/role/custom/instagib_sinner = winner.mind.GetRole(INSTAGIB_ROLE)
+		var/list/datum/objective/objectives = instagib_sinner.GetObjectives()
+		objectives[1].completed = OBJECTIVE_WIN
+
 		winner.forceMove(pick_landmarked_location("Winner Spawn"))
 		winner.equipOutfit(/datum/outfit/instagib/winner)
 
