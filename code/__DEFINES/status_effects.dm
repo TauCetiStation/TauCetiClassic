@@ -38,6 +38,7 @@
 #define STATUS_EFFECT_ARRAY_TURN_BACK /datum/status_effect/array_turn_back
 
 #define STATUS_EFFECT_INSTAGIB_SPAWNED /datum/status_effect/instagib_spawned
+#define STATUS_EFFECT_INSTAGIB_KILLED /datum/status_effect/instagib_killed
 
 // Stasis helpers
 

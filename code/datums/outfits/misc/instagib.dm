@@ -14,30 +14,10 @@
 	glasses = /obj/item/clothing/glasses/eyepatch
 	suit 	= /obj/item/clothing/suit/pirate
 
-/datum/outfit/instagib/assistant
-	uniform = /obj/item/clothing/under/color/grey
-	shoes 	= /obj/item/clothing/shoes/black
-
-/datum/outfit/instagib/cowboy
-	head 	= /obj/item/clothing/head/western/cowboy
-	uniform = /obj/item/clothing/under/cowboy/brown
-	shoes 	= /obj/item/clothing/shoes/western
-
-/datum/outfit/instagib/engineer
-	head 	= /obj/item/clothing/head/hardhat/yellow
-	uniform = /obj/item/clothing/under/rank/engineer
-	shoes 	= /obj/item/clothing/shoes/boots/work
-	suit 	= /obj/item/clothing/suit/storage/hazardvest
-
-/datum/outfit/instagib/medic
-	head 	= /obj/item/clothing/head/surgery/blue
-	uniform = /obj/item/clothing/under/rank/medical/blue
-	shoes 	= /obj/item/clothing/shoes/white
-	mask 	= /obj/item/clothing/mask/surgical
-
 /datum/outfit/instagib/wizard
 	head 	= /obj/item/clothing/head/wizard/redhood
-	uniform = /obj/item/clothing/suit/wizrobe/wiz_red
+	uniform = /obj/item/clothing/under/color/black
+	suit = /obj/item/clothing/suit/wizrobe/wiz_red
 	shoes 	= /obj/item/clothing/shoes/sandal/brown
 
 /datum/outfit/instagib/cultist
@@ -61,3 +41,8 @@
 	head 	= /obj/item/clothing/head/det_hat/gray
 	uniform = /obj/item/clothing/under/mafia/sue
 	shoes 	= /obj/item/clothing/shoes/laceup
+
+/datum/outfit/instagib/mafia
+	uniform = /obj/item/clothing/under/pants/classicjeans
+	shoes 	= /obj/item/clothing/shoes/red
+	glasses = /obj/item/clothing/glasses/aviator_red

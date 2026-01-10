@@ -27,8 +27,11 @@
 
 	map_module.assign_to_faction(H)
 	H.equipOutfit(pick(sinner_outfits))
+
 	H.makeSkeleton()
 	H.revive()
 	H.regenerate_icons()
 	ADD_TRAIT(H, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 	H.put_in_hands(new /obj/item/weapon/gun/energy/laser/devil_dagger)
+	H.shoes.flags = DROPDEL | ABSTRACT
+	H.shoes.canremove = 0
