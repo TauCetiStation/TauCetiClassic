@@ -14,7 +14,8 @@
 		/client/proc/instagib_load_arena,
 		/client/proc/instagib_stop_music,
 		/client/proc/instagib_play_music,
-		/client/proc/instagib_next_music
+		/client/proc/instagib_next_music,
+		/client/proc/instagib_change_end_time
 	)
 
 	var/datum/faction/faction
@@ -29,6 +30,8 @@
 		"sound/music/IG Break loop.ogg"
 	)
 
+	var/end_time = 0
+
 /datum/map_module/instagib/New()
 	..()
 	faction = create_custom_faction(INSTAGIB_FACTION, INSTAGIB_FACTION, "instagib", "Сражайтесь покуда бьётся сердце.")
@@ -36,6 +39,17 @@
 
 	addtimer(CALLBACK(src, PROC_REF(pick_arena)), 1 MINUTE) // waiting for players
 	music_id = rand(1, length(music_loops))
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(start_timer))
+
+/datum/map_module/instagib/proc/start_timer()
+	end_time = world.time + 10 MINUTE
+	START_PROCESSING(SSobj, src)
+
+/datum/map_module/instagib/process()
+	if(world.time >= end_time)
+		STOP_PROCESSING(SSobj, src)
+		end_dm()
 
 ////////////////////////////////////////
 //			LOAD ARENA
@@ -97,6 +111,8 @@
 //			STATS
 /datum/map_module/instagib/stat_entry(mob/M)
 	if(M.client.holder)
+		if(world.time < end_time)
+			stat(null, "Времени до конца: [(end_time - world.time) / 10]")
 		for(var/mob/living/carbon/human/sinner in sinners)
 			stat(null, "[sinner]: [sinners[sinner]]")
 
@@ -172,28 +188,25 @@
 ////////////////////////////////////////
 //			END DEATHMATCH
 /datum/map_module/instagib/proc/end_dm()
-	var/list/mob/living/carbon/human/winners = list(sinners[1])
-	for(var/i in 2 to length(sinners))
-		if(sinners[sinners[i]] != sinners[sinners[i-1]])
-			break
-		winners += sinners[i]
+	sortTim(sinners, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
+	var/max_points = sinners[sinners[1]]
 
-	sinners -= winners
+	for(var/mob/living/carbon/human/sinner in sinners)
+		for(var/item in sinner.get_equipped_items())
+			qdel(item)
 
-	for(var/mob/living/carbon/human/winner in winners)
-		var/datum/role/custom/instagib_sinner = winner.mind.GetRole(INSTAGIB_ROLE)
-		var/list/datum/objective/objectives = instagib_sinner.GetObjectives()
-		objectives[1].completed = OBJECTIVE_WIN
+		if(sinners[sinner] == max_points)
+			var/datum/role/custom/instagib_sinner = sinner.mind.GetRole(INSTAGIB_ROLE)
+			var/list/datum/objective/objectives = instagib_sinner.GetObjectives()
+			objectives[1].completed = OBJECTIVE_WIN
+			sinner.forceMove(pick_landmarked_location("Winner Spawn"))
+			sinner.equipOutfit(/datum/outfit/instagib/winner)
+		else
+			sinner.forceMove(pick_landmarked_location("Looser Spawn"))
+			sinner.equipOutfit(/datum/outfit/instagib/looser)
 
-		winner.forceMove(pick_landmarked_location("Winner Spawn"))
-		winner.equipOutfit(/datum/outfit/instagib/winner)
-
-	for(var/mob/living/carbon/human/looser in sinners)
-		var/turf/T = pick_landmarked_location("Looser Spawn")
-		new /obj/structure/big_rock(get_step(T, EAST))
-		looser.forceMove(T)
-		looser.equipOutfit(/datum/outfit/instagib/looser)
-
+	stop_music()
+	SSticker.force_end = TRUE
 
 ////////////////////////////////////////
 //			ADMIN VERBS
@@ -238,3 +251,18 @@
 
 	var/datum/map_module/instagib/MM = SSmapping.get_map_module(MAP_MODULE_INSTAGIB)
 	MM.next_music()
+
+/client/proc/instagib_change_end_time()
+	set category = "Event"
+	set name = "Instagib: Change Time To End"
+
+	if(SSticker.current_state < GAME_STATE_PLAYING)
+		return tgui_alert(usr, "Дезматч ещё не начался.")
+
+	var/datum/map_module/instagib/MM = SSmapping.get_map_module(MAP_MODULE_INSTAGIB)
+	if(world.time > MM.end_time)
+		return tgui_alert(usr, "Дезматч уже закончился.")
+
+	var/newtime = input("Введите в секундах новое число для длительности дезматча.","Set Delay", MM.end_time / 10) as num|null
+	if(newtime)
+		MM.end_time = world.time + newtime

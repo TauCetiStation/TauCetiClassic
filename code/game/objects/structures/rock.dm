@@ -9,3 +9,4 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		L.Stun(0.5)
+		SpinAnimation(10,1)
