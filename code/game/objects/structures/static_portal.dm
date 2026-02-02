@@ -6,11 +6,6 @@
 	anchored = TRUE
 	var/id = null
 	var/obj/structure/static_portal/linked_portal
-	var/list/sounds = list(
-		'sound/effects/instagib/teleport D.ogg',
-		'sound/effects/instagib/teleport E.ogg',
-		'sound/effects/instagib/teleport F.ogg',
-		'sound/effects/instagib/teleport G.ogg')
 
 /obj/structure/static_portal/atom_init()
 	global.static_portal_list += src
@@ -30,8 +25,8 @@
 		return
 
 	AM.forceMove(get_step(linked_portal, AM.dir))
-	playsound(src, pick(sounds), VOL_EFFECTS_MASTER, 25)
-	playsound(linked_portal, pick(sounds), VOL_EFFECTS_MASTER, 25)
+	playsound(src, 'sound/effects/static_portal.ogg', VOL_EFFECTS_MASTER)
+	playsound(linked_portal, 'sound/effects/static_portal.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/static_portal/proc/find_linked()
 	if(linked_portal)

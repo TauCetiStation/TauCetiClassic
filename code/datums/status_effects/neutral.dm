@@ -65,6 +65,7 @@
 	if(!.)
 		return
 
+	playsound(owner.loc, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
 	new /obj/effect/temp_visual/cult/blood(owner.loc)
 	owner.Stun(1, TRUE)
 	owner.alpha = 55

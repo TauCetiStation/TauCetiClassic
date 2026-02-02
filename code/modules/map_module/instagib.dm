@@ -27,7 +27,8 @@
 	var/music_play = TRUE
 	var/list/music_loops = list(
 		"sound/music/IG DnB loop.ogg",
-		"sound/music/IG Break loop.ogg"
+		"sound/music/IG Break loop.ogg",
+		"sound/music/IG Break loop 2.ogg"
 	)
 
 	var/end_time = 0
@@ -125,7 +126,9 @@
 	victim.nutrition = NUTRITION_LEVEL_WELL_FED
 	killer.nutrition = NUTRITION_LEVEL_WELL_FED
 
+	playsound(victim.loc, 'sound/effects/projectiles_acts/laser_1.ogg', VOL_EFFECTS_MASTER)
 	new /obj/effect/temp_visual/cult/blood/out(victim.loc)
+
 	victim.forceMove(pick_landmarked_location("Sinner Spawn"))
 	victim.apply_status_effect(STATUS_EFFECT_INSTAGIB_KILLED)
 

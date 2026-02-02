@@ -150,7 +150,7 @@
 	name = "Devil Dagger"
 	icon_state = "devil_dagger"
 	desc = "Кинжал грешника."
-	flags = NODROP | ABSTRACT | DROPDEL
+	flags = NODROP | ABSTRACT
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/devil_dagger)
 
 	var/datum/map_module/instagib/MM
