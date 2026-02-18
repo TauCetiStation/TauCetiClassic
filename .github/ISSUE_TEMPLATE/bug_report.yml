@@ -8,8 +8,6 @@ body:
 
   - type: checkboxes
     id: feature_scope
-    validations:
-      required: true
     attributes:
       label: "Категория бага"
       description: "К какому типу контента относится проблема?"
