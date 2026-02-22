@@ -41,7 +41,7 @@
 	update_layer()
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(!(resistance_flags & FULL_INDESTRUCTIBLE) && iswrenching(W))
+	if(!(resistance_flags & DECONSTRUCT_IMMUNE) && iswrenching(W))
 		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			to_chat(user, "<span class='notice'>Вы демонтируете забор.</span>")
 			deconstruct(TRUE)
@@ -217,10 +217,19 @@
 	fence_full = TRUE
 	fence_cover_chance = 50
 
+	can_be_screwed = FALSE
+
+	var/disassemble_type = /obj/item/stack/sheet/sandbag
+
 /obj/structure/fence/sandbags/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
 		if(disassembled)
-			new /obj/item/stack/sheet/sandbag(loc, 1)
+			new disassemble_type(loc, 1)
 		else
 			new /obj/item/weapon/ore/glass(loc)
 	..()
+
+/obj/structure/fence/sandbags/green
+	icon_state = "sandbags_green"
+
+	disassemble_type = /obj/item/stack/sheet/sandbag_green
