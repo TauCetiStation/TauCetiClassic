@@ -179,6 +179,9 @@
 
 	message_type = SHOWMSG_VISUAL
 
+
+	message_1p = "You are doing a flip."
+	message_3p = "does flip."
 	required_stat = CONSCIOUS
 
 	required_bodyparts = list(BP_R_LEG, BP_L_LEG)
