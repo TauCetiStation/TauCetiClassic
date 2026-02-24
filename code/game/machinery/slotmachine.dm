@@ -107,12 +107,12 @@
 		var/win = cost * multiplier
 
 		if(win > 0)
-			src.visible_message("<b>Slot Machine</b> says, \"[congrats] You won [win] credits!\"")
+			svisible_message("<b>Slot Machine</b> says, \"[congrats] You won [win] credits!\"")
 			src.balance += win
 			playsound(src, 'sound/machines/slots/slots_win.ogg', VOL_EFFECTS_MASTER)
 			SStgui.update_uis(src)
 		else
-			src.visible_message("<b>Slot Machine</b> says, \"No luck!\"")
+			visible_message("<b>Slot Machine</b> says, \"No luck!\"")
 			playsound(src, 'sound/machines/slots/slots_nah.ogg', VOL_EFFECTS_MASTER)
 			SStgui.update_uis(src)
 		icon_state = "[initial(icon_state)]"
