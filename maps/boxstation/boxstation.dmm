@@ -16488,8 +16488,9 @@
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "aCn" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
+/obj/structure/table/woodentable,
+/obj/item/device/cardpay/casino{
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
@@ -44712,9 +44713,6 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 1
-	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "bAZ" = (
@@ -45841,15 +45839,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "bDd" = (
-/obj/structure/table/woodentable,
-/obj/item/ashtray/glass,
-/obj/item/weapon/lighter/zippo{
-	pixel_x = -5;
-	pixel_y = 5
-	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
+/obj/item/weapon/stool,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "bDe" = (
@@ -81863,7 +81856,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 30
 	},
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/machinery/slot_machine,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "pIR" = (
@@ -113300,8 +113293,8 @@ beG
 bmy
 akF
 aGn
-bCP
 aCn
+bCP
 bCP
 dWf
 bEn
