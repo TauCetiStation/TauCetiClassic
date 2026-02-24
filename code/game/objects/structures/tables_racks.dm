@@ -192,7 +192,7 @@
 	spark_system.start()
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был разрезан на части [user]!</span>", "<span class='notice'>Вы можете услышать как [CASE(src, NOMINATIVE_CASE)] скоро сломается.</span>")
+	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был разрезан на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
 	deconstruct(TRUE)
 
@@ -366,7 +366,7 @@
 /obj/structure/table/glass
 	name = "glass table"
 	cases = list("стеклянный стол", "стеклянного стола ", "стеклянному столу", "стеклянный стол", "стеклянным столом", "стеклянном столе")
-	desc = "Выглядит хрупким. Вас так и манит перевернуть его. Оно так и ПРОСИТ СДЕЛАТЬ ЭТО!"
+	desc = "Выглядит хрупким. Вас так и манит перевернуть его. Он так и ПРОСИТ СДЕЛАТЬ ЭТО!"
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	parts = /obj/item/weapon/table_parts/glass
 	max_integrity = 10
@@ -400,7 +400,7 @@
 	update_adjacent()
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>[CASE(src, NOMINATIVE_CASE)] сломался!</span>", "<span class='danger'>Вы слышите разбившееся стекло.</span>")
+	visible_message("<span class='warning'>[CASE(src, NOMINATIVE_CASE)] сломался!</span>", "<span class='danger'>Вы слышите разбивающееся стекло.</span>")
 
 	var/T = get_turf(src)
 	new /obj/item/weapon/shard(T)
@@ -414,7 +414,7 @@
 /obj/structure/table/glass/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
 	if(check_break(user))
-		usr.visible_message("<span class='warning'>[user] пытается забрать на [CASE(src, NOMINATIVE_CASE)], но оно ломается!</span>")
+		usr.visible_message("<span class='warning'>[user] пытается забрать на [CASE(src, NOMINATIVE_CASE)], но он ломается!</span>")
 	else
 		..()
 
@@ -440,7 +440,7 @@
 
 	victim.Stun(2)
 	victim.Weaken(5)
-	visible_message("<span class='danger'>[assailant] разбивает лицо [victim] об [CASE(src, NOMINATIVE_CASE)] и оно ломается!</span>")
+	visible_message("<span class='danger'>[assailant] разбивает лицо [victim] об [CASE(src, NOMINATIVE_CASE)] и он ломается!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
 	victim.log_combat(assailant, "face-slammed against [name]")
@@ -830,7 +830,7 @@
 
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, "sparks", VOL_EFFECTS_MASTER)
-	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был разрезан на части [user]!</span>", "<span class='notice'> Вы можете услышать как [CASE(src, NOMINATIVE_CASE)] скоро сломается.</span>")
+	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был разрезан на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
 	deconstruct(TRUE)
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type, damage_flag)
