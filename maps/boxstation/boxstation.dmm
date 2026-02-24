@@ -16488,10 +16488,10 @@
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "aCn" = (
-/obj/structure/table/woodentable,
 /obj/item/device/cardpay/casino{
 	pixel_y = 5
 	},
+/obj/structure/table/woodentable/fancy/black,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "aCo" = (
@@ -45842,7 +45842,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
-/obj/item/weapon/stool,
+/obj/structure/holostool,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "bDe" = (
