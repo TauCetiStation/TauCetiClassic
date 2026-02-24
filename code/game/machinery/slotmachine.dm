@@ -20,8 +20,8 @@
 	if(istype(I, /obj/item/toy/caps))
 		var/obj/item/toy/caps/C = I
 		balance += C.capsAmount
-		qdel(I)
 		to_chat(user, "<span class='notice'>You put [I] inside [src].</span>")
+		qdel(I)
 		SStgui.update_uis(src)
 		return
 
@@ -52,17 +52,17 @@
 	switch(action)
 		if("spin")
 			if(working)
-				return
-			if(balance < cost || cost <= 0)
+				return TRUE
+			if(cost <= 0 || balance < cost)
 				return TRUE
 			spin()
 			return TRUE
 		if("cashout")
 			if(working)
-				return
+				return TRUE
 			if(balance > 0)
 				give_cashout()
-				return TRUE
+			return TRUE
 		if("set_cost")
 			if(params["bet"])
 				cost = clamp(round(text2num(params["bet"])), 20, 1000)
@@ -74,50 +74,47 @@
 	icon_state = "[initial(icon_state)]-on"
 	working = TRUE
 	playsound(src, 'sound/machines/slots/slots_spin.ogg', VOL_EFFECTS_MASTER)
+
 	sleep(50)
 	if(QDELETED(src))
 		return
+	plays += 1
+	var/roll = rand(1, max_roll)
+	var/multiplier = 0
+	var/congrats = ""
+	// it just works
+	var/jack = round(JACKPOT * max_roll)
+	var/big = round(BIG_WIN * max_roll) + jack
+	var/med = round(MED_WIN * max_roll) + big
+	var/small = round(SMALL_WIN * max_roll) + med
+
+	if(roll <= jack)
+		congrats = "JAACKPOT!!"
+		multiplier = 55
+	else if(roll <= big)
+		congrats = "BIG WIN!!"
+		multiplier = 5
+	else if(roll <= med)
+		congrats = "Winner!"
+		multiplier = 4
+	else if(roll <= small)
+		congrats = "Small Winner!"
+		multiplier = 2
 	else
-		SStgui.update_uis(src)
-		plays += 1
-		var/roll = rand(1, max_roll)
-		var/multiplier = 0
-		var/congrats = ""
-		// it just works
-		var/jack = round(JACKPOT * max_roll)
-		var/big = round(BIG_WIN * max_roll) + jack
-		var/med = round(MED_WIN * max_roll) + big
-		var/small = round(SMALL_WIN * max_roll) + med
+		multiplier = 0
 
-		if(roll <= jack)
-			congrats = "JAACKPOT!!"
-			multiplier = 55
-		else if(roll <= big)
-			congrats = "BIG WIN!!"
-			multiplier = 5
-		else if(roll <= med)
-			congrats = "Winner!"
-			multiplier = 4
-		else if(roll <= small)
-			congrats = "Small Winner!"
-			multiplier = 2
-		else
-			multiplier = 0
+	var/win = cost * multiplier
 
-		var/win = cost * multiplier
-
-		if(win > 0)
-			visible_message("<b>Slot Machine</b> says, \"[congrats] You won [win] credits!\"")
-			src.balance += win
-			playsound(src, 'sound/machines/slots/slots_win.ogg', VOL_EFFECTS_MASTER)
-			SStgui.update_uis(src)
-		else
-			visible_message("<b>Slot Machine</b> says, \"No luck!\"")
-			playsound(src, 'sound/machines/slots/slots_nah.ogg', VOL_EFFECTS_MASTER)
-			SStgui.update_uis(src)
-		icon_state = "[initial(icon_state)]"
-		working = FALSE
-		SStgui.update_uis(src)
+	if(win > 0)
+		visible_message("<b>Slot Machine</b> says, \"[congrats] You won [win] credits!\"")
+		balance += win
+		playsound(src, 'sound/machines/slots/slots_win.ogg', VOL_EFFECTS_MASTER)
+	else
+		visible_message("<b>Slot Machine</b> says, \"No luck!\"")
+		playsound(src, 'sound/machines/slots/slots_nah.ogg', VOL_EFFECTS_MASTER)
+	icon_state = "[initial(icon_state)]"
+	working = FALSE
+	SStgui.update_uis(src)
 
 /obj/machinery/slot_machine/proc/give_cashout()
 	new /obj/item/toy/caps(get_turf(src), balance)

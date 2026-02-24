@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface SlotMachineData {
-  busy: string;
+  busy?: string;
   balance: number;
   cost: number;
   working: boolean;
@@ -63,7 +63,7 @@ export const SlotMachine = (props, context) => {
                     maxValue={1000}
                     step={10}
                     width="80px"
-                    format={(value) => value + '⪽'}
+                    format={(value) => value + 'cr'}
                     onChange={(e, value) => act('set_cost', { bet: value })}
                   />
                 </Stack.Item>
@@ -89,14 +89,16 @@ export const SlotMachine = (props, context) => {
                 icon="dice"
                 tooltip="Pull the lever"
                 tooltipPosition="right"
-                onClick={() => act('spin', { bet: cost })}>
+                onClick={() => act('spin')}>
                 Play!
               </Button>
             </Stack.Item>
           </Stack>
         </Window.Content>
       ) : (
-        <NoticeBox info>{busy}</NoticeBox>
+        <Window.Content>
+          <NoticeBox info>{busy}</NoticeBox>
+        </Window.Content>
       )}
     </Window>
   );
