@@ -30,7 +30,7 @@ export const SlotMachine = (props, context) => {
                   <strong>Account Balance:</strong>
                 </Stack.Item>
                 <Stack.Item>
-                  <Icon name="dollar-sign" /> {balance}
+                  {balance}cr
                 </Stack.Item>
                 <Stack.Item>
                   <Button
@@ -87,8 +87,15 @@ export const SlotMachine = (props, context) => {
             <Stack.Item>
               <Button
                 icon="dice"
-                tooltip="Pull the lever"
-                tooltipPosition="right"
+		disabled={balance < cost}
+		color={balance < cost * 3 ? "average" : "default"}
+                tooltip={
+			balance < cost
+				? "Not enough funds!"
+				: balance < cost * 2
+				? "Last spin at this wager!"
+				: "Pull the lever"
+		}
                 onClick={() => act('spin')}>
                 Play!
               </Button>

@@ -16488,10 +16488,10 @@
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "aCn" = (
-/obj/item/device/cardpay/casino{
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/device/cardpay/casino/slots{
 	pixel_y = 5
 	},
-/obj/structure/table/woodentable/fancy/black,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "aCo" = (

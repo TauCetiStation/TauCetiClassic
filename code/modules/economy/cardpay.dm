@@ -470,6 +470,20 @@
 	update_holoprice(clear = TRUE)
 	changemode(CARDPAY_IDLEMODE)
 
+// only fot slotmachine
+
+/obj/item/device/cardpay/casino/slots/attackby(obj/item/I, mob/user, params)
+	if(!linked_account && global.station_account)
+		linked_account = global.station_account.account_number
+		changemode(CARDPAY_IDLEMODE)
+	return ..()
+
+/obj/item/device/cardpay/casino/slots/attack_hand(mob_user)
+	if(!linked_account && global.station_account)
+		linked_account = global.station_account.account_number
+		changemode(CARDPAY_IDLEMODE)
+	return ..()
+
 #undef CARDPAY_IDLEMODE
 #undef CARDPAY_PAYMODE
 #undef CARDPAY_REFUNDMODE

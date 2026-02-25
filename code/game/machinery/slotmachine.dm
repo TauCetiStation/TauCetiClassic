@@ -1,7 +1,8 @@
-#define JACKPOT 0.001
-#define BIG_WIN 0.005
-#define MED_WIN 0.020
-#define SMALL_WIN 0.100
+// Probability of each win, multiplied by max_roll to get the threshold
+#define SLOTMACHINE_JACKPOT 0.001
+#define SLOTMACHINE_BIG_WIN 0.005
+#define SLOTMACHINE_MED_WIN 0.020
+#define SLOTMACHINE_SMALL_WIN 0.200
 
 /obj/machinery/slot_machine
 	name = "slot machine"
@@ -21,6 +22,7 @@
 		var/obj/item/toy/caps/C = I
 		balance += C.capsAmount
 		to_chat(user, "<span class='notice'>You put [I] inside [src].</span>")
+		playsound(src, 'sound/machines/slots/caps_insert.ogg', VOL_EFFECTS_MASTER)
 		qdel(I)
 		SStgui.update_uis(src)
 		return
@@ -83,17 +85,21 @@
 	var/multiplier = 0
 	var/congrats = ""
 	// it just works
-	var/jack = round(JACKPOT * max_roll)
-	var/big = round(BIG_WIN * max_roll) + jack
-	var/med = round(MED_WIN * max_roll) + big
-	var/small = round(SMALL_WIN * max_roll) + med
+	// Jackpot: 0.1% | Big: 0.5% | Med: 2% | Loss: ~87%
+	var/jack = CEIL(SLOTMACHINE_JACKPOT * max_roll)
+	var/big = CEIL(SLOTMACHINE_BIG_WIN * max_roll) + jack
+	var/med = CEIL(SLOTMACHINE_MED_WIN * max_roll) + big
+	var/small = CEIL(SLOTMACHINE_SMALL_WIN * max_roll) + med
 
 	if(roll <= jack)
 		congrats = "JAACKPOT!!"
-		multiplier = 55
+		multiplier = 100
+		var/datum/announcement/station/jackpot/A = new
+		A.message = "[usr] сорвал джекпот [cost * multiplier] фишек на игровом автомате. Руководство просит победителя вернуться на рабочее место."
+		A.play()
 	else if(roll <= big)
 		congrats = "BIG WIN!!"
-		multiplier = 5
+		multiplier = 8
 	else if(roll <= med)
 		congrats = "Winner!"
 		multiplier = 4
