@@ -84535,6 +84535,40 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/medical/virology)
+"svl" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/item/stack/sheet/sandbag_green{
+	amount = 5;
+	pixel_y = -2;
+	pixel_x = -3
+	},
+/obj/structure/rack,
+/obj/item/stack/sheet/sandbag_green{
+	amount = 5;
+	pixel_y = 8;
+	pixel_x = 1
+	},
+/obj/item/stack/sheet/sandbag_green{
+	amount = 5;
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/obj/item/stack/sheet/sandbag_green{
+	amount = 5;
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/item/stack/sheet/sandbag_green{
+	amount = 5;
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/armoury)
 "svp" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -118887,7 +118921,7 @@ abl
 abT
 aas
 aJb
-acu
+svl
 abl
 aeG
 aeW
