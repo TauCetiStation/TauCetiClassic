@@ -127,7 +127,7 @@
 	balance = 0
 	SStgui.update_uis(src)
 
-#undef JACKPOT
-#undef BIG_WIN
-#undef MED_WIN
-#undef SMALL_WIN
+#undef SLOTMACHINE_JACKPOT
+#undef SLOTMACHINE_BIG_WIN
+#undef SLOTMACHINE_MED_WIN
+#undef SLOTMACHINE_SMALL_WIN
