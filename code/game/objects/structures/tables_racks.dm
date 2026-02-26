@@ -473,7 +473,7 @@
 /obj/structure/table/woodentable
 	name = "wooden table"
 	cases = list("деревянный стол", "деревянного стола ", "деревянному столу", "деревянный стол", "деревянным столом", "деревянном столе")
-	desc = "Ходят слухи, что достаточно одного маленького огня и стол сгорит за секунды. Лучше не курить вблизи него."
+	desc = "Ходят слухи, что достаточно одного маленького огня и стол сгорит за секунды. Лучше не курить возле него."
 	icon = 'icons/obj/smooth_structures/wooden_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood
 	max_integrity = 50
@@ -482,7 +482,7 @@
 
 /obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
 	name = "gambling table"
-	cases = list("игровой стол", "игрового стола ", "игровому столу", "игровой стол", "игровым столом", "игровом столе")
+	cases = list("игровой стол", "игрового стола", "игровому столу", "игровой стол", "игровым столом", "игровом столе")
 	desc = "Убогий стол для сомнительных сделок в убогих местах."
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood/poker
@@ -490,7 +490,7 @@
 
 /obj/structure/table/woodentable/fancy
 	name = "fancy table"
-	cases = list("украшенный стол", "украшенного стола ", "украшенному столу", "украшенный стол", "украшенным столом", "украшенном столе")
+	cases = list("украшенный стол", "украшенного стола", "украшенному столу", "украшенный стол", "украшенным столом", "украшенном столе")
 	desc = "Стандартный металлический каркас стола, обтянутый изумительно вычурной тканью с рисунком."
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 	canSmoothWith = list(/obj/structure/table/woodentable/fancy, /obj/structure/table/woodentable/fancy/black)
@@ -506,8 +506,8 @@
  */
 /obj/structure/table/reinforced
 	name = "reinforced table"
-	cases = list("укрепленный стол", "укрепленного стола ", "укрепленному столу", "укрепленной стол", "укрепленным столом", "укрепленном столе")
-	desc = "Вариант стола на четырех ножках. Он прочнее чем ты."
+	cases = list("укрепленный стол", "укрепленного стола", "укрепленному столу", "укрепленной стол", "укрепленным столом", "укрепленном столе")
+	desc = "Вариант стола на четырех ножках. Он прочнее, чем ты."
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/reinforced
@@ -704,7 +704,7 @@
 
 /obj/structure/table/reinforced/stall
 	name = "stall table"
-	cases = list("магнитный стол", "магнитного стола ", "магнитному столу", "магнитный стол", "магнитным столом", "магнитном столе")
+	cases = list("магнитный стол", "магнитного стола", "магнитному столу", "магнитный стол", "магнитным столом", "магнитном столе")
 	desc = "Стол, оснащенный магнитным захватом."
 	icon = 'icons/obj/smooth_structures/stall_table.dmi'
 	max_integrity = 200
@@ -753,7 +753,7 @@
 
 /obj/structure/table/rglass
 	name = "reinforced glass table"
-	cases = list("укрепленный стеклянный стол", "укрепленного стеклянного стола ", "укрепленному стеклянному столу", "укрепленный стеклянный стол", "укрепленным стеклянным столом", "укрепленном стеклянном столе")
+	cases = list("укрепленный стеклянный стол", "укрепленного стеклянного стола", "укрепленному стеклянному столу", "укрепленный стеклянный стол", "укрепленным стеклянным столом", "укрепленном стеклянном столе")
 	desc = "Укрепленная версия стеклянного стола."
 	icon = 'icons/obj/smooth_structures/rglass.dmi'
 	max_integrity = 100
@@ -767,7 +767,7 @@
  */
 /obj/structure/rack // TODO subtype of table?
 	name = "rack"
-	cases = list("стеллаж", "стеллажа ", "стеллажу", "стеллаж", "стеллажом", "стеллаже")
+	cases = list("стеллаж", "стеллажа", "стеллажу", "стеллаж", "стеллажом", "стеллаже")
 	desc = "Обычный железный стеллаж, который точно не использовали для пыток в средних веках."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
