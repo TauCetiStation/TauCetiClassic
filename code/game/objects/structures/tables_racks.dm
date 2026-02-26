@@ -414,7 +414,7 @@
 /obj/structure/table/glass/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
 	if(check_break(user))
-		usr.visible_message("<span class='warning'>[user] пытается забрать на [CASE(src, NOMINATIVE_CASE)], но он ломается!</span>")
+		usr.visible_message("<span class='warning'>[user] пытается забраться на [CASE(src, NOMINATIVE_CASE)], но он ломается!</span>")
 	else
 		..()
 
