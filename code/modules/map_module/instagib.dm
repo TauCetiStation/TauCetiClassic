@@ -10,6 +10,8 @@
 	config_use_spawners_lobby = TRUE
 	disable_default_spawners = TRUE
 
+	map_lobby_image = "html/media/lobby-instagib.png"
+
 	admin_verbs = list(
 		/client/proc/instagib_load_arena,
 		/client/proc/instagib_stop_music,
