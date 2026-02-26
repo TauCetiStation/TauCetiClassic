@@ -90,7 +90,7 @@
 				SStgui.update_uis(src)
 			return TRUE
 
-/obj/machinery/slot_machine/proc/spin(mob/usr)
+/obj/machinery/slot_machine/proc/spin(mob/user)
 	balance -= cost
 	working = TRUE
 	icon_state = "spin_start"
@@ -115,7 +115,7 @@
 		congrats = "JAACKPOT!!"
 		multiplier = 100
 		var/datum/announcement/station/jackpot/A = new
-		A.message = "[usr] сорвал джекпот [cost * multiplier] фишек на игровом автомате. Руководство просит победителя вернуться на рабочее место."
+		A.message = "[user] сорвал джекпот [cost * multiplier] фишек на игровом автомате. Руководство просит победителя вернуться на рабочее место."
 		A.play()
 	else if(roll <= big)
 		congrats = "BIG WIN!!"
