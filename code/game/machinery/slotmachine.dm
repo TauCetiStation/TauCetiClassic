@@ -1,9 +1,3 @@
-// Probability of each win, multiplied by max_roll to get the threshold
-#define SLOTMACHINE_JACKPOT 0.001
-#define SLOTMACHINE_BIG_WIN 0.005
-#define SLOTMACHINE_MED_WIN 0.020
-#define SLOTMACHINE_SMALL_WIN 0.200
-
 /obj/machinery/slot_machine
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
@@ -106,10 +100,10 @@
 	var/congrats = ""
 	// it just works
 	// Jackpot: 0.1% | Big: 0.5% | Med: 2% | Loss: ~87%
-	var/jack = CEIL(SLOTMACHINE_JACKPOT * max_roll)
-	var/big = CEIL(SLOTMACHINE_BIG_WIN * max_roll) + jack
-	var/med = CEIL(SLOTMACHINE_MED_WIN * max_roll) + big
-	var/small = CEIL(SLOTMACHINE_SMALL_WIN * max_roll) + med
+	var/jack = CEIL(0.001 * max_roll)
+	var/big = CEIL(0.005 * max_roll) + jack
+	var/med = CEIL(0.20 * max_roll) + big
+	var/small = CEIL(0.200 * max_roll) + med
 
 	if(roll <= jack)
 		congrats = "JAACKPOT!!"
@@ -149,8 +143,3 @@
 	new /obj/item/toy/caps(get_turf(src), balance)
 	balance = 0
 	SStgui.update_uis(src)
-
-#undef SLOTMACHINE_JACKPOT
-#undef SLOTMACHINE_BIG_WIN
-#undef SLOTMACHINE_MED_WIN
-#undef SLOTMACHINE_SMALL_WIN
