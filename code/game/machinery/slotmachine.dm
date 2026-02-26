@@ -7,12 +7,14 @@
 /obj/machinery/slot_machine
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
-	icon = 'icons/obj/atmos.dmi'
-	icon_state = "sheater-off"
+	icon = 'icons/obj/machines/slotmachine.dmi'
+	icon_state = "idle"
 	density = TRUE
 	anchored = TRUE
 	var/balance = 0 // uses gusev caps lol
+	var/stored = 0 // lost
 	var/working = FALSE
+	var/won_last_spin = FALSE
 	var/max_roll = 1000
 	var/plays = 0
 	var/cost = 20 // wager
@@ -25,7 +27,24 @@
 		playsound(src, 'sound/machines/slots/caps_insert.ogg', VOL_EFFECTS_MASTER)
 		qdel(I)
 		SStgui.update_uis(src)
+	return ..()
+
+/obj/machinery/slot_machine/atom_break(damage_flag)
+	. = ..()
+	if(. && stored > 0)
+		new /obj/item/toy/caps(get_turf(src), round(stored * (rand(10, 90) / 100)))
+
+/obj/machinery/slot_machine/update_icon()
+	. = ..()
+	if(stat & BROKEN)
+		icon_state = "broken"
 		return
+	if(working)
+		return
+	if(won_last_spin)
+		icon_state = "win"
+		return
+	icon_state = "idle"
 
 /obj/machinery/slot_machine/ui_interact(mob/user)
 	tgui_interact(user)
@@ -55,9 +74,9 @@
 		if("spin")
 			if(working)
 				return TRUE
-			if(cost <= 0 || balance < cost)
+			if(balance < cost)
 				return TRUE
-			spin()
+			spin(usr)
 			return TRUE
 		if("cashout")
 			if(working)
@@ -71,13 +90,14 @@
 				SStgui.update_uis(src)
 			return TRUE
 
-/obj/machinery/slot_machine/proc/spin()
+/obj/machinery/slot_machine/proc/spin(mob/usr)
 	balance -= cost
-	icon_state = "[initial(icon_state)]-on"
 	working = TRUE
+	icon_state = "spin_start"
 	playsound(src, 'sound/machines/slots/slots_spin.ogg', VOL_EFFECTS_MASTER)
-
-	sleep(50)
+	sleep(4)
+	icon_state = "spin"
+	sleep(46)
 	if(QDELETED(src))
 		return
 	plays += 1
@@ -112,14 +132,17 @@
 	var/win = cost * multiplier
 
 	if(win > 0)
+		won_last_spin = TRUE
 		visible_message("<b>Slot Machine</b> says, \"[congrats] You won [win] credits!\"")
 		balance += win
 		playsound(src, 'sound/machines/slots/slots_win.ogg', VOL_EFFECTS_MASTER)
 	else
+		won_last_spin = FALSE
+		stored += round(cost * 0.3) // ~30%
 		visible_message("<b>Slot Machine</b> says, \"No luck!\"")
 		playsound(src, 'sound/machines/slots/slots_nah.ogg', VOL_EFFECTS_MASTER)
-	icon_state = "[initial(icon_state)]"
 	working = FALSE
+	update_icon()
 	SStgui.update_uis(src)
 
 /obj/machinery/slot_machine/proc/give_cashout()

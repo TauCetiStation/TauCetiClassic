@@ -86,7 +86,7 @@ export const SlotMachine = (props, context) => {
               <Button
                 icon="dice"
                 disabled={balance < cost}
-                color={balance < cost * 3 ? 'average' : 'default'}
+                color={balance < cost * 2 ? 'average' : 'default'}
                 tooltip={
                   balance < cost
                     ? 'Not enough funds!'
