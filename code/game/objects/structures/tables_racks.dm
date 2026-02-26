@@ -880,7 +880,7 @@
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!!</span>")
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
