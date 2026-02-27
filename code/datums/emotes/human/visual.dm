@@ -202,7 +202,7 @@
 	if(istype(user.buckled, /obj/structure/stool/bed/chair) && prob(80))
 		var/obj/structure/stool/bed/chair/ch = user.buckled
 		if((ch.can_flipped == TRUE) && (ch.flipped == FALSE))
-			user.visible_message("<span class='notice'>[user] flips \the [ch.name] down.</span>","<span class='notice'>You flips \the [ch.name] down.</span>")
+			user.visible_message("<span class='notice'>[user] flips \the [ch.name] down.</span>","<span class='notice'>You flip \the [ch.name] down.</span>")
 			ch.flip()
 			ch.unbuckle_mob()
 			user.apply_effect(2, WEAKEN, 0)
