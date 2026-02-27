@@ -203,6 +203,7 @@
 #define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
 #define TRAIT_FAST_WALKER         "fast_walker"
+#define TRAIT_BULLET_DODGER        "bullet_dodger"
 #define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
 #define TRAIT_MIMING              "miming"
 #define TRAIT_CAN_LEAP            "can_leap"

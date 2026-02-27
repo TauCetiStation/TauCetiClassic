@@ -76,6 +76,9 @@
 		if(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 			miss_chance = 60
 
+	if(HAS_TRAIT(target, TRAIT_BULLET_DODGER))
+		miss_chance += 50
+
 	if(!prob(miss_chance + miss_chance_mod)) // chance to hit
 		return zone
 

@@ -155,6 +155,7 @@
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.set_dir(i)
 				sleep(1)
+		user.emote("flip")
 
 /obj/item/weapon/dualsaber/Get_shield_chance()
 	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && !slicing)

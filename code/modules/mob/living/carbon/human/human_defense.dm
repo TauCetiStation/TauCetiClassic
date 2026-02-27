@@ -28,8 +28,14 @@
 	var/weight_diff_coef = 1 + sqrt(size_diff_calculate)
 	if(shoes?.flags & AIR_FLOW_PROTECT || wear_suit?.flags & AIR_FLOW_PROTECT)
 		adjustHalLoss(15 * weight_diff_coef)	//thicc landing
+		if(isliving(AM))
+			var/mob/living/M = AM
+			M.adjustHalLoss(15 * weight_diff_coef)
 	else
 		AdjustWeakened(2 * weight_diff_coef)	//4 seconds is default slip
+		if(isliving(AM))
+			var/mob/living/M = AM
+			M.AdjustWeakened(2 * weight_diff_coef)
 	visible_message("<span class='warning'>[AM] falls on [src].</span>",
 					"<span class='warning'>[AM] falls on you!</span>",
 					"<span class='notice'>You hear something heavy fall.</span>")

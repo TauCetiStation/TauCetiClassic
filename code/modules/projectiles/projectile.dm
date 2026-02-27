@@ -171,6 +171,9 @@
 /obj/item/projectile/proc/check_miss(mob/living/L)
 	if(L.prob_miss(src))
 		L.visible_message("<span class = 'notice'>\The [src] misses [L] narrowly!</span>")
+		if((L.stat == CONSCIOUS) && HAS_TRAIT(L, TRAIT_BULLET_DODGER))
+			L.emote("flip")
+			L.throw_at(get_step(L, pick(alldirs)), 1, 1)
 		playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 		permutated.Add(L)
 		return TRUE

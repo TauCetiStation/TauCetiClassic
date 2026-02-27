@@ -181,12 +181,37 @@
 
 
 	message_1p = "You are doing a flip."
-	message_3p = "does flip."
+	message_3p = "does a flip."
 	required_stat = CONSCIOUS
 
 	required_bodyparts = list(BP_R_LEG, BP_L_LEG)
 
 
 /datum/emote/human/flip/do_emote(mob/living/carbon/human/user)
+	if(user.stunned || user.weakened)
+		return
+	if(user.crawling)
+		message_1p = "You are doing a tactical roll."
+		message_3p = "does a tactical roll."
+	else
+		message_1p = "You are doing a flip."
+		message_3p = "does a flip."
 	. = ..()
-	user.SpinAnimation(5,1)
+	var/cw = pick(TRUE, FALSE)
+	user.SpinAnimation(7, 1, cw)
+	if(istype(user.buckled, /obj/structure/stool/bed/chair) && prob(80))
+		var/obj/structure/stool/bed/chair/ch = user.buckled
+		if((ch.can_flipped == TRUE) && (ch.flipped == FALSE))
+			user.visible_message("<span class='notice'>[user] flips \the [ch.name] down.</span>","<span class='notice'>You flips \the [ch.name] down.</span>")
+			ch.flip()
+			ch.unbuckle_mob()
+			user.apply_effect(2, WEAKEN, 0)
+			user.apply_damage(3, BRUTE, BP_HEAD)
+	else if(user.crawling)
+		user.adjustHalLoss(20)
+		user.throw_at(get_step(user, user.dir), 1, 1)
+	else if(prob(1) || (user.drunkenness >= DRUNKENNESS_SLUR))
+		user.visible_message("<span class='warning'>[user] does a bad flip and lands right on his head. That must be pretty nasty!</span>","<span class='warning'OUCH!</span>")
+		user.apply_effect(10, WEAKEN, 0)
+		user.apply_damage(20, BRUTE, BP_HEAD)
+		user.adjustBrainLoss(5)
