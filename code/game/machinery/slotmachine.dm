@@ -103,7 +103,7 @@
 	var/jack = CEIL(0.001 * max_roll)
 	var/big = CEIL(0.005 * max_roll) + jack
 	var/med = CEIL(0.02 * max_roll) + big
-	var/small = CEIL(0.200 * max_roll) + med
+	var/small = CEIL(0.2 * max_roll) + med
 
 	if(roll <= jack)
 		congrats = "JAACKPOT!!"
