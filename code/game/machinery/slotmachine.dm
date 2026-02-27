@@ -9,7 +9,6 @@
 	var/stored = 0 // lost
 	var/working = FALSE
 	var/won_last_spin = FALSE
-	var/max_roll = 1000
 	var/plays = 0
 	var/cost = 20 // wager
 
@@ -59,18 +58,18 @@
 		data["busy"] = "Spinning!"
 	return data
 
-/obj/machinery/slot_machine/tgui_act(action, params)
+/obj/machinery/slot_machine/tgui_act(action, params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	if(.)
 		return
-
+	var/mob/user = ui.user
 	switch(action)
 		if("spin")
 			if(working)
 				return TRUE
 			if(balance < cost)
 				return TRUE
-			spin(usr)
+			INVOKE_ASYNC(src, PROC_REF(spin), user)
 			return TRUE
 		if("cashout")
 			if(working)
@@ -81,7 +80,6 @@
 		if("set_cost")
 			if(params["bet"])
 				cost = clamp(round(text2num(params["bet"])), 20, 1000)
-				SStgui.update_uis(src)
 			return TRUE
 
 /obj/machinery/slot_machine/proc/spin(mob/user)
@@ -95,15 +93,15 @@
 	if(QDELETED(src))
 		return
 	plays += 1
-	var/roll = rand(1, max_roll)
+	var/roll = rand(1, 1000)
 	var/multiplier = 0
 	var/congrats = ""
 	// it just works
-	// Jackpot: 0.1% | Big: 0.5% | Med: 2% | Loss: ~87%
-	var/jack = CEIL(0.001 * max_roll)
-	var/big = CEIL(0.005 * max_roll) + jack
-	var/med = CEIL(0.02 * max_roll) + big
-	var/small = CEIL(0.2 * max_roll) + med
+	// Jackpot: 0.1% | Big: 0.5% | Med: 2% | Small: 20% | Loss: ~77%
+	var/jack = CEIL(0.001 * 1000)
+	var/big = CEIL(0.005 * 1000) + jack
+	var/med = CEIL(0.02 * 1000) + big
+	var/small = CEIL(0.2 * 1000) + med
 
 	if(roll <= jack)
 		congrats = "JAACKPOT!!"
@@ -142,4 +140,3 @@
 /obj/machinery/slot_machine/proc/give_cashout()
 	new /obj/item/toy/caps(get_turf(src), balance)
 	balance = 0
-	SStgui.update_uis(src)
