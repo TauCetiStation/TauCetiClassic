@@ -30,7 +30,7 @@
 		adjustHalLoss(15 * weight_diff_coef)	//thicc landing
 		if(isliving(AM))
 			var/mob/living/M = AM
-			M.adjustHalLoss(15 * weight_diff_coef)
+			M.AdjustWeakened(2 * weight_diff_coef)
 	else
 		AdjustWeakened(2 * weight_diff_coef)	//4 seconds is default slip
 		if(isliving(AM))
