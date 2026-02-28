@@ -7,6 +7,7 @@
 	anchored = TRUE
 	var/balance = 0 // uses gusev caps lol
 	var/stored = 0 // lost
+	var/max_roll = 1000
 	var/working = FALSE
 	var/won_last_spin = FALSE
 	var/plays = 0
@@ -93,15 +94,15 @@
 	if(QDELETED(src))
 		return
 	plays += 1
-	var/roll = rand(1, 1000)
+	var/roll = rand(1, max_roll)
 	var/multiplier = 0
 	var/congrats = ""
 	// it just works
 	// Jackpot: 0.1% | Big: 0.5% | Med: 2% | Small: 20% | Loss: ~77%
-	var/jack = CEIL(0.001 * 1000)
-	var/big = CEIL(0.005 * 1000) + jack
-	var/med = CEIL(0.02 * 1000) + big
-	var/small = CEIL(0.2 * 1000) + med
+	var/jack = CEIL(0.001 * max_roll)
+	var/big = CEIL(0.005 * max_roll) + jack
+	var/med = CEIL(0.02 * max_roll) + big
+	var/small = CEIL(0.2 * max_roll) + med
 
 	if(roll <= jack)
 		congrats = "JAACKPOT!!"
