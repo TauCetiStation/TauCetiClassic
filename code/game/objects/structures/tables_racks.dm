@@ -14,6 +14,7 @@
 	name = "table"
 	cases = list("стол", "стола", "столу", "стол", "столом", "столе")
 	desc = "Квадратный кусок металла, стоящий на четырех металлических ножках. Он не может двигаться."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "box"
 	density = TRUE
@@ -367,6 +368,7 @@
 	name = "glass table"
 	cases = list("стеклянный стол", "стеклянного стола", "стеклянному столу", "стеклянный стол", "стеклянным столом", "стеклянном столе")
 	desc = "Выглядит хрупким. Вас так и манит перевернуть его. Он так и ПРОСИТ СДЕЛАТЬ ЭТО!"
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	parts = /obj/item/weapon/table_parts/glass
 	max_integrity = 10
@@ -474,6 +476,7 @@
 	name = "wooden table"
 	cases = list("деревянный стол", "деревянного стола ", "деревянному столу", "деревянный стол", "деревянным столом", "деревянном столе")
 	desc = "Ходят слухи, что достаточно одного маленького огня и стол сгорит за секунды. Лучше не курить возле него."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/wooden_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood
 	max_integrity = 50
@@ -484,6 +487,7 @@
 	name = "gambling table"
 	cases = list("игровой стол", "игрового стола", "игровому столу", "игровой стол", "игровым столом", "игровом столе")
 	desc = "Убогий стол для сомнительных сделок в убогих местах."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood/poker
 	max_integrity  = 50
@@ -492,6 +496,7 @@
 	name = "fancy table"
 	cases = list("украшенный стол", "украшенного стола", "украшенному столу", "украшенный стол", "украшенным столом", "украшенном столе")
 	desc = "Стандартный металлический каркас стола, обтянутый изумительно вычурной тканью с рисунком."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 	canSmoothWith = list(/obj/structure/table/woodentable/fancy, /obj/structure/table/woodentable/fancy/black)
 	parts = /obj/item/weapon/table_parts/wood/fancy
@@ -508,6 +513,7 @@
 	name = "reinforced table"
 	cases = list("укрепленный стол", "укрепленного стола", "укрепленному столу", "укрепленной стол", "укрепленным столом", "укрепленном столе")
 	desc = "Вариант стола на четырех ножках. Он прочнее, чем ты."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/reinforced
@@ -706,6 +712,7 @@
 	name = "stall table"
 	cases = list("магнитный стол", "магнитного стола", "магнитному столу", "магнитный стол", "магнитным столом", "магнитном столе")
 	desc = "Стол, оснащенный магнитным захватом."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/stall_table.dmi'
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/stall
@@ -755,6 +762,7 @@
 	name = "reinforced glass table"
 	cases = list("укрепленный стеклянный стол", "укрепленного стеклянного стола", "укрепленному стеклянному столу", "укрепленный стеклянный стол", "укрепленным стеклянным столом", "укрепленном стеклянном столе")
 	desc = "Укрепленная версия стеклянного стола."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/rglass.dmi'
 	max_integrity = 100
 	parts = /obj/item/weapon/table_parts/rglass
@@ -769,6 +777,7 @@
 	name = "rack"
 	cases = list("стеллаж", "стеллажа", "стеллажу", "стеллаж", "стеллажом", "стеллаже")
 	desc = "Обычный железный стеллаж, который точно не использовали для пыток в средних веках."
+	gender = MALE
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = TRUE
