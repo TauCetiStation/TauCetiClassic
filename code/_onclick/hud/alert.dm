@@ -505,7 +505,7 @@
 	if(mob_viewer.restrained())
 		to_chat(mob_viewer, "Вы в наручниках! Сначала разберитесь с ними!")
 		return
-	if(mob_viewer.incapacitated() || mob_viewer.crawling || mob_viewer.is_busy())
+	if(mob_viewer.incapacitated() || mob_viewer.is_busy())
 		return
 	master.user_unbuckle_mob(mob_viewer)
 
