@@ -96,14 +96,14 @@
 	if(HULK in user.mutations)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.say(pick(";РААААААААГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
+		user.say(pick(";РРРРРРАААРГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
 		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/table/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	visible_message("<span class='danger'>[user] разрезает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
+	visible_message("<span class='danger'>[user] разрезает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 	if(istype(src, /obj/structure/table/glass))
 		deconstruct(FALSE)
 	else
@@ -113,14 +113,14 @@
 	if(user.environment_smash)
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
-		user.say(pick(";РААААААААГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
+		user.say(pick(";РРРРРРАААРГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
 		deconstruct(TRUE)
 
 /obj/structure/table/attack_tk() // no telehulk sorry
@@ -192,7 +192,7 @@
 	spark_system.start()
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был разрезан на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
+	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был[VERB_RU(src)] разрезан[VERB_RU(src)] на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
 	deconstruct(TRUE)
 
@@ -203,7 +203,7 @@
 	spark_system.start()
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-	to_chat(user, "<span class='notice'>Вы пытаетесь разрезать [CASE(src, NOMINATIVE_CASE)], но [CASE(I, NOMINATIVE_CASE)] слишком слабый для этого.</span>")
+	to_chat(user, "<span class='notice'>Вы пытаетесь разрезать [CASE(src, ACCUSATIVE_CASE)], но [CASE(I, NOMINATIVE_CASE)] слишком слаб[VERB_RU(src)] для этого.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
 
 // React to tools attacking src.
@@ -211,7 +211,7 @@
 	if(iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
-		to_chat(user, "<span class='notice'>Вы начинаете разбирать [CASE(src, NOMINATIVE_CASE)].</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете разбирать [CASE(src, ACCUSATIVE_CASE)].</span>")
 		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
@@ -278,7 +278,7 @@
 		to_chat(usr, "<span class='notice'>Оно не сдвинется с места.</span>")
 		return
 
-	usr.visible_message("<span class='warning'>[usr] переворачивает [CASE(src, NOMINATIVE_CASE)]!</span>")
+	usr.visible_message("<span class='warning'>[usr] переворачивает [CASE(src, ACCUSATIVE_CASE)]!</span>")
 
 	if(climbable)
 		structure_shaken()
@@ -400,7 +400,7 @@
 	update_adjacent()
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>[CASE(src, NOMINATIVE_CASE)] сломался!</span>", "<span class='danger'>Вы слышите разбивающееся стекло.</span>")
+	visible_message("<span class='warning'>[CASE(src, NOMINATIVE_CASE)] сломал[VERB2_RU(src)]!</span>", "<span class='danger'>Вы слышите разбивающееся стекло.</span>")
 
 	var/T = get_turf(src)
 	new /obj/item/weapon/shard(T)
@@ -414,7 +414,7 @@
 /obj/structure/table/glass/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
 	if(check_break(user))
-		usr.visible_message("<span class='warning'>[user] пытается забраться на [CASE(src, NOMINATIVE_CASE)], но он ломается!</span>")
+		usr.visible_message("<span class='warning'>[user] пытается забраться на [CASE(src, ACCUSATIVE_CASE)], но [THEY_RU(src)] ломается!</span>")
 	else
 		..()
 
@@ -440,7 +440,7 @@
 
 	victim.Stun(2)
 	victim.Weaken(5)
-	visible_message("<span class='danger'>[assailant] разбивает лицо [victim] об [CASE(src, NOMINATIVE_CASE)] и он ломается!</span>")
+	visible_message("<span class='danger'>[assailant] разбивает лицо [victim] об [CASE(src, ACCUSATIVE_CASE)] и [THEY_RU(src)] ломается!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
 	victim.log_combat(assailant, "face-slammed against [name]")
@@ -545,12 +545,12 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			if(status == 2)
-				to_chat(user, "<span class='notice'>Вы начинаете укреплять [CASE(src, NOMINATIVE_CASE)].</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять [CASE(src, ACCUSATIVE_CASE)].</span>")
 				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>Вы ослабляете укрепления [CASE(src, GENITIVE_CASE)].</span>")
 					src.status = 1
 			else
-				to_chat(user, "<span class='notice'>Вы начинаете укреплять [CASE(src, NOMINATIVE_CASE)].</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять [CASE(src, ACCUSATIVE_CASE)].</span>")
 				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>Вы ослабляете укрепления [CASE(src, GENITIVE_CASE)].</span>")
 					src.status = 2
@@ -560,7 +560,7 @@
 	else if(status != 2 && iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
-		to_chat(user, "<span class='notice'>Вы разбираете [CASE(src, NOMINATIVE_CASE)].</span>")
+		to_chat(user, "<span class='notice'>Вы разбираете [CASE(src, ACCUSATIVE_CASE)].</span>")
 		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
@@ -830,7 +830,7 @@
 
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, "sparks", VOL_EFFECTS_MASTER)
-	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был разрезан на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
+	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был[VERB_RU(src)] разрезан[VERB_RU(src)] на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
 	deconstruct(TRUE)
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type, damage_flag)
@@ -865,14 +865,14 @@
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
-		user.say(pick(";РААААААААГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
+		user.say(pick(";РРРРРРАААРГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
 		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/rack/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	visible_message("<span class='danger'>[user] разрезает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
+	visible_message("<span class='danger'>[user] разрезает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 	deconstruct(TRUE)
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
@@ -880,7 +880,7 @@
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
