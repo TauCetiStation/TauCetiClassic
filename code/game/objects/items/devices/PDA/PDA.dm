@@ -736,13 +736,7 @@
 
 	if(mode == 8 || mode == 81 || mode == 82)
 	 	// find active QMs and technicians
-		var/manifest = global.data_core.get_manifest()
-		var/no_cargonauts = TRUE
-		for(var/civ in manifest["civ"])
-			if(civ["active"] == "Active" && (civ["rank"] in list("Quartermaster", "Cargo Technician")))
-				no_cargonauts = FALSE
-				break
-		data["no_cargonauts"] = no_cargonauts
+		data["no_cargonauts"] = !check_active_cargonauts()
 		// pass onlineshop data...
 		var/list/categories_frontend = list()
 		for(var/index in global.shop_categories)

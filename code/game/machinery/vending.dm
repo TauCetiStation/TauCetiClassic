@@ -379,18 +379,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/vendorname = name  //import the machine's name
 
 	var/ad
-	if(cargo_connected && global.online_shop_ads)
-		var/lot_index = pick(global.online_shop_lots_hashed)
-		if(lot_index)
-			var/datum/shop_lot/Lot = pick(global.online_shop_lots_hashed[lot_index])
-			if(Lot)
-				ad += "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
-				ad += "<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
-				ad += "<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
-				ad += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
-				ad += "<td><a href='byond://?src=\ref[src];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
-				ad += "<tr><td colspan='3'><SMALL><I>[Lot.description]</I></SMALL><br></td></tr>"
-				ad += "</tbody></table></center></div><br>"
+	if(cargo_connected && global.online_shop_ads && check_active_cargonauts())
+		ad += get_gruztorg_advertisement(src)
 
 	if(currently_vending)
 		var/dat
@@ -511,11 +501,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		return
 
 	else if (href_list["pda_gruztorg"])
+		if(!usr || issilicon(usr) || isobserver(usr) || usr.incapacitated() || !Adjacent(usr))
+			return
+
 		var/obj/item/device/pda/PDA = locate() in usr
 		if(PDA)
 			PDA.category_shop_page = 1
 			PDA.mode = 8
 			PDA.attack_self(usr)
+			return
 
 	updateUsrDialog()
 
