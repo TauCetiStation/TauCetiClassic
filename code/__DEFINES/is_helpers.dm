@@ -167,6 +167,8 @@
 
 #define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
 
+#define issewing(A) (istype(A, /obj/item/stack/medical/suture))
+
 // OBJECTS
 
 #define isitem(A) (istype(A, /obj/item))

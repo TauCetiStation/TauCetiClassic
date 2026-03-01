@@ -1763,6 +1763,8 @@
 #include "code\modules\ext_scripts\get_webpage.dm"
 #include "code\modules\ext_scripts\python.dm"
 #include "code\modules\ext_scripts\shell.dm"
+#include "code\modules\factory\parts.dm"
+#include "code\modules\factory\products.dm"
 #include "code\modules\fluff\customitems.dm"
 #include "code\modules\fluff\fluffmenu.dm"
 #include "code\modules\fluff\history.dm"

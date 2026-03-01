@@ -5,7 +5,7 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous", "Production")
 
 /datum/supply_pack
 	var/name = "Crate"
@@ -1708,6 +1708,20 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Toner cartridges"
 	group = "Supply"
 
+/datum/supply_pack/suture
+	name = "Suture kits"
+	contains = list(/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture,
+					/obj/item/stack/medical/suture)
+	crate_name = "Suture kits"
+	group = "Supply"
+
 /datum/supply_pack/papers
 	name = "Paper packs"
 	contains = list(/obj/item/weapon/paper_refill,
@@ -2131,3 +2145,244 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	)
 	additional_costs = 2000
 	group = "Operations"
+
+
+
+//----------------------------------------------
+//------------------PRODUCTION------------------
+//----------------------------------------------
+
+//Wooden
+/datum/supply_pack/production_woodenclock
+	name = "Manufacturing parts: Wooden clock"
+	contains = list(
+		/obj/item/manufacturing_parts/wood/woodenclock,
+		/obj/item/manufacturing_parts/wood/woodenclock,
+		/obj/item/manufacturing_parts/wood/woodenclock,
+		/obj/item/manufacturing_parts/wood/woodenclock,
+		/obj/item/manufacturing_parts/wood/woodenclock,
+	)
+	additional_costs = 100
+	group = "Production"
+
+/datum/supply_pack/production_coffin
+	name = "Manufacturing parts: Coffin"
+	contains = list(
+		/obj/item/manufacturing_parts/wood/coffin,
+		/obj/item/manufacturing_parts/wood/coffin,
+		/obj/item/manufacturing_parts/wood/coffin,
+		/obj/item/manufacturing_parts/wood/coffin,
+		/obj/item/manufacturing_parts/wood/coffin,
+	)
+	additional_costs = 150
+	group = "Production"
+
+
+//Metal
+/datum/supply_pack/production_handcuffs
+	name = "Manufacturing parts: Handcuffs"
+	contains = list(
+		/obj/item/manufacturing_parts/metal/handcuffs,
+		/obj/item/manufacturing_parts/metal/handcuffs,
+		/obj/item/manufacturing_parts/metal/handcuffs,
+		/obj/item/manufacturing_parts/metal/handcuffs,
+		/obj/item/manufacturing_parts/metal/handcuffs,
+	)
+	additional_costs = 200
+	group = "Production"
+
+
+/datum/supply_pack/production_splint
+	name = "Manufacturing parts: Splint"
+	contains = list(
+		/obj/item/manufacturing_parts/metal/splint,
+		/obj/item/manufacturing_parts/metal/splint,
+		/obj/item/manufacturing_parts/metal/splint,
+		/obj/item/manufacturing_parts/metal/splint,
+		/obj/item/manufacturing_parts/metal/splint,
+	)
+	additional_costs = 150
+	group = "Production"
+
+/datum/supply_pack/production_beartrap
+	name = "Manufacturing parts: Beartrap"
+	contains = list(
+		/obj/item/manufacturing_parts/metal/beartrap,
+		/obj/item/manufacturing_parts/metal/beartrap,
+		/obj/item/manufacturing_parts/metal/beartrap,
+		/obj/item/manufacturing_parts/metal/beartrap,
+		/obj/item/manufacturing_parts/metal/beartrap,
+	)
+	additional_costs = 250
+	group = "Production"
+
+/datum/supply_pack/production_officechair
+	name = "Manufacturing parts: Officechair"
+	contains = list(
+		/obj/item/manufacturing_parts/metal/officechair,
+		/obj/item/manufacturing_parts/metal/officechair,
+		/obj/item/manufacturing_parts/metal/officechair,
+		/obj/item/manufacturing_parts/metal/officechair,
+		/obj/item/manufacturing_parts/metal/officechair,
+	)
+	additional_costs = 100
+	group = "Production"
+
+/datum/supply_pack/production_toolbox
+	name = "Manufacturing parts: Toolbox"
+	contains = list(
+		/obj/item/manufacturing_parts/metal/toolbox,
+		/obj/item/manufacturing_parts/metal/toolbox,
+		/obj/item/manufacturing_parts/metal/toolbox,
+		/obj/item/manufacturing_parts/metal/toolbox,
+		/obj/item/manufacturing_parts/metal/toolbox,
+	)
+	additional_costs = 150
+	group = "Production"
+
+/datum/supply_pack/production_welding_gogles
+	name = "Manufacturing parts: Welding gogles"
+	contains = list(
+		/obj/item/manufacturing_parts/metal/welding_gogles,
+		/obj/item/manufacturing_parts/metal/welding_gogles,
+		/obj/item/manufacturing_parts/metal/welding_gogles,
+		/obj/item/manufacturing_parts/metal/welding_gogles,
+		/obj/item/manufacturing_parts/metal/welding_gogles,
+	)
+	additional_costs = 100
+	group = "Production"
+
+/datum/supply_pack/production_vest
+	name = "Manufacturing parts: Vest"
+	contains = list(
+		/obj/item/manufacturing_parts/metal/vest,
+		/obj/item/manufacturing_parts/metal/vest,
+		/obj/item/manufacturing_parts/metal/vest,
+		/obj/item/manufacturing_parts/metal/vest,
+		/obj/item/manufacturing_parts/metal/vest,
+	)
+	additional_costs = 300
+	group = "Production"
+
+
+//Electric
+/datum/supply_pack/production_pda
+	name = "Manufacturing parts: Pda"
+	contains = list(
+		/obj/item/manufacturing_parts/electric/pda,
+		/obj/item/manufacturing_parts/electric/pda,
+		/obj/item/manufacturing_parts/electric/pda,
+		/obj/item/manufacturing_parts/electric/pda,
+		/obj/item/manufacturing_parts/electric/pda,
+	)
+	additional_costs = 200
+	group = "Production"
+
+/datum/supply_pack/production_flashlight
+	name = "Manufacturing parts: Flashlight"
+	contains = list(
+		/obj/item/manufacturing_parts/electric/flashlight,
+		/obj/item/manufacturing_parts/electric/flashlight,
+		/obj/item/manufacturing_parts/electric/flashlight,
+		/obj/item/manufacturing_parts/electric/flashlight,
+		/obj/item/manufacturing_parts/electric/flashlight,
+	)
+	additional_costs = 50
+	group = "Production"
+
+/datum/supply_pack/production_modkit
+	name = "Manufacturing parts: Modkit"
+	contains = list(
+		/obj/item/manufacturing_parts/electric/modkit,
+		/obj/item/manufacturing_parts/electric/modkit,
+		/obj/item/manufacturing_parts/electric/modkit,
+		/obj/item/manufacturing_parts/electric/modkit,
+		/obj/item/manufacturing_parts/electric/modkit,
+	)
+	additional_costs = 300
+	group = "Production"
+
+/datum/supply_pack/production_occult
+	name = "Manufacturing parts: Occult"
+	contains = list(
+		/obj/item/manufacturing_parts/electric/occult,
+		/obj/item/manufacturing_parts/electric/occult,
+		/obj/item/manufacturing_parts/electric/occult,
+		/obj/item/manufacturing_parts/electric/occult,
+		/obj/item/manufacturing_parts/electric/occult,
+	)
+	additional_costs = 100
+	group = "Production"
+
+/datum/supply_pack/production_flash
+	name = "Manufacturing parts: Flash"
+	contains = list(
+		/obj/item/manufacturing_parts/electric/flash,
+		/obj/item/manufacturing_parts/electric/flash,
+		/obj/item/manufacturing_parts/electric/flash,
+		/obj/item/manufacturing_parts/electric/flash,
+		/obj/item/manufacturing_parts/electric/flash,
+	)
+	additional_costs = 200
+	group = "Production"
+
+/datum/supply_pack/production_instrument
+	name = "Manufacturing parts: Instrument"
+	contains = list(
+		/obj/item/manufacturing_parts/electric/instrument,
+		/obj/item/manufacturing_parts/electric/instrument,
+		/obj/item/manufacturing_parts/electric/instrument,
+		/obj/item/manufacturing_parts/electric/instrument,
+		/obj/item/manufacturing_parts/electric/instrument,
+	)
+	additional_costs = 300
+	group = "Production"
+
+//Clothing
+/datum/supply_pack/production_insulated_gloves
+	name = "Manufacturing parts: Insulated gloves"
+	contains = list(
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+	)
+	additional_costs = 200
+	group = "Production"
+
+/datum/supply_pack/production_insulated_gloves
+	name = "Manufacturing parts: Insulated gloves"
+	contains = list(
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+		/obj/item/manufacturing_parts/cloth/insulated_gloves,
+	)
+	additional_costs = 200
+	group = "Production"
+
+/datum/supply_pack/production_spacesuit
+	name = "Manufacturing parts: Spacesuit"
+	contains = list(
+		/obj/item/manufacturing_parts/cloth/spacesuit,
+		/obj/item/manufacturing_parts/cloth/spacesuit,
+		/obj/item/manufacturing_parts/cloth/spacesuit,
+		/obj/item/manufacturing_parts/cloth/spacesuit,
+		/obj/item/manufacturing_parts/cloth/spacesuit,
+	)
+	additional_costs = 150
+	group = "Production"
+
+/datum/supply_pack/production_baseball
+	name = "Manufacturing parts: Baseball"
+	contains = list(
+		/obj/item/manufacturing_parts/cloth/baseball,
+		/obj/item/manufacturing_parts/cloth/baseball,
+		/obj/item/manufacturing_parts/cloth/baseball,
+		/obj/item/manufacturing_parts/cloth/baseball,
+		/obj/item/manufacturing_parts/cloth/baseball,
+	)
+	additional_costs = 50
+	group = "Production"

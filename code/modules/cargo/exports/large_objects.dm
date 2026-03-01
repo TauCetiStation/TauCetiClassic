@@ -165,3 +165,14 @@
 	cost = 300
 	unit_name = "mining drill head"
 	export_types = list(/obj/machinery/mining/drill)
+
+/datum/export/large/coffin
+	cost = 250
+	unit_name = "mining drill head"
+	export_types = list(/obj/structure/closet/coffin)
+
+/datum/export/large/office_chair
+	cost = 250
+	unit_name = "mining drill head"
+	export_types = list(/obj/structure/stool/bed/chair/office)
+	include_subtypes = TRUE

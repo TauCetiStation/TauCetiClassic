@@ -83,13 +83,13 @@
 	export_types = list(/obj/item/weapon/grenade/chem_grenade/teargas)
 
 /datum/export/weapon/flash
-	cost = 5
+	cost = 100
 	unit_name = "handheld flash"
 	export_types = list(/obj/item/device/flash)
 	include_subtypes = TRUE
 
 /datum/export/weapon/handcuffs
-	cost = 1
+	cost = 75
 	unit_name = "pair"
 	message = "of handcuffs"
 	export_types = list(/obj/item/weapon/handcuffs)
