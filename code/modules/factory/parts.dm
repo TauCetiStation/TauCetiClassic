@@ -1,6 +1,6 @@
 /obj/item/manufacturing_parts
 	name = "manufacturing parts"
-	desc = "детали для сборки"
+	desc = "РґРµС‚Р°Р»Рё РґР»СЏ СЃР±РѕСЂРєРё"
 	icon = 'icons/obj/factory.dmi'
 	icon_state = "wood_2"
 
@@ -26,7 +26,7 @@
 
 	var/obj/structure/table/table = locate(/obj/structure/table, get_turf(src))
 	if(!table)
-		to_chat(user, "Положите детали на стол.")
+		to_chat(user, "РџРѕР»РѕР¶РёС‚Рµ РґРµС‚Р°Р»Рё РЅР° СЃС‚РѕР».")
 		return
 
 	switch(steps[step])
