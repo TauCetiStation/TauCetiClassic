@@ -336,3 +336,39 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 	Item.pixel_y = rand(-10, 10)
 
 	qdel(src)
+
+/proc/get_gruztorg_advertisement(atom/source)
+	var/data
+	if(!global.online_shop_lots_hashed.len)
+		return
+
+	var/lot_index = pick(global.online_shop_lots_hashed)
+	if(!lot_index)
+		return
+
+	var/list/lots = global.online_shop_lots_hashed[lot_index]
+	if(!lots.len)
+		return
+
+	var/datum/shop_lot/Lot = pick(lots)
+	if(!Lot)
+		return
+
+	data += "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
+	data += "<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
+	data += "<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
+	data += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
+	data += "<td><a href='byond://?src=\ref[source];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
+	data += "<tr><td colspan='3'><SMALL><I>[Lot.description]</I></SMALL><br></td></tr>"
+	data += "</tbody></table></center></div><br>"
+
+	return data
+
+
+/proc/check_active_cargonauts()
+	var/manifest = global.data_core.get_manifest()
+	for(var/civ in manifest["civ"])
+		if(civ["active"] == "Active" && (civ["rank"] in list("Quartermaster", "Cargo Technician")))
+			return TRUE
+
+	return FALSE

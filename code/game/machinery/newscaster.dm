@@ -181,7 +181,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = "" //the feed channel which will be receiving the feed, or being created
 	var/c_locked = 0        //Will our new channel be locked to public submissions?
-	var/c_ads = FALSE        //Will our new channel show ads?
+	var/channel_show_ads = FALSE        //Will our new channel show ads?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
@@ -310,7 +310,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat+="<HR><B><A href='byond://?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [channel_name]<BR>"
 				dat+="<B>Автор Канала:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
 				dat+="<B><A href='byond://?src=\ref[src];set_channel_lock=1'>Истории других пользователей</A>:</B> [(c_locked) ? ("НЕТ") : ("ДА")]<BR>"
-				dat+="<B><A href='byond://?src=\ref[src];set_channel_ads=1'>Реклама в постах</A>:</B> [(c_ads) ? ("ДА") : ("НЕТ")]<BR><HR>"
+				dat+="<B><A href='byond://?src=\ref[src];set_channel_ads=1'>Реклама в постах</A>:</B> [(channel_show_ads) ? ("ДА") : ("НЕТ")]<BR><HR>"
 				dat+="<BR><A href='byond://?src=\ref[src];submit_new_channel=1'>Создать</A><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(3)
 				dat+="Создание Истории..."
@@ -398,17 +398,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 
-							if(viewing_channel.show_ads && global.online_shop_ads)
-								var/lot_index = pick(global.online_shop_lots_hashed)
-								if(lot_index)
-									var/datum/shop_lot/Lot = pick(global.online_shop_lots_hashed[lot_index])
-									if(Lot)
-										dat+="<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
-										dat+="<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
-										dat+="<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
-										dat+="<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
-										dat+="<td><a href='byond://?src=\ref[src];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
-										dat+="</tbody></table></center></div><br>"
+							if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts())
+								dat+=get_gruztorg_advertisement(src)
 
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
@@ -622,7 +613,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		//update_icon()
 
 	else if(href_list["set_channel_ads"])
-		c_ads = !c_ads
+		channel_show_ads = !channel_show_ads
 
 	else if(href_list["submit_new_channel"])
 		//var/list/existing_channels = list() //OBSOLETE
@@ -649,7 +640,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				newChannel.channel_name = channel_name
 				newChannel.author = scanned_user
 				newChannel.locked = c_locked
-				newChannel.show_ads = c_ads
+				newChannel.show_ads = channel_show_ads
 				feedback_inc("newscaster_channels",1)
 				/*for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)    //Let's add the new channel in all casters.
 					NEWSCASTER.channel_list += newChannel*/                     //Now that it is sane, get it into the list. -OBSOLETE
@@ -869,7 +860,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			scanned_user = "Unknown"
 			msg = ""
 			c_locked = 0
-			c_ads = FALSE
+			channel_show_ads = FALSE
 			channel_name = ""
 			viewing_channel = null
 
@@ -897,7 +888,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
-				if(viewing_channel.show_ads && global.online_shop_ads)
+				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts())
 					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
 					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
 
@@ -915,7 +906,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
-				if(viewing_channel.show_ads && global.online_shop_ads)
+				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts())
 					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
 					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
 
