@@ -20,6 +20,7 @@ var/global/orders_and_offers_number = 0
 var/global/online_shop_discount = 0
 var/global/online_shop_delivery_cost = 0.15
 var/global/online_shop_profits = 0
+var/global/online_shop_ads = TRUE
 
 /datum/shop_lot
 	var/name = "Лот"
@@ -68,19 +69,25 @@ var/global/online_shop_profits = 0
 	LAZYREMOVEASSOC(global.online_shop_lots_hashed, src.hash, src)
 	return ..()
 
-/datum/shop_lot/proc/to_list()
+/datum/shop_lot/proc/get_seller()
 	var/datum/money_account/MA = get_account(account)
 
+	return MA ? MA.owner_name : "Unknown"
+
+/datum/shop_lot/proc/get_price_string()
 	var/price_str = "[get_discounted_price() + get_delivery_cost()]"
 	if(global.online_shop_discount)
 		price_str = "<S>[src.price + get_delivery_cost()]</S> <B>[get_discounted_price() + get_delivery_cost()]</B>"
 
+	return price_str
+
+/datum/shop_lot/proc/to_list()
 	return list(
 		"name" = name,
 		"description" = src.description,
-		"price" = price_str,
+		"price" = get_price_string(),
 		"number" = number,
-		"seller" = MA ? MA.owner_name : "Unknown",
+		"seller" = get_seller(),
 		"account" = account,
 		"delivered" = delivered,
 		"postpayment" = get_discounted_price(),

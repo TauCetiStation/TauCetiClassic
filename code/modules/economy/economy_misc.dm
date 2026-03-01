@@ -132,6 +132,7 @@ var/global/initial_station_money = 7500
 	current_date_string = "[DD].[MM].[game_year]"
 
 	setup_shop()
+	setup_vending()
 
 	economy_init = TRUE
 	return 1
@@ -215,3 +216,10 @@ var/global/initial_station_money = 7500
 /proc/setup_shop()
 	for(var/obj/random_shop_item/Item in global.random_gruztorg_items)
 		Item.generate_shop_item()
+
+/proc/setup_vending()
+	for(var/obj/machinery/vending/Vend in global.vending_machines)
+		if(Vend.cargo_connected)
+			Vend.seller_account = global.cargo_account.account_number
+		else
+			Vend.seller_account = global.vendor_account.account_number

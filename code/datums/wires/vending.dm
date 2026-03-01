@@ -59,6 +59,10 @@ var/global/const/VENDING_WIRE_CARGO		 = 32
 
 		if(VENDING_WIRE_CARGO)
 			V.cargo_connected = !V.cargo_connected
+			if(V.cargo_connected)
+				V.seller_account = global.cargo_account.account_number
+			else
+				V.seller_account = 0
 
 /datum/wires/vending/update_pulsed(index)
 	var/obj/machinery/vending/V = holder
@@ -83,3 +87,7 @@ var/global/const/VENDING_WIRE_CARGO		 = 32
 
 		if(VENDING_WIRE_CARGO)
 			V.cargo_connected = !V.cargo_connected
+			if(V.cargo_connected)
+				V.seller_account = global.cargo_account.account_number
+			else
+				V.seller_account = 0

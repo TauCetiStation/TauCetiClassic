@@ -68,6 +68,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/max_load = 0
 
 	var/cargo_connected = FALSE
+	var/seller_account = 0
 
 
 /obj/machinery/vending/atom_init()
@@ -190,6 +191,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 		if(isprying(W))
 			default_deconstruction_crowbar(W)
+			return
 
 		if(istype(W, /obj/item/device/lens) && W.type != camera.lens)
 			var/obj/item/device/lens/CameraLens = camera.lens
@@ -198,6 +200,18 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			if(!user.get_active_hand())
 				user.put_in_hands(CameraLens)
 			camera.lens = W
+			return
+
+		if(!cargo_connected && (istype(W, /obj/item/device/pda) && W.GetID()))
+			var/obj/item/weapon/card/Card = W.GetID()
+			seller_account = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
+			return
+
+		if(!cargo_connected && istype(W, /obj/item/weapon/card))
+			var/obj/item/weapon/card/Card = W
+			seller_account = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
 			return
 
 	if(isscrewing(W) && anchored)
@@ -310,9 +324,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		playsound(src, 'sound/machines/use_card.ogg', VOL_EFFECTS_MASTER)
 		if(check_accounts)
-			if(vendor_account)
+			if(seller_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				if(D)
+				var/datum/money_account/S = get_account(seller_account)
+				if(D && S)
 					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
 					if(usr.incapacitated() || !Adjacent(usr))
 						return
@@ -321,13 +336,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
-							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
+							var/tax = 0
+							if(cargo_connected)
+								tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
+								charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
 							//create entries in the two account transaction logs
-							charge_to_account(D.account_number, "[global.cargo_account.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
+							charge_to_account(D.account_number, "[S.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
 							//
-							charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
+							charge_to_account(S.account_number, S.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
 
 							// Vend the item
 							vend(src.currently_vending, usr)
@@ -339,7 +356,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				else
 					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 			else
-				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access seller account. Check security settings and try again.</span>")
 		else
 			//Just Vend it.
 			vend(src.currently_vending, usr)
@@ -361,19 +378,25 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	var/vendorname = name  //import the machine's name
 
+	var/ad
+	if(cargo_connected && global.online_shop_ads)
+		var/lot_index = pick(global.online_shop_lots_hashed)
+		if(lot_index)
+			var/datum/shop_lot/Lot = pick(global.online_shop_lots_hashed[lot_index])
+			if(Lot)
+				ad += "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
+				ad += "<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
+				ad += "<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
+				ad += "<td><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
+				ad += "<td><B>Продавец: </B><SMALL><I>[Lot.get_seller()]</I></SMALL></td>"
+				ad += "<td><a href='byond://?src=\ref[src];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
+				ad += "<tr><td colspan='3'><SMALL><I>[Lot.description]</I></SMALL><br></td></tr>"
+				ad += "</tbody></table></center></div><br>"
+
 	if(currently_vending)
 		var/dat
-		var/datum/shop_lot/Lot = pick(global.online_shop_lots_hashed[pick(global.online_shop_lots_hashed)])
-		if(Lot && cargo_connected)
-			var/list/lot_list = Lot.to_list()
-			dat += "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
-			dat += "<tr><th colspan='4' class='cargo'>Успейте купить [lot_list["name"]] <B>в ГрузТорге!</B></th></tr>"
-			dat += "<tr><td rowspan='2'>[lot_list["icon"]]<br></td>"
-			dat += "<td><B>Цена: </B><span class='good'><SMALL><I>[lot_list["price"]]$</I></SMALL></span></td>"
-			dat += "<td><B>Продавец: </B><SMALL><I>[lot_list["seller"]]</I></SMALL></td>"
-			dat += "<td><a href='byond://?src=\ref[src];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
-			dat += "<tr><td colspan='3'><SMALL><I>[lot_list["description"]]</I></SMALL><br></td></tr>"
-			dat += "</tbody></table></center></div><br>"
+		if(ad)
+			dat += ad
 
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
@@ -383,17 +406,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		return
 
 	var/dat
-	var/datum/shop_lot/Lot = pick(global.online_shop_lots_hashed[pick(global.online_shop_lots_hashed)])
-	if(Lot && cargo_connected)
-		var/list/lot_list = Lot.to_list()
-		dat += "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
-		dat += "<tr><th colspan='4' class='cargo'>Успейте купить [lot_list["name"]] <B>в ГрузТорге!</B></th></tr>"
-		dat += "<tr><td rowspan='2'>[lot_list["icon"]]<br></td>"
-		dat += "<td><B>Цена: </B><span class='good'><SMALL><I>[lot_list["price"]]$</I></SMALL></span></td>"
-		dat += "<td><B>Продавец: </B><SMALL><I>[lot_list["seller"]]</I></SMALL></td>"
-		dat += "<td><a href='byond://?src=\ref[src];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
-		dat += "<tr><td colspan='3'><SMALL><I>[lot_list["description"]]</I></SMALL><br></td></tr>"
-		dat += "</tbody></table></center></div><br>"
+	if(ad)
+		dat += ad
 
 	dat += "<div class='Section__title'>Products</div>"
 	dat += "<div class='Section'>"
