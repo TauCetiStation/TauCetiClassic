@@ -48463,7 +48463,7 @@
 /area/station/security/iaa_office)
 "bHE" = (
 /obj/structure/table,
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -49540,10 +49540,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bJA" = (
-/obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/disposal,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -84000,12 +84000,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/glass{
 	name = "Mail Office"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralfull"
@@ -86067,8 +86067,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction/flipped{
-	name = "Mail";
-	sortType = "Mail"
+	name = "Mail Office";
+	sortType = "Mail Office"
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
