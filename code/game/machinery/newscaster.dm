@@ -885,10 +885,12 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				var/payment = 5
 				if(FM.is_licensed)
 					payment *= 2
-				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
-				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
-				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts())
+				if(global.station_account.money > payment)
+					charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
+					charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
+
+				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts() && global.cargo_account.money >= 5)
 					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
 					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
 
@@ -903,10 +905,12 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				var/payment = 5
 				if(FM.is_licensed)
 					payment *= 2
-				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
-				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
-				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts())
+				if(global.station_account.money > payment)
+					charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
+					charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
+
+				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts() && global.cargo_account.money >= 5)
 					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
 					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
 
