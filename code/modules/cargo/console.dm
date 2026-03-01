@@ -55,7 +55,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
 			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"
 			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='byond://?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
-			dat += "'[CARGOSHOPNAME]' discount: <A href='byond://?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
+			dat += "'[CARGOSHOPNAME]' discount: <A href='byond://?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>"
+			dat += "'[CARGOSHOPNAME]' advertisements: <A href='byond://?src=\ref[src];online_shop_ads=1'>[global.online_shop_ads ? "Yes" : "No"]</A><BR>\n<BR>"
 			dat += "'[CARGOSHOPNAME]' profits: [global.online_shop_profits]$<BR>\n<BR>"
 		else
 			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: [global.online_shop_delivery_cost*100]%<BR>\n<BR>"
@@ -227,6 +228,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		discount = round(clamp(discount, 0, 100))
 
 		global.online_shop_discount = discount/100
+
+	if(href_list["online_shop_ads"])
+		global.online_shop_ads = !global.online_shop_ads
 
 	if(href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"

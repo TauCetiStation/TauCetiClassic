@@ -56,6 +56,8 @@
 	var/is_admin_channel = 0
 	//var/page = null //For newspapers
 
+	var/show_ads = FALSE
+
 /datum/feed_message/proc/clear()
 	author = ""
 	body = ""
@@ -72,6 +74,8 @@
 	backup_author = ""
 	censored = 0
 	is_admin_channel = 0
+
+	show_ads = FALSE
 
 /datum/feed_message/Destroy()
 	QDEL_LIST(pages)
@@ -177,6 +181,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = "" //the feed channel which will be receiving the feed, or being created
 	var/c_locked = 0        //Will our new channel be locked to public submissions?
+	var/c_ads = FALSE        //Will our new channel show ads?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
@@ -304,7 +309,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat+="Создание Новостного Канала..."
 				dat+="<HR><B><A href='byond://?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [channel_name]<BR>"
 				dat+="<B>Автор Канала:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
-				dat+="<B><A href='byond://?src=\ref[src];set_channel_lock=1'>Истории других пользователей</A>:</B> [(c_locked) ? ("НЕТ") : ("ДА")]<BR><HR>"
+				dat+="<B><A href='byond://?src=\ref[src];set_channel_lock=1'>Истории других пользователей</A>:</B> [(c_locked) ? ("НЕТ") : ("ДА")]<BR>"
+				dat+="<B><A href='byond://?src=\ref[src];set_channel_ads=1'>Реклама в постах</A>:</B> [(c_ads) ? ("ДА") : ("НЕТ")]<BR><HR>"
 				dat+="<BR><A href='byond://?src=\ref[src];submit_new_channel=1'>Создать</A><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(3)
 				dat+="Создание Истории..."
@@ -391,6 +397,19 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 							if(MESSAGE.img)
 								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+
+							if(viewing_channel.show_ads && global.online_shop_ads)
+								var/lot_index = pick(global.online_shop_lots_hashed)
+								if(lot_index)
+									var/datum/shop_lot/Lot = pick(global.online_shop_lots_hashed[lot_index])
+									if(Lot)
+										dat+="<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
+										dat+="<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
+										dat+="<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
+										dat+="<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
+										dat+="<td><a href='byond://?src=\ref[src];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
+										dat+="</tbody></table></center></div><br>"
+
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
 							dat+="<FONT SIZE=1>[((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='byond://?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.get_likes()]</FONT> \
@@ -602,6 +621,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		c_locked = !c_locked
 		//update_icon()
 
+	else if(href_list["set_channel_ads"])
+		c_ads = !c_ads
+
 	else if(href_list["submit_new_channel"])
 		//var/list/existing_channels = list() //OBSOLETE
 		var/list/existing_authors = list()
@@ -627,6 +649,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				newChannel.channel_name = channel_name
 				newChannel.author = scanned_user
 				newChannel.locked = c_locked
+				newChannel.show_ads = c_ads
 				feedback_inc("newscaster_channels",1)
 				/*for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)    //Let's add the new channel in all casters.
 					NEWSCASTER.channel_list += newChannel*/                     //Now that it is sane, get it into the list. -OBSOLETE
@@ -846,6 +869,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			scanned_user = "Unknown"
 			msg = ""
 			c_locked = 0
+			c_ads = FALSE
 			channel_name = ""
 			viewing_channel = null
 
@@ -873,6 +897,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
+				if(viewing_channel.show_ads && global.online_shop_ads)
+					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
+					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
+
 	else if(href_list["setDislike"])
 		if(is_guest)
 			screen = 25
@@ -886,6 +914,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					payment *= 2
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
+
+				if(viewing_channel.show_ads && global.online_shop_ads)
+					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
+					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
 
 	else if(href_list["toggleDisplayVoters"])
 		var/datum/feed_message/FM = locate(href_list["toggleDisplayVoters"])
@@ -945,6 +977,13 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			viewing_channel.lock_comments = FALSE
 		else
 			viewing_channel.lock_comments = TRUE
+
+	else if(href_list["pda_gruztorg"])
+		var/obj/item/device/pda/PDA = locate() in usr
+		if(PDA)
+			PDA.category_shop_page = 1
+			PDA.mode = 8
+			PDA.attack_self(usr)
 
 	updateUsrDialog()
 
