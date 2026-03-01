@@ -168,11 +168,23 @@
 
 /datum/export/large/coffin
 	cost = 250
-	unit_name = "mining drill head"
+	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/coffin)
 
 /datum/export/large/office_chair
 	cost = 250
-	unit_name = "mining drill head"
+	unit_name = "office chair"
 	export_types = list(/obj/structure/stool/bed/chair/office)
+	include_subtypes = TRUE
+
+/datum/export/large/cabinet
+	cost = 250
+	unit_name = "cabinet"
+	export_types = list(/obj/structure/closet/cabinet)
+	include_subtypes = FALSE
+
+/datum/export/large/flora
+	cost = 100
+	unit_name = "flora"
+	export_types = list(/obj/item/weapon/flora)
 	include_subtypes = TRUE

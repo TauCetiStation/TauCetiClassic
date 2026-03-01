@@ -103,7 +103,7 @@
 	export_types = list(/obj/item/stack/sheet/wood)
 
 /datum/export/stack/carpet
-	cost = 10
+	cost = 50
 	unit_name = "carpet"
 	export_types = list(/obj/item/stack/tile/carpet)
 

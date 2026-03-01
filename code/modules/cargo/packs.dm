@@ -2165,14 +2165,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 100
 	group = "Production"
 
-/datum/supply_pack/production_coffin
-	name = "Manufacturing parts: Coffin"
+/datum/supply_pack/production_cabinet
+	name = "Manufacturing parts: Cabinet"
 	contains = list(
-		/obj/item/manufacturing_parts/wood/coffin,
-		/obj/item/manufacturing_parts/wood/coffin,
-		/obj/item/manufacturing_parts/wood/coffin,
-		/obj/item/manufacturing_parts/wood/coffin,
-		/obj/item/manufacturing_parts/wood/coffin,
+		/obj/item/manufacturing_parts/wood/cabinet,
+		/obj/item/manufacturing_parts/wood/cabinet,
+		/obj/item/manufacturing_parts/wood/cabinet,
+		/obj/item/manufacturing_parts/wood/cabinet,
+		/obj/item/manufacturing_parts/wood/cabinet,
 	)
 	additional_costs = 150
 	group = "Production"
@@ -2216,16 +2216,16 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 250
 	group = "Production"
 
-/datum/supply_pack/production_officechair
-	name = "Manufacturing parts: Officechair"
+/datum/supply_pack/production_flora
+	name = "Manufacturing parts: Flora"
 	contains = list(
-		/obj/item/manufacturing_parts/metal/officechair,
-		/obj/item/manufacturing_parts/metal/officechair,
-		/obj/item/manufacturing_parts/metal/officechair,
-		/obj/item/manufacturing_parts/metal/officechair,
-		/obj/item/manufacturing_parts/metal/officechair,
+		/obj/item/manufacturing_parts/metal/flora,
+		/obj/item/manufacturing_parts/metal/flora,
+		/obj/item/manufacturing_parts/metal/flora,
+		/obj/item/manufacturing_parts/metal/flora,
+		/obj/item/manufacturing_parts/metal/flora,
 	)
-	additional_costs = 100
+	additional_costs = 150
 	group = "Production"
 
 /datum/supply_pack/production_toolbox
@@ -2351,18 +2351,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 200
 	group = "Production"
 
-/datum/supply_pack/production_insulated_gloves
-	name = "Manufacturing parts: Insulated gloves"
-	contains = list(
-		/obj/item/manufacturing_parts/cloth/insulated_gloves,
-		/obj/item/manufacturing_parts/cloth/insulated_gloves,
-		/obj/item/manufacturing_parts/cloth/insulated_gloves,
-		/obj/item/manufacturing_parts/cloth/insulated_gloves,
-		/obj/item/manufacturing_parts/cloth/insulated_gloves,
-	)
-	additional_costs = 200
-	group = "Production"
-
 /datum/supply_pack/production_spacesuit
 	name = "Manufacturing parts: Spacesuit"
 	contains = list(
@@ -2383,6 +2371,18 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/cloth/baseball,
 		/obj/item/manufacturing_parts/cloth/baseball,
 		/obj/item/manufacturing_parts/cloth/baseball,
+	)
+	additional_costs = 50
+	group = "Production"
+
+/datum/supply_pack/production_carpet
+	name = "Manufacturing parts: Carpet"
+	contains = list(
+		/obj/item/manufacturing_parts/cloth/carpet,
+		/obj/item/manufacturing_parts/cloth/carpet,
+		/obj/item/manufacturing_parts/cloth/carpet,
+		/obj/item/manufacturing_parts/cloth/carpet,
+		/obj/item/manufacturing_parts/cloth/carpet,
 	)
 	additional_costs = 50
 	group = "Production"

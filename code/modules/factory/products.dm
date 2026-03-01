@@ -2,8 +2,8 @@
 /obj/item/manufacturing_parts/wood/woodenclock
 	product_type = /obj/item/woodenclock
 
-/obj/item/manufacturing_parts/wood/coffin
-	product_type = /obj/structure/closet/coffin
+/obj/item/manufacturing_parts/wood/cabinet
+	product_type = /obj/structure/closet/cabinet
 
 
 //METAL
@@ -16,8 +16,8 @@
 /obj/item/manufacturing_parts/metal/beartrap
 	product_type = /obj/item/weapon/legcuffs/beartrap
 
-/obj/item/manufacturing_parts/metal/officechair
-	product_type = list(/obj/structure/stool/bed/chair/office/light, /obj/structure/stool/bed/chair/office/dark)
+/obj/item/manufacturing_parts/metal/flora
+	product_type = list(/obj/item/weapon/flora/random)
 
 /obj/item/manufacturing_parts/metal/toolbox
 	product_type = list(/obj/item/weapon/storage/toolbox, /obj/item/weapon/storage/toolbox/mechanical, /obj/item/weapon/storage/toolbox/electrical)
@@ -58,3 +58,6 @@
 
 /obj/item/manufacturing_parts/cloth/baseball
 	product_type = list(/obj/item/clothing/head/soft/red, /obj/item/clothing/head/soft/blue, /obj/item/clothing/head/soft/green, /obj/item/clothing/head/soft/yellow, /obj/item/clothing/head/soft/grey, /obj/item/clothing/head/soft/orange, /obj/item/clothing/head/soft/purple)
+
+/obj/item/manufacturing_parts/cloth/carpet
+	product_type = list(/obj/item/stack/tile/carpet, /obj/item/stack/tile/carpet/black, /obj/item/stack/tile/carpet/purple, /obj/item/stack/tile/carpet/orange, /obj/item/stack/tile/carpet/green, /obj/item/stack/tile/carpet/blue, /obj/item/stack/tile/carpet/blue2, /obj/item/stack/tile/carpet/red, /obj/item/stack/tile/carpet/cyan)
