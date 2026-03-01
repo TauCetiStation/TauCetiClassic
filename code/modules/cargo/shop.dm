@@ -20,7 +20,7 @@ var/global/orders_and_offers_number = 0
 var/global/online_shop_discount = 0
 var/global/online_shop_delivery_cost = 0.15
 var/global/online_shop_profits = 0
-var/global.online_shop_ads = TRUE
+var/global/online_shop_ads = TRUE
 
 /datum/shop_lot
 	var/name = "Лот"
