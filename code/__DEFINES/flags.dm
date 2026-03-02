@@ -85,6 +85,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
+#define TOGGLEABLE_EYES_S_LAYER "toggleable_eyes_static_layer"
 #define REQUIRE_LIGHT      "require_light"
 #define IS_SYNTHETIC       "is_synthetic"
 #define HAS_HAIR           "has_hair"

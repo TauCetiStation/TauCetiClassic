@@ -46,6 +46,7 @@
 
 	var/age = /datum/preferences::age //Player's age (pure fluff)
 	var/height = /datum/preferences::height //Player's height
+	var/wide_eyes = /datum/preferences::wide_eyes //Player's eyes
 
 	var/underwear = /datum/preferences::underwear   //Which underwear the player wants
 	var/undershirt = /datum/preferences::undershirt  //Which undershirt the player wants.
