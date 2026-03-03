@@ -86068,7 +86068,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction/flipped{
 	name = "Mail Office";
-	sortType = "Mail Office"
+	sortType = "Mail Office";
+	dir = 2
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
