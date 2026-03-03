@@ -431,11 +431,20 @@
 
 /obj/item/device/cardpay/casino/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/caps))
+		if(!linked_account)
+			to_chat(user, "<span class='warning'>Терминал не подключён к счёту.</span>")
+			return
+
+		var/obj/item/toy/caps/Caps = I
+
+		if(Caps.source_account != linked_account)
+			to_chat(user, "<span class='warning'>Эти фишки от другого терминала.</span>")
+			return
+
 		var/datum/money_account/D = get_account(linked_account)
 		if(!D)
 			return
 
-		var/obj/item/toy/caps/Caps = I
 		var/toReturn = min(D.money, Caps.capsAmount)
 
 		pay_amount = toReturn
@@ -464,7 +473,8 @@
 	charge_to_account(Acc.account_number, "Обменник фишек [D.owner_name] ([D.account_number])", "Оплата", src.name, -amount)
 	charge_to_account(linked_account, "Обменник фишек [D.owner_name] ([D.account_number])", "Прибыль", src.name, amount)
 
-	new /obj/item/toy/caps(get_turf(src), amount)
+	var/obj/item/toy/caps/C = new(get_turf(src), amount)
+	C.source_account = linked_account
 
 	pay_amount = 0
 	update_holoprice(clear = TRUE)

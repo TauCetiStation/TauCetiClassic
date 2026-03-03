@@ -1488,6 +1488,7 @@ Owl & Griffin toys
 	w_class = SIZE_MIDGET
 
 	var/capsAmount = 1
+	var/source_account = 0
 
 /obj/item/toy/caps/atom_init(mapload, capsAmount = 1)
 	. = ..()

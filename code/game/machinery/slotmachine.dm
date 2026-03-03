@@ -26,7 +26,10 @@
 /obj/machinery/slot_machine/atom_break(damage_flag)
 	. = ..()
 	if(. && stored > 0)
-		new /obj/item/toy/caps(get_turf(src), round(stored * (rand(10, 90) / 100)))
+		var/obj/item/toy/caps/C = new(get_turf(src), round(stored * (rand(10, 90) / 100)))
+		if(global.station_account)
+			C.source_account = global.station_account.account_number
+		stored = 0
 
 /obj/machinery/slot_machine/update_icon()
 	. = ..()
@@ -139,5 +142,7 @@
 	SStgui.update_uis(src)
 
 /obj/machinery/slot_machine/proc/give_cashout()
-	new /obj/item/toy/caps(get_turf(src), balance)
+	var/obj/item/toy/caps/C = new(get_turf(src), balance)
+	if(global.station_account)
+		C.source_account = global.station_account.account_number
 	balance = 0
