@@ -79,7 +79,7 @@
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
 		return FALSE
 
-	if(!user.Adjacent(M) || user.incapacitated() || user.weakened || ispAI(user) || ismouse(user))
+	if(!user.Adjacent(M) || user.incapacitated() || ispAI(user) || ismouse(user))
 		return FALSE
 
 	if(user.is_busy())
