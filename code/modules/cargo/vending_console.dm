@@ -40,7 +40,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/vending, vending_consoles)
 		var/vending_status = 1 //1 = working, 2 = unpowered, 3 = broken
 		if(Vend.stat & NOPOWER)
 			vending_status = 2
-		if(Vend.stat & BROKEN || !Vend.cargo_connected)
+		if((Vend.stat & BROKEN) || !Vend.cargo_connected)
 			vending_status = 3
 
 		vending_data += list(list("name" = Vend.name, "status" = vending_status, "load" = amount_percent, "x" = Vend.x, "y" = Vend.y))
