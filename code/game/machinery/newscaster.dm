@@ -399,7 +399,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 
 							if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts())
-								dat+=get_gruztorg_advertisement(src)
+								dat+=get_onlineshop_advertisement(src, referal_account = MESSAGE.author_account.account_number)
 
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
@@ -890,10 +890,6 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 					charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
-				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts() && global.cargo_account.money >= 5)
-					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
-					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
-
 	else if(href_list["setDislike"])
 		if(is_guest)
 			screen = 25
@@ -909,10 +905,6 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				if(global.station_account.money > payment)
 					charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 					charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
-
-				if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts() && global.cargo_account.money >= 5)
-					charge_to_account(MA.account_number, "Newscaster", "Выплата за рекламу в газете", name, 5)
-					charge_to_account(global.cargo_account.account_number, "Newscaster", "Выплата за рекламу в газете", name, -5)
 
 	else if(href_list["toggleDisplayVoters"])
 		var/datum/feed_message/FM = locate(href_list["toggleDisplayVoters"])
@@ -973,12 +965,20 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		else
 			viewing_channel.lock_comments = TRUE
 
-	else if(href_list["pda_gruztorg"])
+	else if(href_list["pda_onlineshop"])
 		var/obj/item/device/pda/PDA = locate() in usr
-		if(PDA)
-			PDA.category_shop_page = 1
-			PDA.mode = 8
-			PDA.attack_self(usr)
+		if(!PDA)
+			return
+
+		PDA.category_shop_page = 1
+		PDA.mode = 8
+
+		var/ref_account_num = text2num(href_list["pda_onlineshop"])
+		var/datum/money_account/MA = get_account(ref_account_num)
+		if(MA && !MA.suspended)
+			PDA.referal_account = MA.account_number
+
+		PDA.attack_self(usr)
 
 	updateUsrDialog()
 

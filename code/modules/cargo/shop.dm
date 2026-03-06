@@ -21,6 +21,7 @@ var/global/online_shop_discount = 0
 var/global/online_shop_delivery_cost = 0.15
 var/global/online_shop_profits = 0
 var/global/online_shop_ads = TRUE
+var/global/online_shop_referal_revenue = 5
 
 /datum/shop_lot
 	var/name = "Лот"
@@ -144,9 +145,13 @@ var/global/online_shop_ads = TRUE
 
 	return Lot
 
-/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination)
+/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination, referal_account = 0)
 	if(!Lot)
 		return FALSE
+
+	var/datum/money_account/Referal
+	if(referal_account)
+		Referal = get_account(referal_account)
 
 	var/datum/money_account/MA = get_account(account)
 	if(!MA)
@@ -167,6 +172,11 @@ var/global/online_shop_ads = TRUE
 
 	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
 	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
+
+	if(Referal)
+		if(global.online_shop_ads && check_active_cargonauts() && global.cargo_account.money >= online_shop_referal_revenue)
+			charge_to_account(Referal.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке", CARGOSHOPNAME, global.online_shop_referal_revenue)
+			charge_to_account(global.cargo_account.account_number, Referal.account_number, "Выплата за покупку по реферальной ссылке", CARGOSHOPNAME, -global.online_shop_referal_revenue)
 
 	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
 		if(istype(Console, /obj/machinery/computer/cargo/request))
@@ -307,10 +317,10 @@ var/global/online_shop_ads = TRUE
 
 	return Item
 
-var/global/list/random_gruztorg_items = list()
-ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
+var/global/list/random_onlineshop_items = list()
+ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 /obj/random_shop_item
-	name = "Random Gruztorg item"
+	name = "Random OnlineShop item"
 	desc = "Случайный товар для грузторга."
 	icon = 'icons/obj/package_wrap.dmi'
 	icon_state = "deliverycrateSmall"
@@ -337,9 +347,8 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 
 	qdel(src)
 
-/proc/get_gruztorg_advertisement(atom/source)
-	var/data
-	if(!global.online_shop_lots_hashed.len)
+/proc/get_random_onlineshop_lot()
+	if(!global.online_shop_lots_hashed || !global.online_shop_lots_hashed.len)
 		return
 
 	var/lot_index = pick(global.online_shop_lots_hashed)
@@ -351,6 +360,12 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 		return
 
 	var/datum/shop_lot/Lot = pick(lots)
+
+	return Lot
+
+/proc/get_onlineshop_advertisement(atom/source, referal_account = 0)
+	var/data
+	var/datum/shop_lot/Lot = get_random_onlineshop_lot()
 	if(!Lot)
 		return
 
@@ -358,7 +373,7 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
 	data += "<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
 	data += "<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
 	data += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
-	data += "<td><a href='byond://?src=\ref[source];pda_gruztorg=1' style='float:right;'>ГрузТорг в КПК</a></td>"
+	data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=[referal_account]' style='float:right;'>ГрузТорг в КПК</a></td>"
 	data += "<tr><td colspan='3'><SMALL><I>[Lot.description]</I></SMALL><br></td></tr>"
 	data += "</tbody></table></center></div><br>"
 
