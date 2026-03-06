@@ -126,13 +126,23 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(icon_path != def_icon_path && !icon_exists(icon_path, "[t_state][icon_state_appendix]"))
 		icon_path = def_icon_path
 
-	var/fem = ""
+	var/fem_appendix = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(t_state != null)
 			if(icon_exists(icon_path, "[t_state]_fem"))
-				fem = "_fem"
+				fem_appendix = "_fem"
 
-	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
+	var/rolled_down_appendix = ""
+	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
+		if(isunder(src))
+			if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
+				fem_appendix = "" // we do not have overweight sprites for women
+			var/obj/item/clothing/under/U = src
+			if(U.rolled_down)
+				if(icon_exists(icon_path, "[t_state]_d[fem_appendix]")) // check if there is such sprite
+					rolled_down_appendix = "_d"
+
+	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][rolled_down_appendix][fem_appendix][icon_state_appendix]", layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
