@@ -380,6 +380,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!istype(target))
 		return
 
+	// If target is an AI, let the ghost choose between eye and core
+	if(isAI(target))
+		var/mob/living/silicon/ai/AI = target
+		if(AI.eyeobj)
+			var/choice = tgui_alert(src, "Что вы хотите отслеживать?", "Наблюдение за ИИ", list("Глаз ИИ", "Ядро ИИ"))
+			if(choice == "Глаз ИИ")
+				target = AI.eyeobj
+
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
 
 	var/orbitsize = (I.Width() + I.Height()) * 0.5
