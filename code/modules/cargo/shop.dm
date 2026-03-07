@@ -37,6 +37,9 @@ var/global/online_shop_referal_revenue = 5
 	var/lot_item_ref = ""
 	// How much would exporting this item via cargo shuttle pay up.
 	var/market_price = 0
+	// Referer that makes profits from advertisements.
+	var/referer = null
+	var/referer_profit = 0
 
 /datum/shop_lot/New(name, description, price, category, account, icon, lot_item_ref, market_price)
 	global.online_shop_number++
@@ -145,13 +148,13 @@ var/global/online_shop_referal_revenue = 5
 
 	return Lot
 
-/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination, referal_account = 0)
+/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination, referer_account = null)
 	if(!Lot)
 		return FALSE
 
-	var/datum/money_account/Referal
-	if(referal_account)
-		Referal = get_account(referal_account)
+	if(referer_account)
+		Lot.referer = referer_account
+		Lot.referer_profit = global.online_shop_referal_revenue
 
 	var/datum/money_account/MA = get_account(account)
 	if(!MA)
@@ -172,11 +175,6 @@ var/global/online_shop_referal_revenue = 5
 
 	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
 	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
-
-	if(Referal)
-		if(global.online_shop_ads && check_active_cargonauts() && global.cargo_account.money >= online_shop_referal_revenue)
-			charge_to_account(Referal.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке", CARGOSHOPNAME, global.online_shop_referal_revenue)
-			charge_to_account(global.cargo_account.account_number, Referal.account_number, "Выплата за покупку по реферальной ссылке", CARGOSHOPNAME, -global.online_shop_referal_revenue)
 
 	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
 		if(istype(Console, /obj/machinery/computer/cargo/request))
@@ -237,6 +235,13 @@ var/global/online_shop_referal_revenue = 5
 
 	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
 	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
+
+	if(Lot.referer)
+		var/datum/money_account/referer_acc = get_account(Lot.referer)
+		if(referer_acc)
+			charge_to_account(referer_acc.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.referer_profit)
+			charge_to_account(global.cargo_account.account_number, referer_acc.account_number, "Выплата за покупку по реферальной ссылке в [CARGOSHOPNAME]", CARGOSHOPNAME, -Lot.referer_profit)
+
 	return TRUE
 
 /proc/add_order_and_offer(Name, Text)
@@ -347,25 +352,23 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 
 	qdel(src)
 
-/proc/get_random_onlineshop_lot()
+/proc/get_random_unique_onlineshop_lot()
 	if(!global.online_shop_lots_hashed || !global.online_shop_lots_hashed.len)
-		return
+		return null
 
 	var/lot_index = pick(global.online_shop_lots_hashed)
-	if(!lot_index)
-		return
 
 	var/list/lots = global.online_shop_lots_hashed[lot_index]
 	if(!lots.len)
-		return
+		return null
 
 	var/datum/shop_lot/Lot = pick(lots)
 
 	return Lot
 
-/proc/get_onlineshop_advertisement(atom/source, referal_account = 0)
+/proc/get_onlineshop_advertisement(atom/source, referer_account = null)
 	var/data
-	var/datum/shop_lot/Lot = get_random_onlineshop_lot()
+	var/datum/shop_lot/Lot = get_random_unique_onlineshop_lot()
 	if(!Lot)
 		return
 
@@ -373,7 +376,7 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 	data += "<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
 	data += "<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
 	data += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
-	data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=[referal_account]' style='float:right;'>ГрузТорг в КПК</a></td>"
+	data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=[referer_account]' style='float:right;'>ГрузТорг в КПК</a></td>"
 	data += "<tr><td colspan='3'><SMALL><I>[Lot.description]</I></SMALL><br></td></tr>"
 	data += "</tbody></table></center></div><br>"
 
