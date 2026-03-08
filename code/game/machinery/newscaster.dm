@@ -399,7 +399,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 
 							if(viewing_channel.show_ads && global.online_shop_ads && check_active_cargonauts())
-								dat+=get_onlineshop_advertisement(src, referer_account = MESSAGE.author_account.account_number)
+								dat+=get_onlineshop_advertisement(src, referrer_account = MESSAGE.author_account.account_number)
 
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
@@ -973,9 +973,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		PDA.category_shop_page = 1
 		PDA.mode = 8
 
-		var/referer_account = href_list["pda_onlineshop"]
-		if(referer_account)
-			PDA.referer_account = text2num(referer_account)
+		var/referrer_account = href_list["referrer_account"]
+		if(referrer_account)
+			PDA.referrer_account = text2num(referrer_account)
 
 		PDA.attack_self(usr)
 
