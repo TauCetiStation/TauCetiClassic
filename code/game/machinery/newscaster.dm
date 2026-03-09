@@ -984,10 +984,16 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		if(!usr)
 			return
 
-		if(issilicon(usr) || isobserver(usr))
+		if(issilicon(usr))
 			return
 
-		if(usr.incapacitated() || !Adjacent(usr))
+		if(isobserver(usr))
+			return
+
+		if(usr.incapacitated())
+			return
+
+		if(!Adjacent(usr))
 			return
 
 		if(!usr.client)
