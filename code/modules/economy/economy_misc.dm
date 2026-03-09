@@ -214,7 +214,7 @@ var/global/initial_station_money = 7500
 	department_accounts[department] = department_account
 
 /proc/setup_shop()
-	for(var/obj/random_shop_item/Item in global.random_gruztorg_items)
+	for(var/obj/random_shop_item/Item in global.random_onlineshop_items)
 		Item.generate_shop_item()
 
 /proc/setup_vending()

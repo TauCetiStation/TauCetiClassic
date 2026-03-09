@@ -380,7 +380,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	var/ad
 	if(cargo_connected && global.online_shop_ads && check_active_cargonauts())
-		ad += get_gruztorg_advertisement(src)
+		ad += get_onlineshop_advertisement(src)
 
 	if(currently_vending)
 		var/dat
@@ -500,16 +500,22 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		updateUsrDialog()
 		return
 
-	else if (href_list["pda_gruztorg"])
+	else if (href_list["pda_onlineshop"])
 		if(!usr || issilicon(usr) || isobserver(usr) || usr.incapacitated() || !Adjacent(usr))
 			return
 
 		var/obj/item/device/pda/PDA = locate() in usr
-		if(PDA)
-			PDA.category_shop_page = 1
-			PDA.mode = 8
-			PDA.attack_self(usr)
+		if(!PDA)
 			return
+
+		PDA.category_shop_page = 1
+		PDA.mode = 8
+
+		var/referrer_account = href_list["referrer_account"]
+		if(referrer_account)
+			PDA.referrer_account = referrer_account
+
+		PDA.attack_self(usr)
 
 	updateUsrDialog()
 
