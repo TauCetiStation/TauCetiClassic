@@ -87,8 +87,7 @@
 
 	if(locked && messages.len) //Locked channel means author is single
 		var/datum/feed_message/msg = messages[1]
-		. |= msg.author_account.account_number
-		return
+		return list(msg.author_account.account_number)
 
 	for(var/datum/feed_message/msg in messages)
 		. |= msg.author_account.account_number
