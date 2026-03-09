@@ -1058,7 +1058,7 @@ other types of metals and chemistry for reagents).
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
 	id = "s-crystal"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 1000, MAT_SILVER = 20, MAT_GOLD = 20)
+	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 40)
 	build_path = /obj/item/weapon/stock_parts/subspace/crystal
 	category = list("Telecomms")
 
