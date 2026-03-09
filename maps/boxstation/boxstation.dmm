@@ -26020,7 +26020,10 @@
 /area/station/gateway)
 "aTZ" = (
 /obj/effect/landmark/start/research_assistant,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "purplecorner"
+	},
 /area/station/hallway/primary/starboard)
 "aUa" = (
 /obj/machinery/vending/blood,
@@ -50589,10 +50592,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "purplecorner"
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bLI" = (
 /obj/item/device/radio/intercom{
@@ -50633,8 +50633,8 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "purplecorner"
+	dir = 9;
+	icon_state = "purple"
 	},
 /area/station/hallway/primary/starboard)
 "bLM" = (
@@ -70965,12 +70965,12 @@
 /area/station/bridge/captain_quarters)
 "eey" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+	icon_state = "stand_clear_white"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "purplecorner"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea"
 	},
+/turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "efb" = (
 /obj/machinery/disposal,
@@ -81170,15 +81170,6 @@
 	icon_state = "yellow"
 	},
 /area/station/hallway/primary/central)
-"oMq" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "purplecorner"
-	},
-/area/station/hallway/primary/starboard)
 "oMx" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -124911,8 +124902,8 @@ blT
 bmX
 bFD
 bcc
-eey
-bcb
+bjd
+bLG
 bbG
 cpX
 bjk
@@ -125168,8 +125159,8 @@ bwZ
 bCq
 bFF
 bIh
-oMq
-bcb
+jBb
+bLG
 bbG
 cpX
 lmV
@@ -125426,7 +125417,7 @@ bjy
 bjy
 bjy
 bLH
-bcb
+bLG
 bbG
 cpX
 lmV
@@ -125939,7 +125930,7 @@ bxA
 bCs
 bFQ
 bIm
-bLG
+eey
 bNc
 bbH
 cpX
