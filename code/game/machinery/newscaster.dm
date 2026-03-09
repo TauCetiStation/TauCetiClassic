@@ -81,6 +81,18 @@
 	QDEL_LIST(pages)
 	return ..()
 
+/datum/feed_channel/proc/get_authors_accounts()
+	var/list/channel_authors = list()
+
+	if(locked && messages.len)
+		var/datum/feed_message/msg = messages[1]
+		return list(msg.author_account.account_number)
+
+	for(var/datum/feed_message/msg in messages)
+		channel_authors |= msg.author_account.account_number
+
+	return channel_authors
+
 /datum/comment_pages/Destroy()
 	QDEL_LIST(comments)
 	return ..()
@@ -966,7 +978,17 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			viewing_channel.lock_comments = TRUE
 
 	else if(href_list["pda_onlineshop"])
+		if(!viewing_channel?.show_ads)
+			return
+
 		if(!usr || issilicon(usr) || isobserver(usr) || usr.incapacitated() || !Adjacent(usr))
+			return
+
+		if(!usr.client || !LAZYACCESS(usr.client.browsers, "window=newscaster_main"))
+			return
+
+		var/referrer_account = href_list["referrer_account"]
+		if(!referrer_account || !(text2num(referrer_account) in viewing_channel.get_authors_accounts()))
 			return
 
 		var/obj/item/device/pda/PDA = locate() in usr
@@ -975,10 +997,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 		PDA.category_shop_page = 1
 		PDA.mode = 8
-
-		var/referrer_account = href_list["referrer_account"]
-		if(referrer_account)
-			PDA.referrer_account = text2num(referrer_account)
+		PDA.referrer_account = text2num(referrer_account)
 
 		PDA.attack_self(usr)
 
@@ -1162,6 +1181,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 							if(MESSAGE.img)
 								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
+
+							if(C.show_ads && global.online_shop_ads && check_active_cargonauts())
+								dat+=get_onlineshop_advertisement(src, referrer_account = MESSAGE.author_account.account_number, no_link = TRUE)
+
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							dat+="<FONT SIZE=1>Лайки: [MESSAGE.get_likes()] Дизлайки: [MESSAGE.get_dislikes()]</FONT><BR><BR>"
 						dat+="</ul>"

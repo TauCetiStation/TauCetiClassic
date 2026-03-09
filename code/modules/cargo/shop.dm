@@ -367,7 +367,7 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 
 	return pick(hashed_lots)
 
-/proc/get_onlineshop_advertisement(atom/source, referrer_account = null)
+/proc/get_onlineshop_advertisement(atom/source, referrer_account = null, no_link = FALSE)
 	var/datum/shop_lot/lot = get_random_unique_onlineshop_lot()
 	if(!lot)
 		return
@@ -376,7 +376,12 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 	data += "<tr><th colspan='4' class='cargo'>Успейте купить [lot.name] <B>в магазине '[CARGOSHOPNAME]'!</B></th></tr>"
 	data += "<tr><td rowspan='2'>[lot.item_icon]<br></td>"
 	data += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[lot.get_price_string()]$</I></SMALL></span></td>"
-	data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=1;referrer_account=[referrer_account]' style='float:right;'>'[CARGOSHOPNAME]' в КПК</a></td>"
+
+	if(no_link)
+		data += "<td>'[CARGOSHOPNAME]' в КПК</td>"
+	else
+		data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=1;referrer_account=[referrer_account]' style='float:right;'>'[CARGOSHOPNAME]' в КПК</a></td>"
+
 	data += "<tr><td colspan='3'><SMALL><I>[lot.description]</I></SMALL><br></td></tr>"
 	data += "</tbody></table></center></div><br>"
 
