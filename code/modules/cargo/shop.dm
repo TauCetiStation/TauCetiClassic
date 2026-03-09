@@ -176,8 +176,8 @@ var/global/online_shop_referrer_revenue = 0.50
 
 	global.shop_categories[Lot.category]--
 
-	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
-	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
+	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
+	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
 
 	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
 		if(istype(Console, /obj/machinery/computer/cargo/request))
@@ -233,17 +233,17 @@ var/global/online_shop_referrer_revenue = 0.50
 	Lot.mark_delivered()
 
 	if(global.online_shop_discount)
-		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
-		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
+		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
 
-	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
-	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
+	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
+	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
 
 	if(Lot.referrer_account)
 		var/datum/money_account/referrer_acc = get_account(Lot.referrer_account)
 		if(referrer_acc)
-			charge_to_account(referrer_acc.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.referrer_profit)
-			charge_to_account(global.cargo_account.account_number, referrer_acc.account_number, "Выплата за покупку по реферальной ссылке в [CARGOSHOPNAME]", CARGOSHOPNAME, -Lot.referrer_profit)
+			charge_to_account(referrer_acc.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.referrer_profit)
+			charge_to_account(global.cargo_account.account_number, referrer_acc.account_number, "Выплата за покупку по реферальной ссылке в магазине [CARGOSHOPNAME]", CARGOSHOPNAME, -Lot.referrer_profit)
 
 	return TRUE
 
