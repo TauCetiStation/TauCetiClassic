@@ -21,7 +21,7 @@ var/global/online_shop_discount = 0
 var/global/online_shop_delivery_cost = 0.15
 var/global/online_shop_profits = 0
 var/global/online_shop_ads = TRUE
-var/global/online_shop_referal_revenue = 5
+var/global/online_shop_referrer_revenue = 0.50
 
 /datum/shop_lot
 	var/name = "Лот"
@@ -105,6 +105,9 @@ var/global/online_shop_referal_revenue = 5
 /datum/shop_lot/proc/get_discounted_price()
 	return round((1 - global.online_shop_discount) * price, 0.1)
 
+/datum/shop_lot/proc/get_referrer_revenue()
+	return round(get_delivery_cost() * global.online_shop_referrer_revenue, 0.1)
+
 /datum/shop_lot/proc/mark_delivered()
 	delivered = TRUE
 
@@ -154,7 +157,7 @@ var/global/online_shop_referal_revenue = 5
 
 	if(referrer_account)
 		Lot.referrer_account = referrer_account
-		Lot.referrer_profit = global.online_shop_referal_revenue
+		Lot.referrer_profit = Lot.get_referrer_revenue()
 
 	var/datum/money_account/MA = get_account(account)
 	if(!MA)
@@ -353,31 +356,28 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 	qdel(src)
 
 /proc/get_random_unique_onlineshop_lot()
-	if(!global.online_shop_lots_hashed || !global.online_shop_lots_hashed.len)
+	if(!global.online_shop_lots_hashed?.len)
 		return null
 
-	var/lot_index = pick(global.online_shop_lots_hashed)
+	var/random_lot_hash = pick(global.online_shop_lots_hashed)
 
-	var/list/lots = global.online_shop_lots_hashed[lot_index]
-	if(!lots.len)
+	var/list/hashed_lots = global.online_shop_lots_hashed[random_lot_hash]
+	if(!hashed_lots.len)
 		return null
 
-	var/datum/shop_lot/Lot = pick(lots)
-
-	return Lot
+	return pick(hashed_lots)
 
 /proc/get_onlineshop_advertisement(atom/source, referrer_account = null)
-	var/data
-	var/datum/shop_lot/Lot = get_random_unique_onlineshop_lot()
-	if(!Lot)
+	var/datum/shop_lot/lot = get_random_unique_onlineshop_lot()
+	if(!lot)
 		return
 
-	data += "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
-	data += "<tr><th colspan='4' class='cargo'>Успейте купить [Lot.name] <B>в ГрузТорге!</B></th></tr>"
-	data += "<tr><td rowspan='2'>[Lot.item_icon]<br></td>"
-	data += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[Lot.get_price_string()]$</I></SMALL></span></td>"
+	var/data = "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
+	data += "<tr><th colspan='4' class='cargo'>Успейте купить [lot.name] <B>в ГрузТорге!</B></th></tr>"
+	data += "<tr><td rowspan='2'>[lot.item_icon]<br></td>"
+	data += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[lot.get_price_string()]$</I></SMALL></span></td>"
 	data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=1;referrer_account=[referrer_account]' style='float:right;'>ГрузТорг в КПК</a></td>"
-	data += "<tr><td colspan='3'><SMALL><I>[Lot.description]</I></SMALL><br></td></tr>"
+	data += "<tr><td colspan='3'><SMALL><I>[lot.description]</I></SMALL><br></td></tr>"
 	data += "</tbody></table></center></div><br>"
 
 	return data

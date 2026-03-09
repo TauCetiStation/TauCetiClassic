@@ -310,7 +310,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat+="<HR><B><A href='byond://?src=\ref[src];set_channel_name=1'>Название Канала</A>:</B> [channel_name]<BR>"
 				dat+="<B>Автор Канала:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
 				dat+="<B><A href='byond://?src=\ref[src];set_channel_lock=1'>Истории других пользователей</A>:</B> [(c_locked) ? ("НЕТ") : ("ДА")]<BR>"
-				dat+="<B><A href='byond://?src=\ref[src];set_channel_ads=1'>Реклама в постах</A>:</B> [(channel_show_ads) ? ("ДА") : ("НЕТ")] ([global.online_shop_referal_revenue]$ с каждой покупки)<BR><HR>"
+				dat+="<B><A href='byond://?src=\ref[src];set_channel_ads=1'>Реклама в постах</A>:</B> [(channel_show_ads) ? ("ДА") : ("НЕТ")] ([global.online_shop_referrer_revenue * 100]% со стоимости доставки каждой покупки)<BR><HR>"
 				dat+="<BR><A href='byond://?src=\ref[src];submit_new_channel=1'>Создать</A><BR><A href='byond://?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(3)
 				dat+="Создание Истории..."
