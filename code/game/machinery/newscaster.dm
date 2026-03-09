@@ -3,6 +3,7 @@
 //###-Agouri###################################
 
 #define COMMENTS_ON_PAGE 5 //number of comments per page
+#define NEWSCASTER_WINDOW_ID "window=newscaster_main"
 
 /datum/feed_message
 	var/author = ""
@@ -81,17 +82,16 @@
 	QDEL_LIST(pages)
 	return ..()
 
-/datum/feed_channel/proc/get_authors_accounts()
-	var/list/channel_authors = list()
+/datum/feed_channel/proc/get_authors_account_numbers()
+	. = list()
 
 	if(locked && messages.len)
 		var/datum/feed_message/msg = messages[1]
-		return list(msg.author_account.account_number)
+		. |= msg.author_account.account_number
+		return
 
 	for(var/datum/feed_message/msg in messages)
-		channel_authors |= msg.author_account.account_number
-
-	return channel_authors
+		. |= msg.author_account.account_number
 
 /datum/comment_pages/Destroy()
 	QDEL_LIST(comments)
@@ -604,7 +604,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/newscaster)		//Sending pictures to the client
 		assets.send(human_or_robot_user)
 
-		var/datum/browser/popup = new(human_or_robot_user, "window=newscaster_main", name, 400, 600)
+		var/datum/browser/popup = new(human_or_robot_user, NEWSCASTER_WINDOW_ID, name, 400, 600)
 		popup.set_content(dat)
 		popup.open()
 
@@ -981,14 +981,26 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		if(!viewing_channel?.show_ads)
 			return
 
-		if(!usr || issilicon(usr) || isobserver(usr) || usr.incapacitated() || !Adjacent(usr))
+		if(!usr)
 			return
 
-		if(!usr.client || !LAZYACCESS(usr.client.browsers, "window=newscaster_main"))
+		if(issilicon(usr) || isobserver(usr))
+			return
+
+		if(usr.incapacitated() || !Adjacent(usr))
+			return
+
+		if(!usr.client)
+			return
+
+		if(!LAZYACCESS(usr.client.browsers, NEWSCASTER_WINDOW_ID))
 			return
 
 		var/referrer_account = href_list["referrer_account"]
-		if(!referrer_account || !(text2num(referrer_account) in viewing_channel.get_authors_accounts()))
+		if(!referrer_account)
+			return
+
+		if(!(text2num(referrer_account) in viewing_channel.get_authors_account_numbers()))
 			return
 
 		var/obj/item/device/pda/PDA = locate() in usr
@@ -1317,3 +1329,4 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	return
 
 #undef COMMENTS_ON_PAGE
+#undef NEWSCASTER_WINDOW_ID
