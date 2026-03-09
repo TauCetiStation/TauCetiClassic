@@ -25,7 +25,7 @@
 			if(poi == null)
 				. = TRUE
 				return
-			owner.ManualFollow(poi)
+			owner.ManualFollow(owner.resolve_follow_target(poi))
 			. = TRUE
 		if("refresh")
 			update_static_data(owner, ui)

@@ -140,7 +140,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if(href_list["track"])
 		var/atom/target = locate(href_list["track"])
 		if(target != src)
-			ManualFollow(target)
+			ManualFollow(resolve_follow_target(target))
 			return
 
 	if(href_list["x"] && href_list["y"] && href_list["z"])
@@ -375,18 +375,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit_menu.tgui_interact(src)
 
 
-// This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if (!istype(target))
-		return
-
-	// If target is an AI, let the ghost choose between eye and core
+/mob/dead/observer/proc/resolve_follow_target(atom/movable/target)
 	if(isAI(target))
 		var/mob/living/silicon/ai/AI = target
 		if(AI.eyeobj)
 			var/choice = tgui_alert(src, "Что вы хотите отслеживать?", "Наблюдение за ИИ", list("Глаз ИИ", "Ядро ИИ"))
 			if(choice == "Глаз ИИ")
-				target = AI.eyeobj
+				return AI.eyeobj
+	return target
+
+// This is the ghost's follow verb with an argument
+/mob/dead/observer/proc/ManualFollow(atom/movable/target)
+	if (!istype(target))
+		return
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
 
