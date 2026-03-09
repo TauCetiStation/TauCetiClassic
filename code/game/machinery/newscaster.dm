@@ -966,6 +966,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			viewing_channel.lock_comments = TRUE
 
 	else if(href_list["pda_onlineshop"])
+		if(!usr || issilicon(usr) || isobserver(usr) || usr.incapacitated() || !Adjacent(usr))
+			return
+
 		var/obj/item/device/pda/PDA = locate() in usr
 		if(!PDA)
 			return
