@@ -85,7 +85,7 @@
 /datum/feed_channel/proc/get_authors_account_numbers()
 	. = list()
 
-	if(locked && messages.len)
+	if(locked && messages.len) //Locked channel means author is single
 		var/datum/feed_message/msg = messages[1]
 		. |= msg.author_account.account_number
 		return
