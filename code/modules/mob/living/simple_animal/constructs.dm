@@ -397,37 +397,21 @@
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
 		)
+
 /mob/living/simple_animal/construct/harvester/atom_init()
 	. = ..()
+	AddElement(/datum/element/wall_walker, /turf/simulated/wall/cult)
 	add_conversion_area_spell()
+
+	var/datum/action/innate/seek_prey/seek = new(src)
+	seek.Grant(src)
+	seek.Activate()
 
 /mob/living/simple_animal/construct/harvester/proc/add_conversion_area_spell()
 	if(SSticker.nar_sie_has_risen)
 		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion(src))
 	else
 		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion/lesser(src))
-
-/mob/living/simple_animal/construct/harvester/Bump(atom/A)
-	. = ..()
-	if(A == loc)
-		return
-	var/its_wall = FALSE
-	if(istype(A, /turf/simulated/wall/cult))
-		its_wall = TRUE
-
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || isconstruct(A) || istype(A, /mob/living/simple_animal/hostile/pylon/cult))
-		var/atom/movable/stored_pulling = pulling
-		if(stored_pulling)
-			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
-			stored_pulling.forceMove(loc)
-
-		if(its_wall)
-			forceMove(A)
-		else
-			forceMove(A.loc)
-
-		if(stored_pulling)
-			start_pulling(stored_pulling) //drag anything we're pulling through the wall with us by magic
 
 /mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return TRUE
@@ -442,6 +426,46 @@
 			return ..() //Attack
 		return
 	return ..()
+
+/datum/action/innate/seek_prey
+	name = "Seek the Harvest"
+	//desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
+	background_icon_state = "bg_demon"
+	//overlay_icon_state = "bg_demon_border"
+
+	//buttontooltipstyle = "cult"
+	button_icon_state = "cult_mark"
+	var/seeking = FALSE
+
+/datum/action/innate/seek_prey/Activate()
+	var/atom/real_target = get_target()
+
+	if(seeking)
+		button_icon_state = "cult_mark"
+		seeking = FALSE
+		to_chat(owner, "<span class='cult italic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
+		return
+	if(ismob(real_target))
+		var/mob/M = real_target
+		to_chat(owner, "<span class='cult italic'>You are now tracking your prey, [M.real_name] - harvest [P_THEM(M)]!</span>")
+	else to_chat(owner, "<span class='cult italic'>You are now tracking [real_target.name]!</span>")
+	button_icon_state = "sintouch"
+	seeking = TRUE
+
+/datum/action/innate/seek_prey/proc/get_target()
+	for(var/mob/living/carbon/human/H in player_list)
+		if(H.stat == DEAD)
+			continue
+		if(iscultist(H))
+			continue
+		if(!is_station_level(H.z))
+			continue
+		return H
+
+/datum/action/innate/seek_prey/greed/get_target() //Used in /obj/item/clothing/head/greed
+	var/list/possible_targets = list(global.poi_list, global.player_list, global.possible_items_for_steal) //Yes, you can target ghosts
+	var/target = tgui_input_list(owner, "К чему же тебя отвести?", "Поиск", possible_targets)
+	return target
 
 /////////////////////////////////////Proteon from tg/////////////////////////////////
 /mob/living/simple_animal/construct/proteon

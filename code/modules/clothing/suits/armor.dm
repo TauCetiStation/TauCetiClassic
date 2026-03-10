@@ -137,6 +137,10 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.6
 
+/obj/item/clothing/suit/armor/hos/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
 	cases = list("противоударная броня", "противоударной брони", "противоударной броне", "противоударную броню", "противоударной бронёй", "противоударной броне")
@@ -264,6 +268,10 @@
 	item_state = "reactiveoff"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/active = FALSE
+
+/obj/item/clothing/suit/armor/vest/reactive/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
 /obj/item/clothing/suit/armor/vest/reactive/Get_shield_chance()
 	if(active)

@@ -188,6 +188,10 @@
 	minbodytemp = 0
 	environment_smash = 1
 
+/mob/living/simple_animal/hostile/viscerator/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
+
 /mob/living/simple_animal/hostile/viscerator/death()
 	..()
 	visible_message("<span class='warning'><b>[src]</b> is smashed into pieces!</span>")

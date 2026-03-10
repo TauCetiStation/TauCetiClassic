@@ -445,6 +445,14 @@
 	if(.)
 		flags = DROPDEL // no CONDUCT
 
+/obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
+	user.visible_message("<span class='danger'>[user]'s [name] breaks in a discharge of energy!</span>", \
+							"<span class='userdanger'>[user]'s [name] breaks in a discharge of energy!</span>")
+	var/datum/effect/effect/system/spark_spread/s = new()
+	s.set_up(4,0,user.loc)
+	s.start()
+	. = ..()
+
 // SURGICAL INSTRUMENTS
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"

@@ -658,6 +658,10 @@
 	max_mounted_devices = 7
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/emp_shield)
 
+/obj/item/clothing/suit/space/rig/engineering/chief/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
 	name = "mining hardsuit helmet"
@@ -711,6 +715,7 @@
 	var/equipped_on_head = FALSE
 	var/rig_type = "syndie"
 	var/glowtype = "terror"
+	var/holochip = TRUE
 	flags = PHORONGUARD
 	light_color = LIGHT_COLOR_NUKE_OPS
 
@@ -718,8 +723,8 @@
 	. = ..()
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
 
-	holochip = new /obj/item/holochip/nuclear(src)
-	holochip.holder = src
+	if(holochip)
+		new /obj/item/holochip/nuclear(src)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/AltClick(mob/user)
 	var/mob/living/carbon/wearer = loc
@@ -1201,3 +1206,72 @@
 	slowdown = 0.2
 	offline_slowdown = 4
 	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/anomaly_scanner)
+
+//Inquisitory
+/obj/item/clothing/head/helmet/space/rig/syndi/inquisition
+	name = "Inquisitory hybrid helmet"
+	desc = "A holy hybrid helmet made by the tech-priests and designers on special order for elite church inquisitors"
+	icon_state = "inquisitory"
+	rig_type = "inquisitory"
+	item_state = "inquisitory"
+	space_armor = list(melee = 50, bullet = 25, laser = 35, energy = 20, bomb = 50, bio = 100, rad = 100) //Weak in space to ranged weapons
+	combat_armor = list(melee = 40, bullet = 40, laser = 40, energy = 35, bomb = 50, bio = 100, rad = 70) //Medic's armor, others being altered on specialization
+	glowtype = "inquisitory"
+	light_color = LIGHT_COLOR_FIRE
+	can_be_modded = FALSE
+	holochip = FALSE
+
+/obj/item/clothing/head/helmet/space/rig/syndi/inquisition/attack_self(mob/user) //Redefining
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		return
+	on = !on
+	update_inv_mob()
+	update_item_actions()
+	update_icon(user)
+
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/inquisition/spacemarine
+	name = "Spacemarine combat helmet"
+	desc = "A holy church's berserkers helmet. Made by the best of tech-priests. Can adjust itself even for biggest of human beings, tough, only humans."
+	icon_state = "rig-spacemarine"
+	item_state = "rig-spacemarine"
+	rig_type = "spacemarine"
+	glowtype = "spacemarine"
+	light_color = LIGHT_COLOR_GHOST_CANDLE
+	space_armor = list(melee = 60, bullet = 35, laser = 45, energy = 30, bomb = 100, bio = 100, rad = 100) //Weak in space to ranged weapons
+	combat_armor = list(melee = 75, bullet = 70, laser = 60, energy = 60, bomb = 75, bio = 75, rad = 50)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/inquisition/spacemarine/update_icon(mob/user)
+	. = ..()
+	icon_state = "rig-[rig_type]"
+	if(user)
+		user.cut_overlay(lamp)
+		if(equipped_on_head && on)
+			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "[glowtype]_glow")
+
+/obj/item/clothing/suit/space/rig/syndi/inquisition
+	name = "Inquisitory elite hybrid suit"
+	desc = "A holy hybrid suit made by the tech-priests and designers on special order for elite church inquisitors."
+	icon_state = "rig-syndie_elit-space"
+	item_state = "syndicate-elite"
+	rig_variant = "rig-syndie_elit"
+	space_armor = list(melee = 30, bullet = 25, laser = 35, energy = 20, bomb = 50, bio = 100, rad = 100) //Weak in space to ranged weapons
+	combat_armor = list(melee = 40, bullet = 40, laser = 40, energy = 35, bomb = 50, bio = 100, rad = 70) //Medic's armor, others being altered on specialization
+	combat_slowdown = 0.2
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/emp_shield)
+	max_mounted_devices = 4
+	can_be_modded = FALSE
+	slowdown = 0.5 //Dont forget, in space mode it is very weak
+	combat_slowdown = 0
+
+/obj/item/clothing/suit/space/rig/syndi/inquisition/spacemarine
+	name = "Spacemarine combat suit"
+	desc = "A holy inquistion suit. Made by the best of tech-priests. Can adjust itself even for biggest of human beings, tough, only humans."
+	icon_state = "spacemarine"
+	item_state = "spacemarine"
+	rig_variant = "spacemarine"
+	space_armor = list(melee = 60, bullet = 35, laser = 45, energy = 30, bomb = 100, bio = 100, rad = 100) //Weak in space to ranged weapons
+	combat_armor = list(melee = 75, bullet = 65, laser = 70, energy = 70, bomb = 75, bio = 75, rad = 50)

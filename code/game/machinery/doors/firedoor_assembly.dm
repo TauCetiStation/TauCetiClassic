@@ -6,6 +6,11 @@
 	anchored = FALSE
 	opacity = 0
 	density = TRUE
+
+	max_integrity = 100
+	damage_deflection = 5
+	resistance_flags = CAN_BE_HIT
+
 	var/wired = 0
 
 /obj/structure/firedoor_assembly/update_icon()

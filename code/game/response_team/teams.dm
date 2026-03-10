@@ -5,6 +5,10 @@
 	probability = 40
 	faction = /datum/faction/responders/nt_ert
 
+/datum/response_team/nt_ert/New()
+	if(security_level == SEC_LEVEL_DELTA)
+		probability = 80
+
 /datum/response_team/gorlex
 	name = "Gorlex Marauders"
 	spawner = /datum/spawner/responders/gorlex
@@ -50,6 +54,17 @@
 	faction = /datum/faction/responders/soviet
 	fixed_objective = /datum/objective/target/assassinate_heads
 
+/datum/response_team/soviet/New()
+	if(SSticker.mode.name == "Revolution")
+		var/heads = 0
+		var/just_heads = 1
+		for(var/mob/living/carbon/human/player as anything in human_list)
+			if(player.mind && (player.mind.assigned_role in SSjob.heads_positions))
+				if(player.stat == DEAD)
+					just_heads++
+				heads++
+			probability = 20 * ((heads / just_heads) - 1) //More head alive - more chances to get rev squad
+
 /datum/response_team/security
 	name = "Security Team"
 	spawner = /datum/spawner/responders/security
@@ -75,3 +90,12 @@
 	probability = 20
 	faction = /datum/faction/responders/clowns
 	fixed_objective = /datum/objective/custom/clowns
+
+//Semi-deathsquad
+/datum/response_team/inquisition
+	name = "Holy inquisitors"
+	spawner = /datum/spawner/responders/inquisition
+	spawners_amount = 7
+	probability = 5
+	faction = /datum/faction/responders/inquisition
+	//fixed_objective = /datum/objective/custom/clowns

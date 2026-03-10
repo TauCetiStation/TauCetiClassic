@@ -441,7 +441,7 @@
 
 	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
 
-	dat += "<tr><td><B>Head:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HEAD]'>[(head && !(head.flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Head:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HEAD]'>[(head && !(head.flags & ABSTRACT))  || !HAS_TRAIT(head, TRAIT_EXAMINE_SKIP) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	if(SLOT_WEAR_MASK in obscured)
 		dat += "<tr><td><font color=grey><B>Mask:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
@@ -466,8 +466,8 @@
 
 	dat += "<tr><td>&nbsp;</td></tr>"
 
-	dat += "<tr><td><B>Exosuit:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_WEAR_SUIT]'>[(wear_suit && !(wear_suit.flags & ABSTRACT)) ? wear_suit : "<font color=grey>Empty</font>"]</A></td></tr>"
-	if(wear_suit)
+	dat += "<tr><td><B>Exosuit:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_WEAR_SUIT]'>[(wear_suit && !(wear_suit.flags & ABSTRACT)) || !HAS_TRAIT(wear_suit, TRAIT_EXAMINE_SKIP) ? wear_suit : "<font color=grey>Empty</font>"]</A></td></tr>"
+	if(wear_suit || !HAS_TRAIT(wear_suit, TRAIT_EXAMINE_SKIP))
 		if(SLOT_S_STORE in obscured)
 			dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Suit Storage:</B></font></td></tr>"
 		else
@@ -1449,7 +1449,7 @@
 		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
-// todo: why we need to support two set species procedures just because of abductors, 
+// todo: why we need to support two set species procedures just because of abductors,
 // merge it with the one above and add args to toggle behavior
 /mob/living/carbon/human/proc/set_species_soft(new_species)
 	if(species.name == new_species)
@@ -1777,7 +1777,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
 			continue
-		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
+		var/skeleton_state = BP.get_icon_state(fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
 		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
 	MA = update_height(MA)
 	return MA
@@ -2014,7 +2014,7 @@
 	if(deadtime > DEFIB_TIME_LOSS)
 		// damage for every second above DEFIB_TIME_LOSS till DEFIB_TIME_LIMIT
 		// 60 is often used as threshold for brainloss to trigger funny interactions
-		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS))) 
+		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS)))
 
 	med_hud_set_health()
 
@@ -2292,12 +2292,12 @@
 	var/datum/species/S = all_species[species.name]
 	age = rand(S.min_age, S.max_age)
 
-	regenerate_icons(update_body_preferences = TRUE) 
+	regenerate_icons(update_body_preferences = TRUE)
 
 /mob/living/carbon/human/get_blood_datum()
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		return /datum/dirt_cover/blue_blood
-	
+
 	if(species.blood_datum_path)
 		return species.blood_datum_path
 

@@ -22,8 +22,7 @@
 
 /obj/item/clothing/head/helmet/space/deathsquad/atom_init()
 	. = ..()
-	holochip = new /obj/item/holochip/deathsquad(src)
-	holochip.holder = src
+	new /obj/item/holochip/deathsquad(src)
 
 //Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat

@@ -168,6 +168,14 @@
 	time_for_registration = null
 	register_only = FALSE
 
+/datum/spawner/living/shade
+	name = "Дух"
+	desc = "Вы душа погибшего"
+	cooldown = 1 MINUTES
+	time_for_registration = null
+	register_only = FALSE
+	ranks = list(ROLE_CULTIST, ROLE_GHOSTLY)
+
 /datum/spawner/living/evil_shade
 	name = "Злой Дух"
 	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"

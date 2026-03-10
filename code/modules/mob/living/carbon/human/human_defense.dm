@@ -47,6 +47,16 @@
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
 
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
+	if(sigreturn & COMPONENT_PROJECTILE_FORCE_MISS)
+		return PROJECTILE_FORCE_MISS
+	if(sigreturn & COMPONENT_PROJECTILE_BLOCKED)
+		return PROJECTILE_ABSORBED
+	if(sigreturn & COMPONENT_PROJECTILE_ACTED)
+		return PROJECTILE_ACTED
+	if(sigreturn & COMPONENT_PROJECTILE_WEAKENED)
+		return PROJECTILE_WEAKENED
+
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/pyrometer) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
 			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check

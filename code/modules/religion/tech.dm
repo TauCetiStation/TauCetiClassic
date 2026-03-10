@@ -33,9 +33,9 @@
 	RegisterSignal(R, list(COMSIG_REL_ADD_MEMBER), PROC_REF(give_spell))
 	RegisterSignal(R, list(COMSIG_REL_REMOVE_MEMBER), PROC_REF(remove_spell))
 
-/datum/religion_tech/cult/cooldown_reduction
-	id = RTECH_COOLDOWN_REDUCTION
-	info = /datum/building_agent/tech/cult/cooldown_reduction
+/datum/religion_tech/cult/rift_lifetime
+	id = RTECH_RIFT_LIFETIME
+	info = /datum/building_agent/tech/cult/rift_lifetime
 
 /datum/religion_tech/cult/reusable_runes
 	id = RTECH_REUSABLE_RUNE
@@ -63,6 +63,22 @@
 /datum/religion_tech/cult/improved_pylons/on_add(datum/religion/cult/R)
 	for(var/obj/structure/cult/pylon/P as anything in global.pylons)
 		P.init_healing()
+
+/datum/religion_tech/cult/rift_defences
+	id = RTECH_RIFT_DEFENCES
+	info = /datum/building_agent/tech/cult/rift_defences
+
+/datum/religion_tech/cult/rift_defences/on_add(datum/religion/cult/R)
+	for(var/obj/effect/portal/rift/stable/S as anything in cult_religion.rifts)
+		S.P = new (src, TRUE)
+
+/datum/religion_tech/cult/eminence_runes
+	id = RTECH_EMINENCE_RUNES
+	info = /datum/building_agent/tech/cult/eminence_runes
+
+/datum/religion_tech/cult/tome_shackles
+	id = RTECH_TOME_SHACKLES
+	info = /datum/building_agent/tech/cult/tome_shackles
 
 /datum/religion_tech/upgrade_aspect
 	var/datum/aspect/aspect_type

@@ -511,8 +511,20 @@
 /obj/item/weapon/card/id/centcom/ert/leader
 	icon_state = "ert-leader"
 	item_state_world = "ert-leader_world"
-	assignment = "Emergency Response Team Leader"
+	assignment = "Inquisitor"
 	rank = "Emergency Response Team Leader"
+
+/obj/item/weapon/card/id/centcom/ert/inquisition
+	icon_state = "ert"
+	item_state_world = "ert_world"
+	assignment = "chaplain"
+	rank = "Emergency Response Inquisitor"
+
+/obj/item/weapon/card/id/centcom/ert/inquisition/spacemarine
+	icon_state = "ert-leader"
+	item_state_world = "ert-leader_world"
+	assignment = "chaplain"
+	rank = "Emergency Response Spacemarine"
 
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"

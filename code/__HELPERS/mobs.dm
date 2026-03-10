@@ -357,6 +357,40 @@
 	if(target && target != user)
 		target.in_use_action = FALSE
 
+/proc/do_skillcheck(mob/user, delay, check = FALSE, can_move = FALSE, datum/callback/extra_checks, needhand = FALSE, endtime)
+	if(!user)
+		return FALSE
+	var/atom/Uloc = null
+	if(!can_move)
+		Uloc = user.loc
+
+	var/_endtime = world.time + delay
+
+	var/datum/skillcheck/skillcheck
+	if(check)
+		if(user.client)
+			skillcheck = new(user, delay)
+		else
+			check = FALSE
+	. = FALSE
+	while (world.time < _endtime || skillcheck.result)
+		stoplag(1)
+		if (skillcheck)
+			skillcheck.update()
+
+		if(QDELETED(user))
+			break
+		if(user.incapacitated(NONE))
+			break
+		if(Uloc && (user.loc != Uloc))
+			break
+		if(extra_checks && !extra_checks.Invoke(user))
+			break
+
+	if(skillcheck)
+		. = skillcheck.result
+		qdel(skillcheck)
+
 //Returns true if this person has a job which is a department head
 /mob/proc/is_head_role()
 	. = FALSE

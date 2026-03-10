@@ -106,11 +106,31 @@
 
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
-	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
-		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
-		C.Deconvert()
-		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
-				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
+	if(ishuman(M) && iscultist(M))
+		if(!(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
+			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+			C.Deconvert()
+			M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
+					          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
+		if(!data["ticks"])
+			data["ticks"] = 1
+		switch(data["ticks"])
+			if(1 to 20)
+				M.make_jittery(3)
+			if(20 to 40)
+				M.make_jittery(6)
+				if(prob(15))
+					M.SetSleeping(2 SECONDS)
+			if(40 to 80)
+				M.make_jittery(12)
+				if(prob(30))
+					M.SetSleeping(4 SECONDS)
+			if(80 to INFINITY)
+				M.SetSleeping(5 SECONDS)
+				if(prob(15))
+					var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+					C.Deconvert()
+		data["ticks"]++
 
 /datum/reagent/water/holywater/reaction_obj(obj/O, volume)
 	src = null

@@ -331,6 +331,7 @@
 
 	suit = /obj/item/clothing/suit/armor/vest/surplus
 	l_ear = /obj/item/device/radio/headset
+	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform =/obj/item/clothing/under/soviet
 	shoes = /obj/item/clothing/shoes/boots
 	back = /obj/item/weapon/storage/backpack/kitbag
@@ -348,7 +349,7 @@
 
 	id = /obj/item/weapon/card/id/syndicate
 	var/assignment = "Krasnoarmeets"
-	var/list/surnames = list("Ivanov", "Petrov", "Vasilyev", "Semenov", "Mihailov", "Pavlov", "Fedorov", "Andreev", "Stepanov", "Smirnov", "Kuznetsov")
+	var/list/surnames = list("Ivanov", "Petrov", "Vasilyev", "Semenov", "Mihailov", "Pavlov", "Fedorov", "Andreev", "Stepanov", "Kuznetsov", "Igorev")
 
 /datum/outfit/responders/ussp/post_equip(mob/living/carbon/human/H)
 	H.real_name = "[assignment] [pick(surnames)][H.gender == "male" ? "" : "a"]"
@@ -360,6 +361,9 @@
 	if(prob(30))
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/surplus(H), SLOT_HEAD)
 	else
+		var/obj/item/clothing/head/ushanka/black/U = new (H)
+		U.flashbang_protection = TRUE
+		U.desc = "[initial(U.desc)] Has additional ear protective fur."
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka/black(H), SLOT_HEAD)
 
 /datum/outfit/responders/ussp/leader
@@ -368,6 +372,7 @@
 	suit = /obj/item/clothing/suit/storage/comissar
 	head = /obj/item/clothing/head/soviet_peaked_cap
 	suit_store = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
+	glasses = /obj/item/clothing/glasses/night
 
 	l_hand = /obj/item/device/megaphone
 
@@ -384,7 +389,7 @@
 	belt = /obj/item/weapon/shovel/spade/soviet
 
 	assignment = "Komissar"
-	surnames = list("Makarov", "Zahaev", "Barkov", "Volkov")
+	surnames = list("Chicherin", "Trockiy", "Krasin", "Dzerjinskiy", "Smirnov", "Rikov", "Bryhanov", "Shmidt", "Sokolnikov", "Kyibishev")
 
 /datum/outfit/responders/ussp/leader/post_equip(mob/living/carbon/human/H)
 	. = ..()
@@ -708,3 +713,215 @@
 	new /obj/item/clothing/head/helmet/space/clown(src)
 	new /obj/item/clothing/suit/space/clown(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Anti-cult semi-deathsquad
+/datum/outfit/responders/inquisitor
+	name = "Responders: Inquisitor"
+	uniform = /obj/item/clothing/under/rank/chaplain
+	glasses = /obj/item/clothing/glasses/night
+	shoes = /obj/item/clothing/shoes/boots/combat
+	belt = /obj/item/weapon/storage/belt/inquisition/full
+	mask = /obj/item/clothing/mask/gas
+	gloves = /obj/item/clothing/gloves/combat
+	id = /obj/item/weapon/card/id/centcom/ert/inquisition
+	l_ear = /obj/item/device/radio/headset/ert
+	back = /obj/item/weapon/storage/backpack/chaplain/inquisition
+	suit = /obj/item/clothing/suit/space/rig/syndi/inquisition
+	head = /obj/item/clothing/head/helmet/space/rig/syndi/inquisition
+
+	r_pocket = /obj/item/weapon/tank/emergency_oxygen/double
+	//l_pocket =
+
+	backpack_contents = list(/obj/item/weapon/nullrod, /obj/item/weapon/storage/bible, /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat, /obj/item/weapon/plastique)
+
+	var/assignment = "Emergency Response Inquisitor"
+
+//todo Коробку с выбором эквипа: медик с поясом ауры хила и дамага и хилбимом, боец ближнего боя с улучшенным щитом и невозможностью использовать дальнее оружие, боец-дальник
+/datum/outfit/responders/inquisitor/post_equip(mob/living/carbon/human/H)
+	H.real_name = "Brother [pick(global.last_names)]"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = assignment
+	ID.rank = assignment
+
+	H.sec_hud_set_ID()
+
+	H.mind.skills.add_available_skillset(/datum/skillset/chaplain)
+	H.mind.skills.maximize_active_skills()
+
+	H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+
+	//Add vest
+	var/obj/item/clothing/under/U = H.w_uniform
+	if(istype(U))
+		var/obj/item/clothing/accessory/storage/black_vest/S = new (U)
+		LAZYADD(U.accessories, S)
+		S.on_attached(U, H, TRUE)
+
+	//Add knife
+	var/obj/item/weapon/kitchenknife/combat/K = new()
+	var/obj/item/clothing/shoes/boots/combat/B = H.shoes
+	B.add_knife(K)
+	B.update_icon()
+
+/datum/outfit/responders/inquisitor/spacemarine
+	name = "Responders: Spacemarine"
+	suit = /obj/item/clothing/suit/space/rig/syndi/inquisition/spacemarine
+	head = /obj/item/clothing/head/helmet/space/rig/syndi/inquisition/spacemarine
+	id = /obj/item/weapon/card/id/centcom/ert/inquisition/spacemarine
+	l_pocket = /obj/item/weapon/pinpointer/advpinpointer
+	suit_store = /obj/item/weapon/claymore/religion/chainsaw_sword
+
+	assignment = "Emergency Response Spacemarine"
+
+/datum/outfit/responders/inquisitor/spacemarine/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.resize = 1.25
+	H.remove_status_flags(CANPUSH)
+	H.mob_general_damage_mod.ModMultiplicative(0.85, src)
+	H.can_be_pulled = FALSE
+	ADD_TRAIT(H, TRAIT_NO_EMBED, src)
+	ADD_TRAIT(H, TRAIT_NO_PAIN, src)
+	ADD_TRAIT(H, TRAIT_VIRUS_IMMUNE, src)
+	ADD_TRAIT(H, TRAIT_MORPH_IMMUNE, src)
+	ADD_TRAIT(H, TRAIT_STRONGMIND, src)
+	ADD_TRAIT(H, TRAIT_HEMOCOAGULATION, src)
+	ADD_TRAIT(H, TRAIT_SOULSTONE_IMMUNE, src)
+
+/obj/item/weapon/storage/box/inquisitors_equipment
+	name = "boxed inquisititor's equipment"
+	desc = "It's a boxed equipment for inquisitors."
+	var/speciality_chosen = FALSE
+
+/obj/item/weapon/storage/box/inquisitors_equipment/try_open(mob/user)
+	. = ..()
+	var/datum/role/inquisitor/I = user.mind?.GetRole("Inquisitor")
+	if(!I || I.speciality)
+		return FALSE
+
+/obj/item/weapon/storage/box/inquisitors_equipment/open(mob/user)
+	. = ..()
+	if(!speciality_chosen)
+		if(!ishuman(user))
+			return
+		var/mob/living/carbon/human/H = user
+		if(!istype(H.wear_suit, /obj/item/clothing/suit/space/rig/syndi/inquisition))
+			if(tgui_alert(user, "Инквизитор, ты выбираешь свою специализацию не имея на себе брони инквизиции, в этом случае она не будет модифицирована.", "Уверен?", list("Да", "Нет"), 10 SECONDS) != "Да")
+				return
+		switch(tgui_alert(user, "Choose your speciality, inquisitor", "Speciality", list("Close combat", "Range combat", "Medic")))
+			if("Close combat") //Has above average armor, strong shield and sword
+				new /obj/item/weapon/storage/backpack/chaplain/inquisition/upgraded (src)
+				new /obj/item/weapon/claymore/religion/chainsaw_sword/high_frequency (src)
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/syndi/inquisition))
+					var/obj/item/clothing/suit/space/rig/syndi/inquisition/S = H.wear_suit
+					S.combat_armor = list(melee = 40, bullet = 60, laser = 60, energy = 60, bomb = 75, bio = 100, rad = 70)  //Has low melee def to encourage close combat fights
+					S.desc = "[initial(S.desc)]. Medium armor."
+			if("Range combat") //Has heavy armor, slowdow, a freaking flamethrwoer and some other ranged weapons
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/syndi/inquisition))
+					var/obj/item/clothing/suit/space/rig/syndi/inquisition/S = H.wear_suit
+					S.combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 50) //Heavy syndi armor
+					S.combat_slowdown = 0.7 //heavy + 0.2 for shielding aura
+					S.desc = "[initial(S.desc)]. Heavy and more durable variant of combat armor, additionaly, fireproof."
+
+				new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec (src)
+				new /obj/item/ammo_box/magazine/glock/extended(src)
+				new /obj/item/ammo_box/magazine/glock/extended(src)
+				new /obj/item/weapon/gun/energy/gun/nuclear (src)
+				new /obj/item/weapon/gun/projectile/shotgun/combat(src)
+				new /obj/item/ammo_box/eight_shells/incendiary(src)
+				new /obj/item/ammo_box/eight_shells/incendiary(src)
+				//flamethrower
+			if("Medic") //Has healing and damaging auras, medicaments, healbeam, normal inquisitor's armor, but good space armor
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/syndi/inquisition))
+					var/obj/item/clothing/suit/space/rig/syndi/inquisition/S = H.wear_suit
+					S.space_armor = list(melee = 60, bullet = 50, laser = 50, energy = 45, bomb = 100, bio = 100, rad = 100)
+					S.desc = "[initial(S.desc)]. Has additional space armor."
+				//Med
+				new /obj/item/weapon/storage/pouch/medical_supply/combat (src)
+				new /obj/item/clothing/glasses/hud/health/night (src)
+				new /obj/item/weapon/gun/medbeam (src)
+				new /obj/item/weapon/storage/firstaid/adv (src)
+				new /obj/item/weapon/shockpaddles/standalone (src)
+				new /obj/item/weapon/storage/belt/inquisition/aura/full (src)
+				new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(src)
+
+				//weapons
+				new /obj/item/weapon/gun/energy/gun/nuclear (src)
+				new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec (src)
+				new /obj/item/ammo_box/magazine/glock/extended(src)
+				new /obj/item/ammo_box/magazine/glock/extended(src)
+
+
+/obj/item/weapon/claymore/religion/chainsaw_sword
+	name = "sacred chainsaw sword"
+	desc = "Suffer not a heretic to live."
+	icon_state = "chainswordon"
+	item_state = "chainswordon"
+	//hitsound = 'sound/items/weapons/chainsawhit.ogg'
+	toolspeed = 1.5 //slower than a real saw
+	holy_force = 45 //Dsword
+	def_force = 10 //Big club
+	throwforce = 15
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 20000
+	g_amt = 10000
+	attack_verb = list("teared", "lacerated", "chopped", "diced", "slashed", "sawed", "cut")
+	sharp = 1
+	edge = 1
+	usesound = 'sound/items/surgery/Bone_Saw.ogg'
+	var/sword_icon_state = "chainsword"
+
+/obj/item/weapon/claymore/religion/chainsaw_sword/dropped(mob/user)
+	..()
+	icon_state = "[sword_icon_state]off"
+	REMOVE_TRAIT(user, TRAIT_NOGUNS, src)
+
+/obj/item/weapon/claymore/religion/chainsaw_sword/equipped(mob/user, slot)
+	..()
+	if((slot == SLOT_L_HAND) || (slot == SLOT_R_HAND) && user.mind?.holy_role && !iscultist(user))
+		force = holy_force + blessed
+		icon_state = "[sword_icon_state]on"
+		ADD_TRAIT(user, TRAIT_NOGUNS, src)
+	else
+		force = def_force + blessed
+		icon_state = "[sword_icon_state]off"
+
+/obj/item/weapon/claymore/religion/chainsaw_sword/high_frequency
+	name = "high frequency blade"
+	desc = "Bad references are the DNA of the soul."
+	icon_state = "hfrequencyoff"
+	item_state = "hfrequencyon"
+	attack_verb = list("stabbed", "pierced", "impaled")
+	//hitsound = 'sound/items/weapons/rapierhit.ogg'
+	sword_icon_state = "hfrequency"
+	holy_force = 35 //Esword + 5 dam
+	def_force = 15 //As it still has a sharp blade

@@ -20,6 +20,9 @@
 	// Color of aspect
 	var/color
 
+	///How much of passive favor was gained through this aspect.
+	var/passive_favor_gained = 0
+
 /datum/aspect/New()
 	if(icon && icon_state)
 		aspect_image = image(icon = src.icon, icon_state = src.icon_state)
@@ -183,7 +186,7 @@
 
 	color = COLOR_LIME
 
-//Gives mana from: ghosts staying near the altar
+//Gives mana from: ghosts staying near the altar, stable rifts
 //Needed for: spells and rituals related to the theme of ghosts
 /datum/aspect/mystic
 	name = ASPECT_MYSTIC
@@ -242,14 +245,14 @@
 
 /datum/aspect/wacky/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/bananapeel/honk))
-		return 40
+		return 200
 	if(istype(I, /obj/item/weapon/bananapeel))
 		return 30
 	if(istype(I, /obj/item/stack/sheet/mineral/clown))
 		var/obj/item/stack/sheet/mineral/clown/banan = I
-		return banan.amount * 60
+		return banan.amount * 600
 	if(istype(I, /obj/item/weapon/ore/clown))
-		return 50
+		return 500
 	return FALSE
 
 /datum/aspect/wacky/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
@@ -267,6 +270,7 @@
 		return
 
 	F.holy.religion.adjust_favor(weaken_duration * power * 0.5)
+	F.holy.religion.passive_favor_gain += weaken_duration * power * 0.05
 
 /datum/aspect/wacky/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
 	..()

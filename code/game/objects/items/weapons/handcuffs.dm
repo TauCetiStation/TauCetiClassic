@@ -113,3 +113,16 @@
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && !C.handcuffed)
 		place_handcuffs(C, user)
+
+/obj/item/weapon/handcuffs/cult //For the cult shackling upgrade
+	name = "shadow shackles"
+	desc = "Shackles that bind the wrists with sinister magic."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "cuff"
+	breakouttime = 40 SECONDS
+	flags = DROPDEL
+
+/obj/item/weapon/handcuffs/cult/dropped(mob/user)
+	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
+							"<span class='notice'> Your [src] shatters in a discharge of dark magic!</span>")
+	. = ..()

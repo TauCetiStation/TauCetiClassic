@@ -241,3 +241,132 @@
 	item_state = "militarybelt"
 	force = 10
 	can_hold = list()
+
+/obj/item/weapon/storage/belt/inquisition
+	name = "inquisitor's belt"
+	desc = "Worn by the inquisitors, witch hunters, cosplayers and some other strange persons."
+	icon_state = "swatbelt"
+	item_state = "swatbelt"
+	storage_slots = 6
+	can_hold = list(
+		/obj/item/weapon/grenade/holynade,
+		/obj/item/weapon/nullrod,
+		/obj/item/weapon/grenade/flashbang,
+		/obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/handcuffs,
+		/obj/item/device/flash,
+		/obj/item/clothing/glasses,
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
+		/obj/item/weapon/melee/baton,
+		/obj/item/weapon/gun/energy/taser/stunrevolver,
+		/obj/item/weapon/lighter,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/clothing/glasses/hud/security,
+		/obj/item/device/flashlight,
+		/obj/item/device/pda,
+		/obj/item/taperoll/police,
+		/obj/item/device/radio/headset,
+		/obj/item/weapon/melee,
+		/obj/item/weapon/kitchenknife,
+		/obj/item/device/flashlight/seclite
+		)
+	force = 5
+
+/obj/item/weapon/storage/belt/inquisition/full/atom_init()
+	. = ..()
+	for (var/i in 1 to 4)
+		new /obj/item/weapon/grenade/holynade(src)
+	new /obj/item/weapon/melee/baton (src)
+	new /obj/item/weapon/handcuffs (src)
+	new /obj/item/weapon/kitchenknife/throwing (src)
+	new /obj/item/weapon/kitchenknife/throwing (src)
+
+/obj/item/weapon/storage/belt/inquisition/aura
+	storage_slots = 12
+	icon_state = "soulstonebelt"
+	item_state = "soulstonebelt"
+	desc = "Worn by the white inquisitors, plague doctors, cosplayers and medics. Can hold all sorts of medical and antimagic thingies."
+	color = COLOR_YELLOW
+	var/datum/component/aura_healing/inquisition/deadly/deadly_aura
+	var/datum/component/aura_healing/inquisition/healing_aura
+
+	can_hold = list( //Can hold medical and surgical items, null rod and holynades
+		/obj/item/weapon/grenade/holynade,
+		/obj/item/weapon/nullrod,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
+		/obj/item/weapon/lighter,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/device/flashlight,
+		/obj/item/weapon/kitchenknife,
+		/obj/item/device/flashlight/seclite,
+		/obj/item/device/healthanalyzer,
+		/obj/item/device/plant_analyzer,
+		/obj/item/device/robotanalyzer,
+		/obj/item/weapon/dnainjector,
+		/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/bottle,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/stack/medical,
+		/obj/item/device/flashlight/pen,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/clothing/gloves/latex,
+	    /obj/item/weapon/reagent_containers/hypospray,
+	    /obj/item/device/sensor_device,
+	    /obj/item/device/mass_spectrometer,
+	    /obj/item/device/reagent_scanner,
+		/obj/item/device/antibody_scanner,
+	    /obj/item/weapon/retractor,
+	    /obj/item/weapon/hemostat,
+	    /obj/item/weapon/cautery,
+	    /obj/item/weapon/surgicaldrill,
+	    /obj/item/weapon/scalpel,
+	    /obj/item/weapon/circular_saw,
+	    /obj/item/weapon/bonegel,
+	    /obj/item/weapon/FixOVein,
+	    /obj/item/weapon/bonesetter,
+		/obj/item/bodybag/cryobag
+		)
+
+/obj/item/weapon/storage/belt/inquisition/aura/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_BELT)
+		var/datum/role/inquisitor/I = user.mind?.GetRole("Inquisitor")
+		if(I && I.speciality == "medic")
+			START_PROCESSING(SSaura_healing, healing_aura)
+			START_PROCESSING(SSaura_healing, deadly_aura)
+		else
+			to_chat(user, "<span class='red'>You don't know how it works.</span>")
+			return
+	else
+		STOP_PROCESSING(SSaura_healing, healing_aura)
+		STOP_PROCESSING(SSaura_healing, deadly_aura)
+
+/obj/item/weapon/storage/belt/inquisition/aura/atom_init()
+	. = ..()
+	healing_aura = AddComponent(/datum/component/aura_healing/inquisition, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, COLOR_GOLD) //Colors almost the same, so you have a hard time to defer them in combat
+	deadly_aura = AddComponent(/datum/component/aura_healing/inquisition/deadly, 5, TRUE, -0.4, -0.4, -0.1, -1, -1, -0.3, -0.8, null, -1.2, COLOR_TIGER)
+	STOP_PROCESSING(SSaura_healing, healing_aura)
+	STOP_PROCESSING(SSaura_healing, deadly_aura)
+
+/obj/item/weapon/storage/belt/inquisition/aura/dropped(mob/living/user)
+	..()
+	STOP_PROCESSING(SSaura_healing, healing_aura)
+	STOP_PROCESSING(SSaura_healing, deadly_aura)
+
+/obj/item/weapon/storage/belt/inquisition/aura/full/atom_init()
+	. = ..()
+	new /obj/item/device/healthanalyzer (src)
+	new /obj/item/weapon/storage/pill_bottle/bicaridine (src)
+	new /obj/item/weapon/storage/pill_bottle/dermaline (src)
+	new /obj/item/weapon/storage/pill_bottle/dylovene (src)
+	new /obj/item/weapon/storage/pill_bottle/tramadol (src)
+	new /obj/item/weapon/reagent_containers/syringe (src)
+	new /obj/item/weapon/reagent_containers/hypospray (src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv (src)
+	new /obj/item/stack/medical/suture (src)
+	new /obj/item/bodybag/cryobag (src)

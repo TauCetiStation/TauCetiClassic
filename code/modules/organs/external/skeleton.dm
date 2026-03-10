@@ -137,8 +137,6 @@
 	force = 8
 	min_broken_damage = 15
 	controller_type = /datum/bodypart_controller/skeleton
-
-	cannot_amputate = FALSE
 	vital = FALSE
 
 /obj/item/organ/external/groin/skeleton/attack(mob/living/M, mob/living/user, def_zone)

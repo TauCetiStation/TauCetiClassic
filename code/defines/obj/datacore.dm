@@ -229,7 +229,13 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		manifest_inject(H, H.client)
 
 		CHECK_TICK
-
+		/*
+for(var/mob/dead/new_player/readied_player as anything in GLOB.new_player_list)
+		if(readied_player.new_character)
+			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
+		if(ishuman(readied_player.new_character))
+			inject(readied_player.new_character)
+			*/
 /obj/effect/datacore/proc/manifest_modify(name, assignment)
 	PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord

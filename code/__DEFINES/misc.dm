@@ -309,6 +309,15 @@
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
 
+/// Small size. (ie: context subtooltips, spell delays) - Size options: 12pt 24pt.
+#define MAPTEXT_TINY_UNICODE(text) {"<span style='font-family: \"TinyUnicode\"; font-size: 12pt; line-height: 0.75; -dm-text-outline: 1px black'>[##text]</span>"}
+
+/// Macro from Lummox used to get height from a MeasureText proc.
+#define WXH_TO_HEIGHT(measurement) (text2num(copytext(measurement, findtextEx(measurement, "x") + 1)))
+
+/// Removes everything enclose in < and > inclusive of the bracket, and limits the length of the message.
+#define STRIP_HTML_FULL(text, limit) (global.html_tags.Replace(copytext(text, 1, limit), ""))
+
 //For crawl_can_use() in /mob/living
 #define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)
 

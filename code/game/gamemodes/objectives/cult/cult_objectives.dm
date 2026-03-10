@@ -111,3 +111,19 @@
 		if(convertees >= convertees_needed)
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/cult/open_rifts
+	explanation_text = "Откройте не менее 1 Разлома на станции с помощью ритуала Создания Разлома."
+	weight = 1.5
+	var/need_rifts = 1
+
+/datum/objective/cult/open_rifts/New()
+	need_rifts = max(4, round(player_list.len * 0.04) + 1) //2 rifts on 38 pop
+	explanation_text = "Откройте не менее [need_rifts] [pluralize_russian(need_rifts, "Разлома", "Разломов", "Разломов")] на станции с помощью ритуала Создания Разлома."
+	..()
+
+/datum/objective/cult/open_rifts/check_completion()
+	var/datum/faction/cult/C = faction
+	if(istype(C) && length(C.religion.rifts) >= need_rifts)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

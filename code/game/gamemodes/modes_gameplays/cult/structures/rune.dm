@@ -82,13 +82,15 @@
 	examine(user)
 	power?.ghost_action(user)
 
-/obj/effect/rune/attack_hand(mob/living/user)
+/obj/effect/rune/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(get_dist(user, src) > 1) // anti-telekinesis
 		return
 	if(!iscultist(user))
-		if(prob(user.getBrainLoss()))
-			user.say(pick("Хаккрутйу гопоенйим.", "Храсаи пивроиашан.", "Фирййи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Миуф хон внор'с.", "Вакабаи хий фен йусших."))
+		if(isliving(user))
+			var/mob/living/L = user
+			if(prob(L.getBrainLoss()))
+				user.say(pick("Хаккрутйу гопоенйим.", "Храсаи пивроиашан.", "Фирййи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Миуф хон внор'с.", "Вакабаи хий фен йусших."))
 		return
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		to_chat(user, "Вы не можете произнести слова руны.")

@@ -10,6 +10,7 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
 	w_class = SIZE_MINUSCULE
 	slot_flags = SLOT_FLAGS_BELT
+	flags = HEAR_PASS_SAY
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted
 
@@ -111,7 +112,7 @@
 		if(H.stat == CONSCIOUS)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Сначала убейте или оглушите жертву!")
 			return
-		if(H.client == null)
+		if(!H.mind)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В этой оболочке нет души.")
 			return
 		if(contents.len)
@@ -174,7 +175,7 @@
 		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> Камень душ пуст! Самое время убить кого-нибудь.")
 		return
 
-	if(!S.client)
+	if(!S.mind)
 		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> У существа внутри нет души! Самое время найти новую.")
 		return
 

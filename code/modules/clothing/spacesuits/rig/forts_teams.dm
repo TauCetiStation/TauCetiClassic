@@ -30,8 +30,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/forts/team_red/atom_init()
 	. = ..()
-	holochip = new /obj/item/holochip/team_red(src)
-	holochip.holder = src
+	new /obj/item/holochip/team_red(src)
 
 /obj/item/clothing/suit/space/rig/forts/team_red
 	icon_state = "ert_security"
@@ -45,8 +44,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/forts/team_blue/atom_init()
 	. = ..()
-	holochip = new /obj/item/holochip/team_blue(src)
-	holochip.holder = src
+	new /obj/item/holochip/team_blue(src)
 
 /obj/item/clothing/suit/space/rig/forts/team_blue
 	icon_state = "ert_commander"

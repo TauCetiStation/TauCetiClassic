@@ -28,6 +28,8 @@
 
 	var/datum/religion/religion
 
+	var/table_test_radius
+
 /obj/structure/cult/tech_table/Destroy()
 	pylon_around = null
 	if(tech_timer)
@@ -77,7 +79,7 @@
 	if(!category_images.len)
 		gen_category_images()
 
-	var/choice = show_radial_menu(user, src, category_images, tooltips = TRUE, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, category_images, radius = 6 * category_images.len, min_angle = 22.5, tooltips = TRUE, require_near = TRUE)
 
 	var/list/tech = list()
 	var/list/user_tech_images = list()
@@ -99,7 +101,10 @@
 // list/techs is (tech_name_with_cost = tech_id)
 // list/user_techs_images is (tech_name_with_cost = tech_images)
 /obj/structure/cult/tech_table/proc/choose_tech(mob/user, list/techs, list/user_techs_images)
-	var/tech_name_with_cost = show_radial_menu(user, src, user_techs_images, tooltips = TRUE, require_near = TRUE)
+	var/spec_radius = max(32, 6 * tech_images.len)
+	if(table_test_radius)
+		spec_radius = table_test_radius
+	var/tech_name_with_cost = show_radial_menu(user, src, user_techs_images, radius = spec_radius, min_angle = 22.5, tooltips = TRUE, require_near = TRUE)
 	chosen_tech = tech_by_id[techs[tech_name_with_cost]]
 	if(!chosen_tech)
 		return

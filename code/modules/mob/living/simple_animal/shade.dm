@@ -27,10 +27,15 @@
 	status_flags = 0
 	faction = "cult"
 	status_flags = CANPUSH
+	spawner_args = list(/datum/spawner/living/shade)
 
 	animalistic = FALSE
 	has_head = TRUE
 	has_arm = TRUE
+
+/mob/living/simple_animal/shade/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
 
 /mob/living/simple_animal/shade/Move(atom/NewLoc, direct)
 	. = TRUE

@@ -97,3 +97,11 @@
 	disallow_job = TRUE
 
 	skillset_type = /datum/skillset/clown
+
+/datum/role/inquisitor
+	name = "Inquisitor"
+	id = "Inquisitor"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/hos
+	var/speciality

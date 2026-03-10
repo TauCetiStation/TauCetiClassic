@@ -320,6 +320,12 @@
 	if(amount > 0)
 		adjust_piety(amount)
 
+/// Adjust passive Favor gain by a certain amount. Uses formula, the more current gain exceeds roof, the less amount added
+/datum/religion/proc/adjust_passive_favor_gain(amount = 0, roof = 15, datum/aspect/asp)
+	var/gained = amount / sqrt(min(passive_favor_gain / roof, 1))
+	passive_favor_gain += gained
+	asp.passive_favor_gained += gained
+
 // Sets favor to a specific amount. Can provide optional features based on a user.
 /datum/religion/proc/set_favor(amount = 0)
 	favor = clamp(amount, 0, max_favor)
