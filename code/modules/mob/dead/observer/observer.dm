@@ -375,7 +375,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit_menu.tgui_interact(src)
 
 
-
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target))
