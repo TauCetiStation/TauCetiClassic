@@ -172,3 +172,106 @@
 	var/mob/living/silicon/robot/R = user
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 	R.module.remove_item(src)
+
+//Agent ID card for cyborgs, so they wont put it in silly places. Let's pretend that its a device, not just a card.
+/obj/item/weapon/card/access_grabber
+	name = "robotic access grabber device"
+	desc = "Устройство, используемое для копирования станционного доступа с ID карт."
+	icon_state = "id"
+
+/obj/item/weapon/card/access_grabber/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	var/mob/living/silicon/robot/R = user
+	if(istype(target, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/S = target
+		if(istype(S.module, R.module.type))
+			R.req_access |= S.req_access
+	if(istype(target, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = target
+		R.req_access |= I.access
+		if(isliving(user) && user.mind)
+			to_chat(user, "<span class='notice'>The device's microscanners activate as you pass it over the ID, copying its access.</span>")
+
+/obj/item/weapon/tool_package
+	name = "tool package"
+	desc = "Инновационная RedSpace разработка для синтетиков, позволяющая владельцу выбрать 1 из 2 наборов инструментов: для боя или для поддержки. Первый сочитает в себе все необходимое для медицины и инженерии, второй обладает встроенным вооружением."
+	icon_state = "id"
+
+/obj/item/weapon/tool_package/attack_self(mob/user)
+	. = ..()
+	if(!isrobot(user))
+		CRASH("Предмет для киборгов оказался в руках не-киборга [loc]!")
+	var/mob/living/silicon/robot/R = user
+	switch(tgui_input_list(usr,"Select a role!","Custom Setup Creation", list("combat", "support")))
+		if("combat")
+			R.module.modules += new /obj/item/weapon/handcuffs/cyborg(src)
+			R.module.modules += new /obj/item/weapon/melee/baton(src)
+			R.module.modules += new /obj/item/weapon/melee/cultblade(src)
+			R.module.modules += new /obj/item/borg/sight/night(src)
+
+			var/obj/item/device/hailer/H = new(src)
+			H.emagged = TRUE
+			H.insults = 2
+			R.module.modules += H
+		if("support")
+			//Engineer
+			R.module.modules += new /obj/item/borg/sight/meson(src)
+			R.module.modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+			R.module.modules += new /obj/item/weapon/airlock_painter(src)
+			R.module.modules += new /obj/item/weapon/weldingtool/largetank(src)
+			R.module.modules += new /obj/item/weapon/screwdriver(src)
+			R.module.modules += new /obj/item/weapon/wrench(src)
+			R.module.modules += new /obj/item/weapon/wirecutters(src)
+			R.module.modules += new /obj/item/device/multitool(src)
+			R.module.modules += new /obj/item/weapon/rcd/borg(src)
+			R.module.modules += new /obj/item/device/t_scanner(src)
+			R.module.modules += new /obj/item/device/analyzer(src)
+			R.module.modules += new /obj/item/weapon/gripper(src)
+			R.module.modules += new /obj/item/weapon/matter_decompiler(src)
+			//Medic
+			R.module.modules += new /obj/item/device/healthanalyzer(src)
+			R.module.modules += new /obj/item/weapon/reagent_containers/borghypo/medical(src)
+			R.module.modules += new /obj/item/weapon/scalpel/manager(src)
+			R.module.modules += new /obj/item/weapon/FixOVein(src)
+			R.module.modules += new /obj/item/weapon/hemostat(src)
+			R.module.modules += new /obj/item/weapon/retractor(src)
+			R.module.modules += new /obj/item/weapon/cautery(src)
+			R.module.modules += new /obj/item/weapon/bonegel(src)
+			R.module.modules += new /obj/item/weapon/bonesetter(src)
+			R.module.modules += new /obj/item/weapon/circular_saw(src)
+			R.module.modules += new /obj/item/weapon/surgicaldrill(src)
+			R.module.modules += new /obj/item/weapon/razor(src)
+			R.module.modules += new /obj/item/weapon/gripper/medical(src)
+			R.module.modules += new /obj/item/device/reagent_scanner/adv(src)
+			R.module.modules += new /obj/item/roller_holder(src)
+			R.module.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+			R.module.modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
+			R.module.modules += new /obj/item/weapon/reagent_containers/syringe(src)
+			R.module.modules += new /obj/item/weapon/shockpaddles/robot(src)
+			R.module.modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg(src)
+
+			R.module.stacktypes = list(
+				/obj/item/stack/sheet/metal/cyborg = 50,
+				/obj/item/stack/sheet/glass/cyborg = 50,
+				/obj/item/stack/sheet/rglass/cyborg = 50,
+				/obj/item/stack/cable_coil/cyborg = 50,
+				/obj/item/stack/rods = 15,
+				/obj/item/stack/tile/plasteel = 15,
+				/obj/item/stack/medical/advanced/bruise_pack = 6,
+				/obj/item/stack/medical/advanced/ointment = 6,
+				/obj/item/stack/nanopaste = 10,
+				/obj/item/stack/medical/splint = 5
+				)
+			for(var/T in R.module.stacktypes)
+				var/obj/item/stack/W = new T(src)
+				W.set_amount(R.module.stacktypes[T])
+				R.module.modules += W
+/*
+/obj/item/stone_of_aura
+	name = "Stone of Healing aura"
+	desc = "The stone is made of a complex material, if you look closely, the surface structure is fractal."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "cultstone"
+
+/obj/item/stone_of_aura*/

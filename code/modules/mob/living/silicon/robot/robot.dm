@@ -195,6 +195,10 @@
 		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
+	if(iscultist(src))
+		to_chat(src, "<span class='userdanger'>#&~ERROR^1! Critical malfunction in module protocols!'!&$ERROR&*@#</span>")
+		choose_module["Cultist"] = image(icon = 'icons/mob/robots.dmi', icon_state = "kodiak-combat")
+
 	modtype = show_radial_menu(usr, usr, choose_module, radius = 50, tooltips = TRUE)
 	if(!modtype)
 		return
@@ -317,11 +321,15 @@
 			build_combat_borg()
 			return
 
+		if("Cultist")
+			build_cultist_borg()
+			return
+
 	module_icon.update_icon(src)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
+	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate" || modtype == "Cultist")
 		remove_status_flags(CANPUSH)
 
 	// Radial menu for choose icon_state
@@ -344,6 +352,43 @@
 	module = new /obj/item/weapon/robot_module/combat(src)
 	C.key = key
 	qdel(src)
+
+/mob/living/silicon/robot/proc/build_cultist_borg()
+	icon_state = "kodiak-combat"
+	modtype = "Cultist"
+	faction = "cult"
+	req_access = list() //We loose all of our access
+	w_class = SIZE_BIG
+	typing_indicator_type = "syndibot"
+	cell.maxcharge = 25000
+	cell.charge = 25000
+
+	spawner_args = list(/datum/spawner/living/robot/cult, 2 MINUTES)
+
+	lockcharge = 0
+	lawupdate = 0
+	scrambledcodes = 1
+	if(camera)
+		camera.clear_all_networks()
+		cameranet.removeCamera(camera)
+	update_manifest()
+
+	module = new /obj/item/weapon/robot_module/cultist(src)
+	laws = new /datum/ai_laws/faith/cult() //Just in case
+
+	for(var/datum/robot_component/C in components)
+		qdel(C)
+
+	components["actuator"] = new/datum/robot_component/actuator/cult(src)
+	components["radio"] = new/datum/robot_component/radio/combat(src)
+	components["power cell"] = new/datum/robot_component/cell/combat(src)
+	components["diagnosis unit"] = new/datum/robot_component/diagnosis_unit/combat(src)
+	components["camera"] = new/datum/robot_component/camera/combat(src)
+	components["comms"] = new/datum/robot_component/binary_communication/combat(src)
+	components["armour"] = new/datum/robot_component/armour/class_5(src)
+
+	dna = new /datum/dna(null) //as we have a heart now
+	dna.real_name = real_name
 
 /mob/living/silicon/robot/proc/updatename(prefix)
 	if(prefix)

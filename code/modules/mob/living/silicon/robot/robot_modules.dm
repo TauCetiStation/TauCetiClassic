@@ -368,6 +368,31 @@
 	modules += new /obj/item/weapon/wrench(src)
 	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
 
+/obj/item/weapon/robot_module/cultist
+	name = "cultist robot module"
+
+/obj/item/weapon/robot_module/cultist/atom_init()
+	modules += new /obj/item/weapon/storage/bible/tome/cyborg(src)
+
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/device/gps/cyborg(src)
+
+	modules += new /obj/item/weapon/card/access_grabber(src) //Agent card
+	modules += new /obj/item/weapon/tool_package(src) //Specialitiy
+	modules += new /obj/item/device/synth(src) //Melody rites
+	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
+
+
+/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
+	..()
+	var/obj/item/weapon/melee/baton/B = locate() in modules
+	if(B.charges < 10)
+		B.charges++
+	var/obj/item/device/hailer/H = locate() in modules
+	if(H.insults < 2)
+		H.insults++
+
 /obj/item/weapon/robot_module/science
 	name = "science robot module"
 
