@@ -564,7 +564,7 @@
 			if(target_turf && isturf(target_turf))
 				ghost_owner.abstract_move(target_turf)
 		if(NOTIFY_ORBIT)
-			ghost_owner.ManualFollow(ghost_owner.resolve_follow_target(target))
+			ghost_owner.ManualFollow(target)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 

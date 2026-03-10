@@ -25,7 +25,7 @@
 			if(poi == null)
 				. = TRUE
 				return
-			owner.ManualFollow(owner.resolve_follow_target(poi))
+			owner.ManualFollow(poi)
 			. = TRUE
 		if("refresh")
 			update_static_data(owner, ui)
@@ -70,7 +70,10 @@
 			continue
 
 		if(M.mind == null)
-			data["npcs"] += list(serialized)
+			if(istype(M, /mob/camera/Eye/ai))
+				data["alive"] += list(serialized)
+			else
+				data["npcs"] += list(serialized)
 			continue
 
 		data["alive"] += list(serialized)

@@ -34,7 +34,7 @@
 
 	// Things you might plausibly want to follow
 	if(istype(A, /atom/movable))
-		ManualFollow(resolve_follow_target(A))
+		ManualFollow(A)
 
 	// Otherwise jump
 	else
