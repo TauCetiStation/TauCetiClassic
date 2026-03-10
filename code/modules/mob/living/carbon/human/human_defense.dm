@@ -268,7 +268,7 @@
 			continue
 		BP.emplode(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-			if(IO.robotic == 0)
+			if(!IO.is_robotic())
 				continue
 			IO.emplode(severity)
 	..()
@@ -285,7 +285,7 @@
 	var/hit_area = BP.name
 
 	if(istype(I,/obj/item/weapon/card/emag))
-		if(!BP.is_robotic())
+		if(!BP.is_robotic_part())
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(BP.sabotaged)
@@ -328,7 +328,8 @@
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I)
+	var/impact_direction = get_impact_direction_from(user)
+	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I, impact_direction = impact_direction)
 
 	//Melee weapon embedded object code.
 	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())

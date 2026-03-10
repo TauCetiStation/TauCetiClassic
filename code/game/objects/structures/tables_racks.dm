@@ -25,6 +25,8 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	var/parts = /obj/item/weapon/table_parts
 	var/flipped = 0
 	var/flipable = TRUE
@@ -209,7 +211,7 @@
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 	return FALSE
@@ -367,6 +369,8 @@
 	parts = /obj/item/weapon/table_parts/glass
 	max_integrity = 10
 
+	hit_particle_type = /particles/tool/digging/glass
+
 /obj/structure/table/glass/atom_init()
 	. = ..()
 	AddComponent(/datum/component/clickplace, , CALLBACK(src, PROC_REF(slam)))
@@ -471,6 +475,8 @@
 	parts = /obj/item/weapon/table_parts/wood
 	max_integrity = 50
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
@@ -534,12 +540,12 @@
 		if(WT.use(0, user))
 			if(status == 2)
 				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>You have weakened \the [src].</span>")
 					src.status = 1
 			else
 				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
 					to_chat(user, "<span class='notice'>You have strengthened \the [src].</span>")
 					src.status = 2
 			return TRUE
@@ -549,7 +555,7 @@
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 
@@ -746,6 +752,8 @@
 	parts = /obj/item/weapon/table_parts/rglass
 	flipable = FALSE
 
+	hit_particle_type = /particles/tool/digging/glass
+
 /*
  * Racks
  */
@@ -763,6 +771,8 @@
 
 	max_integrity = 20
 	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/metal
 
 /obj/structure/rack/atom_init()
 	. = ..()

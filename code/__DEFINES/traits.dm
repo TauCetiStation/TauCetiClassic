@@ -156,6 +156,11 @@
 #define TRAIT_NERVOUS             "nervous"
 #define TRAIT_STRESS_EATER        "stresseater"
 #define TRAIT_MULTITASKING        "multitasking"
+#define TRAIT_CAVE_EXPLORER       "cave_explorer"
+#define TRAIT_SHIFTY              "shifty"
+#define TRAIT_ADAMANTIUM_SKELETON "adamantium_skeleton"
+#define TRAIT_FRAGILE_BONES       "fragile_bones"
+#define TRAIT_BAD_BACK            "bad_back"
 #define TRAIT_NATURECHILD         "child_of_nature"
 #define TRAIT_MUTE                "mute"
 #define TRAIT_STRONGMIND          "strong_mind"
@@ -230,6 +235,7 @@
 #define TRAIT_GLOWING_EYES        "glowing_eyes"
 // todo: this enables night vision filter, but we also need to set see_in_dark for it to work in the dark, need to rework or rename this trait
 #define TRAIT_NIGHT_EYES          "night_eyes"
+#define TRAIT_CYBER_NIGHT_EYES    "cyber_night_eyes"
 /// grayscale body and white hair, for changeling victims
 #define TRAIT_HUSK                "husk"
 /// no hair, scorched body

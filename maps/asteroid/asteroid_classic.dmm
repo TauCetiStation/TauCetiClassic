@@ -3234,7 +3234,6 @@
 "gG" = (
 /obj/structure/alien/weeds,
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
 	icon_state = "dark"

@@ -12,7 +12,8 @@
 #define ONESHOT  1
 #define DISABLED 0
 
-var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
+// Order is important. EVENT_LEVEL_FEATURE, EVENT_LEVEL_MUNDANE, EVENT_LEVEL_MODERATE, EVENT_LEVEL_MAJOR
+var/global/list/severity_to_string = list("RoundStart", "Mundane", "Moderate", "Major")
 
 /datum/event_container
 	var/severity = -1

@@ -4,6 +4,15 @@ var/global/list/online_shop_lots_hashed = list()
 
 var/global/online_shop_number = 0
 var/global/list/shop_categories = list("Еда" = 0, "Одежда" = 0, "Устройства" = 0, "Инструменты" = 0, "Ресурсы" = 0, "Наборы" = 0, "Разное" = 0)
+var/global/list/shop_category2color = list(
+		"Еда" = "orange",
+		"Одежда" = "green",
+		"Устройства" = "purple",
+		"Инструменты" = "red",
+		"Ресурсы" = "blue",
+		"Наборы" = "yellow",
+		// "Разное" = no colour,
+	)
 
 var/global/list/orders_and_offers = list()
 var/global/orders_and_offers_number = 0
@@ -110,6 +119,24 @@ var/global/online_shop_profits = 0
 		package.lot_lock_image = null
 		return
 
+/proc/create_onlineshop_item(obj/Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", market_price)
+
+	global.shop_categories[lot_category]++
+
+	Item.name = "Посылка номер: [global.online_shop_number]"
+	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
+
+	if(istype(Item, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/Package = Item
+		Package.lot_number = Lot.number
+	else
+		var/obj/item/smallDelivery/Package = Item
+		Package.lot_number = Lot.number
+
+	return Lot
+
 /proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination)
 	if(!Lot)
 		return FALSE
@@ -138,19 +165,9 @@ var/global/online_shop_profits = 0
 		if(istype(Console, /obj/machinery/computer/cargo/request))
 			continue
 
-		var/static/list/category2color = list(
-			"Еда" = "orange",
-			"Одежда" = "green",
-			"Устройства" = "purple",
-			"Инструменты" = "red",
-			"Ресурсы" = "blue",
-			"Наборы" = "yellow",
-			// "Разное" = no colour,
-		)
-
 		var/color_string = ""
-		if(category2color[Lot.category])
-			color_string = " ([category2color[Lot.category]])"
+		if(global.shop_category2color[Lot.category])
+			color_string = " ([global.shop_category2color[Lot.category]])"
 
 		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
 
@@ -208,3 +225,107 @@ var/global/online_shop_profits = 0
 /proc/add_order_and_offer(Name, Text)
 	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = Name, "description" = Text, "time" = worldtime2text())
 	global.orders_and_offers_number++
+
+
+
+/proc/get_item_shop_category(obj/target)
+	if(istype(target, /obj/item/weapon/reagent_containers/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage))
+		return "Наборы"
+	else if(istype(target, /obj/item/weapon))
+		return "Инструменты"
+	else if(istype(target, /obj/item/clothing))
+		return "Одежда"
+	else if(istype(target, /obj/item/device))
+		return "Устройства"
+	else if(istype(target, /obj/item/stack))
+		return "Ресурсы"
+	else
+		return "Разное"
+
+/proc/shop_object2package(obj/Item)
+	var/itemPixelX = Item.pixel_x
+	var/itemPixelY = Item.pixel_y
+
+	var/obj/Package = Item.try_wrap_up()
+	if(!Package)
+		return
+
+	if(istype(Package, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/P = Package
+		P.lot_lock_image = image('icons/obj/package_wrap.dmi', "[P.icon_state]-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
+	else
+		var/obj/structure/bigDelivery/P = Package
+		P.lot_lock_image = image('icons/obj/package_wrap.dmi', "[P.icon_state]-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
+
+	Package.modify_max_integrity(75)
+	Package.atom_fix()
+	Package.damage_deflection = 25
+
+	Item = Package
+
+	Item.pixel_x = itemPixelX
+	Item.pixel_y = itemPixelY
+
+	return Item
+
+/proc/object2onlineshop_package(obj/Item, forceColor = null, hideIcon = FALSE)
+	var/lot_name = Item.name
+	var/lot_desc = Item.price_tag["description"]
+	var/lot_price = Item.price_tag["price"]
+	var/lot_category = Item.price_tag["category"]
+	var/lot_account = Item.price_tag["account"]
+	var/item_icon
+	if(!hideIcon)
+		item_icon = bicon(Item)
+
+	Item = shop_object2package(Item)
+
+	if(forceColor)
+		Item.color = forceColor
+	else if(global.shop_category2color[lot_category])
+		Item.color = global.shop_category2color[lot_category]
+
+	if(hideIcon)
+		item_icon = bicon(Item)
+
+	create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+
+	return Item
+
+var/global/list/random_gruztorg_items = list()
+ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_gruztorg_items)
+/obj/random_shop_item
+	name = "Random Gruztorg item"
+	desc = "Случайный товар для грузторга."
+	icon = 'icons/obj/package_wrap.dmi'
+	icon_state = "deliverycrateSmall"
+	flags = ABSTRACT
+
+/obj/random_shop_item/proc/generate_shop_item()
+	var/item_path = PATH_OR_RANDOM_PATH(/obj/random/trader_product_safer)
+
+	if(!item_path)
+		qdel(src)
+		return
+
+	var/obj/item/Item = new item_path(loc)
+
+	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
+	var/new_price = market_price ? round(market_price * pick(1.1, 1.2, 1.3)) : 50
+
+	Item.add_price_tag(Item.desc, new_price, get_item_shop_category(Item), global.cargo_account.account_number)
+
+	Item = object2onlineshop_package(Item)
+
+	Item.pixel_x = rand(-10, 10)
+	Item.pixel_y = rand(-10, 10)
+
+	qdel(src)

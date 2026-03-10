@@ -33,8 +33,8 @@
 	owner.stunned = TRUE
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	owner.drop_from_inventory(owner.l_hand)
-	owner.drop_from_inventory(owner.r_hand)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.stunned = FALSE

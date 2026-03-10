@@ -198,7 +198,7 @@
 
 			if(!H.shoes)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.is_robotic())
+				if(BP.is_robotic_part())
 					return
 				BP.take_damage(5, 0)
 				if(!HAS_TRAIT(H, TRAIT_NO_PAIN))

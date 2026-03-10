@@ -972,3 +972,55 @@
 	construction_time = 50
 	starts_unlocked = TRUE
 	category = list("Misc")
+
+//Organ
+
+/datum/design/cybernetic_heart
+	name = "Cybernetic heart"
+	id = "cybernetic_heart"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/heart/cybernetic
+	materials = list(MAT_METAL=2000, MAT_GLASS=500)
+	construction_time = 50
+	starts_unlocked = TRUE
+	category = list("Organs")
+
+/datum/design/cybernetic_lungs
+	name = "Cybernetic lungs"
+	id = "cybernetic_lungs"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/lungs/cybernetic
+	materials = list(MAT_METAL=2000, MAT_GLASS=500)
+	construction_time = 50
+	starts_unlocked = TRUE
+	category = list("Organs")
+
+/datum/design/cybernetic_liver
+	name = "Cybernetic liver"
+	id = "cybernetic_liver"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/liver/cybernetic
+	materials = list(MAT_METAL=2000, MAT_GLASS=500)
+	construction_time = 50
+	starts_unlocked = TRUE
+	category = list("Organs")
+
+/datum/design/cybernetic_kidneys
+	name = "Cybernetic kidneys"
+	id = "cybernetic_kidneys"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/kidneys/cybernetic
+	materials = list(MAT_METAL=2000, MAT_GLASS=500)
+	construction_time = 50
+	starts_unlocked = TRUE
+	category = list("Organs")
+
+/datum/design/cybernetic_eyes
+	name = "Cybernetic eyes"
+	id = "cybernetic_eyes"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/eyes/cybernetic
+	materials = list(MAT_METAL=2000, MAT_GLASS=500)
+	construction_time = 50
+	starts_unlocked = TRUE
+	category = list("Organs")

@@ -107,9 +107,7 @@
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
-				if(istype(W, /obj/item/device/detective_scanner))
-					return
-				else if(isscrewing(W))
+				if(isscrewing(W))
 					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
@@ -481,9 +479,6 @@
 
 
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user)
-
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
 	return attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user)
@@ -492,6 +487,7 @@
 
 	use_power(5)
 	user.SetNextMove(CLICK_CD_INTERACT)
+	add_fingerprint(user)
 
 	active = 1
 	icon_state = "launcheract"

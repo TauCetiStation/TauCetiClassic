@@ -41,7 +41,7 @@
 			<B>Fire Damage:</B> [ceil(victim.getFireLoss())]<BR>
 			<B>Suffocation Damage:</B> [ceil(victim.getOxyLoss())]<BR>
 			<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
-			<B>Heartbeat rate:</B> [victim.get_pulse(GETPULSE_TOOL)]<BR>
+			<B>Heartbeat rate:</B> [victim.get_pulse_number(GETPULSE_TOOL)]<BR>
 			"}
 	else
 		src.victim = null
