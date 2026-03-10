@@ -157,7 +157,7 @@ var/global/online_shop_referrer_revenue = 0.50
 
 	if(referrer_account)
 		Lot.referrer_account = referrer_account
-		Lot.referrer_profit = Lot.get_referrer_revenue()
+		Lot.referrer_revenue = Lot.get_referrer_revenue()
 
 	var/datum/money_account/MA = get_account(account)
 	if(!MA)
