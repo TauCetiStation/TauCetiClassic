@@ -37,9 +37,9 @@ var/global/online_shop_referrer_revenue = 0.50
 	var/lot_item_ref = ""
 	// How much would exporting this item via cargo shuttle pay up.
 	var/market_price = 0
-	// Referrer that makes profits from advertisements.
+	// Referrer that makes revenue from advertisements.
 	var/referrer_account = null
-	var/referrer_profit = 0
+	var/referrer_revenue = 0
 
 /datum/shop_lot/New(name, description, price, category, account, icon, lot_item_ref, market_price)
 	global.online_shop_number++
@@ -242,8 +242,8 @@ var/global/online_shop_referrer_revenue = 0.50
 	if(Lot.referrer_account)
 		var/datum/money_account/referrer_acc = get_account(Lot.referrer_account)
 		if(referrer_acc)
-			charge_to_account(referrer_acc.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, Lot.referrer_profit)
-			charge_to_account(global.cargo_account.account_number, referrer_acc.account_number, "Выплата за покупку по реферальной ссылке в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, -Lot.referrer_profit)
+			charge_to_account(referrer_acc.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, Lot.referrer_revenue)
+			charge_to_account(global.cargo_account.account_number, referrer_acc.account_number, "Выплата за покупку по реферальной ссылке в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, -Lot.referrer_revenue)
 
 	return TRUE
 
