@@ -7,3 +7,6 @@
 #define STARTING_MONEY_MULTIPLYER 3
 #define STARTING_MONEY_VARIANCE 5 //in percents
 #define STARTING_MONEY_MINIMUM 50
+
+#define MAP_CARGO_ACCOUNT_NUMBER "Map_Cargo_Account_Number"
+#define MAP_STATION_ACCOUNT_NUMBER "Map_Cargo_Account_Number"

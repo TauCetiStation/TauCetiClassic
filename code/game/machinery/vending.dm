@@ -69,7 +69,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/load = 0
 	var/max_load = 0
 
-	var/cargo_connected = FALSE
 	var/seller_account_number = null
 
 
@@ -98,8 +97,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	update_wires_check()
 	update_unstable_product()
 
-	if(is_station_level(z))
-		cargo_connected = TRUE
+	if(!seller_account_number && is_station_level(z))
+		seller_account_number = MAP_CARGO_ACCOUNT_NUMBER
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -204,13 +203,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			camera.lens = W
 			return
 
-		if(!cargo_connected && (istype(W, /obj/item/device/pda) && W.GetID()))
+		if(!seller_account_number && (istype(W, /obj/item/device/pda) && W.GetID()))
 			var/obj/item/weapon/card/Card = W.GetID()
 			seller_account_number = Card.associated_account_number
 			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
 			return
 
-		if(!cargo_connected && istype(W, /obj/item/weapon/card))
+		if(!seller_account_number && istype(W, /obj/item/weapon/card))
 			var/obj/item/weapon/card/Card = W
 			seller_account_number = Card.associated_account_number
 			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
@@ -339,7 +338,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 							//transfer the money
 							var/tax = 0
-							if(cargo_connected)
+							if(S in department_accounts)
 								tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
 								charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
@@ -381,7 +380,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/vendorname = name  //import the machine's name
 
 	var/ad = ""
-	if(cargo_connected && global.online_shop_ads && check_active_cargonauts())
+	if((seller_account_number == global.cargo_account.account_number) && global.online_shop_ads && check_active_cargonauts())
 		ad += get_onlineshop_advertisement(src)
 
 	if(currently_vending)
@@ -503,7 +502,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		return
 
 	else if (href_list["pda_onlineshop"])
-		if(!cargo_connected)
+		if(!(seller_account_number == global.cargo_account.account_number))
 			return
 
 		if(!usr)

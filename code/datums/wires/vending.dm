@@ -31,7 +31,7 @@ var/global/const/VENDING_WIRE_CARGO		 = 32
 	. += "The green light is [V.extended_inventory ? "on" : "off"]."
 	. += "The [V.scan_id ? "purple" : "yellow"] light is on."
 	. += "The blue light is [V.shut_up ? "off" : "on"]."
-	. += "The purple light is [V.cargo_connected ? "blinking" : "off"]."
+	. += "The purple light is [(V.seller_account_number == global.cargo_account.account_number) ? "blinking" : "off"]."
 
 /datum/wires/vending/update_cut(index, mended, mob/user)
 	var/obj/machinery/vending/V = holder
@@ -58,8 +58,7 @@ var/global/const/VENDING_WIRE_CARGO		 = 32
 			V.update_wires_check()
 
 		if(VENDING_WIRE_CARGO)
-			V.cargo_connected = !V.cargo_connected
-			if(V.cargo_connected)
+			if(V.seller_account_number != global.cargo_account.account_number)
 				V.seller_account_number = global.cargo_account.account_number
 			else
 				V.seller_account_number = null
@@ -86,8 +85,7 @@ var/global/const/VENDING_WIRE_CARGO		 = 32
 			V.update_wires_check()
 
 		if(VENDING_WIRE_CARGO)
-			V.cargo_connected = !V.cargo_connected
-			if(V.cargo_connected)
+			if(V.seller_account_number != global.cargo_account.account_number)
 				V.seller_account_number = global.cargo_account.account_number
 			else
 				V.seller_account_number = null

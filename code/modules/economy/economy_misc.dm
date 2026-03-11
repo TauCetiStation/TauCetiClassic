@@ -113,8 +113,7 @@ var/global/initial_station_money = 7500
 		if(D.station_account)
 			create_department_account(D.title)
 
-	create_department_account("Vendor")
-	vendor_account = department_accounts["Vendor"]
+	vendor_account = create_account("Vendor", 1000, age = 135)
 
 	// todo: cargo department exists only in accounts, wold be better to separate them already
 	create_department_account("Cargo")
@@ -219,7 +218,12 @@ var/global/initial_station_money = 7500
 
 /proc/setup_vending()
 	for(var/obj/machinery/vending/Vend in global.vending_machines)
-		if(Vend.cargo_connected)
-			Vend.seller_account_number = global.cargo_account.account_number
-		else
-			Vend.seller_account_number = global.vendor_account.account_number
+		switch(Vend.seller_account_number)
+			if(MAP_CARGO_ACCOUNT_NUMBER)
+				Vend.seller_account_number = global.cargo_account.account_number
+
+			if(MAP_STATION_ACCOUNT_NUMBER)
+				Vend.seller_account_number = global.station_account.account_number
+
+			else
+				Vend.seller_account_number = global.vendor_account.account_number
