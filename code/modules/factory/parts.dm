@@ -118,6 +118,8 @@
 	paper.updateinfolinks()
 	paper.update_icon()
 
+	qdel(Pen)
+
 /obj/item/manufacturing_parts/wash_act()
 	var/iterations = rand(0, 2)
 	if(iterations)
@@ -125,7 +127,7 @@
 			var/dismantle_type = pick(dismantle_types)
 			new dismantle_type(loc)
 
-	for(var/i = 1; i <= (5 - iterations); i++)
+	for(var/i = 1; i <= (3 - iterations); i++)
 		new /obj/item/weapon/scrap_lump(loc)
 
 	qdel(src)
