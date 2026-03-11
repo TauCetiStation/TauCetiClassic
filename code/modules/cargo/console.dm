@@ -239,9 +239,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 
 		global.online_shop_referrer_revenue = referrer_revenue / 100
 
-	if(href_list["online_shop_ads"])
-		global.online_shop_ads = !global.online_shop_ads
-
 	if(href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
 		for(var/S in SSshuttle.shoppinglist)
