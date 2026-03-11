@@ -220,6 +220,6 @@ var/global/initial_station_money = 7500
 /proc/setup_vending()
 	for(var/obj/machinery/vending/Vend in global.vending_machines)
 		if(Vend.cargo_connected)
-			Vend.seller_account = global.cargo_account.account_number
+			Vend.seller_account_number = global.cargo_account.account_number
 		else
-			Vend.seller_account = global.vendor_account.account_number
+			Vend.seller_account_number = global.vendor_account.account_number

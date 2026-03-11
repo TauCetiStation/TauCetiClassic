@@ -70,7 +70,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/max_load = 0
 
 	var/cargo_connected = FALSE
-	var/seller_account = 0
+	var/seller_account_number = null
 
 
 /obj/machinery/vending/atom_init()
@@ -98,7 +98,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	update_wires_check()
 	update_unstable_product()
 
-	if(is_station_level(src.z))
+	if(is_station_level(z))
 		cargo_connected = TRUE
 
 /obj/machinery/vending/Destroy()
@@ -206,13 +206,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 		if(!cargo_connected && (istype(W, /obj/item/device/pda) && W.GetID()))
 			var/obj/item/weapon/card/Card = W.GetID()
-			seller_account = Card.associated_account_number
+			seller_account_number = Card.associated_account_number
 			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
 			return
 
 		if(!cargo_connected && istype(W, /obj/item/weapon/card))
 			var/obj/item/weapon/card/Card = W
-			seller_account = Card.associated_account_number
+			seller_account_number = Card.associated_account_number
 			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
 			return
 
@@ -326,9 +326,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		playsound(src, 'sound/machines/use_card.ogg', VOL_EFFECTS_MASTER)
 		if(check_accounts)
-			if(seller_account)
+			if(seller_account_number)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				var/datum/money_account/S = get_account(seller_account)
+				var/datum/money_account/S = get_account(seller_account_number)
 				if(D && S)
 					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
 					if(usr.incapacitated() || !Adjacent(usr))
@@ -380,7 +380,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	var/vendorname = name  //import the machine's name
 
-	var/ad
+	var/ad = ""
 	if(cargo_connected && global.online_shop_ads && check_active_cargonauts())
 		ad += get_onlineshop_advertisement(src)
 
@@ -531,11 +531,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(!PDA)
 			return
 
-		PDA.category_shop_page = 1
-		PDA.mode = 8
-		PDA.referrer_account = null
-
-		PDA.attack_self(usr)
+		PDA.open_shop_page(usr, null)
 
 	updateUsrDialog()
 
