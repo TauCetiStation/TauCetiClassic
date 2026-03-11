@@ -37,9 +37,9 @@ var/global/online_shop_referrer_revenue = 0.50
 	var/lot_item_ref = ""
 	// How much would exporting this item via cargo shuttle pay up.
 	var/market_price = 0
-	// Referrer that makes profits from advertisements.
+	// Referrer that makes revenue from advertisements.
 	var/referrer_account = null
-	var/referrer_profit = 0
+	var/referrer_revenue = 0
 
 /datum/shop_lot/New(name, description, price, category, account, icon, lot_item_ref, market_price)
 	global.online_shop_number++
@@ -157,7 +157,7 @@ var/global/online_shop_referrer_revenue = 0.50
 
 	if(referrer_account)
 		Lot.referrer_account = referrer_account
-		Lot.referrer_profit = Lot.get_referrer_revenue()
+		Lot.referrer_revenue = Lot.get_referrer_revenue()
 
 	var/datum/money_account/MA = get_account(account)
 	if(!MA)
@@ -176,8 +176,8 @@ var/global/online_shop_referrer_revenue = 0.50
 
 	global.shop_categories[Lot.category]--
 
-	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
-	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
+	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, -delivery_cost)
+	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, delivery_cost)
 
 	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
 		if(istype(Console, /obj/machinery/computer/cargo/request))
@@ -233,17 +233,17 @@ var/global/online_shop_referrer_revenue = 0.50
 	Lot.mark_delivered()
 
 	if(global.online_shop_discount)
-		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
-		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, Lot.price - postpayment)
+		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, -(Lot.price - postpayment))
 
-	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
-	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
+	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, -postpayment)
+	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, postpayment)
 
 	if(Lot.referrer_account)
 		var/datum/money_account/referrer_acc = get_account(Lot.referrer_account)
 		if(referrer_acc)
-			charge_to_account(referrer_acc.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.referrer_profit)
-			charge_to_account(global.cargo_account.account_number, referrer_acc.account_number, "Выплата за покупку по реферальной ссылке в [CARGOSHOPNAME]", CARGOSHOPNAME, -Lot.referrer_profit)
+			charge_to_account(referrer_acc.account_number, global.cargo_account.account_number, "Выплата за покупку по реферальной ссылке в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, Lot.referrer_revenue)
+			charge_to_account(global.cargo_account.account_number, referrer_acc.account_number, "Выплата за покупку по реферальной ссылке в магазине '[CARGOSHOPNAME]'", CARGOSHOPNAME, -Lot.referrer_revenue)
 
 	return TRUE
 
@@ -367,16 +367,21 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 
 	return pick(hashed_lots)
 
-/proc/get_onlineshop_advertisement(atom/source, referrer_account = null)
+/proc/get_onlineshop_advertisement(atom/source, referrer_account = null, no_link = FALSE)
 	var/datum/shop_lot/lot = get_random_unique_onlineshop_lot()
 	if(!lot)
 		return
 
 	var/data = "<div class='Section'><center><table class='shop' style='width: 100%;'><tbody>"
-	data += "<tr><th colspan='4' class='cargo'>Успейте купить [lot.name] <B>в ГрузТорге!</B></th></tr>"
+	data += "<tr><th colspan='4' class='cargo'>Успейте купить [lot.name] <B>в магазине '[CARGOSHOPNAME]'!</B></th></tr>"
 	data += "<tr><td rowspan='2'>[lot.item_icon]<br></td>"
 	data += "<td colspan='2'><B>Цена: </B><span class='good'><SMALL><I>[lot.get_price_string()]$</I></SMALL></span></td>"
-	data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=1;referrer_account=[referrer_account]' style='float:right;'>ГрузТорг в КПК</a></td>"
+
+	if(no_link)
+		data += "<td>'[CARGOSHOPNAME]' в КПК</td>"
+	else
+		data += "<td><a href='byond://?src=\ref[source];pda_onlineshop=1;referrer_account=[referrer_account]' style='float:right;'>'[CARGOSHOPNAME]' в КПК</a></td>"
+
 	data += "<tr><td colspan='3'><SMALL><I>[lot.description]</I></SMALL><br></td></tr>"
 	data += "</tbody></table></center></div><br>"
 

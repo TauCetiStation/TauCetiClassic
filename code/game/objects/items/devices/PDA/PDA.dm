@@ -1273,6 +1273,7 @@
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
 									if(order_onlineshop_item(owner, owner_account, NewLot, T, referrer_account = referrer_account))
 										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
+										break
 									else
 										to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
