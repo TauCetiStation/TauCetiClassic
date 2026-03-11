@@ -1,3 +1,5 @@
+#define VENDING_WINDOW_ID "window=vending"
+
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
@@ -421,7 +423,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.get_money() : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
-	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
+	var/datum/browser/popup = new(user, VENDING_WINDOW_ID, "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat)
 	popup.open()
@@ -501,7 +503,28 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		return
 
 	else if (href_list["pda_onlineshop"])
-		if(!usr || issilicon(usr) || isobserver(usr) || usr.incapacitated() || !Adjacent(usr))
+		if(!cargo_connected)
+			return
+
+		if(!usr)
+			return
+
+		if(issilicon(usr))
+			return
+
+		if(isobserver(usr))
+			return
+
+		if(usr.incapacitated())
+			return
+
+		if(!Adjacent(usr))
+			return
+
+		if(!usr.client)
+			return
+
+		if(!LAZYACCESS(usr.client.browsers, VENDING_WINDOW_ID))
 			return
 
 		var/obj/item/device/pda/PDA = locate() in usr
@@ -510,10 +533,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 		PDA.category_shop_page = 1
 		PDA.mode = 8
-
-		var/referrer_account = href_list["referrer_account"]
-		if(referrer_account)
-			PDA.referrer_account = referrer_account
+		PDA.referrer_account = null
 
 		PDA.attack_self(usr)
 
