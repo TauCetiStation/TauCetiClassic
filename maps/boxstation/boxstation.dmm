@@ -11339,10 +11339,12 @@
 "asO" = (
 /obj/machinery/vending/holy,
 /obj/structure/fence/metal{
-	dir = 4
+	dir = 4;
+	color = "#996633"
 	},
 /obj/structure/fence/metal{
-	dir = 1
+	dir = 1;
+	color = "#996633"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -13896,9 +13898,12 @@
 "axz" = (
 /obj/structure/table/woodentable/fancy,
 /obj/structure/fence/metal{
-	dir = 8
+	dir = 8;
+	color = "#996633"
 	},
-/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	color = "#996633"
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "axA" = (
@@ -15132,10 +15137,12 @@
 "azS" = (
 /obj/machinery/constructable_frame/machine_frame,
 /obj/structure/fence/metal{
-	dir = 8
+	dir = 8;
+	color = "#996633"
 	},
 /obj/structure/fence/metal{
-	dir = 1
+	dir = 1;
+	color = "#996633"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -39738,9 +39745,12 @@
 "bsw" = (
 /obj/structure/table/woodentable/fancy,
 /obj/structure/fence/metal{
-	dir = 4
+	dir = 4;
+	color = "#996633"
 	},
-/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	color = "#996633"
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "bsx" = (
@@ -70911,7 +70921,7 @@
 	pixel_x = -1;
 	pixel_y = 6
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -86028,7 +86038,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
