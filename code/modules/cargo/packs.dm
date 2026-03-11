@@ -2152,8 +2152,19 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 //------------------PRODUCTION------------------
 //----------------------------------------------
 
+/datum/supply_pack/production/fill(obj/structure/closet/crate/C)
+	. = ..()
+
+	for(var/obj/item/I in C.contents)
+		if(!istype(I, /obj/item/manufacturing_parts))
+			continue
+
+		var/obj/item/manufacturing_parts/parts = I
+		parts.generate_instructions()
+		return
+
 //Wooden
-/datum/supply_pack/production_woodenclock
+/datum/supply_pack/production/woodenclock
 	name = "Manufacturing parts: Wooden clock"
 	contains = list(
 		/obj/item/manufacturing_parts/wood/woodenclock,
@@ -2162,10 +2173,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/wood/woodenclock,
 		/obj/item/manufacturing_parts/wood/woodenclock,
 	)
-	additional_costs = 100
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_cabinet
+/datum/supply_pack/production/cabinet
 	name = "Manufacturing parts: Cabinet"
 	contains = list(
 		/obj/item/manufacturing_parts/wood/cabinet,
@@ -2174,12 +2185,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/wood/cabinet,
 		/obj/item/manufacturing_parts/wood/cabinet,
 	)
-	additional_costs = 150
+	additional_costs = 0
 	group = "Production"
 
 
 //Metal
-/datum/supply_pack/production_handcuffs
+/datum/supply_pack/production/handcuffs
 	name = "Manufacturing parts: Handcuffs"
 	contains = list(
 		/obj/item/manufacturing_parts/metal/handcuffs,
@@ -2188,11 +2199,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/metal/handcuffs,
 		/obj/item/manufacturing_parts/metal/handcuffs,
 	)
-	additional_costs = 200
+	additional_costs = 0
 	group = "Production"
 
 
-/datum/supply_pack/production_splint
+/datum/supply_pack/production/splint
 	name = "Manufacturing parts: Splint"
 	contains = list(
 		/obj/item/manufacturing_parts/metal/splint,
@@ -2201,10 +2212,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/metal/splint,
 		/obj/item/manufacturing_parts/metal/splint,
 	)
-	additional_costs = 150
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_beartrap
+/datum/supply_pack/production/beartrap
 	name = "Manufacturing parts: Beartrap"
 	contains = list(
 		/obj/item/manufacturing_parts/metal/beartrap,
@@ -2213,10 +2224,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/metal/beartrap,
 		/obj/item/manufacturing_parts/metal/beartrap,
 	)
-	additional_costs = 250
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_flora
+/datum/supply_pack/production/flora
 	name = "Manufacturing parts: Flora"
 	contains = list(
 		/obj/item/manufacturing_parts/metal/flora,
@@ -2225,10 +2236,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/metal/flora,
 		/obj/item/manufacturing_parts/metal/flora,
 	)
-	additional_costs = 150
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_toolbox
+/datum/supply_pack/production/toolbox
 	name = "Manufacturing parts: Toolbox"
 	contains = list(
 		/obj/item/manufacturing_parts/metal/toolbox,
@@ -2237,22 +2248,22 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/metal/toolbox,
 		/obj/item/manufacturing_parts/metal/toolbox,
 	)
-	additional_costs = 150
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_welding_gogles
-	name = "Manufacturing parts: Welding gogles"
+/datum/supply_pack/production/welding_goggles
+	name = "Manufacturing parts: Welding goggles"
 	contains = list(
-		/obj/item/manufacturing_parts/metal/welding_gogles,
-		/obj/item/manufacturing_parts/metal/welding_gogles,
-		/obj/item/manufacturing_parts/metal/welding_gogles,
-		/obj/item/manufacturing_parts/metal/welding_gogles,
-		/obj/item/manufacturing_parts/metal/welding_gogles,
+		/obj/item/manufacturing_parts/metal/welding_goggles,
+		/obj/item/manufacturing_parts/metal/welding_goggles,
+		/obj/item/manufacturing_parts/metal/welding_goggles,
+		/obj/item/manufacturing_parts/metal/welding_goggles,
+		/obj/item/manufacturing_parts/metal/welding_goggles,
 	)
-	additional_costs = 100
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_vest
+/datum/supply_pack/production/vest
 	name = "Manufacturing parts: Vest"
 	contains = list(
 		/obj/item/manufacturing_parts/metal/vest,
@@ -2261,12 +2272,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/metal/vest,
 		/obj/item/manufacturing_parts/metal/vest,
 	)
-	additional_costs = 300
+	additional_costs = 0
 	group = "Production"
 
 
 //Electric
-/datum/supply_pack/production_pda
+/datum/supply_pack/production/pda
 	name = "Manufacturing parts: Pda"
 	contains = list(
 		/obj/item/manufacturing_parts/electric/pda,
@@ -2275,10 +2286,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/electric/pda,
 		/obj/item/manufacturing_parts/electric/pda,
 	)
-	additional_costs = 200
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_flashlight
+/datum/supply_pack/production/flashlight
 	name = "Manufacturing parts: Flashlight"
 	contains = list(
 		/obj/item/manufacturing_parts/electric/flashlight,
@@ -2287,10 +2298,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/electric/flashlight,
 		/obj/item/manufacturing_parts/electric/flashlight,
 	)
-	additional_costs = 50
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_modkit
+/datum/supply_pack/production/modkit
 	name = "Manufacturing parts: Modkit"
 	contains = list(
 		/obj/item/manufacturing_parts/electric/modkit,
@@ -2299,10 +2310,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/electric/modkit,
 		/obj/item/manufacturing_parts/electric/modkit,
 	)
-	additional_costs = 300
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_occult
+/datum/supply_pack/production/occult
 	name = "Manufacturing parts: Occult"
 	contains = list(
 		/obj/item/manufacturing_parts/electric/occult,
@@ -2311,10 +2322,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/electric/occult,
 		/obj/item/manufacturing_parts/electric/occult,
 	)
-	additional_costs = 100
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_flash
+/datum/supply_pack/production/flash
 	name = "Manufacturing parts: Flash"
 	contains = list(
 		/obj/item/manufacturing_parts/electric/flash,
@@ -2323,10 +2334,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/electric/flash,
 		/obj/item/manufacturing_parts/electric/flash,
 	)
-	additional_costs = 200
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_instrument
+/datum/supply_pack/production/instrument
 	name = "Manufacturing parts: Instrument"
 	contains = list(
 		/obj/item/manufacturing_parts/electric/instrument,
@@ -2335,11 +2346,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/electric/instrument,
 		/obj/item/manufacturing_parts/electric/instrument,
 	)
-	additional_costs = 300
+	additional_costs = 0
 	group = "Production"
 
 //Clothing
-/datum/supply_pack/production_insulated_gloves
+/datum/supply_pack/production/insulated_gloves
 	name = "Manufacturing parts: Insulated gloves"
 	contains = list(
 		/obj/item/manufacturing_parts/cloth/insulated_gloves,
@@ -2348,10 +2359,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/cloth/insulated_gloves,
 		/obj/item/manufacturing_parts/cloth/insulated_gloves,
 	)
-	additional_costs = 200
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_spacesuit
+/datum/supply_pack/production/spacesuit
 	name = "Manufacturing parts: Spacesuit"
 	contains = list(
 		/obj/item/manufacturing_parts/cloth/spacesuit,
@@ -2360,10 +2371,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/cloth/spacesuit,
 		/obj/item/manufacturing_parts/cloth/spacesuit,
 	)
-	additional_costs = 150
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_baseball
+/datum/supply_pack/production/baseball
 	name = "Manufacturing parts: Baseball"
 	contains = list(
 		/obj/item/manufacturing_parts/cloth/baseball,
@@ -2372,10 +2383,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/cloth/baseball,
 		/obj/item/manufacturing_parts/cloth/baseball,
 	)
-	additional_costs = 50
+	additional_costs = 0
 	group = "Production"
 
-/datum/supply_pack/production_carpet
+/datum/supply_pack/production/carpet
 	name = "Manufacturing parts: Carpet"
 	contains = list(
 		/obj/item/manufacturing_parts/cloth/carpet,
@@ -2384,5 +2395,5 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/manufacturing_parts/cloth/carpet,
 		/obj/item/manufacturing_parts/cloth/carpet,
 	)
-	additional_costs = 50
+	additional_costs = 0
 	group = "Production"

@@ -5,3 +5,5 @@
 
 // Multiplier to cost of any pack by default.
 #define CARGO_DEFAULT_OVERPRICE 1.1
+
+#define CARGO_FACTORY_MARGIN 0.5

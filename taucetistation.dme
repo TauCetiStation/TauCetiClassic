@@ -1543,6 +1543,7 @@
 #include "code\modules\cargo\shop_market_monitoring.dm"
 #include "code\modules\cargo\supplyshuttle.dm"
 #include "code\modules\cargo\vending_console.dm"
+#include "code\modules\cargo\exports\factory.dm"
 #include "code\modules\cargo\exports\gear.dm"
 #include "code\modules\cargo\exports\grown.dm"
 #include "code\modules\cargo\exports\large_objects.dm"

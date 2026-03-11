@@ -195,3 +195,8 @@
 	cost = 100
 	unit_name = "woodenclock"
 	export_types = list(/obj/item/woodenclock)
+
+/datum/export/modkit
+	cost = 150
+	unit_name = "modkit"
+	export_types = list(/obj/item/device/modkit)

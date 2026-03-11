@@ -11,6 +11,8 @@
 
 	var/product_type
 
+	var/dismantle_types = list()
+
 /obj/item/manufacturing_parts/atom_init(mapload)
 	. = ..()
 
@@ -30,49 +32,58 @@
 		return
 
 	switch(steps[step])
-		if("cut")
+		if(QUALITY_CUTTING)
 			if(!iscutter(I))
 				return
 			if(!I.use_tool(src, user, 30, volume = 75, quality = QUALITY_CUTTING))
 				return
 
-		if("screw")
+		if(QUALITY_SCREWING)
 			if(!isscrewing(I))
 				return
 			if(!I.use_tool(src, user, 30, volume = 75, quality = QUALITY_SCREWING))
 				return
 
-		if("wrench")
+		if(QUALITY_WRENCHING)
 			if(!iswrenching(I))
 				return
 			if(!I.use_tool(src, user, 30, volume = 75, quality = QUALITY_WRENCHING))
 				return
 
-		if("weld")
+		if(QUALITY_WELDING)
 			if(!iswelding(I))
 				return
 			if(!I.use_tool(src, user, 30, volume = 75, quality = QUALITY_WELDING))
 				return
 
-		if("coil")
+		if(QUALITY_COILING)
 			if(!iscoil(I))
 				return
-			if(!I.use_tool(src, user, 30, amount = 1, volume = 75))
+			if(!I.use_tool(src, user, 30, amount = 1, volume = 75, quality = QUALITY_COILING))
 				return
 
-		if("pulse")
+		if(QUALITY_PULSING)
 			if(!ispulsing(I))
 				return
 			if(!I.use_tool(src, user, 30, volume = 75, quality = QUALITY_PULSING))
 				return
 
-		if("sew")
+		if(QUALITY_SEWING)
 			if(!issewing(I))
 				return
-			if(!I.use_tool(src, user, 30, amount = 1, volume = 75))
+			if(!I.use_tool(src, user, 30, amount = 1, volume = 75, quality = QUALITY_SEWING))
 				return
 		else
 			return
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.get_bodypart(BP_ACTIVE_ARM)
+		if(!BP)
+			return
+
+		BP.adjust_pumped(1, 15)
+
 
 	step++
 	if(step > steps.len)
@@ -91,22 +102,58 @@
 
 	qdel(src)
 
+/obj/item/manufacturing_parts/proc/generate_instructions()
+	var/obj/item/weapon/paper/paper = new(loc)
+	var/obj/item/weapon/pen/Pen = new
+	paper.name = "инструкция по сборке"
+
+	var/dat = @"[center][large][b]Порядок сборки:[/b][/large][/center][br]"
+	dat += @"[list]"
+	for(var/manufacture_step in steps)
+		dat += @"[*]"
+		dat += "[manufacture_step]"
+	dat += @"[/list]"
+
+	paper.info = paper.parsepencode(dat, Pen)
+	paper.updateinfolinks()
+	paper.update_icon()
+
+/obj/item/manufacturing_parts/wash_act()
+	var/iterations = rand(0, 2)
+	if(iterations)
+		for(var/i = 1; i <= iterations; i++)
+			var/dismantle_type = pick(dismantle_types)
+			new dismantle_type(loc)
+
+	for(var/i = 1; i <= (5 - iterations); i++)
+		new /obj/item/weapon/scrap_lump(loc)
+
+	qdel(src)
+
 /obj/item/manufacturing_parts/wood
-	steps = list("cut", "screw")
+	steps = list(QUALITY_CUTTING, QUALITY_SCREWING)
 
 	parts_state = "wood"
 
+	dismantle_types = list(/obj/item/stack/sheet/wood, /obj/item/weapon/table_parts/wood, /obj/item/stack/tile/wood, /obj/item/weapon/grown/log, /obj/random/meds/medical_pills)
+
 /obj/item/manufacturing_parts/metal
-	steps = list("cut", "weld", "wrench")
+	steps = list(QUALITY_CUTTING, QUALITY_WELDING, QUALITY_WRENCHING)
 
 	parts_state = "metal"
 
+	dismantle_types = list(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/plasteel, /obj/item/stack/rods, /obj/item/stack/sheet/mineral/plastic, /obj/random/tools/tech_supply)
+
 /obj/item/manufacturing_parts/electric
-	steps = list("coil", "weld", "pulse", "screw")
+	steps = list(QUALITY_COILING, QUALITY_WELDING, QUALITY_PULSING, QUALITY_SCREWING)
 
 	parts_state = "electric"
 
+	dismantle_types = list(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/mineral/plastic, /obj/item/stack/sheet/mineral/gold, /obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/platinum, /obj/random/science/science_supply)
+
 /obj/item/manufacturing_parts/cloth
-	steps = list("cut", "sew", "sew", "sew")
+	steps = list(QUALITY_CUTTING, QUALITY_SEWING, QUALITY_SEWING, QUALITY_SEWING)
 
 	parts_state = "cloth"
+
+	dismantle_types = list(/obj/item/stack/sheet/cloth, /obj/item/stack/sheet/leather, /obj/random/cloth/shittysuit)

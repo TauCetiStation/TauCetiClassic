@@ -22,7 +22,7 @@
 /obj/item/manufacturing_parts/metal/toolbox
 	product_type = list(/obj/item/weapon/storage/toolbox, /obj/item/weapon/storage/toolbox/mechanical, /obj/item/weapon/storage/toolbox/electrical)
 
-/obj/item/manufacturing_parts/metal/welding_gogles
+/obj/item/manufacturing_parts/metal/welding_goggles
 	product_type = /obj/item/clothing/glasses/welding
 
 /obj/item/manufacturing_parts/metal/vest
