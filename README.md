@@ -22,7 +22,7 @@
 
 * **Общее:**
   - [Contribution Guide](/.github/CONTRIBUTING.md)
-  - [Соглашения о коде](/.github/wiki/CODE_CONVENTION.md)
+  - [Code convention или Соглашение о коде](/.github/wiki/CODE_CONVENTION.md)
   - [Оформление PR-ов](/.github/wiki/STYLING_OF_PR.md)
   - [Быстрый старт](https://wiki.taucetistation.org/Git)
 

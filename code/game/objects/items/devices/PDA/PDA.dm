@@ -70,6 +70,7 @@
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 
+	//Variables for OnlineShop
 	var/category
 	var/list/shop_lots = list()
 	var/list/shop_lots_paged = list()
@@ -77,6 +78,7 @@
 	var/list/shopping_cart = list()
 	var/category_shop_page = 1
 	var/category_shop_per_page = 5
+	var/referrer_account
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -1224,6 +1226,7 @@
 		if("Shop")
 			category_shop_page = 1
 			mode = 8
+			referrer_account = null
 
 		//Maintain Category
 		if("Shop_Category")
@@ -1274,15 +1277,16 @@
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
-									if(order_onlineshop_item(owner, owner_account, NewLot, T))
+									if(order_onlineshop_item(owner, owner_account, NewLot, T, referrer_account = referrer_account))
 										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
+										break
 									else
 										to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
 						to_chat(user, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
 
-					else if(order_onlineshop_item(owner, owner_account, Lot, T))
+					else if(order_onlineshop_item(owner, owner_account, Lot, T, referrer_account = referrer_account))
 						MA.shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
 						to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")

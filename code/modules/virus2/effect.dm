@@ -975,7 +975,7 @@
 	var/mob/living/carbon/human/H = mob
 	var/list/parts = list()
 	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			if(BP.get_damage())
 				parts += BP
 	if(!parts.len)

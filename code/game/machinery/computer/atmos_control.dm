@@ -381,12 +381,14 @@ Nitrous Oxide
 			output += {"
 <a href='byond://?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Air machinery mode for the area:</b><ul>"}
-			var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering - Scrubs out contaminants",\
-					AALARM_MODE_REPLACEMENT = "<span class='blue'>Replace Air - Siphons out air while replacing</span>",\
-					AALARM_MODE_PANIC       = "<span class='red'>Panic - Siphons air out of the room</span>",\
-					AALARM_MODE_CYCLE       = "<span class='red'>Cycle - Siphons air before replacing</span>",\
-					AALARM_MODE_FILL        = "<span class='green'>Fill - Shuts off scrubbers and opens vents</span>",\
-					AALARM_MODE_OFF         = "<span class='blue'>Off - Shuts off vents and scrubbers</span>",)
+			// Order is important.
+			// AALARM_MODE_SCRUBBING, AALARM_MODE_REPLACEMENT, AALARM_MODE_PANIC, AALARM_MODE_CYCLE, AALARM_MODE_FILL, AALARM_MODE_OFF
+			var/list/modes = list("Filtering - Scrubs out contaminants",\
+					"<span class='blue'>Replace Air - Siphons out air while replacing</span>",\
+					"<span class='red'>Panic - Siphons air out of the room</span>",\
+					"<span class='red'>Cycle - Siphons air before replacing</span>",\
+					"<span class='green'>Fill - Shuts off scrubbers and opens vents</span>",\
+					"<span class='blue'>Off - Shuts off vents and scrubbers</span>")
 			for(var/m in 1 to modes.len)
 				if (current.mode==m)
 					output += {"<li><A href='byond://?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}

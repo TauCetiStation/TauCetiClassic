@@ -16,6 +16,10 @@
 	m_amt = 2000
 	can_suicide_with = FALSE
 
+/obj/item/weapon/gun/syringe/atom_init()
+	. = ..()
+	AddComponent(/datum/component/serial_number)
+
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
 	if(src in view(2, user))

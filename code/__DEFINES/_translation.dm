@@ -144,6 +144,9 @@
 // Capitalize Case: тоже самое, что и CASE, только превращает первую букву в заглавную
 #define C_CASE(atom, case) capitalize(CASE(atom, case))
 
+// Выводит отформатированное оригинальное name объекта на английском, и в скобках перевод, если он существует
+#define CASEPLUS(datum, case) (datum.cases && datum.cases[case] ? "\the [datum.name] ([capitalize(datum.cases[case])])" : datum.name)
+
 // Часто встречаемые pluralize_russian(). Не забывайте про существование нецелых чисел и округления - они тоже влияют.
 #define PLUR_UNITS(units) pluralize_russian(units, "юнит", "юнита", "юнитов")
 

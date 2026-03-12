@@ -10,12 +10,13 @@ SUBSYSTEM_DEF(events)
 	var/list/active_events = list()
 	var/list/finished_events = list()
 	var/list/allEvents = list()
+	// Order is important. EVENT_LEVEL_FEATURE, EVENT_LEVEL_MUNDANE, EVENT_LEVEL_MODERATE, EVENT_LEVEL_MAJOR
 	var/list/event_containers = list(
-			EVENT_LEVEL_FEATURE    = new/datum/event_container/feature,
-			EVENT_LEVEL_MUNDANE    = new/datum/event_container/mundane,
-			EVENT_LEVEL_MODERATE   = new/datum/event_container/moderate,
-			EVENT_LEVEL_MAJOR      = new/datum/event_container/major,
-		)
+		new/datum/event_container/feature,
+		new/datum/event_container/mundane,
+		new/datum/event_container/moderate,
+		new/datum/event_container/major,
+	)
 
 	var/datum/event_meta/new_event = new
 
