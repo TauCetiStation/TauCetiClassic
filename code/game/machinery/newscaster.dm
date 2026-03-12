@@ -1012,7 +1012,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		if(!PDA)
 			return
 
-		PDA.open_shop_page(usr, text2num(referrer_account))
+		PDA.open_shop_page(usr, referrer_account_number = text2num(referrer_account))
 
 	updateUsrDialog()
 

@@ -530,7 +530,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(!PDA)
 			return
 
-		PDA.open_shop_page(usr, null)
+		PDA.open_shop_page(usr)
 
 	updateUsrDialog()
 

@@ -2068,7 +2068,7 @@
 		chiptune_player.repeat = Ring.replays
 		chiptune_player.parse_song_text(Ring.melody)
 
-/obj/item/device/pda/proc/open_shop_page(mob/user, referrer_account_number)
+/obj/item/device/pda/proc/open_shop_page(mob/user, referrer_account_number = null)
 	category_shop_page = 1
 	mode = 8
 	referrer_account = referrer_account_number
