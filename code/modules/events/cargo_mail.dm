@@ -32,6 +32,9 @@
 	for(var/datum/data/record/R in data_core.general)
 		if(!R)
 			continue
+		if(!R.fields["auto_creation"])
+			continue
+
 		var/datum/money_account/MA = get_account(R.fields["acc_number"])
 		if(!MA)
 			continue
