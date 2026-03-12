@@ -69,10 +69,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/load = 0
 	var/max_load = 0
 
-	var/seller_account_number = null
+	var/seller_account_number = MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER
 
 
-/obj/machinery/vending/atom_init()
+/obj/machinery/vending/atom_init(mapload)
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
@@ -97,8 +97,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	update_wires_check()
 	update_unstable_product()
 
-	if(!seller_account_number && is_station_level(z))
-		seller_account_number = MAP_CARGO_ACCOUNT_NUMBER
+	if(mapload && is_station_level(z))
+		seller_account_number = MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -502,7 +502,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		return
 
 	else if (href_list["pda_onlineshop"])
-		if(!(seller_account_number == global.cargo_account.account_number))
+		if(seller_account_number != global.cargo_account.account_number)
 			return
 
 		if(!usr)

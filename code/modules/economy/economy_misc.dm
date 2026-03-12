@@ -219,11 +219,11 @@ var/global/initial_station_money = 7500
 /proc/setup_vending()
 	for(var/obj/machinery/vending/Vend in global.vending_machines)
 		switch(Vend.seller_account_number)
-			if(MAP_CARGO_ACCOUNT_NUMBER)
+			if(MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER)
+				Vend.seller_account_number = global.vendor_account.account_number
+
+			if(MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER)
 				Vend.seller_account_number = global.cargo_account.account_number
 
-			if(MAP_STATION_ACCOUNT_NUMBER)
+			if(MAP_STATION_ACCOUNT_NUMBER_PLACEHOLDER)
 				Vend.seller_account_number = global.station_account.account_number
-
-			else
-				Vend.seller_account_number = global.vendor_account.account_number
