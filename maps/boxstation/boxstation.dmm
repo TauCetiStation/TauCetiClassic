@@ -11339,10 +11339,12 @@
 "asO" = (
 /obj/machinery/vending/holy,
 /obj/structure/fence/metal{
-	dir = 4
+	dir = 4;
+	color = "#996633"
 	},
 /obj/structure/fence/metal{
-	dir = 1
+	dir = 1;
+	color = "#996633"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -13902,9 +13904,12 @@
 "axz" = (
 /obj/structure/table/woodentable/fancy,
 /obj/structure/fence/metal{
-	dir = 8
+	dir = 8;
+	color = "#996633"
 	},
-/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	color = "#996633"
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "axA" = (
@@ -15164,10 +15169,12 @@
 "azS" = (
 /obj/machinery/constructable_frame/machine_frame,
 /obj/structure/fence/metal{
-	dir = 8
+	dir = 8;
+	color = "#996633"
 	},
 /obj/structure/fence/metal{
-	dir = 1
+	dir = 1;
+	color = "#996633"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -21928,12 +21935,12 @@
 /area/station/rnd/storage)
 "aMy" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/rnd/mixing)
@@ -26056,7 +26063,10 @@
 /area/station/gateway)
 "aTZ" = (
 /obj/effect/landmark/start/research_assistant,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "purplecorner"
+	},
 /area/station/hallway/primary/starboard)
 "aUa" = (
 /obj/machinery/vending/blood,
@@ -34110,10 +34120,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/effect/decal/turf_decal/set_burned,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "bhZ" = (
@@ -39797,9 +39807,12 @@
 "bsw" = (
 /obj/structure/table/woodentable/fancy,
 /obj/structure/fence/metal{
-	dir = 4
+	dir = 4;
+	color = "#996633"
 	},
-/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	color = "#996633"
+	},
 /obj/item/clothing/accessory/metal_cross,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
@@ -50466,6 +50479,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bLq" = (
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "purple"
@@ -50662,10 +50676,10 @@
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "purplecorner"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bLI" = (
 /obj/item/device/radio/intercom{
@@ -50706,8 +50720,8 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "purplecorner"
+	dir = 9;
+	icon_state = "purple"
 	},
 /area/station/hallway/primary/starboard)
 "bLM" = (
@@ -51623,13 +51637,13 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "bNo" = (
@@ -56719,10 +56733,10 @@
 /obj/item/stack/sheet/metal{
 	amount = 12
 	},
-/obj/structure/window/thin/reinforced{
+/obj/effect/decal/turf_decal/set_burned,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "bZH" = (
@@ -70988,7 +71002,7 @@
 	pixel_x = -1;
 	pixel_y = 6
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -71041,6 +71055,15 @@
 /obj/effect/spawner/aspect/mech/phazon,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
+"eey" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "stand_clear_white"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/starboard)
 "efb" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -86249,7 +86272,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -125178,8 +125201,8 @@ blT
 bmX
 bFD
 bcc
+bjd
 bLG
-bcb
 bbG
 cpX
 bjk
@@ -125435,8 +125458,8 @@ bwZ
 bCq
 bFF
 bIh
+jBb
 bLG
-bcb
 bbG
 cpX
 lmV
@@ -125693,7 +125716,7 @@ bjy
 bjy
 bjy
 bLH
-bcb
+bLG
 bbG
 cpX
 lmV
@@ -126206,7 +126229,7 @@ bxA
 bCs
 bFQ
 bIm
-bLG
+eey
 bNc
 bbH
 cpX
