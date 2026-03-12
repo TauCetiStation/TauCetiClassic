@@ -97,11 +97,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	update_wires_check()
 	update_unstable_product()
 
-	if(mapload)
-		if(is_station_level(z))
-			seller_account_number = MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER
-		else
-			seller_account_number = MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER
+	if(mapload && is_station_level(z))
+		seller_account_number = MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
