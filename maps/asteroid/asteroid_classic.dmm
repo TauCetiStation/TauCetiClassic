@@ -790,7 +790,7 @@
 /area/asteroid/research_outpost/hallway)
 "bU" = (
 /obj/machinery/vending/cola{
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /obj/effect/decal/turf_decal/metal{
 	dir = 1;
@@ -840,7 +840,7 @@
 	},
 /obj/machinery/vending/hydroseeds{
 	slogan_delay = 700;
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -2824,7 +2824,7 @@
 /area/asteroid/mine/unexplored/safe)
 "fG" = (
 /obj/machinery/vending/snack{
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -3080,7 +3080,7 @@
 /area/asteroid/mine/unexplored/safe)
 "gj" = (
 /obj/machinery/vending/coffee{
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -9682,7 +9682,7 @@
 /area/asteroid/mine/living_quarters)
 "va" = (
 /obj/machinery/vending/cigarette{
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -9691,7 +9691,7 @@
 /area/asteroid/mine/living_quarters)
 "vb" = (
 /obj/machinery/vending/snack{
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -14035,7 +14035,7 @@
 /area/asteroid/mine/abandoned)
 "Ub" = (
 /obj/machinery/vending/hydronutrients{
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -14546,7 +14546,7 @@
 /area/asteroid/mine/production)
 "Yf" = (
 /obj/machinery/vending/eva/mining{
-	seller_account_number = "MapCargoAccountNumber"
+	seller_account_number = "CargoAccount"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
