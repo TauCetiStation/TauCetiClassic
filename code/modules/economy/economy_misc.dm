@@ -224,6 +224,3 @@ var/global/initial_station_money = 7500
 
 			if(MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER)
 				Vend.seller_account_number = global.cargo_account.account_number
-
-			if(MAP_STATION_ACCOUNT_NUMBER_PLACEHOLDER)
-				Vend.seller_account_number = global.station_account.account_number
