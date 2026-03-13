@@ -1,5 +1,5 @@
 /datum/event/cargo_mail
-	var/list/citizenship_to_type = list(
+	var/list/citizenship_to_mail_type = list(
 		"Mars" = /obj/random/mail/mars,
 		"Venus" = /obj/random/mail/venus,
 		"Earth" = /obj/random/mail/earth,
@@ -13,7 +13,7 @@
 		"Qerrbalak" = /obj/random/mail/qerrbalak,
 	)
 
-	var/list/job_to_mail = list(
+	var/list/job_to_mail_type = list(
 		JOB_VIROLOGIST = list("Венерианский Институт Вирусологии и Микологии", /obj/item/weapon/virusdish/random),
 		JOB_GENETICIST = list("Ассоциация Свободных Генетиков", /obj/random/meds/dna_injector),
 		JOB_ENGINEER = list("Профсоюз Инженеров и Атмостехов", /obj/random/tools/bettertool),
@@ -30,20 +30,17 @@
 	var/list/available_receivers = list()
 
 	for(var/datum/data/record/R in data_core.general)
-		if(!R)
-			continue
-		if(!R.fields["auto_creation"])
+		if(!R.fields["auto_created"])
 			continue
 
 		var/datum/money_account/MA = get_account(R.fields["acc_number"])
 		if(!MA)
 			continue
 
-		available_receivers += list(list(R.fields["name"], R.fields["citizenship"], R.fields["rank"], R.fields["acc_number"]))
+		available_receivers += R
 
 	if(!available_receivers.len)
 		return
-
 
 	var/mail_amount = rand(1, ceil(available_receivers.len * 0.3))
 
@@ -51,51 +48,53 @@
 		if(!available_receivers.len)
 			break
 
-		var/list/receiversData = pick_n_take(available_receivers)
-		var/receiver_name = receiversData[1]
-		var/citizenship = receiversData[2]
-		var/receiver_rank = receiversData[3]
-		var/receiver_account = receiversData[4]
+		generate_mail_for_record(pick_n_take(available_receivers))
 
-		var/itemType
-		var/senderInfo
+/datum/event/cargo_mail/proc/generate_mail_for_record(datum/data/record/record)
+	var/receiver_name = record.fields["name"]
+	var/citizenship = record.fields["citizenship"]
+	var/receiver_rank = record.fields["rank"]
+	var/receiver_account = record.fields["acc_number"]
 
-		var/list/variants = list("FromHome", "NTSocial", "WrongMail", "WannaKnowMore?", "Love", "Prank")
-		if(receiver_rank in job_to_mail)
-			variants += "JobItem"
+	var/item_type
+	var/sender_info
 
-		switch(pick(variants))
-			if("FromHome") //From Home with Love
-				senderInfo = citizenship
-				var/citizenshipType = citizenship_to_type[senderInfo]
-				if(!citizenshipType)
-					citizenshipType = /obj/random/mail/home
-				itemType = PATH_OR_RANDOM_PATH(citizenshipType)
+	var/list/variants = list("FromHome", "NTSocial", "WrongMail", "WannaKnowMore?", "Love", "Prank")
+	if(receiver_rank in job_to_mail_type)
+		variants += "JobItem"
 
-			if("NTSocial") //NT Support
-				senderInfo = "Отдел социальной поддержки персонала НаноТрейзен"
-				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/ntsupport)
+	switch(pick(variants))
+		if("FromHome") //From Home with Love
+			sender_info = citizenship
+			var/citizenship_mail_type = citizenship_to_mail_type[sender_info]
+			if(!citizenship_mail_type)
+				citizenship_mail_type = /obj/random/mail/home
+			item_type = PATH_OR_RANDOM_PATH(citizenship_mail_type)
 
-			if("WrongMail") //Wrong Receiver
-				senderInfo = pick(citizenship_to_type)
-				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/wrongreceiver)
+		if("NTSocial") //NT Support
+			sender_info = "Отдел социальной поддержки персонала НаноТрейзен"
+			item_type = PATH_OR_RANDOM_PATH(/obj/random/mail/ntsupport)
 
-			if("WannaKnowMore?") //Wanna know more?
-				senderInfo = "Хочешь знать больше?"
-				itemType = PATH_OR_RANDOM_PATH(/obj/random/misc/book)
+		if("WrongMail") //Wrong Receiver
+			sender_info = pick(citizenship_to_mail_type)
+			item_type = PATH_OR_RANDOM_PATH(/obj/random/mail/wrongreceiver)
 
-			if("Love") //Lover
-				senderInfo = "<3"
-				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/love)
+		if("WannaKnowMore?") //Wanna know more?
+			sender_info = "Хочешь знать больше?"
+			item_type = PATH_OR_RANDOM_PATH(/obj/random/misc/book)
 
-			if("JobItem") //Job related
-				var/list/data = job_to_mail[receiver_rank]
-				senderInfo = data[1]
-				itemType = PATH_OR_RANDOM_PATH(data[2])
+		if("Love") //Lover
+			sender_info = "<3"
+			item_type = PATH_OR_RANDOM_PATH(/obj/random/mail/love)
 
-			if("Prank") //Prank
-				senderInfo = pick(citizenship_to_type)
-				itemType = PATH_OR_RANDOM_PATH(/obj/random/mail/prank)
+		if("JobItem") //Job related
+			var/list/data = job_to_mail_type[receiver_rank]
+			sender_info = data[1]
+			item_type = PATH_OR_RANDOM_PATH(data[2])
+
+		if("Prank") //Prank
+			sender_info = pick(citizenship_to_mail_type)
+			item_type = PATH_OR_RANDOM_PATH(/obj/random/mail/prank)
 
 
-		SSshuttle.add_mail(senderInfo, receiver_name, receiver_account, itemType)
+	SSshuttle.add_mail(sender_info, receiver_name, receiver_account, item_type)

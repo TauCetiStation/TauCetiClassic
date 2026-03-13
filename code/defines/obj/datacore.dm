@@ -303,7 +303,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			acc_number = 0
 		G.fields["acc_number"] = acc_number
 
-		G.fields["auto_creation"] = TRUE
+		G.fields["auto_created"] = TRUE
 
 		general += G
 
@@ -326,7 +326,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		else
 			M.fields["notes"] = "No notes found."
 
-		M.fields["auto_creation"] = TRUE
+		M.fields["auto_created"] = TRUE
 
 		medical += M
 
@@ -345,7 +345,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		else
 			S.fields["notes"] = "No notes."
 
-		S.fields["auto_creation"] = TRUE
+		S.fields["auto_created"] = TRUE
 
 		security += S
 
@@ -366,7 +366,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		L.fields["identity"]	= H.dna.UI
 		L.fields["image"]		= ticon
 
-		L.fields["auto_creation"] = TRUE
+		L.fields["auto_created"] = TRUE
 
 		locked += L
 
