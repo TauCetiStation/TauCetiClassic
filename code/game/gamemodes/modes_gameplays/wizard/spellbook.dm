@@ -425,6 +425,14 @@
 	cost = 1
 	surplus = 1
 
+/datum/spellbook_entry/item/cloak_of_invisibility
+	name = "Плащ невидимки"
+	desc = "Мерцающий плащ, сотканный из теней и иллюзий. Раскройте его двумя руками и станте невидимым."
+	item_path = /obj/item/clothing/suit/wizrobe/cloak_of_invisibility
+	log_name = "CI"
+	category = "Мобильность"
+	cost = 1
+
 /*datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
 	desc = "An ensorcelled suit of armour, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
