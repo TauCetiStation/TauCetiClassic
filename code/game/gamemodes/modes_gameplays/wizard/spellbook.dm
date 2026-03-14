@@ -426,7 +426,7 @@
 	surplus = 1
 
 /datum/spellbook_entry/item/cloak_of_invisibility
-	name = "Плащ невидимки"
+	name = "Плащ-невидимка"
 	desc = "Мерцающий плащ, сотканный из теней и иллюзий. Раскройте его двумя руками и станете невидимым."
 	item_path = /obj/item/clothing/suit/wizrobe/cloak_of_invisibility
 	log_name = "CI"
