@@ -97,7 +97,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	update_wires_check()
 	update_unstable_product()
 
-	if(mapload && is_station_level(z)) //Экономика инициализируется после инициализации атомов, потому мы вынуждены делать плейсхолдеры.
+	if(mapload && is_station_level(z)) // Economy is initialized after atoms, thus we must use set the placeholder here until we refactor global money accounts to do lazy initializations.
 		seller_account_number = MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER
 
 /obj/machinery/vending/Destroy()
