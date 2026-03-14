@@ -3484,7 +3484,7 @@
 /area/asteroid/mine/abandoned)
 "iU" = (
 /obj/machinery/vending/cola{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -3568,7 +3568,7 @@
 /area/asteroid/research_outpost/hallway)
 "je" = (
 /obj/machinery/vending/snack{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	icon_state = "blueyellowfull"
@@ -5224,7 +5224,7 @@
 /area/asteroid/mine/dwarf)
 "oy" = (
 /obj/machinery/vending/chinese{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	icon_state = "blueyellowfull"
@@ -9875,7 +9875,7 @@
 /area/asteroid/research_outpost/longtermstorage)
 "DC" = (
 /obj/machinery/vending/eva/mining{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -10422,7 +10422,7 @@
 	},
 /obj/machinery/vending/hydroseeds{
 	slogan_delay = 700;
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -11778,7 +11778,7 @@
 /area/space)
 "Lq" = (
 /obj/machinery/vending/cigarette{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /obj/machinery/light/smart{
 	dir = 8
@@ -12395,7 +12395,7 @@
 /area/asteroid/research_outpost/spectro)
 "Ol" = (
 /obj/machinery/vending/coffee{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -12432,7 +12432,7 @@
 /area/asteroid/mine/explored)
 "Oq" = (
 /obj/machinery/vending/coffee{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -12646,7 +12646,7 @@
 /area/asteroid/mine/explored)
 "Pz" = (
 /obj/machinery/vending/snack{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -14198,7 +14198,7 @@
 /area/asteroid/research_outpost/hallway)
 "Wc" = (
 /obj/machinery/vending/hydronutrients{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -14236,7 +14236,7 @@
 /area/asteroid/research_outpost/gearstore)
 "Wk" = (
 /obj/machinery/vending/cola{
-	seller_account_number = "CargoAccount"
+	seller_account_number = "%cargo_account%"
 	},
 /obj/effect/decal/turf_decal/metal{
 	dir = 1;
