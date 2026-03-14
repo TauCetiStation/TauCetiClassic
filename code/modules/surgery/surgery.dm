@@ -133,6 +133,159 @@
 
 	return !check_covered_bodypart(T, zone)
 
+/proc/has_medical_hud(mob/living/user)
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	var/obj/item/clothing/glasses/G = H.glasses
+	if(!G || !G.hud_types)
+		return FALSE
+	if((DATA_HUD_MEDICAL in G.hud_types) || (DATA_HUD_MEDICAL_ADV in G.hud_types))
+		return TRUE
+	return FALSE
+
+/proc/collect_nearby_surgery_items(mob/living/user, mob/living/carbon/human/target)
+	var/list/nearby_items = list()
+	if(user.l_hand)
+		nearby_items += user.l_hand
+	if(user.r_hand)
+		nearby_items += user.r_hand
+	for(var/turf/T in range(1, target))
+		for(var/obj/item/I in T.contents)
+			nearby_items += I
+			if(istype(I, /obj/item/weapon/storage))
+				for(var/obj/item/SI in I.contents)
+					nearby_items += SI
+		for(var/obj/structure/table/table in T.contents)
+			for(var/obj/item/I in table.contents)
+				nearby_items += I
+				if(istype(I, /obj/item/weapon/storage))
+					for(var/obj/item/SI in I.contents)
+						nearby_items += SI
+	return nearby_items
+
+/proc/get_surgery_step_name(datum/surgery_step/S)
+	var/full_type = "[S.type]"
+	var/list/parts = splittext(full_type, "/")
+	var/last = parts[parts.len]
+	last = replacetext(last, "_", " ")
+	if(length(last))
+		last = uppertext(copytext(last, 1, 2)) + copytext(last, 2)
+	return last
+
+/proc/show_surgery_radial_menu(mob/living/user, mob/living/carbon/human/target, target_zone)
+	set waitfor = FALSE
+
+	if(!has_medical_hud(user))
+		return
+	if(!ishuman(target))
+		return
+	if(!user.client)
+		return
+
+	var/list/nearby_items = collect_nearby_surgery_items(user, target)
+
+	var/list/step_data = list()
+
+	for(var/datum/surgery_step/S in surgery_steps)
+		if(!S.is_valid_mutantrace(target))
+			continue
+		if(!S.allowed_tools)
+			continue
+
+		var/list/tools_for_step = list()
+		var/obj/item/best_tool = null
+		var/best_quality = 0
+
+		for(var/tool_type in S.allowed_tools)
+			var/quality = S.allowed_tools[tool_type]
+			for(var/obj/item/I in nearby_items)
+				if(istype(I, tool_type))
+					if(!S.can_use(user, target, target_zone, I))
+						continue
+					if(!tools_for_step[I])
+						tools_for_step[I] = image(icon = I.icon, icon_state = I.icon_state)
+					if(quality > best_quality)
+						best_quality = quality
+						best_tool = I
+					break
+
+		if(tools_for_step.len && best_tool)
+			step_data += list(list("step" = S, "tools" = tools_for_step, "best_tool" = best_tool, "best_quality" = best_quality))
+
+	if(!step_data.len)
+		return
+
+	var/obj/item/chosen = null
+
+	if(step_data.len == 1)
+		var/list/entry = step_data[1]
+		var/list/tools = entry["tools"]
+		chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE, tooltips = TRUE)
+	else
+		// multiple steps available, show step selection first
+		var/list/step_choices = list()
+		var/list/name_to_entry = list()
+
+		for(var/list/entry in step_data)
+			var/datum/surgery_step/S = entry["step"]
+			var/obj/item/best = entry["best_tool"]
+			var/step_name = get_surgery_step_name(S)
+
+			var/unique_name = step_name
+			var/suffix = 2
+			while(unique_name in step_choices)
+				unique_name = "[step_name] [suffix]"
+				suffix++
+
+			step_choices[unique_name] = image(icon = best.icon, icon_state = best.icon_state)
+			name_to_entry[unique_name] = entry
+
+		var/chosen_step = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE, tooltips = TRUE)
+
+		if(!chosen_step || !user.Adjacent(target))
+			return
+
+		var/list/selected_entry = name_to_entry[chosen_step]
+		var/list/tools = selected_entry["tools"]
+
+		if(tools.len == 1)
+			chosen = tools[1]
+		else
+			chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE, tooltips = TRUE)
+
+	if(!chosen || !user.Adjacent(target))
+		return
+
+	var/atom/tool_original_loc = chosen.loc
+	var/obj/item/dropped_item = null
+
+	if(chosen.loc != user)
+		if(!user.put_in_hands(chosen))
+			// both hands full, drop active hand first
+			dropped_item = user.get_active_hand()
+			if(dropped_item)
+				user.drop_from_inventory(dropped_item, get_turf(target))
+			if(!user.put_in_hands(chosen))
+				to_chat(user, "<span class='warning'>You can't pick up [chosen]!</span>")
+				if(dropped_item)
+					user.put_in_hands(dropped_item)
+				return
+
+	do_surgery(target, user, chosen)
+
+	// put the tool back where we found it
+	if(tool_original_loc && tool_original_loc != user && chosen.loc == user)
+		user.drop_from_inventory(chosen, get_turf(target))
+		if(!QDELETED(tool_original_loc))
+			if(istype(tool_original_loc, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/S = tool_original_loc
+				S.handle_item_insertion(chosen, prevent_warning = TRUE)
+			else
+				chosen.forceMove(tool_original_loc)
+	if(dropped_item && dropped_item.loc != user)
+		user.put_in_hands(dropped_item)
+
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	checks_for_surgery(M, user, FALSE)
 	var/target_zone = user.get_targetzone()
@@ -148,6 +301,8 @@
 
 	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, skillcheck, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
+
+
 
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check, if target undressed for clothless operations
@@ -180,6 +335,7 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.update_surgery()										//shows surgery results
+				show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery
 	return FALSE
 
