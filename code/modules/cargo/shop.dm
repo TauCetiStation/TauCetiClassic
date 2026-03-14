@@ -301,26 +301,26 @@ var/global/online_shop_referrer_revenue = 0.50
 
 	return Item
 
-/proc/object2onlineshop_package(obj/Item, forceColor = null, hideInfo = FALSE)
+/proc/object2onlineshop_package(obj/Item, force_color = null, hide_info = FALSE)
 	var/lot_name = Item.name
-	if(hideInfo)
+	if(hide_info)
 		lot_name = "Почтовое отправление"
 	var/lot_desc = Item.price_tag["description"]
 	var/lot_price = Item.price_tag["price"]
 	var/lot_category = Item.price_tag["category"]
 	var/lot_account = Item.price_tag["account"]
 	var/item_icon
-	if(!hideInfo)
+	if(!hide_info)
 		item_icon = bicon(Item)
 
 	Item = shop_object2package(Item)
 
-	if(forceColor)
-		Item.color = forceColor
+	if(force_color)
+		Item.color = force_color
 	else if(global.shop_category2color[lot_category])
 		Item.color = global.shop_category2color[lot_category]
 
-	if(hideInfo)
+	if(hide_info)
 		item_icon = bicon(Item)
 
 	create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)

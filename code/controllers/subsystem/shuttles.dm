@@ -487,11 +487,11 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
 			break
-		var/turf/pickedloc = pick_n_take(clear_turfs)
+		var/turf/picked_loc = pick_n_take(clear_turfs)
 
 		var/datum/supply_order/SO = S
 
-		SO.generate(pickedloc)
+		SO.generate(picked_loc)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
@@ -499,11 +499,11 @@ SUBSYSTEM_DEF(shuttle)
 		CHECK_TICK
 
 	if(mail_orders.len && clear_turfs.len)
-		var/turf/pickedloc = pick_n_take(clear_turfs)
+		var/turf/picked_loc = pick_n_take(clear_turfs)
 
-		var/obj/structure/closet/crate/mailcrate/Crate = new(pickedloc)
+		var/obj/structure/closet/crate/mailcrate/Crate = new(picked_loc)
 		for(var/datum/mail_order/Order in mail_orders)
-			var/obj/item/Item = generate_mail_item(Order, pickedloc)
+			var/obj/item/Item = generate_mail_item(Order, picked_loc)
 			if(Item)
 				Item.forceMove(Crate)
 
@@ -514,35 +514,35 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/mail_order
 	var/sender
-	var/itemType
+	var/item_type
 	var/receiver_name
 	var/receiver_acc
 
-/datum/mail_order/New(sender, itemType, receiver_name, receiver_acc)
+/datum/mail_order/New(sender, item_type, receiver_name, receiver_acc)
 	src.sender = sender
-	src.itemType = itemType
+	src.item_type = item_type
 	src.receiver_name = receiver_name
 	src.receiver_acc = receiver_acc
 
-/datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver_name, receiver_acc, itemType)
-	var/datum/mail_order/Order = new /datum/mail_order(sender, itemType, receiver_name, receiver_acc)
+/datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver_name, receiver_acc, item_type)
+	var/datum/mail_order/Order = new /datum/mail_order(sender, item_type, receiver_name, receiver_acc)
 	mail_orders += Order
 
-/datum/controller/subsystem/shuttle/proc/generate_mail_item(datum/mail_order/Order, turf/pickedloc)
-	var/itemType = Order.itemType
+/datum/controller/subsystem/shuttle/proc/generate_mail_item(datum/mail_order/Order, turf/picked_loc)
+	var/item_type = Order.item_type
 
 	var/sender = Order.sender
 	var/receiver_name = Order.receiver_name
 	var/receiver_number = Order.receiver_acc
 	var/datum/money_account/receiver_account = get_account(receiver_number)
-	if(!receiver_account || !sender || !itemType)
+	if(!receiver_account || !sender || !item_type)
 		return
 
-	var/obj/item/Item = new itemType(pickedloc)
+	var/obj/item/Item = new item_type(picked_loc)
 
 	Item.add_price_tag("Отправитель - [sender]", 50, "Разное", global.cargo_account.account_number)
 
-	Item = object2onlineshop_package(Item, forceColor = "white", hideInfo = TRUE)
+	Item = object2onlineshop_package(Item, force_color = "white", hide_info = TRUE)
 
 	Item.pixel_x = rand(-10, 10)
 	Item.pixel_y = rand(-10, 10)
