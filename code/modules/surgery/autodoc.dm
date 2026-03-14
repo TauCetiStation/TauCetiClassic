@@ -4,8 +4,8 @@
 /obj/machinery/autodoc
 	var/locked
 	name = "Autodoc"
-	cases = list("автодок", "автодока", "автодоку", "автодок", "автодоком", "автодоке")
-	desc = "Используется для оперирования пациентов."
+	cases = list("Р°РІС‚РѕРґРѕРє", "Р°РІС‚РѕРґРѕРєР°", "Р°РІС‚РѕРґРѕРєСѓ", "Р°РІС‚РѕРґРѕРє", "Р°РІС‚РѕРґРѕРєРѕРј", "Р°РІС‚РѕРґРѕРєРµ")
+	desc = "РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РѕРїРµСЂРёСЂРѕРІР°РЅРёСЏ РїР°С†РёРµРЅС‚РѕРІ."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	anchored = TRUE
@@ -49,17 +49,17 @@
 
 /obj/machinery/autodoc/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
-		to_chat(user, "<span class='userdanger'>[C_CASE(src, NOMINATIVE_CASE)] уже занят кем-то!</span>")
+		to_chat(user, "<span class='userdanger'>[C_CASE(src, NOMINATIVE_CASE)] СѓР¶Рµ Р·Р°РЅСЏС‚ РєРµРј-С‚Рѕ!</span>")
 		return FALSE
 	if(!ishuman(target))
-		to_chat(user, "<span class='userdanger'>Это устройство может оперировать только гуманоидные формы жизни.</span>")
+		to_chat(user, "<span class='userdanger'>Р­С‚Рѕ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РјРѕР¶РµС‚ РѕРїРµСЂРёСЂРѕРІР°С‚СЊ С‚РѕР»СЊРєРѕ РіСѓРјР°РЅРѕРёРґРЅС‹Рµ С„РѕСЂРјС‹ Р¶РёР·РЅРё.</span>")
 		return FALSE
 	var/mob/living/carbon/human/H = target
 	if(H.species.flags[NO_MED_HEALTH_SCAN])
-		to_chat(user, "<span class='userdanger'>Это существо нельзя оперировать</span>")
+		to_chat(user, "<span class='userdanger'>Р­С‚Рѕ СЃСѓС‰РµСЃС‚РІРѕ РЅРµР»СЊР·СЏ РѕРїРµСЂРёСЂРѕРІР°С‚СЊ</span>")
 		return FALSE
 	if(target.abiotic())
-		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
+		to_chat(user, "<span class='userdanger'>РЈ РїР°С†РёРµРЅС‚Р° РЅРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ С‡РµРіРѕ-Р»РёР±Рѕ РІ СЂСѓРєР°С….</span>")
 		return FALSE
 	if(!do_skill_checks(user))
 		return
@@ -81,7 +81,7 @@
 	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
+		to_chat(user, "<span class='warning'>Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ РїРѕРЅСЏС‚СЊ, С‡С‚Рѕ СЃ СЌС‚РёРј РґРµР»Р°С‚СЊ.</span>")
 		return
 	if(!move_inside_checks(target, user))
 		return
@@ -93,7 +93,7 @@
 	if(user.incapacitated() || !Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
+		to_chat(user, "<span class='warning'>Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ РїРѕРЅСЏС‚СЊ, С‡С‚Рѕ СЃ СЌС‚РёРј РґРµР»Р°С‚СЊ.</span>")
 		return
 	if(occupant)
 		eject()
@@ -141,7 +141,7 @@
 /obj/machinery/autodoc_console
 	var/obj/machinery/autodoc/connected
 	name = "Autodoc Console"
-	cases = list("консоль автодока", "консоли автодока", "консоли автодока", "консоль автодока", "консолью автодока", "консоли автодока")
+	cases = list("РєРѕРЅСЃРѕР»СЊ Р°РІС‚РѕРґРѕРєР°", "РєРѕРЅСЃРѕР»Рё Р°РІС‚РѕРґРѕРєР°", "РєРѕРЅСЃРѕР»Рё Р°РІС‚РѕРґРѕРєР°", "РєРѕРЅСЃРѕР»СЊ Р°РІС‚РѕРґРѕРєР°", "РєРѕРЅСЃРѕР»СЊСЋ Р°РІС‚РѕРґРѕРєР°", "РєРѕРЅСЃРѕР»Рё Р°РІС‚РѕРґРѕРєР°")
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE
