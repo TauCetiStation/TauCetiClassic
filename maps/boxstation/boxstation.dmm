@@ -48513,7 +48513,7 @@
 /area/station/security/iaa_office)
 "bHE" = (
 /obj/structure/table,
-/obj/structure/sign/poster/official/random{
+/obj/structure/sign/poster/onlineshop{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
