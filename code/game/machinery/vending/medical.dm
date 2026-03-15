@@ -98,7 +98,7 @@
 	products = list(
 		/obj/item/weapon/reagent_containers/pill/happy = 14,
 		/obj/item/weapon/reagent_containers/pill/zoom = 14,
-		/obj/item/weapon/reagent_containers/pill/LSD = 14,
+		/obj/item/weapon/reagent_containers/pill/hallucination_pills = 14,
 		/obj/item/weapon/reagent_containers/syringe = 12,
 		/obj/item/weapon/reagent_containers/glass/bottle/zombiepowder = 4,
 		/obj/item/weapon/reagent_containers/glass/bottle/jenkem = 4,
@@ -110,5 +110,33 @@
 	premium = list(
 		/obj/item/weapon/reagent_containers/syringe/antitoxin = 10,
 		/obj/item/device/healthanalyzer = 3,
+	)
+	private = TRUE
+
+/obj/machinery/vending/firstaid
+	name = "NanoMed Kits"
+	desc = "First Aid Kits dispenser."
+	icon_state = "med_firstaid"
+	icon_deny = "med_firstaid-deny"
+	light_color = "#e6fff2"
+	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
+	products = list(
+		/obj/item/weapon/storage/firstaid/regular = 4,
+		/obj/item/weapon/storage/firstaid/adv = 4,
+		/obj/item/weapon/storage/firstaid/fire = 4,
+		/obj/item/weapon/storage/firstaid/o2 = 4,
+		/obj/item/weapon/storage/firstaid/toxin = 4,
+
+	)
+	contraband = list(
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat = 1,
+	)
+	prices = list(
+
+    )
+	premium = list(
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space = 2,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian = 2,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment = 2,
 	)
 	private = TRUE

@@ -41,6 +41,10 @@ var/global/list/image/fluidtrack_cache=list()
 	var/going_state="blood2"
 	var/updatedtracks=0
 
+	// tracks handle it differently
+	should_merge = FALSE
+	should_dry = FALSE
+
 	// dir = id in stack
 	var/list/setdirs=list(
 		"1"=0,
@@ -161,6 +165,12 @@ var/global/list/image/fluidtrack_cache=list()
 /obj/effect/decal/cleanable/blood/tracks/footprints/claws
 	coming_state = "claw1"
 	going_state  = "claw2"
+
+/obj/effect/decal/cleanable/blood/tracks/snake
+	name = "wet tracks"
+	desc = "They look like still wet tracks left by a giant snake."
+	coming_state = "snake1"
+	going_state  = "snake2"
 
 /obj/effect/decal/cleanable/blood/tracks/wheels
 	name = "wet tracks"

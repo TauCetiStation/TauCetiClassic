@@ -18,3 +18,6 @@
 
 #define ROUND_ASPECT_ALTERNATIVE_RESEARCH "Alternative Research"
 
+#define ROUND_ASPECT_MECHAS "Mechs For Everyone"
+
+#define ROUND_ASPECT_HEALING_ALCOHOL "Healing Alcohol"

@@ -144,7 +144,7 @@
  */
 /datum/religion_rites/standing/animation
 	name = "Анимация"
-	desc = "Возрождает вещи на алтаре."
+	desc = "Возрождает вещи на алтаре. Цена ритуала зависит от количества оживляемых предметов!"
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Я обращаюсь к тебе - Всевышний...",
 							  "...свет, дарованный мудростью возвратившихся богов...",
@@ -158,6 +158,12 @@
 		ASPECT_WEAPON = 1,
 	)
 
+/datum/religion_rites/standing/animation/proc/calculate_new_cost(item_to_anim)
+	favor_cost = round((initial(favor_cost) * religion.members.len * item_to_anim / divine_power), 10)
+
+/datum/religion_rites/standing/animation/reset_rite()
+	favor_cost = initial(favor_cost)
+
 /datum/religion_rites/standing/animation/on_chosen(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
@@ -167,7 +173,7 @@
 	if(!anim_items)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
 		return FALSE
-	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items / divine_power), 10)
+	calculate_new_cost(anim_items)
 	religion.update_rites()
 	return TRUE
 
@@ -180,7 +186,7 @@
 	for(var/obj/item/O in get_turf(AOG))
 		anim_items += O
 
-	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items.len) / divine_power, 10)
+	calculate_new_cost(anim_items.len)
 	religion.update_rites()
 
 	if(!religion.check_costs(favor_cost, piety_cost, user))
@@ -193,6 +199,7 @@
 			R.friends = religion.members
 
 		user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
+	reset_rite()
 	return TRUE
 
 /*

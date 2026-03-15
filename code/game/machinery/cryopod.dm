@@ -29,10 +29,10 @@ var/global/list/frozen_items = list()
 	dat += "<div class='Section__title'>Cryogenic Oversight Control</div>"
 	dat += "<div class='Section'>"
 	dat += "<i>Welcome, [user.real_name].</i><br/><br/>"
-	dat += "<a href='?src=\ref[src];log=1'>View storage log</a><br>"
-	dat += "<a href='?src=\ref[src];item=1'>Recover object</a><br>"
-	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a><br>"
-	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a><br/>"
+	dat += "<a href='byond://?src=\ref[src];log=1'>View storage log</a><br>"
+	dat += "<a href='byond://?src=\ref[src];item=1'>Recover object</a><br>"
+	dat += "<a href='byond://?src=\ref[src];allitems=1'>Recover all objects</a><br>"
+	dat += "<a href='byond://?src=\ref[src];crew=1'>Revive crew</a><br/>"
 	dat += "</div>"
 
 	var/datum/browser/popup = new(user, "window=cryopod_console", src.name)
@@ -94,7 +94,7 @@ var/global/list/frozen_items = list()
 	updateUsrDialog()
 
 /obj/item/weapon/circuitboard/cryopodcontrol
-	name = "Circuit board (Cryogenic Oversight Console)"
+	details = "circuit board (Cryogenic Oversight Console)"
 	build_path = /obj/machinery/computer/cryopod
 	origin_tech = "programming=3"
 
@@ -159,17 +159,25 @@ var/global/list/frozen_items = list()
 
 /obj/machinery/cryopod/atom_init()
 
-	announce = new /obj/item/device/radio/intercom(src)
-
-	if(orient_right)
-		icon_state = "cryosleeper_right"
-	else
-		icon_state = "cryosleeper_left"
+	announce = new /obj/item/device/radio/intercom(null)
 	. = ..()
 
 /obj/machinery/cryopod/Destroy()
 	. = ..()
 	QDEL_NULL(announce)
+
+/obj/machinery/cryopod/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
+	qdel(src)
 
 /obj/machinery/cryopod/proc/delete_objective(datum/objective/target/O)
 	if(!O)
@@ -245,11 +253,6 @@ var/global/list/frozen_items = list()
 				if ((G.fields["name"] == occupant.real_name))
 					qdel(G)
 
-			if(orient_right)
-				icon_state = "cryosleeper_right"
-			else
-				icon_state = "cryosleeper_left"
-
 			//This should guarantee that ghosts don't spawn.
 			occupant.ckey = null
 
@@ -264,6 +267,7 @@ var/global/list/frozen_items = list()
 			qdel(occupant)
 			occupant = null
 
+			open_machine()
 
 /obj/machinery/cryopod/attackby(obj/item/weapon/G, mob/user)
 
@@ -324,15 +328,25 @@ var/global/list/frozen_items = list()
 				preserve_item(object)
 		qdel(O)
 
+/obj/machinery/cryopod/update_icon()
+	if(occupant)
+		icon_state = "cryosleeper_[orient_right ? "right" : "left"]_cl"
+	else
+		icon_state = "cryosleeper_[orient_right ? "right" : "left"]"
+
+/obj/machinery/cryopod/open_machine()
+	occupant = null
+	dropContents()
+	update_icon()
 
 /obj/machinery/cryopod/proc/insert(mob/M)
-	M.forceMove(src)
-	icon_state = "cryosleeper_[orient_right ? "right" : "left"]_cl"
+	M.forceMove(src, keep_grabs = FALSE)
 	to_chat(M, "<span class='notice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
 	to_chat(M, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
 	occupant = M
 	time_entered = world.time
 	set_med_status("*SSD*")
+	update_icon()
 
 /obj/machinery/cryopod/proc/set_med_status(mes)
 	for(var/datum/data/record/R in data_core.general)
@@ -343,7 +357,10 @@ var/global/list/frozen_items = list()
 
 /obj/machinery/cryopod/AltClick(mob/user)
 	. = ..()
-	enter_pod(user)
+	if(occupant)
+		eject()
+	else
+		enter_pod(user)
 
 /obj/machinery/cryopod/relaymove(mob/user)
 	..()
@@ -351,7 +368,8 @@ var/global/list/frozen_items = list()
 
 /obj/machinery/cryopod/MouseDrop_T(mob/target, mob/user)
 	. = ..()
-	enter_pod(user)
+	if(user == target)
+		enter_pod(user)
 
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"
@@ -381,6 +399,9 @@ var/global/list/frozen_items = list()
 	if(user.incapacitated() || !(ishuman(user)))
 		return
 
+	if(!Adjacent(user))
+		return
+
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='notice'>You have no idea how to do that.</span>")
 		return
@@ -404,11 +425,8 @@ var/global/list/frozen_items = list()
 		add_fingerprint(user)
 
 /obj/machinery/cryopod/proc/go_out()
-	occupant.forceMove(get_turf(src))
 	set_med_status("Active")
-	occupant = null
-	icon_state = "cryosleeper_[orient_right ? "right" : "left"]"
-
+	open_machine()
 
 //Attacks/effects.
 /obj/machinery/cryopod/blob_act()

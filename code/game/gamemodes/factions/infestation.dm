@@ -122,14 +122,15 @@
 
 
 /datum/faction/infestation/proc/count_alien_percent()
-	var/total_human = check_crew()
+	var/total_human = check_crew(for_alien = TRUE)
 	var/total_alien = count_hive_power()
 	var/alien_percent = 0
 	if(total_human && total_alien)
 		alien_percent = round(total_alien * 100 / total_human)
 	else if(!total_human && total_alien)
 		alien_percent = WIN_PERCENT
-	. = list(TOTAL_HUMAN = total_human, TOTAL_ALIEN = total_alien, ALIEN_PERCENT = alien_percent)
+	// Order is important. TOTAL_HUMAN, TOTAL_ALIEN, ALIEN_PERCENT
+	. = list(total_human, total_alien, alien_percent)
 
 /datum/faction/infestation/process()
 	var/data = count_alien_percent()

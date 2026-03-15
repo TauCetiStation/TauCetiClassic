@@ -33,6 +33,14 @@
 
 		return "[output][and_text][input[index]]"
 
+/proc/list2text(list/input, separator = ", ")
+	. = ""
+
+	for(var/line in input)
+		if(length(.))
+			. += separator
+		. += line
+
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/list,index)
 	if(istype(list) && list.len)
@@ -844,6 +852,8 @@
 #define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 ///Accesses an associative list, returns null if nothing is found
 #define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
+///Qdel every item in the list before setting the list to null
+#define QDEL_LAZYLIST(L) for(var/I in L) qdel(I); L = null;
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 

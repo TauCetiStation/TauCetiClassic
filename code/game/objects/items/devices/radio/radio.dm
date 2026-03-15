@@ -243,8 +243,6 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				connection = secure_radio_connections[channel]
 				if (!channels[channel]) // if the channel is turned off, don't broadcast
 					return FALSE
-			else
-				// If we were to send to a channel we don't have, drop it.
 		else // If a channel isn't specified, send to common.
 			connection = radio_connection
 			channel = null
@@ -848,8 +846,9 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	icon_state = "radio_grid"
 
 /obj/item/device/radio_grid/proc/attach(obj/item/device/radio/radio)
-	radio.on = TRUE
-	radio.grid = TRUE
+	if(prob(reliability))
+		radio.on = TRUE
+		radio.grid = TRUE
 	qdel(src)
 
 /obj/item/device/radio_grid/proc/dettach(obj/item/device/radio/radio)

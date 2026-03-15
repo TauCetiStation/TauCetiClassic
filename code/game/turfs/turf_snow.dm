@@ -4,9 +4,6 @@
 	icon_state = "snow0"
 	plane = FLOOR_PLANE
 
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	force_lighting_update = TRUE
-
 	basetype = /turf/environment/snow
 	footstep = FOOTSTEP_SNOWSTEP
 	barefootstep = FOOTSTEP_SNOWSTEP
@@ -19,7 +16,7 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 12000 // ~6 snow tiles
 
-	light_color = COLOR_BLUE
+	level_light_source = TRUE
 
 	var/static/datum/dirt_cover/basedatum = /datum/dirt_cover/snow
 	var/static/image/snow_fall_overlay
@@ -33,9 +30,6 @@
 			snow_fall_overlay.plane = GAME_PLANE
 			snow_fall_overlay.layer = 10
 		add_overlay(snow_fall_overlay)
-
-	if(IS_EVEN(x) && IS_EVEN(y))
-		set_light(1.4)
 
 	if(type == /turf/environment/snow)
 		if(prob(27)) // ~= 100*30/110

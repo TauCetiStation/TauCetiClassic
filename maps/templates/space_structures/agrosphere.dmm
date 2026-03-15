@@ -374,10 +374,10 @@
 	},
 /area/space_structures/agrospheregarden)
 "aQ" = (
-/obj/item/weapon/reagent_containers/pill/LSD{
+/obj/item/weapon/reagent_containers/pill/hallucination_pills{
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/pill/LSD{
+/obj/item/weapon/reagent_containers/pill/hallucination_pills{
 	pixel_x = 4;
 	pixel_y = -3
 	},
@@ -611,10 +611,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bq" = (
-/mob/living/simple_animal/pug{
-	faction = "tomato";
-	name = "El Muchacho"
-	},
+/obj/effect/spawner/mob_spawn/pug_agrosphere,
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "br" = (
@@ -808,7 +805,7 @@
 "bM" = (
 /obj/structure/window/thin/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/pill/LSD{
+/obj/item/weapon/reagent_containers/pill/hallucination_pills{
 	pixel_x = -7;
 	pixel_y = 10
 	},
@@ -875,9 +872,7 @@
 "bW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/mob/living/simple_animal/hostile/tomato{
-	faction = "tomato"
-	},
+/obj/effect/spawner/mob_spawn/tomato_agrosphere,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bX" = (
@@ -1071,9 +1066,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/tomato{
-	faction = "tomato"
-	},
+/obj/effect/spawner/mob_spawn/tomato_agrosphere,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1456,9 +1449,7 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
-/mob/living/simple_animal/hostile/tomato{
-	faction = "tomato"
-	},
+/obj/effect/spawner/mob_spawn/tomato_agrosphere,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "KY" = (

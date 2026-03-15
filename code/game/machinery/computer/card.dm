@@ -107,15 +107,41 @@
 	data["all_centcom_access"] = null
 	data["regions"] = null
 
-	data["engineering_jobs"] = format_jobs(engineering_positions)
-	data["medical_jobs"] = format_jobs(medical_positions)
-	data["science_jobs"] = format_jobs(science_positions)
-	data["security_jobs"] = format_jobs(security_positions)
-	data["civilian_jobs"] = format_jobs(civilian_positions)
-	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+	data["engineering_jobs"] = format_jobs(SSjob.departments_occupations[DEP_ENGINEERING])
+	data["medical_jobs"] = format_jobs(SSjob.departments_occupations[DEP_MEDICAL])
+	data["science_jobs"] = format_jobs(SSjob.departments_occupations[DEP_SCIENCE])
+	data["security_jobs"] = format_jobs(SSjob.departments_occupations[DEP_SECURITY])
+	data["civilian_jobs"] = format_jobs(SSjob.departments_occupations[DEP_CIVILIAN])
+	data["representative_jobs"] = format_jobs(SSjob.departments_occupations[DEP_SPECIAL])
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
+
+	if(mode == 2)
+		var/list/jobsCategories = list(
+			list(title = "Command", jobs = SSjob.departments_occupations[DEP_COMMAND], color = "#aac1ee"),
+			list(title = "NT Representatives", jobs = SSjob.departments_occupations[DEP_SPECIAL], color = "#6c7391"),
+			list(title = "Engineering", jobs = SSjob.departments_occupations[DEP_ENGINEERING], color = "#ffd699"),
+			list(title = "Security", jobs = SSjob.departments_occupations[DEP_SECURITY], color = "#ff9999"),
+			list(title = "Synthetic", jobs = SSjob.departments_occupations[DEP_SILICON], color = "#ccffcc"),
+			list(title = "Service", jobs = SSjob.departments_occupations[DEP_CIVILIAN], color = "#cccccc"),
+			list(title = "Medical", jobs = SSjob.departments_occupations[DEP_MEDICAL], color = "#99ffe6"),
+			list(title = "Science", jobs = SSjob.departments_occupations[DEP_SCIENCE], color = "#e6b3e6"),
+		)
+
+		for(var/jobCategory in jobsCategories)
+			var/list/jobsList = jobCategory["jobs"]
+			var/list/newJobsList = list()
+
+			for(var/jobTitle in jobsList)
+				var/datum/job/job = SSjob.name_occupations[jobTitle]
+				if(!job)
+					continue
+				newJobsList += list(list("name" = jobTitle, "quota" = job.quota))
+
+			jobCategory["jobs"] = newJobsList
+
+		data["all_jobs"] = jobsCategories
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
@@ -240,19 +266,16 @@
 						modify.assignment = temp_t
 				else
 					var/list/access = list()
-					if(is_centcom())
-						access = get_centcom_access(t1)
-					else
-						for(var/datum/job/J in SSjob.occupations)
-							if(ckey(J.title) == ckey(t1))
-								jobdatum = J
-								break
-						if(!jobdatum)
-							to_chat(usr, "<span class='warning'>No log exists for this job: [t1]</span>")
-							return
+					for(var/datum/job/J as anything in SSjob.active_occupations)
+						if(ckey(J.title) == ckey(t1))
+							jobdatum = J
+							break
+					if(!jobdatum)
+						to_chat(usr, "<span class='warning'>No log exists for this job: [t1]</span>")
+						return
 
-						access = jobdatum.get_access()
-						new_salary = jobdatum.salary
+					access = jobdatum.get_access()
+					new_salary = jobdatum.salary
 
 					modify.access = access
 					modify.assignment = t1
@@ -321,6 +344,24 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
+
+		if ("up_quota")
+			var/job_name = sanitize(href_list["quotajob_name"], 50)
+			var/datum/job/Job = SSjob.name_occupations[job_name]
+			if(Job)
+				if(Job.quota == QUOTA_WANTED)
+					Job.quota = QUOTA_NEUTRAL
+				else
+					Job.quota = QUOTA_WANTED
+
+		if ("down_quota")
+			var/job_name = sanitize(href_list["quotajob_name"], 50)
+			var/datum/job/Job = SSjob.name_occupations[job_name]
+			if(Job)
+				if(Job.quota == QUOTA_UNWANTED)
+					Job.quota = QUOTA_NEUTRAL
+				else
+					Job.quota = QUOTA_UNWANTED
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

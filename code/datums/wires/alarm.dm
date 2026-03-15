@@ -19,7 +19,7 @@ var/global/const/AALARM_WIRE_AALARM     = 16
 	. += "[(A.shorted || (A.stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!"]"
 	. += "[A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on."]"
 
-/datum/wires/alarm/update_cut(index, mended)
+/datum/wires/alarm/update_cut(index, mended, mob/user)
 	var/obj/machinery/alarm/A = holder
 
 	switch(index)
@@ -28,7 +28,8 @@ var/global/const/AALARM_WIRE_AALARM     = 16
 				A.locked = TRUE
 
 		if(AALARM_WIRE_POWER)
-			A.shock(usr, 50)
+			if(user)
+				A.shock(usr, 50)
 			A.shorted = !mended
 			A.update_icon()
 

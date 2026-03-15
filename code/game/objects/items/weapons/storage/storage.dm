@@ -335,9 +335,6 @@
 	if(!can_be_inserted(I))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/implanter/compressed))
-		return FALSE
-
 	if((istype(I, /obj/item/weapon/packageWrap) || istagger(I)) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
@@ -407,6 +404,10 @@
 		return
 
 	var/turf/T = get_turf(src)
+
+	if(HAS_TRAIT(src, TRAIT_UNDERFLOOR) && T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		return
+
 	hide_from(usr)
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T, NoUpdate = TRUE)

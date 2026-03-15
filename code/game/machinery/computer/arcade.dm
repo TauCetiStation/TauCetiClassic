@@ -74,6 +74,10 @@
 							/obj/item/toy/figure/secofficer					= 1,
 							/obj/item/toy/figure/virologist					= 1,
 							/obj/item/toy/figure/warden						= 1,
+							/obj/item/toy/figure/iaa						= 1,
+							/obj/item/toy/figure/blueofficer				= 1,
+							/obj/item/toy/figure/xenobio					= 1,
+							/obj/item/toy/figure/xenoarcheolog				= 1,
 							/obj/item/toy/prize/poly/polyclassic			= 1,
 							/obj/item/toy/prize/poly/polypink				= 1,
 							/obj/item/toy/prize/poly/polydark				= 1,
@@ -119,7 +123,8 @@
 							/obj/random/plushie								= 1,
 							/obj/random/plushie								= 1,
 							/obj/random/plushie								= 1,
-							/obj/random/plushie								= 1
+							/obj/random/plushie								= 1,
+							/obj/item/toy/foamblade							= 1
 							)
 
 	light_color = "#00ff00"

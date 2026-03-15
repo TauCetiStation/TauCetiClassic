@@ -123,4 +123,9 @@
 /obj/item/weapon/melee/powerfist/update_icon()
 	icon_state = "powerfist_[fisto_setting]"
 
+/obj/item/weapon/melee/powerfist/with_tank/atom_init()
+	. = ..()
+	var/obj/item/weapon/tank/emergency_oxygen/double/new_tank = new(src)
+	tank = new_tank
+
 #undef POWERFIST_MIN_PRESSURE

@@ -27,6 +27,7 @@
 	var/space_empty_levels = 1
 	var/load_junkyard = TRUE
 
+	var/environment_lighting = "starlight"
 	var/minetype = "asteroid"
 	var/smartlight_preset = "default"
 
@@ -141,6 +142,9 @@
 
 	if("station_image" in json)
 		station_image = json["station_image"]
+
+	if("environment_lighting" in json)
+		environment_lighting = json["environment_lighting"]
 
 	if("smartlight_preset" in json)
 		smartlight_preset = json["smartlight_preset"]

@@ -22,9 +22,8 @@
 	affected.Weaken(2)
 	//20% chance to harm a one (little) finger of five on the leg
 	if(istype(A, /obj/structure/table) && ishuman(affected) && prob(50))
-		var/mob/living/carbon/human/H = affected
-		if(H.species && !H.species.flags[NO_PAIN])
-			custom_tablebump_effect(H, A)
+		if(!HAS_TRAIT(affected, TRAIT_NO_PAIN))
+			custom_tablebump_effect(affected, A)
 			return
 	affected.visible_message("<span class='warning'>[affected] [pick("ran", "slammed")] into \the [A]!</span>")
 	affected.apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))

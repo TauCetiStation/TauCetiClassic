@@ -13,9 +13,7 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/laugh/get_impaired_msg(mob/user)
 	return "opens and closes [P_THEIR(user)] mouth, smiling."
@@ -24,6 +22,8 @@
 	var/static/list/laugh_by_gender_species = list(
 		"[SKRELL][FEMALE]" = SOUNDIN_LAUGH_SKRELL_FEMALE,
 		"[SKRELL][MALE]" = SOUNDIN_LAUGH_SKRELL_MALE,
+		"[SERPENTID][NEUTER]" = SOUNDIN_LAUGH_INSECTOID,
+		"[MOTH][NEUTER]" = SOUNDIN_LAUGH_INSECTOID,
 	)
 
 	var/hash = "[user.get_species()][user.gender]"
@@ -47,9 +47,7 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/giggle/get_impaired_msg(mob/user)
 	return "opens and closes [P_THEIR(user)] mouth slightly, smiling."
@@ -69,15 +67,22 @@
 
 	cloud = "cloud-pain"
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/grunt/get_impaired_msg(mob/user)
 	return "clenches [P_THEIR(user)] teeth."
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/grunt_by_gender_species = list(
+		"[SERPENTID]" = SOUNDIN_GRUNT_INSECTOID,
+		"[MOTH]" = SOUNDIN_GRUNT_INSECTOID,
+	)
+
+	var/hash = "[user.get_species()]"
+
+	if(grunt_by_gender_species[hash])
+		return grunt_by_gender_species[hash]
 	return get_sound_by_voice(user, SOUNDIN_MALE_LIGHT_PAIN, SOUNDIN_FEMALE_LIGHT_PAIN)
 
 /datum/emote/human/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
@@ -100,15 +105,22 @@
 
 	cloud = "cloud-pain"
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/groan/get_impaired_msg(mob/user)
 	return "opens [P_THEIR(user)] mouth slightly."
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/grunt_by_gender_species = list(
+		"[SERPENTID]" = SOUNDIN_GRUNT_INSECTOID,
+		"[MOTH]" = SOUNDIN_GRUNT_INSECTOID,
+	)
+
+	var/hash = "[user.get_species()]"
+
+	if(grunt_by_gender_species[hash])
+		return grunt_by_gender_species[hash]
 	var/female_groans = SOUNDIN_FEMALE_PASSIVE_PAIN
 	var/male_groans = SOUNDIN_MALE_PASSIVE_PAIN
 	if(user.get_species() != SKRELL && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66))
@@ -137,15 +149,21 @@
 
 	cloud = "cloud-scream"
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/scream/get_impaired_msg(mob/user)
 	return "opens [P_THEIR(user)] mouth like a fish gasping for air!"
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/scream_by_gender_species = list(
+		"[SERPENTID]" = SOUNDIN_SCREAM_INSECTOID,
+		"[MOTH]" = SOUNDIN_SCREAM_INSECTOID,
+	)
+	var/hash = "[user.get_species()]"
+
+	if(scream_by_gender_species[hash])
+		return scream_by_gender_species[hash]
 	return get_sound_by_voice(user, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_FEMALE_HEAVY_PAIN)
 
 /datum/emote/human/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
@@ -166,10 +184,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/cough/get_impaired_msg(mob/user)
 	return "moves [P_THEIR(user)] face forward as [P_THEY(user)] open and close [P_THEIR(user)] mouth!"
@@ -193,13 +209,12 @@
 
 	sound = 'sound/voice/hiccup.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/hiccup/get_impaired_msg(mob/user)
 	return "spasms suddenly while opening [P_THEIR(user)] mouth."
+
 
 /datum/emote/human/choke
 	key = "choke"
@@ -214,11 +229,9 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
+	required_bodyparts = list(BP_HEAD)
 
 	cloud = "cloud-gasp"
 
@@ -238,13 +251,12 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/snore/get_impaired_msg(mob/user)
 	return "opens [P_THEIR(user)] mouth wide to take a breath."
+
 
 // TO-DO: make so intentional sniffing reveals how a reagent solution held in hand smells?
 /datum/emote/human/sniff
@@ -261,9 +273,7 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/human/sneeze
@@ -280,10 +290,11 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
+
+/datum/emote/human/sneeze/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_SNEEZE_MALE, SOUNDIN_SNEEZE_FEMALE)
 
 
 /datum/emote/human/gasp
@@ -300,13 +311,14 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 	cloud = "cloud-gasp"
+
+/datum/emote/human/gasp/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_GASP_MALE, SOUNDIN_GASP_FEMALE)
 
 
 /datum/emote/human/sigh
@@ -322,10 +334,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/human/sigh/get_impaired_msg(mob/user)
 	return "opens [P_THEIR(user)] mouth."
@@ -346,10 +356,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/human/mumble/get_impaired_msg(mob/user)
 	return "opens and closes [P_THEIR(user)] mouth."
@@ -369,9 +377,7 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_think/get_impaired_msg(mob/user)
 	return "scratches [P_THEIR(user)] chin thougtfully..."
@@ -394,9 +400,7 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_question/get_impaired_msg(mob/user)
 	return "curls [P_THEIR(user)] eyebrows questioningly..?"
@@ -419,9 +423,7 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_excited/get_impaired_msg(mob/user)
 	return "curls [P_THEIR(user)] eyebrows excitedly!"
@@ -445,9 +447,7 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_WOO_MALE, SOUNDIN_WOO_FEMALE)
@@ -467,10 +467,9 @@
 	message_type = SHOWMSG_AUDIO
 
 	age_variations = TRUE
+	soundless_for_mute = FALSE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 	// Mouth getting a bit dry
 	cooldown = 3 SECONDS

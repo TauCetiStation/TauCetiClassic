@@ -21,7 +21,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 		to_chat(src, "<span class='red'>You have OOC muted.</span>")
 		return
 
-	if(prefs.muted & MUTE_OOC)
+	if(prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(src, ADMIN_CD_OOC))
 		to_chat(src, "<span class='red'>You cannot use OOC (muted).</span>")
 		return
 
@@ -45,7 +45,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 			to_chat(src, "<span class='red'>[user_message]</span>")
 			return
 
-		if(handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg,ADMIN_CD_OOC))
 			return
 		if(findtext(msg, "byond://"))
 			to_chat(src, "<b>Advertising other servers is not allowed.</b>")
@@ -146,10 +146,10 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if(!dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "<span class='red'>OOC for dead mobs has been turned off.</span>")
 			return
-		if(prefs.muted & MUTE_OOC)
+		if(prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(src, ADMIN_CD_OOC))
 			to_chat(src, "<span class='red'>You cannot use OOC (muted).</span>")
 			return
-		if(handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg,ADMIN_CD_OOC))
 			return
 		if(findtext(msg, "byond://"))
 			to_chat(src, "<B>Advertising other servers is not allowed.</B>")

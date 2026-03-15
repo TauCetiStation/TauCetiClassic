@@ -18,4 +18,4 @@ var/global/DBConnection/dbcon = new()
 // Xeno/role whitelist database ( code/modules/admin/whitelist.dm )
 //
 var/global/list/role_whitelist   // cache of all ckeys and their roles
-var/global/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "vox", "ian") // Case important, everything must be in lowercase.
+var/global/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "vox", "ian", "pluvian") // Case important, everything must be in lowercase.

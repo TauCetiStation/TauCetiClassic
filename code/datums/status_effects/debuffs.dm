@@ -33,8 +33,8 @@
 	owner.stunned = TRUE
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	owner.drop_from_inventory(owner.l_hand)
-	owner.drop_from_inventory(owner.r_hand)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.stunned = FALSE
@@ -126,8 +126,8 @@
 	owner.drop_from_inventory(owner.r_hand)
 
 /atom/movable/screen/alert/status_effect/asleep
-	name = "Asleep"
-	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
+	name = "Сон"
+	desc = "Вы заснули. Подождите немного, и вы проснетесь, если только у вас всё в порядке..."
 	icon_state = "asleep"
 
 //STASIS
@@ -164,8 +164,13 @@
 	update_time_of_death()
 	handle_stasis_bag()
 
+/datum/status_effect/incapacitating/stasis_bag/on_apply()
+	owner.mob_metabolism_mod.ModMultiplicative(0, src) // stop any metabolism while in the bag
+	return ..()
+
 /datum/status_effect/incapacitating/stasis_bag/on_remove()
 	update_time_of_death()
+	owner.mob_metabolism_mod.RemoveMods(src)
 	return ..()
 
 /datum/status_effect/incapacitating/stasis_bag/be_replaced()
@@ -173,8 +178,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/stasis_bag
-	name = "Stasis Bag"
-	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	name = "Стазисный мешок"
+	desc = "Ваши биологические функции остановились. Вы могли бы жить так вечно, но это довольно скучно."
 	icon_state = "stasis"
 
 /datum/status_effect/remove_trait
@@ -224,8 +229,8 @@
 	if(!isxeno(owner))
 		return
 	var/mob/living/carbon/xenomorph/Q = owner
-	Q.bruteloss = Q.bruteloss / 2
-	Q.fireloss = Q.fireloss / 2
+	Q.adjustBruteLoss(Q.getBruteLoss() / 2)
+	Q.adjustFireLoss(Q.getFireLoss() / 2)
 	Q.maxHealth = Q.maxHealth / 2
 	Q.update_health_hud()
 	Q.heal_rate = Q.heal_rate / 2.5
@@ -332,6 +337,7 @@
 	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))
 
 /// Causes a fake "zap" to the hallucinator.
+// todo: rewrite it to use get_skeleton_appearance() or /obj/effect/electrocute (and remove electrocute dmi states)
 /datum/hallucination/shock
 	var/electrocution_icon = 'icons/mob/human.dmi'
 	var/electrocution_icon_state = "electrocuted_base"

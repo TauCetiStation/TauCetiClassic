@@ -47,7 +47,7 @@ var/global/list/datum/stack_recipe/scrap_recipes = list ( \
 
 /obj/item/stack/sheet/refined_scrap
 	name = "refined scrap"
-	desc = "This is ghetto gold! It could be used as fuel or building material. Even central Command would give cargo points for this."
+	desc = "This is ghetto gold! It could be used as fuel or building material. Even Central Command would give credits for this."
 	icon = 'icons/obj/structures/scrap/refine.dmi'
 	icon_state = "refined"
 	max_amount = 20

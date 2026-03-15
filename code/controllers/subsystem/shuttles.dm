@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(shuttle)
 	ordernum = rand(1, 9000)
 	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod4/station))
 
-	if(!exports_list.len)
+	if(!global.exports_list.len)
 		setupExports()
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
@@ -135,46 +135,14 @@ SUBSYSTEM_DEF(shuttle)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					shake_mobs_in_area(end_location, SOUTH)
 
-					dock_act(end_location, "shuttle_escape")
-					dock_act(/area/centcom/evac, "shuttle_escape")
+					dock_act(end_location, "escape_shuttle")
+
 
 							//pods
-					start_location = locate(/area/shuttle/escape_pod1/transit)
-					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod1")
-						dock_act(/area/centcom/evac, "pod1")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod2/transit)
-					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod2")
-						dock_act(/area/centcom/evac, "pod2")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod3/transit)
-					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod3")
-						dock_act(/area/centcom/evac, "pod3")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod4/transit)
-					end_location = locate(/area/shuttle/escape_pod4/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod4")
-						dock_act(/area/centcom/evac, "pod4")
-
-					shake_mobs_in_area(end_location, WEST)
-
+					pod_docking(/area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod1/centcom, "pod1")
+					pod_docking(/area/shuttle/escape_pod2/transit, /area/shuttle/escape_pod2/centcom, "pod2")
+					pod_docking(/area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod3/centcom, "pod3")
+					pod_docking(/area/shuttle/escape_pod4/transit, /area/shuttle/escape_pod4/centcom, "pod4")
 					online = 0
 
 					return TRUE
@@ -211,8 +179,7 @@ SUBSYSTEM_DEF(shuttle)
 
 				start_location.move_contents_to(end_location)
 
-				dock_act(end_location, "shuttle_escape")
-				dock_act(/area/station/hallway/secondary/exit, "arrival_escape")
+				dock_act(end_location, "escape_shuttle")
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
@@ -222,8 +189,8 @@ SUBSYSTEM_DEF(shuttle)
 
 				world.send2bridge(
 					type = list(BRIDGE_ROUNDSTAT),
-					attachment_title = "The shuttle docked to the station",
-					attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+					attachment_title = "Шаттл пристыковался к станции",
+					attachment_msg = BRIDGE_JOIN_LINKS,
 					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 				)
 
@@ -236,8 +203,7 @@ SUBSYSTEM_DEF(shuttle)
 			if(!station_doors_bolted && timeleft < 10)
 				station_doors_bolted = TRUE
 
-				undock_act(/area/shuttle/escape/station, "shuttle_escape")
-				undock_act(/area/station/hallway/secondary/exit, "arrival_escape")
+				undock_act(/area/shuttle/escape/station, "escape_shuttle")
 
 			if(timeleft > 0)
 				if(timeleft == 13)
@@ -276,77 +242,13 @@ SUBSYSTEM_DEF(shuttle)
 				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
-				if(alert == 0) // Crew Transfer not for pods
-
-					var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg' // successful undocking, clean flight, yay!
-					if(prob(33))
-						ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg' // the escape pod almost crashed into something, damn it!
-					start_location = locate(/area/shuttle/escape_pod1/station)
-					end_location = locate(/area/shuttle/escape_pod1/transit)
-					end_location.parallax_movedir = EAST
-					start_location.move_contents_to(end_location, null, NORTH)
-					undock_act(start_location, "pod1")
-					undock_act(/area/station/maintenance/chapel || /area/station/maintenance/bridge, "pod1")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
-
-					start_location = locate(/area/shuttle/escape_pod2/station)
-					end_location = locate(/area/shuttle/escape_pod2/transit)
-					end_location.parallax_movedir = EAST
-					start_location.move_contents_to(end_location, null, NORTH)
-					undock_act(start_location, "pod2")
-					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/civilian/gym, "pod2")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
-
-					start_location = locate(/area/shuttle/escape_pod3/station)
-					end_location = locate(/area/shuttle/escape_pod3/transit)
-					end_location.parallax_movedir = EAST
-					start_location.move_contents_to(end_location, null, NORTH)
-					undock_act(start_location, "pod3")
-					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig || /area/station/security/prison, "pod3")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
-
-					start_location = locate(/area/shuttle/escape_pod4/station)
-					end_location = locate(/area/shuttle/escape_pod4/transit)
-					end_location.parallax_movedir = WEST
-					start_location.move_contents_to(end_location, null, EAST)
-					undock_act(start_location, "pod4")
-					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod5/station)
-					end_location = locate(/area/shuttle/escape_pod5/transit)
-					end_location.parallax_movedir = NORTH
-					start_location.move_contents_to(end_location, null, SOUTH)
-					undock_act(start_location, "pod5")
-					undock_act(/area/station/hallway/secondary/entry, "pod5")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, SOUTH)
-
-					start_location = locate(/area/shuttle/escape_pod6/station)
-					end_location = locate(/area/shuttle/escape_pod6/transit)
-					end_location.parallax_movedir = NORTH
-					start_location.move_contents_to(end_location, null, SOUTH)
-					undock_act(start_location, "pod6")
-					undock_act(/area/station/hallway/secondary/entry, "pod6")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, SOUTH)
-
+				try_launch_pod(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod1/transit, EAST, WEST, "pod1")
+				try_launch_pod(/area/shuttle/escape_pod2/station, /area/shuttle/escape_pod2/transit, EAST, WEST, "pod2")
+				try_launch_pod(/area/shuttle/escape_pod3/station, /area/shuttle/escape_pod3/transit, EAST, WEST, "pod3")
+				try_launch_pod(/area/shuttle/escape_pod4/station, /area/shuttle/escape_pod4/transit, WEST, EAST, "pod4")
+				try_launch_pod(/area/shuttle/escape_pod5/station, /area/shuttle/escape_pod5/transit, NORTH, SOUTH, "pod5")
+				try_launch_pod(/area/shuttle/escape_pod6/station, /area/shuttle/escape_pod6/transit, NORTH, SOUTH, "pod6")
+				if(alert == 0)
 					announce_emer_left.play()
 				else
 					announce_crew_left.play()
@@ -420,9 +322,9 @@ SUBSYSTEM_DEF(shuttle)
 					step(L, fall_direction)
 		CHECK_TICK
 
-/datum/controller/subsystem/shuttle/proc/dock_act(area_type, door_tag)
+/datum/controller/subsystem/shuttle/proc/dock_act(shuttle_area, door_tag)
 	//todo post_signal? & doors with door_tag near shuttle zone
-	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+	var/area/A = ispath(shuttle_area) ? locate(shuttle_area) : shuttle_area
 
 	for(var/obj/machinery/door/DOOR in A)
 		if(DOOR.dock_tag == door_tag)
@@ -433,10 +335,13 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.locked = 0
 				D.open()
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.unbolt()
 
-/datum/controller/subsystem/shuttle/proc/undock_act(area_type, door_tag)
+/datum/controller/subsystem/shuttle/proc/undock_act(shuttle_area, door_tag)
 	//todo post_signal? & doors with door_tag near shuttle zone
-	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+	var/area/A = ispath(shuttle_area) ? locate(shuttle_area) : shuttle_area
 
 	for(var/obj/machinery/door/DOOR in A)
 		if(DOOR.dock_tag == door_tag)
@@ -447,6 +352,9 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.close()
 				D.locked = 1
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.close_unsafe(TRUE)
 
 /datum/controller/subsystem/shuttle/proc/send()
 	var/area/from
@@ -455,17 +363,17 @@ SUBSYSTEM_DEF(shuttle)
 		if(1)
 			from = locate(SUPPLY_STATION_AREATYPE)
 			dest = locate(SUPPLY_DOCK_AREATYPE)
-			undock_act(/area/station/cargo/storage, "supply_dock")
 			at_station = 0
 		if(0)
 			from = locate(SUPPLY_DOCK_AREATYPE)
 			dest = locate(SUPPLY_STATION_AREATYPE)
-			dock_act(/area/station/cargo/storage, "supply_dock")
 			at_station = 1
 	moving = 0
 
+	undock_act(from, "supply_dock")
 	clean_arriving_area(dest)
 	from.move_contents_to(dest)
+	dock_act(dest, "supply_dock")
 
 //Check whether the shuttle is allowed to move
 /datum/controller/subsystem/shuttle/proc/can_move()
@@ -508,7 +416,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(!shuttle)
 		return
 
-	if(!exports_list.len) // No exports list? Generate it!
+	if(!global.exports_list.len) // No exports list? Generate it!
 		setupExports()
 
 	var/msg = ""
@@ -522,7 +430,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(sold_atoms)
 		sold_atoms += "."
 
-	for(var/a in exports_list)
+	for(var/a in global.exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
 		if(!export_text)
@@ -530,8 +438,8 @@ SUBSYSTEM_DEF(shuttle)
 
 		msg += export_text + "\n"
 		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
-		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "NTS Велосити", tax)
-		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Прибыль с экспорта", "NTS Велосити", E.total_cost - tax)
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "НТС Велосити", tax)
+		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Прибыль с экспорта", "НТС Велосити", E.total_cost - tax)
 		E.export_end()
 
 	centcom_message = msg
@@ -665,10 +573,42 @@ SUBSYSTEM_DEF(shuttle)
 	endtime = REALTIMEOFDAY + (get_shuttle_arrive_time()*10 - ticksleft)
 	return
 
+/datum/controller/subsystem/shuttle/proc/check_emag(area/escape_pod)
+	var/obj/item/device/radio/intercom/pod/int = locate(/obj/item/device/radio/intercom/pod) in escape_pod
+	if(isnull(int))
+		return
+	return int.emagged
+
+/datum/controller/subsystem/shuttle/proc/try_launch_pod(area/escape_pod_start, area/escape_pod_end, move_content_dir, shake_dir, loc_name)
+	if(!locate(escape_pod_start) in all_areas)
+		return
+	var/area/start = locate(escape_pod_start)
+	var/area/transit = locate(escape_pod_end)
+	if(alert == 0 || check_emag(start))
+		var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg'
+		if(prob(33))
+			ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg'
+		transit.parallax_movedir = move_content_dir
+		start.move_contents_to(transit, null, move_content_dir)
+		for(var/mob/M in transit)
+			M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
+		shake_mobs_in_area(transit, shake_dir)
+		undock_act(start, loc_name)
+
+/datum/controller/subsystem/shuttle/proc/pod_docking(area/start, area/end, loc_name)
+	var/area/transit = locate(start)
+	var/area/centcom = locate(end)
+	if(prob(5) || check_emag(transit)) // 5% that they survive
+		transit.move_contents_to(centcom, null, NORTH)
+		dock_act(centcom, loc_name)
+	shake_mobs_in_area(centcom, EAST)
+
+
 /datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
 	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
 
 /datum/controller/subsystem/shuttle/proc/start_transit()
+	SSticker.load_arena()
 	SSrating.start_rating_collection()
 
 /obj/effect/bgstar

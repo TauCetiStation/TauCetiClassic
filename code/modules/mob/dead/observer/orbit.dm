@@ -69,6 +69,10 @@
 			data["dead"] += list(serialized)
 			continue
 
+		if(istype(M, /mob/camera/Eye/ai))
+			data["alive"] += list(serialized)
+			continue
+
 		if(M.mind == null)
 			data["npcs"] += list(serialized)
 			continue

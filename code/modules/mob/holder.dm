@@ -88,6 +88,13 @@
 	icon_state = "drone"
 	flags = HEAR_PASS_SAY
 
+/obj/item/weapon/holder/malf_drone
+	name = "strange drone"
+	desc = "Крайне странный дрон. В его мозгу поплавилась не одна микросхема."
+	icon_state = "drone"
+	origin_tech = "magnets=3;engineering=5"
+	flags = HEAR_PASS_SAY
+
 /obj/item/weapon/holder/cat
 	name = "cat"
 	desc = "It's a cat. Meow."
@@ -127,7 +134,6 @@
 /obj/item/weapon/holder/monkey
 	name = "monkey"
 	desc = "It's a monkey. Ook."
-	icon_state = "cat"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	flags = HEAR_PASS_SAY
@@ -150,7 +156,41 @@
 	icon_state = "skrellkey1"
 	flags = HEAR_PASS_SAY
 
+/obj/item/weapon/holder/monkey/pluvia
+	name = "pluvian"
+	desc = "Оно никогда не существовало в дикой природе.."
+	icon_state = "pluvian"
+	flags = HEAR_PASS_SAY
+
 /obj/item/weapon/holder/monkey/punpun
 	name = "punpun"
 	icon_state = "punpun1"
 	flags = HEAR_PASS_SAY
+
+/obj/item/weapon/holder/nabber
+	name = "larva"
+	desc = "It's a sugar larva."
+	icon_state = "nabber"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0
+
+/obj/item/weapon/holder/moth_small
+	name = "small moth"
+	desc = "It's a sugar moth."
+	icon_state = "moth_plushie"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0
+
+/obj/item/weapon/holder/mothroach
+	name = "mothroach"
+	desc = "It's a sugar mothroach."
+	icon_state = "mothroach"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0
+
+/obj/item/weapon/holder/snake
+	name = "snake"
+	desc = "It's a sugar larva."
+	icon_state = "snake"
+	flags = HEAR_PASS_SAY
+	slot_flags = 0

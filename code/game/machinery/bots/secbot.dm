@@ -97,7 +97,7 @@
 		Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 		Maintenance panel panel is [open ? "opened" : "closed"]"},
 
-		"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
+		"<A href='byond://?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>
@@ -107,11 +107,11 @@
 			Report Arrests: []<BR>
 			Auto Patrol: []"},
 
-			"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-			"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-			"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-			"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+			"<A href='byond://?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+			"<A href='byond://?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+			"<A href='byond://?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+			"<A href='byond://?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
+			"<A href='byond://?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 	var/datum/browser/popup = new(user, "window=autosec", src.name)
 	popup.set_content(dat)

@@ -140,7 +140,7 @@
 		current_alerts -= remove_alert_from
 
 /atom/movable/screen/alert/aura_healing
-	name = "Aura Healing"
+	name = "Целительная аура"
 	icon_state = "template"
 
 #undef HEAL_EFFECT_COOLDOWN

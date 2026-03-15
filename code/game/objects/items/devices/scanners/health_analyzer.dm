@@ -17,6 +17,7 @@
 	var/last_scan = ""
 	var/last_scan_name = ""
 	var/scan_hallucination = FALSE
+	var/advanced = FALSE
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	add_fingerprint(user)
@@ -45,7 +46,7 @@
 		popup.set_content(message)
 		popup.open()
 		return
-	var/dat = health_analyze(M, user, mode, output_to_chat, null, scan_hallucination)
+	var/dat = health_analyze(M, user, mode, output_to_chat, null, scan_hallucination, advanced)
 	last_scan = dat
 	last_scan_name = M.name
 	if(output_to_chat)
@@ -54,6 +55,21 @@
 	var/datum/browser/popup = new(user, "[M.name]_scan_report", "Результаты сканирования [M.name]", 400, 400, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
+
+/obj/item/device/healthanalyzer/examine(mob/user)
+	. = ..()
+	if(advanced)
+		to_chat(user, "[capitalize(CASE(src, NOMINATIVE_CASE))] имеет модуль анализатора реагентов и может показывать находящиеся в пациенте реагенты!")
+	else
+		to_chat(user, "[capitalize(CASE(src, NOMINATIVE_CASE))] может быть улучшен с помощью анализатора реагентов!")
+
+/obj/item/device/healthanalyzer/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I, /obj/item/device/mass_spectrometer) && !advanced)
+		advanced = TRUE
+		icon_state = "health_adv"
+		to_chat(user, "Вы подсоединяете анализатор реагентов в пазы [CASE(src, GENITIVE_CASE)].")
+		qdel(I)
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	var/datum/browser/popup = new(user, "[last_scan_name]_scan_report", "Результаты сканирования [last_scan_name]", 400, 400, ntheme = CSS_THEME_LIGHT)
@@ -95,12 +111,11 @@
 	if(!used)
 		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
 		used = 1
-		icon_state = "health1"
 		spawn(cooldown) // splits off to handle the cooldown while handling wavelength
 			used = 0
-			icon_state = "health"
 		to_chat(user,"<span class='warning'>Успешное облучение [M].</span>")
 		M.log_combat(user, "irradiated with [name]")
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
@@ -115,18 +130,18 @@
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
 	user.set_machine(src)
 	var/cooldown = round(max(10, (intensity*5 - wavelength/4)))
-	var/dat = "Облучение: <A href='?src=\ref[src];rad=1'>[irradiate ? "Вкл" : "Выкл"]</A><br>"
+	var/dat = "Облучение: <A href='byond://?src=\ref[src];rad=1'>[irradiate ? "Вкл" : "Выкл"]</A><br>"
 
 	dat += {"
 	Интенсивность излучения:
-	<A href='?src=\ref[src];radint=-5'>-</A><A href='?src=\ref[src];radint=-1'>-</A>
+	<A href='byond://?src=\ref[src];radint=-5'>-</A><A href='byond://?src=\ref[src];radint=-1'>-</A>
 	[intensity]
-	<A href='?src=\ref[src];radint=1'>+</A><A href='?src=\ref[src];radint=5'>+</A><BR>
+	<A href='byond://?src=\ref[src];radint=1'>+</A><A href='byond://?src=\ref[src];radint=5'>+</A><BR>
 
 	Длина волны излучения:
-	<A href='?src=\ref[src];radwav=-5'>-</A><A href='?src=\ref[src];radwav=-1'>-</A>
+	<A href='byond://?src=\ref[src];radwav=-5'>-</A><A href='byond://?src=\ref[src];radwav=-1'>-</A>
 	[(wavelength+(intensity*4))]
-	<A href='?src=\ref[src];radwav=1'>+</A><A href='?src=\ref[src];radwav=5'>+</A><BR>
+	<A href='byond://?src=\ref[src];radwav=1'>+</A><A href='byond://?src=\ref[src];radwav=5'>+</A><BR>
 	Перезарядка лазера: [cooldown] секунд<BR>
 	"}
 
@@ -156,6 +171,8 @@
 
 /obj/item/device/healthanalyzer/psychology
 	name = "Health and Mental Analyzer"
+
 	cases = list("анализатор здоровья и психики", "анализатора здоровья и психики", "анализатору здоровья и психики", "анализатор здоровья психики", "анализатором здоровья и психики", "анализаторе здоровья и психики")
 	desc = "Анализатор здоровья и психики, способный просканировать жизненные и психические показатели пациента."
 	scan_hallucination = TRUE
+	icon_state = "psyholog"

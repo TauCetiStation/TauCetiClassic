@@ -8,7 +8,7 @@
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
-		if(target.species.flags[NO_SCAN] || target.species.flags[IS_SYNTHETIC])
+		if(HAS_TRAIT(target, TRAIT_INCOMPATIBLE_DNA) || target.species.flags[IS_SYNTHETIC])
 			charge_counter = charge_max
 			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
@@ -150,7 +150,7 @@
 		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
-		target.setOxyLoss(0) //In case the shadowling was choking them out
+		target.resetOxyLoss() //In case the shadowling was choking them out
 		add_faction_member(faction, target)
 		if(M && M.role)
 			var/datum/role/thrall/thrall = M.role
@@ -275,7 +275,6 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
-		H.regenerate_icons()
 
 /obj/effect/proc_holder/spell/targeted/collective_mind
 	name = "Collective Hivemind"
@@ -385,7 +384,10 @@
 	custom_metabolism = 100
 
 /datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(!isshadowling(M) || !isshadowthrall(M))
 		to_chat(M, "<span class='warning bold'>You breathe in the black smoke, and your eyes burn horribly!</span>")
 		M.eye_blind = 5
@@ -655,8 +657,7 @@
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
-		var/datum/species/S = all_species[target.get_species()]
-		if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
+		if(!ishuman(target) || target.get_species() == GOLEM)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return

@@ -39,12 +39,23 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 	var/two_hand_weapon = FALSE
+	var/burst = 1 //burst size
+	var/burst_delay = 1 //cooldown between burst shots
+	var/spread_increase = 0 // per shot
+	var/spread_max = 0
+	var/spread = 0
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
 /datum/action/item_action/hands_free/switch_gun
 	name = "Switch Gun"
+
+/obj/item/weapon/gun/process()
+	if(spread == 0)
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		spread = clamp(spread - 0.1, 0, spread_max)
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()
@@ -54,12 +65,12 @@
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/weapon/gun/proc/process_chamber()
-	return 0
+	return FALSE
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
@@ -68,6 +79,11 @@
 		if(M.get_inactive_hand())
 			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
 			return FALSE
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.can_use_two_hands())
+				to_chat(M, "<span class='notice'>Both of your hands must be functional to fire this weapon!</span>")
+				return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
@@ -80,12 +96,21 @@
 		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
 		if(two_hand_weapon != DESIRABLE_TWOHAND)
 			shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+			if(spread_increase)
+				spread = clamp(spread + spread_increase, 0, spread_max)
+				START_PROCESSING(SSfastprocess, src)
 		if(two_hand_weapon == DESIRABLE_TWOHAND)
 			//No OPTIMAL_POWER_RECOIL only for increasing user's motivation to drop other hand
 			if(user.get_inactive_hand())
 				shake_camera(user, recoil + 2, recoil + 1)
+				if(spread_increase)
+					spread = clamp(spread + spread_increase + 1, 0, spread_max)
+					START_PROCESSING(SSfastprocess, src)
 			else
 				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+				if(spread_increase)
+					spread = clamp(spread + spread_increase, 0, spread_max)
+					START_PROCESSING(SSfastprocess, src)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -159,7 +184,7 @@
 				var/going_to_explode = 0
 				if(H.ClumsyProbabilityCheck(50))
 					going_to_explode = 1
-				if(chambered && chambered.crit_fail && prob(10))
+				if(chambered && chambered.crit_fail && !user.mood_prob(90))
 					going_to_explode = 1
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)
@@ -174,25 +199,28 @@
 		return
 
 	if (!ready_to_fire())
-		if (world.time % 3) //to prevent spam
-			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
-	if(chambered)
-		if(point_blank)
-			if(!chambered.BB.fake)
-				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
-			chambered.BB.damage *= 1.3
-		if(!chambered.fire(src, target, user, params, , silenced))
-			shoot_with_empty_chamber(user)
-		else
-			shoot_live_shot(user)
-			user.newtonian_move(get_dir(target, user))
-	else
-		shoot_with_empty_chamber(user)
-	process_chamber()
-	update_icon()
-	update_inv_mob()
 
+	user.next_click = world.time + (burst - 1) * burst_delay
+	for(var/i in 1 to burst)
+		if(chambered)
+			if(point_blank)
+				if(!chambered.BB.fake)
+					user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+				chambered.BB.damage *= 1.3
+			if(!chambered.fire(src, target, user, params, , silenced))
+				shoot_with_empty_chamber(user)
+				break
+			else
+				shoot_live_shot(user)
+				user.newtonian_move(get_dir(target, user))
+		else
+			shoot_with_empty_chamber(user)
+			break
+		sleep(burst_delay)
+		process_chamber()
+		update_icon()
+		update_inv_mob()
 
 /obj/item/weapon/gun/proc/can_fire()
 	return
@@ -245,6 +273,8 @@
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
 			else if(!chambered.BB.nodamage)
+				if(ishuman(user))
+					SEND_SIGNAL(user, COMSIG_HUMAN_ON_SUICIDE, src)
 				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
 				user.death()
 			chambered.BB = null

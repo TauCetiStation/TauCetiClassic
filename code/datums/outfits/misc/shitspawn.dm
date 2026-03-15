@@ -266,7 +266,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	l_pocket = /obj/item/weapon/melee/energy/sword
 	r_pocket = /obj/item/weapon/grenade/empgrenade
-	belt = /obj/item/weapon/gun/projectile/automatic/silenced
+	belt = /obj/item/weapon/gun/projectile/automatic/pistol/silenced
 
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
@@ -387,6 +387,7 @@
 
 	H.mutations += list(NO_SHOCK, TK, REMOTE_TALK)
 	H.update_mutations()
+	H.update_body(update_preferences = TRUE)
 
 /datum/outfit/velocity
 	belt = /obj/item/device/pda/velocity
@@ -555,10 +556,8 @@
 /datum/outfit/jolly_gravedigger/post_equip(mob/living/carbon/human/H)
 	H.real_name = pick("Tyler", "Tyrone", "Tom", "Timmy", "Takeuchi", "Timber", "Tyrell")
 
-	H.s_tone = max(min(round(rand(130, 170)), 220), 1)
-	H.s_tone = -H.s_tone + 35
-
-	H.apply_recolor()
+	H.s_tone = random_skin_tone()
+	H.update_body(update_preferences = TRUE)
 
 /datum/outfit/jolly_gravedigger/surpeme
 	name = "jolly gravedigger supreme"

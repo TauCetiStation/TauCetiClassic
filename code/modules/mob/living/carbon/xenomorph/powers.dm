@@ -220,9 +220,9 @@
 /obj/effect/proc_holder/spell/targeted/screech/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
 	alien.adjustToxLoss(-plasma_cost)
-	alien.create_shriekwave()
+	alien.create_shriekwave(shriekwaves_left = 15)
 	for(var/mob/living/L as anything in targets)
-		if(L.stat == DEAD || isxeno(L) || L.flags & GODMODE)
+		if(L.stat == DEAD || isxeno(L) || HAS_TRAIT(L, ELEMENT_TRAIT_GODMODE))
 			continue
 		if(!ishuman(L))
 			to_chat(L, "<span class='danger'>You feel strong vibrations.</span>")
@@ -233,7 +233,7 @@
 			to_chat(H, "<span class='danger'>You feel strong vibrations and quiet noise...</span>")
 			H.Stun(2)
 			continue
-		if(H.species.flags[NO_BREATHE] || H.species.flags[NO_PAIN]) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems and vox armalis get less debuffs
+		if(HAS_TRAIT(H, TRAIT_NO_BREATHE) || HAS_TRAIT(H, TRAIT_NO_PAIN)) // so IPCs, dioneae, abductors, skeletons, zombies, shadowlings, golems and vox armalis get less debuffs
 			to_chat(H, "<span class='danger'>You feel strong vibrations and loud noise, but you're strong enough to stand it!</span>")
 			H.Stun(2)
 			continue
@@ -498,6 +498,33 @@
 	user.visible_message("<span class='warning'><B>[user]</B> emits faint purple cloud.</span>", "<span class='notice'>You let some phoron out.</span>")
 	user.adjustToxLoss(-plasma_cost)
 	T.assume_gas("phoron", 25, user.bodytemperature) // give 25 moles of phoron (approx. 0.25% of air in room like Bar)
+
+/obj/effect/proc_holder/spell/no_target/xeno_turret
+	name = "Поставить турель"
+	desc = "Поставить турель, стреляющую кислотными плевками."
+	charge_max = 2000
+	charge_type = "recharge"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	action_background_icon_state = "bg_alien"
+	plasma_cost = 400
+	action_icon_state = "acid_turret"
+
+/obj/effect/proc_holder/spell/no_target/xeno_turret/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	if(ALREADY_STRUCTURE_THERE(user))
+		if(try_start)
+			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
+		return FALSE
+	if(!CHECK_WEEDS(user))
+		if(try_start)
+			to_chat (user, "<span class='warning'>You can only build on weeds.</span>")
+		return FALSE
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/xeno_turret/cast(list/targets, mob/user = usr)
+	user.visible_message("<span class='notice'><B>[user]</B> has planted acid turret.</span>", "<span class='notice'>You plant acid turret.</span>")
+	new /mob/living/simple_animal/hostile/pylon/aliens(user.loc)
 
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS

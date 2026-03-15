@@ -6,7 +6,7 @@
 	name = "black gloves"
 	desc = "Heaped gloves with a bunch of all sorts of electronics."
 	icon_state = "marinad"
-	item_state = "marinad"
+	item_state = "bgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	cold_protection = ARMS
@@ -105,10 +105,12 @@
 			calc_power *= H.get_siemens_coefficient_organ(BP)
 		L.visible_message("<span class='warning bold'>[L] has been touched with the gloves by [attacker]!</span>")
 		L.log_combat(attacker, "stungloved with [name]")
+		SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, L)
 		L.apply_damage(calc_power, HALLOSS)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 		s.set_up(3, 1, L)
 		s.start()
+		return TRUE
 	else if(selected_mode == GLOVES_MODE_KILL)
 		cell.use(cell_use)
 		var/mob/living/carbon/human/H = A
@@ -129,4 +131,6 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(3, 1, L)
 			s.start()
-	return TRUE
+		return TRUE
+	else if(selected_mode == GLOVES_MODE_OFF)
+		return FALSE

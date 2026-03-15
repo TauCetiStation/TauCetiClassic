@@ -11,6 +11,8 @@
 	damage_deflection = 15
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -87,7 +89,7 @@
 	for(var/obj/item/I in src.loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(!I.anchored)
+		if(!I.anchored && !istype(I, /obj/item/weapon/paper/sticker))
 			I.forceMove(src)
 			itemcount++
 
@@ -178,6 +180,9 @@
 	else if(istagger(W))
 		return
 
+	else if(istype(W, /obj/item/weapon/paper/sticker))
+		return
+
 	else
 		attack_hand(user)
 
@@ -187,7 +192,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())
 			return FALSE
-		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
+		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING))
 			if(opened)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
@@ -296,3 +301,14 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
+
+/obj/structure/closet/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliverycloset"
+	P.add_texture(texture_name, details_name)
+
+	welded = TRUE
+
+	forceMove(P)
+
+	return P

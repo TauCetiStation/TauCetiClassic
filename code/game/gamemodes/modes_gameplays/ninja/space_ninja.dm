@@ -79,11 +79,10 @@
 	var/mob/living/carbon/human/new_ninja = new(spawn_point.loc)
 	var/ninja_title = pick(ninja_titles)
 	var/ninja_name = pick(ninja_names)
-	new_ninja.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.randomize_appearance_for(new_ninja)
-	new_ninja.real_name = "[ninja_title] [ninja_name]"
+	new_ninja.randomize_appearance()
+	new_ninja.name = "[ninja_title] [ninja_name]"
+	new_ninja.real_name = new_ninja.name
 	new_ninja.dna.ready_dna(new_ninja)
 	new_ninja.create_mind_space_ninja()
 	new_ninja.equip_space_ninja()
@@ -153,10 +152,12 @@
 		n_gloves = U.gloves
 		n_gloves.canremove=0
 
+	U.regenerate_icons()
+
 	return TRUE
 
 //This proc allows the suit to be taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
+/obj/item/clothing/suit/space/space_ninja/proc/unlock_suit(mob/living/carbon/human/U)
 	affecting = null
 	canremove = 1
 	slowdown = 0.5
@@ -172,6 +173,8 @@
 		n_gloves.canremove=1
 		n_gloves.candrain=0
 		n_gloves.draining=0
+
+	U.regenerate_icons()
 
 //Allows the mob to grab a stealth icon.
 /mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.

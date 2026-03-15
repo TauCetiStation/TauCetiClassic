@@ -33,7 +33,7 @@
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_ahelp_reply(whom, reply_type)
-	if(prefs.muted & MUTE_ADMINHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>")
 		return
 	var/client/C
@@ -64,7 +64,7 @@
 //Fetching a message if needed. src is the sender and C is the target client
 
 /client/proc/cmd_admin_pm(whom, msg)
-	if(prefs.muted & MUTE_ADMINHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat_admin_pm(src, "<span class='warning'>Error: Private-Message: You are unable to use PM-s (muted).</span>")
 		return
 
@@ -94,7 +94,7 @@
 		if(!msg)
 			return
 
-		if(prefs.muted & MUTE_ADMINHELP) // maybe client were muted while typing input.
+		if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM)) // maybe client were muted while typing input.
 			to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: You are unable to use admin PM-s (muted).</span>")
 			return
 
@@ -106,7 +106,7 @@
 				current_ticket.MessageNoRecipient(msg)
 			return
 
-	if (handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if (handle_spam_prevention(msg,ADMIN_CD_PM))
 		return
 
 	if(recipient.holder)

@@ -47,10 +47,12 @@
 									  "<span class='warning'>You hear the operation of some mechanism.</span>")
 					//Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					feedback_add_details("handcuffs","B")
+					playsound(src,'sound/weapons/legtrap.ogg', VOL_EFFECTS_MASTER)
 		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !isconstruct(AM) && !isshade(AM) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health -= 20
+			playsound(src,'sound/weapons/legtrap.ogg', VOL_EFFECTS_MASTER)
 
 		icon_state = "beartrap[armed]"
 
@@ -77,6 +79,12 @@
 	if(!isliving(hit_atom))
 		return
 	var/mob/living/L = hit_atom
+	if(L.has_status_effect(STATUS_EFFECT_ALERTNESS) && !L.incapacitated())
+		throw_at(throwingdatum.thrower, throw_range, throw_speed, L) // throw bola back
+		L.visible_message("<span class='danger'>\The [L] throws \the [src] away from him!</span>",
+		                "<span class='notice'>You're pushing \the [src] away from you!</span>",
+						"<span class='danger'>You hear something flying at a very fast speed.</span>")
+		return
 	if(!iscarbon(L))
 		L.Weaken(weaken)
 		qdel(src)
@@ -88,6 +96,17 @@
 						"<span class='notice'>You hear something flying at a very fast speed.</span>")
 		feedback_add_details("handcuffs","B")
 		C.Weaken(weaken)
+
+	if(isxenoadult(C) && C.stat == CONSCIOUS)
+		C.visible_message("<span class='danger'>\The [src] ensnares [C]!</span>",
+		    "<span class='userdanger'>\The [src] ensnares you!</span>",
+			"<span class='notice'>You hear something flying at a very fast speed.</span>")
+		if(!isxenoqueen(C))
+			C.Stun(weaken, TRUE)
+			C.Weaken(weaken, TRUE)
+		for(var/mob/living/carbon/xenomorph/humanoid/XH in range(7, C))
+			XH.apply_status_effect(STATUS_EFFECT_ALERTNESS, 1 MINUTE)
+		qdel(src)
 
 //traitor variant
 /obj/item/weapon/legcuffs/bola/tactical

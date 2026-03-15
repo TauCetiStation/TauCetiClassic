@@ -70,6 +70,7 @@ var/global/list/slot_equipment_priority = list(
 	SLOT_W_UNIFORM,
 	SLOT_WEAR_SUIT,
 	SLOT_WEAR_MASK,
+	SLOT_NECK,
 	SLOT_HEAD,
 	SLOT_SHOES,
 	SLOT_GLOVES,
@@ -185,7 +186,6 @@ var/global/list/slot_equipment_priority = list(
 
 		l_hand = W	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_L_HAND)
 		W.slot_equipped = SLOT_L_HAND
 //		l_hand.screen_loc = ui_lhand
@@ -214,7 +214,6 @@ var/global/list/slot_equipment_priority = list(
 
 		r_hand = W
 		W.plane = ABOVE_HUD_PLANE
-		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_R_HAND)
 		W.slot_equipped = SLOT_R_HAND
 //		r_hand.screen_loc = ui_rhand
@@ -250,7 +249,6 @@ var/global/list/slot_equipment_priority = list(
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
 		W.slot_equipped = initial(W.slot_equipped)
 		return 0
@@ -338,7 +336,6 @@ var/global/list/slot_equipment_priority = list(
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
-	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 
 	if(isitem(O))
@@ -387,6 +384,7 @@ var/global/list/slot_equipment_priority = list(
 		if(SLOT_W_UNIFORM) return w_uniform
 		if(SLOT_BACK) return back
 		if(SLOT_WEAR_MASK) return wear_mask
+		if(SLOT_NECK) return neck
 		if(SLOT_L_HAND) return l_hand
 		if(SLOT_R_HAND) return r_hand
 		if(SLOT_S_STORE) return s_store
@@ -432,6 +430,8 @@ var/global/list/slot_equipment_priority = list(
 		items += wear_suit
 	if(w_uniform)
 		items += w_uniform
+	if(neck)
+		items += neck
 
 	return items
 
@@ -470,6 +470,8 @@ var/global/list/slot_equipment_priority = list(
 			return "back"
 		if(SLOT_WEAR_MASK)
 			return "mask"
+		if(SLOT_NECK)
+			return "neck"
 		if(SLOT_HANDCUFFED)
 			return "hands"
 		if(SLOT_L_HAND)
@@ -514,7 +516,7 @@ var/global/list/slot_equipment_priority = list(
 			return "error=[slot]"
 
 /mob/living/carbon/ian/slot_id_to_name(slot)
-	if(slot == SLOT_NECK)
+	if(slot == SLOT_IAN_NECK)
 		return "neck"
 	else
 		return ..()

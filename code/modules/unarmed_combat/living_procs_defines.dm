@@ -25,6 +25,9 @@
 	var/attack_push_vis_effect
 	var/attack_disarm_vis_effect
 
+	var/original_body
+	var/wabbajacked = 0
+
 /mob/living/proc/read_possible_combos()
 	set name = "Combos Cheat Sheet"
 	set desc = "A list of all possible combos with rough descriptions."
@@ -269,6 +272,7 @@
 		return FALSE
 
 	log_combat(attacker, "[damVerb]ed")
+	SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, src)
 
 	var/armor_block = 0
 	var/obj/item/organ/external/BP = attacker.get_targetzone() // apply_damage accepts both the bodypart and the zone.

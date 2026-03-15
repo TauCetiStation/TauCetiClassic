@@ -260,51 +260,14 @@
 	title = "Standard Operating Procedure"
 	wiki_page = "Standard_Operating_Procedure"
 
-/obj/item/weapon/book/manual/detective
-	name = "The Film Noir: Proper Procedures for Investigations"
-	icon_state ="bookDetective"
+/obj/item/weapon/book/manual/wiki/forensics
+	name = "Proper Procedures for Investigations"
+	icon_state = "bookDetective"
 	item_state_world = "bookDetective_world"
 	item_state = "book2"
 	author = "NanoTrasen"
-	title = "The Film Noir: Proper Procedures for Investigations"
-
-	dat = {"<html>
-				<head>
-				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				body {font-size: 13px; font-family: Verdana;}
-				</style>
-				</head>
-				<body>
-				<h1>Detective Work</h1>
-
-				Between your bouts of self-narration and drinking whiskey on the rocks, you might get a case or two to solve.<br>
-				To have the best chance to solve your case, follow these directions:
-				<p>
-				<ol>
-					<li>Go to the crime scene. </li>
-					<li>Take your scanner and scan EVERYTHING (Yes, the doors, the tables, even the dog). </li>
-					<li>Once you are reasonably certain you have every scrap of evidence you can use, find all possible entry points and scan them, too. </li>
-					<li>Return to your office. </li>
-					<li>Using your forensic scanning computer, scan your scanner to upload all of your evidence into the database.</li>
-					<li>Browse through the resulting dossiers, looking for the one that either has the most complete set of prints, or the most suspicious items handled. </li>
-					<li>If you have 80% or more of the print (The print is displayed), go to step 10, otherwise continue to step 8.</li>
-					<li>Look for clues from the suit fibres you found on your perpetrator, and go about looking for more evidence with this new information, scanning as you go. </li>
-					<li>Try to get a fingerprint card of your perpetrator, as if used in the computer, the prints will be completed on their dossier.</li>
-					<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
-					<li>Since you now have both your dossier and the name of the person, print both out as evidence and get security to nab your baddie.</li>
-					<li>Give yourself a pat on the back and a bottle of the ship's finest vodka, you did it!</li>
-				</ol>
-				<p>
-				It really is that easy! Good luck!
-
-				</body>
-			</html>"}
+	title = "Proper Procedures for Investigations"
+	wiki_page = "Guide_to_Forensics"
 
 //Civilian guides
 
@@ -485,5 +448,35 @@
 			"<span class='warning'>As soon as you finish reading \the [src], you become the speaker of Sy-Code and [src] burns to ashes.</span>"
 		)
 		user.add_language(LANGUAGE_SYCODE)
+		new /obj/effect/decal/cleanable/ash(user.loc)
+		qdel(src)
+
+/obj/item/weapon/syndcodebook/rowena
+	name = "black-red book"
+	desc = "Ominous book with some gabblery written on yellow pages."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "syndicate"
+	item_state_world = "syndicate_world"
+	item_state = "book"
+
+/obj/item/weapon/syndcodebook/rowena/attack_self(mob/user)
+
+	if(do_after(user, 40, target = user))
+		user.visible_message(
+			"<span class='warning'>[user] perks at \the [src] and nods. Suddenly, \the [src] burns to ashes!</span>",
+			"<span class='warning'>As soon as you finish reading \the [src], you become the speaker of many languages and [src] burns to ashes.</span>"
+		)
+		user.add_language(LANGUAGE_SOLCOMMON)
+		user.add_language(LANGUAGE_SINTAUNATHI, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_SIIKMAAS, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_SKRELLIAN, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_ROOTSPEAK, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_ROOTSONG, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_TRADEBAND)
+		user.add_language(LANGUAGE_TRINARY, LANGUAGE_CAN_UNDERSTAND)
+		user.add_language(LANGUAGE_GUTTER)
+		user.add_language(LANGUAGE_USL)
+		user.add_language(LANGUAGE_VOXPIDGIN, LANGUAGE_CAN_UNDERSTAND)
 		new /obj/effect/decal/cleanable/ash(user.loc)
 		qdel(src)

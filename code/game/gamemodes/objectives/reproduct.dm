@@ -1,12 +1,12 @@
 /datum/objective/reproduct
-	explanation_text = "Улей должен жить и размножаться. Ваша численность должна превосходить экипаж станции в X раз."
+	explanation_text = "Улей должен жить и размножаться. Ваша численность должна превосходить число возможных разумных носителей в X раз."
 
 /datum/objective/reproduct/PostAppend()
 	..()
 	var/datum/faction/infestation/aliens = faction
 	if(!istype(aliens))
 		return FALSE
-	explanation_text = "Улей должен жить и размножаться. Ваша численность должна превосходить экипаж станции в [WIN_PERCENT/100] раз."
+	explanation_text = "Улей должен жить и размножаться. Ваша численность должна превосходить число возможных разумных носителей в [WIN_PERCENT/100] раз."
 	return TRUE
 
 /datum/objective/reproduct/check_completion()

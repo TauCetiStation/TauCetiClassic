@@ -315,9 +315,15 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 
+/obj/structure/closet/crate/loot
+	desc = "Что же может оказаться внутри?"
+	name = "Abandoned crate"
+	icon_closed = "treasure"
+	icon_opened = "treasureopen"
+
 /obj/structure/closet/crate/rcd/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/rcd_ammo(src)
+		new /obj/item/weapon/rcd_ammo/huge(src)
 	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/solar
@@ -383,6 +389,21 @@
 	for(var/i in 1 to 4)
 		new /obj/item/clothing/head/radiation(src)
 
+/obj/structure/closet/crate/surplus_crate
+	icon_state = "syndicrate"
+	icon_opened = "syndicrateopen"
+	icon_closed = "syndicrate"
+
+/obj/structure/closet/crate/surplus_crate_team
+	icon_state = "gorlexcrate"
+	icon_opened = "gorlexcrateopen"
+	icon_closed = "gorlexcrate"
+
+/obj/structure/closet/crate/surplus_crate_super
+	icon_state = "gorlex_weaponcrate"
+	icon_opened = "gorlex_weaponcrateopen"
+	icon_closed = "gorlex_weaponcrate"
+
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"
@@ -432,6 +453,8 @@
 	icon_state = "woodseccrate"
 	icon_opened = "woodseccrateopen"
 	icon_closed = "woodseccrate"
+
+	hit_particle_type = /particles/tool/digging/wood
 
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
@@ -584,3 +607,12 @@
 							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
 						else if(length(danger_reagents))
 							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)
+
+/obj/structure/closet/crate/try_wrap_up(texture_name = "cardboard", details_name = null)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliverycrate"
+	P.add_texture(texture_name, details_name)
+
+	forceMove(P)
+
+	return P

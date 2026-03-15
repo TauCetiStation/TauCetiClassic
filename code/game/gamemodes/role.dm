@@ -14,6 +14,8 @@
 	var/list/required_jobs = list()
 	// Specie flags that for any amount of reasons can cause this role to not be available. TODO: use traits? ~Luduk
 	var/list/restricted_species_flags = list()
+	// Yep, moving to traits
+	var/list/restricted_species_traits = list()
 	// The required preference for this role
 	var/required_pref = ""
 	// If this role is recruited to at roundstart, the person recruited is not assigned a position on station (Wizard, Nuke Op, Vox Raider)
@@ -178,6 +180,11 @@
 				log_mode("[ckey_of_antag] his species \"[S.name]\" has restricted flag")
 				return FALSE
 
+		for(var/specie_trait in restricted_species_traits)
+			if(S.race_traits[specie_trait])
+				log_mode("[ckey_of_antag] his species \"[S.name]\" has restricted trait")
+				return FALSE
+
 	if(is_type_in_list(src, M.antag_roles)) //No double double agent agent
 		log_mode("[ckey_of_antag] already has this role.")
 		return FALSE
@@ -249,16 +256,16 @@
 	var/mob/M = antag.current
 	if (M)
 		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
-	[name] <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
-	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
-	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
-	 - <a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>"}
+	[name] <a href='byond://?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
+	 - <a href='byond://?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
+	 - <a href='byond://?_src_=holder;traitor=\ref[M]'>(TP)</a>
+	 - <a href='byond://?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>"}
 	else if(antag)
 		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
 	[name] [antag.name]/[antag.key]<b><font color=red> - (DESTROYED)</font></b>
-	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
-	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
-	 - <a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>"}
+	 - <a href='byond://?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
+	 - <a href='byond://?_src_=holder;traitor=\ref[M]'>(TP)</a>
+	 - <a href='byond://?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>"}
 
 
 /datum/role/proc/Greet(greeting = GREET_DEFAULT, custom)
@@ -375,9 +382,9 @@
 
 	if (admin_edit)
 		if (faction)
-			text += "<a href='?src=\ref[M];role_edit=\ref[src];remove_from_faction=1'>(remove from faction)</a>[faction.extraPanelButtons(M)]"
+			text += "<a href='byond://?src=\ref[M];role_edit=\ref[src];remove_from_faction=1'>(remove from faction)</a>[faction.extraPanelButtons(M)]"
 		else
-			text += "<a href='?src=\ref[M];role_edit=\ref[src];add_to_faction=1'> - (add to faction) - </a>"
+			text += "<a href='byond://?src=\ref[M];role_edit=\ref[src];add_to_faction=1'> - (add to faction) - </a>"
 
 	text += "<br>"
 	if(faction)
@@ -392,7 +399,7 @@
 	var/icon/logo = get_logo_icon()
 	text += "<b>[bicon(logo, css = "style='position:relative; top:10;'")] [name]</b>"
 	if (admin_edit)
-		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons(M)]"
+		text += " - <a href='byond://?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='byond://?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons(M)]"
 
 	if(objectives.objectives.len)
 		text += "<br><ul><b>Personal objectives:</b><br>"
@@ -481,7 +488,7 @@
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/role/proc/add_antag_hud(custom_name)
 	if(antag_hud_type && (antag_hud_name || custom_name))
-		var/name = antag_hud_name ? antag_hud_name :custom_name
+		var/name = antag_hud_name ? antag_hud_name : custom_name
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.join_hud(antag.current)
 		set_antag_hud(antag.current, name, antag_hud_type)

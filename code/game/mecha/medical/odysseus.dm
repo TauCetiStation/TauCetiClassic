@@ -33,3 +33,15 @@
 	if(.)
 		var/datum/atom_hud/hud = global.huds[DATA_HUD_MEDICAL]
 		hud.add_hud_to(M.brainmob)
+
+/obj/mecha/medical/odysseus/medical/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/sleeper(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/syringe_gun(src)
+	ME.attach(src)
+
+/obj/mecha/medical/odysseus/ert
+	dna_lockable = TRUE

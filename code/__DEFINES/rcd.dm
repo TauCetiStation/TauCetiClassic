@@ -2,4 +2,6 @@
 #define RCD_MODE_AIRLOCK     "Airlock"
 #define RCD_MODE_DECONSTRUCT "Deconstruct"
 
-#define RCD_MODE_PNEUMATIC "Pneumatic Tube"
+#define RCD_MODE_PNEUMATIC 	"Pneumatic Tube"
+
+#define RCD_MODE_FLOOR_FAN 	  "Floor Fan"

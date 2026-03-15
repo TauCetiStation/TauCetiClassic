@@ -167,7 +167,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /mob/proc/playsound_lobbymusic()
 	if(!SSticker || !SSticker.login_music || !client)
 		return
-	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
+
+	var/music = SSticker.login_music
+
+	var/datum/map_module/MM = SSmapping.get_map_module()
+	if(MM && MM.map_lobby_music)
+		music = MM.map_lobby_music
+
+	playsound_music(music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
 	if(!client || !client.prefs_ready)
@@ -276,7 +283,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 			prefs.snd_jukebox_vol = vol
 
-			if(istype(media)) // will be updated in "/mob/living/Login()" if changed in lobby.
+			if(istype(media)) // will be updated in "/mob/living/LateLogin()" if changed in lobby.
 				media.update_volume()
 
 				if(!vol && old_vol) // only play/stop if last change is a mute or unmute state.
@@ -418,7 +425,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 						<input type="range" class="volume_slider" min="0" max="100" value="[slider_value]" id="[slider_id]" onchange="updateVolume([slider_id])">
 					</td>
 					<td>
-						<p><b><center><a href='?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
+						<p><b><center><a href='byond://?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
 					</td>
 				</tr>
 			"}

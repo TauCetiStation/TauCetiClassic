@@ -6,14 +6,7 @@
 	has_sensor = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
-	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/syndicate/equipped(mob/M)
-	if(M.gender == "male")
-		item_state = "syndicate"
-	else
-		item_state = "syndicate_f"
-	return ..()
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/syndicate/combat
 	name = "combat turtleneck"

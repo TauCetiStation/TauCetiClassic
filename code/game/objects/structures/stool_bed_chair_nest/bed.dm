@@ -31,12 +31,14 @@
 	return attack_hand(user)
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
-	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
+	// todo: we should not change mover properties here, this method is only for attempt to pass
+	// part of future mob layer / crawl refactoring
+	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 	return ..()
 
 /obj/structure/stool/bed/CheckExit(atom/movable/O as mob|obj)
-	if(istype(O) && O.checkpass(PASSCRAWL))
+	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
 		O.layer = 4.0
 	return ..()
 

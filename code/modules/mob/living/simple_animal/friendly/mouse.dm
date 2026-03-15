@@ -18,6 +18,7 @@
 	see_in_dark = 6
 	maxHealth = 15
 	health = 15
+	nutrition = NUTRITION_LEVEL_STARVING
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
@@ -60,6 +61,8 @@
 			wander = TRUE
 		else if(prob(5))
 			emote("snuffles")
+	if(nutrition > 0 && prob(10))
+		nutrition -= 1
 
 /mob/living/simple_animal/mouse/atom_init()
 	. = ..()
