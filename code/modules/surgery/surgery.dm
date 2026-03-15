@@ -338,7 +338,8 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.update_surgery()										//shows surgery results
-				show_surgery_radial_menu(user, H, target_zone)
+				spawn(0)
+					show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery
 	return FALSE
 
