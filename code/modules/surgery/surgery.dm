@@ -141,25 +141,23 @@
 	return FALSE
 
 /proc/collect_nearby_surgery_items(mob/living/user, mob/living/carbon/human/target)
-	var/list/nearby_items = list()
 	if(isrobot(user))
+		var/list/nearby_items = list()
 		var/mob/living/silicon/robot/R = user
 		if(R.module)
 			for(var/obj/item/I in R.module.modules)
 				if(I.required_skills && I.required_skills.len)
 					nearby_items += I
 		return nearby_items
-	if(user.l_hand)
-		nearby_items += user.l_hand
-	if(user.r_hand)
-		nearby_items += user.r_hand
-	for(var/turf/T in range(1, target))
-		for(var/obj/item/I in T.contents)
-			nearby_items += I
-			if(istype(I, /obj/item/weapon/storage))
-				if(!("locked" in I.vars) || !I.vars["locked"])
-					for(var/obj/item/SI in I.contents)
-						nearby_items += SI
+	var/list/nearby_items = list()
+	var/datum/personal_crafting/C = new
+	for(var/obj/item/I in C.get_environment(user))
+		nearby_items += I
+		if(istype(I, /obj/item/weapon/storage))
+			if(!("locked" in I.vars) || !I.vars["locked"])
+				for(var/obj/item/SI in I.contents)
+					nearby_items += SI
+	qdel(C)
 	return nearby_items
 
 /proc/get_surgery_step_name(datum/surgery_step/S)
