@@ -256,11 +256,16 @@
 
 	if(!chosen || !user.Adjacent(target))
 		return
+	if(QDELETED(chosen) || user.incapacitated())
+		return
 
 	var/atom/tool_original_loc = chosen.loc
 	var/obj/item/dropped_item = null
 
 	if(chosen.loc != user)
+		if(QDELETED(chosen) || !user.Adjacent(chosen))
+			to_chat(user, "<span class='warning'>[chosen] is no longer within reach!</span>")
+			return
 		if(!user.put_in_hands(chosen))
 			// both hands full, drop active hand first
 			dropped_item = user.get_active_hand()
@@ -283,7 +288,7 @@
 				S.handle_item_insertion(chosen, prevent_warning = TRUE)
 			else
 				chosen.forceMove(tool_original_loc)
-	if(dropped_item && dropped_item.loc != user)
+	if(dropped_item && !QDELETED(dropped_item) && dropped_item.loc != user)
 		user.put_in_hands(dropped_item)
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
@@ -301,8 +306,6 @@
 
 	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, skillcheck, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
-
-
 
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check, if target undressed for clothless operations
