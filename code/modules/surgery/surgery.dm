@@ -134,18 +134,21 @@
 	return !check_covered_bodypart(T, zone)
 
 /proc/has_medical_hud(mob/living/user)
-	if(!ishuman(user))
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	var/obj/item/clothing/glasses/G = H.glasses
-	if(!G || !G.hud_types)
-		return FALSE
-	if((DATA_HUD_MEDICAL in G.hud_types) || (DATA_HUD_MEDICAL_ADV in G.hud_types))
+	var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+	var/datum/atom_hud/med_adv = global.huds[DATA_HUD_MEDICAL_ADV]
+	if((med && (user in med.hudusers)) || (med_adv && (user in med_adv.hudusers)))
 		return TRUE
 	return FALSE
 
 /proc/collect_nearby_surgery_items(mob/living/user, mob/living/carbon/human/target)
 	var/list/nearby_items = list()
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.module)
+			for(var/obj/item/I in R.module.modules)
+				if(I.required_skills && I.required_skills.len)
+					nearby_items += I
+		return nearby_items
 	if(user.l_hand)
 		nearby_items += user.l_hand
 	if(user.r_hand)
@@ -154,12 +157,7 @@
 		for(var/obj/item/I in T.contents)
 			nearby_items += I
 			if(istype(I, /obj/item/weapon/storage))
-				for(var/obj/item/SI in I.contents)
-					nearby_items += SI
-		for(var/obj/structure/table/table in T.contents)
-			for(var/obj/item/I in table.contents)
-				nearby_items += I
-				if(istype(I, /obj/item/weapon/storage))
+				if(!("locked" in I.vars) || !I.vars["locked"])
 					for(var/obj/item/SI in I.contents)
 						nearby_items += SI
 	return nearby_items
@@ -176,6 +174,8 @@
 /proc/show_surgery_radial_menu(mob/living/user, mob/living/carbon/human/target, target_zone)
 	set waitfor = FALSE
 
+	if(!ishuman(user) && !isrobot(user))
+		return
 	if(!has_medical_hud(user))
 		return
 	if(!ishuman(target))
@@ -186,6 +186,7 @@
 	var/list/nearby_items = collect_nearby_surgery_items(user, target)
 
 	var/list/step_data = list()
+	var/list/claimed_tools = list()
 
 	for(var/datum/surgery_step/S in surgery_steps)
 		if(!S.is_valid_mutantrace(target))
@@ -201,6 +202,8 @@
 			var/quality = S.allowed_tools[tool_type]
 			for(var/obj/item/I in nearby_items)
 				if(istype(I, tool_type))
+					if(I in claimed_tools)
+						continue
 					if(!S.can_use(user, target, target_zone, I))
 						continue
 					if(!tools_for_step[I])
@@ -212,6 +215,8 @@
 
 		if(tools_for_step.len && best_tool)
 			step_data += list(list("step" = S, "tools" = tools_for_step, "best_tool" = best_tool, "best_quality" = best_quality))
+			for(var/obj/item/T in tools_for_step)
+				claimed_tools += T
 
 	if(!step_data.len)
 		return
@@ -253,6 +258,12 @@
 	if(QDELETED(chosen) || user.incapacitated())
 		return
 
+	// borg path: tools stay in module, no pickup/return needed
+	if(isrobot(user))
+		do_surgery(target, user, chosen, from_radial = TRUE)
+		show_surgery_radial_menu(user, target, target_zone)
+		return
+
 	var/atom/tool_original_loc = chosen.loc
 	var/obj/item/dropped_item = null
 
@@ -271,7 +282,7 @@
 					user.put_in_hands(dropped_item)
 				return
 
-	do_surgery(target, user, chosen)
+	do_surgery(target, user, chosen, from_radial = TRUE)
 
 	// put the tool back where we found it
 	if(tool_original_loc && tool_original_loc != user && chosen.loc == user)
@@ -285,7 +296,10 @@
 	if(dropped_item && !QDELETED(dropped_item) && dropped_item.loc != user)
 		user.put_in_hands(dropped_item)
 
-/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
+	// chain: show next radial after cleanup is done
+	show_surgery_radial_menu(user, target, target_zone)
+
+/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool, from_radial = FALSE)
 	checks_for_surgery(M, user, FALSE)
 	var/target_zone = user.get_targetzone()
 	var/covered
@@ -331,8 +345,8 @@
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.update_surgery()										//shows surgery results
-				spawn(0)
+				H.update_surgery()
+				if(!from_radial)
 					show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery
 	return FALSE
