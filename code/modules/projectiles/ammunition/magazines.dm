@@ -11,6 +11,35 @@
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 7
+	var/can_spin = TRUE
+	var/spin_chambers = -1 // -1 = not spun, >= 0 empty chambers left before the bullet
+
+/obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
+	var/live = ammo_count(FALSE)
+	var/total = max_ammo
+
+	if(!live || !total)
+		spin_chambers = 0
+		return
+
+	if(prob((live * 100) / total))
+		spin_chambers = 0
+	else
+		spin_chambers = rand(0, (total - live) - 1)
+
+/obj/item/ammo_box/magazine/internal/cylinder/proc/advance()
+	if(spin_chambers > 0)
+		spin_chambers--
+	else if(spin_chambers == 0)
+		spin_chambers = -1
+
+/obj/item/ammo_box/magazine/internal/cylinder/proc/reset_spin()
+	spin_chambers = -1
+
+/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = FALSE)
+	if(spin_chambers > 0)
+		return null
+	return ..(keep)
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
 	if (!countempties)
@@ -22,18 +51,6 @@
 		return boolets
 	else
 		return ..()
-
-/obj/item/ammo_box/magazine/internal/cylinder/rus357
-	name = "russian revolver cylinder"
-	desc = "О боже, этого не должно было здесь быть!"
-	ammo_type = /obj/item/ammo_casing/a357
-	caliber = "357"
-	max_ammo = 6
-	multiload = 0
-
-/obj/item/ammo_box/magazine/internal/cylinder/rus357/atom_init()
-	. = ..()
-	stored_ammo += new ammo_type(src)
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "d-tiv revolver cylinder"
@@ -91,6 +108,7 @@
 	caliber = "shotgun"
 	max_ammo = 2
 	multiload = 0
+	can_spin = FALSE
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
 	name = "derringer internal magazine"

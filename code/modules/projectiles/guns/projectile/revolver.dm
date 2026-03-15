@@ -5,59 +5,40 @@
 	item_state = "revolver"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
-	var/can_spin = TRUE // 'cause some guns subtypes of revolver, like doublebarrel shotgun (why?)
-	var/spun = FALSE
-	var/empty_rounds_left = 0
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if (chambered || !magazine)
+	if(chambered || !magazine)
 		return
-	else if (magazine.ammo_count())
+	else if(magazine.ammo_count())
 		chambered = magazine.get_round(1)
 	return
 
 /obj/item/weapon/gun/projectile/revolver/process_chamber()
-	spun = FALSE
-	empty_rounds_left = 0
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(istype(C))
+		C.reset_spin()
 	return ..(0, 1)
 
 /obj/item/weapon/gun/projectile/revolver/shoot_with_empty_chamber(mob/living/user)
 	..()
-	if(spun)
-		if(empty_rounds_left > 0)
-			empty_rounds_left--
-		else
-			chamber_round()
-			if(!chambered)
-				return
-			spun = FALSE
-	else
-		chamber_round()
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(istype(C) && C.spin_chambers >= 0)
+		C.advance()
+	chamber_round()
 
 /obj/item/weapon/gun/projectile/revolver/atom_init()
 	. = ..()
-	if(can_spin)
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(istype(C) && C.can_spin)
 		verbs += /obj/item/weapon/gun/projectile/revolver/verb/spin
 
 /obj/item/weapon/gun/projectile/revolver/proc/do_spin(mob/user)
-	if(!magazine)
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(!istype(C))
 		return FALSE
-
 	chambered = null
-	spun = TRUE
-	var/live = get_ammo(FALSE, FALSE)
-	var/total = magazine.max_ammo
-
-	if(!live || !total)
-		empty_rounds_left = 0
-
-	if(prob((live * 100) / total))
-		chamber_round()
-		empty_rounds_left = 0
-
-	else
-		empty_rounds_left = rand(0, (total - live) - 1)
-
+	C.spin()
+	chamber_round()
 	playsound(user, 'sound/weapons/guns/chamber_spin.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] spins the cylinder of \the [src].</span>","<span class='notice'>You spin the cylinder of \the [src].</span>")
 
@@ -76,16 +57,17 @@
 /obj/item/weapon/gun/projectile/revolver/AltClick(mob/user)
 	if(user.incapacitated())
 		return
-
-	if(!can_spin)
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(!istype(C) || !C.can_spin)
 		return
 	do_spin(user)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
-		spun = FALSE
-		empty_rounds_left = 0
+		var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+		if(istype(C))
+			C.reset_spin()
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
 		I.update_icon()
 		update_icon()
@@ -97,20 +79,21 @@
 		chambered.SpinAnimation(10, 1)
 		chambered.update_icon()
 		chambered = null
-	spun = FALSE
-	empty_rounds_left = 0
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(istype(C))
+		C.reset_spin()
 	var/num_unloaded = 0
-	while (get_ammo() > 0)
+	while(get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		CB.loc = get_turf(src.loc)
 		CB.SpinAnimation(10, 1)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
-		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
+	if(num_unloaded)
+		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from \the [src].</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(countchambered = 0, countempties = 1)
 	var/boolets = 0 //mature var names for mature people
@@ -211,19 +194,20 @@
 		chambered.SpinAnimation(10, 1)
 		chambered.update_icon()
 		chambered = null
-	spun = FALSE
-	empty_rounds_left = 0
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(istype(C))
+		C.reset_spin()
 	var/num_unloaded = 0
-	if (get_ammo() > 0)
+	if(get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		CB.loc = get_turf(src.loc)
 		CB.update_icon()
 		num_unloaded++
-	if (num_unloaded)
-		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
+	if(num_unloaded)
+		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from \the [src].</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/detective
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber

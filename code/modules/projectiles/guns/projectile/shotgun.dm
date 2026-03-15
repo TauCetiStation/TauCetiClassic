@@ -79,7 +79,6 @@
 	origin_tech = "combat=3;materials=1"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	can_be_holstered = FALSE
-	can_spin = FALSE
 	var/open = FALSE
 	var/short = FALSE
 	var/can_be_shortened = TRUE
