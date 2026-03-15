@@ -232,14 +232,8 @@
 			var/obj/item/best = entry["best_tool"]
 			var/step_name = get_surgery_step_name(S)
 
-			var/unique_name = step_name
-			var/suffix = 2
-			while(unique_name in step_choices)
-				unique_name = "[step_name] [suffix]"
-				suffix++
-
-			step_choices[unique_name] = image(icon = best.icon, icon_state = best.icon_state)
-			name_to_entry[unique_name] = entry
+			step_choices[step_name] = image(icon = best.icon, icon_state = best.icon_state)
+			name_to_entry[step_name] = entry
 
 		var/chosen_step = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE)
 
