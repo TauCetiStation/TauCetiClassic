@@ -221,7 +221,7 @@
 	if(step_data.len == 1)
 		var/list/entry = step_data[1]
 		var/list/tools = entry["tools"]
-		chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE, tooltips = TRUE)
+		chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE)
 	else
 		// multiple steps available, show step selection first
 		var/list/step_choices = list()
@@ -241,7 +241,7 @@
 			step_choices[unique_name] = image(icon = best.icon, icon_state = best.icon_state)
 			name_to_entry[unique_name] = entry
 
-		var/chosen_step = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE, tooltips = TRUE)
+		var/chosen_step = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE)
 
 		if(!chosen_step || !user.Adjacent(target))
 			return
@@ -252,7 +252,7 @@
 		if(tools.len == 1)
 			chosen = tools[1]
 		else
-			chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE, tooltips = TRUE)
+			chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE)
 
 	if(!chosen || !user.Adjacent(target))
 		return
