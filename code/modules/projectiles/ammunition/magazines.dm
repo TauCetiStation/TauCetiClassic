@@ -39,7 +39,7 @@
 /obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = FALSE)
 	if(spin_chambers > 0)
 		return null
-	return ..(keep)
+	return ..()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
 	if (!countempties)
