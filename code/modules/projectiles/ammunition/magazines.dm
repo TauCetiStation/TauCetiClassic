@@ -12,34 +12,44 @@
 	caliber = "357"
 	max_ammo = 7
 	var/can_spin = TRUE
-	var/spin_chambers = -1 // -1 = not spun, >= 0 empty chambers left before the bullet
+	var/list/chamber_order = null // null = not spun; list of TRUE/FALSE per chamber slot after a spin
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
 	var/live = ammo_count(FALSE)
-	var/total = max_ammo
-
-	if(!live || !total)
-		spin_chambers = 0
-		return
-
-	if(prob((live * 100) / total))
-		spin_chambers = 0
-	else
-		spin_chambers = rand(0, (total - live) - 1)
+	chamber_order = list()
+	for(var/i in 1 to live)
+		chamber_order += TRUE
+	for(var/i in 1 to (max_ammo - live))
+		chamber_order += FALSE
+	for(var/i = chamber_order.len to 2 step -1)
+		var/j = rand(1, i)
+		var/swap = chamber_order[i]
+		chamber_order[i] = chamber_order[j]
+		chamber_order[j] = swap
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/advance()
-	if(spin_chambers > 0)
-		spin_chambers--
-	else if(spin_chambers == 0)
-		spin_chambers = -1
+	if(chamber_order && chamber_order.len)
+		chamber_order.Cut(1, 2)
+		if(!chamber_order.len)
+			chamber_order = null
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/reset_spin()
-	spin_chambers = -1
+	chamber_order = null
 
 /obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = FALSE)
-	if(spin_chambers > 0)
+	if(chamber_order && chamber_order.len)
+		var/has_round = chamber_order[1]
+		if(!keep)
+			advance()
+		if(has_round)
+			return ..(keep)
 		return null
 	return ..()
+
+/obj/item/ammo_box/magazine/internal/cylinder/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(.)
+		reset_spin()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
 	if (!countempties)

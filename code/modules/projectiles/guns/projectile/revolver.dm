@@ -22,7 +22,7 @@
 /obj/item/weapon/gun/projectile/revolver/shoot_with_empty_chamber(mob/living/user)
 	..()
 	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
-	if(istype(C) && C.spin_chambers >= 0)
+	if(istype(C) && C.chamber_order)
 		C.advance()
 	chamber_round()
 
@@ -32,7 +32,7 @@
 	if(istype(C) && C.can_spin)
 		verbs += /obj/item/weapon/gun/projectile/revolver/verb/spin
 
-/obj/item/weapon/gun/projectile/revolver/proc/do_spin(mob/user)
+/obj/item/weapon/gun/projectile/revolver/proc/spin_cylinder(mob/user)
 	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
 	if(!istype(C))
 		return FALSE
@@ -44,6 +44,22 @@
 
 	return TRUE
 
+/obj/item/weapon/gun/projectile/revolver/proc/try_spin_cylinder(mob/user)
+	if(user.incapacitated())
+		return FALSE
+	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+	if(!istype(C) || !C.can_spin)
+		return FALSE
+	return spin_cylinder(user)
+
+/obj/item/weapon/gun/projectile/revolver/proc/eject_chamber()
+	if(!chambered)
+		return
+	chambered.loc = get_turf(src.loc)
+	chambered.SpinAnimation(10, 1)
+	chambered.update_icon()
+	chambered = null
+
 /obj/item/weapon/gun/projectile/revolver/verb/spin()
 	set name = "Spin Chamber"
 	set category = "Object"
@@ -52,7 +68,7 @@
 	if(usr.incapacitated())
 		return
 
-	do_spin(usr)
+	try_spin_cylinder(usr)
 
 /obj/item/weapon/gun/projectile/revolver/AltClick(mob/user)
 	if(user.incapacitated())
@@ -60,25 +76,18 @@
 	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
 	if(!istype(C) || !C.can_spin)
 		return
-	do_spin(user)
+	try_spin_cylinder(user)
 
 /obj/item/weapon/gun/projectile/revolver/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
-		var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
-		if(istype(C))
-			C.reset_spin()
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
 		I.update_icon()
 		update_icon()
 		chamber_round()
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
-	if(chambered)
-		chambered.loc = get_turf(src.loc)
-		chambered.SpinAnimation(10, 1)
-		chambered.update_icon()
-		chambered = null
+	eject_chamber()
 	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
 	if(istype(C))
 		C.reset_spin()
@@ -189,11 +198,7 @@
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev45
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
-	if(chambered)
-		chambered.loc = get_turf(src.loc)
-		chambered.SpinAnimation(10, 1)
-		chambered.update_icon()
-		chambered = null
+	eject_chamber()
 	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
 	if(istype(C))
 		C.reset_spin()
