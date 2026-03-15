@@ -789,7 +789,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "bU" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/effect/decal/turf_decal/metal{
 	dir = 1;
 	icon_state = "spline_plain"
@@ -837,7 +839,8 @@
 	dir = 8
 	},
 /obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
+	slogan_delay = 700;
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -2820,7 +2823,9 @@
 	},
 /area/asteroid/mine/unexplored/safe)
 "fG" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -3074,7 +3079,9 @@
 /turf/simulated/mineral,
 /area/asteroid/mine/unexplored/safe)
 "gj" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -9674,14 +9681,18 @@
 	},
 /area/asteroid/mine/living_quarters)
 "va" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
 /area/asteroid/mine/living_quarters)
 "vb" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -14023,7 +14034,9 @@
 	},
 /area/asteroid/mine/abandoned)
 "Ub" = (
-/obj/machinery/vending/hydronutrients,
+/obj/machinery/vending/hydronutrients{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenfull"
@@ -14532,7 +14545,9 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "Yf" = (
-/obj/machinery/vending/eva/mining,
+/obj/machinery/vending/eva/mining{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
