@@ -1744,7 +1744,9 @@
 		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
 		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
+			message_admins("[key_name_admin(src)] has started replying to fax.")
 		if(!input)
+			message_admins("[key_name_admin(src)] has cancelled their reply to fax.")
 			return
 
 		var/customname = sanitize_safe(input(src.owner, "Pick a title for the report", "Title") as text|null)
