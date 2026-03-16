@@ -2,6 +2,7 @@
 //						Plastic Surgery							//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/plastic_surgery
+	name = "Plastic surgery"
 	clothless = 0
 	priority = 3
 	can_infect = 0
@@ -15,6 +16,7 @@
 	return target_zone == O_MOUTH
 
 /datum/surgery_step/plastic_surgery/retract_face
+	name = "Retract face"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75, \
@@ -44,6 +46,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/plastic_surgery/adjust_vocal
+	name = "Adjust vocal"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100, 	\
 	/obj/item/stack/cable_coil = 75, 	\
@@ -88,6 +91,7 @@
 
 //reshape_face
 /datum/surgery_step/plastic_surgery/reshape_face
+	name = "Reshape face"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -123,6 +127,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/plastic_surgery/cauterize
+	name = "Cauterize"
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\

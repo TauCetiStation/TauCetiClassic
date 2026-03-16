@@ -1,5 +1,6 @@
 /* SURGERY STEPS */
 /datum/surgery_step
+	var/name = "surgery step"
 	var/priority = 0	//steps with higher priority would be attempted first
 
 	//type path referencing tools that can be used for this step, and how well are they suited for it
@@ -168,6 +169,8 @@
 	return nearby_items
 
 /proc/get_surgery_step_name(datum/surgery_step/S)
+	if(S.name != "surgery step")
+		return S.name
 	var/full_type = "[S.type]"
 	var/list/parts = splittext(full_type, "/")
 	var/last = parts[parts.len]

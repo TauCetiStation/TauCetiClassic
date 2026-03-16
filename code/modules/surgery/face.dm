@@ -19,6 +19,7 @@
 	return target_zone == O_MOUTH
 
 /datum/surgery_step/face/cut_face
+	name = "Remove face"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -49,6 +50,7 @@
 	target.losebreath += 10
 
 /datum/surgery_step/face/mend_vocal
+	name = "Mend vocal"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,             \
 	/obj/item/stack/cable_coil = 75,            \
@@ -79,6 +81,7 @@
 	target.losebreath += 10
 
 /datum/surgery_step/face/fix_face
+	name = "Fix face"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100, 	\
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -108,6 +111,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/face/cauterize
+	name = "Cauterize"
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
@@ -147,6 +151,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/ipc/face
+	name = "Face"
 	clothless = FALSE
 	priority = 2
 	can_infect = FALSE
@@ -162,6 +167,7 @@
 	return target_zone == O_MOUTH
 
 /datum/surgery_step/ipc/face/screw_face
+	name = "Screw face"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -193,6 +199,7 @@
 	BP.take_damage(6, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/face/pry_screen
+	name = "Pry screen"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -222,6 +229,7 @@
 	BP.take_damage(12, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc/face/fix_screen
+	name = "Fix screen"
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
 	/obj/item/weapon/bonegel = 30,
@@ -256,6 +264,7 @@
 		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/face/close_shut
+	name = "Close shut"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,

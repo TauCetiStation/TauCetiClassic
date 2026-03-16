@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/gender_reassignment
+	name = "Gender reassignment"
 	priority = 1
 	can_infect = 0
 	blood_level = 1
@@ -21,6 +22,7 @@
 	return 1
 
 /datum/surgery_step/gender_reassignment/reshape_genitals
+	name = "Reshape genitals"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
