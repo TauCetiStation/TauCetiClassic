@@ -263,7 +263,6 @@ What a mess.*/
 			if (!( data_core.general.Find(R) ))
 				temp = "Record Not Found!"
 			else
-				for(var/datum/data/record/E in data_core.security)
 				active1 = R
 				screen = SKILLS_MODE_EDIT_SCREEN
 

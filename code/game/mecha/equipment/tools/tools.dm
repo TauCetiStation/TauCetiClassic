@@ -30,6 +30,7 @@
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
+				playsound(target, 'sound/mecha/hydraulic.ogg', VOL_EFFECTS_MASTER)
 				occupant_message("You lift [target] and start to load it into cargo compartment.")
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 				set_ready_state(0)
@@ -51,15 +52,23 @@
 		else if(istype(target, /obj/structure/scrap))
 			var/obj/structure/scrap/pile = target
 			playsound(target, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER)
+
+			var/obj/effect/abstract/particle_holder/Particle = new(pile, /particles/tool/squeeze_trash, PARTICLE_FADEOUT)
+			var/particles/particle_datum = Particle.get_particle()
+			particle_datum.change_dir(get_dir(get_turf(pile), get_turf(src)))
+
 			if(do_after_cooldown(pile))
 				occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
 				pile.make_cube()
 			else
 				occupant_message("<font color='red'>[target] is firmly secured.</font>")
+
+			Particle.delete_particle()
 		else if(istype(target, /obj/structure/droppod))
 			var/obj/structure/droppod/Drop = target
 			if(Drop.stat_flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
 				return
+			playsound(target, 'sound/mecha/hydraulic.ogg', VOL_EFFECTS_MASTER)
 			var/T = chassis.loc
 			if(do_after_cooldown(Drop) && T == chassis.loc && src == chassis.selected\
 			&& !Drop.intruder && !Drop.second_intruder && !(Drop.stat_flags & STATE_DROPING) && !(Drop.stat_flags & STATE_AIMING))
@@ -112,8 +121,14 @@
 	occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete
+
+	var/obj/effect/abstract/particle_holder/Particle = new(target, /particles/tool/drill_mineral, PARTICLE_FADEOUT)
+	var/particles/particle_datum = Particle.get_particle()
+	particle_datum.change_dir(get_dir(get_turf(target), get_turf(src)))
+
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
+			playsound(target, 'sound/mecha/mechdrill.ogg', VOL_EFFECTS_MASTER)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
 			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
@@ -150,6 +165,8 @@
 
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
+
+	Particle.delete_particle()
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
@@ -182,6 +199,7 @@
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
+			playsound(target, 'sound/mecha/mechdrill.ogg', VOL_EFFECTS_MASTER)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")

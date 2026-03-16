@@ -68721,7 +68721,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/lobby)
 "mLa" = (
-/obj/item/weapon/paper/brig_arsenal,
+/obj/item/weapon/paper/inventory/brig_armoury,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "mLd" = (
@@ -110298,6 +110298,9 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
+	},
+/obj/item/weapon/paper/inventory{
+	pixel_y = -21
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

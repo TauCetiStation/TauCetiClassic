@@ -164,6 +164,7 @@
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && (O in src.cargo))
 			occupant_message("<span class='notice'>You unload [O].</span>")
+			playsound(src, 'sound/mecha/hydraulic.ogg', VOL_EFFECTS_MASTER)
 			O.loc = get_turf(src)
 			src.cargo -= O
 			var/turf/T = get_turf(O)

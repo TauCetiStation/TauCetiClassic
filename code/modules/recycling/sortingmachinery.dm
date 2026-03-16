@@ -305,7 +305,7 @@
 	origin_tech = "materials=1;engineering=1"
 
 	var/mode = 1
-	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
+	var/list/modes = list("Метка", "Ценник", "Бирка")
 
 	var/lot_description = "Это что-то"
 	var/lot_account_number = null
@@ -341,21 +341,20 @@
 	desc = "Используется для наклейки ценников и бирок."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
-	modes = list(1 = "Ценник", 2 = "Бирка")
+	modes = list("Ценник", "Бирка")
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
-
-	dat += "<table style='width:100%; padding:4px;'><tr>"
 
 	dat += "<center><HR>Режим: <A href='byond://?src=\ref[src];change_mode=1'>[modes[mode]]</A></center><BR>\n"
 
 	switch(modes[mode])
 		if("Метка")
+			dat += "<table style='width:100%; padding:4px;'><tr>"
 			for(var/i = 1, i <= tagger_locations.len, i++)
 				dat += "<td><a href='byond://?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
-				if (i%4==0)
+				if (i%3==0)
 					dat += "</tr><tr>"
 
 			dat += "</tr></table><br>Выбрано: [currTag ? currTag : "None"]</tt>"
@@ -377,7 +376,7 @@
 			icon_state = "labeler1"
 			dat += "Текст бирки: <A href='byond://?src=\ref[src];label_text=1'>[label ? label : "Написать"]</A><BR>\n"
 
-	var/datum/browser/popup = new(user, "destTagScreen", "Маркировщик 2.3", 450, 400)
+	var/datum/browser/popup = new(user, "destTagScreen", "Маркировщик 2.3", 500, 500)
 	popup.set_content(dat)
 	popup.open()
 

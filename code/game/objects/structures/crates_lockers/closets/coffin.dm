@@ -16,6 +16,8 @@
 
 	storage_capacity = 1
 
+	hit_particle_type = /particles/tool/digging/wood
+
 	// When we can open this again.
 	var/next_open = 0
 

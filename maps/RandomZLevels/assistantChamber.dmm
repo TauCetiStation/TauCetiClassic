@@ -115,7 +115,7 @@
 	},
 /area/awaymission)
 "t" = (
-/obj/item/brain,
+/obj/item/organ/internal/brain,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
