@@ -179,6 +179,16 @@
 	icon_state = "sivtsev"
 	desc = "Таблица Сивцева для проверки остроты зрения."
 
+/obj/structure/sign/poster/onlineshop
+	name = "onlineshop poster"
+	icon_state = "onlineshop"
+	desc = "Продать ты сможешь даже гвоздь, ты здесь хозяин, а не гость."
+
+/obj/structure/sign/poster/onlineshop/atom_init()
+	. = ..()
+
+	name = CARGOSHOPNAME
+
 /obj/structure/sign/poster/olympic_games
 	name = "2214 Winter Olympics"
 	icon_state = "olympic"
