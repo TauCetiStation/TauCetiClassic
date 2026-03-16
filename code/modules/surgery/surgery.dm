@@ -250,7 +250,6 @@
 	// borg path: tools stay in module, no pickup/return needed
 	if(isrobot(user))
 		do_surgery(target, user, chosen, from_radial = TRUE)
-		try_show_surgery_radial_menu(user, target, target_zone)
 		return
 
 	var/atom/tool_original_loc = chosen.loc
@@ -335,7 +334,7 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.update_surgery()
-				if(!from_radial)
+				if(!from_radial || isrobot(user))
 					try_show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery
 	return FALSE
