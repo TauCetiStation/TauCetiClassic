@@ -154,7 +154,14 @@
 	for(var/obj/item/I in C.get_environment(user))
 		nearby_items += I
 		if(istype(I, /obj/item/weapon/storage))
-			if(!("locked" in I.vars) || !I.vars["locked"])
+			var/is_locked = FALSE
+			if(istype(I, /obj/item/weapon/storage/lockbox))
+				var/obj/item/weapon/storage/lockbox/LB = I
+				is_locked = LB.locked
+			else if(istype(I, /obj/item/weapon/storage/secure))
+				var/obj/item/weapon/storage/secure/SB = I
+				is_locked = SB.locked
+			if(!is_locked)
 				for(var/obj/item/SI in I.contents)
 					nearby_items += SI
 	qdel(C)
@@ -169,7 +176,32 @@
 		last = uppertext(copytext(last, 1, 2)) + copytext(last, 2)
 	return last
 
-/proc/show_surgery_radial_menu(mob/living/user, mob/living/carbon/human/target, target_zone)
+/proc/get_available_surgery_tools(mob/living/user, mob/living/carbon/human/target, target_zone, list/nearby_items)
+	var/list/best_for_step = list()
+	var/list/claimed_tools = list()
+
+	for(var/obj/item/I in nearby_items)
+		if(I in claimed_tools)
+			continue
+		for(var/datum/surgery_step/S in surgery_steps)
+			if(!S.is_valid_mutantrace(target))
+				continue
+			if(!S.allowed_tools)
+				continue
+			var/quality = S.tool_quality(I)
+			if(!quality)
+				continue
+			if(!S.can_use(user, target, target_zone, I))
+				continue
+			var/step_ref = "\ref[S]"
+			if(!best_for_step[step_ref] || quality > best_for_step[step_ref]["quality"])
+				best_for_step[step_ref] = list("step" = S, "tool" = I, "quality" = quality)
+				claimed_tools += I
+			break
+
+	return best_for_step
+
+/proc/try_show_surgery_radial_menu(mob/living/user, mob/living/carbon/human/target, target_zone)
 	set waitfor = FALSE
 
 	if(!ishuman(user) && !isrobot(user))
@@ -182,74 +214,30 @@
 		return
 
 	var/list/nearby_items = collect_nearby_surgery_items(user, target)
+	var/list/best_for_step = get_available_surgery_tools(user, target, target_zone, nearby_items)
 
-	var/list/step_data = list()
-	var/list/claimed_tools = list()
-
-	for(var/datum/surgery_step/S in surgery_steps)
-		if(!S.is_valid_mutantrace(target))
-			continue
-		if(!S.allowed_tools)
-			continue
-
-		var/list/tools_for_step = list()
-		var/obj/item/best_tool = null
-		var/best_quality = 0
-
-		for(var/tool_type in S.allowed_tools)
-			var/quality = S.allowed_tools[tool_type]
-			for(var/obj/item/I in nearby_items)
-				if(istype(I, tool_type))
-					if(I in claimed_tools)
-						continue
-					if(!S.can_use(user, target, target_zone, I))
-						continue
-					if(!tools_for_step[I])
-						tools_for_step[I] = image(icon = I.icon, icon_state = I.icon_state)
-					if(quality > best_quality)
-						best_quality = quality
-						best_tool = I
-					break
-
-		if(tools_for_step.len && best_tool)
-			step_data += list(list("step" = S, "tools" = tools_for_step, "best_tool" = best_tool, "best_quality" = best_quality))
-			for(var/obj/item/T in tools_for_step)
-				claimed_tools += T
-
-	if(!step_data.len)
+	if(!best_for_step.len)
 		return
 
-	var/obj/item/chosen = null
+	var/list/step_choices = list()
+	var/list/name_to_data = list()
 
-	if(step_data.len == 1)
-		var/list/entry = step_data[1]
-		var/list/tools = entry["tools"]
-		chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE)
-	else
-		// multiple steps available, show step selection first
-		var/list/step_choices = list()
-		var/list/name_to_entry = list()
+	for(var/step_ref in best_for_step)
+		var/list/data = best_for_step[step_ref]
+		var/datum/surgery_step/S = data["step"]
+		var/obj/item/tool = data["tool"]
+		var/step_name = get_surgery_step_name(S)
 
-		for(var/list/entry in step_data)
-			var/datum/surgery_step/S = entry["step"]
-			var/obj/item/best = entry["best_tool"]
-			var/step_name = get_surgery_step_name(S)
+		step_choices[step_name] = image(icon = tool.icon, icon_state = tool.icon_state)
+		name_to_data[step_name] = data
 
-			step_choices[step_name] = image(icon = best.icon, icon_state = best.icon_state)
-			name_to_entry[step_name] = entry
+	var/chosen_name = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE)
 
-		var/chosen_step = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE)
+	if(!chosen_name || !user.Adjacent(target))
+		return
 
-		if(!chosen_step || !user.Adjacent(target))
-			return
-
-		var/list/selected_entry = name_to_entry[chosen_step]
-		var/list/tools = selected_entry["tools"]
-
-		if(tools.len == 1)
-			chosen = tools[1]
-		else
-			chosen = show_radial_menu(user, target, tools, radius = 36, require_near = TRUE)
+	var/list/chosen_data = name_to_data[chosen_name]
+	var/obj/item/chosen = chosen_data["tool"]
 
 	if(!chosen || !user.Adjacent(target))
 		return
@@ -259,7 +247,7 @@
 	// borg path: tools stay in module, no pickup/return needed
 	if(isrobot(user))
 		do_surgery(target, user, chosen, from_radial = TRUE)
-		show_surgery_radial_menu(user, target, target_zone)
+		try_show_surgery_radial_menu(user, target, target_zone)
 		return
 
 	var/atom/tool_original_loc = chosen.loc
@@ -295,7 +283,7 @@
 		user.put_in_hands(dropped_item)
 
 	// chain: show next radial after cleanup is done
-	show_surgery_radial_menu(user, target, target_zone)
+	try_show_surgery_radial_menu(user, target, target_zone)
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool, from_radial = FALSE)
 	checks_for_surgery(M, user, FALSE)
@@ -345,7 +333,7 @@
 				var/mob/living/carbon/human/H = M
 				H.update_surgery()
 				if(!from_radial)
-					show_surgery_radial_menu(user, H, target_zone)
+					try_show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery
 	return FALSE
 
