@@ -28,7 +28,6 @@
 		range = pick(2,2,2, 3,3,3, 4)
 
 /obj/item/weapon/grenade/cancasing/update_icon()
-	. = ..()
 	if(active)
 		icon_state 			 = "[initial(icon_state)]_activated"
 		item_state_inventory = "[initial(item_state_inventory)]_activated"
