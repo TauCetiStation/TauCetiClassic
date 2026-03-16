@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/add_tissue
+	name = "Apply tissue"
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack = 100,
 	/obj/item/stack/medical/advanced/ointment = 100
@@ -57,6 +58,7 @@
 	tool.update_icon()
 
 /datum/surgery_step/set_tissue
+	name = "Set tissue"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,
 	/obj/item/weapon/wirecutters = 75,

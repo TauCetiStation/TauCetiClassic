@@ -21,6 +21,7 @@
 	return TRUE
 
 /datum/surgery_step/generic/cut_with_laser
+	name = "Laser incision"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel/laser3 = 95, \
 	/obj/item/weapon/scalpel/laser2 = 85, \
@@ -60,6 +61,7 @@
 	BP.take_damage(7.5, 12.5, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/incision_manager
+	name = "Managed incision"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel/manager = 100
 	)
@@ -96,6 +98,7 @@
 	BP.take_damage(20, 15, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cut_open
+	name = "Incision"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -134,6 +137,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/clamp_bleeders
+	name = "Clamp bleeders"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,             \
 	/obj/item/stack/cable_coil = 75,            \
@@ -170,6 +174,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/retract_skin
+	name = "Retract skin"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -225,6 +230,7 @@
 	BP.take_damage(12, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cauterize
+	name = "Cauterize"
 	allowed_tools = list(
 	/obj/item/stack/medical/suture = 100,
 	/obj/item/weapon/cautery = 100,
@@ -262,6 +268,7 @@
 	BP.take_damage(0, 3, used_weapon = tool)
 
 /datum/surgery_step/generic/cut_limb
+	name = "Amputate"
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
 	/obj/item/weapon/hatchet = 75,       \
@@ -321,6 +328,7 @@
 	return TRUE
 
 /datum/surgery_step/ipc/generic/screw_open
+	name = "Unscrew hatch"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -358,6 +366,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/generic/pry_open
+	name = "Pry open hatch"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -393,6 +402,7 @@
 	BP.take_damage(12, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc/generic/close_shut
+	name = "Lock hatch"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
