@@ -2163,6 +2163,7 @@
 #include "code\modules\nano\modules\crew_monitor.dm"
 #include "code\modules\orbit\orbit.dm"
 #include "code\modules\paperwork\abstract_photography.dm"
+#include "code\modules\paperwork\ballot_box.dm"
 #include "code\modules\paperwork\carbonpaper.dm"
 #include "code\modules\paperwork\clipboard.dm"
 #include "code\modules\paperwork\filingcabinet.dm"

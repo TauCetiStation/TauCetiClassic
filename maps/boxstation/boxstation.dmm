@@ -13910,6 +13910,9 @@
 /obj/structure/fence/metal{
 	color = "#996633"
 	},
+/obj/item/weapon/storage/fancy/candle_box{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "axA" = (
@@ -15167,7 +15170,6 @@
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "azS" = (
-/obj/machinery/constructable_frame/machine_frame,
 /obj/structure/fence/metal{
 	dir = 8;
 	color = "#996633"
@@ -15176,6 +15178,7 @@
 	dir = 1;
 	color = "#996633"
 	},
+/obj/structure/ballot_box,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "vault"
@@ -73419,6 +73422,23 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"gJI" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = 6
+	},
+/obj/item/pen_holder{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/weapon/pen/blue,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel)
 "gKb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/belt/utility,
@@ -136498,7 +136518,7 @@ aKv
 bHn
 aKv
 aIU
-bQn
+gJI
 azS
 bao
 aVp
