@@ -1685,6 +1685,7 @@
 			M.Stuttering(20)
 
 	else if(href_list["CentcommReply"])
+		message_admins("[key_name_admin(usr)] has started replying to Emergency message.")
 		var/mob/living/H = locate(href_list["CentcommReply"])
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living")
@@ -1694,7 +1695,9 @@
 			return
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""))
-		if(!input)	return
+		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to Emergency message.")
+			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
@@ -1709,6 +1712,7 @@
 		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])
+		message_admins("[key_name_admin(usr)] has started replying to Syndicate Emergency message.")
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
@@ -1718,7 +1722,9 @@
 			return
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
-		if(!input)	return
+		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to Syndicate Emergency message.")
+			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
@@ -1740,13 +1746,13 @@
 		popup.open()
 
 	else if(href_list["CentcommFaxReply"])
+		message_admins("[key_name_admin(usr)] has started replying to fax.")
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
 		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
-			message_admins("[key_name_admin(src)] has started replying to fax.")
 		if(!input)
-			message_admins("[key_name_admin(src)] has cancelled their reply to fax.")
+			message_admins("[key_name_admin(usr)] has cancelled their reply to fax.")
 			return
 
 		var/customname = sanitize_safe(input(src.owner, "Pick a title for the report", "Title") as text|null)
