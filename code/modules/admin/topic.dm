@@ -1685,7 +1685,6 @@
 			M.Stuttering(20)
 
 	else if(href_list["CentcommReply"])
-		message_admins("[key_name_admin(usr)] has started replying to Emergency message.")
 		var/mob/living/H = locate(href_list["CentcommReply"])
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living")
@@ -1693,6 +1692,7 @@
 		if(!H.CanObtainCentcommMessage())
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
+		message_admins("[key_name_admin(usr)] has started replying to Emergency message.")
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""))
 		if(!input)
@@ -1712,7 +1712,6 @@
 		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])
-		message_admins("[key_name_admin(usr)] has started replying to Syndicate Emergency message.")
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
@@ -1720,6 +1719,7 @@
 		if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
+		message_admins("[key_name_admin(usr)] has started replying to Syndicate Emergency message.")
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
 		if(!input)
