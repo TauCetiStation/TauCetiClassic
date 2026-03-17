@@ -15178,7 +15178,10 @@
 	dir = 1;
 	color = "#996633"
 	},
-/obj/structure/ballot_box,
+/obj/structure/ballot_box{
+	name = "anonymous message box";
+	desc = "Урна для писем."
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "vault"
@@ -15500,8 +15503,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
+/obj/structure/ballot_box{
+	name = "anonymous message box";
+	desc = "Урна для писем."
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -36788,6 +36792,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/weapon/storage/fancy/crayons{
+	pixel_y = 5
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -36863,10 +36870,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -35
 	},
-/obj/structure/table/woodentable/fancy/black,
-/obj/item/weapon/storage/fancy/crayons{
-	pixel_y = 5
-	},
+/obj/structure/closet/wardrobe/black,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -36906,7 +36910,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/closet/wardrobe/black,
+/obj/structure/closet/wardrobe/white,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -72723,7 +72727,10 @@
 	name = "apc left";
 	pixel_x = -28
 	},
-/obj/structure/closet/wardrobe/white,
+/obj/machinery/constructable_frame/machine_frame{
+	name = "holy machine frame";
+	desc = "Dedicated to oaths forgotten. Forgiven be."
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
