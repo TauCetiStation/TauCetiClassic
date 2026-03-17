@@ -25714,7 +25714,10 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbreak)
 "aTu" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/machinery/constructable_frame/machine_frame{
+	name = "holy machine frame";
+	desc = "Dedicated to oaths forgotten. Forgiven be."
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
