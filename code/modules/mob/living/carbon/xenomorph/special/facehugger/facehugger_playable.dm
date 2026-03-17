@@ -173,6 +173,7 @@ This is chestburster mechanic for damaging
 	var/state = null
 
 	var/last_bite = 0
+	var/bite_count = 0
 
 	layer = 21
 	item_state = "nothing"
@@ -223,45 +224,30 @@ This is chestburster mechanic for damaging
 		qdel(src)
 		return
 
-	if(ishuman(affecting))
-		var/mob/living/carbon/human/H = affecting
-		var/obj/item/organ/external/chest/BP = H.bodyparts_by_name[BP_CHEST]
-		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
-			chestburster.loc = get_turf(H)
-			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
-			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
-			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
-			H.death()
-			// we're fucked. no chance to revive a person
+	last_bite = world.time
+	bite_count++
+
+	var/mob/living/carbon/victim = affecting
+	victim.adjustBruteLoss(rand(15, 30) * bite_count)
+	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
+	victim.Stun(2 + bite_count)
+	victim.Weaken(2 + bite_count)
+	victim.emote("scream")
+
+	if(bite_count >= 4 || victim.stat == DEAD)
+		chestburster.loc = get_turf(victim)
+		chestburster.visible_message("<span class='danger'>[chestburster] bursts out of [victim]!</span>")
+		victim.visible_message("<span class='userdanger'>[chestburster] crawls out of [victim]!</span>")
+		victim.add_overlay(image('icons/mob/alien.dmi', loc = victim, icon_state = "bursted_stand"))
+		playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+		victim.death()
+		if(ishuman(victim))
+			var/mob/living/carbon/human/H = victim
 			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
-			H.adjustToxLoss(rand(180, 200)) // Bad but effective solution.
+			H.adjustToxLoss(rand(180, 200))
 			H.organs_by_name[O_HEART].damage = rand(50, 100)
 			H.rupture_lung()
-			BP.open = 1
-			qdel(src)
-		else
-			last_bite = world.time
-			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
-			H.adjustHalLoss(20)
-			H.Stun(1)
-			H.Weaken(1)
-			H.emote("scream")
-	else if(ismonkey(affecting))
-		var/mob/living/carbon/monkey/M = affecting
-		if(M.stat == DEAD)
-			chestburster.loc = get_turf(M)
-			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
-			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
-			qdel(src)
-		else
-			last_bite = world.time
-			M.adjustBruteLoss(rand(35, 65))
-			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-			M.Stun(8)
-			M.Weaken(8)
+		qdel(src)
 
 /obj/item/weapon/larva_bite/proc/confirm()
 	if(!chestburster || !affecting)
