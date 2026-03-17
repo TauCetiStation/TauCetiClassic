@@ -334,7 +334,7 @@ var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА",
 		time_spent += time
 
 	animate(pixel_x=oldx, pixel_y=oldy, time=3)
-	addtimer(CALLBACK(C, TYPE_PROC_REF(/client, restore_default_pixel_values)), 0.4 SECOND)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/client, restore_default_pixel_values)), 0.4 SECONDS)
 
 #undef TILES_PER_SECOND
 
