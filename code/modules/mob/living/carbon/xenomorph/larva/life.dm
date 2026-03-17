@@ -7,9 +7,10 @@
 
 	for(var/obj/item/weapon/larva_bite/G in src)
 		G.process()
+	var/obj/item/weapon/embryo_kick/EK = locate() in src
+	EK?.process()
 	if(istype(loc, /obj/item/alien_embryo))
 		larva_in_embryo = TRUE
-		SetSleeping(5 SECONDS)
 
 	..()
 
