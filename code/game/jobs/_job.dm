@@ -110,7 +110,7 @@
 	return outfit
 
 /datum/job/proc/get_access()
-	if(title in SSjob.heads_positions && HAS_ROUND_ASPECT(ROUND_ASPECT_NEPO_BABIES))
+	if((title in SSjob.heads_positions) && HAS_ROUND_ASPECT(ROUND_ASPECT_NEPO_BABIES))
 		return job_to_min_access()
 	return access.Copy()
 
