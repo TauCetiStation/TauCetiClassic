@@ -112,8 +112,8 @@
 	H.equip_to_slot(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_to_slot(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
 	H.equip_to_slot(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
-	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
-	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
+	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_IN_BACKPACK)
+	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_IN_BACKPACK)
 
 
 /datum/quality/positiveish/all_affairs
