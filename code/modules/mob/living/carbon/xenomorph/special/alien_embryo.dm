@@ -2,6 +2,51 @@
 This is emryo growth procs
 ----------------------------------------*/
 
+/mob/living/proc/on_larva_erupt(mob/living/larva)
+	visible_message("<span class='userdanger'>[larva] crawls out of [src]!</span>")
+	add_overlay(image('icons/mob/alien.dmi', loc = src, icon_state = "bursted_stand"))
+	playsound(src, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	death()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
+		H.adjustToxLoss(rand(180, 200))
+		H.organs_by_name[O_HEART].damage = rand(50, 100)
+		H.rupture_lung()
+	if(stat != DEAD)
+		gib()
+
+/mob/living/proc/on_larva_kick(stage)
+	switch(stage)
+		if(2)
+			visible_message("<span class='warning'>[src]'s stomach growls loudly.</span>")
+			to_chat(src, "<span class='warning'>You feel a strange movement inside you.</span>")
+		if(3)
+			visible_message("<span class='danger'>[src] clutches their stomach in pain!</span>")
+			to_chat(src, "<span class='danger'>Something kicks inside your chest!</span>")
+			adjustBruteLoss(rand(10, 15))
+			Stun(2)
+			emote("scream")
+			step(src, pick(NORTH, SOUTH, EAST, WEST))
+		if(4)
+			visible_message("<span class='userdanger'>[src] convulses and collapses!</span>")
+			to_chat(src, "<span class='userdanger'>Something is thrashing violently inside you!</span>")
+			adjustBruteLoss(rand(20, 30))
+			Paralyse(4)
+			Weaken(4)
+			emote("scream")
+			make_jittery(50)
+			for(var/i in 1 to rand(1, 3))
+				step(src, pick(NORTH, SOUTH, EAST, WEST))
+				sleep(2)
+
+/mob/living/proc/on_larva_bite(bite_count)
+	adjustBruteLoss(rand(15, 30) * bite_count)
+	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
+	Stun(2 + bite_count)
+	Weaken(2 + bite_count)
+	emote("scream")
+
 /obj/item/alien_embryo
 	name = "alien embryo"
 	desc = "All slimy and yuck."
@@ -155,20 +200,10 @@ This is emryo growth procs
 			START_PROCESSING(SSobj, src)
 			return
 
-		affected_mob.death()
-		if(ishuman(affected_mob)) // we're fucked. no chance to revive a person
-			var/mob/living/carbon/human/H = affected_mob
-			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
-			H.adjustToxLoss(rand(180, 200)) // Bad but effective solution.
-			H.organs_by_name[O_HEART].damage = rand(50, 100)
-			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
 		new_xeno.update_icons()
-		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE) // To get the player's attention
-
-		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
-		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
+		affected_mob.on_larva_erupt(new_xeno)
 		qdel(src)
 	else
 		if(baby)
@@ -205,57 +240,26 @@ This is emryo growth procs
 		to_chat(baby, "<span class='warning'>You need to rest before kicking again.</span>")
 		return
 	COOLDOWN_START(src, next_kick, 15 SECONDS)
-	switch(stage)
-		if(2)
-			affected_mob.visible_message("<span class='warning'>[affected_mob]'s stomach growls loudly.</span>")
-			to_chat(affected_mob, "<span class='warning'>You feel a strange movement inside you.</span>")
-		if(3)
-			affected_mob.visible_message("<span class='danger'>[affected_mob] clutches their stomach in pain!</span>")
-			to_chat(affected_mob, "<span class='danger'>Something kicks inside your chest!</span>")
-			affected_mob.adjustBruteLoss(rand(10, 15))
-			affected_mob.Stun(2)
-			affected_mob.emote("scream")
-			step(affected_mob, pick(NORTH, SOUTH, EAST, WEST))
-		if(4)
-			affected_mob.visible_message("<span class='userdanger'>[affected_mob] convulses and collapses!</span>")
-			to_chat(affected_mob, "<span class='userdanger'>Something is thrashing violently inside you!</span>")
-			affected_mob.adjustBruteLoss(rand(20, 30))
-			affected_mob.Paralyse(4)
-			affected_mob.Weaken(4)
-			affected_mob.emote("scream")
-			affected_mob.make_jittery(50)
-			for(var/i in 1 to rand(1, 3))
-				step(affected_mob, pick(NORTH, SOUTH, EAST, WEST))
-				sleep(2)
-		if(5)
-			var/turf/T = get_turf(affected_mob)
-			var/atom/movable/mob_container = baby
-			mob_container.forceMove(T)
-			baby.reset_view()
-			playsound(affected_mob, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
-			if(affected_mob.health < 0)
-				affected_mob.visible_message("<span class='userdanger'>[affected_mob]'s body bulges grotesquely before exploding!</span>")
-				playsound(affected_mob, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
-				affected_mob.gib()
-			else
-				affected_mob.visible_message("<span class='userdanger'>[baby] bursts out of [affected_mob]!</span>")
-				affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
-				affected_mob.death()
-				if(ishuman(affected_mob))
-					var/mob/living/carbon/human/H = affected_mob
-					H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
-					H.adjustToxLoss(rand(180, 200))
-					H.organs_by_name[O_HEART].damage = rand(50, 100)
-					H.rupture_lung()
-				if(affected_mob.stat != DEAD)
-					affected_mob.gib()
-			var/obj/item/weapon/embryo_kick/K = locate() in baby
-			if(K)
-				K.flags &= ~(DROPDEL | NODROP)
-				qdel(K)
-			qdel(src)
-			return
-	to_chat(baby, "<span class='notice'>You kick your host from the inside.</span>")
+	if(stage < 5)
+		affected_mob.on_larva_kick(stage)
+		to_chat(baby, "<span class='notice'>You kick your host from the inside.</span>")
+		return
+	// Stage 5 - chestburst
+	var/turf/T = get_turf(affected_mob)
+	var/atom/movable/mob_container = baby
+	mob_container.forceMove(T)
+	baby.reset_view()
+	if(affected_mob.health < 0)
+		affected_mob.visible_message("<span class='userdanger'>[affected_mob]'s body bulges grotesquely before exploding!</span>")
+		playsound(affected_mob, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+		affected_mob.gib()
+	else
+		affected_mob.on_larva_erupt(baby)
+	var/obj/item/weapon/embryo_kick/K = locate() in baby
+	if(K)
+		K.flags &= ~(DROPDEL | NODROP)
+		qdel(K)
+	qdel(src)
 
 /obj/item/weapon/embryo_kick
 	name = "embryo_kick"

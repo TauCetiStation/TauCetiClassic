@@ -228,25 +228,11 @@ This is chestburster mechanic for damaging
 	bite_count++
 
 	var/mob/living/carbon/victim = affecting
-	victim.adjustBruteLoss(rand(15, 30) * bite_count)
-	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-	victim.Stun(2 + bite_count)
-	victim.Weaken(2 + bite_count)
-	victim.emote("scream")
+	victim.on_larva_bite(bite_count)
 
 	if(bite_count >= 4 || victim.stat == DEAD)
 		chestburster.loc = get_turf(victim)
-		chestburster.visible_message("<span class='danger'>[chestburster] bursts out of [victim]!</span>")
-		victim.visible_message("<span class='userdanger'>[chestburster] crawls out of [victim]!</span>")
-		victim.add_overlay(image('icons/mob/alien.dmi', loc = victim, icon_state = "bursted_stand"))
-		playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
-		victim.death()
-		if(ishuman(victim))
-			var/mob/living/carbon/human/H = victim
-			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
-			H.adjustToxLoss(rand(180, 200))
-			H.organs_by_name[O_HEART].damage = rand(50, 100)
-			H.rupture_lung()
+		victim.on_larva_erupt(chestburster)
 		qdel(src)
 
 /obj/item/weapon/larva_bite/proc/confirm()
