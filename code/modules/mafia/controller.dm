@@ -116,6 +116,8 @@
 			all_roles += new rtype(src)
 		var/datum/mafia_role/rp = rtype
 		current_setup_text += "[initial(rp.name)] x[setup_list[rtype]]"
+	current_setup_text = global.shuffle(current_setup_text)
+
 	var/list/spawnpoints = landmarks.Copy()
 	for(var/datum/mafia_role/role in all_roles)
 		role.assigned_landmark = pick_n_take(spawnpoints)
