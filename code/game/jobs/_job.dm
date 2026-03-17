@@ -110,7 +110,24 @@
 	return outfit
 
 /datum/job/proc/get_access()
+	if(title in SSjob.heads_positions && HAS_ROUND_ASPECT(ROUND_ASPECT_NEPO_BABIES))
+		return job_to_min_access()
 	return access.Copy()
+
+/datum/job/proc/job_to_min_access()
+	var/list/new_access
+	switch(title)
+		if(JOB_HOP)
+			new_access = list(access_change_ids, access_hop, access_heads, access_RC_announce, access_keycard_auth)
+		if(JOB_CHIEF_ENGINEER)
+			new_access = list(access_ce, access_heads, access_RC_announce, access_keycard_auth)
+		if(JOB_CMO)
+			new_access = list(access_cmo, access_heads, access_RC_announce, access_keycard_auth)
+		if(JOB_RD)
+			new_access = list(access_rd, access_heads, access_RC_announce, access_keycard_auth)
+		if(JOB_HOS)
+			new_access = list(access_hos, access_heads, access_RC_announce, access_keycard_auth)
+	return new_access
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
@@ -195,6 +212,8 @@
 	return TRUE
 
 /datum/job/proc/get_skillset(mob/living/carbon/human/H)
+	if(title in SSjob.heads_positions && HAS_ROUND_ASPECT(ROUND_ASPECT_NEPO_BABIES))
+		return /datum/skillset/nepo_baby
 	if(alt_titles && H.mind.role_alt_title)
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]

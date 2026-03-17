@@ -40,3 +40,9 @@
 		/datum/skill/medical = SKILL_LEVEL_TRAINED,
 		/datum/skill/command = SKILL_LEVEL_ROBUST,
 	)
+
+/datum/skillset/nepo_baby
+	name = "Nepo Baby"
+	initial_skills = list(
+		/datum/skill/command = SKILL_LEVEL_PRO,
+	)
