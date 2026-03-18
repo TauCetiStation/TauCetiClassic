@@ -156,7 +156,7 @@
 					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
 				else
 					owner.blood_remove(bleed_amount)
-				playsound(src, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
+				playsound(owner, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
 
 	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
 		return
