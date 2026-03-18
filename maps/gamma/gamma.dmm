@@ -9245,7 +9245,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/spawner/aspect/mech/phazon,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -13476,7 +13475,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14115,18 +14113,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"cdT" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkredcorners"
-	},
-/area/station/security/brig)
 "cea" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -19589,7 +19575,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -24596,7 +24581,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -26061,12 +26045,6 @@
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/outerlabs)
-"eub" = (
-/obj/effect/spawner/aspect/mech/gygax/ultra,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/hos)
 "eue" = (
 /obj/machinery/door/window/southright{
 	dir = 8;
@@ -30066,10 +30044,6 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/dormitories)
-"fky" = (
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "fkz" = (
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
@@ -31491,15 +31465,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/warden)
-"fwT" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/grid_floor,
-/area/station/cargo/storage)
 "fwU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -33973,7 +33938,6 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -34129,7 +34093,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "fWs" = (
-/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkyellow"
@@ -36664,7 +36627,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -38943,7 +38905,6 @@
 /turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "gPj" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -39463,7 +39424,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -39811,7 +39771,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -40958,7 +40917,6 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor/carpet,
 /area/station/cargo/qm)
 "hll" = (
@@ -58216,7 +58174,6 @@
 	},
 /area/station/bridge/captain_quarters)
 "kFL" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -59942,13 +59899,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/hallway)
-"kYI" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "kYK" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -71854,7 +71804,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -72825,7 +72774,6 @@
 	},
 /area/station/ai_monitored/eva)
 "nBP" = (
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -77075,7 +77023,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -82805,7 +82752,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -83234,7 +83180,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -87341,13 +87286,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/brig)
-"qtF" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor,
-/area/station/engineering/engine)
 "qtG" = (
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -88262,7 +88200,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -95013,7 +94950,6 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -108089,7 +108025,6 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/obj/effect/spawner/aspect/mech/honker,
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/dormitories/theater)
 "usE" = (
@@ -114646,7 +114581,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor,
 /area/station/medical/sleeper)
 "vKI" = (
@@ -141224,7 +141158,7 @@ atB
 mun
 eXK
 xLy
-kYI
+hdK
 cbf
 rJq
 rJq
@@ -141239,7 +141173,7 @@ fAG
 tGl
 kka
 edr
-fwT
+kka
 nhd
 tAT
 nsg
@@ -141481,7 +141415,7 @@ kFL
 qUL
 wrv
 xLy
-kYI
+hdK
 oXL
 azw
 tro
@@ -141753,7 +141687,7 @@ dVZ
 tDo
 kka
 kCg
-fwT
+kka
 lvq
 wDV
 jZm
@@ -150907,7 +150841,7 @@ pGN
 pAC
 gvJ
 qEw
-cdT
+lYN
 lYN
 lYN
 wyR
@@ -153984,7 +153918,7 @@ jFJ
 mtX
 tWL
 frM
-eub
+hdc
 box
 hdc
 pQG
@@ -169149,7 +169083,7 @@ poq
 myw
 iZr
 nUG
-qtF
+wCr
 dTy
 bSW
 qxL
@@ -171726,7 +171660,7 @@ uVU
 lXH
 cOs
 vBh
-fky
+qdl
 tYs
 sEX
 tYs
@@ -171983,7 +171917,7 @@ upZ
 eKu
 qdl
 afd
-fky
+qdl
 afd
 eyd
 fXX
@@ -172240,7 +172174,7 @@ pis
 bnT
 ceb
 xEz
-fky
+qdl
 cOs
 jVD
 aAo

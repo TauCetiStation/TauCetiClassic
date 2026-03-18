@@ -4045,7 +4045,6 @@
 	name = "MedBay largecell apc left";
 	pixel_x = -27
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -5137,7 +5136,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/aspect/mech/phazon,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "aFo" = (
@@ -6120,7 +6118,6 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -6159,7 +6156,6 @@
 	name = "MedBay largecell apc top";
 	pixel_y = 27
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor,
 /area/station/medical/reception)
 "aSI" = (
@@ -6648,17 +6644,6 @@
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/cafeteria)
-"baF" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor,
-/area/station/engineering/engine)
 "baM" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -8279,13 +8264,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"bvk" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
-	},
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "bvK" = (
 /obj/machinery/vending/donut,
 /obj/machinery/status_display{
@@ -8364,15 +8342,6 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/xenobiology)
-"bwp" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
 "bws" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -16000,13 +15969,6 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/storage)
-"dvY" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/miningoffice)
 "dwf" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -20394,7 +20356,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -20657,7 +20618,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "exM" = (
@@ -21960,13 +21920,6 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/office)
-"eNU" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor,
-/area/station/engineering/engine)
 "eNX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -26588,7 +26541,6 @@
 	},
 /area/station/medical/genetics)
 "fPn" = (
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -29242,7 +29194,6 @@
 	name = "Medbay top APC";
 	pixel_y = 27
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -39586,12 +39537,6 @@
 "iWv" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/warden)
-"iWz" = (
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	icon_state = "darkred"
-	},
-/area/station/security/warden)
 "iWJ" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -48592,7 +48537,6 @@
 	pixel_y = -28
 	},
 /obj/machinery/light/small,
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "darkbrown"
 	},
@@ -53227,14 +53171,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"mrh" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/red,
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "mrw" = (
 /obj/structure/closet/bombcloset,
 /obj/machinery/alarm{
@@ -53256,13 +53192,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"mrM" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "mrP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -67543,7 +67472,6 @@
 	},
 /area/station/security/hos)
 "pXN" = (
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -71145,7 +71073,6 @@
 /area/station/engineering/monitoring)
 "qTz" = (
 /obj/item/weapon/flora/random,
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -71640,7 +71567,6 @@
 	c_tag = "Cargo Mining office";
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -72167,16 +72093,6 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/monitoring)
-"rfV" = (
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/armoury)
 "rfW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -73926,7 +73842,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/honker,
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "rCM" = (
@@ -75418,13 +75333,6 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"rWm" = (
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellow"
-	},
-/area/station/engineering/engine)
 "rWA" = (
 /obj/machinery/flasher_button{
 	id = "solitary1";
@@ -78310,7 +78218,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -88654,7 +88561,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "vkU" = (
@@ -91705,7 +91611,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -93707,12 +93612,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
-"wwB" = (
-/obj/effect/spawner/aspect/mech/gygax/ultra,
-/turf/simulated/floor{
-	icon_state = "darkred"
-	},
-/area/station/security/hos)
 "wwC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -94077,7 +93976,6 @@
 	name = "Cargo right APC";
 	pixel_x = 27
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -128497,7 +128395,7 @@ qeP
 mYn
 lut
 uhz
-bwp
+lut
 mQq
 oVS
 iPa
@@ -129011,7 +128909,7 @@ xjw
 mYn
 lut
 kJF
-bwp
+lut
 qVa
 iag
 xuC
@@ -131050,7 +130948,7 @@ wtc
 uaB
 fzS
 dBb
-dvY
+hgs
 wsM
 ghi
 gVM
@@ -135186,7 +135084,7 @@ sEc
 pKw
 mfd
 lKX
-mrM
+tIV
 oCy
 fou
 bNI
@@ -135443,7 +135341,7 @@ fcR
 qHH
 hyp
 lKX
-bvk
+dNM
 qog
 lZs
 sBD
@@ -135700,7 +135598,7 @@ off
 gGm
 lqw
 ozn
-mrh
+dGe
 sPq
 gBi
 kiN
@@ -139282,7 +139180,7 @@ lhk
 ptb
 ube
 aad
-eNU
+jJd
 xPY
 tye
 tye
@@ -139794,7 +139692,7 @@ jHt
 tnQ
 tye
 gpR
-rWm
+ube
 knx
 jJd
 xNs
@@ -139804,7 +139702,7 @@ cTT
 pkE
 lde
 vyX
-baF
+nEw
 qDZ
 jTY
 ihi
@@ -140310,7 +140208,7 @@ tye
 gLh
 ube
 tsE
-eNU
+jJd
 xPY
 tye
 tye
@@ -142326,7 +142224,7 @@ ihf
 crc
 mXq
 wJu
-iWz
+nHG
 dNV
 iWv
 ptX
@@ -143337,7 +143235,7 @@ iJi
 wrb
 gMo
 bAf
-wwB
+rTJ
 kxs
 gTE
 xkd
@@ -146175,7 +146073,7 @@ gOu
 wWk
 mhV
 mhV
-rfV
+dxK
 lei
 dwv
 wWk

@@ -34,7 +34,7 @@
 	..()
 	overload_action.Remove(user)
 
-/obj/mecha/combat/gygax/security/atom_init() //for aspect
+/obj/mecha/combat/gygax/security/atom_init()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
 	ME.attach(src)
@@ -59,7 +59,7 @@
 	. = ..()
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
-/obj/mecha/combat/gygax/ultra/security/atom_init() //for aspect
+/obj/mecha/combat/gygax/ultra/security/atom_init()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
 	ME.attach(src)

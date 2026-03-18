@@ -34,7 +34,7 @@
 		var/datum/atom_hud/hud = global.huds[DATA_HUD_MEDICAL]
 		hud.add_hud_to(M.brainmob)
 
-/obj/mecha/medical/odysseus/medical/atom_init() //for aspect
+/obj/mecha/medical/odysseus/medical/atom_init()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
 	ME.attach(src)

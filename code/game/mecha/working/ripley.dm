@@ -36,7 +36,7 @@
 		else
 			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open"))
 
-/obj/mecha/working/ripley/engi/atom_init() //for aspect
+/obj/mecha/working/ripley/engi/atom_init()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/rcd(src)
 	ME.attach(src)
@@ -45,7 +45,7 @@
 	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
 	ME.attach(src)
 
-/obj/mecha/working/ripley/mine/atom_init() //for aspect
+/obj/mecha/working/ripley/mine/atom_init()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill(src)
 	ME.attach(src)
@@ -69,7 +69,7 @@
 	. = ..()
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1400, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
-/obj/mecha/working/ripley/firefighter/engi/atom_init() //for aspect
+/obj/mecha/working/ripley/firefighter/engi/atom_init()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/rcd(src)
 	ME.attach(src)
