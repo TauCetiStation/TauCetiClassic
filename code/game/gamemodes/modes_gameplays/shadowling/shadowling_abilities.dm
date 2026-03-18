@@ -123,7 +123,7 @@
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
 			return
-		if(!ishuman(target) || target.get_species() == GOLEM)
+		if(!ishuman(target) || target.get_species() == GOLEM || target.get_species() == IPC)
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
