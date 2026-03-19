@@ -2,6 +2,51 @@
 This is emryo growth procs
 ----------------------------------------*/
 
+/mob/living/proc/on_larva_erupt(mob/living/larva)
+	visible_message("<span class='userdanger'>[larva] crawls out of [src]!</span>")
+	add_overlay(image('icons/mob/alien.dmi', loc = src, icon_state = "bursted_stand"))
+	playsound(src, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	death()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
+		H.adjustToxLoss(rand(180, 200))
+		H.organs_by_name[O_HEART].damage = rand(50, 100)
+		H.rupture_lung()
+	if(stat != DEAD)
+		gib()
+
+/mob/living/proc/on_larva_kick(stage)
+	switch(stage)
+		if(2)
+			visible_message("<span class='warning'>[src]'s stomach growls loudly.</span>")
+			to_chat(src, "<span class='warning'>You feel a strange movement inside you.</span>")
+		if(3)
+			visible_message("<span class='danger'>[src] clutches their stomach in pain!</span>")
+			to_chat(src, "<span class='danger'>Something kicks inside your chest!</span>")
+			adjustBruteLoss(rand(10, 15))
+			Stun(2)
+			emote("scream")
+			step(src, pick(NORTH, SOUTH, EAST, WEST))
+		if(4)
+			visible_message("<span class='userdanger'>[src] convulses and collapses!</span>")
+			to_chat(src, "<span class='userdanger'>Something is thrashing violently inside you!</span>")
+			adjustBruteLoss(rand(20, 30))
+			Paralyse(4)
+			Weaken(4)
+			emote("scream")
+			make_jittery(50)
+			for(var/i in 1 to rand(1, 3))
+				step(src, pick(NORTH, SOUTH, EAST, WEST))
+				sleep(2)
+
+/mob/living/proc/on_larva_bite(bite_count)
+	adjustBruteLoss(rand(15, 30) * bite_count)
+	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
+	Stun(2 + bite_count)
+	Weaken(2 + bite_count)
+	emote("scream")
+
 /obj/item/alien_embryo
 	name = "alien embryo"
 	desc = "All slimy and yuck."
@@ -13,6 +58,7 @@ This is emryo growth procs
 	var/growth_counter = 0
 	var/stage = 0
 	var/next_growth_limit = MAX_EMBRYO_GROWTH
+	COOLDOWN_DECLARE(next_kick)
 
 /obj/item/alien_embryo/atom_init()
 	..()
@@ -154,20 +200,10 @@ This is emryo growth procs
 			START_PROCESSING(SSobj, src)
 			return
 
-		affected_mob.death()
-		if(ishuman(affected_mob)) // we're fucked. no chance to revive a person
-			var/mob/living/carbon/human/H = affected_mob
-			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
-			H.adjustToxLoss(rand(180, 200)) // Bad but effective solution.
-			H.organs_by_name[O_HEART].damage = rand(50, 100)
-			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
 		new_xeno.update_icons()
-		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE) // To get the player's attention
-
-		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
-		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
+		affected_mob.on_larva_erupt(new_xeno)
 		qdel(src)
 	else
 		if(baby)
@@ -176,12 +212,6 @@ This is emryo growth procs
 			mob_container = baby
 			mob_container.forceMove(affected_mob)
 			baby.reset_view()
-			baby.SetSleeping(0)
-			var/obj/item/weapon/larva_bite/G = new /obj/item/weapon/larva_bite(baby, src.loc)
-			baby.put_in_active_hand(G)
-			G.last_bite = world.time - 20
-			G.synch()
-			qdel(src)
 
 //only aliens will see this HUD
 /obj/item/alien_embryo/proc/add_infected_hud()
@@ -195,3 +225,83 @@ This is emryo growth procs
 	hud.remove_hud_from(affected_mob)
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = null
+
+/obj/item/alien_embryo/proc/kick()
+	if(!affected_mob)
+		return
+	if(!baby)
+		return
+	if(!baby.client)
+		return
+	if(stage < 2)
+		to_chat(baby, "<span class='warning'>You are too small to do anything yet.</span>")
+		return
+	if(!COOLDOWN_FINISHED(src, next_kick))
+		to_chat(baby, "<span class='warning'>You need to rest before kicking again.</span>")
+		return
+	COOLDOWN_START(src, next_kick, 15 SECONDS)
+	if(stage < 5)
+		affected_mob.on_larva_kick(stage)
+		to_chat(baby, "<span class='notice'>You kick your host from the inside.</span>")
+		return
+	// Stage 5 - chestburst
+	var/turf/T = get_turf(affected_mob)
+	var/atom/movable/mob_container = baby
+	mob_container.forceMove(T)
+	baby.reset_view()
+	if(affected_mob.health < 0)
+		affected_mob.visible_message("<span class='userdanger'>[affected_mob]'s body bulges grotesquely before exploding!</span>")
+		playsound(affected_mob, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+		affected_mob.gib()
+	else
+		affected_mob.on_larva_erupt(baby)
+	var/obj/item/weapon/embryo_kick/K = locate() in baby
+	if(K)
+		K.flags &= ~(DROPDEL | NODROP)
+		qdel(K)
+	qdel(src)
+
+/obj/item/weapon/embryo_kick
+	name = "embryo_kick"
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
+	var/atom/movable/screen/embryo_kick/hud = null
+	var/obj/item/alien_embryo/embryo = null
+	layer = 21
+	item_state = "nothing"
+	w_class = SIZE_BIG
+
+/obj/item/weapon/embryo_kick/atom_init(mapload, obj/item/alien_embryo/E)
+	. = ..()
+	embryo = E
+	hud = new /atom/movable/screen/embryo_kick(src)
+	hud.icon = 'icons/hud/screen1_xeno.dmi'
+	hud.icon_state = "chest_burst"
+	hud.name = "Kick Host"
+	hud.master = src
+
+/obj/item/weapon/embryo_kick/attack_self(mob/user)
+	if(embryo)
+		embryo.kick()
+
+/obj/item/weapon/embryo_kick/proc/synch()
+	if(embryo && embryo.baby)
+		if(embryo.baby.r_hand == src)
+			hud.screen_loc = ui_rhand
+
+/obj/item/weapon/embryo_kick/process()
+	if(!embryo || !embryo.baby)
+		qdel(src)
+		return
+	if(embryo.baby.client)
+		embryo.baby.client.screen -= hud
+		embryo.baby.client.screen += hud
+
+/atom/movable/screen/embryo_kick
+	name = "Kick Host"
+
+/atom/movable/screen/embryo_kick/Click()
+	if(master)
+		var/obj/item/weapon/embryo_kick/K = master
+		if(K.embryo)
+			K.embryo.kick()
+	return TRUE
