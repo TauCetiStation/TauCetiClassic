@@ -36,10 +36,11 @@
 
 /datum/round_aspect/mechas/after_start()
 	for(var/datum/design/D in global.all_designs)
-		if(D.build_type == MECHFAB)
-			for(var/M in D.materials)
-				D.materials[M] *= 0.5
-			construction_time *= 0.5
+		if(D.build_type != MECHFAB)
+			continue
+		for(var/M in D.materials)
+			D.materials[M] *= 0.5
+		construction_time *= 0.5
 
 /datum/round_aspect/agent_of_high_affairs
 	name = ROUND_ASPECT_HF_AGENT
