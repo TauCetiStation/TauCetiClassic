@@ -31,37 +31,15 @@
 
 /datum/round_aspect/mechas
 	name = ROUND_ASPECT_MECHAS
-	desc = "Добавлены мехи во все отделы."
+	desc = "Добавлены мехи во все отделы. Уменьшена цена и время создания вещей в фабрикаторе мехов."
+	afterspawn_IC_announcement = "<span class='success'>Случились прорывные открытия в сфере робототехники! Благодаря им, создание мехов и снаряжения для них стоит сущие копейки.</span>"
 
 /datum/round_aspect/mechas/after_start()
-	new /datum/event/feature/area/replace/sec_rearmament_mech
-	for(var/datum/design/nuclear_gun/ng in global.all_designs)
-		for(var/M in ng.materials)
-			ng.materials[M] *= 5
-	for(var/datum/design/stunrevolver/sr in global.all_designs)
-		for(var/M in sr.materials)
-			sr.materials[M] *= 5
-	for(var/datum/design/smg/smg in global.all_designs)
-		for(var/M in smg.materials)
-			smg.materials[M] *= 5
-	for(var/datum/design/lasercannon/lc in global.all_designs)
-		for(var/M in lc.materials)
-			lc.materials[M] *= 5
-	for(var/datum/design/laserrifle/lr in global.all_designs)
-		for(var/M in lr.materials)
-			lr.materials[M] *= 5
-	for(var/datum/design/plasma_10_gun/plsm in global.all_designs)
-		for(var/M in plsm.materials)
-			plsm.materials[M] *= 5
-	for(var/datum/design/plasma_104_gun/plsmsh in global.all_designs)
-		for(var/M in plsmsh.materials)
-			plsmsh.materials[M] *= 5
-
-	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
-		e.cost *= 25
-
-	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
-		b.cost *= 25
+	for(var/datum/design/D in global.all_designs)
+		if(D.build_type == MECHFAB)
+			for(var/M in D.materials)
+				D.materials[M] *= 0.5
+			construction_time *= 0.5
 
 /datum/round_aspect/agent_of_high_affairs
 	name = ROUND_ASPECT_HF_AGENT
