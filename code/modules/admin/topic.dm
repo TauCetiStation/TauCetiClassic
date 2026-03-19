@@ -421,9 +421,9 @@
 				counter = 0
 		jobs += "</tr></table>"
 
-	//NT Representatives (Grey-blue)
+	//Special Department Nanotrasen station (Grey-blue)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr align='center' bgcolor='6c7391'><th colspan='[length(SSjob.departments_occupations[DEP_SPECIAL])]'><a href='byond://?src=\ref[src];jobban3=specialdept;jobban4=\ref[M]'>NT Representatives Positions</a></th></tr><tr align='center'>"
+		jobs += "<tr align='center' bgcolor='6c7391'><th colspan='[length(SSjob.departments_occupations[DEP_SPECIAL])]'><a href='byond://?src=\ref[src];jobban3=specialdept;jobban4=\ref[M]'>Special Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in SSjob.departments_occupations[DEP_SPECIAL])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
