@@ -40,7 +40,7 @@
 			continue
 		for(var/M in D.materials)
 			D.materials[M] *= 0.5
-		construction_time *= 0.5
+		D.construction_time *= 0.5
 
 /datum/round_aspect/agent_of_high_affairs
 	name = ROUND_ASPECT_HF_AGENT
