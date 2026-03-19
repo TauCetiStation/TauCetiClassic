@@ -59,7 +59,6 @@
 		/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
 	)
 	support_equipment.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
 
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
