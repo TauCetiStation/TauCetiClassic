@@ -80,8 +80,8 @@
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
 
-/* NT Representatives */
-#define DEP_SPECIAL "NT Representatives"
+/* Special */
+#define DEP_SPECIAL "Special"
 
 #define JOB_BLUESHIELD "Blueshield Officer"
 #define JOB_LAWYER "Internal Affairs Agent"
