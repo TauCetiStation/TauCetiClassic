@@ -272,6 +272,7 @@
 			tgui_alert(usr, "This mob already has every available roles! Geez, calm down!", "Assigned role")
 			return
 
+		sortTim(available_roles, GLOBAL_PROC_REF(cmp_text_asc))
 		var/new_role = input("Select new role", "Assigned role", null) as null|anything in available_roles
 		if (!new_role)
 			return
@@ -695,10 +696,15 @@
 	for(var/datum/faction/F in SSticker.mode.factions)
 		all_factions[F.name] = F
 	all_factions += "-----"
+
+	var/list/factionNameByType = list()
 	for(var/factiontype in subtypesof(/datum/faction))
 		var/datum/faction/F = factiontype
-		if (!(initial(F.name) in all_factions))
-			all_factions[initial(F.name)] = F
+		if (!(initial(F.name) in factionNameByType))
+			factionNameByType[initial(F.name)] = F
+	sortTim(factionNameByType, GLOBAL_PROC_REF(cmp_text_asc))
+	all_factions |= factionNameByType
+
 	all_factions += "-----"
 	return all_factions
 

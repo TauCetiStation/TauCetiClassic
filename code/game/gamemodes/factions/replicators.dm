@@ -414,6 +414,7 @@ Message ends."}
 	adjust_fractol(moles)
 
 /datum/faction/replicators/replixeno
+	name = F_SMART_REPLICATORS
 	ID = F_SMART_REPLICATORS
 
 	has_catapult_spell = FALSE

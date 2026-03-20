@@ -8,5 +8,5 @@
 		/datum/faction/changeling,
 	)
 
-	minimum_player_count = 25
-	minimum_players_bundles = 25
+	minimum_player_count = 30
+	minimum_players_bundles = 30

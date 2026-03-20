@@ -11,7 +11,7 @@
 	antag_hud_type = ANTAG_HUD_REPLICATOR
 	antag_hud_name = "replicator"
 
-/datum/role/replicator/OnPreSetup()
+/datum/role/replicator/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/simple_animal/hostile/replicator/H = antag.current
 

@@ -3,6 +3,7 @@
 // Faction IDs
 #define F_ABDUCTORS          "Abductor Team"
 #define F_BLOODCULT          "Cult Of Blood"
+#define F_BLOODCULT_HEADS    "Cult Of Blood with Heads"
 #define F_BLOBCONGLOMERATE   "Blob Conglomerate"
 #define F_BORER_HIVEMIND     "Borer Hivemind"
 #define F_COPS               "Organized Crimes Department"

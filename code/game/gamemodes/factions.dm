@@ -167,7 +167,7 @@
 	if(leader == R)
 		leader = null
 
-/datum/faction/proc/AppendObjective(objective_type,duplicates=0)
+/datum/faction/proc/AppendObjective(objective_type, duplicates = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!duplicates && locate(objective_type) in objective_holder.GetObjectives())
 		return null

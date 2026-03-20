@@ -745,6 +745,7 @@
 #include "code\game\gamemodes\objectives\abductors\abductor_objectives.dm"
 #include "code\game\gamemodes\objectives\borer\borer_objectives.dm"
 #include "code\game\gamemodes\objectives\cult\cult_objectives.dm"
+#include "code\game\gamemodes\objectives\cult\rp_cult.dm"
 #include "code\game\gamemodes\objectives\families\become_captain.dm"
 #include "code\game\gamemodes\objectives\families\capture_station.dm"
 #include "code\game\gamemodes\objectives\families\church_tradition.dm"

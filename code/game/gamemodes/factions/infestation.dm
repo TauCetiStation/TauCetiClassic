@@ -268,6 +268,7 @@
 #undef CHECK_PERIOD
 
 /datum/faction/infestation/replixeno
+	name = F_SMART_XENOMORPH_HIVE
 	ID = F_SMART_XENOMORPH_HIVE
 
 /datum/faction/infestation/replixeno/getObjectiveType()
