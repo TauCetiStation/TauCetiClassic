@@ -7,7 +7,7 @@
 	cases = list("автодок", "автодока", "автодоку", "автодок", "автодоком", "автодоке")
 	desc = "Используется для оперирования пациентов."
 	icon = 'icons/obj/Cryogenic3.dmi'
-	icon_state = "body_scanner_0"
+	icon_state = "autodoc_0"
 	anchored = TRUE
 	light_color = "#00ff00"
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
@@ -75,7 +75,7 @@
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/autodoc/update_icon()
-	icon_state = "body_scanner_[occupant ? "1" : "0"]"
+	icon_state = "autodoc_[occupant ? "1" : "0"]"
 
 /obj/machinery/autodoc/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated())
@@ -127,13 +127,13 @@
 
 /obj/machinery/autodoc_console/power_change()
 	if(stat & BROKEN)
-		icon_state = "body_scannerconsole-p"
+		icon_state = "autodocconsole-p"
 	else if(powered())
 		icon_state = initial(icon_state)
 		stat &= ~NOPOWER
 	else
 		spawn(rand(0, 15))
-			src.icon_state = "body_scannerconsole-p"
+			src.icon_state = "autodocconsole-p"
 			stat |= NOPOWER
 			update_power_use()
 	update_power_use()
@@ -143,7 +143,7 @@
 	name = "Autodoc Console"
 	cases = list("консоль автодока", "консоли автодока", "консоли автодока", "консоль автодока", "консолью автодока", "консоли автодока")
 	icon = 'icons/obj/Cryogenic3.dmi'
-	icon_state = "body_scannerconsole"
+	icon_state = "autodocconsole"
 	anchored = TRUE
 	COOLDOWN_DECLARE(next_print)
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
@@ -302,7 +302,5 @@
 	switch(action)
 		if("ejectify")
 			connected.eject()
-		if("print_p")
-			print_scan()
 
 	return TRUE
