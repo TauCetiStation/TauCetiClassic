@@ -1,11 +1,11 @@
-/datum/game_mode/mix/shadowtraitorwiz
-	name = "Shadowlings+Traitors+Wizards"
-	config_name = "shadowtraitorwiz"
+/datum/game_mode/mix/shadowtraitorchngs
+	name = "Shadowlings+Traitors+Changelings"
+	config_name = "shadowtraitorchngs"
 	probability = 100
 	factions_allowed = list(
 		/datum/faction/shadowlings,
 		/datum/faction/traitor,
-		/datum/faction/wizards,
+		/datum/faction/changeling,
 	)
 
 	minimum_player_count = 25
