@@ -22,7 +22,7 @@
 	random_basetype = /obj/structure/sign/poster/official
 
 /obj/item/weapon/poster/revolution
-	name = "revolution poster"
+	name = "contraband poster"
 	icon_state = "rolled_poster"
 	random_basetype = /obj/structure/sign/poster/revolution
 
