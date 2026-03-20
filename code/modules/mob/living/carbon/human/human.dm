@@ -2192,6 +2192,8 @@
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()
+
+	AdjustDrunkenness(-1)
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
 		if(istype(IO))
