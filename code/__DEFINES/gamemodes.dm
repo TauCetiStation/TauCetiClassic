@@ -23,8 +23,10 @@
 #define F_SPIDERCLAN         "Spider Clan"
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
+#define F_SMART_XENOMORPH_HIVE "Alien Hivemind vs Replicators"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
+#define F_SMART_REPLICATORS  "Replicator Hivemind vs Aliens"
 #define F_MALF_DRONES		 "Malf Drones"
 #define F_SPACE_TRADERS      "Space Traders"
 

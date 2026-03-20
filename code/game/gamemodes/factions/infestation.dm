@@ -72,8 +72,11 @@
 /datum/faction/infestation/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/reproduct)
+	AppendObjective(getObjectiveType())
 	return TRUE
+
+/datum/faction/infestation/proc/getObjectiveType()
+	return /datum/objective/reproduct
 
 /datum/faction/infestation/proc/count_hive_power(in_detail = FALSE)
 	var/count = 0
@@ -263,3 +266,12 @@
 	return TRUE
 
 #undef CHECK_PERIOD
+
+/datum/faction/infestation/replixeno
+	ID = F_SMART_XENOMORPH_HIVE
+
+/datum/faction/infestation/replixeno/getObjectiveType()
+	return /datum/objective/destroy_replicators
+
+/datum/faction/infestation/replixeno/check_win()
+	return FALSE

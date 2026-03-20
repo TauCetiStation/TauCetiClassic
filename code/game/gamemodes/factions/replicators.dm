@@ -74,6 +74,8 @@
 	var/min_fake_disintegration_cooldown = 1 SECOND
 	var/max_fake_disintegration_cooldown = 3 SECONDS
 
+	var/has_catapult_spell = TRUE
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -119,8 +121,11 @@
 /datum/faction/replicators/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/replicator_replicate)
+	AppendObjective(getObjectiveType())
 	return TRUE
+
+/datum/faction/replicators/proc/getObjectiveType()
+	return /datum/objective/replicator_replicate
 
 /datum/faction/replicators/process()
 	. = ..()
@@ -407,3 +412,14 @@ Message ends."}
 		return
 
 	adjust_fractol(moles)
+
+/datum/faction/replicators/replixeno
+	ID = F_SMART_REPLICATORS
+
+	has_catapult_spell = FALSE
+
+/datum/faction/replicators/replixeno/getObjectiveType()
+	return /datum/objective/destroy_infestation
+
+/datum/faction/replicators/replixeno/check_win()
+	return FALSE
