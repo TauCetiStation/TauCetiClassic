@@ -50,7 +50,7 @@
 
 /obj/structure/sign/warning/shop_disposal
 	name = "sign TO THE "
-	desc = "Current disposal unit leads straight to the "
+	desc = "Этот вход пневмопочты ведет в магазин "
 	icon_state = "shop_disposal"
 
 /obj/structure/sign/warning/shop_disposal/atom_init()
