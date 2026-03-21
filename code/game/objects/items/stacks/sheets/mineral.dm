@@ -20,25 +20,25 @@ Mineral Sheets
  * Recipes
  */
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
-	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, max_per_turf = 1, build_outline = TRUE), \
-	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, max_per_turf = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, max_per_place = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, max_per_place = 1, build_outline = TRUE), \
 	)
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
-	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, max_per_turf = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, max_per_place = 1, build_outline = TRUE), \
 	)
 
 var/global/list/datum/stack_recipe/phoron_recipes = list ( \
-	new/datum/stack_recipe("phoron door", /obj/structure/mineral_door/transparent/phoron, 10, max_per_turf = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("phoron door", /obj/structure/mineral_door/transparent/phoron, 10, max_per_place = 1, build_outline = TRUE), \
 	)
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
-	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, max_per_turf = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, max_per_place = 1, build_outline = TRUE), \
 	)
 
 var/global/list/datum/stack_recipe/plastic_recipes = list ( \
-	new/datum/stack_recipe("plastic crate", /obj/structure/closet/crate/plastic, 10, max_per_turf = 1, build_outline = TRUE), \
-	new/datum/stack_recipe("plastic ashtray", /obj/item/ashtray/plastic, 2, max_per_turf = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("plastic crate", /obj/structure/closet/crate/plastic, 10, max_per_place = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("plastic ashtray", /obj/item/ashtray/plastic, 2, max_per_place = 1, build_outline = TRUE), \
 	new/datum/stack_recipe("plastic fork", /obj/item/weapon/kitchen/utensil/pfork, 1, build_outline = TRUE), \
 	new/datum/stack_recipe("plastic spoon", /obj/item/weapon/kitchen/utensil/pspoon, 1, build_outline = TRUE), \
 	new/datum/stack_recipe("plastic knife", /obj/item/weapon/kitchenknife/plastic, 1, build_outline = TRUE), \
@@ -48,11 +48,11 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	)
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
-	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, max_per_turf = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, max_per_place = 1, build_outline = TRUE), \
 	)
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
-	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, max_per_turf = 1, build_outline = TRUE), \
+	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, max_per_place = 1, build_outline = TRUE), \
 	)
 
 

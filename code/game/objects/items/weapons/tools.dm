@@ -438,6 +438,8 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		if(!IO)
+			return
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
@@ -566,7 +568,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
 			return
-		if(!(BP.is_robotic()) || user.a_intent != INTENT_HELP)
+		if(!(BP.is_robotic_part()) || user.a_intent != INTENT_HELP)
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])

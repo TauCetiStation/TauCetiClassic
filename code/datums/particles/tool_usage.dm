@@ -55,6 +55,31 @@
 	icon = 'icons/effects/particles/mining.dmi'
 	icon_state = list("rock1", "rock2", "rock3", "rock4", "rock5", "rock6", "rock7", "rock8")
 
+/particles/tool/drill_mineral
+	icon = 'icons/effects/particles/mining.dmi'
+	icon_state = list("rock1", "rock2", "rock3", "rock4", "rock5", "rock6", "rock7", "rock8")
+
 /particles/tool/digging/trash
 	icon = 'icons/obj/structures/scrap/trash.dmi'
 	icon_state = list("base1", "base2", "base3", "base4", "base5", "base6", "base7", "base8", "base9", "base10", "base11", "base12", "base13", "base14", "base15", "base16", "base17", "base18")
+
+/particles/tool/squeeze_trash
+	icon = 'icons/obj/structures/scrap/trash.dmi'
+	icon_state = list("base1", "base2", "base3", "base4", "base5", "base6", "base7", "base8", "base9", "base10", "base11", "base12", "base13", "base14", "base15", "base16", "base17", "base18")
+
+
+
+/particles/tool/digging/wood
+	icon = 'icons/effects/particles/woodhit.dmi'
+	icon_state = list("wood1", "wood2", "wood3")
+
+/particles/tool/digging/metal
+	icon = 'icons/effects/particles/metalhit.dmi'
+	icon_state = list("metal1", "metal2", "metal3")
+
+/particles/tool/digging/glass
+	icon = 'icons/effects/particles/glasshit.dmi'
+	icon_state = list("glass1", "glass2", "glass3")
+
+/particles/tool/digging/glass/phoron
+	icon_state = list("phoronglass1", "phoronglass2", "phoronglass3")

@@ -26722,7 +26722,7 @@
 	},
 /area/station/medical/virology)
 "fQI" = (
-/obj/item/weapon/paper/brig_arsenal,
+/obj/item/weapon/paper/inventory/brig_armoury,
 /obj/item/toy/cards{
 	layer = 4.1
 	},
@@ -97928,6 +97928,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"xzG" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/obj/item/weapon/paper/inventory{
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/armoury)
 "xzI" = (
 /obj/effect/landmark{
 	name = "xeno_spawn"
@@ -146640,7 +146652,7 @@ dHl
 wWk
 uOS
 kZX
-fVV
+xzG
 ucF
 wWk
 dgG

@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 56
+#define SAVEFILE_VERSION_MAX 57
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -159,12 +159,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["citizenship"] << citizenship
 		S["faction"]     << faction
 		S["religion"]    << religion
-
-	if(current_version < 32)
-		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
-		organ_data = list()
-		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES))
-			organ_data[i] = null
 
 	if(current_version < 33)
 		S["parallax_theme"] << null
@@ -487,6 +481,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		undershirt = /datum/preferences::undershirt
 		undershirt_print = /datum/preferences::undershirt_print
 		socks = /datum/preferences::socks
+
+	if(current_version < 57)
+		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
+		organ_data = list()
+		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES, O_LUNGS))
+			organ_data[i] = null
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
@@ -875,7 +875,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
 	underwear		= sanitize_integer(underwear, 0, underwear_t.len, initial(underwear))
 	undershirt		= sanitize_integer(undershirt, 0, undershirt_t.len, initial(undershirt))
-	undershirt_print = sanitize_inlist(undershirt_print, undershirt_prints_t, null)
+	undershirt_print = sanitize_inlist(undershirt_print, undershirt_prints_t + null, null)
 	socks			= sanitize_integer(socks, 0, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME

@@ -21,6 +21,8 @@
 
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 /obj/structure/door_assembly/atom_init()
 	. = ..()
 	update_state()

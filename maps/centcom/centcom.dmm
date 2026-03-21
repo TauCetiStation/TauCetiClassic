@@ -2569,7 +2569,7 @@
 /obj/item/weapon/scalpel{
 	pixel_y = 2
 	},
-/obj/item/brain,
+/obj/item/organ/internal/brain,
 /obj/item/weapon/circular_saw{
 	pixel_y = -5
 	},

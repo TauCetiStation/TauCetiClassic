@@ -517,7 +517,7 @@
 					message += "<span class='notice'><font color='red'>Внимание! Остановка сердца!</font></span><br>"
 				if(HEART_FIBR)
 					message += "<span class='notice'>Состояние сердца пациента: <font color='blue'>Внимание! Сердце подвержено фибрилляции.</font></span><br>"
-			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] уд/мин.</font></span><br>"
+			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse_number(GETPULSE_TOOL)] уд/мин.</font></span><br>"
 	var/list/reflist = list(message, scan_hallucination)
 	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, reflist)
 	message = reflist[1]

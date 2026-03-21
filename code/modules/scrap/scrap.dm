@@ -150,7 +150,7 @@ var/global/list/scrap_base_cache = list()
 				return
 			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS)))
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.is_robotic())
+				if(BP.is_robotic_part())
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Stun(1)
@@ -214,7 +214,7 @@ var/global/list/scrap_base_cache = list()
 	var/mob/living/carbon/human/victim = user
 	var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 	var/obj/item/clothing/gloves/G = victim.gloves
-	if(!BP || BP.is_robotic() || HAS_TRAIT(victim, TRAIT_NO_MINORCUTS)\
+	if(!BP || BP.is_robotic_part() || HAS_TRAIT(victim, TRAIT_NO_MINORCUTS)\
 		|| victim.species.flags[IS_SYNTHETIC] || (victim.gloves && G.protect_fingers))
 		return FALSE
 	else if(prob(50))
@@ -411,7 +411,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/syndie/fullhouse,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-		/obj/item/brain,
+		/obj/item/organ/internal/brain,
 		/obj/item/weapon/tank/phoron
 	)
 

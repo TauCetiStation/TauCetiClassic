@@ -9,6 +9,8 @@
 	max_integrity = 200
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	canSmoothWith = list(
 		/turf/simulated/wall, \
 		/turf/simulated/wall/yellow, \

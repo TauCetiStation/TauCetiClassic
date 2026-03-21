@@ -25,6 +25,8 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	var/parts = /obj/item/weapon/table_parts
 	var/flipped = 0
 	var/flipable = TRUE
@@ -367,6 +369,8 @@
 	parts = /obj/item/weapon/table_parts/glass
 	max_integrity = 10
 
+	hit_particle_type = /particles/tool/digging/glass
+
 /obj/structure/table/glass/atom_init()
 	. = ..()
 	AddComponent(/datum/component/clickplace, , CALLBACK(src, PROC_REF(slam)))
@@ -470,6 +474,8 @@
 	icon = 'icons/obj/smooth_structures/wooden_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood
 	max_integrity = 50
+
+	hit_particle_type = /particles/tool/digging/wood
 
 /obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
 	name = "gambling table"
@@ -746,6 +752,8 @@
 	parts = /obj/item/weapon/table_parts/rglass
 	flipable = FALSE
 
+	hit_particle_type = /particles/tool/digging/glass
+
 /*
  * Racks
  */
@@ -763,6 +771,8 @@
 
 	max_integrity = 20
 	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/metal
 
 /obj/structure/rack/atom_init()
 	. = ..()

@@ -313,8 +313,7 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in bodyparts)
-		qdel(t)
+
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link, R)
 
@@ -337,6 +336,9 @@
 			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
 		O.key = key
+
+	for(var/t in bodyparts)
+		qdel(t)
 
 	O.loc = loc
 	O.job = "Cyborg"
