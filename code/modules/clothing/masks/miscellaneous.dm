@@ -55,14 +55,59 @@
 	desc = "A simple neck scarf."
 	icon_state = "bluescarf"
 	item_state = "bluescarf"
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_NECK
 	flags = MASKCOVERSMOUTH
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
 	var/hanging = 0
 	item_action_types = list(/datum/action/item_action/hands_free/adjust_scarf)
 
+/obj/item/clothing/mask/scarf/proc/pull_up()
+	hanging = FALSE
+	gas_transfer_coefficient = 0.90
+	flags |= MASKCOVERSMOUTH
+	icon_state = "[initial(icon_state)]"
+
+/obj/item/clothing/mask/scarf/proc/pull_down()
+	hanging = TRUE
+	gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+	flags &= ~MASKCOVERSMOUTH
+	icon_state = "[initial(icon_state)]down"
+
+/obj/item/clothing/mask/scarf/equipped(mob/user, slot)
+	if(slot == SLOT_WEAR_MASK)
+		if(hanging)
+			pull_up()
+			to_chat(user, "You pull the scarf up to cover your face.")
+
+	else if(slot == SLOT_NECK)
+		if(!hanging)
+			pull_down()
+			to_chat(user, "Your scarf is now hanging on your neck.")
+
+	. = ..()
+
 /datum/action/item_action/hands_free/adjust_scarf
 	name = "Adjust scarf"
+
+/datum/action/item_action/hands_free/adjust_scarf/Activate()
+	var/obj/item/clothing/mask/scarf/scarf = target
+	var/mob/user = usr
+	if((user.get_inactive_hand() == scarf) || (user.get_active_hand() == scarf))
+		scarf.attack_self(usr)
+		return
+
+	if(scarf.slot_equipped == SLOT_WEAR_MASK)
+		if(!user.unEquip(scarf))
+			return
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_NECK) && !user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK, FALSE, TRUE))
+			user.put_in_hands(scarf)
+
+	else if(scarf.slot_equipped == SLOT_NECK)
+		if(!user.unEquip(scarf))
+			return
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK) && !user.equip_to_slot_if_possible(scarf, SLOT_NECK, FALSE, TRUE))
+			user.put_in_hands(scarf)
 
 /obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
@@ -93,34 +138,6 @@
 	desc = "A violet neck scarf."
 	icon_state = "violetscarf"
 	item_state = "violetscarf"
-
-/obj/item/clothing/mask/scarf/attack_self(mob/user)
-
-	if(user.incapacitated())
-		return
-	if((user.get_inactive_hand() != src) && (user.get_active_hand() != src))
-		to_chat(user, "<span class='warning'>You need to hold the scarf in your hand.</span>")
-		return
-
-	if(!hanging)
-		hanging = !hanging
-		gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-		flags &= ~MASKCOVERSMOUTH
-		slot_flags = SLOT_FLAGS_NECK
-		icon_state = "[initial(icon_state)]down"
-		to_chat(user, "Your scarf is now hanging on your neck.")
-	else
-		hanging = !hanging
-		gas_transfer_coefficient = 0.90
-		flags |= MASKCOVERSMOUTH
-		slot_flags = SLOT_FLAGS_MASK
-		icon_state = "[initial(icon_state)]"
-		to_chat(user, "You pull the scarf up to cover your face.")
-	update_inv_mob()
-	update_item_actions()
-
-
-
 
 /obj/item/clothing/mask/scarf/ninja
 	name = "ninja scarf"
