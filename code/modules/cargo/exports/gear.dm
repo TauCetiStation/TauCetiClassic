@@ -2,15 +2,28 @@
 
 /datum/export/gear
 
+//Clothes
+/datum/export/gear/baseball_hat
+	cost = 100
+	include_subtypes = TRUE
+	unit_name = "baseball hat"
+	export_types = list(/obj/item/clothing/head/soft)
+
+/datum/export/gear/insulated_gloves
+	cost = 150
+	include_subtypes = FALSE
+	unit_name = "insulated gloves"
+	export_types = list(/obj/item/clothing/gloves/insulated, /obj/item/clothing/gloves/budget_insulated)
+
 // Security gear
 /datum/export/gear/sec_helmet
-	cost = 25
+	cost = 100
 	include_subtypes = FALSE
 	unit_name = "helmet"
 	export_types = list(/obj/item/clothing/head/helmet)
 
 /datum/export/gear/sec_armor
-	cost = 50
+	cost = 150
 	include_subtypes = FALSE
 	unit_name = "armor vest"
 	export_types = list(/obj/item/clothing/suit/armor/vest,
@@ -150,35 +163,35 @@
 //--------------------------------------------
 
 /datum/export/gear/glasses
-	cost = 1
+	cost = 10
 	include_subtypes = FALSE
 	unit_name = "glasses"
 	export_types = list(/obj/item/clothing/glasses)
 
 /datum/export/gear/glasses/hud
-	cost = 5
+	cost = 50
 	include_subtypes = TRUE
 	unit_name = "hud glasses"
 	export_types = list(/obj/item/clothing/glasses/hud)
 
 /datum/export/gear/glasses/meson
-	cost = 10
+	cost = 100
 	unit_name = "meson glasses"
 	export_types = list(/obj/item/clothing/glasses/meson)
 
 /datum/export/gear/glasses/night
-	cost = 40
+	cost = 400
 	unit_name = "night vision glasses"
 	export_types = list(/obj/item/clothing/glasses/night)
 
 /datum/export/gear/glasses/thermal
-	cost = 80
+	cost = 800
 	include_subtypes = TRUE
 	unit_name = "thermal vision glasses"
 	export_types = list(/obj/item/clothing/glasses/thermal)
 
 /datum/export/gear/glasses/welding
-	cost = 10
+	cost = 150
 	include_subtypes = TRUE
 	unit_name = "welding glasses"
 	export_types = list(/obj/item/clothing/glasses/welding)

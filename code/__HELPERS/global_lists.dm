@@ -316,7 +316,8 @@
 							/obj/item/clothing/shoes,
 							/obj/item/clothing/suit,
 							/obj/item/weapon/bedsheet,
-							/obj/item/clothing/under)
+							/obj/item/clothing/under,
+							/obj/item/manufacturing_parts)
 
 	global.washing_items_list = typecacheof(path_list, ignore_root_path = TRUE)
 

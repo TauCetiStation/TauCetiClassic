@@ -9,7 +9,7 @@
 #define QUALITY_WRENCHING  "wrenching"	// for wrench/hand drill
 #define QUALITY_SCREWING   "screwing"	// for screwdriver/hand drill
 #define QUALITY_WELDING    "welding"	// for welding tools
-
+#define QUALITY_COILING	   "coiling"	// for coils
 #define QUALITY_PULSING	   "pulsing"	// for multitools
-
+#define QUALITY_SEWING	   "sewing"		// for suture kits
 #define QUALITY_SIGNALLING "signaling"	// for signaller

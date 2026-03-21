@@ -33,6 +33,24 @@
 	message = "of wirecutters"
 	export_types = list(/obj/item/weapon/wirecutters)
 
+/datum/export/hand_drill
+	cost = 150
+	unit_name = "hand drill"
+	export_types = list(/obj/item/weapon/multi/hand_drill)
+	include_subtypes = FALSE
+
+/datum/export/jaws
+	cost = 150
+	unit_name = "jaws of life"
+	export_types = list(/obj/item/weapon/multi/jaws_of_life)
+	include_subtypes = FALSE
+
+/datum/export/multitool
+	cost = 150
+	unit_name = "multitool"
+	export_types = list(/obj/item/device/multitool)
+	include_subtypes = FALSE
+
 
 // Welding tools
 /datum/export/weldingtool
@@ -62,7 +80,7 @@
 
 // Flashlights
 /datum/export/flashlight
-	cost = 1
+	cost = 30
 	unit_name = "flashlight"
 	export_types = list(/obj/item/device/flashlight)
 	include_subtypes = FALSE
@@ -73,7 +91,7 @@
 	export_types = list(/obj/item/device/flashlight/flare)
 
 /datum/export/flashlight/seclite
-	cost = 2
+	cost = 50
 	unit_name = "seclite"
 	export_types = list(/obj/item/device/flashlight/seclite)
 
@@ -146,3 +164,39 @@
 	cost = 50
 	unit_name = "monkey cube"
 	export_types = list(/obj/item/weapon/storage/box/monkeycubes)
+
+/datum/export/toolbox
+	cost = 150
+	unit_name = "toolbox"
+	export_types = list(/obj/item/weapon/storage/toolbox, /obj/item/weapon/storage/toolbox/mechanical, /obj/item/weapon/storage/toolbox/electrical)
+
+/datum/export/beartrap
+	cost = 200
+	unit_name = "beartrap"
+	export_types = list(/obj/item/weapon/legcuffs/beartrap)
+
+/datum/export/splint
+	cost = 100
+	unit_name = "splint"
+	export_types = list(/obj/item/stack/medical/splint)
+
+/datum/export/pda
+	cost = 200
+	unit_name = "pda"
+	export_types = list(/obj/item/device/pda)
+	include_subtypes = TRUE
+
+/datum/export/occult
+	cost = 100
+	unit_name = "occult"
+	export_types = list(/obj/item/device/occult_scanner, /obj/item/weapon/occult_pinpointer)
+
+/datum/export/woodenclock
+	cost = 100
+	unit_name = "woodenclock"
+	export_types = list(/obj/item/woodenclock)
+
+/datum/export/modkit
+	cost = 150
+	unit_name = "modkit"
+	export_types = list(/obj/item/device/modkit)
