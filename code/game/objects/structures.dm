@@ -205,9 +205,9 @@
 
 	if(get_turf(climber) == T)
 		if(climber == user)
-			user.visible_message("<span class='warning'>[user] [flags & ON_BORDER ? "перелезает через" : "залезает на"] [src]!</span>")
+			user.visible_message("<span class='warning'>[user] [flags & ON_BORDER ? "перелезает через" : "залезает на"] [CASE(src, ACCUSATIVE_CASE)]!</span>")
 		else
-			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [flags & ON_BORDER ? "через" : "на"] [src]!</span>")
+			user.visible_message("<span class='warning'>[user] перетаскивает [climber] [flags & ON_BORDER ? "через" : "на"] [CASE(src, ACCUSATIVE_CASE)]!</span>")
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
