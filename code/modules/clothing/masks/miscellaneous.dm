@@ -100,13 +100,13 @@
 	if(scarf.slot_equipped == SLOT_WEAR_MASK)
 		if(!user.unEquip(scarf))
 			return
-		if(!user.equip_to_slot_if_possible(scarf, SLOT_NECK) && !user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK))
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_NECK) && !user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK, FALSE, TRUE))
 			user.put_in_hands(scarf)
 
 	else if(scarf.slot_equipped == SLOT_NECK)
 		if(!user.unEquip(scarf))
 			return
-		if(!user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK) && !user.equip_to_slot_if_possible(scarf, SLOT_NECK))
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK) && !user.equip_to_slot_if_possible(scarf, SLOT_NECK, FALSE, TRUE))
 			user.put_in_hands(scarf)
 
 /obj/item/clothing/mask/scarf/blue
