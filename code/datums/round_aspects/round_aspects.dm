@@ -175,3 +175,7 @@
 	name = ROUND_ASPECT_HEALING_ALCOHOL
 	desc = "Алкоголь лечит физические повреждения."
 	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продлевает жизнь.</span>"
+
+/datum/round_aspect/nepo_babies
+	name = ROUND_ASPECT_NEPO_BABIES
+	desc = "Главы не имеют должных навыков и во всём должны полагаться на своих подчиненных."
