@@ -52,6 +52,7 @@
 
 	if(!R.total_volume || !R)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
+		update_icon()
 		return 0
 
 	if(M == user)
@@ -63,8 +64,8 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 			reagents.reaction(M, INGEST)
-			addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, gulp_size), 5)
 
+		update_icon()
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else if (!canopened)
@@ -80,25 +81,21 @@
 
 		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-		if(reagents.total_volume)
-			reagents.trans_to_ingest(M, gulp_size)
-
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			var/refill = R.get_master_reagent_id()
 			addtimer(CALLBACK(R, TYPE_PROC_REF(/datum/reagents, add_reagent), refill, fillevel), 600)
-
+		update_icon()
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-
+	update_icon()
 	if (!is_open_container())
 		to_chat(user, "<span class='notice'>You need to open [src]!</span>")
 		return
-
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 		var/obj/structure/reagent_dispensers/RD = target
 		if(!RD.reagents.total_volume)
@@ -140,6 +137,7 @@
 	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		reagents.standard_splash(target, user=user)
+		update_icon()
 
 //DRINKS
 
