@@ -54,6 +54,8 @@
 			handle_mutations_and_radiation()
 
 		if(stat != DEAD)
+			AdjustConfused(-1)
+
 			//Disabilities
 			handle_disabilities()
 
@@ -671,8 +673,6 @@ var/global/list/tourette_bad_words= list(
 				update_inv_wear_suit()
 				update_size_class()
 
-	AdjustConfused(-1)
-	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
 	if((crawling) || (buckled))
 		dizziness = max(0, dizziness - 15)
