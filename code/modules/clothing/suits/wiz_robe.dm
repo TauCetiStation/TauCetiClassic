@@ -352,3 +352,72 @@
 	desc = "Strange-looking yellow hat-wear that most certainly belongs to a powerful magic user."
 	icon_state = "yellowwizard"
 	item_state = "yellowwizard"
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility
+	name = "Cloak of invisibility"
+	desc = "Мерцающий плащ, сотканный из теней и иллюзий."
+	icon_state = "wizard"      // Затычка, заменить на "cloak_invis" после добавления спрайта
+	item_state = "wizrobe"
+
+	var/mob/living/carbon/human/invis_user = null
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility/atom_init(mapload, ...)
+	. = ..()
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 0
+	TCB.force_unwielded = 0
+	TCB.icon_wielded = "wizard"  // Заменить на "cloak_invis_open" для раскрытого спрайта
+	TCB.on_wield   = CALLBACK(src, PROC_REF(on_wield))
+	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
+	AddComponent(/datum/component/twohanded, TCB)
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility/proc/on_wield(mob/living/carbon/human/wielder, obj/item/wieldee)
+	activate_invisibility(wielder)
+	return FALSE
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility/proc/on_unwield(mob/living/carbon/human/wielder, obj/item/wieldee)
+	deactivate_invisibility(wielder)
+	return FALSE
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility/proc/activate_invisibility(mob/living/carbon/human/user)
+	invis_user = user
+
+	user.invisibility = INVISIBILITY_MAXIMUM
+	user.alpha = 0
+
+	to_chat(user, "<span class='notice'>Вы раскрываете [src] и растворяетесь в темноте...</span>")
+	user.visible_message(
+		"<span class='notice'>[user] раскрывает мерцающий плащ и исчезает из виду!</span>"
+	)
+	playsound(user.loc, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility/proc/deactivate_invisibility(mob/living/carbon/human/user)
+	if(!user)
+		user = invis_user
+	if(!user)
+		invis_user = null
+		return
+
+	invis_user = null
+
+	user.invisibility = 0
+	user.alpha = 255
+
+	to_chat(user, "<span class='notice'>Вы складываете [src] - тень спадает, и вы снова видимы.</span>")
+	user.visible_message(
+		"<span class='notice'>[user] складывает плащ и появляется из ниоткуда!</span>"
+	)
+	playsound(user.loc, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility/equipped(mob/user, slot)
+	if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+		if(invis_user)
+			deactivate_invisibility(user)
+		to_chat(user, "<span class='warning'>Надев [src] как обычный плащ, вы не чувствуете в нём магии. Раскройте его.</span>")
+	..()
+
+/obj/item/clothing/suit/wizrobe/cloak_of_invisibility/Destroy()
+	if(invis_user)
+		deactivate_invisibility(invis_user)
+	return ..()
+
