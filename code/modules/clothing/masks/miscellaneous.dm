@@ -76,12 +76,14 @@
 
 /obj/item/clothing/mask/scarf/equipped(mob/user, slot)
 	if(slot == SLOT_WEAR_MASK)
-		pull_up()
-		to_chat(user, "You pull the scarf up to cover your face.")
+		if(hanging)
+			pull_up()
+			to_chat(user, "You pull the scarf up to cover your face.")
 
 	else if(slot == SLOT_NECK)
-		pull_down()
-		to_chat(user, "Your scarf is now hanging on your neck.")
+		if(!hanging)
+			pull_down()
+			to_chat(user, "Your scarf is now hanging on your neck.")
 
 	. = ..()
 
@@ -96,13 +98,15 @@
 		return
 
 	if(scarf.slot_equipped == SLOT_WEAR_MASK)
-		user.remove_from_mob(scarf)
-		if(!user.equip_to_slot_if_possible(scarf, SLOT_NECK))
+		if(!user.unEquip(scarf))
+			return
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_NECK) && !user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK))
 			user.put_in_hands(scarf)
 
 	else if(scarf.slot_equipped == SLOT_NECK)
-		user.remove_from_mob(scarf)
-		if(!user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK))
+		if(!user.unEquip(scarf))
+			return
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK) && !user.equip_to_slot_if_possible(scarf, SLOT_NECK))
 			user.put_in_hands(scarf)
 
 /obj/item/clothing/mask/scarf/blue
