@@ -104,7 +104,6 @@
 	icon_state = "[initial(icon_state)]down"
 
 /obj/item/clothing/mask/scarf/attack_self(mob/user)
-
 	if(user.incapacitated())
 		return
 	if((user.get_inactive_hand() != src) && (user.get_active_hand() != src))
