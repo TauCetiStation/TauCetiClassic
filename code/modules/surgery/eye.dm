@@ -19,6 +19,7 @@
 	return target_zone == O_EYES
 
 /datum/surgery_step/eye/cut_open
+	name = "Cut open"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -51,6 +52,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/lift_eyes
+	name = "Lift eyes"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,	        \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -82,6 +84,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/mend_eyes
+	name = "Mend eyes"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,             \
 	/obj/item/stack/cable_coil = 75,            \
@@ -122,6 +125,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/cauterize
+	name = "Cauterize"
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
@@ -155,6 +159,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/organ_manipulation/place_eye
+	name = "Place eye"
 	priority = 2
 	allowed_tools = list(/obj/item/organ/internal/eyes = 100)
 
@@ -208,6 +213,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/eye/manipulation/remove
+	name = "Remove"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -261,6 +267,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/ipc/eye
+	name = "Eye"
 	clothless = FALSE
 	priority = 2
 	can_infect = FALSE
@@ -276,6 +283,7 @@
 	return target_zone == O_EYES
 
 /datum/surgery_step/ipc/eye/screw_open
+	name = "Screw open"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -311,6 +319,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/ipc/eye/mend_cameras
+	name = "Mend cameras"
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
 	/obj/item/weapon/bonegel = 30,
@@ -352,6 +361,7 @@
 	target.blinded += 3.0
 
 /datum/surgery_step/ipc/eye/close_shut
+	name = "Close shut"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
