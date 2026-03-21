@@ -31,6 +31,7 @@ jobs:
             Данное предложение пробыло без активности открытым более полугода. Если вы найдёте того, кто его реализует,
             и вам нужно открыть данный ишью, пожалуйста, обратитесь к кому-либо из мейнтейнеров.
             Вы можете призвать их в комментарии слапнув ``@TauCetiStation/maintainers``.
+          only-issue-types: 'Feature'
           exempt-issue-labels: 'Bug, Task'
           days-before-issue-stale: 200
           days-before-issue-close: 1

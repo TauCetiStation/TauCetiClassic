@@ -1,0 +1,96 @@
+# Changes to a .dmm or anything in the _map subfolder
+'Map Edit':
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.dmm'
+
+# Any .dmi changes
+'Sprites':
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.dmi'
+
+# Any sounds changes
+'Sound':
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.aif'
+    - '**/*.aiff'
+    - '**/*.it'
+    - '**/*.mid'
+    - '**/*.midi'
+    - '**/*.mod'
+    - '**/*.mp3'
+    - '**/*.ogg'
+    - '**/*.oxm'
+    - '**/*.raw'
+    - '**/*.s3m'
+    - '**/*.wma'
+    - '**/*.wav'
+    - '**/*.xm'
+
+# Changes to the SQL subfolder
+'Database':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'SQL/**'
+
+# Changes to the tgui subfolder
+'UI':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'tgui/**'
+    - 'html/**'
+    - 'nano/**'
+
+# Changes to the config subfolder
+'Config Update':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'config/**/*'
+    - 'config/example/**/*'
+
+# Changes to a .dm or anything in the code subfolder
+'Code':
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.dm'
+
+# Any .json changes
+'javascript':
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.json'
+
+# Changes to the .Github subfolder
+'Maintainability Improvements':
+- changed-files:
+  - any-glob-to-any-file:
+    - '.github/**'
+    - '.github/**/*'
+    - '.vscode/**/*'
+    - 'docs/**/*'
+    - 'scripts/**/*'
+    - 'test/**/*'
+    - '.codebeatignore'
+    - '.codebeatsettings'
+    - '.editorconfig'
+    - '.git*'
+    - 'biome.json'
+    - 'libmysql.dll'
+    - 'LICENSE'
+    - 'README.md'
+    - 'SpacemanDMM.toml'
+
+# Changes to the Tools folder
+'Tools':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'tools/**/*'
+
+#Translation tools
+'Translation/Localization':
+- changed-files:
+  - any-glob-to-any-file:
+     - 'code/__DEFINES/_translation.dm'
+     - '.github/wiki/TRANSLATION.md'
