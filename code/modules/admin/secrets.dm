@@ -17,9 +17,17 @@
 
 	var/dat
 
+	dat += "<div>"
+	dat += "<div>"
 	dat += "<a href='byond://?src=\ref[src];secretsmenu=tab;tab=0' [current_tab == 0 ? "class='selected'" : ""]>Debug</a>"
 	dat += "<a href='byond://?src=\ref[src];secretsmenu=tab;tab=1' [current_tab == 1 ? "class='selected'" : ""]>IC Events</a>"
 	dat += "<a href='byond://?src=\ref[src];secretsmenu=tab;tab=2' [current_tab == 2 ? "class='selected'" : ""]>OOC Events</a>"
+	dat += "</div>"
+
+	dat += "<div style=' text-align: center;'>"
+	dat += "<a href='byond://?src=\ref[src];secretsmenu=admin_list' style='width=80%'>Admin List</a>"
+	dat += "</div>"
+	dat += "</div>"
 
 	switch(current_tab)
 		if(0) // Debug
