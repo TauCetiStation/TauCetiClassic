@@ -238,17 +238,19 @@
 
 	M.AddSpell(new type(src))
 
-/datum/religion/cult/can_convert(mob/living/L)
-	if(L.my_religion && !istype(L.my_religion, /datum/religion/pluvia))
+/datum/religion/cult/can_convert(mob/M)
+	if(M.my_religion && !istype(M.my_religion, /datum/religion/pluvia))
 		return FALSE
-	if(L.stat == DEAD)
+	if(M.stat == DEAD)
 		return FALSE
-	if(jobban_isbanned(L, ROLE_CULTIST) || jobban_isbanned(L, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
+	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
 		return FALSE
-	if(HAS_TRAIT(L, TRAIT_NO_BLOOD) || L?.mind?.pluvian_blessed)
+	if(HAS_TRAIT(M, TRAIT_NO_BLOOD) || M?.mind?.pluvian_blessed)
 		return FALSE
-	if(ismindprotect(L))
-		return FALSE
+	if(isliving(M))
+		var/mob/living/L = M
+		if(ismindprotect(L))
+			return FALSE
 	return TRUE
 
 /datum/religion/cult/add_member(mob/M, holy_role)
