@@ -8,43 +8,21 @@
 	icon_state = "center_8"
 	},
 /area/custom/arena)
-"g" = (
-/obj/item/weapon/grenade/syndieminibomb,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"r" = (
-/obj/random/guns/projectile_handgun,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
 "s" = (
-/obj/random/cloth/armor,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
+/obj/structure/static_portal{
+	color = "#ff4100";
+	id = 1
 	},
-/area/custom/arena)
-"t" = (
-/obj/random/cloth/helmet,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"u" = (
-/obj/random/melee,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
 	icon_state = "center_8"
 	},
 /area/custom/arena)
 "w" = (
-/obj/random/guns/energy_weapon,
+/obj/structure/static_portal{
+	color = "#4572e3";
+	id = 2
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
 	icon_state = "center_8"
@@ -53,31 +31,8 @@
 "L" = (
 /turf/unsimulated/wall/like_a_normal/red,
 /area/custom/arena)
-"P" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"V" = (
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
 "W" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"Z" = (
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
 	icon_state = "center_8"
@@ -156,8 +111,8 @@ f
 f
 f
 f
-u
-r
+W
+f
 f
 f
 f
@@ -181,15 +136,15 @@ L
 f
 L
 f
-P
 f
 f
-t
-W
-w
 f
 f
-P
+f
+f
+f
+f
+f
 f
 L
 f
@@ -206,24 +161,24 @@ a
 a
 L
 f
-u
-r
-L
+f
+f
+f
 f
 f
 f
 L
 f
 s
-P
-L
-f
-f
 f
 L
 f
-u
-r
+f
+f
+f
+f
+f
+f
 L
 a
 a
@@ -234,12 +189,12 @@ a
 a
 L
 L
-t
+f
 W
-w
 f
 f
-Z
+f
+f
 f
 L
 L
@@ -247,12 +202,12 @@ L
 L
 L
 f
-Z
 f
 f
-t
+f
+f
 W
-w
+f
 L
 L
 a
@@ -264,24 +219,24 @@ a
 L
 f
 f
-s
-P
 f
 f
 f
 f
 f
-s
+f
+f
+f
 L
-t
 f
 f
 f
 f
 f
 f
-s
-P
+f
+f
+f
 f
 L
 a
@@ -292,17 +247,6 @@ a
 L
 L
 L
-L
-f
-f
-L
-L
-f
-f
-f
-f
-g
-f
 f
 f
 f
@@ -310,7 +254,18 @@ L
 L
 f
 f
+f
+f
+f
+f
+f
+f
+f
 L
+L
+f
+f
+f
 L
 L
 L
@@ -326,16 +281,16 @@ f
 f
 L
 f
-u
-r
 f
 f
 f
 f
 f
 f
-u
-r
+f
+f
+f
+f
 L
 f
 f
@@ -349,27 +304,27 @@ a
 a
 L
 f
-P
-f
-Z
 f
 f
-t
+f
+f
+f
+f
 W
-w
+f
 L
 f
-P
+f
 f
 L
-t
+f
 W
-w
 f
 f
-Z
 f
-P
+f
+f
+f
 f
 L
 a
@@ -384,16 +339,16 @@ f
 f
 f
 f
-s
-P
-L
-f
 f
 f
 L
 f
-s
-P
+f
+f
+L
+f
+f
+f
 f
 f
 f
@@ -417,7 +372,7 @@ L
 L
 L
 f
-Z
+f
 f
 L
 L
@@ -436,57 +391,57 @@ L
 L
 f
 f
-u
-r
-L
-t
 f
 f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-s
 L
 f
-u
-r
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+L
+f
+f
+f
 f
 L
 "}
 (14,1,1) = {"
 L
 f
-t
 W
+f
 w
 L
 L
-g
 f
-P
 f
-Z
 f
-V
 f
-Z
 f
-P
 f
-g
-L
-L
-t
 W
+f
+f
+f
+f
+f
+f
+L
+L
 w
+f
+W
 f
 L
 "}
@@ -494,28 +449,28 @@ L
 L
 f
 f
-s
-P
-L
-s
 f
 f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-f
-t
 L
 f
-s
-P
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+L
+f
+f
+f
 f
 L
 "}
@@ -533,7 +488,7 @@ L
 L
 L
 f
-Z
+f
 f
 L
 L
@@ -558,16 +513,16 @@ f
 f
 f
 f
-u
-r
-L
-f
 f
 f
 L
 f
-u
-r
+f
+f
+L
+f
+f
+f
 f
 f
 f
@@ -581,27 +536,27 @@ L
 a
 L
 f
-P
-f
-Z
 f
 f
-t
+f
+f
+f
+f
 W
-w
+f
 L
 f
-P
+f
 f
 L
-t
+f
 W
-w
 f
 f
-Z
 f
-P
+f
+f
+f
 f
 L
 a
@@ -616,16 +571,16 @@ f
 f
 L
 f
-s
-P
 f
 f
 f
 f
 f
 f
-s
-P
+f
+f
+f
+f
 L
 f
 f
@@ -640,17 +595,6 @@ a
 L
 L
 L
-L
-f
-f
-L
-L
-f
-f
-f
-f
-g
-f
 f
 f
 f
@@ -658,7 +602,18 @@ L
 L
 f
 f
+f
+f
+f
+f
+f
+f
+f
 L
+L
+f
+f
+f
 L
 L
 L
@@ -670,24 +625,24 @@ a
 L
 f
 f
-u
-r
 f
 f
 f
 f
 f
-t
+f
+f
+f
 L
-s
 f
 f
 f
 f
 f
 f
-u
-r
+f
+f
+f
 f
 L
 a
@@ -698,12 +653,12 @@ a
 a
 L
 L
-t
+f
 W
-w
 f
 f
-Z
+f
+f
 f
 L
 L
@@ -711,12 +666,12 @@ L
 L
 L
 f
-Z
 f
 f
-t
+f
+f
 W
-w
+f
 L
 L
 a
@@ -728,24 +683,24 @@ a
 a
 L
 f
-s
-P
-L
 f
 f
 f
-L
-f
-u
-r
-L
 f
 f
 f
 L
 f
 s
-P
+f
+L
+f
+f
+f
+f
+f
+f
+f
 L
 a
 a
@@ -761,15 +716,15 @@ L
 f
 L
 f
-P
 f
 f
-t
-W
-w
 f
 f
-P
+f
+f
+f
+f
+f
 f
 L
 f
@@ -794,8 +749,8 @@ f
 f
 f
 f
-s
-P
+W
+f
 f
 f
 f

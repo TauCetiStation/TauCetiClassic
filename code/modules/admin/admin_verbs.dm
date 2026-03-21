@@ -1257,14 +1257,14 @@ var/global/centcom_barriers_stat = 1
 
 	var/list/arenas = list()
 
-	for(var/i in subtypesof(/datum/map_template/post_round_arena))
-		var/datum/map_template/post_round_arena/A = i
+	for(var/i in subtypesof(/datum/map_template/arena/post_round))
+		var/datum/map_template/arena/post_round/A = i
 		arenas[A.name] = A
 
 	var/choice = input("Select the arena") as null|anything in arenas
 	if(!choice) return
 
-	var/datum/map_template/post_round_arena/arena = arenas[choice]
+	var/datum/map_template/arena/post_round/arena = arenas[choice]
 	SSticker.load_arena_admin(arena)
 
 	log_admin("[key_name(src)] load arena map [arena.name] - [arena.mappath]")

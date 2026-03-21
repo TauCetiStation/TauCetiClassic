@@ -1,0 +1,1840 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bf" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"bT" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/carpet/green,
+/area/custom/arena)
+"dW" = (
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"dZ" = (
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"fV" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/unsimulated/floor{
+	icon_state = "bcircuit"
+	},
+/area/custom/arena)
+"gD" = (
+/obj/structure/rack,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"hr" = (
+/obj/machinery/atmospherics/pipe/manifold/visible,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"hC" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"hQ" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Surgery2";
+	name = "Surgery Shutters";
+	opacity = 0
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"hU" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"kN" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"lj" = (
+/turf/unsimulated/wall/like_a_normal,
+/area/custom/arena)
+"lL" = (
+/turf/unsimulated/floor{
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"mO" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"ni" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"oF" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"qg" = (
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"qN" = (
+/obj/machinery/computer/crew,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"rc" = (
+/obj/structure/table,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"rh" = (
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"rs" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"sf" = (
+/turf/unsimulated/floor,
+/area/custom/arena)
+"sN" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"tS" = (
+/obj/effect/decal/turf_decal{
+	dir = 9;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"up" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"vo" = (
+/obj/machinery/life_assist/cardiopulmonary_bypass,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"wf" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"wo" = (
+/obj/structure/rack,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"xH" = (
+/obj/machinery/iv_drip,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"xM" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"yp" = (
+/obj/machinery/vending/blood,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"yC" = (
+/obj/machinery/door/airlock/medical{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"yG" = (
+/obj/machinery/vending/medical,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"zT" = (
+/obj/machinery/vending/coffee,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"Aj" = (
+/obj/machinery/vending/medical,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Aw" = (
+/obj/machinery/chem_master,
+/obj/effect/decal/turf_decal{
+	dir = 9;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Bc" = (
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"BD" = (
+/obj/structure/rack,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"BL" = (
+/obj/machinery/iv_drip,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Di" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Dp" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "barber"
+	},
+/area/custom/arena)
+"ET" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"FM" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"Ho" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"HP" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Id" = (
+/turf/unsimulated/floor{
+	icon_state = "whitebluecorner"
+	},
+/area/custom/arena)
+"Jd" = (
+/obj/machinery/clonepod,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Jk" = (
+/obj/machinery/computer/cloning,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"JX" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"Kn" = (
+/obj/machinery/chem_dispenser,
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Kr" = (
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"Kx" = (
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Lk" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"Lp" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"LK" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"MN" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/custom/arena)
+"Ne" = (
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/arena)
+"Ng" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Ow" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"Ox" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/arena)
+"PR" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/custom/arena)
+"PS" = (
+/obj/machinery/vending/firstaid,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Qu" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor,
+/area/custom/arena)
+"RF" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"RU" = (
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor,
+/area/custom/arena)
+"RY" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"Th" = (
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Tq" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Tu" = (
+/obj/structure/rack,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"TC" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Uq" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/arena)
+"Uv" = (
+/obj/structure/rack,
+/turf/unsimulated/floor{
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"Vm" = (
+/obj/structure/rack,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteyellow"
+	},
+/area/custom/arena)
+"Vo" = (
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"VI" = (
+/obj/machinery/computer/scan_consolenew,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Wh" = (
+/turf/unsimulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/custom/arena)
+"WD" = (
+/obj/machinery/computer/med_data,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+"Yo" = (
+/turf/unsimulated/floor/carpet/green,
+/area/custom/arena)
+"Yx" = (
+/obj/structure/flora/ausbushes/ywflowers{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"YD" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"YX" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"YY" = (
+/obj/structure/flora/ausbushes/ywflowers{
+	layer = 2.7
+	},
+/obj/structure/flora/tree/jungle/small,
+/turf/unsimulated/floor{
+	icon_state = "grass1"
+	},
+/area/custom/arena)
+"ZQ" = (
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
+	},
+/area/custom/arena)
+
+(1,1,1) = {"
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+"}
+(2,1,1) = {"
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+kN
+qg
+Vo
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(3,1,1) = {"
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Uq
+Bc
+Bc
+Bc
+Bc
+kN
+qg
+Vo
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+lj
+Bc
+Uq
+Bc
+Bc
+Bc
+Bc
+Uq
+Bc
+lj
+"}
+(4,1,1) = {"
+lj
+Bc
+Bc
+Uq
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+kN
+PR
+Vo
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(5,1,1) = {"
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+lj
+lj
+lj
+lj
+lj
+Bc
+lj
+lj
+lj
+kN
+qg
+Vo
+lj
+lj
+Bc
+Bc
+lj
+lj
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(6,1,1) = {"
+lj
+lj
+lj
+Bc
+Bc
+Bc
+Bc
+lj
+rc
+rc
+rh
+rh
+rh
+zT
+lj
+Di
+kN
+qg
+Vo
+Wh
+lj
+Bc
+Uq
+Bc
+lj
+lj
+Bc
+lj
+lj
+lj
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(7,1,1) = {"
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+rh
+rh
+rh
+rh
+rh
+rh
+rh
+Wh
+kN
+qg
+Vo
+Wh
+lj
+Bc
+Bc
+Bc
+lj
+YD
+xM
+YX
+YD
+lj
+Bc
+Bc
+Bc
+lj
+lj
+"}
+(8,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+rh
+rh
+bf
+rh
+rh
+rh
+JX
+Wh
+kN
+qg
+Vo
+Wh
+lj
+Bc
+Bc
+Bc
+lj
+YY
+xM
+YD
+YD
+lj
+Bc
+Uq
+Bc
+Bc
+lj
+"}
+(9,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+lj
+ni
+rh
+rh
+rh
+rh
+MN
+lj
+Aj
+kN
+qg
+Vo
+lj
+lj
+Bc
+lj
+lj
+lj
+xM
+dZ
+Yx
+xM
+lj
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(10,1,1) = {"
+lj
+Bc
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+JX
+yC
+lj
+lj
+lj
+lj
+kN
+PR
+Vo
+lj
+Jd
+Ne
+Ne
+lj
+lj
+lj
+Wh
+JX
+lj
+lj
+lj
+lj
+lj
+Bc
+lj
+"}
+(11,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+Lp
+Lp
+lj
+tS
+rs
+RU
+Th
+TC
+TC
+RF
+lj
+kN
+qg
+Vo
+lj
+Jk
+TC
+RF
+lj
+VI
+TC
+TC
+TC
+TC
+RF
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(12,1,1) = {"
+lj
+Bc
+Bc
+Bc
+Bc
+HP
+hr
+lj
+wf
+sf
+Ow
+kN
+qg
+qg
+Vo
+Wh
+kN
+qg
+Vo
+JX
+kN
+PR
+Vo
+lj
+kN
+qg
+qg
+qg
+qg
+Vo
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(13,1,1) = {"
+lj
+Bc
+Uq
+Bc
+lj
+Ne
+hC
+Ne
+wf
+sf
+Ow
+kN
+qg
+PR
+Vo
+Wh
+kN
+qg
+Vo
+Wh
+kN
+qg
+Vo
+Wh
+kN
+qg
+qg
+PR
+qg
+Vo
+Bc
+Bc
+Uq
+Bc
+lj
+"}
+(14,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+wo
+hU
+lj
+wf
+sf
+Ow
+kN
+qg
+qg
+Vo
+Wh
+kN
+qg
+Vo
+lj
+kN
+qg
+Vo
+lj
+kN
+qg
+Id
+oF
+oF
+Ng
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(15,1,1) = {"
+lj
+Bc
+Bc
+lj
+lj
+lj
+lj
+lj
+Kx
+sN
+up
+ZQ
+oF
+vo
+BD
+lj
+kN
+qg
+Vo
+lj
+lj
+JX
+lj
+lj
+ZQ
+oF
+Ng
+lj
+lj
+lj
+lj
+lj
+Bc
+Bc
+lj
+"}
+(16,1,1) = {"
+lj
+lj
+Bc
+lj
+fV
+LK
+mO
+lj
+lj
+Wh
+Wh
+lj
+lj
+JX
+JX
+lj
+kN
+qg
+Vo
+lj
+Wh
+Wh
+RY
+lj
+lj
+Wh
+JX
+lj
+Wh
+Wh
+Wh
+lj
+Bc
+lj
+lj
+"}
+(17,1,1) = {"
+lj
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+ET
+qg
+Ho
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+TC
+lj
+"}
+(18,1,1) = {"
+lj
+qg
+qg
+PR
+qg
+qg
+qg
+qg
+qg
+PR
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+qg
+PR
+qg
+qg
+qg
+qg
+qg
+PR
+qg
+qg
+lj
+"}
+(19,1,1) = {"
+lj
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+FM
+qg
+Id
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+oF
+lj
+"}
+(20,1,1) = {"
+lj
+lj
+Bc
+lj
+lj
+lj
+Wh
+Wh
+JX
+lj
+lj
+lj
+Wh
+Wh
+lj
+lj
+kN
+qg
+Vo
+lj
+lj
+JX
+Wh
+lj
+lj
+lj
+JX
+JX
+Wh
+lj
+lj
+lj
+Bc
+lj
+lj
+"}
+(21,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+PS
+TC
+TC
+TC
+RF
+lj
+xH
+TC
+TC
+BL
+lj
+kN
+qg
+Vo
+lj
+Aw
+RU
+qg
+Uv
+lj
+Th
+TC
+TC
+TC
+Tq
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(22,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+kN
+qg
+qg
+qg
+Vo
+lj
+kN
+qg
+qg
+Vo
+lj
+kN
+qg
+Vo
+lj
+Kn
+Ow
+qg
+lL
+lj
+kN
+dW
+dW
+dW
+Vo
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(23,1,1) = {"
+lj
+lj
+lj
+Bc
+Bc
+kN
+qg
+PR
+qg
+Vo
+JX
+kN
+qg
+qg
+Vo
+Wh
+kN
+qg
+Vo
+JX
+Kx
+Qu
+qg
+lL
+lj
+kN
+dW
+Dp
+dW
+Vo
+lj
+lj
+Bc
+Uq
+lj
+"}
+(24,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+kN
+qg
+qg
+qg
+Vo
+Wh
+kN
+qg
+PR
+Vo
+Wh
+kN
+qg
+Vo
+Wh
+qg
+qg
+qg
+lL
+lj
+qN
+dW
+dW
+dW
+Vo
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(25,1,1) = {"
+lj
+Bc
+Bc
+lj
+lj
+ZQ
+oF
+oF
+oF
+Ng
+lj
+kN
+qg
+qg
+Vo
+Wh
+kN
+qg
+Vo
+lj
+Lk
+Lk
+Tu
+Vm
+lj
+WD
+oF
+oF
+oF
+BD
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(26,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+lj
+hQ
+hQ
+Wh
+lj
+lj
+kN
+qg
+qg
+Vo
+lj
+kN
+qg
+Vo
+lj
+lj
+Kr
+lj
+lj
+lj
+lj
+lj
+Bc
+lj
+lj
+lj
+lj
+Bc
+lj
+lj
+"}
+(27,1,1) = {"
+lj
+Bc
+Uq
+Bc
+lj
+Th
+TC
+TC
+TC
+RF
+lj
+yp
+qg
+qg
+Vo
+lj
+kN
+PR
+Vo
+lj
+Kr
+Kr
+Kr
+Kr
+Kr
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+lj
+"}
+(28,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+kN
+qg
+qg
+qg
+Vo
+lj
+yG
+oF
+oF
+Ng
+lj
+kN
+qg
+Vo
+Kr
+Kr
+Yo
+bT
+Yo
+Kr
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+"}
+(29,1,1) = {"
+lj
+lj
+lj
+Bc
+lj
+kN
+qg
+PR
+qg
+Vo
+lj
+lj
+Bc
+lj
+lj
+lj
+kN
+qg
+Vo
+lj
+Kr
+Yo
+Yo
+Yo
+Kr
+lj
+Bc
+Bc
+Bc
+Uq
+Bc
+lj
+Bc
+Bc
+lj
+"}
+(30,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+kN
+qg
+qg
+qg
+Vo
+lj
+Bc
+Bc
+Bc
+Bc
+lj
+kN
+qg
+Vo
+lj
+Kr
+Kr
+Kr
+Kr
+Ox
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+lj
+"}
+(31,1,1) = {"
+lj
+Bc
+Bc
+Bc
+lj
+gD
+oF
+oF
+oF
+BD
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+kN
+qg
+Vo
+lj
+lj
+Bc
+lj
+lj
+lj
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+lj
+Bc
+lj
+"}
+(32,1,1) = {"
+lj
+Bc
+Bc
+lj
+lj
+lj
+Bc
+lj
+lj
+lj
+lj
+lj
+Bc
+Uq
+Bc
+lj
+kN
+qg
+Vo
+lj
+Bc
+Bc
+lj
+Bc
+Bc
+lj
+lj
+Bc
+lj
+lj
+lj
+lj
+Bc
+Bc
+lj
+"}
+(33,1,1) = {"
+lj
+Bc
+Uq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+kN
+PR
+Vo
+Bc
+Bc
+Uq
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Uq
+Bc
+lj
+"}
+(34,1,1) = {"
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Uq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+kN
+qg
+Vo
+lj
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+lj
+Bc
+Bc
+Bc
+lj
+"}
+(35,1,1) = {"
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+lj
+"}
