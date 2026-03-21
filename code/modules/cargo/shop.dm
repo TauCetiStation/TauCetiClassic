@@ -11,7 +11,7 @@ var/global/list/shop_category2color = list(
 		"Инструменты" = "red",
 		"Ресурсы" = "blue",
 		"Наборы" = "yellow",
-		// "Разное" = no colour,
+		"Разное" = "#b38050",
 	)
 
 var/global/list/orders_and_offers = list()
@@ -151,7 +151,7 @@ var/global/online_shop_referrer_revenue = 0.50
 
 	return Lot
 
-/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination, referrer_account = null)
+/proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination, referrer_account = null, forced = FALSE)
 	if(!Lot)
 		return FALSE
 
@@ -164,7 +164,7 @@ var/global/online_shop_referrer_revenue = 0.50
 		return FALSE
 
 	var/delivery_cost = Lot.get_delivery_cost()
-	if(delivery_cost > MA.money)
+	if(!forced && (delivery_cost > MA.money))
 		return FALSE
 
 	Lot.sold = TRUE
@@ -275,7 +275,7 @@ var/global/online_shop_referrer_revenue = 0.50
 	var/itemPixelX = Item.pixel_x
 	var/itemPixelY = Item.pixel_y
 
-	var/obj/Package = Item.try_wrap_up()
+	var/obj/Package = Item.try_wrap_up(texture_name = "blank")
 	if(!Package)
 		return
 
@@ -301,24 +301,26 @@ var/global/online_shop_referrer_revenue = 0.50
 
 	return Item
 
-/proc/object2onlineshop_package(obj/Item, forceColor = null, hideIcon = FALSE)
+/proc/object2onlineshop_package(obj/Item, force_color = null, hide_info = FALSE)
 	var/lot_name = Item.name
+	if(hide_info)
+		lot_name = "Почтовое отправление"
 	var/lot_desc = Item.price_tag["description"]
 	var/lot_price = Item.price_tag["price"]
 	var/lot_category = Item.price_tag["category"]
 	var/lot_account = Item.price_tag["account"]
 	var/item_icon
-	if(!hideIcon)
+	if(!hide_info)
 		item_icon = bicon(Item)
 
 	Item = shop_object2package(Item)
 
-	if(forceColor)
-		Item.color = forceColor
+	if(force_color)
+		Item.color = force_color
 	else if(global.shop_category2color[lot_category])
 		Item.color = global.shop_category2color[lot_category]
 
-	if(hideIcon)
+	if(hide_info)
 		item_icon = bicon(Item)
 
 	create_onlineshop_item(Item, lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
