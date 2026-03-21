@@ -225,6 +225,7 @@
 			module_sprites["Acheron"] = "mechoid-Service"
 			module_sprites["Kodiak"] = "kodiak-service"
 			module_sprites["Maid"] = "kerfusMaid"
+			module_sprites["Ebot"] = "ebot-serv"
 
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
@@ -234,6 +235,7 @@
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
 			module_sprites["Acheron"] = "mechoid-Science"
+			module_sprites["Ebot"] = "ebot-science"
 			give_hud(DATA_HUD_MINER)
 
 		if("Miner")
@@ -247,6 +249,7 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			module_sprites["Ebot"] = "ebot-miner"
 			give_hud(DATA_HUD_MINER)
 
 		if("Medical")
@@ -261,6 +264,7 @@
 			module_sprites["Drone Red"] = "drone-surgery"
 			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
+			module_sprites["Ebot"] = "ebot-med"
 
 		if("Security")
 			if(can_be_security)
@@ -277,6 +281,7 @@
 				module_sprites["Acheron"] = "mechoid-Security"
 				module_sprites["Kodiak"] = "kodiak-sec"
 				module_sprites["NO ERP"] = "kerfusNoERP"
+				module_sprites["Ebot"] = "ebot-sec"
 			else
 				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
 				return
@@ -295,6 +300,7 @@
 			module_sprites["Acheron"] = "mechoid-Engineering"
 			module_sprites["Kodiak"] = "kodiak-eng"
 			module_sprites["Flushed"] = "kerfusFlushed"
+			module_sprites["Ebot"] = "ebot-eng"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -303,6 +309,7 @@
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Drone"] = "drone-janitor"
 			module_sprites["Acheron"] = "mechoid-Janitor"
+			module_sprites["Ebot"] = "ebot-maid"
 
 		if("PeaceKeeper")
 			if(!can_be_security)
