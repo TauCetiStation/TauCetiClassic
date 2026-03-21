@@ -186,7 +186,7 @@
 						/obj/item/clothing/shoes/yakuza,
 						/obj/item/clothing/suit/jacket/leather,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective_type = /datum/objective/gang/save_station
+	gang_objective_type = /datum/objective/save_station/gang
 
 /datum/faction/gang/jackbros
 	name = "Jack Bros"

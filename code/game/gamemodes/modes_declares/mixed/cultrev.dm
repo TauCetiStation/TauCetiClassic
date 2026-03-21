@@ -1,10 +1,10 @@
 /datum/game_mode/mix/cultrev
 	name = "Revolution Of Nar-sie"
 	config_name = "revocult"
-	probability = 80
+	probability = 100
 	factions_allowed = list(
 		/datum/faction/cult/target_heads,
-		/datum/faction/revolution,
+		/datum/faction/revolution/save_station,
 	)
 
 	minimum_player_count = 45

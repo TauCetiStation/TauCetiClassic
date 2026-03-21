@@ -41,7 +41,10 @@
 /datum/faction/cult/forgeObjectives()
 	if(!..())
 		return FALSE
+	setupOjectives()
+	return TRUE
 
+/datum/faction/cult/proc/setupOjectives()
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
 
 	var/objectives_weight = 0
@@ -53,8 +56,6 @@
 		var/datum/objective/cult/C = O
 		objectives_weight += C.weight
 		possibles_objectives -= C.type
-
-	return TRUE
 
 /datum/faction/cult/AdminPanelEntry()
 	. = ..()
@@ -169,16 +170,15 @@
 
 	objectives_cap = 2
 
-/datum/faction/cult/target_heads/forgeObjectives()
-	if(!..())
-		return FALSE
-
+/datum/faction/cult/target_heads/setupOjectives()
+	AppendObjective(/datum/objective/cult/capture_areas)
 	var/list/heads = get_living_heads()
 	for(var/datum/mind/head_mind in heads)
 		var/datum/objective/target/rp_cult/rev_obj = new(text = null, _auto_target = FALSE)
 		rev_obj.target = head_mind
 		rev_obj.explanation_text = rev_obj.format_explanation()
 		AppendObjective(rev_obj, TRUE)
+	AppendObjective(/datum/objective/cult/summon_narsie)
 
 /datum/faction/cult/target_heads/latespawn(mob/M)
 	if(M.mind.assigned_role in SSjob.heads_positions)

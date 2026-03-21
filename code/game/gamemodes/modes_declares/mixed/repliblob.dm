@@ -4,7 +4,7 @@
 	probability = 100
 	factions_allowed = list(
 		/datum/faction/replicators,
-		/datum/faction/blob_conglomerate,
+		/datum/faction/blob_conglomerate/more_tiles,
 	)
 
 	minimum_player_count = 40
