@@ -809,11 +809,6 @@
 	},
 /area/asteroid/research_outpost/sample)
 "bW" = (
-/obj/machinery/door/window/westleft{
-	dir = 1;
-	name = "Sample Preparation Loading";
-	req_access = list(65)
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -825,22 +820,22 @@
 	},
 /area/asteroid/research_outpost/sample)
 "bX" = (
-/obj/structure/window/thin/reinforced{
+/obj/item/weapon/flora/pottedplant,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/item/weapon/flora/pottedplant,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
 	},
 /area/asteroid/research_outpost/sample)
 "bY" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/machinery/vending/hydroseeds{
-	slogan_delay = 700;
-	seller_account_number = "%cargo_account%"
+	seller_account_number = "%cargo_account%";
+	slogan_delay = 700
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -6791,7 +6786,6 @@
 /area/asteroid/mine/explored)
 "nT" = (
 /obj/structure/lattice,
-/obj/structure/window/thin/reinforced,
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
 	},
@@ -7844,7 +7838,6 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/explored)
 "qn" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/lattice,
 /obj/structure/transit_tube{
 	icon_state = "E-NW"
@@ -7855,11 +7848,23 @@
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "qo" = (
-/obj/structure/lattice,
 /obj/structure/window/thin/reinforced,
-/obj/structure/transit_tube,
-/turf/environment/space,
-/area/asteroid/mine/explored)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/glass/reinforced,
+/area/asteroid/mine/production)
 "qp" = (
 /obj/structure/sign/xeno_warning_mining{
 	pixel_y = -32
@@ -7959,11 +7964,11 @@
 	},
 /area/asteroid/mine/explored)
 "qE" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/turf/simulated/floor/glass/reinforced/phoron/airless,
+/obj/structure/fence/metal,
+/turf/simulated/floor/glass/reinforced,
 /area/asteroid/mine/explored)
 "qF" = (
 /obj/machinery/door/firedoor,
@@ -12333,18 +12338,6 @@
 	icon_state = "white"
 	},
 /area/asteroid/mine/living_quarters)
-"Cf" = (
-/obj/machinery/door/window/westleft{
-	name = "Production Area";
-	req_access = list(48)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/asteroid/mine/production)
 "Cg" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -13018,12 +13011,12 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Jf" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/closet/crate/secure/miningsec,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13459,15 +13452,15 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Ne" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13904,15 +13897,6 @@
 	},
 /obj/structure/plasticflaps/mining,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/production)
-"Se" = (
-/obj/machinery/door/window/westright{
-	name = "Production Area";
-	req_access = list(48)
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
 /area/asteroid/mine/production)
 "Sf" = (
 /obj/machinery/conveyor{
@@ -49689,7 +49673,7 @@ nJ
 pS
 qn
 qE
-qV
+pF
 aa
 aa
 aa
@@ -49944,9 +49928,9 @@ kO
 aa
 aa
 aa
-qo
+pV
 qE
-qV
+pF
 aa
 aa
 aa
@@ -50201,9 +50185,9 @@ aa
 aa
 aa
 aa
-qo
+pV
 qE
-qV
+pF
 aa
 aa
 aa
@@ -50458,9 +50442,9 @@ aa
 aa
 aa
 aa
-qo
+pV
 qE
-qV
+pF
 aa
 aa
 aa
@@ -50715,9 +50699,9 @@ aa
 aa
 aa
 aa
-qo
+pV
 qE
-qV
+pF
 aa
 aa
 aa
@@ -50972,9 +50956,9 @@ aa
 aa
 aa
 aa
-qo
+pV
 qE
-qV
+pF
 kO
 kO
 aa
@@ -51229,9 +51213,9 @@ aa
 aa
 aa
 ar
-qo
+pV
 qE
-qV
+pF
 kO
 kO
 YV
@@ -51488,7 +51472,7 @@ ar
 pT
 nT
 qE
-qV
+pF
 kO
 kO
 YV
@@ -55707,7 +55691,7 @@ lA
 aa
 aa
 xw
-zi
+qo
 wB
 zA
 zA
@@ -58798,8 +58782,8 @@ Bh
 Fe
 Bh
 Ne
-Se
-Cf
+Te
+Df
 Jf
 Ak
 AW

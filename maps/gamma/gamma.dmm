@@ -22,12 +22,12 @@
 	},
 /area/station/solar/starboard)
 "aac" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/item/weapon/flora/random,
 /obj/machinery/alarm{
 	pixel_y = 22
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -3473,6 +3473,12 @@
 	icon_state = "spline_plain"
 	},
 /obj/item/weapon/flora/random,
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3505,6 +3511,9 @@
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
 	sortType = "OnlineShop"
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -4037,9 +4046,6 @@
 "alN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1
-	},
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -5366,12 +5372,12 @@
 	},
 /area/station/security/range)
 "azm" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenbluefull"
@@ -6169,7 +6175,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
 /turf/simulated/floor/grass,
@@ -10974,6 +10980,9 @@
 	layer = 2.7
 	},
 /obj/structure/flora/ausbushes/pointybush,
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
 "byh" = (
@@ -11220,11 +11229,11 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
@@ -12571,12 +12580,12 @@
 /area/station/security/prison)
 "bQd" = (
 /obj/structure/stool/bed/roller,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/medical/cryo)
@@ -13635,10 +13644,10 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -14726,9 +14735,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "ckf" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
@@ -14739,6 +14745,9 @@
 /obj/effect/landmark/start/security_cadet,
 /obj/structure/disposalpipe/segment{
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -15720,10 +15729,13 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "cuG" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
+	color = "#996633";
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
@@ -15915,6 +15927,7 @@
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "spline_plain"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "cwt" = (
@@ -15992,6 +16005,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -16142,11 +16156,13 @@
 /area/station/hallway/secondary/exit)
 "czd" = (
 /obj/structure/flora/ausbushes/pointybush,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
+	color = "#996633";
 	dir = 4
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
@@ -16387,10 +16403,10 @@
 /area/station/civilian/bar)
 "cAF" = (
 /obj/structure/flora/ausbushes/genericbush,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
 "cAG" = (
@@ -17579,7 +17595,7 @@
 /area/station/civilian/locker)
 "cLp" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -18135,9 +18151,6 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "cPB" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "vault"
@@ -18289,10 +18302,10 @@
 /area/station/rnd/server)
 "cQS" = (
 /obj/structure/flora/ausbushes/fernybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -18844,13 +18857,17 @@
 /area/station/engineering/atmos)
 "cVI" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
+	color = "#996633";
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
 "cVU" = (
@@ -19385,8 +19402,8 @@
 	},
 /area/station/civilian/garden)
 "dbf" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/pointybush,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "dbn" = (
@@ -20101,8 +20118,8 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/checkpoint)
 "djA" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "djI" = (
@@ -20273,11 +20290,11 @@
 	},
 /area/station/medical/surgery3)
 "dlE" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "dlL" = (
@@ -21774,13 +21791,13 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "dAp" = (
@@ -22196,14 +22213,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
-"dFg" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/flora/ausbushes/fernybush,
-/turf/simulated/floor/grass,
-/area/station/civilian/dormitories)
 "dFi" = (
 /obj/item/weapon/pen,
 /obj/effect/decal/cleanable/dirt,
@@ -24510,10 +24519,10 @@
 	},
 /area/station/civilian/bar)
 "efn" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/genericbush,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "efo" = (
@@ -25055,6 +25064,9 @@
 	icon_state = "spline_plain"
 	},
 /obj/item/weapon/flora/random,
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -25259,10 +25271,13 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/brig/solitary_confinement)
 "emH" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/junglebush/b,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/flora/junglebush/b,
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "emT" = (
@@ -26553,7 +26568,7 @@
 /area/station/medical/cryo)
 "eyj" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkyellow"
@@ -27681,10 +27696,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "eLf" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/grassybush,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "eLi" = (
@@ -28646,7 +28661,7 @@
 /obj/item/weapon/autopsy_scanner,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/glass,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -29050,12 +29065,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "eZe" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/flora/ausbushes/palebush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
@@ -29316,7 +29331,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -29352,7 +29367,7 @@
 /area/station/cargo/storage)
 "fcP" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -29532,6 +29547,13 @@
 	icon_state = "2,1"
 	},
 /area/shuttle/supply/station)
+"feV" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "ffm" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -29975,16 +29997,6 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
-"fjH" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/flora/junglebush,
-/turf/simulated/floor/grass,
-/area/station/hallway/secondary/entry)
 "fjL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -30771,6 +30783,7 @@
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "spline_plain"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "fqR" = (
@@ -31492,14 +31505,20 @@
 /turf/simulated/floor/plating,
 /area/station/security/warden)
 "fwT" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/grid_floor,
-/area/station/cargo/storage)
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "fwU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -31655,7 +31674,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -32838,11 +32857,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "fLo" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "fLq" = (
@@ -32869,10 +32888,10 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "fLz" = (
-/obj/structure/window/thin/reinforced{
+/obj/machinery/computer/operating,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/machinery/computer/operating,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -33466,15 +33485,15 @@
 	},
 /area/station/engineering/atmos)
 "fRG" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/flora/tree/jungle/small{
 	pixel_x = -17;
 	pixel_y = 8
 	},
 /obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "fRH" = (
@@ -35204,10 +35223,10 @@
 	pixel_x = 9;
 	pixel_y = 12
 	},
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
 "gfQ" = (
@@ -36138,6 +36157,22 @@
 	icon_state = "whitecorner"
 	},
 /area/station/rnd/mixing)
+"gqh" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/bar)
 "gqn" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -36163,12 +36198,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "gqz" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/engineering,
 /obj/item/clothing/head/helmet/space/rig/engineering,
 /obj/item/clothing/mask/breath,
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkyellow"
@@ -36951,12 +36986,12 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -38807,7 +38842,7 @@
 	},
 /area/station/medical/surgery)
 "gOh" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
 "gOj" = (
@@ -39877,6 +39912,7 @@
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "spline_plain"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "gZB" = (
@@ -40020,13 +40056,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "haX" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/window/thin/reinforced{
-	dir = 1
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
@@ -40800,8 +40840,8 @@
 	},
 /area/station/engineering/engine)
 "hkb" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/stool,
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenbluefull"
@@ -40832,17 +40872,17 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "hki" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/ausbushes/leafybush,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "hkk" = (
@@ -41271,12 +41311,12 @@
 /area/space)
 "hoU" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/medical/cryo)
@@ -42171,7 +42211,7 @@
 /area/station/hallway/secondary/exit)
 "hyT" = (
 /obj/structure/flora/junglebush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -43590,11 +43630,11 @@
 /area/station/maintenance/bridge)
 "hOq" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
@@ -44940,22 +44980,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
-"ibM" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/ausbushes/leafybush,
-/turf/simulated/floor/grass,
-/area/station/civilian/dormitories)
 "ibO" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "ibR" = (
@@ -47220,11 +47250,11 @@
 	},
 /area/station/security/brig)
 "iwt" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -47316,7 +47346,7 @@
 /area/station/civilian/chapel)
 "ixe" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -48364,15 +48394,15 @@
 /area/station/hallway/secondary/arrival)
 "iGA" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
 	},
 /obj/item/tableclock{
 	pixel_y = 15
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/medical/cryo)
@@ -48641,12 +48671,12 @@
 /area/station/medical/genetics)
 "iJC" = (
 /obj/machinery/washing_machine,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/blue{
 	dir = 9;
 	icon_state = "siding_line"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -48665,13 +48695,13 @@
 	},
 /area/station/maintenance/outerlabs)
 "iJQ" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
 	},
 /obj/effect/landmark/start/security_cadet,
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -49428,10 +49458,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "iSw" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/pointybush,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "iSG" = (
@@ -50258,9 +50288,6 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "spline_plain"
 	},
@@ -50268,6 +50295,7 @@
 	icon_state = "tree5";
 	pixel_y = -12
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "jcS" = (
@@ -50469,10 +50497,10 @@
 /area/station/medical/hallway)
 "jfd" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -50801,11 +50829,11 @@
 /area/station/bridge/hop_office)
 "jid" = (
 /obj/structure/dresser,
-/obj/structure/window/thin/reinforced,
 /obj/effect/decal/turf_decal/blue{
 	dir = 6;
 	icon_state = "siding_line"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -51128,11 +51156,15 @@
 /area/station/security/tribunal)
 "jlm" = (
 /obj/structure/table/woodentable/fancy,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/item/trash/candle{
 	pixel_y = 5
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/chapel)
@@ -53755,13 +53787,13 @@
 	},
 /area/station/gateway)
 "jIW" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/genericbush,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "jJc" = (
@@ -53870,6 +53902,9 @@
 	icon_state = "spline_plain"
 	},
 /obj/structure/closet/emcloset,
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55051,7 +55086,7 @@
 /area/station/hallway/primary/bridgehall)
 "jXT" = (
 /obj/machinery/vending/coffee,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -55126,7 +55161,7 @@
 	desc = "A large drawer filled with autopsy reports.";
 	name = "Autopsy Reports"
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -57463,13 +57498,10 @@
 	},
 /area/station/hallway/primary/central)
 "kxC" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/reedbush,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "kxI" = (
@@ -58398,12 +58430,12 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/medical/cryo)
@@ -58899,7 +58931,7 @@
 /area/station/security/interrogation)
 "kOa" = (
 /obj/structure/flora/ausbushes/grassybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -59308,12 +59340,12 @@
 	},
 /area/station/civilian/barbershop)
 "kSY" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -59451,14 +59483,14 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "kUo" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/junglebush/c,
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "kUp" = (
@@ -59774,6 +59806,19 @@
 	icon_state = "whiteblue"
 	},
 /area/station/security/prison)
+"kWG" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/hallway/primary/bridgehall)
 "kWH" = (
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 6;
@@ -60708,6 +60753,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
 	icon_state = "loadingarea"
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -62759,10 +62807,10 @@
 "lBF" = (
 /obj/structure/closet,
 /obj/item/device/paicard,
-/obj/structure/window/thin/reinforced,
 /obj/effect/decal/turf_decal/blue{
 	icon_state = "siding_line"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -63359,9 +63407,6 @@
 	},
 /area/station/security/interrogation)
 "lHC" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28;
@@ -63961,6 +64006,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "lNp" = (
@@ -64055,11 +64104,11 @@
 	},
 /area/station/civilian/hydroponics)
 "lOz" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/grassybush,
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "lPa" = (
@@ -64532,11 +64581,11 @@
 	},
 /area/station/medical/sleeper)
 "lTy" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "lTA" = (
@@ -66108,8 +66157,8 @@
 	},
 /area/station/aisat)
 "mic" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "mih" = (
@@ -66918,6 +66967,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "mrm" = (
@@ -67225,6 +67278,21 @@
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/science)
+"mtU" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engineering/singularity)
 "mtX" = (
 /obj/structure/rack,
 /obj/structure/window/thin/reinforced,
@@ -67321,7 +67389,7 @@
 /area/station/rnd/misc_lab)
 "muX" = (
 /obj/structure/flora/ausbushes/pointybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -67572,7 +67640,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outerlabs)
 "mxS" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenbluefull"
@@ -69019,11 +69087,11 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -70612,6 +70680,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "ndH" = (
@@ -72163,11 +72234,11 @@
 	},
 /area/station/medical/surgerystorage)
 "nuC" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "nuM" = (
@@ -73099,12 +73170,12 @@
 	},
 /area/station/medical/sleeper)
 "nEA" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73519,10 +73590,10 @@
 /area/station/civilian/dormitories)
 "nII" = (
 /obj/structure/flora/ausbushes/pointybush,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "nIM" = (
@@ -73844,7 +73915,7 @@
 /area/station/cargo/office)
 "nLm" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -73967,6 +74038,14 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn_corner"
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -74967,14 +75046,14 @@
 	pixel_x = 3;
 	pixel_y = 1
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced,
 /obj/effect/decal/turf_decal/blue{
 	dir = 10;
 	icon_state = "siding_line"
 	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -75119,13 +75198,17 @@
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
 "nWX" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/palebush,
-/obj/structure/window/thin/reinforced{
-	dir = 1
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
@@ -75555,6 +75638,21 @@
 	icon_state = "whiteyellowfull"
 	},
 /area/station/medical/chemistry)
+"oaR" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/bar)
 "oaV" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "cargodocks_airlock";
@@ -76664,10 +76762,10 @@
 	},
 /area/station/cargo/office)
 "onk" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/junglebush,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/flora/junglebush,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "onv" = (
@@ -77506,10 +77604,10 @@
 	},
 /area/station/civilian/hydroponics)
 "oxH" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/palebush,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "oxJ" = (
@@ -77856,10 +77954,10 @@
 	},
 /area/station/civilian/dormitories)
 "oBW" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/fernybush,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "oCg" = (
@@ -78175,12 +78273,15 @@
 	},
 /area/station/maintenance/outerlabs)
 "oEO" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
+	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
@@ -79695,15 +79796,15 @@
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
 	pixel_y = -2
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
 	},
 /obj/item/wallclock{
 	pixel_y = 24
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/medical/cryo)
@@ -79810,23 +79911,23 @@
 /turf/simulated/floor,
 /area/station/maintenance/brigright)
 "oUH" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/ausbushes/genericbush,
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
 "oUM" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/leafybush,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "oUS" = (
@@ -80676,12 +80777,12 @@
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "pcR" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/medical/cryo)
@@ -81018,9 +81119,6 @@
 "pgH" = (
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -81664,10 +81762,10 @@
 	c_tag = "Locker Room";
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "pnC" = (
@@ -82010,6 +82108,16 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
+"pqC" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "Minedoc2"
+	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "pqD" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -82124,7 +82232,7 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "prW" = (
 /obj/structure/flora/ausbushes/pointybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -83522,6 +83630,22 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/sleeper)
+"pJC" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/bar)
 "pJF" = (
 /obj/structure/closet/theatrecloset,
 /obj/item/clothing/head/batman_helmet,
@@ -83691,11 +83815,11 @@
 /turf/simulated/wall/r_wall,
 /area/station/medical/virology)
 "pLC" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -84073,10 +84197,10 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -84640,11 +84764,11 @@
 	},
 /area/station/engineering/atmos)
 "pUn" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/fernybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "pUo" = (
@@ -84698,12 +84822,12 @@
 	},
 /area/station/bridge)
 "pUJ" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
+	},
+/obj/structure/fence/metal{
+	dir = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
@@ -85893,6 +86017,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/break_room)
+"qgF" = (
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/bar)
 "qgS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -86439,6 +86575,14 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -92285,7 +92429,7 @@
 	})
 "rum" = (
 /obj/structure/closet/secure_closet/brig,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -93465,6 +93609,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rFz" = (
@@ -93499,10 +93646,10 @@
 /obj/item/stack/sheet/metal{
 	amount = 12
 	},
-/obj/structure/window/thin/reinforced{
+/obj/effect/decal/turf_decal/set_burned,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "rFT" = (
@@ -93710,7 +93857,7 @@
 /obj/structure/morgue{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -95211,10 +95358,10 @@
 	},
 /area/station/bridge/meeting_room)
 "rYL" = (
-/obj/structure/window/thin/reinforced{
+/obj/random/vending/snack,
+/obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -96662,6 +96809,9 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/bridgehall)
 "snX" = (
@@ -97851,11 +98001,11 @@
 /area/station/cargo/recycler)
 "sxS" = (
 /obj/structure/flora/ausbushes/pointybush,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
@@ -98475,12 +98625,16 @@
 /area/station/security/prison)
 "sDT" = (
 /obj/structure/table/woodentable/fancy,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/item/trash/candle{
 	pixel_x = 5;
 	pixel_y = 5
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/chapel)
@@ -102180,17 +102334,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "tpB" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/ausbushes/leafybush,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "tpP" = (
@@ -104006,10 +104160,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/effect/decal/turf_decal/set_burned,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "tGM" = (
@@ -107886,6 +108040,18 @@
 	icon_state = "dark"
 	},
 /area/station/aisat)
+"urh" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/bar)
 "uri" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/basic_engineering{
@@ -108893,10 +109059,10 @@
 	},
 /area/station/engineering/break_room)
 "uCq" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "uCt" = (
@@ -109618,6 +109784,14 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine/n20,
 /area/station/engineering/atmos)
+"uJm" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/fence/metal,
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/dormitories)
 "uJt" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -110764,6 +110938,10 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -112211,7 +112389,7 @@
 /area/station/engineering/equip)
 "vkt" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -112634,12 +112812,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "vpH" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "greenbluefull"
@@ -113798,7 +113976,7 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -115082,7 +115260,7 @@
 /area/station/rnd/hallway)
 "vOU" = (
 /obj/structure/flora/ausbushes/grassybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -115180,11 +115358,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "vQB" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "vQC" = (
@@ -116298,10 +116476,10 @@
 	},
 /area/station/hallway/primary/central)
 "vZA" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/genericbush,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "vZB" = (
@@ -120360,7 +120538,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -120707,11 +120885,11 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "wVH" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/leafybush,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor/grass,
 /area/station/civilian/dormitories)
 "wVK" = (
@@ -121470,9 +121648,6 @@
 	},
 /area/station/medical/hallway)
 "xdi" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "vault"
 	},
@@ -121606,14 +121781,14 @@
 /area/station/civilian/hydroponics)
 "xez" = (
 /obj/structure/closet/secure_closet/security,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
 /obj/machinery/light_switch{
 	pixel_y = 28
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -122921,11 +123096,11 @@
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
 "xrX" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -125028,7 +125203,7 @@
 /area/station/civilian/garden)
 "xRN" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
 /turf/simulated/floor/grass,
@@ -125398,12 +125573,12 @@
 /turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "xWI" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -126009,11 +126184,13 @@
 /area/station/maintenance/brig)
 "ycJ" = (
 /obj/structure/flora/ausbushes/grassybush,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
+	color = "#996633";
 	dir = 4
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
@@ -141239,7 +141416,7 @@ fAG
 tGl
 kka
 edr
-fwT
+kka
 nhd
 tAT
 nsg
@@ -141467,7 +141644,7 @@ lkF
 uFS
 lTF
 czH
-fjH
+hyT
 fRG
 eYW
 afJ
@@ -141753,7 +141930,7 @@ dVZ
 tDo
 kka
 kCg
-fwT
+kka
 lvq
 wDV
 jZm
@@ -142778,7 +142955,7 @@ tSp
 kHE
 kYs
 xKO
-rTE
+pqC
 ohJ
 plf
 kHU
@@ -152010,7 +152187,7 @@ fLo
 lOz
 fLo
 qlD
-dFg
+pUn
 lho
 toJ
 gQM
@@ -152028,7 +152205,7 @@ jfd
 vOU
 fcP
 qlD
-wVH
+uJm
 wWt
 cMb
 jwG
@@ -152493,7 +152670,7 @@ puj
 inE
 sfm
 qSV
-dlp
+pJC
 ycJ
 czd
 cVI
@@ -152504,10 +152681,10 @@ bMU
 tWl
 qPx
 taV
-dlp
-czd
-ycJ
-cVI
+gqh
+qgF
+urh
+oaR
 kor
 hrA
 aeV
@@ -153060,7 +153237,7 @@ dlE
 aoI
 baG
 gQM
-ibM
+oUM
 eht
 iJC
 oRL
@@ -157650,7 +157827,7 @@ eca
 acO
 meh
 euV
-pxq
+feV
 jcQ
 eje
 eje
@@ -162498,7 +162675,7 @@ qzL
 ycL
 qVa
 vHA
-oEO
+kWG
 uTa
 vOc
 rjJ
@@ -167586,7 +167763,7 @@ plf
 plf
 plf
 fzG
-doM
+fwT
 qCG
 plf
 rvv
@@ -168100,7 +168277,7 @@ plf
 plf
 plf
 fzG
-vvi
+mtU
 tmA
 plf
 rvv

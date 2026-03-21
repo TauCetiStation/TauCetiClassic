@@ -119,6 +119,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/explored)
 "ao" = (
@@ -1753,7 +1756,6 @@
 /area/asteroid/research_outpost/iso1)
 "dC" = (
 /obj/structure/lattice,
-/obj/structure/window/thin/reinforced,
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
 	},
@@ -2117,7 +2119,7 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "eD" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless{
@@ -2376,11 +2378,14 @@
 /turf/simulated/wall/purple,
 /area/asteroid/research_outpost/gearstore)
 "fr" = (
-/obj/structure/lattice,
-/obj/structure/window/thin/reinforced,
-/obj/structure/transit_tube,
-/turf/environment/space,
-/area/asteroid/mine/explored)
+/obj/item/weapon/flora/random,
+/obj/structure/fence/metal{
+	color = "#996633"
+	},
+/turf/simulated/floor{
+	icon_state = "blueyellowfull"
+	},
+/area/asteroid/mine/living_quarters)
 "fs" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -3116,9 +3121,6 @@
 /area/asteroid/mine/abandoned)
 "hF" = (
 /obj/structure/transit_tube,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -4999,6 +5001,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/explored)
 "nR" = (
@@ -5984,11 +5989,11 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/abandoned)
 "qU" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/turf/simulated/floor/glass/reinforced/phoron/airless,
+/obj/structure/fence/metal,
+/turf/simulated/floor/glass/reinforced,
 /area/asteroid/mine/explored)
 "qW" = (
 /obj/structure/disposalpipe/segment,
@@ -8001,13 +8006,9 @@
 /turf/simulated/wall/r_wall/yellow,
 /area/asteroid/mine/living_quarters)
 "ww" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/lattice,
 /obj/structure/transit_tube{
 	icon_state = "E-NW"
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
 	},
 /turf/environment/space,
 /area/asteroid/mine/explored)
@@ -9681,9 +9682,6 @@
 	icon_state = "D-SW"
 	},
 /obj/structure/lattice,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "Co" = (
@@ -10417,12 +10415,12 @@
 	},
 /area/asteroid/mine/living_quarters)
 "FZ" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/machinery/vending/hydroseeds{
-	slogan_delay = 700;
-	seller_account_number = "%cargo_account%"
+	seller_account_number = "%cargo_account%";
+	slogan_delay = 700
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -10558,13 +10556,6 @@
 	icon_state = "whitehall"
 	},
 /area/asteroid/research_outpost/hallway)
-"Gw" = (
-/obj/structure/lattice,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/turf/environment/space,
-/area/asteroid/mine/explored)
 "Gy" = (
 /obj/structure/table,
 /obj/machinery/bunsen_burner{
@@ -11396,11 +11387,6 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "Kb" = (
-/obj/machinery/door/window/westleft{
-	dir = 1;
-	name = "Sample Preparation Loading";
-	req_access = list(65)
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -11502,7 +11488,7 @@
 /area/asteroid/mine/dwarf)
 "Kt" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -11594,17 +11580,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
-"KF" = (
-/obj/machinery/door/window/westleft{
-	dir = 2
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/asteroid/mine/explored)
 "KO" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
 	dir = 1
@@ -12760,10 +12735,10 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "Qn" = (
-/obj/structure/window/thin/reinforced{
+/obj/item/weapon/flora/pottedplant,
+/obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/item/weapon/flora/pottedplant,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -12901,9 +12876,6 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "QS" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/lattice,
 /turf/environment/space,
 /area/asteroid/mine/explored)
@@ -22563,7 +22535,7 @@ uF
 pN
 il
 nP
-uF
+fr
 uO
 ai
 eQ
@@ -56210,7 +56182,7 @@ QS
 Cn
 ww
 qU
-Gw
+QS
 kO
 YV
 Zz
@@ -56465,9 +56437,9 @@ kO
 aa
 aa
 aa
-fr
+Tu
 qU
-Gw
+QS
 kO
 YV
 YV
@@ -56722,9 +56694,9 @@ aa
 aa
 aa
 aa
-fr
+Tu
 qU
-Gw
+QS
 kO
 YV
 YV
@@ -56979,9 +56951,9 @@ aa
 aa
 aa
 aa
-fr
+Tu
 qU
-Gw
+QS
 rK
 rK
 Zz
@@ -57236,9 +57208,9 @@ aa
 aa
 aa
 aa
-fr
+Tu
 qU
-Gw
+QS
 rK
 rK
 Zz
@@ -57493,9 +57465,9 @@ aa
 aa
 aa
 aa
-fr
+Tu
 qU
-Gw
+QS
 kO
 kO
 YV
@@ -57750,9 +57722,9 @@ aa
 aa
 aa
 ar
-fr
+Tu
 qU
-Gw
+QS
 kO
 rK
 Zz
@@ -58009,7 +57981,7 @@ ar
 ns
 dC
 qU
-Gw
+QS
 rK
 rK
 YV
@@ -58778,7 +58750,7 @@ FG
 Zw
 fo
 hF
-KF
+fH
 VC
 VC
 rK

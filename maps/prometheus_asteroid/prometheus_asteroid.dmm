@@ -240,7 +240,7 @@
 "aE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/drone,
+/obj/effect/spawner/mob_spawn/alien/sentinel,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "black"
@@ -525,7 +525,7 @@
 "bj" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/drip,
-/mob/living/simple_animal/hostile/xenomorph,
+/obj/effect/spawner/mob_spawn/alien/drone,
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
 "bk" = (
@@ -2689,6 +2689,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5385,6 +5386,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8414,6 +8416,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10263,6 +10266,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/structure/fence/metal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
