@@ -27,7 +27,7 @@
 /atom/movable/proc/can_buckle(mob/living/M)
 	if(!can_buckle)
 		return FALSE
-	if(!istype(M) || (M.loc != loc))
+	if(!istype(M))
 		return FALSE
 	if(M.buckled || buckled_mob || M.anchored)
 		return FALSE
@@ -45,6 +45,7 @@
 	if(M.grabbed_by.len)
 		for (var/obj/item/weapon/grab/G in M.grabbed_by)
 			qdel(G)
+	M.Move(loc)
 	M.buckled = src
 	M.set_dir(dir)
 	buckled_mob = M
@@ -78,7 +79,7 @@
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
 		return FALSE
 
-	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
+	if(!user.Adjacent(M) || user.incapacitated() || ispAI(user) || ismouse(user) || is_blocked_turf(get_turf(src)) || !can_enter_turf(M, get_turf(src), get_turf(M)))
 		return FALSE
 
 	if(user.is_busy())
