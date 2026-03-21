@@ -305,9 +305,6 @@
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("PeaceKeeper")
-			if(!can_be_security)
-				to_chat(src, "<span class='warning'>#Error: Needed security circuitboard.</span>")
-				return
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			module_sprites["Marina"] = "marina-peace"
 			module_sprites["Sleak"] = "sleek-peace"
