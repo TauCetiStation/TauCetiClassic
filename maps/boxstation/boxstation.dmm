@@ -28213,9 +28213,6 @@
 /obj/random/misc/all,
 /obj/random/tools/tech_supply,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fence/metal{
-	dir = 8
-	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aXK" = (
