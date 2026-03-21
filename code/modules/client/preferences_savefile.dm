@@ -757,6 +757,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["OOC_Notes"]             >> metadata
 	S["real_name"]             >> real_name
 	S["name_is_always_random"] >> be_random_name
+	S["wide_eyes"]             >> wide_eyes
 	S["gender"]                >> gender
 	S["neuter_gender_voice"]   >> neuter_gender_voice
 	S["age"]                   >> age
@@ -960,6 +961,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["OOC_Notes"]             << metadata
 	S["real_name"]             << real_name
 	S["name_is_always_random"] << be_random_name
+	S["wide_eyes"]             << wide_eyes
 	S["gender"]                << gender
 	S["neuter_gender_voice"]   << neuter_gender_voice
 	S["age"]                   << age

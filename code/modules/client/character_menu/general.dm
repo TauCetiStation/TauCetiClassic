@@ -15,6 +15,8 @@
 	. += 						"<br><b>Age:</b> <a href='byond://?_src_=prefs;preference=age;task=input'>[age]</a>"
 	if(!specie_obj.flags[NO_GENDERS])
 		. += 					"<br><b>Gender:</b> <a href='byond://?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
+	if(specie_obj.flags[TOGGLEABLE_EYES_S_LAYER])
+		. += 					"<br><b>Wide eyes:</b> <a href='byond://?_src_=prefs;preference=wide_eyes'><b>[wide_eyes == TRUE ? "Yes" : "No"]</b></a>"
 	if(species == IPC)  // only ipc can change their voice at this moment
 		. += 					"<br><b>Voice:</b> <a href='byond://?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='byond://?_src_=prefs;preference=height;task=input'>[height]</a>"
@@ -299,6 +301,10 @@
 						gender = MALE
 						if(specie_obj.flags[NO_GENDERS])
 							gender = NEUTER
+						if(specie_obj.eyes_static_layer)
+							wide_eyes = TRUE
+						else
+							wide_eyes = FALSE
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_speak))
@@ -629,6 +635,9 @@
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)
+
+				if("wide_eyes")
+					wide_eyes = !wide_eyes
 
 				if("gendervoice")
 					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE

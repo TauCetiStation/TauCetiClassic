@@ -86,6 +86,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	//character preferences
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
+	var/wide_eyes
 	var/gender = MALE					//gender of character (well duh)
 	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
@@ -410,6 +411,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.sec_record = sec_record
 	character.gen_record = gen_record
 
+	character.wide_eyes = wide_eyes
 	character.gender = gender
 	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age

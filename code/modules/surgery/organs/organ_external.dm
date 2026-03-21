@@ -1117,7 +1117,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	// eyes
 	// todo: should move it to own organ, make /eyes external
-	if(species.eyes_static_layer)
+	if(species.eyes_static_layer && owner.wide_eyes)
 		var/mutable_appearance/eyes_static_layer = mutable_appearance(
 			species.eyes_icon,
 			species.eyes_static_layer,
