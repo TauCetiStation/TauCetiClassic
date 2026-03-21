@@ -486,6 +486,8 @@
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
 		if(istype(BP) && BP.disfigured)
 			msg += "<span class='warning'><b>[t_His] face is violently disfigured!</b></span>\n"
+		else if(isshadowthrall(src))
+			msg += "<span class='shadowling'><b>Their features seem unnaturally tight and drawn.</b></span>\n"
 
 	if((!skipface || !skipjumpsuit || !skipgloves))
 		if(HAS_TRAIT(src, TRAIT_BURNT))
