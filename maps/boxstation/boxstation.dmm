@@ -85945,6 +85945,9 @@
 /obj/structure/fence/metal{
 	dir = 8
 	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "tRI" = (
