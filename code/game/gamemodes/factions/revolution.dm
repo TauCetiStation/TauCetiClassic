@@ -280,3 +280,11 @@
 	if(!S)
 		return
 	S.total_TC += 3
+
+/datum/faction/revolution/save_station
+	name = F_REVOLUTION_STAION
+	ID = F_REVOLUTION_STAION
+
+/datum/faction/revolution/save_station/forgeObjectives()
+	. = ..()
+	AppendObjective(/datum/objective/save_station)
