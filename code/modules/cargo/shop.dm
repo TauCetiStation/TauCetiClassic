@@ -1,6 +1,7 @@
 var/global/list/online_shop_lots = list()
 var/global/list/online_shop_lots_latest[3]
 var/global/list/online_shop_lots_hashed = list()
+var/global/list/online_shop_lots_hashed_notsold = list()
 
 var/global/online_shop_number = 0
 var/global/list/shop_categories = list("Еда" = 0, "Одежда" = 0, "Устройства" = 0, "Инструменты" = 0, "Ресурсы" = 0, "Наборы" = 0, "Разное" = 0)
@@ -58,6 +59,7 @@ var/global/online_shop_referrer_revenue = 0.50
 	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
 
 	LAZYADDASSOCLIST(global.online_shop_lots_hashed, src.hash, src)
+	LAZYADDASSOCLIST(global.online_shop_lots_hashed_notsold, src.hash, src)
 
 	global.online_shop_lots_latest.Swap(2, 3)
 	global.online_shop_lots_latest.Swap(1, 2)
@@ -168,6 +170,7 @@ var/global/online_shop_referrer_revenue = 0.50
 		return FALSE
 
 	Lot.sold = TRUE
+	LAZYREMOVEASSOC(global.online_shop_lots_hashed_notsold, Lot.hash, Lot)
 
 	for(var/i in 1 to 3)
 		if(global.online_shop_lots_latest[i] == Lot)
@@ -355,20 +358,19 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 
 	qdel(src)
 
-/proc/get_random_unique_onlineshop_lot()
+/proc/get_random_unique_notsold_onlineshop_lot_or_null()
 	if(!global.online_shop_lots_hashed?.len)
 		return null
 
-	var/random_lot_hash = pick(global.online_shop_lots_hashed)
-
-	var/list/hashed_lots = global.online_shop_lots_hashed[random_lot_hash]
+	var/random_lot_hash = pick(global.online_shop_lots_hashed_notsold)
+	var/list/hashed_lots = global.online_shop_lots_hashed_notsold[random_lot_hash]
 	if(!hashed_lots.len)
 		return null
 
 	return pick(hashed_lots)
 
 /proc/get_onlineshop_advertisement(atom/source, referrer_account = null, no_link = FALSE)
-	var/datum/shop_lot/lot = get_random_unique_onlineshop_lot()
+	var/datum/shop_lot/lot = get_random_unique_notsold_onlineshop_lot_or_null()
 	if(!lot)
 		return
 
