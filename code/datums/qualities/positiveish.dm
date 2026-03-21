@@ -447,3 +447,12 @@
 /datum/quality/positiveish/allchannels/add_effect(mob/living/carbon/human/H)
 	H.equip_or_collect(new /obj/item/device/encryptionkey/allchannels(H), SLOT_R_STORE)
 	to_chat(H, "<span class='notice'>Возможно, чтобы установить ключ шифрования, придётся расковырять наушник отверткой. Только не попадись охране!</span>")
+
+/datum/quality/positiveish/bullet_dodger
+	name = "Bullet Dodger"
+	desc = "В детстве тебе дали кличку \"Хрен попадёшь\". Интересно, с чего бы это?"
+	requirement = "Нет."
+
+/datum/quality/positiveish/bullet_dodger/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_BULLET_DODGER, QUALITY_TRAIT)
+
