@@ -1,7 +1,7 @@
 /datum/game_mode/families
 	name = "Families"
 	config_name = "families"
-	probability = 100
+	probability = 80
 
 	factions_allowed = list(/datum/faction/cops)
 
