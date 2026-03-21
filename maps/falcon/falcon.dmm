@@ -5295,12 +5295,15 @@
 /area/station/maintenance/escape)
 "ajw" = (
 /obj/structure/table/woodentable/fancy,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced,
 /obj/item/candle/infinite{
 	pixel_y = 9
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
@@ -5318,20 +5321,25 @@
 /area/station/civilian/gym)
 "ajy" = (
 /obj/structure/table/woodentable/fancy,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced,
 /obj/item/candle/infinite{
 	pixel_y = 9
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "ajz" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/altar_of_gods,
 /obj/item/weapon/storage/bible{
 	pixel_y = 12
+	},
+/obj/structure/fence/metal{
+	color = "#996633"
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
@@ -16018,12 +16026,13 @@
 	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/glass/rag,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_x = 3;
 	pixel_y = 4
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -17186,15 +17195,6 @@
 "hqn" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/nuke_storage)
-"hrp" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
 "hrw" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper{
@@ -18345,6 +18345,10 @@
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
+	},
+/obj/structure/fence/metal{
+	dir = 1;
+	layer = 5
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -26661,15 +26665,16 @@
 /area/station/security/checkpoint)
 "pNA" = (
 /obj/structure/table/woodentable,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/machinery/reagentgrinder{
 	layer = 3.1;
 	pixel_y = 5
 	},
 /obj/machinery/light_switch{
 	pixel_y = -26
+	},
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -29756,18 +29761,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
-"sBb" = (
-/obj/machinery/door/window/southright{
-	dir = 4;
-	name = "Bar Door";
-	req_one_access = list(25)
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/wood,
-/area/station/civilian/bar)
 "sCe" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "5,0"
@@ -31826,11 +31819,12 @@
 /area/station/maintenance/science)
 "uzx" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
 /obj/item/toy/plushie/octopus,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/fence/metal{
+	color = "#996633";
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "uAW" = (
@@ -32375,6 +32369,9 @@
 	supply_display = 1
 	},
 /obj/structure/dispenser/oxygen,
+/obj/structure/fence/metal{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -64925,7 +64922,7 @@ cvS
 anN
 waP
 uzx
-sBb
+iyV
 goJ
 pNA
 ixg
@@ -64950,7 +64947,7 @@ iiV
 abJ
 xbK
 tMy
-hrp
+xbK
 lVb
 rTU
 kek
@@ -65464,7 +65461,7 @@ akS
 abH
 xbK
 smt
-hrp
+xbK
 qRj
 bkM
 idm
