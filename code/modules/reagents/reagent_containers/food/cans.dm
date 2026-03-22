@@ -63,7 +63,6 @@
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
-			reagents.reaction(M, INGEST)
 
 		update_icon()
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
@@ -78,7 +77,8 @@
 		if(!do_mob(user, M)) return
 		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
 						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
-
+		if(reagents.total_volume)
+			reagents.trans_to_ingest(M, gulp_size)
 		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
