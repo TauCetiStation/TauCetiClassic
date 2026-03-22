@@ -573,6 +573,10 @@
 	dir = 4;
 	id = "stationscrap"
 	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	layer = 5.1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "aaR" = (
@@ -2961,6 +2965,20 @@
 /area/asteroid/research_outpost/entry{
 	name = "Research Shuttle Dock"
 	})
+"agE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 2
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "agG" = (
 /obj/machinery/message_server,
 /turf/simulated/floor{
@@ -4189,7 +4207,7 @@
 	},
 /area/station/rnd/lab)
 "avs" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -27433,6 +27451,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -123878,7 +123900,7 @@ uSx
 oDy
 oDy
 oDy
-bxS
+agE
 tcD
 iIe
 oAg
@@ -124906,7 +124928,7 @@ mUU
 tfb
 sfr
 tPp
-bxS
+agE
 tcD
 sLP
 xPj

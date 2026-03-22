@@ -20380,7 +20380,7 @@
 /obj/effect/decal/turf_decal/white{
 	icon_state = "box_corners_white"
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -45628,7 +45628,7 @@
 /obj/effect/decal/turf_decal/white{
 	icon_state = "box_corners_white"
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -71616,7 +71616,7 @@
 	dir = 4;
 	icon_state = "box_corners_white"
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -71895,7 +71895,7 @@
 	},
 /area/station/rnd/hallway)
 "nCm" = (
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -90083,7 +90083,7 @@
 	dir = 4;
 	icon_state = "box_corners_white"
 	},
-/obj/structure/fence/metal{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{

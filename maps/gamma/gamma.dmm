@@ -20251,13 +20251,7 @@
 /area/station/construction/assembly_line)
 "dlp" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -23594,13 +23588,9 @@
 /area/station/storage/primary)
 "dVE" = (
 /obj/structure/flora/ausbushes/grassybush,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
 "dVR" = (
@@ -155781,7 +155771,7 @@ wqj
 pan
 nwq
 eBQ
-nwq
+trr
 fzr
 jUg
 nwq
@@ -156038,7 +156028,7 @@ cwT
 kTF
 gxN
 aSN
-aSN
+cwT
 tCC
 wWd
 nwq
