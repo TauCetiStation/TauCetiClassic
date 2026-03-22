@@ -730,3 +730,14 @@
 		if(stop_type && istype(turf_to_check, stop_type))
 			break
 	return turf_to_check
+
+/proc/get_bodytype_by_name(bodytype_name)
+	var/datum/bodytype/bt
+	if(bodytype_name == "normal")
+		bt = /datum/bodytype/normal
+	else if(bodytype_name == "femine")
+		bt = /datum/bodytype/femine
+	else if(bodytype_name == "fat")
+		bt = /datum/bodytype/fat
+	return bt
+

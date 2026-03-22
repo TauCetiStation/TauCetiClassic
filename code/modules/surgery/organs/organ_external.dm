@@ -282,16 +282,10 @@
 		if(gender_icon)
 			gender_suffix = (owner_gender == FEMALE ? "_f" : "_m")
 
-	if(fat_state && owner && HAS_TRAIT(owner, TRAIT_FAT))
-		if(body_zone == BP_CHEST)
-			fat_suffix = "_fat"
-		else if(species.fat_limb_icons == TRUE && (body_zone in list(BP_GROIN, BP_HEAD, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
-			fat_suffix = "_fat"
-
 	if(pump_state && !fat_suffix && pumped > pumped_threshold)
 		pump_suffix = "_pumped"
 
-	return "[body_zone][organ_suffix][gender_suffix][fat_suffix][pump_suffix]"
+	return "[body_zone][organ_suffix][gender_suffix][owner.bodytype.external_organs_suffix][pump_suffix]"
 
 // generates list of (mutable) appearances
 // should work even without owner

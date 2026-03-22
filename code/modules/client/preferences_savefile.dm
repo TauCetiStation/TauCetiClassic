@@ -795,6 +795,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]         >> use_skirt
 	S["pda_ringtone"]      >> chosen_ringtone
 	S["pda_custom_melody"] >> custom_melody
+	S["bodytype"]          >> bodytype
 
 	//Load prefs
 	S["alternate_option"] >> alternate_option
@@ -996,6 +997,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]             << use_skirt
 	S["pda_ringtone"]          << chosen_ringtone
 	S["pda_custom_melody"]     << custom_melody
+	S["bodytype"]              << bodytype
 	//Write prefs
 	S["alternate_option"]      << alternate_option
 	S["job_preferences"]       << job_preferences

@@ -29,6 +29,8 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
+	var/datum/bodytype/new_bodytype = get_bodytype_by_name(bodytype_name)
+	bodytype = new new_bodytype
 	AddComponent(/datum/component/mood)
 
 	dna = new
@@ -2369,3 +2371,7 @@
 	forceMove(P)
 
 	return P
+
+/mob/living/carbon/human/proc/update_bodytype()
+	var/datum/bodytype/new_bodytype = get_bodytype_by_name(bodytype_name)
+	bodytype = new new_bodytype
