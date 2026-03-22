@@ -86,8 +86,7 @@
 			to_chat(user, "Your scarf is now hanging on your neck.")
 
 	update_item_actions()
-
-	. = ..()
+	return ..()
 
 /datum/action/item_action/hands_free/adjust_scarf
 	name = "Adjust scarf"
