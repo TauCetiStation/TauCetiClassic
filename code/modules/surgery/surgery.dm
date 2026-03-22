@@ -59,6 +59,9 @@
 /datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return
 
+/datum/surgery_step/proc/end_step_action(mob/living/carbon/human/target, target_zone)
+	return
+
 // stuff that happens when the step fails
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return null

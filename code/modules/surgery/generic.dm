@@ -121,11 +121,17 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] has made an incision on [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
+
+	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
+	end_step_action(target, target_zone)
+
+
+/datum/surgery_step/generic/cut_open/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 1
 	var/datum/reagents/R = target.reagents
 	if(!R.has_reagent("metatrombine"))
 		BP.status |= ORGAN_BLEEDING
-	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -161,6 +167,12 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] clamps bleeders in [target]'s [BP.name] with \the [tool].</span>",	\
 	"<span class='notice'>You clamp bleeders in [target]'s [BP.name] with \the [tool].</span>")
+
+	end_step_action(target, target_zone)
+
+
+/datum/surgery_step/generic/clamp_bleeders/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.strap()
 
 /datum/surgery_step/generic/clamp_bleeders/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -209,6 +221,12 @@
 		msg = "<span class='notice'>[user] keeps the incision open on [target]'s lower abdomen with \the [tool].</span>"
 		self_msg = "<span class='notice'>You keep the incision open on [target]'s lower abdomen with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
+
+	end_step_action(target, target_zone)
+
+
+/datum/surgery_step/generic/retract_skin/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 2
 
 /datum/surgery_step/generic/retract_skin/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -252,6 +270,12 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] cauterizes the incision on [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You cauterize the incision on [target]'s [BP.name] with \the [tool].</span>")
+
+	end_step_action(target, target_zone)
+
+
+/datum/surgery_step/generic/cauterize/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 0
 	BP.status &= ~ORGAN_BLEEDING
 

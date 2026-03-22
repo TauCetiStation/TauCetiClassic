@@ -1,5 +1,4 @@
-// Pretty much everything here is stolen from the dna scanner FYI
-
+#define AUTODOC_COOLDOWN 30
 
 /obj/machinery/autodoc
 	var/locked
@@ -14,6 +13,8 @@
 
 	var/list/datum/auto_surgery/surgeries_queue = list()
 	var/list/datum/surgery_step/steps_queue = list()
+
+	var/prev_step_time = 0
 
 /obj/machinery/autodoc/power_change()
 	..()
@@ -39,6 +40,11 @@
 	add_fingerprint(usr)
 	return
 
+/obj/machinery/autodoc/open_machine()
+	surgeries_queue = list()
+	steps_queue = list()
+	return ..()
+
 /obj/machinery/autodoc/verb/move_inside()
 	set src in oview(1)
 	set category = "Object"
@@ -49,6 +55,11 @@
 	if(!move_inside_checks(usr, usr))
 		return
 	close_machine(usr, usr)
+
+/obj/machinery/autodoc/close_machine(mob/living/target = null)
+	surgeries_queue = list()
+	steps_queue = list()
+	return ..()
 
 /obj/machinery/autodoc/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
@@ -131,6 +142,74 @@
 		A.forceMove(get_turf(src))
 	..()
 
+/obj/machinery/autodoc/process()
+	if(prev_step_time + AUTODOC_COOLDOWN > world.time)
+		return
+
+	if(steps_queue.len)
+		process_step()
+		return
+
+	if(surgeries_queue.len)
+		process_surgery()
+		return
+
+/obj/machinery/autodoc/proc/process_surgery()
+	var/list/surgery_list = popleft(surgeries_queue)
+	var/surgery_path = surgery_list["surgery_type"]
+	var/datum/auto_surgery/surgery = new surgery_path()
+	if(!surgery)
+		return
+
+	for(var/surgery_step in surgery.steps)
+		var/list/step_list = list("target_zone" = surgery_list["target_zone"], "step" = surgery_step, "cost" = surgery.step_cost)
+		steps_queue += list(step_list)
+
+	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
+	qdel(surgery)
+
+/obj/machinery/autodoc/proc/process_step()
+	var/list/step_list = popleft(steps_queue)
+	var/step_path = step_list["step"]
+	var/datum/surgery_step/step = new step_path()
+	var/target_zone = step_list["target_zone"]
+	if(!try_take_money(step_list["cost"]))
+		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='danger'>Недостаточно средств, операция отменена!</span>")
+		open_machine()
+		return
+
+	step.end_step_action(occupant, target_zone)
+
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
+	qdel(step)
+
+	prev_step_time = world.time
+
+	if(!steps_queue.len && !surgeries_queue.len)
+		open_machine()
+
+/obj/machinery/autodoc/proc/try_take_money(amount_needed = 0)
+	if(!occupant || !ishuman(occupant))
+		return FALSE
+
+	var/mob/living/carbon/human/H = occupant
+	var/datum/data/record/R = find_record("fingerprint", md5(H.dna.uni_identity), data_core.general)
+	if(!R)
+		return FALSE
+	var/datum/money_account/MA = get_account(R.fields["acc_number"])
+	if(!MA)
+		return FALSE
+
+	if(MA.money < amount_needed)
+		return FALSE
+
+	if(amount_needed > 0)
+		charge_to_account(MA.account_number, global.department_accounts["Medical"].account_number, "Оплата за операцию в АвтоДоке", name, -amount_needed)
+		charge_to_account(global.department_accounts["Medical"].account_number, MA.account_number, "Оплата за операцию в АвтоДоке", name, amount_needed)
+
+	return TRUE
+
 /obj/machinery/autodoc_console/power_change()
 	if(stat & BROKEN)
 		icon_state = "autodocconsole-p"
@@ -164,7 +243,7 @@
 /obj/machinery/autodoc_console/ui_interact(mob/user)
 	var/mob/living/carbon/human/occupant = connected.occupant
 	var/dat = ""
-	if(occupant && ishuman(occupant) && !(connected.surgeries_queue.len || connected.steps_queue))
+	if(occupant && ishuman(occupant) && !(connected.surgeries_queue.len || connected.steps_queue.len))
 		var/mob/living/carbon/human/H = occupant
 		var/occupant_insurance = get_insurance_type(H)
 
@@ -178,10 +257,11 @@
 			if(surgeries_list.len)
 				for(var/datum/auto_surgery/surgery in surgeries_list)
 					if(is_ensurance_enough(occupant_insurance, surgery.insurance_needed))
-						dat += "<label>[surgery.name]<input type='checkbox' name='[target_zone]' value='[surgery.type]'></input><br>"
+						var/list/params_list = list("target_zone" = target_zone, "surgery_type" = surgery.type)
+						dat += "<label>[surgery.name]<input type='checkbox' name='[list2params(params_list)]' value='1'></input><br>"
 			dat += "<HR><br>"
 		dat += "<input type='submit' value='Запустить'></form>"
-	else if(connected.surgeries_queue.len || connected.steps_queue)
+	else if(connected.surgeries_queue.len || connected.steps_queue.len)
 		dat += "В работе..."
 	else
 		dat += "Положите пациента."
@@ -197,12 +277,17 @@
 
 	if(href_list["choice"])
 		for(var/thing in href_list - list("src", "choice"))
-			var/added = FALSE
-			if(thing in TARGET_ZONE_ALL)
-				connected.surgeries_queue += list(list("[thing]", text2path(href_list[thing])))
-				added = TRUE
+			var/list/thing_list = params2list(thing)
+			if(!thing_list)
+				continue
 
-			if(added)
-				START_PROCESSING(SSobj, connected)
+			if(!(thing_list["target_zone"] in TARGET_ZONE_ALL))
+				continue
+
+			var/surgery_path = text2path(thing_list["surgery_type"])
+			if(!ispath(surgery_path))
+				continue
+
+			connected.surgeries_queue += list(list("target_zone" = thing_list["target_zone"], "surgery_type" = surgery_path))
 
 	updateUsrDialog()

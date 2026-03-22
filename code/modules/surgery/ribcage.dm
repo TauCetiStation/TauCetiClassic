@@ -37,6 +37,10 @@
 /datum/surgery_step/ribcage/saw_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] has cut [target]'s ribcage open with \the [tool].</span>",		\
 	"<span class='notice'>You have cut [target]'s ribcage open with \the [tool].</span>")
+
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/ribcage/saw_ribcage/end_step_action(mob/living/carbon/human/target, target_zone)
 	target.op_stage.ribcage = 1
 
 /datum/surgery_step/ribcage/saw_ribcage/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -74,6 +78,10 @@
 	var/msg = "<span class='notice'>[user] forces open [target]'s ribcage with \the [tool].</span>"
 	var/self_msg = "<span class='notice'>You force open [target]'s ribcage with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
+
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/ribcage/retract_ribcage/end_step_action(mob/living/carbon/human/target, target_zone)
 	target.op_stage.ribcage = 2
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 3
@@ -116,6 +124,9 @@
 	var/self_msg = "<span class='notice'>You bend [target]'s ribcage back into place with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
 
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/ribcage/close_ribcage/end_step_action(mob/living/carbon/human/target, target_zone)
 	target.op_stage.ribcage = 1
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 2
@@ -155,6 +166,9 @@
 	var/self_msg = "<span class='notice'>You applied \the [tool] to [target]'s ribcage.</span>"
 	user.visible_message(msg, self_msg)
 
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/ribcage/mend_ribcage/end_step_action(mob/living/carbon/human/target, target_zone)
 	target.op_stage.ribcage = 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 2
@@ -256,10 +270,20 @@
 			if(!IO.is_robotic())
 				user.visible_message("[user] treats damage to [target]'s [IO.name] with [tool_name].", \
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
-				IO.damage = 0
 			else
 				user.visible_message("<span class='notice'>[user] pokes [target]'s mechanical [IO.name] with [tool_name]...</span>", \
 				"<span class='notice'>You poke [target]'s mechanical [IO.name] with [tool_name]... <span class='warning'>For no effect, since it's robotic.</span></span>")
+
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/ribcage/fix_chest_internal/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
+	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+		if(IO && IO.damage > 0)
+			if(IO.status & ORGAN_DEAD)
+				return
+			if(!IO.is_robotic())
+				IO.damage = 0
 
 /datum/surgery_step/ribcage/fix_chest_internal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
