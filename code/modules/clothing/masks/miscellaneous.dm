@@ -85,6 +85,8 @@
 			pull_down()
 			to_chat(user, "Your scarf is now hanging on your neck.")
 
+	update_item_actions()
+
 	. = ..()
 
 /datum/action/item_action/hands_free/adjust_scarf
@@ -93,9 +95,6 @@
 /datum/action/item_action/hands_free/adjust_scarf/Activate()
 	var/obj/item/clothing/mask/scarf/scarf = target
 	var/mob/user = usr
-	if((user.get_inactive_hand() == scarf) || (user.get_active_hand() == scarf))
-		scarf.attack_self(usr)
-		return
 
 	if(scarf.slot_equipped == SLOT_WEAR_MASK)
 		if(!user.unEquip(scarf))
