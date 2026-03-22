@@ -1,5 +1,5 @@
 /datum/auto_surgery
-	name = "surgery"
+	var/name = "surgery"
 
 	var/insurance_needed = INSURANCE_STANDARD
 	var/step_cost = 1

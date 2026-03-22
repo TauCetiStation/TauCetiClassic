@@ -12,6 +12,9 @@
 	light_color = "#00ff00"
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
+	var/list/datum/auto_surgery/surgeries_queue = list()
+	var/list/datum/surgery_step/steps_queue = list()
+
 /obj/machinery/autodoc/power_change()
 	..()
 	if(!(stat & (BROKEN|NOPOWER)))
@@ -57,6 +60,9 @@
 	var/mob/living/carbon/human/H = target
 	if(H.species.flags[NO_MED_HEALTH_SCAN])
 		to_chat(user, "<span class='userdanger'>Это существо нельзя оперировать</span>")
+		return FALSE
+	if(get_insurance_type(H) == INSURANCE_NONE)
+		to_chat(user, "<span class='userdanger'>У пациента отсутствует страховка.</span>")
 		return FALSE
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
@@ -156,151 +162,47 @@
 	connected = locate(/obj/machinery/autodoc) in orange(1, src)
 
 /obj/machinery/autodoc_console/ui_interact(mob/user)
-	tgui_interact(user)
-
-/obj/machinery/autodoc_console/tgui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "AutoDoc", C_CASE(src, NOMINATIVE_CASE), 690, 600)
-		ui.open()
-
-/obj/machinery/autodoc_console/tgui_data(mob/user)
-	var/list/data = list()
-	var/list/occupantData = list()
 	var/mob/living/carbon/human/occupant = connected.occupant
+	var/dat = ""
+	if(occupant && ishuman(occupant) && !(connected.surgeries_queue.len || connected.steps_queue))
+		var/mob/living/carbon/human/H = occupant
+		var/occupant_insurance = get_insurance_type(H)
 
-	data["occupied"] = occupant
-	if(occupant)
-		occupantData["name"] = occupant.name
-		occupantData["stat"] = occupant.stat
-		occupantData["health"] = occupant.health
-		occupantData["maxHealth"] = occupant.maxHealth
+		dat += "<form name='choosen_surgeries' action='?src=\ref[src]' method='get'>"
+		dat += "<input type='hidden' name='src' value='\ref[src]'>"
+		dat += "<input type='hidden' name='choice' value='choosen_surgeries'>"
+		for(var/target_zone in global.auto_surgeries)
+			var/obj/item/organ/external/bodypart = H.get_bodypart(target_zone)
+			dat += "<b>[CASE(bodypart, NOMINATIVE_CASE)]</b><br>"
+			var/list/surgeries_list = global.auto_surgeries[target_zone]
+			if(surgeries_list.len)
+				for(var/datum/auto_surgery/surgery in surgeries_list)
+					if(is_ensurance_enough(occupant_insurance, surgery.insurance_needed))
+						dat += "<label>[surgery.name]<input type='checkbox' name='[target_zone]' value='[surgery.type]'></input><br>"
+			dat += "<HR><br>"
+		dat += "<input type='submit' value='Запустить'></form>"
+	else if(connected.surgeries_queue.len || connected.steps_queue)
+		dat += "В работе..."
+	else
+		dat += "Положите пациента."
 
-		occupantData["hasVirus"] = occupant.virus2.len
+	var/datum/browser/popup = new(user, "window=autodoc_console", src.name)
+	popup.set_content(dat)
+	popup.open()
 
-		occupantData["bruteLoss"] = occupant.getBruteLoss()
-		occupantData["oxyLoss"] = occupant.getOxyLoss()
-		occupantData["toxLoss"] = occupant.getToxLoss()
-		occupantData["fireLoss"] = occupant.getFireLoss()
-
-		occupantData["radLoss"] = occupant.radiation
-		occupantData["cloneLoss"] = occupant.getCloneLoss()
-		occupantData["brainLoss"] = occupant.getBrainLoss()
-		occupantData["drunkenness"] = (occupant.drunkenness / 6) // 600 - maximum stage
-		occupantData["bodyTempC"] = occupant.bodytemperature-T0C
-		occupantData["bodyTempF"] = (((occupant.bodytemperature-T0C) * 1.8) + 32)
-
-		occupantData["hasBorer"] = !!occupant.has_brain_worms()
-
-		var/list/bloodData = list()
-		bloodData["hasBlood"] = FALSE
-		if(!HAS_TRAIT(occupant, TRAIT_NO_BLOOD))
-			bloodData["hasBlood"] = TRUE
-			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
-			bloodData["pulse"] = occupant.get_pulse_number(GETPULSE_TOOL)
-			bloodData["bloodLevel"] = occupant.blood_amount()
-			bloodData["bloodNormal"] = BLOOD_VOLUME_NORMAL
-		occupantData["blood"] = bloodData
-
-		var/list/extOrganData = list()
-		for(var/obj/item/organ/external/E in occupant.bodyparts)
-			var/list/organData = list()
-
-			organData["name"] = C_CASE(E, NOMINATIVE_CASE)
-			if(E.is_stump)
-				organData["name"] = capitalize(parse_zone_ru(E.body_zone))
-
-			organData["open"] = E.open
-			organData["germ_level"] = get_germ_level_name(E.germ_level)
-			organData["bruteLoss"] = E.brute_dam
-			organData["fireLoss"] = E.burn_dam
-			organData["totalLoss"] = E.brute_dam + E.burn_dam
-			organData["maxHealth"] = E.max_damage
-			organData["broken"] = E.min_broken_damage
-			organData["stump"] = E.is_stump
-
-			var/list/implantData = list()
-			var/has_unknown_implant = FALSE
-			for(var/obj/item/weapon/implant/I in E.embedded_objects)
-				var/list/implantSubData = list()
-				implantSubData["name"] = C_CASE(I, NOMINATIVE_CASE)
-
-				if(!is_known_implant(I))
-					has_unknown_implant = TRUE
-					implantSubData["name"] = null
-
-				implantData.Add(list(implantSubData))
-
-			organData["implant"] = implantData
-			organData["unknown_implant"] = has_unknown_implant
-
-			var/list/organStatus = list()
-			if(E.status & ORGAN_BROKEN)
-				organStatus["broken"] = capitalize(E.broken_description)
-			if(E.is_robotic_part())
-				organStatus["robotic"] = TRUE
-			if(E.status & ORGAN_SPLINTED)
-				organStatus["splinted"] = TRUE
-			if(E.status & ORGAN_DEAD)
-				organStatus["dead"] = TRUE
-
-			organData["status"] = organStatus
-
-			if(istype(E, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
-				organData["lungRuptured"] = TRUE
-
-			if(E.status & ORGAN_ARTERY_CUT)
-				organData["internalBleeding"] = TRUE
-
-			extOrganData.Add(list(organData))
-
-		for(var/bp_type in occupant.get_missing_bodyparts())
-			var/list/organData = list()
-			var/list/organStatus = list()
-
-			organData["name"] = capitalize(parse_zone_ru(bp_type))
-			organData["missing"] = TRUE
-			organData["totalLoss"] = 0
-
-			organData["status"] = organStatus
-
-			extOrganData.Add(list(organData))
-
-		occupantData["extOrgan"] = extOrganData
-
-		var/list/intOrganData = list()
-		for(var/obj/item/organ/internal/I in occupant.organs)
-			var/list/organData = list()
-			organData["name"] = C_CASE(I, NOMINATIVE_CASE)
-			organData["germ_level"] = get_germ_level_name(I.germ_level)
-			organData["damage"] = I.damage
-			organData["maxHealth"] = I.min_broken_damage
-			organData["bruised"] = I.is_bruised()
-			organData["broken"] = I.is_broken()
-			organData["robotic"] = I.is_robotic()
-			organData["dead"] = (I.status & ORGAN_DEAD)
-
-			intOrganData.Add(list(organData))
-
-		occupantData["intOrgan"] = intOrganData
-
-		occupantData["blind"] = occupant.sdisabilities & BLIND
-		occupantData["nearsighted"] = HAS_TRAIT(occupant, TRAIT_NEARSIGHT)
-
-	data["occupant"] = occupantData
-
-	return data
-
-/obj/machinery/autodoc_console/proc/is_known_implant(obj/item/weapon/implant/I)
-	return I.legal
-
-/obj/machinery/autodoc_console/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+/obj/machinery/autodoc_console/Topic(href, href_list)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
-	switch(action)
-		if("ejectify")
-			connected.eject()
+	if(href_list["choice"])
+		for(var/thing in href_list - list("src", "choice"))
+			var/added = FALSE
+			if(thing in TARGET_ZONE_ALL)
+				connected.surgeries_queue += list(list("[thing]", text2path(href_list[thing])))
+				added = TRUE
 
-	return TRUE
+			if(added)
+				START_PROCESSING(SSobj, connected)
+
+	updateUsrDialog()
