@@ -85,7 +85,7 @@
 			pull_down()
 			to_chat(user, "Your scarf is now hanging on your neck.")
 
-	. = ..()
+	return ..()
 
 /datum/action/item_action/hands_free/adjust_scarf
 	name = "Adjust scarf"
