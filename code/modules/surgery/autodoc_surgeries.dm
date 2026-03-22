@@ -17,7 +17,7 @@
 		/datum/surgery_step/generic/retract_skin,
 		/datum/surgery_step/glue_bone,
 		/datum/surgery_step/mend_skull,
-		/datum/surgery_step/glue_bone,
+		/datum/surgery_step/finish_bone,
 		/datum/surgery_step/generic/cauterize
 	)
 	available_target_zones = list(BP_HEAD)
@@ -32,8 +32,8 @@
 		/datum/surgery_step/generic/clamp_bleeders,
 		/datum/surgery_step/generic/retract_skin,
 		/datum/surgery_step/ribcage/mend_ribcage,
-		/datum/surgery_step/ribcage/mend_ribcage,
-		/datum/surgery_step/ribcage/mend_ribcage,
+		/datum/surgery_step/set_bone,
+		/datum/surgery_step/finish_bone,
 		/datum/surgery_step/generic/cauterize
 	)
 	available_target_zones = list(BP_CHEST)
@@ -49,7 +49,7 @@
 		/datum/surgery_step/generic/retract_skin,
 		/datum/surgery_step/glue_bone,
 		/datum/surgery_step/set_bone,
-		/datum/surgery_step/glue_bone,
+		/datum/surgery_step/finish_bone,
 		/datum/surgery_step/generic/cauterize
 	)
 	available_target_zones = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
