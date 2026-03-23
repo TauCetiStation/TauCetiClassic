@@ -271,7 +271,7 @@
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 /datum/surgery_step/ipc/limb/ipc_prepare
-	name = "Ipc prepare"
+	name = "Prepare robotic limb"
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75
