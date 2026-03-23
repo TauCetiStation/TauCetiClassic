@@ -149,15 +149,11 @@
 /atom/proc/AIAltClick()
 	return
 
-/obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
-	if(!secondsElectrified)
-		// permenant shock
-		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+/obj/machinery/door/airlock/AIAltClick() // Emergency access override
+	if(emergency)
+		Topic("aiDisable=11", list("aiDisable"="11"), 1)
 	else
-		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-		Topic("aiDisable=5", list("aiDisable"="5"), 1)
-	diag_hud_set_electrified()
-	return
+		Topic("aiEnable=11", list("aiEnable"="11"), 1)
 
 //
 // Override AdjacentQuick for AltClicking
