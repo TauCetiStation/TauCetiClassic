@@ -44,14 +44,15 @@
 	if(!try_open(user))
 		tgui_interact(user)
 
-/obj/item/weapon/storage/secure/try_open(mob/user)
-	. = ..()
+/obj/item/weapon/storage/secure/try_open(mob/user, check_only = FALSE)
+	. = ..(user, check_only)
 	if(!.)
 		return FALSE
 	if(locked)
 		return FALSE
 
-	open(user)
+	if(!check_only)
+		open(user)
 	return TRUE
 
 
@@ -199,13 +200,13 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/secure/briefcase/try_open(mob/user)
+/obj/item/weapon/storage/secure/briefcase/try_open(mob/user, check_only = FALSE)
 	if(locked)
-		if(user.in_interaction_vicinity(src))
+		if(!check_only && user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		return FALSE
 	else
-		return ..()
+		return ..(user, check_only)
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
@@ -256,13 +257,13 @@
 	density = FALSE
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
-/obj/item/weapon/storage/secure/safe/try_open(mob/user)
+/obj/item/weapon/storage/secure/safe/try_open(mob/user, check_only = FALSE)
 	if(locked)
-		if(user.in_interaction_vicinity(src))
+		if(!check_only && user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		return FALSE
 	else
-		return ..()
+		return ..(user, check_only)
 
 
 /obj/item/weapon/storage/secure/safe/atom_init()

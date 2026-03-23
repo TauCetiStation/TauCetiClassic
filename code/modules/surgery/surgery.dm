@@ -155,15 +155,9 @@
 	for(var/obj/item/I in C.get_environment(user))
 		nearby_items += I
 		if(istype(I, /obj/item/weapon/storage))
-			var/is_locked = FALSE
-			if(istype(I, /obj/item/weapon/storage/lockbox))
-				var/obj/item/weapon/storage/lockbox/LB = I
-				is_locked = LB.locked
-			else if(istype(I, /obj/item/weapon/storage/secure))
-				var/obj/item/weapon/storage/secure/SB = I
-				is_locked = SB.locked
-			if(!is_locked)
-				for(var/obj/item/SI in I.contents)
+			var/obj/item/weapon/storage/S = I
+			if(S.try_open(user, check_only = TRUE))
+				for(var/obj/item/SI in S.contents)
 					nearby_items += SI
 	qdel(C)
 	return nearby_items
