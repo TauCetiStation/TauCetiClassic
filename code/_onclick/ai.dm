@@ -150,6 +150,14 @@
 	return
 
 /obj/machinery/door/airlock/AIAltClick(mob/M) // Emergency access override OR electrify
+	if(M.can_use_topic(src) != STATUS_INTERACTIVE || !can_interact_with(M))
+		M.unset_machine(src)
+		return FALSE
+
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(M))
+		allowed_fail(M)
+		return FALSE
+
 	var/antag_check = FALSE
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
@@ -167,18 +175,24 @@
 				antag_check = TRUE
 	if(antag_check)
 		if(!secondsElectrified)
-			// permenant shock
-			Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+			// Electrify door indefinitely
+			if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+				to_chat(M, "The electrification wire has been cut.<br>\n")
+				return
+			shockedby += "\[[time_stamp()]\][usr](ckey:[M.ckey])"
+			M.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
+			secondsElectrified = -1
 		else
 			// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-			Topic("aiDisable=5", list("aiDisable"="5"), 1)
+			if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+				to_chat(M, "Can't un-electrify the airlock - The electrification wire is cut.")
+				return
+			secondsElectrified = 0
 		diag_hud_set_electrified()
 		return
 
-	if(emergency)
-		Topic("aiDisable=11", list("aiDisable"="11"), 1)
-	else
-		Topic("aiEnable=11", list("aiEnable"="11"), 1)
+	emergency = !emergency
+	update_icon()
 
 //
 // Override AdjacentQuick for AltClicking
