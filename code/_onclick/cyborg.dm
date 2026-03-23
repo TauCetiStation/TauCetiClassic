@@ -153,11 +153,11 @@
 	AltClick(user)
 	return
 
-/obj/machinery/door/airlock/BorgAltClick() // Eletrifies doors. Forwards to AI code.
-	AIAltClick()
+/obj/machinery/door/airlock/BorgAltClick(mob/M) // Eletrifies doors. Forwards to AI code.
+	AIAltClick(M)
 
-/obj/machinery/turretid/BorgAltClick() //turret lethal on/off. Forwards to AI code.
-	AIAltClick()
+/obj/machinery/turretid/BorgAltClick(mob/M) //turret lethal on/off. Forwards to AI code.
+	AIAltClick(M)
 
 /*
 	As with AI, these are not used in click code,

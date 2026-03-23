@@ -146,10 +146,35 @@
 /obj/machinery/power/apc/AICtrlClick() // turns off APCs.
 	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
 
-/atom/proc/AIAltClick()
+/atom/proc/AIAltClick(mob/M)
 	return
 
-/obj/machinery/door/airlock/AIAltClick() // Emergency access override
+/obj/machinery/door/airlock/AIAltClick(mob/M) // Emergency access override OR electrify
+	var/antag_check = FALSE
+	if(isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(R.emagged)
+			antag_check = TRUE
+		else if(R.laws)
+			var/datum/ai_laws/laws = R.laws
+			if(laws.zeroth)
+				antag_check = TRUE
+	if(isAI(M))
+		var/mob/living/silicon/ai/A = M
+		if(A.laws)
+			var/datum/ai_laws/laws = A.laws
+			if(laws.zeroth)
+				antag_check = TRUE
+	if(antag_check)
+		if(!secondsElectrified)
+			// permenant shock
+			Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+		else
+			// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
+			Topic("aiDisable=5", list("aiDisable"="5"), 1)
+		diag_hud_set_electrified()
+		return
+
 	if(emergency)
 		Topic("aiDisable=11", list("aiDisable"="11"), 1)
 	else
