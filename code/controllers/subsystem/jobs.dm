@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(job)
 		var/datum/department/department = new D()
 		departments += department
 		name_departments[department.title] = department
-		if(department.head)
+		if(department.head && department.title != DEP_SILICON)
 			heads_positions[department.head] = department
 		departments_occupations[department.title] = list()
 
