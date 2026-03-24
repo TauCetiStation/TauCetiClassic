@@ -84,3 +84,21 @@
 		/datum/surgery_step/generic/cauterize
 	)
 	available_target_zones = list(BP_CHEST)
+
+/datum/auto_surgery/organ/groin
+	name = "исправить внутренние органы"
+
+	insurance_needed = INSURANCE_PREMIUM
+	step_cost = 10
+	steps = list(
+		/datum/surgery_step/generic/cut_open,
+		/datum/surgery_step/generic/clamp_bleeders,
+		/datum/surgery_step/generic/retract_skin,
+		/datum/surgery_step/ribcage/saw_ribcage,
+		/datum/surgery_step/ribcage/retract_ribcage,
+		/datum/surgery_step/groin_organs/fixing,
+		/datum/surgery_step/ribcage/close_ribcage,
+		/datum/surgery_step/ribcage/mend_ribcage,
+		/datum/surgery_step/generic/cauterize
+	)
+	available_target_zones = list(BP_GROIN)

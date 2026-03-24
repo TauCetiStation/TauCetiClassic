@@ -172,6 +172,9 @@
 	var/list/step_list = popleft(steps_queue)
 	var/step_path = step_list["step"]
 	var/datum/surgery_step/step = new step_path()
+	if(!step.is_valid_mutantrace(occupant))
+		qdel(step)
+		return
 	var/target_zone = step_list["target_zone"]
 	if(!try_take_money(step_list["cost"]))
 		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
