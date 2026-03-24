@@ -290,6 +290,7 @@
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
 #define FEAR_TRAIT         "fear"
+#define CULT_SILENCING_TRAIT      "cult_silencing"
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
