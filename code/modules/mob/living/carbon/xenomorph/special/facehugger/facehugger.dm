@@ -323,7 +323,6 @@
 			new_xeno.key = FH.key
 			var/obj/item/weapon/embryo_kick/K = new /obj/item/weapon/embryo_kick(new_xeno, new_embryo)
 			new_xeno.put_in_active_hand(K)
-			K.synch()
 			qdel(current_hugger)
 		target.unEquip(src)
 		target.add_status_flags(XENO_HOST)

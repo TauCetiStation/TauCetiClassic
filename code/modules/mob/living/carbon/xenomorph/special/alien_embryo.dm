@@ -7,14 +7,12 @@ This is emryo growth procs
 	add_overlay(image('icons/mob/alien.dmi', loc = src, icon_state = "bursted_stand"))
 	playsound(src, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	death()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
-		H.adjustToxLoss(rand(180, 200))
-		H.organs_by_name[O_HEART].damage = rand(50, 100)
-		H.rupture_lung()
-	if(stat != DEAD)
-		gib()
+
+/mob/living/carbon/human/on_larva_erupt(mob/living/larva)
+	organs_by_name[O_HEART].damage = rand(50, 100)
+	rupture_lung()
+	. = ..()
+	apply_damage(rand(150, 250), BRUTE, BP_CHEST)
 
 /mob/living/proc/on_larva_kick(stage)
 	switch(stage)
@@ -27,7 +25,7 @@ This is emryo growth procs
 			adjustBruteLoss(rand(10, 15))
 			Stun(2)
 			emote("scream")
-			step(src, pick(NORTH, SOUTH, EAST, WEST))
+			step_rand(src)
 		if(4)
 			visible_message("<span class='userdanger'>[src] convulses and collapses!</span>")
 			to_chat(src, "<span class='userdanger'>Something is thrashing violently inside you!</span>")
@@ -36,15 +34,20 @@ This is emryo growth procs
 			Weaken(4)
 			emote("scream")
 			make_jittery(50)
-			for(var/i in 1 to rand(1, 3))
-				step(src, pick(NORTH, SOUTH, EAST, WEST))
-				sleep(2)
+			step_rand(src)
 
 /mob/living/proc/on_larva_bite(bite_count)
-	adjustBruteLoss(rand(15, 30) * bite_count)
+	adjustBruteLoss(rand(35, 65))
 	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-	Stun(2 + bite_count)
-	Weaken(2 + bite_count)
+	Stun(8)
+	Weaken(8)
+
+/mob/living/carbon/human/on_larva_bite(bite_count)
+	apply_damage(rand(7, 14), BRUTE, BP_CHEST)
+	adjustHalLoss(20)
+	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
+	Stun(1)
+	Weaken(1)
 	emote("scream")
 
 /obj/item/alien_embryo
@@ -59,6 +62,8 @@ This is emryo growth procs
 	var/stage = 0
 	var/next_growth_limit = MAX_EMBRYO_GROWTH
 	COOLDOWN_DECLARE(next_kick)
+	var/bite_count = 0
+	var/atom/movable/screen/cooldown_overlay/kick_cd_overlay
 
 /obj/item/alien_embryo/atom_init()
 	..()
@@ -239,56 +244,75 @@ This is emryo growth procs
 	if(!COOLDOWN_FINISHED(src, next_kick))
 		to_chat(baby, "<span class='warning'>You need to rest before kicking again.</span>")
 		return
-	COOLDOWN_START(src, next_kick, 15 SECONDS)
 	if(stage < 5)
+		COOLDOWN_START(src, next_kick, 15 SECONDS)
+		var/obj/item/weapon/embryo_kick/K = locate() in baby
+		if(K)
+			QDEL_NULL(kick_cd_overlay)
+			kick_cd_overlay = new(K.hud, K.hud)
+			kick_cd_overlay.start_cooldown(15)
 		affected_mob.on_larva_kick(stage)
 		to_chat(baby, "<span class='notice'>You kick your host from the inside.</span>")
 		return
-	// Stage 5 - chestburst
-	var/turf/T = get_turf(affected_mob)
-	var/atom/movable/mob_container = baby
-	mob_container.forceMove(T)
-	baby.reset_view()
-	if(affected_mob.health < 0)
-		affected_mob.visible_message("<span class='userdanger'>[affected_mob]'s body bulges grotesquely before exploding!</span>")
-		playsound(affected_mob, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
-		affected_mob.gib()
-	else
-		affected_mob.on_larva_erupt(baby)
+	COOLDOWN_START(src, next_kick, 6 SECONDS)
 	var/obj/item/weapon/embryo_kick/K = locate() in baby
 	if(K)
-		K.flags &= ~(DROPDEL | NODROP)
-		qdel(K)
-	qdel(src)
+		QDEL_NULL(kick_cd_overlay)
+		kick_cd_overlay = new(K.hud, K.hud)
+		kick_cd_overlay.start_cooldown(6)
+	bite_count++
+	affected_mob.on_larva_bite(bite_count)
+	affected_mob.updatehealth()
+	to_chat(baby, "<span class='warning'>You tear at your host's insides!</span>")
+	var/chest_broken = FALSE
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/H = affected_mob
+		var/obj/item/organ/external/chest = H.bodyparts_by_name[BP_CHEST]
+		if(chest && (chest.status & ORGAN_BROKEN))
+			chest_broken = TRUE
+	if(chest_broken || affected_mob.stat == DEAD || affected_mob.health <= 0 || bite_count >= 6)
+		var/turf/T = get_turf(affected_mob)
+		var/atom/movable/mob_container = baby
+		mob_container.forceMove(T)
+		baby.reset_view()
+		if(bite_count >= 5)
+			affected_mob.visible_message("<span class='userdanger'>[affected_mob]'s body bulges grotesquely before exploding!</span>")
+			playsound(affected_mob, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+			affected_mob.gib()
+		else
+			affected_mob.on_larva_erupt(baby)
+		K = locate() in baby
+		if(K)
+			K.flags &= ~(DROPDEL | NODROP)
+			qdel(K)
+		qdel(src)
 
 /obj/item/weapon/embryo_kick
 	name = "embryo_kick"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
 	var/atom/movable/screen/embryo_kick/hud = null
-	var/obj/item/alien_embryo/embryo = null
+	var/datum/weakref/embryo_ref = null
 	layer = 21
 	item_state = "nothing"
 	w_class = SIZE_BIG
 
 /obj/item/weapon/embryo_kick/atom_init(mapload, obj/item/alien_embryo/E)
 	. = ..()
-	embryo = E
+	embryo_ref = WEAKREF(E)
 	hud = new /atom/movable/screen/embryo_kick(src)
 	hud.icon = 'icons/hud/screen1_xeno.dmi'
 	hud.icon_state = "chest_burst"
 	hud.name = "Kick Host"
 	hud.master = src
+	hud.screen_loc = ui_rhand
 
 /obj/item/weapon/embryo_kick/attack_self(mob/user)
-	if(embryo)
-		embryo.kick()
+	var/obj/item/alien_embryo/embryo = embryo_ref?.resolve()
+	embryo?.kick()
 
-/obj/item/weapon/embryo_kick/proc/synch()
-	if(embryo && embryo.baby)
-		if(embryo.baby.r_hand == src)
-			hud.screen_loc = ui_rhand
 
 /obj/item/weapon/embryo_kick/process()
+	var/obj/item/alien_embryo/embryo = embryo_ref?.resolve()
 	if(!embryo || !embryo.baby)
 		qdel(src)
 		return
@@ -302,6 +326,6 @@ This is emryo growth procs
 /atom/movable/screen/embryo_kick/Click()
 	if(master)
 		var/obj/item/weapon/embryo_kick/K = master
-		if(K.embryo)
-			K.embryo.kick()
+		var/obj/item/alien_embryo/embryo = K.embryo_ref?.resolve()
+		embryo?.kick()
 	return TRUE

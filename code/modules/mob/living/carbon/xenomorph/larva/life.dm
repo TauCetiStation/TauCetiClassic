@@ -5,8 +5,8 @@
 	if (notransform)
 		return
 
-	for(var/obj/item/weapon/larva_bite/G in src)
-		G.process()
+
+
 	var/obj/item/weapon/embryo_kick/EK = locate() in src
 	EK?.process()
 	if(istype(loc, /obj/item/alien_embryo))

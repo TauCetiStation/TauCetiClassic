@@ -4,7 +4,6 @@
 #define GRAB_EMBRYO		3
 #define GRAB_IMPREGNATE	4
 
-#define BITE_COOLDOWN 20
 
 /mob/living/carbon/xenomorph/facehugger
 	name = "alien facehugger"
@@ -143,127 +142,8 @@
 /mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
 	return FALSE
 
-/*----------------------------------------
-              LARVA'S  BITE
-
-This is chestburster mechanic for damaging
- victim chest to get out from stomach
-----------------------------------------*/
-/atom/movable/screen/larva_bite
-	name = "larva_bite"
-
-/atom/movable/screen/larva_bite/Click()
-	var/obj/item/weapon/larva_bite/G = master
-	if(G)
-		G.s_click(src)
-		return TRUE
-
-/atom/movable/screen/larva_bite/attack_hand()
-	return
-
-/atom/movable/screen/larva_bite/attackby()
-	return
-
-/obj/item/weapon/larva_bite
-	name = "larva_bite"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
-	var/atom/movable/screen/larva_bite/hud = null
-	var/mob/affecting = null
-	var/mob/chestburster = null
-	var/state = null
-
-	var/last_bite = 0
-	var/bite_count = 0
-
-	layer = 21
-	item_state = "nothing"
-	w_class = SIZE_BIG
 
 
-/obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
-	. = ..()
-	chestburster = loc
-	affecting = victim
-
-	hud = new /atom/movable/screen/larva_bite(src)
-	hud.icon = 'icons/hud/screen1_xeno.dmi'
-	hud.icon_state = "chest_burst"
-	hud.name = "Burst thru chest"
-	hud.master = src
-
-/obj/item/weapon/larva_bite/proc/throw_held()
-	return null
-
-/obj/item/weapon/larva_bite/attack_self(mob/user)
-	s_click()
-
-/obj/item/weapon/larva_bite/proc/synch()
-	if(affecting)
-		if(chestburster.r_hand == src)
-			hud.screen_loc = ui_rhand
-
-/obj/item/weapon/larva_bite/process()
-	confirm()
-
-	if(chestburster.client)
-		chestburster.client.screen -= hud
-		chestburster.client.screen += hud
-
-/obj/item/weapon/larva_bite/proc/s_click(atom/movable/screen/S)
-	if(!affecting)
-		return
-	if(!chestburster)
-		return
-	if(chestburster.next_move > world.time)
-		return
-	if(chestburster.lying)
-		return
-	if(world.time < (last_bite + BITE_COOLDOWN))
-		return
-	if(istype(chestburster.loc, /turf))
-		qdel(src)
-		return
-
-	last_bite = world.time
-	bite_count++
-
-	var/mob/living/carbon/victim = affecting
-	victim.on_larva_bite(bite_count)
-
-	if(bite_count >= 4 || victim.stat == DEAD)
-		chestburster.loc = get_turf(victim)
-		victim.on_larva_erupt(chestburster)
-		qdel(src)
-
-/obj/item/weapon/larva_bite/proc/confirm()
-	if(!chestburster || !affecting)
-		qdel(src)
-		return FALSE
-
-	if(affecting)
-		if(isliving(chestburster.loc))
-			return TRUE
-		else
-			qdel(src)
-			return FALSE
-
-	return TRUE
-
-
-/obj/item/weapon/larva_bite/attack(mob/M, mob/user)
-	if(!affecting)
-		return
-
-	if(M == affecting)
-		s_click(hud)
-		return
-
-/obj/item/weapon/larva_bite/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	hud = null
-	affecting = null
-	chestburster = null
-	return ..()
 
 /*----------------------------------------
              FACEHUGGER'S  GRAB
@@ -473,4 +353,3 @@ When we finish, facehugger's player will be transfered inside embryo.
 #undef GRAB_EMBRYO
 #undef GRAB_IMPREGNATE
 
-#undef BITE_COOLDOWN
