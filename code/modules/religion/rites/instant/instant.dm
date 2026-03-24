@@ -661,12 +661,12 @@
 			L.Stuttering(stun_modifier)
 			L.Weaken(stun_modifier)
 			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
-			ADD_TRAIT(L, CULT_SILENCING_TRAIT, STATUS_EFFECT_TRAIT)
+			ADD_TRAIT(L, TRAIT_CURSED_TALK, STATUS_EFFECT_TRAIT)
 			addtimer(CALLBACK(src, PROC_REF(remove_silencing), L), 15 SECONDS)
 	return TRUE
 
 /datum/religion_rites/instant/impose_stun/proc/remove_silencing(mob/living/L)
-	REMOVE_TRAIT(L, CULT_SILENCING_TRAIT, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_CURSED_TALK, STATUS_EFFECT_TRAIT)
 
 /datum/religion_rites/instant/communicate
 	name = "Общение"
