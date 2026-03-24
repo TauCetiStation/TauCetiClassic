@@ -1200,7 +1200,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
 		return
-	var/mob/M = usr
+	var/mob/M = throwingdatum?.thrower
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
 	var/list/turfs = list()
