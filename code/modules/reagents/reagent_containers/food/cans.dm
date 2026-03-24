@@ -77,9 +77,11 @@
 		if(!do_mob(user, M)) return
 		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
 						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
+
+		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
-		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
