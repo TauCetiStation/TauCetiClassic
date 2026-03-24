@@ -175,3 +175,22 @@
 	name = ROUND_ASPECT_HEALING_ALCOHOL
 	desc = "Алкоголь лечит физические повреждения."
 	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продлевает жизнь.</span>"
+
+
+/datum/round_aspect/random_ai_laws
+	name = ROUND_ASPECT_RANDOM_LAWSET
+	desc = "Изменён набор законов ИИ."
+
+/datum/round_aspect/random_ai_laws/after_init()
+	var/list/laws = list(
+		/datum/ai_laws/robocop,
+		/datum/ai_laws/paladin,
+		/datum/ai_laws/tyrant,
+		/datum/ai_laws/corporate,
+		/datum/ai_laws/asimov_xenophile
+		)
+	global.base_law_type = pick(laws)
+
+/datum/round_aspect/random_ai_laws/after_start()
+	for(var/obj/item/weapon/aiModule/crewsimov/module in global.all_areas)
+		qdel(module)
