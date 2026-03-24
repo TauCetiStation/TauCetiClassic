@@ -166,13 +166,12 @@
 			if(laws.zeroth)
 				antag_check = TRUE
 	if(antag_check)
-		if(!secondsElectrified)
+		if(!secondsElectrified) //Needs rework. The best way is wrapping all code in function, while replacing it in both, machinery/Topic() and airlock/Topic(). See more in PR #14556
 			// permenant shock
 			Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
 		else
 			// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 			Topic("aiDisable=5", list("aiDisable"="5"), 1)
-		diag_hud_set_electrified()
 		return
 
 	if(emergency)
