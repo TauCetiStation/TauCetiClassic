@@ -174,6 +174,8 @@
 	var/datum/surgery_step/step = new step_path()
 	if(!step.is_valid_mutantrace(occupant))
 		qdel(step)
+		if(!steps_queue.len && !surgeries_queue.len)
+			open_machine()
 		return
 	var/target_zone = step_list["target_zone"]
 	if(!try_take_money(step_list["cost"]))
