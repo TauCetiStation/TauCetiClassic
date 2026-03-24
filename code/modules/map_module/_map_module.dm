@@ -22,6 +22,9 @@
 	// disable default mice/drone spawners
 	var/disable_default_spawners = FALSE
 
+	var/map_lobby_image
+	var/map_lobby_music
+
 /datum/map_module/New()
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -44,6 +47,10 @@
 	if(gamemode)
 		log_debug("[gamemode] mode forced.")
 		master_mode = gamemode
+
+	if(map_lobby_image)
+		log_debug("Title screen changed.")
+		change_lobbyscreen(map_lobby_image)
 
 	if(player_verbs)
 		setup_temp_player_verbs(player_verbs, "Map")
