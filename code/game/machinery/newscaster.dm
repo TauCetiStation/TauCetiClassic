@@ -10,7 +10,6 @@
 	var/body = ""
 	var/datum/money_account/author_account = null
 	var/is_licensed = FALSE
-	var/ai_generated = FALSE
 	//var/parent_channel
 	var/backup_body = ""
 	var/backup_author = ""
@@ -189,7 +188,6 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	var/datum/money_account/user_account = null
 	var/have_license = FALSE
 	var/is_guest = FALSE
-	var/is_ai = FALSE
 	var/msg = ""                //Feed message
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = "" //the feed channel which will be receiving the feed, or being created
@@ -685,21 +683,17 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		var/payment = 20
 		if(have_license)
 			payment /= 2
-
-		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || (!is_ai && (user_account.money < payment || is_guest)))
+		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || user_account.money < payment || is_guest)
 			screen = 6
 		else
 			var/datum/feed_message/newMsg = new /datum/feed_message
 			var/datum/comment_pages/CP = new /datum/comment_pages
 			newMsg.author = scanned_user
 			newMsg.body = msg
-			if(is_ai)
-				newMsg.ai_generated = TRUE
-			else
-				newMsg.author_account = user_account
-				newMsg.is_licensed = have_license
-				charge_to_account(user_account.account_number, "Newscaster", "Вы опубликовали новость", name, -payment)
-				charge_to_account(global.station_account.account_number, "Newscaster", "Опубликована новость", name, payment)
+			newMsg.author_account = user_account
+			newMsg.is_licensed = have_license
+			charge_to_account(user_account.account_number, "Newscaster", "Вы опубликовали новость", name, -payment)
+			charge_to_account(global.station_account.account_number, "Newscaster", "Опубликована новость", name, payment)
 			if(photo)
 				newMsg.img = photo.img
 			feedback_inc("newscaster_stories",1)
@@ -897,16 +891,15 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		else
 			var/datum/feed_message/FM = locate(href_list["setLike"])
 			FM.voters[scanned_user] = 1
-			if(!FM.ai_generated)
-				var/datum/money_account/MA = FM.author_account
-				if(MA && !MA.suspended && (FM.author != scanned_user))
-					var/payment = 5
-					if(FM.is_licensed)
-						payment *= 2
+			var/datum/money_account/MA = FM.author_account
+			if(MA && !MA.suspended && (FM.author != scanned_user))
+				var/payment = 5
+				if(FM.is_licensed)
+					payment *= 2
 
-					if(global.station_account.money > payment)
-						charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
-						charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
+				if(global.station_account.money > payment)
+					charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
+					charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
 	else if(href_list["setDislike"])
 		if(is_guest)
@@ -914,16 +907,15 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		else
 			var/datum/feed_message/FM = locate(href_list["setDislike"])
 			FM.voters[scanned_user] = -1
-			if(!FM.ai_generated)
-				var/datum/money_account/MA = FM.author_account
-				if(MA && !MA.suspended && (FM.author != scanned_user))
-					var/payment = 5
-					if(FM.is_licensed)
-						payment *= 2
+			var/datum/money_account/MA = FM.author_account
+			if(MA && !MA.suspended && (FM.author != scanned_user))
+				var/payment = 5
+				if(FM.is_licensed)
+					payment *= 2
 
-					if(global.station_account.money > payment)
-						charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
-						charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
+				if(global.station_account.money > payment)
+					charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
+					charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
 	else if(href_list["toggleDisplayVoters"])
 		var/datum/feed_message/FM = locate(href_list["toggleDisplayVoters"])
@@ -1303,12 +1295,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			user_account = get_account(C.associated_account_number)
 			have_license = (C.assignment == "Journalist")
 			is_guest = istype(C, /obj/item/weapon/card/id/guest)
-			is_ai = FALSE
 	else
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
-		is_guest = FALSE
-		is_ai = TRUE
 
 
 /obj/machinery/newscaster/proc/print_paper()
