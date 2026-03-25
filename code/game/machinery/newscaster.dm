@@ -1295,7 +1295,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			user_account = get_account(C.associated_account_number)
 			have_license = (C.assignment == "Journalist")
 			is_guest = istype(C, /obj/item/weapon/card/id/guest)
-	else
+
+	else if(issilicon(user))
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 		user_account = global.station_account
