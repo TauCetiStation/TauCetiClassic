@@ -137,7 +137,7 @@
 /proc/has_medical_hud(mob/living/user)
 	var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
 	var/datum/atom_hud/med_adv = global.huds[DATA_HUD_MEDICAL_ADV]
-	if((med && (user in med.hudusers)) || (med_adv && (user in med_adv.hudusers)))
+	if((med && (med.hudusers[user])) || (med_adv && (med_adv.hudusers[user])))
 		return TRUE
 	return FALSE
 
