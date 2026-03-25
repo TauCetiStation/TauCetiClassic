@@ -1298,6 +1298,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	else
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
+		user_account = global.station_account
+		is_guest = FALSE
 
 
 /obj/machinery/newscaster/proc/print_paper()
