@@ -163,7 +163,7 @@
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
-	if((get_species() == HOMUNCULUS) || HAS_TRAIT(src, TRAIT_CURSED_TALK))
+	if(HAS_TRAIT(src, TRAIT_CURSED_TALK))
 		message = cursed_talk(message)
 
 	message = capitalize(trim(message))

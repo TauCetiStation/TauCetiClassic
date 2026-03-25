@@ -662,7 +662,7 @@
 			L.Weaken(stun_modifier)
 			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
 			ADD_TRAIT(L, TRAIT_CURSED_TALK, STATUS_EFFECT_TRAIT)
-			addtimer(CALLBACK(src, PROC_REF(remove_cursed_talk)), 15 SECONDS)
+			addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living, remove_cursed_talk)), 15 SECONDS)
 	return TRUE
 
 /mob/living/proc/remove_cursed_talk()
