@@ -249,7 +249,7 @@ var/global/list/slot_equipment_priority = list(
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
 		W.plane = initial(W.plane)
-		W.dropped()
+		W.dropped(src)
 		W.slot_equipped = initial(W.slot_equipped)
 		return 0
 

@@ -163,6 +163,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("painting easel", /obj/structure/easel, 4, time = 15, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("grave marker", /obj/structure/gravemarker/cross, 2, time = 5, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("fence", /obj/structure/fence/wood, 2, time = 25, max_per_place = 1, build_outline = TRUE),
+	new/datum/stack_recipe("ballot box", /obj/structure/ballot_box, 4, time = 50, max_per_place = 1, build_outline = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, max_per_place = FALSE, build_outline = FALSE)
 	)
 

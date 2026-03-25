@@ -13910,6 +13910,9 @@
 /obj/structure/fence/metal{
 	color = "#996633"
 	},
+/obj/item/weapon/storage/fancy/candle_box{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "axA" = (
@@ -15167,7 +15170,6 @@
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "azS" = (
-/obj/machinery/constructable_frame/machine_frame,
 /obj/structure/fence/metal{
 	dir = 8;
 	color = "#996633"
@@ -15175,6 +15177,10 @@
 /obj/structure/fence/metal{
 	dir = 1;
 	color = "#996633"
+	},
+/obj/structure/ballot_box{
+	name = "anonymous message box";
+	desc = "Урна для писем."
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -15497,8 +15503,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
+/obj/structure/ballot_box{
+	name = "anonymous message box";
+	desc = "Урна для писем."
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -25711,7 +25718,10 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbreak)
 "aTu" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/machinery/constructable_frame/machine_frame{
+	name = "holy machine frame";
+	desc = "Dedicated to oaths forgotten. Forgiven be."
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -36782,6 +36792,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/weapon/storage/fancy/crayons{
+	pixel_y = 5
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -36857,10 +36870,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -35
 	},
-/obj/structure/table/woodentable/fancy/black,
-/obj/item/weapon/storage/fancy/crayons{
-	pixel_y = 5
-	},
+/obj/structure/closet/wardrobe/black,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -36900,7 +36910,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/closet/wardrobe/black,
+/obj/structure/closet/wardrobe/white,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -72717,7 +72727,10 @@
 	name = "apc left";
 	pixel_x = -28
 	},
-/obj/structure/closet/wardrobe/white,
+/obj/machinery/constructable_frame/machine_frame{
+	name = "holy machine frame";
+	desc = "Dedicated to oaths forgotten. Forgiven be."
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73419,6 +73432,23 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"gJI" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = 6
+	},
+/obj/item/pen_holder{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/weapon/pen/blue,
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel)
 "gKb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/belt/utility,
@@ -136498,7 +136528,7 @@ aKv
 bHn
 aKv
 aIU
-bQn
+gJI
 azS
 bao
 aVp
