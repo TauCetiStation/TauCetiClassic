@@ -150,7 +150,7 @@
 	return
 
 /obj/machinery/door/airlock/AIAltClick(mob/M) // Emergency access override OR electrify
-	if(!can_use_topic_machinery())
+	if(!can_use_machinery())
 		return
 	if(!issilicon(M))
 		return

@@ -339,7 +339,7 @@ Class Procs:
 /obj/machinery/Topic(href, href_list)
 	..()
 
-	if(!can_use_topic_machinery())
+	if(!can_use_machinery())
 		return FALSE
 
 	usr.set_machine(src)
@@ -350,7 +350,7 @@ Class Procs:
 
 	return TRUE
 
-/obj/machinery/proc/can_use_topic_machinery()
+/obj/machinery/proc/can_use_machinery()
 	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !can_interact_with(usr))
 		usr.unset_machine(src)
 		return FALSE

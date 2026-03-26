@@ -1213,6 +1213,4 @@
 				break
 
 /mob/living/silicon/robot/is_antag()
-	if(emagged || laws?.zeroth)
-		return TRUE
-	return FALSE
+	return emagged
