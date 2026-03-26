@@ -150,6 +150,8 @@
 	return
 
 /obj/machinery/door/airlock/AIAltClick(mob/M) // Emergency access override OR electrify
+	if(!can_use_topic_machinery())
+		return FALSE
 	var/antag_check = FALSE
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
@@ -166,12 +168,10 @@
 			if(laws.zeroth)
 				antag_check = TRUE
 	if(antag_check)
-		if(!secondsElectrified) //Needs rework. The best way is wrapping all code in function, while replacing it in both, machinery/Topic() and airlock/Topic(). See more in PR #14556
-			// permenant shock
-			Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+		if(!secondsElectrified) //Needs rework. See more in PR #14556
+			electrify()
 		else
-			// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-			Topic("aiDisable=5", list("aiDisable"="5"), 1)
+			unelectrify()
 		return
 
 	if(emergency)

@@ -735,14 +735,7 @@ var/global/list/airlock_overlays = list()
 						bolt()
 
 				if(5)
-					// Un-electrify door
-					if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-						to_chat(usr, "Can't un-electrify the airlock - The electrification wire is cut.")
-					else if(secondsElectrified == -1)
-						secondsElectrified = 0
-					else if(secondsElectrified > 0)
-						secondsElectrified = 0
-					diag_hud_set_electrified()
+					unelectrify()
 
 				if(7)
 					// Close door
@@ -829,18 +822,7 @@ var/global/list/airlock_overlays = list()
 						START_PROCESSING(SSmachines, src)
 
 				if(6)
-					// Electrify door indefinitely
-					if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-						to_chat(usr, "The electrification wire has been cut.<br>\n")
-					else if(secondsElectrified == -1)
-						to_chat(usr, "The door is already indefinitely electrified.<br>\n")
-					else if(secondsElectrified)
-						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
-					else
-						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
-						secondsElectrified = -1
-						diag_hud_set_electrified()
+					electrify()
 
 				if(7)
 					// Open door
@@ -889,6 +871,30 @@ var/global/list/airlock_overlays = list()
 
 	if(!no_window)
 		updateUsrDialog()
+
+/obj/machinery/door/airlock/proc/electrify()
+	// Electrify door indefinitely
+	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		to_chat(usr, "The electrification wire has been cut.<br>\n")
+	else if(secondsElectrified == -1)
+		to_chat(usr, "The door is already indefinitely electrified.<br>\n")
+	else if(secondsElectrified)
+		to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+	else
+		shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+		usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
+		secondsElectrified = -1
+		diag_hud_set_electrified()
+
+/obj/machinery/door/airlock/proc/unelectrify()
+	// Un-electrify door
+	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		to_chat(usr, "Can't un-electrify the airlock - The electrification wire is cut.")
+	else if(secondsElectrified == -1)
+		secondsElectrified = 0
+	else if(secondsElectrified > 0)
+		secondsElectrified = 0
+	diag_hud_set_electrified()
 
 /obj/machinery/door/airlock/try_open(mob/user, obj/item/tool = null)
 	if(isElectrified() && !issilicon(user) && !isobserver(user))
