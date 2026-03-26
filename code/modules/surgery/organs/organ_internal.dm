@@ -101,6 +101,10 @@
 
 /obj/item/organ/internal/proc/rejuvenate()
 	damage = 0
+	status &= ~ORGAN_DEAD
+	germ_level = 0
+	if(owner)
+		START_PROCESSING(SSobj, src)
 
 /obj/item/organ/internal/proc/is_bruised()
 	return damage >= min_bruised_damage

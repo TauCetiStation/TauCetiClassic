@@ -113,6 +113,9 @@
 	target.sdisabilities &= ~BLIND
 	eyes.damage = 0
 
+	if(eyes.status & ORGAN_DEAD)
+		to_chat(user, "<span class='warning'>Despite your efforts, [target]'s optics don't seem to respond. The nerves are completely dead.</span>")
+
 /datum/surgery_step/eye/mend_eyes/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
