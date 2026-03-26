@@ -90,6 +90,24 @@
 			break
 	return is_groin_organ_damaged
 
+/datum/surgery_step/groin_organs/fixing/prepare_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
+	var/list/dead_organs = list()
+	var/has_treatable = FALSE
+	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+		if(IO.damage > 0)
+			if(IO.status & ORGAN_DEAD)
+				dead_organs += IO
+			else
+				has_treatable = TRUE
+
+	if(!has_treatable && dead_organs.len)
+		for(var/obj/item/organ/internal/IO in dead_organs)
+			user.visible_message("[target]'s [IO.name] is dead.")
+		return FALSE
+
+	return ..()
+
 /datum/surgery_step/groin_organs/fixing/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
 	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
@@ -103,7 +121,7 @@
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.status & ORGAN_DEAD)
 			user.visible_message("[target]'s [IO.name] is dead.")
-			return
+			continue
 		if(IO && IO.damage > 0)
 			if(!IO.is_robotic())
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].",
@@ -131,7 +149,7 @@
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
-				return
+				continue
 			if(!IO.is_robotic())
 				user.visible_message("<span class='notice'>[user] treats damage to [target]'s [IO.name] with [tool_name].</span>",
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
