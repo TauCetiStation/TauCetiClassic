@@ -151,11 +151,11 @@
 
 /obj/machinery/door/airlock/AIAltClick(mob/M) // Emergency access override OR electrify
 	if(!can_use_topic_machinery())
-		return FALSE
+		return
 	if(!issilicon(M))
 		return
 	var/mob/living/silicon/S = M
-	if(S.antag_check())
+	if(S.is_antag())
 		if(!secondsElectrified) //Needs rework. See more in PR #14556
 			electrify()
 		else

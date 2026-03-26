@@ -949,7 +949,7 @@ var/global/list/ai_verbs_default = list(
 	else
 		pixel_y = 0
 
-/mob/living/silicon/ai/antag_check()
+/mob/living/silicon/ai/is_antag()
 	if(laws?.zeroth)
 		return TRUE
 	return FALSE
