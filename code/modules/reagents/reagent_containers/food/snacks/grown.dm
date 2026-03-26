@@ -1201,6 +1201,7 @@
 	if(..())
 		return
 	var/mob/M = throwingdatum?.thrower
+	var/atom/center = M || hit_atom // Use hit_atom as center if no thrower
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
 	var/list/turfs = list()
@@ -1210,8 +1211,8 @@
 		visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился.</span>","<span class='notice'>Вы слышите шлепок.</span>")
 		qdel(src)
 		return
-	for(var/turf/T in orange(M,outer_teleport_radius))
-		if(T in orange(M,inner_teleport_radius))
+	for(var/turf/T in orange(center,outer_teleport_radius))
+		if(T in orange(center,inner_teleport_radius))
 			continue
 		if(isenvironmentturf(T))
 			continue
@@ -1224,31 +1225,41 @@
 		turfs += T
 	if(!turfs.len)
 		var/list/turfs_to_pick_from = list()
-		for(var/turf/T in orange(M,outer_teleport_radius))
-			if(!(T in orange(M,inner_teleport_radius)))
+		for(var/turf/T in orange(center,outer_teleport_radius))
+			if(!(T in orange(center,inner_teleport_radius)))
 				turfs_to_pick_from += T
 		turfs += pick(/turf in turfs_to_pick_from)
 	var/turf/picked = pick(turfs)
 	if(!isturf(picked))
 		return
-	switch(rand(1,2))//Decides randomly to teleport the thrower or the throwee.
-		if(1) // Teleports the person who threw the tomato.
-			s.set_up(3, 1, M)
+	if(!M) // No thrower — guaranteed teleport hit atom
+		for(var/mob/A in get_turf(hit_atom))
+			s.set_up(3, 1, A)
 			s.start()
-			new/obj/effect/decal/cleanable/molten_item(M.loc) //Leaves a pile of goo behind for dramatic effect.
-			M.loc = picked //
+			new/obj/effect/decal/cleanable/molten_item(A.loc)
+			A.loc = picked
 			sleep(1)
-			s.set_up(3, 1, M)
-			s.start() //Two set of sparks, one before the teleport and one after.
-		if(2) //Teleports mob the tomato hit instead.
-			for(var/mob/A in get_turf(hit_atom))//For the mobs in the tile that was hit...
-				s.set_up(3, 1, A)
+			s.set_up(3, 1, A)
+			s.start()
+	else
+		switch(rand(1,2))//Decides randomly to teleport the thrower or the throwee.
+			if(1) // Teleports the person who threw the tomato.
+				s.set_up(3, 1, M)
 				s.start()
-				new/obj/effect/decal/cleanable/molten_item(A.loc) //Leave a pile of goo behind for dramatic effect...
-				A.loc = picked//And teleport them to the chosen location.
+				new/obj/effect/decal/cleanable/molten_item(M.loc) //Leaves a pile of goo behind for dramatic effect.
+				M.loc = picked //
 				sleep(1)
-				s.set_up(3, 1, A)
-				s.start()
+				s.set_up(3, 1, M)
+				s.start() //Two set of sparks, one before the teleport and one after.
+			if(2) //Teleports mob the tomato hit instead.
+				for(var/mob/A in get_turf(hit_atom))//For the mobs in the tile that was hit...
+					s.set_up(3, 1, A)
+					s.start()
+					new/obj/effect/decal/cleanable/molten_item(A.loc) //Leave a pile of goo behind for dramatic effect...
+					A.loc = picked//And teleport them to the chosen location.
+					sleep(1)
+					s.set_up(3, 1, A)
+					s.start()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился, вызвав искажение пространства-времени.</span>","<span class='notice'>Вы слышите хлопок и треск.</span>")
 	qdel(src)
