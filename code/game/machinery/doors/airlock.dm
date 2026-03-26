@@ -735,6 +735,7 @@ var/global/list/airlock_overlays = list()
 						bolt()
 
 				if(5)
+					// Un-electrify door
 					unelectrify()
 
 				if(7)
@@ -776,11 +777,7 @@ var/global/list/airlock_overlays = list()
 
 				if(11)
 					// Emergency access
-					if(emergency)
-						emergency = 0
-						update_icon()
-					else
-						to_chat(usr, "Emergency access is already disabled!")
+					enable_emergency_access()
 
 		else if(href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -822,6 +819,7 @@ var/global/list/airlock_overlays = list()
 						START_PROCESSING(SSmachines, src)
 
 				if(6)
+					// Electrify door indefinitely
 					electrify()
 
 				if(7)
@@ -863,11 +861,7 @@ var/global/list/airlock_overlays = list()
 
 				if(11)
 					// Emergency access
-					if(!emergency)
-						emergency = 1
-						update_icon()
-					else
-						to_chat(usr, "Emergency access is already disabled!")
+					disable_emergency_access()
 
 	if(!no_window)
 		updateUsrDialog()
@@ -895,6 +889,20 @@ var/global/list/airlock_overlays = list()
 	else if(secondsElectrified > 0)
 		secondsElectrified = 0
 	diag_hud_set_electrified()
+
+/obj/machinery/door/airlock/proc/enable_emergency_access()
+	if(emergency)
+		emergency = 0
+		update_icon()
+	else
+		to_chat(usr, "Emergency access is already disabled!")
+
+/obj/machinery/door/airlock/proc/disable_emergency_access()
+	if(!emergency)
+		emergency = 1
+		update_icon()
+	else
+		to_chat(usr, "Emergency access is already disabled!")
 
 /obj/machinery/door/airlock/try_open(mob/user, obj/item/tool = null)
 	if(isElectrified() && !issilicon(user) && !isobserver(user))

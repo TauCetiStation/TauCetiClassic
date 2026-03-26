@@ -175,9 +175,9 @@
 		return
 
 	if(emergency)
-		Topic("aiDisable=11", list("aiDisable"="11"), 1)
+		enable_emergency_access()
 	else
-		Topic("aiEnable=11", list("aiEnable"="11"), 1)
+		disable_emergency_access()
 
 //
 // Override AdjacentQuick for AltClicking
