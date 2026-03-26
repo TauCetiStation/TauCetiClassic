@@ -1211,3 +1211,8 @@
 					return
 				F.attackby(B, src)
 				break
+
+/mob/living/silicon/robot/antag_check()
+	if(emagged || laws?.zeroth)
+		return TRUE
+	return FALSE
