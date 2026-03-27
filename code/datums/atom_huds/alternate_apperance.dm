@@ -150,6 +150,7 @@ var/global/list/active_alternate_appearances = list()
 
 	qdel(theImage)
 	theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
+	theImage.appearance = alternate_obj.appearance
 	//This is necessary so that sprites are not layered
 	theImage.override = TRUE
 	theImage.pixel_x = alternate_obj.pixel_x
