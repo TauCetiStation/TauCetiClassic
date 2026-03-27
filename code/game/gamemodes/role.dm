@@ -51,11 +51,11 @@
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	AssignToFaction(fac)
-
 	if(M && !AssignToRole(M, override))
 		Drop()
 		return
+
+	AssignToFaction(fac)
 
 	objectives.owner = M
 	..()
