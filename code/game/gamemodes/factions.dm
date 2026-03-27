@@ -159,6 +159,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	members += R
 	R.faction = src
+	update_my_alt_appearance_for(R.antag.current)
 
 /datum/faction/proc/remove_role(datum/role/R)
 	SHOULD_CALL_PARENT(TRUE)
@@ -166,6 +167,7 @@
 	R.faction = null
 	if(leader == R)
 		leader = null
+	update_my_alt_appearance_for(R.antag.current)
 
 /datum/faction/proc/AppendObjective(objective_type,duplicates=0)
 	SHOULD_CALL_PARENT(TRUE)
@@ -430,3 +432,11 @@
 				continue
 		total_human++
 	return total_human
+
+/datum/faction/proc/update_my_alt_appearance_for(mob/M)
+	if(!M)
+		return
+
+	for(var/datum/atom_hud/alternate_appearance/basic/faction/AA in global.active_alternate_appearances)
+		if(istype(src, AA.faction_type))
+			AA.update_alt_appearance(M)
