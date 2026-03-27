@@ -121,11 +121,10 @@
 		log_mode("Mind already had a role of [initial_role]!")
 		return null
 	var/role_type = get_initrole_type()
-	var/datum/role/newRole = new role_type(null, src)
-	newRole.is_roundstart_role = !laterole
-	if(!newRole.AssignToRole(M, laterole = laterole))
-		newRole.Drop()
+	var/datum/role/newRole = new role_type(M, src, FALSE, laterole)
+	if(QDELETED(newRole))
 		return null
+	newRole.is_roundstart_role = !laterole
 	return newRole
 
 // Basically, these are the new members of the faction during the round
@@ -139,9 +138,8 @@
 		log_mode("Mind already had a role of [late_role]!")
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
-	var/datum/role/R = new role_type(null, src) // Add him to our roles
-	if(!R.AssignToRole(M, laterole = laterole))
-		R.Drop()
+	var/datum/role/R = new role_type(M, src, FALSE, laterole) // Add him to our roles
+	if(QDELETED(R))
 		return null
 	return R
 
