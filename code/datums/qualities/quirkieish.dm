@@ -314,6 +314,8 @@
 /datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
+	if(ischangeling(H) || iscultist(H))
+		return
 	H.set_species(GOLEM)
 	H.flavor_text = ""
 
