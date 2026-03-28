@@ -1901,10 +1901,13 @@
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
 
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
+	if(user == src)
+		return
+
 	if(HAS_TRAIT(src, TRAIT_NO_BLOOD)) // this checks for ipc/dionea/etc., but probably we should check for can_breathe and lungs
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
+	if((stat == DEAD) && (world.time - timeofdeath >= DEFIB_TIME_LIMIT))
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
