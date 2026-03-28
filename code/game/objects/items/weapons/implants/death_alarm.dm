@@ -25,7 +25,7 @@ var/global/list/death_alarm_stealth_areas = list(
 
 	RegisterSignal(implanted_mob, COMSIG_MOB_DIED, PROC_REF(on_death))
 
-/obj/item/weapon/implant/eject()
+/obj/item/weapon/implant/death_alarm/eject()
 	UnregisterSignal(implanted_mob, COMSIG_MOB_DIED)
 
 	. = ..()

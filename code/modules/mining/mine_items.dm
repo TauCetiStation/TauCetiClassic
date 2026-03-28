@@ -1087,7 +1087,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(I.use_tool(src, user, 20, volume = 50))
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return
@@ -1169,7 +1169,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			if(user.is_busy(src))
 				return
 			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
-			if(O.use_tool(src, user, 20, volume = 50))
+			if(O.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 				qdel(src)
 			return
 		if(accept_check(O))
@@ -1206,7 +1206,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)

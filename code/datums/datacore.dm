@@ -17,6 +17,17 @@
 	size = 5.0
 	var/list/fields = list(  )
 
+/datum/data/record/Destroy()
+	if(src in global.data_core.medical)
+		global.data_core.medical -= src
+	if(src in global.data_core.security)
+		global.data_core.security -= src
+	if(src in global.data_core.general)
+		global.data_core.general -= src
+	if(src in global.data_core.locked)
+		global.data_core.locked -= src
+	return ..()
+
 /datum/data/text
 	name = "text"
 	var/data = null

@@ -8,6 +8,8 @@ var/global/list/wedge_image_cache = list()
 	density = TRUE
 	can_block_air = TRUE
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	layer = DOOR_LAYER
 	var/base_layer = DOOR_LAYER
 	var/layer_delta = DOOR_CLOSED_MOD
@@ -208,8 +210,6 @@ var/global/list/wedge_image_cache = list()
 			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/device/detective_scanner))
-		return
 	if(src.operating)
 		return
 	if(src.density && hasPower() && istype(I, /obj/item/weapon/melee/energy/blade))

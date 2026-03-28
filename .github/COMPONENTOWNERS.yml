@@ -16,6 +16,7 @@ components:
   ## Код ##
   
   # /code/
+  code/__DEFINES/_translation.dm: AzzyDreemurr13
   code/modules/client/preferences_savefile.dm: volas
 
   ## Конфиги ##
@@ -42,6 +43,7 @@ components:
   "*.sh": volas
 
   .github/: TauCetiStation/maintainers
+  .github/wiki/TRANSLATION.md: AzzyDreemurr13
 
 ignored-authors:
   - dependabot

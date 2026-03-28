@@ -1398,7 +1398,6 @@ Owl & Griffin toys
 	var/cardname = null
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
-	pixel_x = -5
 
 /obj/item/toy/singlecard/examine(mob/user)
 	..()
@@ -1424,12 +1423,10 @@ Owl & Griffin toys
 		else
 			src.icon_state = "sc_Ace of Spades"
 			src.name = "What Card"
-		src.pixel_x = 5
 	else if(flipped)
 		src.flipped = 0
 		src.icon_state = "singlecard_down"
 		src.name = "card"
-		src.pixel_x = -5
 
 /obj/item/toy/singlecard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/singlecard))

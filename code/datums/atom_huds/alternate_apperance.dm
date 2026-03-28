@@ -77,7 +77,7 @@ var/global/list/active_alternate_appearances = list()
 /**
   * If you have one sprite superimposed on the second, then in image/I set `I.override = TRUE`
   * You can choose to send an image or an entire object type. For items that can be picked up, it is better to pass the type.
-  * image/I OR alternate_type AND loc you must pass
+  * image/I OR (alternate_type AND loc) you must pass
   * Arguments:
   * * key - name of the associative array in the form "key" = "image"
   * * image/I - not an important argument, image of alternate apperance
@@ -150,6 +150,7 @@ var/global/list/active_alternate_appearances = list()
 
 	qdel(theImage)
 	theImage = image(alternate_obj.icon, target, alternate_obj.icon_state, alternate_obj.layer)
+	theImage.appearance = alternate_obj.appearance
 	//This is necessary so that sprites are not layered
 	theImage.override = TRUE
 	theImage.pixel_x = alternate_obj.pixel_x

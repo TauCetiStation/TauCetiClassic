@@ -2783,7 +2783,6 @@
 "gG" = (
 /obj/structure/alien/weeds,
 /obj/structure/table,
-/obj/item/weapon/storage/box/cups,
 /obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
 	icon_state = "dark"
@@ -3312,7 +3311,6 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "il" = (
-/obj/item/weapon/storage/box/cups,
 /obj/structure/table/woodentable,
 /obj/machinery/firealarm{
 	dir = 4;
@@ -3485,7 +3483,9 @@
 	},
 /area/asteroid/mine/abandoned)
 "iU" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -3567,7 +3567,9 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
 "je" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	icon_state = "blueyellowfull"
 	},
@@ -5221,7 +5223,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oy" = (
-/obj/machinery/vending/chinese,
+/obj/machinery/vending/chinese{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	icon_state = "blueyellowfull"
 	},
@@ -9870,7 +9874,9 @@
 /turf/simulated/wall/r_wall/purple,
 /area/asteroid/research_outpost/longtermstorage)
 "DC" = (
-/obj/machinery/vending/eva/mining,
+/obj/machinery/vending/eva/mining{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -10415,7 +10421,8 @@
 	dir = 8
 	},
 /obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
+	slogan_delay = 700;
+	seller_account_number = "%cargo_account%"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -11770,7 +11777,9 @@
 	},
 /area/space)
 "Lq" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -12385,7 +12394,9 @@
 	},
 /area/asteroid/research_outpost/spectro)
 "Ol" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -12420,7 +12431,9 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "Oq" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -12632,7 +12645,9 @@
 	},
 /area/asteroid/mine/explored)
 "Pz" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -14182,7 +14197,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "Wc" = (
-/obj/machinery/vending/hydronutrients,
+/obj/machinery/vending/hydronutrients{
+	seller_account_number = "%cargo_account%"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenfull"
@@ -14218,7 +14235,9 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Wk" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola{
+	seller_account_number = "%cargo_account%"
+	},
 /obj/effect/decal/turf_decal/metal{
 	dir = 1;
 	icon_state = "spline_plain"

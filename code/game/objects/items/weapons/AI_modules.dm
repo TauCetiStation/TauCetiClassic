@@ -32,7 +32,9 @@ AI MODULES
 			to_chat(user, "Вы не можете понять, что это за модуль.")
 
 /obj/item/weapon/aiModule/proc/check_skills(mob/user)
-	return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/command = SKILL_LEVEL_PRO))
+	if(isliving(user))
+		return is_one_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/command = SKILL_LEVEL_PRO))
+	return TRUE
 
 /obj/item/weapon/aiModule/proc/install(obj/machinery/computer/C)
 	if (istype(C, /obj/machinery/computer/aiupload))

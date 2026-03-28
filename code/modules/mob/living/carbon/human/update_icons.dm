@@ -115,6 +115,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(icon_custom)
 		if(sprite_sheet_slot != SPRITE_SHEET_HELD)
 			icon_state_appendix = "_mob"
+			if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT || sprite_sheet_slot == SPRITE_SHEET_SUIT_FAT)
+				icon_state_appendix = "_mob_fat"
 		icon_path = icon_custom
 	else if(icon_override)
 		icon_path = icon_override

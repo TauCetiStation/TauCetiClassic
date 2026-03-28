@@ -104,7 +104,7 @@
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
 		var/obj/item/weapon/screwdriver/S = I
-		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40))
+		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40, quality = QUALITY_SCREWING))
 			shitcurity_mode = !shitcurity_mode
 			to_chat(user, "<span class='notice'>Вы подкрутили встроенный Compli-o-nator 3000.</span>")
 	else

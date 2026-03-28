@@ -55,7 +55,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
 			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"
 			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='byond://?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
-			dat += "'[CARGOSHOPNAME]' discount: <A href='byond://?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
+			dat += "'[CARGOSHOPNAME]' discount: <A href='byond://?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount * 100]</A>%<BR>"
+			dat += "'[CARGOSHOPNAME]' advertisements: <A href='byond://?src=\ref[src];online_shop_ads=1'>[global.online_shop_ads ? "Yes" : "No"]</A><BR>"
+			dat += "'[CARGOSHOPNAME]' referrer revenue: <A href='byond://?src=\ref[src];online_shop_referrer=1'>[global.online_shop_referrer_revenue * 100]</A>% of delivery cost<BR>\n<BR>"
 			dat += "'[CARGOSHOPNAME]' profits: [global.online_shop_profits]$<BR>\n<BR>"
 		else
 			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: [global.online_shop_delivery_cost*100]%<BR>\n<BR>"
@@ -217,16 +219,25 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 				break
 
 	if(href_list["online_shop_delivery_cost"])
-		var/cost = input("Delivery Cost: 0% - 100%", "[global.online_shop_delivery_cost]") as num
+		var/cost = input("Delivery Cost: 0% - 100%", "[global.online_shop_delivery_cost * 100]") as num
 		cost = round(clamp(cost, 0, 100))
 
-		global.online_shop_delivery_cost = cost/100
+		global.online_shop_delivery_cost = cost / 100
 
 	if(href_list["online_shop_discount"])
-		var/discount = input("Discount: 0% - 100%", "[global.online_shop_discount]") as num
+		var/discount = input("Discount: 0% - 100%", "[global.online_shop_discount * 100]") as num
 		discount = round(clamp(discount, 0, 100))
 
-		global.online_shop_discount = discount/100
+		global.online_shop_discount = discount / 100
+
+	if(href_list["online_shop_ads"])
+		global.online_shop_ads = !global.online_shop_ads
+
+	if(href_list["online_shop_referrer"])
+		var/referrer_revenue = input("Referrer payments 0% - 100% of delivery cost:", "[global.online_shop_referrer_revenue * 100]") as num
+		referrer_revenue = round(clamp(referrer_revenue, 0, 100))
+
+		global.online_shop_referrer_revenue = referrer_revenue / 100
 
 	if(href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"

@@ -50,6 +50,12 @@
 	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 	verbs -= /obj/proc/remove_price_tag
 
+/obj/proc/add_price_tag(description, price, category, account_num)
+	price_tag = list("description" = description, "price" = price, "category" = category, "account" = account_num)
+	verbs += /obj/proc/remove_price_tag
+
+	underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+
 /obj/proc/get_current_temperature()
 	/*
 	It actually returns a rise in temperature from the enviroment since I don't know why.

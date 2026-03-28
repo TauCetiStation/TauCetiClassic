@@ -80,18 +80,9 @@
 				else if(status == "amputated")
 					++ind
 					. += "<li>Amputated [organ_name]</li>"
-				else if(status == "mechanical")
+				else if(status == "cybernetic")
 					++ind
-					. += "<li>Mechanical [organ_name]</li>"
-				else if(status == "assisted")
-					++ind
-					switch(organ_name)
-						if("heart")
-							. += "<li>Pacemaker-assisted [organ_name]</li>"
-						if("eyes")
-							. += "<li>Retinal overlayed [organ_name]</li>"
-						else
-							. += "<li>Mechanically assisted [organ_name]</li>"
+					. += "<li>Cybernetical [organ_name]</li>"
 			if(species == IPC)
 				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
 
@@ -594,7 +585,7 @@
 									organ_data[limb] = "cyborg"
 
 						if("Organs")
-							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes", "Lungs", "Liver", "Kidneys")
 							if(!organ_name) return
 
 							var/organ = null
@@ -603,17 +594,22 @@
 									organ = O_HEART
 								if("Eyes")
 									organ = O_EYES
+								if("Lungs")
+									organ = O_LUNGS
+								if("Liver")
+									organ = O_LIVER
+								if("Kidneys")
+									organ = O_KIDNEYS
 
-							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
+							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Cybernetic")
+
 							if(!new_state) return
 
 							switch(new_state)
 								if("Normal")
 									organ_data[organ] = null
-								if("Assisted")
-									organ_data[organ] = "assisted"
-								if("Mechanical")
-									organ_data[organ] = "mechanical"
+								if("Cybernetic")
+									organ_data[organ] = "cybernetic"
 				// Choosing a head for an IPC
 				if("ipc_head")
 					var/list/ipc_heads = list("Default", "Cobalt", "Cathod", "Thorax", "Axon")

@@ -64,7 +64,7 @@
 #define JOB_ROBOTICIST "Roboticist"
 #define JOB_RESEARCH_ASSISTANT "Research Assistant"
 
-/* Science */
+/* Security */
 #define DEP_SECURITY "Security"
 
 #define JOB_HOS "Head of Security"

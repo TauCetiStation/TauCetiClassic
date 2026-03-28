@@ -8,14 +8,14 @@
 	if(isnull(full_prosthetic))
 		robolimb_count = 0
 		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.is_robotic())
+			if(BP.is_robotic_part())
 				robolimb_count++
 		full_prosthetic = (robolimb_count == bodyparts.len)
 
 	if(!full_prosthetic && target_zone)
 		var/obj/item/organ/external/BP = get_bodypart(target_zone)
 		if(BP)
-			return BP.is_robotic()
+			return BP.is_robotic_part()
 
 	return full_prosthetic
 
@@ -334,9 +334,23 @@ var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА",
 		time_spent += time
 
 	animate(pixel_x=oldx, pixel_y=oldy, time=3)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/client, restore_default_pixel_values)), 0.4 SECONDS)
 
 #undef TILES_PER_SECOND
 
+#define DIRECTIONAL_RECOIL_POWER_MULTIPLIER 4
+
+/proc/directional_recoil(mob/M, strength=1, angle = 0)
+	if(!M || !M.client)
+		return
+	var/client/C = M.client
+	var/recoil_x = -sin(angle) * DIRECTIONAL_RECOIL_POWER_MULTIPLIER * strength + rand(-strength, strength)
+	var/recoil_y = -cos(angle) * DIRECTIONAL_RECOIL_POWER_MULTIPLIER * strength + rand(-strength, strength)
+	animate(C, pixel_x=recoil_x, pixel_y=recoil_y, time=0.1 SECONDS, easing=SINE_EASING|EASE_OUT, flags=ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_x=0, pixel_y=0, time=0.3 SECONDS, easing=SINE_EASING|EASE_IN)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/client, restore_default_pixel_values)), 0.4 SECONDS)
+
+#undef DIRECTIONAL_RECOIL_POWER_MULTIPLIER
 
 /proc/findname(msg)
 	for(var/mob/M as anything in mob_list)
@@ -570,3 +584,61 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			alert_overlay.appearance_flags |= TILE_BOUND
 		alert_overlay.plane = ABOVE_HUD_PLANE
 		alert.add_overlay(alert_overlay)
+
+/mob/proc/get_height_num()
+	var/height_num = w_class
+	if(lying || crawling)
+		height_num -= 3
+
+	return max(height_num, SIZE_MINUSCULE)
+
+/mob/living/carbon/human/get_height_num()
+	var/height_num = ..()
+
+	switch(height)
+		if(HUMANHEIGHT_SHORTEST)
+			height_num -= 0.5
+		if(HUMANHEIGHT_SHORT)
+			height_num -= 0.25
+		if(HUMANHEIGHT_TALL)
+			height_num += 0.25
+		if(HUMANHEIGHT_TALLEST)
+			height_num += 0.5
+
+	return max(height_num, SIZE_MINUSCULE)
+
+/mob/proc/get_impact_direction_from(mob/Attacker) //Attacker, Defender
+	var/Height1 = Attacker.get_height_num()
+	var/Height2 = get_height_num()
+
+	switch(Height1 - Height2)
+		if(2 to 12)
+			return "Сильно сверху"
+		if(0.5 to 2)
+			return "Сверху"
+		if(-2 to -0.5)
+			return "Снизу"
+		if(-12 to -2)
+			return "Сильно снизу"
+
+	return "С одной высоты"
+
+/mob/proc/get_projectile_hit_direction(obj/item/projectile/P)
+	var/impact_direction = ""
+	var/distance = P.starting ? get_dist(P.starting.loc, loc) : 0
+
+	switch(distance)
+		if(0 to 1)
+			impact_direction += "Вплотную "
+		if(1 to 3)
+			impact_direction += "Близко "
+		else
+			impact_direction += "Далеко "
+
+	if(lying || crawling)
+		return impact_direction + "сверху"
+
+	if(!is_the_opposite_dir(dir, P.dir))
+		return impact_direction + "сзади"
+
+	return impact_direction + "спереди"
