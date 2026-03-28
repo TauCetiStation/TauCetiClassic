@@ -1200,60 +1200,64 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
 		return
-	var/mob/M = throwingdatum?.thrower
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)
 		visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился.</span>","<span class='notice'>Вы слышите шлепок.</span>")
 		qdel(src)
 		return
 	// Decide who to teleport
-	var/mob/target
-	if(!M) // No thrower — guaranteed teleport hit atom
-		if(ismob(hit_atom))
-			target = hit_atom
-	else if(prob(50))
-		target = M
-	else if(ismob(hit_atom))
-		target = hit_atom
-	if(!target)
+	var/list/available_targets = list()
+	if(ismob(hit_atom))
+		available_targets += hit_atom
+	if(ismob(throwingdatum?.thrower))
+		available_targets += throwingdatum.thrower
+	if(!length(available_targets))
 		qdel(src)
 		return
+	var/mob/target = pick(available_targets)
 	// Find turfs around the person being teleported
 	var/list/turfs = list()
-	for(var/turf/T in orange(target,outer_teleport_radius))
-		if(T in orange(target,inner_teleport_radius))
-			continue
-		if(isenvironmentturf(T))
-			continue
-		if(T.density)
-			continue
-		if(T.x > world.maxx - outer_teleport_radius || T.x < outer_teleport_radius)
-			continue
-		if(T.y > world.maxy - outer_teleport_radius || T.y < outer_teleport_radius)
-			continue
-		turfs += T
+	var/turf/target_turf = get_turf(target)
+	for(var/intermediate_radius in round(inner_teleport_radius) to round(outer_teleport_radius))
+		for(var/turf/T in BORDER_TURFS(intermediate_radius, target_turf))
+			if(isenvironmentturf(T))
+				continue
+			if(T.density)
+				continue
+			if(T.x > world.maxx - outer_teleport_radius || T.x < outer_teleport_radius)
+				continue
+			if(T.y > world.maxy - outer_teleport_radius || T.y < outer_teleport_radius)
+				continue
+			turfs += T
 	if(!turfs.len)
-		var/list/turfs_to_pick_from = list()
-		for(var/turf/T in orange(target,outer_teleport_radius))
-			if(!(T in orange(target,inner_teleport_radius)))
-				turfs_to_pick_from += T
-		turfs += pick(/turf in turfs_to_pick_from)
+		for(var/intermediate_radius in round(inner_teleport_radius) to round(outer_teleport_radius))
+			for(var/turf/T in BORDER_TURFS(intermediate_radius, target_turf))
+				turfs += T
+		if(!turfs.len)
+			qdel(src)
+			return
 	var/turf/picked = pick(turfs)
 	if(!isturf(picked))
 		return
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, target)
 	s.start()
 	new/obj/effect/decal/cleanable/molten_item(target.loc)
-	target.loc = picked
-	sleep(1)
-	s.set_up(3, 1, target)
-	s.start()
+	target.forceMove(picked)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(bluespace_arrival_sparks), target), 1)
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился, вызвав искажение пространства-времени.</span>","<span class='notice'>Вы слышите хлопок и треск.</span>")
 	qdel(src)
+
+/proc/bluespace_arrival_sparks(mob/target)
+	if(QDELETED(target))
+		return
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, target)
+	s.start()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
 	name = "Сhur'eech nut"
