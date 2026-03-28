@@ -120,7 +120,7 @@
 	if(mode == 2)
 		var/list/jobsCategories = list(
 			list(title = "Command", jobs = SSjob.departments_occupations[DEP_COMMAND], color = "#aac1ee"),
-			list(title = "NT Representatives", jobs = SSjob.departments_occupations[DEP_SPECIAL], color = "#6c7391"),
+			list(title = "Special", jobs = SSjob.departments_occupations[DEP_SPECIAL], color = "#6c7391"),
 			list(title = "Engineering", jobs = SSjob.departments_occupations[DEP_ENGINEERING], color = "#ffd699"),
 			list(title = "Security", jobs = SSjob.departments_occupations[DEP_SECURITY], color = "#ff9999"),
 			list(title = "Synthetic", jobs = SSjob.departments_occupations[DEP_SILICON], color = "#ccffcc"),
