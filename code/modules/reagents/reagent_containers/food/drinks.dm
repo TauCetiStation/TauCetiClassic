@@ -225,6 +225,11 @@
 		icon_state = "milk_empty"
 	else
 		icon_state = "milk"
+/obj/item/weapon/reagent_containers/food/drinks/milk/on_reagent_change()
+	if(!reagents.total_volume)
+		icon_state = "milk_empty"
+	else
+		icon_state = "milk"
 
 /* Flour is no longer a reagent
 /obj/item/weapon/reagent_containers/food/drinks/flour
@@ -250,6 +255,13 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soymilk/update_icon()
 	if(!reagents.total_volume)
+		icon_state = "soymilk_empty"
+	else
+		icon_state = "soymilk"
+/obj/item/weapon/reagent_containers/food/drinks/soymilk/update_icon()
+	if(!is_open_container())
+		icon_state = initial(icon_state)
+	else if(!reagents.total_volume)
 		icon_state = "soymilk_empty"
 	else
 		icon_state = "soymilk"
