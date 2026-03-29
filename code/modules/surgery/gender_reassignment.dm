@@ -45,7 +45,7 @@
 		user.visible_message("<span class='notice'>[user] has made a man of [target] with \the [tool].</span>" , \
 		"<span class='notice'>You have made a man of [target].</span>")
 		target.gender = MALE
-		target.bodytype = "normal"
+		target.bodytype = AVERAGE_BODYTYPE
 	else
 		user.visible_message("<span class='notice'>[user] has made a woman of [target] with \the [tool].</span>" , \
 		"<span class='notice'>You have made a woman of [target].</span>")

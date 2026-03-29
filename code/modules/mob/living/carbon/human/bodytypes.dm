@@ -19,26 +19,26 @@
 	var/gloves_spare_path = 'icons/mob/hands.dmi'
 	var/shoes_spare_path = 'icons/mob/feet.dmi'
 
-/datum/bodytype/normal
-	name = "normal"
+/datum/bodytype/average
+	name = AVERAGE_BODYTYPE
 
 
-/datum/bodytype/femine
-	name = "femine"
+/datum/bodytype/slim
+	name = SLIM_BODYTYPE
 	external_organs_suffix = "_femine"
 
-	undershirts_path = 'icons/mob/human_undershirt_fem.dmi'
-	undershirts_prints_path = 'icons/mob/human_undershirt_prints_fem.dmi'
-	socks_path = 'icons/mob/human_socks_fem.dmi'
-	underwear_path = 'icons/mob/human_underwear_fem.dmi'
+	undershirts_path = 'icons/mob/human_undershirt_slim.dmi'
+	undershirts_prints_path = 'icons/mob/human_undershirt_prints_slim.dmi'
+	socks_path = 'icons/mob/human_socks_slim.dmi'
+	underwear_path = 'icons/mob/human_underwear_slim.dmi'
 
-	uniforms_path = 'icons/mob/uniform_fem.dmi'
-	gloves_path = 'icons/mob/hands_fem.dmi'
-	shoes_path = 'icons/mob/feet_fem.dmi'
+	uniforms_path = 'icons/mob/uniform_slim.dmi'
+	gloves_path = 'icons/mob/hands_slim.dmi'
+	shoes_path = 'icons/mob/feet_slim.dmi'
 
 
 /datum/bodytype/fat
-	name = "fat"
+	name = FAT_BODYTYPE
 	external_organs_suffix = "_fat"
 
 	undershirts_path = 'icons/mob/human_undershirt_fat.dmi'

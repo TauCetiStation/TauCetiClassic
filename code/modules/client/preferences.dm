@@ -121,7 +121,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
 	var/insurance = INSURANCE_NONE
-	var/bodytype = "normal"
+	var/bodytype = AVERAGE_BODYTYPE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.

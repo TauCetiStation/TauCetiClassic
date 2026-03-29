@@ -733,11 +733,11 @@
 
 /proc/get_bodytype_by_name(bodytype_name)
 	var/datum/bodytype/bt
-	if(bodytype_name == "normal")
-		bt = /datum/bodytype/normal
-	else if(bodytype_name == "femine")
-		bt = /datum/bodytype/femine
-	else if(bodytype_name == "fat")
+	if(bodytype_name == AVERAGE_BODYTYPE)
+		bt = /datum/bodytype/average
+	else if(bodytype_name == SLIM_BODYTYPE)
+		bt = /datum/bodytype/slim
+	else if(bodytype_name == FAT_BODYTYPE)
 		bt = /datum/bodytype/fat
 	return bt
 

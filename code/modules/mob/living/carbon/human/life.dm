@@ -653,7 +653,7 @@ var/global/list/tourette_bad_words= list(
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			mob_metabolism_mod.RemoveMods("Fatness")
-			bodytype_name = "normal"
+			bodytype_name = AVERAGE_BODYTYPE
 			if(gender == FEMALE)
 				bodytype_name = species.females_standart_bodytype
 			update_bodytype()
@@ -668,7 +668,7 @@ var/global/list/tourette_bad_words= list(
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !HAS_TRAIT(src, TRAIT_NEVER_FAT))
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
-				bodytype_name = "fat"
+				bodytype_name = FAT_BODYTYPE
 				update_bodytype()
 				update_body()
 				update_underwear()

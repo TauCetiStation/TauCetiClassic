@@ -109,7 +109,7 @@
 	var/flesh_color = "#ffc896" //Pink.
 	var/default_skin_color // default skin color (r_skin, g_skin, b_skin)
 	var/default_eyes_color
-	var/females_standart_bodytype = "femine"
+	var/females_standart_bodytype = SLIM_BODYTYPE
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -686,7 +686,7 @@
 	eyes_static_layer = "skrell"
 	gender_body_icons = FALSE
 	fat_limb_icons = TRUE
-	females_standart_bodytype = "normal"
+	females_standart_bodytype = AVERAGE_BODYTYPE
 
 	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell

@@ -18,7 +18,7 @@
 	if(species == IPC)  // only ipc can change their voice at this moment
 		. += 					"<br><b>Voice:</b> <a href='byond://?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
 	if(specie_obj.flags[HAS_BODYTYPE_SELECTION] && (gender ==FEMALE))
-		. += 					"<br><b>Bodytype:</b> <a href='byond://?_src_=prefs;preference=bodytype'><b>[bodytype == "normal" ? "Normal" : "Femine"]</b></a>"
+		. += 					"<br><b>Bodytype:</b> <a href='byond://?_src_=prefs;preference=bodytype'><b>[bodytype == AVERAGE_BODYTYPE ? "Average" : "Slim"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='byond://?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='byond://?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
@@ -308,7 +308,7 @@
 						if(gender == FEMALE)
 							bodytype = specie_obj.females_standart_bodytype
 						else
-							bodytype = "normal"
+							bodytype = AVERAGE_BODYTYPE
 
 				if("language")
 					var/list/new_languages = list("None")
@@ -633,7 +633,7 @@
 						bodytype = specie_obj.females_standart_bodytype
 					else
 						gender = MALE
-						bodytype = "normal"
+						bodytype = AVERAGE_BODYTYPE
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)
@@ -642,10 +642,10 @@
 					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE
 
 				if("bodytype")
-					if(bodytype == "normal")
-						bodytype = "femine"
+					if(bodytype == AVERAGE_BODYTYPE)
+						bodytype = SLIM_BODYTYPE
 					else
-						bodytype = "normal"
+						bodytype = AVERAGE_BODYTYPE
 
 				if("randomslot")
 					randomslot = !randomslot
