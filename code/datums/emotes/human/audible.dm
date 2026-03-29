@@ -538,6 +538,7 @@
 	cut_overlay(display_bubble)
 
 /datum/emote/human/aprilfools
+	message_3p = ""
 	message_type = SHOWMSG_AUDIO
 	soundless_for_mute = FALSE
 	cooldown_group = APRILFOOL_GROUP
@@ -552,25 +553,21 @@
 
 /datum/emote/human/aprilfools/troll
 	key = "troll"
-	message_3p = ""
 	emote_icon_state = "troll"
 	sound = 'sound/voice/aprilfool/sitcom.ogg'
 
 /datum/emote/human/aprilfools/reallymad
 	key = "reallymad"
-	message_3p = ""
 	emote_icon_state = "reallymad"
 	sound = 'sound/voice/aprilfool/angry.ogg'
 
 /datum/emote/human/aprilfools/uncanny
 	key = "uncanny"
-	message_3p = ""
 	emote_icon_state = "uncanny"
 	sound = 'sound/voice/aprilfool/godzilla.ogg'
 
 /datum/emote/human/aprilfools/xdd
 	key = "xdd"
-	message_3p = ""
 	emote_icon_state = "xdd"
 
 /datum/emote/human/aprilfools/xdd/get_sound(mob/user, emote_key, intentional)
@@ -578,13 +575,11 @@
 
 /datum/emote/human/aprilfools/taa
 	key = "taa"
-	message_3p = ""
 	emote_icon_state = "taa"
 	sound = 'sound/voice/aprilfool/rizz.ogg'
 
 /datum/emote/human/aprilfools/noway
 	key = "noway"
-	message_3p = ""
 	emote_icon_state = "noway"
 
 /datum/emote/human/aprilfools/noway/get_sound(mob/user, emote_key, intentional)
@@ -592,13 +587,11 @@
 
 /datum/emote/human/aprilfools/tuh
 	key = "tuh"
-	message_3p = ""
 	emote_icon_state = "tuh"
 	sound = 'sound/voice/aprilfool/vineboom.ogg'
 
 /datum/emote/human/aprilfools/jokerge
 	key = "jokerge"
-	message_3p = ""
 	emote_icon_state = "jokerge"
 
 /datum/emote/human/aprilfools/jokerge/get_sound(mob/user, emote_key, intentional)
@@ -606,7 +599,6 @@
 
 /datum/emote/human/aprilfools/fuckingdies
 	key = "fuckingdies"
-	message_3p = ""
 	emote_icon_state = "fuckingdies"
 
 /datum/emote/human/aprilfools/fuckingdies/get_sound(mob/user, emote_key, intentional)
@@ -614,13 +606,11 @@
 
 /datum/emote/human/aprilfools/podkid
 	key = "silence"
-	message_3p = ""
 	emote_icon_state = "silence"
 	sound = 'sound/voice/aprilfool/crickets.ogg'
 
 /datum/emote/human/aprilfools/eggplant
 	key = "boing"
-	message_3p = ""
 	emote_icon_state = "boing"
 
 /datum/emote/human/aprilfools/eggplant/get_sound(mob/user, emote_key, intentional)
@@ -628,13 +618,11 @@
 
 /datum/emote/human/aprilfools/alert
 	key = "alert"
-	message_3p = ""
 	emote_icon_state = "alert"
 	sound = 'sound/voice/aprilfool/alert.ogg'
 
 /datum/emote/human/aprilfools/suspense
 	key = "suspense"
-	message_3p = ""
 	emote_icon_state = "suspense"
 
 /datum/emote/human/aprilfools/suspense/get_sound(mob/user, emote_key, intentional)
