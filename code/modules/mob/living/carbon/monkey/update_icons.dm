@@ -71,7 +71,7 @@
 
 	if(neck)
 		var/image/neck_layer = image("icon"= 'icons/mob/neck.dmi', "icon_state" = "[neck.icon_state]", layer = -M_NECK_LAYER)
-		neck_layer.pixel_y = -2
+		neck_layer.pixel_y = -3
 		overlays_standing[M_NECK_LAYER] = neck_layer
 		neck.screen_loc = ui_monkey_neck
 	else
