@@ -189,6 +189,11 @@
 
 	name = CARGOSHOPNAME
 
+/obj/structure/sign/poster/keepclean
+	name = "keep displosals clean poster"
+	icon_state = "keepclean"
+	desc = "Следи за чистотой входа в пневмопочту, помни, это не мусорка!"
+
 /obj/structure/sign/poster/olympic_games
 	name = "2214 Winter Olympics"
 	icon_state = "olympic"

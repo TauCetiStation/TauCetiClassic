@@ -9,8 +9,8 @@
 #define PRESSURE_TANK_VOLUME 150	//L
 
 /obj/machinery/disposal
-	name = "disposal unit"
-	desc = "A pneumatic waste disposal unit."
+	name = "pneumatic unit"
+	desc = "A pneumatic cargo delivery and waste disposal unit."
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "disposal"
 	anchored = TRUE
