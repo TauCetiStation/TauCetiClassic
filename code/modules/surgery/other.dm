@@ -53,7 +53,7 @@
 	priority = 3
 	can_infect = 0
 	blood_level = 1
-	allowed_species = list(DIONA, IPC, VOX, PODMAN) // Just so you can fail on fixing IPC's groin organs.
+	allowed_species = null // Allows surgery for all species, whereas previously it was only allowed for DIONA, IPC, VOX, and PODMAN
 
 /datum/surgery_step/groin_organs/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
@@ -168,7 +168,7 @@
 	/obj/item/weapon/wrench = 70
 	)
 
-	allowed_species = list(IPC)
+	allowed_species = null // Allows the surgery on prosthetic organs for all species, whereas previously it was only allowed for IPC
 
 	min_duration = 70
 	max_duration = 90
