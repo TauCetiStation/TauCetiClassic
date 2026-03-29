@@ -1,3 +1,5 @@
+#define APRILFOOL_GROUP "aprilfool"
+
 /datum/emote/human/laugh
 	key = "laugh"
 
@@ -508,3 +510,134 @@
 
 	if(prob(50) && !made_wet)
 		user.shoes?.make_wet()
+
+/atom/movable/proc/display_image_in_bubble(image/displayed_image)
+	var/mutable_appearance/display_bubble = mutable_appearance(
+		'icons/effects/aprilfools_emotes.dmi',
+		"thought_bubble",
+		layer = HIGHEST_GAME_LAYER
+	)
+	display_bubble.appearance_flags = KEEP_APART
+
+	var/mutable_appearance/pointed_atom_appearance = new(displayed_image.appearance)
+	pointed_atom_appearance.blend_mode = BLEND_INSET_OVERLAY
+	pointed_atom_appearance.plane = FLOAT_PLANE
+	pointed_atom_appearance.layer = FLOAT_LAYER
+	pointed_atom_appearance.pixel_x = 0
+	pointed_atom_appearance.pixel_y = 0
+	display_bubble.overlays += pointed_atom_appearance
+
+	display_bubble.pixel_w = 16
+	display_bubble.pixel_z = 32
+	display_bubble.alpha = 200
+
+	add_overlay(display_bubble)
+	addtimer(CALLBACK(src, PROC_REF(clear_display_bubble), display_bubble), 4 SECONDS)
+
+/atom/movable/proc/clear_display_bubble(mutable_appearance/display_bubble)
+	cut_overlay(display_bubble)
+
+/datum/emote/human/aprilfools
+	message_type = SHOWMSG_AUDIO
+	soundless_for_mute = FALSE
+	cooldown_group = APRILFOOL_GROUP
+	cooldown = 15 SECONDS
+	audio_cooldown = 4 SECONDS
+	var/emote_icon_state = null
+
+/datum/emote/human/aprilfools/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+	. = ..()
+	var/image/emote_image = image('icons/effects/aprilfools_emotes.dmi', user, emote_icon_state)
+	user.display_image_in_bubble(emote_image)
+
+/datum/emote/human/aprilfools/troll
+	key = "troll"
+	message_3p = ""
+	emote_icon_state = "troll"
+	sound = 'sound/voice/aprilfool/sitcom.ogg'
+
+/datum/emote/human/aprilfools/reallymad
+	key = "reallymad"
+	message_3p = ""
+	emote_icon_state = "reallymad"
+	sound = 'sound/voice/aprilfool/angry.ogg'
+
+/datum/emote/human/aprilfools/uncanny
+	key = "uncanny"
+	message_3p = ""
+	emote_icon_state = "uncanny"
+	sound = 'sound/voice/aprilfool/godzilla.ogg'
+
+/datum/emote/human/aprilfools/xdd
+	key = "xdd"
+	message_3p = ""
+	emote_icon_state = "xdd"
+
+/datum/emote/human/aprilfools/xdd/get_sound(mob/user, emote_key, intentional)
+	return pick('sound/voice/aprilfool/xdd/goofylaugh.ogg','sound/voice/aprilfool/xdd/goofylaugh2.ogg')
+
+/datum/emote/human/aprilfools/taa
+	key = "taa"
+	message_3p = ""
+	emote_icon_state = "taa"
+	sound = 'sound/voice/aprilfool/rizz.ogg'
+
+/datum/emote/human/aprilfools/noway
+	key = "noway"
+	message_3p = ""
+	emote_icon_state = "noway"
+
+/datum/emote/human/aprilfools/noway/get_sound(mob/user, emote_key, intentional)
+	return pick('sound/voice/aprilfool/noway/bruh.ogg','sound/voice/aprilfool/noway/woah.ogg')
+
+/datum/emote/human/aprilfools/tuh
+	key = "tuh"
+	message_3p = ""
+	emote_icon_state = "tuh"
+	sound = 'sound/voice/aprilfool/vineboom.ogg'
+
+/datum/emote/human/aprilfools/jokerge
+	key = "jokerge"
+	message_3p = ""
+	emote_icon_state = "jokerge"
+
+/datum/emote/human/aprilfools/jokerge/get_sound(mob/user, emote_key, intentional)
+	return pick('sound/voice/aprilfool/jokerge/sus.ogg','sound/voice/aprilfool/jokerge/horns.ogg')
+
+/datum/emote/human/aprilfools/fuckingdies
+	key = "fuckingdies"
+	message_3p = ""
+	emote_icon_state = "fuckingdies"
+
+/datum/emote/human/aprilfools/fuckingdies/get_sound(mob/user, emote_key, intentional)
+	return pick('sound/voice/aprilfool/fuckingdies/hell_kitchen.ogg','sound/voice/aprilfool/fuckingdies/rpdeath.ogg','sound/voice/aprilfool/fuckingdies/wilhelm.ogg','sound/voice/aprilfool/fuckingdies/windows_shutdown.ogg')
+
+/datum/emote/human/aprilfools/podkid
+	key = "silence"
+	message_3p = ""
+	emote_icon_state = "silence"
+	sound = 'sound/voice/aprilfool/crickets.ogg'
+
+/datum/emote/human/aprilfools/eggplant
+	key = "boing"
+	message_3p = ""
+	emote_icon_state = "boing"
+
+/datum/emote/human/aprilfools/eggplant/get_sound(mob/user, emote_key, intentional)
+	return pick('sound/voice/aprilfool/eggplant/boing_1.ogg','sound/voice/aprilfool/eggplant/boing_2.ogg','sound/voice/aprilfool/eggplant/boing_3.ogg','sound/voice/aprilfool/eggplant/boing_4.ogg')
+
+/datum/emote/human/aprilfools/alert
+	key = "alert"
+	message_3p = ""
+	emote_icon_state = "alert"
+	sound = 'sound/voice/aprilfool/alert.ogg'
+
+/datum/emote/human/aprilfools/suspense
+	key = "suspense"
+	message_3p = ""
+	emote_icon_state = "suspense"
+
+/datum/emote/human/aprilfools/suspense/get_sound(mob/user, emote_key, intentional)
+	return pick('sound/voice/aprilfool/suspense/suspense_1.ogg','sound/voice/aprilfool/suspense/suspense_2.ogg','sound/voice/aprilfool/suspense/suspense_3.ogg')
+
+#undef APRILFOOL_GROUP
