@@ -1201,9 +1201,7 @@
 	if(..())
 		return
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
-	var/inner_teleport_radius = potency / 15
-
-	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
+	if(outer_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)
 		visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился.</span>","<span class='notice'>Вы слышите шлепок.</span>")
 		qdel(src)
@@ -1218,46 +1216,14 @@
 		qdel(src)
 		return
 	var/mob/target = pick(available_targets)
-	// Find turfs around the person being teleported
-	var/list/turfs = list()
-	var/turf/target_turf = get_turf(target)
-	for(var/intermediate_radius in round(inner_teleport_radius) to round(outer_teleport_radius))
-		for(var/turf/T in BORDER_TURFS(intermediate_radius, target_turf))
-			if(isenvironmentturf(T))
-				continue
-			if(T.density)
-				continue
-			if(T.x > world.maxx - outer_teleport_radius || T.x < outer_teleport_radius)
-				continue
-			if(T.y > world.maxy - outer_teleport_radius || T.y < outer_teleport_radius)
-				continue
-			turfs += T
-	if(!turfs.len)
-		for(var/intermediate_radius in round(inner_teleport_radius) to round(outer_teleport_radius))
-			for(var/turf/T in BORDER_TURFS(intermediate_radius, target_turf))
-				turfs += T
-		if(!turfs.len)
-			qdel(src)
-			return
-	var/turf/picked = pick(turfs)
-	if(!isturf(picked))
-		return
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, target)
-	s.start()
-	new/obj/effect/decal/cleanable/molten_item(target.loc)
-	target.forceMove(picked)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(bluespace_arrival_sparks), target), 1)
-	new/obj/effect/decal/cleanable/blood/oil(loc)
+	// Teleport target to a random turf within radius
+	new /obj/effect/decal/cleanable/molten_item(target.loc)
+	do_teleport(target, get_turf(target), aprecision = outer_teleport_radius)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился, вызвав искажение пространства-времени.</span>","<span class='notice'>Вы слышите хлопок и треск.</span>")
 	qdel(src)
 
-/proc/bluespace_arrival_sparks(mob/target)
-	if(QDELETED(target))
-		return
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, target)
-	s.start()
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
 	name = "Сhur'eech nut"
