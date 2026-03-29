@@ -1201,6 +1201,7 @@
 	if(..())
 		return
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
+	var/inner_teleport_radius = potency / 15
 	if(outer_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)
 		visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился.</span>","<span class='notice'>Вы слышите шлепок.</span>")
@@ -1216,14 +1217,12 @@
 		qdel(src)
 		return
 	var/mob/target = pick(available_targets)
-	// Teleport target to a random turf within radius
+	// Teleport target to a random turf within ring (inner → outer radius)
 	new /obj/effect/decal/cleanable/molten_item(target.loc)
-	do_teleport(target, get_turf(target), aprecision = outer_teleport_radius)
+	do_teleport(target, get_turf(target), aprecision = outer_teleport_radius, amin_precision = inner_teleport_radius)
 	new /obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился, вызвав искажение пространства-времени.</span>","<span class='notice'>Вы слышите хлопок и треск.</span>")
 	qdel(src)
-
-
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
 	name = "Сhur'eech nut"
