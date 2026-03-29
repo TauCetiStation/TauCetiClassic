@@ -1,14 +1,15 @@
 //Monkey Overlays Indexes////////
 //#define M_FIRE_LOWER_LAYER     * // --should be in underlays (underlays bad); or we need to make BODY part as overlays layer too (like humans); or remove
-#define M_R_HAND_LAYER           8
-#define M_L_HAND_LAYER           7
-#define M_HANDCUFF_LAYER         6
-#define M_BACK_LAYER             5
+#define M_R_HAND_LAYER           9
+#define M_L_HAND_LAYER           8
+#define M_HANDCUFF_LAYER         7
+#define M_BACK_LAYER             6
+#define M_NECK_LAYER             5
 #define M_MASK_LAYER             4
 #define M_HEAD_LAYER             3
 #define M_FIRE_UPPER_LAYER       2
 //#define TARGETED_LAYER           1 // For recordkeeping
-#define M_TOTAL_LAYERS           8
+#define M_TOTAL_LAYERS           9
 /////////////////////////////////
 
 /mob/living/carbon/monkey
@@ -18,6 +19,7 @@
 	..()
 	update_inv_head()
 	update_inv_wear_mask()
+	update_inv_neck()
 	update_inv_back()
 	update_inv_r_hand()
 	update_inv_l_hand()
@@ -64,6 +66,18 @@
 
 	apply_standing_overlay(M_MASK_LAYER)
 
+/mob/living/carbon/monkey/update_inv_neck()
+	remove_standing_overlay(M_NECK_LAYER)
+
+	if(neck)
+		var/image/neck_layer = image("icon"= 'icons/mob/neck.dmi', "icon_state" = "[neck.icon_state]", layer = -M_NECK_LAYER)
+		neck_layer.pixel_y = -2
+		overlays_standing[M_NECK_LAYER] = neck_layer
+		neck.screen_loc = ui_monkey_neck
+	else
+		overlays_standing[M_NECK_LAYER] = null
+
+	apply_standing_overlay(M_NECK_LAYER)
 
 /mob/living/carbon/monkey/update_inv_r_hand()
 	remove_standing_overlay(M_R_HAND_LAYER)
@@ -188,6 +202,7 @@
 #undef M_HANDCUFF_LAYER
 #undef M_BACK_LAYER
 #undef M_MASK_LAYER
+#undef M_NECK_LAYER
 #undef M_HEAD_LAYER
 #undef M_FIRE_UPPER_LAYER
 #undef M_TOTAL_LAYERS

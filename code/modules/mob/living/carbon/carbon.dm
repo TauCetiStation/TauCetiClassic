@@ -789,6 +789,9 @@
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 
+	else if(W == neck)
+		neck = null
+
 	else if (W == legcuffed)
 		legcuffed = null
 
