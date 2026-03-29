@@ -144,7 +144,9 @@
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
 
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	toggle_breaker()
+	if(usr.incapacitated() || aidisabled)
+		return
+	toggle_breaker(usr)
 	return ..()
 
 /atom/proc/AIAltClick()
