@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/cavity
-	name = "Cavity"
+	name = "Cavity surgery"
 	priority = 1
 	allowed_species = null
 
@@ -50,7 +50,7 @@
 	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 
 /datum/surgery_step/cavity/make_space
-	name = "Make space"
+	name = "Drill cavity space"
 	allowed_tools = list(
 	/obj/item/weapon/surgicaldrill = 100,	\
 	/obj/item/weapon/pen = 75
@@ -84,7 +84,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/cavity/close_space
-	name = "Close space"
+	name = "Seal cavity"
 	priority = 2
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
@@ -121,7 +121,7 @@
 	BP.take_damage(0, 20, used_weapon = tool)
 
 /datum/surgery_step/cavity/place_item
-	name = "Place item"
+	name = "Place item in cavity"
 	priority = 0
 	allowed_tools = list(/obj/item = 100)
 
@@ -174,7 +174,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/cavity/implant_removal
-	name = "Implant removal"
+	name = "Remove implant"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,	\
 	/obj/item/weapon/wirecutters = 75,	\

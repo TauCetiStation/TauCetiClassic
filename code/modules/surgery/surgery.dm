@@ -150,6 +150,7 @@
 				if(I.required_skills && I.required_skills.len)
 					nearby_items += I
 		return nearby_items
+
 	var/list/nearby_items = list()
 	var/datum/personal_crafting/C = new
 	for(var/obj/item/I in C.get_environment(user))
@@ -162,24 +163,16 @@
 	qdel(C)
 	return nearby_items
 
-/proc/get_surgery_step_name(datum/surgery_step/S)
-	if(S.name != "surgery step")
-		return S.name
-	var/full_type = "[S.type]"
-	var/list/parts = splittext(full_type, "/")
-	var/last = parts[parts.len]
-	last = replacetext(last, "_", " ")
-	if(length(last))
-		last = uppertext(copytext(last, 1, 2)) + copytext(last, 2)
-	return last
+
 
 /proc/get_available_surgery_tools(mob/living/user, mob/living/carbon/human/target, target_zone, list/nearby_items)
 	var/list/best_for_step = list()
-	var/list/claimed_tools = list()
+	var/list/claimed_tools = list() // associative for O(1) lookup
 
 	for(var/obj/item/I in nearby_items)
-		if(I in claimed_tools)
+		if(claimed_tools[I])
 			continue
+		// For each item, find the first matching surgery step (surgery_steps is priority-sorted)
 		for(var/datum/surgery_step/S in surgery_steps)
 			if(!S.is_valid_mutantrace(target))
 				continue
@@ -190,10 +183,9 @@
 				continue
 			if(!S.can_use(user, target, target_zone, I))
 				continue
-			var/step_ref = "\ref[S]"
-			if(!best_for_step[step_ref] || quality > best_for_step[step_ref]["quality"])
-				best_for_step[step_ref] = list("step" = S, "tool" = I, "quality" = quality)
-				claimed_tools += I
+			if(!best_for_step[S] || quality > best_for_step[S]["quality"])
+				best_for_step[S] = list("tool" = I, "quality" = quality)
+				claimed_tools[I] = TRUE
 			break
 
 	return best_for_step
@@ -219,14 +211,12 @@
 	var/list/step_choices = list()
 	var/list/name_to_data = list()
 
-	for(var/step_ref in best_for_step)
-		var/list/data = best_for_step[step_ref]
-		var/datum/surgery_step/S = data["step"]
+	for(var/datum/surgery_step/S in best_for_step)
+		var/list/data = best_for_step[S]
 		var/obj/item/tool = data["tool"]
-		var/step_name = get_surgery_step_name(S)
 
-		step_choices[step_name] = image(icon = tool.icon, icon_state = tool.icon_state)
-		name_to_data[step_name] = data
+		step_choices[S.name] = image(icon = tool.icon, icon_state = tool.icon_state)
+		name_to_data[S.name] = data
 
 	var/chosen_name = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE)
 
@@ -328,6 +318,9 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.update_surgery()
+				// When called from manual tool use (not radial), show radial for next step.
+				// When called from radial, the caller handles chaining via recursive call.
+				// Borgs always get radial since their tools stay in module (no pickup/return needed).
 				if(!from_radial || isrobot(user))
 					try_show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery

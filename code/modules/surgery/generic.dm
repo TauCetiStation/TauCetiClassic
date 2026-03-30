@@ -230,7 +230,7 @@
 	BP.take_damage(12, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cauterize
-	name = "Cauterize"
+	name = "Cauterize wound"
 	allowed_tools = list(
 	/obj/item/stack/medical/suture = 100,
 	/obj/item/weapon/cautery = 100,
@@ -328,7 +328,7 @@
 	return TRUE
 
 /datum/surgery_step/ipc/generic/screw_open
-	name = "Unscrew hatch"
+	name = "Unscrew IPC hatch"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -366,7 +366,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/generic/pry_open
-	name = "Pry open hatch"
+	name = "Pry open IPC hatch"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -402,7 +402,7 @@
 	BP.take_damage(12, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc/generic/close_shut
-	name = "Lock hatch"
+	name = "Lock IPC hatch"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,

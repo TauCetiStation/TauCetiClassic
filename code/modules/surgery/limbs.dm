@@ -18,7 +18,7 @@
 
 
 /datum/surgery_step/limb/cut
-	name = "Cut"
+	name = "Cut limb stump"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -51,7 +51,7 @@
 
 
 /datum/surgery_step/limb/mend
-	name = "Mend"
+	name = "Reposition tissue"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -84,7 +84,7 @@
 
 
 /datum/surgery_step/limb/prepare
-	name = "Prepare"
+	name = "Cauterize stump"
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\

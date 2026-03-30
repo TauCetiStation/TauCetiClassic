@@ -565,7 +565,7 @@
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ipc/ribcage
-	name = "Ribcage"
+	name = "IPC ribcage surgery"
 	can_infect = FALSE
 	priority = 2
 	allowed_species = list(IPC)
@@ -577,7 +577,7 @@
 	return target_zone == BP_CHEST
 
 /datum/surgery_step/ipc/ribcage/wrench_sec
-	name = "Wrench sec"
+	name = "Unbolt IPC ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75
@@ -612,7 +612,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/ribcage/pry_sec
-	name = "Pry sec"
+	name = "Pry open IPC ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -649,7 +649,7 @@
 	BP.take_damage(20, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc/ribcage/shut_sec
-	name = "Shut sec"
+	name = "Close IPC ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -687,7 +687,7 @@
 		target.rupture_lung()
 
 /datum/surgery_step/ipc/ribcage/wrenchshut_sec
-	name = "Wrenchshut sec"
+	name = "Bolt IPC ribcage shut"
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75

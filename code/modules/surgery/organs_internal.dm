@@ -21,7 +21,7 @@
 	return BP && BP.open >= 2 && !(BP.status & ORGAN_BLEEDING) && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)
 
 /datum/surgery_step/organ_manipulation/place
-	name = "Place"
+	name = "Place organ"
 	priority = 0
 	allowed_tools = list(/obj/item/organ/internal = 100)
 
@@ -84,7 +84,7 @@
 
 
 /datum/surgery_step/organ_manipulation/remove
-	name = "Remove"
+	name = "Remove organ"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
