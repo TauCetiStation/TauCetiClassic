@@ -1901,7 +1901,6 @@
 			usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) bandages.</font>"
 
 /mob/living/carbon/human/proc/perform_cpr(mob/living/carbon/human/user)
-
 	if(HAS_TRAIT(src, TRAIT_NO_BLOOD)) // this checks for ipc/dionea/etc., but probably we should check for can_breathe and lungs
 		return
 
