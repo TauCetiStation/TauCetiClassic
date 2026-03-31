@@ -92,7 +92,6 @@
 	if(changes_color)
 		icon_dead = "mouse_[body_color]_splat"
 		icon_state = "mouse_[body_color]_splat"
-	timeofdeath = world.time
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
