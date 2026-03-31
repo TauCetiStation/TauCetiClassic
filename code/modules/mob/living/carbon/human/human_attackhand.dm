@@ -48,7 +48,7 @@
 	if(health < (config.health_threshold_crit) && target_zone == O_MOUTH)
 		INVOKE_ASYNC(src, PROC_REF(perform_av), attacker)
 		return TRUE
-	if(attacker != src && src.lying && Heart && Heart.parent_bodypart == target_zone && Heart.heart_status != HEART_NORMAL)
+	if(attacker != src && lying && Heart && Heart.parent_bodypart == target_zone && Heart.heart_status != HEART_NORMAL)
 		INVOKE_ASYNC(src, PROC_REF(perform_cpr), attacker)
 		return TRUE
 	if(attacker != src || !apply_pressure(attacker, target_zone))

@@ -1904,7 +1904,7 @@
 	if(HAS_TRAIT(src, TRAIT_NO_BLOOD)) // this checks for ipc/dionea/etc., but probably we should check for can_breathe and lungs
 		return
 
-	if((stat == DEAD) && (world.time - timeofdeath >= DEFIB_TIME_LIMIT))
+	if(stat == DEAD && world.time - timeofdeath >= DEFIB_TIME_LIMIT)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
