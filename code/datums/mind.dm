@@ -627,6 +627,7 @@
 
 	if(fac_type)
 		var/datum/faction/FF = create_uniq_faction(fac_type)
+		var/list/datum/role/new_roles = list()
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M
@@ -636,11 +637,14 @@
 			if(isobserver(M))
 				M = makeBody(M)
 
-			if(add_faction_member(FF, M, FALSE, FALSE))
+			var/datum/role/new_role = add_faction_member(FF, M, FALSE, FALSE)
+			if(new_role)
+				new_roles += new_role
 				recruit_count++
 				count--
 
-		FF.OnPostSetup()
+		for(var/datum/role/R in new_roles)
+			R.OnPostSetup()
 
 	if(role_type)
 		while(count > 0 && candidates.len)
