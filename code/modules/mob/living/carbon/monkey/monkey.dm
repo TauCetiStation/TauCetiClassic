@@ -176,7 +176,7 @@
 
 	. = ..()
 
-	if(!istype(src, /mob/living/carbon/monkey/diona))
+	if(!(src.get_species() in list (DIONA, PODMAN)))
 		add_language(LANGUAGE_MONKEY)
 		default_language = LANGUAGE_MONKEY
 
