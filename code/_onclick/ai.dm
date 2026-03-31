@@ -143,11 +143,11 @@
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
 
-/obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	if(usr.incapacitated() || aidisabled)
+/obj/machinery/power/apc/AICtrlClick(mob/user) // turns off/on APCs.
+	if(user.incapacitated() || aidisabled)
 		return
-	toggle_breaker(usr)
-	return ..()
+	toggle_breaker(user)
+	return
 
 /atom/proc/AIAltClick()
 	return
