@@ -94,11 +94,6 @@
 	item_state = "hop"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
-/obj/item/clothing/under/rank/head_of_personnel/atom_init()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
-
-
 /obj/item/clothing/under/rank/head_of_personnel_whimsy
 	desc = "A blue jacket and red tie, with matching red cuffs! Snazzy. Wearing this makes you feel more important than your job title does."
 	name = "head of personnel's suit"

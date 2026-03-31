@@ -44,28 +44,6 @@
 	// By how much should mob's permeability be multiplied.
 	var/permeability_multiplier = 1.0
 
-	// For chemical fire
-	var/chemfiresupp = FALSE
-	var/intensitymod = 0
-	var/durationmod = 0
-	var/radiusmod = 0
-	// For chemical fire from flamethrowers
-	var/intensityfire = 0
-	var/durationfire = 0
-	var/rangefire = 0 // Set to -1 if you want an infinite range
-	//var/flameshape = FLAMESHAPE_LINE
-	var/fire_penetrating = FALSE // Whether it can damage fire-immune xenos
-	// For both chemical fires
-	var/burn_sprite = "dynamic"
-	var/burncolor = "#f88818"
-	var/burncolormod = 1
-	var/max_fire_rad = 5
-	var/max_fire_int = 20
-	var/max_fire_dur = 24
-	var/min_fire_rad = 1
-	var/min_fire_int = 3
-	var/min_fire_dur = 3
-
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!isliving(M))
 		return FALSE

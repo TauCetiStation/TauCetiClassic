@@ -47,10 +47,6 @@
 /obj/item/weapon/reagent_containers/hypospray/cmo
 	list_reagents = list("tricordrazine" = 30)
 
-/obj/item/weapon/reagent_containers/hypospray/cmo/atom_init()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
-
 /obj/item/weapon/reagent_containers/hypospray/cmo/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return

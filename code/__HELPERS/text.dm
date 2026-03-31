@@ -144,10 +144,6 @@
 
 	return output
 
-/// Runs STRIP_HTML_FULL and sanitize.
-/proc/strip_html_full(text, limit = MAX_MESSAGE_LEN)
-	return sanitize(STRIP_HTML_FULL(text, limit))
-
 /proc/shelleo_url_scrub(url)
 	var/static/regex/bad_chars_regex = regex(@"[^#%&./:=?\w]+", "g")
 	var/scrubbed_url = ""

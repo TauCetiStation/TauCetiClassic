@@ -4,8 +4,6 @@
 	var/datum/religion/religion
 	// Used only for sprite generation
 	var/list/words = list()
-	///Can eminence use this rune after upgrade or not?
-	var/eminence_usable = FALSE
 
 	var/static/list/all_words = RUNE_WORDS
 
@@ -64,25 +62,41 @@
 /datum/rune/cult/teleport/is_reusable()
 	return FALSE
 
-/datum/rune/cult/teleport/proc/after_tp(turf/target, mob/user)
+/datum/rune/cult/teleport/proc/teleporting(turf/target, mob/user)
+	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
+	new /obj/effect/temp_visual/cult/blood/out(user.loc)
+	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
+	new /obj/effect/temp_visual/cult/blood(target)
+
+	var/list/companions = holder.handle_teleport_grab(target, user, FALSE, GRAB_NECK)
+	LAZYINITLIST(companions)
+	user.forceMove(target)
+	user.eject_from_wall(gib = FALSE, companions = companions)
+
+	for(var/mob/M in companions + user)
+		if(M.client)
+			new /atom/movable/screen/temp/cult_teleportation(M, M)
+
+	after_tp(get_turf(user), user, companions)
+
+/datum/rune/cult/teleport/proc/after_tp(turf/target, mob/user, list/companions)
 	return
 
 /datum/rune/cult/teleport/teleport_to_heaven
 	name = "Телепорт в РАЙ"
 	words = list("travel", "self", "hell")
 	var/turf/destination
-	eminence_usable = TRUE
 
-/datum/rune/cult/teleport/teleport_to_heaven/action(mob/user)
+/datum/rune/cult/teleport/teleport_to_heaven/action(mob/living/carbon/user)
 	if(!destination)
 		var/area/A = locate(religion.area_type)
 		destination = get_turf(pick(A.contents))
-
-		new /obj/effect/portal/rift(get_turf(holder), destination, null, religion.get_tech(RTECH_RIFT_LIFETIME) ? 14 SECONDS : 7 SECONDS)
-
-		create_from_heaven(destination, user)
-		var/datum/religion/cult/C = religion
-		C.create_anomalys(TRUE)
+		if(!religion.get_tech(RTECH_COOLDOWN_REDUCTION))
+			if(do_after(user, 20, target = user))
+				teleporting(destination	, user)
+		else
+			if(do_after(user, 10, target = user))
+				teleporting(destination	, user)
 
 /datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
 	if(isenvironmentturf(target))
@@ -96,6 +110,18 @@
 	R.power = new /datum/rune/cult/teleport/teleport_from_heaven(R, get_turf(holder))
 	R.power.religion = religion
 	R.icon = get_uristrune_cult(TRUE, R.power.words)
+
+/datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/living/user, list/companions)
+	if(user) // user can gibbed
+		create_from_heaven(target, user)
+		var/datum/religion/cult/C = religion
+		if(companions)
+			for(var/mob/living/L in companions)
+				C.create_anomalys(TRUE)
+				create_from_heaven(get_step(target, global.alldirs), user)
+			C.create_anomalys(TRUE) // with user
+		else
+			C.create_anomalys(TRUE)
 
 /datum/rune/cult/teleport/teleport_from_heaven
 	name = "Телепорт из РАЯ"
@@ -111,12 +137,11 @@
 	return ..()
 
 /datum/rune/cult/teleport/teleport_from_heaven/action(mob/living/carbon/user)
-	new /obj/effect/portal/rift(get_turf(holder), destination, null, religion.get_tech(RTECH_RIFT_LIFETIME) ? 7 SECONDS : 3 SECONDS)
+	teleporting(destination, user)
 
 /datum/rune/cult/teleport/teleport
 	name = "Телепорт"
 	words = list("travel", "self", "see")
-	eminence_usable = FALSE
 	var/id
 	var/id_inputing = FALSE
 
@@ -130,9 +155,7 @@
 	to_chat(user, "<span class='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
 
 /datum/rune/cult/teleport/teleport/can_action(mob/living/carbon/user)
-	if(!id)
-		if(id_inputing)
-			return FALSE
+	if(!id && !id_inputing)
 		id_inputing = TRUE
 		input_rune_id(user)
 		id_inputing = FALSE
@@ -168,21 +191,7 @@
 			"<span class='[religion.style_text]'>Вы чувствуете, как ваше тело проскальзывает сквозь измерения!</span>", \
 			"<span class='userdanger'>Вы слышите болезненный хруст и хлюпанье внутренностей.</span>")
 		var/turf/T = get_turf(pick(tp_runes))
-		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
-		new /obj/effect/temp_visual/cult/blood/out(user.loc)
-		playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
-		new /obj/effect/temp_visual/cult/blood(T)
-
-		var/list/companions = holder.handle_teleport_grab(T, user, FALSE, GRAB_NECK)
-		LAZYINITLIST(companions)
-		user.forceMove(T)
-		user.eject_from_wall(gib = FALSE, companions = companions)
-
-		for(var/mob/M in companions + user)
-			if(M.client)
-				new /atom/movable/screen/temp/cult_teleportation(M, M)
-
-		after_tp(get_turf(user), user, companions)
+		teleporting(T, user)
 
 /datum/rune/cult/teleport/teleport/ghost_action(mob/living/carbon/user)
 	var/list/tp_runes = get_tp_runes_by_id()
@@ -323,15 +332,14 @@
 /datum/rune/cult/item_port
 	name = "Телепорт Предметов"
 	words = list("travel", "other", "see")
-	eminence_usable = TRUE
 
-/datum/rune/cult/item_port/can_action(mob/user)
+/datum/rune/cult/item_port/can_action(mob/living/carbon/user)
 	if(!religion.altars.len)
 		to_chat(user, "<span class='warning'>У вас должен быть алтарь.</span>")
 		return FALSE
 	return TRUE
 
-/datum/rune/cult/item_port/action(mob/user)
+/datum/rune/cult/item_port/action(mob/living/carbon/user)
 	var/obj/structure/altar_of_gods/cult/altar = pick(religion.altars)
 
 	for(var/obj/O in holder.loc)
@@ -352,7 +360,6 @@
 /datum/rune/cult/wall
 	name = "Призыв Стены"
 	words = list("destroy", "travel", "self")
-	eminence_usable = TRUE
 
 	var/obj/effect/forcefield/cult/alt_app/wall
 
@@ -415,7 +422,6 @@
 /datum/rune/cult/charge_pylons
 	name = "Активация Пилонов"
 	words = list("destroy", "other", "technology")
-	eminence_usable = TRUE
 	var/time_to_stop = 2 MINUTE
 
 /datum/rune/cult/charge_pylons/can_action(mob/living/carbon/user)
@@ -439,49 +445,3 @@
 		pylons++
 
 	holder.visible_message("<span class='warning'>[pluralize_russian(pylons, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")
-
-/datum/rune/cult/exile //Takes ~2 minutes to kill everyone currently presented
-	name = "Изгнание еретиков"
-	words = list("destroy", "blood", "other")
-
-	var/list/mobs2damage
-	var/time2damage = 5 SECONDS
-
-/datum/rune/cult/exile/can_action(mob/living/carbon/user)
-	mobs2damage = cult_religion.humans_in_heaven
-	for(var/mob/living/L in mobs2damage)
-		if(iscultist(L))
-			mobs2damage -= L
-			continue
-	if(length(mobs2damage))
-		return TRUE
-	to_chat(user, "<span class='warning'>В Раю нет еретиков!</span>")
-	return FALSE
-
-/datum/rune/cult/exile/action(mob/living/carbon/user)
-	if(do_after(user, time2damage, FALSE, holder, FALSE))
-		var/additionaldam = (50 - time2damage) / 50 //6th cylce - additional 0.6 damage in 8 seconds, 12 - add 1 damage every 5 seconds.
-		for(var/mob/living/L as anything in mobs2damage)
-			L.adjustFireLoss(1 + additionaldam)
-			L.adjustBruteLoss(additionaldam)
-			L.adjustCloneLoss(additionaldam)
-			L.updatehealth()
-			time2damage -= min(2, time2damage - 4)
-			if(HAS_TRAIT(src, TRAIT_NO_PAIN))
-				to_chat(user, "<span class='warning'>Вы чувствуете боль</span>")
-
-			if(get_area(L) != religion.area_type || iscultist(L) || L.stat == DEAD) //This one escaped, converted or died
-				mobs2damage -= L
-				if(length(mobs2damage))
-					continue
-				mobs2damage = cult_religion.humans_in_heaven
-				for(var/mob/living/M in cult_religion.humans_in_heaven)
-					if(iscultist(M))
-						mobs2damage -= M
-				if(!length(mobs2damage))
-					to_chat(user, "<span class='[religion.style_text]'>Еретики закончились</span>")
-					qdel(holder)
-	else qdel(holder)
-
-/datum/rune/cult/exile/is_reusable()
-	return TRUE

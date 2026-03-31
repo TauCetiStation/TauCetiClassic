@@ -115,8 +115,6 @@
 			var/mult = asp.power > 1 ? round(log(asp.power), 0.01) : 0
 			mult += 1
 			points *= mult
-			if(sqrt(asp.power) * 10 > asp.passive_favor_gained) //We gain passive favor on each sacrifice, but this gain cant be more than of aspect's level root
-				religion.adjust_passive_favor_gain(min(points * 0.002, sqrt(asp.power) * 10 - asp.passive_favor_gained), asp)
 			if(points > max_points)
 				max_points = points
 

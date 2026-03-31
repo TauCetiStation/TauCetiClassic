@@ -61,8 +61,7 @@
 	var/list/armor // TODO armor gatum?
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500
-	///0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
-	var/integrity_failure = 0
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
 	///Damage under this value will be completely ignored
 	var/damage_deflection = 0
 
@@ -256,16 +255,6 @@
 
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
-	if(sigreturn & COMPONENT_PROJECTILE_FORCE_MISS)
-		return PROJECTILE_FORCE_MISS
-	if(sigreturn & COMPONENT_PROJECTILE_BLOCKED)
-		return PROJECTILE_ABSORBED
-	if(sigreturn & COMPONENT_PROJECTILE_ACTED)
-		return PROJECTILE_ACTED
-	if(sigreturn & COMPONENT_PROJECTILE_WEAKENED)
-		return PROJECTILE_WEAKENED
-
 	P.on_hit(src, def_zone, 0)
 	return PROJECTILE_ACTED
 
@@ -747,10 +736,6 @@
 	if (!isturf(loc))
 		return FALSE
 
-	if (pointed_atom in src)
-		create_point_bubble(pointed_atom)
-		return FALSE
-
 	var/turf/tile = get_turf(pointed_atom)
 	if (!tile)
 		return FALSE
@@ -762,46 +747,3 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
-
-/atom/proc/create_point_bubble(atom/pointed_atom)
-	var/mutable_appearance/thought_bubble = mutable_appearance(
-		'icons/effects/effects.dmi',
-		"thought_bubble",
-		//offset_spokesman = src,
-		plane = POINT_PLANE,
-	)
-	thought_bubble.appearance_flags = KEEP_APART
-	var/mutable_appearance/pointed_atom_appearance = new(pointed_atom.appearance)
-	pointed_atom_appearance.blend_mode = BLEND_INSET_OVERLAY
-	pointed_atom_appearance.plane = FLOAT_PLANE
-	pointed_atom_appearance.layer = FLOAT_LAYER
-	pointed_atom_appearance.pixel_x = 0
-	pointed_atom_appearance.pixel_y = 0
-	thought_bubble.overlays += pointed_atom_appearance
-
-	/*
-	if(usr.client.outlined_item.len)
-		remove_outline()
-		add_stored_outline()
-	var/hover_outline_index = pointed_atom.filter_data?.Find("hover_outline")
-	if (!isnull(hover_outline_index))
-		pointed_atom_appearance.filters.Cut(hover_outline_index, hover_outline_index + 1)
-*/
-	thought_bubble.pixel_x = 16
-	thought_bubble.pixel_y = 32
-	thought_bubble.alpha = 200
-
-	var/mutable_appearance/point_visual = mutable_appearance(
-		'icons/hud/screen_gen.dmi',
-		"arrow"
-	)
-
-	thought_bubble.overlays += point_visual
-
-	add_overlay(thought_bubble)
-	//LAZYADD(update_overlays_on_z, thought_bubble)
-	addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), thought_bubble), 2 SECONDS)
-
-/atom/proc/clear_point_bubble(mutable_appearance/thought_bubble)
-	//LAZYREMOVE(update_overlays_on_z, thought_bubble)
-	cut_overlay(thought_bubble)

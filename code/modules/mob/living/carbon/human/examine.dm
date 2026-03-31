@@ -89,7 +89,7 @@
 			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][w_uniform.display_accessories()].\n"
 
 	//head
-	if(head && !HAS_TRAIT(head, TRAIT_EXAMINE_SKIP))
+	if(head)
 		if(head.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [head.dirt_description()] on [t_his] head[head.display_accessories()]!</span>\n"
 		else if(head.wet)
@@ -98,7 +98,7 @@
 			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head[head.display_accessories()].\n"
 
 	//suit/armour
-	if(wear_suit && !HAS_TRAIT(wear_suit, TRAIT_EXAMINE_SKIP))
+	if(wear_suit)
 		if(wear_suit.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] [wear_suit.dirt_description()][wear_suit.display_accessories()]!</span>\n"
 		else if(wear_suit.wet)

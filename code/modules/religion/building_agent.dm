@@ -134,9 +134,6 @@
 	name = "Активация Пилонов"
 	rune_type = /datum/rune/cult/charge_pylons
 
-/datum/building_agent/rune/cult/charge_pylons
-	name = "Изгнать Еретиков"
-	rune_type = /datum/rune/cult/exile
 
 // For tech_table
 /datum/building_agent/tech
@@ -157,8 +154,8 @@
 
 /datum/building_agent/tech/cult/memorize_rune
 	name = "Запомнить Руну"
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "brain_rune"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "4"
 	building_type = /datum/religion_tech/cult/memorizing_rune
 	favor_cost = 300
 	piety_cost = 230
@@ -171,18 +168,18 @@
 	favor_cost = 600
 	piety_cost = 50
 
-/datum/building_agent/tech/cult/rift_lifetime
-	name = "Уменьшение времени разлома"
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "portal_state_down"
-	building_type = /datum/religion_tech/cult/rift_lifetime
+/datum/building_agent/tech/cult/cooldown_reduction
+	name = "Быстрая Телепортация"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "6"
+	building_type = /datum/religion_tech/cult/cooldown_reduction
 	favor_cost = 330
 	piety_cost = 130
 
 /datum/building_agent/tech/cult/build_everywhere
 	name = "Строительство Везде"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "construction"
+	icon_state = "pylon"
 	building_type = /datum/religion_tech/cult/build_everywhere
 	favor_cost = 400
 	piety_cost = 100
@@ -197,8 +194,8 @@
 
 /datum/building_agent/tech/cult/more_runes
 	name = "Увеличение Максимума Рун на 5"
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "many_runes"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "3"
 	building_type = /datum/religion_tech/cult/more_runes
 	favor_cost = 300
 	piety_cost = 80
@@ -206,34 +203,10 @@
 /datum/building_agent/tech/cult/improved_pylons
 	name = "Улучшенные пилоны"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "pylon_heal"
+	icon_state = "pylon"
 	building_type = /datum/religion_tech/cult/improved_pylons
 	favor_cost = 300
 	piety_cost = 80
-
-/datum/building_agent/tech/cult/rift_defences
-	name = "Защита Разлома"
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "portal"
-	building_type = /datum/religion_tech/cult/rift_defences
-	favor_cost = 500
-	piety_cost = 100
-
-/datum/building_agent/tech/cult/eminence_runes
-	name = "Руны Возвышенного"
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "portal"
-	building_type = /datum/religion_tech/cult/eminence_runes
-	favor_cost = 300
-	piety_cost = 150
-
-/datum/building_agent/tech/cult/tome_shackles //Roundstart upgrade, mostly QOL
-	name = "Кандалы тома"
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "portal"
-	building_type = /datum/religion_tech/cult/tome_shackles
-	favor_cost = 100
-	piety_cost = 40
 
 // For forge
 /datum/building_agent/tool/cult

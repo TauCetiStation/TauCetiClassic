@@ -66,10 +66,6 @@
 	can_be_holstered = TRUE
 	charge_rate = 25
 
-/obj/item/weapon/gun/energy/laser/selfcharging/captain/atom_init()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
-	
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
 	name = "Alien blaster"
 	icon_state = "egun"

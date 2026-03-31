@@ -89,11 +89,6 @@
 	var/mob/camera/eminence/eminence
 	var/research_forbidden = FALSE //If Eminence forbade research for fellow cultist
 
-	///List of currently presented stable rifts
-	var/list/rifts = list()
-	///List of artifacts
-	var/list/artifacts = list()
-
 /datum/religion/cult/New()
 	..()
 	// Init anomalys

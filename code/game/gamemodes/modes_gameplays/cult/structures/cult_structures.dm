@@ -70,7 +70,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 		init_healing()
 
 /obj/structure/cult/pylon/proc/init_healing()
-	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, "#960000")
+	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, \
+	TRAIT_HEALS_FROM_PYLONS,"#960000")
 	if(!is_centcom_level(z))
 		START_PROCESSING(SSobj, src)
 	C = cult_religion
@@ -138,12 +139,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	var/datum/religion/cult/religion
 	var/charged = FALSE
 
-	var/surgery_mode = FALSE
-	COOLDOWN_DECLARE(surgery)
-	var/surgery_points = 0
-	var/mob/living/patient
-	var/soul
-
 	var/image/belt
 	var/belt_icon = 'icons/obj/cult.dmi'
 	var/belt_icon_state = "torture_restraints"
@@ -152,19 +147,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	. = ..()
 	belt = image(belt_icon, belt_icon_state, layer = FLY_LAYER)
 
-/obj/machinery/optable/torture_table/examine(mob/user)
-	. = ..()
-	if(iscultist(user) || isobserver(user))
-		to_chat(user, "<span class='cult'>Одержим духом [soul]. Способен сам излечивать сердце, артерии, органы, кости, а также более легкие повреждения тканей. Именно в таком порядке. Также собирает лишние запчасти с тех, кому они не нужны.</span>")
-	else
-		to_chat(user, "<span class='cult'>Странный стол с не менее странными хирургическими инструментами. Светится. Может стоит прицепить клоуна и проверить, что будет?</span>")
-
 /obj/machinery/optable/torture_table/Destroy()
 	religion?.torture_tables -= src
 	return ..()
 
 /obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)
-	if(!charged && !surgery_mode && istype(W, /obj/item/weapon/storage/bible/tome))
+	if(!charged && istype(W, /obj/item/weapon/storage/bible/tome))
 		var/obj/item/weapon/storage/bible/tome/T = W
 		if(T.religion && istype(T.religion, /datum/religion/cult))
 			var/datum/religion/cult/C = T.religion
@@ -175,20 +163,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			charged = TRUE
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
-
-	if(!surgery_mode && istype(W, /obj/item/surgery_gem))
-		surgery_mode = TRUE
-		charged = FALSE
-		name = "surgical [initial(name)]"
-		remove_filter("torture_outline")
-		new /obj/effect/temp_visual/cult/sparks(loc)
-		playsound(W, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		if(prob(2))
-			soul = "Апотекария"
-			add_filter("surgery_outline", 2, outline_filter(1, "#006c86"))
-		else
-			soul = "Асклепия"
-			add_filter("surgery_outline", 2, outline_filter(1, "#380038"))
 
 	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
@@ -219,109 +193,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 		M.pixel_x = M.default_pixel_x
 		M.pixel_y = M.default_pixel_y
 		cut_overlay(belt)
-
-	if(surgery_mode)
-		if(buckled_mob && ishuman(buckled_mob))
-			START_PROCESSING(SSobj, src)
-			patient = buckled_mob
-		else STOP_PROCESSING(SSobj, src)
-
-/obj/machinery/optable/torture_table/process()
-	. = ..()
-	if(buckled_mob != patient)
-		STOP_PROCESSING(SSobj, src)
-		return
-	if(!COOLDOWN_FINISHED(src, surgery))
-		return
-
-	var/mob/living/carbon/human/H = patient
-
-	if(!iscultist(patient)) //Free parts
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.cannot_amputate)
-				continue
-			COOLDOWN_START(src, surgery, 2 SECONDS)
-			playsound(H, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/optable/torture_table, salvage_stockparts), H, BP), 2 SECONDS)
-			return
-
-	var/obj/effect/temp_visual/heal/V = new(get_turf(src))
-	V.color = "#960000"
-
-	var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-	if(Heart.damage > 0 || Heart.status != HEART_NORMAL || Heart.fibrillation_timer_id)
-		COOLDOWN_START(src, surgery, 10 SECONDS)
-		playsound(H, 'sound/items/surgery/Retract.ogg', VOL_EFFECTS_MASTER)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/optable/torture_table, fix_heart), H, Heart), 10 SECONDS)
-		return
-
-	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_artery_cut())
-			COOLDOWN_START(src, surgery, 10 SECONDS)
-			playsound(H, 'sound/items/surgery/Hemostat.ogg', VOL_EFFECTS_MASTER)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/optable/torture_table, fix_artery), H, BP), 15 SECONDS)
-			return
-
-	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_broken())
-			COOLDOWN_START(src, surgery, 15 SECONDS)
-			playsound(H, 'sound/items/surgery/Bone_Saw.ogg', VOL_EFFECTS_MASTER)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/optable/torture_table, fix_bone), H, BP), 15 SECONDS)
-			return
-
-	for(var/obj/item/organ/internal/IO in H.organs)
-		if(IO.damage > 0)
-			COOLDOWN_START(src, surgery, 5 SECONDS)
-			playsound(H, 'sound/items/surgery/SurgDrill.ogg', VOL_EFFECTS_MASTER)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/optable/torture_table, fix_organ), H, IO), 5 SECONDS)
-			return
-
-	H.heal_overall_damage(4, 4)
-	H.cure_all_viruses()
-
-/obj/machinery/optable/torture_table/proc/salvage_stockparts(mob/living/carbon/human/H, obj/item/organ/external/BP)
-	if(buckled_mob != patient)
-		STOP_PROCESSING(SSobj, src)
-		return
-	BP.droplimb(TRUE, FALSE) // BLOOD TO THE KING OF BLOOD
-	playsound(H, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-	to_chat(H, "<span class='userdanger big'>ОНО ОТПИЛИЛО МОЮ КОНЕЧНОСТЬ</span>")
-
-/obj/machinery/optable/torture_table/proc/fix_organ(mob/living/carbon/human/H, obj/item/organ/internal/IO)
-	if(buckled_mob != patient)
-		STOP_PROCESSING(SSobj, src)
-		return
-	IO.rejuvenate()
-	playsound(H, 'sound/items/surgery/Bone_Gel.ogg', VOL_EFFECTS_MASTER)
-	to_chat(H, "<span class='notice'>Инструменты полезли к вашим внутренним органам</span>")
-
-/obj/machinery/optable/torture_table/proc/fix_artery(mob/living/carbon/human/H, obj/item/organ/external/BP)
-	if(buckled_mob != patient)
-		STOP_PROCESSING(SSobj, src)
-		return
-	BP.heal_damage(30)
-	BP.status &= ~(ORGAN_ARTERY_CUT | ORGAN_BLEEDING)
-	playsound(H, 'sound/items/surgery/Fix-O-vein.ogg', VOL_EFFECTS_MASTER)
-	to_chat(H, "<span class='notice'>Пробитая артерия закрывается</span>")
-
-/obj/machinery/optable/torture_table/proc/fix_bone(mob/living/carbon/human/H, obj/item/organ/external/BP)
-	if(buckled_mob != patient)
-		STOP_PROCESSING(SSobj, src)
-		return
-	BP.heal_damage(30, 0, TRUE)
-	playsound(H, 'sound/items/surgery/SurgDrill.ogg', VOL_EFFECTS_MASTER)
-	to_chat(H, "<span class='notice'>Кости срастаются/span>")
-
-/obj/machinery/optable/torture_table/proc/fix_heart(mob/living/carbon/human/H, obj/item/organ/internal/heart/Heart)
-	if(buckled_mob != patient)
-		STOP_PROCESSING(SSobj, src)
-		return
-	H.restore_blood()
-	H.full_prosthetic = null
-	Heart?.heart_normalize()
-	Heart.damage = 0
-	playsound(H, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-	to_chat(H, "<span class='notice'>Сердцу стало легче биться</span>")
 
 /obj/machinery/optable/torture_table/attack_hand(mob/living/user)
 	if(user == buckled_mob)

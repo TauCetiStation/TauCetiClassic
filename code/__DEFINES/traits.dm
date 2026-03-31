@@ -144,8 +144,8 @@
 #define TRAIT_EPILEPSY            "epilepsy"
 /// mob is fat and should use fat icons if possible
 #define TRAIT_FAT                 "fatness"
-/// can't become fat, should prevent previous trait
-/// note: you can screw things up if you give TRAIT_FAT
+/// can't become fat, should prevent previous trait 
+/// note: you can screw things up if you give TRAIT_FAT 
 /// without checking TRAIT_NEWER_FAT first
 #define TRAIT_NEVER_FAT           "never_fat"
 #define TRAIT_HIGH_PAIN_THRESHOLD "high_pain_threshold"
@@ -209,7 +209,6 @@
 #define TRAIT_AUTOFIRE_SHOOTS     "autofire_shoots"
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
-#define TRAIT_NOGUNS			  "no_guns"
 #define TRAIT_NO_BREATHE          "no_breathe"
 /// Mod has DNA that is not compatible with station (genetics) machinery, also prevents changeling from targeting some mobs
 #define TRAIT_INCOMPATIBLE_DNA    "incompatible_dna"
@@ -244,7 +243,7 @@
 
 
 /*
- * Elements traits - these will attach trait and corresponding /datum/element
+ * Elements traits - these will attach trait and corresponding /datum/element 
  * to the object, and detach element when no trait sources left
  * useful for elements with multiple sources
  * (similar to AddElementTrait() on tg, easier to manage but no support for arguments)
@@ -267,6 +266,9 @@
  * Used for items that have different behaviour when they are two-hand wielded
  */
 #define TRAIT_DOUBLE_WIELDED "double_wielded"
+
+// item trait
+#define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
 
 /// Visible on t-ray scanners if the atom is under tile
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
@@ -294,12 +296,6 @@
 // Trait from being under the floor in some manner
 #define TRAIT_UNDERFLOOR "underfloor"
 #define TRAIT_CONDUCT "conduct"
-///User won't see an item in strip menu and examine
-#define TRAIT_EXAMINE_SKIP "examine_skip"
-///User uses artefact, and so can't equip another
-#define TRAIT_ARTEFACT_USER "artefact_user"
-// item can't be sacrificed on altars
-#define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
 
 // trait sources
 #define TRAIT_FROM_ELEMENT(source) "element_trait_[source]"

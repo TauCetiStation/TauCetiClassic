@@ -132,7 +132,8 @@
 
 /obj/item/clothing/head/helmet/space/vox/atom_init()
 	. = ..()
-	new /obj/item/holochip/vox(src)
+	holochip = new /obj/item/holochip/vox(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"

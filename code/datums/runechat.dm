@@ -21,6 +21,9 @@
 #define RUNECHAT_LAYER_MAX_Z (RUNECHAT_LAYER_MAX - RUNECHAT_LAYER) / RUNECHAT_LAYER_Z_STEP
 
 
+/// Macro from Lummox used to get height from a MeasureText proc
+#define WXH_TO_HEIGHT(x)			text2num(copytext(x, findtextEx(x, "x") + 1))
+
 /**
  * # Chat Message Overlay
  *

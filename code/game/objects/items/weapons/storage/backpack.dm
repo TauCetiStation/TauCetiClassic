@@ -94,58 +94,6 @@
 	icon_state = "chaplain_backpack"
 	item_state = "chaplain_backpack"
 
-/obj/item/weapon/storage/backpack/chaplain/inquisition
-	name = "Inquisitory's backpack"
-	desc = "A comfy capacious backpack for magic toys. Has inbuilt forcefield generator."
-	icon_state = "backpack_inquisitory_off"
-	item_state = "backpack_inquisitory_off"
-	var/forcefield_health = 20
-
-/obj/item/weapon/storage/backpack/chaplain/inquisition/equipped(mob/user, slot)
-	. = ..()
-	forcefield_handle(user, slot)
-
-/obj/item/weapon/storage/backpack/chaplain/inquisition/proc/forcefield_handle(mob/user, slot)
-	if(slot == SLOT_BACK)
-		if(user.mind.holy_role && !iscultist(user))
-			to_chat(user, "<span class='red'>You don't know how it works.</span>")
-			return
-		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
-		icon_state = "backpack_inquisitory_on"
-		item_state = "backpack_inquisitory_on"
-		ADD_TRAIT(user, TRAIT_NOGUNS, src)
-	else
-		icon_state = "backpack_inquisitory_off"
-		item_state = "backpack_inquisitory_off"
-		SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
-
-/obj/item/weapon/storage/backpack/chaplain/inquisition/atom_init()
-	. = ..()
-	AddComponent(/datum/component/forcefield, "forcefield", forcefield_health, 5 SECONDS, 3 SECONDS, new /obj/effect/effect/forcefield)
-
-/obj/item/weapon/storage/backpack/chaplain/inquisition/dropped(mob/living/user)
-	..()
-	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
-	icon_state = "backpack_inquisitory_off"
-	item_state = "backpack_inquisitory_off"
-	REMOVE_TRAIT(user, TRAIT_NOGUNS, src)
-
-/obj/item/weapon/storage/backpack/chaplain/inquisition/upgraded
-	name = "inquisition's backpack"
-	desc = "Mounted forcefield generator capable to withstand a few direct hits. Technology of tech-priests for annihilating herecy."
-	forcefield_health = 90
-
-/obj/item/weapon/storage/backpack/chaplain/inquisition/upgraded/forcefield_handle(mob/user, slot)
-	if(slot == SLOT_BACK)
-		var/datum/role/inquisitor/I = user.mind?.GetRole("Inquisitor")
-		if(!I || I.speciality != "Close combat")
-			to_chat(user, "<span class='red'>You don't know how it works.</span>")
-			return
-		ADD_TRAIT(user, TRAIT_NOGUNS, src)
-		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
-	else
-		SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
-
 /obj/item/weapon/storage/backpack/clown
 	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."

@@ -50,8 +50,3 @@
 	name = "Space Circus"
 	ID = "Space Circus"
 	initroletype = /datum/role/emag_clown
-
-/datum/faction/responders/inquisition
-	name = "Inquisition"
-	ID = "Inquisition"
-	initroletype = /datum/role/inquisitor

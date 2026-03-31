@@ -51,8 +51,6 @@
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 		to_chat(user, "<a href='byond://?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
-		if(religion.get_tech(RTECH_TOME_SHACKLES))
-			to_chat(user, "Позволяет надевать наручники на жертву. Для этого схватите жертву за руки (2 уровень захвата) и проведите томом над жертвой (клик томом).")
 	else
 		..()
 
@@ -136,11 +134,6 @@
 			religion.adjust_piety(B.deconstruct_piety_cost * cost_coef)
 			break
 
-	if(religion.get_tech(RTECH_TOME_SHACKLES))
-		var/obj/item/weapon/handcuffs/cult/cuff = new (src)
-		if(!cuff.place_handcuffs())
-			qdel(cuff)
-
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
 	for(var/datum/building_agent/rune/cult/B in religion.available_runes)
 		var/datum/rune/cult/R = new B.rune_type
@@ -188,7 +181,7 @@
 	R.power = new choice.rune_type(R)
 	R.power.religion = religion
 	R.blood_DNA = list()
-	if(user.dna)
+	if(!iseminence(user))
 		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
 	new /obj/effect/temp_visual/cult/sparks(get_turf(R))
@@ -218,16 +211,17 @@
 		var/turf/targeted_turf = get_step(src, user.dir)
 		for(var/obj/structure/altar_of_gods/altar in religion.altars)
 			if(targeted_turf.z == altar.z && get_dist_euclidian(targeted_turf, get_turf(altar)) <= 70)
-				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого. Ближайший алтарь в [get_dist_euclidian(targeted_turf, get_turf(altar))] метрах от тебя!</span>")
+				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого.</span>")
 				return
 
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return
 
 	var/turf/targeted_turf = iseminence(user) ? get_turf(src) : get_step(src, user.dir)
-	if(is_blocked_turf(targeted_turf))
-		to_chat(user, "<span class='warning'>Что-то мешает построить!</span>")
-		return
+	for(var/atom/A in targeted_turf.contents)
+		if(A.density)
+			to_chat(user, "<span class='warning'>Что-то мешает построить!</span>")
+			return
 	if(ispath(choice.building_type, /turf))
 		targeted_turf.ChangeTurf(choice.building_type)
 	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult))

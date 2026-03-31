@@ -21,7 +21,6 @@
 	throw_range = 1
 	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
-	var/trap_damage = 20
 	var/armed = 0
 
 /obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
@@ -60,39 +59,6 @@
 /obj/item/weapon/legcuffs/beartrap/armed
 	icon_state = "beartrap1"
 	armed = TRUE
-
-/obj/item/weapon/legcuffs/beartrap/Crossed(atom/movable/AM)
-	. = ..()
-	spring_trap(AM)
-
-/obj/item/weapon/legcuffs/beartrap/proc/spring_trap(atom/movable/AM)
-	if(!armed)
-		return
-	if(HAS_TRAIT(AM, TRAIT_ARIBORN)) // oh no, he is flying, not stepping. Cheater
-		return
-	//don't close the trap if they're as small as a mouse
-	if(AM.w_class <= SIZE_TINY)
-		return
-	if(isturf(loc))
-		return
-	if(ishuman(AM))
-		var/mob/living/carbon/H = AM
-		if(H.m_intent == "run" && !H.buckled && H.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
-			armed = 0
-			H.visible_message("<span class='danger'>[H] steps on \the [src].</span>",
-			                  "<span class='danger'>You step on \the [src]!</span>",
-							  "<span class='warning'>You hear the operation of some mechanism.</span>")
-			//Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-			feedback_add_details("handcuffs","B")
-			H.apply_damage(trap_damage, BRUTE, pick(BP_L_LEG , BP_R_LEG))
-			playsound(src,'sound/weapons/legtrap.ogg', VOL_EFFECTS_MASTER)
-	else if(isanimal(AM))
-		armed = 0
-		var/mob/living/simple_animal/SA = AM
-		SA.health -= trap_damage
-		playsound(src,'sound/weapons/legtrap.ogg', VOL_EFFECTS_MASTER)
-
-	icon_state = "beartrap[armed]"
 
 /obj/item/weapon/legcuffs/bola
 	name = "bola"

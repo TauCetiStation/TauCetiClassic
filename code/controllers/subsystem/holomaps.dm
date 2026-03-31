@@ -1,10 +1,3 @@
-/*
-Files of holomap module:
-code/modules/holomap/holochip.dm
-code/datums/components/holomap.dm
-code/modules/holomap/holochips.dm
-code/controllers/subsystem/holomaps.dm
-*/
 //Used to process holomaps and other holomap-related stuff
 SUBSYSTEM_DEF(holomaps)
 	name = "Holomaps"
@@ -17,7 +10,7 @@ SUBSYSTEM_DEF(holomaps)
 
 	var/list/image/holomaps = list()
 
-	var/list/holomap_components = list()
+	var/list/holochips = list()
 
 	var/list/holomap_cache = list()
 	var/list/holomap_landmarks = list()    //List for shuttles and other stuff that might be useful
@@ -104,22 +97,22 @@ SUBSYSTEM_DEF(holomaps)
 #define HOLOMAP_OFFSET 16 //Offset for correct placement of markers on holomap. 32 is normal turf, we need center, so 16
 
 /datum/controller/subsystem/holomaps/proc/process_holomap_markers()
-	for(var/freq in SSholomaps.holomap_components)
-		for(var/obj/item/holochip/HC in SSholomaps.holomap_components[freq])
-			var/turf/marker_location = get_turf(HC.map.holder)
+	for(var/freq in SSholomaps.holochips)
+		for(var/obj/item/holochip/HC in SSholomaps.holochips[freq])
+			var/turf/marker_location = get_turf(HC.holder)
 			if(!marker_location)
-				stack_trace("[HC.map.holder] | [HC.map.holder.loc] | [HC.map.frequency] without turf.")
+				stack_trace("[HC.holder] | [HC.holder.loc] | [HC.frequency] without turf.")
 				continue
 			if(!is_station_level(marker_location.z))
 				continue
-			if(!HC.map.holder || !iscarbon(HC.map.holder.loc))
+			if(!HC.holder || !iscarbon(HC.holder.loc))
 				continue
-			var/mob/living/carbon/C = HC.map.holder.loc
-			if(C.head != HC.map.holder)
+			var/mob/living/carbon/C = HC.holder.loc
+			if(C.head != HC.holder)
 				continue
 			var/image/I = holomap_cache[HC]
 			if(!I)
-				var/image/NI = image(HC.map.holder.icon, icon_state = HC.map.holder.icon_state)
+				var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
 				NI.transform /= 2.5
 				SSholomaps.holomap_cache[HC] = NI
 				I = NI

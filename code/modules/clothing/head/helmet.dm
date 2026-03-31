@@ -17,7 +17,54 @@
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	flashbang_protection = TRUE
 
+	var/obj/item/holochip/holochip
+
+/obj/item/clothing/head/helmet/Destroy()
+	QDEL_NULL(holochip)
+	return ..()
+
+/obj/item/clothing/head/helmet/equipped(mob/user, slot)
+	if(holochip && slot == SLOT_HEAD)
+		if(user.hud_used) //NPCs don't need a map
+			user.hud_used.init_screen(/atom/movable/screen/holomap)
+		holochip.add_action(user)
+		holochip.update_freq(holochip.frequency)
+	..()
+
+/obj/item/clothing/head/helmet/dropped(mob/user)
+	if(holochip)
+		holochip.remove_action(user)
+		holochip.deactivate_holomap()
+	..()
+
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/holochip))
+		if(flags & ABSTRACT)
+			return    //You can't insert holochip in abstract item.
+		if(holochip)
+			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
+			return
+		user.drop_from_inventory(I, src)
+		holochip = I
+		holochip.holder = src
+		var/mob/living/carbon/human/H = user
+		if(istype(H) && H.head == src)
+			holochip.add_action(user)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
+	else if(isscrewing(I))
+		if(!holochip)
+			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
+			return
+		holochip.deactivate_holomap()
+		holochip.remove_action(user)
+		holochip.holder = null
+		if(!user.put_in_hands(holochip))
+			holochip.forceMove(get_turf(src))
+		holochip = null
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
+
 	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
 		return ..()
 
@@ -229,7 +276,8 @@
 
 /obj/item/clothing/head/helmet/syndiassault/atom_init()
 	. = ..()
-	new /obj/item/holochip/nuclear(src)
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/syndiassault/alternate
 	icon_state = "assaulthelmet"

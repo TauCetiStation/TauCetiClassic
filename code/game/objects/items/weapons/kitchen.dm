@@ -213,7 +213,6 @@
 	throwforce = 5
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "glass"
-	item_state = "shiv"
 
 /obj/item/weapon/kitchenknife/makeshift_shiv/phoron
 	name = "phoron glass shiv"
@@ -221,7 +220,7 @@
 	force = 13
 	throwforce = 9
 	icon_state = "pglass"
-	item_state = "plasmashiv"
+
 
 /*
  * Bucher's cleaver

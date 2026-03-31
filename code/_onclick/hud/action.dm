@@ -11,7 +11,6 @@
 
 /datum/action
 	var/name = "Generic Action"
-	var/desc
 	var/action_type = AB_ITEM
 	var/atom/movable/target = null
 	var/check_flags = 0

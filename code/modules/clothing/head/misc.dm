@@ -418,7 +418,6 @@
 
 /obj/item/clothing/head/soviet_peaked_cap
 	name = "comissar's peaked cap"
-	desc = "Not a step back. Has ear protection plate"
+	desc = "Not a step back."
 	icon_state = "soviet_peakedcap"
 	item_state = "soviet_peakedcap"
-	flashbang_protection = TRUE

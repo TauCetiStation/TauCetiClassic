@@ -34,22 +34,3 @@
 		B.take_damage(damage * B.brute_resist, BRUTE, ENERGY)
 	sleep(80)
 	qdel(src)
-
-/obj/item/weapon/grenade/holynade
-	name = "holynade"
-	desc = "Современное кадило, действует с размахом."
-	name = "smoke bomb"
-	icon = 'icons/obj/grenade.dmi'
-	icon_state = "holy_grenade"
-	det_time = 20
-	item_state = "flashbang"
-
-/obj/item/weapon/grenade/holynade/prime()
-	var/datum/effect/effect/system/smoke_spread/chem/S = new
-	var/turf/location = get_turf(loc)
-	create_reagents(150)
-	reagents.add_reagent("holywater", 150)
-	S.attach(location)
-	S.set_up(reagents, 15, 0, location, 15, 5)
-	S.start()
-	qdel(src)

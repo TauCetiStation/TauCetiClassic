@@ -16,7 +16,8 @@
 
 /obj/item/clothing/head/helmet/space/syndicate/atom_init()
 	. = ..()
-	new /obj/item/holochip/nuclear(src)
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
@@ -126,7 +127,8 @@
 
 /obj/item/clothing/head/helmet/space/syndicate/elite/atom_init()
 	. = ..()
-	new /obj/item/holochip/nuclear(src)
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/syndicate/elite/attack_self(mob/user)
 	return

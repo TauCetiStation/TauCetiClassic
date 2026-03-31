@@ -38,6 +38,9 @@
 	/// Amount of damage to heal on simple mobs over a second
 	var/simple_heal = 0
 
+	/// Trait to limit healing to, if set
+	var/limit_to_trait = null
+
 	/// The color to give the healing visual
 	var/healing_color = COLOR_GREEN
 
@@ -75,6 +78,7 @@
 	src.blood_heal = blood_heal
 	src.organ_healing = organ_healing
 	src.simple_heal = simple_heal
+	src.limit_to_trait = limit_to_trait
 	src.healing_color = healing_color
 
 /datum/component/aura_healing/Destroy(force, silent)
@@ -93,7 +97,7 @@
 	var/alert_category = "aura_healing_[REF(src)]"
 
 	for (var/mob/living/candidate in (requires_visibility ? view(range, parent) : range(range, parent)))
-		if(!check_for_heal())
+		if (!isnull(limit_to_trait) && !HAS_TRAIT(candidate, limit_to_trait))
 			continue
 
 		remove_alerts_from -= candidate
@@ -135,20 +139,8 @@
 		remove_alert_from.clear_alert(alert_category)
 		current_alerts -= remove_alert_from
 
-/datum/component/aura_healing/proc/check_for_heal(mob/living/candidate)
-	return HAS_TRAIT(candidate, TRAIT_HEALS_FROM_PYLONS)
-
 /atom/movable/screen/alert/aura_healing
 	name = "Целительная аура"
 	icon_state = "template"
 
 #undef HEAL_EFFECT_COOLDOWN
-
-/datum/component/aura_healing/deadly/check_for_heal(mob/living/candidate)
-	return !HAS_TRAIT(candidate, TRAIT_HEALS_FROM_PYLONS)
-
-/datum/component/aura_healing/inquisition/check_for_heal(mob/living/candidate)
-	return !iscultist(candidate)
-
-/datum/component/aura_healing/inquisition/deadly/check_for_heal(mob/living/candidate)
-	return iscultist(candidate)

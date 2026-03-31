@@ -25,8 +25,6 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence", image(icon, src, icon_state), src, cult_religion)
 	tome = new(src)
 	AddComponent(/datum/component/logout_spawner, /datum/spawner/living/eminence) //By hand cuz mob level
-	dna = new /datum/dna(null) //For runes
-	dna.real_name = md5(real_name)//No real name
 
 /mob/camera/eminence/Destroy()
 	QDEL_NULL(tome)
@@ -77,7 +75,6 @@
 		Со всеми структурами культа вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, пыточной, аномалиями и дверьми.<br>\
 		Средняя кнопка мыши или CTRL для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных. \
 		Живой последователь, попавший под действие приказа более не будет оглушён, ослеплён и сможет продолжить свой бой.<br>\
-		Если культ завершит исследование \"Руны Возвышенного\", вы обретете способность использовать некоторые руны на подконтрольной религии территории.<br>\
 		\"Переместиться на алтарь\" телепортирует вас на алтари.<br>\
 		\"Переместиться на станцию к руне\" телепортирует вас на случайную руну, которая вне Рая.<br>\
 		\"Использовать том\" имеет такие же функции, как если бы этот том был в руках обычного культиста. ВЫ НЕ МОЖЕТЕ АКТИВИРОВАТЬ РУНЫ САМОСТОЯТЕЛЬНО.<br>\
@@ -173,7 +170,7 @@
 			if(!COOLDOWN_FINISHED(src, point_to))
 				return
 			point_at(A)
-			COOLDOWN_START(src, point_to, 1 SECOND)
+			COOLDOWN_START(src, point_to, 3 SECONDS)
 			return
 		A.examine(src)
 		return
@@ -195,13 +192,6 @@
 	else if(istype(A, /obj/structure/cult/tech_table)) //Research table
 		var/obj/structure/cult/tech_table/T = A
 		T.attack_hand(src)
-	else if(istype(A, /obj/effect/rune)) //Runes
-		if(tome.religion.get_tech(RTECH_EMINENCE_RUNES))
-			var/obj/effect/rune/T = A
-			if(T.power.eminence_usable)
-				var/area/zone = get_area(T)
-				if(zone.religion == tome.religion)
-					T.attack_hand(src) //As eminence, given tech, you can use SOME runes and only in converted areas
 	else if(istype(A, /obj/structure/cult/forge)) //Forge
 		var/obj/structure/cult/forge/F = A
 		F.attack_hand(src)

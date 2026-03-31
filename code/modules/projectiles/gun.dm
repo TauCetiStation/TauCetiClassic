@@ -176,9 +176,6 @@
 			if(user.get_species() == GOLEM)
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
-			if(HAS_TRAIT(user, TRAIT_NOGUNS))
-				to_chat(user, "<span class='red'>You can't bring yourself to use a ranged weapon!")
-				return
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/V = H.wear_suit
 				V.attack_reaction(H, REACTION_GUN_FIRE)
