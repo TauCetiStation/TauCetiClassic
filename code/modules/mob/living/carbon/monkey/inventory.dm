@@ -52,12 +52,12 @@
 	W.update_inv_mob()
 
 /mob/living/carbon/monkey/get_equipped_items()
-	var/list/items = ..()
-	if(neck)
-		items += neck
-	return items
+	. = ..()
+	if(.)
+		. += neck
 
 /mob/living/carbon/monkey/get_equipped_item(slot)
-	if(slot == SLOT_NECK) return neck
+	if(slot == SLOT_NECK)
+		return neck
 	return ..()
 
