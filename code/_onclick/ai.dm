@@ -147,7 +147,6 @@
 	if(user.incapacitated() || aidisabled)
 		return
 	toggle_breaker(user)
-	return
 
 /atom/proc/AIAltClick()
 	return
