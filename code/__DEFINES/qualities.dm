@@ -11,4 +11,5 @@
 // Players IN GENERAL do need to constantly battle with the effects of this quality.
 #define QUALITY_POOL_NEGATIVEISH "negativeish"
 // Same as "quirkeish", but requires special day and has more weight for rolls on this day
-#define QUALITY_POOL_HOLIDAYISH "holidayish"
+// todo: need more quality types for separate pool
+//#define QUALITY_POOL_HOLIDAYISH "holidayish"

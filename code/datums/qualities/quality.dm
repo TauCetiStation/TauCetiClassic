@@ -47,9 +47,6 @@
 	if(species_required && !can_be_species(C, species_required))
 		return FALSE
 
-	if(holidays_required && !is_holiday())
-		return FALSE
-
 	return TRUE
 
 // Whether the spawned-in human can get this quality. For example a player can choose a job that doesn't fit this quality.

@@ -21,7 +21,6 @@ SUBSYSTEM_DEF(qualities)
 		QUALITY_POOL_POSITIVEISH = 50,
 		QUALITY_POOL_QUIRKIEISH = 20,
 		QUALITY_POOL_NEGATIVEISH = 30,
-		QUALITY_POOL_HOLIDAYISH = 20,
 	)
 
 	// ckey = quality_type
@@ -35,6 +34,10 @@ SUBSYSTEM_DEF(qualities)
 	for(var/quality_type in subtypesof(/datum/quality))
 		var/datum/quality/Q = new quality_type
 		if(!Q.name)
+			qdel(Q)
+			continue
+
+		if(Q.holidays_required && !Q.is_holiday())
 			qdel(Q)
 			continue
 
