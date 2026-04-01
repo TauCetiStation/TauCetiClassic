@@ -53,6 +53,11 @@
 	remove_standing_overlay(M_MASK_LAYER)
 
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				wear_mask.screen_loc = ui_mask
+			client.screen += wear_mask
+
 		var/image/mask_layer
 		if(wear_mask:icon_custom)
 			mask_layer = image("icon" = wear_mask:icon_custom, "icon_state" = "[wear_mask.icon_state]_mob", layer = -M_MASK_LAYER)
@@ -70,6 +75,11 @@
 	remove_standing_overlay(M_NECK_LAYER)
 
 	if(neck)
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				neck.screen_loc = ui_neck
+			client.screen += neck
+
 		var/image/neck_layer = image("icon"= 'icons/mob/neck.dmi', "icon_state" = "[neck.icon_state]", layer = -M_NECK_LAYER)
 		neck_layer.pixel_y = -3
 		overlays_standing[M_NECK_LAYER] = neck_layer
@@ -159,6 +169,9 @@
 /mob/living/carbon/monkey/update_hud()
 	if (client)
 		client.screen |= contents
+		if(hud_used)
+			hud_used.hidden_inventory_update()
+			reload_fullscreen()
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/monkey/update_targeted()
