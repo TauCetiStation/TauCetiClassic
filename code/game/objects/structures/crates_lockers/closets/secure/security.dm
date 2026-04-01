@@ -339,11 +339,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	new /obj/item/clothing/under/det(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		new /obj/item/weapon/gun/energy/taser(src)
@@ -402,6 +405,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/secure_closet/forensics/PopulateContents()
 	new /obj/item/clothing/under/rank/forensic_technician(src)
 	new /obj/item/clothing/under/rank/forensic_technician/black(src)
@@ -412,7 +417,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
 

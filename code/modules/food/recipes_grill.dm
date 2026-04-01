@@ -148,6 +148,8 @@
 	reagents = list("enzyme" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/fasqhtongue
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue

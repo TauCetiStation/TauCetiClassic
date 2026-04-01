@@ -105,7 +105,7 @@
 			if(get_integrity() < max_integrity)
 				if(open)
 					user.visible_message("<span class='warning'>[user] start repair [src]!</span>","<span class='notice'>You start repair [src]!</span>")
-					if(W.use_tool(src, user, 20, volume = 50))
+					if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 						repair_damage(10)
 						user.visible_message("<span class='warning'>[user] repaired [src]!</span>","<span class='notice'>You repaired [src]!</span>")
 				else

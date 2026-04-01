@@ -51,12 +51,8 @@
 		str += "Untitled"
 	return str
 
-
-var/global/loopModeNames=list(
-	JUKEMODE_SHUFFLE = "Shuffle",
-	JUKEMODE_REPEAT_SONG = "Single",
-	JUKEMODE_PLAY_ONCE= "Once",
-)
+// Order is important. JUKEMODE_SHUFFLE, JUKEMODE_REPEAT_SONG, JUKEMODE_PLAY_ONCE
+var/global/loopModeNames=list("Shuffle", "Single", "Once")
 /obj/machinery/media/jukebox
 	name = "Jukebox"
 	desc = "A jukebox used for parties and shit."
@@ -152,7 +148,7 @@ var/global/loopModeNames=list(
 			return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
-		if(W.use_tool(src, user, 30, volume = 50))
+		if(W.use_tool(src, user, 30, volume = 50, quality = QUALITY_WRENCHING))
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
 			playing = emagged

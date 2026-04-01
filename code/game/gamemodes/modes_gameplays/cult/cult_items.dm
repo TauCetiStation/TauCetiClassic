@@ -31,22 +31,26 @@
 	if(iscultist(user))
 		var/datum/religion/cult/C = user.my_religion
 		if(!GetComponent(/datum/component/self_effect) && C.get_tech(RTECH_MIRROR_SHIELD))
-			var/shield_type = /obj/item/weapon/shield/riot/mirror
+			var/shield_type = /obj/item/weapon/shield/mirror
 			AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, PROC_REF(only_cultists)), 2 MINUTE, 30 SECONDS, 2 MINUTE)
 	else
 		to_chat(user, "<span class='warning'>Ошеломляющее чувство страха охватывает тебя при поднятии красного меча, было бы разумно поскорее избавиться от него.</span>")
 		user.make_dizzy(120)
 
-/obj/item/weapon/shield/riot/mirror
+/obj/item/weapon/shield/mirror
+	hitsound = list('sound/weapons/metal_shield_hit.ogg')
 	name = "mirror shield"
 	desc = "An infamous shield used by eldritch sects to confuse and disorient their enemies."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "mirror_shield"
 	flags = DROPDEL
+	w_class = SIZE_NORMAL
+	force = 5.0
 	slot_flags = FALSE
+	attack_verb = list("shoved", "bashed")
 	var/reflect_chance = 70
 
-/obj/item/weapon/shield/riot/mirror/pickup(mob/living/user)
+/obj/item/weapon/shield/mirror/pickup(mob/living/user)
 	. = ..()
 	if(!iscultist(user))
 		user.make_dizzy(70)
@@ -57,12 +61,12 @@
 			BP.take_damage(5)
 		return FALSE
 
-/obj/item/weapon/shield/riot/mirror/IsReflect(def_zone, hol_dir, hit_dir)
+/obj/item/weapon/shield/mirror/IsReflect(def_zone, hol_dir, hit_dir)
 	if(prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir))
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/shield/riot/mirror/toggle_wallshield(mob/living/user)
+/obj/item/weapon/shield/mirror/toggle_wallshield(mob/living/user)
 	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
 
 /obj/item/clothing/glasses/cult_blindfold
@@ -88,7 +92,8 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			var/obj/item/organ/internal/eyes/E = H.organs_by_name[O_EYES]
-			E.damage += rand(4, 8)
+			if(E)
+				E.damage += rand(4, 8)
 		L.flash_eyes()
 		L.drop_item()
 		return FALSE

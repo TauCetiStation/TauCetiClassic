@@ -22,7 +22,6 @@
 	var/brute_dam = 0                 // Actual current brute damage.
 	var/burn_dam = 0                  // Actual current burn damage.
 	var/last_dam = -1                 // used in healing/processing calculations.
-	var/max_damage = 0                // Damage cap
 
 	var/controller_type = /datum/bodypart_controller
 	var/datum/bodypart_controller/controller
@@ -98,7 +97,7 @@
 	var/is_husk
 	var/is_burnt
 
-// todo: currently it's impossible to spawn organs out of body 
+// todo: currently it's impossible to spawn organs out of body
 // as insert_organ() call with owner is required for proper init
 /*
 /obj/item/organ/external/atom_init(mapload)
@@ -409,10 +408,10 @@
 /obj/item/organ/external/emp_act(severity)
 	controller.emp_act(severity)
 
-/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
 	if(!isnum(burn))
 		return // prevent basic take_damage usage (TODO remove workaround)
-	return controller.take_damage(brute, burn, damage_flags, used_weapon)
+	return controller.take_damage(brute, burn, damage_flags, used_weapon, impact_direction = impact_direction)
 
 /obj/item/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
 	return controller.heal_damage(brute, burn, internal, robo_repair)
@@ -537,20 +536,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
 			if(!clean)
-				var/gore_sound = "[is_robotic() ? "tortured metal" : "ripping tendons and flesh"]"
+				var/gore_sound = "[is_robotic_part() ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					"<span class='danger'>\The [owner]'s [name] flies off in an arc!</span>",
 					"<span class='userdanger'><b>Your [name] goes flying off!</b></span>",
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
 		if(DROPLIMB_BURN)
-			var/gore = "[is_robotic() ? "": " of burning flesh"]"
+			var/gore = "[is_robotic_part() ? "": " of burning flesh"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] flashes away into ashes!</span>",
 				"<span class='userdanger'><b>Your [name] flashes away into ashes!</b></span>",
 				"<span class='danger'>You hear a crackling sound[gore].</span>")
 		if(DROPLIMB_BLUNT)
-			var/gore = "[is_robotic() ? "": " in shower of gore"]"
-			var/gore_sound = "[is_robotic() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
+			var/gore = "[is_robotic_part() ? "": " in shower of gore"]"
+			var/gore_sound = "[is_robotic_part() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] explodes[gore]!</span>",
 				"<span class='userdanger'><b>Your [name] explodes[gore]!</b></span>",
@@ -577,7 +576,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(DROPLIMB_EDGE)
 			add_blood(owner)
 			//Robotic limbs explode if sabotaged.
-			if(is_robotic() && !no_explode && sabotaged)
+			if(is_robotic_part() && !no_explode && sabotaged)
 				explosion(get_turf(owner), 0, 0, 2, 3)
 				var/datum/effect/effect/system/spark_spread/spark_system = new
 				spark_system.set_up(5, 0, owner)
@@ -593,7 +592,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			should_delete = TRUE
 		if(DROPLIMB_BLUNT)
 			var/obj/effect/decal/cleanable/blood/gibs/gore
-			if(is_robotic())
+			if(is_robotic_part())
 				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(owner))
 			else
 				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner), owner)
@@ -791,7 +790,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/is_flesh()
 	return controller.bodypart_type == BODYPART_ORGANIC
 
-/obj/item/organ/external/proc/is_robotic()
+/obj/item/organ/external/proc/is_robotic_part()
 	return controller.bodypart_type == BODYPART_ROBOTIC
 
 /obj/item/organ/external/proc/is_usable()
@@ -804,7 +803,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return (status & ORGAN_ARTERY_CUT)
 
 /obj/item/organ/external/proc/is_malfunctioning()
-	return (is_robotic() && prob(brute_dam + burn_dam))
+	return (is_robotic_part() && prob(brute_dam + burn_dam))
 
 //for arms and hands
 /obj/item/organ/external/proc/process_grasp(obj/item/c_hand, hand_name)
@@ -1103,6 +1102,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	g_eyes = H.g_eyes
 	b_eyes = H.b_eyes
 
+	var/obj/item/organ/internal/eyes/eyes = H.organs_by_name[O_EYES]
+	if(eyes)
+		eyes.r_eyes = H.r_eyes
+		eyes.g_eyes = H.g_eyes
+		eyes.b_eyes = H.b_eyes
+
 	// lips
 	lip_style = H.lip_style
 	lip_color = H.lip_color
@@ -1114,20 +1119,23 @@ Note that amputating the affected organ does in fact remove the infection from t
 	// todo: should move it to own organ, make /eyes external
 	if(species.eyes_static_layer)
 		var/mutable_appearance/eyes_static_layer = mutable_appearance(
-			species.eyes_icon, 
-			species.eyes_static_layer, 
+			species.eyes_icon,
+			species.eyes_static_layer,
 			-EYES_LAYER
 		)
 
 		if(owner && HAS_TRAIT(owner, TRAIT_PLUVIAN_BLESSED))
 			eyes_static_layer.color = "#88ffff"
 
+		if(owner && HAS_TRAIT(owner, TRAIT_CYBER_NIGHT_EYES))
+			eyes_static_layer.color = "#ecdd06" //catlike
+
 		. += eyes_static_layer
 
 	if(species.eyes_colorable_layer)
 		var/mutable_appearance/eyes_colorable_layer = mutable_appearance(
-			species.eyes_icon, 
-			species.eyes_colorable_layer, 
+			species.eyes_icon,
+			species.eyes_colorable_layer,
 			-EYES_LAYER
 		)
 
@@ -1265,7 +1273,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 						var/obj/item/device/mmi/posibrain/B = new(loc)
 						B.transfer_identity(brainmob)
 					else
-						var/obj/item/brain/B = new(loc)
+						var/obj/item/organ/internal/brain/B = new(loc)
 						B.transfer_identity(brainmob)
 
 					brain_op_stage = 4.0
@@ -1293,7 +1301,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	desc = "Need a hand?"
 	force = 7
 
-	icon_state = "l_arm"
+	icon_state = "l_arm_m"
 
 	artery_name = "basilic vein"
 
@@ -1339,7 +1347,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 7
 	artery_name = "basilic vein"
 
-	icon_state = "r_arm"
+	icon_state = "r_arm_m"
 
 	temp_coeff = 1.0
 
@@ -1383,7 +1391,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 9
 	artery_name = "femoral artery"
 
-	icon_state = "l_leg"
+	icon_state = "l_leg_m"
 
 	temp_coeff = 0.75
 
@@ -1416,7 +1424,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	artery_name = "femoral artery"
 
-	icon_state = "r_leg"
+	icon_state = "r_leg_m"
 
 	temp_coeff = 0.75
 
@@ -1441,7 +1449,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
-/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
+/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null)
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
@@ -1466,7 +1474,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 
 /obj/item/organ/external/proc/get_wounds_desc()
-	if(is_robotic())
+	if(is_robotic_part())
 		var/list/descriptors = list()
 		if(brute_dam)
 			switch(brute_dam)

@@ -194,7 +194,7 @@
 	START_PROCESSING(SSobj, src)
 	RegisterSignal(implanted_mob, COMSIG_MOB_EXAMINED, PROC_REF(on_examine))
 
-/obj/item/weapon/implant/eject()
+/obj/item/weapon/implant/blueshield/eject()
 	UnregisterSignal(implanted_mob, COMSIG_MOB_EXAMINED)
 	. = ..()
 
@@ -223,22 +223,21 @@
 	if(!length(to_protect))
 		penalty_stack = 0
 		return
-	if(!penalty_stack) // so we dont immediately go to 1, prevents spamming when examining players
-		penalty_stack++
-		return
 
-	switch(penalty_stack++)
-		if(1)
-			to_chat(implanted_mob, "<span class='bold warning'>Кто-то из глав или АВД должны быть на станции. Следует проверить их, или имплант напомнит о себе.</span>")
+	switch(++penalty_stack)
+		if(1) // so we dont immediately spam the warning after examining players
+			EMPTY_BLOCK_GUARD
 		if(2)
+			to_chat(implanted_mob, "<span class='bold warning'>Кто-то из глав или АВД должны быть на станции. Следует проверить их, или имплант напомнит о себе.</span>")
+		if(3)
 			to_chat(implanted_mob, "<span class='bold warning'>[C_CASE(src, NOMINATIVE_CASE)] в [CASE(body_part, PREPOSITIONAL_CASE)] напоминает о должностных обязанностях легким ударом тока, дальше может быть хуже.</span>")
 		else
-			if(implanted_mob.mood_prob(5*(penalty_stack-3))) // one guaranteed electrocute act
+			if(implanted_mob.mood_prob(5 * (penalty_stack - 4))) // one guaranteed electrocute act
 				to_chat(implanted_mob, "<span class='bold warning'>Вы ожидаете очередной удар током от [CASE(src, GENITIVE_CASE)], но его не происходит. Вы пережили свой имплант в этой битве. Если бы только вам не пришлось потом писать объяснительную...</span>")
 				meltdown(harmful = FALSE)
 			else
 				to_chat(implanted_mob, "<span class='bold warning'>[C_CASE(body_part, NOMINATIVE_CASE)] бьет вас током за игнорирование служебных обязанностей.</span>")
-				implanted_mob.electrocute_act(15 * (penalty_stack - 2), src)
+				implanted_mob.electrocute_act(15 * (penalty_stack - 3), src)
 
 /obj/item/weapon/implant/bork
 	name = "B0RK-X3 skillchip"

@@ -8,6 +8,12 @@
 		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
 		QDEL_IN(animation, 2 SECOND)
 
+	for(var/obj/item/organ/internal/IO in organs)
+		if(prob(33))
+			IO.remove(src)
+			IO.forceMove(get_turf(src))
+			IO.throw_at(get_edge_target_turf(loc, pick(alldirs)), rand(1, 3), throw_speed)
+
 	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
 		if(prob(100 - BP.get_damage()))
@@ -26,9 +32,6 @@
 	P.real_name = dna.real_name
 	P.dna = dna.Clone()
 	P.UpdateAppearance()
-	P.b_eyes = 200
-	P.g_eyes = 255
-	P.r_eyes = 255
 	P.regenerate_icons(update_body_preferences = TRUE)
 	P.my_corpse = src
 	mind.transfer_to(P)
@@ -77,6 +80,7 @@
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
+
 		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()

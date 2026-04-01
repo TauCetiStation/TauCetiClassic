@@ -421,6 +421,28 @@
 				counter = 0
 		jobs += "</tr></table>"
 
+	//Special Department Nanotrasen station (Grey-blue)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr align='center' bgcolor='6c7391'><th colspan='[length(SSjob.departments_occupations[DEP_SPECIAL])]'><a href='byond://?src=\ref[src];jobban3=specialdept;jobban4=\ref[M]'>Special Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_SPECIAL])
+			if(!jobPos)	continue
+			var/datum/job/job = SSjob.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 6) //So things dont get squiiiiished!
+				jobs += "</tr><tr>"
+				counter = 0
+		jobs += "</tr></table>"
+
+
+
 	//Security (Red)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
@@ -754,6 +776,12 @@
 				for(var/jobPos in SSjob.departments_occupations[DEP_COMMAND])
 					if(!jobPos)
 						continue
+					var/datum/job/temp = SSjob.GetJob(jobPos)
+					if(!temp) continue
+					joblist += temp.title
+			if("specialdept")
+				for(var/jobPos in SSjob.departments_occupations[DEP_SPECIAL])
+					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
@@ -1692,9 +1720,12 @@
 		if(!H.CanObtainCentcommMessage())
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
+		message_admins("[key_name_admin(usr)] has started replying to Emergency message.")
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""))
-		if(!input)	return
+		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to Emergency message.")
+			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
@@ -1716,9 +1747,12 @@
 		if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
+		message_admins("[key_name_admin(usr)] has started replying to Syndicate Emergency message.")
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
-		if(!input)	return
+		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to Syndicate Emergency message.")
+			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
@@ -1740,11 +1774,13 @@
 		popup.open()
 
 	else if(href_list["CentcommFaxReply"])
+		message_admins("[key_name_admin(usr)] has started replying to fax.")
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
 		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
 		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to fax.")
 			return
 
 		var/customname = sanitize_safe(input(src.owner, "Pick a title for the report", "Title") as text|null)
