@@ -660,13 +660,10 @@
 		if(!(HULK in L.mutations))
 			L.Stuttering(stun_modifier)
 			L.Weaken(stun_modifier)
+			L.apply_status_effect(/datum/status_effect/cursed_talk, stun_modifier SECONDS)
 			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
-			ADD_TRAIT(L, TRAIT_CURSED_TALK, STATUS_EFFECT_TRAIT)
-			addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living, remove_cursed_talk)), 15 SECONDS)
 	return TRUE
 
-/mob/living/proc/remove_cursed_talk()
-	REMOVE_TRAIT(src, TRAIT_CURSED_TALK, STATUS_EFFECT_TRAIT)
 
 /datum/religion_rites/instant/communicate
 	name = "Общение"
