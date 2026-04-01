@@ -9,7 +9,7 @@
 	)
 
 /datum/element/mutation/smoll/on_gain(mob/living/L)
-	L.mob_general_damage_mod.ModMultiplicative(2, src)
+	L.mob_general_damage_mod.ModMultiplicative(1.4, src)
 
 	L.update_size_class()
 
