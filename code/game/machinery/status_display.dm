@@ -26,6 +26,7 @@
 					// 3 = alert picture
 					// 4 = Supply shuttle timer
 					// 5 = default N picture
+					// 6 = Queue_Mode
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -34,7 +35,9 @@
 	var/index2
 
 	frequency = 1435		// radio frequency
-	var/supply_display = 0		// true if a supply shuttle display
+	var/supply_display = FALSE		// true if a supply shuttle display
+	var/queue_display = FALSE
+	var/queue_number = 0
 
 	var/friendc = 0      // track if Friend Computer mode
 
@@ -137,6 +140,10 @@
 			update_display(line1, line2)
 		if(5)				// default picture
 			set_picture("default")
+		if(6)
+			var/line1 = "Ticket:"
+			var/line2 = "-[queue_number]-"
+			update_display(line1, line2)
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
@@ -214,6 +221,13 @@
 
 		if("default")
 			mode = 5
+
+		if("queue")
+			if(queue_display)
+				mode = 6
+				if(queue_number < global.ticket_machine_number)
+					queue_number++
+					playsound(src, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 
 
 	update()

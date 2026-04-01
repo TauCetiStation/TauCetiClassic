@@ -43,105 +43,44 @@
 				function updateSearch(){
 					var filter_text = document.getElementById('filter');
 					var filter = filter_text.value.toLowerCase();
-
-					if(event.keyCode == 13){	//Enter / return
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
-						{
-							try{
-								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
-								{
-									alist = lis\[i\].getElementsByTagName("a")
-									if(alist.length > 0){
-										location.href=alist\[0\].href;
-									}
-								}
-							}catch(err) {   }
-						}
-						return
-					}
-
-					if(event.keyCode == 38){	//Up arrow
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
-						{
-							try{
-								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
-								{
-									if( (i-1) >= 0){
-										var li_new = lis\[i-1\];
-										li.style.backgroundColor = "white";
-										li_new.style.backgroundColor = "#ffee88";
-										return
-									}
-								}
-							}catch(err) {  }
-						}
-						return
-					}
-
-					if(event.keyCode == 40){	//Down arrow
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-						for ( var i = 0; i < lis.length; ++i )
-						{
-							try{
-								var li = lis\[i\];
-								if ( li.style.backgroundColor == "#ffee88" )
-								{
-									if( (i+1) < lis.length){
-										var li_new = lis\[i+1\];
-										li.style.backgroundColor = "white";
-										li_new.style.backgroundColor = "#ffee88";
-										return
-									}
-								}
-							}catch(err) {  }
-						}
-						return
-					}
+					var vars_ol = document.getElementById("vars");
 
 					//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
 					if(complete_list != null && complete_list != ""){
-						var vars_ol1 = document.getElementById("vars");
-						vars_ol1.innerHTML = complete_list
+						vars_ol.innerHTML = complete_list
 					}
 
-					if(filter.value == ""){
+					if(filter === ""){
 						return;
 					}else{
-						var vars_ol = document.getElementById('vars');
-						var lis = vars_ol.getElementsByTagName("li");
-
+						var lis = Array.from(vars_ol.children);
+						var fragment = document.createDocumentFragment();
 						for ( var i = 0; i < lis.length; ++i )
 						{
 							try{
 								var li = lis\[i\];
-								if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
+								var text = li.textContent.toLowerCase();
+
+								var aElements = li.getElementsByTagName('a');
+								for (var j = 0; j < aElements.length; j++)
 								{
-									vars_ol.removeChild(li);
-									i--;
+									var aText = aElements\[j\].textContent.trim().toLowerCase();
+									if (aText === 'e' || aText === 'c' || aText === 'm')
+									{
+										text = text.replace(aElements\[j\].textContent.toLowerCase(), '');
+									}
+								}
+								if ( text.indexOf(filter) !== -1 )
+								{
+									fragment.appendChild(li)
 								}
 							}catch(err) {   }
 						}
-					}
-					var lis_new = vars_ol.getElementsByTagName("li");
-					for ( var j = 0; j < lis_new.length; ++j )
-					{
-						var li1 = lis\[j\];
-						if (j == 0){
-							li1.style.backgroundColor = "#ffee88";
-						}else{
-							li1.style.backgroundColor = "white";
-						}
+
+						vars_ol.innerHTML = '';
+						vars_ol.appendChild(fragment);
 					}
 				}
-
-
 
 				function selectTextField(){
 					var filter_text = document.getElementById('filter');
@@ -161,7 +100,7 @@
 				}
 			</script> "}
 
-	body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
+	body += "<body onload='selectTextField(); updateSearch()'>"
 
 	body += "<div align='center'><table width='100%'><tr><td width='50%'>"
 
@@ -175,27 +114,27 @@
 	if(isatom(D))
 		var/atom/A = D
 		if(isliving(A))
-			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
+			body += "<a href='byond://?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
 			if(A.dir)
-				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+				body += "<br><font size='1'><a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
-			body += "<br><font size='1'><a href='?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
+			body += "<br><font size='1'><a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 			body += {"
 			<br><font size='1'>
-			BRUTE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
-			FIRE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
-			TOXIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
-			OXY:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-			CLONE:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
-			BRAIN:<a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			BRUTE:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+			FIRE:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+			TOXIN:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+			OXY:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+			CLONE:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+			BRAIN:<a href='byond://?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
 			</font>
 
 
 			"}
 		else
-			body += "<a href='?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
+			body += "<a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
 			if(A.dir)
-				body += "<br><font size='1'><a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+				body += "<br><font size='1'><a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?_src_=vars;datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?_src_=vars;rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 	else
 		body += "<b>[D]</b>"
 
@@ -214,10 +153,10 @@
 
 	body += "</div></td>"
 
-	body += "<td width='50%'><div align='center'><a href='' onclick=\"this.href='?_src_=vars;datumrefresh=\ref[D];filter='+document.getElementById('filter').value\">Refresh</a>"
+	body += "<td width='50%'><div align='center'><a href='' onclick=\"this.href='byond://?_src_=vars;datumrefresh=\ref[D];filter='+document.getElementById('filter').value\">Refresh</a>"
 
 	//if(ismob(D))
-	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
+	//	body += "<br><a href='byond://?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
 
 	body += {"	<form>
 				<select name="file" size="1"
@@ -232,71 +171,76 @@
 			"}
 
 
-	body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
+	body += "<option value='byond://?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
 	if(ismob(D))
-		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
+		body += "<option value='byond://?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 	if(istype(D, /atom/movable))
-		body += "<option value='?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
+		body += "<option value='byond://?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
 	else
 		var/atom/A = D
 		if(istype(A))
-			body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
+			body += "<option value='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
 
 	body += "<option value>---</option>"
 
 	if(ismob(D))
-		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
-		body += "<option value='?_src_=vars;give_disease2=\ref[D]'>Give Disease</option>"
-		body += "<option value='?_src_=vars;give_religion=\ref[D]'>Give Religion</option>"
+		body += "<option value='byond://?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+		body += "<option value='byond://?_src_=vars;give_disease2=\ref[D]'>Give Disease</option>"
+		body += "<option value='byond://?_src_=vars;give_religion=\ref[D]'>Give Religion</option>"
 		if(isliving(D))
-			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
-		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
-		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
-		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
+			body += "<option value='byond://?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
+		body += "<option value='byond://?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
+		body += "<option value='byond://?_src_=vars;toggle_emutation=\ref[D]'>Toggle (element) Mutation</option>"
+		body += "<option value='byond://?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
+		body += "<option value='byond://?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 
-		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
+		body += "<option value='byond://?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 
-		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
-		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
+		body += "<option value='byond://?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
+		body += "<option value='byond://?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 
-		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
-		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
-		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
+		body += "<option value='byond://?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
+		body += "<option value='byond://?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
+		body += "<option value='byond://?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
 		if(ishuman(D) || istype(D, /mob/dead/new_player))
-			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
+			body += "<option value='byond://?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 
-		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
-		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
-		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
+		body += "<option value='byond://?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
+		body += "<option value='byond://?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
+		body += "<option value='byond://?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(isAI(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;allowmoving=\ref[D]'>Allow Moving</option>"
+			body += "<option value='byond://?_src_=vars;allowmoving=\ref[D]'>Allow Moving</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
-			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
-			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
-			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
-			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
-			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
-			body += "<option value='?_src_=vars;makezombie=\ref[D]'>Make zombie</option>"
+			body += "<option value='byond://?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='byond://?_src_=vars;makeai=\ref[D]'>Make AI</option>"
+			body += "<option value='byond://?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
+			body += "<option value='byond://?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
+			body += "<option value='byond://?_src_=vars;makealien=\ref[D]'>Make alien</option>"
+			body += "<option value='byond://?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
+			body += "<option value='byond://?_src_=vars;makezombie=\ref[D]'>Make zombie</option>"
 		body += "<option value>---</option>"
-		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
-		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
+		body += "<option value='byond://?_src_=vars;burn=\ref[D]'>Burn</option>"
+		body += "<option value='byond://?_src_=vars;husk=\ref[D]'>Husk</option>"
+		body += "<option value='byond://?_src_=vars;electrocute=\ref[D]'>Electrocute</option>"
+		body += "<option value='byond://?_src_=vars;gib=\ref[D]'>Gib</option>"
+		body += "<option value='byond://?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
-		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
-		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
-		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
+		body += "<option value='byond://?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
+		body += "<option value='byond://?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
+		body += "<option value='byond://?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
+		body += "<option value='byond://?_src_=vars;update_icon=\ref[D]'>Update icon</option>"
 	if(isobj(D))
-		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
+		body += "<option value='byond://?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
-		body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
-		body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
+		body += "<option value='byond://?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
+		body += "<option value='byond://?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
 	if(istype(D, /datum/reagents))
-		body += "<option value='?_src_=vars;action=addreag;reagents=\ref[D]'>Add reagent</option>"
-		body += "<option value='?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
-		body += "<option value='?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
-		body += "<option value='?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
+		body += "<option value='byond://?_src_=vars;action=addreag;reagents=\ref[D]'>Add reagent</option>"
+		body += "<option value='byond://?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
+		body += "<option value='byond://?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
+		body += "<option value='byond://?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
 
 	body += "</select></form>"
 
@@ -306,7 +250,7 @@
 	body += "<b>C</b> - Change, asks you for the var type first.<br>"
 	body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
 
-	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='[last_search]' style='width:100%;'></td></tr></table><hr>"
+	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='[last_search]' style='width:100%;' oninput='updateSearch()'></td></tr></table><hr>"
 
 	body += "<ol id='vars'>"
 
@@ -323,7 +267,7 @@
 
 	body += "</ol>"
 
-	var/html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+	var/html = "<!DOCTYPE html><html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
 	if (title)
 		html += "<title>[title]</title>"
 	html += {"<style>
@@ -338,6 +282,7 @@ body
 	font-size: 8pt;
 }
 </style>"}
+	html += get_browse_zoom_style(user.client)
 	html += "</head>"
 	html += body
 
@@ -350,7 +295,7 @@ body
 
 	html += "</body></html>"
 
-	user << browse(html, "window=variables\ref[D];size=475x650")
+	user << browse(html, "window=variables\ref[D];[get_browse_size_parameter(src, 475, 650)]")
 
 	return
 
@@ -358,7 +303,7 @@ body
 	var/html = ""
 
 	if(DA)
-		html += "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+		html += "<li>(<a href='byond://?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='byond://?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='byond://?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 	else
 		html += "<li>"
 
@@ -377,9 +322,9 @@ body
 
 	else if (istype(value, /image))
 		#ifdef VARSICON
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, css = null)]"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, css = null)]"
 		#else
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
 		#endif
 
 	else if (isfile(value))
@@ -387,11 +332,11 @@ body
 
 	else if (istype(value, /datum))
 		var/datum/D = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
 	else if (isclient(value))
 		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
+		html += "<a href='byond://?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
 	else if (istype(value, /list))
 		var/list/L = value
@@ -546,6 +491,29 @@ body
 			L.apply_status_effect(arglist(params))
 			href_list["datumrefresh"] = href_list["give_status_effect"]
 
+	else if(href_list["toggle_emutation"])
+		if(!check_rights(R_ADMIN|R_VAREDIT))
+			return
+
+		var/mob/living/L = locate(href_list["toggle_emutation"])
+		if(!istype(L))
+			to_chat(usr, "This can only be used on instances of type /mob/living")
+			return
+
+		var/mutation_type = input("Select type:","Type") as null|anything in subtypesof(/datum/element/mutation)
+
+		// cursed as it looks but we can use any element as trait now
+		var/has_element_trait = HAS_TRAIT_FROM(L, mutation_type, ADMIN_TRAIT)
+		if(has_element_trait)
+			REMOVE_TRAIT(L, mutation_type, ADMIN_TRAIT)
+		else
+			ADD_TRAIT(L, mutation_type, ADMIN_TRAIT)
+
+		has_element_trait = !has_element_trait
+
+		log_admin("[key_name(usr)] has toggled [key_name(L)]'s emutation [mutation_type] to [has_element_trait ? "On" : "Off"]")
+		message_admins("[key_name_admin(usr)] has toggled [key_name_admin(L)]'s emutation [mutation_type] to [has_element_trait ? "On" : "Off"]")
+
 	else if(href_list["ninja"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -562,13 +530,49 @@ body
 		if(!check_rights(R_REJUVINATE))
 			return
 
-		var/mob/M = locate(href_list["godmode"])
+		var/mob/living/M = locate(href_list["godmode"])
 		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob")
+			to_chat(usr, "This can only be used on instances of type /mob/living")
 			return
 
 		cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
+
+	else if(href_list["burn"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["burn"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_burn(H)
+		return
+
+	else if(href_list["husk"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["husk"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_husk(H)
+		return
+
+	else if(href_list["electrocute"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["electrocute"])
+		if(!istype(H))
+			to_chat(usr, "This can only be used on instances of type /human")
+			return
+
+		cmd_admin_electrocute(H)
+		return
 
 	else if(href_list["gib"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -639,6 +643,12 @@ body
 			return
 		var/atom/A = locate(href_list["edit_particles"])
 		open_particles_editor(A)
+
+	else if(href_list["update_icon"])
+		if(!check_rights(R_DEBUG|R_ADMIN))
+			return
+		var/atom/A = locate(href_list["update_icon"])
+		A.update_icon()
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
@@ -876,7 +886,6 @@ body
 
 		if(H.set_species(new_species))
 			to_chat(usr, "Set species of [H] to [H.species].")
-			H.regenerate_icons()
 		else
 			to_chat(usr, "Failed! Something went wrong.")
 
@@ -1024,7 +1033,7 @@ body
 			if("brute")	L.adjustBruteLoss(amount)
 			if("fire")	L.adjustFireLoss(amount)
 			if("toxin")	L.adjustToxLoss(amount)
-			if("oxygen")L.adjustOxyLoss(amount)
+			if("oxygen") L.adjustOxyLoss(amount)
 			if("brain")	L.adjustBrainLoss(amount)
 			if("clone")	L.adjustCloneLoss(amount)
 			else

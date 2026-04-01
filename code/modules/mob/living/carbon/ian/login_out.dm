@@ -1,4 +1,4 @@
-/mob/living/carbon/ian/Login()
+/mob/living/carbon/ian/LateLogin()
 	..()
 
 	if(!(is_alien_whitelisted(src, "ian") || (client.supporter && !is_alien_whitelisted_banned(src, "ian"))))

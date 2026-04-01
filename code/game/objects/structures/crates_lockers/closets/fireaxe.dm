@@ -76,7 +76,7 @@
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 10)
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-				if(O.use_tool(src, user, 50, volume = 50))
+				if(O.use_tool(src, user, 50, volume = 50, quality = QUALITY_PULSING))
 					locked = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 					playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS_MASTER)

@@ -36,7 +36,7 @@
 		ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
 		return TRUE
 
-	if(broken)
+	if(broken || istype(src, /turf/simulated/floor/grid_floor))
 		break_tile_to_plating()
 		return TRUE
 

@@ -5,6 +5,7 @@
 #define BRIDGE_ROUNDSTAT  "roundstat"  //shuttle/server starting/round starting
 #define BRIDGE_SERVICE    "service"    //private debug msgs
 #define BRIDGE_ANNOUNCE   "announce"   //general announces for players
+#define BRIDGE_SAMOSBOR   "samosbor"   //online milestones notifications
 
 //admin
 #define BRIDGE_ADMINCOM       "admincom"       //admin faxes and command console

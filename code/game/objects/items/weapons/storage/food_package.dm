@@ -63,6 +63,16 @@
 	icon_state = "sosjerky"
 	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 8)
 
+/obj/item/weapon/storage/food/normal/simple_waffles
+	name = "Simple Waffles"
+	desc = "Homemade recipe! The amount of chemicals listed on the label might scare you."
+	icon_state = "simple_waffles"
+	item_state_world = "simple_waffles_world"
+	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/simplewaffle = 3)
+
+/obj/item/weapon/storage/food/normal/simple_waffles/update_icon()
+	return
+
 /obj/item/weapon/storage/food/normal/no_raisin
 	name = "4no Raisins"
 	desc = "Best raisins in the universe. Not sure why."

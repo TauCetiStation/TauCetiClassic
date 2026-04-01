@@ -51,10 +51,13 @@
 	remove_standing_overlay(M_MASK_LAYER)
 
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
+		var/image/mask_layer
 		if(wear_mask:icon_custom)
-			overlays_standing[M_MASK_LAYER]	= image("icon" = wear_mask:icon_custom, "icon_state" = "[wear_mask.icon_state]_mob", layer = -M_MASK_LAYER)
+			mask_layer = image("icon" = wear_mask:icon_custom, "icon_state" = "[wear_mask.icon_state]_mob", layer = -M_MASK_LAYER)
 		else
-			overlays_standing[M_MASK_LAYER]	= image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]", layer = -M_MASK_LAYER)
+			mask_layer = image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]", layer = -M_MASK_LAYER)
+		mask_layer.pixel_y = -3
+		overlays_standing[M_MASK_LAYER] = mask_layer
 		wear_mask.screen_loc = ui_monkey_mask
 	else
 		overlays_standing[M_MASK_LAYER]	= null
@@ -161,7 +164,9 @@
 	//cut_overlay(overlays_standing[M_FIRE_LOWER_LAYER])
 	if(on_fire)
 		//overlays_standing[M_FIRE_LOWER_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", layer = -M_FIRE_LOWER_LAYER)
-		overlays_standing[M_FIRE_UPPER_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", layer = -M_FIRE_UPPER_LAYER)
+		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", layer = -M_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[M_FIRE_UPPER_LAYER] = over
 		//add_overlay(overlays_standing[M_FIRE_LOWER_LAYER])
 	//else
 		//overlays_standing[M_FIRE_LOWER_LAYER] = null

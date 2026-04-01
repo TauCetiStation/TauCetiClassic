@@ -1,4 +1,4 @@
-/mob/dead/new_player/Login()
+/mob/dead/new_player/LateLogin()
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = TRUE
@@ -13,6 +13,8 @@
 		client.show_test_merges()
 	if(host_announcements)
 		to_chat(src, "<div class='host_announcements emojify linkify'>[host_announcements]</div>")
+
+	SSround_aspects.local_announce_aspect(client)
 
 	sight |= SEE_TURFS
 

@@ -1,3 +1,6 @@
+#define ASPECT_CATEGORY "Аспекты"
+#define UNIQ_CATEGORY "Уникальные технологии"
+
 /obj/structure/cult/tech_table
 	name = "scientific altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
@@ -6,12 +9,11 @@
 	light_power = 2
 	light_range = 3
 
-	// /datum/aspect = image
-	// Maybe be wrapped too in /datum/building_agent
-	var/static/list/aspect_images = list()
-	// /datum/building_agent = image
-	var/static/list/uniq_images = list()
-	// string = image
+	// string = image()
+	var/static/list/tech_images = list()
+	// string = /datum/religion_tech
+	var/static/list/tech_by_id = list()
+	// string = image()
 	var/static/list/category_images = list()
 
 	var/researching = FALSE
@@ -19,7 +21,7 @@
 	var/end_research_time
 
 	var/current_research = "Ничего"
-	var/datum/building_agent/tech/choosed_tech
+	var/datum/religion_tech/chosen_tech
 	var/tech_timer
 
 	var/list/pylon_around
@@ -30,9 +32,9 @@
 	pylon_around = null
 	if(tech_timer)
 		deltimer(tech_timer)
-	if(choosed_tech)
-		choosed_tech.researching = FALSE
-		choosed_tech = null
+	if(chosen_tech)
+		chosen_tech.researching = FALSE
+		chosen_tech = null
 	return ..()
 
 /obj/structure/cult/tech_table/examine(mob/user, distance)
@@ -70,106 +72,83 @@
 			to_chat(user, "<span class='warning'>По решению Возвышенного последователям запрещено самим исследовать!</span>")
 			return
 
-	if(!aspect_images.len)
-		gen_aspect_images()
-	if(uniq_images.len < religion.available_techs.len)
+	if(tech_images.len < religion.available_techs.len)
 		gen_tech_images(user)
 	if(!category_images.len)
 		gen_category_images()
 
 	var/choice = show_radial_menu(user, src, category_images, tooltips = TRUE, require_near = TRUE)
 
-	switch(choice)
-		if("Аспекты")
-			choose_aspect(user)
-		if("Уникальные технологии")
-			choose_uniq_tech(user)
+	var/list/tech = list()
+	var/list/user_tech_images = list()
+	for(var/tech_id in tech_by_id)
+		var/datum/religion_tech/RT = tech_by_id[tech_id]
+		if(istype(RT, /datum/religion_tech/upgrade_aspect))
+			var/datum/religion_tech/upgrade_aspect/aspect = RT
+			aspect.calculate_costs(religion)
 
-/obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/user)
-	for(var/datum/building_agent/B in uniq_images)
-		B.name = "[initial(B.name)] [B.get_costs()]"
+		var/tech_with_cost = "[RT.info.name] [RT.info.get_costs()]"
+		if(choice == ASPECT_CATEGORY && istype(RT, /datum/religion_tech/upgrade_aspect))
+			tech[tech_with_cost] = tech_id
+			user_tech_images[tech_with_cost] = tech_images[tech_id]
+		else if(choice == UNIQ_CATEGORY && istype(RT, /datum/religion_tech/cult))
+			tech[tech_with_cost] = tech_id
+			user_tech_images[tech_with_cost] = tech_images[tech_id]
+	choose_tech(user, tech, user_tech_images)
 
-	choosed_tech = show_radial_menu(user, src, uniq_images, tooltips = TRUE, require_near = TRUE)
-	if(!choosed_tech || choosed_tech.researching)
+// list/techs is (tech_name_with_cost = tech_id)
+// list/user_techs_images is (tech_name_with_cost = tech_images)
+/obj/structure/cult/tech_table/proc/choose_tech(mob/user, list/techs, list/user_techs_images)
+	var/tech_name_with_cost = show_radial_menu(user, src, user_techs_images, tooltips = TRUE, require_near = TRUE)
+	chosen_tech = tech_by_id[techs[tech_name_with_cost]]
+	if(!chosen_tech)
 		return
-	if(!religion.check_costs(choosed_tech.favor_cost, choosed_tech.piety_cost, user))
+	if(chosen_tech.researching)
+		to_chat(user, "<span class='warning'>Уже изучается.</span>")
+		return
+	if(!religion.check_costs(chosen_tech.info.favor_cost, chosen_tech.info.piety_cost, user))
 		return
 
-	religion.adjust_favor(-choosed_tech.favor_cost)
-	religion.adjust_piety(-choosed_tech.piety_cost)
+	religion.adjust_favor(-chosen_tech.info.favor_cost)
+	religion.adjust_piety(-chosen_tech.info.piety_cost)
 
-	to_chat(user, "<span class='notice'>Вы начали изучение [initial(choosed_tech.name)].</span>")
+	to_chat(user, "<span class='notice'>Вы начали изучение [chosen_tech.info.name].</span>")
 
-	current_research = initial(choosed_tech.name)
-	choosed_tech.researching = TRUE
-	start_activity(CALLBACK(src, PROC_REF(research_tech), choosed_tech))
+	current_research = chosen_tech.info.name
+	chosen_tech.researching = TRUE
+	start_activity(CALLBACK(src, PROC_REF(research_tech), chosen_tech))
 
-/obj/structure/cult/tech_table/proc/research_tech(datum/building_agent/tech/choosed_tech)
-	religion.add_tech(choosed_tech.building_type)
+/obj/structure/cult/tech_table/proc/research_tech(datum/religion_tech/researched)
+	religion.add_tech(researched)
 
-	uniq_images -= choosed_tech
-	religion.available_techs -= choosed_tech
-	qdel(uniq_images[choosed_tech])
+	tech_by_id -= researched.id
+	religion.available_techs -= researched
+	qdel(tech_images[researched.id])
+	tech_images -= researched.id
 
 	end_activity()
-
-/obj/structure/cult/tech_table/proc/choose_aspect(mob/user)
-	// Generates a name with the power of an aspect and upgrade cost
-	for(var/datum/aspect/A in aspect_images)
-		var/datum/aspect/in_religion = religion.aspects[initial(A.name)]
-		A.name = "[initial(A.name)], сила: [in_religion ? in_religion.power : "0"], piety: [get_upgrade_cost(in_religion)]"
-
-	var/datum/aspect/choosed_aspect = show_radial_menu(user, src, aspect_images, tooltips = TRUE, require_near = TRUE)
-	if(!choosed_aspect)
-		return
-	var/datum/aspect/in_religion = religion.aspects[initial(choosed_aspect.name)]
-	if(!religion.check_costs(null, get_upgrade_cost(in_religion), user))
-		return
-
-	religion.adjust_piety(-get_upgrade_cost(in_religion))
-
-	to_chat(user, "<span class='notice'>Вы начали [in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)].</span>")
-	current_research = "[in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)]"
-	start_activity(CALLBACK(src, PROC_REF(upgrade_aspect), choosed_aspect))
-
-/obj/structure/cult/tech_table/proc/upgrade_aspect(datum/aspect/aspect_to_upgrade)
-	if(initial(aspect_to_upgrade.name) in religion)
-		var/datum/aspect/A = religion.aspects[initial(aspect_to_upgrade.name)]
-		A.power += 1
-	else
-		religion.add_aspects(list(aspect_to_upgrade.type = 1))
-
-	end_activity()
-
-/obj/structure/cult/tech_table/proc/get_upgrade_cost(datum/aspect/in_religion)
-	if(!in_religion)
-		var/all_aspects = 0
-		for(var/aspect_name in cult_religion.aspects)
-			all_aspects++
-		var/cost = max(100, 50 + 25 * all_aspects) //We don't count 6 initial aspects and scale for static 150, +50 piety for each new aspect
-		return cost
-	return in_religion.power * 50
 
 /obj/structure/cult/tech_table/proc/gen_category_images()
-	category_images = list(
-		"Аспекты" = aspect_images[pick(aspect_images)],
-		"Уникальные технологии" = uniq_images[pick(uniq_images)],
-	)
+	for(var/name in tech_images)
+		var/is_aspect_tech = istype(tech_by_id[name], /datum/religion_tech/upgrade_aspect)
+		if(!category_images[ASPECT_CATEGORY] && is_aspect_tech)
+			var/image/old_image = tech_images[name]
+			var/image/copy = image(old_image.icon, old_image.loc, old_image.icon_state)
+			category_images[ASPECT_CATEGORY] = copy
+		else if(!category_images[UNIQ_CATEGORY] && !is_aspect_tech)
+			var/image/old_image = tech_images[name]
+			var/image/copy = image(old_image.icon, old_image.loc, old_image.icon_state)
+			category_images[UNIQ_CATEGORY] = copy
+		if(category_images[UNIQ_CATEGORY] && category_images[ASPECT_CATEGORY])
+			break
 
 /obj/structure/cult/tech_table/proc/gen_tech_images(mob/user)
-	uniq_images = list()
-	for(var/datum/building_agent/tech/BA in religion.available_techs)
-		uniq_images[BA] = image(icon = BA.icon, icon_state = BA.icon_state)
-
-/obj/structure/cult/tech_table/proc/gen_aspect_images()
-	var/list/aspects = subtypesof(/datum/aspect)
-	aspect_images = list()
-	for(var/type in aspects)
-		var/datum/aspect/A = new type
-		if(!A.name)
-			qdel(A)
-			continue
-		aspect_images[A] = image(icon = A.icon, icon_state = A.icon_state)
+	tech_images = list()
+	tech_by_id = list()
+	for(var/datum/religion_tech/T in religion.available_techs)
+		tech_images[T.id] = image(icon = T.info.icon, icon_state = T.info.icon_state)
+		tech_by_id[T.id] = T
+	sortTim(tech_by_id, GLOBAL_PROC_REF(cmp_text_asc))
 
 /obj/structure/cult/tech_table/proc/start_activity(datum/callback/end_activity)
 	LAZYINITLIST(pylon_around)
@@ -195,3 +174,6 @@
 
 	current_research = "Ничего"
 	can_unwrench = TRUE
+
+#undef ASPECT_CATEGORY
+#undef UNIQ_CATEGORY

@@ -1,5 +1,5 @@
 //wrapper
-/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity = TRUE, arespect_entrydir=null, aentrydir=null, checkspace=null)
+/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity = TRUE, arespect_entrydir=null, aentrydir=null, checkspace=null, amin_precision=0)
 	var/datum/teleport/instant/science/D = new
 	if(D.start(arglist(args)))
 		return TRUE
@@ -9,6 +9,7 @@
 	var/atom/movable/teleatom //atom to teleport
 	var/atom/destination //destination to teleport to
 	var/precision = 0 //teleport precision
+	var/min_precision = 0 //minimum teleport distance from center (for ring-shaped teleportation)
 	var/datum/effect/effect/system/effectin //effect to show right before teleportation
 	var/datum/effect/effect/system/effectout //effect to show right after teleportation
 	var/soundin //soundfile to play before teleportation
@@ -21,18 +22,20 @@
 	var/entrydir = SOUTH
 
 
-/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null, aentrydir=null, checkspace=null)
+/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null, aentrydir=null, checkspace=null, amin_precision=0)
 	if(!initTeleport(arglist(args)))
 		return FALSE
 	return TRUE
 
-/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity,arespect_entrydir,aentrydir,checkspace)
+/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity,arespect_entrydir,aentrydir,checkspace,amin_precision)
 	if(!setTeleatom(ateleatom))
 		return FALSE
 	if(!setDestination(adestination))
 		return FALSE
 	if(!setPrecision(aprecision))
 		return FALSE
+	if(isnum(amin_precision))
+		min_precision = amin_precision
 	if(adest_checkdensity)
 		dest_checkdensity = adest_checkdensity
 	if(checkspace)
@@ -123,6 +126,8 @@
 			posturfs += T
 		else
 			for(var/turf/T in RANGE_TURFS(precision,center))
+				if(min_precision && get_dist(T, center) < min_precision)
+					continue
 				if(!density_checks(T))
 					continue
 				if(dest_checkspace && isenvironmentturf(T))
@@ -177,10 +182,9 @@
 		if(T.density)
 			return FALSE
 		if(dest_checkdensity == TELE_CHECK_ALL)
-			T.Enter(teleatom)                      //We want do normal bumping/checks with teleatom first (maybe we got access to that door or to push the atom on the other side),
-			var/obj/effect/E = new(center)         //then we do the real check (if we can enter from destination turf onto target turf).
-			E.invisibility = INVISIBILITY_ABSTRACT //Because, checking this with teleatom - won't give us accurate data, since teleatom is far away at this time.
-			if(!T.Enter(E))                        //That's why we test this with the "fake dummy".
+			var/obj/effect/E = new(center)         //Because checking this with teleatom won't give us accurate data, since teleatom is far away at this time.
+			E.invisibility = INVISIBILITY_ABSTRACT //That's why we test this with the "fake dummy".
+			if(!can_enter_turf(E, T))
 				qdel(E)
 				return FALSE
 			qdel(E)

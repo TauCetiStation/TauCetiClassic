@@ -103,12 +103,28 @@
 	add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
 	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
 
+/atom/movable/screen/health/diona
+	icon = 'icons/hud/screen_diona.dmi'
+
 /atom/movable/screen/health_doll
 	icon = 'icons/hud/screen_gen.dmi'
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
 	copy_flags = NONE
+
+/atom/movable/screen/health_doll/Click(location, control, params)
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/H = usr
+	var/willpower_amount
+	if(H.species.flags[NO_WILLPOWER])
+		willpower_amount = "<span class='boldwarning'>НЕТ</span>"
+	else
+		willpower_amount = H.mind.willpower_amount
+	to_chat(usr, "<span class='notice'>Сила Воли: <b>[willpower_amount]</b>.</span>")
+
+	H.mind.do_select_willpower_effect()
 
 /atom/movable/screen/health_doll/add_to_hud(datum/hud/hud)
 	..()
@@ -128,6 +144,31 @@
 	..()
 	update_icon(hud.mymob)
 	hud.mymob.nutrition_icon = src
+
+/atom/movable/screen/nutrition/Click(location, control, params)
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/H = usr
+	if(H.stat != CONSCIOUS)
+		return
+	if(H.species.flags[IS_SYNTHETIC])
+		return
+	if(H.nutrition < NUTRITION_LEVEL_STARVING)
+		to_chat(H, "<span class='boldwarning'>You are starving to death!</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_HUNGRY)
+		to_chat(H, "<span class='boldwarning'>You are starving!</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_FED)
+		to_chat(H, "<span class='boldwarning'>You are very hungry.</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_NORMAL)
+		to_chat(H, "<span class='boldwarning'>You are hungry.</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_WELL_FED)
+		to_chat(H, "<span class='nicegreen'>You don't feel hungry.</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_FULL)
+		to_chat(H, "<span class='nicegreen'>You feel well fed!</span>")
+	else if(H.nutrition < NUTRITION_LEVEL_FAT)
+		to_chat(H, "<span class='nicegreen'>You feel full.</span>")
+	else
+		to_chat(H, "<span class='nicegreen'>Your belly feels great!</span>")
 
 // Gun screens
 /atom/movable/screen/gun

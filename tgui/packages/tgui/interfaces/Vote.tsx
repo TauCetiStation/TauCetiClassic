@@ -12,6 +12,7 @@ import {
   Icon,
 } from '../components';
 import { Window } from '../layouts';
+import { Fragment } from 'inferno';
 
 type Poll = {
   name: string;
@@ -54,9 +55,11 @@ export const Vote = (_, context) => {
 
   const height = Math.min(
     730,
-    90
-    + (!currentPoll || isAdmin ? 45 + 26 * polls.filter(poll => (!poll.adminOnly || !!isAdmin)).length : 0)
-    + (currentPoll ? 135 + 22 * currentPoll.choices.length : 23)
+    90 +
+      (!currentPoll || isAdmin
+        ? 45 + 26 * polls.filter((poll) => !poll.adminOnly || !!isAdmin).length
+        : 0) +
+      (currentPoll ? 135 + 22 * currentPoll.choices.length : 23)
   );
 
   return (
@@ -111,21 +114,25 @@ const VoteInfoModal = (_, context) => {
       свой голос
       <br />
       {currentPoll.minimumWinPercentage ? (
-        <>
+        <Fragment>
           Необходимо набрать минимум{' '}
           <Box inline bold>
             {currentPoll.minimumWinPercentage * 100}%
           </Box>
           , чтобы вариант победил
-        </>
+        </Fragment>
       ) : (
         ''
       )}
       {currentPoll.description && (
-        <>
+        <Fragment>
           <hr />
-          <Box dangerouslySetInnerHTML={{ __html: sanitizeText(currentPoll.description) }} />
-        </>
+          <Box
+            dangerouslySetInnerHTML={{
+              __html: sanitizeText(currentPoll.description),
+            }}
+          />
+        </Fragment>
       )}
       <hr />
       <Button fluid align="center" onClick={() => setinfoModalOpen(false)}>
@@ -165,15 +172,13 @@ const Choices = (_, context) => {
           ) : undefined
         }>
         {!!currentPoll && currentPoll.choices.length !== 0 ? (
-          <>
+          <Fragment>
             {!currentPoll.showWarning ? (
               ''
             ) : (
               <NoticeBox>{currentPoll.poll.message}</NoticeBox>
             )}
-            {!!currentPoll.question && (
-              <Box italic>{currentPoll.question}</Box>
-            )}
+            {!!currentPoll.question && <Box italic>{currentPoll.question}</Box>}
             <Divider />
             <Stack vertical>
               <Stack fill justify="space-around">
@@ -181,7 +186,7 @@ const Choices = (_, context) => {
                 <Box bold>Голоса</Box>
               </Stack>
               <br />
-              {currentPoll.choices.map(choice => (
+              {currentPoll.choices.map((choice) => (
                 <Stack key={choice.ref} justify="space-between">
                   <Box height="22px">
                     <Button
@@ -192,18 +197,24 @@ const Choices = (_, context) => {
                       onClick={() =>
                         act('putVote', {
                           choiceRef: choice.ref,
-                        })}>
+                        })
+                      }>
                       {choice.name.replace(/^\w/, (c) => c.toUpperCase())}
                     </Button>
                     {!!choice.selected && (
-                      <Icon name="vote-yea" color="green" ml={1} verticalAlign="super" />
+                      <Icon
+                        name="vote-yea"
+                        color="green"
+                        ml={1}
+                        verticalAlign="super"
+                      />
                     )}
                   </Box>
                   <Box mr={15}>{choice.votes}</Box>
                 </Stack>
               ))}
             </Stack>
-          </>
+          </Fragment>
         ) : (
           <NoticeBox info mb="0">
             {!currentPoll
@@ -225,44 +236,52 @@ const ListPolls = (_, context) => {
       <Section title="Начать голосование">
         <Stack vertical justify="space-between">
           {polls ? (
-            polls.map(poll => (!poll.adminOnly || !!isAdmin) && (
-              <Stack.Item key={poll.name}>
-                <Stack horizontal>
-                  {!!isAdmin && (
-                    <Stack.Item>
-                      <Button
-                        width={9.5}
-                        textAlign="center"
-                        onClick={() =>
-                          act('toggleAdminOnly', {
-                            pollRef: poll.type,
-                          })}>
-                        {poll.adminOnly ? 'Только админы' : 'Разрешено всем'}
-                      </Button>
-                    </Stack.Item>
-                  )}
-                  <Stack.Item>
-                    <Button
-                      disabled={
-                        (!poll.canStart && !isAdmin) || poll.forceBlocked
-                      }
-                      color={
-                        !isAdmin
-                          ? undefined
-                          : !poll.canStart
-                            ? 'red'
-                            : undefined
-                      }
-                      tooltip={poll.message}
-                      content={poll.name}
-                      onClick={() =>
-                        act('callVote', {
-                          pollRef: poll.type,
-                        })} />
+            polls.map(
+              (poll) =>
+                (!poll.adminOnly || !!isAdmin) && (
+                  <Stack.Item key={poll.name}>
+                    <Stack horizontal>
+                      {!!isAdmin && (
+                        <Stack.Item>
+                          <Button
+                            width={9.5}
+                            textAlign="center"
+                            onClick={() =>
+                              act('toggleAdminOnly', {
+                                pollRef: poll.type,
+                              })
+                            }>
+                            {poll.adminOnly
+                              ? 'Только админы'
+                              : 'Разрешено всем'}
+                          </Button>
+                        </Stack.Item>
+                      )}
+                      <Stack.Item>
+                        <Button
+                          disabled={
+                            (!poll.canStart && !isAdmin) || poll.forceBlocked
+                          }
+                          color={
+                            !isAdmin
+                              ? undefined
+                              : !poll.canStart
+                                ? 'red'
+                                : undefined
+                          }
+                          tooltip={poll.message}
+                          content={poll.name}
+                          onClick={() =>
+                            act('callVote', {
+                              pollRef: poll.type,
+                            })
+                          }
+                        />
+                      </Stack.Item>
+                    </Stack>
                   </Stack.Item>
-                </Stack>
-              </Stack.Item>
-            ))
+                )
+            )
           ) : (
             <NoticeBox info>Нет доступных голосований!</NoticeBox>
           )}

@@ -19,6 +19,11 @@
 /turf/simulated/floor/carpet/make_plating()
 	ChangeTurf(/turf/simulated/floor/plating)
 
+/turf/simulated/floor/carpet/Entered(atom/movable/O)
+	..()
+	if(ishuman(O))
+		SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
+
 /turf/unsimulated/floor/carpet // copypaste because we still have unsim as different type :(
 	name = "red classic carpet"
 	icon_state = "center_8"

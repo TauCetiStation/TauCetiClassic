@@ -5,7 +5,7 @@
 
 /obj/item/weapon/storage/backpack
 	name = "backpack"
-	cases = list("рюкзака", "рюкзаку", "рюкзак", "рюкзаком", "рюкзаке")
+	cases = list("рюкзак", "рюкзака", "рюкзаку", "рюкзак", "рюкзаком", "рюкзаке")
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
@@ -80,7 +80,7 @@
 
 /obj/item/weapon/storage/backpack/santabag
 	name = "Santa's Gift Bag"
-	cases = list("мешка", "мешку", "мешок", "мешком", "мешке")
+	cases = list("мешок", "мешка", "мешку", "мешок", "мешком", "мешке")
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
@@ -130,7 +130,7 @@
 
 /obj/item/weapon/storage/backpack/satchel
 	name = "leather satchel"
-	cases = list("сумки", "сумке", "сумку", "сумкой", "сумке")
+	cases = list("сумка", "сумки", "сумке", "сумку", "сумкой", "сумке")
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 	item_state = "satchel"
@@ -239,7 +239,7 @@
 
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"
-	cases = list("вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
+	cases = list("вещмешок", "вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
 	icon_state = "kitbag"
 
 /obj/item/weapon/storage/backpack/medbag
@@ -326,33 +326,23 @@
 	item_state = "satchel-flat"
 	w_class = SIZE_SMALL //Can fit in backpacks itself.
 	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
-	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
-
-/obj/item/weapon/storage/backpack/satchel/flat/hide(intact)
-	if(intact)
-		invisibility = 101
-		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
-		icon_state = "[initial(icon_state)]2"
-	else
-		invisibility = initial(invisibility)
-		anchored = FALSE
-		icon_state = initial(icon_state)
 
 /obj/item/weapon/storage/backpack/satchel/flat/atom_init()
 	. = ..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
 
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE, use_anchor = TRUE)
+
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "suspicious looking dufflebag"
-	cases = list("вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
+	cases = list("вещмешок", "вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
 	desc = "A large dufflebag for holding extra tactical supplies."
 	icon_state = "duffle-syndie"
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
 	max_storage_space = DEFAULT_BACKPACK_STORAGE + 10
-	slowdown = 0.5
 
 /obj/item/weapon/storage/backpack/dufflebag/marinad
 	name = "marine dufflebag"
@@ -403,11 +393,10 @@
 
 /obj/item/weapon/storage/backpack/henchmen
 	name = "wings"
-	cases = list("крыльев", "крыльям", "крылья", "крыльями", "крыльях")
+	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
 
 /obj/item/weapon/storage/backpack/dufflebag/cops
 	name = "NanoTrasen bag"
 	desc = "A large duffel bag for holding extra NanoTrasen gear."
-	slowdown = 0

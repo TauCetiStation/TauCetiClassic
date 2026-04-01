@@ -1,5 +1,8 @@
 # Datum Component System (DCS)
 
+> [!WARNING]
+> Более подробный гайд доступен на [hackmd у tg](https://hackmd.io/@tgstation/SignalsComponentsElements). Мы скорее всего должны перенести апи-документацию ниже в сам код и полностью переписать этот README.
+
 ## Concept
 
 Loosely adapted from /vg/. This is an entity component system for adding behaviours to datums when inheritance doesn't quite cut it. By using signals and events instead of direct inheritance, you can inject behaviours without hacky overloads. It requires a different method of thinking, but is not hard to use correctly. If a behaviour can have application across more than one thing. Make it generic, make it a component. Atom/mob/obj event? Give it a signal, and forward it's arguments with a `SendSignal()` call. Now every component that want's to can also know about this happening.

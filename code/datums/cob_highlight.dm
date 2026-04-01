@@ -9,7 +9,7 @@
 	var/obj/item/stack/using_this = null
 	var/turf/over_this = null
 	var/busy = FALSE
-	var/build_direction = NORTH
+	var/build_direction = SOUTH
 	var/image/b_overlay = null
 	var/obj/effect/holo_build = null
 
@@ -66,14 +66,14 @@
 	else if(using_this.get_amount() < from_recipe.req_amount)
 		. = FALSE
 		to_chat(M, "<span class='notice'>You haven't got enough [using_this.name] to build \the [from_recipe.title]!</span>")
-	else if(from_recipe.one_per_turf && (locate(from_recipe.result_type) in here))
-		. = FALSE
-		to_chat(M, "<span class='warning'> There is another [from_recipe.title] here!</span>")
 	else if(!is_type_in_list(here, from_recipe.floor_path))
 		. = FALSE
 		to_chat(M, "<span class='warning'>\The [from_recipe.title] must be constructed on the floor!</span>")
 	else if(here.contents.len > 15) //we don't want for() thru tons of atoms.
+		to_chat(M, "<span class='warning'>Too many items on the tile!</span>")
 		. = FALSE
+	else if(from_recipe.can_place(here, build_direction))
+		to_chat(M, "<span class='warning'>You can't build another [from_recipe.title] here!</span>")
 	else if(!origin.CanPass(null, here, 0))
 		. = FALSE
 	else

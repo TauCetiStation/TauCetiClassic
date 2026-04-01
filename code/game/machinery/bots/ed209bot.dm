@@ -73,7 +73,7 @@
 		Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 		Maintenance panel panel is [open ? "opened" : "closed"]"},
 
-		"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
+		"<A href='byond://?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user) || isobserver(user))
 		if(!lasertag_color)
@@ -83,15 +83,15 @@
 				Operating Mode: []<BR>
 				Report Arrests: []"},
 
-				"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-				"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-				"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-				"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>" )
+				"<A href='byond://?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+				"<A href='byond://?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+				"<A href='byond://?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+				"<A href='byond://?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>" )
 
 		dat += text({"<BR>
 			Auto Patrol: []"},
 
-			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+			"<A href='byond://?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 	var/datum/browser/popup = new(user, "window=autosec", src.name)
 	popup.set_content(dat)
@@ -463,7 +463,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
-				if(I.use_tool(src, user, 40, volume = 100))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
 					if(build_step == 8)
 						build_step++
 						name = "armed [name]"

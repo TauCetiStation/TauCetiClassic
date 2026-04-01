@@ -103,14 +103,15 @@
 			if(beaker)
 				if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
 					H.blood_trans_to(beaker, 1)
+					playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
 						H.reagents.trans_to(beaker, 3)
 						H.blood_trans_to(beaker, 1)
 	return
 
 /obj/machinery/sleeper/deconstruct(disassembled)
-	for(var/atom/movable/A as anything in src)
-		A.forceMove(loc)
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
 	..()
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
@@ -154,9 +155,9 @@
 		if(EXPLODE_LIGHT)
 			if(prob(75))
 				return
-	for(var/atom/movable/A as anything in src)
-		A.loc = src.loc
-		ex_act(severity)
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
 	qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
@@ -198,8 +199,8 @@
 	open_machine()
 
 /obj/machinery/sleeper/Destroy()
-	var/turf/T = loc
-	T.contents += contents
+	for(var/atom/movable/A as anything in contents)
+		A.forceMove(get_turf(src))
 	return ..()
 
 /obj/machinery/sleeper/verb/remove_beaker()
@@ -247,19 +248,19 @@
 
 	dat += "</div>"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
+	dat += "<A href='byond://?src=\ref[src];refresh=1'>Scan</A>"
 
-	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
+	dat += "<A href='byond://?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
 
 	dat += "<h3>Beaker</h3>"
 
 	if(src.beaker)
-		dat += "<A href='?src=\ref[src];removebeaker=1'>Remove Beaker</A>"
+		dat += "<A href='byond://?src=\ref[src];removebeaker=1'>Remove Beaker</A>"
 		if(filtering)
-			dat += "<A href='?src=\ref[src];togglefilter=1'>Stop Dialysis</A>"
+			dat += "<A href='byond://?src=\ref[src];togglefilter=1'>Stop Dialysis</A>"
 			dat += text("<BR>Output Beaker has [] units of free space remaining<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 		else
-			dat += "<A href='?src=\ref[src];togglefilter=1'>Start Dialysis</A>"
+			dat += "<A href='byond://?src=\ref[src];togglefilter=1'>Start Dialysis</A>"
 			dat += text("<BR>Output Beaker has [] units of free space remaining", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 	else
 		dat += "<BR>No Dialysis Output Beaker is present."
@@ -267,14 +268,14 @@
 	dat += "<h3>Injector</h3>"
 
 	if(src.occupant)
-		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
+		dat += "<A href='byond://?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
 	else
 		dat += "<span class='disabled'>Inject Inaprovaline</span>"
 	if(occupant && occupant.health > min_health)
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
-				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
+				dat += "<BR><A href='byond://?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
 	else
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
@@ -290,6 +291,8 @@
 	if(!. || usr == occupant)
 		return FALSE
 
+	if(href_list)
+		playsound(src, 'sound/machines/select.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	if(href_list["refresh"])
 		updateUsrDialog()
 	else if(href_list["open"])
@@ -305,19 +308,23 @@
 			inject_chem(usr, href_list["inject"])
 		else
 			to_chat(usr, "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>")
+			playsound(src, 'sound/machines/synth_no.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	else
 		to_chat(usr, "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
+		playsound(src, 'sound/machines/synth_no.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	updateUsrDialog()
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
 		..()
+		playsound(src, 'sound/machines/sleeper_open.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		if(beaker)
 			beaker.loc = src
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
 		to_chat(target, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
+		playsound(src, 'sound/machines/sleeper_close.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
@@ -326,6 +333,7 @@
 			occupant.reagents.add_reagent(chem, 10)
 		var/units = round(occupant.reagents.get_reagent_amount(chem))
 		to_chat(user, "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>")
+		playsound(src, 'sound/machines/sleeper_inject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)

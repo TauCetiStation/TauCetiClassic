@@ -17,6 +17,33 @@
 
 	var/list/files = list(  )
 
+/obj/item/weapon/card/ticket // tickets for ticket machine
+	name = "ticket"
+	desc = "Билет"
+	icon = 'icons/obj/card.dmi'
+	icon_state = "ticket"
+	item_state_world = "ticket_world"
+
+	maptext_x = 1
+	maptext_y = 3
+
+	var/number = 0
+
+/obj/item/weapon/card/ticket/update_world_icon()
+	. = ..()
+	if(icon_state == initial(icon_state))
+		maptext = {"<div style="font-size:3;color:#595757;font-family:'StatusDisplays';text-align:center;" valign="middle">[number]</div>"}
+	else
+		maptext = ""
+
+/obj/item/weapon/card/ticket/atom_init(mapload, newnumber)
+	. = ..()
+
+	number = newnumber
+
+	maptext = {"<div style="font-size:3;color:#595757;font-family:'StatusDisplays';text-align:center;" valign="middle">[number]</div>"}
+	desc += " №[number]."
+
 /obj/item/weapon/card/emag_broken
 	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
 	name = "broken cryptographic sequencer"
@@ -90,7 +117,6 @@
 	item_state = "card-id"
 	item_state_world = "data_world"
 	layer = 3
-	level = 2
 	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
 	function = "teleporter"
 	data = "Clown Land"
@@ -119,6 +145,9 @@
 	var/assignment = null	//can be alt title or the actual job
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+
+	// by default hud looks for icon by assignment/rank, this allows to override it with custom icon
+	var/sec_hud_icon
 
 /obj/item/weapon/card/id/atom_init()
 	. = ..()
@@ -171,6 +200,10 @@
 	return
 
 /obj/item/weapon/card/id/proc/assign(real_name)
+	if(!istext(real_name))
+		stack_trace("Expected text, got reference")
+		real_name = "[real_name]"
+
 	name = "[real_name]'s ID Card[assignment ? " ([assignment])" : ""]"
 	registered_name = real_name
 
@@ -219,7 +252,7 @@
 
 /obj/item/weapon/card/id/blueshield
 	name = "identification card"
-	desc = "A card issued to blueshield officer."
+	desc = "ID карта офицера, которая олицетворяет личный щит командования станции и представителей Центрального Командования."
 	icon_state = "blueshield"
 	item_state = "int_id"
 	item_state_world = "blueshield_world"
@@ -362,7 +395,7 @@
 					tgui_alert(usr, "Invalid name.")
 					return
 
-				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
+				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant"))
 				if(!u)
 					tgui_alert(usr, "Invalid assignment.")
 					return
@@ -451,6 +484,7 @@
 	assignment = "General"
 	rank = "NanoTrasen Representative"
 	customizable_view = TRAITOR_VIEW
+	sec_hud_icon = "Centcom"
 
 /obj/item/weapon/card/id/centcom/atom_init()
 	. = ..()
@@ -511,6 +545,7 @@
 
 	icon_state = "ert"
 	item_state_world = "ert_world"
+	sec_hud_icon = "Centcom"
 
 /obj/item/weapon/card/id/space_police/atom_init()
 	. = ..()
@@ -557,7 +592,7 @@
 
 /obj/item/weapon/card/id/old_station
 	name = "captain's ID"
-	desc = "Старая ID карта, ранее она принадлежала капитану станции 'LCR'."
+	desc = "Старая, повреждённая ID карта, ранее она принадлежала ■ж■■■ ■■н■у, капитану КСН \"Сизиф\"."
 	icon_state = "gold"
 	item_state = "gold_id"
 	item_state_world = "gold_world"
@@ -565,7 +600,7 @@
 
 /obj/item/weapon/card/id/old_station/eng
 	name = "engineer ID"
-	desc = "ID карта, принадлежащая старшему сотруднику инженерного отдела станции 'LCR'."
+	desc = "Старая ID карта, принадлежащая старшему сотруднику инженерного отдела станции \"Сизиф\"."
 	icon_state = "eng"
 	item_state = "eng_id"
 	item_state_world = "eng_world"
@@ -575,7 +610,7 @@
 
 /obj/item/weapon/card/id/old_station/med
 	name = "medic ID"
-	desc = "ID карта, принадлежащая старшему сотруднику медицинского отдела станции 'LCR'."
+	desc = "Старая ID карта, принадлежащая старшему сотруднику медицинского отдела станции \"Сизиф\"."
 	icon_state = "med"
 	item_state = "med_id"
 	item_state_world = "med_world"

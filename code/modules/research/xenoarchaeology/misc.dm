@@ -7,7 +7,7 @@
 /obj/structure/noticeboard/plastic/anomaly/atom_init()
 	. = ..()
 	//add some memos
-	var/obj/item/weapon/stamp/rd/S = new
+	var/obj/item/weapon/stamp/sci/rd/S = new
 
 	var/obj/item/weapon/paper/P = new
 	P.name = "Memo RE: proper analysis procedure"
@@ -58,6 +58,8 @@
 	new /obj/item/weapon/book/manual/anomaly_testing(src)
 	new /obj/item/weapon/book/manual/anomaly_spectroscopy(src)
 	new /obj/item/weapon/book/manual/stasis(src)
+	new /obj/item/weapon/book/skillbook/engineering(src)
+	new /obj/item/weapon/book/skillbook/robust(src)
 	update_icon()
 
 //---- Lockers and closets

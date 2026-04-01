@@ -83,6 +83,15 @@
 /datum/dna/gene/disability/epilepsy/New()
 	block=HEADACHEBLOCK
 
+/datum/dna/gene/disability/epilepsy/activate(mob/M, connected, flags)
+	if(istype(M))
+		M.AddComponent(/datum/component/epilepsy, IS_EPILEPTIC_NOT_IN_PARALYSIS, (EPILEPSY_PARALYSE_EFFECT | EPILEPSY_JITTERY_EFFECT), GENE_TYPE_EPILEPSY)
+
+/datum/dna/gene/disability/epilepsy/deactivate(mob/M, connected, flags)
+	if(!istype(M))
+		return
+	SEND_SIGNAL(M, COMSIG_REMOVE_GENE_DISABILITY, GENE_TYPE_EPILEPSY)
+
 /datum/dna/gene/disability/cough
 	name="Coughing"
 	activation_message="You start coughing."

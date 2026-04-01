@@ -16,6 +16,7 @@ components:
   ## Код ##
   
   # /code/
+  code/__DEFINES/_translation.dm: AzzyDreemurr13
   code/modules/client/preferences_savefile.dm: volas
 
   ## Конфиги ##
@@ -23,10 +24,10 @@ components:
 
   ## Иконки ##
   icons/:
-    /sprites-department
+    TauCetiStation/sprites-department
 
   ## Карты ##
-  maps/boxstation/: /maps-department
+  maps/boxstation/: TauCetiStation/maps-department
   #maps/delta/: Deahaka
   #maps/falcon/: Tap0r
   #maps/gamma/: AgRevol
@@ -41,7 +42,8 @@ components:
   "*.py": volas
   "*.sh": volas
 
-  .github/: /maintainers
+  .github/: TauCetiStation/maintainers
+  .github/wiki/TRANSLATION.md: AzzyDreemurr13
 
 ignored-authors:
   - dependabot

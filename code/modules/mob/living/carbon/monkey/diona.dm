@@ -27,7 +27,7 @@
 	universal_speak = FALSE      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
-
+	var/tmp/image/eyes
 	var/list/saved_quirks
 
 /mob/living/carbon/monkey/diona/podman
@@ -48,11 +48,22 @@
 
 	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
 
+/mob/living/carbon/monkey/diona/update_icons()
+	. = ..()
+	update_eyes()
+
+/mob/living/carbon/monkey/diona/proc/update_eyes()
+	cut_overlay(eyes)
+	add_overlay(eyes)
+
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
 	gender = NEUTER
 	greaterform = DIONA
 	add_language(LANGUAGE_ROOTSPEAK)
+	eyes = image(icon, "eyes_[icon_state]", layer = ABOVE_LIGHTING_LAYER)
+	eyes.plane = LIGHTING_LAMPS_PLANE
+	luminosity = 1
 
 /mob/living/carbon/monkey/diona/podman/atom_init()
 	. = ..()
@@ -324,7 +335,7 @@
 
 	if(!M || !src) return
 
-	if(M.species.flags[NO_BLOOD])
+	if(HAS_TRAIT(M, TRAIT_NO_BLOOD))
 		to_chat(src, "<span class='warning'>That donor has no blood to take.</span>")
 		return
 
@@ -364,7 +375,7 @@
 	var/message_range = world.view
 
 	if(client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='warning'>You cannot speak in IC (Muted).</span>")
 			return
 

@@ -60,7 +60,7 @@
 				update_icon()
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-				if(O.use_tool(src, user, 100, volume = 50))
+				if(O.use_tool(src, user, 100, volume = 50, quality = QUALITY_PULSING))
 					lock = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 					playsound(src, 'sound/machines/airlock/bolts_down_2.ogg', VOL_EFFECTS_MASTER)

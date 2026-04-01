@@ -4,6 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "signmaker"
 	item_state = "electronic"
+	item_state_world = "signmaker_world"
 	force = 5
 	w_class = SIZE_TINY
 	throwforce = 0

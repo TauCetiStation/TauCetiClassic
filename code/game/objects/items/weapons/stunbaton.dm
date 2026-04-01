@@ -24,6 +24,7 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")
@@ -72,6 +73,9 @@
 	if(!status)
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 		return
+	// Make hit harm-sound for enabled baton
+	if(user.a_intent == INTENT_HARM)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	//Help for administration
 	M.log_combat(user, "stunned (attempt) with [name]")
 	if(charges < 0)

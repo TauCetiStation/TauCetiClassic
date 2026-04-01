@@ -53,3 +53,11 @@
 	//Outputs: Boolean if can pass.
 
 	return !density
+
+//allows people to pass through it
+
+/obj/effect/energy_field/forts
+	desc = "Impenetrable field of energy, capable of blocking anything unlive as long as it's active."
+
+/obj/effect/energy_field/forts/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return ishuman(mover)

@@ -75,7 +75,7 @@
 /datum/robot_component/armour
 	name = "armour plating"
 	external_type = /obj/item/robot_parts/robot_component/armour
-	max_damage = 25
+	max_damage = 100
 
 
 // ACTUATOR

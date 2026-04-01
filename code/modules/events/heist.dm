@@ -3,7 +3,7 @@
 	endWhen      = 120
 
 /datum/event/heist/start()
-	if(!global.heiststart.len)
+	if(!length(landmarks_list["Heist"]))
 		kill()
 		return
 

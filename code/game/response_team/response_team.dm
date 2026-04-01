@@ -42,7 +42,7 @@ var/global/can_call_ert
 		return
 	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 		return
-	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
+	if(code_name_eng[security_level] != "red") // Allow admins to reconsider if the alert level isn't Red
 
 		if(tgui_alert(usr, "На станции не введён красный код. Вы всё ещё хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 			return
@@ -64,7 +64,7 @@ var/global/can_call_ert
 		return 0
 
 	var/datum/response_team/team
-	var/confirm = tgui_alert(usr, "Хотите указать, какой ОБР вызвать?", "ERT", list("Да", "Случайный", "Отмена"))
+	var/confirm = tgui_alert(usr, "Хотите указать, какой ОБР вызвать?", "ОБР", list("Да", "Случайный", "Отмена"))
 	if(confirm == "Отмена")
 		return
 	if(confirm == "Случайный")
@@ -74,14 +74,14 @@ var/global/can_call_ert
 		var/choice = input("Какой?") as anything in allowed_ert_teams
 		team = choice
 	var/changing_objective = FALSE
-	var/custom_objective = "Help the station crew."
+	var/custom_objective = "Помогите экипажу станции"
 	if(team.fixed_objective)
 		var/objective_choice = tgui_alert(usr, "У этого ОБР есть предусмотренная задача. Хотите поменять?", "ERT", list("Нет", "Да"))
 		if(objective_choice == "Да")
 			changing_objective = TRUE
-			custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Help the station crew"))
+			custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Настройка цели", "Помогите экипажу станции"))
 	else
-		custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Help the station crew"))
+		custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Настройка цели", "Помогите экипажу станции"))
 		changing_objective = TRUE
 
 	create_spawners(team.spawner, team.spawners_amount)
@@ -96,9 +96,13 @@ var/global/can_call_ert
 	var/datum/announcement/centcomm/ert/announcement = new
 	announcement.play()
 
-/client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
+/client/proc/create_human_apperance(mob/living/carbon/human/H, _name, allow_name_choice = FALSE)
 	//todo: god damn this.
 	//make it a panel, like in character creation
+	//upd: please (also as option we can take current character from client preferences)
+	if(allow_name_choice)
+		_name = sanitize_name(input(src, "Выберите имя.", "Создание персонажа", _name))
+
 	var/new_facial = input(src, "Выберите цвет растительности на лице.", "Создание персонажа") as color
 	if(new_facial)
 		H.r_facial = hex2num(copytext(new_facial, 2, 4))
@@ -117,12 +121,17 @@ var/global/can_call_ert
 		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=альбинос, 35=белый, 150=чёрный, 220='очень' чёрный)", "Создание персонажа")  as text
+	if(H.species.flags[HAS_SKIN_TONE])
+		var/new_tone = input(src, "Выберите цвет кожи", "Создание персонажа") in global.skin_tones_by_ru_name
+		var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+		H.s_tone = T.name
 
-	if (!new_tone)
-		new_tone = 35
-	H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	H.s_tone = -H.s_tone + 35
+	if(H.species.flags[HAS_SKIN_COLOR])
+		var/new_skin = input(src, "Выберите цвет кожи", "Xenos Skin") as null|color
+		if(new_skin)
+			H.r_skin = hex2num(copytext(new_skin, 2, 4))
+			H.g_skin = hex2num(copytext(new_skin, 4, 6))
+			H.b_skin = hex2num(copytext(new_skin, 6, 8))
 
 	// hair
 	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
@@ -151,9 +160,7 @@ var/global/can_call_ert
 	if(new_fstyle)
 		H.f_style = new_fstyle
 
-	H.apply_recolor()
-	H.update_hair()
-	H.update_body()
+	H.update_body(update_preferences = TRUE)
 	H.check_dna(H)
 
 	if(!_name)

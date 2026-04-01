@@ -26,17 +26,22 @@
 /mob/living/silicon/telepathy_targetable()
 	return FALSE
 
-/mob/proc/telepathy_eavesdrop(atom/source, message, verb, datum/language/language = null)
+// todo: rewrite telepathy as native hear_say with HEAR_PASS flag and add remote_hearers to get_listening_objs()
+// this code is just a mistake
+// or burn all current say code and write it again
+/mob/proc/telepathy_eavesdrop(atom/source, message, verb, datum/language/language = null, runechat_message)
 	for(var/mob/M as anything in remote_hearers)
-		M.telepathy_hear_eavesdrop(source, src, message, verb, language)
+		M.telepathy_hear_eavesdrop(source, src, message, verb, language, runechat_message)
 
-/mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language)
+/mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language, runechat_message)
 	var/dist = get_dist(src, hearer)
 	if(z != hearer.z)
 		dist += 25
 
 	if(source)
 		dist += get_dist(source, hearer)
+
+/* we should not apply stars() at this stage, because some messages are already formatted html
 
 	var/star_chance = 0
 	if(dist > CLEAR_TELEPATHY_RANGE)
@@ -47,12 +52,10 @@
 
 	if(star_chance)
 		message = stars(message, star_chance)
+*/
 
 	var/mob/M = hearer
 	if(ismob(hearer))
-		if(M.remote_hearers.len > CLEAR_TELEPATHY_LISTENERS)
-			star_chance += M.remote_hearers.len * 10
-
 		if(M.next_telepathy_clue < world.time && prob(CLEAR_TELEPATHY_RANGE - dist))
 			to_chat(M, "<span class='warning'>You feel as if somebody is eavesdropping on you.</span>")
 			M.next_telepathy_clue = world.time + 30 SECONDS
@@ -60,6 +63,7 @@
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
 
 	telepathy_eavesdrop(source, message, verb, language)
+	show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
 
 /mob/proc/add_remote_hearer(mob/hearer)
 	LAZYADD(remote_hearers, hearer)

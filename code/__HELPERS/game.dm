@@ -426,22 +426,6 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/GetRedPart(const/hexa)
-	return hex2num(copytext(hexa,2,4))
-
-/proc/GetGreenPart(const/hexa)
-	return hex2num(copytext(hexa,4,6))
-
-/proc/GetBluePart(const/hexa)
-	return hex2num(copytext(hexa,6,8))
-
-/proc/GetHexColors(const/hexa)
-	return list(
-			GetRedPart(hexa),
-			GetGreenPart(hexa),
-			GetBluePart(hexa)
-		)
-
 /proc/MixColors(const/list/colors)
 	var/list/reds = list()
 	var/list/blues = list()
@@ -449,9 +433,9 @@
 	var/list/weights = list()
 
 	for (var/i = 0, ++i <= colors.len)
-		reds.Add(GetRedPart(colors[i]))
-		blues.Add(GetBluePart(colors[i]))
-		greens.Add(GetGreenPart(colors[i]))
+		reds.Add(GETREDPART(colors[i]))
+		blues.Add(GETBLUEPART(colors[i]))
+		greens.Add(GETGREENPART(colors[i]))
 		weights.Add(1)
 
 	var/r = mixOneColor(weights, reds)
@@ -473,7 +457,7 @@
 		|New player notify
 		|Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
 		|Byond profile: <a href='[player_byond_profile]'>open</a>
-		|Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"})
+		|Guard report: <a href='byond://?_src_=holder;guard=\ref[M]'>show</a>"})
 
 		message_admins(adminmsg, emphasize = TRUE)
 
@@ -730,7 +714,7 @@
 	return TRUE
 
 /atom/proc/check_sprite()
-	if(icon_state in icon_states(icon))
+	if(icon_exists(icon, icon_state))
 		return TRUE
 	return FALSE
 

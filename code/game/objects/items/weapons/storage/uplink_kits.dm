@@ -121,13 +121,6 @@
 	. = ..()
 	new /obj/item/weapon/implanter/freedom(src)
 
-/obj/item/weapon/storage/box/syndie_kit/imp_compress
-	name = "box (C)"
-
-/obj/item/weapon/storage/box/syndie_kit/imp_compress/atom_init()
-	new /obj/item/weapon/implanter/compressed(src)
-	. = ..()
-
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive
 	name = "box (E)"
 

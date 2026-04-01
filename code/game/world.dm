@@ -8,10 +8,20 @@ var/global/it_is_a_snow_day = FALSE
 	enable_debugger()
 #endif
 
+#ifdef EARLY_PROFILE
+	Profile(PROFILE_RESTART)
+	Profile(PROFILE_RESTART, type = "sendmaps")
+#endif
+
 	it_is_a_snow_day = prob(50)
 
 	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
+		warning("Your server's byond version does not meet the recommended requirements for this server. Please update BYOND")
+
+#ifndef OPENDREAM
+	if(!(/client::authenticate))
+		warning("Byond hub authentication is disabled for clients.")
+#endif
 
 	global.bridge_secret = world.params["bridge_secret"]
 	world.params = null
@@ -40,7 +50,7 @@ var/global/it_is_a_snow_day = FALSE
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
-	LoadBans()
+	load_guard_blacklist()
 
 	spawn
 		changelog_hash = trim(get_webpage(config.changelog_hash_link))
@@ -51,8 +61,8 @@ var/global/it_is_a_snow_day = FALSE
 
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
-		attachment_title = "Server starting up, new round will start soon",
-		attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+		attachment_title = "Сервер запущен, скоро начнется новый раунд",
+		attachment_msg = BRIDGE_JOIN_LINKS,
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 		mention = BRIDGE_MENTION_ROUNDSTART,
 	)
@@ -78,8 +88,7 @@ var/global/it_is_a_snow_day = FALSE
 #endif
 
 	if(config.kick_inactive)
-		spawn(15 MINUTES)
-			KickInactiveClients()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(KickInactiveClients)), 15 MINUTES)
 
 #undef RECOMMENDED_VERSION
 
@@ -102,6 +111,7 @@ var/global/it_is_a_snow_day = FALSE
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
+	global.icon_lookup_log = file("[log_debug_directory]/icon_lookup.log")
 
 	#ifdef REFERENCE_TRACKING
 	global.gc_log  = file("[log_debug_directory]/gc_debug.log")
@@ -147,7 +157,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 
 		var/list/s = list()
 		s["version"] = game_version
-		s["mode"] = custom_event_msg ? "event" : master_mode
+		s["mode"] = SSevents.custom_event_mode ? SSevents.custom_event_mode : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
 		s["ai"] = config.allow_ai
@@ -236,9 +246,7 @@ var/global/shutdown_processed = FALSE
 	PreShutdown(end_state)
 
 	for(var/client/C in clients)
-		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 		C.tgui_panel?.send_roundrestart()
-		C << link(BYOND_JOIN_LINK)
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")
 	shutdown_processed = TRUE
@@ -263,13 +271,13 @@ var/global/shutdown_processed = FALSE
 
 	..()
 
-/world/proc/KickInactiveClients()
+/proc/KickInactiveClients()
 	for (var/client/C in clients)
 		if (!(C.holder || C.supporter) && C.is_afk())
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
 			QDEL_IN(C, 2 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(KickInactiveClients)), 5 MINUTES)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(KickInactiveClients)), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")
@@ -379,6 +387,31 @@ var/global/shutdown_processed = FALSE
 			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
 			log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by [enabled_by]. Active hours left: [active_hours_left]")
 
+/world/proc/load_guard_blacklist()
+	if(!config.guard_enabled || !fexists("config/guard_blacklist.txt"))
+		return
+
+	var/L = file2list("config/guard_blacklist.txt")
+
+	for(var/line in L)
+		line = trim(line)
+
+		if(!length(line) || line[1] == "#")
+			continue
+
+		var/pos = findtext(line," ")
+		var/code = trim(copytext(line, 1, pos))
+		var/value = trim(copytext(line, pos))
+
+		if(!length(value)) // don't fuck up
+			continue
+
+		switch(code)
+			if("IP")
+				guard_blacklist["IP"] += value
+			if("ISP")
+				guard_blacklist["ISP"] += value
+
 /world/proc/load_supporters()
 	if(config.allow_donators && fexists("config/donators.txt"))
 		var/L = file2list("config/donators.txt")
@@ -451,57 +484,26 @@ var/global/shutdown_processed = FALSE
 /world/proc/update_status()
 	var/s = ""
 
-	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
+	if (config && config.siteurl)
+		s += "<a href=\"[config.siteurl]\">"
 
-	s += "<b>[station_name()]</b>";
+	s += "<b>"
+
+	if (config && config.server_name)
+		s += "[config.server_name] &#8212; "
+
+	s += "[station_name()]</b>"
 
 	if (config && config.siteurl)
-		s += " ("
-		s += "<a href=\"[config.siteurl]\">" //Change this to wherever you want the hub to link to.
-		s += "site"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-		s += "</a>"
-		s += ")"
+		s += "</a>";
 
-	var/list/features = list()
+	s += "<br>Roleplay: <b>Medium</b>"
 
-	if(SSticker)
-		if(master_mode)
-			features += master_mode
-	else
-		features += "<b>STARTING</b>"
+	s += "<br>Round Duration: <b>[roundduration2text()]</b>"
 
-	if (LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
-		features += "closed"
+	if (config && config.changelog_link)
+		s += "<br><a href=\"[config.changelog_link]\">Recent changes</a>"
 
-	features += abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_ai)
-		features += "AI allowed"
-
-	var/n = 0
-	for (var/mob/M in player_list)
-		if (M.client)
-			n++
-
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
-
-	/*
-	is there a reason for this? the byond site shows 'hosted by X' when there is a proper host already.
-	if (host)
-		features += "hosted by <b>[host]</b>"
-	*/
-
-	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
-
-	if (features)
-		s += ": [jointext(features, ", ")]"
-
-	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
 
@@ -633,7 +635,7 @@ var/global/failed_db_connections = 0
 
 	packet_data["secret"] = "SECRET"
 	log_href("WTOPIC: NET ANNOUNCE: \"[list2params(packet_data)]\", from:[sender]")
-	
+
 	return proccess_net_announce(packet_data["type"], packet_data, sender)
 
 /world/proc/proccess_net_announce(type, list/data, sender)
@@ -643,7 +645,7 @@ var/global/failed_db_connections = 0
 	switch(type)
 		if (NET_ANNOUNCE_BAN)
 			// legacy system use files, we need DB for ban check
-			if (config.net_announcers["ban_receive"] && !self_flag && config && !config.ban_legacy_system)
+			if (config.net_announcers["ban_receive"] && !self_flag)
 				return proccess_ban_announce(data, sender)
 	return
 

@@ -1,5 +1,5 @@
 /obj/item/weapon/grenade/smokebomb
-	desc = "It is set to detonate in 2 seconds."
+	desc = "Таймер установлен на 2 секунды."
 	name = "smoke bomb"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
@@ -12,6 +12,10 @@
 	. = ..()
 	smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.attach(src)
+
+/obj/item/weapon/grenade/smokebomb/Destroy()
+	QDEL_NULL(smoke)
+	return ..()
 
 /obj/item/weapon/grenade/smokebomb/prime()
 	playsound(src, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)

@@ -5,6 +5,8 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/cabinet/update_icon()
 	if(!opened)
 		icon_state = icon_closed

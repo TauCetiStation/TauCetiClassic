@@ -125,6 +125,8 @@
 	#define COMPONENT_NO_AFTERATTACK 1
 /// from base of atom/examine(): (/mob)
 #define COMSIG_PARENT_EXAMINE "atom_examine"
+/// from base of atom/examine(): (/mob)
+#define COMSIG_MOB_EXAMINED "mob_examined"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
 /// from base of mob/examinate(): (/atom)
@@ -160,6 +162,10 @@
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
 
+/// from base of atom/throw_impact, sent by the target hit by a thrown object. (thrown_atom, hit_atom, datum/thrownthing/throwingdatum)
+#define COMSIG_ATOM_PREHITBY "atom_pre_hitby"
+	#define COMSIG_HIT_PREVENTED (1<<0)
+
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
@@ -180,6 +186,8 @@
 /// from mob/tryGrab(): (/mob/grabber, force_state, show_warnings)
 #define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"
 	#define COMPONENT_PREVENT_GRAB 1
+/// from /obj/item/weapon/grab/proc/s_click(): (/obj/item/weapon/grab)
+#define COMSIG_S_CLICK_GRAB "s_click_grab"
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
 ///from base of area/Entered(): (/area, /atom/OldLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
@@ -198,11 +206,14 @@
 #define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
 ///sent to the instrument when tempo changes, skipped on new: (datum/music_player)
 #define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"
-// /obj
+
+// /obj signals
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
 #define COMSIG_OBJ_RESET_RITE "obj_reset_rite"
 /// from base of datum/religion_rites/start(): ()
 #define COMSIG_OBJ_START_RITE "obj_start_rite"
+///from base of /turf/proc/levelupdate(). (underfloor_accessibility)
+#define COMSIG_OBJ_LEVELUPDATE "obj_levelupdate"
 
 // /obj/item signals
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
@@ -267,12 +278,14 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 // mob signals
-/// from base of mob/Login(): ()
+/// from base of mob/LateLogin(): ()
 #define COMSIG_LOGIN "mob_login"
 /// from base of mob/Logout(): (logout_reason)
 #define COMSIG_LOGOUT "mob_logout"
 
-/// from  base of mob/ClickOn(): (atom/target, params)
+///from base of /mob/living/emote(): (act, intentional)
+#define COMSIG_MOB_EMOTE "mob_emote"
+/// from base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
 // from base of mob/RegularClickOn(): (atom/target, params)
 #define COMSIG_MOB_REGULAR_CLICK "regular_click"
@@ -288,6 +301,10 @@
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
 	#define COMSIG_ACCESS_ALLOWED 1
+///from base of /mob/proc/update_z: (new_z)
+#define COMSIG_MOB_Z_CHANGED "mob_z_changed"
+///from base of /mob/proc/set_lighting_alpha(): (value)
+#define COMSIG_MOB_LIGHTING_ALPHA_CHANGED "LIGHTING_ALPHA_CHANGED"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
@@ -337,8 +354,20 @@
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 #define COMSIG_LIVING_BUMPED "living_bumped"
+// from base of mob/living/proc/log_combat (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_HARMED_OTHER "human_harmed_other"
+// from base of /obj/structure/stool/bed/chair/noose/user_buckle_mob()
+#define COMSIG_HUMAN_ON_SUICIDE "human_on_suicide"
+// from base of /mob/living/carbon/proc/handle_alerts()
+#define COMSIG_HUMAN_ON_ADJUST_DRUGINESS "human_on_adjust_drugines"
+// from base of /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
+#define COMSIG_HUMAN_ON_CONSUME "human_on_consume"
+// from base of /turf/simulated/floor/carpet/Entered(atom/movable/O)
+#define COMSIG_HUMAN_ON_CARPET "human_on_carpet"
+// from base of /mob/living/carbon/human/say()
+#define COMSIG_HUMAN_SAY "human_say"
 
-/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
+/// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
 /// from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
@@ -385,3 +414,37 @@
 
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+
+///from /obj/machinery/door/airlock/bumpopen(), to the carbon who bumped: (airlock)
+#define COMSIG_CARBON_BUMPED_AIRLOCK_OPEN "carbon_bumped_airlock_open"
+/// Return to stop the door opening on bump.
+	#define STOP_BUMP (1<<0)
+
+/// Called from update_health_hud, whenever a bodypart is being updated on the health doll
+#define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
+	/// Return to override that bodypart's health hud with your own icon
+	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+
+/// from /proc/health_analyze(): (list/args = list(message, scan_hallucination_boolean))
+/// Consumers are allowed to mutate the scan_results list to add extra information
+#define COMSIG_LIVING_HEALTHSCAN "living_healthscan"
+// send this signal to make effect impedrezene for mob/living
+#define COMSIG_IMPEDREZENE_DIGEST "impedrezene_digest"
+// send this signal to make effect flashing eyes for mob/living
+#define COMSIG_FLASH_EYES "flash_eyes"
+// send this signal to make effect enter water turf for mob/living/carbon/human
+#define COMSIG_HUMAN_ENTERED_WATER "human_entered_water"
+// send this signal to make effect exit water turf for mob/living/carbon/human
+#define COMSIG_HUMAN_EXITED_WATER "human_exited_water"
+// send this signal to disable gene for mob/living/carbon
+#define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
+// send this signal to handle disabilities in life for mob/living/carbon/human
+#define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
+
+//from base of client/MouseDown(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDOWN "client_mousedown"
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEUP "client_mouseup"
+	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"

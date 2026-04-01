@@ -14,10 +14,13 @@
 
 	handle_combat()
 
-	handle_nutrition()
+	handle_metabolism()
 
 	if(client)
 		handle_regular_hud_updates()
+		var/turf/T = get_turf(src)
+		if(T && last_z != T.z)
+			update_z(T.z)
 
 /mob/living/proc/update_health_hud()
 	if(!healths)
@@ -73,18 +76,16 @@
 
 	if(vision_for_dead || stat != DEAD)
 		if(blinded)
-			throw_alert("blind", /atom/movable/screen/alert/blind)
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else if(is_vision_obstructed() && !(XRAY in mutations))
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else
-			clear_alert("blind")
 			clear_fullscreen("blind", 0)
 		if(machine)
 			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
-			if(!client.adminobs && !force_remote_viewing)
+			if(!client?.adminobs && !force_remote_viewing)
 				reset_view(null)
 
 
@@ -141,5 +142,16 @@
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
-/mob/living/proc/handle_nutrition()
-	return
+/mob/living/proc/handle_metabolism()
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(stat == DEAD && !HAS_TRAIT(src, TRAIT_EXTERNAL_HEART))
+		return FALSE
+
+	if(!mob_metabolism_mod.Get())
+		return FALSE
+
+	if(reagents && length(reagents.reagent_list))
+		reagents.metabolize(src)
+
+	return TRUE

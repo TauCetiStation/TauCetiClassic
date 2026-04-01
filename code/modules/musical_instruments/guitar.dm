@@ -24,11 +24,3 @@
 
 /obj/item/device/guitar/attack_self(mob/living/user)
 	MP.interact(user)
-
-/obj/item/device/guitar/electric
-	name = "electric guitar"
-	desc = "Space Rock'n'Roll"
-	icon_state = "eguitar"
-	item_state = "eguitar"
-
-	sound_path = "sound/musical_instruments/eguitar"

@@ -1,12 +1,9 @@
 //Xeno Overlays Indexes//////////
-//#define X_FIRE_LOWER_LAYER  * // --should be in underlays (underlays bad); or we need to make BODY part as overlays layer too (like humans); or remove
 #define X_R_HAND_LAYER        7
 #define X_L_HAND_LAYER        6
 #define X_SUIT_LAYER          5
 #define X_HEAD_LAYER          4
 #define X_FIRE_UPPER_LAYER    3
-#define X_SHRIEC_LAYER        2
-//#define TARGETED_LAYER        1 // For recordkeeping
 #define X_TOTAL_LAYERS        7
 /////////////////////////////////
 
@@ -178,7 +175,9 @@
 	remove_standing_overlay(X_FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = icon_state + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = icon_state + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
 
@@ -186,7 +185,9 @@
 	remove_standing_overlay(X_FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = replacetext(icon_state, "_old", "") + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = replacetext(icon_state, "_old", "") + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
 
@@ -199,7 +200,9 @@
 	update_fire_underlay()
 	//cut_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 		//overlays_standing[X_FIRE_LOWER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_underlay", layer = -X_FIRE_LOWER_LAYER)
 		//add_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	//overlays_standing[X_FIRE_LOWER_LAYER] = null
@@ -215,17 +218,45 @@
 	update_fire_underlay()
 	//cut_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 		//overlays_standing[X_FIRE_LOWER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay", layer = -X_FIRE_LOWER_LAYER)
 		//add_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	//overlays_standing[X_FIRE_LOWER_LAYER] = null
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
 
-/mob/living/carbon/xenomorph/humanoid/proc/create_shriekwave()
-	overlays_standing[X_SHRIEC_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = "shriek_waves", layer = -X_SHRIEC_LAYER)
-	apply_standing_overlay(X_SHRIEC_LAYER)
-	addtimer(CALLBACK(src, PROC_REF(remove_standing_overlay), X_SHRIEC_LAYER), 30)
+/mob/living/carbon/xenomorph/humanoid/proc/create_shriekwave(shriekwaves_left = 1)
+	var/offset_y = 8
+	//due to the speed of the shockwaves, it isn't required to be tied to the exact mob movements
+	var/stage1_radius = rand(11, 12)
+	var/stage2_radius = rand(9, 11)
+	var/stage3_radius = rand(8, 10)
+	var/stage4_radius = 7.5
+	//shockwaves are iterated, counting down once per shriekwave, with the total amount being determined on the respective xeno ability tile
+	if(shriekwaves_left > 12)
+		shriekwaves_left--
+		new /obj/effect/shockwave(get_turf(src), stage1_radius, 0.5, offset_y)
+		addtimer(CALLBACK(src, PROC_REF(create_shriekwave), shriekwaves_left), 2)
+		return
+	if(shriekwaves_left > 8)
+		shriekwaves_left--
+		new /obj/effect/shockwave(get_turf(src), stage2_radius, 0.5, offset_y)
+		addtimer(CALLBACK(src, PROC_REF(create_shriekwave), shriekwaves_left), 3)
+		return
+	if(shriekwaves_left > 4)
+		shriekwaves_left--
+		new /obj/effect/shockwave(get_turf(src), stage3_radius, 0.5, offset_y)
+		addtimer(CALLBACK(src, PROC_REF(create_shriekwave), shriekwaves_left), 3)
+		return
+	if(shriekwaves_left > 1)
+		shriekwaves_left--
+		new /obj/effect/shockwave(get_turf(src), stage4_radius, 0.5, offset_y)
+		addtimer(CALLBACK(src, PROC_REF(create_shriekwave), shriekwaves_left), 3)
+		return
+	if(shriekwaves_left == 1)
+		new /obj/effect/shockwave(get_turf(src), 10, 0.6, offset_y)
 
 /mob/living/carbon/xenomorph/proc/update_fire_underlay()
 	if(!fire_underlay_state)
@@ -238,11 +269,9 @@
 
 
 //Xeno Overlays Indexes//////////
-//#undef X_FIRE_LOWER_LAYER
 #undef X_R_HAND_LAYER
 #undef X_L_HAND_LAYER
 #undef X_SUIT_LAYER
 #undef X_HEAD_LAYER
 #undef X_FIRE_UPPER_LAYER
-#undef X_SHRIEC_LAYER
 #undef X_TOTAL_LAYERS

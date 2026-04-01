@@ -6,7 +6,6 @@
 	icon = 'icons/mob/monkey.dmi'
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE
@@ -26,6 +25,79 @@
 	w_class = SIZE_BIG
 
 	moveset_type = /datum/combat_moveset/human
+
+/mob/living/carbon/monkey/proc/handle_monkey_pressure(datum/gas_mixture/environment)
+	var/pressure = environment.return_pressure()
+	//Returns how much pressure actually affects the mob.
+	var/adjusted_pressure = calculate_affecting_pressure(pressure)
+	//Account for massive pressure differences
+	var/warning_LOW_pressure = WARNING_LOW_PRESSURE
+	var/hazard_LOW_pressure = HAZARD_LOW_PRESSURE
+	var/warning_HIGH_pressure = WARNING_HIGH_PRESSURE
+	var/hazard_HIGH_pressure = HAZARD_HIGH_PRESSURE
+
+	var/datum/species/monk_specie = global.all_species[race]
+	if(monk_specie)
+		warning_LOW_pressure = monk_specie.warning_low_pressure
+		hazard_LOW_pressure = monk_specie.hazard_low_pressure
+		warning_HIGH_pressure = monk_specie.warning_high_pressure
+		hazard_HIGH_pressure = monk_specie.hazard_high_pressure
+
+	var/highpress_damage = MAX_HIGH_PRESSURE_DAMAGE
+	var/lowpress_damage = LOW_PRESSURE_DAMAGE
+
+	if(adjusted_pressure > warning_HIGH_pressure)
+		if(adjusted_pressure < hazard_HIGH_pressure)
+			pressure_alert = 1
+			return
+		if(RESIST_HEAT in mutations)
+			highpress_damage /= 3
+		adjustBruteLoss(min(((adjusted_pressure / hazard_HIGH_pressure) - 1) * PRESSURE_DAMAGE_COEFFICIENT, highpress_damage))
+		pressure_alert = 2
+	else if(adjusted_pressure < warning_LOW_pressure)
+		if(adjusted_pressure >= hazard_LOW_pressure)
+			pressure_alert = -1
+			return
+		if(COLD_RESISTANCE in mutations)
+			lowpress_damage /= 3
+		adjustBruteLoss(lowpress_damage)
+		pressure_alert = -2
+
+/mob/living/carbon/monkey/proc/handle_monkey_temperature(datum/gas_mixture/environment)
+	var/temperature = environment.temperature
+	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density()
+
+	if(!on_fire)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
+
+	var/heat_lvl_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	var/cold_lvl_1 = BODYTEMP_COLD_DAMAGE_LIMIT
+	var/datum/species/monk_specie = global.all_species[race]
+	if(monk_specie)
+		heat_lvl_1 = monk_specie.heat_level_1
+		cold_lvl_1 = monk_specie.cold_level_1
+
+	if(bodytemperature > heat_lvl_1)
+		if(RESIST_HEAT in mutations)
+			temp_alert = 1
+			return
+		temp_alert = 2
+		adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
+	else if(bodytemperature < cold_lvl_1)
+		if(COLD_RESISTANCE in mutations)
+			temp_alert = -1
+			return
+		temp_alert = -2
+		adjustFireLoss(COLD_DAMAGE_LEVEL_2)
+
+/mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
+	if(stat != DEAD) // lets put this shit somewhere here
+		stabilize_body_temperature()
+
+	if(!environment || HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
+		return
+	handle_monkey_pressure(environment)
+	handle_monkey_temperature(environment)
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -54,6 +126,15 @@
 	uni_append = list(0x044,0xC5D) // 044C5D
 	race = UNATHI
 	holder_type = /obj/item/weapon/holder/monkey/stok
+
+/mob/living/carbon/monkey/pluvian
+	name = "Pluv-key"
+	voice_name = "Pluv-key"
+	cases = list("Плувеныш", "Плувеныша", "Плувешыну", "Плувеныша", "Плувенышом", "Плувеныше")
+	speak_emote = list("chimpers")
+	icon_state = "pluvian"
+	race = PLUVIAN
+	holder_type = /obj/item/weapon/holder/monkey/pluvia
 
 /mob/living/carbon/monkey/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -116,6 +197,10 @@
 	. = ..()
 	greaterform = TAJARAN
 	add_language(LANGUAGE_SIIKTAJR)
+
+/mob/living/carbon/monkey/pluvian/atom_init()
+	. = ..()
+	greaterform = PLUVIAN
 
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = speed
@@ -182,8 +267,6 @@
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 			if (prob(50))
 				Paralyse(10)
-		else
-	return
 
 /mob/living/carbon/monkey/blob_act()
 	if (stat != DEAD)
@@ -195,7 +278,7 @@
 		gib()
 		return
 	if (stat == DEAD && !client)
-		gibs(loc)
+		new /obj/effect/gibspawner/generic(get_turf(loc), src)
 		qdel(src)
 		return
 

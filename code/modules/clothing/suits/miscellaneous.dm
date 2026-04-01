@@ -98,16 +98,6 @@
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
 
-
-/obj/item/clothing/suit/wcoat
-	name = "waistcoat"
-	desc = "For some classy, murderous fun."
-	icon_state = "vest"
-	item_state = "wcoat"
-	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
-
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
 	desc = "A set of denim overalls."
@@ -217,7 +207,8 @@
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	render_flags = parent_type::render_flags | HIDE_TAIL
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
@@ -334,7 +325,7 @@
 	name = "black trenchcoat"
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
-	item_state = "jensensuit"
+	item_state = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -413,7 +404,7 @@
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
@@ -533,6 +524,24 @@
 	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
+
+/obj/item/clothing/suit/pluvia_morality
+	name = "Path of Morality"
+	icon_state = "pluvia_morality"
+	item_state = "pluvia_morality"
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/suit/pluvia_trick
+	name = "Path of Trick"
+	icon_state = "pluvia_trick"
+	item_state = "pluvia_trick"
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/suit/pluvia_balance
+	name = "Path of Balance"
+	icon_state = "pluvia_balance"
+	item_state = "pluvia_balance"
+	flags = ONESIZEFITSALL
 
 //Mafia
 /obj/item/clothing/suit/browntrenchcoat

@@ -15,7 +15,7 @@
 /obj/machinery/artifact/bluespace_crystal/atom_init()
 	max_integrity = rand(150, 300)
 	. = ..()
-	init_turfs_around()
+	new /datum/proximity_monitor(src, 3)
 	first_effect = new /datum/artifact_effect/tesla(src)
 	first_effect.trigger = TRIGGER_PROXY
 	desc = "A blue strange crystal"

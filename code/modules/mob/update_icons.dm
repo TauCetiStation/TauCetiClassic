@@ -17,6 +17,8 @@
 			update_inv_back()
 		if(SLOT_WEAR_MASK)
 			update_inv_wear_mask()
+		if(SLOT_NECK)
+			update_inv_neck()
 		if(SLOT_HANDCUFFED)
 			update_inv_handcuffed()
 		if(SLOT_L_HAND)
@@ -27,8 +29,10 @@
 			update_inv_belt()
 		if(SLOT_WEAR_ID)
 			update_inv_wear_id()
-		if(SLOT_L_EAR, SLOT_R_EAR)
-			update_inv_ears()
+		if(SLOT_L_EAR)
+			update_inv_l_ear()
+		if(SLOT_R_EAR)
+			update_inv_r_ear()
 		if(SLOT_GLASSES)
 			update_inv_glasses()
 		if(SLOT_GLOVES)
@@ -52,15 +56,10 @@
 	switch(slot)
 		if(SLOT_MOUTH)
 			update_inv_mouth()
-		if(SLOT_NECK)
+		if(SLOT_IAN_NECK)
 			update_inv_neck()
 		else
 			..()
-
-/mob/living/carbon/human/update_inv_slot(slot)
-	..()
-	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD || slot == SLOT_WEAR_SUIT || slot == SLOT_W_UNIFORM)
-		update_hair()
 
 /obj/item/proc/update_inv_mob()
 	if(!slot_equipped || !ismob(loc))
@@ -85,6 +84,9 @@
 	return
 
 /mob/proc/update_inv_wear_mask()
+	return
+
+/mob/proc/update_inv_neck()
 	return
 
 /mob/proc/update_inv_wear_suit()
@@ -120,7 +122,10 @@
 /mob/proc/update_inv_pockets()
 	return
 
-/mob/proc/update_inv_ears()
+/mob/proc/update_inv_l_ear()
+	return
+
+/mob/proc/update_inv_r_ear()
 	return
 
 /mob/proc/update_targeted()

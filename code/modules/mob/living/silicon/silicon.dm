@@ -17,6 +17,12 @@
 
 	var/sensor_mode = FALSE //Determines the current HUD.
 
+	// can't get damage except for burn and brute
+	mob_oxy_mod = new /datum/modval(base_value = 0)
+	mob_tox_mod = new /datum/modval(base_value = 0)
+	mob_clone_mod = new /datum/modval(base_value = 0)
+	mob_brain_mod = new /datum/modval(base_value = 0)
+
 /mob/living/silicon/atom_init()
 	. = ..()
 	silicon_list += src
@@ -64,9 +70,11 @@
 		if(2)
 			take_bodypart_damage(10)
 			Stun(rand(1,5))
-	flash_eyes(affect_silicon = 1)
-	to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
-	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
+	if(stat != DEAD)
+		flash_eyes(affect_silicon = 1)
+		to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
+		to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
+		playsound(src, pick(SOUNDIN_SILICON_PAIN), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null)
 	..()
 
 /mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
@@ -140,25 +148,6 @@
 		if (L.name == rem_language)
 			speech_synthesizer_langs -= L
 
-/mob/living/silicon/check_languages()
-	set name = "Check Known Languages"
-	set category = "IC"
-	set src = usr
-
-	var/dat = ""
-
-	for(var/datum/language/L as anything in languages)
-		dat += "<b>[L.name] "
-		for(var/l_key in L.key)
-			dat += "(:[l_key])"
-		dat += " </b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
-
-	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
-	popup.set_content(dat)
-	popup.open()
-
-	return
-
 /mob/living/silicon/proc/remove_sensors()
 	for(var/hud in sensor_huds)
 		var/datum/atom_hud/sensor = global.huds[hud]
@@ -208,5 +197,8 @@
 		to_chat(user, "<b>[src] has the following laws:</b><br>[write_laws()]")
 
 /mob/living/silicon/update_canmove(no_transform)
+	return
+
+/mob/living/silicon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	return
 

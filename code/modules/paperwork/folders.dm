@@ -62,11 +62,11 @@
 	var/dat = ""
 
 	for(var/obj/item/weapon/paper/P in src)
-		dat += "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[sanitize(P.name)]</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='byond://?src=\ref[src];read=\ref[P]'>[sanitize(P.name)]</A><BR>"
 	for(var/obj/item/weapon/photo/Ph in src)
-		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='byond://?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 	for(var/obj/item/weapon/paper_bundle/Pb in src)
-		dat += "<A href='?src=\ref[src];remove=\ref[Pb]'>Remove</A> - <A href='?src=\ref[src];browse=\ref[Pb]'>[sanitize(Pb.name)]</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];remove=\ref[Pb]'>Remove</A> - <A href='byond://?src=\ref[src];browse=\ref[Pb]'>[sanitize(Pb.name)]</A><BR>"
 
 	var/datum/browser/popup = new(user, "folder", "[name]", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
@@ -118,8 +118,8 @@
 	. = ..()
 	if(mapload)
 		var/atom/A = get_turf(src)
-		for(var/obj/item/weapon/folder in A.contents)
-			folder.forceMove(src)
+		for(var/obj/item/weapon/folder/Folder in A.contents)
+			Folder.forceMove(src)
 		update_icon()
 
 /obj/item/folder_holder/update_icon()

@@ -6,6 +6,7 @@
 	name = "Human hardsuit modification kit"
 	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user."
 	icon_state = "modkit"
+	item_state_world = "modkit_w"
 	var/parts = MODKIT_FULL
 	var/target_species = HUMAN
 
@@ -16,7 +17,8 @@
 		return
 	if (!target_species)
 		return	//it shouldn't be null, okay?
-
+	if(!istype(target, /obj/item/clothing))
+		return
 	var/obj/item/clothing/I = target
 	if (I.can_be_modded == FALSE)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")

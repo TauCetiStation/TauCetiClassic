@@ -13,15 +13,19 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+	var/datum/map_module/loaded_map_module
+
 	var/list/spawned_structures = list()
 	var/list/reserved_space = list()
 
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
-	var/list/z_list
+	var/list/datum/space_level/z_list
 	var/station_loaded = FALSE
 	var/station_image = "exodus" // What image file to use for map displaying, stored in nano/images
+	var/mine_image = "" // What image file to use for mine
+	var/list/cached_nanomap_payload
 
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
@@ -34,6 +38,9 @@ SUBSYSTEM_DEF(mapping)
 	station_name_ru = config.station_name_ru
 	system_name = config.system_name
 	system_name = config.system_name_ru
+
+	if(config.map_module)
+		load_map_module(config.map_module)
 
 	loadWorld()
 	renameAreas()
@@ -51,6 +58,19 @@ SUBSYSTEM_DEF(mapping)
 
 	..()
 
+/datum/controller/subsystem/mapping/proc/load_map_module(module_name)
+	for(var/datum/map_module/MM as anything in subtypesof(/datum/map_module))
+		if(initial(MM.name) == module_name)
+			loaded_map_module = new MM
+			break
+
+	if(!loaded_map_module)
+		CRASH("Can't setup global event \"[module_name]\"!")
+
+/datum/controller/subsystem/mapping/proc/get_map_module(module_name)
+	if(loaded_map_module && (!module_name || loaded_map_module.name == module_name))
+		return loaded_map_module
+
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
 	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
 		make_mining_asteroid_secret(3)
@@ -59,6 +79,17 @@ SUBSYSTEM_DEF(mapping)
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
 		var/datum/ore_distribution/distro = new
 		distro.populate_distribution_map(z)
+
+/datum/controller/subsystem/mapping/proc/get_stationmap_type()
+	var/list/mapByType = list(
+		"boxstation" = /obj/item/station_map/box,
+		"gamma" = /obj/item/station_map/gamma,
+		"delta" = /obj/item/station_map/delta,
+		"falcon" = /obj/item/station_map/falcon,
+		"prometheus" = /obj/item/station_map/prometheus,
+	)
+	var/stationmap_type = mapByType[config.map_path]
+	return stationmap_type
 
 /datum/reserved_space
 	var/z
@@ -222,8 +253,11 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	if(global.config.load_mine)
 		if(config.minetype == "asteroid")
-			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+			var/asteroidmap = pick("asteroid_classic", "asteroid_rich")
+			mine_image = asteroidmap
+			LoadGroup(FailedZs, "Asteroid", "asteroid", asteroidmap + ".dmm", default_traits = ZTRAITS_ASTEROID)
 		else if(config.minetype == "prometheus_asteroid")
+			mine_image = "prometheus_asteroid"
 			LoadGroup(FailedZs, "Asteroid", "prometheus_asteroid", "prometheus_asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
 		else if (!isnull(config.minetype))
 			INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
@@ -248,12 +282,14 @@ SUBSYSTEM_DEF(mapping)
 
 	if(config.system_name)
 		if(areas_by_type[/area/shuttle/arrival/velocity])
-			areas_by_type[/area/shuttle/arrival/velocity].name = "[config.system_name] Transfer Station 13"
+			areas_by_type[/area/shuttle/arrival/velocity].name = "НТС Велосити, док 42"
 	if(config.station_name)
 		if(areas_by_type[/area/shuttle/arrival/station])
 			areas_by_type[/area/shuttle/arrival/station].name = config.station_name
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
+	if(areas_by_type[/area/velocity/monorailwagon])
+		areas_by_type[/area/velocity/monorailwagon].name = "НТС Велосити, остановка 42-й док"
 
 /datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
 	if(!VM.MakeNextMap())
@@ -286,6 +322,26 @@ SUBSYSTEM_DEF(mapping)
 	if(map_poll && map_poll.can_start())
 		to_chat(world, "<span class='notice'>Current next map is inappropriate for ammount of players online. Map vote will be forced.</span>")
 		SSvote.start_vote(map_poll)
+
+/datum/controller/subsystem/mapping/proc/tgui_nanomap_payload()
+	if(cached_nanomap_payload)
+		return cached_nanomap_payload.Copy()
+	var/list/data = list()
+
+	for(var/datum/space_level/space_level as anything in z_list)
+		var/list/level_data = list()
+		level_data["name"] = space_level.name
+
+		if(space_level.traits[ZTRAIT_MINING])
+			level_data["mapTexture"] = mine_image
+
+		if(space_level.traits[ZTRAIT_STATION])
+			level_data["mapTexture"] = station_image
+
+		data["[space_level.z_value]"] = level_data // Key is a string cos DM crashes due to index out of bounds for some reason
+	cached_nanomap_payload = data
+
+	return data.Copy()
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM

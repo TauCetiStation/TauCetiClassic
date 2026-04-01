@@ -9,5 +9,5 @@
 	minimum_players_bundles = 35
 
 /datum/game_mode/infestation/announce()
-	to_chat(world, "<b>The current game mode is - Infestation!</b>")
-	to_chat(world, "<b>There are <span class='userdanger'>xenomorphs</span> on the station. Crew: Kill the xenomorphs before they infest the station. Xenomorphs: Go catch some living hamburgers.</b>")
+	to_chat(world, "<b>Текущий режим игры - Заражение!</b>")
+	to_chat(world, "<b>Это <span class='userdanger'>ксеноморфы</span> на станции. Экипаж: Убейте ксеноморфов, пока они не заселили всю станцию. Ксеноморфы: Идите и ловите живые гамбургеры.</b>")

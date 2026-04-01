@@ -128,6 +128,9 @@
 	create_gas()
 	update_icon()
 
+/obj/machinery/portable_atmospherics/canister/blob_act()
+	qdel(src)
+
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type && start_pressure)
 		air_contents.adjust_gas(gas_type, MolesForPressure())
@@ -284,7 +287,7 @@ update_flag
 			if(!WT.use(0, user))
 				return
 			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-			if(WT.use_tool(src, user, 30, volume = 40))
+			if(WT.use_tool(src, user, 30, volume = 40, quality = QUALITY_WELDING))
 				deconstruct(TRUE)
 		else
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")

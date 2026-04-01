@@ -1,5 +1,8 @@
+var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
+
 /datum/guard
 	var/client/holder
+
 	var/total_alert_weight = 0
 	var/bridge_reported = FALSE
 
@@ -29,6 +32,7 @@
 	addtimer(CALLBACK(src, PROC_REF(trigger_init)), 20 SECONDS) // time for other systems to collect data
 
 /datum/guard/proc/trigger_init()
+	// if client was lost somehow, mob/login should restart test again
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
 
@@ -41,11 +45,12 @@
 			process_autoban()
 
 /datum/guard/proc/do_announce()
+	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end] | [short_report]")
+
 	if(!total_alert_weight || total_alert_weight < 1)
 		return
 
-	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
-	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end]\nGUARD: [short_report]")
+	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='byond://?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
 
 	if(!bridge_reported)
 		bridge_reported = TRUE
@@ -96,9 +101,34 @@
 		Remember: next flags may be false-positives!<br>
 		Proxy: [geoip_data["proxy"]];<br> Mobile: [geoip_data["mobile"]];<br> Hosting: [geoip_data["hosting"]];<br> Ipintel: [geoip_data["ipintel"]];</div>"}
 
-		new_short_report += "Geoip:[geoip_data["proxy"]],[geoip_data["mobile"]],[geoip_data["hosting"]],[geoip_data["ipintel"]]; "
-
+		new_short_report += "Geoip([geoip_data["isp"]]):[geoip_data["proxy"]],[geoip_data["mobile"]],[geoip_data["hosting"]],[geoip_data["ipintel"]]; "
 		total_alert_weight += geoip_weight
+
+	/* blacklist */
+	if(geoip_processed && geoip_data["isp"])
+		var/blacklist_weight = 0
+
+		var/bad_isp = FALSE
+		var/bad_ip = FALSE
+
+		if(geoip_data["isp"] in guard_blacklist["ISP"])
+			bad_isp = TRUE
+
+		for(var/mask in guard_blacklist["ISP"])
+			if(findtext(holder.address, mask)) // real ip masks?
+				bad_isp = TRUE
+				break
+
+		if(bad_isp | bad_ip)
+			blacklist_weight += 1
+			new_report += {"<div class='Section'><h3>GeoIP Blacklist ([blacklist_weight]):</h3>
+			[bad_isp ? "ISP in blacklist; " : ""]
+			[bad_ip ? "IP in blacklist; " : ""]
+			</div>"}
+
+			new_short_report += "[bad_isp ? "BADISP " : ""][bad_ip ? "BADIP " : ""](tw: [blacklist_weight]); "
+
+		total_alert_weight += blacklist_weight
 
 	/* country */
 	if(geoip_processed && geoip_data["countryCode"] && length(config.guard_whitelisted_country_codes))
@@ -143,19 +173,19 @@
 
 		total_alert_weight += related_db_weight
 
-	if(holder.prefs.cid_list.len > 1)
+	if(holder.prefs.cid_count > 1)
 		var/multicid_weight = 0
 		var/allowed_amount = 1
 
 		if(isnum(holder.player_age) && holder.player_age > 60)
 			allowed_amount++
 
-		multicid_weight += min(((holder.prefs.cid_list.len - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
+		multicid_weight += min(((holder.prefs.cid_count - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
 		new_report += {"<div class='Section'><h3>Differents CID's ([multicid_weight]):</h3>
-		Has [holder.prefs.cid_list.len] different computer_id.</div>"}
+		Has [holder.prefs.cid_count] different computer_id.</div>"}
 
-		new_short_report += "Has [holder.prefs.cid_list.len] CID's (tw: [multicid_weight]); "
+		new_short_report += "Has [holder.prefs.cid_count] CID's (tw: [multicid_weight]); "
 
 		total_alert_weight += multicid_weight
 
@@ -274,8 +304,6 @@
 
 	var/reason = config.guard_autoban_reason
 
-	AddBan(holder.ckey, holder.computer_id, reason, "taukitty", 0, 0, holder.mob.lastKnownIP) // legacy bans base
-
 	DB_ban_record_2(BANTYPE_PERMA, holder.mob, -1, reason) // copypaste, bans refactoring needed
 	feedback_inc("ban_perma",1)
 
@@ -287,8 +315,8 @@
 	if(config.banappeals)
 		to_chat(holder, "<span class='red'>To try to resolve this matter head to [config.banappeals]</span>")
 
-	log_admin("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
-	message_admins("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
+	log_admin("GUARD: Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
+	message_admins("GUARD: Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
 
 	if(config.guard_autoban_sticky)
 		var/list/ban = list()

@@ -69,13 +69,30 @@
 	return
 
 /datum/game_mode/proc/Setup()
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!can_start(TRUE))
 		return FALSE
+
 	SetupFactions()
-	var/FactionSuccess = CreateFactions()
-	if(!FactionSuccess)
+
+	if(!CreateFactions())
 		DropAll()
-	return FactionSuccess
+		return FALSE
+
+	RegisterCustomFactions()
+
+	return TRUE
+
+// for custom factions, if they where created before ticker initialization
+var/global/list/datum/faction/preinit_factions
+
+/datum/game_mode/proc/RegisterCustomFactions()
+	if(!global.preinit_factions)
+		return
+	for(var/faction in preinit_factions)
+		factions += faction
+	preinit_factions = null
 
 // it is necessary in those rare cases when the gamemode did not start for those reasons
 // that cannot be detected BEFORE the creation of a human
@@ -90,6 +107,8 @@
 /*===FACTION RELATED STUFF===*/
 
 /datum/game_mode/proc/CreateFactions()
+	if(!length(factions_allowed))
+		return TRUE
 	var/player_count = get_player_count(FALSE)
 	for(var/faction_type in factions_allowed)
 		if(isnum(factions_allowed[faction_type]))
@@ -185,7 +204,7 @@
 	addtimer(CALLBACK(src, PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 	addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
-	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended, /datum/game_mode/imposter)
+	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended)
 	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 
@@ -213,7 +232,7 @@
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 
 /datum/game_mode/proc/GetScoreboard()
-	completition_text = "<h2>Factions & Roles</h2>"
+	completition_text = "<h2>Фракции & Антагонисты</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
 		F.calculate_completion()
@@ -226,7 +245,7 @@
 			completition_text += "</div>"
 
 	if (orphaned_roles.len > 0)
-		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
+		completition_text += "<FONT size = 2><B>Независимые:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)
 		R.calculate_completion()
 		SSStatistics.add_orphaned_role(R)
@@ -235,7 +254,7 @@
 		completition_text += R.GetScoreboard()
 		completition_text += "</div>"
 	if (!exist)
-		completition_text += "(none)"
+		completition_text += "(Антагонисты отсуствовали)"
 	completition_text += "<BR>"
 	count_survivors()
 

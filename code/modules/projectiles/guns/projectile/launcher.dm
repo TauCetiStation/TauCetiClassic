@@ -44,7 +44,7 @@
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=5;materials=3"
-	recoil = 0 //extra kickback
+	recoil = LOW_RECOIL //extra kickback
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
 	var/open
 
@@ -75,6 +75,7 @@
 
 /obj/item/weapon/gun/projectile/grenade_launcher/underslung
 	name = "underslung grenade launcher"
+	cases = list("подствольный гранатомёт", "подствольного гранатомёта", "подствольному гранатомёту", "подствольный гранатомёт", "подствольным гранатомётом", "подствольном гранатомёте")
 	desc = "Это маленькая крошечная пусковая установка. Вам не следовало этого видеть."
 	initial_mag = /obj/item/ammo_box/magazine/internal/m79/underslung
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'

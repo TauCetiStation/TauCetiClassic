@@ -132,7 +132,8 @@
 #define ui_iclothing "WEST:6,SOUTH+1:7"
 #define ui_oclothing "WEST+1:8,SOUTH+1:7"
 #define ui_gloves "WEST+2:10,SOUTH+1:7"
-#define ui_glasses "WEST:6,SOUTH+2:9"
+#define ui_glasses "WEST:6,SOUTH+3:11"
+#define ui_neck "WEST:6,SOUTH+2:9"
 #define ui_mask "WEST+1:8,SOUTH+2:9"
 #define ui_l_ear "WEST+2:10,SOUTH+2:9"
 #define ui_r_ear "WEST+2:10,SOUTH+3:11"
@@ -159,6 +160,8 @@
 // Leap
 #define ui_human_leap "CENTER+3:20,SOUTH:5"
 
+#define ui_direction_arrow "CENTER,CENTER"
+
 // Hud slots
 #define HUD_SLOT_MAIN		1
 #define HUD_SLOT_ADDING		2
@@ -167,3 +170,7 @@
 #define HUD_COPY_ICON	1
 #define HUD_COPY_COLOR	2
 #define HUD_COPY_ALPHA	4
+
+//Parallax
+#define PARALLAX_CLASSIC "parallax_classic"
+#define PARALLAX_HEAVEN "parallax_heaven"

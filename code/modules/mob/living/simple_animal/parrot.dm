@@ -126,9 +126,9 @@
 
 	var/dat = ""
 	if(ears)
-		dat +=	"<br><b>Headset:</b> [ears] (<a href='?src=\ref[src];remove_inv=ears'>Remove</a>)"
+		dat +=	"<br><b>Headset:</b> [ears] (<a href='byond://?src=\ref[src];remove_inv=ears'>Remove</a>)"
 	else
-		dat +=	"<br><b>Headset:</b> <a href='?src=\ref[src];add_inv=ears'>Nothing</a>"
+		dat +=	"<br><b>Headset:</b> <a href='byond://?src=\ref[src];add_inv=ears'>Nothing</a>"
 
 	var/datum/browser/popup = new(user, "mob[real_name]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
@@ -694,7 +694,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		":e Нет, черртежи я не прродам.",
 		":e Закажите ящик с перрчатками.",
 		":e Я ЖЕ ГОВОРРИЛ, НЕ ТРРОГАЙТЕ СУПЕРРМАТЕРИЮ РРУКАМИ!",
-		":e Да не нужны СМЕСЫ, мы напррямую подключим.",
+		":e Да не нужны СПИНы, мы напррямую подключим.",
 		":e Я много рраз так делал, все норрмально будет.",
 		":e Вы еще шалаш пострройте вокрруг бухломата.",
 		":e Мы - инженерр.",
@@ -711,16 +711,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	Read_Memory()
 	if(rounds_survived == longest_survival)
 		speak += pick("...[longest_survival].", "Чего я только не видал!", "Я прожил так много жизней!", "Что ты предо мной?")
-		desc += " Старый как грех, и такой же громкий. Утверждал, что выжил [rounds_survived]."
+		desc += " Старый как грех, и такой же громкий. Утверждал, что пережил [rounds_survived] [pluralize_russian(rounds_survived, "смену", "смены", "смен")]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		color = "#eeee22"
 	else if(rounds_survived == longest_deathstreak)
 		speak += pick("Чего же ты ждёшь!?", "Насилие поррождает насилие!", "Крровь! Кровь!", "Убей меня, если посмеешь!")
-		desc += " В ушах звенят крики [-rounds_survived] мертвых попугаев..."
+		desc += " В ушах звенят крики [-rounds_survived] [pluralize_russian(-rounds_survived, "мертвого попугая", "мертвых попугаев", "мертвых попугаев")]..."
 		color = "#bb7777"
 	else if(rounds_survived > 0)
 		speak += pick("...снова?", "Нет, всё было кончено!", "Выпустите меня!", "Это никогда не закончится!")
-		desc += " Более [rounds_survived] смен без \"ужасных\" \"инцидентов\"!"
+		desc += " Он провел [rounds_survived] [pluralize_russian(rounds_survived, "смену", "смены", "смен")] без \"ужасных\" \"инцидентов\"!"
 	else
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 	. = ..()
@@ -784,13 +784,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	desc = "Обреченный бродить по Земле."
 	color = "#FFFFFF77"
 	speak_chance = 20
-	status_flags = GODMODE
 	incorporeal_move = 1
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/atom_init()
 	memory_saved = 1 //At this point nothing is saved
 	. = ..()
+	ADD_TRAIT(src, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 
 /mob/living/simple_animal/parrot/say(message)
 

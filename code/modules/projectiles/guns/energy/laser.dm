@@ -74,19 +74,8 @@
 	origin_tech = null
 	charge_rate = 50
 
-/obj/item/weapon/gun/energy/laser/scatter
-	name = "scatter laser gun"
-	icon_state = "oldlaser"
-	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
-	can_be_holstered = TRUE
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
-
-/obj/item/weapon/gun/energy/laser/scatter/attack_self(mob/living/user)
-	..()
-	update_icon()
-
-/obj/item/weapon/gun/energy/laser/scatter/alien
-	name = "scatter laser rife"
+/obj/item/weapon/gun/energy/laser/scatter_alien
+	name = "scatter laser rifle"
 	icon_state = "subegun"
 	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)

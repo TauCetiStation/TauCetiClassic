@@ -12,7 +12,11 @@
 	var/head_content
 	var/content
 
-/datum/browser/New(nuser, nwindow_id, ntitle, nwidth, nheight, atom/nref, ntheme = CSS_THEME_DARK)
+	/// If this browser is opening as a new element, or as a pre-defined skin element.
+	/// If the latter, it should be the name of the pre-defined skin element.
+	var/existing_browser = FALSE
+
+/datum/browser/New(nuser, nwindow_id, ntitle, nwidth, nheight, atom/nref, ntheme = CSS_THEME_DARK, existing_container = FALSE)
 	if(ismob(nuser))
 		var/mob/M = nuser
 		nuser = M.client
@@ -32,6 +36,9 @@
 
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 	add_stylesheet("font-awesome.css", 'html/font-awesome/css/all.min.css')
+
+	if(existing_container)
+		existing_browser = existing_container
 
 /datum/browser/Destroy()
 	LAZYREMOVE(user.browsers, window_id)
@@ -73,6 +80,8 @@
 
 	for(var/name in scripts)
 		head_content += "<script type='text/javascript' src='[name]'></script>"
+	
+	head_content += get_browse_zoom_style(user)
 
 	return {"<!DOCTYPE html>
 <html>
@@ -94,14 +103,20 @@
 /datum/browser/proc/open()
 	var/window_size
 	if(width && height)
-		window_size = "size=[width]x[height];"
+		window_size = get_browse_size_parameter(user, width, height)
+	else
+		window_size = get_browse_size_parameter(user, 400, 400)
 	var/datum/asset/error_handler_js = get_asset_datum(/datum/asset/simple/error_handler_js) // error_handler - same name as in other places, add_script do ckey with names.
 	error_handler_js.send(user)
-	if(stylesheets.len)
+	if(length(stylesheets))
 		send_asset_list(user, stylesheets)
-	if(scripts.len)
+	if(length(scripts))
 		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
+
+	if(existing_browser)
+		winset(user, existing_browser, window_size)
+
 	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
 	onclose(user, window_id, ref)
 
@@ -227,7 +242,22 @@
 	opentime = 0
 	close()
 
+// zoom browser based on user settings
+/proc/get_browse_zoom_style(client/C)
+	. = ""
+	if(C && !C.prefs.window_scale)
+		var/ratio = C.window_pixelratio
 
+		if(ratio != 1)
+			. = "<style>body { zoom: [100 / C.window_pixelratio]% }</style>"
+
+// resize browser based on zoom
+/proc/get_browse_size_parameter(client/C, width, height)
+	var/ratio = 1
+	if(C && C.prefs.window_scale)
+		ratio = C.window_pixelratio
+
+	return "size=[width * ratio]x[height * ratio];"
 
 /proc/popup(user, message, title)
 	var/datum/browser/P = new(user, title, title)
