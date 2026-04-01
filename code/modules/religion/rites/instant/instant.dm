@@ -664,7 +664,6 @@
 			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
 	return TRUE
 
-
 /datum/religion_rites/instant/communicate
 	name = "Общение"
 	desc = "Отправляет телепатическое сообщение всем членам религии!"
