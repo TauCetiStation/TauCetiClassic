@@ -387,6 +387,19 @@
 	components["comms"] = new/datum/robot_component/binary_communication/combat(src)
 	components["armour"] = new/datum/robot_component/armour/class_5(src)
 
+	for(var/V in components) if(V != "power cell")
+		var/datum/robot_component/C = components[V]
+		C.installed = 1
+		C.wrapped = new C.external_type
+	if(!cell)
+		cell = new /obj/item/weapon/stock_parts/cell(src)
+		cell.maxcharge = 7500
+		cell.charge = 7500
+
+	var/datum/robot_component/cell_component = components["power cell"]
+	cell_component.wrapped = cell
+	cell_component.installed = 1
+
 	dna = new /datum/dna(null) //as we have a heart now
 	dna.real_name = real_name
 

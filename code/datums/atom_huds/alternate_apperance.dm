@@ -184,7 +184,7 @@ var/global/list/active_alternate_appearances = list()
 			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/silicons/mobShouldSee(mob/M)
-	if(issilicon(M))
+	if(issilicon(M) && !iscultist(M))
 		return TRUE
 	return FALSE
 

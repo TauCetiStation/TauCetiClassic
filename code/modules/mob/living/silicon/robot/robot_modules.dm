@@ -381,8 +381,6 @@
 	modules += new /obj/item/weapon/card/access_grabber(src) //Agent card
 	modules += new /obj/item/weapon/tool_package(src) //Specialitiy
 	modules += new /obj/item/device/synth(src) //Melody rites
-	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
-
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()

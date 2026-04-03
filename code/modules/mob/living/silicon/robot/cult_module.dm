@@ -70,6 +70,8 @@
 /obj/item/weapon/storage/bible/tome/cyborg/attack_self(mob/user)
 	if(!isrobot(user))
 		CRASH("Предмет для киборгов оказался в руках не-киборга [loc]!")
+	if(!religion && user.my_religion)
+		religion = user.my_religion
 	var/mob/living/silicon/robot/R = user
 	if(!istype(R.components["actuator"], /datum/robot_component/actuator/cult))
 		to_chat(user, "<span class='notice'>Внимание! Не обнаружено необходимого аппаратного обеспечения для взаимодействия с данным оборудованием!</span>")
@@ -86,3 +88,18 @@
 		playsound(src, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		return
 	. = ..()
+
+/mob/living/silicon/robot/cultist
+/mob/living/silicon/robot/cultist/atom_init(mapload, name_prefix, laws_type, ai_link, datum/religion/R)
+	. = ..()
+	build_cultist_borg()
+
+/mob/living/silicon/robot/cultist/LateLogin()
+	. = ..()
+	if(iscultist(src))
+		return
+	if(global.cult_religion)
+		global.cult_religion.add_member(src, CULT_ROLE_HIGHPRIEST)
+	else
+		create_faction(/datum/faction/cult, FALSE, FALSE)
+		global.cult_religion.add_member(src, CULT_ROLE_HIGHPRIEST)// religion was created in faction

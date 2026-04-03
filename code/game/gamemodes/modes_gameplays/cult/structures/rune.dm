@@ -95,22 +95,29 @@
 		return
 	if(!power)
 		return
-	if(isrobot(user))
-		var/mob/living/silicon/robot/R = user
-		if(!istype(R.components["actuator"], /datum/robot_component/actuator/cult))
-			to_chat(user, "Внимание! Не обнаружено необходимого аппаратного обеспечения для взаимодействия с данным оборудованием!")
-			playsound(user, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-			return
-		var/datum/robot_component/actuator/cult/A = R.components["actuator"]
-		var/obj/item/robot_parts/robot_component/actuator/cult/C = A.wrapped
-		if(!C)
-			to_chat(user, "<span class='notice'>Внимание! Компонент \"Сердце\" не исправно. Обратитесь в сервисный центр!</span>")
-			playsound(src, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-			return
-		if(C.brute + C.burn > 75)
-			to_chat(user, "<span class='notice'>[pick("Ваше С5рдЦ5", "Моё сердце")] слишком повреждено, что бы использовать данный ко-мПон5нт!</span>") //Lemme play a theatre that a cyborg can feel emotions with heart
-			playsound(src, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-			return
+
+	power.action_wrapper(user)
+
+/obj/effect/rune/attack_robot(mob/living/user)
+	. = ..()
+	user.SetNextMove(CLICK_CD_INTERACT)
+	if(get_dist(user, src) > 1 || !iscultist(user) || !power)
+		return
+	var/mob/living/silicon/robot/R = user
+	if(!istype(R.components["actuator"], /datum/robot_component/actuator/cult))
+		to_chat(user, "Внимание! Не обнаружено необходимого аппаратного обеспечения для взаимодействия с данным оборудованием!")
+		playsound(user, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+		return
+	var/datum/robot_component/actuator/cult/A = R.components["actuator"]
+	var/obj/item/robot_parts/robot_component/actuator/cult/C = A.wrapped
+	if(!C)
+		to_chat(user, "<span class='notice'>Внимание! Компонент \"Сердце\" не исправно. Обратитесь в сервисный центр!</span>")
+		playsound(user, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+		return
+	if(C.brute + C.burn > 75)
+		to_chat(user, "<span class='notice'>[pick("Ваше С5рдЦ5", "Моё сердце")] слишком повреждено, что бы использовать данный ко-мПон5нт!</span>") //Lemme play a theatre that a cyborg can feel emotions with heart
+		playsound(user, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+		return
 
 	power.action_wrapper(user)
 
