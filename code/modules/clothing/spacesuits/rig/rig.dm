@@ -140,6 +140,7 @@
 	. = ..()
 	if(HELMET_TYPE)
 		helmet = new HELMET_TYPE(src)
+		helmet.rig_connect = src
 	if(BOOTS_TYPE)
 		boots  = new BOOTS_TYPE(src)
 	if(initial_modules && initial_modules.len)
@@ -459,8 +460,7 @@
 	var/mob/living/carbon/human/H = usr
 
 	if(!istype(H)) return
-	if(H.incapacitated())
-		return
+	if(H.incapacitated()) return
 	if(H.wear_suit != src) return
 
 	if(H.head == helmet)

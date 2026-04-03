@@ -19,7 +19,7 @@
 		return	//it shouldn't be null, okay?
 	if(!istype(target, /obj/item/clothing))
 		return
-	var/obj/item/clothing/I = target
+	var/obj/item/clothing/suit/space/rig/I = target
 	if (I.can_be_modded == FALSE)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
@@ -27,18 +27,24 @@
 	var/excluding = ("exclude" in I.species_restricted)
 	var/in_list = (target_species in I.species_restricted)
 
+	var/h_excluding = ("exclude" in I.helmet.species_restricted)
+	var/in_h_list = (target_species in I.helmet.species_restricted)
+
 	if (excluding ^ in_list)
 		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
-		return
+		if(h_excluding ^ in_h_list)
+			to_chat(user, "<span class='notice'>[I.helmet] is already modified.</span>")
+			return
 
 	if(!isturf(target.loc))
 		to_chat(user, "<span class='warning'>[target] must be safely placed on the ground for modification.</span>")
 		return
 
-	if(istype(I, /obj/item/clothing/head/helmet) && (parts & MODKIT_HELMET))
-		parts &= ~MODKIT_HELMET
-	else if(istype(I, /obj/item/clothing/suit) && (parts & MODKIT_SUIT))
+
+	if(ishardsuit(I) && (parts & MODKIT_SUIT))
 		parts &= ~MODKIT_SUIT
+		if(ishardhelmet(I.helmet) && (parts & MODKIT_HELMET))
+			parts &= ~MODKIT_HELMET
 	else
 		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
 		return
@@ -48,6 +54,7 @@
 	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [target].</span>","<span class='red'> You open \the [src] and modify \the [target].</span>")
 
 	I.refit_for_species(target_species)
+	I.helmet.refit_for_species(target_species)
 
 	if(!parts)
 		user.drop_from_inventory(src)

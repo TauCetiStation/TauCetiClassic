@@ -242,13 +242,16 @@
 			return TRUE
 	return FALSE
 
-/obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
-	var/obj/item/clothing/head/helmet/space/rig/R = I
-	if(istype(R) && !R.canremove)	//if the helmet is attached to the rig, facehugger will not be able to remove it
-		R.canremove = TRUE
-	if(C.unEquip(I))
-		return TRUE
-	return FALSE
+/obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/human/H)
+	var/obj/item/clothing/head/helmet/space/rig/helmet = I
+	var/obj/item/clothing/suit/space/rig/rig = helmet.rig_connect
+	helmet.canremove = 1
+	var/dropped_helmet = helmet
+	H.drop_from_inventory(helmet)
+	rig.helmet = dropped_helmet
+	helmet.loc = rig
+
+	return TRUE
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/carbon/C)
 	if(!CanHug(C, FALSE))

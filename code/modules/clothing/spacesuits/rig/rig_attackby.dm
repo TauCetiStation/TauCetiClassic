@@ -91,8 +91,6 @@
 		var/list/current_mounts = list()
 		if(cell)
 			current_mounts += list("Cell" = image(getFlatIcon(cell)))
-		if(helmet)
-			current_mounts += list("Helmet" = image(icon = helmet.icon, icon_state = helmet.icon_state))
 		if(boots)
 			current_mounts += list("Boots" = image(icon = boots.icon, icon_state = boots.icon_state))
 		if(installed_modules.len)

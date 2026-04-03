@@ -207,9 +207,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(locked || UV)
 		to_chat(user, "<span class ='danger'>Unable to opened unit.</span>")
 		return
-	if(occupant)
-		eject_occupant(occupant)
-		return
 	opened = TRUE
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
@@ -386,9 +383,13 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(!opened)
-		toggle_lock(user)
-	else
+	if(!powered || broken)
+		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
+		return
+	if(UV)
+		return
+
+	if(opened)
 		var/list/suit_storage = list()
 		if(!occupant)
 			if(HELMET)
@@ -403,6 +404,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				suit_storage += list("Mask" = image(icon = MASK.icon, icon_state = MASK.icon_state))
 		else
 			suit_storage += list("Somebody" = image(getFlatIcon(occupant)))
+
 		var/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
 		if(to_dispense)
 			switch(to_dispense)
@@ -419,6 +421,12 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				if("Somebody")
 					eject_occupant()
 			update_icon()
+			return
+
+	if(!locked)
+		opened ? close() : open(user)
+		update_icon()
+		return
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(UV)
@@ -434,6 +442,10 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		if(isprying(I))
 			if(default_deconstruction_crowbar(I))
 				return
+	if(!opened)
+		if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
+			if(allowed(usr))
+				toggle_lock(user)
 	if(opened)
 		if(istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
