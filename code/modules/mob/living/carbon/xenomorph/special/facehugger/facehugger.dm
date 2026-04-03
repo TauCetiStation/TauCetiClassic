@@ -254,7 +254,7 @@
 		rig.helmet = dropped_helmet
 		helmet.loc = rig
 	else
-		C.unEquip(I)
+		H.unEquip(I)
 
 	return TRUE
 
