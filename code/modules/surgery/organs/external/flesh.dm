@@ -92,7 +92,7 @@
 		damage_amt += burn
 		cur_damage += BP.burn_dam
 
-	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage || (((sharp && damage_amt >= 5) || damage_amt >= 10) && prob(5))))
+	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage) && prob(5))
 	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		IO.take_damage(damage_amt / 2)
