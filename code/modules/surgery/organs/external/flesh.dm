@@ -88,11 +88,16 @@
 	var/cur_damage = BP.brute_dam
 	var/pure_brute = brute
 	var/pure_burn = burn
+	var/cutoff_internal_organ_damage_threshold = 10
+	if(sharp)
+		cutoff_internal_organ_damage_threshold = 5
+
 	if(laser)
 		damage_amt += burn
 		cur_damage += BP.burn_dam
 
-	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage) && prob(5))
+
+	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage + cutoff_internal_organ_damage_threshold) && prob(5))
 	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		IO.take_damage(damage_amt / 2)
