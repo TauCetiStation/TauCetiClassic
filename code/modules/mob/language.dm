@@ -295,9 +295,11 @@
 	desc = "A primitive language of grunts and hoots shared among the monkey population of known space."
 	speech_verb = "hoots"
 	ask_verb = "screeches"
+	exclaim_verb = "shrieks"
 	colour = "monkey"
-	syllables = list("УУ", "ЫЫ", "АА", "ИИ", "АУ", "ОО", "ЫА", "УА", "ЫА", "АЫ")
+	syllables = list("УУ", "У-А", "УУУ", "АА", "АУ", "УА", "ААА", "ИИ", "ОО")
 	flags = RESTRICTED
+	space_chance = 40
 
 /datum/language/xenomorph
 	name = LANGUAGE_XENOMORPH
