@@ -49,6 +49,26 @@
 		if(10.0)
 			return "southwest"
 
+//Turns a direction into text
+/proc/dir2text_ru(direction)
+	switch(direction)
+		if(1.0)
+			return "север"
+		if(2.0)
+			return "юг"
+		if(4.0)
+			return "восток"
+		if(8.0)
+			return "запад"
+		if(5.0)
+			return "северо-восток"
+		if(6.0)
+			return "юго-восток"
+		if(9.0)
+			return "северо-запад"
+		if(10.0)
+			return "юго-запад"
+
 //Turns text into proper directions
 /proc/text2dir(direction)
 	switch(uppertext(direction))
