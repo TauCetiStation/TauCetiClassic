@@ -211,7 +211,7 @@
 		var/turf/targeted_turf = get_step(src, user.dir)
 		for(var/obj/structure/altar_of_gods/altar in religion.altars)
 			var/distance = get_dist_euclidian(targeted_turf, get_turf(altar))
-			if(targeted_turf.z == altar.z && get_dist_euclidian(targeted_turf, get_turf(altar)) <= 70)
+			if(targeted_turf.z == altar.z && distance <= 70)
 				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого. Ближайший алтарь в [round(distance)] шагах к [dir2text_ru(get_dir(src, get_turf(altar)))]у.</span>")
 				return
 
