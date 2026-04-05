@@ -1196,14 +1196,31 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 	reagents.add_reagent("singulo", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
+	AddComponent(/datum/component/slippery, 8, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/proc/AfterSlip(mob/living/carbon/human/M)
+	M.Stun(2)
+
+	var/outer_teleport_radius = potency / 7 //Plant potency determines radius of teleport.
+	var/inner_teleport_radius = potency / 12
+
+	// Teleport target to a random turf within ring (inner → outer radius)
+	if(outer_teleport_radius >= 1 && prob(50))
+		new /obj/effect/decal/cleanable/molten_item(get_turf(M))
+		do_teleport(M, get_turf(M), aprecision = outer_teleport_radius, amin_precision = inner_teleport_radius)
+		new/obj/effect/decal/cleanable/bluespacetomato_smudge(loc)
+		visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] телепортировал [CASE(M, NOMINATIVE_CASE)], вызвав искажение пространства-времени.</span>","<span class='notice'>Вы слышите хлопок и треск.</span>")
+		// A chance for this clownery to end
+		if(prob(15))
+			qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
 		return
-	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
-	var/inner_teleport_radius = potency / 15
+	var/outer_teleport_radius = potency / 7 //Plant potency determines radius of teleport.
+	var/inner_teleport_radius = potency / 12
 	if(outer_teleport_radius < 1) //Wasn't potent enough, it just splats.
-		new/obj/effect/decal/cleanable/blood/oil(loc)
+		new/obj/effect/decal/cleanable/bluespacetomato_smudge(loc)
 		visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился.</span>","<span class='notice'>Вы слышите шлепок.</span>")
 		qdel(src)
 		return
@@ -1220,8 +1237,8 @@
 	// Teleport target to a random turf within ring (inner → outer radius)
 	new /obj/effect/decal/cleanable/molten_item(target.loc)
 	do_teleport(target, get_turf(target), aprecision = outer_teleport_radius, amin_precision = inner_teleport_radius)
-	new /obj/effect/decal/cleanable/blood/oil(loc)
-	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] расплющился, вызвав искажение пространства-времени.</span>","<span class='notice'>Вы слышите хлопок и треск.</span>")
+	new/obj/effect/decal/cleanable/bluespacetomato_smudge(loc)
+	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] телепортировал [CASE(target, NOMINATIVE_CASE)], вызвав искажение пространства-времени.</span>","<span class='notice'>Вы слышите хлопок и треск.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
