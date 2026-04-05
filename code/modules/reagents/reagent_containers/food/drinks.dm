@@ -256,6 +256,7 @@
 		icon_state = "soymilk_empty"
 	else
 		icon_state = "soymilk"
+
 /obj/item/weapon/reagent_containers/food/drinks/soymilk/on_reagent_change()
 	update_icon()
 
