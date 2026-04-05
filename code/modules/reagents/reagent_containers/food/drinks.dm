@@ -225,6 +225,7 @@
 		icon_state = "milk_empty"
 	else
 		icon_state = "milk"
+
 /obj/item/weapon/reagent_containers/food/drinks/milk/on_reagent_change()
 	update_icon()
 
