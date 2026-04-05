@@ -176,7 +176,7 @@
 
 	. = ..()
 
-	if(!(get_species() in list (DIONA, PODMAN)))
+	if(!(get_species() in list(DIONA, PODMAN)))
 		add_language(LANGUAGE_MONKEY)
 		default_language = LANGUAGE_MONKEY
 
