@@ -8,7 +8,7 @@
 	var/heat_temp_mod = 0
 	var/cold_temp_mod = 0
 
-	var/color = "#FFFFFF"
+	var/color = "#ffffff"
 
 	var/mob/living/carbon/human/owner
 
@@ -17,7 +17,7 @@
 	speed_mod = 0.5
 	siemens_coefficient = 2
 
-	color = "#8D8E91"
+	color = "#8d8e91"
 
 /datum/ipc_armour/plasteel
 	brute_mult = 0.66
@@ -32,13 +32,13 @@
 	siemens_coefficient = 0.5
 	reflect_chance = 20
 
-	color = "#A0BBCE"
+	color = "#a0bbce"
 
 /datum/ipc_armour/hardphoronglass
 	siemens_coefficient = 0.25
 	reflect_chance = 25
 
-	color = "#D3B3CB"
+	color = "#d3b3cb"
 
 /datum/ipc_armour/gold
 	brute_mult = 0.93
@@ -46,7 +46,7 @@
 	speed_mod = -0.7
 	siemens_coefficient = 1.25
 
-	color = "#FFC20E"
+	color = "#ffc20e"
 
 /datum/ipc_armour/uranium
 	brute_mult = 0.93
@@ -54,7 +54,7 @@
 	speed_mod = 1
 	siemens_coefficient = 1.25
 
-	color = "#4C7A43"
+	color = "#4c7a43"
 
 /datum/ipc_armour/uranium/add_armour()
 	..()
@@ -95,7 +95,7 @@
 
 	heat_temp_mod = 100
 
-	color = "#CE3282"
+	color = "#ce3282"
 
 /datum/ipc_armour/phoron/add_armour()
 	..()
@@ -116,13 +116,13 @@
 
 	heat_temp_mod = 100
 
-	color = "#97FFFF"
+	color = "#97ffff"
 
 /datum/ipc_armour/bodyarmor
 	brute_mult = 0.8
 	burn_mult = 0.8
 
-	color = "#66789C"
+	color = "#66789c"
 
 /datum/ipc_armour/New(mob/living/carbon/human/H)
 	owner = H
