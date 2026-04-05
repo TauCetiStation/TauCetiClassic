@@ -242,10 +242,11 @@
 			return TRUE
 	return FALSE
 
-/obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/human/H)
+/obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
 
 
-	if(ishardhelmet(I))
+	if(ishardhelmet(I) && ishuman(C))
+		var/mob/living/carbon/human/H = C
 		var/obj/item/clothing/head/helmet/space/rig/helmet = I
 		var/obj/item/clothing/suit/space/rig/rig = helmet.rig_connect
 		helmet.canremove = 1
@@ -254,7 +255,7 @@
 		rig.helmet = dropped_helmet
 		helmet.loc = rig
 	else
-		H.unEquip(I)
+		C.unEquip(I)
 
 	return TRUE
 
