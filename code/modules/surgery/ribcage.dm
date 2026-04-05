@@ -818,7 +818,7 @@
 
 	stack_use_amount = 10
 
-	var/datum/ipc_armour/list/type2armourtype = list(
+	var/list/type2armourtype = list(
 		/obj/item/stack/sheet/metal = /datum/ipc_armour/metal,
 		/obj/item/stack/sheet/plasteel = /datum/ipc_armour/plasteel,
 		/obj/item/stack/sheet/rglass = /datum/ipc_armour/hardglass,
