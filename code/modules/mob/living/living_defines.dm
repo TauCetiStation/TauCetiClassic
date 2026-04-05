@@ -22,6 +22,18 @@
 	var/datum/modval/mob_clone_mod = new (base_value = 1)
 	var/datum/modval/mob_brain_mod = new (base_value = 1)
 
+	var/datum/modval/mob_speed_mod = new (base_value = 0)
+	var/datum/modval/mob_siemens_mod = new (base_value = 1)
+	var/datum/modval/mob_reflect_chance = new (base_value = 0, clamp_min = 0, clamp_max = 100)
+
+	var/datum/modval/mob_cold_level_1 = new (base_value = BODYTEMP_COLD_DAMAGE_LIMIT)
+	var/datum/modval/mob_cold_level_2 = new (base_value = BODYTEMP_COLD_DAMAGE_LIMIT)
+	var/datum/modval/mob_cold_level_3 = new (base_value = BODYTEMP_COLD_DAMAGE_LIMIT)
+
+	var/datum/modval/mob_heat_level_1 = new (base_value = BODYTEMP_HEAT_DAMAGE_LIMIT)
+	var/datum/modval/mob_heat_level_2 = new (base_value = BODYTEMP_HEAT_DAMAGE_LIMIT)
+	var/datum/modval/mob_heat_level_3 = new (base_value = BODYTEMP_HEAT_DAMAGE_LIMIT)
+
 	// this used as multiplicative mod of every other damage modval
 	// change it if you want to affect all damage at once
 	var/datum/modval/mob_general_damage_mod = new (base_value = 1)

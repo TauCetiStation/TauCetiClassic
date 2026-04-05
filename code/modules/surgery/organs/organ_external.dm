@@ -887,8 +887,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
-/obj/item/organ/external/chest
-
 /obj/item/organ/external/groin
 	name = "groin"
 	cases = list("пах", "паха", "паху", "пах", "пахом", "пахе")

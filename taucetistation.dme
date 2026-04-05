@@ -2537,6 +2537,7 @@
 #include "code\modules\surgery\organs\brain.dm"
 #include "code\modules\surgery\organs\eyes.dm"
 #include "code\modules\surgery\organs\heart.dm"
+#include "code\modules\surgery\organs\ipc_armour.dm"
 #include "code\modules\surgery\organs\kidneys.dm"
 #include "code\modules\surgery\organs\liver.dm"
 #include "code\modules\surgery\organs\lungs.dm"

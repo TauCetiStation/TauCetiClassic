@@ -800,3 +800,81 @@
 	target.ear_damage = 0
 	target.ear_deaf = 0
 	target.sdisabilities &= ~DEAF
+
+/datum/surgery_step/ipc/ribcage/add_armour
+	allowed_tools = list(
+		/obj/item/stack/sheet/metal = 100,
+		/obj/item/stack/sheet/plasteel = 100,
+		/obj/item/stack/sheet/rglass = 100,
+		/obj/item/stack/sheet/glass/phoronrglass = 100,
+		/obj/item/stack/sheet/mineral/gold = 100,
+		/obj/item/stack/sheet/mineral/uranium = 100,
+		/obj/item/stack/sheet/mineral/phoron = 100,
+		/obj/item/stack/sheet/mineral/diamond = 100,
+		/datum/crafting_recipe/durathread/armor = 100
+	)
+	min_duration = 100
+	max_duration = 150
+
+	stack_use_amount = 10
+
+	var/datum/ipc_armour/list/type2armourtype = list(
+		/obj/item/stack/sheet/metal = /datum/ipc_armour/metal,
+		/obj/item/stack/sheet/plasteel = /datum/ipc_armour/plasteel,
+		/obj/item/stack/sheet/rglass = /datum/ipc_armour/hardglass,
+		/obj/item/stack/sheet/glass/phoronrglass = /datum/ipc_armour/hardphoronglass,
+		/obj/item/stack/sheet/mineral/gold = /datum/ipc_armour/gold,
+		/obj/item/stack/sheet/mineral/uranium = /datum/ipc_armour/uranium,
+		/obj/item/stack/sheet/mineral/phoron = /datum/ipc_armour/phoron,
+		/obj/item/stack/sheet/mineral/diamond = /datum/ipc_armour/diamond,
+		/datum/crafting_recipe/durathread/armor = /datum/ipc_armour/bodyarmor
+	)
+
+/datum/surgery_step/ipc/ribcage/add_armour/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.ribcage == 1
+
+/datum/surgery_step/ipc/ribcage/add_armour/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("[user] starts putting \the [tool] onto [target]'s chest.",
+	"You start putting \the [tool] onto [target]'s chest.")
+	..()
+
+/datum/surgery_step/ipc/ribcage/add_armour/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='notice'>[user] has put \the [tool] onto [target]'s chest.</span>",
+	"<span class='notice'>You have put \the [tool] onto [target]'s chest.</span>")
+
+	var/obj/item/organ/external/chest/robot/ipc/BP = target.get_bodypart(BP_CHEST)
+	if(BP.armour)
+		BP.armour.remove_armour()
+
+	var/armour_type = type2armourtype[tool.type]
+	var/datum/ipc_armour/armour = new armour_type(target)
+	BP.armour = armour
+
+	target.update_body(BP_CHEST)
+
+/datum/surgery_step/ipc/ribcage/remove_armour
+	allowed_tools = list(
+		/obj/item/weapon/wirecutters = 100,
+	)
+	min_duration = 100
+	max_duration = 150
+
+/datum/surgery_step/ipc/ribcage/remove_armour/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/chest/robot/ipc/BP = target.get_bodypart(BP_CHEST)
+	return ..() && BP.armour && target.op_stage.ribcage == 1
+
+/datum/surgery_step/ipc/ribcage/remove_armour/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("[user] starts removing \the armour from [target]'s chest.",
+	"You start removing \the armour from [target]'s chest.")
+	..()
+
+/datum/surgery_step/ipc/ribcage/remove_armour/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='notice'>[user] has removed \the armour from [target]'s chest.</span>",
+	"<span class='notice'>You have removed \the armour from [target]'s chest.</span>")
+
+	var/obj/item/organ/external/chest/robot/ipc/BP = target.get_bodypart(BP_CHEST)
+	if(BP.armour)
+		BP.armour.remove_armour()
+		BP.armour = null
+
+	target.update_body(BP_CHEST)

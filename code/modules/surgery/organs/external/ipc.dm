@@ -8,9 +8,19 @@
 	var/posibrain_type = /obj/item/device/mmi/posibrain
 	var/posibrain_species = IPC
 
+	var/datum/ipc_armour/armour
+
 /obj/item/organ/external/chest/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"
+
+/obj/item/organ/external/chest/robot/ipc/generate_appearances()
+	. = ..()
+
+	if(armour)
+		var/mutable_appearance/armour_appearance = mutable_appearance(species.icobase, "[body_zone]_armour", -BODY_FEATURES_LAYER)
+		armour_appearance.color = armour.color
+		. += armour_appearance
 
 /obj/item/organ/external/head/robot/ipc
 	name = "ipc head"

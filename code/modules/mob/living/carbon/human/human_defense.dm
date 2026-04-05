@@ -145,6 +145,8 @@
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 
 /mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+	if(prob(mob_reflect_chance.Get()))
+		return TRUE
 	if(head && head.IsReflect(def_zone, hol_dir, hit_dir))
 		return TRUE
 	if(wear_suit && wear_suit.IsReflect(def_zone, hol_dir, hit_dir))

@@ -434,12 +434,12 @@ var/global/list/tourette_bad_words= list(
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
 		return
 
-	if(bodytemperature > species.heat_level_1)
+	if(bodytemperature > mob_heat_level_1.Get())
 		//Body temperature is too hot.
-		if(bodytemperature > species.heat_level_3)
+		if(bodytemperature > mob_heat_level_3.Get())
 			temp_alert = 3
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
-		else if(bodytemperature > species.heat_level_2)
+		else if(bodytemperature > mob_heat_level_2.Get())
 			if(on_fire)
 				temp_alert = 3
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
@@ -449,21 +449,21 @@ var/global/list/tourette_bad_words= list(
 		else
 			temp_alert = 1
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-	else if(bodytemperature < species.cold_level_1 && !istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		if(bodytemperature < species.cold_level_3)
+	else if(bodytemperature < mob_cold_level_1.Get() && !istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		if(bodytemperature < mob_cold_level_3.Get())
 			temp_alert = -3
 			take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
-		else if(bodytemperature < species.cold_level_2)
+		else if(bodytemperature < mob_cold_level_2.Get())
 			temp_alert = -2
 			take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 		else
 			temp_alert = -1
 			take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 
-	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
-		if(bodytemperature < species.cold_level_3)
+	if(bodytemperature < mob_cold_level_1.Get() && get_species() == UNATHI)
+		if(bodytemperature < mob_cold_level_3.Get())
 			drowsyness  = max(drowsyness, 20)
-		else if(prob(50) && bodytemperature < species.cold_level_2)
+		else if(prob(50) && bodytemperature < mob_cold_level_2.Get())
 			drowsyness = max(drowsyness, 10)
 		else if(prob(10))
 			drowsyness = max(drowsyness, 2)
@@ -511,19 +511,19 @@ var/global/list/tourette_bad_words= list(
 	if (abs(body_temperature_difference) < 0.5)
 		return //fuck this precision
 
-	if(bodytemperature < species.cold_level_1) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
+	if(bodytemperature < mob_cold_level_1.Get()) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
 		if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
 			nutrition -= 2
 		var/recovery_amt = max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		//world << "Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
 		adjust_bodytemperature(recovery_amt)
-	else if(species.cold_level_1 <= bodytemperature && bodytemperature <= species.heat_level_1)
+	else if(mob_cold_level_1.Get() <= bodytemperature && bodytemperature <= mob_heat_level_1.Get())
 		var/recovery_amt = body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
 		//world << "Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
 		adjust_bodytemperature(recovery_amt)
-	else if(bodytemperature > species.heat_level_1) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
+	else if(bodytemperature > mob_heat_level_1.Get()) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 		//We totally need a sweat system cause it totally makes sense...~
 		var/recovery_amt = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 		//world << "Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]"

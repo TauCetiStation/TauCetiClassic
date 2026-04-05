@@ -24126,6 +24126,23 @@
 	icon_state = "green"
 	},
 /area/velocity)
+"exE" = (
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/structure/rack,
+/obj/item/stack/sheet/glass/phoronrglass{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 10
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership)
 "eyb" = (
 /obj/machinery/status_display{
 	layer = 4
@@ -30948,6 +30965,13 @@
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"sdZ" = (
+/obj/structure/stool/bed/roller,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership)
 "seM" = (
 /obj/structure/mineral_door/silver,
 /turf/unsimulated/floor{
@@ -92153,8 +92177,8 @@ aiz
 aKN
 aEL
 aGJ
-alM
-alM
+exE
+sdZ
 alM
 aIi
 aly

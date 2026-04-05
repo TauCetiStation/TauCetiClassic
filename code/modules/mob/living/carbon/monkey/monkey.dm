@@ -74,8 +74,8 @@
 	var/cold_lvl_1 = BODYTEMP_COLD_DAMAGE_LIMIT
 	var/datum/species/monk_specie = global.all_species[race]
 	if(monk_specie)
-		heat_lvl_1 = monk_specie.heat_level_1
-		cold_lvl_1 = monk_specie.cold_level_1
+		heat_lvl_1 = mob_heat_level_1.Get()
+		cold_lvl_1 = mob_cold_level_1.Get()
 
 	if(bodytemperature > heat_lvl_1)
 		if(RESIST_HEAT in mutations)

@@ -453,7 +453,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(BP.germ_level >= INFECTION_LEVEL_ONE)
 		//having an infection raises your body temperature
-		var/fever_temperature = (BP.owner.species.heat_level_1 - BP.owner.species.body_temperature - 5)* min(BP.germ_level/INFECTION_LEVEL_TWO, 1) + BP.owner.species.body_temperature
+		var/fever_temperature = (BP.owner.mob_heat_level_1.Get() - BP.owner.species.body_temperature - 5)* min(BP.germ_level/INFECTION_LEVEL_TWO, 1) + BP.owner.species.body_temperature
 		//need to make sure we raise temperature fast enough to get around environmental cooling preventing us from reaching fever_temperature
 		BP.owner.adjust_bodytemperature((fever_temperature - T20C) / BODYTEMP_COLD_DIVISOR + 1, BP.owner.bodytemperature, fever_temperature)
 

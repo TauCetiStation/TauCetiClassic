@@ -49,6 +49,7 @@
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/speed_mod_no_shoes = 0                           // Speed modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
+	var/reflect_chance = 0
 
 	var/pluvian_social_credit = 1                        // Species default social credit for pluvian social credit system
 
@@ -300,7 +301,19 @@
 	H.mob_clone_mod.ModMultiplicative(clone_mod, src)
 	H.mob_brain_mod.ModMultiplicative(brain_mod, src)
 
+	H.mob_speed_mod.ModStatic(speed_mod, src)
+	H.mob_siemens_mod.ModMultiplicative(siemens_coefficient, src)
+	H.mob_reflect_chance.ModStatic(reflect_chance, src)
+
 	H.mob_metabolism_mod.ModMultiplicative(metabolism_mod, src)
+
+	H.mob_cold_level_1.SetBaseValue(cold_level_1)
+	H.mob_cold_level_2.SetBaseValue(cold_level_2)
+	H.mob_cold_level_3.SetBaseValue(cold_level_3)
+
+	H.mob_heat_level_1.SetBaseValue(heat_level_1)
+	H.mob_heat_level_2.SetBaseValue(heat_level_2)
+	H.mob_heat_level_3.SetBaseValue(heat_level_3)
 
 	if(flags[NO_GENDERS])
 		H.gender = NEUTER
@@ -338,7 +351,19 @@
 	H.mob_clone_mod.RemoveMods(src)
 	H.mob_brain_mod.RemoveMods(src)
 
+	H.mob_speed_mod.RemoveMods(src)
+	H.mob_siemens_mod.RemoveMods(src)
+	H.mob_reflect_chance.RemoveMods(src)
+
 	H.mob_metabolism_mod.RemoveMods(src)
+
+	H.mob_cold_level_1.SetBaseValue(BODYTEMP_COLD_DAMAGE_LIMIT)
+	H.mob_cold_level_2.SetBaseValue(BODYTEMP_COLD_DAMAGE_LIMIT)
+	H.mob_cold_level_3.SetBaseValue(BODYTEMP_COLD_DAMAGE_LIMIT)
+
+	H.mob_heat_level_1.SetBaseValue(BODYTEMP_HEAT_DAMAGE_LIMIT)
+	H.mob_heat_level_2.SetBaseValue(BODYTEMP_HEAT_DAMAGE_LIMIT)
+	H.mob_heat_level_3.SetBaseValue(BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 	if(!flags[IS_SOCIAL])
 		H.handle_socialization()

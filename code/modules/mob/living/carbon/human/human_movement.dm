@@ -21,7 +21,7 @@
 		nullify_debuffs = TRUE
 		tally += 0.5
 
-	tally += species.speed_mod
+	tally += mob_speed_mod.Get()
 
 	if(RUN in mutations)
 		tally -= 0.5
@@ -49,8 +49,8 @@
 		if(hungry >= NUTRITION_LEVEL_NORMAL) // Slow down if nutrition <= 40%
 			tally += hungry / 250 // 1,4 - 2
 
-		if(bodytemperature < species.cold_level_1)
-			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10
+		if(bodytemperature < mob_cold_level_1.Get())
+			tally += 1.75 * (mob_cold_level_1.Get() - bodytemperature) / 10
 
 	var/list/moving_bodyparts
 	if(buckled) // so, if we buckled we have large debuff

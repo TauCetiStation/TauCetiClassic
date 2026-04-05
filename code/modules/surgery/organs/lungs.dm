@@ -199,10 +199,10 @@
 
 /obj/item/organ/internal/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath)
 	// Hot air hurts :(
-	if(breath.temperature > owner.species.heat_level_1)
-		if(breath.temperature > owner.species.heat_level_3)
+	if(breath.temperature > owner.mob_heat_level_1.Get())
+		if(breath.temperature > owner.mob_heat_level_3.Get())
 			owner.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
-		else if(breath.temperature > owner.species.heat_level_2)
+		else if(breath.temperature > owner.mob_heat_level_2.Get())
 			owner.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 		else
 			owner.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")

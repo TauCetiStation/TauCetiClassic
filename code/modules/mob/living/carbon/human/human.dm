@@ -660,7 +660,7 @@
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
 	if(species)
-		siemens_coeff *= species.siemens_coefficient
+		siemens_coeff *= mob_siemens_mod.Get()
 
 	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(.)
