@@ -19,22 +19,16 @@
 	},
 /area/custom/arena)
 "aS" = (
-/obj/item/weapon/key{
-	id = "arena mech"
-	},
-/obj/structure/table/abductor,
-/turf/unsimulated/floor/snow,
+/turf/unsimulated/floor/carpet/green,
 /area/custom/arena)
-"aW" = (
-/obj/random/cloth/helmet,
-/turf/unsimulated/floor/snow,
+"aU" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor{
+	icon_state = "asteroid"
+	},
 /area/custom/arena)
 "bg" = (
 /obj/structure/flora/ausbushes/pointybush,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
-"bx" = (
-/obj/item/weapon/grenade/syndieminibomb,
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
 "bE" = (
@@ -49,26 +43,17 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"ca" = (
-/obj/structure/flora/grass/brown,
-/obj/random/guns/set_special,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
 "cf" = (
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
-"cm" = (
-/obj/random/cloth/armor,
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
 "cp" = (
 /turf/unsimulated/beach/sand,
 /area/custom/arena)
-"cr" = (
-/obj/structure/flora/ausbushes/ppflowers{
+"cs" = (
+/obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/random/guns/set_special,
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
 	},
@@ -77,29 +62,16 @@
 /obj/structure/flora/tree/pine,
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
-"dz" = (
-/obj/random/guns/set_special,
+"dL" = (
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	icon_state = "grass1"
 	},
-/area/custom/arena)
-"dE" = (
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor/snow,
 /area/custom/arena)
 "dX" = (
 /obj/structure/cult{
 	icon_state = "gargoyle"
 	},
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"ek" = (
-/obj/random/cloth/helmet,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"eq" = (
-/obj/random/guns/projectile_handgun,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "ey" = (
@@ -115,67 +87,25 @@
 /obj/structure/flora/grass/green,
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
-"fz" = (
-/obj/item/weapon/key{
-	id = "arena mech"
-	},
-/obj/structure/table/abductor,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"fY" = (
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/unsimulated/floor/snow,
+"fR" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/beach/sand,
 /area/custom/arena)
 "gi" = (
 /obj/structure/flora/tree/dead,
 /turf/unsimulated/floor/snow,
-/area/custom/arena)
-"gx" = (
-/obj/random/cloth/helmet,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
 /area/custom/arena)
 "gK" = (
 /turf/unsimulated/floor{
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"gO" = (
-/obj/random/cloth/armor,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"hg" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/obj/structure/lattice,
-/turf/environment/space/holospace,
-/area/custom/arena)
 "hl" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
 /obj/effect/decal/turf_decal/alpha/dark_red{
 	icon_state = "religion_cult_of_blood"
 	},
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor/cult,
-/area/custom/arena)
-"hn" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/arena)
-"hq" = (
-/obj/random/guns/projectile_handgun,
-/turf/unsimulated/floor/snow,
 /area/custom/arena)
 "hs" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -197,91 +127,14 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"hK" = (
-/obj/random/cloth/armor,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"id" = (
-/obj/structure/table/woodentable,
-/obj/random/guns/projectile_handgun,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
 "if" = (
 /obj/structure/flora/grass/brown,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
-"it" = (
-/obj/random/cloth/helmet,
-/obj/structure/flora/ausbushes/sparsegrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
-"iv" = (
-/obj/structure/flora/ausbushes/sparsegrass{
-	layer = 2.7
-	},
-/obj/random/guns/projectile_handgun,
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
 "iB" = (
 /obj/structure/torch_holder{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
-"iC" = (
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"iG" = (
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/obj/random/guns/set_special,
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"iN" = (
-/obj/structure/table/woodentable,
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
-"iZ" = (
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"ja" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
-"jt" = (
-/obj/random/melee,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
-"jv" = (
-/obj/structure/table/woodentable,
-/obj/random/cloth/armor,
-/obj/structure/torch_holder,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
-"jF" = (
-/obj/structure/table/woodentable,
-/obj/random/melee,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -295,19 +148,6 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"kI" = (
-/obj/random/guns/energy_weapon,
-/obj/structure/flora/ausbushes/brflowers{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"ld" = (
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/environment/space/holospace,
-/area/custom/arena)
 "lp" = (
 /obj/structure/torch_holder,
 /turf/unsimulated/floor/snow,
@@ -320,32 +160,19 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"lP" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor/cult,
-/area/custom/arena)
-"ms" = (
-/obj/item/weapon/grenade/syndieminibomb,
-/turf/unsimulated/beach/sand,
+"mi" = (
+/obj/structure/static_portal{
+	color = "#4572e3";
+	id = 2
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
+	icon_state = "center_8"
+	},
 /area/custom/arena)
 "mA" = (
 /obj/structure/lattice,
 /turf/environment/space/holospace,
-/area/custom/arena)
-"mI" = (
-/obj/structure/table,
-/obj/random/cloth/armor,
-/turf/unsimulated/floor{
-	icon_state = "darkred"
-	},
-/area/custom/arena)
-"mQ" = (
-/obj/item/weapon/grenade/syndieminibomb,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"ni" = (
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
 "nP" = (
 /obj/structure/flora/rock/jungle{
@@ -355,62 +182,15 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"om" = (
-/obj/item/weapon/grenade/syndieminibomb,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"ow" = (
-/obj/structure/cult/tome,
-/obj/item/weapon/kitchenknife/ritual{
-	force = 40
-	},
-/turf/unsimulated/floor/cult,
-/area/custom/arena)
-"pW" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
 "qj" = (
 /obj/structure/cult{
 	icon_state = "jew"
 	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/arena)
-"qM" = (
-/obj/random/melee,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"qU" = (
-/obj/random/cloth/armor,
-/turf/unsimulated/floor{
-	icon_state = "asteroid"
-	},
-/area/custom/arena)
-"rf" = (
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
 "rC" = (
 /obj/structure/bonfire,
 /turf/unsimulated/floor/snow,
-/area/custom/arena)
-"rO" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
 /area/custom/arena)
 "rX" = (
 /obj/structure/torch_holder{
@@ -420,18 +200,22 @@
 	icon_state = "wood"
 	},
 /area/custom/arena)
-"sB" = (
-/obj/structure/table/woodentable,
-/obj/random/cloth/helmet,
+"sf" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon_state = "grass1"
 	},
 /area/custom/arena)
-"sS" = (
-/obj/random/guns/projectile_handgun,
+"sE" = (
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
+	icon_state = "solarpanel"
 	},
 /area/custom/arena)
 "td" = (
@@ -451,37 +235,6 @@
 	icon_state = "darkred"
 	},
 /area/custom/arena)
-"tH" = (
-/obj/item/weapon/key{
-	id = "arena mech"
-	},
-/obj/structure/table/abductor,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
-"us" = (
-/obj/structure/torch_holder,
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
-"uC" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/arena)
-"uK" = (
-/obj/item/weapon/grenade/spawnergrenade/manhacks,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
-"uW" = (
-/obj/structure/barricade/wooden,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
 "vp" = (
 /obj/structure/flora/ausbushes/lavendergrass{
 	layer = 2.7
@@ -497,9 +250,8 @@
 	},
 /area/custom/arena)
 "vH" = (
-/obj/structure/torch_holder,
-/obj/item/weapon/gun/energy/temperature,
-/turf/unsimulated/floor/snow,
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/carpet/black,
 /area/custom/arena)
 "vO" = (
 /obj/structure/scrap_cube,
@@ -516,13 +268,6 @@
 	},
 /turf/unsimulated/beach/sand,
 /area/custom/arena)
-"we" = (
-/obj/structure/table/woodentable,
-/obj/random/cloth/armor,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
 "wB" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -530,30 +275,9 @@
 	},
 /area/custom/arena)
 "wF" = (
-/obj/random/melee,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "darkred"
-	},
-/area/custom/arena)
-"wH" = (
-/obj/structure/mineral_door/transparent/diamond{
-	id = "arena mech";
-	locked = 1;
-	max_integrity = 300
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"xe" = (
-/obj/structure/flora/ausbushes/sparsegrass{
-	layer = 2.7
-	},
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/unsimulated/floor{
-	icon_state = "grass1"
 	},
 /area/custom/arena)
 "xM" = (
@@ -565,56 +289,18 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
+"yj" = (
+/obj/structure/static_portal{
+	color = "#ff4100";
+	id = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
+	icon_state = "center_8"
+	},
+/area/custom/arena)
 "yk" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
-"yl" = (
-/obj/random/melee,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"ym" = (
-/obj/mecha/combat/marauder/mauler{
-	operation_req_access = list()
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"yw" = (
-/obj/structure/mineral_door/transparent/diamond{
-	dir = 4;
-	id = "arena mech";
-	locked = 1;
-	max_integrity = 300
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"yM" = (
-/obj/mecha/combat/marauder/loaded{
-	operation_req_access = list()
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
-/area/custom/arena)
-"yP" = (
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/unsimulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/unsimulated/floor/carpet/black,
 /area/custom/arena)
 "zg" = (
 /obj/structure/flora/junglebush/large,
@@ -622,50 +308,26 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"zh" = (
-/obj/machinery/door/airlock/glass,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/arena)
-"zZ" = (
-/obj/random/guns/projectile_handgun,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "brown"
-	},
-/area/custom/arena)
-"Ab" = (
-/obj/item/weapon/key{
-	id = "arena mech"
-	},
-/obj/structure/table/abductor,
-/turf/unsimulated/beach/sand,
-/area/custom/arena)
 "Aw" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid"
 	},
 /area/custom/arena)
-"AK" = (
-/obj/random/cloth/armor,
+"Bk" = (
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
+	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
+	icon_state = "center_8"
 	},
 /area/custom/arena)
-"AU" = (
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
-"Bp" = (
-/obj/random/cloth/armor,
-/obj/structure/flora/ausbushes/ppflowers{
+"BE" = (
+/obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
+/obj/structure/flora/ausbushes/lavendergrass{
+	layer = 2.7
+	},
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
 	},
@@ -678,15 +340,6 @@
 /area/custom/arena)
 "Da" = (
 /turf/unsimulated/wall/like_a_normal/red,
-/area/custom/arena)
-"De" = (
-/obj/random/guns/projectile_handgun,
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
 /area/custom/arena)
 "DT" = (
 /turf/unsimulated/wall/cult/runed/anim,
@@ -711,40 +364,16 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"Ej" = (
-/obj/random/guns/energy_weapon,
-/obj/structure/flora/ausbushes/sparsegrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"Eo" = (
-/obj/random/cloth/helmet,
-/turf/unsimulated/beach/sand,
-/area/custom/arena)
 "Er" = (
-/obj/structure/table,
-/obj/random/cloth/helmet,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
 	},
 /area/custom/arena)
-"EA" = (
-/obj/machinery/door/airlock/external,
-/turf/unsimulated/floor,
-/area/custom/arena)
-"EN" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
+"EX" = (
+/obj/effect/landmark/instagib_arena/sinner,
 /turf/unsimulated/floor{
-	icon_state = "grass1"
+	icon_state = "dark"
 	},
 /area/custom/arena)
 "Fj" = (
@@ -756,30 +385,16 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
+"FC" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/environment/space/holospace,
+/area/custom/arena)
 "FD" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
 /obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"FY" = (
-/obj/random/guns/projectile_handgun,
-/obj/structure/flora/ausbushes/sparsegrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"Gj" = (
-/obj/random/cloth/helmet,
-/obj/structure/flora/ausbushes/ppflowers{
-	layer = 2.7
 	},
 /turf/unsimulated/floor{
 	icon_state = "grass1"
@@ -797,19 +412,6 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"GV" = (
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/unsimulated/beach/sand,
-/area/custom/arena)
-"He" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/obj/structure/flora/ausbushes/sparsegrass{
-	layer = 2.7
-	},
-/turf/unsimulated/beach/sand,
-/area/custom/arena)
 "Hj" = (
 /obj/structure/flora/grass/both,
 /turf/unsimulated/floor/snow,
@@ -817,23 +419,19 @@
 "Ho" = (
 /turf/unsimulated/floor/cult,
 /area/custom/arena)
-"HU" = (
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando,
-/turf/unsimulated/floor{
-	icon_state = "asteroid"
-	},
-/area/custom/arena)
 "IB" = (
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
 /area/custom/arena)
+"IP" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor,
+/area/custom/arena)
 "Je" = (
 /turf/environment/space,
 /area/space)
 "Jq" = (
-/obj/structure/table,
-/obj/random/guns/energy_weapon,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -862,36 +460,6 @@
 /obj/structure/snowman,
 /turf/unsimulated/floor/snow,
 /area/custom/arena)
-"Kn" = (
-/obj/random/melee,
-/obj/structure/flora/ausbushes/lavendergrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"Ky" = (
-/obj/random/cloth/armor,
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"KC" = (
-/obj/random/cloth/armor,
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"KE" = (
-/obj/random/guns/projectile_handgun,
-/turf/unsimulated/floor{
-	icon_state = "asteroid"
-	},
-/area/custom/arena)
 "KJ" = (
 /turf/unsimulated/wall/like_a_normal,
 /area/custom/arena)
@@ -900,6 +468,10 @@
 	layer = 2.7
 	},
 /turf/unsimulated/floor/snow,
+/area/custom/arena)
+"KQ" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/carpet/green,
 /area/custom/arena)
 "KX" = (
 /turf/unsimulated/floor{
@@ -912,12 +484,6 @@
 /obj/structure/flora/ausbushes/lavendergrass{
 	layer = 2.7
 	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"Ll" = (
-/obj/random/melee,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
 	},
@@ -941,30 +507,15 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"Mi" = (
-/obj/structure/mineral_door/wood,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/arena)
-"MX" = (
-/obj/random/cloth/helmet,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
-"No" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor{
-	icon_state = "asteroid"
-	},
-/area/custom/arena)
 "Ns" = (
 /obj/structure/flora/ausbushes,
 /turf/unsimulated/floor{
 	icon_state = "grass1"
 	},
+/area/custom/arena)
+"Nz" = (
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/unsimulated/floor/snow,
 /area/custom/arena)
 "NP" = (
 /obj/structure/flora/ausbushes/brflowers{
@@ -977,35 +528,10 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"Oj" = (
-/obj/random/cloth/helmet,
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"Ow" = (
-/obj/random/melee,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
 "OE" = (
 /turf/unsimulated/floor{
 	icon_state = "darkred"
 	},
-/area/custom/arena)
-"Pp" = (
-/obj/item/weapon/gun/energy/pulse_rifle,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
-"PY" = (
-/obj/structure/lattice,
-/obj/random/guns/set_special,
-/turf/environment/space/holospace,
 /area/custom/arena)
 "Qb" = (
 /turf/unsimulated/floor{
@@ -1014,32 +540,12 @@
 	},
 /area/custom/arena)
 "Qm" = (
-/obj/random/guns/set_special,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brown"
 	},
 /area/custom/arena)
-"Qn" = (
-/obj/random/cloth/armor,
-/obj/structure/flora/ausbushes/lavendergrass{
-	layer = 2.7
-	},
-/obj/structure/flora/ausbushes/sparsegrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
 "Qt" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "blue"
-	},
-/area/custom/arena)
-"Qu" = (
-/obj/random/guns/set_special,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -1054,36 +560,19 @@
 "QN" = (
 /turf/unsimulated/floor,
 /area/custom/arena)
-"QP" = (
-/obj/random/guns/energy_weapon,
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
 "Ra" = (
-/obj/structure/table,
-/obj/random/guns/energy_weapon,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "blue"
 	},
 /area/custom/arena)
-"Rb" = (
-/obj/random/melee,
-/turf/unsimulated/floor/cult,
-/area/custom/arena)
 "Rj" = (
 /turf/unsimulated/wall/log,
 /area/custom/arena)
-"RK" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
-	icon_state = "center_8"
-	},
+"Ru" = (
+/obj/structure/lattice,
+/obj/effect/landmark/instagib_arena/sinner,
+/turf/environment/space/holospace,
 /area/custom/arena)
 "RM" = (
 /obj/structure/flora/tree/jungle/small,
@@ -1092,7 +581,6 @@
 	},
 /area/custom/arena)
 "RP" = (
-/obj/random/cloth/helmet,
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "blue"
@@ -1100,19 +588,6 @@
 /area/custom/arena)
 "RT" = (
 /turf/unsimulated/wall/like_a_normal/green,
-/area/custom/arena)
-"RU" = (
-/obj/random/guns/projectile_handgun,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
-"RZ" = (
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
 /area/custom/arena)
 "Sd" = (
 /obj/item/weapon/flora/random,
@@ -1151,22 +626,10 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"Td" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
 "Tm" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi';
 	icon_state = "center_8"
-	},
-/area/custom/arena)
-"Tv" = (
-/obj/structure/table,
-/obj/random/melee,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "blue"
 	},
 /area/custom/arena)
 "Ty" = (
@@ -1177,12 +640,6 @@
 "Tz" = (
 /obj/structure/pedestal/cult,
 /turf/unsimulated/floor/cult/lava,
-/area/custom/arena)
-"TV" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/turf/unsimulated/floor,
 /area/custom/arena)
 "TW" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -1199,13 +656,6 @@
 "Uj" = (
 /turf/environment/space/holospace,
 /area/custom/arena)
-"UM" = (
-/obj/item/weapon/grenade/syndieminibomb,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
 "UX" = (
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -1217,37 +667,13 @@
 	icon_state = "blue"
 	},
 /area/custom/arena)
-"VL" = (
-/obj/structure/lattice,
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat,
-/turf/environment/space/holospace,
-/area/custom/arena)
 "VO" = (
-/obj/structure/table,
-/obj/random/guns/projectile_handgun,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "blue"
 	},
 /area/custom/arena)
-"Wd" = (
-/obj/random/melee,
-/obj/structure/flora/ausbushes/brflowers{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
-"Wf" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
 "WF" = (
-/obj/structure/table,
-/obj/random/cloth/helmet,
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -1262,10 +688,6 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"WW" = (
-/obj/random/melee,
-/turf/unsimulated/beach/sand,
-/area/custom/arena)
 "WZ" = (
 /obj/structure/flora/ausbushes,
 /obj/structure/flora/ausbushes/brflowers{
@@ -1279,32 +701,14 @@
 /turf/unsimulated/beach/water,
 /area/custom/arena)
 "Xj" = (
-/obj/machinery/door/airlock/external{
-	dir = 4
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
-/turf/unsimulated/floor,
-/area/custom/arena)
-"Xo" = (
-/obj/random/cloth/helmet,
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/turf/unsimulated/beach/sand,
 /area/custom/arena)
 "XA" = (
-/obj/structure/table,
-/obj/random/cloth/armor,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "blue"
-	},
-/area/custom/arena)
-"XB" = (
-/obj/effect/landmark/arenas/post_round/gladiator{
-	name = "Gladiator"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
 	},
 /area/custom/arena)
 "XD" = (
@@ -1316,16 +720,12 @@
 	},
 /area/custom/arena)
 "XE" = (
-/obj/structure/table,
-/obj/random/cloth/armor,
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "brown"
 	},
 /area/custom/arena)
 "XS" = (
-/obj/structure/table,
-/obj/random/guns/projectile_handgun,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -1337,13 +737,6 @@
 	},
 /turf/unsimulated/beach/sand,
 /area/custom/arena)
-"Yp" = (
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/custom/arena)
 "Yx" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -1351,8 +744,6 @@
 	},
 /area/custom/arena)
 "YP" = (
-/obj/structure/table,
-/obj/random/melee,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -1369,35 +760,11 @@
 	icon_state = "grass1"
 	},
 /area/custom/arena)
-"YS" = (
-/obj/random/guns/set_special,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/catwalks.dmi';
-	icon_state = "catwalk0"
-	},
-/area/custom/arena)
-"YZ" = (
-/obj/random/guns/projectile_handgun,
-/obj/structure/flora/ausbushes/brflowers{
-	layer = 2.7
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass1"
-	},
-/area/custom/arena)
 "Zg" = (
 /obj/item/snowball{
 	throwforce = 20
 	},
 /turf/unsimulated/floor/snow,
-/area/custom/arena)
-"Zm" = (
-/obj/structure/mineral_door/wood{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
 /area/custom/arena)
 
 (1,1,1) = {"
@@ -1468,11 +835,11 @@ Rj
 Rj
 Rj
 Rj
-Je
-Je
-Je
-Je
-Je
+Da
+Da
+Da
+Da
+Da
 KJ
 KJ
 KJ
@@ -1497,58 +864,58 @@ Je
 (3,1,1) = {"
 Je
 Rj
-aS
 cf
-cf
-cM
-cm
-Rj
 cf
 cf
 cM
-fY
+cf
+Rj
+cf
+cf
+cM
+cf
 cf
 KN
-Td
+cf
 cf
 KN
+cf
+cf
 Rj
-uK
-Rj
-Da
-Da
-Da
-Da
-Da
+Tm
+Tm
+yj
+Tm
+Tm
 KJ
-AK
+JG
 mA
 mA
-Ow
+JG
 Uj
 KJ
 Uj
-UM
+JG
 Uj
 Uj
 Ty
-AU
+JG
 Ty
 Uj
 Uj
-AK
-tH
+JG
+JG
 KJ
 Je
 "}
 (4,1,1) = {"
 Je
 Rj
-jt
 cf
-Wf
 cf
-iv
+cf
+Nz
+KN
 Zg
 cf
 cf
@@ -1559,31 +926,31 @@ cf
 cf
 cf
 cM
+cf
+cf
 Rj
-uW
-Rj
-gO
 Tm
-RK
 Tm
-gx
+Tm
+Tm
+Tm
 KJ
 Uj
-Uj
+FC
 mA
 mA
 mA
 Uj
 mA
-VL
+mA
 KJ
 mA
 Ty
 JG
 Ty
-hg
+Ru
 mA
-Ow
+JG
 Uj
 KJ
 Je
@@ -1591,20 +958,20 @@ Je
 (5,1,1) = {"
 Je
 Rj
-aW
+cf
 fw
 DV
 cf
-dE
+cf
 cf
 gi
 bg
-bx
+cf
 cf
 Rj
 cf
-dE
-cm
+Nz
+cf
 cf
 cf
 bg
@@ -1614,19 +981,19 @@ Tm
 Tm
 Tm
 Tm
-sS
+Tm
 Uj
-hg
-mA
-KJ
-KJ
-KJ
-KJ
-KJ
-KJ
 mA
 mA
-MX
+KJ
+KJ
+KJ
+KJ
+KJ
+KJ
+mA
+mA
+JG
 Uj
 Uj
 mA
@@ -1653,7 +1020,7 @@ cM
 Hj
 cf
 cf
-aW
+cf
 cf
 cf
 Tm
@@ -1668,7 +1035,7 @@ Uj
 KJ
 RP
 Qx
-Tv
+Qx
 VO
 KJ
 KJ
@@ -1676,7 +1043,7 @@ KJ
 Xj
 KJ
 KJ
-RU
+JG
 Uj
 mA
 KJ
@@ -1686,40 +1053,40 @@ Je
 Je
 Rj
 KN
-Td
+cf
 Rj
-sB
+IB
 iB
 IB
-iN
+IB
 Rj
 Kk
 cf
 cf
-jt
 cf
-Wf
+cf
+cf
 cf
 cf
 KN
 cf
-iC
+Bk
 Tm
 Da
 Tm
-iC
+Tm
 Uj
-AU
 JG
-MX
-EA
+JG
+JG
+Xj
 Qt
-QN
+IP
 QN
 vP
 KJ
 WF
-dz
+wB
 wB
 Jq
 DW
@@ -1734,12 +1101,12 @@ Je
 Rj
 bg
 KN
-DW
+Rj
+IB
+yk
+yk
 IB
 IB
-IB
-IB
-Mi
 cf
 KN
 Zg
@@ -1760,15 +1127,15 @@ Ty
 Ty
 mA
 KJ
-Qu
+Qt
 QN
-TV
+QN
 vP
-zh
+UX
 bE
 UX
-UX
-mI
+EX
+OE
 KJ
 mA
 Uj
@@ -1781,28 +1148,28 @@ Je
 Rj
 cf
 cf
-Mi
 IB
+IB
+vH
 yk
 IB
-ja
-Rj
+IB
 cf
 cf
 cf
 cf
 gi
 DV
-hq
 cf
 cf
-RK
+cf
 Tm
 Tm
 Tm
 Tm
 Tm
-RK
+Tm
+Tm
 Uj
 Uj
 mA
@@ -1813,40 +1180,40 @@ QN
 vP
 KJ
 bE
-hn
+UX
 UX
 OE
-EA
+Xj
 mA
 Uj
-YS
+JG
 KJ
 Je
 "}
 (10,1,1) = {"
 Je
 Rj
-bx
-fY
-Rj
+cf
+cf
 IB
 IB
-IB
-jv
+yk
+yk
+vw
 Rj
 cM
-vH
+lp
 Rj
 Rj
 Rj
 Rj
-Rj
-Zm
+IB
+IB
 Rj
 Rj
 Tm
 Tm
-om
+Tm
 Tm
 Tm
 KJ
@@ -1876,20 +1243,20 @@ Rj
 cf
 gi
 Rj
-id
 IB
 IB
-jF
+IB
+IB
 Rj
 Hj
 cf
 rC
 Rj
-sB
-ja
 IB
 IB
-id
+IB
+IB
+IB
 Rj
 Tm
 Da
@@ -1907,11 +1274,11 @@ KJ
 KJ
 KJ
 KJ
-uC
+UX
 KJ
 KJ
 KJ
-ld
+Uj
 Uj
 Uj
 KJ
@@ -1924,30 +1291,30 @@ cf
 cf
 Rj
 Rj
-Zm
-DW
+IB
+IB
 Rj
 Rj
 cf
 cf
 cf
-DW
 IB
 IB
-IB
-IB
+aS
+aS
+aS
 vw
 Rj
 Tm
-gx
-qM
-rf
+Tm
+Tm
+Tm
 Tm
 KJ
 mA
 mA
 mA
-Pp
+JG
 Uj
 mA
 mA
@@ -1959,7 +1326,7 @@ KX
 KJ
 vO
 Ty
-Ty
+sE
 Uj
 KJ
 Je
@@ -1967,7 +1334,7 @@ Je
 (13,1,1) = {"
 Je
 Rj
-ca
+if
 cf
 cf
 cM
@@ -1975,38 +1342,38 @@ cf
 Hj
 cf
 cf
-Td
+cf
 KN
 cf
-Mi
 IB
 IB
-yk
+aS
+KQ
+aS
 IB
-jF
 Rj
 Tm
 Tm
-Tm
+Bk
 Tm
 Tm
 KJ
 Uj
-ld
+Uj
 Uj
 mA
-Uj
+FC
 Uj
 mA
 DW
-Yp
+Yx
 QN
-TV
+QN
 Ka
-EA
-AU
+Xj
 JG
-AK
+JG
+JG
 Uj
 KJ
 Je
@@ -2014,27 +1381,27 @@ Je
 (14,1,1) = {"
 Je
 Rj
-cf
+Nz
 Zg
 cf
 DV
 cf
 cf
-fY
+cf
 cf
 cf
 cM
 if
 Rj
-iN
+IB
 rX
 IB
 IB
-we
+IB
 Rj
 Rj
 Tm
-rO
+Tm
 Tm
 KJ
 KJ
@@ -2045,9 +1412,9 @@ KJ
 KJ
 JG
 JG
-EA
+Xj
 Yx
-QN
+IP
 QN
 Ka
 KJ
@@ -2061,22 +1428,22 @@ Je
 (15,1,1) = {"
 Je
 Rj
-cm
 cf
-hq
+cf
+cf
 Rj
 Rj
 cf
 cf
 Zg
+Nz
 cf
 cf
-hq
 Rj
 Rj
 Rj
-Zm
-DW
+IB
+IB
 Rj
 Rj
 Tm
@@ -2091,17 +1458,17 @@ Uj
 mA
 Uj
 Uj
-Ow
+JG
 KJ
 YP
-zZ
+Qm
 Qm
 Er
 KJ
 Uj
-hg
 mA
-RU
+mA
+JG
 KJ
 Je
 "}
@@ -2111,7 +1478,7 @@ Rj
 cM
 cf
 KN
-jt
+cf
 cf
 cf
 cM
@@ -2120,22 +1487,22 @@ cf
 cf
 cf
 cf
-cm
+cf
 cf
 Hj
-us
+lp
 Rj
 Tm
 Tm
-sS
 Tm
-gO
+Tm
+Tm
 Tm
 Tm
 KJ
 mA
 mA
-PY
+mA
 mA
 Uj
 mA
@@ -2156,45 +1523,45 @@ Je
 Je
 Rj
 fw
-Wf
+cf
 cf
 if
 cf
 cf
 lp
 Rj
-dE
+cf
 KN
-Wf
+cf
 cf
 cf
 cM
 Tm
 Tm
 Tm
-RK
+Tm
 Tm
 Da
 Da
 Da
 Tm
-RK
+Tm
 Tm
 Tm
 Tm
 mA
-AK
+JG
 mA
-hg
 mA
-AU
+mA
+JG
 JG
 JG
 KJ
 mA
-MX
+JG
 mA
-Ow
+JG
 Uj
 KJ
 Je
@@ -2205,7 +1572,7 @@ Rj
 Cz
 cf
 cf
-it
+KN
 cf
 bg
 cf
@@ -2217,17 +1584,17 @@ cf
 Rj
 cf
 Tm
-om
+Bk
 Tm
 Tm
 Tm
-gx
-Tm
-gO
 Tm
 Tm
 Tm
-om
+Tm
+Tm
+Tm
+Bk
 Tm
 Uj
 KJ
@@ -2249,7 +1616,7 @@ Je
 (19,1,1) = {"
 Je
 Rj
-dE
+cf
 KN
 cf
 cf
@@ -2258,9 +1625,9 @@ gi
 cf
 KN
 cf
-aW
 cf
-jt
+cf
+cf
 Rj
 Rj
 Tm
@@ -2278,15 +1645,15 @@ Tm
 Tm
 KJ
 KJ
-RU
+JG
 Uj
 Uj
-MX
+JG
 Uj
 Uj
-UM
+JG
 Uj
-mA
+Ru
 mA
 mA
 mA
@@ -2302,7 +1669,7 @@ Tm
 cf
 cf
 cf
-RK
+Tm
 Rj
 Rj
 Rj
@@ -2310,19 +1677,19 @@ Rj
 Rj
 Rj
 Tm
-RK
 Tm
 Tm
-iC
+Tm
+Tm
 Da
 Tm
-qM
+Tm
 Tm
 Da
-iC
 Tm
 Tm
-RK
+Tm
+Tm
 Tm
 KJ
 KJ
@@ -2330,7 +1697,7 @@ KJ
 KJ
 KJ
 KJ
-RK
+Tm
 mA
 mA
 Uj
@@ -2342,12 +1709,12 @@ Je
 "}
 (21,1,1) = {"
 Je
-Je
 Da
-gx
 Tm
 Tm
-iC
+Tm
+Tm
+Bk
 Tm
 Tm
 Tm
@@ -2362,9 +1729,9 @@ Tm
 Tm
 Da
 Da
-Da
-yw
-Da
+Tm
+Tm
+Tm
 Da
 Da
 Tm
@@ -2379,17 +1746,16 @@ Tm
 Tm
 Tm
 Tm
-iC
 Tm
 Tm
-gO
+Tm
+Tm
+Tm
 Da
-Je
 Je
 "}
 (22,1,1) = {"
 Je
-Je
 Da
 Tm
 Tm
@@ -2398,30 +1764,13 @@ Tm
 Tm
 Tm
 Tm
-Da
-gx
-Tm
-Tm
-Tm
-sS
-Da
-gO
-Tm
 Tm
 Da
 Tm
 Tm
-yM
-Da
-Tm
-Tm
-gx
-Da
-gO
 Tm
 Tm
 Tm
-rf
 Da
 Tm
 Tm
@@ -2430,60 +1779,77 @@ Tm
 Tm
 Tm
 Tm
+Tm
+Tm
+Tm
+Tm
 Da
-Je
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
 Je
 "}
 (23,1,1) = {"
 Je
-Je
 Da
-RK
+mi
 Tm
-Da
-Da
-Da
-Tm
-om
-Da
-qM
-Tm
-rO
-Tm
-Tm
-Da
-Tm
-Tm
-qM
-wH
-Tm
-Tm
-Tm
-wH
-qM
-Tm
-Tm
-Da
-Tm
-Tm
-rO
-Tm
-qM
-Da
-om
 Tm
 Da
 Da
 Da
 Tm
-RK
+Tm
 Da
-Je
+Tm
+Bk
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Bk
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Bk
+Tm
+Da
+Tm
+Tm
+Da
+Da
+Da
+Tm
+Tm
+mi
+Da
 Je
 "}
 (24,1,1) = {"
 Je
-Je
 Da
 Tm
 Tm
@@ -2492,30 +1858,13 @@ Tm
 Tm
 Tm
 Tm
-Da
-rf
-Tm
-Tm
-Tm
-gO
-Da
-gx
-Tm
-Tm
-Da
-ym
-Tm
 Tm
 Da
 Tm
 Tm
-gO
-Da
-sS
 Tm
 Tm
 Tm
-gx
 Da
 Tm
 Tm
@@ -2524,18 +1873,36 @@ Tm
 Tm
 Tm
 Tm
+Tm
+Tm
+Tm
+Tm
 Da
-Je
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Da
 Je
 "}
 (25,1,1) = {"
 Je
-Je
 Da
-gO
 Tm
 Tm
-iC
+Tm
+Tm
+Tm
 Tm
 Tm
 Tm
@@ -2550,9 +1917,9 @@ Tm
 Tm
 Da
 Da
-Da
-yw
-Da
+Tm
+Tm
+Tm
 Da
 Da
 Tm
@@ -2567,12 +1934,12 @@ Tm
 Tm
 Tm
 Tm
-iC
+Bk
 Tm
 Tm
-gx
+Tm
+Tm
 Da
-Je
 Je
 "}
 (26,1,1) = {"
@@ -2584,7 +1951,7 @@ Tm
 ez
 ez
 ez
-RK
+Tm
 DT
 DT
 DT
@@ -2592,19 +1959,19 @@ DT
 DT
 DT
 Tm
-RK
 Tm
 Tm
-iC
+Tm
+Tm
 Da
 Tm
-qM
+Tm
 Tm
 Da
-iC
 Tm
 Tm
-RK
+Tm
+Tm
 Tm
 RT
 RT
@@ -2612,7 +1979,7 @@ RT
 RT
 RT
 RT
-RK
+Tm
 Aw
 Aw
 bX
@@ -2626,14 +1993,14 @@ Je
 Je
 DT
 dX
-yl
 ez
-iZ
+ez
+ez
 ez
 ez
 Tz
 DT
-iZ
+ez
 ez
 ez
 ez
@@ -2654,11 +2021,11 @@ Tm
 Tm
 RT
 RT
-RZ
+gK
 TW
 YR
 XD
-Gj
+DZ
 DZ
 Aw
 Lz
@@ -2672,45 +2039,45 @@ Je
 (28,1,1) = {"
 Je
 DT
-ek
+ez
 Ho
 Ho
 Ho
 ez
 Ho
-lP
+Ho
 DT
-ek
+ez
 Ho
 hl
 ez
-hK
+ez
 ez
 Tm
-om
+Bk
 Tm
 Tm
 Tm
-gO
-Tm
-gx
 Tm
 Tm
 Tm
-om
+Tm
+Tm
+Tm
+Bk
 Tm
 gK
 RT
 bX
 vp
-XB
+dL
 XD
 TW
 RT
 Aw
-qU
+Aw
 YR
-Xo
+XW
 Uf
 Xf
 RT
@@ -2736,23 +2103,23 @@ ez
 ez
 Tm
 Tm
-RK
+Tm
 Tm
 Da
 Da
 Da
 Tm
-RK
+Tm
 Tm
 Tm
 Tm
 Aw
 XD
-Ll
+gK
 TW
 TW
 aj
-Ky
+TW
 RT
 Aw
 zg
@@ -2766,18 +2133,18 @@ Je
 (30,1,1) = {"
 Je
 DT
-eq
+ez
 Ho
 Ho
 Ho
 ez
 ez
-mQ
+ez
 Ho
 ez
 Ho
-yl
-eq
+ez
+ez
 Tz
 DT
 ez
@@ -2785,25 +2152,25 @@ ez
 DT
 Tm
 Tm
-sS
 Tm
-gO
+Tm
+Tm
 Tm
 Tm
 RT
 XD
 Ns
-No
+Aw
 aL
 RT
 RT
 RT
-YZ
+Ki
 Ki
 RT
-KE
+Aw
 DZ
-He
+vZ
 cp
 Uf
 Xf
@@ -2815,20 +2182,20 @@ Je
 DT
 ez
 ez
-hK
+ez
 ez
 ez
 DT
 DT
 Ho
-pW
+ez
 Ho
 DT
 DT
 ey
 Tz
 Ho
-hK
+ez
 DT
 DT
 Tm
@@ -2839,7 +2206,7 @@ Tm
 RT
 RT
 RT
-Wd
+Ki
 TW
 Aw
 So
@@ -2850,7 +2217,7 @@ lB
 Aw
 aL
 TW
-cp
+fR
 cp
 Uf
 Xf
@@ -2873,32 +2240,32 @@ ez
 Tz
 DT
 DT
-eq
+ez
 Ho
 ez
 ez
 DT
 DT
 Tm
-rO
+Tm
 Tm
 RT
 RT
-Bp
+DZ
 TW
 aj
 TW
 Aw
-yP
+Lz
 Aw
 gK
 hw
-No
+Aw
 aL
 XD
-QP
+TW
 XW
-WW
+cp
 Uf
 Xf
 RT
@@ -2907,33 +2274,33 @@ Je
 (33,1,1) = {"
 Je
 DT
-ek
 ez
-yl
+ez
+ez
 ez
 DT
 Tz
-ni
+ez
 Ho
 ez
 Ho
-ni
+ez
 Tz
 DT
-yl
+ez
 ez
 hl
 ez
 DT
 Tm
 Tm
-Tm
+Bk
 Tm
 Tm
 RT
 DZ
 aj
-EN
+TW
 gK
 RM
 TW
@@ -2973,20 +2340,20 @@ Ho
 ez
 DT
 Tm
-rf
-qM
-gx
+Tm
+Tm
+Tm
 Tm
 RT
-Ej
+XD
 Ki
 NP
 XD
-Oj
+gK
 TW
 GJ
 Aw
-HU
+Aw
 Aw
 gK
 gK
@@ -3004,20 +2371,20 @@ DT
 ey
 hl
 ez
-iZ
-ez
-pW
-ez
-ez
-ow
 ez
 ez
 ez
-pW
 ez
 ez
-ek
-iZ
+Ho
+ez
+ez
+ez
+ez
+ez
+ez
+ez
+ez
 DT
 Tm
 Da
@@ -3026,20 +2393,20 @@ Da
 Tm
 RT
 XD
-FY
+XD
 XD
 RT
 RT
-cr
+DZ
 FD
 Aw
-Aw
+aU
 vp
 gK
 RT
 So
 vZ
-GV
+cp
 Uf
 Xf
 RT
@@ -3068,7 +2435,7 @@ DT
 DT
 Tm
 Tm
-om
+Tm
 Tm
 Tm
 RT
@@ -3095,30 +2462,30 @@ Je
 (37,1,1) = {"
 Je
 DT
-eq
 ez
-hK
+ez
+ez
 ez
 DT
 Tz
-ni
+ez
 Ho
 ez
 Ho
-ni
+ez
 Tz
 DT
-mQ
 ez
-lP
+ez
+Ho
 Tz
-RK
 Tm
 Tm
 Tm
 Tm
 Tm
-RK
+Tm
+Tm
 XD
 Sd
 TW
@@ -3126,14 +2493,14 @@ TW
 XD
 aL
 Aw
-RT
+Aw
 kt
-iG
+TW
 XD
 gK
-De
+TW
 XD
-Eo
+cp
 Uf
 Xf
 RT
@@ -3150,7 +2517,7 @@ DT
 DT
 Tz
 ez
-pW
+ez
 ez
 Tz
 DT
@@ -3170,10 +2537,10 @@ td
 Li
 Aw
 Lz
-No
 Aw
 Aw
-xe
+Aw
+XD
 XD
 td
 XD
@@ -3193,7 +2560,7 @@ ez
 ez
 ez
 ez
-pW
+ez
 DT
 DT
 Ho
@@ -3207,14 +2574,14 @@ ez
 ez
 ez
 ez
-iC
+Tm
 Tm
 Da
 Tm
-iC
+Bk
 aL
 Aw
-Ll
+gK
 Aw
 Aw
 Aw
@@ -3224,9 +2591,9 @@ vp
 nP
 DZ
 RT
-RZ
 gK
-XB
+gK
+gK
 cp
 Uf
 Xf
@@ -3236,23 +2603,23 @@ Je
 (40,1,1) = {"
 Je
 DT
-ek
-Ho
-Ho
-Rb
-ez
-ez
 ez
 Ho
-eq
+Ho
 Ho
 ez
 ez
 ez
 Ho
+ez
+Ho
+ez
+ez
+ez
 Ho
 Ho
-yl
+Ho
+ez
 ez
 Tm
 Tm
@@ -3263,17 +2630,17 @@ aL
 Aw
 Lz
 XD
-Qn
+LL
 RT
-RZ
+gK
 TW
-YR
+BE
 aj
-Ej
+XD
 RT
-KC
+gK
 TW
-TW
+cs
 vZ
 Uf
 Xf
@@ -3289,13 +2656,13 @@ hl
 Ho
 ez
 DT
-ek
 ez
 ez
 ez
-iZ
+ez
+ez
 DT
-ek
+ez
 Ho
 hl
 Ho
@@ -3308,18 +2675,18 @@ Tm
 Tm
 Tm
 XD
-EN
-aj
+TW
+sf
 XD
 RT
 SK
 gK
-XB
+gK
 XD
 So
 RT
 XD
-Kn
+vp
 TW
 cp
 Uf
@@ -3330,7 +2697,7 @@ Je
 (42,1,1) = {"
 Je
 DT
-iZ
+ez
 Ho
 Ho
 Ho
@@ -3346,29 +2713,29 @@ ez
 Ho
 Ho
 Ho
-iZ
+ez
 DT
-gx
 Tm
-RK
 Tm
-gO
+Tm
+Tm
+Tm
 RT
 Fj
 vp
 aj
-kI
+Ki
 RT
-Ll
+gK
 SK
 XD
 XD
-Ky
+TW
 TW
 TW
 vp
 vZ
-ms
+cp
 Uf
 Xf
 RT
@@ -3377,45 +2744,45 @@ Je
 (43,1,1) = {"
 Je
 DT
-fz
-eq
 ez
-hK
+ez
+ez
+ez
 ez
 DT
-yl
+ez
 ez
 qj
 ez
-hK
+ez
 DT
 ez
-eq
 ez
-hK
+ez
+ez
 dX
 DT
-Da
-Da
-Da
-Da
-Da
+Tm
+Tm
+yj
+Tm
+Tm
 RT
-FY
+XD
 LL
-Oj
+gK
 XD
 RT
 XD
 XD
-Oj
+gK
 DZ
 DZ
 gK
 gK
 WS
 cp
-Ab
+cp
 Uf
 Xf
 RT
@@ -3442,11 +2809,11 @@ DT
 DT
 DT
 DT
-Je
-Je
-Je
-Je
-Je
+Da
+Da
+Da
+Da
+Da
 RT
 RT
 RT

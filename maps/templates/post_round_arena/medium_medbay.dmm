@@ -127,7 +127,7 @@
 /area/custom/arena)
 "hr" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{
@@ -423,7 +423,7 @@
 /turf/unsimulated/floor,
 /area/custom/arena)
 "tU" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{
@@ -674,7 +674,7 @@
 	},
 /area/custom/arena)
 "Dp" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{
@@ -1037,7 +1037,7 @@
 	},
 /area/custom/arena)
 "PR" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{
@@ -1204,7 +1204,7 @@
 	},
 /area/custom/arena)
 "TJ" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor/carpet/green,
@@ -1233,7 +1233,7 @@
 	},
 /area/custom/arena)
 "Uq" = (
-/obj/effect/landmark/post_round_dm/gladiator{
+/obj/effect/landmark/arenas/post_round/gladiator{
 	name = "Gladiator"
 	},
 /turf/unsimulated/floor{

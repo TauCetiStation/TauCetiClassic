@@ -24472,7 +24472,7 @@
 /turf/environment/space,
 /area/shuttle/officer/velocity)
 "fbp" = (
-/obj/effect/landmark/post_round_dm/arena,
+/obj/effect/landmark/arenas/post_round/arena,
 /turf/environment/space,
 /area/custom/arena)
 "fcb" = (
