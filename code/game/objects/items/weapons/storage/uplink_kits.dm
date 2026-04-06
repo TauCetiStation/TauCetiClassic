@@ -205,7 +205,6 @@
 /obj/item/weapon/storage/box/syndie_kit/rig/atom_init()
 	. = ..()
 
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	new /obj/item/clothing/suit/space/rig/syndi(src)
 	make_exact_fit()
 
@@ -215,7 +214,6 @@
 /obj/item/weapon/storage/box/syndie_kit/heavy_rig/atom_init()
 	. = ..()
 
-	new /obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
 	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
 	make_exact_fit()
 
@@ -433,7 +431,6 @@
 	/obj/item/weapon/grenade/chem_grenade/acid = 3,
 	/obj/item/weapon/grenade/chem_grenade/incendiary = 2,
 	/obj/item/weapon/card/emag,
-	/obj/item/clothing/head/helmet/space/rig/syndi/hazmat,
 	/obj/item/clothing/suit/space/rig/syndi/hazmat,
 	)
 

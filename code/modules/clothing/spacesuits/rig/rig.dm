@@ -904,6 +904,7 @@
 	var/combat_slowdown = 0
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm,
 	/datum/action/item_action/hands_free/toggle_space_suit_mode)
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
 
 /datum/action/item_action/hands_free/toggle_space_suit_mode
 	name = "Toggle space suit mode"
@@ -990,6 +991,7 @@
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	name = "Syndicate elite hybrid helmet"
@@ -1022,6 +1024,7 @@
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/syndiemmessage, /obj/item/rig_module/emp_shield)
 	can_be_modded = FALSE
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/elite
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"
@@ -1029,6 +1032,7 @@
 	icon_state = "rig-syndie_elitcom-space"
 	item_state = "syndicate-commander"
 	rig_variant = "rig-syndie_elitcom"
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 
 /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
 	name = "hazmat hybrid helmet"
@@ -1062,6 +1066,7 @@
 	               /obj/item/weapon/handcuffs)
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 30, bullet = 20, laser = 20, energy = 45, bomb = 80, bio = 100, rad = 80)
+	HELMET_TYPE = /obj/item/clothing/suit/space/rig/syndi/hazmat
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -1087,6 +1092,7 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/emp_shield/adv)
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/wizard
 
 /obj/item/clothing/suit/space/rig/wizard/atom_init(mapload, ...)
 	. = ..()

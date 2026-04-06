@@ -193,6 +193,8 @@
 
 #define iscanister(A)	 istype(A, /obj/machinery/portable_atmospherics/canister)
 
+#define issuitstorage(A) istype(A, /obj/machinery/suit_storage_unit)
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))

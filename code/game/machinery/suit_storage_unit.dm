@@ -15,7 +15,7 @@
 	var/opened = FALSE
 	var/locked = TRUE
 	var/broken = FALSE
-
+	var/overlay_color = null
 //ultra violet stat
 	var/UV = FALSE
 	var/superUV = FALSE
@@ -71,25 +71,15 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/update_icon()
 	cut_overlays()
 	if(locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST))
-		add_overlay("left_connect")
+		var/image/connector_color = image('icons/obj/suitstorage.dmi',icon_state = "left_connect")
+		if(overlay_color)
+			connector_color.color = overlay_color
+		add_overlay(connector_color)
 	if(locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST))
-		add_overlay("right_connect")
-	if(broken)
-		icon_state = "suitholder_broken"
-		return
-
-	if(panel_open)
-		add_overlay("panel_open")
-
-	if(UV && !superUV)
-		add_overlay("lock_closed")
-		add_overlay("termalclean")
-		return
-	else if(UV && superUV)
-		add_overlay("door_closed")
-		add_overlay("lock_closed")
-		add_overlay("termalclean_emag")
-		return
+		var/image/connector_color = image('icons/obj/suitstorage.dmi',icon_state = "right_connect")
+		if(overlay_color)
+			connector_color.color = overlay_color
+		add_overlay(connector_color)
 
 	if(!ishardsuit(SUIT))
 		if(SUIT)
@@ -112,14 +102,35 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		else if(BOOTS)
 			add_overlay("boots")
 
-	if(!opened)
-		add_overlay("door_closed")
+	var/image/door_I = image('icons/obj/suitstorage.dmi',icon_state = "[opened ? "door_open" : "door_closed"]")
+	var/image/unit_color = image('icons/obj/suitstorage.dmi',icon_state = "[broken ? "suitholder_broken_color" : "suitholder_color"]")
+	if(overlay_color)
+		door_I.color = overlay_color
+		unit_color.color = overlay_color
+		add_overlay(unit_color)
+	if(!opened && !broken)
+		add_overlay(door_I)
 		if(locked && !emagged && !UV)
 			add_overlay("lock_closed")
 		else
 			add_overlay("lock_open")
 	else
-		add_overlay("door_open")
+		add_overlay(door_I)
+	if(broken)
+		icon_state = "suitholder_broken"
+
+	if(UV && !superUV)
+		add_overlay(door_I)
+		add_overlay("lock_closed")
+		add_overlay("termalclean")
+		return
+	else if(UV && superUV)
+		add_overlay(door_I)
+		add_overlay("lock_closed")
+		add_overlay("termalclean_emag")
+		return
+	if(panel_open)
+		add_overlay("panel_open")
 
 /obj/machinery/suit_storage_unit/proc/make_powered()
 	stat &= ~NOPOWER
@@ -294,7 +305,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 					if(BOOTS)
 						BOOTS  = null
 				broken = TRUE
-			visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
+				visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
 	opened = TRUE
 	locked = FALSE
@@ -545,12 +556,35 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	return TRUE
 
 //The units themselves
+//Abandoned
+/obj/machinery/suit_storage_unit/abandoned
+	name = "Abandoned Storage Unit"
+
+/obj/machinery/suit_storage_unit/abandoned/atom_init()
+
+	if(prob(50))
+		occupant = new /mob/living/simple_animal/hostile/xenomorph/queen(src)
+	else
+		var/choose = pick(1,2)
+		switch(choose)
+			if(1)
+				SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
+				MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
+				TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
+				BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
+			if(2)
+				SUIT_TYPE = /obj/item/clothing/suit/space/rig/wizard
+				MASK_TYPE = /obj/item/clothing/mask/gas/coloured
+				TANK_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
+	return ..()
+
 //Syndicate
 /obj/machinery/suit_storage_unit/syndicate_unit
-	name = "Suit Storega Unit"
+	name = "Suit Storage Unit"
 	ignore = FALSE
 	syndie = TRUE
 	req_access = list(access_syndicate)
+	overlay_color = COLOR_DARK_GUNMETAL
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex
 	ignore = TRUE
@@ -611,6 +645,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	name = "Sience Hardsuit Storage Unit"
 	ignore = TRUE
 	req_access = list(access_research)
+	overlay_color = COLOR_VIOLET
 
 /obj/machinery/suit_storage_unit/science/scientist
 	name = "Sience Hardsuit Storage Unit"
@@ -626,6 +661,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	name = "Researh Director Hardsuit Storage Unit"
 	ignore = FALSE
 	req_access = list(access_rd)
+	overlay_color = COLOR_DARK_PURPLE
 
 /obj/machinery/suit_storage_unit/science/rd/full
 	ignore = TRUE
@@ -653,6 +689,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	name = "Atmospheric Hardsuit Storage Unit"
 	ignore = FALSE
 	req_access = list(access_atmospherics)
+	overlay_color = COLOR_TEAL
 
 /obj/machinery/suit_storage_unit/engine/atmos/full
 	ignore = TRUE
@@ -670,11 +707,13 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/chief
 	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	overlay_color = COLOR_TITANIUM
 
 //Security
 /obj/machinery/suit_storage_unit/security
 	ignore = TRUE
 	req_access = list(access_security)
+	overlay_color = COLOR_CRIMSON
 
 /obj/machinery/suit_storage_unit/security/officer
 	name = "Security Officer Hardsuit Storage Unit"
@@ -691,6 +730,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	name = "Head of Security Hardsuit Storage Unit"
 	ignore = FALSE
 	req_access = list(access_hos)
+	overlay_color = COLOR_CRIMSON_RED
 
 /obj/machinery/suit_storage_unit/security/hos/full
 	ignore = TRUE
@@ -702,6 +742,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/medical
 	ignore = TRUE
 	req_access = list(access_medbay_storage)
+	overlay_color = COLOR_CYAN
 
 /obj/machinery/suit_storage_unit/medical/medic
 	ignore = FALSE
@@ -726,6 +767,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/medical/cmo
 	name = "Chief Medical Officer Hardsuit Storage Unit"
 	req_access = list(access_cmo)
+	overlay_color = COLOR_CYAN_BLUE
 
 /obj/machinery/suit_storage_unit/medical/cmo/full
 	ignore = TRUE
@@ -744,11 +786,13 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/globose/civil
 	TANK_TYPE = /obj/item/weapon/tank/jetpack/carbondioxide
+	overlay_color = COLOR_SILVER
 
 /obj/machinery/suit_storage_unit/globose/science
 	ignore = FALSE
 	name = "Science Space Suit Storage Unit"
 	req_access = list(access_research)
+	overlay_color = COLOR_PINK
 
 /obj/machinery/suit_storage_unit/globose/science/full
 	ignore = TRUE
@@ -762,6 +806,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	ignore = FALSE
 	name = "Mining Space Suit Storage Unit"
 	req_access = list(access_mining)
+	overlay_color = COLOR_BROWN
 
 /obj/machinery/suit_storage_unit/globose/mining/full
 	ignore = TRUE
@@ -773,6 +818,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
 	TANK_TYPE = /obj/item/weapon/tank/oxygen
+	overlay_color = COLOR_BLUE_LIGHT
 
 /obj/machinery/suit_storage_unit/skrell/white
 	name = "White Skrellian Suit Storage Unit"
@@ -789,6 +835,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
 	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
 	TANK_TYPE = /obj/item/weapon/tank/oxygen
+	overlay_color = COLOR_SEAWEED
 
 /obj/machinery/suit_storage_unit/unathi/nt
 	name = "NT Unathi Suit Storage Unit"
@@ -804,6 +851,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/captain
 	name = "Captain Suit Storage Unit"
 	req_access = list(access_captain)
+	overlay_color = COLOR_COMMAND_BLUE
 
 /obj/machinery/suit_storage_unit/captain/full
 	ignore = TRUE
@@ -816,6 +864,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/nasa
 	name = "NASA Suit Storage Unit"
 	req_access = list(access_minisat)
+	overlay_color = COLOR_GUNMETAL
 
 /obj/machinery/suit_storage_unit/nasa/full
 	ignore = TRUE
@@ -831,7 +880,9 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	name = "Strange Hardsuit Storage Unit"
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/wizard
 	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
+	TANK_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
 	req_access = list(access_syndicate)
+	overlay_color = COLOR_DARK_PURPLE
 
 /obj/machinery/suit_storage_unit/vox
 	ignore = TRUE
@@ -839,6 +890,10 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/vox
 	TANK_TYPE = /obj/item/weapon/tank/nitrogen
 	req_access = list(access_syndicate)
+
+/obj/machinery/suit_storage_unit/vox/atom_init()
+	overlay_color = pick(COLOR_BLUE, COLOR_BROWN, COLOR_DARK_GRAY, COLOR_ADMIRAL_BLUE, COLOR_CRIMSON, COLOR_CYAN_BLUE)
+	return ..()
 
 /obj/machinery/suit_storage_unit/vox/carapace
 	name = "Vox Carapace Suit Storage Unit"
