@@ -559,6 +559,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 //Abandoned
 /obj/machinery/suit_storage_unit/abandoned
 	name = "Abandoned Storage Unit"
+	ignore = TRUE
 
 /obj/machinery/suit_storage_unit/abandoned/atom_init()
 
@@ -580,14 +581,13 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 //Syndicate
 /obj/machinery/suit_storage_unit/syndicate_unit
-	name = "Suit Storage Unit"
-	ignore = FALSE
+	name = "Syndicate Suit Storage Unit"
+	ignore = TRUE
 	syndie = TRUE
 	req_access = list(access_syndicate)
 	overlay_color = COLOR_DARK_GUNMETAL
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex
-	ignore = TRUE
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex/light
 	name = "Syndicate Hardsuit Storage Unit"
