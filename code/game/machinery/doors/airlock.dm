@@ -872,7 +872,7 @@ var/global/list/airlock_overlays = list()
 		to_chat(usr, "The electrification wire has been cut.<br>\n")
 	else if(secondsElectrified == -1)
 		to_chat(usr, "The door is already indefinitely electrified.<br>\n")
-	else if(secondsElectrified)
+	else if(secondsElectrified > 0)
 		to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 	else
 		shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
