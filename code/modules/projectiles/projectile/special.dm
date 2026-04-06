@@ -223,6 +223,30 @@
 	damage_type = TOX
 	flag = BULLET
 
+/obj/item/projectile/acid_special_spider/poisonous/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	. = ..()
+	if(issilicon(target))
+		var/mob/living/silicon/S = target
+		S.take_bodypart_damage(damage)
+		S.Stun(2)
+
+	if(istype(target,/obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(50)
+		M.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+
+	if(isliving(target) && firer)
+		var/mob/living/L = target
+		if(istype(firer, /mob/living/simple_animal/hostile/giant_spider))
+			var/mob/living/simple_animal/hostile/giant_spider/S = firer
+			L.reagents.add_reagent(S.poison_type, S.poison_per_bite)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				if(H.species.flags[IS_SYNTHETIC]) //No damage from posion, so we take damage twice instead
+					H.apply_damage(damage, damage_type, def_zone, H.run_armor_check(def_zone, flag) * armor_multiplier, damage_flags(), src)
+			return
+		L.reagents.add_reagent("stoxin", 5)
+
 /obj/item/projectile/acid_special/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_ACIDACT

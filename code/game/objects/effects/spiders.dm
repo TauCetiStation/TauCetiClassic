@@ -18,27 +18,107 @@
 
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
+	var/passage_mult = 1
 
-/obj/structure/spider/stickyweb/atom_init()
+/obj/structure/spider/stickyweb/atom_init() //A lil hack so we can have special icons on special types
 	. = ..()
-	if(prob(50))
+	if(prob(50) && icon_state == "stickyweb1")
 		icon_state = "stickyweb2"
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
-		return 1
+		return TRUE
 	else if(isliving(mover))
-		if(prob(50))
+		if(mover.pulledby && istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
+			return TRUE
+		if(prob(50 * passage_mult))
 			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
-			return 0
+			return FALSE
 	else if(istype(mover, /obj/item/projectile))
-		return prob(30)
-	return 1
+		return prob(30 * passage_mult)
+	return TRUE
+
+/obj/structure/spider/stickyweb/sticky
+	name = "sticky web"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Extremely soft and sticky silk."
+	icon_state = "verystickyweb"
+	max_integrity = 20
+	passage_mult = 0
+
+/obj/structure/spider/stickyweb/sealed
+	name = "sealed web"
+	desc = "A solid thick wall of web, airtight enough to block air flow."
+	icon_state = "sealedweb"
+	can_block_air = TRUE
+	passage_mult = 0.7
+	max_integrity = 40
+
+/obj/structure/spider/stickyweb/solid
+	name = "solid web"
+	icon = 'icons/effects/effects.dmi'
+	desc = "A solid wall of web, thick enough to block air flow."
+	icon_state = "solidweb"
+	can_block_air = TRUE
+	opacity = TRUE
+	density = TRUE
+	max_integrity = 90
+	resistance_flags = FIRE_PROOF
+	passage_mult = 0.4
+
+/obj/structure/spider/spikes
+	name = "web spikes"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Silk hardened into small yet deadly spikes."
+	icon_state = "webspikes1"
+	max_integrity = 40
+
+/obj/structure/spider/stickyweb/spikes/Crossed(atom/movable/AM)
+	. = ..()
+	if(ismob(AM))
+		var/mob/M = AM
+		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.buckled)
+				return
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.crawling ? pick(BP_CHEST , BP_GROIN) : pick(BP_L_LEG , BP_R_LEG)]
+			if(BP && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+				BP.take_damage(15, 0)
+			H.Stun(1, TRUE)
+			H.Weaken(4)
+			H.updatehealth()
+
+/obj/structure/spider/stickyweb/reflector
+	name = "Reflective silk screen"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Made up of an extremly reflective silk material looking at it hurts."
+	icon_state = "reflector"
+	max_integrity = 30
+	passage_mult = 0.7
+	density = TRUE
+	opacity = TRUE
+	var/static/list/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
+		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)
+
+/obj/structure/spider/stickyweb/reflector/bullet_act(obj/item/projectile/P, def_zone)
+	if(is_type_in_list(P,reflects))
+		if(istype(P, /obj/item/projectile/plasma))
+			P.damage /= 4
+			return ..()
+		if(P.starting)
+			var/new_x = P.starting.x + pick(0, 0, 0, 0, -1, 1, -2, 2, -3, 3)
+			var/new_y = P.starting.y + pick(0, 0, 0, 0, -1, 1, -2, 2, -3, 3)
+			var/turf/curloc = get_turf(src)
+			P.redirect(new_x, new_y, curloc)
+			return PROJECTILE_FORCE_MISS
+	return ..()
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
+	var/sentient = FALSE
 	var/amount_grown = 0
 
 /obj/structure/spider/eggcluster/atom_init()
@@ -50,9 +130,9 @@
 /obj/structure/spider/eggcluster/process()
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
-		var/num = rand(6,24)
+		var/num = sentient ? 6 : rand(6,24)
 		for(var/i=0, i<num, i++)
-			new /obj/structure/spider/spiderling(src.loc)
+			new /obj/structure/spider/spiderling(loc, sentient)
 		qdel(src)
 
 /obj/structure/spider/spiderling
@@ -62,12 +142,13 @@
 	anchored = FALSE
 	layer = 2.7
 	max_integrity = 3
+	var/sentient = FALSE
 	var/amount_grown = -1
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 
-/obj/structure/spider/spiderling/atom_init()
+/obj/structure/spider/spiderling/atom_init(mapload, sentient = FALSE)
 	. = ..()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
@@ -171,7 +252,9 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			new grow_as(loc)
+			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc)
+			if(sentient || prob(5))
+				S.spawner_args = list(/datum/spawner/living/spider)
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains
@@ -206,5 +289,5 @@
 /obj/structure/spider/cocoon/Destroy()
 	visible_message("<span class='warning'>\the [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
-		A.loc = src.loc
+		A.forceMove(get_turf(src))
 	return ..()
