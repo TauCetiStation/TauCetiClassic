@@ -1,5 +1,5 @@
 /datum/event/cargo_mail
-	var/list/citizenship_to_mail_type = list(
+	var/static/list/citizenship_to_mail_type = list(
 		"Mars" = /obj/random/mail/mars,
 		"Venus" = /obj/random/mail/venus,
 		"Earth" = /obj/random/mail/earth,
