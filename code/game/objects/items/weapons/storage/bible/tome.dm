@@ -82,7 +82,7 @@
 			to_chat(user, "<span class='warning'>Вы не можете уничтожить стол, пока идёт исследование.</span>")
 			return FALSE
 	if(istype(target, /obj/structure/altar_of_gods))
-		if(get_area(target) == /area/custom/cult)
+		if(istype(get_area(target), /area/custom/cult))
 			to_chat(user, "<span class='warning'>Ты не можешь уничтожить алтарь в Раю!</span>")
 			return FALSE
 		if(length(religion.altars) < 2)
