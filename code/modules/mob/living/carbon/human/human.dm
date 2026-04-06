@@ -2377,4 +2377,4 @@
 
 /mob/living/carbon/human/proc/update_bodytype()
 	var/datum/bodytype/new_bodytype = get_bodytype_by_name(bodytype_name)
-	bodytype = new new_bodytype
+	bodytype = new new_bodytype(src)
