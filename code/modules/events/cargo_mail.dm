@@ -13,7 +13,7 @@
 		"Qerrbalak" = /obj/random/mail/qerrbalak,
 	)
 
-	var/list/job_to_mail_type = list(
+	var/static/list/job_to_mail_type = list(
 		JOB_VIROLOGIST = list("Венерианский Институт Вирусологии и Микологии", /obj/item/weapon/virusdish/random),
 		JOB_GENETICIST = list("Ассоциация Свободных Генетиков", /obj/random/meds/dna_injector),
 		JOB_ENGINEER = list("Профсоюз Инженеров и Атмостехов", /obj/random/tools/bettertool),
