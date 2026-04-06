@@ -52,21 +52,21 @@
 //Turns a direction into text
 /proc/dir2text_ru(direction)
 	switch(direction)
-		if(1.0)
+		if(NORTH)
 			return "север"
-		if(2.0)
+		if(SOUTH)
 			return "юг"
-		if(4.0)
+		if(EAST)
 			return "восток"
-		if(8.0)
+		if(WEST)
 			return "запад"
-		if(5.0)
+		if(NORTHEAST)
 			return "северо-восток"
-		if(6.0)
+		if(SOUTHEAST)
 			return "юго-восток"
-		if(9.0)
+		if(NORTHWEST)
 			return "северо-запад"
-		if(10.0)
+		if(SOUTHWEST)
 			return "юго-запад"
 
 //Turns text into proper directions
