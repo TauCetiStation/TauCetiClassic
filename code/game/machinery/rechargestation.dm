@@ -32,6 +32,8 @@
 	update_icon()
 
 /obj/machinery/recharge_station/RefreshParts()
+	..()
+
 	recharge_speed = 0
 	repairs = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
@@ -152,7 +154,7 @@
 			if(R.client)
 				R.client.eye = src
 				R.client.perspective = EYE_PERSPECTIVE
-			R.forceMove(src)
+			R.forceMove(src, keep_grabs = FALSE)
 			occupant = R
 			set_power_use(ACTIVE_POWER_USE)
 			add_fingerprint(R)

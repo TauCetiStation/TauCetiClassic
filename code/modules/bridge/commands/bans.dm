@@ -144,7 +144,7 @@
 
 	var/DBQuery/select_query 
 	if(active_only)
-		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, duration, round_id, job, reason
+		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, duration, round_id, job, reason, ingameage
 			FROM erro_ban 
 			WHERE ckey='[ckey]' 
 				AND (bantype = 'PERMABAN' OR bantype = 'JOB_PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now()) OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now()))
@@ -152,7 +152,7 @@
 			ORDER BY bantime DESC 
 			LIMIT 10 OFFSET [offset]"})
 	else
-		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, duration, round_id, job, reason
+		select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, duration, round_id, job, reason, ingameage
 			FROM erro_ban 
 			WHERE ckey='[ckey]'
 			ORDER BY bantime DESC 
@@ -171,11 +171,12 @@
 		var/roundid  = select_query.item[6]
 		var/job = select_query.item[7]
 		var/reason = select_query.item[8]
+		var/ingameage = select_query.item[9]
 
 		if(duration == -1)
-			duration = null // premaban
+			duration = null // permaban
 
-		message += "**ID**: [banid];  **Type**: [bantype]; **Admin**: [admin]; **Ban time**: [bantime]; [duration ? "**Duration**: [duration]; " : ""]**Round**: [roundid]; [job ? "**Job**: [job]; ": ""]\n**Reason**: *[reason]*\n\n"
+		message += "**ID**: [banid];  **Type**: [bantype]; **Admin**: [admin]; **Ban time**: [bantime] ([ingameage]); [duration ? "**Duration**: [duration]; " : ""]**Round**: [roundid]; [job ? "**Job**: [job]; ": ""]\n**Reason**: *[reason]*\n\n"
 
 	if(!length(message))
 		world.send2bridge(

@@ -9,5 +9,5 @@
 	minimum_players_bundles = 20
 
 /datum/game_mode/revolution/announce()
-	to_chat(world, "<B>The current game mode is - Revolution!</B>")
-	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!</B>")
+	to_chat(world, "<B>Текущий режим игры - Революция!</B>")
+	to_chat(world, "<B>Некоторые члены экипажа попытаются устроить революцию!</B>")

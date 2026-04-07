@@ -16,7 +16,6 @@
 
 	var/atom/movable/screen/module_icon = null
 	var/atom/movable/screen/pullin = null
-	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/healths = null
 	var/atom/movable/screen/throw_icon = null
 	var/atom/movable/screen/complex/gun/gun_setting_icon = null
@@ -35,7 +34,7 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/atom/movable/screen/zone_sel/zone_sel = null
-	var/atom/movable/screen/leap/leap_icon = null
+	var/atom/movable/screen/leap_icon = null
 	var/atom/movable/screen/neurotoxin_icon = null
 	var/atom/movable/screen/healthdoll = null
 	var/atom/movable/screen/nutrition_icon = null
@@ -51,6 +50,7 @@
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
 	var/last_examined = ""
+	var/last_z
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -60,12 +60,16 @@
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
+
+	// todo: we need to rewrite them as status effects
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = 0	//Carbon
 	var/slurring = null		//Carbon
+
+
 	var/real_name = null
 	var/flavor_text = ""
 	var/med_record = ""
@@ -148,18 +152,6 @@
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
 
-	// Determines how mood affects actionspeed.
-	// If ever used by anything else but mood, please
-	// port /datum/actionspeed_modifier system from /tg.
-	// The value is multiplicative.
-	var/mood_multiplicative_actionspeed_modifier = 0.0
-	// Determines how mood affects movespeed.
-	// used only in humans, because mood only is.
-	// If ever used by anything else but mood, please
-	// port /datum/movespeed_modifier system from /tg.
-	// The value is additive.
-	var/mood_additive_speed_modifier = 0.0
-
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
 
@@ -168,7 +160,7 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-	var/update_icon = 0 //Set to 1 to trigger regenerate_icons() at the next life() call
+	var/regenerate_icons_next_tick = FALSE //Set to TRUE to trigger regenerate_icons() at the next life() call
 
 	var/status_flags = MOB_STATUS_FLAGS_DEFAULT // bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
@@ -236,3 +228,5 @@
 
 	var/can_point = TRUE
 	var/show_examine_log = TRUE
+
+	var/neuter_gender_voice = MALE // for male/female emote sounds but with neuter gender

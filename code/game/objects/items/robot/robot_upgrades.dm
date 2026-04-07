@@ -6,6 +6,7 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
+	item_state_world = "cyborg_upgrade_w"
 	var/locked = 0
 	var/require_module = 0
 	var/installed = 0
@@ -21,12 +22,16 @@
 	name = "robotic module reset board"
 	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the robot."
 	icon_state = "cyborg_upgrade1"
+	item_state_world = "cyborg_upgrade1_w"
 	require_module = 1
 
 /obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return 0
+
 	R.uneq_all()
 	R.icon_state = "robot"
+	clearlist(R.module.channels)
 	qdel(R.module)
 	R.module = null
 	R.module_icon.update_icon(R)
@@ -42,6 +47,7 @@
 	name = "robot reclassification board"
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
+	item_state_world = "cyborg_upgrade1_w"
 	var/heldname = "default name"
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
@@ -59,6 +65,7 @@
 	name = "robot emergency restart module"
 	desc = "Used to force a restart of a disabled-but-repaired robot, bringing it back online."
 	icon_state = "cyborg_upgrade1"
+	item_state_world = "cyborg_upgrade1_w"
 
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
@@ -80,6 +87,7 @@
 	name = "robotic VTEC Module"
 	desc = "Used to kick in a robot's VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
+	item_state_world = "cyborg_upgrade2_w"
 	require_module = 1
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
@@ -96,6 +104,7 @@
 	name = "robotic Rapid Taser Cooling Module"
 	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
+	item_state_world = "cyborg_upgrade3_w"
 	require_module = 1
 
 
@@ -127,18 +136,15 @@
 	return 1
 
 /obj/item/borg/upgrade/jetpack
-	name = "mining robot jetpack"
-	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
+	name = "robot jetpack"
+	desc = "A carbon dioxide jetpack suitable for low-gravity operations."
 	icon_state = "cyborg_upgrade3"
+	item_state_world = "cyborg_upgrade3_w"
 	require_module = 1
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
-		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
-		to_chat(usr, "There's no mounting point for the module!")
-		return 0
 	for(var/obj/item/weapon/tank/jetpack/J in R.module.modules)
 		if(J && istype(J, /obj/item/weapon/tank/jetpack))
 			to_chat(usr, "There's no room for another jetpack!")
@@ -155,6 +161,7 @@
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a robot."
 	icon_state = "cyborg_upgrade3"
+	item_state_world = "cyborg_upgrade3_w"
 	require_module = 1
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R)
@@ -171,6 +178,7 @@
 	name = "security safety protocols module"
 	desc = "Unlocks the ability to become a security cyborg."
 	icon_state = "cyborg_upgrade3"
+	item_state_world = "cyborg_upgrade3_w"
 	require_module = FALSE
 
 /obj/item/borg/upgrade/security/action(mob/living/silicon/robot/R)
@@ -187,6 +195,7 @@
 	name = "Рекалибратор дисплея"
 	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
 	icon_state = "cyborg_upgrade2"
+	item_state_world = "cyborg_upgrade2_w"
 	require_module = TRUE
 
 /obj/item/borg/upgrade/hud_calibrator/action(mob/living/silicon/robot/R)

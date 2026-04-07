@@ -57,6 +57,8 @@
 	RefreshParts()
 
 /obj/machinery/gibber/RefreshParts()
+	..()
+
 	var/gib_time = initial(gibtime)
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		meat_produced += 3 * B.rating
@@ -205,7 +207,7 @@
 
 /obj/machinery/gibber/proc/gib_mob(mob/user)
 	occupant.log_combat(user, "gibbed via [name]")
-
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, occupant)
 	occupant.ghostize(bancheck = TRUE)
 
 	occupant.harvest()

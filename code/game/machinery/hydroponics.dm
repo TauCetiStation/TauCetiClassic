@@ -49,6 +49,8 @@
 	RefreshParts()
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
+	..()
+
 	var/tmp_capacity = 0
 	for (var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating
@@ -209,7 +211,7 @@
 		if(isnull(V))
 			CRASH("virus2 nulled before calling activate()")
 		else
-			V.affect_plants(src)
+			V.on_process(src)
 
 /obj/machinery/hydroponics/proc/ripen()
 	harvest = TRUE
@@ -343,12 +345,12 @@
 		return
 
 	var/oldPlantName = myseed.plantname
-	if(myseed.mutatelist.len > 0)
-		var/mutantseed = pick(myseed.mutatelist)
-		qdel(myseed)
-		myseed = new mutantseed
-	else
+	if(myseed.mutatelist.len <= 0)
 		return
+
+	var/mutantseed = pick(myseed.mutatelist)
+	qdel(myseed)
+	myseed = new mutantseed
 
 	dead = FALSE
 	hardmutate()
@@ -358,9 +360,7 @@
 	lastcycle = world.time
 	harvest = FALSE
 	weedlevel = 0 // Reset
-
-	sleep(5) // Wait a while
-	update_icon()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 5)
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
 

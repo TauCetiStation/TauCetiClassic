@@ -63,11 +63,9 @@
 	contents_cost = 80
 	export_types = list(/obj/structure/reagent_dispensers/kvasstank)
 
-
-
 // Heavy engineering equipment. Singulo/Tesla parts mostly.
 /datum/export/large/emitter
-	cost = 80
+	cost = 200
 	unit_name = "emitter"
 	export_types = list(/obj/machinery/power/emitter)
 
@@ -77,7 +75,7 @@
 	export_types = list(/obj/machinery/field_generator)
 
 /datum/export/large/collector
-	cost = 50
+	cost = 150
 	unit_name = "collector"
 	export_types = list(/obj/machinery/power/rad_collector)
 
@@ -92,13 +90,27 @@
 	export_types = list(/obj/machinery/particle_accelerator/control_box)
 
 /datum/export/large/pipedispenser
-	cost = 100
+	cost = 500
 	unit_name = "pipe dispenser"
 	export_types = list(/obj/machinery/pipedispenser)
 
+/datum/export/large/grounding_rod
+	cost = 100
+	unit_name = "grounding rod"
+	export_types = list(/obj/machinery/power/grounding_rod)
+
+/datum/export/large/tesla_coil
+	cost = 150
+	unit_name = "tesla coil"
+	export_types = list(/obj/machinery/power/tesla_coil)
+
+/datum/export/large/particle_accelerator
+	cost = 200
+	unit_name = "Particle Accelerator"
+	export_types = list(/obj/structure/particle_accelerator)
 
 /datum/export/large/singularitygen
-	cost = 200 // If you have one left after engine setup, sell it.
+	cost = 1500 // If you have one left after engine setup, sell it.
 	unit_name = "unused gravitational singularity generator"
 	export_types = list(/obj/machinery/the_singularitygen)
 	include_subtypes = FALSE
@@ -107,6 +119,16 @@
 	unit_name = "unused energy ball generator"
 	export_types = list(/obj/machinery/the_singularitygen/tesla)
 
+/datum/export/large/supermatter
+	unit_name = "supermatter core"
+	include_subtypes = TRUE
+	cost = 2000
+	export_types = list(/obj/machinery/power/supermatter)
+
+/datum/export/large/riteg
+	unit_name = "Mk1 TEG"
+	cost = 2000
+	export_types = list(/obj/machinery/power/generator)
 
 // Misc
 /datum/export/large/iv
@@ -114,7 +136,32 @@
 	unit_name = "iv drip"
 	export_types = list(/obj/machinery/iv_drip)
 
+/datum/export/large/cardiopulmonary_bypass
+	cost = 300
+	unit_name = "cardiopulmonary bypass machine"
+	export_types = list(/obj/machinery/life_assist/cardiopulmonary_bypass)
+
+/datum/export/large/artificial_ventilation
+	cost = 300
+	unit_name = "artifical ventilation machine"
+	export_types = list(/obj/machinery/life_assist/artificial_ventilation)
+
 /datum/export/large/barrier
 	cost = 65
 	unit_name = "security barrier"
 	export_types = list(/obj/machinery/deployable/barrier)
+
+/datum/export/large/floodlight
+	cost = 50
+	unit_name = "floodlight"
+	export_types = list(/obj/machinery/floodlight)
+
+/datum/export/large/drill_brace
+	cost = 150
+	unit_name = "mining drill brace"
+	export_types = list(/obj/machinery/mining/brace)
+
+/datum/export/large/drill_head
+	cost = 300
+	unit_name = "mining drill head"
+	export_types = list(/obj/machinery/mining/drill)

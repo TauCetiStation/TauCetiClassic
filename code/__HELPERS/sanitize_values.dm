@@ -25,15 +25,23 @@
 
 
 //more specialised stuff
-/proc/sanitize_gender(gender,neuter=0,plural=0, default="male")
+/proc/sanitize_gender(gender, must_be_neuter = FALSE, default = MALE)
+	if(must_be_neuter)
+		return NEUTER
+
+	if(gender == MALE || gender == FEMALE)
+		return gender
+
+	return default
+
+/proc/sanitize_gender_voice(gender, default = MALE)
 	switch(gender)
-		if(MALE, FEMALE)return gender
-		if(NEUTER)
-			if(neuter)	return gender
-			else		return default
-		if(PLURAL)
-			if(plural)	return gender
-			else		return default
+		if(MALE)
+			return gender
+
+		if(FEMALE)
+			return gender
+
 	return default
 
 /proc/sanitize_hexcolor(color, default="#000000")

@@ -183,14 +183,12 @@ var/global/const/INGEST = 2
 	//handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
-/datum/reagents/proc/metabolize(mob/M)
-	for(var/datum/reagent/R in reagent_list)
-		if(M && R)
-			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
-			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
-			if(remove_amount > 0)
-				R.on_mob_life(M)
-				remove_reagent(R.id, remove_amount)
+/datum/reagents/proc/metabolize(mob/living/M)
+	for(var/datum/reagent/R as anything in reagent_list)
+		var/remove_amount = R.custom_metabolism * M.mob_metabolism_mod.Get()
+		if(remove_amount > 0) // i think it should be always true, there is no reagents with 0 metabolism and zero metabolism mobs should not reach this code
+			R.on_mob_life(M)
+			remove_reagent(R.id, remove_amount)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -287,7 +285,8 @@ var/global/const/INGEST = 2
 						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(C.result, C.result_amount*multiplier)
-						set_data(C.result, preserved_data)
+						if(preserved_data)
+							set_data(C.result, preserved_data)
 
 						//add secondary products
 						for(var/S in C.secondary_results)
@@ -427,7 +426,7 @@ var/global/const/INGEST = 2
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
 				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
-				R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
+				R.color = rgb(R.data["r_color"], R.data["g_color"], R.data["b_color"])
 
 			// Update:
 			update_total()
@@ -453,7 +452,7 @@ var/global/const/INGEST = 2
 				R.data["virus2"] |= virus_copylist(data["virus2"])
 
 		if(reagent == "customhairdye" || reagent == "paint_custom")
-			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
+			R.color = rgb(R.data["r_color"], R.data["g_color"], R.data["b_color"])
 
 		// Update:
 		R.on_new()
@@ -511,7 +510,7 @@ var/global/const/INGEST = 2
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if (res != "") res += ", "
 		res += A.name
 
 	return res
@@ -621,8 +620,8 @@ var/global/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location [COORD(T)] [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location [COORD(T)]")
+		message_admins("[key_name_admin(user)] splashed ([splash.get_reagents()]) on [target], location [COORD(T)] [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [splash.get_reagents()] on [target], location [COORD(T)]")
 
 		if(ismob(target))
 			var/mob/living/L = target

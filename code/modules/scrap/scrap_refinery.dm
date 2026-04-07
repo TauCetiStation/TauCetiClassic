@@ -1,7 +1,7 @@
 var/global/const/SAFETY_COOLDOWN = 100
 
 /obj/item/weapon/circuitboard/recycler
-	name = "Circuit board (Recycler)"
+	details = "circuit board (Recycler)"
 	board_type = "machine"
 	build_path = /obj/machinery/recycler
 	origin_tech = "engineering = 3"
@@ -33,6 +33,8 @@ var/global/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 /obj/machinery/recycler/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		chance_to_recycle = 25 * M.rating //% of materials salvaged
 	chance_to_recycle = min(100, chance_to_recycle)

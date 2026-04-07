@@ -48,11 +48,11 @@
 /area/space_structures/research_ship)
 "af" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "ag" = (
@@ -172,6 +172,15 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
+"kx" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/structure/sign/poster/contraband,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/space_structures/research_ship)
 "nL" = (
 /obj/structure/closet/crate/scicrate,
 /obj/item/weapon/fossil/bone,
@@ -242,9 +251,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "tt" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
+/obj/structure/closet/wardrobe/white,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "us" = (
@@ -284,10 +293,6 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
 /obj/structure/alien/weeds,
-/obj/machinery/alarm{
-	hidden_from_console = 1;
-	pixel_y = 22
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
@@ -334,10 +339,6 @@
 /obj/item/clothing/head/helmet/space/rig/science,
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/pickaxe,
-/obj/machinery/alarm{
-	hidden_from_console = 1;
-	pixel_y = -32
-	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Af" = (
@@ -392,7 +393,8 @@
 	frequency = 1379;
 	id_tag = "alien_der_inner";
 	locked = 1;
-	name = "Research Ship External Access"
+	name = "Research Ship External Access";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -444,6 +446,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/sign/poster/calendar{
+	pixel_y = -32
+	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "FT" = (
@@ -483,11 +488,6 @@
 	},
 /obj/machinery/computer/reconstitutor/animal,
 /obj/structure/alien/weeds,
-/obj/machinery/alarm{
-	hidden_from_console = 1;
-	pixel_x = -28;
-	pixel_y = -6
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
@@ -524,12 +524,23 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/structure/sign/poster/official/no_erp{
+	pixel_y = 32
+	},
 /turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"Mu" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
 /area/space_structures/research_ship)
 "NF" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/xenomorph/drone,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
@@ -539,6 +550,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/mob_spawn/alien/drone,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "OD" = (
@@ -636,7 +648,7 @@
 /area/space_structures/research_ship)
 "UV" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph,
+/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Wq" = (
@@ -669,7 +681,8 @@
 	frequency = 1379;
 	id_tag = "alien_der_outer";
 	locked = 1;
-	name = "Research Ship External Access"
+	name = "Research Ship External Access";
+	dir = 4
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -752,7 +765,7 @@ LF
 LF
 LF
 xZ
-xZ
+Mu
 EU
 UR
 EZ
@@ -896,7 +909,7 @@ LF
 LF
 LF
 xZ
-xZ
+kx
 vd
 fs
 Fh

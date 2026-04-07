@@ -3,7 +3,7 @@
 	endWhen			= 120
 
 /datum/event/lone_op/start()
-	if(!global.loneopstart.len)
+	if(!length(landmarks_list["Solo operative"]))
 		kill()
 		return
 

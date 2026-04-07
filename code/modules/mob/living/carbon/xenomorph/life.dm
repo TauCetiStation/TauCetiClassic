@@ -86,10 +86,6 @@
 		else if(ear_damage < 25)
 			ear_damage = 0
 
-		//Other
-		if(stuttering > 0)
-			setStuttering(0)
-
 		if(silent)
 			silent = 0
 
@@ -108,10 +104,10 @@
 	set_EyesVision(null)
 
 	if(nightvision)
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 		see_invisible = SEE_INVISIBLE_LIVING
 	else
-		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+		set_lighting_alpha(LIGHTING_PLANE_ALPHA_VISIBLE)
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	return TRUE
 

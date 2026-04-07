@@ -16,6 +16,12 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
+// list datums should have "order" variable, or it will throw error
+// because ":" checks for variable at runtime it's better 
+// not to use this cmp for heavy code or big lists
+/proc/cmp_general_order_asc(datum/A, datum/B)
+	return A:order - B:order
+
 var/global/cmp_field = "name"
 /proc/cmp_records_asc(datum/data/record/a, datum/data/record/b)
 	return sorttext(b.fields[cmp_field], a.fields[cmp_field])
@@ -87,9 +93,20 @@ var/global/cmp_field = "name"
 /proc/cmp_filter_data_priority(list/A, list/B)
 	return A["priority"] - B["priority"]
 
-/proc/cmp_job_titles(list/A, list/B)
-	. = A["priority"] - B["priority"]
-	if (!.)
-		. = sorttext(B["rank"], A["rank"])
-	if (!.)
-		. = sorttext(B["name"], A["name"])
+/proc/cmp_legacy_job_titles(list/recordA, list/recordB)
+	return recordA["priority"] - recordB["priority"]
+
+/proc/cmp_job_titles(job_a, job_b)
+	var/datum/job/A = SSjob.name_occupations[job_a]
+	var/datum/job/B = SSjob.name_occupations[job_b]
+
+	return A.order - B.order
+
+/proc/cmp_department_titles(dep_a, dep_b)
+	var/datum/department/A = SSjob.name_departments[dep_a]
+	var/datum/department/B = SSjob.name_departments[dep_b]
+
+	return A.order - B.order
+
+/proc/cmp_spawners_asc(datum/spawner/A, datum/spawner/B)
+	return A.priority - B.priority

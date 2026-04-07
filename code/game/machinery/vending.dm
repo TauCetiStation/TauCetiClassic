@@ -1,3 +1,5 @@
+#define VENDING_WINDOW_ID "window=vending"
+
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
@@ -5,11 +7,13 @@
 	var/max_amount = 0
 	var/price = 0
 
+ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
+	damage_deflection = 10
 
 	var/subname = null // subname for vendor's circuit name
 
@@ -52,6 +56,7 @@
 	var/extended_inventory = 0 //can we access the hidden inventory?
 	var/obj/item/weapon/coin/coin
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	var/datum/data/vending_product/unstable_product = null
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/ewallet/ewallet
@@ -60,13 +65,21 @@
 
 	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
+	var/obj/item/device/camera/abstract/vendomat/camera
+	var/load = 0
+	var/max_load = 0
 
-/obj/machinery/vending/atom_init()
+	var/seller_account_number = MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER
+
+
+/obj/machinery/vending/atom_init(mapload)
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
+
+	camera = new(src)
 
 	slogan_list = splittext(product_slogans, ";")
 
@@ -82,10 +95,15 @@
 	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
+	update_unstable_product()
+
+	if(mapload && is_station_level(z)) // Economy is initialized after atoms, thus we must use set the placeholder here until we refactor global money accounts to do lazy initializations.
+		seller_account_number = MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
+	QDEL_NULL(camera)
 	return ..()
 
 /obj/machinery/vending/RefreshParts()
@@ -130,9 +148,11 @@
 			emag_records += R
 		else
 			product_records += R
+			max_load += amount
 
 		var/atom/temp = typepath
 		R.product_name = initial(temp.name)
+	load = max_load
 	return
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, mob/user)  //Restocking from TG
@@ -162,6 +182,7 @@
 				to_chat(usr, "<span class='notice'>[restock] of [machine_content.product_name]</span>")
 			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
 				break
+	load += total
 	return total
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
@@ -171,6 +192,28 @@
 
 		if(isprying(W))
 			default_deconstruction_crowbar(W)
+			return
+
+		if(istype(W, /obj/item/device/lens) && W.type != camera.lens)
+			var/obj/item/device/lens/CameraLens = camera.lens
+			CameraLens.forceMove(get_turf(src))
+			user.drop_from_inventory(W, camera)
+			if(!user.get_active_hand())
+				user.put_in_hands(CameraLens)
+			camera.lens = W
+			return
+
+		if(!seller_account_number && (istype(W, /obj/item/device/pda) && W.GetID()))
+			var/obj/item/weapon/card/Card = W.GetID()
+			seller_account_number = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
+			return
+
+		if(!seller_account_number && istype(W, /obj/item/weapon/card))
+			var/obj/item/weapon/card/Card = W
+			seller_account_number = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
+			return
 
 	if(isscrewing(W) && anchored)
 		src.panel_open = !src.panel_open
@@ -195,7 +238,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			if(!istype(src, /obj/machinery/vending) || !user || !W || !T)
 				return
 			if(user.loc == T && user.get_active_hand() == W)
@@ -242,11 +285,6 @@
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
-	else if(src.panel_open)
-		for(var/datum/data/vending_product/R in product_records)
-			if(istype(W, R.product_path))
-				stock(R, user)
-				qdel(W)
 	else
 		..()
 
@@ -276,6 +314,7 @@
 					safety--
 			if(safety <= 0)
 				break
+	load = 0
 	..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
@@ -284,10 +323,12 @@
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
+		playsound(src, 'sound/machines/use_card.ogg', VOL_EFFECTS_MASTER)
 		if(check_accounts)
-			if(vendor_account)
+			if(seller_account_number)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				if(D)
+				var/datum/money_account/S = get_account(seller_account_number)
+				if(D && S)
 					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
 					if(usr.incapacitated() || !Adjacent(usr))
 						return
@@ -296,13 +337,15 @@
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
-							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
+							var/tax = 0
+							if(S in department_accounts)
+								tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
+								charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
 							//create entries in the two account transaction logs
-							charge_to_account(D.account_number, "[global.cargo_account.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
+							charge_to_account(D.account_number, "[S.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
 							//
-							charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
+							charge_to_account(S.account_number, S.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
 
 							// Vend the item
 							vend(src.currently_vending, usr)
@@ -314,7 +357,7 @@
 				else
 					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 			else
-				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access seller account. Check security settings and try again.</span>")
 		else
 			//Just Vend it.
 			vend(src.currently_vending, usr)
@@ -336,8 +379,15 @@
 
 	var/vendorname = name  //import the machine's name
 
+	var/ad = ""
+	if((seller_account_number == global.cargo_account.account_number) && global.online_shop_ads && check_active_cargonauts())
+		ad += get_onlineshop_advertisement(src)
+
 	if(currently_vending)
 		var/dat
+		if(ad)
+			dat += ad
+
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
 		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
@@ -346,6 +396,9 @@
 		return
 
 	var/dat
+	if(ad)
+		dat += ad
+
 	dat += "<div class='Section__title'>Products</div>"
 	dat += "<div class='Section'>"
 
@@ -369,7 +422,7 @@
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.get_money() : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
-	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
+	var/datum/browser/popup = new(user, VENDING_WINDOW_ID, "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat)
 	popup.open()
@@ -393,6 +446,8 @@
 	if(!.)
 		return
 
+	if(href_list)
+		playsound(src, 'sound/machines/vendo_button.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	if(href_list["remove_coin"] && !issilicon(usr) && !isobserver(usr))
 		if(!coin)
 			to_chat(usr, "There is no coin in this machine.")
@@ -415,15 +470,6 @@
 		ewallet = null
 
 	else if (href_list["vend"] && vend_ready && !currently_vending)
-
-		if(isrobot(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return FALSE
-		else if(issilicon(usr))
-			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return FALSE
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
@@ -455,6 +501,37 @@
 		updateUsrDialog()
 		return
 
+	else if (href_list["pda_onlineshop"])
+		if(seller_account_number != global.cargo_account.account_number)
+			return
+
+		if(!usr)
+			return
+
+		if(issilicon(usr))
+			return
+
+		if(isobserver(usr))
+			return
+
+		if(usr.incapacitated())
+			return
+
+		if(!Adjacent(usr))
+			return
+
+		if(!usr.client)
+			return
+
+		if(!LAZYACCESS(usr.client.browsers, VENDING_WINDOW_ID))
+			return
+
+		var/obj/item/device/pda/PDA = locate() in usr
+		if(!PDA)
+			return
+
+		PDA.open_shop_page(usr)
+
 	updateUsrDialog()
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
@@ -477,8 +554,6 @@
 		else
 			QDEL_NULL(coin)
 
-	R.amount--
-
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 		spawn(0)
 			speak(src.vend_reply)
@@ -488,18 +563,10 @@
 	if (src.icon_vend) //Show the vending animation if needed
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
-		new R.product_path(get_turf(src))
-		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
-		src.vend_ready = 1
-		src.currently_vending = null
-		updateUsrDialog()
-
-/obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
-	if(src.panel_open)
-		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
-		R.amount++
-
-	updateUsrDialog()
+		if(R)
+			give_out_product(R)
+			src.vend_ready = 1
+			src.currently_vending = null
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))
@@ -573,14 +640,14 @@
 			if(!R.amount)
 				continue
 			new dump_path(src.loc)
-			R.amount--
+			substract_product(R)
 
 		//Dropping remaining items in a pack
 		var/refilling = 0
 		for(var/datum/data/vending_product/R in src.product_records)
 			while(R.amount > 0)
 				refilling++
-				R.amount--
+				substract_product(R)
 
 		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
 		Refill.charges = refilling
@@ -589,12 +656,19 @@
 			while(R.amount > 0)
 				var/dump_path = R.product_path
 				new dump_path(src.loc)
-				R.amount--
+				substract_product(R)
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
 
+	send_emergency_photo()
+
 	return
+
+/obj/machinery/vending/proc/send_emergency_photo()
+	for(var/obj/machinery/computer/vending/Vend in global.vending_consoles)
+		var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo(Vend.loc)
+		Photo.construct(camera.captureimage(get_turf(src), src))
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
@@ -603,18 +677,12 @@
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
-
-		R.amount--
-		throw_item = new dump_path(src.loc)
-		break
-	if (!throw_item)
+	var/list/AP = get_available_products()
+	if(AP.len)
+		throw_item = give_out_product(pick(AP))
+	else
 		return 0
+
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
@@ -631,6 +699,46 @@
 		return 1
 	else
 		return 0
+
+/obj/machinery/vending/proc/get_available_products()
+	var/list/available_products = list()
+	for(var/datum/data/vending_product/VP in product_records)
+		if(VP.amount && VP.product_path)
+			available_products += VP
+	return available_products
+
+/obj/machinery/vending/proc/substract_product(datum/data/vending_product/P)
+	P.amount--
+	if(P in product_records)
+		load--
+
+/obj/machinery/vending/proc/give_out_product(datum/data/vending_product/VP)
+	playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
+	substract_product(VP)
+	if(VP == unstable_product)
+		unstable_product = null
+	updateUsrDialog()
+	update_unstable_product()
+	return new VP.product_path(src.loc)
+
+/obj/machinery/vending/proc/update_unstable_product()
+	if(!unstable_product && prob(5))
+		var/list/AP = get_available_products()
+		if(AP.len)
+			unstable_product = pick(AP)
+
+/obj/machinery/vending/examine(mob/user, distance)
+	. = ..()
+	if(unstable_product && distance < 3) // need to be close to see
+		to_chat(user, "<span class='notice'>\The [unstable_product.product_name] seems to be loose. I bet I can punch it out!</span>")
+
+/obj/machinery/vending/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(unstable_product && prob(50))
+		do_shake_animation(2, 10, intensity_dropoff = 0.9)
+		give_out_product(unstable_product)
+
+	update_unstable_product()
 
 /*
  * Vending machine types

@@ -114,22 +114,23 @@ var/global/list/airlock_overlays = list()
 		return PROCESS_KILL
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
-	if(!issilicon(usr))
-		if(isElectrified())
-			if(!justzap)
-				if(shock(user, 100))
-					justzap = TRUE
-					spawn (10)
-						justzap = FALSE
-					return
-			else /*if(justzap)*/
-				return
-		else if(user.hallucination > 50 && prob(10) && !operating)
-			to_chat(user, "<span class='warning'><B>You feel a powerful shock course through your body!</B></span>")
-			user.adjustHalLoss(10)
-			user.AdjustStunned(10)
-			return
-	..(user)
+	if(issilicon(usr) || !iscarbon(user))
+		return ..()
+
+	if(isElectrified() && !justzap && shock(user, 100))
+		justzap = TRUE
+		spawn (10)
+			justzap = FALSE
+		return
+	//needs rewriting all hallucination += num to one proc/adjust_hallucination(num)
+	//so directly call status_effect for now
+	if(user.hallucination > 50)
+		user.apply_status_effect(/datum/status_effect/hallucination, 2 SECONDS)
+
+	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
+		return
+
+	return ..(user)
 
 /obj/machinery/door/airlock/finish_crush_wedge_animation()
 	playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
@@ -138,7 +139,7 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/proc/isElectrified()
@@ -225,6 +226,8 @@ var/global/list/airlock_overlays = list()
 // returns 1 if shocked, 0 otherwise
 // The preceding comment was borrowed from the grille's shock script
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
+	if(!Adjacent(user))
+		return 0
 	if(!hasPower())		// unpowered, no shock
 		return 0
 	if(hasShocked)
@@ -349,6 +352,22 @@ var/global/list/airlock_overlays = list()
 				if(atom_integrity < (0.75 * max_integrity))
 					. += get_airlock_overlay("sparks_open", overlays_file, TRUE)
 
+	if(hasPower() && unres_sides)
+		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
+			if(!(unres_sides & heading))
+				continue
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER)
+			switch (heading)
+				if (NORTH)
+					floorlight.pixel_y = 32
+				if (SOUTH)
+					floorlight.pixel_y = -32
+				if (EAST)
+					floorlight.pixel_x = 32
+				if (WEST)
+					floorlight.pixel_x = -32
+			. += floorlight
+
 	cut_overlays()
 	add_overlay(.)
 
@@ -426,23 +445,23 @@ var/global/list/airlock_overlays = list()
 	if(isWireCut(AIRLOCK_WIRE_IDSCAN))
 		t1 += text("IdScan wire is cut.<br>\n")
 	else if(aiDisabledIdScanner)
-		t1 += text("IdScan disabled. <A href='?src=\ref[];aiEnable=1'>Enable?</a><br>\n", src)
+		t1 += text("IdScan disabled. <A href='byond://?src=\ref[];aiEnable=1'>Enable?</a><br>\n", src)
 	else
-		t1 += text("IdScan enabled. <A href='?src=\ref[];aiDisable=1'>Disable?</a><br>\n", src)
+		t1 += text("IdScan enabled. <A href='byond://?src=\ref[];aiDisable=1'>Disable?</a><br>\n", src)
 
 	if(emergency)
-		t1 += text("Emergency access override is enabled. <A href='?src=\ref[];aiDisable=11'>Disable?</a><br>\n", src)
+		t1 += text("Emergency access override is enabled. <A href='byond://?src=\ref[];aiDisable=11'>Disable?</a><br>\n", src)
 	else
-		t1 += text("Emergency access override is disabled. <A href='?src=\ref[];aiEnable=11'>Enable?</a><br>\n", src)
+		t1 += text("Emergency access override is disabled. <A href='byond://?src=\ref[];aiEnable=11'>Enable?</a><br>\n", src)
 
 	if(isWireCut(AIRLOCK_WIRE_MAIN_POWER1))
 		t1 += text("Main Power Input wire is cut.<br>\n")
 	if(isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
 		t1 += text("Main Power Output wire is cut.<br>\n")
 	if(!secondsMainPowerLost)
-		t1 += text("<A href='?src=\ref[];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n", src)
+		t1 += text("<A href='byond://?src=\ref[];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n", src)
 	if(!secondsBackupPowerLost)
-		t1 += text("<A href='?src=\ref[];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n", src)
+		t1 += text("<A href='byond://?src=\ref[];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n", src)
 
 	if(isWireCut(AIRLOCK_WIRE_BACKUP_POWER1))
 		t1 += text("Backup Power Input wire is cut.<br>\n")
@@ -452,51 +471,51 @@ var/global/list/airlock_overlays = list()
 	if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		t1 += text("Door bolt drop wire is cut.<br>\n")
 	else if(!locked)
-		t1 += text("Door bolts are up. <A href='?src=\ref[];aiDisable=4'>Drop them?</a><br>\n", src)
+		t1 += text("Door bolts are up. <A href='byond://?src=\ref[];aiDisable=4'>Drop them?</a><br>\n", src)
 	else
 		t1 += text("Door bolts are down.")
 		if(hasPower())
-			t1 += text(" <A href='?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
+			t1 += text(" <A href='byond://?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
 		else
 			t1 += text(" Cannot raise door bolts due to power failure.<br>\n")
 
 	if(isWireCut(AIRLOCK_WIRE_LIGHT))
 		t1 += text("Door bolt lights wire is cut.<br>\n")
 	else if(!lights)
-		t1 += text("Door lights are off. <A href='?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
+		t1 += text("Door lights are off. <A href='byond://?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
 	else
-		t1 += text("Door lights are on. <A href='?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
+		t1 += text("Door lights are on. <A href='byond://?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
 
 	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		t1 += text("Electrification wire is cut.<br>\n")
 	if(secondsElectrified == -1)
-		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", src)
+		t1 += text("Door is electrified indefinitely. <A href='byond://?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", src)
 	else if(secondsElectrified>0)
-		t1 += text("Door is electrified temporarily ([]s). <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", secondsElectrified, src)
+		t1 += text("Door is electrified temporarily ([]s). <A href='byond://?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", secondsElectrified, src)
 	else
-		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify temporarily (30s)</a> <A href='?src=\ref[];aiEnable=6'>Electrify indefinitely</a><br>\n", src, src)
+		t1 += text("Door is not electrified. <A href='byond://?src=\ref[];aiEnable=5'>Electrify temporarily (30s)</a> <A href='byond://?src=\ref[];aiEnable=6'>Electrify indefinitely</a><br>\n", src, src)
 
 	if(isWireCut(AIRLOCK_WIRE_SAFETY))
 		t1 += text("Door force sensors not responding</a><br>\n")
 	else if(safe)
-		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
+		t1 += text("Door safeties operating normally.  <A href='byond://?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
 	else
-		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
+		t1 += text("Danger.  Door safeties disabled.  <A href='byond://?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
 
 	if(isWireCut(AIRLOCK_WIRE_SPEED))
 		t1 += text("Door timing circuitry not responding</a><br>\n")
 	else if(normalspeed)
-		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'> Override?</a><br>\n",src)
+		t1 += text("Door timing circuitry operating normally.  <A href='byond://?src=\ref[];aiDisable=9'> Override?</a><br>\n",src)
 	else
-		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'> Restore?</a><br>\n",src)
+		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='byond://?src=\ref[];aiEnable=9'> Restore?</a><br>\n",src)
 
 	if(welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
 	else if(!locked)
 		if(density)
-			t1 += text("<A href='?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
+			t1 += text("<A href='byond://?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
 		else
-			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
+			t1 += text("<A href='byond://?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
 
 	var/datum/browser/popup = new(user, "airlock", "Airlock Control")
 	popup.set_content(t1)
@@ -609,17 +628,12 @@ var/global/list/airlock_overlays = list()
 	da.created_name = name
 	da.update_state()
 
-	var/obj/item/weapon/airlock_electronics/ae
-	ae = new/obj/item/weapon/airlock_electronics(loc)
-	if(!req_access)
-		check_access()
-	if(req_access.len)
-		ae.conf_access = req_access
-	else if (req_one_access.len)
-		ae.conf_access = req_one_access
-		ae.one_access = 1
-	ae.loc = da
-	da.electronics = ae
+	if(electronics)
+		electronics.loc = da
+		da.electronics = electronics
+		electronics = null
+	else
+		da.electronics = new (da)
 
 	qdel(src)
 
@@ -884,7 +898,7 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
+	if(istype(C, /obj/item/taperoll))
 		return
 
 	if(iswelding(C) && !(operating > 0))
@@ -894,7 +908,7 @@ var/global/list/airlock_overlays = list()
 				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100))
+			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100, quality = QUALITY_WELDING))
 				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
@@ -924,7 +938,7 @@ var/global/list/airlock_overlays = list()
 		if(beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
+			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_PRYING))
 				deconstruct(TRUE, user)
 				return
 		else if(hasPower())
@@ -1158,8 +1172,12 @@ var/global/list/airlock_overlays = list()
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 	var/obj/item/weapon/airlock_electronics/ae
-	if(!electronics)
-		ae = new/obj/item/weapon/airlock_electronics(loc)
+	if(electronics)
+		ae = electronics
+		electronics = null
+		ae.loc = loc
+	else
+		ae = new /obj/item/weapon/airlock_electronics(loc)
 		if(!req_access)
 			check_access()
 		if(req_access.len)
@@ -1167,12 +1185,11 @@ var/global/list/airlock_overlays = list()
 		else if (req_one_access.len)
 			ae.conf_access = req_one_access
 			ae.one_access = 1
-	else
-		ae = electronics
-		electronics = null
-		ae.loc = loc
+
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
+		ae.item_state_inventory = "door_electronics_smoked"
+		ae.item_state_world = "door_electronics_smoked_w"
 		ae.broken = TRUE
 		operating = 0
 	..()
@@ -1223,3 +1240,47 @@ var/global/list/airlock_overlays = list()
 #undef AIRLOCK_DENY_LIGHT_COLOR
 #undef AIRLOCK_LIGHT_POWER
 #undef AIRLOCK_LIGHT_RANGE
+
+///Mapping helper. Just place it on the map on the airlock and select side, in the round this side will be unrestricted
+/obj/effect/unrestricted_side
+	name = "airlock unrestricted side helper"
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 16
+	pixel_x = 16
+
+/obj/effect/unrestricted_side/atom_init()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/unrestricted_side/atom_init_late()
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	airlock.unres_sides ^= dir
+	airlock.update_icon()
+	qdel(src)
+
+//Also, you can set the value to 5 (3, 6, 7, etc), and have unrestricted access to both north and east sides, but who cares
+/obj/effect/unrestricted_side/north
+	icon_state = "unres_1"
+	dir = NORTH
+	pixel_y = 32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/east
+	icon_state = "unres_4"
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/effect/unrestricted_side/south
+	icon_state = "unres_2"
+	dir = SOUTH
+	pixel_y = -32
+	pixel_x = 0
+
+/obj/effect/unrestricted_side/west
+	icon_state = "unres_8"
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0

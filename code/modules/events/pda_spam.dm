@@ -55,10 +55,20 @@
 					"У вас одно непрочитанное сообщение!",\
 					"Ваше фото профиля, получило две новые симпатии.")
 				if(3)
-					var/datum/shop_lot/lot = pick(global.online_shop_lots)
-					if(lot && !lot.sold)
+					if(global.online_shop_lots.len)
 						sender = CARGOSHOPNAME
-						message = "[lot.name] всего за [lot.price]$! Успейте купить!"
+
+						var/list/available_items = list()
+						for(var/datum/shop_lot/lot in global.online_shop_lots)
+							if(lot.sold)
+								continue
+							available_items += lot
+
+						if(available_items.len)
+							var/datum/shop_lot/lot_item = pick(available_items)
+							message = "[lot_item.name] всего за [lot_item.get_discounted_price()]$! Успейте купить!"
+						else
+							message = "Начните зарабатывать с крупнейшим онлайн-магазином станции! Покупают ваши коллеги, а зарабатываете вы!"
 					else
 						sender = pick("Галактическая Платежная Ассоциация","Лучшее Бюро Бизнеса","Электронные выплаты Тау Кита","Финансовый Департамент НаноТрейзен","Роскошные реплики")
 						message = pick("Роскошные часы по взрывным ценам!",\
@@ -95,10 +105,20 @@
 					"Вы выиграли билеты на новейшую романтическую комедию 16 ПРАВИЛ ЛЮБВИ!",\
 					"Вы выиграли билеты на новейший триллер КУЛЬТ ВСЕСПЯЩЕГО!")
 				if(8)
-					var/datum/shop_lot/lot = pick(global.online_shop_lots)
-					if(lot && !lot.sold)
+					if(global.online_shop_lots.len)
 						sender = CARGOSHOPNAME
-						message = "[lot.name] всего за [lot.get_discounted_price()]$! Успейте купить!"
+
+						var/list/available_items = list()
+						for(var/datum/shop_lot/lot in global.online_shop_lots)
+							if(!lot || lot.sold)
+								continue
+							available_items += lot
+
+						if(available_items.len)
+							var/datum/shop_lot/lot_item = pick(available_items)
+							message = "[lot_item.name] всего за [lot_item.get_discounted_price()]$! Успейте купить!"
+						else
+							message = "Начните зарабатывать с крупнейшим онлайн-магазином станции! Покупают ваши коллеги, а зарабатываете вы!"
 					else
 						sender = pick("Вайлдбананас", "Таяразон", "Вокс-Маркет", "Товарочка", "Красное и Чёрное")
 						message = pick("Стоит взглянуть! Из всех объявлений о продаже шаттла мы выбрали 12. Они больше всего похожи на то, что вы искали. Посмотрите — среди них может быть подходящее предложение.",\

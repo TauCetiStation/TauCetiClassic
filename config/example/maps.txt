@@ -27,6 +27,11 @@ map gamma
 	votable
 endmap
 
+map gamma_snow
+	votable
+	voteweight 0.7
+endmap
+
 map delta
 	votable
 	minplayers 70

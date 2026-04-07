@@ -14,12 +14,12 @@
 	icon_state = "2-4"
 	},
 /obj/structure/girder,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/syndicate_fighter)
 "d" = (
 /obj/item/stack/sheet/metal,
 /obj/machinery/porta_turret_construct,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/syndicate_fighter)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -44,10 +44,8 @@
 /obj/item/stack/cable_coil/random{
 	amount = 2
 	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/floor{
+	icon_state = "darkredfull"
 	},
 /area/space_structures/syndicate_fighter)
 "g" = (
@@ -62,7 +60,8 @@
 "h" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "syndishiv";
-	locked = 1
+	locked = 1;
+	dir = 4
 	},
 /obj/structure/fans/tiny,
 /turf/simulated/shuttle/floor4{
@@ -72,13 +71,11 @@
 	},
 /area/space_structures/syndicate_fighter)
 "i" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/floor{
+	icon_state = "darkredfull"
 	},
 /area/space_structures/syndicate_fighter)
 "j" = (
@@ -88,10 +85,8 @@
 /obj/machinery/computer/security/nuclear/shiv{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/floor{
+	icon_state = "darkredfull"
 	},
 /area/space_structures/syndicate_fighter)
 "k" = (
@@ -112,10 +107,8 @@
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate/infiltrator,
-/turf/simulated/shuttle/floor4{
-	name = "red floor";
-	nitrogen = 103.984;
-	oxygen = 0
+/turf/simulated/floor{
+	icon_state = "darkredfull"
 	},
 /area/space_structures/syndicate_fighter)
 

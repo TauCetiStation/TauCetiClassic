@@ -3,19 +3,24 @@
 	begin_month = APRIL
 	begin_day = 1
 
-	staffwho_group_name = list(
-		SW_ADMINS     = "ClownAdmins",
-		SW_MENTORS    = "Mimes",
-		SW_XENOVISORS = "Clownvisors",
-		SW_DEVELOPERS = "Janitors",
-	)
+	// Order is important. SW_ADMINS, SW_MENTORS, SW_XENOVISORS, SW_DEVELOPERS
+	staffwho_group_name = list("ClownAdmins", "Mimes", "Honkovisors", "Janitors")
+
 	staffwho_prefixs = list("Bored", "Boring", "Funny", "Not Funny", "Cute", "Ugly", "Evil", "Despot", "Sad", "Kind", "Smart", "Wise", "Stupid", "Dumb", "III", "Shit Spawner", "Confused", "Chaotic", "Toxic", "SSD", "Insane", "", "Golden", "Tiny", "Furry", "Holy", "Unholy", "Looser", "Foolish", "Red", "Blue", "ERP")
 	staffwho_no_staff = "No Clowns Online"
+
+/datum/holiday/april_fools/greet()
+	return "Your back is white"
 
 /datum/holiday/spess
 	name = "Cosmonautics Day"
 	begin_day = 12
 	begin_month = APRIL
+
+	// Order is important. SW_ADMINS, SW_MENTORS, SW_XENOVISORS, SW_DEVELOPERS
+	staffwho_group_name = list("Astronauts", "Cosmonauts", "Space-observers", "Houstons")
+	staffwho_prefixs = list("Spaced", "Frozen", "Alien", "Comrade", "Dog", "Flying", "Galactical", "Puzzled", "Decompressed", "Amazed", "Ready", "Proud", "Space Erp", "Xenos", "Pilot", "Astronaut", "Cosmonavt")
+	staffwho_no_staff = "Space is empty"
 
 /datum/holiday/spess/greet()
 	return "On this day over [round(game_year - 1961, 100)] years ago, Comrade Yuri Gagarin first ventured into space!"

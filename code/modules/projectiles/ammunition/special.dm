@@ -1,6 +1,6 @@
 /obj/item/ammo_casing/magic
 	name = "magic casing"
-	desc = "I didn't even know magic needed ammo..."
+	desc = "Я даже не мог подумать, что для магии нужны патроны..."
 	projectile_type = /obj/item/projectile/magic
 
 /obj/item/ammo_casing/magic/change
@@ -26,18 +26,18 @@
 
 /obj/item/ammo_casing/syringegun
 	name = "syringe gun spring"
-	desc = "A high-power spring that throws syringes."
+	desc = "Мощная пневматическая пружина, выстреливающая шприцы."
 	projectile_type = null
 
 
 /obj/item/ammo_casing/magic/neurotoxin
 	name = "neurotoxin"
-	desc = "Hi-s-s-s-s"
+	desc = "Хс-с-с-с-с"
 	projectile_type = /obj/item/projectile/neurotoxin
 
 /obj/item/ammo_casing/scrapshot
 	name = "scrap shot"
-	desc = "Glass, rods and screws flying everywere."
+	desc = "Повсюду летят стекла, стержни и шурупы."
 	projectile_type = /obj/item/projectile/bullet/scrap
 	pellets = 10
 	variance = 30

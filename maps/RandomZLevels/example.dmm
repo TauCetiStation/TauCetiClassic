@@ -541,7 +541,8 @@
 "bE" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms";
-	req_access = list(0)
+	req_access = list(0);
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -797,6 +798,12 @@
 "ct" = (
 /obj/structure/mopbucket,
 /obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/example)
+"qN" = (
+/obj/machinery/door/airlock{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -2765,7 +2772,7 @@ ab
 ab
 ab
 ab
-cg
+qN
 ab
 ab
 ac

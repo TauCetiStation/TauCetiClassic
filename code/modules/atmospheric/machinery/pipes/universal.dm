@@ -9,8 +9,6 @@
 	if(!check_icon_cache())
 		return
 
-	alpha = 255
-
 	cut_overlays()
 	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "universal"))
 	underlays.Cut()
@@ -35,8 +33,6 @@
 	..()
 	update_icon()
 
-
-
 /obj/machinery/atmospherics/pipe/simple/hidden/universal
 	name = "Universal pipe adapter"
 	desc = "An adapter for regular, supply and scrubbers pipes."
@@ -46,8 +42,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal/update_icon(safety = FALSE)
 	if(!check_icon_cache())
 		return
-
-	alpha = 255
 
 	cut_overlays()
 	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "universal"))
@@ -98,7 +92,7 @@
 
 /obj/machinery/atmospherics/proc/add_underlay_adapter(turf/T, obj/machinery/atmospherics/node, direction, icon_connect_type) // modified from add_underlay, does not make exposed underlays
 	if(node)
-		if(!T.is_plating() && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node.undertile && istype(node, /obj/machinery/atmospherics/pipe))
 			underlays += icon_manager.get_atmos_icon("underlay", direction, color_cache_name(node), "down" + icon_connect_type)
 		else
 			underlays += icon_manager.get_atmos_icon("underlay", direction, color_cache_name(node), "intact" + icon_connect_type)

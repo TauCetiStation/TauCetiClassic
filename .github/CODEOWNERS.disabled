@@ -1,0 +1,37 @@
+##
+# Подробнее: https://docs.github.com/ru/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Вы должны быть частью команды гитхаб-организации, иначе гитхаб не сможет назначить вас на ревью.
+# Так что запросите у мейнтейнеров инвайт в группу Collaborators, если необходимо.
+# UPD: Гитхаб всё еще просит write права для Codeowners, так что сейчас будет работать только для мейнтейнеров
+# https://github.com/orgs/community/discussions/23042
+# 
+#
+# Держите файлы и папки в алфавитном порядке (так, как они отсортированны в DreamMaker и taucetistation.dme).
+#
+# CODEOWNERS используются у нас ТОЛЬКО ДЛЯ УВЕДОМЛЕНИЙ, если вы хотите закрепить за собой обязательность 
+# ревью PR-а перед мержем - напишите об этом дополнительно в PR, желательно в первые сутки его открытия!
+#
+##
+
+## Код ##
+# /code/
+/code/modules/client/preferences_savefile.dm @volas
+
+## Конфиги ##
+/config/ @volas
+
+## Иконки ##
+/icons/ sprites-department 
+
+## Карты ##
+# Если вы хотите проверять все карты, раскоментируйте и добавьте себя:
+# /maps/ @вы
+/maps/testmap/testmap.dmm @volas
+
+## TGUI ##
+# /tgui/ @вы
+
+## Общее ##
+*.py @volas
+*.sh @volas

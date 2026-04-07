@@ -13,14 +13,15 @@
 
 /obj/item/weapon/gun/plasma // this will act as placeholder too (previously it was L10-C under projectile guns).
 	name = "plasma 10-bc"
-	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
+	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	fire_delay = 1
+	fire_delay = 2
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
+	var/fullauto = TRUE
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
@@ -36,10 +37,11 @@
 
 /obj/item/weapon/gun/plasma/p104sass
 	name = "plasma 104-sass" // its actually 10/4. 10 - because its based in some technical aspects of carbine and even shoots the same projectiles. 4 - stands for prototype number.
-	desc = "A plasma-based semi-automatic short shotgun."
+	desc = "Полуавтоматический короткоствольный дробовик на основе плазмы"
 	icon_state = "plasma104_stg"
 	item_state = "plasma104_stg"
 	origin_tech = "combat=4;magnets=3"
+	fullauto = FALSE
 
 	overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_massive_shot.ogg'
 
@@ -55,11 +57,15 @@
 
 /obj/item/weapon/gun/plasma/atom_init()
 	. = ..()
+	if(fullauto)
+		AddComponent(/datum/component/automatic_fire, fire_delay)
 	magazine = new initial_mag(src)
 	for(var/i in ammo_type)
 		var/path = ammo_type[i]
 		ammo_type[i] = new path(src)
+
 	update_icon()
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/plasma/Destroy()
 	QDEL_LIST_ASSOC_VAL(ammo_type)
@@ -124,9 +130,9 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
 	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+		to_chat(user, "<span class='notice'>Внутри [src] нет магазина.</span>")
 	update_icon(user)
 	return
 
@@ -136,7 +142,7 @@
 		if(!magazine && istype(AB, initial_mag))
 			user.drop_from_inventory(AB, src)
 			magazine = AB
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+			to_chat(user, "<span class='notice'>Вы загрузили новый магазин в [src].</span>")
 			if(AB.get_charge())
 				if(!AB.has_overcharge())
 					playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
@@ -147,7 +153,7 @@
 			return TRUE
 
 		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
+			to_chat(user, "<span class='notice'>Внутри [src] уже установлен магазин.</span>")
 			return
 
 	return ..()

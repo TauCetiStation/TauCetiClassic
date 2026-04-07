@@ -12,7 +12,7 @@
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/wall/fakeglass/alien,
+/turf/unsimulated/wall/fakealienmembrane,
 /area/mafia)
 "t" = (
 /obj/structure/alien{

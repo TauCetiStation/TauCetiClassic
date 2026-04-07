@@ -54,7 +54,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 		if(BP.open)
 			// Checks if mob is lying down on table for surgery
-			if(can_operate(H))
+			if(can_operate(H, user))
 				do_surgery(H, user, src)
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than [src]!</span>")
@@ -103,7 +103,7 @@
 	repeating = TRUE
 	heal_brute = 1
 
-	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NONE)
 
 /obj/item/stack/medical/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -169,7 +169,7 @@
 	repeating = FALSE
 	heal_burn = 1
 
-	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NONE)
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -403,7 +403,7 @@
 		// Suturing yourself brings much more pain.
 		var/pain_factor = H == user ? 40 : 20
 		if(H.stat == CONSCIOUS)
-			H.AdjustShockStage(pain_factor)
+			H.adjustHalLoss(pain_factor)
 		BP.status &= ~ORGAN_ARTERY_CUT
 		BP.strap()
 		user.visible_message(

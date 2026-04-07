@@ -349,7 +349,7 @@
 
 /obj/machinery/door/airlock/centcom
 	icon          = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 

@@ -19,6 +19,11 @@
 /turf/simulated/floor/carpet/make_plating()
 	ChangeTurf(/turf/simulated/floor/plating)
 
+/turf/simulated/floor/carpet/Entered(atom/movable/O)
+	..()
+	if(ishuman(O))
+		SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
+
 /turf/unsimulated/floor/carpet // copypaste because we still have unsim as different type :(
 	name = "red classic carpet"
 	icon_state = "center_8"
@@ -118,25 +123,3 @@
 /turf/unsimulated/floor/carpet/red
 	name = "red lattice carpet"
 	icon = 'icons/turf/floors/carpets/carpet_lattice_red.dmi'
-
-
-/turf/simulated/floor/carpet/floortile
-	name = "smooth floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile.dmi'
-
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	clawfootstep = FOOTSTEP_HARD_CLAW
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
-/turf/simulated/floor/carpet/floortile/neutral
-	name = "smooth neutral floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile_neutral.dmi'
-
-/turf/simulated/floor/carpet/floortile/white
-	name = "smooth white floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile_white.dmi'
-
-/turf/simulated/floor/carpet/floortile/dark
-	name = "smooth dark floor tile"
-	icon = 'icons/turf/floors/carpets/carpet_floortile_dark.dmi'

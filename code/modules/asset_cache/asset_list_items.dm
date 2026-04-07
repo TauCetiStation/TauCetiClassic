@@ -13,6 +13,12 @@
 		"Gys14Segment.ttf" = 'html/custom-fonts/Gys14Segment.ttf',
 		"Gys14Segment.eot" = 'html/custom-fonts/Gys14Segment.eot',
 		"Gys14Segment.woff" = 'html/custom-fonts/Gys14Segment.woff',
+		"TINIESTONE.ttf" = 'html/custom-fonts/TINIESTONE.ttf',
+		"TINIESTONE.eot" = 'html/custom-fonts/TINIESTONE.eot',
+		"TINIESTONE.woff" = 'html/custom-fonts/TINIESTONE.woff',
+		"StatusDisplays.ttf" = 'html/custom-fonts/StatusDisplays.ttf',
+		"StatusDisplays.eot" = 'html/custom-fonts/StatusDisplays.eot',
+		"StatusDisplays.woff" = 'html/custom-fonts/StatusDisplays.woff',
 		"custom-fonts.css" = 'html/custom-fonts/custom-fonts.css'
 	)
 
@@ -24,12 +30,11 @@
 
 /datum/asset/simple/fontawesome
 	assets = list(
-		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
-		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
-		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
-		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
-		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css',
-		"font-awesome.css"    = 'html/font-awesome/css/all.min.css'
+		"fa-regular-400.ttf"     = 'html/font-awesome/webfonts/fa-regular-400.ttf',
+		"fa-solid-900.ttf"       = 'html/font-awesome/webfonts/fa-solid-900.ttf',
+		"fa-v4compatibility.ttf" = 'html/font-awesome/webfonts/fa-v4compatibility.ttf',
+		"v4shim.css"             = 'html/font-awesome/css/v4-shims.min.css',
+		"font-awesome.css"       = 'html/font-awesome/css/all.min.css'
 	)
 
 /datum/asset/simple/spider_os
@@ -55,6 +60,31 @@
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png',
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
+
+/datum/asset/simple/station_map
+
+/datum/asset/simple/station_map/New()
+	var/list/cache = list(
+		"box" = 'nano/images/nanomap_exodus_1_areas.png',
+		"gamma" = 'nano/images/nanomap_gamma_1_areas.png',
+		"falcon" = 'nano/images/nanomap_falcon_1_areas.png',
+		"prometheus" = 'nano/images/nanomap_prometheus_1_areas.png',
+		"delta" = 'nano/images/nanomap_delta_1_areas.png'
+	)
+
+	var/list/cachekey = list(
+		"box" = "nanomap_exodus_1_areas.png",
+		"gamma" = "nanomap_gamma_1_areas.png",
+		"falcon" = "nanomap_falcon_1_areas.png",
+		"prometheus" = "nanomap_prometheus_1_areas.png",
+		"delta" = "nanomap_delta_1_areas.png"
+	)
+	var/cached_map_file = cache[SSmapping.config.map_path]
+	if(cached_map_file)
+		assets[cachekey[SSmapping.config.map_path]] = cache[SSmapping.config.map_path]
+	assets["nanomap_maplegend.png"] =  'nano/images/nanomap_maplegend.png'
+
+	..()
 
 /datum/asset/simple/newscaster
 	assets = list(
@@ -84,7 +114,9 @@
 		"WK.png" = 'icons/obj/chess/board_WK.png',
 		"WP.png" = 'icons/obj/chess/board_WP.png',
 		"CB.png" = 'icons/obj/chess/board_CB.png',
-		"CR.png" = 'icons/obj/chess/board_CR.png',
+		"CW.png" = 'icons/obj/chess/board_CW.png',
+		"KB.png" = 'icons/obj/chess/board_CB_king.png',
+		"KW.png" = 'icons/obj/chess/board_CW_king.png',
 		"none.png" = 'icons/obj/chess/board_none.png'
 	)
 
@@ -217,6 +249,21 @@
 		items_to_clear += item
 		var/icon/I = getFlatIcon(item)
 		var/imgid = replacetext(replacetext("[r.result_type]", "[/obj/item]/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
+/datum/asset/spritesheet/orebox
+	name = "orebox"
+
+/datum/asset/spritesheet/orebox/register()
+	for(var/k in subtypesof(/obj/item/weapon/ore))
+		var/atom/item = k
+		if (!ispath(item, /atom))
+			continue
+		var/obj/product = new item
+		items_to_clear += product
+		var/icon/I = getFlatIcon(product)
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
 

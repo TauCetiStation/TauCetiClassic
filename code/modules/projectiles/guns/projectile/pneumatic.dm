@@ -3,7 +3,7 @@
 
 /obj/item/weapon/storage/pneumatic
 	name = "pneumatic cannon"
-	desc = "A large gas-powered cannon."
+	desc = "Пушка высокого давления."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
@@ -27,36 +27,36 @@
 
 /obj/item/weapon/storage/pneumatic/verb/set_pressure() //set amount of tank pressure.
 
-	set name = "Set valve pressure"
+	set name = "Установить желаемое давление"
 	set category = "Object"
 	set src in range(0)
-	var/N = input("Percentage of tank used per shot:","[src]") as null|anything in possible_pressure_amounts
+	var/N = input("Сколько % давления использовать для выстрела:","[src]") as null|anything in possible_pressure_amounts
 	if (N)
 		pressure_setting = N
-		to_chat(usr, "You dial the pressure valve to [pressure_setting]%.")
+		to_chat(usr, "Вы крутите вентиль до [pressure_setting]%.")
 
 /obj/item/weapon/storage/pneumatic/verb/eject_tank() //Remove the tank.
 
-	set name = "Eject tank"
+	set name = "Вытащить баллон"
 	set category = "Object"
 	set src in range(0)
 
 	if(tank)
-		to_chat(usr, "You twist the valve and pop the tank out of [src].")
+		to_chat(usr, "Вы поворачиваете вентиль и откручиваете баллон.")
 		tank.loc = usr.loc
 		tank = null
 		icon_state = "pneumatic"
 		item_state = "pneumatic"
 		usr.update_icons()
 	else
-		to_chat(usr, "There's no tank in [src].")
+		to_chat(usr, "Нет баллона.")
 
 /obj/item/weapon/storage/pneumatic/attackby(obj/item/I, mob/user, params)
 	if(!tank && istype(I, /obj/item/weapon/tank))
 		user.remove_from_mob(I)
 		tank = I
 		tank.loc = src.tank_container
-		user.visible_message("[user] jams [I] into [src]'s valve and twists it closed.","You jam [I] into [src]'s valve and twist it closed.")
+		user.visible_message("[user] прикручивает баллон к пневматической пушке.","Вы прикручиваете баллон к пневматической пушке.")
 		icon_state = "pneumatic-tank"
 		item_state = "pneumatic-tank"
 		user.update_icons()
@@ -66,11 +66,11 @@
 /obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()
 	if(src in view(2, user))
-		to_chat(user, "The valve is dialed to [pressure_setting]%.")
+		to_chat(user, "Вентиль установлен на [pressure_setting]%.")
 		if(tank)
-			to_chat(user, "The tank dial reads [tank.air_contents.return_pressure()] kPa.")
+			to_chat(user, "На манометре баллона [tank.air_contents.return_pressure()] кПа.")
 		else
-			to_chat(user, "Nothing is attached to the tank valve!")
+			to_chat(user, "Нет газового баллона!")
 
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/user, proximity, params)
 	if (target.loc == user.loc)
@@ -82,7 +82,7 @@
 		return
 
 	if (length(contents) == 0)
-		to_chat(user, "There's nothing in [src] to fire!")
+		to_chat(user, "Загрузите предмет для выстрела!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
@@ -90,7 +90,7 @@
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
 		if(user.a_intent == INTENT_HARM)
-			user.visible_message("<span class='warning'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
+			user.visible_message("<span class='warning'><b> [user] стреляет в упор по [M] из пневматической пушки!</b></span>")
 			Fire(M,user)
 			return
 		else
@@ -105,11 +105,11 @@
 			V.attack_reaction(H, REACTION_GUN_FIRE)
 
 	if (!tank)
-		to_chat(user, "There is no gas tank in [src]!")
+		to_chat(user, "Вставьте газовый баллон!")
 		return 0
 
 	if (cooldown)
-		to_chat(user, "The chamber hasn't built up enough pressure yet!")
+		to_chat(user, "Низкое давление на манометре!")
 		return 0
 
 	add_fingerprint(user)
@@ -122,7 +122,7 @@
 	var/fire_pressure = (tank.air_contents.return_pressure()/100)*pressure_setting
 
 	if (fire_pressure < minimum_tank_pressure)
-		to_chat(user, "There isn't enough gas in the tank to fire [src].")
+		to_chat(user, "Давления в баллоне недостаточно для выстрела.")
 		return 0
 
 	var/obj/item/object = contents[1]
@@ -141,7 +141,7 @@
 	cooldown = 1
 	spawn(cooldown_time)
 		cooldown = 0
-		to_chat(user, "[src]'s gauge informs you it's ready to be fired again.")
+		to_chat(user, "Манометр показывает достаточное давление для выстрела.")
 
 /obj/item/weapon/storage/pneumatic/Destroy()
 	QDEL_NULL(tank)
@@ -152,37 +152,37 @@
 
 /obj/item/weapon/cannonframe1
 	name = "pneumo-gun(1 stage)"
-	desc = "To finish you need: attach the pipe; weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
+	desc = "Для завершения сборки: вставьте и приварите трубу; добавьте и приварите 5 листов металла; прикрутите вентиль и заварите швы."
 	icon_state = "pneumaticframe1"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe2
 	name = "pneumo-gun(2 stage)"
-	desc = "To finish you need: weld it all; add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
+	desc = "Для завершения сборки: приварите трубу; добавьте и приварите 5 листов металла; прикрутите вентиль и заварите швы."
 	icon_state = "pneumaticframe2"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe3
 	name = "pneumo-gun(3 stage)"
-	desc = "To finish you need: add 5 sheets of metal; weld it all; add tank transfer valve; weld it all."
+	desc = "Для завершения сборки: добавьте и приварите 5 листов металла; прикрутите вентиль и заварите швы."
 	icon_state = "pneumaticframe3"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe4
 	name = "pneumo-gun(4 stage)"
-	desc = "To finish you need: weld it all; add tank transfer valve; weld it all."
+	desc = "Для завершения сборки: приварите металл; прикрутите вентиль и заварите швы."
 	icon_state = "pneumaticframe4"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe5
 	name = "pneumo-gun(5 stage)"
-	desc = "To finish you need: add tank transfer valve; weld it all."
+	desc = "Для завершения сборки: прикрутите вентиль и заварите швы."
 	icon_state = "pneumaticframe5"
 	item_state = "pneumatic"
 
 /obj/item/weapon/cannonframe6
 	name = "pneumo-gun(6 stage)"
-	desc = "To finish you need: weld it all."
+	desc = "Для завершения сборки: заварите швы."
 	icon_state = "pneumaticframe6"
 	item_state = "pneumatic"
 

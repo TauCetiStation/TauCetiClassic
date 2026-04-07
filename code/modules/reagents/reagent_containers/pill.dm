@@ -12,14 +12,43 @@
 	volume = 50
 	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
 
+/obj/item/weapon/reagent_containers/pill/twopart
+	flags = NOREACT
+
 /obj/item/weapon/reagent_containers/pill/atom_init()
 	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
 
+/obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/pen))
+		var/new_name = sanitize_safe(input(user,"Name:","Name your pill!", "Pill") as text|null, MAX_NAME_LEN)
+		if(!new_name)
+			return
+		if (!user.Adjacent(src))
+			return
+		name = new_name
+		return
+	if(istype(W, /obj/item/weapon/reagent_containers/pill))
+		var/obj/item/weapon/reagent_containers/pill/P1 = W
+		if(P1.halved && halved)
+			var/obj/item/weapon/reagent_containers/pill/twopart/P = new(get_turf(src))
+			P1.reagents.trans_to(P, P1.reagents.total_volume)
+			reagents.trans_to(P, reagents.total_volume)
+			to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
+			P.name = "Pill"
+			P.icon_state = P1.icon_state
+			qdel(P1)
+			qdel(src)
+		return
+	return ..()
+
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	if(halved)
 		return
+	// reset flags and call reaction for pill/twopart pills
+	flags &= ~NOREACT
+	reagents.handle_reactions()
 	user.drop_from_inventory(src)
 	var/volume_half = reagents.total_volume / 2
 	for(var/part in list("top", "bottom"))
@@ -258,6 +287,15 @@
 	reagents.add_reagent("tramadol", 10)
 	reagents.add_reagent("stimulants",5)
 	reagents.add_reagent("toxin", 5)
+
+/obj/item/weapon/reagent_containers/pill/hallucination_pills
+	name = "Hallucination pills"
+	desc = "Ahaha oh wow."
+	icon_state = "pill9"
+
+/obj/item/weapon/reagent_containers/pill/hallucination_pills/atom_init()
+	. = ..()
+	reagents.add_reagent("mindbreaker", 15)
 
 /obj/item/weapon/reagent_containers/pill/lipozine
 	name = "Lipozine (15u)"

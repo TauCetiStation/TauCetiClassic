@@ -94,3 +94,20 @@
 	berets["black"] = /obj/item/clothing/head/beret/black
 	berets["purple"] = /obj/item/clothing/head/beret/purple
 	gear_tweaks += new/datum/gear_tweak/path(berets)
+
+/datum/gear/head/chep
+	display_name = "Maid cap"
+	path = /obj/item/clothing/head/chep
+
+/datum/gear/head/pluvia_hat
+	display_name = "Pluvia Hat"
+	path = /obj/item/clothing/head/pluvia
+	cost = 1
+	whitelisted = PLUVIAN
+
+/datum/gear/head/pluvia_hat/New()
+	..()
+	var/hats = list()
+	hats["blue"] = /obj/item/clothing/head/pluvia
+	hats["white"] = /obj/item/clothing/head/pluvia/white
+	gear_tweaks += new/datum/gear_tweak/path(hats)

@@ -111,9 +111,9 @@
 	H.equip_to_slot(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
 	H.equip_to_slot(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_to_slot(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
-	H.equip_to_slot(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
-	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
-	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/all_affairs
@@ -171,15 +171,6 @@
 	ADD_TRAIT(H, TRAIT_VACCINATED, QUALITY_TRAIT)
 
 
-/datum/quality/positiveish/happiness
-	name = "Happiness"
-	desc = "Ты очень-очень счастлив! Жизнь прекрасна и люди на станции прекрасны!!!"
-	requirement = "Нет."
-
-/datum/quality/positiveish/happiness/add_effect(mob/living/carbon/human/H, latespawn)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_happiness", /datum/mood_event/happiness)
-
-
 /datum/quality/positiveish/polyglot
 	name = "Polyglot"
 	desc = "Ты знаешь все языки."
@@ -195,7 +186,7 @@
 
 
 /datum/quality/positiveish/freakish_linguist
-	name = "Freakish linguist"
+	name = "Freakish Linguist"
 	desc = "Ты знаешь все языки. Абсолютно все. Но какой ценой?"
 	requirement = "Мим."
 
@@ -318,8 +309,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/implant/death_alarm/DA = new(H)
-	DA.stealth_inject(H)
+	new /obj/item/weapon/implant/death_alarm(H)
 
 
 /datum/quality/positiveish/anatomist
@@ -343,7 +333,7 @@
 
 /datum/quality/positiveish/cqc
 	name = "CQC"
-	desc = "Вы прошли курсы единоборств и теперь знаете на несколько приёмов больше."
+	desc = "Ты прошёл курсы единоборств и теперь знаешь на несколько приёмов больше."
 	requirement = "Нет."
 
 /datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
@@ -399,3 +389,61 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
+
+
+/datum/quality/positiveish/rollercoaster
+	name = "Roller Coaster"
+	desc = "Случайная встреча с подопытным в техах научила тебя безболезненно кататься по мусорным трубам."
+	requirement = "Нет."
+
+/datum/quality/positiveish/rollercoaster/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE, QUALITY_TRAIT)
+
+/datum/quality/positiveish/spaceartist
+	name = "Space Artist"
+	desc = "Как же быть актёром в космосе, но без космического скафандра?"
+	requirement = "Клоун, Мим."
+	jobs_required = list("Clown", "Mime")
+
+/datum/quality/positiveish/spaceartist/add_effect(mob/living/carbon/human/H)
+	if(H.job == "Clown")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/clown, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/clown, SLOT_L_HAND)
+	else if(H.job == "Mime")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
+
+/datum/quality/positiveish/bettercallsaul
+	name = "Better Call Saul"
+	desc = "У меня есть знакомый, у которого есть знакомый, который дал вам набор лучшего адвоката."
+	requirement = "Адвокат."
+
+	jobs_required = list("Lawyer")
+
+/datum/quality/positiveish/bettercallsaul/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Ты прихватил с собой ручку и штамп, способные подделывать подпись и печать.</span>")
+	H.equip_or_collect(new /obj/item/weapon/pen/chameleon(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/weapon/stamp/chameleon(H), SLOT_L_STORE)
+
+/datum/quality/positiveish/fastwalker
+	name = "Fast Walker"
+	desc = "Упражнения спортивной ходьбой по таяранской методике дали свои плоды - ты способен передвигаться быстро, бесшумно и аккуратно, когда не бежишь."
+	requirement = "Нет."
+
+/datum/quality/positiveish/fastwalker/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_FAST_WALKER, QUALITY_TRAIT)
+
+/datum/quality/positiveish/allchannels
+	name = "All Channels"
+	desc = "Информированным быть приятно - поэтому на чёрном рынке ты раздобыл ключ шифрования всех станционных каналов."
+	requirement = "Все, кроме охраны и глав."
+
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel", "Blueshield Officer",\
+								"Research Director", "Chief Medical Officer", "Chief Engineer")
+
+/datum/quality/positiveish/allchannels/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in funpolice)
+
+/datum/quality/positiveish/allchannels/add_effect(mob/living/carbon/human/H)
+	H.equip_or_collect(new /obj/item/device/encryptionkey/allchannels(H), SLOT_R_STORE)
+	to_chat(H, "<span class='notice'>Возможно, чтобы установить ключ шифрования, придётся расковырять наушник отверткой. Только не попадись охране!</span>")

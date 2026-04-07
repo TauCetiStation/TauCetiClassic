@@ -1,8 +1,6 @@
 /obj/item/clothing/head/hardhat
 	name = "hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
-	icon_state = "hardhat_standard"
-	item_state = "hardhat_standard"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)

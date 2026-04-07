@@ -30,6 +30,8 @@
 	return ..()
 
 /obj/machinery/telepad/RefreshParts()
+	..()
+
 	var/E
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		E += C.rating

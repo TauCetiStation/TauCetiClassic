@@ -17,6 +17,8 @@
 	RefreshParts()
 
 /obj/machinery/seed_extractor/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_seeds = 1000 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
@@ -91,5 +93,10 @@
 			return
 		to_chat(user, "<span class='notice'>You extract some seeds from the [S.name].</span>")
 		new /obj/item/seeds/grassseed(loc)
-
+	else if(istype(O, /obj/item/stack/tile/fairygrass))
+		var/obj/item/stack/tile/fairygrass/F = O
+		if(!F.use(1))
+			return
+		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
+		new /obj/item/seeds/fairy_grass(loc)
 	return

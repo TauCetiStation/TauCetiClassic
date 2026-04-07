@@ -45,7 +45,8 @@
 
 	religion.holy_turfs -= turf
 
-	turf.holy = null
+	if(istype(turf))
+		turf.holy = null
 
 	turf = null
 	religion = null

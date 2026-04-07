@@ -9,12 +9,12 @@
 
 	log_whisper("[key_name(src)]: [message]")
 
-	if(src.client)
-		if (src.client.prefs.muted & MUTE_IC)
+	if(client)
+		if (client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return FALSE
 
-		if (client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,ADMIN_CD_IC))
 			return FALSE
 
 	if (src.stat == DEAD)
@@ -63,7 +63,7 @@
 	message = add_period(message)
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming || HAS_TRAIT(src, TRAIT_MUTE))
+	if(!message || silent || HAS_TRAIT(src, TRAIT_MIMING) || HAS_TRAIT(src, TRAIT_MUTE))
 		return FALSE
 
 	// Mute disability

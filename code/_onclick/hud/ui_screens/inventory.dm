@@ -220,3 +220,9 @@
 	icon_state = "belt"
 	screen_loc = ui_belt
 	slot_id = SLOT_BELT
+
+/atom/movable/screen/inventory/neck
+	name = "neck"
+	icon_state = "neck"
+	screen_loc = ui_neck
+	slot_id = SLOT_NECK

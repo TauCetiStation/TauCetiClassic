@@ -101,14 +101,6 @@
 	dir = 1;
 	pixel_y = -7
 	})
-"ao" = (
-/obj/structure/window/fulltile/reinforced{
-	dir = 1;
-	grilled = 1;
-	pixel_y = -7
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/export_outpost)
 "aq" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -139,7 +131,7 @@
 	},
 /area/space_structures/export_outpost)
 "av" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -404,7 +396,8 @@
 /area/space_structures/export_outpost)
 "aY" = (
 /obj/machinery/door/airlock/security{
-	name = "Security Booth"
+	name = "Security Booth";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -476,7 +469,7 @@
 	},
 /area/space_structures/export_outpost)
 "bm" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /obj/item/weapon/storage/wallet/random,
@@ -707,6 +700,28 @@
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
+"Ry" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"Wx" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
 
 (1,1,1) = {"
 aa
@@ -845,9 +860,9 @@ aa
 aa
 ab
 ab
-ad
-ad
-ad
+Wx
+Wx
+Wx
 ab
 ab
 aa
@@ -1068,7 +1083,7 @@ ad
 aB
 ae
 aN
-ao
+aq
 aX
 aW
 bv
@@ -1093,7 +1108,7 @@ ab
 ag
 aK
 aK
-ao
+aq
 bl
 bp
 au
@@ -1144,9 +1159,9 @@ ab
 ab
 ab
 ab
-ad
-ad
-ad
+Ry
+Ry
+Ry
 ab
 aa
 aa

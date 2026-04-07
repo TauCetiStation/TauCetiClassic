@@ -40,6 +40,7 @@
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language(LANGUAGE_XENOMORPH)
+	ADD_TRAIT(src, TRAIT_NO_PAIN, INNATE_TRAIT)
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
 	for(var/spell in alien_spells)
@@ -68,15 +69,11 @@
 	return 0
 
 /mob/living/carbon/xenomorph/updatehealth()
-	if(status_flags & GODMODE)
-		health = maxHealth
-		stat = CONSCIOUS
-	else
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
-		med_hud_set_health()
-		med_hud_set_status()
+	//oxyloss is only used for suicide
+	//toxloss isn't used for aliens, its actually used as alien powers!!
+	health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/carbon/xenomorph/get_heat_protection()
 	return heat_protection
@@ -282,9 +279,6 @@ Hit Procs
 /mob/living/carbon/xenomorph/show_inv(mob/user)
 	return
 
-/mob/living/carbon/xenomorph/getTrail()
-	return "xltrails"
-
 /mob/living/carbon/xenomorph/update_canmove()
 	..()
 
@@ -322,3 +316,12 @@ Hit Procs
 		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
 	else
 		return
+
+/mob/living/carbon/xenomorph/get_blood_datum()
+	return /datum/dirt_cover/xeno_blood
+
+/mob/living/carbon/xenomorph/get_flesh_color()
+	return "#ffffff"
+
+/mob/living/carbon/xenomorph/get_trail_state()
+	return "xtrails_1"

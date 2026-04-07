@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/pulse_rifle
 	name = "pulse rifle"
-	desc = "A heavy-duty, pulse-based energy weapon, preferred by front-line combat personnel."
+	desc = "Сверхмощное, импульсно-энергетическое оружие, используемое военными."
 	icon_state = "pulse"
 	item_state = "pulse"
 	force = 10
@@ -32,7 +32,7 @@
 
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer
 	name = "pulse destroyer"
-	desc = "A heavy-duty, pulse-based energy weapon."
+	desc = "Сверхмощное, импульсно-энергетическое оружие."
 	cell_type = /obj/item/weapon/stock_parts/cell/infinite
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
@@ -41,7 +41,7 @@
 
 /obj/item/weapon/gun/energy/pulse_rifle/M1911
 	name = "m1911-P"
-	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
+	desc = "Дело не в размере оружия, а в размере дыры, которую оно проделывает в людях."
 	icon_state = "m1911-p"
 	item_state = "gun"
 	can_be_holstered = TRUE

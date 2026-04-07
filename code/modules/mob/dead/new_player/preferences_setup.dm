@@ -14,9 +14,10 @@
 	randomize_hair_color("gradient")
 	randomize_eyes_color()
 	randomize_skin_color()
-	underwear = rand(1,underwear_m.len)
-	undershirt = rand(1,undershirt_t.len)
-	socks = rand(1,socks_t.len)
+	underwear = rand(0, underwear_t.len)
+	undershirt = rand(0, undershirt_t.len)
+	undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
+	socks = rand(0, socks_t.len)
 	backbag = 2
 	use_skirt = pick(TRUE, FALSE)
 	var/datum/species/S = all_species[species]
@@ -32,48 +33,11 @@
 		b_facial = b_hair
 		return
 
-	var/red
-	var/green
-	var/blue
+	var/list/colors_rgb = random_hair_color()
 
-	var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
-	switch(col)
-		if("blonde")
-			red = 255
-			green = 255
-			blue = 0
-		if("black")
-			red = 0
-			green = 0
-			blue = 0
-		if("chestnut")
-			red = 153
-			green = 102
-			blue = 51
-		if("copper")
-			red = 255
-			green = 153
-			blue = 0
-		if("brown")
-			red = 102
-			green = 51
-			blue = 0
-		if("wheat")
-			red = 255
-			green = 255
-			blue = 153
-		if("old")
-			red = rand (100, 255)
-			green = red
-			blue = red
-		if("punk")
-			red = rand (0, 255)
-			green = rand (0, 255)
-			blue = rand (0, 255)
-
-	red = max(min(red + rand (-25, 25), 255), 0)
-	green = max(min(green + rand (-25, 25), 255), 0)
-	blue = max(min(blue + rand (-25, 25), 255), 0)
+	var/red = colors_rgb[1]
+	var/green = colors_rgb[2]
+	var/blue = colors_rgb[3]
 
 	switch(target)
 		if("hair")
@@ -90,108 +54,25 @@
 			b_grad = blue
 
 /datum/preferences/proc/randomize_eyes_color()
-	var/red
-	var/green
-	var/blue
+	var/list/colors_rgb = random_eye_color()
 
-	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
-	switch(col)
-		if("black")
-			red = 0
-			green = 0
-			blue = 0
-		if("grey")
-			red = rand (100, 200)
-			green = red
-			blue = red
-		if("brown")
-			red = 102
-			green = 51
-			blue = 0
-		if("chestnut")
-			red = 153
-			green = 102
-			blue = 0
-		if("blue")
-			red = 51
-			green = 102
-			blue = 204
-		if("lightblue")
-			red = 102
-			green = 204
-			blue = 255
-		if("green")
-			red = 0
-			green = 102
-			blue = 0
-		if("albino")
-			red = rand (200, 255)
-			green = rand (0, 150)
-			blue = rand (0, 150)
-
-	red = max(min(red + rand (-25, 25), 255), 0)
-	green = max(min(green + rand (-25, 25), 255), 0)
-	blue = max(min(blue + rand (-25, 25), 255), 0)
-
-	r_eyes = red
-	g_eyes = green
-	b_eyes = blue
+	r_eyes = colors_rgb[1]
+	g_eyes = colors_rgb[2]
+	b_eyes = colors_rgb[3]
 
 /datum/preferences/proc/randomize_skin_color()
-	var/red
-	var/green
-	var/blue
+	var/list/colors_rgb = random_skin_color()
 
-	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
-	switch(col)
-		if("black")
-			red = 0
-			green = 0
-			blue = 0
-		if("grey")
-			red = rand (100, 200)
-			green = red
-			blue = red
-		if("brown")
-			red = 102
-			green = 51
-			blue = 0
-		if("chestnut")
-			red = 153
-			green = 102
-			blue = 0
-		if("blue")
-			red = 51
-			green = 102
-			blue = 204
-		if("lightblue")
-			red = 102
-			green = 204
-			blue = 255
-		if("green")
-			red = 0
-			green = 102
-			blue = 0
-		if("albino")
-			red = rand (200, 255)
-			green = rand (0, 150)
-			blue = rand (0, 150)
-
-	red = max(min(red + rand (-25, 25), 255), 0)
-	green = max(min(green + rand (-25, 25), 255), 0)
-	blue = max(min(blue + rand (-25, 25), 255), 0)
-
-	r_skin = red
-	g_skin = green
-	b_skin = blue
-
+	r_skin = colors_rgb[1]
+	g_skin = colors_rgb[2]
+	b_skin = colors_rgb[3]
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 
-	if(job_preferences["Test Subject"] == JP_LOW)
-		previewJob = SSjob.GetJob("Test Subject")
+	if(job_preferences["Assistant"] == JP_LOW)
+		previewJob = SSjob.GetJob("Assistant")
 
 	if(!previewJob)
 		var/highest_pref = 0

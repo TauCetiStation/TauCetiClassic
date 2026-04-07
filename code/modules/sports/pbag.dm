@@ -108,7 +108,7 @@
 /mob/living/pbag/Life()
 	handle_combat()
 
-/mob/living/pbag/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null)
+/mob/living/pbag/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
 	hit(damage, damagetype)
 
 	var/flags_mes = ""

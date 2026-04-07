@@ -11,12 +11,27 @@
 	antag_hud_type = ANTAG_HUD_REPLICATOR
 	antag_hud_name = "replicator"
 
+/datum/role/replicator/OnPreSetup()
+	. = ..()
+	var/mob/living/simple_animal/hostile/replicator/H = antag.current
+
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/barricade)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/trap)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/transponder)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/generator)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/toggle_corridor_construction)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/transfer_to_idle)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/transfer_to_area)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/toggle_light)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/set_mail_tag)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/catapult)
+
 /datum/role/replicator/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, {"<span class='notice'><b>You are a replicator. A part of a Swarm. You must consume materials and create infrastructure required for a Bluespace Catapult,
-	which will utilize a rift so that you will spread on through the galaxy. Multiply and prosper!</b></span>"})
-	to_chat(antag.current, "<span class='bold notice'>The Swarm has awarded you with a gift. Examine yourself for possible environmental adaptations.</span>")
-	to_chat(antag.current, "<span class='warning'>Remember. This reality is not meant for you, you are slowly <b>dying</b>. Consuming materials repairs you, allowing to stay in this fleeting world a little longer...</span>")
+	to_chat(antag.current, {"<span class='notice'><b>Вы - Репликатор, часть Роя. Вы должны поглощать материалы, возводить свою инфраструктуру или использовать станционную для постройки Блюспейс Катапульты, которая распространит Рой дальше по галактике через трещину. Реплицируйся и процветай!</b></span>"})
+	to_chat(antag.current, "<span class='bold notice'>Рой вознаградил вас Даром. Осмотрите себя для возможных адаптаций к окружающей среде.</span>")
+	to_chat(antag.current, "<span class='warning'>Помни. Эта реальность не предназначена для вас, вы медленно <b>умираете</b>. Потребление материалов ремонтирует вас, позволяя вам задержатся в этом мимолетном мире еще ненадолго...</span>")
 
 /datum/role/replicator/StatPanel()
 	if(!antag)

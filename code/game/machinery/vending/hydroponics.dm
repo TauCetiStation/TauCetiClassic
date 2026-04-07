@@ -40,6 +40,7 @@
 		/obj/item/seeds/bananaseed = 3,
 		/obj/item/seeds/berryseed = 3,
 		/obj/item/seeds/cabbageseed = 3,
+		/obj/item/seeds/cucumberseed = 3,
 		/obj/item/seeds/carrotseed = 3,
 		/obj/item/seeds/cherryseed = 3,
 		/obj/item/seeds/chantermycelium = 3,
@@ -65,9 +66,9 @@
 		/obj/item/seeds/watermelonseed = 3,
 		/obj/item/seeds/wheatseed = 3,
 		/obj/item/seeds/whitebeetseed = 3,
-		/obj/item/seeds/blackpepper = 5,
+		/obj/item/seeds/blackpepper = 3,
 		/obj/item/seeds/sugarcaneseed = 3,
-		/obj/item/seeds/korta_nut = 3,
+		/obj/item/seeds/chureech_nut = 3,
 	)
 	contraband = list(
 		/obj/item/seeds/amanitamycelium = 2,
@@ -76,6 +77,7 @@
 		/obj/item/seeds/nettleseed = 2,
 		/obj/item/seeds/reishimycelium = 2,
 		/obj/item/seeds/reishimycelium = 2,
+		/obj/item/seeds/laughweedseed = 2,
 	)
 	premium = list(
 		/obj/item/toy/waterflower = 1,

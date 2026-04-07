@@ -87,50 +87,61 @@
 
 /datum/skillset/janitor
 	name = "Janitor"
-/datum/skillset/test_subject
-	name = "Test Subject"
-/datum/skillset/test_subject/lawyer
+/datum/skillset/assistant
+	name = "Assistant"
+	initial_skills = list(
+		/datum/skill/construction = SKILL_LEVEL_NOVICE,
+		/datum/skill/engineering = SKILL_LEVEL_NOVICE
+	)
+
+/datum/skillset/assistant/lawyer
 	name = "Lawyer"
 	initial_skills = list(
 		/datum/skill/command = SKILL_LEVEL_NOVICE
 	)
 
-/datum/skillset/test_subject/mecha
+/datum/skillset/assistant/mecha
 	name = "Mecha Operator"
 	initial_skills = list(
 		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
 		/datum/skill/combat_mech = SKILL_LEVEL_PRO
 	)
 
-/datum/skillset/test_subject/detective
+/datum/skillset/assistant/detective
 	name = "Private Eye"
 	initial_skills = list(
 		/datum/skill/firearms = SKILL_LEVEL_NOVICE
 	)
 
-/datum/skillset/test_subject/reporter
-	name = "Reporter"
+/datum/skillset/assistant/journalist
+	name = "Journalist"
 	initial_skills = list(
 		/datum/skill/command = SKILL_LEVEL_NOVICE
 	)
 
-/datum/skillset/test_subject/waiter
+/datum/skillset/assistant/waiter
 	name = "Waiter"
 	initial_skills = list(
 		/datum/skill/chemistry = SKILL_LEVEL_NOVICE,
 		/datum/skill/medical = SKILL_LEVEL_NOVICE
 	)
 
-/datum/skillset/test_subject/vice_officer
+/datum/skillset/assistant/vice_officer
 	name = "Vice Officer"
 	initial_skills = list(
 		/datum/skill/command = SKILL_LEVEL_TRAINED,
 		/datum/skill/police = SKILL_LEVEL_NOVICE
 	)
 
-/datum/skillset/test_subject/paranormal
+/datum/skillset/assistant/paranormal
 	name = "Paranormal Investigator"
 	initial_skills = list(
 		/datum/skill/research = SKILL_LEVEL_NOVICE,
 		/datum/skill/medical = SKILL_LEVEL_NOVICE
+	)
+
+/datum/skillset/assistant/test_subject
+	name = "Test Subject"
+	initial_skills = list(
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
 	)

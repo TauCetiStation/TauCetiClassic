@@ -1,12 +1,9 @@
 /obj/structure/closet/secure_closet/scientist
 	name = "Scientist's Locker"
 	req_access = list(access_tox_storage)
-	icon_state = "secureres1"
+	icon_state = "secureres"
 	icon_closed = "secureres"
-	icon_locked = "secureres1"
-	icon_opened = "secureresopen"
-	icon_broken = "secureresbroken"
-	icon_off = "secureresoff"
+	icon_opened = "secureres_open"
 
 /obj/structure/closet/secure_closet/scientist/PopulateContents()
 	new /obj/item/clothing/under/rank/scientist(src)
@@ -21,12 +18,9 @@
 /obj/structure/closet/secure_closet/RD
 	name = "Research Director's Locker"
 	req_access = list(access_rd)
-	icon_state = "rdsecure1"
+	icon_state = "rdsecure"
 	icon_closed = "rdsecure"
-	icon_locked = "rdsecure1"
-	icon_opened = "rdsecureopen"
-	icon_broken = "rdsecurebroken"
-	icon_off = "rdsecureoff"
+	icon_opened = "rdsecure_open"
 
 /obj/structure/closet/secure_closet/RD/PopulateContents()
 
@@ -45,5 +39,6 @@
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/device/remote_device/research_director(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/lockbox/medal/rd(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)

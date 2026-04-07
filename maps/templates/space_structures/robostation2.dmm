@@ -39,7 +39,7 @@
 /turf/simulated/floor/wood,
 /area/space_structures/robostation2)
 "bO" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/obj/effect/spawner/mob_spawn/hivebot/range,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "bP" = (
@@ -52,7 +52,7 @@
 /area/space_structures/robostation2)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/range,
+/obj/effect/spawner/mob_spawn/hivebot/range,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "ce" = (
@@ -65,7 +65,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "cw" = (
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "cL" = (
@@ -107,7 +107,7 @@
 /area/space_structures/robostation2)
 "dK" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/range,
+/obj/effect/spawner/mob_spawn/hivebot/range,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredcorners"
@@ -240,7 +240,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "iG" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -250,7 +250,7 @@
 /area/space_structures/robostation2)
 "iO" = (
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostation2)
 "jD" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/ash,
@@ -278,7 +278,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "lC" = (
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 5;
@@ -301,10 +301,17 @@
 "mi" = (
 /obj/structure/lattice,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostation2)
 "mz" = (
 /obj/structure/glowshroom,
 /turf/simulated/floor/greengrid,
+/area/space_structures/robostation2)
+"mC" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
+/obj/item/weapon/bananapeel,
+/turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "mL" = (
 /obj/structure/closet/crate,
@@ -353,6 +360,12 @@
 "oR" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/survival,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostation2)
+"pf" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "ph" = (
@@ -404,6 +417,12 @@
 	},
 /turf/environment/space,
 /area/space_structures/robostation2)
+"sg" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostation2)
 "tl" = (
 /obj/structure/table,
 /obj/item/weapon/storage/pill_bottle/dermaline{
@@ -427,7 +446,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "tB" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
 /obj/structure/sign/warning/lethal_turrets{
 	pixel_y = 32
 	},
@@ -591,7 +612,7 @@
 	},
 /area/space_structures/robostation2)
 "CN" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -626,7 +647,7 @@
 /obj/structure/lattice,
 /obj/structure/window/thin/reinforced,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostation2)
 "FR" = (
 /obj/structure/table,
 /obj/item/weapon/paper{
@@ -663,7 +684,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostation2)
 "GR" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/gun,
@@ -755,7 +776,7 @@
 	dir = 1
 	},
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostation2)
 "Jv" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/disk/research_points{
@@ -811,7 +832,9 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "Lc" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
@@ -841,18 +864,22 @@
 /area/space_structures/robostation2)
 "LG" = (
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/robostation2)
 "Mn" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
 /obj/item/weapon/bananapeel,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Nf" = (
-/obj/machinery/door/airlock/external,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
@@ -900,10 +927,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
-"Pa" = (
-/mob/living/simple_animal/hostile/hivebot/strong,
-/turf/simulated/floor/greengrid,
-/area/space_structures/robostation2)
 "Pg" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/clown,
@@ -921,7 +944,7 @@
 	},
 /area/space_structures/robostation2)
 "Ra" = (
-/obj/item/weapon/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/blueleaf,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Rj" = (
@@ -931,8 +954,8 @@
 /area/space_structures/robostation2)
 "RC" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
 /obj/effect/decal/turf_decal/set_burned,
+/obj/effect/spawner/mob_spawn/hivebot/strong,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Se" = (
@@ -963,8 +986,9 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "TD" = (
-/turf/simulated/wall/r_wall,
-/area/space)
+/obj/effect/spawner/mob_spawn/hivebot/strong,
+/turf/simulated/floor/plating,
+/area/space_structures/robostation2)
 "UI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/paper{
@@ -981,12 +1005,12 @@
 /area/space_structures/robostation2)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/obj/effect/spawner/mob_spawn/hivebot/strong,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "Vh" = (
-/mob/living/simple_animal/hostile/hivebot/strong,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/mob_spawn/hivebot/strong,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkpurple"
@@ -1021,7 +1045,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "VW" = (
-/obj/machinery/door/airlock/clown,
+/obj/machinery/door/airlock/clown{
+	dir = 4
+	},
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "Wy" = (
@@ -1282,7 +1308,7 @@ mi
 iO
 mi
 iO
-TD
+gj
 mi
 Gw
 Gw
@@ -1314,6 +1340,7 @@ mi
 mi
 mi
 mi
+iO
 mi
 mi
 mi
@@ -1323,8 +1350,7 @@ mi
 mi
 mi
 mi
-mi
-TD
+gj
 iO
 mi
 iO
@@ -1366,7 +1392,7 @@ mi
 iO
 iO
 iO
-TD
+gj
 iO
 mi
 iO
@@ -1495,9 +1521,9 @@ lO
 ce
 IW
 gj
-TD
-TD
-TD
+gj
+gj
+gj
 mi
 mi
 mi
@@ -1603,7 +1629,7 @@ tC
 tC
 gj
 gj
-uA
+mC
 gj
 gj
 mi
@@ -1622,9 +1648,9 @@ cL
 Ju
 iO
 iO
-TD
-TD
-TD
+gj
+gj
+gj
 iO
 Gw
 iO
@@ -1664,9 +1690,9 @@ Le
 Ju
 mi
 mi
-TD
+gj
 Hg
-TD
+gj
 mi
 Gw
 mi
@@ -1706,9 +1732,9 @@ Le
 Ju
 iO
 iO
-TD
-TD
-TD
+gj
+gj
+gj
 iO
 Gw
 iO
@@ -1736,7 +1762,7 @@ iO
 iO
 gj
 gj
-bD
+pf
 gj
 gj
 mi
@@ -1771,7 +1797,7 @@ gj
 tC
 tC
 gj
-XE
+sg
 gj
 gj
 iO
@@ -1952,7 +1978,7 @@ gj
 gj
 gj
 gj
-bD
+pf
 gj
 gj
 gj
@@ -1988,7 +2014,7 @@ iO
 iO
 gj
 gj
-bD
+pf
 gj
 gj
 iO
@@ -2036,7 +2062,7 @@ iO
 iO
 gj
 gj
-bD
+pf
 gj
 gj
 gj
@@ -2114,7 +2140,7 @@ Jd
 LG
 iO
 tC
-bP
+TD
 mZ
 Gj
 IW
@@ -2156,7 +2182,7 @@ qo
 gj
 gj
 gj
-Pa
+ph
 gj
 gj
 gj
@@ -2167,9 +2193,9 @@ IJ
 IW
 Jv
 gj
-TD
-TD
-TD
+gj
+gj
+gj
 iO
 Gw
 Gw

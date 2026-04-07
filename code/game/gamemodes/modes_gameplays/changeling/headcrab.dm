@@ -4,12 +4,18 @@
 	name = "Last Resort"
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	button_icon_state = "last_resort"
 	chemical_cost = 20
 	genomecost = 1
 	req_human = 1
 	req_stat = DEAD
 	max_genetic_damage = 10
 	can_be_used_in_abom_form = FALSE
+
+/obj/effect/proc_holder/changeling/headcrab/can_sting(mob/user, mob/target)
+	. = ..()
+	if(tgui_alert(user, "Are we sure we wish to sacrifice our current body?","Last Resort", list("Yes","No")) != "Yes")
+		return FALSE
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
@@ -22,23 +28,20 @@
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Stun(3)
 
-	// Prevents having Regenerate verb after rebirth.
-	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
-	C.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
-
 	// In case we did it out of stasis
-	if (C.instatis)
-		C.instatis = FALSE
+	if(role.instatis)
+		role.instatis = FALSE
 		user.fake_death = FALSE
+	for(var/obj/effect/proc_holder/changeling/fakedeath/A in role.purchasedpowers)
+		A.action.button_icon_state = "fake_death"
+		A.action.button.UpdateIcon()
+		A.ready2revive = FALSE
 
 	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
 	crab.origin = M
 	M.transfer_to(crab)
 	for(var/mob/living/parasite/essence/E in user)
-		E.exit_host()
-		E.loc = crab
-		if(E.client)
-			E.client.eye = crab
+		E.transfer(crab)
 	to_chat(crab,"<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
 	feedback_add_details("changeling_powers","LR")
 	if(ismob(user))
@@ -124,10 +127,18 @@
 	origin.transfer_to(M)
 	var/datum/role/changeling/C = origin.GetRoleByType(/datum/role/changeling)
 	if(C)
-		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
+		if(!A) //If ling doesnt have lesserfrom, give them one-use
+			A = new (null)
+			A.last_resort = TRUE
+			C.purchasedpowers += A
+			A.on_purchase(M)
+		A.action.button_icon_state = "human_form"
+		A.action.button.name = "Human form"
+		A.action.button.UpdateIcon()
 		M.changeling_update_languages(C.absorbed_languages)
 		for(var/mob/living/parasite/essence/E in src)
-			E.enter_host(M)
+			E.transfer(M)
 	if(iscarbon(loc))
 		var/mob/living/carbon/carbon = loc
 		carbon.gib()

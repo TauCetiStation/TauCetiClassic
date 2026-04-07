@@ -1,5 +1,5 @@
 #define TRANSCATION_COOLDOWN 30	//delay between transactions
-#define ALLOWED_ID_OVERLAYS list("id", "gold", "silver", "centcom", "ert", "ert-leader", "syndicate", "syndicate-command", "clown", "mime") // List of overlays in pda.dmi
+#define ALLOWED_ID_OVERLAYS list("id", "gold", "silver", "centcom", "ert", "ert-leader", "syndicate", "syndicate-command", "clown", "mime", "id_world", "gold_world", "silver_world", "centcom_world", "ert_world", "ert-leader_world", "syndicate_world", "syndicate-command_world", "clown_world", "mime_world") // List of overlays in pda.dmi
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
@@ -7,6 +7,7 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
+	item_state_world = "pda_world"
 	item_state = "electronic"
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
@@ -69,6 +70,7 @@
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 
+	//Variables for OnlineShop
 	var/category
 	var/list/shop_lots = list()
 	var/list/shop_lots_paged = list()
@@ -76,10 +78,16 @@
 	var/list/shopping_cart = list()
 	var/category_shop_page = 1
 	var/category_shop_per_page = 5
+	var/referrer_account
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_pda_light)
+
+	var/datum/music_player/chiptune_player
+
+	var/world_state = FALSE
+	var/overlay_suffix = ""
 
 /datum/action/item_action/hands_free/toggle_pda_light
 	name = "Toggle light"
@@ -97,6 +105,12 @@
 	if(default_pen)
 		pen = new default_pen(src)
 
+	chiptune_player = new(src, "sound/musical_instruments/pda")
+
+	set_ringtone(pick(ringtones_by_names))
+
+	update_icon()
+
 /obj/item/device/pda/Destroy()
 	var/datum/money_account/MA = get_account(owner_account)
 	if(MA)
@@ -110,7 +124,13 @@
 		else
 			QDEL_NULL(id)
 	QDEL_NULL(pen)
+
+	QDEL_NULL(chiptune_player)
+
 	return ..()
+
+/obj/item/device/pda/unable_to_play(mob/living/user)
+	return FALSE
 
 /obj/item/device/pda/examine(mob/user)
 	..()
@@ -140,52 +160,67 @@
 
 	if(fon)
 		fon = FALSE
+		playsound(src, 'sound/items/flashlight.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		set_light(0)
 	else
 		fon = TRUE
+		playsound(src, 'sound/items/flashlight.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		set_light(f_lum)
 
 /obj/item/device/pda/proc/assign(real_name)
+	if(!istext(real_name))
+		stack_trace("Expected text, got reference")
+		real_name = "[real_name]"
+
 	owner = real_name
 	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
+	item_state_world = "pda-m_world"
 
 /obj/item/device/pda/viro
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-v"
+	item_state_world = "pda-v_world"
 
 /obj/item/device/pda/engineering
 	default_cartridge = /obj/item/weapon/cartridge/engineering
 	icon_state = "pda-e"
+	item_state_world = "pda-e_world"
 
 /obj/item/device/pda/security
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-s"
+	item_state_world = "pda-s_world"
 
 /obj/item/device/pda/detective
 	default_cartridge = /obj/item/weapon/cartridge/detective
 	icon_state = "pda-det"
+	item_state_world = "pda-det_world"
 
 /obj/item/device/pda/warden
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-warden"
+	item_state_world = "pda-warden_world"
 
 /obj/item/device/pda/janitor
 	default_cartridge = /obj/item/weapon/cartridge/janitor
 	icon_state = "pda-j"
+	item_state_world = "pda-j_world"
 	ttone = "slip"
 
 /obj/item/device/pda/science
 	default_cartridge = /obj/item/weapon/cartridge/signal/science
 	icon_state = "pda-tox"
+	item_state_world = "pda-tox_world"
 	ttone = "boom"
 
 /obj/item/device/pda/clown
 	default_cartridge = /obj/item/weapon/cartridge/clown
 	icon_state = "pda-clown"
+	item_state_world = "pda-clown_world"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
@@ -240,12 +275,14 @@
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"
+	item_state_world = "pda-mime_world"
 	message_silent = 1
 	ttone = "silence"
 
 /obj/item/device/pda/velocity
 	default_cartridge = /obj/item/weapon/cartridge/hos
 	icon_state = "pda-velocity"
+	item_state_world = "pda-velocity_world"
 
 /obj/item/device/pda/velocity/doctor
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -253,115 +290,141 @@
 /obj/item/device/pda/heads
 	default_cartridge = /obj/item/weapon/cartridge/head
 	icon_state = "pda-h"
+	item_state_world = "pda-h_world"
 
 /obj/item/device/pda/heads/hop
 	default_cartridge = /obj/item/weapon/cartridge/hop
 	icon_state = "pda-hop"
+	item_state_world = "pda-hop_world"
 
 /obj/item/device/pda/heads/hos
 	default_cartridge = /obj/item/weapon/cartridge/hos
 	icon_state = "pda-hos"
+	item_state_world = "pda-hos_world"
 
 /obj/item/device/pda/heads/ce
 	default_cartridge = /obj/item/weapon/cartridge/ce
 	icon_state = "pda-ce"
+	item_state_world = "pda-ce_world"
 
 /obj/item/device/pda/heads/cmo
 	default_cartridge = /obj/item/weapon/cartridge/cmo
 	icon_state = "pda-cmo"
+	item_state_world = "pda-cmo_world"
 
 /obj/item/device/pda/heads/rd
 	default_cartridge = /obj/item/weapon/cartridge/rd
 	icon_state = "pda-rd"
+	item_state_world = "pda-rd_world"
 
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"
+	item_state_world = "pda-c_world"
 	detonate = 0
 	//toff = 1
 
 /obj/item/device/pda/cargo
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-cargo"
+	item_state_world = "pda-cargo_world"
 
 /obj/item/device/pda/quartermaster
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-q"
+	item_state_world = "pda-q_world"
 
 /obj/item/device/pda/shaftminer
 	icon_state = "pda-miner"
+	item_state_world = "pda-miner_world"
 
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate
 	default_pen = /obj/item/weapon/pen/edagger
 	icon_state = "pda-syn"
+	item_state_world = "pda-syn_world"
 	name = "Military PDA"
 	owner = "John Doe"
 	hidden = 1
 
 /obj/item/device/pda/chaplain
 	icon_state = "pda-holy"
+	item_state_world = "pda-holy_world"
 	ttone = "holy"
 
 /obj/item/device/pda/lawyer
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
 	icon_state = "pda-lawyer"
+	item_state_world = "pda-lawyer_world"
 	ttone = "..."
 
 /obj/item/device/pda/lawyer2
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
 	icon_state = "pda-lawyer-old"
+//	item_state_world = "pda-lawyer-old_world"   no sprite for this, for now
 	ttone = "..."
 
 /obj/item/device/pda/botanist
 	//default_cartridge = /obj/item/weapon/cartridge/botanist
 	icon_state = "pda-hydro"
+	item_state_world = "pda-hydro_world"
 
 /obj/item/device/pda/roboticist
 	icon_state = "pda-robot"
+	item_state_world = "pda-robot_world"
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-libb"
+	item_state_world = "pda-libb_world"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	message_silent = 1 //Quiet in the library!
 
 /obj/item/device/pda/reporter
 	icon_state = "pda-libc"
+	item_state_world = "pda-libc_world"
 
 /obj/item/device/pda/forensic
 	default_cartridge = /obj/item/weapon/cartridge/detective
-	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda-forensic"
+	item_state_world = "pda-forensic_world"
 
 /obj/item/device/pda/clear
 	icon_state = "pda-transp"
+//	item_state_world = "pda-transp_world"   no sprite for this, for now
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
 	icon_state = "pda-chef"
+	item_state_world = "pda-chef_world"
 
 /obj/item/device/pda/barber
 	icon_state = "pda-barber"
+	item_state_world = "pda-barber_world"
 
 /obj/item/device/pda/bar
 	icon_state = "pda-bar"
+	item_state_world = "pda-bar_world"
 
 /obj/item/device/pda/atmos
 	default_cartridge = /obj/item/weapon/cartridge/atmos
 	icon_state = "pda-atmo"
+	item_state_world = "pda-atmo_world"
 
 /obj/item/device/pda/chemist
 	default_cartridge = /obj/item/weapon/cartridge/chemistry
 	icon_state = "pda-chem"
+	item_state_world = "pda-chem_world"
 
 /obj/item/device/pda/geneticist
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-gene"
+	item_state_world = "pda-gene_world"
 
 /obj/item/device/pda/blueshield
 	icon_state = "pda-blu"
+	item_state_world = "pda-blu_world"
 	default_pen = /obj/item/weapon/pen/edagger/legitimate
 
 
@@ -499,6 +562,7 @@
 
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
 	. = ..()
+	update_icon()
 	var/mob/M = usr
 	if((!istype(over_object, /atom/movable/screen)) && can_use())
 		return attack_self(M)
@@ -598,16 +662,15 @@
 
 	data["stationTime"] = worldtime2text()
 
-	var/secLevelStr
-	switch(get_security_level())
-		if("green")
-			secLevelStr = "<font color='green'><b>&#9899;</b></font>"
-		if("blue")
-			secLevelStr = "<font color='blue'><b>&#9899;</b></font>"
-		if("red")
-			secLevelStr = "<font color='red'><b>&#9899;</b></font>"
-		if("delta")
-			secLevelStr = "<font color='purple'><b>&Delta;</b></font>"
+	var/secLevelStr = code_name_eng[security_level]
+	if(security_level == SEC_LEVEL_GREEN)
+		secLevelStr = {"<div class="circle circle_green"></div>"}
+	if(security_level == SEC_LEVEL_BLUE)
+		secLevelStr = {"<div class="circle circle_blue"></div>"}
+	if(security_level == SEC_LEVEL_RED)
+		secLevelStr = {"<div class="circle circle_red"></div>"}
+	if(security_level == SEC_LEVEL_DELTA)
+		secLevelStr = {"<div class="triangle triangle_purple"></div>"}
 	data["securityLevel"] = secLevelStr
 
 	data["new_Message"] = newmessage
@@ -675,13 +738,7 @@
 
 	if(mode == 8 || mode == 81 || mode == 82)
 	 	// find active QMs and technicians
-		var/manifest = global.data_core.get_manifest()
-		var/no_cargonauts = TRUE
-		for(var/civ in manifest["civ"])
-			if(civ["active"] == "Active" && (civ["rank"] in list("Quartermaster", "Cargo Technician")))
-				no_cargonauts = FALSE
-				break
-		data["no_cargonauts"] = no_cargonauts
+		data["no_cargonauts"] = !check_active_cargonauts()
 		// pass onlineshop data...
 		var/list/categories_frontend = list()
 		for(var/index in global.shop_categories)
@@ -743,9 +800,9 @@
 		data["orders_and_offers"] = orders_and_offers_frontend
 
 		var/list/shopping_cart_frontend = list()
-		if(shopping_cart.len)
-			for(var/index in shopping_cart)
-				var/list/Item = shopping_cart[index]
+		if(MA?.shopping_cart.len)
+			for(var/index in MA.shopping_cart)
+				var/list/Item = MA.shopping_cart[index]
 				shopping_cart_frontend.len++
 				shopping_cart_frontend[shopping_cart_frontend.len] = Item
 				shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "Unknown"
@@ -792,6 +849,7 @@
 	if(mode in safe_pages)
 		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
+	stop_ringtone()
 	return
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -831,8 +889,9 @@
 			U.unset_machine()
 			ui.close()
 			return 0
-		if("Refresh")//Refresh, goes to the end of the proc.
-		if("Return")//Return
+		if("Refresh") //Refresh, goes to the end of the proc.
+			EMPTY_BLOCK_GUARD
+		if("Return") //Return
 			if(mode<=9)
 				mode = 0
 			else
@@ -872,6 +931,7 @@
 				if (cartridge.radio)
 					cartridge.radio.hostpda = null
 				cartridge = null
+				update_icon()
 
 //MENU FUNCTIONS===================================
 
@@ -940,6 +1000,8 @@
 			toff = !toff
 		if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
 			message_silent = !message_silent
+			if(message_silent)
+				stop_ringtone()
 		if("Clear")//Clears messages
 			if(href_list["option"] == "All")
 				tnote.Cut()
@@ -957,20 +1019,26 @@
 				mode=2
 
 		if("Ringtone")
-			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
-			if (t && Adjacent(U))
-				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
-					to_chat(U, "The PDA softly beeps.")
-					ui.close()
-				else
-					ttone = t
-			else
-				ui.close()
-				return 0
-		if("Message")
+			stop_ringtone()
+			var/list/chose_ringtone = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
+			var/Tone = input(U, "Выберите рингтон", name) as null|anything in chose_ringtone
+			if(Tone && Adjacent(U))
+				var/t
+				if(Tone == CUSTOM_RINGTONE_NAME)
+					t = sanitize(input(U, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
+					if (!t || !Adjacent(U))
+						return
+					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
+						to_chat(U, "The PDA softly beeps.")
+						ui.close()
 
+				set_ringtone(Tone, t)
+				play_ringtone(ignore_presence = TRUE)
+
+		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
 			create_message(U, P, !href_list["notap"])
+			stop_ringtone()
 			if(mode == 2)
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
@@ -1095,7 +1163,7 @@
 
 		if("Staff Salary")
 			mode = 73
-			subordinate_staff = my_subordinate_staff(ownrank)
+			subordinate_staff = SSeconomy.my_subordinate_staff(ownrank)
 
 		if("Change insurance price")
 			if(!check_permission_to_change_insurance_price())
@@ -1152,12 +1220,15 @@
 		if("Shop")
 			category_shop_page = 1
 			mode = 8
+			referrer_account = null
 
 		//Maintain Category
 		if("Shop_Category")
 			category_shop_page = 1
 			mode = 81
-			category = href_list["categ"]
+			var/categ = href_list["categ"]
+			if(!isnull(global.shop_categories[categ]))
+				category = categ
 		if("Shop_Change_Page")
 			var/page = href_list["shop_change_page"]
 			switch(page)
@@ -1168,65 +1239,69 @@
 			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
 		if("Shop_Change_Per_page")
 			var/number = text2num(href_list["shop_per_page"])
-			if(number)
+			if(number && (number in list(5, 10, 15, 20)))
 				category_shop_per_page = number
 
 		//Maintain Orders and Offers
 		if("Shop_Add_Order_or_Offer")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_operational(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
-			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
+			var/T = sanitize(input(user, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner && owner_account)
-				add_order_and_offer(T)
+				global.add_order_and_offer(owner, T)
+				mode = 8
 			else
-				to_chat(U, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
+				to_chat(user, "<span class='notice'>ОШИБКА: Не введено описание заказа.</span>")
 
 		//Buy Item
 		if("Shop_Order")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_operational(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
 			var/id = href_list["order_item"]
 			var/datum/shop_lot/Lot = global.online_shop_lots[id]
 			if(Lot && owner_account)
-				var/T = sanitize(input(U, "Введите адрес доставки", "Адрес доставки", null) as text)
+				var/datum/money_account/MA = get_account(owner_account)
+				var/T = sanitize(input(user, "Введите адрес доставки", "Адрес доставки", null) as text)
 				if(T && istext(T))
 					if(Lot.sold)
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
-									if(order_onlineshop_item(owner, owner_account, NewLot, T))
-										shopping_cart["[NewLot.number]"] = Lot.to_list()
+									if(order_onlineshop_item(owner, owner_account, NewLot, T, referrer_account = referrer_account))
+										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
+										break
 									else
-										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+										to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
-						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
+						to_chat(user, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
 
-					else if(order_onlineshop_item(owner, owner_account, Lot, T))
-						shopping_cart["[Lot.number]"] = Lot.to_list()
+					else if(order_onlineshop_item(owner, owner_account, Lot, T, referrer_account = referrer_account))
+						MA.shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
-						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+						to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
-					to_chat(U, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
+					to_chat(user, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
 
 		//Shopping Cart
 		if("Shop_Shopping_Cart")
 			mode = 82
 		if("Shop_Mark_As_Delivered")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
+			if(!global.check_cargo_consoles_operational(src))
+				to_chat(user, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
 			var/lot_id = href_list["delivered_item"]
-			if(!shopping_cart["[lot_id]"])
+			var/datum/money_account/MA = get_account(owner_account)
+			if(!MA.shopping_cart["[lot_id]"])
 				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[lot_id].</span>")
 				return
-			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, shopping_cart["[lot_id]"]["postpayment"]))
-				shopping_cart -= "[lot_id]"
+			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, MA.shopping_cart["[lot_id]"]["postpayment"]))
+				MA.shopping_cart -= "[lot_id]"
 				mode = 82
 
 //SYNDICATE FUNCTIONS===================================
@@ -1339,21 +1414,40 @@
 	return 1 // return 1 tells it to refresh the UI in NanoUI
 
 /obj/item/device/pda/update_icon()
-	..()
-
 	cut_overlays()
-	if(newmessage)
-		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
+	var/list/new_overlays = list()
+
+	world_state = (icon_state == item_state_world)
+	overlay_suffix = world_state ? "_world" : ""
+
+	if(newmessage && icon_state != item_state_world)
+		new_overlays += "pda-r"
 	if(id)
 		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
-			add_overlay(image('icons/obj/pda.dmi', id_overlay))
+			new_overlays +=  id_overlay + overlay_suffix
+	if(pen)
+		new_overlays += "pen_pda" + overlay_suffix
+	if(cartridge)
+		new_overlays += "cart_pda" + overlay_suffix
+	if(blood_DNA && blood_DNA.len && blood_overlay)
+		new_overlays += blood_overlay
+
+	add_overlay(new_overlays)
+
+/obj/item/device/pda/dropped(mob/user)
+	. = ..()
+	update_icon()
+
+/obj/item/device/pda/equipped(mob/user, slot)
+	. = ..()
+	update_icon()
 
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
 		return
 	if(I.icon_state in ALLOWED_ID_OVERLAYS)
-		return I.icon_state
+		return item_state_inventory ? "[initial(I.icon_state)]_world" : "[initial(I.icon_state)]"
 	return "id"
 
 /obj/item/device/pda/proc/detonate_act(obj/item/device/pda/P)
@@ -1456,6 +1550,7 @@
 				pen.forceMove(get_turf(src))
 			to_chat(user, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
 			pen = null
+			update_icon()
 		else
 			to_chat(user, "<span class='notice'>This PDA does not have a pen in it.</span>")
 	else
@@ -1555,7 +1650,7 @@
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
 		if (!P.message_silent)
-			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+			P.play_ringtone()
 			P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 
 		//Search for holder of the PDA.
@@ -1636,6 +1731,7 @@
 		cartridge = I
 		user.drop_from_inventory(I, src)
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
+		update_icon()
 		nanomanager.update_uis(src) // update all UIs attached to src
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
@@ -1680,6 +1776,7 @@
 			pen = I
 			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='notice'>You slide \the [I] into \the [src].</span>")
+			update_icon()
 	else
 		return ..()
 
@@ -1731,20 +1828,23 @@
 		return
 
 	if(istype(target, /obj/structure/bigDelivery))
+		var/datum/money_account/MA = get_account(owner_account)
 		var/obj/structure/bigDelivery/package = target
-		if(!shopping_cart["[package.lot_number]"])
+		if(!MA.shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
-			shopping_cart -= "[package.lot_number]"
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, MA.shopping_cart["[package.lot_number]"]["postpayment"]))
+			MA.shopping_cart -= "[package.lot_number]"
 			return
 
 	if(istype(target, /obj/item/smallDelivery))
+		var/datum/money_account/MA = get_account(owner_account)
 		var/obj/item/smallDelivery/package = target
-		if(!shopping_cart["[package.lot_number]"])
+		if(!MA.shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, MA.shopping_cart["[package.lot_number]"]["postpayment"]))
+			MA.shopping_cart -= "[package.lot_number]"
 			return
 
 	switch(scanmode)
@@ -1912,7 +2012,7 @@
 	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)
-	if((rank in command_positions) || (rank == "Quartermaster"))
+	if((rank in SSjob.heads_positions) || (rank == JOB_QM))
 		boss_PDA = 1
 	else
 		boss_PDA = 0
@@ -1935,11 +2035,44 @@
 		return FALSE
 	return TRUE
 
-/obj/item/device/pda/proc/add_order_and_offer(Text)
-	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = owner, "description" = Text, "time" = worldtime2text())
-	global.orders_and_offers_number++
-	mode = 8
+/obj/item/device/pda/proc/play_ringtone(ignore_presence = FALSE)
+	if(!ignore_presence)
+		var/mob/user = usr
+		if(nanomanager.get_open_ui(user, src, "main"))
+			return
 
+	if(chiptune_player.playing)
+		return
+
+	chiptune_player.playing = TRUE
+	INVOKE_ASYNC(chiptune_player, TYPE_PROC_REF(/datum/music_player, playsong), null)
+
+/obj/item/device/pda/proc/stop_ringtone()
+	chiptune_player.playing = FALSE
+
+/obj/item/device/pda/proc/set_ringtone(ringtone, melody = null)
+	if(!ringtone)
+		return
+	stop_ringtone()
+
+	if(ringtone == CUSTOM_RINGTONE_NAME)
+		if(!melody)
+			return
+
+		chiptune_player.repeat = 1
+		chiptune_player.parse_song_text(melody)
+	else
+		var/datum/ringtone/Ring = global.ringtones_by_names[ringtone]
+		if(!Ring)
+			return
+		chiptune_player.repeat = Ring.replays
+		chiptune_player.parse_song_text(Ring.melody)
+
+/obj/item/device/pda/proc/open_shop_page(mob/user, referrer_account_number = null)
+	category_shop_page = 1
+	mode = 8
+	referrer_account = referrer_account_number
+
+	attack_self(user)
 
 #undef TRANSCATION_COOLDOWN
-

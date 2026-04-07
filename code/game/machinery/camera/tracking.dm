@@ -36,6 +36,10 @@
 
 /mob/living/silicon/ai/proc/ai_camera_list(camera in get_camera_list())
 
+	if(uses_legs)
+		to_chat(src, "Not in mobility mode.")
+		return
+
 	if(src.stat == DEAD)
 		to_chat(src, "You can't list the cameras because you are dead!")
 		return
@@ -177,7 +181,7 @@
 	cameraFollow = null
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
-	if(!istype(target))	return
+	if(!istype(target) || uses_legs)	return
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
@@ -223,7 +227,7 @@
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!can_use())
+	if (!can_use() || user.uses_legs)
 		return
 	user.eyeobj.setLoc(get_turf(src))
 

@@ -12,7 +12,7 @@
 /datum/faction/heist/can_setup(num_players)
 	if(!..())
 		return FALSE
-	if(global.heiststart.len)
+	if(length(landmarks_list["Heist"]))
 		return TRUE
 	return FALSE
 
@@ -88,7 +88,7 @@
 /datum/faction/heist/saboteurs/can_setup()
 	if(!is_type_in_list(/obj/machinery/nuclearbomb, poi_list))
 		return FALSE
-	if(!global.heiststart.len)
+	if(!length(landmarks_list["Heist"]))
 		return FALSE
 	return ..()
 

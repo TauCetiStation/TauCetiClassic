@@ -13,6 +13,10 @@
 		/obj/item/weapon/airalarm_electronics,
 		/obj/item/weapon/airlock_electronics,
 		/obj/item/weapon/module/power_control,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/tile,
 		/obj/item/weapon/stock_parts,
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,
@@ -164,6 +168,7 @@
 	icon_state = "gripper"
 
 	can_hold = list(
+		/obj/item/bluespace_crystal,
 		/obj/item/weapon/tank,
 		/obj/item/device/assembly/signaler,
 		/obj/item/device/gps,
@@ -176,7 +181,7 @@
 		/obj/item/stack/sheet/plasteel,
 		/obj/item/weapon/circuitboard,
 		/obj/item/device/mmi,
-		/obj/item/brain,
+		/obj/item/organ/internal/brain,
 		/obj/item/device/mmi/posibrain,
 		/obj/item/robot_parts,
 		/obj/item/weapon/stock_parts,
@@ -196,13 +201,15 @@
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/organ/internal,
 		/obj/item/organ/external,
-		/obj/item/brain,
+		/obj/item/organ/internal/brain,
 		/obj/item/robot_parts/l_arm,
 		/obj/item/robot_parts/r_arm,
 		/obj/item/robot_parts/l_leg,
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
-		/obj/item/weapon/tank/anesthetic
+		/obj/item/weapon/tank/anesthetic,
+		/obj/item/bodybag,
+		/obj/item/weapon/reagent_containers/syringe
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)

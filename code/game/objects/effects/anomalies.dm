@@ -44,7 +44,7 @@
 ///////////////////////
 
 /atom/movable/warp_effect
-	plane = ANOMALY_PLANE
+	plane = DISTORTION_PLANE
 	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_anti_lens"
@@ -223,6 +223,71 @@
 		T.ex_act(ex_act_force)
 	return
 
+/obj/effect/anomaly/gas
+	name = "phasing gas anomaly"
+	icon_state = "gas"
+	density = FALSE
+	anchored = FALSE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+
+	COOLDOWN_DECLARE(release_cd)
+
+	var/list/gas_types = list(
+		"condensedcapsaicin",
+		"pacid",
+		"space_drugs",
+		"zombiepowder",
+		"kyphotorin",
+		"lexorin",
+		"methylphenidate",
+		"impedrezene",
+		"adminordrazine"
+	)
+	var/release_time = 15 SECONDS
+	var/move_chance = 70
+
+/obj/effect/anomaly/gas/atom_init()
+	. = ..()
+	COOLDOWN_START(src, release_cd, release_time)
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/anomaly/gas/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/effect/anomaly/gas/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(loc != old_loc)
+		playsound(src, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+
+/obj/effect/anomaly/gas/process()
+	if(QDELETED(src))
+		return
+
+	if(COOLDOWN_FINISHED(src, release_cd))
+		release_gas()
+		COOLDOWN_START(src, release_cd, release_time)
+
+	if(prob(move_chance))
+		try_move()
+
+/obj/effect/anomaly/gas/proc/release_gas()
+	var/selected_gas = pick(gas_types)
+
+	var/datum/effect/effect/system/smoke_spread/chem/S = new()
+	var/datum/reagents/R = new/datum/reagents(2700)
+	R.my_atom = src
+	R.add_reagent(selected_gas, 900)
+	S.set_up(R, 10, 0, loc, 60)
+	S.start()
+
+	playsound(src, 'sound/effects/air_release.ogg', VOL_EFFECTS_MASTER)
+
+/obj/effect/anomaly/gas/proc/try_move()
+	var/turf/new_loc = get_step(src, pick(alldirs))
+	if(new_loc)
+		forceMove(new_loc)
+
 /////// CULT ///////
 /obj/effect/anomaly/bluespace/cult_portal
 	name = "ужасающий портал"
@@ -246,9 +311,11 @@
 	var/list/coord_of_pylons = list(1, 1)
 	var/list/beams = list()
 
-/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE)
+/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE, bound_extencion_cd)
 	. = ..()
 	need_bound = bound
+	if(bound_extencion_cd)
+		extencion_cd = bound_extencion_cd
 
 	enable()
 	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.", source = src, action = NOTIFY_ATTACK, header = "Cult Portal")
@@ -291,7 +358,7 @@
 					qdel(obj)
 			var/obj/structure/cult/pylon/P = new(F)
 			P.icon_state = "pylon_glow"
-			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
+			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon/cult and since there is dynamic typing, it works
 				P = P.activate(null, global.cult_religion)
 			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_plane = LIGHTING_LAMPS_PLANE)
 			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_beam))
@@ -328,8 +395,22 @@
 	if(next_spawn > world.time)
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
-
-	var/type = pick(70; /mob/living/simple_animal/construct/harvester,\
+	var/type
+	if(SSholiday.holidays[HALLOWEEN])
+		type = pick(50; /mob/living/simple_animal/construct/wraith/hellknight_halloween,\
+					45; /mob/living/simple_animal/construct/wraith/envoy_halloween,\
+					40; /mob/living/simple_animal/construct/wraith/firewraith_halloween,\
+					30; /mob/living/simple_animal/construct/armoured/fire_halloween,\
+					25; /mob/living/simple_animal/construct/armoured/pain_halloween,\
+					20; /mob/living/simple_animal/construct/armoured/golem_halloween,\
+					35;	/mob/living/simple_animal/construct/builder/summoner_halloween,\
+					40;	/mob/living/simple_animal/construct/builder/firetower_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/necro_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/fireharvest_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/boneshaper_halloween,\
+					)
+	else
+		type = pick(70; /mob/living/simple_animal/construct/harvester,\
 					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
 					40; /mob/living/simple_animal/construct/proteon,\
@@ -351,7 +432,22 @@
 		var/mob/slave = pick_n_take(candidates)
 		if(!slave) // I dont know why or how it can be null, but it can be null
 			continue
-		var/type = pick(
+		var/type
+		if(SSholiday.holidays[HALLOWEEN])
+			type = pick(50; /mob/living/simple_animal/construct/wraith/hellknight_halloween,\
+						45; /mob/living/simple_animal/construct/wraith/envoy_halloween,\
+						40; /mob/living/simple_animal/construct/wraith/firewraith_halloween,\
+						30; /mob/living/simple_animal/construct/armoured/fire_halloween,\
+						25; /mob/living/simple_animal/construct/armoured/pain_halloween,\
+						20; /mob/living/simple_animal/construct/armoured/golem_halloween,\
+						35;	/mob/living/simple_animal/construct/builder/summoner_halloween,\
+						40;	/mob/living/simple_animal/construct/builder/firetower_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/necro_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/fireharvest_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/boneshaper_halloween,\
+						)
+		else
+			type = pick(
 				50; /mob/living/simple_animal/construct/wraith,\
 				50; /mob/living/simple_animal/construct/armoured,\
 				40; /mob/living/simple_animal/construct/proteon,\
@@ -382,7 +478,8 @@
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))
 	if(need_bound)
-		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7)
+		to_chat(C, "<span class='danger'>Вы чувствуете, что портал нестабилен. Его уничтожение может низвергнуть вас обратно из этой реальности!</span>")
+		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7, null, CALLBACK(C, TYPE_PROC_REF(/mob/living/simple_animal/construct, death)))
 		var/mob/M = B.parent
 		if(M.ckey)
 			extencion_timers[M.ckey] = addtimer(CALLBACK(src, PROC_REF(extencion), B), extencion_cd, TIMER_STOPPABLE)

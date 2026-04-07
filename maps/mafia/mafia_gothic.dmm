@@ -76,6 +76,14 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/mafia)
+"w" = (
+/obj/machinery/door/airlock/vault{
+	locked = 1;
+	req_access = list(53);
+	dir = 4
+	},
+/turf/unsimulated/wall/iron,
+/area/mafia)
 "D" = (
 /obj/effect/landmark/mafia,
 /turf/simulated/floor/carpet/green,
@@ -221,9 +229,9 @@ d
 i
 b
 b
-j
+w
 b
-j
+w
 b
 b
 d
@@ -243,7 +251,7 @@ c
 i
 b
 b
-j
+w
 b
 H
 N
@@ -251,7 +259,7 @@ b
 X
 P
 b
-j
+w
 b
 b
 d
@@ -543,7 +551,7 @@ c
 d
 b
 b
-j
+w
 b
 P
 X
@@ -551,7 +559,7 @@ b
 N
 H
 b
-j
+w
 b
 b
 d
@@ -571,9 +579,9 @@ d
 d
 b
 b
-j
+w
 b
-j
+w
 b
 b
 d

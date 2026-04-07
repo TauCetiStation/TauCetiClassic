@@ -1,91 +1,54 @@
-/turf
-	var/dynamic_lighting = TRUE
-	var/force_lighting_update = FALSE
-	luminosity           = 1
-
-	var/tmp/lighting_corners_initialised = FALSE
-
-	var/tmp/list/datum/light_source/affecting_lights       // List of light sources affecting this turf.
-	var/tmp/atom/movable/lighting_object/lighting_object // Our lighting object.
-	var/tmp/list/datum/lighting_corner/corners
-	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
-
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	var/datum/light_source/L
-	var/thing
-	for (thing in affecting_lights)
-		L = thing
-		L.vis_update()
+	lighting_corner_NE?.vis_update()
+	lighting_corner_SE?.vis_update()
+	lighting_corner_SW?.vis_update()
+	lighting_corner_NW?.vis_update()
 
 /turf/proc/lighting_clear_overlay()
-	if (lighting_object)
-		qdel(lighting_object, TRUE)
-
-	var/datum/lighting_corner/C
-	var/thing
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		C.update_active()
-
-// Builds a lighting object for us, but only if our area is dynamic.
-/turf/proc/lighting_build_overlay()
-	if (lighting_object)
-		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
-
-	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
+	if(!lighting_object)
 		return
 
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
+	qdel(lighting_object, TRUE) //Shitty fix for lighting objects persisting after death
+
+/turf/proc/lighting_build_overlay()
+	if(lighting_object)
+		return
 
 	new/atom/movable/lighting_object(src)
 
-	var/thing
-	var/datum/lighting_corner/C
-	var/datum/light_source/S
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		if (!C.active) // We would activate the corner, calculate the lighting for it.
-			for (thing in C.affecting)
-				S = thing
-				S.recalc_corner(C)
-			C.active = TRUE
-
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
-	if (!lighting_object)
+	var/area/A = loc
+	if(!A.dynamic_lighting) // white unsim area
+		// todo: do proper calculation of lums from area overlay
 		return 1
 
-	var/totallums = 0
-	var/thing
+	var/static_lums = 0
+	if(level_light_source && SSmapping.initialized) // todo: casts
+		var/datum/space_level/SL = SSmapping.z_list[z]
+		static_lums = GET_LUM_FROM_COLOR(SL.color_holder)
+
+	var/total_dynamic_lums = 0
 	var/datum/lighting_corner/L
-	for (thing in corners)
-		if(!thing)
-			continue
-		L = thing
-		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_NE
+	if (L)
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SE
+	if (L)
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SW
+	if (L)
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_NW
+	if (L)
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
 
-	totallums /= 12 // 4 corners, each with 3 channels, get the average.
+	total_dynamic_lums /= 12 // 4 corners, each with 3 channels, get the average.
 
-	totallums = (totallums - minlum) / (maxlum - minlum)
+	total_dynamic_lums = (max(total_dynamic_lums, static_lums) - minlum) / (maxlum - minlum)
 
-	return CLAMP01(totallums)
-
-// Returns a boolean whether the turf is on soft lighting.
-// Soft lighting being the threshold at which point the overlay considers
-// itself as too dark to allow sight and see_in_dark becomes useful.
-// So basically if this returns true the tile is unlit black.
-/turf/proc/is_softly_lit()
-	if (!lighting_object)
-		return FALSE
-
-	return !lighting_object.luminosity
+	return CLAMP01(total_dynamic_lums)
 
 // Can't think of a good name, this proc will recalculate the has_opaque_atom variable.
 /turf/proc/recalc_atom_opacity()
@@ -104,39 +67,18 @@
 			else
 				lighting_clear_overlay()
 
-/turf/proc/get_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return null
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-	if (has_opaque_atom)
-		return null // Since this proc gets used in a for loop, null won't be looped though.
-
-	return corners
-
 /turf/proc/generate_missing_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return
+	if (!lighting_corner_NE)
+		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
+	
+	if (!lighting_corner_SE)
+		lighting_corner_SE = new/datum/lighting_corner(src, SOUTH|EAST)
+	
+	if (!lighting_corner_SW)
+		lighting_corner_SW = new/datum/lighting_corner(src, SOUTH|WEST)
+	
+	if (!lighting_corner_NW)
+		lighting_corner_NW = new/datum/lighting_corner(src, NORTH|WEST)
+	
 	lighting_corners_initialised = TRUE
-	if (!corners)
-		corners = list(null, null, null, null)
 
-	for (var/i = 1 to 4)
-		if (corners[i]) // Already have a corner on this direction.
-			continue
-
-		corners[i] = new/datum/lighting_corner(src, global.LIGHTING_CORNER_DIAGONAL[i])
-
-/turf/proc/set_dynamic_lighting(new_dynamic_lighting = DYNAMIC_LIGHTING_ENABLED)
-	if (new_dynamic_lighting == dynamic_lighting)
-		return FALSE
-
-	dynamic_lighting = new_dynamic_lighting
-
-	if (IS_DYNAMIC_LIGHTING(src))
-		lighting_build_overlay()
-	else
-		if (lighting_object)
-			lighting_clear_overlay()
-
-	return TRUE

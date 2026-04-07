@@ -37,10 +37,11 @@
 	RefreshParts()
 
 /obj/machinery/power/emitter/RefreshParts()
+	..()
+
 	var/max_firedelay = 120
 	var/firedelay = 120
 	var/min_firedelay = 24
-	var/power_usage = 350
 	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
 		max_firedelay -= 20 * L.rating
 		min_firedelay -= 4 * L.rating
@@ -48,9 +49,6 @@
 	maximum_fire_delay = max_firedelay
 	minimum_fire_delay = min_firedelay
 	fire_delay = firedelay
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		power_usage -= 50 * M.rating
-	active_power_usage = power_usage
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -95,7 +93,7 @@
 			if(active)
 				active = 0
 				to_chat(user, "You turn off the [src].")
-				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - src)]",0,1)
+				message_admins("Emitter turned off by [key_name(user, user.client)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - src)]",0,1)
 				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
 				log_investigate("turned <font color='red'>off</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			else
@@ -106,7 +104,7 @@
 				to_chat(user, "You turn on the [src].")
 				shot_number = 0
 				fire_delay = maximum_fire_delay
-				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)]",0,1)
+				message_admins("Emitter turned on by [key_name(user, user.client)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)]",0,1)
 				log_game("Emitter turned on by [key_name(user)] in [COORD(src)]")
 				log_investigate("turned <font color='green'>on</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			update_icon()
@@ -162,15 +160,6 @@
 			s.start()
 		A.set_dir(src.dir)
 		A.starting = get_turf(src)
-		switch(dir)
-			if(NORTH)
-				A.original = locate(x, y+1, z)
-			if(EAST)
-				A.original = locate(x+1, y, z)
-			if(WEST)
-				A.original = locate(x-1, y, z)
-			else // Any other
-				A.original = locate(x, y-1, z)
 		A.process()
 
 
@@ -212,7 +201,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
@@ -224,7 +213,7 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WELDING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()

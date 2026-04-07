@@ -2,6 +2,7 @@
 	name = "Anatomic Panacea"
 	desc = "Expels impurifications from our form; curing diseases, genetic disabilities, and removing toxins and radiation."
 	helptext = "Can be used while unconscious."
+	button_icon_state = "panacea"
 	chemical_cost = 25
 	genomecost = 1
 	req_stat = UNCONSCIOUS

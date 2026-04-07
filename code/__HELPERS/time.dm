@@ -11,6 +11,12 @@
 /proc/worldtime2text(time = world.time)
 	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
 
+/proc/worldtime_hours(time = world.time)
+	return round(time / 36000) + 12
+
+/proc/worldtime_minutes(time = world.time)
+	return time / 600 % 60
+
 /proc/time_stamp(format = "hh:mm:ss", wtime = world.timeofday)
 	return time2text(wtime, format)
 

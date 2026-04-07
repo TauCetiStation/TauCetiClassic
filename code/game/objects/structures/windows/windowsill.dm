@@ -21,6 +21,8 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 /obj/structure/windowsill/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
@@ -57,7 +59,7 @@
 
 		if(!type) // should not happen
 			return
-		
+
 		if(!W.use_tool(src, user, 20, 2))
 			return
 
@@ -71,8 +73,8 @@
 			return
 
 		to_chat(user, "<span class='notice'>You begin disassembling \the [src].</span>")
-		
-		if(W.use_tool(src, user, 20))
+
+		if(W.use_tool(src, user, 20, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 
 		return

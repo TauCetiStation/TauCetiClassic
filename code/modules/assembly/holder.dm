@@ -14,6 +14,11 @@
 	var/obj/item/device/assembly/a_right = null
 	var/obj/special_assembly = null
 
+/obj/item/device/assembly_holder/Destroy()
+	QDEL_NULL(a_left)
+	QDEL_NULL(a_right)
+	return ..()
+
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/D, obj/item/device/D2, mob/user)
 	return
 
@@ -161,11 +166,13 @@
 		var/turf/T = get_turf(src)
 		if(!T)	return 0
 		if(a_left)
-			a_left:holder = null
 			a_left.loc = T
+			a_left.holder = null
+			a_left = null
 		if(a_right)
-			a_right:holder = null
 			a_right.loc = T
+			a_right.holder = null
+			a_right = null
 		qdel(src)
 	return
 
@@ -239,3 +246,22 @@
 				to_chat(usr, "<span class='notice'>Timer can't be [ntime<=0?"negative":"more than 1000 seconds"].</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while [usr.stat?"unconscious/dead":"restrained"].</span>")
+
+//********-Mousetrap
+/obj/item/device/assembly_holder/mousetrap_igniter
+	name = "mousetrap-igniter assembly"
+
+/obj/item/device/assembly_holder/mousetrap_igniter/atom_init()
+	. = ..()
+
+	var/obj/item/device/assembly/igniter/ign = new(src)
+	ign.secured = 1
+	ign.holder = src
+	var/obj/item/device/assembly/mousetrap/mous = new(src)
+	mous.armed = TRUE
+	mous.secured = 1
+	mous.holder = src
+	a_left = mous
+	a_right = ign
+	secured = 1
+	update_icon()

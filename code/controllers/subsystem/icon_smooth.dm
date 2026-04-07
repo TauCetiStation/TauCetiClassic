@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
 
-/datum/controller/subsystem/icon_smooth/fire()
+/datum/controller/subsystem/icon_smooth/fire(resumed = FALSE, init_fire = FALSE)
 	var/list/cached = smooth_queue
 	while(cached.len)
 		var/atom/A = cached[cached.len]
@@ -20,8 +20,11 @@ SUBSYSTEM_DEF(icon_smooth)
 			smooth_icon(A)
 		else
 			deferred += A
-		if (MC_TICK_CHECK)
-			return
+
+		if(init_fire)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			break
 
 	if (!cached.len)
 		if (deferred.len)
@@ -31,17 +34,7 @@ SUBSYSTEM_DEF(icon_smooth)
 			can_fire = FALSE
 
 /datum/controller/subsystem/icon_smooth/Initialize()
-	for(var/zlevel in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_CENTCOM, ZTRAIT_MINING, ZTRAIT_SPACE_RUINS)))
-		smooth_zlevel(zlevel, TRUE)
-	var/queue = smooth_queue
-	smooth_queue = list()
-	for(var/V in queue)
-		var/atom/A = V
-		if(!A)
-			continue
-		smooth_icon(A)
-		CHECK_TICK
-
+	fire(init_fire = TRUE)
 	return ..()
 
 /datum/controller/subsystem/icon_smooth/stat_entry()

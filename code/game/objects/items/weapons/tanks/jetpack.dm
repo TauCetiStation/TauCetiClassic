@@ -9,7 +9,7 @@
 	var/on = 0.0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
-	item_action_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/toggle_jetpack_stabilization)
+	item_action_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/toggle_jetpack_stabilization, /datum/action/item_action/hands_free/toggle_internals)
 
 /datum/action/item_action/toggle_jetpack
 	name = "Toggle Jetpack"

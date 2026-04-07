@@ -50,21 +50,62 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
-//scarves (fit in in mask slot)
-
 /obj/item/clothing/mask/scarf
 	name = "scarf"
 	desc = "A simple neck scarf."
 	icon_state = "bluescarf"
 	item_state = "bluescarf"
+	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_NECK
 	flags = MASKCOVERSMOUTH
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
 	var/hanging = 0
 	item_action_types = list(/datum/action/item_action/hands_free/adjust_scarf)
 
+/obj/item/clothing/mask/scarf/proc/pull_up()
+	hanging = FALSE
+	gas_transfer_coefficient = 0.90
+	flags |= MASKCOVERSMOUTH
+	icon_state = "[initial(icon_state)]"
+
+/obj/item/clothing/mask/scarf/proc/pull_down()
+	hanging = TRUE
+	gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+	flags &= ~MASKCOVERSMOUTH
+	icon_state = "[initial(icon_state)]down"
+
+/obj/item/clothing/mask/scarf/equipped(mob/user, slot)
+	if(slot == SLOT_WEAR_MASK)
+		if(hanging)
+			pull_up()
+			to_chat(user, "You pull the scarf up to cover your face.")
+
+	else if(slot == SLOT_NECK)
+		if(!hanging)
+			pull_down()
+			to_chat(user, "Your scarf is now hanging on your neck.")
+
+	update_item_actions()
+	return ..()
+
 /datum/action/item_action/hands_free/adjust_scarf
 	name = "Adjust scarf"
+
+/datum/action/item_action/hands_free/adjust_scarf/Activate()
+	var/obj/item/clothing/mask/scarf/scarf = target
+	var/mob/user = usr
+
+	if(scarf.slot_equipped == SLOT_WEAR_MASK)
+		if(!user.unEquip(scarf))
+			return
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_NECK) && !user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK, FALSE, TRUE))
+			user.put_in_hands(scarf)
+
+	else if(scarf.slot_equipped == SLOT_NECK)
+		if(!user.unEquip(scarf))
+			return
+		if(!user.equip_to_slot_if_possible(scarf, SLOT_WEAR_MASK) && !user.equip_to_slot_if_possible(scarf, SLOT_NECK, FALSE, TRUE))
+			user.put_in_hands(scarf)
 
 /obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
@@ -96,30 +137,6 @@
 	icon_state = "violetscarf"
 	item_state = "violetscarf"
 
-/obj/item/clothing/mask/scarf/attack_self(mob/user)
-
-	if(user.incapacitated())
-		return
-
-
-	if(!hanging)
-		hanging = !hanging
-		gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-		flags &= ~MASKCOVERSMOUTH
-		icon_state = "[initial(icon_state)]down"
-		to_chat(user, "Your scarf is now hanging on your neck.")
-	else
-		hanging = !hanging
-		gas_transfer_coefficient = 0.90
-		flags |= MASKCOVERSMOUTH
-		icon_state = "[initial(icon_state)]"
-		to_chat(user, "You pull the scarf up to cover your face.")
-	update_inv_mob()
-	update_item_actions()
-
-
-
-
 /obj/item/clothing/mask/scarf/ninja
 	name = "ninja scarf"
 	desc = "A stealthy, dark scarf."
@@ -135,7 +152,7 @@
 	desc = "A rubber pig mask."
 	icon_state = "pig"
 	item_state = "pig"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
@@ -151,7 +168,7 @@
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
 	item_state = "horsehead"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 	w_class = SIZE_TINY
@@ -167,7 +184,7 @@
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
 	icon_state = "cowmask"
 	item_state = "cowmask"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 	w_class = SIZE_TINY
@@ -194,7 +211,7 @@
 	name = "chicken suit head"
 	desc = "Bkaw!"
 	icon_state = "chickenmask"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/mask/chicken/speechModification(message)
@@ -224,11 +241,13 @@
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
 	icon_state = "bandred"
+	item_state = "redbandana"
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
 	desc = "A fine blue bandana with nanotech lining."
 	icon_state = "bandblue"
+	item_state = "bluebandana"
 
 /obj/item/clothing/mask/bandana/green
 	name = "green bandana"
@@ -239,42 +258,19 @@
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
 	icon_state = "bandgold"
+	item_state = "goldbandana"
 
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
 	icon_state = "bandblack"
+	item_state = "blackbandana"
 
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
-
-/obj/item/clothing/mask/tie
-	body_parts_covered = 0
-	w_class = SIZE_MINUSCULE
-
-/obj/item/clothing/mask/tie/collar
-	name = "silver collar"
-	desc = "A common collar with silver covering"
-	icon_state = "collar"
-
-/obj/item/clothing/mask/tie/collar2
-	name = "gold collar"
-	desc = "A common collar with gold covering"
-	icon_state = "collar2"
-
-/obj/item/clothing/mask/tie/silver_cross
-	name = "pectoral silver cross"
-	desc = "That's a big pectoral silver cross for big religion figures."
-	icon_state = "pectoral_silver_cross"
-	item_state = "pectoral_silver_cross"
-
-/obj/item/clothing/mask/tie/golden_cross
-	name = "pectoral golden cross"
-	desc = "That's a big pectoral golden cross for the biggest religion figure."
-	icon_state = "pectoral_golden_cross"
-	item_state = "pectoral_golden_cross"
+	item_state = "skullbandana"
 
 /obj/item/clothing/mask/ecig
 	name = "electronic cigarette"

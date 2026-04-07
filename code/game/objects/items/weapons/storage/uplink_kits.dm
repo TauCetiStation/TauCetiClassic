@@ -121,13 +121,6 @@
 	. = ..()
 	new /obj/item/weapon/implanter/freedom(src)
 
-/obj/item/weapon/storage/box/syndie_kit/imp_compress
-	name = "box (C)"
-
-/obj/item/weapon/storage/box/syndie_kit/imp_compress/atom_init()
-	new /obj/item/weapon/implanter/compressed(src)
-	. = ..()
-
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive
 	name = "box (E)"
 
@@ -433,7 +426,7 @@
 	name = "chemical fighter kit"
 	startswith = list(
 	/obj/item/weapon/reagent_containers/watertank_backpack/syndie,
-	/obj/item/weapon/lighter/zippo,
+	/obj/item/weapon/lighter/zippo/syndi,
 	/obj/item/weapon/gun/projectile/revolver/syndie,
 	/obj/item/ammo_box/speedloader/a357 = 2,
 	/obj/item/weapon/melee/energy/sword,

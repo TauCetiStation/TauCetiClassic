@@ -10,8 +10,8 @@
 	var/list/area/targeted_areas = list()
 
 /datum/event/feature/area/setup()
-	..()
 	SHOULD_CALL_PARENT(TRUE)
+	..()
 	if(special_area_types?.len)
 		var/list/area_types = list()
 

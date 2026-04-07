@@ -1,4 +1,4 @@
-/mob/living/carbon/Login()
+/mob/living/carbon/LateLogin()
 	..()
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)

@@ -14,6 +14,8 @@
 	var/filler_margin_y = 11
 	var/filler_height = 7
 	var/current_offset = -1
+	resistance_flags = CAN_BE_HIT
+	fragile = TRUE
 
 /obj/item/weapon/reagent_containers/glass/bottle/atom_init()
 	. = ..()
@@ -147,7 +149,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/adminordrazine
 	name = "Adminordrazine Bottle"
 	desc = "A small bottle. Contains the liquid essence of the gods."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	list_reagents = list("adminordrazine" = 30)
 
@@ -195,6 +197,20 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	list_reagents = list("zombiepowder" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/ambrosium
+	name = "ambrosium bottle"
+	desc = "A small bottle of ambrosium. It smells sweet."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("ambrosium" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/jenkem
+	name = "space jenkem bottle"
+	desc = "A small bottle of space jenkem. Say goodbye to your liver if you wanna try this."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("jenkem" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/peridaxon
 	name = "peridaxon bottle"

@@ -89,6 +89,15 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/mafia)
+"U" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	locked = 1;
+	req_access = list(101);
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/mafia)
 
 (1,1,1) = {"
 a
@@ -201,9 +210,9 @@ d
 i
 j
 j
-l
+U
 j
-l
+U
 j
 j
 d
@@ -223,7 +232,7 @@ b
 i
 j
 j
-l
+U
 j
 m
 q
@@ -231,7 +240,7 @@ j
 q
 m
 j
-l
+U
 j
 j
 d
@@ -523,7 +532,7 @@ b
 d
 j
 j
-l
+U
 j
 m
 q
@@ -531,7 +540,7 @@ j
 q
 m
 j
-l
+U
 j
 j
 d
@@ -551,9 +560,9 @@ d
 d
 j
 j
-l
+U
 j
-l
+U
 j
 j
 d

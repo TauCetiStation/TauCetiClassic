@@ -16,6 +16,8 @@
 							)
 
 /datum/minigame/minesweeper/proc/button_press(y, x)
+	if(!grid_pressed)
+		populate_mines(y, x) //We pressed first button, lets populate minefield
 	if(grid[y][x]["flag"])
 		return TRUE //We fake pressed a button with a flag
 	if(grid[y][x]["state"] == STATE_MINE)
@@ -24,6 +26,9 @@
 	return TRUE //We pressed a button
 
 /datum/minigame/minesweeper/proc/button_flag(y, x)
+	if(!grid_pressed)
+		return FALSE
+
 	var/list/L = grid[y][x]
 	if(L["state"] != STATE_EMPTY)
 		L["flag"] = !L["flag"]
@@ -34,6 +39,8 @@
 	grid_y = rand(7,10)
 
 	grid_mines = rand(7,17)
+	grid_blanks = 0
+	grid_pressed = 0
 
 	grid = new/list(grid_y, grid_x)
 
@@ -43,10 +50,13 @@
 			Line[j] = list("state" = STATE_BLANK, "x" = j, "y" = i, "nearest" = "", "flag" = FALSE)
 			grid_blanks++
 
+/datum/minigame/minesweeper/proc/populate_mines(pressedY, pressedX)
 	for(var/i = 1 to grid_mines)
 		while(TRUE)
 			var/y = rand(1,grid_y)
 			var/x = rand(1,grid_x)
+			if(pressedX == x && pressedY == y)
+				continue
 			var/list/L = grid[y][x]
 			if(L["state"] == STATE_MINE)
 				continue
@@ -90,6 +100,9 @@
 
 /datum/minigame/minesweeper/proc/check_complete()
 	return grid_pressed == grid_blanks
+
+/datum/minigame/minesweeper/proc/get_difficulty()
+	return grid ? grid_mines/grid_blanks : 0
 
 #undef STATE_EMPTY
 #undef STATE_BLANK

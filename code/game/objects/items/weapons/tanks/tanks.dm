@@ -25,6 +25,7 @@
 						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 
 	var/reaction_in_progress = FALSE
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_internals)
 
 /obj/item/weapon/tank/atom_init()
 	. = ..()
@@ -39,6 +40,13 @@
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(air_contents)
 	return ..()
+
+/datum/action/item_action/hands_free/toggle_internals
+	name = "Toggle internals"
+
+/datum/action/item_action/hands_free/toggle_internals/Activate()
+	var/obj/item/weapon/tank/T = target
+	T.toggle_internals()
 
 /obj/item/weapon/tank/examine(mob/user)
 	..()
@@ -157,35 +165,49 @@
 			if(.)
 				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 		if("internal")
-			if(iscarbon(loc))
-				if(internal_switch > world.time)
-					return
-				var/internalsound
-				var/mob/living/carbon/C = loc
-				if(C.internal == src)
-					C.internal = null
-					C.internals?.update_icon(C)
-					to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
-					internalsound = 'sound/misc/internaloff.ogg'
-					if(ishuman(C)) // Because only human can wear a spacesuit
-						var/mob/living/carbon/human/H = C
-						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-							internalsound = 'sound/misc/riginternaloff.ogg'
-					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-				else
-					if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
-						C.internal = src
-						to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
-						C.internals?.update_icon(C)
-						internalsound = 'sound/misc/internalon.ogg'
-						if(ishuman(C)) // Because only human can wear a spacesuit
-							var/mob/living/carbon/human/H = C
-							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-								internalsound = 'sound/misc/riginternalon.ogg'
-						playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-					else
-						to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
-				internal_switch = world.time + 16
+			toggle_internals()
+
+/obj/item/weapon/tank/proc/toggle_internals()
+	if(!iscarbon(loc))
+		return
+	if(internal_switch > world.time)
+		return
+	var/internalsound
+	var/mob/living/carbon/C = loc
+	if(C.internal == src)
+		C.internal = null
+		to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
+		internalsound = 'sound/misc/internaloff.ogg'
+		if(ishuman(C)) // Because only human can wear a spacesuit
+			var/mob/living/carbon/human/H = C
+			if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+				internalsound = 'sound/misc/riginternaloff.ogg'
+		playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+	else
+		if(istype(C.wear_mask, /obj/item/clothing/mask/breath))
+			var/obj/item/clothing/mask/breath/M = C.wear_mask
+			if(M.hanging) // if mask on face but pushed down
+				M.attack_self() // adjust it back
+		if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
+			C.internal = src
+			to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
+			internalsound = 'sound/misc/internalon.ogg'
+			if(ishuman(C)) // Because only human can wear a spacesuit
+				var/mob/living/carbon/human/H = C
+				if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+					internalsound = 'sound/misc/riginternalon.ogg'
+			playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+		else
+			to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
+	internal_switch = world.time + 16
+	update_actions_icons(C)
+
+/obj/item/weapon/tank/proc/update_actions_icons(mob/living/carbon/T)
+	for(var/datum/action/item_action/hands_free/toggle_internals/TI in T.actions)
+		if(T.internal == src)
+			TI.background_icon_state = "bg_active"
+		else
+			TI.background_icon_state = "bg_default"
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)
@@ -203,9 +225,6 @@
 	if(!air_contents)
 		return null
 
-	var/tank_pressure = air_contents.return_pressure()
-	if(tank_pressure < distribute_pressure)
-		distribute_pressure = tank_pressure
 	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	return remove_air(moles_needed)
 

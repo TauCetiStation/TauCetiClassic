@@ -35,3 +35,18 @@
 	ID = "USSP Recon Platoon"
 	logo_state = "soviet"
 	initroletype = /datum/role/soviet
+
+/datum/faction/responders/security
+	name = "Security Team"
+	ID = "Security Team"
+	initroletype = /datum/role/security_responder
+
+/datum/faction/responders/marines
+	name = "Marine Squad"
+	ID = "Marine Squad"
+	initroletype = /datum/role/marine_responder
+
+/datum/faction/responders/clowns
+	name = "Space Circus"
+	ID = "Space Circus"
+	initroletype = /datum/role/emag_clown

@@ -11,7 +11,7 @@
 /mob/living/carbon/monkey/death(gibbed)
 	if(stat == DEAD)
 		return
-	
+
 	stat = DEAD
 
 	if(!gibbed)

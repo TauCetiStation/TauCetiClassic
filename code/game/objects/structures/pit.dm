@@ -174,10 +174,10 @@
 	desc = "You're not the first."
 	icon = 'icons/obj/gravestone.dmi'
 	icon_state = "wood"
-	pixel_x = 15
-	pixel_y = 8
 	anchored = TRUE
 	var/message = "Unknown."
+	max_integrity = 75
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/gravemarker/cross
 	icon_state = "cross"
@@ -200,14 +200,13 @@
 	message = "Here lies [nam], [born] - [died]."
 
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/hatchet))
+	if(istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/fireaxe) || istype(W, /obj/item/weapon/crowbar))
 		if(user.is_busy(src))
 			return
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
-			new /obj/item/stack/sheet/wood(src)
-			qdel(src)
+			deconstruct(TRUE)
 			return
 	if(istype(W,/obj/item/weapon/pen))
 		var/msg = sanitize(input(user, "What should it say?", "Grave marker", input_default(message)) as text|null)
@@ -215,6 +214,12 @@
 		if(msg)
 			message = msg
 
+/obj/structure/gravemarker/deconstruct(disassembled)
+	var/amount = 1
+	if(disassembled)
+		amount = 2
+	new /obj/item/stack/sheet/wood(loc, amount)
+	qdel(src)
 
 //Grave jetsons items
 

@@ -2,8 +2,8 @@
 
 /obj/machinery/power/port_gen/riteg
 	name = "C.H.E.R.N.O.B.Y.L-type Portable Emergency Generator"
-	icon_state = "gen_gen_chernobyl-o-off"
-	icon_state_on = "gen_gen_chernobyl-o-on"
+	icon_state = "gen_chernobyl-off"
+	icon_state_on = "gen_chernobyl-on"
 	power_gen = 5000
 	var/rad_cooef = 40
 	var/rad_range = 1
@@ -39,9 +39,9 @@
 
 	var/dat = ""
 	if (active)
-		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
+		dat += text("Generator: <A href='byond://?src=\ref[src];action=disable'>On</A><br>")
 	else
-		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
+		dat += text("Generator: <A href='byond://?src=\ref[src];action=enable'>Off</A><br>")
 	dat += text("Power output: [power_gen * power_output]<br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 
