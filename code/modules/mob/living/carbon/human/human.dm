@@ -401,8 +401,9 @@
 			regenerating_bodypart = null
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
-	if ((check_type & ARMS) && handcuffed)
-		return TRUE
+	if (check_type & ARMS)
+		if(handcuffed || istype(buckled, /obj/structure/stool/bed/nest))
+			return TRUE
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -2050,11 +2051,14 @@
 
 	var/new_w_class = initial(w_class)
 
-	if(SMALLSIZE in mutations)
-		new_w_class -= 1
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SMOLL))
+		new_w_class = SIZE_MINUSCULE
+	else
+		if(SMALLSIZE in mutations)
+			new_w_class -= 1
 
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
-		new_w_class += 1
+		if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+			new_w_class += 1
 
 	w_class = new_w_class
 

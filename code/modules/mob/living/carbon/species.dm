@@ -1298,6 +1298,13 @@
 		/datum/emote/robot/beep,
 		/datum/emote/robot/ping,
 		/datum/emote/robot/buzz,
+		/datum/emote/robot/confirm,
+		/datum/emote/robot/deny,
+		/datum/emote/robot/scary,
+		/datum/emote/robot/woop,
+		/datum/emote/robot/boop,
+		/datum/emote/robot/robochirp,
+		/datum/emote/robot/calling
 	)
 
 	default_mood_event = /datum/mood_event/machine
@@ -1685,6 +1692,7 @@
 		TRAIT_NO_PAIN,
 		TRAIT_VIRUS_IMMUNE,
 		TRAIT_EMOTIONLESS,
+		TRAIT_CURSED_TALK,
 	)
 
 	flags = list(

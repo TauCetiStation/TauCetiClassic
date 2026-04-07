@@ -1700,3 +1700,7 @@
 /datum/disease2/effect/conductivity/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustWater(holder.stage)
 	A.myseed.react_to_disease_effect(A, src, holder)
+
+/datum/disease2/effect/conductivity/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(A, TRAIT_CONDUCT, VIRUS_TRAIT)
+	trait_added = FALSE

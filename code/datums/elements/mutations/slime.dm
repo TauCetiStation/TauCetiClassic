@@ -17,6 +17,6 @@
 		H.regenerate_icons(update_body_preferences = TRUE)
 		H.rejuvenate() // fixes slimetoxin damage (also calls regenerate_icons second time...)
 
-/datum/element/mutation/zombie/on_loose(mob/living/carbon/human/H)
+/datum/element/mutation/slime/on_loose(mob/living/carbon/human/H)
 	if(istype(H))
 		H.regenerate_icons(update_body_preferences = TRUE)

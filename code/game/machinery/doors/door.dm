@@ -155,9 +155,9 @@ var/global/list/wedge_image_cache = list()
 				playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 				var/armor_block = H.run_armor_check(BP_HEAD, "melee")
 				if(armor_block)
-					visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
-				else
 					visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				else
+					visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
 				if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
 					H.Stun(2)
 					H.Weaken(5)

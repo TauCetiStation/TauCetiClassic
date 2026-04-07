@@ -164,10 +164,11 @@
 		if (!do_skilled(user, user, R.time, R.required_skills, -0.2))
 			return
 
+	var/atom/build_loc = loc
+
 	if(!use(R.req_amount*multiplier))
 		return
 
-	var/atom/build_loc = loc
 	var/atom/movable/O = new R.result_type(build_loc)
 	user.try_take(O, build_loc)
 	O.set_dir(user.dir)

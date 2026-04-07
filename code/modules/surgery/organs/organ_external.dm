@@ -1301,7 +1301,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	desc = "Need a hand?"
 	force = 7
 
-	icon_state = "l_arm"
+	icon_state = "l_arm_m"
 
 	artery_name = "basilic vein"
 
@@ -1347,7 +1347,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 7
 	artery_name = "basilic vein"
 
-	icon_state = "r_arm"
+	icon_state = "r_arm_m"
 
 	temp_coeff = 1.0
 
@@ -1391,7 +1391,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	force = 9
 	artery_name = "femoral artery"
 
-	icon_state = "l_leg"
+	icon_state = "l_leg_m"
 
 	temp_coeff = 0.75
 
@@ -1424,7 +1424,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	artery_name = "femoral artery"
 
-	icon_state = "r_leg"
+	icon_state = "r_leg_m"
 
 	temp_coeff = 0.75
 

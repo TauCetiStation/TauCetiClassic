@@ -28,7 +28,7 @@
 
 /datum/component/serial_number/proc/on_examine(datum/source, mob/user)
 	SIGNAL_HANDLER
-	to_chat(user, "<span class = 'notice'>\nСерийный номер: [serial_number]</span>")
+	to_chat(user, "<span class = 'notice'>Серийный номер: [serial_number]</span>")
 
 /* inventory papers */
 
