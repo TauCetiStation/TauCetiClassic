@@ -1450,7 +1450,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	controller_type = /datum/bodypart_controller/plant
 
 
-/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null, protection)
+/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null, protection = 0)
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
