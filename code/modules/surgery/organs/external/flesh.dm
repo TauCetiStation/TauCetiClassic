@@ -97,8 +97,10 @@
 		damage_amt += burn
 		cur_damage += BP.burn_dam
 
+	var/is_parent_damaged_enough = cur_damage + damage_amt >= BP.max_damage + cutoff_internal_organ_damage_threshold
+	var/are_organs_unprotected = protection <= PROTECTION_REQUERED_FOR_ORGANS
 
-	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage + cutoff_internal_organ_damage_threshold) && (protection <= PROTECTION_REQUERED_FOR_ORGANS))
+	if(BP.bodypart_organs.len && is_parent_damaged_enough && are_organs_unprotected)
 	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		IO.take_damage(damage_amt / 10)
