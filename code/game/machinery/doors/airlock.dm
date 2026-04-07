@@ -892,14 +892,14 @@ var/global/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/enable_emergency_access()
 	if(emergency)
-		emergency = 0
+		emergency = FALSE
 		update_icon()
 	else
 		to_chat(usr, "Emergency access is already disabled!")
 
 /obj/machinery/door/airlock/proc/disable_emergency_access()
 	if(!emergency)
-		emergency = 1
+		emergency = TRUE
 		update_icon()
 	else
 		to_chat(usr, "Emergency access is already disabled!")
