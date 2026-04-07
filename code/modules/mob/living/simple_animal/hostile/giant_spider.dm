@@ -263,7 +263,7 @@
 	give_adaptation(choice)
 	var/obj/structure/spider/cocoon/C = new(owner.loc)
 	owner.forceMove(C)
-	QDEL_IN(C, 1 SECONDS)
+	QDEL_IN(C, 4 SECONDS)
 
 /datum/action/innate/spider/evolve/adapt/Grant(mob/T)
 	. = ..()
@@ -361,9 +361,8 @@
 			to_chat(S, "<span class='notice'>Мы научились плести новую паутину!</span>")
 
 		if("Скорость плетения")
-			var/num = max(S.web_mult - 0.3, 0.2)
-			S.web_mult = num
-			if(S.web_mult <= num)
+			S.web_mult = max(S.web_mult - 0.3, 0.2)
+			if(S.web_mult <= 0.2)
 				options -= "Скорость плетения"
 			to_chat(S, "<span class='notice'>Теперь мы быстрее плетем паутину!</span>")
 
@@ -389,7 +388,6 @@
 		return
 	visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 	var/choice = /obj/structure/spider/stickyweb
-	to_chat(src, "[length(webs) > 1 && client]")
 	if(length(webs) > 1 && client)
 		//List with images that goes to client
 		var/list/web_options = list()
@@ -400,13 +398,13 @@
 			choices[initial(W.name)] = W
 			web_options[initial(W.name)] = image(icon = initial(W.icon), icon_state = initial(W.icon_state))
 
-		choice = choices[show_radial_menu(src, T, web_options, require_near = TRUE, tooltips = TRUE), radius = 48, requare_near = TRUE]
+		choice = choices[show_radial_menu(src, T, web_options, require_near = TRUE, tooltips = TRUE, radius = 48, require_near = TRUE)]
 		if(choice == /obj/structure/spider/spikes)
 			for(var/obj/structure/spider/spikes in T.contents) //To prevent unfun things
 				to_chat(src, "<span class='notice'>Шипы могут быть установлены лишь на открытом месте!</span>")
 				return
 		if(!choice)
-			choice = /obj/structure/spider/stickyweb
+			return
 	if(!do_after(src, 4 * web_mult SECONDS, FALSE, T))
 		return
 
@@ -462,7 +460,7 @@
 			if(istype(M, /mob/living/simple_animal/hostile/giant_spider)) //There is some dupe, but takes a very long time
 				fed += 0.1
 				to_chat(src, "<span class='notice'>Это мясо практически непригодно как пища. (+0.1)'</span>")
-			if(ishuman(M))
+			else if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.update_body()
 				fed += 1
@@ -532,7 +530,6 @@
 				if(prob(100 - (H.run_armor_check(BP, BIO) * 0.7))) //If we have armor with 100 bio def, poison probability is 30
 					L.reagents.add_reagent(poison_type, 5)
 					to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
-				to_chat(world, "[100 - (H.run_armor_check(BP, BIO) * 0.7)]. [100 - H.run_armor_check(BP, BIO) * 0.7]")
 			else if(prob(poison_per_bite) || client)
 				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 				L.reagents.add_reagent(poison_type, 5)
@@ -673,13 +670,3 @@
 	speed = 0.5
 	web_mult = 1.5
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
-
-/mob/living/simple_animal/hostile/giant_spider/midwife/omnibuilder
-	webs = list(/obj/structure/spider/stickyweb/reflector,
-				/obj/structure/spider/spikes,
-				/obj/structure/spider/stickyweb/solid,
-				/obj/structure/spider/stickyweb/sealed,
-				/obj/structure/spider/stickyweb/sticky,
-				/obj/structure/spider/stickyweb)
-	web_mult = 0.2
-	reproduced = 20

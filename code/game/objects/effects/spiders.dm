@@ -145,6 +145,7 @@
 			var/obj/structure/spider/spiderling/S = new (loc, sentient)
 			S.inhereted = inhereted
 			S.adaptations = adaptations
+			S.sentient = sentient
 		qdel(src)
 
 /obj/structure/spider/spiderling
@@ -162,7 +163,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 
-/obj/structure/spider/spiderling/atom_init(mapload, sentient = FALSE)
+/obj/structure/spider/spiderling/atom_init(mapload)
 	. = ..()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
@@ -268,7 +269,8 @@
 			grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc, adaptations, inhereted)
 			if(sentient || prob(5))
-				S.spawner_args = list(/datum/spawner/living/spider)
+				S.spawner_args.Insert(1, /datum/component/logout_spawner)
+				S.AddComponent(arglist(/datum/spawner/living/spider))
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains
