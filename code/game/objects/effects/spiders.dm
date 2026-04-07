@@ -19,6 +19,7 @@
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
 	var/passage_mult = 1
+	var/passage_mult_proj = 1
 
 /obj/structure/spider/stickyweb/atom_init() //A lil hack so we can have special icons on special types
 	. = ..()
@@ -31,11 +32,11 @@
 	else if(isliving(mover))
 		if(mover.pulledby && istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
 			return TRUE
-		if(prob(50 * passage_mult))
+		if(!prob(50 * passage_mult))
 			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
 	else if(istype(mover, /obj/item/projectile))
-		return prob(30 * passage_mult)
+		return prob(30 * passage_mult_proj)
 	return TRUE
 
 /obj/structure/spider/stickyweb/sticky
@@ -45,6 +46,7 @@
 	icon_state = "verystickyweb"
 	max_integrity = 20
 	passage_mult = 0
+	passage_mult_proj = 1.5
 
 /obj/structure/spider/stickyweb/sealed
 	name = "sealed web"
@@ -53,6 +55,7 @@
 	can_block_air = TRUE
 	passage_mult = 0.7
 	max_integrity = 40
+	passage_mult_proj = 0.5
 
 /obj/structure/spider/stickyweb/solid
 	name = "solid web"
@@ -61,10 +64,10 @@
 	icon_state = "solidweb"
 	can_block_air = TRUE
 	opacity = TRUE
-	density = TRUE
 	max_integrity = 90
 	resistance_flags = FIRE_PROOF
 	passage_mult = 0.4
+	passage_mult_proj = 0
 
 /obj/structure/spider/spikes
 	name = "web spikes"
@@ -72,10 +75,13 @@
 	desc = "Silk hardened into small yet deadly spikes."
 	icon_state = "webspikes1"
 	max_integrity = 40
+	alpha = 30
 
-/obj/structure/spider/stickyweb/spikes/Crossed(atom/movable/AM)
+/obj/structure/spider/spikes/Crossed(atom/movable/AM)
 	. = ..()
 	if(ismob(AM))
+		if(istype(AM, /mob/living/simple_animal/hostile/giant_spider))
+			return
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		if(ishuman(M))
@@ -85,9 +91,11 @@
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.crawling ? pick(BP_CHEST , BP_GROIN) : pick(BP_L_LEG , BP_R_LEG)]
 			if(BP && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 				BP.take_damage(15, 0)
-			H.Stun(1, TRUE)
-			H.Weaken(4)
 			H.updatehealth()
+		M.Stun(1, TRUE)
+		M.Weaken(4)
+	else
+		AM.take_damage(15, BRUTE)
 
 /obj/structure/spider/stickyweb/reflector
 	name = "Reflective silk screen"
@@ -96,7 +104,7 @@
 	icon_state = "reflector"
 	max_integrity = 30
 	passage_mult = 0.7
-	density = TRUE
+	passage_mult_proj = 0
 	opacity = TRUE
 	var/static/list/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
 		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)
@@ -119,6 +127,8 @@
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
 	var/sentient = FALSE
+	var/inhereted = 0
+	var/adaptations = list()
 	var/amount_grown = 0
 
 /obj/structure/spider/eggcluster/atom_init()
@@ -132,7 +142,9 @@
 	if(amount_grown >= 100)
 		var/num = sentient ? 6 : rand(6,24)
 		for(var/i=0, i<num, i++)
-			new /obj/structure/spider/spiderling(loc, sentient)
+			var/obj/structure/spider/spiderling/S = new (loc, sentient)
+			S.inhereted = inhereted
+			S.adaptations = adaptations
 		qdel(src)
 
 /obj/structure/spider/spiderling
@@ -143,6 +155,8 @@
 	layer = 2.7
 	max_integrity = 3
 	var/sentient = FALSE
+	var/inhereted = 0
+	var/adaptations = list()
 	var/amount_grown = -1
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
@@ -251,8 +265,8 @@
 	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
-			grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc)
+			grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
+			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc, adaptations, inhereted)
 			if(sentient || prob(5))
 				S.spawner_args = list(/datum/spawner/living/spider)
 			qdel(src)

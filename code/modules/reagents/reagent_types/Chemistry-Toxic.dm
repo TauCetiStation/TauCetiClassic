@@ -388,6 +388,18 @@
 /datum/reagent/toxin/stoxin/on_diona_digest(mob/living/M)
 	return FALSE
 
+/datum/reagent/toxin/stoxin/spider
+	name = "Spider Toxin"
+	id = "spidertoxin"
+	description = "An effective toxin used to hunt organics."
+	toxpwr = 0.75
+
+/datum/reagent/toxin/stoxin/spider/strong
+	name = "Spider Toxin"
+	id = "sspiderstoxin"
+	description = "A very effective toxin used to hunt organics."
+	toxpwr = 1.5
+
 /datum/reagent/toxin/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
