@@ -531,6 +531,91 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_UNIFORM
 
+	/// Whether this uniform uses the polychromic system
+	var/poly = FALSE
+	/// Base style: "standart", "standart_belt", "turtlneck"
+	var/poly_style = "standart"
+	/// Pattern overlay for second color: "1"-"5", "turt", or null for none
+	var/poly_pattern = null
+	/// list("#base_color", "#pattern_color")
+	var/list/poly_colors = null
+
+/// Shared color palette for polychromic jumpsuit customization (used in UI pickers)
+var/global/list/poly_color_palette = list(
+	"Orange Light"   = "#D6A851",
+	"Orange Medium"  = "#B47538",
+	"Orange Dark"    = "#8C5B3E",
+	"Blue Light"     = "#109CDE",
+	"Blue Medium"    = "#186ABD",
+	"Blue Dark"      = "#2B4E90"
+)
+
+/// Converts a hex color to a color matrix that preserves greyscale detail.
+/// Pure multiply: black removes all detail. This matrix keeps ~12% of original brightness
+/// so shadows, folds and outlines remain visible even with very dark colors.
+/proc/poly_color_matrix(hex_color)
+	var/r = hex2num(copytext(hex_color, 2, 4)) / 255
+	var/g = hex2num(copytext(hex_color, 4, 6)) / 255
+	var/b = hex2num(copytext(hex_color, 6, 8)) / 255
+	var/k = 0.12 // detail preservation factor
+	// Matrix: output = pixel * (color * (1-k) + k)
+	// Black(0,0,0) → pixel * 0.12 (dark grey, details visible)
+	// White(1,1,1) → pixel * 1.0 (unchanged)
+	return list(
+		r*(1-k)+k, 0, 0, \
+		0, g*(1-k)+k, 0, \
+		0, 0, b*(1-k)+k  \
+	)
+
+/obj/item/clothing/under/update_icon()
+	..()
+	cut_overlays()
+	if(!poly || !length(poly_colors))
+		return
+	// Inventory rendering uses "world" states (1 dir)
+	var/world_base = (poly_style == "turtlneck") ? "1_color_turtlneck" : "standart_world"
+	icon = 'icons/obj/clothing/uniforms_poly.dmi'
+	icon_state = world_base
+	color = poly_color_matrix(poly_colors[1])
+	// Pattern overlay for inventory
+	if(poly_pattern && length(poly_colors) >= 2)
+		var/world_overlay = (poly_style == "turtlneck") ? "on turtlneck world" : "on world"
+		var/mutable_appearance/MA = mutable_appearance('icons/obj/clothing/uniforms_poly.dmi', world_overlay)
+		MA.color = poly_color_matrix(poly_colors[2])
+		add_overlay(MA)
+
+/// Returns the mob icon_state for this poly uniform, accounting for gender and fat
+/obj/item/clothing/under/proc/get_poly_mob_state(mob/living/carbon/human/H)
+	var/base = poly_style
+	if(!base)
+		return "standart"
+	// Roll-down states
+	if(rolled_down)
+		base = "roll_down"
+	// Fat variant
+	if(H && HAS_TRAIT(H, TRAIT_FAT))
+		return "[base]_fat"
+	// Female variant
+	if(H && H.gender == FEMALE)
+		return "[base]_f"
+	return base
+
+/// Returns the pattern icon_state for the mob overlay
+/obj/item/clothing/under/proc/get_poly_pattern_state(mob/living/carbon/human/H)
+	if(!poly_pattern)
+		return null
+	var/pat = poly_pattern
+	// Belt variants for patterns that have them
+	if((poly_style == "standart_belt" || poly_style == "standart_belt_white") && (pat == "3" || pat == "5"))
+		pat = "[pat]_b"
+	// Fat variant
+	if(H && HAS_TRAIT(H, TRAIT_FAT))
+		return "[pat]_fat"
+	// Female variant
+	if(H && H.gender == FEMALE)
+		return "[pat]_f"
+	return pat
+
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
 	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
@@ -644,6 +729,22 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/wash_act(w_color)
+	if(poly && w_color)
+		var/static/list/dye_to_hex = list(
+			"red"    = "#CC4444",
+			"orange" = "#CC7722",
+			"yellow" = "#DAA520",
+			"green"  = "#228B22",
+			"blue"   = "#4169E1",
+			"purple" = "#7B3FA0",
+			"white"  = "#FFFFFF",
+			"mime"   = "#C8C8C8"
+		)
+		var/hex = dye_to_hex[w_color]
+		if(hex)
+			poly_colors = list(poly_colors[1], hex)
+			update_icon()
+			return
 	. = ..()
 	fresh_laundered_until = world.time + 5 MINUTES
 

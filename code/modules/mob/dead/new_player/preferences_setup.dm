@@ -102,6 +102,32 @@
 	if(S)
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
+	// Equip custom jumpsuit from prefs (skip if using job default)
+	var/obj/item/clothing/under/color/custom/J = spawn_custom_jumpsuit(mannequin)
+	if(J)
+		var/obj/item/existing_uniform = mannequin.get_equipped_item(SLOT_W_UNIFORM)
+		if(existing_uniform)
+			mannequin.drop_from_inventory(existing_uniform)
+			qdel(existing_uniform)
+		mannequin.equip_to_slot_or_del(J, SLOT_W_UNIFORM)
+
+	// Equip loadout items for preview
+	if(gear && gear.len)
+		for(var/thing in gear)
+			var/datum/gear/G = gear_datums[thing]
+			if(!G)
+				continue
+			if(G.slot)
+				// Remove job-equipped item from the slot so loadout can replace it
+				var/obj/item/existing = mannequin.get_equipped_item(G.slot)
+				if(existing)
+					mannequin.drop_from_inventory(existing)
+					qdel(existing)
+				var/metadata = get_gear_metadata(G)
+				var/obj/item/I = G.spawn_item(mannequin, metadata)
+				if(I)
+					mannequin.equip_to_slot_or_del(I, G.slot)
+
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

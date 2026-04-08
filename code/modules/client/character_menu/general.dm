@@ -127,6 +127,13 @@
 				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
+			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[jumpsuit_style]</a><br>"
+			if(jumpsuit_style == "standart_white" || jumpsuit_style == "standart_belt_white" || jumpsuit_style == "turtlneck_white")
+				. += "&nbsp;&nbsp;Base: <a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a><br>"
+			if(jumpsuit_style != "job" && jumpsuit_style != "turtlneck" && jumpsuit_style != "turtlneck_white")
+				. += "&nbsp;&nbsp;Pattern: <a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? jumpsuit_pattern : "None"]</a><br>"
+			if(jumpsuit_style != "job")
+				. += "&nbsp;&nbsp;Accent: <a href='byond://?_src_=prefs;preference=jumpsuit_color;task=input'><font color='[jumpsuit_color]'>&#9608;&#9608;</font></a><br>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
@@ -483,6 +490,45 @@
 
 				if("use_skirt")
 					use_skirt = !use_skirt
+
+				if("jumpsuit_style")
+					var/list/styles = list("job", "standart", "standart_white", "standart_belt", "standart_belt_white", "turtlneck", "turtlneck_white")
+					var/new_style = input(user, "Choose jumpsuit style:", "Character Preference", jumpsuit_style) as null|anything in styles
+					if(new_style)
+						jumpsuit_style = new_style
+						if(new_style == "turtlneck" || new_style == "turtlneck_white")
+							jumpsuit_pattern = "turt"
+						else if(jumpsuit_pattern == "turt")
+							jumpsuit_pattern = null
+
+				if("jumpsuit_pattern")
+					var/list/patterns = list(
+						"None"           = null,
+						"Pattern 1"      = "1",
+						"Pattern 2"      = "2",
+						"Pattern 3"      = "3",
+						"Pattern 4"      = "4",
+						"Pattern 5"      = "5"
+					)
+					var/choice = input(user, "Choose jumpsuit pattern:", "Character Preference") as null|anything in patterns
+					if(!isnull(choice))
+						jumpsuit_pattern = patterns[choice]
+
+				if("jumpsuit_color")
+					var/list/choices = global.poly_color_palette + "Pick Custom (RGB)..."
+					var/choice = input(user, "Choose accent color:", "Character Preference") as null|anything in choices
+					if(choice)
+						if(choice == "Pick Custom (RGB)...")
+							var/new_color = input(user, "Pick custom accent color:", "Character Preference", jumpsuit_color) as null|color
+							if(new_color)
+								jumpsuit_color = new_color
+						else
+							jumpsuit_color = global.poly_color_palette[choice]
+
+				if("jumpsuit_base_color")
+					var/new_color = input(user, "Choose base color:", "Character Preference", jumpsuit_base_color) as null|color
+					if(new_color)
+						jumpsuit_base_color = new_color
 
 				if("nt_relation")
 					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation) as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")

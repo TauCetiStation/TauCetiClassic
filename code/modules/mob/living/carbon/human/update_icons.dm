@@ -428,7 +428,20 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
-		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
+		var/image/standing
+		if(U.poly && length(U.poly_colors))
+			// Polychromic uniform: build base + pattern from poly DMI
+			var/base_state = U.get_poly_mob_state(src)
+			standing = mutable_appearance('icons/mob/uniform_poly.dmi', base_state, -UNIFORM_LAYER)
+			standing.color = poly_color_matrix(U.poly_colors[1])
+			// Pattern overlay (second color)
+			var/pattern_state = U.get_poly_pattern_state(src)
+			if(pattern_state && length(U.poly_colors) >= 2)
+				var/mutable_appearance/pattern = mutable_appearance('icons/mob/uniform_poly.dmi', pattern_state)
+				pattern.color = poly_color_matrix(U.poly_colors[2])
+				standing.add_overlay(pattern)
+		else
+			standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		standing.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		standing.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
