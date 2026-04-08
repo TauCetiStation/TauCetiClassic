@@ -110,6 +110,10 @@
 	mannequin.update_inv_w_uniform()
 	mannequin.update_inv_wear_suit()
 
+	var/obj/item/clothing/under/color/polychromic/polychromic_jumpsuit = spawn_custom_jumpsuit()
+	if(polychromic_jumpsuit)
+		mannequin.replace_in_slot(SLOT_W_UNIFORM, polychromic_jumpsuit)
+
 	var/obj/item/clothing/preview_uniform = istype(mannequin.w_uniform, /obj/item/clothing) ? mannequin.w_uniform : null
 	var/obj/item/clothing/preview_suit = istype(mannequin.wear_suit, /obj/item/clothing) ? mannequin.wear_suit : null
 	if(gear && gear.len)

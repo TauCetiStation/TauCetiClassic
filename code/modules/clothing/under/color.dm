@@ -1,3 +1,16 @@
+// Polychromic jumpsuit - greyscale base + pattern overlay with independent colors
+/obj/item/clothing/under/color/custom
+	name = "custom jumpsuit"
+	desc = "A jumpsuit with custom coloring."
+	icon = 'icons/obj/clothing/uniforms_poly.dmi'
+	icon_state = "standart_world"
+	item_state = "white"
+	flags = ONESIZEFITSALL|HEAR_TALK
+	poly = TRUE
+	poly_style = "standart"
+	poly_pattern = "1"
+	poly_colors = list("#FFFFFF", "#FFFFFF")
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
