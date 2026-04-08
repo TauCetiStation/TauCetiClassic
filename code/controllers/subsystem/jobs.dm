@@ -448,6 +448,16 @@ SUBSYSTEM_DEF(job)
 
 		job.equip(H)
 
+		// Apply custom polychromic jumpsuit from preferences
+		if(H.client?.prefs)
+			var/obj/item/clothing/under/color/custom/J = H.client.prefs.spawn_custom_jumpsuit(H)
+			if(J)
+				var/obj/item/clothing/under/existing = H.w_uniform
+				if(existing)
+					H.drop_from_inventory(existing)
+					qdel(existing)
+				H.equip_to_slot_or_del(J, SLOT_W_UNIFORM)
+
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
 			if(G.slot in custom_equip_slots)

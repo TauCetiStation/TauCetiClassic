@@ -96,6 +96,10 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
 	var/use_skirt = FALSE				//using skirt uniform version
+	var/jumpsuit_style = "job"			//polychromic jumpsuit style ("job" = use job default)
+	var/jumpsuit_pattern = null			//polychromic jumpsuit pattern
+	var/jumpsuit_color = "#FFFFFF"		//polychromic jumpsuit accent color
+	var/jumpsuit_base_color = "#FFFFFF"	//polychromic jumpsuit base color (for white-base styles)
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
@@ -553,3 +557,17 @@ var/global/list/datum/preferences/preferences_datums = list()
 		var/datum/browser/popup = new(user, "jobban_info", "Информация о джоббане", ntheme = CSS_THEME_LIGHT)
 		popup.set_content(dat)
 		popup.open()
+
+/// Creates and returns a custom polychromic jumpsuit configured from preferences.
+/// Returns null if style is "job" or not set.
+/datum/preferences/proc/spawn_custom_jumpsuit(atom/location)
+	if(!jumpsuit_style || jumpsuit_style == "job")
+		return null
+	var/obj/item/clothing/under/color/custom/J = new(location)
+	J.poly_style = jumpsuit_style
+	J.poly_pattern = (jumpsuit_style == "turtlneck" || jumpsuit_style == "turtlneck_white") ? "turt" : jumpsuit_pattern
+	var/list/white_bases = list("standart_white", "standart_belt_white", "turtlneck_white")
+	var/base_col = (jumpsuit_style in white_bases) ? jumpsuit_base_color : "#FFFFFF"
+	J.poly_colors = list(base_col, jumpsuit_color)
+	J.update_icon()
+	return J
