@@ -1337,6 +1337,9 @@
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_xeno", I, null, null, NONE)
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I, null, null, NONE)
 
+/datum/species/machine/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.ipc_equip(H)
+
 /datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
