@@ -449,34 +449,46 @@
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	icon_state = "saw"
 	toolspeed = 0.3
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
+/obj/item/weapon/bonegel/alien
+	name = "alien ectoplasm"
+	desc = "Contains ecotplasm. In the case of ingestion can cause to stomach pains."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "ectoplasm"
+	item_state_world = null
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
 /obj/machinery/optable/abductor
@@ -571,12 +583,6 @@
 	icon_state  = "abductor"
 	icon_opened = "abductoropen"
 	icon_closed = "abductor"
-
-/obj/item/weapon/bonegel/alien
-	name = "alien ectoplasm"
-	desc = "Contains ecotplasm. In the case of ingestion can cause to stomach pains."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "ectoplasm"
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
