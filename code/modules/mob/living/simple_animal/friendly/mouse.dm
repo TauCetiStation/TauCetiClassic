@@ -88,13 +88,10 @@
 	desc = "Это маленький, поражённый болезнями грызун."
 
 /mob/living/simple_animal/mouse/proc/splat()
-	health = 0
-	stat = DEAD
+	death()
 	if(changes_color)
 		icon_dead = "mouse_[body_color]_splat"
 		icon_state = "mouse_[body_color]_splat"
-	layer = MOB_LAYER
-	timeofdeath = world.time
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
