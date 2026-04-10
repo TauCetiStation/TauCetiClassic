@@ -85,7 +85,7 @@
 	breach_threshold = 25
 	slowdown = 0.7
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser)
-	HELMET_TYPE = /obj/item/clothing/suit/space/rig/ert/security
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/ert/security
 
 //Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer
