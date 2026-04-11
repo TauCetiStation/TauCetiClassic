@@ -8,22 +8,31 @@
 
 #define MEDIA_VOLUME SANITIZE_VOL(50)
 
-// Open up VLC and play musique.
-// Converted to VLC for cross-platform and ogg support. - N3X
+// Open up the HTML5 audio player.
+// Migrated from ActiveX WMP to HTML5 Audio for BYOND 516+ (WebView2/Chromium). ActiveX is not supported in Chromium.
 var/global/const/PLAYER_HTML={"
-	<OBJECT id='player' CLASSID='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6' type='application/x-oleobject'></OBJECT>
+	<audio id='player' preload='auto'></audio>
 	<script>
 function noErrorMessages () { return true; }
 window.onerror = noErrorMessages;
 function SetMusic(url, time, volume) {
 	var player = document.getElementById('player');
-	player.URL = url;
-	player.Controls.currentPosition = +time;
-	player.Settings.volume = +volume;
+	if (!url || url === '') {
+		player.pause();
+		player.removeAttribute('src');
+		return;
+	}
+	var vol = Math.max(0, Math.min(1, (+volume) / 100));
+	player.volume = vol;
+	if (player.src !== url) {
+		player.src = url;
+	}
+	player.currentTime = +time;
+	player.play().catch(function(){});
 }
 function SetVolume(volume) {
 	var player = document.getElementById('player');
-	player.Settings.volume = volume;
+	player.volume = Math.max(0, Math.min(1, (+volume) / 100));
 }
 	</script>"}
 
