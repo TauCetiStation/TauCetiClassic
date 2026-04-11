@@ -374,7 +374,7 @@
 	update_manifest()
 
 	module = new /obj/item/weapon/robot_module/cultist(src)
-	laws = new /datum/ai_laws/faith/cult() //Just in case
+	laws = new /datum/ai_laws/faith/cult(cult_religion) //Just in case
 
 	for(var/datum/robot_component/C in components)
 		qdel(C)

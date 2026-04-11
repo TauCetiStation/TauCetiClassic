@@ -373,6 +373,7 @@
 
 /obj/item/weapon/robot_module/cultist/atom_init()
 	modules += new /obj/item/weapon/storage/bible/tome/cyborg(src)
+	modules += new /obj/item/device/synth(src) //Melody rites
 
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/crowbar(src)
@@ -380,7 +381,6 @@
 
 	modules += new /obj/item/weapon/card/access_grabber(src) //Agent card
 	modules += new /obj/item/weapon/tool_package(src) //Specialitiy
-	modules += new /obj/item/device/synth(src) //Melody rites
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()
