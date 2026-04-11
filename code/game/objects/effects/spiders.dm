@@ -151,7 +151,6 @@
 	layer = 2.7
 	max_integrity = 3
 	var/sentient = FALSE
-	var/inhereted = 0
 	var/adaptations = list()
 	var/amount_grown = -1
 	var/grow_as = null

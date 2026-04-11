@@ -424,7 +424,7 @@
 
 		choice = choices[show_radial_menu(src, T, web_options, require_near = TRUE, tooltips = TRUE, radius = 48, require_near = TRUE)]
 		if(choice == /obj/structure/spider/spikes)
-			for(var/obj/structure/spider/spikes in T.contents) //To prevent unfun things
+			for(var/obj/structure/spider/spikes/s in T.contents) //To prevent unfun things
 				to_chat(src, "<span class='notice'>Шипы могут быть установлены лишь на открытом месте!</span>")
 				return
 		if(!choice)
@@ -665,7 +665,7 @@
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
 	webs = list(/obj/structure/spider/stickyweb,
 				/obj/structure/spider/spikes)
-	alpha_change = 150
+	alpha_change = 80
 
 /mob/living/simple_animal/hostile/giant_spider/viper
 	name = "viper spider"
@@ -685,7 +685,7 @@
 
 /mob/living/simple_animal/hostile/giant_spider/midwife
 	name = "Midwife"
-	desc = "Мохнатый и черный. И мелкий. У вас бегают мурашки по коже, когда вы смотрите на него. У этого глаза ядовито-зеленые."
+	desc = "Мохнатый и черный. И мелкий. У вас бегают мурашки по коже, когда вы смотрите на него. У этого глаза лиловые."
 	gender = FEMALE
 	icon_state = "midwife"
 	icon_living = "midwife"
