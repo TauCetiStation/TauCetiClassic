@@ -183,7 +183,7 @@
 	if(!proximity)
 		return
 	var/mob/living/silicon/robot/R = user
-	if(istype(target, /mob/living/silicon/robot))
+	if(isrobot(target))
 		var/mob/living/silicon/robot/S = target
 		if(istype(S.module, R.module.type))
 			R.req_access |= S.req_access
