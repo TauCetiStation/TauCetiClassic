@@ -117,6 +117,8 @@
 /datum/spawner/living/spider
 	name = "Паук"
 	desc = "Вы становитесь очередным паучьим отпрыском."
+	cooldown = 3 MINUTES
+	time_for_registration = 5 SECONDS
 
 	ranks = list(ROLE_ALIEN)
 

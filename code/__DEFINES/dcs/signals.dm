@@ -305,6 +305,9 @@
 #define COMSIG_MOB_Z_CHANGED "mob_z_changed"
 ///from base of /mob/proc/set_lighting_alpha(): (value)
 #define COMSIG_MOB_LIGHTING_ALPHA_CHANGED "LIGHTING_ALPHA_CHANGED"
+///before attackingtarget has happened, source is the attacker and target is the attacked
+#define COMSIG_MOB_PRE_ATTACKINGTARGET "animal_pre_attackingtarget"
+	#define COMPONENT_MOB_NO_ATTACK (1<<0) //cancel the attack, only works before attack happens
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()

@@ -41,12 +41,11 @@
 
 /obj/structure/spider/stickyweb/sticky
 	name = "sticky web"
-	icon = 'icons/effects/effects.dmi'
 	desc = "Extremely soft and sticky silk."
 	icon_state = "verystickyweb"
 	max_integrity = 20
 	passage_mult = 0
-	passage_mult_proj = 1.5
+	passage_mult_proj = 2
 
 /obj/structure/spider/stickyweb/sealed
 	name = "sealed web"
@@ -54,12 +53,11 @@
 	icon_state = "sealedweb"
 	can_block_air = TRUE
 	passage_mult = 0.7
-	max_integrity = 40
+	max_integrity = 50
 	passage_mult_proj = 0.5
 
 /obj/structure/spider/stickyweb/solid
 	name = "solid web"
-	icon = 'icons/effects/effects.dmi'
 	desc = "A solid wall of web, thick enough to block air flow."
 	icon_state = "solidweb"
 	can_block_air = TRUE
@@ -71,7 +69,6 @@
 
 /obj/structure/spider/spikes
 	name = "web spikes"
-	icon = 'icons/effects/effects.dmi'
 	desc = "Silk hardened into small yet deadly spikes."
 	icon_state = "webspikes1"
 	max_integrity = 40
@@ -127,7 +124,6 @@
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
 	var/sentient = FALSE
-	var/inhereted = 0
 	var/adaptations = list()
 	var/amount_grown = 0
 
@@ -143,7 +139,6 @@
 		var/num = sentient ? 6 : rand(6,24)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new (loc, sentient)
-			S.inhereted = inhereted
 			S.adaptations = adaptations
 			S.sentient = sentient
 		qdel(src)
@@ -267,10 +262,10 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc, adaptations, inhereted)
+			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc, adaptations)
 			if(sentient || prob(5))
-				S.spawner_args.Insert(1, /datum/component/logout_spawner)
-				S.AddComponent(arglist(/datum/spawner/living/spider))
+				create_spawner(/datum/spawner/living/spider, S)
+				//S.AddComponent(/datum/component/logout_spawner, /datum/spawner/living/spider) //Cause we add it after init
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains

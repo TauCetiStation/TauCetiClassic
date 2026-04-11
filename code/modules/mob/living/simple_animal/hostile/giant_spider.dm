@@ -63,12 +63,18 @@
 	///Can we speak to ALL spiders at once
 	var/can_speak_hivemind = FALSE
 
-/mob/living/simple_animal/hostile/giant_spider/atom_init(mapload, adaptations, inhereted)
+/mob/living/simple_animal/hostile/giant_spider/atom_init(mapload, passed_adaptations)
 	. = ..()
+	if(passed_adaptations)
+		adaptations = passed_adaptations
+		inhereted = length(passed_adaptations)
+
 	var/datum/action/innate/spider/E
 	for(var/V in spider_actions)
 		E = new V (src)
 		E.Grant(src)
+
+	AddElement(/datum/element/prevent_attacking_of_types, global.typecache_general_bad_attack_targets, "This tastes awful!")
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
 	. = ..()
@@ -78,8 +84,16 @@
 	. = ..()
 	name = "[name] ([rand(100, 999)])"
 	if(!isrolebytype(/datum/role/spider, src))
+		if(!SSticker?.mode) //We have someone logged in before roundstart, so we need to create faction later, after roundstart
+			RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_start_spider))
+			return
 		var/datum/faction/spiders/F = create_uniq_faction(/datum/faction/spiders)
 		add_faction_member(F, src, FALSE)
+
+/mob/living/simple_animal/hostile/giant_spider/proc/on_start_spider()
+	var/datum/faction/spiders/F = create_uniq_faction(/datum/faction/spiders)
+	add_faction_member(F, src, FALSE)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 
 /mob/living/simple_animal/hostile/giant_spider/Moved(atom/OldLoc, Dir)
 	. = ..()
@@ -234,8 +248,9 @@
 	var/mob/living/simple_animal/hostile/giant_spider/old_s = owner
 	var/mob/living/simple_animal/hostile/giant_spider/S = new choice (get_turf(owner), old_s?.adaptations, old_s?.inhereted)
 	S.ckey = owner.ckey
+
 	var/obj/structure/spider/cocoon/C = new(owner.loc)
-	owner.forceMove(C)
+	S.forceMove(C)
 	qdel(owner)
 	QDEL_IN(C, 5 SECONDS)
 
@@ -250,7 +265,7 @@
 	if(S.health < S.maxHealth)
 		to_chat(owner, "<span class='notice'>Мы слишком ранены, что бы эволюционировать.</span>")
 		return
-	if(length(S.adaptations) >= S.reproduced)
+	if(length(S.adaptations) >= S.reproduced + S.inhereted)
 		to_chat(owner, "<span class='notice'>Для эволюции нужно оставить потомство!</span>")
 		return
 	if(!length(options))
@@ -281,12 +296,13 @@
 	options["Видимость в паутине"] = image(icon = 'icons/hud/actions.dmi', icon_state = "alpha")
 	options["Общение на расстоянии"] = image(icon = 'icons/hud/actions.dmi', icon_state = "speak")
 	options["Скорость плетения"] = image(icon = 'icons/hud/actions.dmi', icon_state = "wrap_0")
+	options["Снос стен"] = image(icon = 'icons/hud/actions.dmi', icon_state = "regurgitate")
 
 	var/mob/living/simple_animal/hostile/giant_spider/S = owner
 	for(var/n in S.adaptations)
-		give_adaptation(n)
+		give_adaptation(n, TRUE)
 
-/datum/action/innate/spider/evolve/adapt/proc/give_adaptation(adaptation)
+/datum/action/innate/spider/evolve/adapt/proc/give_adaptation(adaptation, inheretence = FALSE)
 	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider))
 		return
 	var/mob/living/simple_animal/hostile/giant_spider/S = owner
@@ -328,7 +344,7 @@
 			to_chat(S, "<span class='notice'>Теперь мы впрыскиваем по [S.poison_per_bite] за укус!</span>")
 
 		if("Плюнуть ядом")
-			if(!S.projectiletype)
+			if(!S.projectiletype || !S.ranged)
 				S.projectiletype = /obj/item/projectile/acid_special_spider/poisonous
 				S.ranged = TRUE
 				to_chat(S, "<span class='notice'>Мы научились плеваться ядом!</span>")
@@ -376,6 +392,14 @@
 			options -= "Общение на расстоянии"
 			to_chat(S, "<span class='notice'>Теперь при разговоре, добавив \";\", мы сможем говорить со всеми живыми пауками!</span>")
 
+		if("Снос стен")
+			S.environment_smash = min(S.environment_smash + 1, 2)
+			if(S.environment_smash >= 2)
+				options -= "Снос стен"
+			to_chat(S, "<span class='notice'>Теперь мы можем сносить обычные стены!</span>")
+
+	if(inheretence)
+		return
 	S.adaptations += adaptation
 
 /mob/living/simple_animal/hostile/giant_spider/proc/spin_web(atom/A, web = /obj/structure/spider/stickyweb)
@@ -421,11 +445,10 @@
 		to_chat(src, "<span class='notice'>Нужно кого-нибудь съесть, что бы создать кладку яиц.</span>")
 		return
 	visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
-	if(!do_after(src, 6 SECONDS, FALSE, T))
+	if(!do_after(src, 6 SECONDS * web_mult, FALSE, T))
 		return
 	E = new (T)
 	E.sentient = TRUE
-	E.inhereted = inhereted
 	E.adaptations = adaptations
 
 	fed--
@@ -447,7 +470,7 @@
 			to_chat(src, "<span class='notice'>Мы пока не голодны. Нужно отложить яйцы!</span>")
 			return
 
-	if(!do_after(src, cocoon_target.w_class SECONDS, FALSE, cocoon_target)) //The bigger target - the more time it takes
+	if(!do_after(src, cocoon_target.w_class * web_mult SECONDS , FALSE, cocoon_target)) //The bigger target - the more time it takes
 		return
 
 	if(cocoon_target && get_dist(src, cocoon_target) <= 1)
@@ -533,6 +556,11 @@
 			else if(prob(poison_per_bite) || client)
 				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 				L.reagents.add_reagent(poison_type, 5)
+		if(isrobot(target))
+			L.Stun(1)
+	else if(istype(target, /obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(melee_damage) //Means twice as much damage
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
 	..()

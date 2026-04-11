@@ -34,6 +34,8 @@
 	user.SetNextMove(CLICK_CD_MELEE) // animals only punching things.
 
 /mob/living/simple_animal/UnarmedAttack(atom/A)
+	if(SEND_SIGNAL(src, COMSIG_MOB_PRE_ATTACKINGTARGET, A) & COMPONENT_MOB_NO_ATTACK)
+		return FALSE //but more importantly return before attack_animal called
 	..()
 	A.attack_animal(src)
 

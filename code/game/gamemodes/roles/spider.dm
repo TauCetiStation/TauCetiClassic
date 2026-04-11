@@ -1,6 +1,7 @@
 /datum/role/spider
 	name = SPIDER
 	id = SPIDER
+	logo_state = "spider"
 
 /datum/role/spider/forgeObjectives()
 	. = ..()

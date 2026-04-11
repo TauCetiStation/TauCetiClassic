@@ -242,7 +242,7 @@
 			L.reagents.add_reagent(S.poison_type, S.poison_per_bite)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if(H.species.flags[IS_SYNTHETIC]) //No damage from posion, so we take damage twice instead
+				if(H.species.flags[IS_SYNTHETIC]) //No damage from poison, so we take damage twice instead
 					H.apply_damage(damage, damage_type, def_zone, H.run_armor_check(def_zone, flag) * armor_multiplier, damage_flags(), src)
 			return
 		L.reagents.add_reagent("stoxin", 5)
