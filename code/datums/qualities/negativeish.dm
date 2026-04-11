@@ -286,7 +286,7 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/illusionist/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Шоу начинается!</span>")
-	if(!H.equip_to_slot_or_del(new /obj/item/clothing/suit/straight_jacket (H), SLOT_WEAR_SUIT))
+	if(!H.equip_to_slot_or_del(new /obj/item/clothing/suit/straight_jacket (H), SLOT_WEAR_SUIT) || prob(1)) //This is your day! Or not...
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs (H), SLOT_HANDCUFFED)
 	H.equip_to_slot_or_del(new /obj/item/weapon/legcuffs/beartrap (H), SLOT_LEGCUFFED)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/blindfold, SLOT_GLASSES)
