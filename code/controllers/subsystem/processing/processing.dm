@@ -28,3 +28,7 @@ SUBSYSTEM_DEF(processing)
 			STOP_PROCESSING(src, thing)
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/processing/Recover(datum/controller/subsystem/processing/previous_ss)
+	if (istype(previous_ss))
+		processing = previous_ss.processing
