@@ -363,7 +363,10 @@
 
 			department_data += "<a class='jobPosition [quota_class] [head_class]' href='byond://?src=\ref[src];SelectedJob=[J.title]'>[J.title]"
 			if(J.current_positions)
-				department_data += " ([J.current_positions])<br><i>(Active: [SSjob.GetActiveCount(J.title)])</i>"
+				department_data += " ([J.current_positions])"
+				var/active = SSjob.GetActiveCount(J.title)
+				if(active < J.current_positions)
+					department_data += "<br><i>(Active: [active])</i>"
 			department_data += "</a>"
 		if(length(department_data))
 			var/datum/department/D = SSjob.name_departments[department_tag]

@@ -22,7 +22,7 @@
 	random_basetype = /obj/structure/sign/poster/official
 
 /obj/item/weapon/poster/revolution
-	name = "revolution poster"
+	name = "contraband poster"
 	icon_state = "rolled_poster"
 	random_basetype = /obj/structure/sign/poster/revolution
 
@@ -178,6 +178,21 @@
 	name = "sivtsev table"
 	icon_state = "sivtsev"
 	desc = "Таблица Сивцева для проверки остроты зрения."
+
+/obj/structure/sign/poster/onlineshop
+	name = "onlineshop poster"
+	icon_state = "onlineshop"
+	desc = "Продать ты сможешь даже гвоздь, ты здесь хозяин, а не гость."
+
+/obj/structure/sign/poster/onlineshop/atom_init()
+	. = ..()
+
+	name = CARGOSHOPNAME
+
+/obj/structure/sign/poster/keepclean
+	name = "keep displosals clean poster"
+	icon_state = "keepclean"
+	desc = "Следи за чистотой входа в пневмопочту, помни, это не мусорка!"
 
 /obj/structure/sign/poster/olympic_games
 	name = "2214 Winter Olympics"

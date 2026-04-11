@@ -777,7 +777,9 @@
 
 /mob/living/carbon/restrained()
 	if (handcuffed)
-		return 1
+		return TRUE
+	if (istype(buckled, /obj/structure/stool/bed/nest))
+		return TRUE
 	return
 
 /mob/living/carbon/u_equip(obj/item/W)

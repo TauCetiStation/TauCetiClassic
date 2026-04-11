@@ -249,6 +249,7 @@
 	desc = "Omar's coming!"
 	can_be_holstered = TRUE
 	short = 1
+	recoil = HEAVY_RECOIL
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off/beanbag
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot

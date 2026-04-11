@@ -135,7 +135,7 @@
 
 	suit_store = /obj/item/weapon/gun/medbeam
 
-	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone)
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone, /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec, /obj/item/weapon/crowbar/red, /obj/item/weapon/melee/baton)
 
 	assignment = "Emergency Response Team Medic"
 

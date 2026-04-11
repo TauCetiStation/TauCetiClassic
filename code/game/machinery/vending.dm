@@ -1,3 +1,5 @@
+#define VENDING_WINDOW_ID "window=vending"
+
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
@@ -67,8 +69,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/load = 0
 	var/max_load = 0
 
+	var/seller_account_number = MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER
 
-/obj/machinery/vending/atom_init()
+
+/obj/machinery/vending/atom_init(mapload)
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
@@ -92,6 +96,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	power_change()
 	update_wires_check()
 	update_unstable_product()
+
+	if(mapload && is_station_level(z)) // Economy is initialized after atoms, thus we must use set the placeholder here until we refactor global money accounts to do lazy initializations.
+		seller_account_number = MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -185,6 +192,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 		if(isprying(W))
 			default_deconstruction_crowbar(W)
+			return
 
 		if(istype(W, /obj/item/device/lens) && W.type != camera.lens)
 			var/obj/item/device/lens/CameraLens = camera.lens
@@ -193,6 +201,18 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			if(!user.get_active_hand())
 				user.put_in_hands(CameraLens)
 			camera.lens = W
+			return
+
+		if(!seller_account_number && (istype(W, /obj/item/device/pda) && W.GetID()))
+			var/obj/item/weapon/card/Card = W.GetID()
+			seller_account_number = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
+			return
+
+		if(!seller_account_number && istype(W, /obj/item/weapon/card))
+			var/obj/item/weapon/card/Card = W
+			seller_account_number = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
 			return
 
 	if(isscrewing(W) && anchored)
@@ -305,9 +325,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		playsound(src, 'sound/machines/use_card.ogg', VOL_EFFECTS_MASTER)
 		if(check_accounts)
-			if(vendor_account)
+			if(seller_account_number)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				if(D)
+				var/datum/money_account/S = get_account(seller_account_number)
+				if(D && S)
 					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
 					if(usr.incapacitated() || !Adjacent(usr))
 						return
@@ -316,13 +337,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
-							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
+							var/tax = 0
+							if(S in department_accounts)
+								tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
+								charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
 							//create entries in the two account transaction logs
-							charge_to_account(D.account_number, "[global.cargo_account.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
+							charge_to_account(D.account_number, "[S.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
 							//
-							charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
+							charge_to_account(S.account_number, S.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
 
 							// Vend the item
 							vend(src.currently_vending, usr)
@@ -334,7 +357,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				else
 					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 			else
-				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access seller account. Check security settings and try again.</span>")
 		else
 			//Just Vend it.
 			vend(src.currently_vending, usr)
@@ -356,8 +379,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	var/vendorname = name  //import the machine's name
 
+	var/ad = ""
+	if((seller_account_number == global.cargo_account.account_number) && global.online_shop_ads && check_active_cargonauts())
+		ad += get_onlineshop_advertisement(src)
+
 	if(currently_vending)
 		var/dat
+		if(ad)
+			dat += ad
+
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
 		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
@@ -366,6 +396,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		return
 
 	var/dat
+	if(ad)
+		dat += ad
+
 	dat += "<div class='Section__title'>Products</div>"
 	dat += "<div class='Section'>"
 
@@ -389,7 +422,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.get_money() : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
-	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
+	var/datum/browser/popup = new(user, VENDING_WINDOW_ID, "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat)
 	popup.open()
@@ -467,6 +500,37 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		src.currently_vending = null
 		updateUsrDialog()
 		return
+
+	else if (href_list["pda_onlineshop"])
+		if(seller_account_number != global.cargo_account.account_number)
+			return
+
+		if(!usr)
+			return
+
+		if(issilicon(usr))
+			return
+
+		if(isobserver(usr))
+			return
+
+		if(usr.incapacitated())
+			return
+
+		if(!Adjacent(usr))
+			return
+
+		if(!usr.client)
+			return
+
+		if(!LAZYACCESS(usr.client.browsers, VENDING_WINDOW_ID))
+			return
+
+		var/obj/item/device/pda/PDA = locate() in usr
+		if(!PDA)
+			return
+
+		PDA.open_shop_page(usr)
 
 	updateUsrDialog()
 

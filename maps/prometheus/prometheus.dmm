@@ -4637,7 +4637,8 @@
 	id = "xenobioout6";
 	name = "Containment Release Switch";
 	pixel_x = -28;
-	req_access = list(55)
+	req_access = list(55);
+	pixel_y = 7
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -4932,12 +4933,6 @@
 /area/station/security/execution)
 "aDD" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/door_control{
-	id = "xenobio7";
-	name = "Containment Blast Doors";
-	pixel_y = 28;
-	req_access = list(55)
-	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
@@ -15923,6 +15918,13 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/machinery/door_control{
+	id = "xenobio4";
+	name = "Containment Blast Doors";
+	pixel_y = -36;
+	req_access = list(55);
+	pixel_x = 3
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -15934,6 +15936,13 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/machinery/door_control{
+	id = "xenobio3";
+	name = "Containment Blast Doors";
+	pixel_y = -36;
+	req_access = list(55);
+	pixel_x = -3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -17564,6 +17573,13 @@
 	},
 /area/station/civilian/bar)
 "dMo" = (
+/obj/machinery/door_control{
+	id = "xenobio5";
+	name = "Containment Blast Doors";
+	pixel_x = -41;
+	req_access = list(55);
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
@@ -22279,21 +22295,6 @@
 	icon_state = "white"
 	},
 /area/station/rnd/xenobiology)
-"eSa" = (
-/obj/machinery/door_control{
-	id = "xenobio6";
-	name = "Containment Blast Doors";
-	pixel_y = 28;
-	req_access = list(55)
-	},
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/xenobiology)
 "eSb" = (
 /turf/simulated/wall,
 /area/station/medical/storage)
@@ -24305,7 +24306,7 @@
 	},
 /area/station/medical/reception)
 "fpi" = (
-/obj/structure/reagent_dispensers/aqueous_foam_tank,
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitepurple"
@@ -24600,6 +24601,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "xenobio6";
+	name = "Containment Blast Doors";
+	pixel_y = 42;
+	req_access = list(55);
+	pixel_x = 3
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -25451,12 +25459,6 @@
 /area/station/medical/virology)
 "fCB" = (
 /obj/structure/closet/l3closet/scientist,
-/obj/machinery/door_control{
-	id = "xenobio1";
-	name = "Containment Blast Doors";
-	pixel_y = 28;
-	req_access = list(55)
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
@@ -25506,12 +25508,6 @@
 	},
 /area/station/civilian/bar)
 "fDl" = (
-/obj/machinery/door_control{
-	id = "xenobio2";
-	name = "Containment Blast Doors";
-	pixel_x = 28;
-	req_access = list(55)
-	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
@@ -28577,6 +28573,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "xenobio1";
+	name = "Containment Blast Doors";
+	pixel_y = 43;
+	req_access = list(55);
+	pixel_x = -3
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -32906,18 +32909,13 @@
 /area/station/maintenance/brig)
 "hkP" = (
 /obj/machinery/door_control{
-	id = "xenobio5";
+	id = "xenobio7";
 	name = "Containment Blast Doors";
-	pixel_x = -28;
-	req_access = list(55)
+	pixel_x = 36;
+	req_access = list(55);
+	pixel_y = -7
 	},
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/wall/r_wall,
 /area/station/rnd/xenobiology)
 "hlc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -34067,12 +34065,6 @@
 /area/station/engineering/atmos)
 "hBB" = (
 /obj/structure/closet/l3closet/scientist,
-/obj/machinery/door_control{
-	id = "xenobio4";
-	name = "Containment Blast Doors";
-	pixel_y = -28;
-	req_access = list(55)
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
@@ -40252,12 +40244,6 @@
 	},
 /area/station/security/warden)
 "jeG" = (
-/obj/machinery/door_control{
-	id = "xenobio3";
-	name = "Containment Blast Doors";
-	pixel_y = -28;
-	req_access = list(55)
-	},
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
@@ -49358,14 +49344,12 @@
 	},
 /area/station/civilian/kitchen)
 "lut" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
+/obj/structure/table,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whitepurple"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/area/station/rnd/xenobiology)
 "luw" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -57151,13 +57135,13 @@
 	},
 /area/station/rnd/xenobiology)
 "nom" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
 /obj/machinery/requests_console/science{
 	pixel_x = -28
 	},
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurple"
@@ -67822,6 +67806,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cryo)
 "qaE" = (
+/obj/machinery/door_control{
+	id = "xenobio2";
+	name = "Containment Blast Doors";
+	pixel_x = 41;
+	req_access = list(55);
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -125289,9 +125280,9 @@ qkG
 blj
 qkG
 dbE
-eSa
+cbc
 cse
-hkP
+cYD
 jfa
 qkG
 qkG
@@ -126054,7 +126045,7 @@ cJy
 iRy
 iRy
 cJy
-bsl
+hkP
 bsl
 bsl
 bsl
@@ -127345,7 +127336,7 @@ aSo
 dft
 cJM
 dvs
-fhH
+lut
 gnj
 iTg
 kot
@@ -128495,7 +128486,7 @@ seU
 hPS
 qeP
 mYn
-lut
+bwp
 uhz
 bwp
 mQq
@@ -129009,7 +129000,7 @@ mTs
 vAS
 xjw
 mYn
-lut
+bwp
 kJF
 bwp
 qVa

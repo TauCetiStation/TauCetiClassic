@@ -95,7 +95,7 @@
 	if(owner && parent_bodypart && amount > 0)
 		var/obj/item/organ/external/parent = owner.get_bodypart(parent_bodypart)
 		if(parent && !silent)
-			owner.custom_pain("Something inside your [parent.name] hurts a lot.", 1)
+			owner.custom_pain("What a pain! My [name]!", 1)
 	if(damage >= max_damage)
 		die()
 
