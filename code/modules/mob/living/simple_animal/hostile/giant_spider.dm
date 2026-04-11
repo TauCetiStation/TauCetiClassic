@@ -467,7 +467,7 @@
 			to_chat(src, "<span class='notice'>С него нечего есть!</span>")
 			return
 		if(fed >= 1)
-			to_chat(src, "<span class='notice'>Мы пока не голодны. Нужно отложить яйцы!</span>")
+			to_chat(src, "<span class='notice'>Мы пока не голодны. Нужно отложить яйца!</span>")
 			return
 
 	if(!do_after(src, cocoon_target.w_class * web_mult SECONDS , FALSE, cocoon_target)) //The bigger target - the more time it takes
