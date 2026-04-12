@@ -430,7 +430,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				return
 		var/image/standing
 		if(U.poly && length(U.poly_colors))
-			// Polychromic uniform: build base + pattern from poly DMI
+			// Polychromic uniform: build base + pattern + detail from poly DMI
 			var/base_state = U.get_poly_mob_state(src)
 			standing = mutable_appearance('icons/mob/uniform_poly.dmi', base_state, -UNIFORM_LAYER)
 			standing.color = poly_color_matrix(U.poly_colors[1])
@@ -440,6 +440,11 @@ Please contact me on #coderbus IRC. ~Carn x
 				var/mutable_appearance/pattern = mutable_appearance('icons/mob/uniform_poly.dmi', pattern_state)
 				pattern.color = poly_color_matrix(U.poly_colors[2])
 				standing.add_overlay(pattern)
+			// Non-colorable detail overlay (zippers, seams)
+			var/detail_state = U.get_poly_detail_state(src)
+			if(detail_state)
+				var/mutable_appearance/detail = mutable_appearance('icons/mob/uniform_poly.dmi', detail_state)
+				standing.add_overlay(detail)
 		else
 			standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
