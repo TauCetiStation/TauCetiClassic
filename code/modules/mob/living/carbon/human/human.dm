@@ -2306,7 +2306,7 @@
 	var/datum/species/S = all_species[species.name]
 	age = rand(S.min_age, S.max_age)
 
-	regenerate_icons(update_body_preferences = TRUE) 
+	regenerate_icons(update_body_preferences = TRUE)
 
 /mob/living/carbon/human/get_blood_datum()
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
