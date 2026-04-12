@@ -542,12 +542,26 @@ BLIND     // can't see anything
 
 /// Shared color palette for polychromic jumpsuit customization (used in UI pickers)
 var/global/list/poly_color_palette = list(
-	"Orange Light"   = "#D6A851",
-	"Orange Medium"  = "#B47538",
-	"Orange Dark"    = "#8C5B3E",
-	"Blue Light"     = "#109CDE",
-	"Blue Medium"    = "#186ABD",
-	"Blue Dark"      = "#2B4E90"
+	"Фиолетовый"       = "#6E39A9",
+	"Фиолетовый V2"    = "#8D45A9",
+	"Розовый"           = "#AC1B5B",
+	"Светло Розовый"    = "#B25266",
+	"Красный"           = "#AB1F1F",
+	"Светло Красный"    = "#B1372D",
+	"Оранжевый"         = "#B47538",
+	"Золотой"           = "#BE902A",
+	"Желтый"            = "#C29700",
+	"Салатовый"         = "#ADB834",
+	"Зеленый"           = "#149605",
+	"Зеленый V2"        = "#588142",
+	"Темно Синий"       = "#273B75",
+	"Синий"             = "#186ABD",
+	"Светло Синий"      = "#2789CD",
+	"Голубой"           = "#309AA3",
+	"Белый"             = "#E6E7F0",
+	"Черный"            = "#444444",
+	"Черный V2"         = "#222222",
+	"Черный V3"         = "#373334"
 )
 
 /// Converts a hex color to a color matrix that preserves greyscale detail.
@@ -572,19 +586,28 @@ var/global/list/poly_color_palette = list(
 	cut_overlays()
 	if(!poly || !length(poly_colors))
 		return
-	// Inventory rendering uses "world" states (1 dir)
-	var/world_base = (poly_style == "turtlneck") ? "1_color_turtlneck" : "standart_world"
+	// Determine the world (inventory) base state
+	var/list/white_styles = list("standart_white", "standart_belt_white", "turtlneck_white")
+	var/is_white = (poly_style in white_styles)
+	var/world_base
+	switch(poly_style)
+		if("turtlneck", "turtlneck_white")
+			world_base = is_white ? "1_color_turtlneck_white" : "1_color_turtlneck"
+		if("standart_belt", "standart_belt_white")
+			world_base = is_white ? "standart_belt_world_white" : "standart_belt_world"
+		else
+			world_base = is_white ? "standart_world_white" : "standart_world"
 	icon = 'icons/obj/clothing/uniforms_poly.dmi'
 	icon_state = world_base
 	color = poly_color_matrix(poly_colors[1])
 	// Pattern overlay for inventory
 	if(poly_pattern && length(poly_colors) >= 2)
-		var/world_overlay = (poly_style == "turtlneck") ? "on turtlneck world" : "on world"
+		var/world_overlay = (poly_style == "turtlneck" || poly_style == "turtlneck_white") ? "on turtlneck world" : "on world"
 		var/mutable_appearance/MA = mutable_appearance('icons/obj/clothing/uniforms_poly.dmi', world_overlay)
 		MA.color = poly_color_matrix(poly_colors[2])
 		add_overlay(MA)
 
-/// Returns the mob icon_state for this poly uniform, accounting for gender and fat
+/// Returns the mob icon_state for this poly uniform, accounting for gender, fat, and vox
 /obj/item/clothing/under/proc/get_poly_mob_state(mob/living/carbon/human/H)
 	var/base = poly_style
 	if(!base)
@@ -592,6 +615,9 @@ var/global/list/poly_color_palette = list(
 	// Roll-down states
 	if(rolled_down)
 		base = "roll_down"
+	// Vox variant
+	if(H && H.species?.name == VOX)
+		return "[base]_vox"
 	// Fat variant
 	if(H && HAS_TRAIT(H, TRAIT_FAT))
 		return "[base]_fat"
@@ -599,6 +625,22 @@ var/global/list/poly_color_palette = list(
 	if(H && H.gender == FEMALE)
 		return "[base]_f"
 	return base
+
+/// Returns the non-colorable detail overlay state (zippers, seams, etc.)
+/// These are drawn on top of the colored layers without tinting.
+/obj/item/clothing/under/proc/get_poly_detail_state(mob/living/carbon/human/H)
+	var/is_belt = (poly_style == "standart_belt" || poly_style == "standart_belt_white")
+	// Vox variant
+	if(H && H.species?.name == VOX)
+		return "normal-vox"
+	// Fat variant
+	if(H && HAS_TRAIT(H, TRAIT_FAT))
+		return "normal-fat"
+	// Female variant
+	if(H && H.gender == FEMALE)
+		return is_belt ? "normal-fem-belt" : "normal-fem"
+	// Male variant
+	return is_belt ? "normal-men-belt" : "normal-men"
 
 /// Returns the pattern icon_state for the mob overlay
 /obj/item/clothing/under/proc/get_poly_pattern_state(mob/living/carbon/human/H)
