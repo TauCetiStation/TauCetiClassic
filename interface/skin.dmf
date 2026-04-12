@@ -194,14 +194,14 @@ window "mapwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		font-family = "Arial"
+		font-family = "Grand9K Pixel"
 		font-size = 7
 		text-color = none
 		is-default = true
 		saved-params = "icon-size;zoom-mode"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
-		style = ".center { text-align: center; } .maptext { font-family: 'Small Fonts', 'MS Serif'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; } .small { font-size: 6px; } .big { font-size: 8px; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
+		style = ".center { text-align: center; } .maptext { font-family: 'Grand9K Pixel'; font-size: 6px; -dm-text-outline: 1px black; color: white; line-height: 1.0; } .small { font-size: 6px; } .big { font-size: 8px; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
 	elem "lobbybrowser"
 		type = BROWSER
 		pos = 0,0
@@ -227,7 +227,7 @@ window "popupwindow"
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = 281,0
+		pos = 0,0
 		size = 640x480
 		anchor1 = -1,-1
 		anchor2 = -1,-1
@@ -238,24 +238,16 @@ window "outputwindow"
 		can-minimize = false
 		can-resize = false
 		is-pane = true
-	elem "browseroutput"
-		type = BROWSER
+	elem "legacy_output_selector"
+		type = CHILD
 		pos = 0,0
-		size = 640x460
+		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffffff
-		is-visible = false
-		is-disabled = true
-		saved-params = ""
-	elem "output"
-		type = OUTPUT
-		pos = 0,0
-		size = 640x460
-		anchor1 = 0,0
-		anchor2 = 100,100
-		is-default = true
-		saved-params = ""
+		saved-params = "splitter"
+		left = "output_legacy"
+		is-vert = false
 	elem "input"
 		type = INPUT
 		pos = 2,460
@@ -286,6 +278,44 @@ window "outputwindow"
 		text = "Emote"
 		command = ".winset \"mebutton.is-checked=true?input.command=\"!me \\\"\" macrobutton.is-checked=false:input.command=\"\"mebutton.is-checked=true?saybutton.is-checked=false\""
 		button-type = pushbox
+
+window "output_legacy"
+	elem "output_legacy"
+		type = MAIN
+		pos = 0,0
+		size = 640x456
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 640x456
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-default = true
+		saved-params = ""
+
+window "output_browser"
+	elem "output_browser"
+		type = MAIN
+		pos = 0,0
+		size = 640x456
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "browseroutput"
+		type = BROWSER
+		pos = 0,0
+		size = 640x456
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		saved-params = ""
 
 window "preferences_window"
 	elem "preferences_window"

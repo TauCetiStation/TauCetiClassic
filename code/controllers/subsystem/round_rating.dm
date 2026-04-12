@@ -62,7 +62,7 @@
 	var/fa_icon = ""
 
 /datum/vote_choice/rating/render_html(category)
-	return "<a href='?src=\ref[SSrating];round_rating=[text];rating_cat=[category]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
+	return "<a href='byond://?src=\ref[SSrating];round_rating=[text];rating_cat=[category]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
 
 /datum/vote_choice/rating/one
 	text = "1"

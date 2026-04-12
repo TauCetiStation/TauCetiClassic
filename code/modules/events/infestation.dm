@@ -76,7 +76,8 @@
 				var/mob/living/simple_animal/SA = new spawn_type(T)
 				if(istype(SA, /mob/living/simple_animal/mouse/rat))
 					create_spawner(/datum/spawner/living/rat, SA)
-
+				if(istype(SA, /mob/living/simple_animal/lizard))
+					create_spawner(/datum/spawner/living/lizard, SA)
 #undef INFESTATION_LOCATIONS
 
 #undef VERM_MICE

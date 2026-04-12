@@ -35,6 +35,8 @@
 	icon_closed = "mixed"
 
 /obj/structure/closet/jcloset/PopulateContents()
+	new /obj/item/weapon/reagent_containers/food/snacks/soap(src)
+	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/black(src)
@@ -74,6 +76,8 @@
 	icon_state = "cabinet_closed"
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
+
+	hit_particle_type = /particles/tool/digging/wood
 
 /obj/structure/closet/theatrecloset/PopulateContents()
 	switch (rand(1, 21))

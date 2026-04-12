@@ -38,7 +38,7 @@ var NanoUtility = function ()
 					queryString += key + '=' + parameters[key];
 				}
 			}
-			return queryString;
+			return 'byond://' + queryString;
 		}
     }
 } ();
@@ -48,7 +48,7 @@ if (typeof jQuery == 'undefined') {
 }
 if (typeof doT == 'undefined') {
 	alert('ERROR: Template engine failed to load!');
-}	
+}
 
 // All scripts are initialised here, this allows control of init order
 $(document).ready(function () {

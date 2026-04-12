@@ -227,12 +227,12 @@
 	if (!ban)
 		return
 	var/src_href = "_src_=holder"
-	var/disable_link = "<a href='?[src_href];stickyban=revert&ckey=[ckey]'>Revert</a>"
+	var/disable_link = "<a href='byond://?[src_href];stickyban=revert&ckey=[ckey]'>Revert</a>"
 
 	if(establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
-		disable_link = "<a href='?[src_href];stickyban=[(ban[BANKEY_TIMEOUT] ? "untimeout" : "timeout")]&ckey=[ckey]'>[ban[BANKEY_TIMEOUT] ? "Untimeout" : "Timeout"]</a>"
-	var/remove_link = "<a href='?[src_href];stickyban=remove&ckey=[ckey]'>-</a>"
-	var/edit_link = "<b><a href='?[src_href];stickyban=edit&ckey=[ckey]'>Edit</a></b>"
+		disable_link = "<a href='byond://?[src_href];stickyban=[(ban[BANKEY_TIMEOUT] ? "untimeout" : "timeout")]&ckey=[ckey]'>[ban[BANKEY_TIMEOUT] ? "Untimeout" : "Timeout"]</a>"
+	var/remove_link = "<a href='byond://?[src_href];stickyban=remove&ckey=[ckey]'>-</a>"
+	var/edit_link = "<b><a href='byond://?[src_href];stickyban=edit&ckey=[ckey]'>Edit</a></b>"
 	var/owner = "LEGACY"
 	if (!is_stickyban_from_game(ban))
 		owner = "HOST"
@@ -243,8 +243,8 @@
 		if (ckey(key) == ckey)
 			continue
 		var/li = "<li>"
-		li += "<a href='?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>-</a>"
-		li += "<a href='?[src_href];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]'>E</a>"
+		li += "<a href='byond://?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>-</a>"
+		li += "<a href='byond://?[src_href];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]'>E</a>"
 		li += "[key]"
 		li += "</li>"
 		alt_keys_li += li
@@ -252,8 +252,8 @@
 		if (ckey(key) == ckey)
 			continue
 		var/li = "<li>"
-		li += "<a href='?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>-</a>"
-		li += "<a href='?[src_href];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>UE</a>"
+		li += "<a href='byond://?[src_href];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>-</a>"
+		li += "<a href='byond://?[src_href];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>UE</a>"
 		li += "[key]"
 		li += "</li>"
 		alt_keys_li += li
@@ -275,7 +275,7 @@
 		return
 	var/list/bans = sticky_banned_ckeys()
 	var/header = "<title>Sticky Bans</title><style> .sign{ font-style: italic;}</style>"
-	var/title = "Sticky Bans <a href='?_src_=holder;stickyban=add'>Add</a>"
+	var/title = "Sticky Bans <a href='byond://?_src_=holder;stickyban=add'>Add</a>"
 	var/list/html_bans_data = list()
 	for(var/ckey in bans)
 		var/list/ban_html_record = stickyban_gethtml(ckey)

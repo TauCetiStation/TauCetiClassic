@@ -13,4 +13,4 @@
 	empulse(get_turf(holder), range / 2, range)
 
 /datum/artifact_effect/emp/DoEffectDestroy()
-	empulse(get_turf(holder), 7, range)
+	empulse(get_turf(holder), 7, range, custom_effects = EMP_SEBB)

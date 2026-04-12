@@ -19,6 +19,17 @@
 /datum/action/item_action/hands_free/activate_grenade
 	name = "Activate Grenade"
 
+/obj/item/weapon/grenade/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback)
+	. = ..()
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+	transform = turn(transform, rand(0,360))
+
+/obj/item/weapon/grenade/pickup()
+	. = ..()
+	transform = initial(transform)
+	update_icon()
+
 /obj/item/weapon/grenade/proc/clown_check(mob/living/user)
 	if(user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>Как эта штука работает?</span>")
@@ -39,7 +50,7 @@
 	if(!clown_check(user))
 		return
 
-	to_chat(user, "<span class='warning'>Вы подготавливаете [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
+	to_chat(user, "<span class='warning'>Вы активируете [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user))
@@ -87,8 +98,8 @@
 	..()
 
 /obj/item/weapon/grenade/syndieminibomb
-	desc = "Изготовленное синдикатом взрывное устройство, предназначенное для разрушений и хаоса."
 	name = "syndicate minibomb"
+	desc = "Изготовленное синдикатом взрывное устройство, предназначенное для разрушений и хаоса."
 	icon_state = "syndicate"
 	item_state = "flashbang"
 	origin_tech = "materials=3;magnets=4;syndicate=4"

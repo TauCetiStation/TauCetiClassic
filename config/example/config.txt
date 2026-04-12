@@ -4,9 +4,6 @@
 ## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
 
-## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
-BAN_LEGACY_SYSTEM
-
 ## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
@@ -37,6 +34,7 @@ LOG_ASSET
 LOG_TGUI
 # LOG_JS_ERROR
 # LOG_HREFS
+# LOG_ICON_LOOKUP
 # LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
 ## sql switching
@@ -91,8 +89,11 @@ ALLOW_AI 1
 ## set a hosted by name for unix platforms
 #HOSTEDBY yournamehere
 
-## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
-GUEST_BAN
+## Level of access for people connecting to your server with guest account (without a registered ckey, i.e. guest-*)
+## 0 - blocked
+## 1 - lobby only (for alternative login methods like server password)
+## 2 - game access
+GUEST_MODE 0
 
 ## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
@@ -169,7 +170,7 @@ ALIEN_AVAILABLE_BY_TIME DIONA 40000
 #DEATHTIME_REQUIRED 18000
 
 ## Path to the python executable on the system. Leave blank for default.
-## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
+## Default is "python" on Windows, "/usr/bin/env python3" on UNIX.
 #PYTHON_PATH
 
 ## GitHub PAT with no scopes to increase rate limits of GitHub requests.
@@ -226,9 +227,6 @@ REQ_CULT_GHOSTWRITER 6
 ## Your link to donat informations
 #DONATE_INFO_URL http://you-url
 
-## Uncomment this to enable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
-# CHECK_RANDOMIZER
-
 ##BYOND version restrictions
 ##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned
 ##by default will be used build RECOMMENDED_VERSION (latest compatible major version)
@@ -278,13 +276,17 @@ NO_JUNKYARD
 ## Saves some initialization time
 # NO_SPACE_LEVELS
 
+## Uncomment to enable byond profiler. Logs will be dropped in the round log folder.
+## Keep in mind it can cause performance degradation.
+# AUTO_PROFILE
+
 ## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
 # AUTO_LAG_SWITCH_POP 100
 
 ## Enables demo recordings, works slower on windows
 # RECORD_REPLAYS
 
-## Use persistent cache for better perfomance
+## Use persistent cache for better performance
 ## You will need to occasionally clean ./cache/persistent yourself from old files
 ## by removing folder or with ./script/clear_persistent_cache.sh
 #USE_PERSISTENT_CACHE

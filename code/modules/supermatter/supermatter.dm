@@ -34,11 +34,12 @@
 /obj/machinery/power/supermatter
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal. <span class='warning'>You get headaches just from looking at it.</span>"
-	icon = 'icons/obj/engine.dmi'
+	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = FALSE
 	light_range = 4
+	layer = 4
 
 	appearance_flags = PIXEL_SCALE // no tile bound to allow distortion to render outside of direct view
 	///Effect holder for the displacement filter to distort the SM based on its activity level
@@ -362,7 +363,7 @@
 
 /atom/movable/distortion_effect
 	name = ""
-	plane = ANOMALY_PLANE
+	plane = DISTORTION_PLANE
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/96x96.dmi'

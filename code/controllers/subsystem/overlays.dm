@@ -135,6 +135,10 @@ SUBSYSTEM_DEF(overlays)
 
 	overlays = build_appearance_list(overlays)
 
+	if(SSticker.current_state <= GAME_STATE_STARTUP) // saves on subsystem overhead at init
+		src.overlays += overlays
+		return
+
 	LAZYINITLIST(add_overlays) //always initialized after this point
 	var/a_len = add_overlays.len
 

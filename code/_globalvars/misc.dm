@@ -38,6 +38,7 @@ var/global/list/ignore_vision_inside = list(
 	/obj/machinery/clonepod,
 	/obj/machinery/dna_scannernew,
 	/obj/machinery/sleeper,
+	/obj/machinery/build_crane,
 	/obj/effect/dummy,
 	/obj/structure/droppod,
 	/obj/item/organ/external/head/skeleton,
@@ -47,6 +48,7 @@ var/global/list/ignore_vision_inside = list(
 var/global/datum/religion/chaplain/chaplain_religion
 // Cultists religion. You/I can change it?
 var/global/datum/religion/cult/cult_religion
+var/global/datum/religion/pluvia/pluvia_religion
 var/global/list/datum/religion/all_religions = list()
 
 //Used for global activation of pylons
@@ -58,3 +60,8 @@ var/global/timezoneOffset = 0       // The difference betwen midnight (of the ho
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
 
 var/global/playsound_frequency_admin = 0	// Admin var for shitspawn via Secrets panel
+
+var/global/nuclear_siren_cooldown = 0
+
+var/global/station_disposal_count = 0
+var/global/station_chairs_count = 0

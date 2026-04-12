@@ -24,7 +24,7 @@
 		action = new (user)
 		action.button_icon_state = button_icon_state
 		action.name = name
-		action.holder = src
+		action.target = src
 		action.Grant(user)
 
 /obj/effect/proc_holder/changeling/Destroy()
@@ -37,13 +37,13 @@
 /datum/action/innate/changeling
 	button_icon = 'icons/hud/actions_changeling.dmi'
 	background_icon_state = "bg_changeling"
-	var/obj/effect/proc_holder/changeling/holder
 
 /datum/action/innate/changeling/Trigger()
 	. = ..()
 	var/mob/user = owner
 	if(!user || !ischangeling(user))
 		return
+	var/obj/effect/proc_holder/changeling/holder = target
 	holder.on_sting_choose(user)
 
 /obj/effect/proc_holder/changeling/Click()

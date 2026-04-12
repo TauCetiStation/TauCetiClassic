@@ -7,7 +7,8 @@
 	antag_hud_name = "changeling"
 
 	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Head of Security", "Captain", "Blueshield Officer")
-	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC)
+	restricted_species_traits = list(TRAIT_INCOMPATIBLE_DNA)
 	logo_state = "change-logoa"
 
 	stat_type = /datum/stat/role/changeling
@@ -140,7 +141,7 @@
 	. += "<br><b>Genomes Absorbed:</b> [absorbedcount]"
 	. += "<br><b>Stored Essences:</b><br>"
 	for(var/mob/living/parasite/essence/E in essences)
-		. += printplayerwithicon(E?.mind)
+		. += printplayer(E?.mind)
 		. += "<br>"
 	if(purchasedpowers.len)
 		. += "<br><b>[changelingID] used the following abilities: </b>"
@@ -154,7 +155,7 @@
 /datum/role/changeling/extraPanelButtons()
 	var/dat = ..()
 	if(absorbed_dna.len && (antag.current.real_name != absorbed_dna[1]) )
-		dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];changeling_initialdna=1'>(Transform to initial appearance)</a>"
+		dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];changeling_initialdna=1'>(Transform to initial appearance)</a>"
 	return dat
 
 /datum/role/changeling/RoleTopic(href, href_list, datum/mind/M, admin_auth)

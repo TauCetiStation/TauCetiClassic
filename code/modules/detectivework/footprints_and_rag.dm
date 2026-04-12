@@ -1,13 +1,11 @@
 /mob
-	var/bloody_hands = 0
-	var/mob/living/carbon/human/bloody_hands_mob
+	var/dirty_hands_transfers = 0
 	var/track_blood = 0
 	var/list/feet_blood_DNA
 	var/datum/dirt_cover/feet_dirt_color
 
 /obj/item/clothing/gloves
-	var/transfer_blood = 0
-	var/mob/living/carbon/human/bloody_hands_mob
+	var/dirt_transfers = 0
 
 /obj/item/clothing/shoes
 	var/track_blood = 0

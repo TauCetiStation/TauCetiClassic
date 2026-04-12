@@ -21,17 +21,11 @@
 	state = _state
 	invisibility = state ? initial(invisibility) : INVISIBILITY_ABSTRACT
 
-/client/New(TopicData)
-	. = ..()
-	tooltip = new /atom/movable/screen/tooltip()
-	if(prefs.tooltip)
-		tooltip.set_state(TRUE)
-
 /client/MouseEntered(atom/hoverOn, location, control, params)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	tooltip.looking_at = "\ref[hoverOn]"
 	if(prefs.tooltip && tooltip?.state)
-		var/text_in_tooltip = hoverOn.get_name()
+		var/text_in_tooltip = hoverOn.get_name(mob)
 		screen |= tooltip
 		tooltip.SetMapText(text_in_tooltip, prefs.tooltip_font)

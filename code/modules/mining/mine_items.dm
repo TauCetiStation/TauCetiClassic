@@ -121,7 +121,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
-	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
+	dat += "<b><A href='byond://?src=\ref[src];move=[1]'>Send</A></b></center>"
 
 	var/datum/browser/popup = new(user, "miningshuttle", "Mining Shuttle Control", 200, 150)
 	popup.set_content(dat)
@@ -270,6 +270,19 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
 		QUALITY_PRYING = 0.75
+	)
+
+/obj/item/weapon/shovel/experimental
+	name = "experimental shovel"
+	desc = "It's a damn cool shovel."
+	icon_state = "expshovel"
+	item_state = "expshovel"
+	item_state_world = "expshovel_world"
+	force = 10.0
+	toolspeed = 0.1
+	origin_tech = "materials=2;engineering=3"
+	qualities = list(
+		QUALITY_PRYING = 0.1
 	)
 
 /obj/item/weapon/shovel/spade
@@ -444,7 +457,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
 	name = "mining explosives"
-	desc = "Used for mining."
+	cases = list("шахтерская взрывчатка","шахтерской взрывчатки","шахтерской взрывчатке","шахтерскую взрывчатку","шахтерской взрывчаткой","шахтерской взрывчатке")
+	desc = "Применяется для шахтерских взрывных работ. Используя её, не забывайте о технике безопасности"
 	gender = PLURAL
 	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
@@ -458,24 +472,22 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>Вы разбираетесь, как установить таймер на [CASE(src, PREPOSITIONAL_CASE)]...</span>"))
 		return
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
+	var/newtime = input(usr, "Укажите время до взрыва.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
-	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
+	to_chat(user, "<span class='notice'>Таймер установлен на [timer] [PLUR_SECONDS_IN(timer)].</span>")
 
 /obj/item/weapon/mining_charge/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
 		return
-	if (!istype(target, /turf/simulated/mineral))
-		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
-		return
+
 	if(user.is_busy(src))
 		return
 
-	to_chat(user, "<span class='notice'>Planting explosives...</span>")
+	to_chat(user, "<span class='notice'>Вы устанавливаете взрывчатку...</span>")
 	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_MASTER, /datum/skill/engineering = SKILL_LEVEL_PRO), -0.1)
 	if(do_after(user, planting_time, target = target))
 		user.drop_item()
@@ -484,14 +496,25 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		var/location
 		location = target
 		target.add_overlay(image('icons/obj/mining/explosives.dmi', "charge_basic_armed"))
-		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
+		to_chat(user, "<span class='notice'>Взрывчатка установлена. До взрыва осталось [timer] [PLUR_SECONDS_LEFT(timer)].</span>")
 		spawn(timer*10)
+
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
 				if(!M)	return
 
 			if(target)
-				explosion(location, 0, 2, 4)
-				target.ex_act(EXPLODE_DEVASTATE)
+
+				if(istype(target, /turf/simulated/mineral))
+					explosion(location, 0, 7, 4)
+				else
+					explosion(location, 0, 0, 4)
+
+				if(iswallturf(target))
+					var/turf/simulated/wall/W = target
+					W.dismantle_wall(1)
+				else
+					target.ex_act(EXPLODE_DEVASTATE)
+
 				if(src)
 					qdel(src)
 
@@ -667,7 +690,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	damtype = BURN
 	hitsound = list('sound/weapons/sear.ogg')
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
-	fire_delay = 3
+	fire_delay = 4
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -697,16 +720,15 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if((iswallturf(target)) && (prob(destruction_chance)))
 		target.ex_act(EXPLODE_HEAVY)
 
-
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
 	if(emagged)
 		return FALSE
 	ammo_type += new /obj/item/ammo_casing/energy/laser/cutter/emagged(src)
-	fire_delay = 5
 	origin_tech += ";syndicate=1"
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
@@ -787,7 +809,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_expander
 	name = "accelerator upgrade"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "card_mod"
+	icon_state = "accelerator_space"
+	item_state_world = "accelerator_space_w"
 	desc = "Расширение для кинетического ускорителя. Даёт место для дополнительного улучшения."
 
 ///////////////////////////////////////////
@@ -795,6 +818,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/resources
 	name = "accelerator upgrade(resources)"
 	icon_state = "accelerator_upg_resources"
+	item_state_world = "accelerator_upg_resources_w"
 	var/additional_coefficient = 0.25 // 25%
 
 /obj/item/kinetic_upgrade/resources/atom_init()
@@ -812,6 +836,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/range
 	name = "accelerator upgrade(range)"
 	icon_state = "accelerator_upg_range"
+	item_state_world = "accelerator_upg_range_w"
 	var/range_increase = 1
 
 /obj/item/kinetic_upgrade/range/atom_init()
@@ -829,6 +854,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/damage
 	name = "accelerator upgrade(damage)"
 	icon_state = "accelerator_upg_damage"
+	item_state_world = "accelerator_upg_damage_w"
 	var/damage_increase = 1.5
 
 /obj/item/kinetic_upgrade/damage/atom_init()
@@ -846,6 +872,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/speed
 	name = "accelerator upgrade(speed)"
 	icon_state = "accelerator_upg_speed"
+	item_state_world = "accelerator_upg_speed_w"
 	var/cooldown_reduction = 0.4 SECOND
 
 /obj/item/kinetic_upgrade/speed/atom_init()
@@ -865,7 +892,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	has_gravity = 1
 	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
 
@@ -1060,7 +1087,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(I.use_tool(src, user, 20, volume = 50))
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			new /obj/item/device/gps(src.loc)
 			qdel(src)
 			return
@@ -1142,7 +1169,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			if(user.is_busy(src))
 				return
 			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
-			if(O.use_tool(src, user, 20, volume = 50))
+			if(O.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 				qdel(src)
 			return
 		if(accept_check(O))
@@ -1179,7 +1206,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)

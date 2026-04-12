@@ -1,5 +1,5 @@
 
-/mob/living/Login()
+/mob/living/LateLogin()
 	..()
 	//Mind updates
 	sync_mind()	//updates the mind (or creates and initializes one if one doesn't exist) and sync with client
@@ -12,7 +12,7 @@
 	noob_notify(src)
 
 	if(config.guard_enabled)
-		client.guard.trigger_init()
+		client.prefs.guard.trigger_init()
 
 	//Jukebox
 	client.media?.open()

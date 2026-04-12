@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(mob_modifier)
 		if(QDELETED(thing))
 			processing -= thing
 		else
-			thing.process()
+			thing.process(wait * 0.1)
 
 		if (MC_TICK_CHECK)
 			return

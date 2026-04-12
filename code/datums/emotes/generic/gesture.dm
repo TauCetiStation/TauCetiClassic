@@ -8,9 +8,7 @@
 
 	cooldown = 5 SECONDS
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/dance/do_emote(mob/user, emote_key, intentional)
 	. = ..()

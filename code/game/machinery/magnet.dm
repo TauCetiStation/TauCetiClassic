@@ -9,7 +9,6 @@
 	icon_state = "floor_magnet-f"
 	name = "Electromagnetic Generator"
 	desc = "A device that uses station power to create points of magnetic energy."
-	level = 1		// underfloor
 	layer = 2.5
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -30,29 +29,14 @@
 
 /obj/machinery/magnetic_module/atom_init()
 	. = ..()
-	var/turf/T = loc
-	hide(T.intact)
-	center = T
+	center = loc
 	radio_controller.add_object(src, freq, RADIO_MAGNETS)
 	INVOKE_ASYNC(src, PROC_REF(magnetic_process))
 
-	// update the invisibility and icon
-/obj/machinery/magnetic_module/hide(intact)
-	invisibility = intact ? 101 : 0
-	updateicon()
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
-	// update the icon_state
 /obj/machinery/magnetic_module/proc/updateicon()
-	var/state = "floor_magnet"
-	var/onstate = ""
-	if(!on)
-		onstate = "0"
-
-	if(invisibility)
-		icon_state = "[state][onstate]-f"	// if invisible, set icon to faded version
-											// in case of being revealed by T-scanner
-	else
-		icon_state = "[state][onstate]"
+	icon_state = "floor_magnet[on ? "" : "0"]"
 
 /obj/machinery/magnetic_module/receive_signal(datum/signal/signal)
 	var/command = signal.data["command"]
@@ -235,9 +219,9 @@
 	var/dat = ""
 	if(!autolink)
 		dat += {"
-		Frequency: <a href='?src=\ref[src];operation=setfreq'>[frequency]</a><br>
-		Code: <a href='?src=\ref[src];operation=setfreq'>[code]</a><br>
-		<a href='?src=\ref[src];operation=probe'>Probe Generators</a><br>
+		Frequency: <a href='byond://?src=\ref[src];operation=setfreq'>[frequency]</a><br>
+		Code: <a href='byond://?src=\ref[src];operation=setfreq'>[code]</a><br>
+		<a href='byond://?src=\ref[src];operation=probe'>Probe Generators</a><br>
 		"}
 
 	if(magnets.len >= 1)
@@ -246,11 +230,11 @@
 		var/i = 0
 		for(var/obj/machinery/magnetic_module/M in magnets)
 			i++
-			dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< \[[i]\] (<a href='?src=\ref[src];radio-op=togglepower'>[M.on ? "On":"Off"]</a>) | Electricity level: <a href='?src=\ref[src];radio-op=minuselec'>-</a> [M.electricity_level] <a href='?src=\ref[src];radio-op=pluselec'>+</a>; Magnetic field: <a href='?src=\ref[src];radio-op=minusmag'>-</a> [M.magnetic_field] <a href='?src=\ref[src];radio-op=plusmag'>+</a><br>"
+			dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< \[[i]\] (<a href='byond://?src=\ref[src];radio-op=togglepower'>[M.on ? "On":"Off"]</a>) | Electricity level: <a href='byond://?src=\ref[src];radio-op=minuselec'>-</a> [M.electricity_level] <a href='byond://?src=\ref[src];radio-op=pluselec'>+</a>; Magnetic field: <a href='byond://?src=\ref[src];radio-op=minusmag'>-</a> [M.magnetic_field] <a href='byond://?src=\ref[src];radio-op=plusmag'>+</a><br>"
 
-	dat += "<br>Speed: <a href='?src=\ref[src];operation=minusspeed'>-</a> [speed] <a href='?src=\ref[src];operation=plusspeed'>+</a><br>"
-	dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
-	dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
+	dat += "<br>Speed: <a href='byond://?src=\ref[src];operation=minusspeed'>-</a> [speed] <a href='byond://?src=\ref[src];operation=plusspeed'>+</a><br>"
+	dat += "Path: {<a href='byond://?src=\ref[src];operation=setpath'>[path]</a>}<br>"
+	dat += "Moving: <a href='byond://?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
 
 	var/datum/browser/popup = new(user, "window=magnet", src.name, 400, 500)
 	popup.set_content(dat)

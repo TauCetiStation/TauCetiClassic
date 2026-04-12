@@ -14,12 +14,6 @@ import { SettingsPanel, useSettings } from './settings';
 import { EmotesPanel, useEmotes } from './emotes';
 
 export const Panel = (props, context) => {
-  // IE8-10: Needs special treatment due to missing Flex support
-  if (Byond.IS_LTE_IE10) {
-    return (
-      <HoboPanel />
-    );
-  }
   const settings = useSettings(context);
   const emotes = useEmotes(context);
   const game = useGame(context);
@@ -27,9 +21,7 @@ export const Panel = (props, context) => {
     const { useDebug, KitchenSink } = require('tgui/debug');
     const debug = useDebug(context);
     if (debug.kitchenSink) {
-      return (
-        <KitchenSink panel />
-      );
+      return <KitchenSink panel />;
     }
   }
   return (
@@ -51,17 +43,19 @@ export const Panel = (props, context) => {
                   icon="grin"
                   tooltip="Emotes panel"
                   tooltipPosition="bottom-start"
-                  onClick={() => emotes.toggle()} />
+                  onClick={() => emotes.toggle()}
+                />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon={settings.visible ? 'times' : 'cog'}
                   selected={settings.visible}
-                  tooltip={settings.visible
-                    ? 'Close settings'
-                    : 'Open settings'}
+                  tooltip={
+                    settings.visible ? 'Close settings' : 'Open settings'
+                  }
                   tooltipPosition="bottom-start"
-                  onClick={() => settings.toggle()} />
+                  onClick={() => settings.toggle()}
+                />
               </Stack.Item>
             </Stack>
           </Section>
@@ -78,21 +72,21 @@ export const Panel = (props, context) => {
         )}
         <Stack.Item grow>
           <Section fill fitted position="relative">
-            <Pane.Content scrollable>
+            <Pane.Content style={{ 'overflow-y': 'scroll' }} scrollable>
               <ChatPanel lineHeight={settings.lineHeight} />
             </Pane.Content>
             <Notifications>
               {game.connectionLostAt && (
                 <Notifications.Item
-                  rightSlot={(
+                  rightSlot={
                     <Button
                       color="white"
                       onClick={() => Byond.command('.reconnect')}>
                       Reconnect
                     </Button>
-                  )}>
-                  You are either AFK, experiencing lag or the connection
-                  has closed.
+                  }>
+                  You are either AFK, experiencing lag or the connection has
+                  closed.
                 </Notifications.Item>
               )}
               {game.roundRestartedAt && (
@@ -113,7 +107,7 @@ const HoboPanel = (props, context) => {
   const settings = useSettings(context);
   return (
     <Pane theme={settings.theme}>
-      <Pane.Content scrollable>
+      <Pane.Content>
         <Button
           style={{
             position: 'fixed',
@@ -125,9 +119,7 @@ const HoboPanel = (props, context) => {
           onClick={() => settings.toggle()}>
           Settings
         </Button>
-        {settings.visible && (
-          <SettingsPanel />
-        ) || (
+        {(settings.visible && <SettingsPanel />) || (
           <ChatPanel lineHeight={settings.lineHeight} />
         )}
       </Pane.Content>

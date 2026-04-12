@@ -3,12 +3,12 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door
 	name = "Door"
 	desc = "It opens and closes."
-	icon = 'icons/obj/doors/Doorint.dmi'
-	icon_state = "door1"
 	anchored = TRUE
 	opacity = 1
 	density = TRUE
 	can_block_air = TRUE
+
+	hit_particle_type = /particles/tool/digging/metal
 
 	layer = DOOR_LAYER
 	var/base_layer = DOOR_LAYER
@@ -155,9 +155,9 @@ var/global/list/wedge_image_cache = list()
 				playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 				var/armor_block = H.run_armor_check(BP_HEAD, "melee")
 				if(armor_block)
-					visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
-				else
 					visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				else
+					visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
 				if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
 					H.Stun(2)
 					H.Weaken(5)
@@ -210,8 +210,6 @@ var/global/list/wedge_image_cache = list()
 			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/device/detective_scanner))
-		return
 	if(src.operating)
 		return
 	if(src.density && hasPower() && istype(I, /obj/item/weapon/melee/energy/blade))
@@ -585,5 +583,6 @@ var/global/list/wedge_image_cache = list()
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+	icon_state = "door1"
 	door_open_sound  = 'sound/machines/shutter_open.ogg'
 	door_close_sound = 'sound/machines/shutter_close.ogg'

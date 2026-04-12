@@ -53,6 +53,7 @@
 
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
+	add_fingerprint(user)
 	if(!allowed(usr))
 		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
 		return FALSE
@@ -70,7 +71,7 @@
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 	else if(isscrewing(P))
-		if(P.use_tool(src, user, 15))
+		if(P.use_tool(src, user, 15, quality = QUALITY_SCREWING))
 			deconstruct(TRUE)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	else
@@ -86,6 +87,7 @@
 	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
+	add_fingerprint(user)
 	if(!allowed(usr))
 		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
 		return FALSE
@@ -99,7 +101,7 @@
 	var/i
 	for(i=contents.len, i>=1, i--)
 		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
+		dat += "<tr><td><a href='byond://?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
 	dat += "</table></center>"
 
 	var/datum/browser/popup = new(user, "filingcabinet", src.name, 350, 300)

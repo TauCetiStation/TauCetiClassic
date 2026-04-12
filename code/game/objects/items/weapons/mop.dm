@@ -3,13 +3,14 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
+	item_state_world = "mop_world"
 	force = 3.0
 	throwforce = 10.0
 	throw_range = 10
 	w_class = SIZE_SMALL
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 
-	sweep_step = 4
+	sweep_step = 2
 
 	var/mopping = 0
 	var/mopcount = 0
@@ -124,10 +125,11 @@
 	name = "advanced mop"
 	icon_state = "advmop"
 	item_state = "advmop"
+	item_state_world = "advmop_world"
 	force = 6.0
 	throwforce = 10.0
 	throw_range = 10.0
-	sweep_step = 2
+	sweep_step = 1
 
 /obj/effect/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap) || istype(I, /obj/item/weapon/kitchen/utensil/fork))

@@ -95,11 +95,11 @@
 
 /datum/gear/accessory/silver_collar
 	display_name = "Silver Collar"
-	path = /obj/item/clothing/mask/tie/collar
+	path = /obj/item/clothing/neck/collar
 
 /datum/gear/accessory/gold_collar
 	display_name = "Gold Collar"
-	path = /obj/item/clothing/mask/tie/collar2
+	path = /obj/item/clothing/neck/collar2
 
 /datum/gear/accessory/metal_cross
 	display_name = "Metal cross"

@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(vote)
 	if(!active_poll)
 		return
 
-	active_poll.process()
+	active_poll.process(wait * 0.1)
 	if(!active_poll)//Need to check again because the active vote can be nulled during its process. For example if an admin forces start
 		return
 
@@ -87,6 +87,9 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
+		return
+
+	if(usr && IsGuestKey(usr.key))
 		return
 
 	switch(action)
@@ -168,5 +171,8 @@ SUBSYSTEM_DEF(vote)
 /mob/verb/vote()
 	set category = "OOC"
 	set name = "Vote"
+
+	if(IsGuestKey(key))
+		return
 
 	SSvote.tgui_interact(src)

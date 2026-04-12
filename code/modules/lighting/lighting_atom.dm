@@ -77,15 +77,6 @@
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
 
-
-/atom/movable/Moved(atom/OldLoc, Dir)
-	. = ..()
-	var/datum/light_source/L
-	var/thing
-	for (thing in light_sources) // Cycle through the light sources on this atom and tell them to update.
-		L = thing
-		L.source_atom.update_light()
-
 /atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = LIGHT_COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
 	return
 
@@ -115,14 +106,14 @@
 /atom/proc/turn_light_off()
 	set_light(0)
 
-var/global/GLOW_BRIGHTNESS_BASE = 0.46
-var/global/GLOW_BRIGHTNESS_POWER = -1.6
-var/global/GLOW_CONTRAST_BASE = 10
-var/global/GLOW_CONTRAST_POWER = -0.15
-var/global/EXPOSURE_BRIGHTNESS_BASE = 0.2
-var/global/EXPOSURE_BRIGHTNESS_POWER = -0.2
-var/global/EXPOSURE_CONTRAST_BASE = 10
-var/global/EXPOSURE_CONTRAST_POWER = 0
+var/global/GLOW_BRIGHTNESS_BASE = GLOW_BRIGHTNESS_BASE_DEF
+var/global/GLOW_BRIGHTNESS_POWER = GLOW_BRIGHTNESS_POWER_DEF
+var/global/GLOW_CONTRAST_BASE = GLOW_CONTRAST_BASE_DEF
+var/global/GLOW_CONTRAST_POWER = GLOW_CONTRAST_POWER_DEF
+var/global/EXPOSURE_BRIGHTNESS_BASE = EXPOSURE_BRIGHTNESS_BASE_DEF
+var/global/EXPOSURE_BRIGHTNESS_POWER = EXPOSURE_BRIGHTNESS_POWER_DEF
+var/global/EXPOSURE_CONTRAST_BASE = EXPOSURE_CONTRAST_BASE_DEF
+var/global/EXPOSURE_CONTRAST_POWER = EXPOSURE_CONTRAST_POWER_DEF
 /atom/proc/update_bloom()
 	cut_overlay(glow_overlay)
 	cut_overlay(exposure_overlay)

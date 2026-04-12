@@ -7,6 +7,3 @@
 /datum/game_mode/extended/announce()
 	to_chat(world, "<B>Текущий режим игры - Extended, Ролевая игра!</B>")
 	to_chat(world, "<B>Просто веселитесь и играйте!</B>")
-
-/datum/game_mode/extended/Setup()
-	return TRUE

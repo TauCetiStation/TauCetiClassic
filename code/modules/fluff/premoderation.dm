@@ -86,12 +86,13 @@
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 
 <div id='main'><table id='searchable' cellspacing='0'>
-<a class='small' href='?src=\ref[src];custom_items=moderation_viewbyckey'>View items by ckey</a><br>
-<a class='small' href='?src=\ref[src];custom_items=moderation_viewpremoderation'>View premoderation list</a>
+<a class='small' href='byond://?src=\ref[src];custom_items=moderation_viewbyckey'>View items by ckey</a><br>
+<a class='small' href='byond://?src=\ref[src];custom_items=moderation_viewpremoderation'>View premoderation list</a>
 <tr class='title'>
 <th text-align:center;'>Item (click to preview)</th>
 <th text-align:center;'>Author ckey</th>
@@ -105,17 +106,17 @@
 		for(var/itemname in items)
 			var/datum/custom_item/item = items[itemname]
 			output += "<tr>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_view;ckey=[player_ckey];itemname=[ckey(item.name)]'>[item.name] ([item.status])</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];custom_items=moderation_view;ckey=[player_ckey];itemname=[ckey(item.name)]'>[item.name] ([item.status])</a></td>"
 			output += "<td style='text-align:center;'>[player_ckey]</td>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_accept;ckey=[player_ckey];itemname=[ckey(item.name)];viewthis=1'>Accept</a> <a class='small' href='?src=\ref[src];custom_items=moderation_reject;ckey=[player_ckey];itemname=[ckey(item.name)];viewthis=1'>Deny</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];custom_items=moderation_accept;ckey=[player_ckey];itemname=[ckey(item.name)];viewthis=1'>Accept</a> <a class='small' href='byond://?src=\ref[src];custom_items=moderation_reject;ckey=[player_ckey];itemname=[ckey(item.name)];viewthis=1'>Deny</a></td>"
 			output += "</tr>"
 	else
 		var/list/premoderations = custom_item_premoderation_list()
 		for(var/datum/premoderation_item/item in premoderations)
 			output += "<tr>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_view;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>[item.item_name]</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];custom_items=moderation_view;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>[item.item_name]</a></td>"
 			output += "<td style='text-align:center;'>[item.author_ckey]</td>"
-			output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=moderation_accept;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>Accept</a> <a class='small' href='?src=\ref[src];custom_items=moderation_reject;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>Deny</a></td>"
+			output += "<td style='text-align:center;'><a class='small' href='byond://?src=\ref[src];custom_items=moderation_accept;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>Accept</a> <a class='small' href='byond://?src=\ref[src];custom_items=moderation_reject;ckey=[item.author_ckey];itemname=[ckey(item.item_name)]'>Deny</a></td>"
 			output += "</tr>"
 
 	output += {"
@@ -124,4 +125,4 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=customitems_moderation;size=600x500")
+	usr << browse(output,"window=customitems_moderation;[get_browse_size_parameter(usr, 600, 500)]")

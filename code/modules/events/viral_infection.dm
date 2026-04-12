@@ -14,7 +14,7 @@
 	for(var/mob/living/carbon/human/H in shuffle(human_list))
 		if(!infected)
 			break
-		if(!H.client || H.stat == DEAD || H.species.flags[VIRUS_IMMUNE])
+		if(!H.client || H.stat == DEAD || HAS_TRAIT(H, TRAIT_VIRUS_IMMUNE))
 			continue
 		if(prob(chance))
 			infect_mob_random_greater(H)

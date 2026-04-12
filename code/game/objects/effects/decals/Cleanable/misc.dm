@@ -131,9 +131,7 @@
 	return ..()
 
 /obj/effect/decal/cleanable/vomit/proc/stop_light()
-	sleep(rand(150,300))
-	if(!src) return
-	set_light(0)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, set_light), 0), rand(150, 300))
 
 /obj/effect/decal/cleanable/shreds
 	name = "shreds"
@@ -156,6 +154,17 @@
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
+
+	beauty = -100
+
+/obj/effect/decal/cleanable/bluespacetomato_smudge
+	name = "bluespacetomato smudge"
+	desc = "It's blue."
+	density = FALSE
+	anchored = TRUE
+	layer = 2
+	icon = 'icons/effects/tomatodecal.dmi'
+	random_icon_states = list("bluespacetomato_floor1", "bluespacetomato_floor2", "bluespacetomato_floor3")
 
 	beauty = -100
 

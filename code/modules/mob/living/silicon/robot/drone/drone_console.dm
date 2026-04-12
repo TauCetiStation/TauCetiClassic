@@ -28,12 +28,12 @@
 		dat += "<BR>[D.real_name] ([D.stat == DEAD ? "<span class='red'>INACTIVE</span>" : "<span class='green'>ACTIVE</span>"])"
 		dat += "<BR>Cell charge: [D.cell.charge]/[D.cell.maxcharge]."
 		dat += "<BR>Currently located in: [get_area(D)]."
-		dat += "<BR><A href='?src=\ref[src];resync=\ref[D]'>Resync</A> | <A href='?src=\ref[src];shutdown=\ref[D]'>Shutdown</A>"
+		dat += "<BR><A href='byond://?src=\ref[src];resync=\ref[D]'>Resync</A> | <A href='byond://?src=\ref[src];shutdown=\ref[D]'>Shutdown</A>"
 
-	dat += "<BR><BR><B>Request drone presence in area:</B> <A href='?src=\ref[src];setarea=1'>[drone_call_area]</A> (<A href='?src=\ref[src];ping=1'>Send ping</A>)"
+	dat += "<BR><BR><B>Request drone presence in area:</B> <A href='byond://?src=\ref[src];setarea=1'>[drone_call_area]</A> (<A href='byond://?src=\ref[src];ping=1'>Send ping</A>)"
 
 	dat += "<BR><BR><B>Drone fabricator</B>: "
-	dat += "[dronefab ? "<A href='?src=\ref[src];toggle_fab=1'>[(dronefab.produce_drones && !(dronefab.stat & NOPOWER)) ? "ACTIVE" : "INACTIVE"]</A>" : "<span class='red'><b>FABRICATOR NOT DETECTED.</b></span> (<A href='?src=\ref[src];search_fab=1'>search</a>)"]"
+	dat += "[dronefab ? "<A href='byond://?src=\ref[src];toggle_fab=1'>[(dronefab.produce_drones && !(dronefab.stat & NOPOWER)) ? "ACTIVE" : "INACTIVE"]</A>" : "<span class='red'><b>FABRICATOR NOT DETECTED.</b></span> (<A href='byond://?src=\ref[src];search_fab=1'>search</a>)"]"
 
 	var/datum/browser/popup = new(user, "computer", null, 400, 500)
 	popup.set_content(dat)
@@ -71,16 +71,20 @@
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["resync"])
 
-		if(D.stat != DEAD)
-			to_chat(usr, "<span class='warning'>You issue a law synchronization directive for the drone.</span>")
+		if(D.emagged || istype(D, /mob/living/silicon/robot/drone/maintenance/malfuction))
+			to_chat(usr, "<span class='warning'>Дрон не отвечает на запросы.</span>")
+		else if(D.stat != DEAD)
+			to_chat(usr, "<span class='notice'>You issue a law synchronization directive for the drone.</span>")
 			D.law_resync()
 
 	else if (href_list["shutdown"])
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["shutdown"])
 
-		if(D.stat != DEAD)
-			to_chat(usr, "<span class='warning'>You issue a kill command for the unfortunate drone.</span>")
+		if(D.emagged || istype(D, /mob/living/silicon/robot/drone/maintenance/malfuction))
+			to_chat(usr, "<span class='warning'>Система самоуничтожения этого дрона неисправна.</span>")
+		else if(D.stat != DEAD)
+			to_chat(usr, "<span class='notice'>You issue a kill command for the unfortunate drone.</span>")
 			message_admins("[key_name_admin(usr)] issued kill order for drone [key_name_admin(D)] from control console. [ADMIN_JMP(usr)]")
 			log_game("[key_name(usr)] issued kill order for [key_name(src)] from control console.")
 			D.shut_down()

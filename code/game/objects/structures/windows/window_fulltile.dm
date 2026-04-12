@@ -50,7 +50,7 @@
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
-	
+
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
@@ -62,7 +62,7 @@
 							"<span class='warning'>You start removing the glass from the [src]!</span>", \
 							"<span class='warning'>You hear screwing.</span>")
 
-		if(W.use_tool(src, user, 40))
+		if(W.use_tool(src, user, 40, quality = QUALITY_PRYING))
 			to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
 			deconstruct(TRUE)
 
@@ -103,7 +103,7 @@
 
 /obj/structure/window/fulltile/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS) && (!grilled || Proj.checkpass(PASSGRILLE)))
-		return PROJECTILE_FORCE_MISS
+		return PROJECTILE_WEAKENED
 
 	if(grilled && Proj.checkpass(PASSGLASS)) // replics should be happy (im crying because of how awful this is)
 		if(prob((max_integrity - get_integrity()) * 100 / GRILLE_MAX_INTEGRITY))
@@ -151,6 +151,8 @@
 	glass_color_blend_to_ratio = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronglass
+
+	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /**
  * Fulltile tinted
@@ -231,6 +233,8 @@
 	glass_color_blend_to_ratio = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronrglass
+
+	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /**
  * Fulltile reinforced tinted

@@ -225,3 +225,69 @@ SUBSYSTEM_DEF(economy)
 		charge_to_account(department_account.account_number, department_account.owner_name, "Субсидии отделу из бюджета станции", "Бюджет станции", needed_to_pay)
 		continue
 
+/datum/controller/subsystem/economy/proc/add_account_knowledge(mob/M, department)
+	var/datum/money_account/department_account = department_accounts[department]
+
+	if(!department_account)
+		return
+
+	M.mind.store_memory({"
+		<b>Your department's account number is:</b> #[department_account.account_number]<br>
+		<b>Your department's account pin is:</b> [department_account.remote_access_pin]<br>
+		<b>Your department's account funds are:</b> $[department_account.money]<br>
+	"})
+
+	M.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_NUMBER, department_account.account_number)
+	M.mind.add_key_memory(MEM_DEPARTMENT_ACCOUNT_PIN, department_account.remote_access_pin)
+
+//the function takes a rank, returns a list of subordinate personnel
+// todo: should rewrite
+/datum/controller/subsystem/economy/proc/my_subordinate_staff(head_rank)
+
+	var/all_staff = data_core.get_manifest()	//crew manifest
+	var/list/data = list()	//it will be returned
+	var/list/own_department = list()
+	var/list/QM_staff = list("Cargo Technician", "Shaft Miner", "Recycler")	//QM's boys
+
+	switch(head_rank)	//What departments do we manage?
+		if("Admin")
+			own_department = list("heads", "centcom", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
+		if("Captain")
+			own_department = list("sec", "eng", "med", "sci", "civ", "misc")	//exept "heads", repetitions we don't need
+		if("Head of Personnel")
+			own_department = list("civ", "misc")
+		if("Head of Security")
+			own_department = list("sec")
+		if("Chief Engineer")
+			own_department = list("eng")
+		if("Research Director")
+			own_department = list("sci")
+		if("Chief Medical Officer")
+			own_department = list("med")
+		if("Quartermaster")
+			own_department = list("civ")
+
+	for(var/department in own_department)
+		for(var/person in all_staff[department])
+			if(head_rank == person["rank"])	//we will not change the salary for yourself
+				continue
+			if(department == "med" && (head_rank == "Admin" || head_rank == "Captain") && person["rank"] == "Geneticist")	//so that the geneticist would not repeat twice
+				continue	//there is a geneticist in "sci"
+			if(department == "heads" && person["rank"] != "Captain")	//in "heads" we need only Captain
+				continue
+			if(department == "civ")
+				if(head_rank != "Admin" && person["rank"] == "Internal Affairs Agent")	//only CentCom can change IAA's salary
+					continue
+				if(head_rank != "Admin" && person["rank"] == "Blueshield Officer")
+					continue
+				//ffs just make cargo own department already instead of this stupidity
+				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
+					continue
+
+			var/datum/money_account/MA = get_account(person["account"])
+			if(!MA)
+				continue
+
+			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = MA.owner_salary, "account" = person["account"])
+
+	return data	// --> list(real_name, assignment, salary, account_number)

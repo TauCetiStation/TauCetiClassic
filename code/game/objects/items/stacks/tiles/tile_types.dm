@@ -11,6 +11,10 @@
 	lefthand_file = 'icons/mob/inhands/tiles_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/tiles_righthand.dmi'
 
+	// by default tile just changes floor icon_state. Use it to force change_turf
+	// in case if your floor has different type or needs smoothing
+	var/use_change_turf = FALSE 
+
 /*
  * Grass
  */
@@ -28,6 +32,20 @@
 	max_amount = 60
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/grass
+
+/obj/item/stack/tile/fairygrass
+	name = "fairygrass tile"
+	singular_name = "fairygrass floor tile"
+	desc = "A patch of odd, glowing blue grass."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "tile_fairygrass"
+	w_class = SIZE_SMALL
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 20
+	max_amount = 60
+	turf_type = /turf/simulated/floor/fairy
 
 /*
  * Wood
@@ -62,6 +80,9 @@
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor/carpet
+
+	use_change_turf = TRUE
+
 	var/carpet_icon_state = "carpet"
 
 /obj/item/stack/tile/carpet/black
@@ -135,3 +156,55 @@
 	item_state = "tile-carpet-cyan"
 	turf_type = /turf/simulated/floor/carpet/cyan
 	carpet_icon_state = "cyancarpet"
+
+/*
+ * Catwalk tiles
+ */
+
+/obj/item/stack/tile/grid
+	name = "grid tile"
+	singular_name = "grid floor tile"
+	icon_state = "tile_grid"
+	w_class = SIZE_SMALL
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 20
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/grid_floor
+
+	use_change_turf = TRUE
+
+/*
+ * Glass tiles
+ */
+
+/obj/item/stack/tile/glass
+	name = "glass tile"
+	icon_state = "tile_glass"
+	w_class = SIZE_SMALL
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 20
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/glass
+
+	use_change_turf = TRUE
+
+/obj/item/stack/tile/glass/reinforced
+	name = "reinforced glass tile"
+	icon_state = "tile_rglass"
+	turf_type = /turf/simulated/floor/glass/reinforced
+
+/obj/item/stack/tile/glass/phoron
+	name = "phoron glass tile"
+	icon_state = "tile_pglass"
+	turf_type = /turf/simulated/floor/glass/phoron
+
+/obj/item/stack/tile/glass/reinforced/phoron
+	name = "reinforced phoron glass tile"
+	icon_state = "tile_prglass"
+	turf_type = /turf/simulated/floor/glass/reinforced/phoron

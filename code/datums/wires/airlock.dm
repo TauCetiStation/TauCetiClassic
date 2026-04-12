@@ -67,27 +67,31 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 	if(.)
 		holder.add_fingerprint(usr)
 
-/datum/wires/airlock/update_cut(index, mended)
+/datum/wires/airlock/update_cut(index, mended, mob/user)
 	var/obj/machinery/door/airlock/A = holder
 
 	switch(index)
 		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			if(!mended)
 				A.loseMainPower()
-				A.shock(usr, 50)
+				if(user)
+					A.shock(user, 50)
 			else
 				if(!is_index_cut(AIRLOCK_WIRE_MAIN_POWER1) && !is_index_cut(AIRLOCK_WIRE_MAIN_POWER2))
 					A.regainMainPower()
-					A.shock(usr, 50)
+					if(user)
+						A.shock(user, 50)
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			if(!mended)
 				A.loseBackupPower()
-				A.shock(usr, 50)
+				if(user)
+					A.shock(user, 50)
 			else
 				if(!is_index_cut(AIRLOCK_WIRE_BACKUP_POWER1) && !is_index_cut(AIRLOCK_WIRE_BACKUP_POWER2))
 					A.regainBackupPower()
-					A.shock(usr, 50)
+					if(user)
+						A.shock(user, 50)
 
 		if(AIRLOCK_WIRE_DOOR_BOLTS)
 			if(!mended)
@@ -105,9 +109,9 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(!mended)
 				if(A.secondsElectrified != -1)
-					if(usr)
+					if(user)
 						A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
+						user.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
 					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)

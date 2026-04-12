@@ -295,7 +295,7 @@
 	var/list/hairs = get_valid_styles_from_cache(hairs_cache, E.species, gender)
 	if(hairs.len > 0)
 		h_style = pick(hairs)
-	update_hair()
+	update_body(BP_HEAD, update_preferences = TRUE)
 
 	ADD_TRAIT(src, TRAIT_SOULSTONE_IMMUNE, GENERIC_TRAIT)
 
@@ -423,10 +423,9 @@
 	if(!do_after(user, 5 SECONDS, FALSE, target))
 		return FALSE
 
-	if(target.ismindprotect())
-		for(var/obj/item/weapon/implant/mind_protect/L in target)
-			if(L.implanted)
-				qdel(L)
+	if(ismindprotect(target))
+		for(var/obj/item/weapon/implant/mind_protect/L in target.implants)
+			L.meltdown(harmful = FALSE)
 		target.sec_hud_set_implants()
 
 	var/converted = iscultist(target)
@@ -661,6 +660,7 @@
 		if(!(HULK in L.mutations))
 			L.Stuttering(stun_modifier)
 			L.Weaken(stun_modifier)
+			L.apply_status_effect(/datum/status_effect/cursed_talk, stun_modifier SECONDS)
 			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
 	return TRUE
 

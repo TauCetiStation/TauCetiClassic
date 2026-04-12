@@ -137,7 +137,7 @@
 		host.AdjustConfused(8)
 		host.make_jittery(60)
 		host.emote("scream")
-		host.setOxyLoss(0) //They can't heal oxyloss, so we need to deal with it right now
+		host.resetOxyLoss() //They can't heal oxyloss, so we need to deal with it right now (upd: now can, so maybe should be removed)
 		var/datum/faction/abductors/req_f = create_uniq_faction(/datum/faction/abductors)
 		var/datum/role/R = SSticker.mode.CreateRole(/datum/role/abductor/assistant, host)
 		req_f.HandleRecruitedRole(R)

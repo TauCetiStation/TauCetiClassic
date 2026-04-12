@@ -277,7 +277,10 @@
 /obj/item/weapon/pickaxe/silver/price = 2770
 /obj/item/weapon/pinpointer/price = 10000
 /obj/item/weapon/rcd/price = 8000
-/obj/item/weapon/rcd_ammo/price = 1700
+/obj/item/weapon/rcd_ammo/small/price = 1000
+/obj/item/weapon/rcd_ammo/medium/price = 2000
+/obj/item/weapon/rcd_ammo/large/price = 3000
+/obj/item/weapon/rcd_ammo/huge/price = 4000
 /obj/item/weapon/retractor/price = 1250
 /obj/item/weapon/scalpel/price = 1250
 /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen/price = 222
