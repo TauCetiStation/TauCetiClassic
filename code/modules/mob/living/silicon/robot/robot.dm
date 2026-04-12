@@ -365,13 +365,7 @@
 
 	spawner_args = list(/datum/spawner/living/robot/cult, 2 MINUTES)
 
-	lockcharge = 0
-	lawupdate = 0
-	scrambledcodes = 1
-	if(camera)
-		camera.clear_all_networks()
-		cameranet.removeCamera(camera)
-	update_manifest()
+	UnlinkSelf()
 
 	module = new /obj/item/weapon/robot_module/cultist(src)
 	laws = new /datum/ai_laws/faith/cult(cult_religion) //Just in case
