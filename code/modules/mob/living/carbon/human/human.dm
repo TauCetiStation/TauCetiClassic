@@ -2311,7 +2311,6 @@
 /mob/living/carbon/human/get_blood_datum()
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		return /datum/dirt_cover/blue_blood
-	
 	if(species.blood_datum_path)
 		return species.blood_datum_path
 
