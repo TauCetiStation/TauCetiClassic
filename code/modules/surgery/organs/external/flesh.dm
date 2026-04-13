@@ -105,7 +105,7 @@
 		for(var/obj/item/clothing/C in BP.owner.get_equipped_items())
 			if((IO.organ_tag in C.potentially_protected_organs) && are_organs_protected)
 				organs_will_be_damaged = FALSE
-		if(organs_will_be_damaged == TRUE)
+		if(organs_will_be_damaged)
 			IO.take_damage(damage_amt / 10)
 
 	if(used_weapon)
