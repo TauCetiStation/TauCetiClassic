@@ -207,5 +207,6 @@ var/global/list/typecache_general_bad_attack_targets = typecacheof(list(
 	/obj/machinery/portable_atmospherics/canister,
 	/obj/structure/reagent_dispensers,
 	/obj/machinery/power,
-	/obj/machinery/field_generator
+	/obj/machinery/field_generator,
+	/obj/structure/cable
 ))
