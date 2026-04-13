@@ -1737,7 +1737,7 @@
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
 
-		to_chat(H, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='orange'>Центрального Командования</font></b>. Передаю: <b>\"[input]\"</b> Конец связи.\"")
+		to_chat(H, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[input]\"</b> Конец связи.\"")
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])

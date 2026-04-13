@@ -53,11 +53,11 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/source = tgui_alert(src, "Choose message source:", "Subtle Message to [M.key]", list("Voice in head", "CentCom", "Syndicate"))
+	var/source = tgui_alert(src, "Выберите источник сообщения:", "Subtle Message для [M.key]", list("Голос в голове", "ЦК", "Синдикат", "Custom"))
 	if(!source)
 		return
 
-	if(source == "CentCom")
+	if(source == "ЦК")
 		if(isliving(M))
 			var/mob/living/L = M
 			if(!L.CanObtainCentcommMessage())
@@ -67,7 +67,7 @@
 			to_chat(src, "CentCom messages can only be sent to living mobs.")
 			return
 
-	if(source == "Syndicate")
+	if(source == "Синдикат")
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
@@ -75,6 +75,22 @@
 				return
 		else
 			to_chat(src, "Syndicate messages can only be sent to humans.")
+			return
+
+	var/custom_color = "green"
+	var/custom_sender = ""
+	if(source == "Custom")
+		var/col_choice = tgui_alert(src, "Выберите цвет имени:", "Цвет", list("Зелёный", "Синий", "ХОНК", "Серый"))
+		if(!col_choice)
+			return
+		switch(col_choice)
+			if("Зелёный") custom_color = "green"
+			if("Синий") custom_color = "#3366ff" // a nice readable blue
+			if("ХОНК") custom_color = "#ff1493" // deep pink, readable
+			if("Серый") custom_color = "gray"
+
+		custom_sender = sanitize(input("Введите имя отправителя:", text("Отправитель для [M.key]")) as text)
+		if(!custom_sender)
 			return
 
 	var/msg = sanitize(input("Message:", text("Subtle PM to [M.key]")) as text)
@@ -85,20 +101,22 @@
 		if (usr.client)
 			if(usr.client.holder)
 				switch(source)
-					if("Voice in head")
+					if("Голос в голове")
 						to_chat(M, "<b>Вы слышите голос в своей голове... <i>[msg]</i></b>")
-					if("CentCom")
-						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='orange'>Центрального Командования</font></b>. Передаю: <b>\"[msg]\"</b> Конец связи.\"")
-					if("Syndicate")
+					if("ЦК")
+						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[msg]\"</b> Конец связи.\"")
+					if("Синдикат")
 						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[msg]\"</b> Конец связи.\"")
+					if("Custom")
+						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='[custom_color]'>[custom_sender]</font></b>. Сообщение: <b>\"[msg]\"</b> Конец связи.\"")
 
 	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='notice'><b>SubtleMessage([source])</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
 
-	if(source != "Voice in head")
+	if(source != "Голос в голове" && source != "Custom")
 		world.send2bridge(
 			type = list(BRIDGE_ADMINCOM),
-			attachment_title = "[source == "CentCom" ? ":regional_indicator_c:" : ":regional_indicator_s:"] **[key_name(usr)]** replied to **[key_name(M)]** via Subtle Message",
+			attachment_title = "[source == "ЦК" ? ":regional_indicator_c:" : ":regional_indicator_s:"] **[key_name(usr)]** replied to **[key_name(M)]** via Subtle Message",
 			attachment_msg = msg,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
@@ -176,24 +194,14 @@
 	if(!M)
 		return
 
-	var/style = tgui_alert(src, "Choose narration style:", "Direct Narrate to [M.key]", list("Narration", "Feeling", "Vision"))
-	if(!style)
-		return
-
 	var/msg = sanitize(input("Message:", text("Enter the text you wish to appear to your target:")) as text)
 
 	if( !msg )
 		return
 
-	switch(style)
-		if("Narration")
-			to_chat(M, "<big><b><span class='notice'><i>[msg]</i></span></b></big>")
-		if("Feeling")
-			to_chat(M, "<big><b><span class='notice'><i>Вы чувствуете... [msg]</i></span></b></big>")
-		if("Vision")
-			to_chat(M, "<big><b><span class='notice'><i>Вы замечаете... [msg]</i></span></b></big>")
-	log_admin("DirectNarrate([style]): [key_name(usr)] to [key_name(M)]: [msg]")
-	message_admins("<span class='notice'><b>DirectNarrate([style])</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
+	to_chat(M, "<big><b><span class='notice'><i>[msg]</i></span></b></big>")
+	log_admin("DirectNarrate: [key_name(usr)] to [key_name(M)]: [msg]")
+	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_godmode(mob/living/M as mob in mob_list)
