@@ -13,9 +13,9 @@
 
 /datum/objective/spider_evolve/check_completion()
 	if(owner && owner.current)
-		if(is_type_in_list(owner.current,
+		if(is_type_in_list(owner.current, list(
 				/mob/living/simple_animal/hostile/giant_spider/tarantula,
 				/mob/living/simple_animal/hostile/giant_spider/viper,
-				/mob/living/simple_animal/hostile/giant_spider/midwife))
+				/mob/living/simple_animal/hostile/giant_spider/midwife)))
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
