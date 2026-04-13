@@ -27,6 +27,7 @@
 	melee_damage = 18
 	heat_damage_per_tick = 20
 	cold_damage_per_tick = 20
+	unsuitable_atoms_damage = 8	// This damage is taken when atmos doesn't fit all the requirements above
 	faction = "spiders"
 	pass_flags = PASSTABLE
 	move_to_delay = 6
@@ -84,7 +85,7 @@
 
 /mob/living/simple_animal/hostile/giant_spider/LateLogin()
 	. = ..()
-	name = "[name] ([rand(100, 999)])"
+	name = "[initial(name)] ([rand(100, 999)])"
 	if(!isrolebytype(/datum/role/spider, src))
 		if(!SSticker?.mode) //We have someone logged in before roundstart, so we need to create faction later, after roundstart
 			RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_start_spider))
@@ -314,8 +315,8 @@
 	var/mob/living/simple_animal/hostile/giant_spider/S = owner
 	switch(adaptation)
 		if("Сила")
-			S.melee_damage = min(S.melee_damage + 10, 55)
-			if(S.melee_damage >= 55)
+			S.melee_damage = min(S.melee_damage + 10, 45)
+			if(S.melee_damage >= 45)
 				options -= "Сила"
 			to_chat(S, "<span class='notice'>Наша сила увеличилась до [S.melee_damage]!</span>")
 
@@ -415,6 +416,8 @@
 		n++
 	if(n > 3)
 		to_chat(src, "<span class='notice'>Слишком много паутины в одном месте!</span>")
+		return
+	if(busy_with_action)
 		return
 	visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 	var/choice = /obj/structure/spider/stickyweb
@@ -593,7 +596,7 @@
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/Life()
 	..()
-	if(stop_automated_movement)
+	if(stop_automated_movement || client)
 		return
 	if(stat == CONSCIOUS)
 		if(stance == HOSTILE_STANCE_IDLE)
@@ -663,9 +666,9 @@
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
 	icon_move = null
-	maxHealth = 200
-	health = 200
-	melee_damage = 40
+	maxHealth = 120
+	health = 120
+	melee_damage = 25
 	poison_per_bite = 5
 	speed = 3
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
