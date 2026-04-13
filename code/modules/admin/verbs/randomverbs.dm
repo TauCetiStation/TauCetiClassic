@@ -88,9 +88,9 @@
 					if("Voice in head")
 						to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
 					if("CentCom")
-						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[msg]\"</b>  Message ends.\"")
+						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from <b><font color='orange'>Central Command</font></b>.  Message as follows. <b>\"[msg]\"</b>  Message ends.\"")
 					if("Syndicate")
-						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[msg]\"</b>  Message ends.\"")
+						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from <b><font color='red'>YOUR BENEFACTOR</font></b>.  Message as follows, agent. <b>\"[msg]\"</b>  Message ends.\"")
 
 	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='notice'><b>SubtleMessage([source])</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
