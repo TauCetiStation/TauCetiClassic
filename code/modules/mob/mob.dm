@@ -637,8 +637,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	//endwhile - reset the pixel offsets to zero
 	is_dizzy = FALSE
 	if(client)
-		client.pixel_x = 0
-		client.pixel_y = 0
+		client.restore_default_pixel_values()
 
 // jitteriness - copy+paste of dizziness
 

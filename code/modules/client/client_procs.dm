@@ -842,3 +842,8 @@ var/global/list/disconnected_ckey_by_stat = list()
 	if(holder)
 		holder.particool = new /datum/particle_editor(in_atom)
 		holder.particool.tgui_interact(mob)
+
+/client/proc/restore_default_pixel_values()
+	pixel_x = default_pixel_x.Get()
+	pixel_y = default_pixel_y.Get()
+

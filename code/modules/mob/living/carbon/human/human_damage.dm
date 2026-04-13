@@ -343,9 +343,9 @@ This function restores all bodyparts.
 	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
-			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon, impact_direction = impact_direction)
+			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon, impact_direction = impact_direction, protection = blocked)
 		if(BURN)
-			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon, impact_direction = impact_direction)
+			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon, impact_direction = impact_direction,  protection = blocked)
 	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
 		BP.status &= ~ORGAN_SPLINTED
 		playsound(src, 'sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)

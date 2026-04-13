@@ -58,8 +58,10 @@
 #define ui_borg_show_foto "SOUTH+1:6,WEST+1"
 #define ui_borg_namepick "EAST:-6,NORTH:-6"
 
-#define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
-#define ui_monkey_back "CENTER-2:14,SOUTH:5"	//monkey
+// Monkey
+#define ui_monkey_mask "CENTER-4:14,SOUTH:5"
+#define ui_monkey_neck "CENTER-3:14,SOUTH:5"
+#define ui_monkey_back "CENTER-2:14,SOUTH:5"
 
 #define ui_alien_head "CENTER-4:12,SOUTH:5"
 #define ui_alien_oclothing "CENTER-3:14,SOUTH:5"

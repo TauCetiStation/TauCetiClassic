@@ -22,7 +22,7 @@
 	random_basetype = /obj/structure/sign/poster/official
 
 /obj/item/weapon/poster/revolution
-	name = "revolution poster"
+	name = "contraband poster"
 	icon_state = "rolled_poster"
 	random_basetype = /obj/structure/sign/poster/revolution
 
@@ -188,6 +188,11 @@
 	. = ..()
 
 	name = CARGOSHOPNAME
+
+/obj/structure/sign/poster/keepclean
+	name = "keep displosals clean poster"
+	icon_state = "keepclean"
+	desc = "Следи за чистотой входа в пневмопочту, помни, это не мусорка!"
 
 /obj/structure/sign/poster/olympic_games
 	name = "2214 Winter Olympics"

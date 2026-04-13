@@ -250,7 +250,7 @@
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 80
+	agony = 20
 	embed = 0
 	sharp = 0
 	dispersion = 2.0

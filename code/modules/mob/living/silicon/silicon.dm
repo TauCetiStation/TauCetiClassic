@@ -148,25 +148,6 @@
 		if (L.name == rem_language)
 			speech_synthesizer_langs -= L
 
-/mob/living/silicon/check_languages()
-	set name = "Check Known Languages"
-	set category = "IC"
-	set src = usr
-
-	var/dat = ""
-
-	for(var/datum/language/L as anything in languages)
-		dat += "<b>[L.name] "
-		for(var/l_key in L.key)
-			dat += "(:[l_key])"
-		dat += " </b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
-
-	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
-	popup.set_content(dat)
-	popup.open()
-
-	return
-
 /mob/living/silicon/proc/remove_sensors()
 	for(var/hud in sensor_huds)
 		var/datum/atom_hud/sensor = global.huds[hud]

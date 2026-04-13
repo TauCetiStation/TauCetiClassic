@@ -1,8 +1,12 @@
 #define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free"
 #define ONLY_TWOHAND "To fire this weapon, the inactive hand MUST be free"
 //Please do not increase power in shake_camera(). It is really not needed for players.
-#define OPTIMAL_POWER_RECOIL 1
 #define DEFAULT_DURATION_RECOIL 1
+
+#define LOW_RECOIL 3 //for small caliber guns (like glock, 1911, c20r and etc)
+#define MEDIUM_RECOIL 5 //for most types of firearms
+#define HEAVY_RECOIL 10 //for guns with very high recoil (like PTR-7 and desert eagle)
+
 
 /obj/item/weapon/gun
 	name = "gun"
@@ -91,23 +95,23 @@
 	playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	return
 
-/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user, atom/target)
 	if(recoil > 0)
-		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+		var/angle = Get_Angle(user, target)
+		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.25))
 		if(two_hand_weapon != DESIRABLE_TWOHAND)
-			shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+			directional_recoil(user, skill_recoil_duration, angle)
 			if(spread_increase)
 				spread = clamp(spread + spread_increase, 0, spread_max)
 				START_PROCESSING(SSfastprocess, src)
 		if(two_hand_weapon == DESIRABLE_TWOHAND)
-			//No OPTIMAL_POWER_RECOIL only for increasing user's motivation to drop other hand
 			if(user.get_inactive_hand())
-				shake_camera(user, recoil + 2, recoil + 1)
+				directional_recoil(user, skill_recoil_duration*2, angle)
 				if(spread_increase)
 					spread = clamp(spread + spread_increase + 1, 0, spread_max)
 					START_PROCESSING(SSfastprocess, src)
 			else
-				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+				directional_recoil(user, skill_recoil_duration, angle)
 				if(spread_increase)
 					spread = clamp(spread + spread_increase, 0, spread_max)
 					START_PROCESSING(SSfastprocess, src)
@@ -212,7 +216,7 @@
 				shoot_with_empty_chamber(user)
 				break
 			else
-				shoot_live_shot(user)
+				shoot_live_shot(user, target)
 				user.newtonian_move(get_dir(target, user))
 		else
 			shoot_with_empty_chamber(user)
@@ -297,5 +301,4 @@
 	else
 		return ..()
 
-#undef OPTIMAL_POWER_RECOIL
 #undef DEFAULT_DURATION_RECOIL

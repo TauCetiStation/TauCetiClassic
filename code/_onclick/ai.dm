@@ -143,8 +143,10 @@
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
 
-/obj/machinery/power/apc/AICtrlClick() // turns off APCs.
-	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
+/obj/machinery/power/apc/AICtrlClick(mob/user) // turns off/on APCs.
+	if(user.incapacitated() || aidisabled)
+		return
+	toggle_breaker(user)
 
 /atom/proc/AIAltClick()
 	return
