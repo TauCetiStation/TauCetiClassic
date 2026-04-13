@@ -12,6 +12,7 @@
 		/atom/movable/screen/equip,
 		/atom/movable/screen/throw,
 		/atom/movable/screen/inventory/mask/monkey,
+		/atom/movable/screen/inventory/neck/monkey,
 		/atom/movable/screen/inventory/back,
 		/atom/movable/screen/complex/gun,
 		/atom/movable/screen/health
@@ -27,6 +28,7 @@
 		/atom/movable/screen/equip,
 		/atom/movable/screen/throw,
 		/atom/movable/screen/inventory/mask/monkey,
+		/atom/movable/screen/inventory/neck/monkey,
 		/atom/movable/screen/inventory/back,
 		/atom/movable/screen/complex/gun,
 		/atom/movable/screen/health/diona
