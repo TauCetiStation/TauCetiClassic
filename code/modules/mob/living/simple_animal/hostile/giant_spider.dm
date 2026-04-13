@@ -208,18 +208,19 @@
 /datum/action/innate/spider/evolve
 	name = "Evolve"
 	button_icon_state = "guard"
-	var/ready2evolve = FALSE
+	COOLDOWN_DECLARE(ready2evolve)
 
 /datum/action/innate/spider/evolve/Grant(mob/T)
 	. = ..()
-	VARSET_IN(src, ready2evolve, TRUE, 3 MINUTES)
-	to_chat(owner, "<span class='notice'>Нам нужно пережить 3 минуты, что бы эволюционировать.</span>")
+	COOLDOWN_START(src, ready2evolve, 3 MINUTES)
+	to_chat(T, "<span class='notice'>Нам нужно пережить 3 минуты, что бы эволюционировать.</span>")
 
 /datum/action/innate/spider/evolve/Activate()
 	if(!isliving(owner))
 		return
-	if(!ready2evolve)
-		to_chat(owner, "<span class='notice'>Нам нужно пережить 3 минуты, что бы эволюционировать.</span>")
+	if(!COOLDOWN_FINISHED(src, ready2evolve))
+		var/timeleft = round(COOLDOWN_TIMELEFT(src, ready2evolve) * 0.1)
+		to_chat(owner, "<span class='notice'>Нам нужно пережить еще [timeleft] [pluralize_russian(timeleft, "секунду", "секунды", "секунд")], что бы эволюционировать.</span>")
 		return
 	var/mob/living/L = owner
 	if(L.health < L.maxHealth)
@@ -249,11 +250,14 @@
 		return
 	var/mob/living/simple_animal/hostile/giant_spider/old_s = owner
 	var/mob/living/simple_animal/hostile/giant_spider/S = new choice (get_turf(owner), old_s?.adaptations, old_s?.inhereted)
-	S.ckey = owner.ckey
 
+	S.mind = old_s.mind
+	old_s.mind.set_current(S)
+	S.key = old_s.key
+
+	qdel(old_s)
 	var/obj/structure/spider/cocoon/C = new(owner.loc)
 	S.forceMove(C)
-	qdel(owner)
 	QDEL_IN(C, 5 SECONDS)
 
 /datum/action/innate/spider/evolve/adapt
