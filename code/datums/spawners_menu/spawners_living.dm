@@ -118,7 +118,7 @@
 	name = "Паук"
 	desc = "Вы становитесь очередным паучьим отпрыском."
 	cooldown = 3 MINUTES
-	time_for_registration = 5 SECONDS
+	time_for_registration = 10 SECONDS
 
 	ranks = list(ROLE_ALIEN)
 
