@@ -90,6 +90,8 @@
 			return back
 		if(SLOT_WEAR_MASK)
 			return wear_mask
+		if(SLOT_NECK)
+			return neck
 		if(SLOT_HANDCUFFED)
 			return handcuffed
 		if(SLOT_L_HAND)
@@ -101,6 +103,8 @@
 	switch(slot)
 		if(SLOT_HEAD)
 			return head
+		if(SLOT_NECK)
+			return neck
 		if(SLOT_MOUTH)
 			return mouth
 		if(SLOT_NECK)

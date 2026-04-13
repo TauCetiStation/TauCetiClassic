@@ -15,6 +15,9 @@
 	var/obj/item/alien_embryo/E = locate() in buckled_mob
 	if(E && E.stage >= 5)
 		return
+	var/mob/living/carbon/xenomorph/larva/L = locate() in buckled_mob
+	if(L)
+		return
 	buckled_mob.heal_bodypart_damage(5, 5)
 	buckled_mob.adjustToxLoss(-5)
 	buckled_mob.adjustOxyLoss(-10)

@@ -57,6 +57,7 @@
 /datum/bodypart_controller/proc/emp_act(severity)
 	return // meatbags do not care about EMP
 
+#define PROTECTION_REQUERED_FOR_ORGANS 25  //The percentage of protection required to prevent organ damage
 
 /mob/living/carbon/human
 	var/next_autoheal_allowed = 0 // turns off autoheal on damage for period of time
@@ -64,7 +65,7 @@
 // Paincrit knocks someone down once they hit 60 shock_stage, so by default make it so that close to 100 additional damage needs to be dealt,
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
 // These control the damage thresholds for the various ways of removing limbs
-/datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
+/datum/bodypart_controller/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null, protection = 0)
 	brute = round(brute * BP.owner.mob_brute_mod.Get(), 0.1)
 	burn = round(burn * BP.owner.mob_burn_mod.Get(), 0.1)
 
@@ -88,14 +89,21 @@
 	var/cur_damage = BP.brute_dam
 	var/pure_brute = brute
 	var/pure_burn = burn
+	var/cutoff_internal_organ_damage_threshold = 10
+	if(sharp)
+		cutoff_internal_organ_damage_threshold = 5
+
 	if(laser)
 		damage_amt += burn
 		cur_damage += BP.burn_dam
 
-	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage || (((sharp && damage_amt >= 5) || damage_amt >= 10) && prob(5))))
+	var/is_parent_damaged_enough = cur_damage + damage_amt >= BP.max_damage + cutoff_internal_organ_damage_threshold
+	var/are_organs_unprotected = protection <= PROTECTION_REQUERED_FOR_ORGANS
+
+	if(BP.bodypart_organs.len && is_parent_damaged_enough && are_organs_unprotected)
 	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
-		IO.take_damage(damage_amt / 2)
+		IO.take_damage(damage_amt / 10)
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
@@ -224,6 +232,8 @@
 		BP.owner.UpdateDamageIcon(BP)
 
 	return created_wound
+
+#undef PROTECTION_REQUERED_FOR_ORGANS
 
 /datum/bodypart_controller/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
 	if(bodypart_type == BODYPART_ROBOTIC && !robo_repair)

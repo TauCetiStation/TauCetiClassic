@@ -210,6 +210,7 @@
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_NO_BREATHE          "no_breathe"
+#define TRAIT_CURSED_TALK         "cursed_talk"
 /// Mod has DNA that is not compatible with station (genetics) machinery, also prevents changeling from targeting some mobs
 #define TRAIT_INCOMPATIBLE_DNA    "incompatible_dna"
 /// Character can't be cloned

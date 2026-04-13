@@ -203,6 +203,7 @@
 	icon_state = "posibrain-occupied"
 	item_state_world = "posibrain-occupied"
 	var/obj/item/device/mmi/posibrain/stored_mmi
+	status = ORGAN_ROBOT
 
 
 /obj/item/organ/internal/brain/ipc/remove(mob/living/carbon/human/M)
