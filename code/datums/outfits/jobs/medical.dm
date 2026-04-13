@@ -148,6 +148,8 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
+	back_style = BACKPACK_STYLE_MEDICAL
+
 // PSYCHOLOGIST OUTFIT
 /datum/outfit/job/psychologist
 	name = OUTFIT_JOB_NAME("Psychologist")
@@ -159,6 +161,8 @@
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med
 
+	back_style = BACKPACK_STYLE_MEDICAL
+
 // MEDICAL INTERN OUTFIT
 /datum/outfit/job/intern
 	name = OUTFIT_JOB_NAME("Medical Intern")
@@ -168,3 +172,5 @@
 
 	belt = /obj/item/device/pda
 	l_ear = /obj/item/device/radio/headset/headset_med
+
+	back_style = BACKPACK_STYLE_MEDICAL
