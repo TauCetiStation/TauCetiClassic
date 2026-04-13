@@ -86,11 +86,11 @@
 			if(usr.client.holder)
 				switch(source)
 					if("Voice in head")
-						to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
+						to_chat(M, "<b>Вы слышите голос в своей голове... <i>[msg]</i></b>")
 					if("CentCom")
-						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from <b><font color='orange'>Central Command</font></b>.  Message as follows. <b>\"[msg]\"</b>  Message ends.\"")
+						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='orange'>Центрального Командования</font></b>. Передаю: <b>\"[msg]\"</b> Конец связи.\"")
 					if("Syndicate")
-						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from <b><font color='red'>YOUR BENEFACTOR</font></b>.  Message as follows, agent. <b>\"[msg]\"</b>  Message ends.\"")
+						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[msg]\"</b> Конец связи.\"")
 
 	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='notice'><b>SubtleMessage([source])</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
@@ -176,14 +176,24 @@
 	if(!M)
 		return
 
+	var/style = tgui_alert(src, "Choose narration style:", "Direct Narrate to [M.key]", list("Narration", "Feeling", "Vision"))
+	if(!style)
+		return
+
 	var/msg = sanitize(input("Message:", text("Enter the text you wish to appear to your target:")) as text)
 
 	if( !msg )
 		return
 
-	to_chat(M, msg)
-	log_admin("DirectNarrate: [key_name(usr)] to [key_name(M)]: [msg]")
-	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
+	switch(style)
+		if("Narration")
+			to_chat(M, "<big><b><span class='notice'><i>[msg]</i></span></b></big>")
+		if("Feeling")
+			to_chat(M, "<big><b><span class='notice'><i>Вы чувствуете... [msg]</i></span></b></big>")
+		if("Vision")
+			to_chat(M, "<big><b><span class='notice'><i>Вы замечаете... [msg]</i></span></b></big>")
+	log_admin("DirectNarrate([style]): [key_name(usr)] to [key_name(M)]: [msg]")
+	message_admins("<span class='notice'><b>DirectNarrate([style])</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_godmode(mob/living/M as mob in mob_list)
