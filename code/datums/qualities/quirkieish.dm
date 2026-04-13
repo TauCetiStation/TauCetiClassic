@@ -436,3 +436,30 @@
 
 	to_chat(H, "<span class='notice'>В твоей сумке лежат особые перчатки, они позволят тебе незаметно красть вещи у людей.</span>")
 	H.equip_or_collect(new /obj/item/clothing/gloves/black/strip(H), SLOT_IN_BACKPACK)
+
+/datum/quality/quirkieish/illusionist
+	name = "Novice illusionist"
+	desc = "Вы насмотрелись шоу с побегом из заточения. Ну и... Решили попробовать."
+	requirement = "Не СБ и главы."
+	var/list/funpolice = list("Security Officer", "Warden", "Blueshield Officer")
+
+/datum/quality/quirkieish/illusionist/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in funpolice) && !H.is_head_role()
+
+/datum/quality/quirkieish/illusionist/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Шоу начинается!</span>")
+	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs (H), SLOT_HANDCUFFED)
+	if(prob(1)) //This is your day! Or not...
+		H.equip_to_slot_or_del(new /obj/item/clothing/suit/straight_jacket (H), SLOT_WEAR_SUIT)
+	H.equip_to_slot_or_del(new /obj/item/weapon/legcuffs/beartrap (H), SLOT_LEGCUFFED)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/blindfold, SLOT_GLASSES)
+
+	var/obj/structure/closet/C = new (get_turf(H))
+	C.welded = TRUE
+	C.update_icon()
+	H.forceMove(C)
+	H.instant_vision_update(1, C)
+
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
+	ADD_TRAIT(H, TRAIT_MIMING, GENERIC_TRAIT)

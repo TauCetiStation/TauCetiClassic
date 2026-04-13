@@ -274,19 +274,3 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/dyslalia/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_DYSLALIA, QUALITY_TRAIT)
-
-/datum/quality/negativeish/illusionist
-	name = "Novice illusionist"
-	desc = "Вы насмотрелись шоу с побегом из заточения. Ну и... Решили попробовать."
-	requirement = "Не СБ и главы."
-	var/list/funpolice = list("Security Officer", "Warden", "Blueshield Officer")
-
-/datum/quality/negativeish/illusionist/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return !(H.mind.assigned_role in funpolice) && !H.is_head_role()
-
-/datum/quality/negativeish/illusionist/add_effect(mob/living/carbon/human/H, latespawn)
-	to_chat(H, "<span class='notice'>Шоу начинается!</span>")
-	if(!H.equip_to_slot_or_del(new /obj/item/clothing/suit/straight_jacket (H), SLOT_WEAR_SUIT) || prob(1)) //This is your day! Or not...
-		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs (H), SLOT_HANDCUFFED)
-	H.equip_to_slot_or_del(new /obj/item/weapon/legcuffs/beartrap (H), SLOT_LEGCUFFED)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/blindfold, SLOT_GLASSES)
