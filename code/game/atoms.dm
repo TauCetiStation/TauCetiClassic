@@ -713,6 +713,7 @@
 		if(AA.theImage.override)
 			for(var/v in img_viewers)
 				viewers -= v
+			I.override = FALSE // Image inheriting override from parent
 
 	var/image/I = image(icon, icon_state)
 	I.appearance = src

@@ -48,14 +48,14 @@
 	var/moveset_type
 
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
-/datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
+/datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE, laterole = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	AssignToFaction(fac)
-
-	if(M && !AssignToRole(M, override))
+	if(M && !AssignToRole(M, override, laterole))
 		Drop()
 		return
+
+	AssignToFaction(fac)
 
 	objectives.owner = M
 	..()
