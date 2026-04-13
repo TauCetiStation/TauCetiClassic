@@ -53,6 +53,30 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
+	var/source = tgui_alert(src, "Choose message source:", "Subtle Message to [M.key]", list("Voice in head", "CentCom", "Syndicate"))
+	if(!source)
+		return
+
+	if(source == "CentCom")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "CentCom messages can only be sent to living mobs.")
+			return
+
+	if(source == "Syndicate")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "Syndicate messages can only be sent to humans.")
+			return
+
 	var/msg = sanitize(input("Message:", text("Subtle PM to [M.key]")) as text)
 
 	if (!msg)
@@ -60,10 +84,25 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
+				switch(source)
+					if("Voice in head")
+						to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
+					if("CentCom")
+						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[msg]\"</b>  Message ends.\"")
+					if("Syndicate")
+						to_chat(M, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[msg]\"</b>  Message ends.\"")
 
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	message_admins("<span class='notice'><b>SubtleMessage</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
+	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
+	message_admins("<span class='notice'><b>SubtleMessage([source])</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
+
+	if(source != "Voice in head")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINCOM),
+			attachment_title = "[source == "CentCom" ? ":regional_indicator_c:" : ":regional_indicator_s:"] **[key_name(usr)]** replied to **[key_name(M)]** via Subtle Message",
+			attachment_msg = msg,
+			attachment_color = BRIDGE_COLOR_ADMINCOM,
+		)
+
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_mentor_check_new_players()	//Allows mentors / admins to determine who the newer players are.
