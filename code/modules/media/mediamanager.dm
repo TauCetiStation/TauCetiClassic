@@ -9,7 +9,6 @@
 #define MEDIA_VOLUME SANITIZE_VOL(50)
 
 // Open up the HTML5 audio player.
-// Migrated from ActiveX WMP to HTML5 Audio for BYOND 516+ (WebView2/Chromium). ActiveX is not supported in Chromium.
 var/global/const/PLAYER_HTML={"
 	<audio id='player' preload='auto'></audio>
 	<script>
