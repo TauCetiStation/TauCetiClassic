@@ -27,7 +27,7 @@
 	melee_damage = 18
 	heat_damage_per_tick = 20
 	cold_damage_per_tick = 20
-	unsuitable_atoms_damage = 8	// This damage is taken when atmos doesn't fit all the requirements above
+	unsuitable_atoms_damage = 2
 	faction = "spiders"
 	pass_flags = PASSTABLE
 	move_to_delay = 6
@@ -35,6 +35,7 @@
 	environment_smash = 1
 	weather_immunities = list("ash", "acid")
 	projectilesound = 'sound/weapons/pierce.ogg'
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -81,7 +82,8 @@
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
 	. = ..()
-	health = min(health + maxHealth * 0.01, maxHealth) //1% regen per tick
+	if(stat != DEAD)
+		health = min(health + maxHealth * 0.01, maxHealth) //1% regen per tick
 
 /mob/living/simple_animal/hostile/giant_spider/LateLogin()
 	. = ..()
@@ -339,8 +341,9 @@
 			to_chat(S, "<span class='notice'>Наш яд стал сильнее!</span>")
 
 		if("Живучесть")
-			S.maxHealth = min(S.maxHealth + 40, 250)
-			if(S.maxHealth >= 250)
+			S.maxHealth = min(S.maxHealth + 40, 350)
+			S.unsuitable_atoms_damage = S.maxHealth * 0.02
+			if(S.maxHealth >= 350)
 				options -= "Живучесть"
 			to_chat(S, "<span class='notice'>Наша живучесть увеличилась до [S.maxHealth]!</span>")
 
@@ -362,9 +365,7 @@
 				to_chat(S, "<span class='notice'>Теперь мы быстрее плюемся ядом!</span>")
 
 		if("Зрение")
-			if(S.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-				S.set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			else if(!(S.sight & SEE_MOBS))
+			if(!(S.sight & SEE_MOBS))
 				S.sight |= SEE_MOBS
 			else if(!(S.sight & SEE_OBJS))
 				S.sight |= SEE_TURFS|SEE_OBJS
@@ -527,6 +528,7 @@
 	health = 40
 	melee_damage = 8
 	poison_per_bite = 10
+	unsuitable_atoms_damage = 2
 	var/atom/cocoon_target
 	poison_type = "stoxin"
 
@@ -540,6 +542,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8)
 	maxHealth = 120
 	health = 120
+	unsuitable_atoms_damage = 3
 	melee_damage = 15
 	poison_per_bite = 5
 	move_to_delay = 4
@@ -666,9 +669,10 @@
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
 	icon_move = null
-	maxHealth = 120
-	health = 120
-	melee_damage = 25
+	maxHealth = 220
+	health = 220
+	melee_damage = 30
+	unsuitable_atoms_damage = 4.4
 	poison_per_bite = 5
 	speed = 3
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
@@ -683,11 +687,11 @@
 	icon_living = "viper"
 	icon_dead = "viper_dead"
 	icon_move = null
-	maxHealth = 55
-	health = 55
+	maxHealth = 130
+	health = 130
+	unsuitable_atoms_damage = 2.2
 	melee_damage = 15
 	speed = 2
-	web_mult = 1.2
 	ranged = TRUE
 	projectiletype = /obj/item/projectile/acid_special_spider/poisonous
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
@@ -701,9 +705,10 @@
 	icon_dead = "midwife_dead"
 	icon_move = null
 	poison_type = "spidertoxin"
-	maxHealth = 100
-	health = 100
+	maxHealth = 150
+	health = 150
+	unsuitable_atoms_damage = 3
 	melee_damage = 15
 	speed = 0.5
-	web_mult = 1.5
+	web_mult = 1.2
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
