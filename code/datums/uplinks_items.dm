@@ -637,7 +637,7 @@
 	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 2
-	uplink_types = list(UPLINK_TYPE_DEALER)
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	name = "Romerol"
