@@ -53,7 +53,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/source = tgui_alert(src, "Выберите источник сообщения:", "Subtle Message для [M.key]", list("Голос в голове", "ЦК", "Синдикат", "Custom"))
+	var/source = tgui_alert(src, "Выберите источник сообщения:", "Subtle Message для [M.key]", list("Голос в голове", "ЦК", "Синдикат", "Свой"))
 	if(!source)
 		return
 
@@ -79,7 +79,7 @@
 
 	var/custom_color = "green"
 	var/custom_sender = ""
-	if(source == "Custom")
+	if(source == "Свой")
 		var/col_choice = tgui_alert(src, "Выберите цвет имени:", "Цвет", list("Зелёный", "Синий", "ХОНК", "Серый"))
 		if(!col_choice)
 			return
@@ -107,13 +107,13 @@
 						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[msg]\"</b> Конец связи.\"")
 					if("Синдикат")
 						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[msg]\"</b> Конец связи.\"")
-					if("Custom")
+					if("Свой")
 						to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='[custom_color]'>[custom_sender]</font></b>. Сообщение: <b>\"[msg]\"</b> Конец связи.\"")
 
 	log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='notice'><b>SubtleMessage([source])</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
 
-	if(source != "Голос в голове" && source != "Custom")
+	if(source != "Голос в голове" && source != "Свой")
 		world.send2bridge(
 			type = list(BRIDGE_ADMINCOM),
 			attachment_title = "[source == "ЦК" ? ":regional_indicator_c:" : ":regional_indicator_s:"] **[key_name(usr)]** replied to **[key_name(M)]** via Subtle Message",
