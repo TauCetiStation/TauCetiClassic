@@ -396,7 +396,7 @@
 
 /datum/reagent/toxin/stoxin/spider/strong
 	name = "Spider Toxin"
-	id = "sspiderstoxin"
+	id = "sspidertoxin"
 	description = "A very effective toxin used to hunt organics."
 	toxpwr = 1.5
 

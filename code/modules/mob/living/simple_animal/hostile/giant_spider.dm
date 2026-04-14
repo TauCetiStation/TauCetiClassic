@@ -330,8 +330,8 @@
 			if(!S.poison_type)
 				S.poison_type = "toxin"
 			else if(S.poison_type == "toxin")
-				S.poison_type = "spiderstoxin"
-			else if(S.poison_type == "spiderstoxin")
+				S.poison_type = "spidertoxin"
+			else if(S.poison_type == "spidertoxin")
 				S.poison_type = "sspiderstoxin"
 				options -= "Сила яда"
 			else //just in case
