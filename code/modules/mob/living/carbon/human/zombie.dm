@@ -133,12 +133,18 @@
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	if(organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
+		var/free_body = TRUE
 		if(!key && mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == mind && ghost.can_reenter_corpse)
-					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"))
+					free_body = FALSE
+					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"), 10 SECONDS)
 					if(answer == "Yes")
 						ghost.reenter_corpse()
+					else
+						create_spawner(/datum/spawner/living/zombie, src)
+		if(free_body)
+			create_spawner(/datum/spawner/living/zombie, src)
 
 		visible_message("<span class='danger'>[src]'s body starts to move!</span>")
 		addtimer(CALLBACK(src, PROC_REF(revive_zombie)), 40)
@@ -159,11 +165,11 @@
 	if(!iszombie(src))
 		zombify()
 
-	setToxLoss(0)
-	setOxyLoss(0)
-	setCloneLoss(0)
-	setBrainLoss(0)
-	setHalLoss(0)
+	resetToxLoss(0)
+	resetOxyLoss(0)
+	resetCloneLoss(0)
+	resetBrainLoss(0)
+	resetHalLoss(0)
 	//del wounds and embedded implants in limbs, heal
 	for(var/obj/item/organ/external/limb in bad_bodyparts)
 		limb.rejuvenate()
@@ -202,7 +208,7 @@
 	ear_deaf = 0
 	ear_damage = 0
 
-	shock_stage = 0
+	//shock_stage = 0
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	Heart?.heart_normalize()
 
@@ -417,7 +423,7 @@ var/global/list/zombie_list = list()
 	color = "#123524" // RGB (18, 53, 36)
 	custom_metabolism = 1
 	taste_message = "brains"
-	restrict_species = list(IPC, DIONA, VOX)
+	//restrict_species = list(IPC, DIONA, VOX)
 
 /datum/reagent/romerol/on_general_digest(mob/living/M)
 	..()
@@ -469,19 +475,17 @@ var/global/list/zombie_list = list()
 
 /obj/item/weapon/implanter/zombie
 	name = "implanter (Z)"
-
-/obj/item/weapon/implanter/zombie/atom_init()
-	imp = new /obj/item/weapon/implant/zombie(src)
-	. = ..()
-	update()
+	init_type = /obj/item/weapon/implant/zombie
 
 /obj/item/weapon/implant/zombie
 	name = "retaliation"
 	desc = "And boom goes the weasel."
 	icon_state = "implant_evil"
-
-/obj/item/weapon/implant/zombie/get_data()
-	var/dat = {"
+	legal = FALSE
+	activation_emote = "deathgasp"
+	uses = 1
+	delete_after_use = TRUE
+	implant_data = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Retaliation's implant<BR>
 <b>Life:</b> Activates upon death.<BR>
@@ -491,30 +495,22 @@ var/global/list/zombie_list = list()
 <b>Function:</b> Contains special chemicals that bring the deceased back to life a few seconds after death. Allows you to take revenge on your enemy. Use away from allies.<BR>
 <b>Special Features:</b> Replaces the explosion implant<BR>
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
-	return dat
 
 /obj/item/weapon/implant/zombie/inject(mob/living/carbon/C, def_zone)
 	. = ..()
 	for(var/obj/item/weapon/implant/dexplosive/I in C)
 		qdel(I)
 
-/obj/item/weapon/implant/zombie/trigger(emote, source)
-	if(emote == "deathgasp")
-		activate("death")
-	return
-
-/obj/item/weapon/implant/zombie/activate(cause)
-	if(!cause || !imp_in)
+/obj/item/weapon/implant/zombie/activate()
+	if(!implanted_mob)
 		return FALSE
-	var/mob/living/carbon/human/H = imp_in
-	if(!H || !(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+	var/mob/living/carbon/human/H = implanted_mob
+	if(!H || !H.can_zombified())
 		return FALSE
-	if(imp_in.stat != DEAD)
-		imp_in.adjustToxLoss(imp_in.maxHealth * 2.5)
-		imp_in.death(FALSE)
+	if(H.stat != DEAD)
+		H.adjustToxLoss(H.maxHealth * 2.5)
+		H.adjustFireLoss(H.maxHealth)
+		H.death(FALSE)
 	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 5 SECONDS)
 	to_chat(H, "<span class='cult'>Твоё сердце умолкает, а вместе с ним и хладеет твоё тело, и лишь голод начинает разгораться с невиданной силой!</span>")
 	qdel(src)
-
-/obj/item/weapon/implant/zombie/islegal()
-	return FALSE

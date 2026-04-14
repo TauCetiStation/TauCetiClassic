@@ -646,7 +646,7 @@
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/romerol
 	cost = 50
-	uplink_types = list(UPLINK_TYPE_DEALER)
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 // STEALTHY TOOLS
 

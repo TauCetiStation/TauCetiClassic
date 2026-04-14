@@ -187,7 +187,7 @@
 	if(!(H.can_zombified()))
 		return
 
-	if(infected_organ == null && holder.ticks == 0)
+	if(infected_organ == null && holder.ticks <= 1)
 		var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
 		organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
 		for(var/o in organs)
