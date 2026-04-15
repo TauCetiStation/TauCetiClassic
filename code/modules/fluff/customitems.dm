@@ -51,7 +51,16 @@
 
 /obj/item/clothing/suit/hooded/custom
 	name = "Custom hoodie"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/suit/hooded/custom/ToggleHood()
+	if(!hooded)
+		hood.render_flags |= HIDE_TOP_HAIR
+	else
+		hood.render_flags &= HIDE_TOP_HAIR
+	return ..()
 
 /obj/item/clothing/mask/custom
 	name = "Custom mask"
