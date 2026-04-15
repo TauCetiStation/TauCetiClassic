@@ -54,13 +54,12 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	hoodtype = /obj/item/clothing/head/hood/custom
 
-/obj/item/clothing/suit/hooded/custom/ToggleHood()
-	if(!hooded)
-		hood.render_flags |= HIDE_TOP_HAIR
-	else
-		hood.render_flags &= HIDE_TOP_HAIR
-	return ..()
+/obj/item/clothing/head/hood/custom
+	cold_protection = HEAD
+	render_flags = parent_type::render_flags | HIDE_TOP_HAIR
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/mask/custom
 	name = "Custom mask"
