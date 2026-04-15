@@ -4,6 +4,7 @@
 	var/hoodtype = /obj/item/clothing/head //so the chaplain hoodie or other hoodies can override this
 	var/hooded = FALSE
 	var/icon_suit_up
+	var/icon_suit_down //for fluff stuff
 
 /datum/action/item_action/hands_free/hood
 	name = "Hood"
@@ -33,9 +34,11 @@
 		H.unEquip(hood, 1)
 	hood.loc = src
 	hooded = !hooded
-	if(icon_suit_up)
+	if(icon_suit_up && !icon_custom)
 		icon_state = initial(icon_state)
-		update_inv_mob()
+	else
+		icon_state = icon_suit_down
+	update_inv_mob()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -54,6 +57,8 @@
 			H.equip_to_slot_if_possible(hood, SLOT_HEAD)
 			if(icon_suit_up)
 				icon_state = icon_suit_up
+				if(icon_custom)
+					item_state = "[icon_suit_up]_mob"
 				update_inv_mob()
 			hooded = !hooded
 	else
