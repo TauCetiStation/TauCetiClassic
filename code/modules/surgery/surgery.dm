@@ -163,20 +163,13 @@
 	qdel(C)
 	return nearby_items
 
-
-
 /proc/get_available_surgery_tools(mob/living/user, mob/living/carbon/human/target, target_zone, list/nearby_items)
 	var/list/best_for_step = list()
-	var/list/claimed_tools = list() // associative for O(1) lookup
 
 	for(var/obj/item/I in nearby_items)
-		if(claimed_tools[I])
-			continue
 		// For each item, find the first matching surgery step (surgery_steps is priority-sorted)
 		for(var/datum/surgery_step/S in surgery_steps)
 			if(!S.is_valid_mutantrace(target))
-				continue
-			if(!S.allowed_tools)
 				continue
 			var/quality = S.tool_quality(I)
 			if(!quality)
@@ -185,7 +178,6 @@
 				continue
 			if(!best_for_step[S] || quality > best_for_step[S]["quality"])
 				best_for_step[S] = list("tool" = I, "quality" = quality)
-				claimed_tools[I] = TRUE
 			break
 
 	return best_for_step
@@ -202,78 +194,74 @@
 	if(!user.client)
 		return
 
-	var/list/nearby_items = collect_nearby_surgery_items(user, target)
-	var/list/best_for_step = get_available_surgery_tools(user, target, target_zone, nearby_items)
-
-	if(!best_for_step.len)
-		return
-
-	var/list/step_choices = list()
-	var/list/name_to_data = list()
-
-	for(var/datum/surgery_step/S in best_for_step)
-		var/list/data = best_for_step[S]
-		var/obj/item/tool = data["tool"]
-
-		step_choices[S.name] = image(icon = tool.icon, icon_state = tool.icon_state)
-		name_to_data[S.name] = data
-
-	var/chosen_name = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE)
-
-	if(!chosen_name || !user.Adjacent(target))
-		return
-
-	var/list/chosen_data = name_to_data[chosen_name]
-	var/obj/item/chosen = chosen_data["tool"]
-
-	if(!chosen || !user.Adjacent(target))
-		return
-	if(QDELETED(chosen) || user.incapacitated())
-		return
-
-	// borg path: tools stay in module, no pickup/return needed
-	if(isrobot(user))
-		do_surgery(target, user, chosen, from_radial = TRUE)
-		return
-
-	var/atom/tool_original_loc = chosen.loc
-	var/obj/item/dropped_item = null
-
-	if(chosen.loc != user)
-		if(QDELETED(chosen) || !user.Adjacent(chosen))
-			to_chat(user, "<span class='warning'>[chosen] is no longer within reach!</span>")
+	while(TRUE)
+		if(!user.Adjacent(target) || user.incapacitated())
 			return
-		if(!user.put_in_hands(chosen))
-			// both hands full, drop active hand first
-			dropped_item = user.get_active_hand()
-			if(dropped_item)
-				user.drop_from_inventory(dropped_item, get_turf(target))
-			if(!user.put_in_hands(chosen))
-				to_chat(user, "<span class='warning'>You can't pick up [chosen]!</span>")
-				if(dropped_item)
-					user.put_in_hands(dropped_item)
+
+		var/list/nearby_items = collect_nearby_surgery_items(user, target)
+		var/list/best_for_step = get_available_surgery_tools(user, target, target_zone, nearby_items)
+
+		if(!best_for_step.len)
+			return
+
+		var/list/step_choices = list()
+		var/list/name_to_tool = list()
+
+		for(var/datum/surgery_step/S in best_for_step)
+			var/obj/item/tool = best_for_step[S]["tool"]
+			step_choices[S.name] = image(icon = tool.icon, icon_state = tool.icon_state)
+			name_to_tool[S.name] = tool
+
+		var/chosen_name = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE, tooltips = TRUE)
+
+		if(!chosen_name || !user.Adjacent(target) || user.incapacitated())
+			return
+
+		var/obj/item/chosen = name_to_tool[chosen_name]
+		if(QDELETED(chosen))
+			return
+
+		// borg path: tools stay in module, no pickup/return needed
+		if(isrobot(user))
+			do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone)
+			continue
+
+		var/atom/tool_original_loc = chosen.loc
+		var/obj/item/dropped_item = null
+
+		if(chosen.loc != user)
+			if(!user.Adjacent(chosen))
+				to_chat(user, "<span class='warning'>[chosen] is no longer within reach!</span>")
 				return
+			if(!user.put_in_hands(chosen))
+				// both hands full, drop active hand first
+				dropped_item = user.get_active_hand()
+				if(dropped_item)
+					user.drop_from_inventory(dropped_item, get_turf(target))
+				if(!user.put_in_hands(chosen))
+					to_chat(user, "<span class='warning'>You can't pick up [chosen]!</span>")
+					if(dropped_item)
+						user.put_in_hands(dropped_item)
+					return
 
-	do_surgery(target, user, chosen, from_radial = TRUE)
+		do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone)
 
-	// put the tool back where we found it
-	if(tool_original_loc && tool_original_loc != user && chosen.loc == user)
-		user.drop_from_inventory(chosen, get_turf(target))
-		if(!QDELETED(tool_original_loc))
-			if(istype(tool_original_loc, /obj/item/weapon/storage))
-				var/obj/item/weapon/storage/S = tool_original_loc
-				S.handle_item_insertion(chosen, prevent_warning = TRUE)
-			else
-				chosen.forceMove(tool_original_loc)
-	if(dropped_item && !QDELETED(dropped_item) && dropped_item.loc != user)
-		user.put_in_hands(dropped_item)
+		// put the tool back where we found it
+		if(tool_original_loc && tool_original_loc != user && chosen.loc == user)
+			user.drop_from_inventory(chosen, get_turf(target))
+			if(!QDELETED(tool_original_loc))
+				if(istype(tool_original_loc, /obj/item/weapon/storage))
+					var/obj/item/weapon/storage/S = tool_original_loc
+					if(!S.handle_item_insertion(chosen, prevent_warning = TRUE))
+						to_chat(user, "<span class='warning'>[chosen] no longer fits in [S], leaving it on the floor.</span>")
+				else
+					chosen.forceMove(tool_original_loc)
+		if(dropped_item && !QDELETED(dropped_item) && dropped_item.loc != user)
+			user.put_in_hands(dropped_item)
 
-	// chain: show next radial after cleanup is done
-	try_show_surgery_radial_menu(user, target, target_zone)
-
-/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool, from_radial = FALSE)
+/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool, from_radial = FALSE, forced_zone = null)
 	checks_for_surgery(M, user, FALSE)
-	var/target_zone = user.get_targetzone()
+	var/target_zone = forced_zone || user.get_targetzone()
 	var/covered
 	if(ishuman(M))
 		covered = get_human_covering(M)
@@ -318,10 +306,9 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.update_surgery()
-				// When called from manual tool use (not radial), show radial for next step.
-				// When called from radial, the caller handles chaining via recursive call.
-				// Borgs always get radial since their tools stay in module (no pickup/return needed).
-				if(!from_radial || isrobot(user))
+				// When called from manual tool use, kick off the radial chain for the next step.
+				// When called from radial, try_show_surgery_radial_menu loops on its own.
+				if(!from_radial)
 					try_show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery
 	return FALSE
