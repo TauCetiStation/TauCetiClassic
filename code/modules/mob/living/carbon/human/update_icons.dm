@@ -432,16 +432,18 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/base_state = U.get_poly_mob_state(src)
 			standing = mutable_appearance('icons/mob/uniform_poly.dmi', base_state, -UNIFORM_LAYER)
 			standing.color = poly_color_matrix(U.poly_colors[1])
-			// Pattern overlay (second color)
+			// Pattern overlay (second color) — RESET_COLOR prevents inheriting base color matrix
 			var/pattern_state = U.get_poly_pattern_state(src)
 			if(pattern_state && length(U.poly_colors) >= 2)
 				var/mutable_appearance/pattern = mutable_appearance('icons/mob/uniform_poly.dmi', pattern_state)
 				pattern.color = poly_color_matrix(U.poly_colors[2])
+				pattern.appearance_flags |= RESET_COLOR
 				standing.add_overlay(pattern)
-			// Non-colorable detail overlay (zippers, seams)
+			// Non-colorable detail overlay (zippers, seams) — RESET_COLOR prevents tinting
 			var/detail_state = U.get_poly_detail_state(src)
 			if(detail_state)
 				var/mutable_appearance/detail = mutable_appearance('icons/mob/uniform_poly.dmi', detail_state)
+				detail.appearance_flags |= RESET_COLOR
 				standing.add_overlay(detail)
 		else
 			standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
