@@ -448,8 +448,10 @@ SUBSYSTEM_DEF(job)
 
 		job.equip(H)
 
-		// Apply custom polychromic jumpsuit from preferences
-		if(H.client?.prefs)
+		// Apply custom polychromic jumpsuit from preferences — only for human mobs,
+		// only for jobs that accept loadout items (skips AI/cyborg), and only if
+		// gear loadout didn't already place something in SLOT_W_UNIFORM.
+		if(ishuman(H) && H.client?.prefs && job.give_loadout_items && !(SLOT_W_UNIFORM in custom_equip_slots))
 			var/obj/item/clothing/under/color/custom/J = H.client.prefs.spawn_custom_jumpsuit(H)
 			if(J)
 				var/obj/item/clothing/under/existing = H.w_uniform

@@ -428,32 +428,15 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
-		var/image/standing
-		if(U.poly && length(U.poly_colors))
-			// Polychromic uniform: build base + pattern + detail from poly DMI
-			var/base_state = U.get_poly_mob_state(src)
-			standing = mutable_appearance('icons/mob/uniform_poly.dmi', base_state, -UNIFORM_LAYER)
-			standing.color = poly_color_matrix(U.poly_colors[1])
-			// Pattern overlay (second color) — RESET_COLOR prevents inheriting base color matrix
-			var/pattern_state = U.get_poly_pattern_state(src)
-			if(pattern_state && length(U.poly_colors) >= 2)
-				var/mutable_appearance/pattern = mutable_appearance('icons/mob/uniform_poly.dmi', pattern_state)
-				pattern.color = poly_color_matrix(U.poly_colors[2])
-				pattern.appearance_flags |= RESET_COLOR
-				standing.add_overlay(pattern)
-			// Non-colorable detail overlay (zippers, seams) — RESET_COLOR prevents tinting
-			var/detail_state = U.get_poly_detail_state(src)
-			if(detail_state)
-				var/mutable_appearance/detail = mutable_appearance('icons/mob/uniform_poly.dmi', detail_state)
-				detail.appearance_flags |= RESET_COLOR
-				standing.add_overlay(detail)
-		else
-			standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
+		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		standing.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		standing.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
-		overlays_standing[UNIFORM_LAYER] = standing
 
+		// Accessories ride as siblings of the uniform in overlays_standing, not as
+		// sub-overlays of `standing` — nested sub-overlays of a colored poly appearance
+		// lose their explicit layer and get buried under pattern/detail.
+		var/list/uniform_stack = list(standing)
 		for(var/obj/item/clothing/accessory/A in U.accessories)
 			var/t_state = A.icon_state
 			var/icon_path = 'icons/mob/accessory.dmi'
@@ -466,11 +449,13 @@ Please contact me on #coderbus IRC. ~Carn x
 				if(icon_exists(icon_path, "[t_state]_fem"))
 					t_state += "_fem"
 
-			var/image/accessory
-			accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + A.layer_priority)
+			var/image/accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + 0.1 + A.layer_priority)
 			accessory.color = A.color
+			accessory.appearance_flags |= RESET_COLOR
 			accessory = human_update_offset(accessory, TRUE)
-			standing.add_overlay(accessory)
+			uniform_stack += accessory
+
+		overlays_standing[UNIFORM_LAYER] = uniform_stack
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
