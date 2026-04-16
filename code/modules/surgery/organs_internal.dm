@@ -212,19 +212,12 @@
 
 		var/obj/item/organ/internal/IO = choosen_organ
 		var/obj/item/weapon/reagent_containers/container = tool
-		var/Peridaxon = FALSE
 
 		if(container.reagents.has_reagent("peridaxon"))
-			Peridaxon = TRUE
-
-		var/trans = container.reagents.trans_to(target, container.amount_per_transfer_from_this)
-		if(trans > 0)
-			container.reagents.reaction(target)	//technically it's contact, but the reagents are being applied to internal tissue
-
-			if(Peridaxon)
-				IO.status &= ~ORGAN_DEAD
-				IO.germ_level = 0
-				IO.damage = 0
+			var/trans = container.treat_organ(target)
+			IO.status &= ~ORGAN_DEAD
+			IO.germ_level = 0
+			IO.damage = 0
 
 			user.visible_message(
 				"<span class='notice'>[user] applies [trans] units of the solution to affected tissue in [target]'s [BP.name]</span>",

@@ -40,7 +40,25 @@
 		..()
 
 /obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
-	return
+	if(!target.reagents || !proximity) return FALSE
+
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+		if(BP.open)
+			// Checks if mob is lying down on table for surgery
+			if(can_operate(H, user))
+				do_surgery(H, user, src)
+				return TRUE
+			else
+				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than \a [src]!</span>")
+			return FALSE
+
+/obj/item/weapon/reagent_containers/proc/treat_organ(mob/living/carbon/human/target)
+	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+	reagents.reaction(target)
+	update_icon()
+	return trans
 
 /obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
 	var/data
