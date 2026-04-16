@@ -127,15 +127,20 @@
 				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
-			var/list/style_display = list("job"="Job Default", "std"="Standard", "std_w"="Standard (White)", "belt"="Belt", "belt_w"="Belt (White)", "turt"="Turtleneck", "turt_w"="Turtleneck (White)")
+			var/list/style_display = list("job"="Job Default", "std"="Standard", "std_w"="Poly-Standard", "belt"="Belt", "belt_w"="Poly-Belt", "turt"="Turtleneck", "turt_w"="Poly-Turtleneck")
+			var/list/pattern_display = list("1"="Vey Med", "2"="Einstein Engines", "3"="Solarian", "4"="Nanotrasen", "5"="Hephaestus Industries", "turt"="Turtleneck")
 			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[style_display[jumpsuit_style] || jumpsuit_style]</a><br>"
-			if(species != VOX)
-				if(jumpsuit_style == "std_w" || jumpsuit_style == "belt_w" || jumpsuit_style == "turt_w")
-					. += "&nbsp;&nbsp;Base: <a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a><br>"
-				if(jumpsuit_style != "job" && jumpsuit_style != "turt" && jumpsuit_style != "turt_w")
-					. += "&nbsp;&nbsp;Pattern: <a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? jumpsuit_pattern : "None"]</a><br>"
 			if(jumpsuit_style != "job")
-				. += "&nbsp;&nbsp;Accent: <a href='byond://?_src_=prefs;preference=jumpsuit_color;task=input'><font color='[jumpsuit_color]'>&#9608;&#9608;</font></a><br>"
+				. += "<table style='margin-left:8px;border-spacing:0 2px'>"
+				if(species != VOX)
+					if(jumpsuit_style == "std_w" || jumpsuit_style == "belt_w" || jumpsuit_style == "turt_w")
+						. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+					if(jumpsuit_style != "turt" && jumpsuit_style != "turt_w")
+						. += "<tr><td>Pattern:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? (pattern_display[jumpsuit_pattern] || jumpsuit_pattern) : "None"]</a></td></tr>"
+				else
+					. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "<tr><td>Accent:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_color;task=input'><font color='[jumpsuit_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "</table>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
@@ -494,23 +499,23 @@
 					use_skirt = !use_skirt
 
 				if("jumpsuit_style")
-					var/list/style_choices = (species == VOX) ? list("Job Default"="job", "Standard"="std") : list("Job Default"="job", "Standard"="std", "Standard (White)"="std_w", "Belt"="belt", "Belt (White)"="belt_w", "Turtleneck"="turt", "Turtleneck (White)"="turt_w")
+					var/list/style_choices = (species == VOX) ? list("Job Default"="job", "Poly-Standard"="std_w") : list("Job Default"="job", "Poly-Standard"="std_w", "Poly-Belt"="belt_w", "Poly-Turtleneck"="turt_w")
 					var/choice = input(user, "Choose jumpsuit style:", "Character Preference") as null|anything in style_choices
 					if(choice)
 						jumpsuit_style = style_choices[choice]
-						if(jumpsuit_style == "turt" || jumpsuit_style == "turt_w")
+						if(jumpsuit_style == "turt_w")
 							jumpsuit_pattern = "turt"
 						else if(jumpsuit_pattern == "turt")
 							jumpsuit_pattern = null
 
 				if("jumpsuit_pattern")
 					var/list/patterns = list(
-						"None"           = null,
-						"Pattern 1"      = "1",
-						"Pattern 2"      = "2",
-						"Pattern 3"      = "3",
-						"Pattern 4"      = "4",
-						"Pattern 5"      = "5"
+						"None"                  = null,
+						"Vey Med"               = "1",
+						"Einstein Engines"      = "2",
+						"Solarian"              = "3",
+						"Nanotrasen"            = "4",
+						"Hephaestus Industries" = "5"
 					)
 					var/choice = input(user, "Choose jumpsuit pattern:", "Character Preference") as null|anything in patterns
 					if(!isnull(choice))
