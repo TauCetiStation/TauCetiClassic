@@ -86,7 +86,7 @@
 			if(H.buckled)
 				return
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.crawling ? pick(BP_CHEST , BP_GROIN) : pick(BP_L_LEG , BP_R_LEG)]
-			if(BP && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS) || !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+			if(BP && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 				BP.take_damage(10, 0)
 			H.updatehealth()
 		M.Stun(1, TRUE)
