@@ -78,6 +78,8 @@
 		E = new V (src)
 		E.Grant(src)
 
+	unsuitable_atoms_damage = maxHealth * 0.03
+
 	AddElement(/datum/element/prevent_attacking_of_types, global.typecache_general_bad_attack_targets, "This tastes awful!")
 	RegisterSignal(src, COMSIG_LIVING_START_PULL, PROC_REF(can_pull_thing))
 
@@ -348,7 +350,7 @@
 
 		if("Живучесть")
 			S.maxHealth = min(S.maxHealth + 40, 350)
-			S.unsuitable_atoms_damage = S.maxHealth * 0.0225
+			S.unsuitable_atoms_damage = S.maxHealth * 0.03
 			if(S.maxHealth >= 350)
 				options -= "Живучесть"
 			to_chat(S, "<span class='notice'>Наша живучесть увеличилась до [S.maxHealth]!</span>")
@@ -536,7 +538,6 @@
 	health = 40
 	melee_damage = 8
 	poison_per_bite = 10
-	unsuitable_atoms_damage = 2
 	var/atom/cocoon_target
 	poison_type = "stoxin"
 
@@ -550,7 +551,6 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8)
 	maxHealth = 120
 	health = 120
-	unsuitable_atoms_damage = 3
 	melee_damage = 15
 	poison_per_bite = 5
 	move_to_delay = 4
@@ -682,7 +682,6 @@
 	maxHealth = 220
 	health = 220
 	melee_damage = 25
-	unsuitable_atoms_damage = 4.4
 	poison_per_bite = 5
 	speed = 3
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
@@ -699,7 +698,6 @@
 	icon_move = null
 	maxHealth = 110
 	health = 110
-	unsuitable_atoms_damage = 2.2
 	melee_damage = 15
 	speed = 2
 	ranged = TRUE
@@ -718,7 +716,6 @@
 	poison_type = "spidertoxin"
 	maxHealth = 120
 	health = 120
-	unsuitable_atoms_damage = 2.4
 	melee_damage = 15
 	speed = 0.5
 	web_mult = 1.2
