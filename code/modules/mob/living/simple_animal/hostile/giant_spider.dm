@@ -329,8 +329,8 @@
 			to_chat(S, "<span class='notice'>Наша сила увеличилась до [S.melee_damage]!</span>")
 
 		if("Скорость")
-			S.speed = max(S.speed - 0.5, -2)
-			if(S.speed <= -2)
+			S.speed = max(S.speed - 0.5, -0.5)
+			if(S.speed <= -0.5)
 				options -= "Скорость"
 			to_chat(S, "<span class='notice'>Наша скорость увеличилась!</span>")
 
