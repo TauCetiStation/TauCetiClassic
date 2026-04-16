@@ -2619,8 +2619,8 @@
 #include "interface\fonts.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\centcom\centcom.dmm"
 #include "maps\delta\job_changes.dm"
 #include "maps\falcon\job_changes.dm"
 #include "maps\stroechka\job_changes.dm"
+#include "maps\testmap\testmap.dmm"
 // END_INCLUDE
