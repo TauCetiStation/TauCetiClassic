@@ -35,6 +35,12 @@
 
 	if(ishuman(antag.current))
 		var/mob/living/carbon/human/H = antag.current
+		// Clear slots nuclear_outfit will fill — equip_to_slot_or_del uses
+		// del_on_fail=TRUE, so any pre-existing item (poly jumpsuit, loadout
+		// gear, prior job kit) would cause the nuke item to be qdel'd instead.
+		for(var/obj/item/I in list(H.back, H.wear_mask, H.glasses, H.gloves, H.shoes, H.w_uniform, H.belt, H.wear_id, H.l_ear, H.l_store, H.r_store))
+			H.drop_from_inventory(I)
+			qdel(I)
 		H.equipOutfit(nuclear_outfit)
 	antag.current.add_language(LANGUAGE_SYCODE)
 

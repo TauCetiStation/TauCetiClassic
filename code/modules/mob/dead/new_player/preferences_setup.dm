@@ -128,6 +128,7 @@
 				if(I)
 					mannequin.equip_to_slot_or_del(I, G.slot)
 
+	mannequin.update_inv_back()
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
