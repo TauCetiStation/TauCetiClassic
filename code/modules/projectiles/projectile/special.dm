@@ -239,11 +239,13 @@
 		var/mob/living/L = target
 		if(istype(firer, /mob/living/simple_animal/hostile/giant_spider))
 			var/mob/living/simple_animal/hostile/giant_spider/S = firer
-			L.reagents.add_reagent(S.poison_type, S.poison_per_bite)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
+				L.reagents.add_reagent(S.poison_type, S.poison_per_bite * max(0.01 * 100 - (H.run_armor_check(def_zone, BIO)), 0.15))
 				if(H.species.flags[IS_SYNTHETIC]) //No damage from poison, so we take damage twice instead
 					H.apply_damage(damage, damage_type, def_zone, H.run_armor_check(def_zone, flag) * armor_multiplier, damage_flags(), src)
+			else //Non-human target - no armor
+				L.reagents.add_reagent(S.poison_type, S.poison_per_bite)
 			return
 		L.reagents.add_reagent("stoxin", 5)
 

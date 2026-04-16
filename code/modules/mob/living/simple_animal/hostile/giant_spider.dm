@@ -79,6 +79,12 @@
 		E.Grant(src)
 
 	AddElement(/datum/element/prevent_attacking_of_types, global.typecache_general_bad_attack_targets, "This tastes awful!")
+	RegisterSignal(src, COMSIG_LIVING_START_PULL, PROC_REF(can_pull_thing))
+
+/mob/living/simple_animal/hostile/giant_spider/proc/can_pull_thing(datum/source, atom/movable/A)
+	SIGNAL_HANDLER
+	if(isliving(A) && !istype(A, /mob/living/simple_animal/hostile/giant_spider))
+		return COMPONENT_PREVENT_PULL
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
 	. = ..()
@@ -317,7 +323,7 @@
 	var/mob/living/simple_animal/hostile/giant_spider/S = owner
 	switch(adaptation)
 		if("Сила")
-			S.melee_damage = min(S.melee_damage + 10, 45)
+			S.melee_damage = min(S.melee_damage + 8, 45)
 			if(S.melee_damage >= 45)
 				options -= "Сила"
 			to_chat(S, "<span class='notice'>Наша сила увеличилась до [S.melee_damage]!</span>")
@@ -342,13 +348,13 @@
 
 		if("Живучесть")
 			S.maxHealth = min(S.maxHealth + 40, 350)
-			S.unsuitable_atoms_damage = S.maxHealth * 0.02
+			S.unsuitable_atoms_damage = S.maxHealth * 0.0225
 			if(S.maxHealth >= 350)
 				options -= "Живучесть"
 			to_chat(S, "<span class='notice'>Наша живучесть увеличилась до [S.maxHealth]!</span>")
 
 		if("Количество яда")
-			S.poison_per_bite = max(S.poison_per_bite + 7, 30)
+			S.poison_per_bite = max(S.poison_per_bite + 5, 30)
 			if(S.poison_per_bite >= 30)
 				options -= "Количество яда"
 			to_chat(S, "<span class='notice'>Теперь мы впрыскиваем по [S.poison_per_bite] за укус!</span>")
@@ -411,14 +417,14 @@
 	S.adaptations += adaptation
 
 /mob/living/simple_animal/hostile/giant_spider/proc/spin_web(atom/A, web = /obj/structure/spider/stickyweb)
+	if(busy_with_action)
+		return
 	var/turf/T = get_turf(A)
 	var/n = 0
 	for(var/obj/structure/spider/S in T)
 		n++
-	if(n > 3)
+	if(n > 1) //Two max
 		to_chat(src, "<span class='notice'>Слишком много паутины в одном месте!</span>")
-		return
-	if(busy_with_action)
 		return
 	visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 	var/choice = /obj/structure/spider/stickyweb
@@ -498,7 +504,7 @@
 				H.update_body()
 				fed += 1
 				to_chat(src, "<span class='notice'>Это отличное мясо. (+1)</span>")
-			else //Monkeys, slimes, etc. Not hostile - less reward. Monkeys give 0.4, though
+			else //Monkeys, slimes, etc. Not hostile - less reward. Monkeys give 0.48, though
 				var/food_amount = 0.08 * w_class
 				fed += food_amount
 				to_chat(src, "<span class='notice'>Это плохое мясо. (+[food_amount])</span>")
@@ -554,6 +560,9 @@
 	poison_type = "toxin"
 
 /mob/living/simple_animal/hostile/giant_spider/UnarmedAttack(atom/target)
+	if(istype(target, /mob/living/simple_animal/hostile/giant_spider))
+		to_chat(src, "<span class='warning'>Не стоит атаковать собратьев. Лучше их съесть, когда сами умрут.</span>")
+		return
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
@@ -562,12 +571,11 @@
 				var/mob/living/carbon/human/H = target
 				var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
-				if(prob(100 - (H.run_armor_check(BP, BIO) * 0.7))) //If we have armor with 100 bio def, poison probability is 30
-					L.reagents.add_reagent(poison_type, 5)
-					to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
+				L.reagents.add_reagent(poison_type, poison_per_bite * max(0.01 * 100 - (H.run_armor_check(BP, BIO)), 0.15)) //Poison per byte 5, armor 100 and 85 both means 0.75 of poison
+				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 			else if(prob(poison_per_bite) || client)
 				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
-				L.reagents.add_reagent(poison_type, 5)
+				L.reagents.add_reagent(poison_type, poison_per_bite)
 		if(isrobot(target))
 			L.Stun(1)
 	else if(istype(target, /obj/mecha))
@@ -664,14 +672,14 @@
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula
 	name = "tarantula"
-	desc = "Мохнатый и черный, а ещё большой. У вас бегают мурашки по коже, когда вы смотрите на него. У этого глаза красные"
+	desc = "Мохнатый и черный, а ещё большой. У вас бегают мурашки по коже, когда вы смотрите на него. У этого глаза красные."
 	icon_state = "tarantula"
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
 	icon_move = null
 	maxHealth = 220
 	health = 220
-	melee_damage = 30
+	melee_damage = 25
 	unsuitable_atoms_damage = 4.4
 	poison_per_bite = 5
 	speed = 3
@@ -687,13 +695,14 @@
 	icon_living = "viper"
 	icon_dead = "viper_dead"
 	icon_move = null
-	maxHealth = 130
-	health = 130
+	maxHealth = 110
+	health = 110
 	unsuitable_atoms_damage = 2.2
 	melee_damage = 15
 	speed = 2
 	ranged = TRUE
 	projectiletype = /obj/item/projectile/acid_special_spider/poisonous
+	ranged_cooldown_cap = 3
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
 
 /mob/living/simple_animal/hostile/giant_spider/midwife
@@ -705,9 +714,9 @@
 	icon_dead = "midwife_dead"
 	icon_move = null
 	poison_type = "spidertoxin"
-	maxHealth = 150
-	health = 150
-	unsuitable_atoms_damage = 3
+	maxHealth = 120
+	health = 120
+	unsuitable_atoms_damage = 2.4
 	melee_damage = 15
 	speed = 0.5
 	web_mult = 1.2

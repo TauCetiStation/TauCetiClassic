@@ -295,6 +295,7 @@
 	A.original = target
 	A.yo = target.y - start.y
 	A.xo = target.x - start.x
+	A.firer = src
 	spawn(0)
 		A.process()
 
