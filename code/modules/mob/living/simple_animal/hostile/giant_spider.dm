@@ -451,6 +451,8 @@
 	new choice (T)
 
 /mob/living/simple_animal/hostile/giant_spider/proc/lay_egg_cluster(turf/T)
+	if(busy_with_action)
+		return
 	if(!T)
 		return
 	var/obj/structure/spider/eggcluster/E = locate() in T
