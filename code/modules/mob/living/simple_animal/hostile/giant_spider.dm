@@ -475,7 +475,7 @@
 	reproduced++
 
 /mob/living/simple_animal/hostile/giant_spider/proc/cocoon(atom/movable/cocoon_target)
-	if(get_dist(src, cocoon_target) > 1 || cocoon_target.anchored || cocoon_target == src)
+	if(get_dist(src, cocoon_target) > 1 || cocoon_target.anchored || cocoon_target == src || busy_with_action)
 		return
 	visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 	if(isliving(cocoon_target))
