@@ -78,16 +78,20 @@ This is emryo growth procs
 		qdel(src)
 
 /obj/item/alien_embryo/Destroy()
-	if(affected_mob)
-		affected_mob.remove_status_flags(XENO_HOST)
-		STOP_PROCESSING(SSobj, src)
-		remove_infected_hud()
-		affected_mob.med_hud_set_status()
+	detach_from_host()
 	if(baby)
 		baby.clear_alert("alien_embryo")
-	affected_mob = null
 	baby = null
 	return ..()
+
+/obj/item/alien_embryo/proc/detach_from_host()
+	if(!affected_mob)
+		return
+	affected_mob.remove_status_flags(XENO_HOST)
+	STOP_PROCESSING(SSobj, src)
+	remove_infected_hud()
+	affected_mob.med_hud_set_status()
+	affected_mob = null
 
 /obj/item/alien_embryo/process()
 	if(!affected_mob) // The mob we were gestating in is straight up gone, we shouldn't be here
@@ -106,11 +110,7 @@ This is emryo growth procs
 			return FALSE
 
 	if(loc != affected_mob)
-		affected_mob.remove_status_flags(XENO_HOST)
-		STOP_PROCESSING(SSobj, src)
-		remove_infected_hud()
-		affected_mob.med_hud_set_status()
-		affected_mob = null
+		detach_from_host()
 		return FALSE
 
 	if(stage < MAX_EMBRYO_STAGE)
@@ -199,10 +199,7 @@ This is emryo growth procs
 				larva_candidate = affected_mob.key
 
 		if(!larva_candidate)
-			stage = 4 // mission failed we'll get em next time
-			growth_counter -= MAX_EMBRYO_GROWTH
-			next_growth_limit -= MAX_EMBRYO_GROWTH
-			START_PROCESSING(SSobj, src)
+			rewind_failed_burst()
 			return
 
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
@@ -231,6 +228,22 @@ This is emryo growth procs
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = null
 
+// Rolls embryo back from stage 5 to stage 4 when no larva candidate is available.
+/obj/item/alien_embryo/proc/rewind_failed_burst()
+	stage = 4 // mission failed we'll get em next time
+	growth_counter -= MAX_EMBRYO_GROWTH
+	next_growth_limit -= MAX_EMBRYO_GROWTH
+	START_PROCESSING(SSobj, src)
+
+// Sets up cooldown and refreshes the kick HUD overlay. duration is in seconds (e.g. 15 or 6).
+/obj/item/alien_embryo/proc/apply_kick_cooldown(duration)
+	COOLDOWN_START(src, next_kick, duration SECONDS)
+	var/obj/item/weapon/embryo_kick/K = locate() in baby
+	if(K)
+		QDEL_NULL(kick_cd_overlay)
+		kick_cd_overlay = new(K.hud, K.hud)
+		kick_cd_overlay.start_cooldown(duration)
+
 /obj/item/alien_embryo/proc/kick()
 	if(!affected_mob)
 		return
@@ -245,21 +258,11 @@ This is emryo growth procs
 		to_chat(baby, "<span class='warning'>You need to rest before kicking again.</span>")
 		return
 	if(stage < 5)
-		COOLDOWN_START(src, next_kick, 15 SECONDS)
-		var/obj/item/weapon/embryo_kick/K = locate() in baby
-		if(K)
-			QDEL_NULL(kick_cd_overlay)
-			kick_cd_overlay = new(K.hud, K.hud)
-			kick_cd_overlay.start_cooldown(15)
+		apply_kick_cooldown(15)
 		affected_mob.on_larva_kick(stage)
 		to_chat(baby, "<span class='notice'>You kick your host from the inside.</span>")
 		return
-	COOLDOWN_START(src, next_kick, 6 SECONDS)
-	var/obj/item/weapon/embryo_kick/K = locate() in baby
-	if(K)
-		QDEL_NULL(kick_cd_overlay)
-		kick_cd_overlay = new(K.hud, K.hud)
-		kick_cd_overlay.start_cooldown(6)
+	apply_kick_cooldown(6)
 	bite_count++
 	affected_mob.on_larva_bite(bite_count)
 	affected_mob.updatehealth()
@@ -281,7 +284,7 @@ This is emryo growth procs
 			affected_mob.gib()
 		else
 			affected_mob.on_larva_erupt(baby)
-		K = locate() in baby
+		var/obj/item/weapon/embryo_kick/K = locate() in baby
 		if(K)
 			K.flags &= ~(DROPDEL | NODROP)
 			qdel(K)
