@@ -218,7 +218,7 @@
 			var/obj/item/weapon/reagent_containers/dropper/robot/drone/P = I
 			P.reagents.clear_reagents()
 			P.reagents.add_reagent(reagent, 10)
-			P.icon_state = "[initial(P.icon_state)]1"
+			P.update_icon()
 			to_chat(D, "<span class='notice'>Your [P.name] was refilled.</span>")
 	return TRUE
 
