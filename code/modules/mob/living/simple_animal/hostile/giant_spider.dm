@@ -574,10 +574,9 @@
 				var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
 				L.reagents.add_reagent(poison_type, poison_per_bite * max(0.01 * 100 - (H.run_armor_check(BP, BIO)), 0.15)) //Poison per byte 5, armor 100 and 85 both means 0.75 of poison
-				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 			else if(prob(poison_per_bite) || client)
-				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 				L.reagents.add_reagent(poison_type, poison_per_bite)
+			to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 		if(isrobot(target))
 			L.Stun(1)
 	else if(istype(target, /obj/mecha))
