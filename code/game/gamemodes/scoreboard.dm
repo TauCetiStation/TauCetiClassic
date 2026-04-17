@@ -238,9 +238,6 @@
 		to_chat(src, "<span class='warning'>Итоги раунда ещё не доступны.</span>")
 		return
 
-	for(var/i in 1 to end_icons.len)
-		src << browse_rsc(end_icons[i], "logo_[i].png")
-
 	var/datum/browser/popup = new(mob, "roundstats", "Round #[global.round_id] Stats", 1000, 600)
 	popup.set_content(global.endgame_scoreboard)
 	popup.open()
