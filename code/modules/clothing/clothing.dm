@@ -603,6 +603,18 @@ var/global/list/poly_color_palette = list(
 		0, 0, b * (1 - k) + k  \
 	)
 
+/// Creates a poly overlay mutable_appearance with RESET_COLOR set.
+/// Optionally tints with `color_hex` and applies `human.update_height()`.
+/// `icon_file` defaults to the poly uniform sheet; pass blood.dmi for blood overlays.
+/proc/make_poly_overlay(state, color_hex = null, mob/living/carbon/human/human = null, icon_file = 'icons/mob/uniform_poly.dmi')
+	var/mutable_appearance/overlay = mutable_appearance(icon_file, state)
+	if(color_hex)
+		overlay.color = poly_color_matrix(color_hex)
+	overlay.appearance_flags |= RESET_COLOR
+	if(human)
+		human.update_height(overlay)
+	return overlay
+
 /obj/item/clothing/under/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
 	if(!poly || !length(poly_colors))
 		return ..()
@@ -624,26 +636,14 @@ var/global/list/poly_color_palette = list(
 	. = list()
 	var/detail_state = get_poly_detail_state(H)
 	if(detail_state)
-		var/mutable_appearance/detail = mutable_appearance('icons/mob/uniform_poly.dmi', detail_state)
-		detail.appearance_flags |= RESET_COLOR
-		if(H)
-			H.update_height(detail)
-		. += detail
+		. += make_poly_overlay(detail_state, null, H)
 	var/pattern_state = get_poly_pattern_state(H)
 	if(pattern_state && length(poly_colors) >= 2)
-		var/mutable_appearance/pattern = mutable_appearance('icons/mob/uniform_poly.dmi', pattern_state)
-		pattern.color = poly_color_matrix(poly_colors[2])
-		pattern.appearance_flags |= RESET_COLOR
-		if(H)
-			H.update_height(pattern)
-		. += pattern
+		. += make_poly_overlay(pattern_state, poly_colors[2], H)
 	if(dirt_overlay && bloodied_icon_state)
-		var/mutable_appearance/bloodsies = mutable_appearance('icons/effects/blood.dmi', bloodied_icon_state)
-		bloodsies.color = dirt_overlay.color
-		bloodsies.appearance_flags |= RESET_COLOR
-		if(H)
-			H.update_height(bloodsies)
-		. += bloodsies
+		var/mutable_appearance/blood = make_poly_overlay(bloodied_icon_state, null, H, 'icons/effects/blood.dmi')
+		blood.color = dirt_overlay.color
+		. += blood
 
 /// Builds pattern and blood overlays for inventory/in-hand (world) display.
 /obj/item/clothing/under/proc/get_poly_world_overlays()
@@ -651,15 +651,11 @@ var/global/list/poly_color_palette = list(
 	if(poly_pattern && length(poly_colors) >= 2)
 		var/pat_state = get_poly_world_pattern_state()
 		if(pat_state)
-			var/mutable_appearance/pat = mutable_appearance('icons/mob/uniform_poly.dmi', pat_state)
-			pat.color = poly_color_matrix(poly_colors[2])
-			pat.appearance_flags |= RESET_COLOR
-			. += pat
+			. += make_poly_overlay(pat_state, poly_colors[2])
 	if(dirt_overlay)
-		var/mutable_appearance/bloodsies = mutable_appearance('icons/effects/blood.dmi', "uniformblood")
-		bloodsies.color = dirt_overlay.color
-		bloodsies.appearance_flags |= RESET_COLOR
-		. += bloodsies
+		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, null, 'icons/effects/blood.dmi')
+		blood.color = dirt_overlay.color
+		. += blood
 
 /obj/item/clothing/under/update_icon()
 	..()
@@ -674,13 +670,11 @@ var/global/list/poly_color_palette = list(
 /// Returns the world (inventory/in-hand) icon_state for this poly uniform.
 /// World states don't vary by gender/fat/species. Belt styles reuse the std world sprite.
 /obj/item/clothing/under/proc/get_poly_world_state()
-	switch(poly_style)
-		if("turt", "turt_w")
-			return "w_turt"
-		if("std_w", "belt_w")
-			return "w_std_w"
-		else
-			return "w_std"
+	if(poly_style == "turt" || poly_style == "turt_w")
+		return "w_turt"
+	if(is_poly_white_base(poly_style))
+		return "w_std_w"
+	return "w_std"
 
 /// Returns the world pattern icon_state, or null if this style/pattern has none.
 /obj/item/clothing/under/proc/get_poly_world_pattern_state()
@@ -720,8 +714,7 @@ var/global/list/poly_color_palette = list(
 			base = "b_std"
 	// Roll-down states
 	if(rolled_down)
-		var/is_white = (style == "std_w" || style == "belt_w" || style == "turt_w")
-		base = is_white ? "b_roll_w" : "b_roll"
+		base = is_poly_white_base(style) ? "b_roll_w" : "b_roll"
 	// Vox variant — b_std_w_vox is the only Vox base sprite, used for all styles
 	if(H && H.species?.name == VOX)
 		return "b_std_w_vox"
@@ -886,12 +879,18 @@ var/global/list/poly_color_palette = list(
 	set src in usr
 	set_sensors(usr)
 
+/obj/item/clothing/under/proc/can_rollsuit(mob/user)
+	if(!isliving(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/under/verb/rollsuit()
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
-	if(!isliving(usr)) return
-	if(usr.incapacitated())
+	if(!can_rollsuit(usr))
 		return
 
 	if(copytext(item_state,-2) != "_d")
@@ -903,9 +902,7 @@ var/global/list/poly_color_palette = list(
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/color/custom/rollsuit()
-	if(!isliving(usr))
-		return
-	if(usr.incapacitated())
+	if(!can_rollsuit(usr))
 		return
 	if(poly_style == "turt" || poly_style == "turt_w")
 		to_chat(usr, "<span class='notice'>You cannot roll down a turtleneck!</span>")

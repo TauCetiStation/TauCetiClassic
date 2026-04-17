@@ -568,8 +568,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/obj/item/clothing/under/color/custom/J = new(location)
 	J.poly_style = jumpsuit_style
 	J.poly_pattern = (jumpsuit_style == "turt" || jumpsuit_style == "turt_w") ? "turt" : jumpsuit_pattern
-	var/list/white_bases = list("std_w", "belt_w", "turt_w")
-	var/base_col = (jumpsuit_style in white_bases) ? jumpsuit_base_color : "#FFFFFF"
+	var/base_col = is_poly_white_base(jumpsuit_style) ? jumpsuit_base_color : "#FFFFFF"
 	J.poly_colors = list(base_col, jumpsuit_color)
 	J.update_icon()
 	return J
