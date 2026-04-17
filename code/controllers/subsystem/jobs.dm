@@ -452,7 +452,7 @@ SUBSYSTEM_DEF(job)
 		// only for jobs that accept loadout items (skips AI/cyborg), and only if
 		// gear loadout didn't already place something in SLOT_W_UNIFORM.
 		if(ishuman(H) && H.client?.prefs && job.give_loadout_items && !(SLOT_W_UNIFORM in custom_equip_slots))
-			var/obj/item/clothing/under/color/custom/J = H.client.prefs.spawn_custom_jumpsuit(H)
+			var/obj/item/clothing/under/color/polychromic/J = H.client.prefs.spawn_custom_jumpsuit(H)
 			if(J)
 				H.replace_in_slot(SLOT_W_UNIFORM, J)
 

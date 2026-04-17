@@ -901,7 +901,7 @@ var/global/list/poly_color_palette = list(
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
-/obj/item/clothing/under/color/custom/rollsuit()
+/obj/item/clothing/under/color/polychromic/rollsuit()
 	if(!can_rollsuit(usr))
 		return
 	if(poly_style == "turt" || poly_style == "turt_w")
