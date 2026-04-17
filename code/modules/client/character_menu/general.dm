@@ -127,16 +127,14 @@
 				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
-			var/list/style_display = list("job"="Job Default", "std"="Standard", "std_w"="Poly-Standard", "belt"="Belt", "belt_w"="Poly-Belt", "turt"="Turtleneck", "turt_w"="Poly-Turtleneck")
-			var/list/pattern_display = list("1"="Vey Med", "2"="Einstein Engines", "3"="Solarian", "4"="Nanotrasen", "5"="Hephaestus Industries", "turt"="Turtleneck")
-			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[style_display[jumpsuit_style] || jumpsuit_style]</a><br>"
+			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[poly_style_display[jumpsuit_style] || jumpsuit_style]</a><br>"
 			if(jumpsuit_style != "job")
 				. += "<table style='margin-left:8px;border-spacing:0 2px'>"
 				if(species != VOX)
-					if(jumpsuit_style == "std_w" || jumpsuit_style == "belt_w" || jumpsuit_style == "turt_w")
+					if(is_poly_white_base(jumpsuit_style))
 						. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
 					if(jumpsuit_style != "turt" && jumpsuit_style != "turt_w")
-						. += "<tr><td>Pattern:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? (pattern_display[jumpsuit_pattern] || jumpsuit_pattern) : "None"]</a></td></tr>"
+						. += "<tr><td>Pattern:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? (poly_pattern_display[jumpsuit_pattern] || jumpsuit_pattern) : "None"]</a></td></tr>"
 				else
 					. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
 				. += "<tr><td>Accent:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_color;task=input'><font color='[jumpsuit_color]'>&#9608;&#9608;</font></a></td></tr>"
@@ -499,7 +497,12 @@
 					use_skirt = !use_skirt
 
 				if("jumpsuit_style")
-					var/list/style_choices = (species == VOX) ? list("Job Default"="job", "Poly-Standard"="std_w") : list("Job Default"="job", "Poly-Standard"="std_w", "Poly-Belt"="belt_w", "Poly-Turtleneck"="turt_w")
+					// VOX only gets white-base poly styles (no belt/turt variants exist for Vox)
+					var/list/style_choices
+					if(species == VOX)
+						style_choices = list("Job Default"="job", "Poly-Standard"="std_w")
+					else
+						style_choices = list("Job Default"="job", "Poly-Standard"="std_w", "Poly-Belt"="belt_w", "Poly-Turtleneck"="turt_w")
 					var/choice = input(user, "Choose jumpsuit style:", "Character Preference") as null|anything in style_choices
 					if(choice)
 						jumpsuit_style = style_choices[choice]
@@ -509,14 +512,11 @@
 							jumpsuit_pattern = null
 
 				if("jumpsuit_pattern")
-					var/list/patterns = list(
-						"None"                  = null,
-						"Vey Med"               = "1",
-						"Einstein Engines"      = "2",
-						"Solarian"              = "3",
-						"Nanotrasen"            = "4",
-						"Hephaestus Industries" = "5"
-					)
+					// Build pattern list from global display names, excluding "turt" (set automatically by turt_w style)
+					var/list/patterns = list("None" = null)
+					for(var/key in poly_pattern_display)
+						if(key != "turt")
+							patterns[poly_pattern_display[key]] = key
 					var/choice = input(user, "Choose jumpsuit pattern:", "Character Preference") as null|anything in patterns
 					if(!isnull(choice))
 						jumpsuit_pattern = patterns[choice]
