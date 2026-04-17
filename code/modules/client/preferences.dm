@@ -563,7 +563,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 /datum/preferences/proc/spawn_custom_jumpsuit(atom/location)
 	if(!jumpsuit_style || jumpsuit_style == "job")
 		return null
-	var/obj/item/clothing/under/color/custom/J = new(location)
+	var/obj/item/clothing/under/color/polychromic/J = new(location)
 	J.poly_style = jumpsuit_style
 	J.poly_pattern = (jumpsuit_style == "turt" || jumpsuit_style == "turt_w") ? "turt" : jumpsuit_pattern
 	var/base_col = is_poly_white_base(jumpsuit_style) ? jumpsuit_base_color : "#FFFFFF"

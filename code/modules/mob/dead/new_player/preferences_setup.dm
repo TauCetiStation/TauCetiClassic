@@ -110,9 +110,9 @@
 		mannequin.update_inv_wear_suit()
 
 	// Equip custom jumpsuit from prefs (skip if using job default)
-	var/obj/item/clothing/under/color/custom/custom_jumpsuit = spawn_custom_jumpsuit(mannequin)
-	if(custom_jumpsuit)
-		mannequin.replace_in_slot(SLOT_W_UNIFORM, custom_jumpsuit)
+	var/obj/item/clothing/under/color/polychromic/polychromic_jumpsuit = spawn_custom_jumpsuit(mannequin)
+	if(polychromic_jumpsuit)
+		mannequin.replace_in_slot(SLOT_W_UNIFORM, polychromic_jumpsuit)
 
 	// Equip loadout items for preview
 	var/obj/item/clothing/preview_uniform = istype(mannequin.w_uniform, /obj/item/clothing) ? mannequin.w_uniform : null
