@@ -153,8 +153,6 @@
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	if(!organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
-	//zombie have NO_PAIN and can't adjust/sets halloss
-	resetHalLoss()
 	//remove all blind-blur effects
 	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
 	sdisabilities &= ~BLIND
@@ -174,8 +172,6 @@
 	for(var/obj/item/organ/external/limb in bad_bodyparts)
 		limb.rejuvenate()
 
-	resetCloneLoss()
-	resetBrainLoss()
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
@@ -197,14 +193,6 @@
 		reagents.clear_reagents()
 
 	suiciding = FALSE
-
-	//remove all sight effects
-	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
-	sdisabilities &= ~BLIND
-	blinded = FALSE
-	setBlurriness(0)
-	handle_vision(TRUE)
-
 	ear_deaf = 0
 	ear_damage = 0
 
