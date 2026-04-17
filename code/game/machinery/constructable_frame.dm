@@ -967,6 +967,26 @@ to destroy them and players will be able to make replacements.
 		/obj/item/stack/cable_coil = 3,
 		/obj/item/weapon/stock_parts/console_screen = 1
 	)
+	var/list/names_of_suit_storage = list()
+	var/list/radial_icons = list()
+
+/obj/item/weapon/circuitboard/suit_storage/atom_init()
+	..()
+	take_storage_by_type()
+
+/obj/item/weapon/circuitboard/suit_storage/proc/take_storage_by_type()
+	names_of_suit_storage = list()
+	radial_icons = list()					// Force clear list befor add some
+	for(var/obj/machinery/suit_storage_unit/type as anything in typesof(/obj/machinery/suit_storage_unit))
+		var/full_name = initial(type.name)
+		if(!emagged)
+			if(type.ignore)
+				continue
+		else if(!type.syndie || type.ignore)
+			continue
+		ASSERT(!names_of_suit_storage[full_name])
+		names_of_suit_storage[full_name] = type
+		radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
 
 /obj/item/weapon/circuitboard/suit_storage/emag_act(mob/user)
 	if(emagged)
@@ -974,26 +994,11 @@ to destroy them and players will be able to make replacements.
 		return FALSE
 	to_chat(user, "<span class='notice'>You override the circuit lock and open controls.</span>")
 	emagged = TRUE
+	take_storage_by_type()
 	return TRUE
 
 /obj/item/weapon/circuitboard/suit_storage/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
-		var/list/names_of_suit_storage = list()
-		var/list/radial_icons = list()
-
-		if(names_of_suit_storage.len == 0 || emagged)
-			for(var/obj/machinery/suit_storage_unit/type as anything in typesof(/obj/machinery/suit_storage_unit))
-				var/full_name = initial(type.name)
-				if(!emagged)
-					if(type.ignore)
-						continue
-				else if(!type.syndie || type.ignore)
-					continue
-				ASSERT(!names_of_suit_storage[full_name])
-
-				names_of_suit_storage[full_name] = type
-				radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
-
 		var/suit_storage_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(suit_storage_name))
 			return

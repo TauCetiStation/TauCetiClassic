@@ -582,12 +582,14 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 //Syndicate
 /obj/machinery/suit_storage_unit/syndicate_unit
 	name = "Syndicate Suit Storage Unit"
-	ignore = TRUE
+	ignore = FALSE
 	syndie = TRUE
+	emagged = TRUE
 	req_access = list(access_syndicate)
 	overlay_color = COLOR_DARK_GUNMETAL
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex
+	ignore = TRUE
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex/light
 	name = "Syndicate Hardsuit Storage Unit"
