@@ -618,12 +618,8 @@ var/global/list/poly_color_palette = list(
 /obj/item/clothing/under/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
 	if(!poly || !length(poly_colors))
 		return ..()
-	// Held-in-hand uses world states (w_*). DMI has no d_* details nor blood for world views.
 	if(sprite_sheet_slot == SPRITE_SHEET_HELD)
-		var/mutable_appearance/held = mutable_appearance('icons/mob/uniform_poly.dmi', get_poly_world_state(), layer)
-		held.color = poly_color_matrix(poly_colors[1])
-		held.add_overlay(get_poly_world_overlays())
-		return held
+		return ..()
 	var/mutable_appearance/MA = mutable_appearance('icons/mob/uniform_poly.dmi', get_poly_mob_state(H), layer)
 	MA.color = poly_color_matrix(poly_colors[1])
 	MA.add_overlay(get_poly_mob_overlays(H, bloodied_icon_state))
@@ -645,7 +641,19 @@ var/global/list/poly_color_palette = list(
 		blood.color = dirt_overlay.color
 		. += blood
 
-/// Builds pattern and blood overlays for inventory/in-hand (world) display.
+/// Builds pattern and blood overlays for inventory display.
+/obj/item/clothing/under/proc/get_poly_inventory_overlays()
+	. = list()
+	if(poly_pattern && length(poly_colors) >= 2)
+		var/pat_state = get_poly_inventory_pattern_state()
+		if(pat_state)
+			. += make_poly_overlay(pat_state, poly_colors[2])
+	if(dirt_overlay)
+		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, null, 'icons/effects/blood.dmi')
+		blood.color = dirt_overlay.color
+		. += blood
+
+/// Builds pattern and blood overlays for world display.
 /obj/item/clothing/under/proc/get_poly_world_overlays()
 	. = list()
 	if(poly_pattern && length(poly_colors) >= 2)
@@ -663,9 +671,32 @@ var/global/list/poly_color_palette = list(
 	if(!poly || !length(poly_colors))
 		return
 	icon = 'icons/mob/uniform_poly.dmi'
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
+		icon_state = get_poly_inventory_state()
+		color = poly_color_matrix(poly_colors[1])
+		add_overlay(get_poly_inventory_overlays())
+		return
 	icon_state = get_poly_world_state()
 	color = poly_color_matrix(poly_colors[1])
 	add_overlay(get_poly_world_overlays())
+
+/obj/item/clothing/under/update_world_icon()
+	if(poly && length(poly_colors))
+		update_icon()
+		return
+	..()
+
+/// Returns the inventory icon_state for this poly uniform.
+/obj/item/clothing/under/proc/get_poly_inventory_state()
+	return "inventory_std"
+
+/// Returns the inventory pattern icon_state, or null if this style/pattern has none.
+/obj/item/clothing/under/proc/get_poly_inventory_pattern_state()
+	if(!poly_pattern)
+		return null
+	if(poly_style == "turt" || poly_style == "turt_w")
+		return "inventory_turt_pattern"
+	return "inventory_pattern"
 
 /// Returns the world (inventory/in-hand) icon_state for this poly uniform.
 /// World states don't vary by gender/fat/species. Belt styles reuse the std world sprite.
