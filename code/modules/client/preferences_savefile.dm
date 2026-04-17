@@ -793,6 +793,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
 	S["use_skirt"]         >> use_skirt
+	S["jumpsuit_style"]    >> jumpsuit_style
+	S["jumpsuit_pattern"]  >> jumpsuit_pattern
+	S["jumpsuit_color"]    >> jumpsuit_color
+	S["jumpsuit_base_color"] >> jumpsuit_base_color
+	// Null/invalid guard — slots without this key saved will default to job uniform
+	if(!jumpsuit_style || !((jumpsuit_style in poly_valid_styles)))
+		jumpsuit_style = "job"
 	S["pda_ringtone"]      >> chosen_ringtone
 	S["pda_custom_melody"] >> custom_melody
 
@@ -994,6 +1001,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt
+	S["jumpsuit_style"]        << jumpsuit_style
+	S["jumpsuit_pattern"]      << jumpsuit_pattern
+	S["jumpsuit_color"]        << jumpsuit_color
+	S["jumpsuit_base_color"]   << jumpsuit_base_color
 	S["pda_ringtone"]          << chosen_ringtone
 	S["pda_custom_melody"]     << custom_melody
 	//Write prefs
