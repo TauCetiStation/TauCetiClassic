@@ -1581,6 +1581,7 @@
 #include "code\modules\client\character_menu\loadout\loadout_glasses.dm"
 #include "code\modules\client\character_menu\loadout\loadout_hats.dm"
 #include "code\modules\client\character_menu\loadout\loadout_shoes.dm"
+#include "code\modules\clothing\poly_constants.dm"
 #include "code\modules\clothing\clothing.dm"
 #include "code\modules\clothing\glasses\glasses.dm"
 #include "code\modules\clothing\glasses\hud.dm"
