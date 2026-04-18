@@ -453,6 +453,10 @@
 	..()
 	H.pluvian_reborn_if_worthy()
 
+/datum/species/pluvian/New()
+	. = ..()
+	has_organ += list(BP_EARS = /obj/item/organ/external/ears)
+
 /datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT
 	icobase = 'icons/mob/human/pluvian.dmi'
