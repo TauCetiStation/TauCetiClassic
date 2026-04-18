@@ -153,7 +153,7 @@
 	controller_type = /datum/bodypart_controller/skeleton
 
 /obj/item/organ/external/ears/skeleton
-	name = "skeleton tail"
+	name = "skeleton ears"
 	leaves_stump = FALSE
 	force = 8
 	min_broken_damage = 10
