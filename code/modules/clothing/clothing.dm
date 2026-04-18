@@ -542,23 +542,23 @@ BLIND     // can't see anything
 
 /// Shared color palette for polychromic jumpsuit customization (used in UI pickers)
 var/global/list/poly_color_palette = list(
-	"Фиолетовый"       = "#6E39A9",
-	"Фиолетовый V2"    = "#8D45A9",
-	"Розовый"           = "#AC1B5B",
-	"Светло Розовый"    = "#B25266",
-	"Красный"           = "#AB1F1F",
-	"Светло Красный"    = "#B1372D",
-	"Оранжевый"         = "#B47538",
-	"Золотой"           = "#BE902A",
-	"Желтый"            = "#C29700",
-	"Салатовый"         = "#ADB834",
+	"Фиолетовый"       = "#6e39a9",
+	"Фиолетовый V2"    = "#8d45a9",
+	"Розовый"           = "#ac1b5b",
+	"Светло Розовый"    = "#b25266",
+	"Красный"           = "#ab1f1f",
+	"Светло Красный"    = "#b1372d",
+	"Оранжевый"         = "#b47538",
+	"Золотой"           = "#be902a",
+	"Желтый"            = "#c29700",
+	"Салатовый"         = "#adb834",
 	"Зеленый"           = "#149605",
 	"Зеленый V2"        = "#588142",
-	"Темно Синий"       = "#273B75",
-	"Синий"             = "#186ABD",
-	"Светло Синий"      = "#2789CD",
-	"Голубой"           = "#309AA3",
-	"Белый"             = "#E6E7F0",
+	"Темно Синий"       = "#273b75",
+	"Синий"             = "#186abd",
+	"Светло Синий"      = "#2789cd",
+	"Голубой"           = "#309aa3",
+	"Белый"             = "#e6e7f0",
 	"Черный"            = "#444444",
 	"Черный V2"         = "#222222",
 	"Черный V3"         = "#373334"
@@ -923,14 +923,14 @@ var/global/list/poly_color_palette = list(
 /obj/item/clothing/under/wash_act(w_color)
 	if(poly && w_color)
 		var/static/list/dye_to_hex = list(
-			"red"    = "#CC4444",
-			"orange" = "#CC7722",
-			"yellow" = "#DAA520",
-			"green"  = "#228B22",
-			"blue"   = "#4169E1",
-			"purple" = "#7B3FA0",
-			"white"  = "#FFFFFF",
-			"mime"   = "#C8C8C8"
+			"red"    = "#cc4444",
+			"orange" = "#cc7722",
+			"yellow" = "#daa520",
+			"green"  = "#228b22",
+			"blue"   = "#4169e1",
+			"purple" = "#7b3fa0",
+			"white"  = "#ffffff",
+			"mime"   = "#c8c8c8"
 		)
 		var/hex = dye_to_hex[w_color]
 		if(hex)
