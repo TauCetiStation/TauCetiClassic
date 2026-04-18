@@ -143,7 +143,6 @@
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
 		,BP_R_LEG  = /obj/item/organ/external/r_leg
-		,BP_EARS   = /obj/item/organ/external/ears
 		)
 
 	var/list/has_organ = list(
@@ -438,6 +437,17 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	)
+
+	has_organ = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_EARS   = /obj/item/organ/external/ears
 	)
 
 	min_age = 25
