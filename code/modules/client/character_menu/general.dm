@@ -522,20 +522,16 @@
 						jumpsuit_pattern = patterns[choice]
 
 				if("jumpsuit_color")
-					var/list/choices = global.poly_color_palette + "Pick Custom (RGB)..."
+					var/list/choices = global.poly_color_palette
 					var/choice = input(user, "Choose accent color:", "Character Preference") as null|anything in choices
 					if(choice)
-						if(choice == "Pick Custom (RGB)...")
-							var/new_color = input(user, "Pick custom accent color:", "Character Preference", jumpsuit_color) as null|color
-							if(new_color)
-								jumpsuit_color = new_color
-						else
-							jumpsuit_color = global.poly_color_palette[choice]
+						jumpsuit_color = global.poly_color_palette[choice]
 
 				if("jumpsuit_base_color")
-					var/new_color = input(user, "Choose base color:", "Character Preference", jumpsuit_base_color) as null|color
-					if(new_color)
-						jumpsuit_base_color = new_color
+					var/list/base_choices = global.poly_color_palette
+					var/base_choice = input(user, "Choose base color:", "Character Preference") as null|anything in base_choices
+					if(base_choice)
+						jumpsuit_base_color = global.poly_color_palette[base_choice]
 
 				if("nt_relation")
 					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation) as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")

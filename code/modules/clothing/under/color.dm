@@ -9,7 +9,7 @@
 	poly = TRUE
 	poly_style = "std"
 	poly_pattern = null
-	poly_colors = list("#FFFFFF", "#FFFFFF")
+	poly_colors = list("#ffffff", "#ffffff")
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
