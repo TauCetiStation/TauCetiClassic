@@ -143,6 +143,7 @@
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
 		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_EARS   = /obj/item/organ/external/ears
 		)
 
 	var/list/has_organ = list(
@@ -452,10 +453,6 @@
 /datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
 	..()
 	H.pluvian_reborn_if_worthy()
-
-/datum/species/pluvian/New()
-	. = ..()
-	has_organ += list(BP_EARS = /obj/item/organ/external/ears)
 
 /datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT
