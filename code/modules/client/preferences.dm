@@ -100,8 +100,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/use_skirt = FALSE				//using skirt uniform version
 	var/jumpsuit_style = "job"			//polychromic jumpsuit style ("job" = use job default)
 	var/jumpsuit_pattern = null			//polychromic jumpsuit pattern
-	var/jumpsuit_color = "#FFFFFF"		//polychromic jumpsuit accent color
-	var/jumpsuit_base_color = "#FFFFFF"	//polychromic jumpsuit base color (for white-base styles)
+	var/jumpsuit_color = "#ffffff"		//polychromic jumpsuit accent color
+	var/jumpsuit_base_color = "#ffffff"	//polychromic jumpsuit base color (for white-base styles)
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
@@ -568,7 +568,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/obj/item/clothing/under/color/polychromic/J = new(location)
 	J.poly_style = jumpsuit_style
 	J.poly_pattern = (jumpsuit_style == "turt" || jumpsuit_style == "turt_w") ? "turt" : jumpsuit_pattern
-	var/base_col = is_poly_white_base(jumpsuit_style) ? jumpsuit_base_color : "#FFFFFF"
+	var/base_col = is_poly_white_base(jumpsuit_style) ? jumpsuit_base_color : "#ffffff"
 	J.poly_colors = list(base_col, jumpsuit_color)
 	J.update_icon()
 	return J
