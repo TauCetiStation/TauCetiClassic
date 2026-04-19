@@ -133,7 +133,7 @@
 				if(species != VOX)
 					if(is_poly_white_base(jumpsuit_style))
 						. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
-					if(jumpsuit_style != "turt" && jumpsuit_style != "turt_w")
+					if(jumpsuit_style != "turt_w")
 						. += "<tr><td>Pattern:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? (poly_pattern_display[jumpsuit_pattern] || jumpsuit_pattern) : "None"]</a></td></tr>"
 				else
 					. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"

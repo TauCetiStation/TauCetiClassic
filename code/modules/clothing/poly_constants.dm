@@ -3,11 +3,8 @@
 /// Human-readable display names for all poly_style values.
 var/global/list/poly_style_display = list(
 	"job"    = "Job Default",
-	"std"    = "Standard",
 	"std_w"  = "Poly-Standard",
-	"belt"   = "Belt",
 	"belt_w" = "Poly-Belt",
-	"turt"   = "Turtleneck",
 	"turt_w" = "Poly-Turtleneck"
 )
 
@@ -22,7 +19,7 @@ var/global/list/poly_pattern_display = list(
 )
 
 /// All valid poly_style values (used for savefile validation).
-var/global/list/poly_valid_styles = list("job", "std", "std_w", "belt", "belt_w", "turt", "turt_w")
+var/global/list/poly_valid_styles = list("job", "std_w", "belt_w", "turt_w")
 
 /// Styles that use a white (greyscale) sprite base and support base color tinting.
 var/global/list/poly_white_base_styles = list("std_w", "belt_w", "turt_w")
