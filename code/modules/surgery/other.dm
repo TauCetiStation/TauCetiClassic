@@ -103,7 +103,7 @@
 
 	if(!has_treatable && dead_organs.len)
 		for(var/obj/item/organ/internal/IO in dead_organs)
-			user.visible_message("[target]'s [IO.name] is dead.")
+			to_chat(user, "<span class='warning'>[target]'s [IO.name] is dead.</span>")
 		return FALSE
 
 	return ..()
@@ -120,7 +120,7 @@
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.status & ORGAN_DEAD)
-			user.visible_message("[target]'s [IO.name] is dead.")
+			to_chat(user, "<span class='warning'>[target]'s [IO.name] is dead.</span>")
 			continue
 		if(IO && IO.damage > 0)
 			if(!IO.is_robotic())
