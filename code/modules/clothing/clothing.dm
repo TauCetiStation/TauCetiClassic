@@ -672,24 +672,22 @@ var/global/list/poly_color_palette = list(
 /obj/item/clothing/under/proc/get_poly_inventory_pattern_state()
 	if(!poly_pattern)
 		return null
-	if(poly_style == "turt" || poly_style == "turt_w")
+	if(poly_style == "turt_w")
 		return "inventory_turt_pattern"
 	return "inventory_pattern"
 
 /// Returns the world (inventory/in-hand) icon_state for this poly uniform.
 /// World states don't vary by gender/fat/species. Belt styles reuse the std world sprite.
 /obj/item/clothing/under/proc/get_poly_world_state()
-	if(poly_style == "turt" || poly_style == "turt_w")
+	if(poly_style == "turt_w")
 		return "w_turt"
-	if(is_poly_white_base(poly_style))
-		return "w_std_w"
-	return "w_std"
+	return "w_std_w"
 
 /// Returns the world pattern icon_state, or null if this style/pattern has none.
 /obj/item/clothing/under/proc/get_poly_world_pattern_state()
 	if(!poly_pattern)
 		return null
-	if(poly_style == "turt" || poly_style == "turt_w")
+	if(poly_style == "turt_w")
 		return "w_turt_pattern"
 	return "w_pattern"
 
@@ -697,8 +695,8 @@ var/global/list/poly_color_palette = list(
 /// Fat mobs have no turtleneck sprites in the DMI — downgrade turt → std so the
 /// whole appearance (base + detail + pattern) stays consistent.
 /obj/item/clothing/under/proc/get_effective_poly_style(mob/living/carbon/human/H)
-	if(H && HAS_TRAIT(H, TRAIT_FAT) && (poly_style == "turt" || poly_style == "turt_w"))
-		return (poly_style == "turt_w") ? "std_w" : "std"
+	if(H && HAS_TRAIT(H, TRAIT_FAT) && poly_style == "turt_w")
+		return "std_w"
 	return poly_style
 
 /// Returns the mob icon_state for this poly uniform, accounting for gender, fat, and vox
@@ -707,28 +705,25 @@ var/global/list/poly_color_palette = list(
 	// Map poly_style to base state prefix
 	var/base
 	switch(style)
-		if("std")
-			base = "b_std"
 		if("std_w")
 			base = "b_std_w"
-		if("belt")
-			base = "b_belt"
 		if("belt_w")
 			base = "b_belt_w"
-		if("turt")
-			base = "b_turt"
 		if("turt_w")
 			base = "b_turt_w"
 		else
-			base = "b_std"
+			base = "b_std_w"
 	// Roll-down states
 	if(rolled_down)
 		base = is_poly_white_base(style) ? "b_roll_w" : "b_roll"
 	// Vox variant — b_std_w_vox is the only Vox base sprite, used for all styles
 	if(H && H.species?.name == VOX)
 		return "b_std_w_vox"
-	// Fat variant — b_belt_w/b_turt/b_turt_w have no fat sprites; fall through to fem/base
-	var/static/list/has_fat = list("b_std", "b_belt", "b_std_w", "b_roll", "b_roll_w")
+	// Fat variant — b_turt_w has no fat sprites; fall through to fem/base
+	// b_belt_w has no fat sprite — fall back to b_std_w_fat
+	if(H && HAS_TRAIT(H, TRAIT_FAT) && base == "b_belt_w")
+		return "b_std_w_fat"
+	var/static/list/has_fat = list("b_std_w", "b_roll_w")
 	if(H && HAS_TRAIT(H, TRAIT_FAT) && (base in has_fat))
 		return "[base]_fat"
 	// Female variant
@@ -744,9 +739,9 @@ var/global/list/poly_color_palette = list(
 	if(rolled_down)
 		return null
 	// Turtlenecks have no zipper detail
-	if(style == "turt" || style == "turt_w")
+	if(style == "turt_w")
 		return null
-	var/is_belt = (style == "belt" || style == "belt_w")
+	var/is_belt = (style == "belt_w")
 	// Vox variant — only one sprite exists, used for all patterns
 	if(H && H.species?.name == VOX)
 		return "d_vox"
@@ -781,7 +776,7 @@ var/global/list/poly_color_palette = list(
 		return (H && H.gender == FEMALE) ? "p_turt_white_fem" : "p_turt_white"
 	var/pat = "p[poly_pattern]"
 	// Belt variants for patterns that have them (p3_belt, p5_belt)
-	if((style == "belt" || style == "belt_w") && (poly_pattern == "3" || poly_pattern == "5"))
+	if(style == "belt_w" && (poly_pattern == "3" || poly_pattern == "5"))
 		pat = "p[poly_pattern]_belt"
 	// Fat variant — only p1_fat and p2_fat exist in DMI; p3/p4/p5 fall through to fem/base
 	var/static/list/has_fat_pattern = list("1", "2")
@@ -913,7 +908,7 @@ var/global/list/poly_color_palette = list(
 /obj/item/clothing/under/color/polychromic/rollsuit()
 	if(!can_rollsuit(usr))
 		return
-	if(poly_style == "turt" || poly_style == "turt_w")
+	if(poly_style == "turt_w")
 		to_chat(usr, "<span class='notice'>You cannot roll down a turtleneck!</span>")
 		return
 

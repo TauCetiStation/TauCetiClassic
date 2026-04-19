@@ -103,11 +103,13 @@
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
 	// Apply visual quirk effects — only traits that affect sprite/clothing display
+	// Mannequin is reused across slot switches, so always clear traits first
+	REMOVE_TRAIT(mannequin, TRAIT_FAT, INNATE_TRAIT)
 	if((QUIRK_FATNESS in all_quirks))
 		ADD_TRAIT(mannequin, TRAIT_FAT, INNATE_TRAIT)
-		mannequin.update_body()
-		mannequin.update_inv_w_uniform()
-		mannequin.update_inv_wear_suit()
+	mannequin.update_body()
+	mannequin.update_inv_w_uniform()
+	mannequin.update_inv_wear_suit()
 
 	// Equip custom jumpsuit from prefs (skip if using job default)
 	var/obj/item/clothing/under/color/polychromic/polychromic_jumpsuit = spawn_custom_jumpsuit(mannequin)

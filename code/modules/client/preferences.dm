@@ -326,6 +326,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 			load_character()
 
 		if("changeslot")
+			save_character()
 			load_character(text2num(href_list["num"]))
 
 		if("general")
@@ -565,7 +566,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 		return null
 	var/obj/item/clothing/under/color/polychromic/J = new(location)
 	J.poly_style = jumpsuit_style
-	J.poly_pattern = (jumpsuit_style == "turt" || jumpsuit_style == "turt_w") ? "turt" : jumpsuit_pattern
+	J.poly_pattern = (jumpsuit_style == "turt_w") ? "turt" : jumpsuit_pattern
 	var/base_col = is_poly_white_base(jumpsuit_style) ? jumpsuit_base_color : "#ffffff"
 	J.poly_colors = list(base_col, jumpsuit_color)
 	J.update_icon()
