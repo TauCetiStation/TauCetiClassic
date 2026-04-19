@@ -102,7 +102,7 @@
 				has_treatable = TRUE
 
 	if(!has_treatable && dead_organs.len)
-		for(var/obj/item/organ/internal/IO in dead_organs)
+		for(var/obj/item/organ/internal/IO as anything in dead_organs)
 			to_chat(user, "<span class='warning'>[target]'s [IO.name] is dead.</span>")
 		return FALSE
 
