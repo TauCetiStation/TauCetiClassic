@@ -580,28 +580,12 @@ var/global/list/poly_color_palette = list(
 	"Синий"             = "#186abd",
 	"Светло Синий"      = "#2789cd",
 	"Голубой"           = "#309aa3",
-	"Белый"             = "#e6e7f0",
+	"Белый"             = "#ffffff",
 	"Черный"            = "#444444",
 	"Черный V2"         = "#222222",
-	"Черный V3"         = "#373334"
+	"Черный V3"         = "#000000"
 )
 
-/// Converts a hex color to a color matrix that preserves greyscale detail.
-/// Pure multiply: black removes all detail. This matrix keeps ~12% of original brightness
-/// so shadows, folds and outlines remain visible even with very dark colors.
-/proc/poly_color_matrix(hex_color)
-	var/r = hex2num(copytext(hex_color, 2, 4)) / 255
-	var/g = hex2num(copytext(hex_color, 4, 6)) / 255
-	var/b = hex2num(copytext(hex_color, 6, 8)) / 255
-	var/k = 0.12 // detail preservation factor
-	// Matrix: output = pixel * (color * (1-k) + k)
-	// Black(0,0,0) → pixel * 0.12 (dark grey, details visible)
-	// White(1,1,1) → pixel * 1.0 (unchanged)
-	return list(
-		r * (1 - k) + k, 0, 0, \
-		0, g * (1 - k) + k, 0, \
-		0, 0, b * (1 - k) + k  \
-	)
 
 /// Creates a poly overlay mutable_appearance with RESET_COLOR set.
 /// Optionally tints with `color_hex` and applies `human.update_height()`.
@@ -609,7 +593,7 @@ var/global/list/poly_color_palette = list(
 /proc/make_poly_overlay(state, color_hex = null, mob/living/carbon/human/human = null, icon_file = 'icons/mob/uniform_poly.dmi')
 	var/mutable_appearance/overlay = mutable_appearance(icon_file, state)
 	if(color_hex)
-		overlay.color = poly_color_matrix(color_hex)
+		overlay.color = color_luminance_max(color_hex, 12)
 	overlay.appearance_flags |= RESET_COLOR
 	if(human)
 		human.update_height(overlay)
@@ -621,7 +605,7 @@ var/global/list/poly_color_palette = list(
 	if(sprite_sheet_slot == SPRITE_SHEET_HELD)
 		return ..()
 	var/mutable_appearance/MA = mutable_appearance('icons/mob/uniform_poly.dmi', get_poly_mob_state(H), layer)
-	MA.color = poly_color_matrix(poly_colors[1])
+	MA.color = color_luminance_max(poly_colors[1], 12)
 	MA.add_overlay(get_poly_mob_overlays(H, bloodied_icon_state))
 	return MA
 
@@ -673,11 +657,11 @@ var/global/list/poly_color_palette = list(
 	icon = 'icons/mob/uniform_poly.dmi'
 	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
 		icon_state = get_poly_inventory_state()
-		color = poly_color_matrix(poly_colors[1])
+		color = color_luminance_max(poly_colors[1], 12)
 		add_overlay(get_poly_inventory_overlays())
 		return
 	icon_state = get_poly_world_state()
-	color = poly_color_matrix(poly_colors[1])
+	color = color_luminance_max(poly_colors[1], 12)
 	add_overlay(get_poly_world_overlays())
 
 /obj/item/clothing/under/update_world_icon()
