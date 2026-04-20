@@ -271,7 +271,7 @@
 	// decrease weight for repeated maps
 
 	// last 1
-	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name) 
+	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name)
 	voteweights[map_name] = 1 - REPEATED_MAPS_FACTOR_DECREASE
 
 	// and 2 previous from DB history
@@ -317,6 +317,8 @@
 	can_unvote = FALSE
 	see_votes = TRUE
 
+
+	name = sanitize(input("Укажите заголовок голосования.", "Пользовательское голосование", "Заголовок пользовательского голосования"))
 	question = sanitize(input("Какой вопрос голосования?", "Пользовательское голосование", "Вопрос пользовательского голосования"))
 
 	var/choice_text = ""
@@ -344,6 +346,10 @@
 
 	if(tgui_alert(usr, "Завершить создание голосования?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		choices.Cut()
+
+/datum/poll/custom/on_end()
+	..()
+	name = initial(name)
 
 /datum/vote_choice/custom
 	text = "Вариант ответа"

@@ -1,3 +1,41 @@
+/datum/quirk/adamantium_skeleton
+	name = QUIRK_ADAMANTIUM_SKELETON
+	desc = "Ваши кости в полтора раза прочнее обычного."
+	value = 3
+	mob_trait = TRAIT_ADAMANTIUM_SKELETON
+	gain_text = "<span class='notice'>Ваши кости крепче стали.</span>"
+	lose_text = "<span class='danger'>Вы чувствуете хрупкость своих костей.</span>"
+	incompatible_species = list(IPC)
+
+/datum/quirk/adamantium_skeleton/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		BP.min_broken_damage *= 1.5
+
+
+
+/datum/quirk/cave_explorer
+	name = QUIRK_CAVE_EXPLORER
+	desc = "Вы привыкли ко тьме пещер. Тьма в опасных зонах астероида не так сильно мешает вам."
+	value = 2
+	mob_trait = TRAIT_CAVE_EXPLORER
+	gain_text = "<span class='notice'>Вы привыкли ко тьме пещер.</span>"
+	lose_text = "<span class='danger'>Глубины астероида вновь полны тьмы и страха для вас.</span>"
+
+
+
+/datum/quirk/shifty
+	name = QUIRK_SHIFTY
+	desc = "Благодаря вашей ловкости, вы можете намного быстрее скидывать с себя наручники и болы."
+	value = 2
+	mob_trait = TRAIT_SHIFTY
+	gain_text = "<span class='notice'>Вы чувствуете, что никакие кандалы не смогут сдержать вас.</span>"
+	lose_text = "<span class='danger'>Вы снова чувствуете себя неуклюжим.</span>"
+	// They are slow as all hell.
+	incompatible_species = list(DIONA)
+
+
+
 /datum/quirk/multitasking
 	name = QUIRK_MULTITASKING
 	desc = "Вы можете действовать обеими руками одновременно!"

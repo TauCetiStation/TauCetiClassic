@@ -124,6 +124,7 @@
 	. = ..()
 
 /datum/role/traitor/wishgranter
+	id = TRAITOR_WISHGRANTER
 
 /datum/role/traitor/wishgranter/forgeObjectives()
 	if(!..())
@@ -133,6 +134,7 @@
 	return TRUE
 
 /datum/role/traitor/syndbeacon
+	id = TRAITOR_SYNDBEACON
 
 /datum/role/traitor/syndbeacon/forgeObjectives()
 	if(!..())
@@ -141,6 +143,7 @@
 	return TRUE
 
 /datum/role/traitor/syndcall
+	id = TRAITOR_SYNDCALL
 
 /datum/role/traitor/syndcall/Greet(greeting, custom)
 	..()

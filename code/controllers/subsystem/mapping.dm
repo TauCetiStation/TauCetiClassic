@@ -80,6 +80,17 @@ SUBSYSTEM_DEF(mapping)
 		var/datum/ore_distribution/distro = new
 		distro.populate_distribution_map(z)
 
+/datum/controller/subsystem/mapping/proc/get_stationmap_type()
+	var/list/mapByType = list(
+		"boxstation" = /obj/item/station_map/box,
+		"gamma" = /obj/item/station_map/gamma,
+		"delta" = /obj/item/station_map/delta,
+		"falcon" = /obj/item/station_map/falcon,
+		"prometheus" = /obj/item/station_map/prometheus,
+	)
+	var/stationmap_type = mapByType[config.map_path]
+	return stationmap_type
+
 /datum/reserved_space
 	var/z
 	var/x1 // left-bottom

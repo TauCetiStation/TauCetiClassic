@@ -95,7 +95,7 @@
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, quality = QUALITY_SCREWING))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -108,7 +108,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, quality = QUALITY_SCREWING))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -249,6 +249,7 @@
 	desc = "Omar's coming!"
 	can_be_holstered = TRUE
 	short = 1
+	recoil = HEAVY_RECOIL
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off/beanbag
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot

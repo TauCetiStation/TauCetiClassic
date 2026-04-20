@@ -71,6 +71,7 @@ var/global/list/admin_cooldowns_list = list(
 #define R_HOST			65535
 
 #define ADMIN_RANK_ROUND   "Temporary Round Admin"
+#define ADMIN_RANK_EVENT_MAKER "Event Maker"
 #define ADMIN_RANK_SANDBOX "Sandbox Admin"
 #define ADMIN_RANK_REMOVED "Removed"
 
@@ -153,9 +154,5 @@ var/global/list/admin_cooldowns_list = list(
 #define SW_DEVELOPERS 4
 #define SW_ALL_GROUPS 4 //update this, if add more staff groups
 
-var/global/list/default_admin_names = list(
-	SW_ADMINS     = "Admins",
-	SW_MENTORS    = "Mentors",
-	SW_XENOVISORS = "Xenovisors",
-	SW_DEVELOPERS = "Developers",
-)
+// Order is important. SW_ADMINS, SW_MENTORS, SW_XENOVISORS, SW_DEVELOPERS
+var/global/list/default_admin_names = list("Admins", "Mentors", "Xenovisors", "Developers")

@@ -6,9 +6,10 @@
 
 /obj/item/organ
 	name = "organ"
+	icon = 'icons/obj/surgery.dmi'
 	germ_level = 0
 
-	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART
 
 	// Strings.
 	var/parent_bodypart                // Bodypart holding this object.
@@ -25,21 +26,36 @@
 
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
+	var/max_damage = 0				   // Damage cap
 
 /obj/item/organ/Destroy()
 	owner = null
 	return ..()
+
+/obj/item/organ/proc/remove(mob/living/user)
+	if(!istype(owner))
+		return
+
+	owner.organs -= src
+
+	forceMove(get_turf(owner))
+	START_PROCESSING(SSobj, src)
+
+	if(owner && vital)
+		owner.death()
+	owner = null
 
 /obj/item/organ/proc/set_owner(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
 	loc = null
 	owner = H
 
+/obj/item/organ/process()
+	return FALSE
+
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	SHOULD_CALL_PARENT(TRUE)
 	set_owner(H)
-
-	STOP_PROCESSING(SSobj, src)
 
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
@@ -93,7 +109,7 @@
 		BP.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
-/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
+/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage, impact_direction)
 	var/weapon_name
 
 	if(isatom(used_weapon))
@@ -102,23 +118,32 @@
 	else
 		weapon_name = used_weapon
 
-	var/datum/autopsy_data/W = autopsy_data[weapon_name + worldtime2text()]
+	var/datum/autopsy_data/W = autopsy_data[weapon_name + worldtime2text() + impact_direction]
 
 	if(!W)
 		W = new()
 		W.weapon = weapon_name
-		autopsy_data[weapon_name + worldtime2text()] = W
+		autopsy_data[weapon_name + worldtime2text() + impact_direction] = W
 
 	var/time = W.time_inflicted
 	if(time != worldtime2text())
 		W = new()
 		W.weapon = weapon_name
-		autopsy_data[weapon_name + worldtime2text()] = W
+		autopsy_data[weapon_name + worldtime2text() + impact_direction] = W
 
 	W.hits += 1
 	W.damage += damage
 	W.time_inflicted = worldtime2text()
+
+	if(istype(used_weapon, /obj/item/projectile))
+		var/obj/item/projectile/Proj = used_weapon
+		if(Proj.flag == BULLET)
+			type_damage = BULLET
+
 	W.type_damage = type_damage
+
+	if(impact_direction)
+		W.impact_direction = impact_direction
 
 // Takes care of bodypart and their organs related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_bodyparts()
@@ -136,6 +161,16 @@
 	//processing organs is pretty cheap, do that first.
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
+
+	var/obj/item/organ/internal/liver/L = organs_by_name[O_LIVER]
+	if(!L)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			// Ethanol and all drinks are so bad
+			if(istype(R, /datum/reagent/consumable/ethanol))
+				adjustToxLoss(2,5)
+			// Can't cope with toxins at all
+			if(istype(R, /datum/reagent/toxin))
+				adjustToxLoss(5)
 
 	handle_stance()
 
@@ -232,3 +267,8 @@
 				break
 		if(!has_arm) //need atleast one hand to crawl
 			Stun(5)
+
+/obj/item/organ/proc/is_robotic()
+	if(status & ORGAN_ROBOT)
+		return TRUE
+	return FALSE

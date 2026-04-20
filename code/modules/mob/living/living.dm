@@ -636,6 +636,8 @@
 	if(istype(BP))
 		BP.disfigured = FALSE
 
+	reset_op_stage()
+
 	for (var/obj/item/organ/external/head/H in lost_heads_list) // damn son, where'd you get this?
 		if(H.brainmob)
 			if(H.brainmob.real_name == real_name)
@@ -643,6 +645,10 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
+
+/mob/living/carbon/human/proc/reset_op_stage()
+    op_stage = new()
+
 /mob/living/proc/UpdateDamageIcon()
 	return
 
@@ -949,6 +955,9 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
+				if(HAS_TRAIT(CM, TRAIT_SHIFTY))
+					breakouttime *= 0.5
+					displaytime *= 0.5
 				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
@@ -985,6 +994,9 @@
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
+				if(HAS_TRAIT(CM, TRAIT_SHIFTY))
+					breakouttime *= 0.5
+					displaytime *= 0.5
 				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
@@ -1549,3 +1561,22 @@
 
 /mob/living/proc/get_trail_state()
 	return null
+
+/mob/living/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.a_intent == INTENT_HARM && L.is_bigger_than(src) && is_usable_leg())
+			if(prob(LERP(10, 0, health/maxHealth)))
+				visible_message("<span class='warning bold'>[src] has been stepped on by [L]!</span>")
+				log_combat(L, "stepped on")
+				playsound(src, pick(SOUNDIN_DESCERATION), VOL_EFFECTS_MASTER)
+				gib()
+			else
+				visible_message("<span class='warning bold'>[src] has been kicked away by [L]!</span>")
+				log_combat(L, "kicked")
+				playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
+
+				var/turf/target = get_step(src, pick(turn(L.dir, 45), turn(L.dir, -45)))
+				throw_at(target, range = 1, speed = 1, thrower = L, spin = prob(50), diagonals_first = TRUE)
+				apply_damage(10, BRUTE)
+	. = ..()

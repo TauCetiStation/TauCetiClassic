@@ -131,6 +131,9 @@
 /atom/movable/screen/inventory/mask/monkey
 	screen_loc = ui_monkey_mask
 
+/atom/movable/screen/inventory/neck/monkey
+	screen_loc = ui_monkey_neck
+
 /atom/movable/screen/inventory/back
 	name = "back"
 	icon_state = "back"

@@ -13,6 +13,10 @@
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
 
+/obj/item/weapon/gun/grenadelauncher/atom_init()
+	. = ..()
+	AddComponent(/datum/component/serial_number)
+
 /obj/item/weapon/gun/grenadelauncher/attack_hand(mob/user)
 	if(loc == user)
 		if(grenades.len > 0)

@@ -631,30 +631,37 @@
 				var/obj/item/weapon/card/id/id_card
 				if(istype(W, /obj/item/weapon/card/id))
 					id_card = W
+					playsound(src, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
 				else
 					var/obj/item/device/pda/pda = W
 					id_card = pda.id
 				output_maintenance_dialog(id_card, user)
+				playsound(src, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
 				return
 			else
 				to_chat(user, "<span class='warning'>Invalid ID: Access denied.</span>")
+				playsound(src, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg',  VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='warning'>Maintenance protocols disabled by operator.</span>")
 	else if(iswrenching(W))
 		if(state==1)
 			state = 2
 			to_chat(user, "You undo the securing bolts.")
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		else if(state==2)
 			state = 1
 			to_chat(user, "You tighten the securing bolts.")
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		return
 	else if(isprying(W))
 		if(state==2)
 			state = 3
 			to_chat(user, "You open the hatch to the power unit")
+			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		else if(state==3)
 			state=2
 			to_chat(user, "You close the hatch to the power unit")
+			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		return
 	else if(iscoil(W))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
@@ -664,21 +671,25 @@
 				return
 			clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 			to_chat(user, "You replace the fused wires.")
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		return
 	else if(isscrewing(W))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		else if(state==3 && cell)
 			cell.forceMove(loc)
 			cell = null
 			state = 4
 			to_chat(user, "You unscrew and pry out the powercell.")
 			log_message("Powercell removed")
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		else if(state==4)
 			if(cell)
 				state=3
 				to_chat(user, "You screw the cell in place")
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			else
 				var/list/actions = list()
 				if(dna_lockable)
@@ -702,7 +713,7 @@
 							if(tracking && tracking.loc == src)
 								to_chat(user, "You unscrew [tracking.name] from [name]")
 								tracking.forceMove(loc)
-
+					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 		diag_hud_set_mechcell()
 		return
@@ -714,6 +725,7 @@
 				user.drop_from_inventory(W, src)
 				cell = W
 				log_message("Powercell installed")
+				playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 			else
 				to_chat(user, "There's already a powercell installed.")
 			diag_hud_set_mechcell()
@@ -726,6 +738,7 @@
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
 				to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
+				playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		else
 			return
 		if(health<initial(health))
@@ -734,6 +747,7 @@
 			update_health()
 		else
 			to_chat(user, "The [name] is at full integrity")
+			playsound(src, 'sound/mecha/UI_SCI-FI_Tone_10.ogg',  VOL_EFFECTS_MASTER)
 		return
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
@@ -827,6 +841,7 @@
 		P.other_airs += internal_tank.return_air()
 		P.update = 1
 	log_message("Connected to gas port.")
+	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 	return TRUE
 
 /obj/mecha/proc/disconnect()
@@ -840,6 +855,7 @@
 	connected_port.connected_device = null
 	connected_port = null
 	log_message("Disconnected from gas port.")
+	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 	return TRUE
 
 

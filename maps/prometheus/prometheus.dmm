@@ -4636,8 +4636,16 @@
 	desc = "A remote control-switch for a door to space.";
 	id = "xenobioout6";
 	name = "Containment Release Switch";
-	pixel_x = -28;
-	req_access = list(55)
+	req_access = list(55);
+	pixel_y = 6;
+	pixel_x = -25
+	},
+/obj/machinery/door_control{
+	id = "xenobio7";
+	name = "Containment 7 Blast Doors";
+	req_access = list(55);
+	pixel_y = -6;
+	pixel_x = -25
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -4932,12 +4940,6 @@
 /area/station/security/execution)
 "aDD" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/door_control{
-	id = "xenobio7";
-	name = "Containment Blast Doors";
-	pixel_y = 28;
-	req_access = list(55)
-	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
@@ -10051,7 +10053,6 @@
 	},
 /area/station/medical/reception)
 "bSy" = (
-/obj/machinery/computer/forensic_scanning,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -10062,6 +10063,7 @@
 	c_tag = "Forensic's Office";
 	network = list("SS13","Security")
 	},
+/obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -16692,14 +16694,13 @@
 /turf/environment/space,
 /area/space)
 "dCP" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/security/wooden_tv,
 /obj/structure/noticeboard{
 	pixel_y = 28
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "dDf" = (
@@ -19106,12 +19107,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/medical/reception)
-"egQ" = (
-/obj/structure/sign/departments/science{
-	icon_state = "xenobio3"
-	},
-/turf/simulated/wall,
-/area/station/rnd/xenobiology)
 "ehl" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -22280,21 +22275,6 @@
 	icon_state = "white"
 	},
 /area/station/rnd/xenobiology)
-"eSa" = (
-/obj/machinery/door_control{
-	id = "xenobio6";
-	name = "Containment Blast Doors";
-	pixel_y = 28;
-	req_access = list(55)
-	},
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/xenobiology)
 "eSb" = (
 /turf/simulated/wall,
 /area/station/medical/storage)
@@ -22454,6 +22434,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
+	},
+/obj/machinery/camera{
+	c_tag = "RnD Containment Room 2";
+	dir = 8;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24306,6 +24291,26 @@
 	},
 /area/station/medical/reception)
 "fpi" = (
+/obj/machinery/door_control{
+	id = "xenobio4";
+	name = "Containment 4 Blast Doors";
+	req_access = list(55);
+	pixel_x = -25;
+	pixel_y = -6
+	},
+/obj/machinery/door_control{
+	id = "xenobio6";
+	name = "Containment 6 Blast Doors";
+	req_access = list(55);
+	pixel_x = -25;
+	pixel_y = 6
+	},
+/obj/machinery/door_control{
+	id = "xenobio5";
+	name = "Containment 5 Blast Doors";
+	req_access = list(55);
+	pixel_x = -37
+	},
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 9;
@@ -25452,12 +25457,6 @@
 /area/station/medical/virology)
 "fCB" = (
 /obj/structure/closet/l3closet/scientist,
-/obj/machinery/door_control{
-	id = "xenobio1";
-	name = "Containment Blast Doors";
-	pixel_y = 28;
-	req_access = list(55)
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
@@ -25467,6 +25466,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/machinery/camera{
+	c_tag = "RnD Containment Room 1";
+	dir = 4;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -25507,12 +25511,6 @@
 	},
 /area/station/civilian/bar)
 "fDl" = (
-/obj/machinery/door_control{
-	id = "xenobio2";
-	name = "Containment Blast Doors";
-	pixel_x = 28;
-	req_access = list(55)
-	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
@@ -26673,7 +26671,7 @@
 	},
 /area/station/medical/virology)
 "fQI" = (
-/obj/item/weapon/paper/brig_arsenal,
+/obj/item/weapon/paper/inventory/brig_armoury,
 /obj/item/toy/cards{
 	layer = 4.1
 	},
@@ -32905,21 +32903,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"hkP" = (
-/obj/machinery/door_control{
-	id = "xenobio5";
-	name = "Containment Blast Doors";
-	pixel_x = -28;
-	req_access = list(55)
-	},
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/xenobiology)
 "hlc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -34068,12 +34051,6 @@
 /area/station/engineering/atmos)
 "hBB" = (
 /obj/structure/closet/l3closet/scientist,
-/obj/machinery/door_control{
-	id = "xenobio4";
-	name = "Containment Blast Doors";
-	pixel_y = -28;
-	req_access = list(55)
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
@@ -39326,7 +39303,26 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "iTg" = (
-/obj/structure/closet,
+/obj/machinery/door_control{
+	id = "xenobio3";
+	name = "Containment 3 Blast Doors";
+	req_access = list(55);
+	pixel_x = 25;
+	pixel_y = -6
+	},
+/obj/machinery/door_control{
+	id = "xenobio1";
+	name = "Containment 1 Blast Doors";
+	req_access = list(55);
+	pixel_x = 25;
+	pixel_y = 6
+	},
+/obj/machinery/door_control{
+	id = "xenobio2";
+	name = "Containment 2 Blast Doors";
+	req_access = list(55);
+	pixel_x = 37
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitepurple"
@@ -40253,12 +40249,6 @@
 	},
 /area/station/security/warden)
 "jeG" = (
-/obj/machinery/door_control{
-	id = "xenobio3";
-	name = "Containment Blast Doors";
-	pixel_y = -28;
-	req_access = list(55)
-	},
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
@@ -48290,7 +48280,7 @@
 /area/station/civilian/gym)
 "lhj" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin,
+/obj/structure/bedsheetbin/full,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -48704,29 +48694,10 @@
 /turf/simulated/floor/carpet/black,
 /area/station/tcommsat/computer)
 "lmm" = (
-/obj/structure/cable,
-/obj/structure/table/glass,
-/obj/item/device/reagent_scanner{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/weapon/storage/fancy/vials{
-	pixel_x = 6
-	},
-/obj/item/weapon/reagent_containers/syringe{
-	pixel_y = 8
-	},
-/obj/item/weapon/reagent_containers/dropper{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/device/mass_spectrometer{
-	pixel_x = -4;
-	pixel_y = 3
-	},
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -49013,12 +48984,20 @@
 	},
 /area/station/security/checkpoint)
 "lqd" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/machinery/light/small,
 /obj/machinery/alarm{
 	pixel_y = -32
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/obj/item/station_map/prometheus{
+	pixel_x = 10;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "whitered"
@@ -49370,13 +49349,12 @@
 	},
 /area/station/civilian/kitchen)
 "lut" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock";
-	req_access = list(31)
+/obj/structure/closet,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whitepurple"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/area/station/rnd/xenobiology)
 "luw" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -54649,7 +54627,6 @@
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/storage/box/cups,
 /obj/item/toy/plushie/tuxedo_cat,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
@@ -55291,7 +55268,9 @@
 	},
 /area/station/engineering/monitoring)
 "mQq" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},
@@ -57161,13 +57140,13 @@
 	},
 /area/station/rnd/xenobiology)
 "nom" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
 /obj/machinery/requests_console/science{
 	pixel_x = -28
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurple"
@@ -59854,6 +59833,8 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -61061,7 +61042,6 @@
 /area/station/security/blueshield/shuttle)
 "ooQ" = (
 /obj/structure/table/woodentable,
-/obj/item/device/detective_scanner,
 /obj/machinery/windowtint{
 	id = "privateoffice";
 	pixel_y = 28
@@ -61070,6 +61050,9 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/weapon/forensic_sample_kit/powder,
+/obj/item/weapon/forensic_sample_kit,
+/obj/item/weapon/storage/box/swabs,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "opA" = (
@@ -63030,6 +63013,8 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Bay Storage North"
 	},
+/obj/random_shop_item,
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -69214,8 +69199,7 @@
 	},
 /area/station/engineering/atmos)
 "qrN" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
+/obj/machinery/microscope,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "qrZ" = (
@@ -71295,7 +71279,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "qVa" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
+/obj/machinery/door/unpowered/shuttle/wagon{
+	dock_tag = "supply_dock"
+	},
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,6"
 	},
@@ -73191,15 +73177,25 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rsR" = (
+/obj/structure/cable,
 /obj/structure/table/glass,
-/obj/item/weapon/paper_bin{
+/obj/item/device/reagent_scanner{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/fancy/vials{
+	pixel_x = 6
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/dropper{
+	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/obj/item/station_map/prometheus{
-	pixel_y = 6
+/obj/item/device/mass_spectrometer{
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -76249,11 +76245,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
 "sgm" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/forensic_scanning/detective,
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
+/obj/structure/table/woodentable,
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "sgo" = (
@@ -82202,8 +82198,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "tGv" = (
-/obj/structure/table,
-/obj/item/device/tagger/shop,
+/obj/machinery/computer/vending{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -85282,10 +85279,10 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "utU" = (
-/obj/machinery/computer/secure_data,
 /obj/machinery/requests_console/forensic{
 	pixel_y = 28
 	},
+/obj/machinery/microscope,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -85912,6 +85909,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 27
 	},
+/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -86459,6 +86457,7 @@
 	pixel_y = 3;
 	stamp_message = "Cargo"
 	},
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -97947,6 +97946,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"xzG" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/obj/item/weapon/paper/inventory{
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/armoury)
 "xzI" = (
 /obj/effect/landmark{
 	name = "xeno_spawn"
@@ -125267,9 +125278,9 @@ qkG
 blj
 qkG
 dbE
-eSa
+cbc
 cse
-hkP
+cYD
 jfa
 qkG
 qkG
@@ -126036,9 +126047,9 @@ bsl
 bsl
 bsl
 bsl
+aXv
 bsl
-bsl
-egQ
+nMQ
 gEh
 nMQ
 bsl
@@ -127323,7 +127334,7 @@ aSo
 dft
 cJM
 dvs
-fhH
+lut
 gnj
 iTg
 kot
@@ -127582,9 +127593,9 @@ bsl
 bsl
 nMQ
 gEh
-egQ
+nMQ
 bsl
-bsl
+aXv
 bsl
 bsl
 bsl
@@ -128473,7 +128484,7 @@ seU
 hPS
 qeP
 mYn
-lut
+bwp
 uhz
 bwp
 mQq
@@ -128987,7 +128998,7 @@ mTs
 vAS
 xjw
 mYn
-lut
+bwp
 kJF
 bwp
 qVa
@@ -146673,7 +146684,7 @@ dHl
 wWk
 uOS
 kZX
-fVV
+xzG
 ucF
 wWk
 dgG
