@@ -110,47 +110,50 @@
 		if(!checks(target, "enthrall"))
 			return
 		if(!target.client)
-			to_chat(usr, "<span class='warning'>[target]'s mind is vacant of activity. Still, you may rearrange their memories in the case of their return.</span>")
+			to_chat(user, "<span class='warning'>[target]'s mind is vacant of activity. Still, you may rearrange their memories in the case of their return.</span>")
 
 		enthralling = TRUE
-		to_chat(usr, "<span class='danger'>This target is valid. You begin the enthralling.</span>")
-		to_chat(target, "<span class='userdanger'>[usr] stares at you. You feel your head begin to pulse.</span>")
+		to_chat(user, "<span class='danger'>This target is valid. You begin the enthralling.</span>")
+		to_chat(target, "<span class='userdanger'>[user] stares at you. You feel your head begin to pulse.</span>")
 
 		var/datum/status_effect/thrall_mark/M = target.has_status_effect(/datum/status_effect/thrall_mark)
 		var/time = 250
-		if(M)
+		if(M || thrallsPresent <= 5)
 			time = 75
-			to_chat(usr, "<span class='warning'>One's mind has been weakened by thrall's mark! Brainwashing will be way faster!</span>")
+			to_chat(user, "<span class='warning'>One's mind has been weakened by thrall's mark! Brainwashing will be way faster!</span>")
+		else
+			to_chat(user, "<span class='warning'>One's mind is strong! Maybe a thrall can weaken it...</span>")
 		for(var/progress = 0, progress <= 3, progress++)
 			switch(progress)
 				if(1)
-					to_chat(usr, "<span class='notice'>You begin allocating energy for the enthralling.</span>")
-					usr.visible_message("<span class='warning'>[usr]'s eyes begin to throb a piercing red.</span>")
+					to_chat(user, "<span class='notice'>You begin allocating energy for the enthralling.</span>")
+					user.visible_message("<span class='warning'>[user]'s eyes begin to throb a piercing red.</span>")
 				if(2)
-					to_chat(usr, "<span class='notice'>You begin the enthralling of [target].</span>")
-					usr.visible_message("<span class='danger'>[usr] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>")
+					to_chat(user, "<span class='notice'>You begin the enthralling of [target].</span>")
+					user.visible_message("<span class='danger'>[user] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>")
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
 					target.Stun(12)
 					target.Weaken(12)
 					sleep(20)
 				if(3)
-					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
-					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
+					to_chat(user, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
+					user.visible_message("<span class='danger'>[user]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
 					to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>")//Ow the edge
-			if(!do_mob(usr, target, time)) //around 90 seconds total for enthralling, minus one minute with mark
-				to_chat(usr, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
+			if(!do_mob(user, target, time)) //around 90 seconds total for enthralling, minus one minute with mark
+				to_chat(user, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
 				to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
 				enthralling = FALSE
 				return
 
 		enthralling = FALSE
-		to_chat(usr, "<span class='shadowling'>You have enthralled <b>[target]</b>!</span>")
+		to_chat(user, "<span class='shadowling'>You have enthralled <b>[target]</b>!</span>")
 		target.visible_message("<span class='big'>[target]'s expression appears as if they have experienced a revelation!</span>", \
 		"<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
 		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
 		target.resetOxyLoss() //In case the shadowling was choking them out
+		target.losebreath = 0
 		add_faction_member(faction, target)
 		if(M && M.role)
 			var/datum/role/thrall/thrall = M.role
@@ -175,11 +178,11 @@
 		charge_counter = charge_max
 		return FALSE
 	var/datum/species/S = all_species[target.get_species()]
-	if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
+	if(!ishuman(target) || (S && S.flags[TRAIT_EMOTIONLESS]))
 		to_chat(usr, "<span class='warning'>You can only [noun] humans.</span>")
 		charge_counter = charge_max
 		return FALSE
-	if(target.ismindprotect())
+	if(ismindprotect(target))
 		to_chat(usr, "<span class='notice'>Their mind seems to be protected!</span>")
 		charge_counter = charge_max
 		return FALSE
@@ -328,7 +331,7 @@
 			with no bodily defects.</i></span>")
 			user.AddSpell(new /obj/effect/proc_holder/spell/targeted/reviveThrall)
 
-		if(thralls >= 12 && stage < 5)
+		if(thralls >= victory_threshold * 0.75 && stage < 5)
 			stage++
 			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Glare</b> ability. This ability will bring mind of target to shock, paralyzing them</i></span>")
 			user.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare)
@@ -390,10 +393,9 @@
 
 	if(!isshadowling(M) || !isshadowthrall(M))
 		to_chat(M, "<span class='warning bold'>You breathe in the black smoke, and your eyes burn horribly!</span>")
-		M.eye_blind = 5
-		if(prob(25))
-			M.visible_message("<b>[M]</b> claws at their eyes!")
-			M.Stun(3)
+		M.eye_blind = 10
+		M.visible_message("<b>[M]</b> claws at their eyes!")
+		M.Stun(3)
 	else
 		to_chat(M, "<span class='notice bold'>You breathe in the black smoke, and you feel revitalized!</span>")
 		M.heal_bodypart_damage(2, 2)

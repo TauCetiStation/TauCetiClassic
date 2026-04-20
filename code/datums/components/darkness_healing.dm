@@ -1,5 +1,6 @@
 /datum/component/darkness_healing
 	var/multiplier = 1
+	var/damage_multiplier = 0
 
 /datum/component/darkness_healing/Initialize()
 	if (!ishuman(parent))
@@ -27,7 +28,7 @@
 		H.AdjustWeakened(-1 * multiplier)
 		H.nutrition = max(NUTRITION_LEVEL_HUNGRY, H.nutrition)
 
-	else if(multiplier > 1)
-		H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN / 2 * multiplier)
+	else if(damage_multiplier > 0)
+		H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN * damage_multiplier)
 		to_chat(H, "<span class='userdanger'>The light burns you!</span>")
 		H.playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)

@@ -142,7 +142,6 @@
 
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/glare)
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk)
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze)

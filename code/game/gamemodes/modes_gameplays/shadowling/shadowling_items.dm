@@ -28,6 +28,7 @@
 	max_heat_protection_temperature = null
 	canremove = 0
 	siemens_coefficient = 0.2
+	armor = list(melee = 30, bullet = 15, laser = 15, energy = 20, bomb = 50, bio = 50, rad = 70)
 
 
 /obj/item/clothing/shoes/shadowling

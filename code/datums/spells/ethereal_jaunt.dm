@@ -106,6 +106,12 @@
 	sleep(jaunt_duration)
 	usr.visible_message("<span class='warning'>[usr] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
 
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk/lesser
+	name = "Lesser Shadow Walk"
+	movement_cooldown = 3
+	jaunt_duration = 4 SECONDS
+	charge_max = 3 MINUTES
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
 	school = "transmutation"
 	centcomm_cancast = 0 //Prevent people from getting to centcomm
