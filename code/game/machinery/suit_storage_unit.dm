@@ -182,7 +182,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/proc/dispense_helmet()
 	if(!HELMET)
-
 		return
 	else
 		HELMET.forceMove(get_turf(src))
@@ -280,56 +279,55 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(!locked)
 		locked = TRUE
 	UV = TRUE
+	if(!superUV)
+		cycletime_left = 1
+	else
+		cycletime_left = 5
 	update_icon()
 	UV_cleaning()
 
 /obj/machinery/suit_storage_unit/proc/UV_cleaning()
-	if(!superUV)
-		cycletime_left = 5
-	else
-		cycletime_left = 25
-	while(cycletime_left)
+	if(cycletime_left)
 		cycletime_left--
-		sleep(10)
-
 		if(occupant)
 			if(superUV)
-				occupant.adjustFireLoss(rand(5, 15))
-		if(!cycletime_left)
-			if(!superUV)
-				if(HELMET)
-					HELMET.clean_blood()
-				if(SUIT)
-					SUIT.clean_blood()
-				if(MASK)
-					MASK.clean_blood()
-				if(TANK)
-					TANK.clean_blood()
-				if(BOOTS)
-					BOOTS.clean_blood()
+				occupant.adjustFireLoss(rand(15, 30))
+		addtimer(CALLBACK(src, PROC_REF(UV_cleaning)), 5 SECONDS)
+	else
+		if(!superUV)
+			if(HELMET)
+				HELMET.clean_blood()
+			if(SUIT)
+				SUIT.clean_blood()
+			if(MASK)
+				MASK.clean_blood()
+			if(TANK)
+				TANK.clean_blood()
+			if(BOOTS)
+				BOOTS.clean_blood()
+		else
+			if(occupant)
+				occupant.dust()
+				occupant = null
 			else
-				if(occupant)
-					occupant.dust()
-					occupant = null
-				else
-					if(HELMET)
-						HELMET = null
-					if(SUIT)
-						SUIT   = null
-					if(MASK)
-						MASK   = null
-					if(TANK)
-						TANK   = null
-					if(BOOTS)
-						BOOTS  = null
-				broken = TRUE
-				visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
+				if(HELMET)
+					HELMET = null
+				if(SUIT)
+					SUIT   = null
+				if(MASK)
+					MASK   = null
+				if(TANK)
+					TANK   = null
+				if(BOOTS)
+					BOOTS  = null
+			broken = TRUE
+			visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
-	opened = TRUE
-	locked = FALSE
-	UV = FALSE //Cycle ends
-	update_icon()
-	return
+		opened = TRUE
+		locked = FALSE
+		UV = FALSE //Cycle ends
+		update_icon()
+		return
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant()
 	if(locked)
@@ -396,7 +394,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(!allowed(user))
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 		return
-	if(!opened && !locked)
+	if((!opened && !locked) || emagged)
 		start_UV(user)
 
 /obj/machinery/suit_storage_unit/CtrlClick(mob/user)
