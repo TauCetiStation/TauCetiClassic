@@ -157,15 +157,15 @@
 	var/mob/living/silicon/S = M
 	if(S.is_antag())
 		if(!secondsElectrified) //Needs rework. See more in PR #14556
-			electrify()
+			electrify(M)
 		else
-			unelectrify()
+			unelectrify(M)
 		return
 
 	if(emergency)
-		enable_emergency_access()
+		enable_emergency_access(M)
 	else
-		disable_emergency_access()
+		disable_emergency_access(M)
 
 //
 // Override AdjacentQuick for AltClicking
