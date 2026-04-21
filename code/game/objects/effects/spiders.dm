@@ -71,7 +71,7 @@
 	. = ..()
 	if(!.)
 		alpha = 255
-		animate(src, 5 SECONDS, alpha = 0)
+		animate(src, 5 SECONDS, alpha = 5)
 		if(isliving(mover))
 			var/mob/living/L = mover
 			L.AdjustWeakened(1)
