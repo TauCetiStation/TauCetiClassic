@@ -564,14 +564,14 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 //Syndicate
 /obj/machinery/suit_storage_unit/syndicate_unit
-	name = "Syndicate Suit Storage Unit"
+	name = "Suit Storega Unit"
 	req_access = list(access_syndicate)
 	syndie = TRUE
 	emagged = TRUE
 
 	overlay_color = COLOR_DARK_GUNMETAL
 
-/obj/machinery/suit_storage_unit/syndicate_unit/gorlex/light
+/obj/machinery/suit_storage_unit/syndicate_unit/light
 	name = "Syndicate Hardsuit Storage Unit"
 	ignore = TRUE
 	suit_type = /obj/item/clothing/suit/space/rig/syndi
@@ -580,7 +580,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
-/obj/machinery/suit_storage_unit/syndicate_unit/gorlex/heavy
+/obj/machinery/suit_storage_unit/syndicate_unit/heavy
 	name = "Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/heavy
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
@@ -588,7 +588,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
-/obj/machinery/suit_storage_unit/syndicate_unit/gorlex/chem
+/obj/machinery/suit_storage_unit/syndicate_unit/chem
 	name = "Hazmat Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/hazmat
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
