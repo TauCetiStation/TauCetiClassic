@@ -18,8 +18,12 @@
 
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
+	//Percentage of living can walk through
 	var/passage_mult = 1
+	//Percentage of projectile flying through
 	var/passage_mult_proj = 1
+	//Is spider's acid blocked by web?
+	var/pass_acid = TRUE
 
 /obj/structure/spider/stickyweb/atom_init() //A lil hack so we can have special icons on special types
 	. = ..()
@@ -36,6 +40,8 @@
 			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
 	else if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/item/projectile/acid_special_spider/poisonous) && pass_acid)
+			return TRUE
 		return prob(30 * passage_mult_proj)
 	return TRUE
 
@@ -46,6 +52,29 @@
 	max_integrity = 20
 	passage_mult = 0
 	passage_mult_proj = 2
+	alpha = 5 //Its invisible by default
+
+/obj/structure/spider/stickyweb/sticky/atom_init()
+	. = ..()
+	if(SSticker)
+		var/image/I = image(icon, src, icon_state)
+		I.alpha = 150
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/faction, "invisible_web", I, /datum/faction/spiders)
+		I.appearance_flags |= RESET_ALPHA //Override setting of app_flags
+
+/obj/structure/spider/stickyweb/sticky/examine(mob/user)
+	. = ..()
+	if(istype(user, /mob/living/simple_animal/hostile/giant_spider))
+		to_chat(user, "<span class='notice'>Для не-пауков паутина практически невидима.</span>")
+
+/obj/structure/spider/stickyweb/sticky/CanPass(atom/movable/mover, turf/target, height=0)
+	. = ..()
+	if(!.)
+		alpha = 255
+		animate(src, 5 SECONDS, alpha = 0)
+		if(isliving(mover))
+			var/mob/living/L = mover
+			L.AdjustWeakened(1)
 
 /obj/structure/spider/stickyweb/sealed
 	name = "sealed web"
@@ -66,6 +95,7 @@
 	resistance_flags = FIRE_PROOF
 	passage_mult = 0.4
 	passage_mult_proj = 0
+	pass_acid = FALSE
 
 /obj/structure/spider/spikes
 	name = "web spikes"
@@ -105,6 +135,7 @@
 	passage_mult = 0.7
 	passage_mult_proj = 0
 	opacity = TRUE
+	pass_acid = FALSE
 	var/static/list/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
 		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)
 

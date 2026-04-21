@@ -21,6 +21,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
+	mouse_opacity = MOUSE_OPACITY_ICON
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 200
 	health = 200
@@ -66,6 +67,8 @@
 	var/inhereted = 0
 	///Can we speak to ALL spiders at once
 	var/can_speak_hivemind = FALSE
+	///speed without web
+	var/normal_speed = 1
 
 /mob/living/simple_animal/hostile/giant_spider/atom_init(mapload, passed_adaptations)
 	. = ..()
@@ -79,6 +82,7 @@
 		E.Grant(src)
 
 	unsuitable_atoms_damage = maxHealth * 0.03
+	normal_speed = speed
 
 	AddElement(/datum/element/prevent_attacking_of_types, global.typecache_general_bad_attack_targets, "This tastes awful!")
 	RegisterSignal(src, COMSIG_LIVING_START_PULL, PROC_REF(can_pull_thing))
@@ -103,6 +107,8 @@
 		var/datum/faction/spiders/F = create_uniq_faction(/datum/faction/spiders)
 		add_faction_member(F, src, FALSE)
 
+	walk(src,0) //Stop auto movement
+
 /mob/living/simple_animal/hostile/giant_spider/proc/on_start_spider()
 	var/datum/faction/spiders/F = create_uniq_faction(/datum/faction/spiders)
 	add_faction_member(F, src, FALSE)
@@ -115,9 +121,11 @@
 		web = TRUE
 		if(alpha > alpha_change)
 			animate(src, 1 SECOND, alpha = alpha_change)
+		speed = max(-1, normal_speed - 1.5)
 		return
 	if(!web)
 		alpha = 255
+		speed = normal_speed
 
 /mob/living/simple_animal/hostile/giant_spider/CtrlClickOn(atom/A)
 	if(get_dist(src, A) < 2 && !busy_with_action)
@@ -331,8 +339,8 @@
 			to_chat(S, "<span class='notice'>Наша сила увеличилась до [S.melee_damage]!</span>")
 
 		if("Скорость")
-			S.speed = max(S.speed - 0.5, -0.5)
-			if(S.speed <= -0.5)
+			S.normal_speed = max(S.normal_speed - 0.5, -0.5)
+			if(S.normal_speed <= -0.5)
 				options -= "Скорость"
 			to_chat(S, "<span class='notice'>Наша скорость увеличилась!</span>")
 
@@ -381,14 +389,12 @@
 			to_chat(S, "<span class='notice'>Мы видим больше!</span>")
 
 		if("Паутина")
-			if(!(/obj/structure/spider/stickyweb/sticky in S.webs))
-				S.webs |= /obj/structure/spider/stickyweb/sealed
-				S.webs |= /obj/structure/spider/stickyweb/sticky
-			else if(!(/obj/structure/spider/stickyweb/solid in S.webs))
+			if(!(/obj/structure/spider/stickyweb/solid in S.webs))
 				S.webs |= /obj/structure/spider/stickyweb/solid
-			else if(!(/obj/structure/spider/stickyweb/reflector in S.webs))
 				S.webs |= /obj/structure/spider/stickyweb/reflector
+			else
 				S.webs |= /obj/structure/spider/spikes
+				S.webs |= /obj/structure/spider/stickyweb/sticky
 				options -= "Паутина"
 			to_chat(S, "<span class='notice'>Мы научились плести новую паутину!</span>")
 
@@ -447,7 +453,7 @@
 				return
 		if(!choice)
 			return
-	if(!do_after(src, 4 * web_mult SECONDS, FALSE, T))
+	if(!do_after(src, 3 * web_mult SECONDS, FALSE, T))
 		return
 
 	new choice (T)
@@ -468,7 +474,8 @@
 	if(!do_after(src, 6 SECONDS * web_mult, FALSE, T))
 		return
 	E = new (T)
-	E.sentient = TRUE
+	if(client)
+		E.sentient = TRUE
 	E.adaptations = adaptations
 
 	fed--
@@ -578,7 +585,7 @@
 				L.reagents.add_reagent(poison_type, poison_per_bite)
 			to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 		if(isrobot(target))
-			L.Stun(1)
+			L.apply_damage(melee_damage, melee_damtype) //Means twice as much damage
 	else if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(melee_damage) //Means twice as much damage
@@ -683,10 +690,11 @@
 	melee_damage = 25
 	poison_per_bite = 5
 	speed = 3
+	web_mult = 0.7
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
 	webs = list(/obj/structure/spider/stickyweb,
 				/obj/structure/spider/spikes)
-	alpha_change = 80
+	alpha_change = 60
 
 /mob/living/simple_animal/hostile/giant_spider/viper
 	name = "viper spider"
@@ -695,14 +703,19 @@
 	icon_living = "viper"
 	icon_dead = "viper_dead"
 	icon_move = null
-	maxHealth = 110
-	health = 110
+	maxHealth = 130
+	health = 130
 	melee_damage = 15
 	speed = 2
 	ranged = TRUE
 	projectiletype = /obj/item/projectile/acid_special_spider/poisonous
-	ranged_cooldown_cap = 3
+	ranged_cooldown_cap = 2
+	webs = list(
+		/obj/structure/spider/stickyweb,
+		/obj/structure/spider/stickyweb/sealed,
+	)
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
+	alpha_change = 120
 
 /mob/living/simple_animal/hostile/giant_spider/midwife
 	name = "Midwife"
@@ -713,9 +726,14 @@
 	icon_dead = "midwife_dead"
 	icon_move = null
 	poison_type = "spidertoxin"
-	maxHealth = 120
-	health = 120
+	maxHealth = 170
+	health = 170
 	melee_damage = 15
 	speed = 0.5
 	web_mult = 1.2
+	webs = list(
+		/obj/structure/spider/stickyweb,
+		/obj/structure/spider/stickyweb/sticky,
+	)
 	spider_actions = list(/datum/action/innate/spider/evolve/adapt, /datum/action/innate/spider/spin_web, /datum/action/innate/spider/lay_egg_cluster, /datum/action/innate/spider/cocoon)
+	alpha_change = 120
