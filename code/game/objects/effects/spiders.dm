@@ -82,8 +82,8 @@
 	icon_state = "sealedweb"
 	can_block_air = TRUE
 	passage_mult = 0.7
-	max_integrity = 50
-	passage_mult_proj = 0.5
+	max_integrity = 85
+	passage_mult_proj = 0.3
 
 /obj/structure/spider/stickyweb/solid
 	name = "solid web"
@@ -91,7 +91,7 @@
 	icon_state = "solidweb"
 	can_block_air = TRUE
 	opacity = TRUE
-	max_integrity = 90
+	max_integrity = 140
 	resistance_flags = FIRE_PROOF
 	passage_mult = 0.4
 	passage_mult_proj = 0
@@ -131,7 +131,7 @@
 	icon = 'icons/effects/effects.dmi'
 	desc = "Made up of an extremly reflective silk material looking at it hurts."
 	icon_state = "reflector"
-	max_integrity = 30
+	max_integrity = 45
 	passage_mult = 0.7
 	passage_mult_proj = 0
 	opacity = TRUE

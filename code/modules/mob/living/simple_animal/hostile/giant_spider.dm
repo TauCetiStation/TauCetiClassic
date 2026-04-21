@@ -45,7 +45,7 @@
 
 	///Used only by bot
 	var/busy = 0
-	///How fast we can produce webs
+	///How fast we can produce webs, mult
 	var/web_mult = 1
 	///List of available webs
 	var/list/webs = list(/obj/structure/spider/stickyweb)
@@ -61,14 +61,14 @@
 	var/reproduced = 0
 	///Num to which we change our alpha if we get on web
 	var/alpha_change = 255
+	///Speed without web. Set this in-game instead of normal speed and vice versa
+	var/normal_speed = 1
 	///Upgrades we got
 	var/list/adaptations = list()
 	///How many upgrades we got by inheretence
 	var/inhereted = 0
 	///Can we speak to ALL spiders at once
 	var/can_speak_hivemind = FALSE
-	///speed without web
-	var/normal_speed = 1
 
 /mob/living/simple_animal/hostile/giant_spider/atom_init(mapload, passed_adaptations)
 	. = ..()
@@ -390,8 +390,9 @@
 
 		if("Паутина")
 			if(!(/obj/structure/spider/stickyweb/solid in S.webs))
-				S.webs |= /obj/structure/spider/stickyweb/solid
-				S.webs |= /obj/structure/spider/stickyweb/reflector
+				S.webs |= /obj/structure/spider/stickyweb/solid //Anti-bullet
+				S.webs |= /obj/structure/spider/stickyweb/reflector //Anti-laser
+				S.webs |= /obj/structure/spider/stickyweb/sealed //Dot
 			else
 				S.webs |= /obj/structure/spider/spikes
 				S.webs |= /obj/structure/spider/stickyweb/sticky
