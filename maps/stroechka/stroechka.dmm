@@ -260,19 +260,11 @@
 	},
 /area/station/hallway/primary/central)
 "aB" = (
-/obj/structure/rack,
-/obj/item/device/suit_cooling_unit{
-	layer = 2.9;
-	pixel_y = -4
-	},
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/item/clothing/mask/breath,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
@@ -2891,6 +2883,7 @@
 	},
 /obj/item/device/radio/off,
 /obj/item/device/flashlight/lantern,
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3182,6 +3175,18 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
+/obj/item/device/suit_cooling_unit{
+	layer = 2.9;
+	pixel_y = -4
+	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "fD" = (
@@ -3705,15 +3710,6 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
-"hX" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(71)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
 "ic" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,3"
@@ -6116,13 +6112,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "Cw" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/engineering/chief,
-/obj/item/clothing/glasses/welding/superior/cheif_eng,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/engineering/chief,
-/obj/item/clothing/mask/breath,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/machinery/suit_storage_unit/engine/chief{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7149,19 +7141,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Hi" = (
-/obj/structure/rack,
-/obj/item/device/suit_cooling_unit{
-	layer = 2.9;
-	pixel_y = -4
-	},
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/engineering,
-/obj/item/clothing/mask/breath,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
@@ -8789,6 +8773,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -34581,7 +34566,7 @@ gs
 dS
 lx
 UV
-hX
+fz
 kv
 fz
 Nf
@@ -35095,7 +35080,7 @@ bU
 dU
 Bs
 UV
-hX
+fz
 uI
 fz
 FY

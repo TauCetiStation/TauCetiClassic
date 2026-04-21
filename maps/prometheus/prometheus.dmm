@@ -152,7 +152,6 @@
 	},
 /area/station/aisat/antechamber)
 "aak" = (
-/obj/structure/closet/malf/suits,
 /obj/machinery/camera{
 	c_tag = "Main Computer Room";
 	network = list("Tcomsat")
@@ -165,6 +164,9 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/suit_storage_unit/nasa{
+	fulled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -7128,6 +7130,7 @@
 	},
 /obj/item/weapon/skill_cartridge/usp10,
 /obj/item/weapon/disk/nuclear,
+/obj/item/weapon/hand_tele,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bib" = (
@@ -19195,7 +19198,9 @@
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "ehN" = (
-/obj/machinery/suit_storage_unit/engine/atmos/full,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkyellow"
@@ -20972,7 +20977,9 @@
 	},
 /area/station/medical/virology)
 "eCc" = (
-/obj/machinery/suit_storage_unit/medical/medic/full,
+/obj/machinery/suit_storage_unit/medical{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkgreen"
@@ -33845,7 +33852,9 @@
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/cafeteria)
 "hyp" = (
-/obj/machinery/suit_storage_unit/engine/atmos/full,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -46227,10 +46236,11 @@
 /turf/simulated/floor/engine,
 /area/station/engineering/engine)
 "kIC" = (
-/obj/structure/closet/malf/suits,
-/obj/item/clothing/glasses/night,
 /obj/machinery/firealarm{
 	pixel_y = 22
+	},
+/obj/machinery/suit_storage_unit/nasa{
+	fulled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -52275,7 +52285,9 @@
 	},
 /area/station/rnd/scibreak)
 "mfd" = (
-/obj/machinery/suit_storage_unit/engine/atmos/full,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57069,7 +57081,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -57496,7 +57510,9 @@
 	c_tag = "Engineering Chief Engineer's Office";
 	network = list("SS13","Engineering")
 	},
-/obj/machinery/suit_storage_unit/engine/chief/full,
+/obj/machinery/suit_storage_unit/engine/chief{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkyellow"
@@ -58097,7 +58113,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nBd" = (
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkyellow"
@@ -63791,7 +63809,9 @@
 /obj/item/weapon/storage/secure/safe{
 	pixel_y = -22
 	},
-/obj/machinery/suit_storage_unit/medical/cmo/full,
+/obj/machinery/suit_storage_unit/medical/cmo{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -65014,7 +65034,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/medical/paramedic/full,
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -65802,7 +65824,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "pAv" = (
-/obj/machinery/suit_storage_unit/security/officer/full,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -67246,7 +67270,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security/hos/full,
+/obj/machinery/suit_storage_unit/security/hos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73038,19 +73064,16 @@
 	},
 /area/station/security/checkpoint)
 "rsr" = (
-/obj/structure/rack,
 /obj/structure/bobross{
 	pixel_x = 32
 	},
-/obj/item/weapon/tank/jetpack/oxygen,
-/obj/item/clothing/suit/armor/captain,
-/obj/item/clothing/head/helmet/space/capspace,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/hand_tele,
 /obj/effect/decal/turf_decal/set_damaged,
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 28;
 	pixel_y = 5
+	},
+/obj/machinery/suit_storage_unit/captain{
+	fulled = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -75214,7 +75237,9 @@
 	dir = 10;
 	network = list("SS13","Research")
 	},
-/obj/machinery/suit_storage_unit/science/scientist/full,
+/obj/machinery/suit_storage_unit/science{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -81167,7 +81192,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/suit_storage_unit/globose/science/full,
+/obj/machinery/suit_storage_unit/globose/science{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -81834,7 +81861,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/skrell/white,
+/obj/machinery/suit_storage_unit/skrell/white{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -85993,7 +86022,9 @@
 	name = "Tribunal"
 	})
 "uEG" = (
-/obj/machinery/suit_storage_unit/skrell/black,
+/obj/machinery/suit_storage_unit/skrell/black{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -93034,7 +93065,9 @@
 	name = "Brig largecell apc left";
 	pixel_x = -27
 	},
-/obj/machinery/suit_storage_unit/security/officer/full,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -93939,7 +93972,9 @@
 	},
 /area/station/hallway/primary/port)
 "wzu" = (
-/obj/machinery/suit_storage_unit/medical/paramedic/full,
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -98213,7 +98248,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -99575,7 +99612,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/unathi/nt,
+/obj/machinery/suit_storage_unit/unathi/nt{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -100590,7 +100629,9 @@
 	name = "RnD left APC";
 	pixel_x = -27
 	},
-/obj/machinery/suit_storage_unit/science/rd/full,
+/obj/machinery/suit_storage_unit/science/rd{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkpurple"

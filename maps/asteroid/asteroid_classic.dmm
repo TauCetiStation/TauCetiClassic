@@ -839,8 +839,8 @@
 	dir = 8
 	},
 /obj/machinery/vending/hydroseeds{
-	slogan_delay = 700;
-	seller_account_number = "%cargo_account%"
+	seller_account_number = "%cargo_account%";
+	slogan_delay = 700
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5737,12 +5737,14 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+	fulled = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -6006,9 +6008,11 @@
 	},
 /area/asteroid/research_outpost/longtermstorage)
 "mc" = (
-/obj/machinery/suit_storage_unit/science/scientist/full,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/science{
+	fulled = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -7308,9 +7312,11 @@
 	},
 /area/asteroid/mine/explored)
 "pc" = (
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+	fulled = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -7601,12 +7607,12 @@
 "pI" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 10;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 10;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/device/suit_cooling_unit{
 	pixel_x = 10
@@ -7615,12 +7621,12 @@
 	pixel_x = -10
 	},
 /obj/item/weapon/storage/briefcase/inflatable{
-	pixel_y = -5;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = -5
 	},
 /obj/item/weapon/storage/briefcase/inflatable{
-	pixel_y = -5;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -5
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -8371,6 +8377,9 @@
 /area/asteroid/mine/unexplored)
 "rA" = (
 /obj/structure/alien/weeds/node,
+/obj/machinery/suit_storage_unit/abandoned{
+	fulled = 1
+	},
 /turf/simulated/floor/airless{
 	dir = 10;
 	icon_state = "darkpurple"
@@ -11472,7 +11481,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining/full,
+/obj/machinery/suit_storage_unit/globose/mining{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "zq" = (
@@ -11484,7 +11495,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining/full,
+/obj/machinery/suit_storage_unit/globose/mining{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "zs" = (
@@ -12475,7 +12488,9 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
 "Dh" = (
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist,
+/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+	fulled = 1
+	},
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"

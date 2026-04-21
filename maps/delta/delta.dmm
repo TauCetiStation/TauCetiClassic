@@ -2360,7 +2360,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/machinery/suit_storage_unit/security/hos/full,
+/obj/machinery/suit_storage_unit/security/hos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -7401,7 +7403,9 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/obj/machinery/suit_storage_unit/security/officer/full,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7414,7 +7418,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/machinery/suit_storage_unit/security/officer/full,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8978,6 +8984,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"apc" = (
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "bot_old"
+	},
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	fulled = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/medical/storage)
 "apd" = (
 /obj/structure/table,
 /turf/simulated/floor,
@@ -11266,7 +11284,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/security/officer/full,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "asF" = (
@@ -15309,7 +15329,9 @@
 	dir = 3;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17370,9 +17392,9 @@
 	pixel_y = -5
 	},
 /obj/machinery/door/window/eastright{
+	dir = 8;
 	name = "Paramedic equipment";
-	req_access = list(70);
-	dir = 8
+	req_access = list(70)
 	},
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -27373,8 +27395,9 @@
 	},
 /area/station/rnd/robotics)
 "cWR" = (
-/obj/structure/closet/malf/suits,
-/obj/item/clothing/glasses/night,
+/obj/machinery/suit_storage_unit/nasa{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -27883,23 +27906,14 @@
 /turf/simulated/floor/carpet,
 /area/station/bridge)
 "dfo" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
+	icon_state = "delivery"
 	},
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "MedBay";
-	dir = 1;
-	name = "Medbay top APC";
-	pixel_y = 27
+/obj/machinery/suit_storage_unit/medical{
+	fulled = 1
 	},
-/turf/simulated/floor{
-	icon_state = "neutral"
-	},
-/area/station/medical/cmo)
+/turf/simulated/floor,
+/area/station/ai_monitored/eva)
 "dft" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -29227,7 +29241,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/captain/full,
+/obj/machinery/suit_storage_unit/captain{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/station/bridge/captain_quarters)
 "dvZ" = (
@@ -32204,15 +32220,26 @@
 	},
 /area/station/security/checkpoint/engi)
 "ejI" = (
-/obj/effect/decal/turf_decal/alpha/red{
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/machinery/suit_storage_unit/medical/paramedic/full,
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "Medbay top APC";
+	pixel_y = 27
+	},
+/obj/machinery/suit_storage_unit/medical/cmo{
+	fulled = 1
+	},
 /turf/simulated/floor{
-	dir = 8;
 	icon_state = "neutral"
 	},
-/area/station/medical/storage)
+/area/station/medical/cmo)
 "ejJ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -32245,9 +32272,11 @@
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
-/obj/machinery/suit_storage_unit/science,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/science{
+	fulled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -32611,7 +32640,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/science/scientist/full,
+/obj/machinery/suit_storage_unit/globose/science{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -36253,7 +36284,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "fjH" = (
-/obj/machinery/suit_storage_unit/engine/atmos/full,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -41633,7 +41663,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/skrell/black,
+/obj/machinery/suit_storage_unit/skrell/black{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -44990,7 +45022,9 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -58645,7 +58679,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/skrell/white,
+/obj/machinery/suit_storage_unit/skrell/white{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -62601,7 +62637,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "lrZ" = (
@@ -63148,7 +63186,6 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/chief/full,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -66215,7 +66252,9 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/science/rd/full,
+/obj/machinery/suit_storage_unit/science/rd{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -67534,7 +67573,6 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/medical/cmo/full,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -76852,7 +76890,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/engine/atmos/full,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "oRY" = (
@@ -90120,6 +90160,9 @@
 	name = "Engineering down APC";
 	pixel_y = -27
 	},
+/obj/machinery/suit_storage_unit/engine/chief{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -90510,7 +90553,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/unathi/nt,
+/obj/machinery/suit_storage_unit/unathi/nt{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -91452,7 +91497,9 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/machinery/suit_storage_unit/engine/atmos/full,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -91968,7 +92015,6 @@
 /area/station/medical/storage)
 "szY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/suit_storage_unit/engine/atmos/full,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -100222,12 +100268,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "uGb" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
 	},
-/obj/machinery/suit_storage_unit/medical/medic/full,
-/turf/simulated/floor,
-/area/station/ai_monitored/eva)
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/engineering/atmos/atmos_office)
 "uGd" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench,
@@ -100710,6 +100757,9 @@
 "uND" = (
 /obj/structure/closet/fireaxecabinet{
 	pixel_x = 32
+	},
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -114451,7 +114501,9 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -140251,7 +140303,7 @@ bmj
 itq
 stm
 uND
-fjH
+uGb
 rsf
 ewN
 nnZ
@@ -150323,7 +150375,7 @@ bXp
 hvB
 bCO
 jQJ
-uGb
+dfo
 oRV
 lrS
 rTk
@@ -151351,7 +151403,7 @@ pym
 xZC
 iWg
 baa
-uGb
+dfo
 asE
 asE
 rTk
@@ -151382,7 +151434,7 @@ vhk
 eyM
 lmd
 wBR
-dfo
+ejI
 clp
 mAu
 rqe
@@ -154209,8 +154261,8 @@ mne
 sBD
 gys
 bpV
-ejI
-ejI
+apc
+apc
 mAx
 lRD
 sBD

@@ -3345,7 +3345,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security/officer/full,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/station/security/armoury)
 "afB" = (
@@ -6012,7 +6014,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security/hos/full,
+/obj/machinery/suit_storage_unit/security/hos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7944,6 +7948,21 @@
 	icon_state = "redfull"
 	},
 /area/station/security/brig)
+"amX" = (
+/obj/machinery/alarm{
+	pixel_y = 28
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/suit_storage_unit/nasa{
+	fulled = 1
+	},
+/turf/simulated/floor/carpet,
+/area/station/tcommsat/computer)
 "amY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/window/brigdoor/northright{
@@ -15814,7 +15833,9 @@
 	id = "CE";
 	pixel_x = -28
 	},
-/obj/machinery/suit_storage_unit/engine/chief/full,
+/obj/machinery/suit_storage_unit/engine/chief{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -17164,7 +17185,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/medical/medic/full,
+/obj/machinery/suit_storage_unit/medical{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17250,7 +17273,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security/officer/full,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -18376,7 +18401,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -18385,7 +18412,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/engine/atmos/full,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -19010,7 +19039,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/skrell/black,
+/obj/machinery/suit_storage_unit/skrell/black{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -20273,7 +20304,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/unathi/nt,
+/obj/machinery/suit_storage_unit/unathi/nt{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -20282,7 +20315,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/skrell/white,
+/obj/machinery/suit_storage_unit/skrell/white{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -23976,7 +24011,9 @@
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
-/obj/machinery/suit_storage_unit/science/rd/full,
+/obj/machinery/suit_storage_unit/science/rd{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -28547,16 +28584,27 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aYq" = (
-/obj/machinery/alarm{
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+	dir = 10
 	},
-/obj/structure/closet/malf/suits,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
+	dir = 10
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
+/obj/machinery/suit_storage_unit/nasa{
+	fulled = 1
+	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "aYr" = (
@@ -28858,28 +28906,20 @@
 	},
 /area/station/hallway/secondary/entry)
 "aYV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/obj/structure/closet/malf/suits,
-/obj/item/clothing/glasses/night,
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 10
-	},
-/obj/machinery/power/apc{
+/obj/machinery/suit_storage_unit/engine,
+/turf/simulated/floor{
 	dir = 1;
-	name = "apc top";
-	pixel_y = 28
+	icon_state = "yellow"
 	},
-/turf/simulated/floor/carpet,
-/area/station/tcommsat/computer)
+/area/station/engineering/engine)
 "aYW" = (
 /obj/structure/stool,
 /obj/structure/cable{
@@ -37315,7 +37355,9 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
-/obj/machinery/suit_storage_unit/captain/full,
+/obj/machinery/suit_storage_unit/captain{
+	fulled = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bnZ" = (
@@ -37957,7 +37999,9 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/suit_storage_unit/science/scientist/full,
+/obj/machinery/suit_storage_unit/science{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -39391,7 +39435,9 @@
 	name = "RnD down APC";
 	pixel_y = -27
 	},
-/obj/machinery/suit_storage_unit/globose/science/full,
+/obj/machinery/suit_storage_unit/globose/science{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -50482,7 +50528,12 @@
 	},
 /area/station/hallway/primary/starboard)
 "bLr" = (
-/obj/machinery/suit_storage_unit/medical/paramedic/full,
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	fulled = 1
+	},
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -58870,21 +58921,14 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "chi" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	fulled = 1
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellow"
+	dir = 4;
+	icon_state = "whiteblue"
 	},
-/area/station/engineering/engine)
+/area/station/medical/storage)
 "chj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -65087,15 +65131,16 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cyd" = (
-/obj/structure/sign/warning/enginesafety{
-	pixel_y = 32
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -66007,7 +66052,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/engine/atmos/full,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	fulled = 1
+	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "cAH" = (
@@ -78327,15 +78374,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lBj" = (
-/obj/machinery/alarm{
-	pixel_y = 24
+/obj/structure/sign/warning/enginesafety{
+	pixel_y = 32
 	},
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
-/obj/machinery/suit_storage_unit/engine/engineer/full,
+/obj/machinery/suit_storage_unit/engine,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -81992,7 +82039,9 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/machinery/suit_storage_unit/medical/cmo/full,
+/obj/machinery/suit_storage_unit/medical/cmo{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -115795,7 +115844,7 @@ cAR
 nxV
 nxV
 crH
-chi
+cyd
 cuf
 cuf
 czN
@@ -116052,7 +116101,7 @@ cAR
 cff
 cff
 crH
-cyd
+lBj
 cuf
 cuf
 czN
@@ -116309,7 +116358,7 @@ cvV
 cxH
 cfK
 crH
-lBj
+aYV
 cAN
 cCy
 cHw
@@ -124754,7 +124803,7 @@ bNw
 bvv
 bIb
 bLr
-bLr
+chi
 bQg
 bTs
 bha
@@ -129964,7 +130013,7 @@ cFP
 aaa
 aaa
 cGU
-aYV
+aYq
 aZa
 tiv
 cFj
@@ -130478,7 +130527,7 @@ cFP
 aaa
 aaa
 cGU
-aYq
+amX
 cIR
 pSU
 cFk

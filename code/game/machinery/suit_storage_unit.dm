@@ -25,11 +25,12 @@
 Erro's idea on standarising SSUs whle keeping creation of other SSU types easy:
 Make a child SSU, name it something then set the TYPE vars to your desired suit output. New() should take it from there by itself.
 */
-	var/HELMET_TYPE = null
-	var/MASK_TYPE   = null
-	var/SUIT_TYPE   = null
-	var/BOOTS_TYPE  = null
-	var/TANK_TYPE   = null
+	var/fulled = FALSE
+	var/helmet_type = null
+	var/mask_type   = null
+	var/suit_type   = null
+	var/boot_type  = null
+	var/tank_type   = null
 /*
 All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 */
@@ -55,16 +56,17 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 	RefreshParts()
 
-	if(SUIT_TYPE)
-		SUIT   = new SUIT_TYPE(src)
-	if(HELMET_TYPE)
-		HELMET = new HELMET_TYPE(src)
-	if(MASK_TYPE)
-		MASK   = new MASK_TYPE(src)
-	if(BOOTS_TYPE)
-		BOOTS  = new BOOTS_TYPE(src)
-	if(TANK_TYPE)
-		TANK   = new TANK_TYPE(src)
+	if(fulled)
+		if(suit_type)
+			SUIT   = new suit_type(src)
+		if(helmet_type)
+			HELMET = new helmet_type(src)
+		if(mask_type)
+			MASK   = new mask_type(src)
+		if(boot_type)
+			BOOTS  = new boot_type(src)
+		if(tank_type)
+			TANK   = new tank_type(src)
 	set_power_use(IDLE_POWER_USE)
 	update_icon()
 
@@ -131,25 +133,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		return
 	if(panel_open)
 		add_overlay("panel_open")
-
-/obj/machinery/suit_storage_unit/proc/make_powered()
-	stat &= ~NOPOWER
-	update_icon()
-
-/obj/machinery/suit_storage_unit/proc/make_unpowered()
-	stat |= NOPOWER
-	locked = FALSE
-	opened = TRUE
-	dump_everything()
-	update_power_use()
-	update_icon()
-
-/obj/machinery/suit_storage_unit/power_change()
-	if(powered())
-		make_powered()
-	else
-		addtimer(CALLBACK(src, PROC_REF(make_unpowered)), rand(0, 15))
-	update_power_use()
 
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
@@ -569,285 +552,231 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		var/choose = pick(1,2)
 		switch(choose)
 			if(1)
-				SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
-				MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-				TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
-				BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
+				suit_type = /obj/item/clothing/suit/space/rig/syndi
+				mask_type = /obj/item/clothing/mask/gas/syndicate
+				tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+				boot_type = /obj/item/clothing/shoes/magboots/syndie
 			if(2)
-				SUIT_TYPE = /obj/item/clothing/suit/space/rig/wizard
-				MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-				TANK_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
+				suit_type = /obj/item/clothing/suit/space/rig/wizard
+				mask_type = /obj/item/clothing/mask/gas/coloured
+				tank_type = /obj/item/weapon/tank/emergency_oxygen/double
 	return ..()
 
 //Syndicate
 /obj/machinery/suit_storage_unit/syndicate_unit
 	name = "Syndicate Suit Storage Unit"
-	ignore = FALSE
+	req_access = list(access_syndicate)
 	syndie = TRUE
 	emagged = TRUE
-	req_access = list(access_syndicate)
-	overlay_color = COLOR_DARK_GUNMETAL
 
-/obj/machinery/suit_storage_unit/syndicate_unit/gorlex
-	ignore = TRUE
+	overlay_color = COLOR_DARK_GUNMETAL
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex/light
 	name = "Syndicate Hardsuit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
-	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
+	ignore = TRUE
+	suit_type = /obj/item/clothing/suit/space/rig/syndi
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex/heavy
 	name = "Syndicate Hardsuit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi/heavy
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
-	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
+	suit_type = /obj/item/clothing/suit/space/rig/syndi/heavy
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/gorlex/chem
 	name = "Hazmat Hardsuit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi/hazmat
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
-	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
+	suit_type = /obj/item/clothing/suit/space/rig/syndi/hazmat
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
 	name = "Syndicate Striker Suit Storage Unit"
 	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/syndicate/elite
-	HELMET = /obj/item/clothing/suit/space/syndicate/elite
-	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
+	suit_type = /obj/item/clothing/suit/space/syndicate/elite
+	helmet_type = /obj/item/clothing/suit/space/syndicate/elite
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
 	name = "Elite Syndicate Hardsuit Storage Unit"
 	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi/elite
-	HELMET_TYPE =/obj/item/clothing/head/helmet/space/rig/syndi/elite
-	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
+	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite/comander
 	name = "Comander Syndicate Hardsuit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi/elite/comander
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
-	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
 	req_access = list(access_syndicate_commander)
+	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite/comander
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 //Sience
 /obj/machinery/suit_storage_unit/science
 	name = "Sience Hardsuit Storage Unit"
-	ignore = TRUE
 	req_access = list(access_research)
+	suit_type = /obj/item/clothing/suit/space/rig/science
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
+
 	overlay_color = COLOR_VIOLET
-
-/obj/machinery/suit_storage_unit/science/scientist
-	name = "Sience Hardsuit Storage Unit"
-	ignore = FALSE
-
-/obj/machinery/suit_storage_unit/science/scientist/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/science
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/science/rd
 	name = "Researh Director Hardsuit Storage Unit"
-	ignore = FALSE
 	req_access = list(access_rd)
-	overlay_color = COLOR_DARK_PURPLE
+	suit_type = /obj/item/clothing/suit/space/rig/science/rd
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
 
-/obj/machinery/suit_storage_unit/science/rd/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/science/rd
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	overlay_color = COLOR_DARK_PURPLE
 
 //Engine
 /obj/machinery/suit_storage_unit/engine
 	name = "Engineer Hardsuit Storage Unit"
-	ignore = TRUE
 	req_access = list(access_engine)
-
-/obj/machinery/suit_storage_unit/engine/engineer
-	name = "Engineer Hardsuit Storage Unit"
-	ignore = FALSE
-
-/obj/machinery/suit_storage_unit/engine/engineer/full
-	ignore = TRUE
-	SUIT_TYPE  = /obj/item/clothing/suit/space/rig/engineering
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	suit_type  = /obj/item/clothing/suit/space/rig/engineering
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/engine/atmos
 	name = "Atmospheric Hardsuit Storage Unit"
-	ignore = FALSE
 	req_access = list(access_atmospherics)
+	suit_type = /obj/item/clothing/suit/space/rig/atmos
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
+
 	overlay_color = COLOR_TEAL
-
-/obj/machinery/suit_storage_unit/engine/atmos/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
-
 /obj/machinery/suit_storage_unit/engine/chief
 	name = "Chief Engineer Hardsuit Storage Unit"
-	ignore = FALSE
 	req_access = list(access_ce)
+	suit_type = /obj/item/clothing/suit/space/rig/engineering/chief
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
 
-/obj/machinery/suit_storage_unit/engine/chief/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/chief
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
 	overlay_color = COLOR_TITANIUM
 
 //Security
 /obj/machinery/suit_storage_unit/security
-	ignore = TRUE
-	req_access = list(access_security)
-	overlay_color = COLOR_CRIMSON
-
-/obj/machinery/suit_storage_unit/security/officer
 	name = "Security Officer Hardsuit Storage Unit"
-	ignore = FALSE
 	req_access = list(access_security)
+	suit_type = /obj/item/clothing/suit/space/rig/security
+	mask_type = /obj/item/clothing/mask/gas/sechailer
+	boot_type = /obj/item/clothing/shoes/magboots
 
-/obj/machinery/suit_storage_unit/security/officer/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security
-	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	overlay_color = COLOR_CRIMSON
 
 /obj/machinery/suit_storage_unit/security/hos
 	name = "Head of Security Hardsuit Storage Unit"
-	ignore = FALSE
 	req_access = list(access_hos)
-	overlay_color = COLOR_CRIMSON_RED
+	suit_type = /obj/item/clothing/suit/space/rig/security/hos
+	mask_type = /obj/item/clothing/mask/gas/sechailer
+	boot_type = /obj/item/clothing/shoes/magboots
 
-/obj/machinery/suit_storage_unit/security/hos/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security/hos
-	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	overlay_color = COLOR_CRIMSON_RED
 
 //Medical
 /obj/machinery/suit_storage_unit/medical
-	ignore = TRUE
-	req_access = list(access_medbay_storage)
-	overlay_color = COLOR_CYAN
-
-/obj/machinery/suit_storage_unit/medical/medic
-	ignore = FALSE
 	name = "Medical Hardsuit Storage Unit"
+	req_access = list(access_medbay_storage)
+	suit_type = /obj/item/clothing/suit/space/rig/medical
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
 
-/obj/machinery/suit_storage_unit/medical/medic/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	overlay_color = COLOR_CYAN
 
 /obj/machinery/suit_storage_unit/medical/paramedic
 	name = "Paremedic Hardsuit Storage Unit"
 	req_access = list(access_paramedic)
-
-/obj/machinery/suit_storage_unit/medical/paramedic/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	suit_type = /obj/item/clothing/suit/space/rig/medical
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/medical/cmo
 	name = "Chief Medical Officer Hardsuit Storage Unit"
 	req_access = list(access_cmo)
-	overlay_color = COLOR_CYAN_BLUE
+	suit_type = /obj/item/clothing/suit/space/rig/medical/cmo
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
 
-/obj/machinery/suit_storage_unit/medical/cmo/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical/cmo
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	overlay_color = COLOR_CYAN_BLUE
 
 //Other
 /obj/machinery/suit_storage_unit/globose
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/globose
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
-	MASK_TYPE = /obj/item/clothing/mask/breath
-	TANK_TYPE = /obj/item/weapon/tank/oxygen
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
+	suit_type = /obj/item/clothing/suit/space/globose
+	helmet_type = /obj/item/clothing/head/helmet/space/globose
+	mask_type = /obj/item/clothing/mask/breath
+	tank_type = /obj/item/weapon/tank/oxygen
+	boot_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/globose/civil
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/carbondioxide
+	tank_type = /obj/item/weapon/tank/jetpack/carbondioxide
 	overlay_color = COLOR_SILVER
 
 /obj/machinery/suit_storage_unit/globose/science
-	ignore = FALSE
 	name = "Science Space Suit Storage Unit"
 	req_access = list(access_research)
-	overlay_color = COLOR_PINK
+	suit_type = /obj/item/clothing/suit/space/globose/science
+	helmet_type = /obj/item/clothing/head/helmet/space/globose/science
 
-/obj/machinery/suit_storage_unit/globose/science/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
+	overlay_color = COLOR_PINK
 
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist
 	name = "Xenoarchaeologist Space Suit Storage Unit"
 
 /obj/machinery/suit_storage_unit/globose/mining
-	ignore = FALSE
 	name = "Mining Space Suit Storage Unit"
 	req_access = list(access_mining)
-	overlay_color = COLOR_BROWN
+	suit_type = /obj/item/clothing/suit/space/globose/mining
+	helmet_type = /obj/item/clothing/head/helmet/space/globose/mining
 
-/obj/machinery/suit_storage_unit/globose/mining/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/globose/mining
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/mining
+	overlay_color = COLOR_BROWN
 
 /obj/machinery/suit_storage_unit/skrell
 	ignore = TRUE
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
-	TANK_TYPE = /obj/item/weapon/tank/oxygen
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
+	tank_type = /obj/item/weapon/tank/oxygen
+
 	overlay_color = COLOR_BLUE_LIGHT
 
 /obj/machinery/suit_storage_unit/skrell/white
 	name = "White Skrellian Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/white
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/white
+	suit_type = /obj/item/clothing/suit/space/skrell/white
+	helmet_type = /obj/item/clothing/head/helmet/space/skrell/white
 
 /obj/machinery/suit_storage_unit/skrell/black
 	name = "Black Skrellian Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/black
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/black
+	suit_type = /obj/item/clothing/suit/space/skrell/black
+	helmet_type = /obj/item/clothing/head/helmet/space/skrell/black
 
 /obj/machinery/suit_storage_unit/unathi
 	ignore = TRUE
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
-	TANK_TYPE = /obj/item/weapon/tank/oxygen
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
+	tank_type = /obj/item/weapon/tank/oxygen
 	overlay_color = COLOR_SEAWEED
 
 /obj/machinery/suit_storage_unit/unathi/nt
 	name = "NT Unathi Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/unathi/rig_cheap
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
+	suit_type = /obj/item/clothing/suit/space/unathi/rig_cheap
+	helmet_type = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 
 /obj/machinery/suit_storage_unit/unathi/breacher
 	name = "Breacher Unathi Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/unathi/breacher
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/unathi/breacher
+	suit_type = /obj/item/clothing/suit/space/unathi/breacher
+	helmet_type = /obj/item/clothing/head/helmet/space/unathi/breacher
 	req_access = list(access_captain)
 
 /obj/machinery/suit_storage_unit/captain
@@ -855,42 +784,39 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_captain)
 	overlay_color = COLOR_COMMAND_BLUE
 
-/obj/machinery/suit_storage_unit/captain/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/armor/captain
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/oxygen
+/obj/machinery/suit_storage_unit/captain
+	suit_type = /obj/item/clothing/suit/armor/captain
+	helmet_type = /obj/item/clothing/head/helmet/space/capspace
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen
 
 /obj/machinery/suit_storage_unit/nasa
 	name = "NASA Suit Storage Unit"
 	req_access = list(access_minisat)
+	suit_type = /obj/item/clothing/suit/space/nasavoid
+	helmet_type = /obj/item/clothing/head/helmet/space/nasavoid
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	boot_type = /obj/item/clothing/shoes/magboots
+	tank_type = /obj/item/weapon/tank/jetpack/void
+
 	overlay_color = COLOR_GUNMETAL
-
-/obj/machinery/suit_storage_unit/nasa/full
-	ignore = TRUE
-	SUIT_TYPE = /obj/item/clothing/suit/space/nasavoid
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/nasavoid
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots
-	TANK_TYPE = /obj/item/weapon/tank/jetpack/void
-
 
 /obj/machinery/suit_storage_unit/wizard
 	ignore = TRUE
 	name = "Strange Hardsuit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/wizard
-	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
-	TANK_TYPE = /obj/item/weapon/tank/emergency_oxygen/double
+	suit_type = /obj/item/clothing/suit/space/rig/wizard
+	mask_type = /obj/item/clothing/mask/gas/coloured
+	tank_type = /obj/item/weapon/tank/emergency_oxygen/double
 	req_access = list(access_syndicate)
+
 	overlay_color = COLOR_DARK_PURPLE
 
 /obj/machinery/suit_storage_unit/vox
 	ignore = TRUE
-	MASK_TYPE = /obj/item/clothing/mask/gas/vox
-	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/vox
-	TANK_TYPE = /obj/item/weapon/tank/nitrogen
+	mask_type = /obj/item/clothing/mask/gas/vox
+	boot_type = /obj/item/clothing/shoes/magboots/vox
+	tank_type = /obj/item/weapon/tank/nitrogen
 	req_access = list(access_syndicate)
 
 /obj/machinery/suit_storage_unit/vox/atom_init()
@@ -899,20 +825,20 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/vox/carapace
 	name = "Vox Carapace Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/vox/carapace
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/carapace
+	suit_type = /obj/item/clothing/suit/space/vox/carapace
+	helmet_type = /obj/item/clothing/head/helmet/space/vox/carapace
 
 /obj/machinery/suit_storage_unit/vox/medic
 	name = "Vox Alien Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/vox/medic
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/medic
+	suit_type = /obj/item/clothing/suit/space/vox/medic
+	helmet_type = /obj/item/clothing/head/helmet/space/vox/medic
 
 /obj/machinery/suit_storage_unit/vox/stealth
 	name = "Vox Stealth Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/vox/stealth
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/stealth
+	suit_type = /obj/item/clothing/suit/space/vox/stealth
+	helmet_type = /obj/item/clothing/head/helmet/space/vox/stealth
 
 /obj/machinery/suit_storage_unit/vox/engine
 	name = "Vox Engineer Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/space/vox/pressure
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/vox/pressure
+	suit_type = /obj/item/clothing/suit/space/vox/pressure
+	helmet_type = /obj/item/clothing/head/helmet/space/vox/pressure
