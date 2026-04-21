@@ -971,8 +971,8 @@ to destroy them and players will be able to make replacements.
 	var/list/radial_icons = list()
 
 /obj/item/weapon/circuitboard/suit_storage/atom_init()
-	..()
 	take_storage_by_type()
+	return ..()
 
 /obj/item/weapon/circuitboard/suit_storage/proc/take_storage_by_type()
 	names_of_suit_storage = list()
