@@ -82,31 +82,21 @@
 /datum/surgery_step/groin_organs/fixing/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
 		return FALSE
-	var/is_groin_organ_damaged = FALSE
-	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
-	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		if(IO.damage > 0)
-			is_groin_organ_damaged = TRUE
-			break
-	return is_groin_organ_damaged
-
-/datum/surgery_step/groin_organs/fixing/prepare_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
 	var/list/dead_organs = list()
 	var/has_treatable = FALSE
-	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+	for(var/obj/item/organ/internal/IO as anything in BP.bodypart_organs)
 		if(IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
 				dead_organs += IO
 			else
 				has_treatable = TRUE
-
-	if(!has_treatable && dead_organs.len)
-		for(var/obj/item/organ/internal/IO in dead_organs)
-			to_chat(user, "<span class='warning'>[target]'s [IO.name] is dead.</span>")
-		return FALSE
-
-	return ..()
+	if(has_treatable)
+		return TRUE
+	if(dead_organs.len)
+		for(var/obj/item/organ/internal/IO as anything in dead_organs)
+			to_chat(user, "<span class='warning'>[target]'s [IO.name] has necrosed and can't be treated this way.</span>")
+	return FALSE
 
 /datum/surgery_step/groin_organs/fixing/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
@@ -120,7 +110,7 @@
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.status & ORGAN_DEAD)
-			to_chat(user, "<span class='warning'>[target]'s [IO.name] is dead.</span>")
+			to_chat(user, "<span class='warning'>[target]'s [IO.name] has necrosed and can't be treated this way.</span>")
 			continue
 		if(IO && IO.damage > 0)
 			if(!IO.is_robotic())
