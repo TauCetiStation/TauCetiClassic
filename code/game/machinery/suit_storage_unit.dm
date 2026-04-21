@@ -39,6 +39,8 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	var/obj/item/clothing/mask/MASK = null
 	var/obj/item/clothing/shoes/magboots/BOOTS = null
 	var/obj/item/weapon/tank/oxygen/TANK = null
+	var/obj/machinery/suit_storage_unit/ssu_left = null
+	var/obj/machinery/suit_storage_unit/ssu_right = null
 
 /obj/machinery/suit_storage_unit/atom_init()
 	. = ..()
@@ -68,71 +70,104 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		if(tank_type)
 			TANK   = new tank_type(src)
 	set_power_use(IDLE_POWER_USE)
-	update_icon()
+	update_icon()						//in update icon, we add src connectors icons and search neardy Suit Storage Units
+	ssu_left?.add_connectors() 			//to add connector sprites for neardy staying Suit Storage Units
+	ssu_right?.add_connectors()
+
+/obj/machinery/suit_storage_unit/proc/add_connectors()
+	var/list/connectors_overlays = list()
+	var/mutable_appearance/I
+	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
+	if(ssu_left)
+		I = mutable_appearance(icon_state = "left_connect")
+		if(overlay_color)
+			I.color = overlay_color
+		connectors_overlays += I
+
+	ssu_right = locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST)
+	if(ssu_right)
+		I = mutable_appearance(icon_state = "right_connect")
+		if(overlay_color)
+			I.color = overlay_color
+		connectors_overlays += I
+
+	add_overlay(connectors_overlays)
 
 /obj/machinery/suit_storage_unit/update_icon()
 	cut_overlays()
-	if(locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST))
-		var/image/connector_color = image('icons/obj/suitstorage.dmi',icon_state = "left_connect")
-		if(overlay_color)
-			connector_color.color = overlay_color
-		add_overlay(connector_color)
-	if(locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST))
-		var/image/connector_color = image('icons/obj/suitstorage.dmi',icon_state = "right_connect")
-		if(overlay_color)
-			connector_color.color = overlay_color
-		add_overlay(connector_color)
-
+	var/list/suit_storage_overlays = list()
+	var/mutable_appearance/I
+	add_connectors(suit_storage_overlays)
 	if(!ishardsuit(SUIT))
 		if(SUIT)
-			add_overlay("suit")
+			I = mutable_appearance(icon_state = "suit")
+			suit_storage_overlays += I
 		if(HELMET)
-			add_overlay("helmet")
+			I = mutable_appearance(icon_state = "helmet")
+			suit_storage_overlays += I
 		if(BOOTS)
-			add_overlay("boots")
+			I = mutable_appearance(icon_state = "boots")
+			suit_storage_overlays += I
 	else
 		var/obj/item/clothing/suit/space/rig/RIG_SUIT = SUIT
 		if(RIG_SUIT?.helmet)
-			add_overlay("suit&helmet")
+			I = mutable_appearance(icon_state = "suit&helmet")
+			suit_storage_overlays += I
 		else
 			if(SUIT)
-				add_overlay("suit")
+				I = mutable_appearance(icon_state = "suit")
+				suit_storage_overlays += I
 			if(HELMET)
-				add_overlay("helmet")
+				I = mutable_appearance(icon_state = "helmet")
+				suit_storage_overlays += I
 		if(RIG_SUIT?.boots)
-			add_overlay("boots")
+			I = mutable_appearance(icon_state = "boots")
+			suit_storage_overlays += I
 		else if(BOOTS)
-			add_overlay("boots")
+			I = mutable_appearance(icon_state = "boots")
+			suit_storage_overlays += I
 
-	var/image/door_I = image('icons/obj/suitstorage.dmi',icon_state = "[opened ? "door_open" : "door_closed"]")
-	var/image/unit_color = image('icons/obj/suitstorage.dmi',icon_state = "[broken ? "suitholder_broken_color" : "suitholder_color"]")
+	var/mutable_appearance/door_I = mutable_appearance(icon_state = "[opened ? "door_open" : "door_closed"]")
+	var/mutable_appearance/unit_color = mutable_appearance(icon_state = "[broken ? "suitholder_broken_color" : "suitholder_color"]")
 	if(overlay_color)
 		door_I.color = overlay_color
 		unit_color.color = overlay_color
-		add_overlay(unit_color)
+		suit_storage_overlays += unit_color
 	if(!opened && !broken)
-		add_overlay(door_I)
+		suit_storage_overlays += door_I
 		if(locked && !emagged && !UV)
-			add_overlay("lock_closed")
+			I = mutable_appearance(icon_state = "lock_closed")
+			suit_storage_overlays += I
 		else
-			add_overlay("lock_open")
+			I = mutable_appearance(icon_state = "lock_open")
+			suit_storage_overlays += I
 	else
-		add_overlay(door_I)
+		suit_storage_overlays += door_I
+
 	if(broken)
 		icon_state = "suitholder_broken"
-
 	if(UV && !superUV)
-		add_overlay(door_I)
-		add_overlay("lock_closed")
-		add_overlay("termalclean")
+		suit_storage_overlays += door_I
+		I = mutable_appearance(icon_state = "lock_closed")
+		suit_storage_overlays += I
+		I = mutable_appearance(icon_state = "termalclean")
+		suit_storage_overlays += I
+		add_overlay(suit_storage_overlays)
 		return
 	else if(UV && superUV)
-		add_overlay(door_I)
-		add_overlay("lock_closed")
-		add_overlay("termalclean_emag")
+		suit_storage_overlays += door_I
+		I = mutable_appearance(icon_state = "lock_closed")
+		suit_storage_overlays += I
+		I = mutable_appearance(icon_state = "termalclean_emag")
+		suit_storage_overlays += I
+		add_overlay(suit_storage_overlays)
 		return
 	if(panel_open)
-		add_overlay("panel_open")
+		I = mutable_appearance(icon_state = "panel_open")
+		suit_storage_overlays += I
+
+	add_overlay(suit_storage_overlays)
+
 
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
