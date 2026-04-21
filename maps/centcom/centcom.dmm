@@ -13338,15 +13338,19 @@
 	},
 /area/centcom/specops)
 "aEJ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box{
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/box{
-	pixel_y = -8
-	},
+/obj/structure/rack,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
 /turf/unsimulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "aEK" = (

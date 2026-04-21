@@ -12,6 +12,8 @@
 		msg += "It is [bicon(src.handcuffed)] handcuffed!\n"
 	if (src.wear_mask)
 		msg += "It has [bicon(src.wear_mask)] \a [src.wear_mask] on its head.\n"
+	if (src.neck)
+		msg += "It has [bicon(src.neck)] \a [src.neck] on its neck.\n"
 	if (src.l_hand)
 		msg += "It has [bicon(src.l_hand)] \a [src.l_hand] in its left hand.\n"
 	if (src.r_hand)

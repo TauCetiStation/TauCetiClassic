@@ -660,6 +660,7 @@
 		if(!(HULK in L.mutations))
 			L.Stuttering(stun_modifier)
 			L.Weaken(stun_modifier)
+			L.apply_status_effect(/datum/status_effect/cursed_talk, stun_modifier SECONDS)
 			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
 	return TRUE
 

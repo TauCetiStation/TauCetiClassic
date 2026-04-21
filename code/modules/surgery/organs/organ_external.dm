@@ -408,10 +408,10 @@
 /obj/item/organ/external/emp_act(severity)
 	controller.emp_act(severity)
 
-/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
+/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null, protection)
 	if(!isnum(burn))
 		return // prevent basic take_damage usage (TODO remove workaround)
-	return controller.take_damage(brute, burn, damage_flags, used_weapon, impact_direction = impact_direction)
+	return controller.take_damage(brute, burn, damage_flags, used_weapon, impact_direction = impact_direction,  protection = protection)
 
 /obj/item/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
 	return controller.heal_damage(brute, burn, internal, robo_repair)
@@ -1449,7 +1449,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
-/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null)
+
+/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null, protection = 0)
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
