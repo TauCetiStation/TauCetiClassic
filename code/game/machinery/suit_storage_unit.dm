@@ -714,13 +714,11 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 //Other
 /obj/machinery/suit_storage_unit/globose
+	name = "Civil Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/globose
 	helmet_type = /obj/item/clothing/head/helmet/space/globose
 	mask_type = /obj/item/clothing/mask/breath
-	tank_type = /obj/item/weapon/tank/oxygen
 	boot_type = /obj/item/clothing/shoes/magboots
-
-/obj/machinery/suit_storage_unit/globose/civil
 	tank_type = /obj/item/weapon/tank/jetpack/carbondioxide
 	overlay_color = COLOR_SILVER
 
