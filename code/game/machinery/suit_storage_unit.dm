@@ -169,6 +169,13 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	add_overlay(suit_storage_overlays)
 
 
+/obj/machinery/suit_storage_unit/Destroy()
+	. = ..()
+	ssu_left?.update_icon()
+	ssu_left = null
+	ssu_right?.update_icon()
+	ssu_right = null
+
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
