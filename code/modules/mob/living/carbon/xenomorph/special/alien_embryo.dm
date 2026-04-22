@@ -63,7 +63,7 @@ This is emryo growth procs
 	var/next_growth_limit = MAX_EMBRYO_GROWTH
 	COOLDOWN_DECLARE(next_kick)
 	var/bite_count = 0
-	var/atom/movable/screen/cooldown_overlay/kick_cd_overlay
+	var/datum/action/embryo_kick/kick_action
 
 /obj/item/alien_embryo/atom_init()
 	..()
@@ -81,6 +81,7 @@ This is emryo growth procs
 	detach_from_host()
 	if(baby)
 		baby.clear_alert("alien_embryo")
+	QDEL_NULL(kick_action)
 	baby = null
 	return ..()
 
@@ -235,15 +236,6 @@ This is emryo growth procs
 	next_growth_limit -= MAX_EMBRYO_GROWTH
 	START_PROCESSING(SSobj, src)
 
-// Sets up cooldown and refreshes the kick HUD overlay. duration is in seconds (e.g. 15 or 6).
-/obj/item/alien_embryo/proc/apply_kick_cooldown(duration)
-	COOLDOWN_START(src, next_kick, duration SECONDS)
-	var/obj/item/weapon/embryo_kick/K = locate() in baby
-	if(K)
-		QDEL_NULL(kick_cd_overlay)
-		kick_cd_overlay = new(K.hud, K.hud)
-		kick_cd_overlay.start_cooldown(duration)
-
 /obj/item/alien_embryo/proc/kick()
 	if(!affected_mob)
 		return
@@ -258,25 +250,25 @@ This is emryo growth procs
 		to_chat(baby, "<span class='warning'>You need to rest before kicking again.</span>")
 		return
 	if(stage < 5)
-		apply_kick_cooldown(15)
+		COOLDOWN_START(src, next_kick, 1.5 SECONDS)
 		affected_mob.on_larva_kick(stage)
 		to_chat(baby, "<span class='notice'>You kick your host from the inside.</span>")
 		return
-	apply_kick_cooldown(6)
+	COOLDOWN_START(src, next_kick, 0.6 SECONDS)
 	bite_count++
 	affected_mob.on_larva_bite(bite_count)
 	affected_mob.updatehealth()
 	to_chat(baby, "<span class='warning'>You tear at your host's insides!</span>")
+
 	var/chest_broken = FALSE
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
 		var/obj/item/organ/external/chest = H.bodyparts_by_name[BP_CHEST]
 		if(chest && (chest.status & ORGAN_BROKEN))
 			chest_broken = TRUE
+
 	if(chest_broken || affected_mob.stat == DEAD || affected_mob.health <= 0 || bite_count >= 6)
-		var/turf/T = get_turf(affected_mob)
-		var/atom/movable/mob_container = baby
-		mob_container.forceMove(T)
+		baby.forceMove(get_turf(affected_mob))
 		baby.reset_view()
 		if(bite_count >= 5)
 			affected_mob.visible_message("<span class='userdanger'>[affected_mob]'s body bulges grotesquely before exploding!</span>")
@@ -284,51 +276,20 @@ This is emryo growth procs
 			affected_mob.gib()
 		else
 			affected_mob.on_larva_erupt(baby)
-		var/obj/item/weapon/embryo_kick/K = locate() in baby
-		if(K)
-			K.flags &= ~(DROPDEL | NODROP)
-			qdel(K)
 		qdel(src)
 
-/obj/item/weapon/embryo_kick
-	name = "embryo_kick"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL | NODROP
-	var/atom/movable/screen/embryo_kick/hud = null
+/datum/action/embryo_kick
+	name = "Kick Host"
+	action_type = AB_ITEM
+	button_icon = 'icons/hud/screen1_xeno.dmi'
+	button_icon_state = "chest_burst"
+	check_flags = 0
 	var/datum/weakref/embryo_ref = null
-	layer = 21
-	item_state = "nothing"
-	w_class = SIZE_BIG
 
-/obj/item/weapon/embryo_kick/atom_init(mapload, obj/item/alien_embryo/E)
-	. = ..()
+/datum/action/embryo_kick/New(obj/item/alien_embryo/E)
 	embryo_ref = WEAKREF(E)
-	hud = new /atom/movable/screen/embryo_kick(src)
-	hud.icon = 'icons/hud/screen1_xeno.dmi'
-	hud.icon_state = "chest_burst"
-	hud.name = "Kick Host"
-	hud.master = src
-	hud.screen_loc = ui_rhand
+	..()
 
-/obj/item/weapon/embryo_kick/attack_self(mob/user)
+/datum/action/embryo_kick/Activate()
 	var/obj/item/alien_embryo/embryo = embryo_ref?.resolve()
 	embryo?.kick()
-
-
-/obj/item/weapon/embryo_kick/process()
-	var/obj/item/alien_embryo/embryo = embryo_ref?.resolve()
-	if(!embryo || !embryo.baby)
-		qdel(src)
-		return
-	if(embryo.baby.client)
-		embryo.baby.client.screen -= hud
-		embryo.baby.client.screen += hud
-
-/atom/movable/screen/embryo_kick
-	name = "Kick Host"
-
-/atom/movable/screen/embryo_kick/Click()
-	if(master)
-		var/obj/item/weapon/embryo_kick/K = master
-		var/obj/item/alien_embryo/embryo = K.embryo_ref?.resolve()
-		embryo?.kick()
-	return TRUE

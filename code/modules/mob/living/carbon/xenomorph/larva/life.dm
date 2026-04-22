@@ -7,8 +7,6 @@
 
 
 
-	var/obj/item/weapon/embryo_kick/EK = locate() in src
-	EK?.process()
 	if(istype(loc, /obj/item/alien_embryo))
 		larva_in_embryo = TRUE
 
