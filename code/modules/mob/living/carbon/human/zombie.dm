@@ -18,8 +18,10 @@
 
 	attack_verb = list("bitten and scratched", "scratched")
 
-/obj/item/weapon/melee/zombie_hand/right
-	icon_state = "bloodhand_right"
+/obj/item/weapon/melee/zombie_hand/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_R_HAND)
+		icon_state = "bloodhand_right"
 
 /obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -133,8 +135,8 @@
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	if(organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
-		var/free_body = TRUE
 		if(!key && mind)
+			var/free_body = TRUE
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == mind && ghost.can_reenter_corpse)
 					free_body = FALSE
@@ -143,8 +145,8 @@
 						ghost.reenter_corpse()
 					else
 						create_spawner(/datum/spawner/living/zombie, src)
-		if(free_body)
-			create_spawner(/datum/spawner/living/zombie, src)
+			if(free_body)
+				create_spawner(/datum/spawner/living/zombie, src)
 
 		visible_message("<span class='danger'>[src]'s body starts to move!</span>")
 		addtimer(CALLBACK(src, PROC_REF(revive_zombie)), 40)

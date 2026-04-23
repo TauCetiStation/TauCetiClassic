@@ -36,8 +36,7 @@
 		H.drop_l_hand()
 		H.drop_r_hand()
 
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+		H.AddComponent(/datum/component/mutant_hands)
 
 		var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
 		if(O)
@@ -60,12 +59,7 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
-
-		if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
-			qdel(H.l_hand)
-
-		if(istype(H.r_hand, /obj/item/weapon/melee/zombie_hand))
-			qdel(H.r_hand)
+		qdel(H.GetComponent(/datum/component/mutant_hands))
 
 		var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
 		if(O)
