@@ -114,6 +114,10 @@
 		src.eject_wait = FALSE
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
+	// todo: add "naked" human new argument?
+	H.underwear = 0
+	H.undershirt = 0
+	H.socks = 0
 	occupant = H
 
 	if(!R.dna.real_name) //to prevent null names
