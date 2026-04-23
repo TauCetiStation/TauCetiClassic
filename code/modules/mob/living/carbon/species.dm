@@ -439,7 +439,7 @@
 	,IS_SOCIAL = TRUE
 	)
 
-	has_organ = list(
+	has_bodypart = list(
 		 BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
 		,BP_HEAD   = /obj/item/organ/external/head
