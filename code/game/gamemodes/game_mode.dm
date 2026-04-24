@@ -273,7 +273,7 @@ var/global/list/datum/faction/preinit_factions
 	for(var/datum/role/R in orphaned_roles)
 		if (R.check_win())
 			return TRUE
-	if(SSticker.station_was_nuked || SSshuttle.location == SHUTTLE_AT_CENTCOM)
+	if(SSticker.roundstart_blob_dead || SSticker.station_was_nuked || SSshuttle.location == SHUTTLE_AT_CENTCOM)
 		return TRUE
 	return FALSE
 

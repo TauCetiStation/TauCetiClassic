@@ -148,6 +148,10 @@
 				aiPlayer.set_zeroth_law("")
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
+			var/datum/game_mode/gamemode = SSticker.mode
+			if(istype(gamemode, /datum/game_mode/blob))
+				SSticker.roundstart_blob_dead = TRUE
+				gamemode.check_finished()
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""
