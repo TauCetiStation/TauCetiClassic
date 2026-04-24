@@ -39,7 +39,6 @@ SUBSYSTEM_DEF(ticker)
 	var/datum/map_template/post_round_arena/arena = null
 	var/list/medal_list = list()
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
-	var/roundstart_blob_dead = FALSE
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
