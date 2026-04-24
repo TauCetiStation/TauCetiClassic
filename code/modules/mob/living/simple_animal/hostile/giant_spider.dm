@@ -239,7 +239,7 @@
 		return
 	if(!COOLDOWN_FINISHED(src, ready2evolve))
 		var/timeleft = round(COOLDOWN_TIMELEFT(src, ready2evolve) * 0.1)
-		to_chat(owner, "<span class='notice'>Нам нужно пережить еще [timeleft] [pluralize_russian(timeleft, "секунду", "секунды", "секунд")], что бы эволюционировать.</span>")
+		to_chat(owner, "<span class='notice'>Нам нужно пережить еще [timeleft] [PLUR_SECONDS_IN(timeleft)], что бы эволюционировать.</span>")
 		return
 	var/mob/living/L = owner
 	if(L.health < L.maxHealth)
@@ -262,17 +262,18 @@
 			choice = /mob/living/simple_animal/hostile/giant_spider/midwife
 	if(!choice)
 		return
-	owner.visible_message("<span class='notice'>\the [src] begins to twist and shed it's chitin!</span>")
+	owner.visible_message("<span class='notice'>\the [owner] begins to twist and shed it's chitin!</span>")
 	if(!do_after(owner, 5 SECONDS, FALSE, owner))
 		return
 	if(!owner.client)
 		return
 	var/mob/living/simple_animal/hostile/giant_spider/old_s = owner
-	var/mob/living/simple_animal/hostile/giant_spider/S = new choice (get_turf(owner), old_s?.adaptations, old_s?.inhereted)
+	var/mob/living/simple_animal/hostile/giant_spider/S = new choice (get_turf(owner), old_s?.adaptations)
 
 	S.mind = old_s.mind
 	old_s.mind.set_current(S)
 	S.key = old_s.key
+	S.fed = old_s.fed
 
 	qdel(old_s)
 	var/obj/structure/spider/cocoon/C = new(owner.loc)

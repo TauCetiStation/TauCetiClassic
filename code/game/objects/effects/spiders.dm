@@ -295,9 +295,12 @@
 		if(amount_grown >= 100)
 			grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc, adaptations)
-			if(sentient || prob(5))
+			if(sentient)
 				create_spawner(/datum/spawner/living/spider, S)
-				//S.AddComponent(/datum/component/logout_spawner, /datum/spawner/living/spider) //Cause we add it after init
+				S.inhereted += 1
+			else if(prob(15))
+				create_spawner(/datum/spawner/living/spider, S)
+				S.inhereted += 3
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains
