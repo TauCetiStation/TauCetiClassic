@@ -392,7 +392,14 @@
 	name = "Spider Toxin"
 	id = "spidertoxin"
 	description = "An effective toxin used to hunt organics."
-	toxpwr = 0.75
+	toxpwr = 1
+	reagent_state = LIQUID
+	color = "#e895cc" // rgb: 232, 149, 204
+	overdose = REAGENTS_OVERDOSE
+	flags = list(IS_ORGANIC = TRUE)
+
+/datum/reagent/toxin/spider/on_diona_digest(mob/living/M)
+	return FALSE
 
 /datum/reagent/toxin/spider/strong
 	name = "Spider Toxin"
