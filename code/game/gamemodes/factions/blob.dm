@@ -146,8 +146,7 @@
 				aiPlayer.set_zeroth_law("")
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
-			var/datum/game_mode/gamemode = SSticker.mode
-			if(istype(gamemode, /datum/game_mode/blob))
+			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/announcement/centcomm/blob/biohazard_station_unlock_alt/announcement = new
 				announcement.play()
 				SSshuttle.incall(0.5)
