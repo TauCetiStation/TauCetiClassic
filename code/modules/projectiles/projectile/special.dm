@@ -223,6 +223,9 @@
 	damage_type = TOX
 	flag = BULLET
 
+/obj/item/projectile/acid_special_spider/poisonous
+	damage = 20
+
 /obj/item/projectile/acid_special_spider/poisonous/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	if(issilicon(target))
@@ -241,11 +244,11 @@
 			var/mob/living/simple_animal/hostile/giant_spider/S = firer
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				L.reagents.add_reagent(S.poison_type, S.poison_per_bite * 0.5 * max(0.01 * 100 - (H.run_armor_check(def_zone, BIO)), 0.15))
+				L.reagents.add_reagent(S.poison_type, S.poison_per_bite * 0.7 * max(0.01 * 100 - (H.run_armor_check(def_zone, BIO)), 0.1))
 				if(H.species.flags[IS_SYNTHETIC]) //No damage from poison, so we take damage twice instead
 					H.apply_damage(damage, damage_type, def_zone, H.run_armor_check(def_zone, flag) * armor_multiplier, damage_flags(), src)
 			else //Non-human target - no armor
-				L.reagents.add_reagent(S.poison_type, S.poison_per_bite * 0.5)
+				L.reagents.add_reagent(S.poison_type, S.poison_per_bite * 0.7)
 			return
 		L.reagents.add_reagent("stoxin", 5)
 

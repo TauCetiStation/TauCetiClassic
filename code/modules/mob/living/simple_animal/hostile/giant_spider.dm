@@ -365,8 +365,8 @@
 			to_chat(S, "<span class='notice'>Наша живучесть увеличилась до [S.maxHealth]!</span>")
 
 		if("Количество яда")
-			S.poison_per_bite = max(S.poison_per_bite + 5, 30)
-			if(S.poison_per_bite >= 30)
+			S.poison_per_bite = max(S.poison_per_bite + 5, 20)
+			if(S.poison_per_bite >= 20)
 				options -= "Количество яда"
 			to_chat(S, "<span class='notice'>Теперь мы впрыскиваем по [S.poison_per_bite] за укус!</span>")
 
