@@ -423,13 +423,6 @@ var/global/list/zombie_list = list()
 		var/mob/living/carbon/human/H = M
 		H.infect_zombie_virus(null, TRUE, TRUE)
 
-/obj/item/weapon/reagent_containers/hypospray/combat/zombie
-	name = "biowarfare hypospray"
-	desc = "A modified air-needle autoinjector, used by operatives to quickly make warcrimes in the field. This one is left unlabelled."
-	volume = 15
-	list_reagents = list("romerol" = 15)
-	amount_per_transfer_from_this = 5
-
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol
 	name = "Z-virus"
 	desc = "Makes warcrimes"
