@@ -169,7 +169,7 @@
 /obj/structure/spider/eggcluster/process()
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
-		var/num = sentient ? 6 : rand(6,24)
+		var/num = sentient ? 3 : rand(6,24)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new (loc, sentient)
 			S.adaptations = adaptations
@@ -297,7 +297,6 @@
 			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(loc, adaptations)
 			if(sentient)
 				create_spawner(/datum/spawner/living/spider, S)
-				S.inhereted += 1
 			else if(prob(15))
 				create_spawner(/datum/spawner/living/spider, S)
 				S.inhereted += 3

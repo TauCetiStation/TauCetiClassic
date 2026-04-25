@@ -388,13 +388,13 @@
 /datum/reagent/toxin/stoxin/on_diona_digest(mob/living/M)
 	return FALSE
 
-/datum/reagent/toxin/stoxin/spider
+/datum/reagent/toxin/spider
 	name = "Spider Toxin"
 	id = "spidertoxin"
 	description = "An effective toxin used to hunt organics."
 	toxpwr = 0.75
 
-/datum/reagent/toxin/stoxin/spider/strong
+/datum/reagent/toxin/spider/strong
 	name = "Spider Toxin"
 	id = "sspidertoxin"
 	description = "A very effective toxin used to hunt organics."
