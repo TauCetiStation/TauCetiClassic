@@ -16,7 +16,7 @@
 	if(last_check > world.time)
 		return FALSE
 	last_check = world.time + 30 SECONDS
-	if(round(length(members) / check_crew() >= 0.8))
+	if(round(length(members) / check_crew()) >= 0.8)
 		SSshuttle.incall(0.5)
 		SSshuttle.announce_emer_called.message = "Карантин прорван, дальнейшая локализация угрозы не представляется возможной. Выжившему персоналу предписано прибыть на эвакуацию и удерживать оборону. Эвакуационный шаттл прибудет через несколько минут."
 		SSshuttle.announce_emer_called.play()
