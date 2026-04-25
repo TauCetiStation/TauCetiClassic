@@ -124,7 +124,7 @@
 /mob/living/carbon/human/proc/handle_infected_death() //Death of human
 	if(!can_zombified())
 		return
-	preprerevive_zombie(300)
+	preprerevive_zombie(600)
 
 /mob/living/carbon/human/proc/preprerevive_zombie(delay)
 	addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), delay)
