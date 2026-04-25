@@ -645,7 +645,7 @@
 			On death, these nodules take control of the dead body, causing limited revivification, \
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/romerol
-	cost = 50
+	cost = 80
 	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
 // STEALTHY TOOLS
