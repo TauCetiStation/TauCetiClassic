@@ -26,9 +26,6 @@
 	maxHealth = 200
 	health = 200
 	melee_damage = 18
-	heat_damage_per_tick = 20
-	cold_damage_per_tick = 20
-	unsuitable_atoms_damage = 2
 	faction = "spiders"
 	pass_flags = PASSTABLE
 	move_to_delay = 6
@@ -37,6 +34,13 @@
 	weather_immunities = list("ash", "acid")
 	projectilesound = 'sound/weapons/pierce.ogg'
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	unsuitable_atoms_damage = 2
+	heat_damage_per_tick = 20
+	cold_damage_per_tick = 20
+
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -81,7 +85,7 @@
 		E = new V (src)
 		E.Grant(src)
 
-	unsuitable_atoms_damage = maxHealth * 0.03
+	unsuitable_atoms_damage = maxHealth * 0.05
 	normal_speed = speed
 
 	AddElement(/datum/element/prevent_attacking_of_types, global.typecache_general_bad_attack_targets, "This tastes awful!")
@@ -359,7 +363,7 @@
 
 		if("Живучесть")
 			S.maxHealth = min(S.maxHealth + 40, 350)
-			S.unsuitable_atoms_damage = S.maxHealth * 0.03
+			S.unsuitable_atoms_damage = S.maxHealth * 0.05
 			if(S.maxHealth >= 350)
 				options -= "Живучесть"
 			to_chat(S, "<span class='notice'>Наша живучесть увеличилась до [S.maxHealth]!</span>")
@@ -687,9 +691,9 @@
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
 	icon_move = null
-	maxHealth = 220
+	maxHealth = 160
 	health = 220
-	melee_damage = 25
+	melee_damage = 20
 	poison_per_bite = 5
 	speed = 3
 	web_mult = 0.7
@@ -705,7 +709,7 @@
 	icon_living = "viper"
 	icon_dead = "viper_dead"
 	icon_move = null
-	maxHealth = 130
+	maxHealth = 100
 	health = 130
 	melee_damage = 15
 	speed = 2
@@ -728,8 +732,8 @@
 	icon_dead = "midwife_dead"
 	icon_move = null
 	poison_type = "spidertoxin"
-	maxHealth = 170
-	health = 170
+	maxHealth = 120
+	health = 120
 	melee_damage = 15
 	speed = 0.5
 	web_mult = 1.2
