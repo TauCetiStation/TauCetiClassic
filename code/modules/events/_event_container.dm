@@ -228,6 +228,7 @@ var/global/list/severity_to_string = list("RoundStart", "Mundane", "Moderate", "
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Grid Check",              /datum/event/grid_check,                0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Pyro Anomaly",            /datum/event/anomaly/anomaly_pyro,      75,    list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Vortex Anomaly",          /datum/event/anomaly/anomaly_vortex,    75,    list(ASSIGNMENT_ENGINEER = 25)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Bluespace Anomaly",       /datum/event/anomaly/anomaly_bluespace, 75,    list(ASSIGNMENT_ENGINEER = 25)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Viral Infection",         /datum/event/viral_infection,           0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Wormholes",               /datum/event/wormholes,                 50,    list(ASSIGNMENT_MEDICAL = 50),  ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Sandstorm",               /datum/event/sandstorm,                 0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
