@@ -139,8 +139,13 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	if(href_list["track"])
 		var/atom/target = locate(href_list["track"])
-		if(target != src)
-			ManualFollow(target)
+		if(target && target != src)
+			if(ismovable(target))
+				ManualFollow(target)
+			else
+				var/turf/target_turf = get_turf(target)
+				if(target_turf && isturf(target_turf))
+					abstract_move(target_turf)
 			return
 
 	if(href_list["x"] && href_list["y"] && href_list["z"])

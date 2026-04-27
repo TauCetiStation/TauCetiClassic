@@ -549,8 +549,13 @@
 	var/atom/target = null
 	var/action = NOTIFY_JUMP
 
-/atom/movable/screen/alert/notify_action/Click()
-	. = ..()
+/atom/movable/screen/alert/notify_action/Click(location, control, params)
+	if(!usr || !usr.client)
+		return
+	var/paramslist = params2list(params)
+	if(paramslist[SHIFT_CLICK])
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		return
 	if(!target)
 		return
 	var/mob/dead/observer/ghost_owner = mob_viewer
@@ -564,7 +569,12 @@
 			if(target_turf && isturf(target_turf))
 				ghost_owner.abstract_move(target_turf)
 		if(NOTIFY_ORBIT)
-			ghost_owner.ManualFollow(target)
+			if(ismovable(target))
+				ghost_owner.ManualFollow(target)
+			else
+				var/turf/target_turf = get_turf(target)
+				if(target_turf && isturf(target_turf))
+					ghost_owner.abstract_move(target_turf)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
