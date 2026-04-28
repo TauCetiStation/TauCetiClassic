@@ -143,9 +143,10 @@
 					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"), 10 SECONDS)
 					if(answer == "Yes")
 						ghost.reenter_corpse()
-					else
+					else if(!client)
 						create_spawner(/datum/spawner/living/zombie, src)
-			if(free_body)
+					break
+			if(free_body && !client)
 				create_spawner(/datum/spawner/living/zombie, src)
 
 		visible_message("<span class='danger'>[src]'s body starts to move!</span>")
