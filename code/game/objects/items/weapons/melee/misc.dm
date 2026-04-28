@@ -40,11 +40,14 @@
 		to_chat(target, "<span class='userdanger'>COVER BLOWN!!! THEY KNOW ABOUT US!!!</span>")
 		qdel(src)
 		return
-	if(!isimplantedobedience(H))
+	var/obj/item/weapon/implant/obedience/obed_implant = isimplantedobedience(H)
+	if(!obed_implant || !COOLDOWN_FINISHED(obed_implant, shock_cooldown))
+		to_chat(user, "Nothing has happened. Maybe you need to wait for the implant to recharge?")
 		return
+	COOLDOWN_START(obed_implant, shock_cooldown, 1.5 SECOND)
 	H.Stun(5)
 	H.apply_effect(5, WEAKEN)
-	H.apply_effect(20, AGONY)
+	H.apply_effect(10, AGONY)
 	to_chat(H, "<span class='danger'You feel something beep inside of you and a wave of electricity pierces your body!</span>")
 	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 	sparks.set_up(3, 0, get_turf(H))

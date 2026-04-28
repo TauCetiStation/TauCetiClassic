@@ -154,7 +154,7 @@
 	desc = "Делает ваше стадо послушным."
 	hud_id = IMPOBED_HUD
 	hud_icon_state = "hud_imp_obedience"
-
+	COOLDOWN_DECLARE(shock_cooldown)
 	implant_data = {"
 <b>Характеристики импланта:</b><BR>
 <b>Наименование:</b> Внушитель послушания сотрудника типа \"Гарант прибыли\" NanoTrasen<BR>
