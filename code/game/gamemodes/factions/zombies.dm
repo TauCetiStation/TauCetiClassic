@@ -18,7 +18,7 @@
 	last_check = world.time + 1 MINUTE
 	if(round(length(members) / check_crew()) >= 0.8)
 		if(SSshuttle.location || SSshuttle.direction) //If traveling or docked somewhere other than idle at command, don't call.
-			return
+			return FALSE
 		SSshuttle.incall(0.5)
 		SSshuttle.announce_emer_called.message = "Карантин прорван, дальнейшая локализация угрозы не представляется возможной. Выжившему персоналу предписано прибыть на эвакуацию и удерживать оборону. Эвакуационный шаттл прибудет через несколько минут."
 		SSshuttle.announce_emer_called.play()
