@@ -44,7 +44,7 @@
 	if(!obed_implant || !COOLDOWN_FINISHED(obed_implant, shock_cooldown))
 		to_chat(user, "Nothing has happened. Maybe you need to wait for the implant to recharge?")
 		return
-	COOLDOWN_START(obed_implant, shock_cooldown, 1.5 SECOND)
+	COOLDOWN_START(obed_implant, shock_cooldown, 6 SECOND)
 	H.Stun(5)
 	H.apply_effect(5, WEAKEN)
 	H.apply_effect(10, AGONY)
