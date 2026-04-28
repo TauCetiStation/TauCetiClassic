@@ -15,7 +15,7 @@
 /datum/faction/zombie/check_win()
 	if(last_check > world.time)
 		return FALSE
-	last_check = world.time + 30 SECONDS
+	last_check = world.time + 1 MINUTE
 	if(round(length(members) / check_crew()) >= 0.8)
 		if(SSshuttle.location || SSshuttle.direction) //If traveling or docked somewhere other than idle at command, don't call.
 			return
