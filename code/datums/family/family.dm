@@ -2,6 +2,14 @@
 
 /datum/family
 	var/desc = ""
+	var/list/restricted_species = list(DIONA, VOX, IPC, PODMAN)
+
+/datum/family/proc/is_species_permited(mob/living/carbon/human/H)
+	for(var/flag in restricted_species)
+		if(H.get_species() == flag)
+			to_chat(H, "<span class='warning'>Вы не можете быть членом семьи!</span>")
+			return FALSE
+	return TRUE
 
 /datum/family/proc/check_family_members(mob/living/carbon/human/target)
 	var/couter = 0
