@@ -57,7 +57,7 @@
 			pda.ownjob = wear_id.assignment
 			pda.assign(new_name)
 	to_chat(H, "<span class='warning'>Теперь Вы член семьи [surename]!</span>")
-	to_chat(target, "<span class='warning'>Теперь [H.real_name] член Вашей семьи!</span>")
+	to_chat(target, "<span class='warning'>Теперь [H.real_name] член вашей семьи!</span>")
 	global.family += H
 	if(!global.family.Find(target))
 		global.family += (target)
