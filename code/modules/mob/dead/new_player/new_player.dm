@@ -130,7 +130,7 @@
 			var/datum/preferences/P = client.prefs
 			if(tgui_alert(
 				src,
-				"Вы уверены, что хотите присоединится к семье?",
+				"Вы уверены, что хотите присоединиться к семье?",
 				"Семья",
 				list("ДА!!!", "Нет")) == "ДА!!!")
 				P.family_status = TRUE
