@@ -27,7 +27,3 @@
 		return
 
 	create_spawners(/datum/spawner/alien_event, spawncount)
-
-	var/obj/vent = pick(vents)
-	var/mutable_appearance/xeno_overlay = mutable_appearance('icons/obj/cardboard_cutout.dmi', "cutout_fukken_xeno")
-	notify_ghosts("Alien infestation! Доступна роль в спавнер-меню.", source = vent, alert_overlay = xeno_overlay, action = NOTIFY_JUMP, header = "Alien Infestation")
