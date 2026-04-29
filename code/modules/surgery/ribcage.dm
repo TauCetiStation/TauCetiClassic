@@ -220,9 +220,7 @@
 				has_treatable = TRUE
 	if(has_treatable)
 		return TRUE
-	if(dead_organs.len)
-		for(var/obj/item/organ/internal/IO as anything in dead_organs)
-			to_chat(user, "<span class='warning'>[target]'s [IO.name] has necrosed and can't be treated this way.</span>")
+	warn_necrotic_organs(user, target, dead_organs)
 	return FALSE
 
 
@@ -236,10 +234,11 @@
 		else
 			tool_name = "the bandaid"
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
+	var/list/dead_organs = list()
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
-				to_chat(user, "<span class='warning'>[target]'s [IO.name] has necrosed and can't be treated this way.</span>")
+				dead_organs += IO
 				continue
 			if(!IO.is_robotic())
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].", \
@@ -247,6 +246,7 @@
 			else
 				user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>", \
 				"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
+	warn_necrotic_organs(user, target, dead_organs)
 
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
