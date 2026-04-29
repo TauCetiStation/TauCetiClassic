@@ -68,6 +68,8 @@
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
+	global.family -= src
+
 	if(my_master)
 		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
 		golem_hud.remove_from_hud(src)
