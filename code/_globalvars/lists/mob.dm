@@ -20,6 +20,8 @@ var/global/list/joined_player_list = list()		//List of all clients that have joi
 
 var/global/list/mob_list = list()				//List of all mobs, including clientless
 var/global/list/new_player_list = list()
+var/global/list/family = list()
+var/global/list/people_who_want_find_family = list()
 var/global/list/observer_list = list()
 var/global/list/living_list = list()
 var/global/list/carbon_list = list()

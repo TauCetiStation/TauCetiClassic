@@ -152,6 +152,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	// Quality selected.
 	var/selected_quality_name
 	var/selecting_quality = FALSE
+	//check for take family
+	var/family_status = FALSE
 
 	// Quirk list
 	var/list/positive_quirks = list()

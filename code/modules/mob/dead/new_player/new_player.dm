@@ -116,6 +116,26 @@
 			ready = !ready
 			client << output(ready, "lobbybrowser:setReadyStatus")
 		return
+	if(href_list["lobby_be_family"])
+		if(config.alt_lobby_menu)
+			return
+		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
+			return
+		if(client.prefs.family_status)
+			to_chat(src, "<span class='warning'>Вы больше не хотите присоединится к семье.</span>")
+			client.prefs.family_status = FALSE
+			client << output(FALSE, "lobbybrowser:has_family")
+			return
+		if(!client.prefs.family_status)
+			var/datum/preferences/P = client.prefs
+			if(tgui_alert(
+				src,
+				"Вы уверены, что хотите присоединится к семье?",
+				"Семья",
+				list("ДА!!!", "Нет")) == "ДА!!!")
+				P.family_status = TRUE
+				client << output(TRUE, "lobbybrowser:has_family")
+		return
 
 	if(href_list["lobby_be_special"])
 		if(config.alt_lobby_menu)
@@ -257,14 +277,16 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-
-
+	var/datum/family/F = character.family
 	SSjob.EquipRank(character, rank, TRUE)					//equips the human
 
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
 		character.PutDisabilityMarks()
+		if(client.prefs.family_status && !(isloyal(character) || isanyantag(character)))
+			global.people_who_want_find_family += character
+			F.add_family(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")

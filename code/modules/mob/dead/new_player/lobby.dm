@@ -16,6 +16,9 @@ var/global/lobby_screen = "lobby"
 #define QUALITY_READY     "BE&#8239;SPECIAL&#8239;[CHECK_BOX]"
 #define QUALITY_NOT_READY "BE&#8239;SPECIAL&#8239;[CROSS_BOX]"
 
+#define FAMILY_READY "FIND&#8239;FAMILY&#8239;[CHECK_BOX]"
+#define FAMILY_NOT_READY "FIND&#8239;FAMILY&#8239;[CROSS_BOX]"
+
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
 	<html>
@@ -133,7 +136,8 @@ var/global/lobby_screen = "lobby"
 
 			var/has_quality = client.prefs.selected_quality_name
 			dat += {"<a id="quality" class="menu_a" href='byond://?src=\ref[src];lobby_be_special=1'>[has_quality ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
-
+			var/has_family = client.prefs.family_status
+			dat += {"<a id="family" class="menu_a" href='byond://?src=\ref[src];lobby_be_family=1'>[has_family ? FAMILY_READY : FAMILY_NOT_READY]</a>"}
 		dat += {"<a class="menu_a" href='byond://?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 		dat += "<br><br>"
 
@@ -167,6 +171,10 @@ var/global/lobby_screen = "lobby"
 		var quality_mark=document.getElementById("quality");
 		function set_quality(setQuality) {
 			quality_mark.innerHTML = Boolean(Number(setQuality)) ? "[QUALITY_READY]" : "[QUALITY_NOT_READY]";
+		}
+		var family_mark=document.getElementById("family");
+		function has_family(HasFamily) {
+			family_mark.innerHTML = Boolean(Number(HasFamily)) ? "[FAMILY_READY]" : "[FAMILY_NOT_READY]";
 		}
 
 		/* pass any keys to byond, somehow this will work */
