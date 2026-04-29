@@ -116,6 +116,35 @@
 	name = "Metal Turf Decals"
 	color = "#404040"
 
+/obj/effect/decal/turf_decal/solgov
+	name = "SolGov Logo"
+	icon = 'icons/turf/sol_fed_logo.dmi'
+	icon_state = "11"
+
+/obj/effect/decal/turf_decal/solgov/top
+	icon_state = "12"
+
+/obj/effect/decal/turf_decal/solgov/top_right
+	icon_state = "13"
+
+/obj/effect/decal/turf_decal/solgov/center_left
+	icon_state = "21"
+
+/obj/effect/decal/turf_decal/solgov/center
+	icon_state = "22"
+
+/obj/effect/decal/turf_decal/solgov/center_right
+	icon_state = "23"
+
+/obj/effect/decal/turf_decal/solgov/bottom_left
+	icon_state = "31"
+
+/obj/effect/decal/turf_decal/solgov/bottom_center
+	icon_state = "32"
+
+/obj/effect/decal/turf_decal/solgov/bottom_right
+	icon_state = "33"
+
 // special decals
 /obj/effect/decal/turf_decal/goonplaque
 	name = "Goon Plaque"
