@@ -122,7 +122,7 @@
 		if(config.guest_mode <= GUEST_LOBBY && IsGuestKey(key))
 			return
 		if(client.prefs.family_status)
-			to_chat(src, "<span class='warning'>Вы больше не хотите присоединится к семье.</span>")
+			to_chat(src, "<span class='warning'>Вы больше не хотите присоединиться к семье.</span>")
 			client.prefs.family_status = FALSE
 			client << output(FALSE, "lobbybrowser:has_family")
 			return
