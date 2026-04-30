@@ -55,6 +55,9 @@
 /turf/unsimulated/wall/like_a_normal/green
 	icon = 'icons/turf/walls/has_false_walls/wall_green.dmi'
 
+/turf/unsimulated/wall/like_a_normal/blue
+	icon = 'icons/turf/walls/has_false_walls/wall_blue.dmi'
+
 /turf/unsimulated/wall/like_a_normal/beige
 	icon = 'icons/turf/walls/has_false_walls/wall_beige.dmi'
 

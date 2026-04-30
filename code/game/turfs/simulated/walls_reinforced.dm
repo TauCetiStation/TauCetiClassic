@@ -28,6 +28,9 @@
 /turf/simulated/wall/r_wall/green
 	icon = 'icons/turf/walls/has_false_walls/reinforced_green.dmi'
 
+/turf/simulated/wall/r_wall/nightblue
+	icon = 'icons/turf/walls/has_false_walls/reinforced_blue.dmi'
+
 /turf/simulated/wall/r_wall/beige
 	icon = 'icons/turf/walls/has_false_walls/reinforced_beige.dmi'
 
@@ -44,6 +47,8 @@
 			new_type = /turf/simulated/wall/r_wall/purple
 		if("green")
 			new_type = /turf/simulated/wall/r_wall/green
+		if("nightblue")
+			new_type = /turf/simulated/wall/r_wall/nightblue
 		if("beige")
 			new_type = /turf/simulated/wall/r_wall/beige
 		else

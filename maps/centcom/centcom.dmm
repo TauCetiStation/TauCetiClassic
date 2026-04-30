@@ -22723,10 +22723,10 @@
 	},
 /area/pluvian_heaven)
 "ciW" = (
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "white"
+/obj/structure/stool/bed/bench{
+	dir = 1
 	},
+/turf/unsimulated/floor,
 /area/space)
 "cjb" = (
 /obj/machinery/status_display{
@@ -25640,6 +25640,10 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/waitingroom)
+"gxp" = (
+/obj/structure/stool/bed/bench,
+/turf/unsimulated/floor,
+/area/space)
 "gyb" = (
 /obj/structure/disposalpipe/segment,
 /obj/random/vending/cola,
@@ -27853,6 +27857,14 @@
 	icon_state = "grass2"
 	},
 /area/centcom/living)
+"kcu" = (
+/obj/machinery/door/airlock/security{
+	name = "Security Checkpoint";
+	req_access = list(101);
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/space)
 "kcE" = (
 /obj/machinery/light{
 	dir = 8
@@ -29230,6 +29242,15 @@
 	icon_state = "green"
 	},
 /area/centcom/holding)
+"mmO" = (
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "bot"
+	},
+/obj/machinery/computer/arrival_shuttle/dock{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/space)
 "mnb" = (
 /obj/structure/rack,
 /obj/item/toy/gun,
@@ -29759,6 +29780,12 @@
 /obj/effect/landmark/space_traders/product,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
+"nmy" = (
+/obj/structure/stool/bed/bench{
+	icon_state = "bench_2"
+	},
+/turf/unsimulated/floor,
+/area/space)
 "nnb" = (
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
@@ -31302,6 +31329,14 @@
 /obj/item/clothing/suit/pluvia_trick,
 /turf/unsimulated/floor/carpet/blue2,
 /area/pluvian_heaven)
+"pWZ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/space)
 "pXb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "2,6"
@@ -31928,10 +31963,9 @@
 	},
 /area/velocity/locker)
 "tbW" = (
-/obj/effect/decal/turf_decal/dark_red{
+/obj/structure/stool/bed/bench{
 	dir = 1;
-	icon_state = "arrow";
-	pixel_y = -5
+	icon_state = "bench_2"
 	},
 /turf/unsimulated/floor,
 /area/space)
@@ -32020,6 +32054,16 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/unsimulated/floor,
 /area/space)
+"tQc" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/structure/closet/emcloset,
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/space)
 "tSt" = (
 /obj/machinery/photocopier{
 	density = 0;
@@ -32071,6 +32115,11 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/turf/unsimulated/floor,
+/area/space)
+"tYt" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/structure/stool/bed/bench,
 /turf/unsimulated/floor,
 /area/space)
 "tZC" = (
@@ -32133,6 +32182,12 @@
 	icon_state = "redcorner"
 	},
 /area/centcom/specops)
+"ukG" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/space)
 "ulG" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -32594,6 +32649,15 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"wCT" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea"
+	},
+/obj/effect/decal/turf_decal/alpha/black{
+	icon_state = "arrow"
+	},
+/turf/unsimulated/floor,
+/area/space)
 "wDJ" = (
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity/exit)
@@ -83405,8 +83469,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+kkV
+kkV
 aaM
 aaM
 aaM
@@ -83662,8 +83726,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+glL
+lbr
 aaM
 aaM
 aaM
@@ -83919,8 +83983,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ikY
+lbr
 aaM
 aaM
 aaM
@@ -84176,8 +84240,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+lKy
+lbr
 aaM
 aaM
 aaM
@@ -84433,8 +84497,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+glL
+lbr
 aaM
 aaM
 aaM
@@ -84681,8 +84745,8 @@ aaM
 aaM
 aaM
 tyc
+pWZ
 ulG
-ciW
 gnb
 aaM
 aaM
@@ -84690,8 +84754,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+ikY
+lbr
 aaM
 aaM
 aaM
@@ -84947,8 +85011,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+kkV
+kkV
 aaM
 aaM
 aaM
@@ -85455,21 +85519,21 @@ tyc
 tyc
 tyc
 tyc
+tyc
+tyc
+tyc
+kkV
 aGH
 aGH
 aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aaM
-aaM
+kkV
+tyc
+tyc
+tyc
+tyc
+tyc
+tyc
+tyc
 aaM
 aaM
 aaM
@@ -85725,8 +85789,8 @@ aGH
 aGH
 aGH
 aGH
-aaM
-aaM
+ikY
+tyc
 aaM
 aaM
 aaM
@@ -85970,20 +86034,20 @@ kkV
 vli
 cow
 tca
+tbW
+lKy
+gxp
 aGH
 aGH
 aGH
+tbW
+tYt
+gxp
 aGH
 aGH
 aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aaM
-aaM
+ikY
+tyc
 aaM
 aaM
 aaM
@@ -86227,22 +86291,22 @@ glL
 sqs
 aCw
 tca
+ciW
+lKy
+nmy
 aGH
 aGH
 aGH
+ciW
+lKy
+nmy
 aGH
 aGH
 aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aaM
-aaM
-aaM
-aaM
+tQc
+tyc
+tyc
+tyc
 aaM
 aaM
 aaM
@@ -86482,7 +86546,7 @@ hpb
 lbr
 ikY
 sqs
-aGH
+bUU
 tca
 aGH
 aGH
@@ -86495,11 +86559,11 @@ aGH
 aGH
 aGH
 aGH
-aGH
-aaM
-aaM
-aaM
-aaM
+sqs
+wCT
+csL
+pje
+csL
 aaM
 aaM
 aaM
@@ -86739,7 +86803,7 @@ hpb
 lbr
 lKy
 hwu
-tbW
+aGH
 tca
 aGH
 aGH
@@ -86752,11 +86816,11 @@ aGH
 aGH
 aGH
 aGH
-aGH
-aaM
-aaM
-aaM
-aaM
+sqs
+wCT
+csL
+pje
+csL
 aaM
 aaM
 aaM
@@ -86996,7 +87060,7 @@ hpb
 lbr
 glL
 sqs
-aGH
+bUU
 tca
 aGH
 aGH
@@ -87009,11 +87073,11 @@ aGH
 aGH
 aGH
 aGH
-aGH
-aaM
-aaM
-aaM
-aaM
+sqs
+wCT
+csL
+pje
+csL
 aaM
 aaM
 aaM
@@ -87255,22 +87319,22 @@ ikY
 sqs
 gns
 tca
+tbW
+lKy
+gxp
 aGH
 aGH
 aGH
+tbW
+kkV
+gxp
 aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aaM
-aaM
-aaM
-aaM
+tyc
+kkV
+kkV
+tyc
+tyc
+tyc
 aaM
 aaM
 aaM
@@ -87512,20 +87576,20 @@ kkV
 vli
 pKE
 tca
+ciW
+lKy
+nmy
 aGH
 aGH
 aGH
+ciW
+kkV
+nmy
 aGH
+tyc
 aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aGH
-aaM
-aaM
+mmO
+kkV
 aaM
 aaM
 aaM
@@ -87779,10 +87843,10 @@ aGH
 aGH
 aGH
 aGH
+tyc
 aGH
-aGH
-aaM
-aaM
+ukG
+kkV
 aaM
 aaM
 aaM
@@ -88037,7 +88101,7 @@ rGa
 aQf
 aQf
 tyc
-tyc
+kcu
 tyc
 tyc
 aaM

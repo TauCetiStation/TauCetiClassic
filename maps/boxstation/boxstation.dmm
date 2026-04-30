@@ -33525,6 +33525,9 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -34457,8 +34460,11 @@
 	},
 /area/shuttle/escape_pod1/station)
 "biI" = (
-/obj/machinery/light/smart,
-/turf/simulated/floor,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/flora/deskferntrim,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/entry)
 "biK" = (
 /obj/effect/decal/turf_decal{
@@ -42256,8 +42262,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -53531,7 +53539,6 @@
 /area/station/hallway/primary/starboard)
 "bQB" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "browncorner"
 	},
@@ -55748,13 +55755,13 @@
 /turf/simulated/wall,
 /area/station/civilian/garden)
 "bWv" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
-/obj/structure/sign/directions/dock_tablo/tablo3,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/machinery/disposal,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/entry)
 "bWw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -56708,13 +56715,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bZz" = (
-/obj/machinery/door/airlock/external{
-	dir = 4;
-	dock_tag = "velocity_officer_shuttle";
-	locked = 1;
-	name = "Arrival Airlock"
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/entry)
 "bZB" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -71430,18 +71436,8 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "ezi" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK"
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/turf/simulated/wall,
+/area/space,
 /area/station/hallway/secondary/entry)
 "ezx" = (
 /obj/machinery/door/firedoor,
@@ -73393,7 +73389,9 @@
 "gGe" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -73747,6 +73745,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
+"gTy" = (
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's South 2";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "browncorner"
+	},
+/area/station/hallway/secondary/entry)
 "gTC" = (
 /obj/structure/transit_tube{
 	icon_state = "N-S"
@@ -75111,6 +75118,14 @@
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
+"iqs" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "iry" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -75387,6 +75402,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"iCh" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	dock_tag = "velocity_officer_shuttle";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "iCC" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -76374,6 +76401,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -77855,7 +77883,10 @@
 	},
 /area/station/hallway/primary/central)
 "kYI" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-j2"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "kYJ" = (
@@ -80208,6 +80239,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
+"nsL" = (
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/entry)
 "ntb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -81712,10 +81749,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Arrival Dock's South 2";
-	dir = 5
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -83437,6 +83470,16 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/lobby)
+"rbM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "rcb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
@@ -84932,6 +84975,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"swB" = (
+/obj/structure/stool/bed/chair/comfy/black,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/entry)
 "sxb" = (
 /obj/item/seeds/ambrosiavulgarisseed,
 /obj/item/seeds/carrotseed,
@@ -87203,6 +87252,14 @@
 	icon_state = "0,2"
 	},
 /area/shuttle/supply/station)
+"wcu" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "arrival_planb";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/hallway/secondary/entry)
 "wcU" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -88157,6 +88214,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "xLM" = (
@@ -88426,6 +88486,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"yeN" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "yji" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
@@ -92431,7 +92496,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aag
 aaa
 aaa
 aaa
@@ -93203,7 +93268,7 @@ aaa
 aaa
 aaa
 aaa
-aag
+aaa
 aaa
 aaa
 aaa
@@ -93486,7 +93551,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aag
 aaa
 aaa
 aaa
@@ -94255,7 +94320,7 @@ aaa
 aaa
 aaa
 aaa
-aag
+aaa
 aaa
 aaa
 aaa
@@ -94504,9 +94569,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+avy
+avy
+avy
 aaa
 aaa
 aaa
@@ -94761,11 +94826,11 @@ aaa
 aaa
 aaa
 aaa
+avy
+avy
+avy
 aaa
-aaa
-aaa
-aaa
-aaa
+aah
 aaa
 aaa
 aaa
@@ -95017,12 +95082,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+avy
+avy
+avy
+avy
+avy
+aah
 aaa
 aaa
 aaa
@@ -95274,12 +95339,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+avy
+avy
+avy
+avy
+avy
+aah
 aaa
 aaa
 aaa
@@ -95531,7 +95596,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
+avy
+avy
+avy
+avy
+avy
 aah
 aah
 aah
@@ -95550,10 +95619,6 @@ aah
 aah
 aah
 aah
-aah
-aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -95781,37 +95846,37 @@ aaa
 aaa
 aaa
 aaa
-bgj
-bgj
-bgj
-bgj
-bgj
 aaa
 aaa
+bgj
+bgj
+bgj
+bgj
+bgj
+avy
+avy
+avy
+avy
+avy
+aah
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
+bWt
 aah
 aah
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-bWt
-aah
-aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -96037,38 +96102,38 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
 hVb
 bgj
 bgj
 bgj
 bgj
 bgj
-aaa
-aaa
-aah
-bWt
-bWt
-aah
-aah
-aaa
-aaa
-aaa
-aaa
-btD
-btD
-btD
-aaa
-btD
-btD
-btD
-aaa
-aaa
-aaa
+avy
+avy
+avy
+avy
+avy
 bWt
 bWt
 aah
 aaa
 aaa
+aaa
+btD
+btD
+btD
+aaa
+btD
+btD
+btD
+aaa
+aaa
+aaa
+bWt
+bWt
+aah
 aaa
 aaa
 aaa
@@ -96290,9 +96355,11 @@ aaa
 aaa
 aaa
 aaa
-avy
-avy
-avy
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 apo
 bgj
@@ -96300,15 +96367,15 @@ bgj
 bgj
 bgj
 bgj
-aaa
-aaa
-aah
+avy
+avy
+avy
+avy
+avy
 bWt
 aaa
 aah
 aaa
-aaa
-aaa
 btD
 btD
 btD
@@ -96324,8 +96391,6 @@ aaa
 aaa
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -96545,25 +96610,27 @@ apT
 apT
 bOx
 bOx
-hVb
-aah
-avy
-avy
-avy
-aah
+apT
+apT
+bdz
+aaa
+aaa
+aaa
+aaa
+aaa
 asD
 bgj
 bgj
 bgj
 bgj
 bgj
-hVb
-aaa
-aah
+apT
+apT
+iCh
+bdz
+bWt
 bWt
 aaa
-aah
-aaa
 aaa
 btD
 btD
@@ -96581,8 +96648,6 @@ btD
 aaa
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -96801,22 +96866,24 @@ dEb
 aro
 baY
 aSI
-biI
-apo
-avy
-avy
-avy
-avy
-avy
+atE
+baY
+aro
+wcu
+aaa
+aaa
+aaa
+aaa
+aaa
 asD
 bgj
 bgj
 bgj
 bgj
 bgj
-apo
-bOx
-bOx
+apT
+aro
+aro
 apT
 aaa
 aah
@@ -96838,8 +96905,6 @@ btD
 aaa
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -97059,12 +97124,14 @@ aNG
 baY
 aSI
 atE
-aDy
-avy
-avy
-avy
-avy
-avy
+baY
+aro
+wcu
+aaa
+aaa
+aaa
+aaa
+aaa
 apT
 bgj
 bgj
@@ -97095,8 +97162,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -97316,12 +97381,14 @@ apT
 apT
 aCR
 atE
-aDy
-avy
-avy
-avy
-avy
-avy
+baY
+aNG
+wcu
+aaa
+aaa
+aaa
+aaa
+aaa
 apT
 bgj
 bgj
@@ -97352,8 +97419,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -97570,15 +97635,17 @@ aXZ
 aXZ
 aaa
 aaa
-aDy
+apT
 aSI
 atE
-aDy
-avy
-avy
-avy
-avy
-avy
+apT
+apT
+apT
+aaa
+aaa
+aaa
+aaa
+aaa
 apT
 bgj
 bgj
@@ -97609,8 +97676,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -97831,11 +97896,13 @@ aDy
 aSI
 atE
 aDy
-avy
-avy
-avy
-avy
-avy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 apT
 bgj
 bgj
@@ -97866,8 +97933,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -98088,11 +98153,13 @@ aDy
 bMg
 aPN
 aDy
-avy
-avy
-avy
-avy
-avy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 apT
 bgj
 bgj
@@ -98123,8 +98190,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -98345,11 +98410,13 @@ aDy
 bMi
 baM
 apT
-aah
-ezi
-bZz
-aDy
-aah
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 apT
 aaa
 mhC
@@ -98380,8 +98447,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -98604,7 +98669,9 @@ aGj
 apT
 apT
 aDy
-bLZ
+aDy
+aDy
+aDy
 aDy
 apT
 apT
@@ -98637,8 +98704,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -98859,12 +98924,14 @@ aXZ
 mhC
 aGp
 apT
-aYx
+btv
 bWv
-xnL
-aDy
+swB
+biI
+bZz
+nsL
+ezi
 aYx
-apT
 aYx
 cxD
 xnL
@@ -98894,8 +98961,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -99117,9 +99182,9 @@ apT
 aGj
 apT
 bWw
-bTo
-bTo
 gGe
+bTo
+bTo
 bie
 phy
 jyQ
@@ -99129,6 +99194,8 @@ bvc
 gKX
 lUd
 bwx
+iqs
+rbM
 aYh
 apT
 apT
@@ -99151,8 +99218,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -99376,21 +99441,23 @@ apT
 wwg
 xLk
 atE
-aqN
+atE
 bkQ
 qtj
-atE
+yeN
 qUJ
 bhj
 bvg
 aus
 bfZ
 aMb
+aus
+bhj
 gMQ
 aEb
 aah
 aah
-aah
+aaa
 btD
 btD
 btD
@@ -99408,8 +99475,6 @@ btD
 btD
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -99635,8 +99700,8 @@ kYI
 prF
 bQB
 bDq
-bis
-bOA
+gTy
+iDb
 bgP
 bhd
 bHe
@@ -99645,9 +99710,11 @@ bio
 bIn
 bio
 bio
-aah
+apT
+apT
 aaa
 aah
+aaa
 aaa
 btD
 btD
@@ -99665,8 +99732,6 @@ btD
 aaa
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -99904,7 +99969,9 @@ fQb
 bgp
 aah
 aaa
+aaa
 aah
+aaa
 aaa
 btD
 btD
@@ -99922,8 +99989,6 @@ btD
 aaa
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -100161,7 +100226,9 @@ eZb
 bgp
 aah
 aaa
+aaa
 aah
+aaa
 aaa
 btD
 btD
@@ -100179,8 +100246,6 @@ btD
 aaa
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -100421,6 +100486,8 @@ aah
 aah
 aah
 aah
+aah
+aah
 btD
 btD
 btD
@@ -100432,12 +100499,10 @@ btD
 btD
 btD
 btD
-aaa
+bWt
 bWt
 bWt
 aah
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -101967,10 +102032,10 @@ aah
 bWt
 bWt
 aaa
+aah
 aaa
 aaa
-aaa
-aaa
+aah
 aaa
 aaa
 aaa
@@ -102224,10 +102289,10 @@ aah
 aah
 bWt
 bWt
+aah
 aaa
 aaa
-aaa
-aaa
+aah
 aaa
 aaa
 aaa
