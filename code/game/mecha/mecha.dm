@@ -607,35 +607,34 @@
 ////// AttackBy //////
 //////////////////////
 
+/obj/mecha/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>Системы безопасности [src] уже взломаны.</span>")
+		return FALSE
+	if(occupant)
+		to_chat(user, "<span class='warning'>Невозможно взломать системы управления, пока внутри находится пилот!</span>")
+		return FALSE
+
+	user.visible_message("<span class='warning'>[user] подключает карту к интерфейсу доступа [src]...</span>", \
+						 "<span class='notice'>Вы начинаете взлом систем безопасности [src]...</span>")
+
+	if(!do_after(user, 5 SECONDS, target = src))
+		return FALSE
+
+	emagged = TRUE
+	operation_req_access = list()
+	dna = null
+	dna_lockable = FALSE
+
+	spark_system.start()
+	user.visible_message("<span class='warning'>[src] издает серию электронных щелчков, индикаторы доступа гаснут.</span>", \
+						 "<span class='notice'>Системы безопасности [src] успешно взломаны. Любой может зайти внутрь.</span>")
+	return TRUE
+
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/weapon/card/emag))
-		var/obj/item/weapon/card/emag/E = W
-		if(!E.uses)
-			to_chat(user, "<span class='warning'>[E] разряжен.</span>")
-			return
-		if(emagged)
-			to_chat(user, "<span class='warning'>Системы безопасности [src] уже взломаны.</span>")
-			return
-		if(occupant)
-			to_chat(user, "<span class='warning'>Невозможно взломать системы управления, пока внутри находится пилот!</span>")
-			return
-
-		user.visible_message("<span class='warning'>[user] подключает [E] к интерфейсу доступа [src]...</span>", \
-							 "<span class='notice'>Вы начинаете взлом систем безопасности [src]...</span>")
-
-		if(!do_after(user, 5 SECONDS, target = src))
-			return
-
-		E.use(1)
-		emagged = TRUE
-		operation_req_access = list()
-		dna = null
-		dna_lockable = FALSE
-
-		spark_system.start()
-		user.visible_message("<span class='warning'>[src] издает серию электронных щелчков, индикаторы доступа гаснут.</span>", \
-							 "<span class='notice'>Системы безопасности [src] успешно взломаны. Любой может зайти внутрь.</span>")
+		emag_act(user)
 		return
 
 	if(isMMI(W))
