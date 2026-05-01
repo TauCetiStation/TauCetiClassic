@@ -79,7 +79,8 @@
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
 		return FALSE
 
-	if(!user.Adjacent(M) || user.incapacitated() || ispAI(user) || ismouse(user) || (M.loc != src.loc) && get_bump_target(get_turf(src), M))
+	var/try_to_buckle_from_another_tile = ((M.loc != src.loc) && get_bump_target(get_turf(src), M))
+	if(!user.Adjacent(M) || user.incapacitated() || ispAI(user) || ismouse(user) || try_to_buckle_from_another_tile)
 		return FALSE
 
 	if(user.is_busy())
