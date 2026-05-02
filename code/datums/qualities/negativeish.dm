@@ -279,7 +279,6 @@ var/global/list/allergen_reagents_list
 	name = "Hangover"
 	desc = "Вчерашняя вечеринка не прошла бесследно. Вы проснулись с алкогольным опьянением, и только бутылка воды в руках даёт надежду на опохмеление"
 	requirement = "Нет."
-	pools = list(QUALITY_POOL_NEGATIVEISH)
 
 /datum/quality/negativeish/hangover/add_effect(mob/living/carbon/human/H, latespawn)
 	var/static/list/booze_types = list(
