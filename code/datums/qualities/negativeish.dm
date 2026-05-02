@@ -274,3 +274,18 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/dyslalia/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_DYSLALIA, QUALITY_TRAIT)
+
+/datum/quality/negativeish/hangover
+	name = "Hangover"
+	desc = "Вчерашняя вечеринка не прошла бесследно. Вы проснулись с алкогольным опьянением, и только бутылка воды в руках даёт надежду на опохмеление"
+	requirement = "Нет."
+	pools = list(QUALITY_POOL_NEGATIVEISH)
+
+/datum/quality/negativeish/hangover/add_effect(mob/living/carbon/human/H, latespawn)
+	var/static/list/booze_types = list(
+		"beer", "vodka", "whiskey", "wine", "rum",
+		"tequila", "patron", "gin", "champagne", "sake", "cider"
+	)
+	var/drink = pick(booze_types)
+	H.reagents.add_reagent(drink, rand(90, 120))
+	H.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle)
