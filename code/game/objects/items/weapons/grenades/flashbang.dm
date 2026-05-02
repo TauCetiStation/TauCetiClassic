@@ -27,10 +27,6 @@
 	for(var/mob/living/carbon/M in hear(flashbang_range, flashbang_turf))
 		bang(flashbang_turf, M)
 
-	for(var/obj/structure/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
-		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
-		B.take_damage(damage * B.brute_resist, BRUTE, ENERGY) // workaround to deal full damage
-
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)	// Added a new proc called 'bang' that takes a location and a person to be banged.
