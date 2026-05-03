@@ -135,7 +135,7 @@
 
 	suit_store = /obj/item/weapon/gun/medbeam
 
-	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone, /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec, /obj/item/weapon/crowbar/red, /obj/item/weapon/melee/baton)
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone, /obj/item/weapon/melee/baton)
 
 	assignment = "Emergency Response Team Medic"
 
@@ -143,7 +143,8 @@
 	name = "Responders: NT ERT Medic (EMT)"
 
 	l_pocket = /obj/item/weapon/storage/pouch/medical_supply/combat
-
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone, /obj/item/weapon/melee/baton, /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec)
+	r_ear = /obj/item/weapon/reagent_containers/syringe
 	assignment = "Emergency Medical Team Medic"
 
 /datum/outfit/responders/nanotrasen_ert/medic/emt/surgeon

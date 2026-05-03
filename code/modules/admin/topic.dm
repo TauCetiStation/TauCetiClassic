@@ -1737,7 +1737,7 @@
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
 
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
+		to_chat(H, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[input]\"</b> Конец связи.\"")
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
@@ -1763,7 +1763,7 @@
 			attachment_msg = input,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
+		to_chat(H, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[input]\"</b> Конец связи.\"")
 
 	else if(href_list["CentcommFaxViewInfo"])
 		var/info = locate(href_list["CentcommFaxViewInfo"])
