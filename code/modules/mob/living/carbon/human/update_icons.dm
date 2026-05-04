@@ -432,8 +432,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = update_height(standing)
 		standing.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		standing.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
-		overlays_standing[UNIFORM_LAYER] = standing
 
+		// Accessories ride as siblings of the uniform in overlays_standing, not as
+		// sub-overlays of `standing` — nested sub-overlays of a colored poly appearance
+		// lose their explicit layer and get buried under pattern/detail.
+		var/list/uniform_stack = list(standing)
 		for(var/obj/item/clothing/accessory/A in U.accessories)
 			var/t_state = A.icon_state
 			var/icon_path = 'icons/mob/accessory.dmi'
@@ -446,11 +449,13 @@ Please contact me on #coderbus IRC. ~Carn x
 				if(icon_exists(icon_path, "[t_state]_fem"))
 					t_state += "_fem"
 
-			var/image/accessory
-			accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + A.layer_priority)
+			var/image/accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + 0.1 + A.layer_priority)
 			accessory.color = A.color
+			accessory.appearance_flags |= RESET_COLOR
 			accessory = human_update_offset(accessory, TRUE)
-			standing.add_overlay(accessory)
+			uniform_stack += accessory
+
+		overlays_standing[UNIFORM_LAYER] = uniform_stack
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//

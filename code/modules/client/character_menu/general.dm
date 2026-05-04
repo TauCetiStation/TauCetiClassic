@@ -127,6 +127,18 @@
 				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
+			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[poly_style_display[jumpsuit_style] || jumpsuit_style]</a><br>"
+			if(jumpsuit_style != "job")
+				. += "<table style='margin-left:8px;border-spacing:0 2px'>"
+				if(species != VOX)
+					if(is_poly_white_base(jumpsuit_style))
+						. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+					if(jumpsuit_style != "turt_w")
+						. += "<tr><td>Pattern:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? (poly_pattern_display[jumpsuit_pattern] || jumpsuit_pattern) : "None"]</a></td></tr>"
+				else
+					. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "<tr><td>Accent:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_color;task=input'><font color='[jumpsuit_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "</table>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
@@ -483,6 +495,43 @@
 
 				if("use_skirt")
 					use_skirt = !use_skirt
+
+				if("jumpsuit_style")
+					// VOX only gets white-base poly styles (no belt/turt variants exist for Vox)
+					var/list/style_choices
+					if(species == VOX)
+						style_choices = list("Job Default"="job", "Poly-Standard"="std_w")
+					else
+						style_choices = list("Job Default"="job", "Poly-Standard"="std_w", "Poly-Belt"="belt_w", "Poly-Turtleneck"="turt_w")
+					var/choice = input(user, "Choose jumpsuit style:", "Character Preference") as null|anything in style_choices
+					if(choice)
+						jumpsuit_style = style_choices[choice]
+						if(jumpsuit_style == "turt_w")
+							jumpsuit_pattern = "turt"
+						else if(jumpsuit_pattern == "turt")
+							jumpsuit_pattern = null
+
+				if("jumpsuit_pattern")
+					// Build pattern list from global display names, excluding "turt" (set automatically by turt_w style)
+					var/list/patterns = list("None" = null)
+					for(var/key in poly_pattern_display)
+						if(key != "turt")
+							patterns[poly_pattern_display[key]] = key
+					var/choice = input(user, "Choose jumpsuit pattern:", "Character Preference") as null|anything in patterns
+					if(!isnull(choice))
+						jumpsuit_pattern = patterns[choice]
+
+				if("jumpsuit_color")
+					var/list/choices = global.poly_color_palette
+					var/choice = input(user, "Choose accent color:", "Character Preference") as null|anything in choices
+					if(choice)
+						jumpsuit_color = global.poly_color_palette[choice]
+
+				if("jumpsuit_base_color")
+					var/list/base_choices = global.poly_color_palette
+					var/base_choice = input(user, "Choose base color:", "Character Preference") as null|anything in base_choices
+					if(base_choice)
+						jumpsuit_base_color = global.poly_color_palette[base_choice]
 
 				if("nt_relation")
 					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation) as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")

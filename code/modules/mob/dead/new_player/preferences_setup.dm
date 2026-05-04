@@ -102,6 +102,69 @@
 	if(S)
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
+	// Apply visual quirk effects — only traits that affect sprite/clothing display
+	// Mannequin is reused across slot switches, so always clear traits first
+	REMOVE_TRAIT(mannequin, TRAIT_FAT, INNATE_TRAIT)
+	if((QUIRK_FATNESS in all_quirks))
+		ADD_TRAIT(mannequin, TRAIT_FAT, INNATE_TRAIT)
+	mannequin.update_body()
+	mannequin.update_inv_w_uniform()
+	mannequin.update_inv_wear_suit()
+
+	// Equip custom jumpsuit from prefs (skip if using job default)
+	var/obj/item/clothing/under/color/polychromic/polychromic_jumpsuit = spawn_custom_jumpsuit(mannequin)
+	if(polychromic_jumpsuit)
+		mannequin.replace_in_slot(SLOT_W_UNIFORM, polychromic_jumpsuit)
+
+	// Equip loadout items for preview
+	var/obj/item/clothing/preview_uniform = istype(mannequin.w_uniform, /obj/item/clothing) ? mannequin.w_uniform : null
+	var/obj/item/clothing/preview_suit = istype(mannequin.wear_suit, /obj/item/clothing) ? mannequin.wear_suit : null
+	if(gear && gear.len)
+		for(var/thing in gear)
+			var/datum/gear/G = gear_datums[thing]
+			if(!G)
+				continue
+			// Skip species-whitelisted items if species doesn't match
+			if(G.whitelisted && G.whitelisted != species)
+				continue
+			var/metadata = get_gear_metadata(G)
+			var/obj/item/spawned_item = G.spawn_item(mannequin, metadata)
+			if(!spawned_item)
+				continue
+			if(istype(spawned_item, /obj/item/clothing/accessory))
+				// Clothing accessories attach to worn clothing, not to a body slot
+				if(preview_uniform && preview_uniform.can_attach_accessory(spawned_item))
+					preview_uniform.attach_accessory(spawned_item, mannequin)
+				else if(preview_suit && preview_suit.can_attach_accessory(spawned_item))
+					preview_suit.attach_accessory(spawned_item, mannequin)
+				else
+					qdel(spawned_item)
+			else
+				// Map item slot_flags to equip slot; replace whatever the job put there
+				var/target_slot = _preview_slot_from_flags(spawned_item.slot_flags)
+				if(target_slot)
+					mannequin.replace_in_slot(target_slot, spawned_item)
+				else if(!mannequin.equip_to_appropriate_slot(spawned_item))
+					qdel(spawned_item)
+
+	mannequin.update_inv_back()
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+
+/// Maps an item's slot_flags bitmask to the corresponding equip slot constant.
+/// Returns null if the flags don't map to a single clear body slot (e.g. pockets).
+/proc/_preview_slot_from_flags(slot_flags)
+	if(slot_flags & SLOT_FLAGS_BACK)     return SLOT_BACK
+	if(slot_flags & SLOT_FLAGS_OCLOTHING) return SLOT_WEAR_SUIT
+	if(slot_flags & SLOT_FLAGS_ICLOTHING) return SLOT_W_UNIFORM
+	if(slot_flags & SLOT_FLAGS_GLOVES)   return SLOT_GLOVES
+	if(slot_flags & SLOT_FLAGS_EYES)     return SLOT_GLASSES
+	if(slot_flags & SLOT_FLAGS_EARS)     return SLOT_L_EAR
+	if(slot_flags & SLOT_FLAGS_MASK)     return SLOT_WEAR_MASK
+	if(slot_flags & SLOT_FLAGS_HEAD)     return SLOT_HEAD
+	if(slot_flags & SLOT_FLAGS_FEET)     return SLOT_SHOES
+	if(slot_flags & SLOT_FLAGS_ID)       return SLOT_WEAR_ID
+	if(slot_flags & SLOT_FLAGS_BELT)     return SLOT_BELT
+	if(slot_flags & SLOT_FLAGS_NECK)     return SLOT_NECK
+	return null
