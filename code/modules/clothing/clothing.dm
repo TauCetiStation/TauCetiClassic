@@ -781,8 +781,8 @@ var/global/list/poly_color_palette = list(
 	if(poly_pattern == "turt")
 		return (H && H.gender == FEMALE) ? "p_turt_white_fem" : "p_turt_white"
 	var/pat = "p[poly_pattern]"
-	// Belt variants for patterns that have them (p3_belt, p5_belt)
-	if(style == "belt_w" && (poly_pattern == "3" || poly_pattern == "5"))
+	// Belt variants for patterns that have them (p1_belt, p3_belt, p5_belt)
+	if(style == "belt_w" && (poly_pattern == "1" || poly_pattern == "3" || poly_pattern == "5"))
 		pat = "p[poly_pattern]_belt"
 	// Fat variant — only p1_fat and p2_fat exist in DMI; p3/p4/p5 fall through to fem/base
 	var/static/list/has_fat_pattern = list("1", "2")
