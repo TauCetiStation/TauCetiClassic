@@ -64,7 +64,7 @@
 	return null
 
 /// Outputs a consolidated warning about necrotic organs that can't be treated by "fix" step.
-/datum/surgery_step/proc/warn_necrotic_organs(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
+/datum/surgery_step/proc/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
 	if(!length(dead_organs))
 		return
 	var/list/organ_names = list()

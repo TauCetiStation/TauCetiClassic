@@ -220,7 +220,7 @@
 				has_treatable = TRUE
 	if(has_treatable)
 		return TRUE
-	warn_necrotic_organs(user, target, dead_organs)
+	necrotic_organs_warning(user, target, dead_organs)
 	return FALSE
 
 
@@ -246,7 +246,7 @@
 			else
 				user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>", \
 				"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
-	warn_necrotic_organs(user, target, dead_organs)
+	necrotic_organs_warning(user, target, dead_organs)
 
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
