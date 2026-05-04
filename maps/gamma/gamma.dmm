@@ -8238,12 +8238,6 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/weapon/paper{
-	info = "4 Deployable Barriers<br>3 Portable Flashers + Wrench <br>3 Sets of Riot Armor <br>3 Bulletproof Vests <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit <br>1 Chemical Implant Kit <br>1 Tracking Implant Kit <br>1 Loyalty Implant Kit <br>1 Death Alarm Implant Kit <br>1 Box of Spare Handcuffs <br>1 Box of flashbangs <br>1 Box of spare R.O.B.U.S.T. cartridges <br>3 Riot shields <br>3 Stun Batons <br>3 Energy Guns <br>3 Laser Rifles <br>2 Ion Rifles <br>6 Security Masks <br>1 Grenade Launcher <br>2 Boxes of teargas grenades";
-	name = "Armory Inventory";
-	pixel_x = -7;
-	pixel_y = 16
-	},
 /obj/item/weapon/folder/blue{
 	pixel_x = 7;
 	pixel_y = 10
@@ -8260,6 +8254,7 @@
 	pixel_x = -8;
 	pixel_y = -7
 	},
+/obj/item/weapon/paper/inventory/brig_armoury,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkredcorners"
@@ -56146,15 +56141,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"kka" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/grid_floor,
-/area/station/cargo/storage)
 "kkg" = (
 /obj/structure/grille,
 /obj/structure/window/thin/reinforced{
@@ -110299,9 +110285,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/weapon/paper/inventory{
-	pixel_y = -21
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -141237,7 +141220,7 @@ bLA
 bZi
 fAG
 tGl
-kka
+fwT
 edr
 fwT
 nhd
@@ -141751,7 +141734,7 @@ gUm
 aOi
 dVZ
 tDo
-kka
+fwT
 kCg
 fwT
 lvq

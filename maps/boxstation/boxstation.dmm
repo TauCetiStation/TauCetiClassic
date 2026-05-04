@@ -3197,7 +3197,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/item/weapon/paper/inventory,
 /turf/simulated/floor,
 /area/station/security/armoury)
 "aft" = (
@@ -5170,12 +5169,12 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "yellow"
+	color = "yellow";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -5550,8 +5549,8 @@
 	icon_state = "bot"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -8179,8 +8178,8 @@
 /area/station/security/brig)
 "anq" = (
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/dormitory)
@@ -11339,12 +11338,12 @@
 "asO" = (
 /obj/machinery/vending/holy,
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "#996633"
+	color = "#996633";
+	dir = 4
 	},
 /obj/structure/fence/metal{
-	dir = 1;
-	color = "#996633"
+	color = "#996633";
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -13904,8 +13903,8 @@
 "axz" = (
 /obj/structure/table/woodentable/fancy,
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "#996633"
+	color = "#996633";
+	dir = 8
 	},
 /obj/structure/fence/metal{
 	color = "#996633"
@@ -15171,16 +15170,16 @@
 /area/station/rnd/tox_launch)
 "azS" = (
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "#996633"
+	color = "#996633";
+	dir = 8
 	},
 /obj/structure/fence/metal{
-	dir = 1;
-	color = "#996633"
+	color = "#996633";
+	dir = 1
 	},
 /obj/structure/ballot_box{
-	name = "anonymous message box";
-	desc = "Урна для писем."
+	desc = "Урна для писем.";
+	name = "anonymous message box"
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -15504,8 +15503,8 @@
 	pixel_y = -24
 	},
 /obj/structure/ballot_box{
-	name = "anonymous message box";
-	desc = "Урна для писем."
+	desc = "Урна для писем.";
+	name = "anonymous message box"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -25723,8 +25722,8 @@
 /area/station/medical/medbreak)
 "aTu" = (
 /obj/machinery/constructable_frame/machine_frame{
-	name = "holy machine frame";
-	desc = "Dedicated to oaths forgotten. Forgiven be."
+	desc = "Dedicated to oaths forgotten. Forgiven be.";
+	name = "holy machine frame"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -32928,8 +32927,8 @@
 	icon_state = "box_of_doom"
 	},
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "yellow"
+	color = "yellow";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -39817,8 +39816,8 @@
 "bsw" = (
 /obj/structure/table/woodentable/fancy,
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "#996633"
+	color = "#996633";
+	dir = 4
 	},
 /obj/structure/fence/metal{
 	color = "#996633"
@@ -41780,8 +41779,8 @@
 /area/station/hallway/secondary/exit)
 "bvP" = (
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/chapel)
@@ -59479,8 +59478,8 @@
 "ciQ" = (
 /obj/machinery/light/small,
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
+	color = "yellow";
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -67836,8 +67835,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -70067,8 +70066,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -70228,12 +70227,12 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "yellow"
+	color = "yellow";
+	dir = 4
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -71454,8 +71453,8 @@
 /area/station/civilian/kitchen)
 "ezD" = (
 /obj/structure/fence/metal{
-	dir = 1;
-	color = "yellow"
+	color = "yellow";
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -72302,12 +72301,12 @@
 	c_tag = "Recycler External South"
 	},
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
+	color = "yellow";
+	dir = 8
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -72762,8 +72761,8 @@
 	pixel_x = -28
 	},
 /obj/machinery/constructable_frame/machine_frame{
-	name = "holy machine frame";
-	desc = "Dedicated to oaths forgotten. Forgiven be."
+	desc = "Dedicated to oaths forgotten. Forgiven be.";
+	name = "holy machine frame"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -75460,8 +75459,8 @@
 /area/station/maintenance/medbay)
 "iFo" = (
 /obj/structure/fence/metal{
-	dir = 1;
-	color = "yellow"
+	color = "yellow";
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/chapel)
@@ -76698,8 +76697,8 @@
 /area/station/rnd/xenobiology)
 "jPH" = (
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -78816,12 +78815,12 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
+	color = "yellow";
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -80337,8 +80336,8 @@
 /area/station/medical/reception)
 "nyN" = (
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
+	color = "yellow";
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -80699,8 +80698,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -80762,8 +80761,8 @@
 /area/space)
 "nYC" = (
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
+	color = "yellow";
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -81180,8 +81179,8 @@
 /area/station/medical/genetics_cloning)
 "oux" = (
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -82116,8 +82115,8 @@
 /area/station/maintenance/incinerator)
 "pDI" = (
 /obj/structure/fence/metal{
-	dir = 1;
-	color = "yellow"
+	color = "yellow";
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -83684,8 +83683,8 @@
 /area/station/medical/virology)
 "rmk" = (
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -84474,12 +84473,12 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
+	color = "yellow";
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -84719,12 +84718,12 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "yellow"
+	color = "yellow";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -84886,29 +84885,29 @@
 	},
 /obj/item/stack/sheet/sandbag_green{
 	amount = 5;
-	pixel_y = -2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = -2
 	},
 /obj/structure/rack,
 /obj/item/stack/sheet/sandbag_green{
 	amount = 5;
-	pixel_y = 8;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 8
 	},
 /obj/item/stack/sheet/sandbag_green{
 	amount = 5;
-	pixel_y = -2;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -2
 	},
 /obj/item/stack/sheet/sandbag_green{
 	amount = 5;
-	pixel_y = 3;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/item/stack/sheet/sandbag_green{
 	amount = 5;
-	pixel_y = 3;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -84924,8 +84923,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -85876,12 +85875,12 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "yellow"
+	color = "yellow";
+	dir = 8
 	},
 /obj/structure/fence/metal{
-	dir = 2;
-	color = "yellow"
+	color = "yellow";
+	dir = 2
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -86342,9 +86341,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 2;
 	name = "Mail Office";
-	sortType = "Mail Office";
-	dir = 2
+	sortType = "Mail Office"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -86823,8 +86822,8 @@
 	icon_state = "warn"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "caution_white";
-	dir = 4
+	dir = 4;
+	icon_state = "caution_white"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"

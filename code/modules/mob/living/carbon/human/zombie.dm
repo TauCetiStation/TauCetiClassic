@@ -133,12 +133,18 @@
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	if(organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
+		var/free_body = TRUE
 		if(!key && mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == mind && ghost.can_reenter_corpse)
-					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"))
+					free_body = FALSE
+					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"), 10 SECONDS)
 					if(answer == "Yes")
 						ghost.reenter_corpse()
+					else
+						create_spawner(/datum/spawner/living/zombie, src)
+		if(free_body)
+			create_spawner(/datum/spawner/living/zombie, src)
 
 		visible_message("<span class='danger'>[src]'s body starts to move!</span>")
 		addtimer(CALLBACK(src, PROC_REF(revive_zombie)), 40)
@@ -147,8 +153,6 @@
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	if(!organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
-	//zombie have NO_PAIN and can't adjust/sets halloss
-	resetHalLoss()
 	//remove all blind-blur effects
 	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
 	sdisabilities &= ~BLIND
@@ -159,17 +163,23 @@
 	if(!iszombie(src))
 		zombify()
 
+	resetToxLoss(0)
+	resetOxyLoss(0)
+	resetCloneLoss(0)
+	resetBrainLoss(0)
+	resetHalLoss(0)
 	//del wounds and embedded implants in limbs, heal
 	for(var/obj/item/organ/external/limb in bad_bodyparts)
 		limb.rejuvenate()
 
-	resetCloneLoss()
-	resetBrainLoss()
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	nutrition = NUTRITION_LEVEL_NORMAL
+	setDrugginess(0)
 	SetSleeping(0)
+	SetDrunkenness(0)
+
+	nutrition = NUTRITION_LEVEL_NORMAL
 	radiation = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 	restore_blood()
@@ -178,6 +188,21 @@
 	// i think we can pull burned/husked zombies, need to see how it works
 	//REMOVE_TRAIT(src, TRAIT_HUSK, GENERIC_TRAIT)
 	//REMOVE_TRAIT(src, TRAIT_BURNT, GENERIC_TRAIT)
+
+	if(reagents)
+		reagents.clear_reagents()
+
+	suiciding = FALSE
+	ear_deaf = 0
+	ear_damage = 0
+
+	//shock_stage = 0
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	Heart?.heart_normalize()
+
+	restore_all_bodyparts()
+	restore_all_organs()
+	cure_all_viruses()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)
@@ -240,6 +265,7 @@
 	D.antigen |= ANTIGEN_Z
 	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 	Z.RegisterSignal(src, COMSIG_MOB_DIED, PROC_REF(handle_infected_death))
+	Z.signal_setup = FALSE
 
 	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
@@ -364,3 +390,117 @@ var/global/list/zombie_list = list()
 	tracker = null
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
+
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol
+	name = "romerol"
+	desc = "As if in mockery, someone kindly engraved in small print directly on the glass of the vial: \"Romerol. The REAL zombie powder.\""
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol/atom_init()
+	. = ..()
+	reagents.add_reagent("romerol", 15)
+	update_icon()
+
+/datum/reagent/romerol
+	name = "Romerol"
+	id = "romerol"
+	// the REAL zombie powder
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#123524" // RGB (18, 53, 36)
+	custom_metabolism = 1
+	taste_message = "brains"
+	//restrict_species = list(IPC, DIONA, VOX)
+
+/datum/reagent/romerol/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.infect_zombie_virus(null, TRUE, TRUE)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/zombie
+	name = "biowarfare hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives to quickly make warcrimes in the field. This one is left unlabelled."
+	volume = 50
+	list_reagents = list("romerol" = 50)
+	amount_per_transfer_from_this = 5
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol
+	name = "Z-virus"
+	desc = "Makes warcrimes"
+	icon_state = "bonepen"
+	item_state = "bonepen"
+	volume = 35
+	list_reagents = list("romerol" = 5, "cyanide" = 30)
+
+/obj/item/weapon/grenade/chem_grenade/romerol
+	name = "biowarfare grenade"
+	icon_state = "pyrog"
+	item_state = "flashbang"
+	desc = "A red grenade with an unusual design, a biohazard sign is engraved on the side. Does massive war crimes."
+	path = 2
+	stage = 2
+	det_time = 2 SECONDS
+
+/obj/item/weapon/grenade/chem_grenade/romerol/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent("sugar", 75)
+	B1.reagents.add_reagent("potassium", 75)
+	B2.reagents.add_reagent("phosphorus", 75)
+
+	B2.reagents.add_reagent("romerol", 20)
+	B1.reagents.add_reagent("cyanide", 55)
+
+	beakers += B1
+	beakers += B2
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+	var/obj/item/device/assembly/timer/tmr = detonator.a_left
+	tmr.time = 2
+
+/obj/item/weapon/implanter/zombie
+	name = "implanter (Z)"
+	init_type = /obj/item/weapon/implant/zombie
+
+/obj/item/weapon/implant/zombie
+	name = "retaliation"
+	desc = "And boom goes the weasel."
+	icon_state = "implant_evil"
+	legal = FALSE
+	activation_emote = "deathgasp"
+	uses = 1
+	delete_after_use = TRUE
+	implant_data = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Retaliation's implant<BR>
+<b>Life:</b> Activates upon death.<BR>
+<b>Important Notes:</b> Prevent the implant from falling into the hands of the enemy<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains special chemicals that bring the deceased back to life a few seconds after death. Allows you to take revenge on your enemy. Use away from allies.<BR>
+<b>Special Features:</b> Replaces the explosion implant<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+
+/obj/item/weapon/implant/zombie/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	for(var/obj/item/weapon/implant/dexplosive/I in C)
+		qdel(I)
+
+/obj/item/weapon/implant/zombie/activate()
+	if(!implanted_mob)
+		return FALSE
+	var/mob/living/carbon/human/H = implanted_mob
+	if(!H || !H.can_zombified())
+		return FALSE
+	if(H.stat != DEAD)
+		H.adjustToxLoss(H.maxHealth * 2.5)
+		H.adjustFireLoss(H.maxHealth)
+		H.death(FALSE)
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 5 SECONDS)
+	to_chat(H, "<span class='cult'>Твоё сердце умолкает, а вместе с ним и хладеет твоё тело, и лишь голод начинает разгораться с невиданной силой!</span>")
+	qdel(src)
