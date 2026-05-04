@@ -127,6 +127,9 @@
 		return
 
 	M.adjustToxLoss(1)
+/datum/reagent/consumable/drink/poisonberryjuice/on_skrell_digest(mob/living/M)
+	M.nutrition += 5 * REM
+	return !flags[IS_ORGANIC]
 
 /datum/reagent/consumable/drink/watermelonjuice
 	name = "Watermelon Juice"
