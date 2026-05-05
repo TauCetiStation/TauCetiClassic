@@ -19,6 +19,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	var/obj/machinery/power/terminal/terminal = null
 
 	var/powerused = 0
+	var/powerused_last = 0
 
 	var/image/holoprice
 
@@ -215,12 +216,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	terminal.add_load(load())
 	add_avail(terminal.newavail())
 
+	powerused_last = powerused
 	powerused += min(load(), newavail())
 
 	update_icon()
 
 /obj/machinery/power/meter/update_icon()
-	if(can_operate() && powerused > 0)
+	if(can_operate() && (powerused - powerused_last) > 0)
 		icon_state = "[initial(icon_state)]_w"
 	else if(panel_open)
 		icon_state = "[initial(icon_state)]-o"
