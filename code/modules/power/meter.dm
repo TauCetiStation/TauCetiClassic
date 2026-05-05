@@ -55,7 +55,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 /obj/machinery/power/meter/examine(mob/user)
 	..()
-	to_chat(user, "Потреблено: [powerused KWH]кВт/ч | Цена за кВт/ч: [credits_per_kwh]")
+	to_chat(user, "Потреблено: [round(powerused KWH, 0.01)]кВт/ч | Цена за кВт/ч: [credits_per_kwh]")
 
 /obj/machinery/power/meter/attack_hand(mob/user)
 	. = ..()
