@@ -231,7 +231,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	powerused_last = powerused
 	powerused += available_power
 
-	if(powerused_las < powerused)
+	if(powerused_last < powerused)
 		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
 
 	update_icon()
