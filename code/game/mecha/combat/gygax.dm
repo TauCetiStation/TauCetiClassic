@@ -36,14 +36,15 @@
 
 /obj/mecha/combat/gygax/security/atom_init() //for aspect
 	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME
 
 	var/obj/item/mecha_parts/mecha_equipment/main_weapon = pick(
 		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
 		/obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse,
 		/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
 	)
-	new main_weapon(src)
-	main_weapon.attach(src)
+	ME = new main_weapon(src)
+	ME.attach(src)
 
 	var/obj/item/mecha_parts/mecha_equipment/side_weapon = pick(
 		/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,
@@ -51,8 +52,8 @@
 		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot,
 		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
 	)
-	new side_weapon(src)
-	side_weapon.attach(src)
+	ME = new side_weapon(src)
+	ME.attach(src)
 
 	var/obj/item/mecha_parts/mecha_equipment/support_equipment = pick(
 		/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
@@ -60,8 +61,8 @@
 		/obj/item/mecha_parts/mecha_equipment/repair_droid,
 		/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
 	)
-	new support_equipment(src)
-	support_equipment.attach(src)
+	ME = new support_equipment(src)
+	ME.attach(src)
 
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
