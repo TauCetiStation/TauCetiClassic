@@ -140,6 +140,9 @@
 			return
 
 		var/rate = input("Цена за кВт/ч (от 0 до 500)", "[M.credits_per_kwh]") as num|null
+		if(!Adjacent(usr))
+			return
+
 		rate = round(clamp(rate, 0, 500))
 
 		M.credits_per_kwh = rate
