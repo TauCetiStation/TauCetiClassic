@@ -365,10 +365,9 @@
 	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/gygax/special_conditions(uplink_type)
-	if(uplink_type == UPLINK_TYPE_NUCLEAR)
-		return TRUE
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS) && uplink_type == UPLINK_TYPE_TRAITOR)
-		cost = 20
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost *= 0.5
+	if((uplink_type == UPLINK_TYPE_NUCLEAR) || (HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS) && uplink_type == UPLINK_TYPE_TRAITOR))
 		return TRUE
 	return FALSE
 
@@ -379,6 +378,10 @@
 	item = /obj/mecha/combat/marauder/mauler
 	cost = 60
 	uplink_types = list(UPLINK_TYPE_NUCLEAR)
+
+/datum/uplink_item/dangerous/mauler/special_conditions(uplink_type)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost *= 0.5
 
 /datum/uplink_item/dangerous/syndieborg
 	name = "Syndicate Robot"
