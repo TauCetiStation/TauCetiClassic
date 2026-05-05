@@ -64,14 +64,13 @@
 		var/lighting_cons = 0
 		var/environment_cons = 0
 		if(L.len > 0)
-			meters += "<tr><th>Meter</th> <th>Load</th> <td>Used</td></tr>"
+			meters += "<tr><th>Meter</th> <th>Load</th> <th>Used</th> <th>Operating</th></tr>"
 			for(var/obj/machinery/power/meter/M in L)
-				if(M.can_operate())
-					var/acc_name = M.name
-					if(M.connected_account_number && get_account(M.connected_account_number))
-						var/datum/money_account/Acc = get_account(M.connected_account_number)
-						acc_name = "[Acc.owner_name]'s power meter"
-					meters += "<tr><td>[acc_name]</td> <td>[DisplayPower(M.load())]</td> <td>[DisplayPower(M.powerused/3600)]/ч</td>"
+				var/acc_name = M.name
+				if(M.connected_account_number && get_account(M.connected_account_number))
+					var/datum/money_account/Acc = get_account(M.connected_account_number)
+					acc_name = "[Acc.owner_name]'s power meter"
+				meters += "<tr><td>[acc_name]</td> <td>[DisplayPower(M.load())]</td> <td>[DisplayPower(M.powerused/3600)]/ч</td> <td>[M.can_operate() ? "<span style='color: green'>ON</span>" : "<span style='color: red'>OFF</span>"]</td>"
 
 			apcs += "<tr> <th>Area</th> <th>Eqp.</th> <th>Lgt.</th> <th>Env.</th>"
 			apcs += "<th style='text-align: center'>Load</th> <th style='text-align: right'>Cell </th> <th> - </th> </tr>"

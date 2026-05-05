@@ -114,7 +114,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 			return
 
 		if(terminal) // is there already a terminal ?
-			to_chat(user, "<span class='warning'>This SMES already have a power terminal!</span>")
+			to_chat(user, "<span class='warning'>This power meter already have a power terminal!</span>")
 			return
 
 		if(!panel_open) // is the panel open ?
@@ -221,6 +221,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 /obj/machinery/power/meter/update_icon()
 	if(can_operate() && powerused > 0)
 		icon_state = "[initial(icon_state)]_w"
+	else if(panel_open)
+		icon_state = "[initial(icon_state)]-o"
 	else
 		icon_state = initial(icon_state)
 
