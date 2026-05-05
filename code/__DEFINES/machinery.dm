@@ -1,6 +1,6 @@
 // this define should be removed, if power module will ever be updated.
 #define TAUCETI_POWER_DRAW_MOD /10 // at the moment, we don't use Bay's machinery power drain rebalance, so for us atmos uses too much power and we need to devide return value
-#define KWH / (HOUR * 1000)
+#define KWH / (1 HOUR * 1000)
 
 // channel numbers for power
 #define TOTAL           1	//for total power used only
