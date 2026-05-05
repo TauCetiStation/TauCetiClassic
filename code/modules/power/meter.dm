@@ -4,7 +4,7 @@ var/global/list/power_meters = list()
 ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 /obj/machinery/power/meter
 	name = "power meter unit"
-	cases = list("счетчик электроэнергии", "счетчика электроэнергии", "счетчику электроэнергии", "счетчик электроэнергии", "счетчиком электроэнергии", "счетчике электроэнергии")
+	cases = list("счётчик электроэнергии", "счётчика электроэнергии", "счётчику электроэнергии", "счётчик электроэнергии", "счётчиком электроэнергии", "счётчике электроэнергии")
 	desc = "Счетчик используемой электроэнергии."
 	icon_state = "powermeter"
 	density = TRUE
@@ -77,8 +77,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		update_icon()
 		return
 
-	charge_to_account(Acc.account_number, "Счетчик электроэнергии", "Оплата электроэнергии", src.name, -pay_amount)
-	charge_to_account(global.department_accounts["Engineering"], "Счетчик электроэнергии", "Прибыль за электроэнергию", src.name, pay_amount)
+	charge_to_account(Acc.account_number, "Счётчик электроэнергии", "Оплата электроэнергии", src.name, -pay_amount)
+	charge_to_account(global.department_accounts["Engineering"], "Счётчик электроэнергии", "Прибыль за электроэнергию", src.name, pay_amount)
 
 	powerused = 0
 	paid = TRUE
@@ -160,19 +160,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 
 	if(istype(I, /obj/item/weapon/card/id))
-		visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
+		visible_message("<span class='info'>[usr] прикладывает карту к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I
 		connected_account_number = Card.associated_account_number
 
 	else if(istype(I, /obj/item/device/pda) && I.GetID())
-		visible_message("<span class='info'>[usr] прикладывает кпк к терминалу.</span>")
+		visible_message("<span class='info'>[usr] прикладывает кпк к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		connected_account_number = Card.associated_account_number
 
 	else if(istype(I, /obj/item/weapon/ewallet))
-		visible_message("<span class='info'>[usr] прикладывает чип к терминалу.</span>")
+		visible_message("<span class='info'>[usr] прикладывает чип к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/ewallet/Wallet = I
 		connected_account_number = Wallet.account_number
