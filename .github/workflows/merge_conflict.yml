@@ -17,5 +17,4 @@ jobs:
       - name: Apply labels based on changed files
         uses: actions/labeler@v6
         with:
-          sync-labels: true
           configuration-path: .github/LABELER.yml
