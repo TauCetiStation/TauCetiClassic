@@ -53,23 +53,30 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		disconnect_terminal()
 	return ..()
 
+/obj/machinery/power/meter/examine(mob/user)
+	..()
+	to_chat(user, "Потреблено: [powerused KWH]кВт/ч | Цена за кВт/ч: [credits_per_kwh]")
+
 /obj/machinery/power/meter/attack_hand(mob/user)
 	. = ..()
 	if(!paid)
 		try_retrieve_funds()
+
+/obj/machinery/power/meter/proc/fail_retrieve()
+	paid = FALSE
+	update_icon()
+	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
 
 /obj/machinery/power/meter/proc/try_retrieve_funds()
 	if(!powerused || !credits_per_kwh)
 		return
 
 	if(!connected_account_number || !isnum(connected_account_number))
-		paid = FALSE
-		update_icon()
+		fail_retrieve()
 		return
 
 	if(!get_account(connected_account_number))
-		paid = FALSE
-		update_icon()
+		fail_retrieve()
 		return
 
 	var/datum/money_account/Acc = get_account(connected_account_number)
@@ -77,8 +84,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	var/pay_amount = round(powerused KWH * credits_per_kwh)
 
 	if(Acc.money < pay_amount)
-		paid = FALSE
-		update_icon()
+		fail_retrieve()
 		return
 
 	charge_to_account(Acc.account_number, "Счётчик электроэнергии", "Оплата электроэнергии", src.name, -pay_amount)
@@ -225,10 +231,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	powerused_last = powerused
 	powerused += available_power
 
+	if(powerused_las < powerused)
+		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
+
 	update_icon()
 
 /obj/machinery/power/meter/update_icon()
-	if(can_operate() && (powerused - powerused_last) > 0)
+	if(can_operate() && (powerused > powerused_last))
 		icon_state = "[initial(icon_state)]_w"
 	else if(panel_open)
 		icon_state = "[initial(icon_state)]-o"
@@ -245,8 +254,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 		holoprice.pixel_y = 4
 
-	cut_overlay(holoprice)
-	holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused KWH * credits_per_kwh)]$</div>"}
-	holoprice.icon = 'icons/obj/device.dmi'
-	holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused KWH * credits_per_kwh)), 3)]"
-	add_overlay(holoprice)
+	if(powerused > powerused_last)
+		cut_overlay(holoprice)
+		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused KWH * credits_per_kwh)]$</div>"}
+		holoprice.icon = 'icons/obj/device.dmi'
+		holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused KWH * credits_per_kwh)), 3)]"
+		add_overlay(holoprice)
+
+		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+
