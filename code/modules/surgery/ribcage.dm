@@ -266,7 +266,7 @@
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
-				return
+				continue
 			if(!IO.is_robotic())
 				user.visible_message("[user] treats damage to [target]'s [IO.name] with [tool_name].", \
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
@@ -281,7 +281,7 @@
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
-				return
+				continue
 			if(!IO.is_robotic())
 				IO.damage = 0
 

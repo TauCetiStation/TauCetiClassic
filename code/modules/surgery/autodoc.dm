@@ -1,7 +1,6 @@
 #define AUTODOC_COOLDOWN 30
 
 /obj/machinery/autodoc
-	var/locked
 	name = "Autodoc"
 	cases = list("автодок", "автодока", "автодоку", "автодок", "автодоком", "автодоке")
 	desc = "Используется для оперирования пациентов."
@@ -15,6 +14,7 @@
 	var/list/datum/surgery_step/steps_queue = list()
 
 	var/prev_step_time = 0
+	var/locked
 
 /obj/machinery/autodoc/power_change()
 	..()
