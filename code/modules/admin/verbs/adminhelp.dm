@@ -239,17 +239,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		)
 	_interactions += "[time_stamp()]: [formatted_message]"
 
-	if(usr && usr.ckey == initiator_ckey)
-		var/list/adm = get_admin_counts(R_BAN)
-		var/list/activemins = adm["present"]
-		if(activemins.len <= 0) // If there are still no active admins in the game
-			world.send2bridge(
-				type = list(BRIDGE_ADMINLOG),
-				attachment_title = "Response to **Ticket #[id]** from **[initiator_key_name]**",
-				attachment_msg = formatted_message,
-				attachment_color = BRIDGE_COLOR_ADMINALERT,
-			)
-
 //Adds a cooldown to the user's ahelp verb.
 /datum/admin_help/proc/TimeoutVerb()
 	ahelp_tickets.ckey_cooldown_holder[initiator_ckey] = world.time + 2 MINUTES //2 minute cooldown of admin helps
@@ -286,12 +275,23 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc
-/datum/admin_help/proc/MessageNoRecipient(msg)
+/datum/admin_help/proc/MessageNoRecipient(msg, log_to_bridge = TRUE)
 	var/ref_src = "\ref[src]"
 	//Message to be sent to all admins
 	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='emojify linkify'>[msg]</span></span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
+
+	if(log_to_bridge && usr && usr.ckey == initiator_ckey)
+		var/list/adm = get_admin_counts(R_BAN)
+		var/list/activemins = adm["present"]
+		if(activemins.len <= 0) // If there are still no active admins in the game
+			world.send2bridge(
+				type = list(BRIDGE_ADMINLOG),
+				attachment_title = "Response to **Ticket #[id]** from **[key_name(initiator)]**",
+				attachment_msg = sanitize(msg),
+				attachment_color = BRIDGE_COLOR_ADMINALERT,
+			)
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
@@ -599,7 +599,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(current_ticket)
 		if(tgui_alert(src, "You already have a ticket open. Is this for the same issue?",, list("Yes","No")) != "No")
 			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
+				current_ticket.MessageNoRecipient(msg, FALSE)
 				current_ticket.TimeoutVerb()
 				return
 			else
