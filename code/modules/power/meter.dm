@@ -219,7 +219,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	actual_load = load() - newavail() //load minus our own production
 
 	var/available_power = max(0, min(actual_load, terminal.surplus()))
-	terminal.add_load(actual_load)
+	terminal.add_load(max(0, actual_load))
 	add_avail(max(0, terminal.surplus()))
 
 	powerused_last = powerused
