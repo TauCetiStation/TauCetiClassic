@@ -279,7 +279,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/khel_tiraza
 	name = "Khel`Tiraza"
-	desc = "Не знаю, съедобно ли это… Но выглядит дорого."
+	desc = "Не знаю, съедобно ли это, но выглядит дорого."
 	icon_state = "khel-tiraza"
 	item_state_world = "khel-tiraza_world"
 	bitesize = 2
