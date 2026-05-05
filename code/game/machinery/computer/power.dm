@@ -78,13 +78,13 @@
 		t += "<PRE>Equipment: [DisplayPower(equipment_cons)]; Lighting: [DisplayPower(lighting_cons)]; Environment: [DisplayPower(environment_cons)]<BR></PRE>"
 
 		if(powermeters.len > 0)
-			meters_text += "<tr><th>Счётчик</th> <th>Нагрузка</th> <th>Использовано</th> <th>Цена за 1кВт/ч</th> <th>Статус</th></tr>"
+			meters_text += "<tr><th>Счётчик</th> <th>Нагрузка</th> <th>Использовано</th> <th>Цена за кВт/ч</th> <th>Статус</th></tr>"
 			for(var/obj/machinery/power/meter/meter in powermeters)
 				var/acc_name = meter.name
 				var/datum/money_account/acc = get_account(meter.connected_account_number)
 				if(acc)
 					acc_name = "[acc.owner_name]'s power meter"
-				meters_text += "<tr><td>[acc_name]</td> <td>[DisplayPower(meter.actual_load)]</td> <td>[meter.powerused KWH]кВт/ч</td>"
+				meters_text += "<tr><td>[acc_name]</td> <td>[DisplayPower(meter.actual_load)]</td> <td>[round(meter.powerused KWH, 0.01)]кВт/ч</td>"
 				meters_text += "<td><A href='byond://?src=\ref[src];change_meter_rate=1;meter_ref=[REF(meter)]'>[meter.credits_per_kwh]$</A></td>"
 				meters_text += "<td>[meter.can_operate() ? "<span style='color: green'>ON</span>" : "<span style='color: red'>OFF</span>"]</td>"
 
@@ -111,7 +111,7 @@
 				else
 					apcs_text += "N/C</td> <td>   </td> </tr>"
 
-			t += "<FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
+			t += "<BR><FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
 			t += apcs_text
 			t += "</TABLE></FONT>"
 
