@@ -69,7 +69,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 	var/datum/money_account/Acc = get_account(connected_account_number)
 
-	var/pay_amount = round(powerused * ELECTRICITY_EXCHANGE_RATE)
+	var/pay_amount = round(powerused / 3600000 * ELECTRICITY_EXCHANGE_RATE)
 
 	if(Acc.money < pay_amount)
 		paid = FALSE
