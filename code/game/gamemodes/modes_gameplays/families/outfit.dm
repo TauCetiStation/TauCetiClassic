@@ -36,7 +36,7 @@
 	. = ..()
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(istype(U))
-		var/obj/item/clothing/accessory/holster/armpit/holster = new /obj/item/clothing/accessory/holster/armpit(U)
+		var/obj/item/clothing/accessory/holster/armpit/holster = new (U)
 		LAZYADD(U.accessories, holster)
 		holster.on_attached(U, H, TRUE)
 
