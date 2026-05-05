@@ -4,6 +4,7 @@ var/global/list/power_meters = list()
 ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 /obj/machinery/power/meter
 	name = "power meter unit"
+	cases = list("счетчик электроэнергии", "счетчика электроэнергии", "счетчику электроэнергии", "счетчик электроэнергии", "счетчиком электроэнергии", "счетчике электроэнергии")
 	desc = "Счетчик используемой электроэнергии."
 	icon_state = "powermeter"
 	density = TRUE
