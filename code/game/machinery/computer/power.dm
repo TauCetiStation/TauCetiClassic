@@ -85,7 +85,7 @@
 				if(Meter.connected_account_number && get_account(Meter.connected_account_number))
 					var/datum/money_account/Acc = get_account(Meter.connected_account_number)
 					acc_name = "[Acc.owner_name]'s power meter"
-				meters += "<tr><td>[acc_name]</td> <td>[DisplayPower(Meter.load())]</td> <td>[DisplayPower(Meter.powerused/3600)]/ч</td>"
+				meters += "<tr><td>[acc_name]</td> <td>[DisplayPower(Meter.actual_load)]</td> <td>[DisplayPower(Meter.powerused/3600)]/ч</td>"
 				meters += "<td><A href='byond://?src=\ref[src];change_meter_rate=1;meter_id=[global.power_meters.Find(Meter)]'>[Meter.credits_per_kwh]$</A></td>"
 				meters += "<td>[Meter.can_operate() ? "<span style='color: green'>ON</span>" : "<span style='color: red'>OFF</span>"]</td>"
 

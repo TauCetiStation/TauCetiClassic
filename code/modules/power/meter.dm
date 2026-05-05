@@ -27,6 +27,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 	var/credits_per_kwh = 250
 
+	var/actual_load = 0
+
 /obj/machinery/power/meter/atom_init()
 	. = ..()
 
@@ -214,10 +216,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	if(!can_operate())
 		return
 
-	var/to_consume = load()
+	actual_load = load() - newavail() //load minus our own production
 
-	var/available_power = max(0, min(to_consume, terminal.surplus()))
-	terminal.add_delayedload(to_consume)
+	var/available_power = max(0, min(actual_load, terminal.surplus()))
+	terminal.add_delayedload(actual_load)
 	add_avail(max(0, terminal.surplus()))
 
 	powerused_last = powerused
