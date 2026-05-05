@@ -214,11 +214,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	if(!can_operate())
 		return
 
-	var/to_consume = load() + 1000
+	var/to_consume = load()
 
-	var/available_power = max(0, min(to_consume, terminal.newavail() - to_consume))
-	terminal.add_load(available_power)
-	add_avail(available_power)
+	var/available_power = max(0, min(to_consume, terminal.surplus()))
+	terminal.add_delayedload(to_consume)
+	add_avail(max(0, terminal.surplus()))
 
 	powerused_last = powerused
 	powerused += available_power
