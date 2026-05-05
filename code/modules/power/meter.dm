@@ -1,4 +1,3 @@
-#define ELECTRICITY_EXCHANGE_RATE 250 // credits per kw/h
 var/global/list/power_meters = list()
 
 ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
@@ -25,6 +24,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 	var/connected_account_number = 0
 	var/paid = TRUE
+
+	var/credits_per_kwh = 250
 
 /obj/machinery/power/meter/atom_init()
 	. = ..()
@@ -53,10 +54,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 /obj/machinery/power/meter/attack_hand(mob/user)
 	. = ..()
 	if(!paid)
-		try_pay()
+		try_retrieve_funds()
 
-/obj/machinery/power/meter/proc/try_pay()
-	if(!powerused)
+/obj/machinery/power/meter/proc/try_retrieve_funds()
+	if(!powerused || !credits_per_kwh)
 		return
 
 	if(!connected_account_number || !isnum(connected_account_number))
@@ -71,7 +72,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 	var/datum/money_account/Acc = get_account(connected_account_number)
 
-	var/pay_amount = round(powerused / 3600000 * ELECTRICITY_EXCHANGE_RATE)
+	var/pay_amount = round(powerused / 3600000 * credits_per_kwh)
 
 	if(Acc.money < pay_amount)
 		paid = FALSE
@@ -213,11 +214,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	if(!can_operate())
 		return
 
+	var/available_power = min(load(), terminal.surplus())
 	terminal.add_load(load())
-	add_avail(terminal.newavail())
+	add_avail(available_power)
 
 	powerused_last = powerused
-	powerused += min(load(), newavail())
+	powerused += available_power
 
 	update_icon()
 
@@ -240,9 +242,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		holoprice.pixel_y = 4
 
 	cut_overlay(holoprice)
-	holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused / 3600000 * ELECTRICITY_EXCHANGE_RATE)]$</div>"}
+	holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused / 3600000 * credits_per_kwh)]$</div>"}
 	holoprice.icon = 'icons/obj/device.dmi'
-	holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused / 3600000 * ELECTRICITY_EXCHANGE_RATE)), 3)]"
+	holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused / 3600000 * credits_per_kwh)), 3)]"
 	add_overlay(holoprice)
-
-#undef ELECTRICITY_EXCHANGE_RATE

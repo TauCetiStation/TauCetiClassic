@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(economy)
 
 	//Pay for electricity used
 	for(var/obj/machinery/power/meter/Meter in global.power_meters)
-		Meter.try_pay()
+		Meter.try_retrieve_funds()
 
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.owner_salary && !D.suspended)
