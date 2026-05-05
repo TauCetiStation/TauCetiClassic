@@ -193,6 +193,7 @@
 
 	else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
 		return
+
 	else if(istype(target, /obj/machinery/kitchen_machine))
 		return
 
