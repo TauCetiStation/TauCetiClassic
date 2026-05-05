@@ -74,7 +74,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 	var/datum/money_account/Acc = get_account(connected_account_number)
 
-	var/pay_amount = round(powerused / 3600000 * credits_per_kwh)
+	var/pay_amount = round(WATT_TO_KWH(powerused) * credits_per_kwh)
 
 	if(Acc.money < pay_amount)
 		paid = FALSE
@@ -219,7 +219,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	actual_load = load() - newavail() //load minus our own production
 
 	var/available_power = max(0, min(actual_load, terminal.surplus()))
-	terminal.add_delayedload(actual_load)
+	terminal.add_load(actual_load)
 	add_avail(max(0, terminal.surplus()))
 
 	powerused_last = powerused
@@ -246,7 +246,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		holoprice.pixel_y = 4
 
 	cut_overlay(holoprice)
-	holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused / 3600000 * credits_per_kwh)]$</div>"}
+	holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(WATT_TO_KWH(powerused) * credits_per_kwh)]$</div>"}
 	holoprice.icon = 'icons/obj/device.dmi'
-	holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused / 3600000 * credits_per_kwh)), 3)]"
+	holoprice.icon_state = "holo_overlay_[min(length(num2text(WATT_TO_KWH(powerused) * credits_per_kwh)), 3)]"
 	add_overlay(holoprice)
