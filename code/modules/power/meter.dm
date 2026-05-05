@@ -231,7 +231,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	powerused_last = powerused
 	powerused += available_power
 
-	if(powerused_last < powerused)
+	if(round(powerused_last KWH * credits_per_kwh) < round(powerused KWH * credits_per_kwh))
 		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
 
 	update_icon()
@@ -260,6 +260,3 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		holoprice.icon = 'icons/obj/device.dmi'
 		holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused KWH * credits_per_kwh)), 3)]"
 		add_overlay(holoprice)
-
-		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
-
