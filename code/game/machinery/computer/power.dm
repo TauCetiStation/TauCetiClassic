@@ -54,15 +54,25 @@
 
 		var/list/L = list()
 		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = term.master
+			if(istype(term.master, /obj/machinery/power/apc) || istype(term.master, /obj/machinery/power/meter))
+				var/obj/machinery/power/A = term.master
 				L += A
 
+		var/meters = ""
 		var/apcs = ""
 		var/equipment_cons = 0
 		var/lighting_cons = 0
 		var/environment_cons = 0
 		if(L.len > 0)
+			meters += "<tr><th>Meter</th> <th>Load</th> <td>Used</td></tr>"
+			for(var/obj/machinery/power/meter/M in L)
+				if(M.can_operate())
+					var/acc_name = M.name
+					if(M.connected_account_number && get_account(M.connected_account_number))
+						var/datum/money_account/Acc = get_account(M.connected_account_number)
+						acc_name = "[Acc.owner_name]'s power meter"
+					meters += "<tr><td>[acc_name]</td> <td>[DisplayPower(M.load())]</td> <td>[DisplayPower(M.powerused/3600)]/ч</td>"
+
 			apcs += "<tr> <th>Area</th> <th>Eqp.</th> <th>Lgt.</th> <th>Env.</th>"
 			apcs += "<th style='text-align: center'>Load</th> <th style='text-align: right'>Cell </th> <th> - </th> </tr>"
 
@@ -86,6 +96,11 @@
 
 		t += "<PRE>Total power: [DisplayPower(powernet.viewavail)]<BR>Total load:  [DisplayPower(powernet.viewload)]<BR></PRE>"
 		t += "<PRE>Equipment: [DisplayPower(equipment_cons)]; Lighting: [DisplayPower(lighting_cons)]; Environment: [DisplayPower(environment_cons)]<BR></PRE>"
+		t += "<FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
+		t += meters
+
+		t += "</TABLE></FONT></TT>"
+
 		t += "<FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
 		t += apcs
 

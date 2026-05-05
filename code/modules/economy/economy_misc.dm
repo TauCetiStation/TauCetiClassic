@@ -131,7 +131,8 @@ var/global/initial_station_money = 7500
 	current_date_string = "[DD].[MM].[game_year]"
 
 	setup_shop()
-	setup_vending()
+
+	setup_map_placeholder_accounts()
 
 	economy_init = TRUE
 	return 1
@@ -216,11 +217,20 @@ var/global/initial_station_money = 7500
 	for(var/obj/random_shop_item/Item in global.random_onlineshop_items)
 		Item.generate_shop_item()
 
-/proc/setup_vending()
-	for(var/obj/machinery/vending/Vend in global.vending_machines)
-		switch(Vend.seller_account_number)
-			if(MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER)
-				Vend.seller_account_number = global.vendor_account.account_number
+/proc/get_account_number_from__map_placeholder_or_null(map_placeholder)
+	switch(map_placeholder)
+		if(MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER)
+			return global.vendor_account.account_number
 
-			if(MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER)
-				Vend.seller_account_number = global.cargo_account.account_number
+		if(MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER)
+			return global.cargo_account.account_number
+
+		else
+			return null
+
+/proc/setup_map_placeholder_accounts()
+	for(var/obj/machinery/vending/Vend in global.vending_machines)
+		Vend.seller_account_number = get_account_number_from__map_placeholder_or_null(Vend.seller_account_number)
+
+	for(var/obj/machinery/power/meter/Meter in global.power_meters)
+		Meter.connected_account_number = get_account_number_from__map_placeholder_or_null(Meter.connected_account_number)
