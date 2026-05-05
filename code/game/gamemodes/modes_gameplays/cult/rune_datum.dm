@@ -263,7 +263,7 @@
 
 	statue = new(rune_turf, holder)
 	var/religify_compelted = R.religify_area(area.type, CALLBACK(src, PROC_REF(capture_iteration)), null, TRUE)
-	religion.send_message_to_members("Захват [area] [religify_compelted ? "удался" : "провален"].", pick(religion.deity_names))
+	religion.send_message_to_members("Захват [CASE(area, GENITIVE_CASE)] [religify_compelted ? "удался" : "провален"].", pick(religion.deity_names))
 	message_admins("Capture of [area] [religify_compelted ? "successful" : "failed"].")
 	R.capturing_area = FALSE
 
@@ -272,7 +272,8 @@
 		return FALSE
 
 	if((100*i)/all_items.len % 25 == 0)
-		religion.send_message_to_members("Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%", font_size = 2)
+		var/area/A = get_area(holder) //for cases
+		religion.send_message_to_members("Захват [CASE(A, GENITIVE_CASE)] завершен на [round((100*i)/all_items.len, 0.1)]%", font_size = 2)
 
 	INVOKE_ASYNC(src, PROC_REF(capture_effect), i, all_items)
 	sleep(per_obj_cd)

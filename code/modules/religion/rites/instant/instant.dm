@@ -319,7 +319,7 @@
 		return FALSE
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	for(var/i in 1 to divine_power)
-		if(candidates.len < divine_power)
+		if(!candidates.len)
 			return TRUE
 
 		var/mob/M = pick(candidates)
@@ -660,6 +660,7 @@
 		if(!(HULK in L.mutations))
 			L.Stuttering(stun_modifier)
 			L.Weaken(stun_modifier)
+			L.apply_status_effect(/datum/status_effect/cursed_talk, stun_modifier SECONDS)
 			L.show_message("<span class='userdanger'>У вас будто вылетает душа из тела, а по возвращению теряет контроль над телом!</span>", SHOWMSG_VISUAL)
 	return TRUE
 

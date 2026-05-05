@@ -219,6 +219,7 @@
 	name = "Набор Брони"
 	building_type = /obj/item/weapon/storage/backpack/cultpack/armor
 	favor_cost = 200
+	piety_cost = 10
 
 /datum/building_agent/tool/cult/blade
 	name = "Кровавая Месть"
