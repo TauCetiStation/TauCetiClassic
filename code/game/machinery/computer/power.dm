@@ -143,7 +143,7 @@
 		if(!Adjacent(usr))
 			return
 
-		rate = round(clamp(rate, 0, 500))
+		rate = round(clamp(rate, 0, MAX_KWH_PRICE))
 
 		M.credits_per_kwh = rate
 
