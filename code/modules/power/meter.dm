@@ -214,7 +214,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	if(!can_operate())
 		return
 
-	var/available_power = min(load(), terminal.surplus())
+	var/available_power = max(0, min(load(), terminal.surplus()))
 	terminal.add_load(load())
 	add_avail(available_power)
 
