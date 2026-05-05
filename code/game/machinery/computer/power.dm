@@ -132,7 +132,7 @@
 		return
 
 	if(href_list["change_meter_rate"])
-		var/meter_ref = hrefs['meter_ref']
+		var/meter_ref = href_list["meter_ref"]
 		if(!meter_ref)
 			return
 		var/obj/machinery/power/meter/M = locate(meter_ref)
