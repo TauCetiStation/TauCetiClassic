@@ -143,7 +143,7 @@
 		if(!Adjacent(usr))
 			return
 
-		if(!rate)
+		if(isnull(rate))
 			return
 
 		rate = round(clamp(rate, 0, MAX_KWH_PRICE))
