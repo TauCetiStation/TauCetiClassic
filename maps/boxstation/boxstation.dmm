@@ -83691,6 +83691,7 @@
 	name = "apc left";
 	pixel_x = -28
 	},
+/obj/item/weapon/woodencrate/potato,
 /turf/simulated/floor,
 /area/station/civilian/cold_room)
 "rnU" = (
@@ -87613,6 +87614,11 @@
 	dir = 8;
 	name = "apc left";
 	pixel_x = -28
+	},
+/obj/item/stack/sheet/wood{
+	amount = 20;
+	pixel_x = 5;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

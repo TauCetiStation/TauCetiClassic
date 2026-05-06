@@ -21,6 +21,9 @@
 	var/starttype
 	var/startamount
 
+	var/max_items = 15
+	var/contains_name = ""
+
 /obj/item/weapon/woodencrate/atom_init()
 	. = ..()
 
@@ -28,7 +31,13 @@
 
 	if(starttype && startamount)
 		for(var/i in 1 to startamount)
-			new starttype(src)
+			if(starttype in typesof(/obj/item/weapon/reagent_containers/food/snacks/grown))
+				new starttype(src, 10)
+			else
+				new starttype(src)
+
+		var/obj/item/I = contents[1]
+		desc = "[initial(desc)] Содержит: [I.name]"
 
 	generate_icons()
 
@@ -79,11 +88,11 @@
 		var/icon/iconthing
 		if(I.item_state_world)
 			iconthing = icon(I.icon, I.item_state_world)
+			picture.Blend(iconthing, ICON_OVERLAY, 1, 3)
 		else
 			iconthing = icon(I.icon, I.icon_state)
-			iconthing.Scale(10, 10)
-
-		picture.Blend(iconthing, ICON_OVERLAY, 12, 14)
+			iconthing.Scale(12, 12)
+			picture.Blend(iconthing, ICON_OVERLAY, 11, 13)
 
 		add_overlay(picture)
 
@@ -107,12 +116,31 @@
 			update_icon()
 			return
 
+	if(istype(W, /obj/item/weapon/storage) && !istype(W, /obj/item/weapon/storage/bag/plants))
+		return ..()
+
 	if(open)
 		if(contents.len)
 			var/obj/item/I = contents[1]
+			if(istype(W, /obj/item/weapon/storage/bag/plants))
+				var/obj/item/weapon/storage/bag/plants/P = W
+
+				for(var/obj/item/T in P.contents)
+					if(contents.len >= max_items)
+						return ..()
+					if(T.type == I.type)
+						P.remove_from_storage(T, src)
+
+				update_icon()
+				return
+
 			if(W.type != I.type)
 				return ..()
 
+		if(contents.len >= max_items)
+			return ..()
+
+		desc = "[initial(desc)] Содержит: [W.name]"
 		user.drop_from_inventory(W, src)
 		W.pixel_x = rand(insides_boundaries[1][1], insides_boundaries[2][1])
 		W.pixel_y = rand(insides_boundaries[1][2], insides_boundaries[2][2])
