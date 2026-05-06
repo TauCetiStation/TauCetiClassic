@@ -79787,6 +79787,12 @@
 	icon_state = "whitered"
 	},
 /area/station/medical/hallway)
+"mvI" = (
+/obj/machinery/power/meter{
+	anchored = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/engine)
 "mwb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -116405,8 +116411,8 @@ uns
 crH
 mfF
 mfF
-cAR
-cAR
+mvI
+mvI
 nxV
 nxV
 crH

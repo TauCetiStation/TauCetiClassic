@@ -165,3 +165,8 @@
 	cost = 300
 	unit_name = "mining drill head"
 	export_types = list(/obj/machinery/mining/drill)
+
+/datum/export/large/powermeter
+	cost = 1500
+	unit_name = "certified nt-powermeter"
+	export_types = list(/obj/machinery/power/meter)

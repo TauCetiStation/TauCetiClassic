@@ -1180,6 +1180,13 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 500
 	group = "Engineering"
 
+/datum/supply_pack/powermeter
+	name = "Certified NT-Powermeter"
+	contains  = list(/obj/machinery/power/meter)
+	crate_type = /obj/structure/closet/crate/secure/large
+	crate_name = "Certified NT-Powermeter Crate"
+	group = "Engineering"
+
 //----------------------------------------------
 //------------MEDICAL / SCIENCE-----------------
 //----------------------------------------------

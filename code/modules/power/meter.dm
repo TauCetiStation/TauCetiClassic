@@ -26,11 +26,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	var/paid = TRUE
 
 	var/credits_per_kwh = 250
+	var/new_credits_per_kwh = 250
 
 	var/actual_load = 0
 
-/obj/machinery/power/meter/atom_init()
+/obj/machinery/power/meter/atom_init(mapload)
 	. = ..()
+
+	if(!mapload)
+		anchored = FALSE
+		return
+
+	if(!anchored)
+		return
 
 	update_icon()
 
@@ -59,6 +67,24 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 /obj/machinery/power/meter/attack_hand(mob/user)
 	. = ..()
+	if(panel_open)
+		var/account_num = input("Введите номер счёта", "") as num|null
+		if(!Adjacent(user))
+			return
+		if(!account_num)
+			return
+
+
+
+		var/datum/money_account/meter_acc = attempt_account_access_with_user_input(account_num, user = user)
+		if(!meter_acc)
+			to_chat(user, "Счёта не существует или пин-код набран неправильно")
+			return
+
+		connected_account_number = account_num
+		to_chat(user, "Счёт подключен успешно")
+		return
+
 	if(!paid)
 		try_retrieve_funds()
 
@@ -75,29 +101,58 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		fail_retrieve()
 		return
 
-	if(!get_account(connected_account_number))
+	var/datum/money_account/meter_acc = get_account(connected_account_number)
+	if(!meter_acc)
 		fail_retrieve()
 		return
-
-	var/datum/money_account/Acc = get_account(connected_account_number)
 
 	var/pay_amount = round(powerused KWH * credits_per_kwh)
 
-	if(Acc.money < pay_amount)
+	if(meter_acc.money < pay_amount)
 		fail_retrieve()
 		return
 
-	charge_to_account(Acc.account_number, "Счётчик электроэнергии", "Оплата электроэнергии", src.name, -pay_amount)
+	charge_to_account(meter_acc.account_number, "Счётчик электроэнергии", "Оплата электроэнергии", src.name, -pay_amount)
 	charge_to_account(global.department_accounts["Engineering"], "Счётчик электроэнергии", "Прибыль за электроэнергию", src.name, pay_amount)
 
 	powerused = 0
 	paid = TRUE
+
+	if(new_credits_per_kwh != credits_per_kwh)
+		credits_per_kwh = new_credits_per_kwh
+
+/obj/machinery/power/meter/proc/change_rate(newrate)
+	if(!connected_account_number || !isnum(connected_account_number))
+		return FALSE
+
+	var/datum/money_account/meter_acc = get_account(connected_account_number)
+	if(!meter_acc)
+		return FALSE
+
+	charge_to_account(meter_acc.account_number, "Счётчик электроэнергии", "Изменение цены за кВт/ч, начиная со следующего отчётного периода, с [credits_per_kwh] до [newrate]$", src.name, 0)
+
+	new_credits_per_kwh = newrate
+
+	return TRUE
 
 /obj/machinery/power/meter/attackby(obj/item/I, mob/user)
 	// opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		update_icon()
 		return
+
+	//anchoring
+	if(iswelding(I) && !panel_open)
+		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(anchored)
+				anchored = FALSE
+				to_chat(user, "You unweld the [src] from the floor.")
+				disconnect_terminal()
+				disconnect_from_network()
+			else
+				anchored = TRUE
+				to_chat(user, "You weld the [src] to the floor.")
+				connect_to_network()
 
 	// changing direction using wrench
 	if(default_change_direction_wrench(user, I))
@@ -169,27 +224,25 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		terminal.dismantle(user)
 
 
-	if(istype(I, /obj/item/weapon/card/id))
+	if(panel_open && istype(I, /obj/item/weapon/card/id))
 		visible_message("<span class='info'>[usr] прикладывает карту к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I
 		connected_account_number = Card.associated_account_number
 
-	else if(istype(I, /obj/item/device/pda) && I.GetID())
+	else if(panel_open && istype(I, /obj/item/device/pda) && I.GetID())
 		visible_message("<span class='info'>[usr] прикладывает кпк к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		connected_account_number = Card.associated_account_number
 
-	else if(istype(I, /obj/item/weapon/ewallet))
+	else if(panel_open && istype(I, /obj/item/weapon/ewallet))
 		visible_message("<span class='info'>[usr] прикладывает чип к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/ewallet/Wallet = I
 		connected_account_number = Wallet.account_number
 
-	// crowbarring it!
-	if(!default_deconstruction_crowbar(I))
-		return ..()
+	return ..()
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
@@ -207,7 +260,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	if(stat & BROKEN)
 		return FALSE
 
+	if(!anchored)
+		return FALSE
+
 	if(panel_open)
+		return FALSE
+
+	if(!terminal)
 		return FALSE
 
 	if(!powernet || !terminal.powernet)
@@ -240,9 +299,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	if(can_operate() && (powerused > powerused_last))
 		icon_state = "[initial(icon_state)]_w"
 	else if(panel_open)
-		icon_state = "[initial(icon_state)]-o"
+		icon_state = "[initial(icon_state)][anchored ? "" : "_notanchored"]-o"
 	else
-		icon_state = initial(icon_state)
+		icon_state = "[initial(icon_state)][anchored ? "" : "_notanchored"]"
 
 	if(!holoprice)
 		holoprice = image('icons/effects/32x32.dmi', "blank")
@@ -254,9 +313,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 		holoprice.pixel_y = 4
 
-	if(powerused > powerused_last)
+	if(!can_operate())
 		cut_overlay(holoprice)
-		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused KWH * credits_per_kwh)]$</div>"}
-		holoprice.icon = 'icons/obj/device.dmi'
-		holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused KWH * credits_per_kwh)), 3)]"
-		add_overlay(holoprice)
+		return
+
+	if(powerused < powerused_last)
+		return
+
+	cut_overlay(holoprice)
+	holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused KWH * credits_per_kwh)]$</div>"}
+	holoprice.icon = 'icons/obj/device.dmi'
+	holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused KWH * credits_per_kwh)), 3)]"
+	add_overlay(holoprice)

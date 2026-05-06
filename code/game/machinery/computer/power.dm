@@ -85,7 +85,7 @@
 				if(acc)
 					acc_name = "[acc.owner_name]'s meter"
 				meters_text += "<tr><td>[acc_name]</td> <td>[DisplayPower(meter.actual_load)]</td> <td>[round(meter.powerused KWH, 0.01)]кВт/ч</td>"
-				meters_text += "<td><A href='byond://?src=\ref[src];change_meter_rate=1;meter_ref=[REF(meter)]'>[meter.credits_per_kwh]$</A></td>"
+				meters_text += "<td><A href='byond://?src=\ref[src];change_meter_rate=1;meter_ref=[REF(meter)]'>[meter.new_credits_per_kwh == meter.credits_per_kwh ? meter.credits_per_kwh : "<S>[meter.credits_per_kwh]</S> meter.new_credits_per_kwh"]$</A></td>"
 				meters_text += "<td>[meter.can_operate() ? "<span style='color: green'>ON</span>" : "<span style='color: red'>OFF</span>"]</td>"
 
 			t += "<FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
@@ -139,13 +139,14 @@
 		if(!M)
 			return
 
-		var/rate = input("Цена за кВт/ч (от 0 до 500)", "[M.credits_per_kwh]") as num|null
+		var/rate = input("Цена за кВт/ч (от 0 до 500)", "[M.new_credits_per_kwh]") as num|null
 		if(!Adjacent(usr))
 			return
 
+		if(!rate)
+			return
+
 		rate = round(clamp(rate, 0, MAX_KWH_PRICE))
-
-		M.credits_per_kwh = rate
-
-		updateDialog()
+		if(M.change_rate(rate))
+			updateDialog()
 		return
