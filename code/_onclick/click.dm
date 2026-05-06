@@ -369,6 +369,24 @@
 	return
 
 /*
+	Alt+Shift click
+	Unused except for AI
+*/
+/mob/proc/AltShiftClickOn(atom/A)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_ALT_SHIFT, A) & COMPONENT_CANCEL_CLICK)
+		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_ALTSHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
+	A.AltShiftClick(src)
+	return
+
+/atom/proc/AltShiftClick(mob/user)
+	return
+
+/*
 	Misc helpers
 
 	Laser Eyes: as the name implies, handles this since nothing else does currently

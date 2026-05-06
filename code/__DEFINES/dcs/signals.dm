@@ -241,6 +241,8 @@
 #define COMSIG_ITEM_ALTCLICKWITH "item_altclickwith"
 /// from base of mob/CtrlShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_CTRLSHIFTCLICKWITH "item_ctrlshiftclickwith"
+/// from base of mob/AltShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_ALTSHIFTCLICKWITH "item_altshiftclickwith"
 /// from base of mob/MiddleClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
 	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
@@ -328,6 +330,8 @@
 #define COMSIG_LIVING_CLICK_CTRL "living_click_ctrl"
 /// from base of mob/CtrlShiftClickOn(): (atom/target)
 #define COMSIG_LIVING_CLICK_CTRL_SHIFT "living_click_ctrl_shift"
+/// from base of mob/CtrlShiftClickOn(): (atom/target)
+#define COMSIG_LIVING_CLICK_ALT_SHIFT "living_alt_ctrl_shift"
 /// from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"
 /// from slime ShiftClickOn(): (/mob)

@@ -40,6 +40,9 @@
 	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
+	if(modifiers[SHIFT_CLICK] && modifiers[ALT_CLICK])
+		AltShiftClickOn(A)
+		return
 	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
@@ -96,6 +99,8 @@
 	A.AIShiftClick(src)
 /mob/living/silicon/ai/CtrlClickOn(atom/A)
 	A.AICtrlClick(src)
+/mob/living/silicon/ai/AltShiftClickOn(atom/A)
+	A.AIAltShiftClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
 	if(active_module)
 		if(!active_module.AIAltClickHandle(A))
@@ -156,14 +161,16 @@
 		return
 	if(!issilicon(M))
 		return
-	var/mob/living/silicon/S = M
-	if(S.is_antag())
-		if(!secondsElectrified) //Needs rework. See more in PR #14556
-			electrify(M)
-		else
-			unelectrify(M)
-		return
+	if(!secondsElectrified) //Needs rework. See more in PR #14556
+		electrify(M)
+	else
+		unelectrify(M)
+	return
 
+/atom/proc/AIAltShiftClick()
+	return
+
+/obj/machinery/door/airlock/AIAltShiftClick(mob/M)
 	if(emergency)
 		enable_emergency_access(M)
 	else
