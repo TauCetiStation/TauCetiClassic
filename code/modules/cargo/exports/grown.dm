@@ -20,6 +20,116 @@ use it if low potency results garbage from harvested crop
 	var/ratio = G.potency / 100
 	return ..() * ratio
 
+/datum/export/grown/corn
+	unit_name = "corn"
+	cost = 15
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/corn)
+
+/datum/export/grown/cherries
+	unit_name = "cherries"
+	cost = 50
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cherries)
+
+/datum/export/grown/potato
+	unit_name = "potato"
+	cost = 9
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/potato)
+
+/datum/export/grown/grapes
+	unit_name = "grapes"
+	cost = 17
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/grapes)
+
+/datum/export/grown/cabbage
+	unit_name = "cabbage"
+	cost = 24
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage)
+
+/datum/export/grown/cucumber
+	unit_name = "cucumber"
+	cost = 13
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cucumber)
+
+/datum/export/grown/cocoapod
+	unit_name = "cocoapod"
+	cost = 15
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod)
+
+/datum/export/grown/sugarcane
+	unit_name = "sugarcane"
+	cost = 15
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane)
+
+/datum/export/grown/apple
+	unit_name = "apple"
+	cost = 7
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/apple)
+
+/datum/export/grown/watermelon
+	unit_name = "watermelon"
+	cost = 42
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon)
+
+/datum/export/grown/pumpkin
+	unit_name = "pumpkin"
+	cost = 42
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
+
+/datum/export/grown/lime
+	unit_name = "lime"
+	cost = 10
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/lime)
+
+/datum/export/grown/lemon
+	unit_name = "lemon"
+	cost = 11
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/lemon)
+
+/datum/export/grown/orange
+	unit_name = "orange"
+	cost = 12
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/orange)
+
+/datum/export/grown/mandarin
+	unit_name = "mandarin"
+	cost = 6
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/mandarin)
+
+/datum/export/grown/whitebeet
+	unit_name = "whitebeet"
+	cost = 7
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet)
+
+/datum/export/grown/banana
+	unit_name = "banana"
+	cost = 5
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
+
+/datum/export/grown/chili
+	unit_name = "chili"
+	cost = 3
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/chili)
+
+/datum/export/grown/eggplant
+	unit_name = "eggplant"
+	cost = 13
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant)
+
+/datum/export/grown/tomato
+	unit_name = "tomato"
+	cost = 20
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tomato)
+
+/datum/export/grown/wheat
+	unit_name = "wheat"
+	cost = 5
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
+
+/datum/export/grown/carrot
+	unit_name = "carrot"
+	cost = 15
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/carrot)
+
 /datum/export/grown/jupitercup
 	unit_name = "strange mushroom"
 	cost = 100
