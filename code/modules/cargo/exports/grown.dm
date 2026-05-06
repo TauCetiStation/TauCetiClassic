@@ -17,7 +17,7 @@ use it if low potency results garbage from harvested crop
 
 /datum/export/grown/get_cost(obj/O)
 	var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
-	var/ratio = G.potency / 10
+	var/ratio = G.potency / 100
 	return ..() * ratio
 
 /datum/export/grown/corn
