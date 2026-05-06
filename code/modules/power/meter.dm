@@ -76,7 +76,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 
 
-		var/datum/money_account/meter_acc = attempt_account_access_with_user_input(account_num, user = user)
+		var/datum/money_account/meter_acc = attempt_account_access_with_user_input(account_num, 2, user)
 		if(!meter_acc)
 			to_chat(user, "Счёта не существует или пин-код набран неправильно")
 			return
@@ -153,6 +153,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 				anchored = TRUE
 				to_chat(user, "You weld the [src] to the floor.")
 				connect_to_network()
+
+			update_icon()
+			return
 
 	// changing direction using wrench
 	if(default_change_direction_wrench(user, I))
