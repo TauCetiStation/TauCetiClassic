@@ -22,7 +22,6 @@
 	var/startamount
 
 	var/max_items = 15
-	var/contains_name = ""
 
 /obj/item/weapon/woodencrate/atom_init()
 	. = ..()
