@@ -1565,8 +1565,7 @@
 /mob/living/Crossed(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/L = AM
-
-		if(L.a_intent == INTENT_HARM && L.is_bigger_than(src))
+		if(L.a_intent == INTENT_HARM && L.is_bigger_than(src) && is_usable_leg())
 			if(prob(LERP(10, 0, health/maxHealth)))
 				visible_message("<span class='warning bold'>[src] has been stepped on by [L]!</span>")
 				log_combat(L, "stepped on")

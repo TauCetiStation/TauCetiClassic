@@ -288,6 +288,7 @@
 		occupantData["nearsighted"] = HAS_TRAIT(occupant, TRAIT_NEARSIGHT)
 
 	data["occupant"] = occupantData
+	data["canPopout"] = hasHUD(user, "medical")
 
 	return data
 
@@ -304,6 +305,8 @@
 			connected.eject()
 		if("print_p")
 			print_scan()
+		if("popout_scan")
+			popout_scan()
 
 	return TRUE
 
@@ -465,6 +468,52 @@
 		dat += "Обнаружено смещение сетчатки.<BR>"
 
 	return dat
+
+/obj/machinery/body_scanconsole/proc/popout_scan()
+	if(!do_skill_checks(usr))
+		return
+
+	if(!connected || !connected.occupant || !hasHUD(usr, "medical"))
+		return
+	
+	new /datum/body_scanconsole_tguidataholder(usr, tgui_data())
+
+/datum/body_scanconsole_tguidataholder
+	var/list/saved_tgui_data
+
+/datum/body_scanconsole_tguidataholder/New(mob/user, list/data)
+	. = ..()
+	saved_tgui_data = data
+	saved_tgui_data["isPopout"] = TRUE
+	tgui_interact(user)
+
+/datum/body_scanconsole_tguidataholder/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BodyScanner", "Результаты сканирования [saved_tgui_data["occupant"]["name"]]", 690, 600)
+		ui.open()
+
+/datum/body_scanconsole_tguidataholder/tgui_static_data(mob/user)
+	return saved_tgui_data
+
+/datum/body_scanconsole_tguidataholder/tgui_state(mob/user)
+	return global.conscious_state
+
+/datum/body_scanconsole_tguidataholder/tgui_status(mob/user, datum/tgui_state/state)
+	. = ..()
+	if(. < UI_DISABLED)
+		return
+
+	if(!hasHUD(user, "medical"))
+		return UI_CLOSE
+	return UI_INTERACTIVE
+
+/datum/body_scanconsole_tguidataholder/tgui_close(mob/user)
+	qdel(src)
+
+/datum/body_scanconsole_tguidataholder/Destroy(force, ...)
+	SStgui.close_uis(src)
+	. = ..()
 
 /obj/machinery/body_scanconsole/vox/is_known_implant(obj/item/weapon/implant/I)
 	return istype(I, /obj/item/weapon/implant/cortical)

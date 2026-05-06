@@ -142,12 +142,17 @@
 				aiPlayer.set_zeroth_law(law)
 
 		if(FS_DEFEATED) //Cleanup time
-			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
-			announcement.play()
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
+			if(istype(SSticker.mode, /datum/game_mode/blob))
+				var/datum/announcement/centcomm/blob/biohazard_station_unlock_alt/announcement = new
+				announcement.play()
+				SSshuttle.incall(0.5)
+			else
+				var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
+				announcement.play()
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""

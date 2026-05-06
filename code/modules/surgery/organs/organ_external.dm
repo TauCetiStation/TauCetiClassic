@@ -270,7 +270,7 @@
 	if(gender_state)
 		var/gender_icon = FALSE
 		switch(body_zone)
-			if(BP_CHEST, BP_GROIN, BP_HEAD)
+			if(BP_CHEST, BP_GROIN, BP_HEAD, BP_EARS)
 				gender_icon = species.gender_body_icons
 			if(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)
 				gender_icon = species.gender_limb_icons
@@ -402,10 +402,10 @@
 /obj/item/organ/external/emp_act(severity)
 	controller.emp_act(severity)
 
-/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
+/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null, protection)
 	if(!isnum(burn))
 		return // prevent basic take_damage usage (TODO remove workaround)
-	return controller.take_damage(brute, burn, damage_flags, used_weapon, impact_direction = impact_direction)
+	return controller.take_damage(brute, burn, damage_flags, used_weapon, impact_direction = impact_direction,  protection = protection)
 
 /obj/item/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
 	return controller.heal_damage(brute, burn, internal, robo_repair)
@@ -948,6 +948,23 @@ Note that amputating the affected organ does in fact remove the infection from t
 		bones_appearance_behind.alpha = 175
 		base_appearance_behind.add_overlay(bones_appearance_behind)
 
+/obj/item/organ/external/ears
+	name = "ears"
+	cases = list("ухо", "уха", "уху", "уши", "ушами", "ушах")
+
+	icon_state = "ears"
+	default_icon_layer = HEAD_LAYER
+
+	body_zone = BP_EARS
+	parent_bodypart = BP_HEAD
+
+	cannot_amputate = TRUE
+	leaves_stump = FALSE
+
+	max_pumped = 0
+
+	vital = FALSE
+
 /obj/item/organ/external/wings
 	name = "wings"
 	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
@@ -1443,7 +1460,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
-/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null)
+
+/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null, protection = 0)
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
