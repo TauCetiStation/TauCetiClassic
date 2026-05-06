@@ -152,7 +152,18 @@
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
 
+/obj/item/organ/external/ears/skeleton
+	name = "skeleton ears"
+	leaves_stump = FALSE
+	force = 8
+	min_broken_damage = 10
+	controller_type = /datum/bodypart_controller/skeleton
+
 /obj/item/organ/external/tail/skeleton/skeleton/attack(mob/living/M, mob/living/user, def_zone)
+	if(!skeleton_insert_bodypart(M, src, def_zone))
+		. = ..()
+
+/obj/item/organ/external/ears/skeleton/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
 

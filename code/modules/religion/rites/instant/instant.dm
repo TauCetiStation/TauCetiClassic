@@ -319,7 +319,7 @@
 		return FALSE
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	for(var/i in 1 to divine_power)
-		if(candidates.len < divine_power)
+		if(!candidates.len)
 			return TRUE
 
 		var/mob/M = pick(candidates)

@@ -51,7 +51,7 @@
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE, laterole = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(M && !AssignToRole(M, override, laterole))
+	if(M && !AssignToRole(M, override, laterole = laterole))
 		Drop()
 		return
 
