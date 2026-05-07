@@ -169,19 +169,18 @@
 			unelectrify(M)
 		return
 
+/atom/proc/AIAltShiftClick(mob/M)
+	return
+
+/obj/machinery/door/airlock/AIAltShiftClick(mob/M) // Emergency access override.
+	if(!can_still_interact_with(M))
+		return
+	if(!issilicon(M))
+		return
 	if(emergency)
 		enable_emergency_access(M)
 	else
 		disable_emergency_access(M)
-
-/atom/proc/AIAltShiftClick()
-	return
-
-/obj/machinery/door/airlock/AIAltShiftClick() // Emergency access override.
-	if(emergency)
-		Topic("aiDisable=11", list("aiDisable"="11"), 1) // 1 meaning no window (consistency!)
-	else
-		Topic("aiEnable=11", list("aiEnable"="11"), 1)
 
 //
 // Override AdjacentQuick for AltClicking

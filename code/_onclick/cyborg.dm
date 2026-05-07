@@ -170,8 +170,8 @@
 	AltShiftClick(user)
 	return
 
-/obj/machinery/door/airlock/BorgAltShiftClick() // Emergency mode doors on/off. Forwards to AI code.
-	AIAltShiftClick()
+/obj/machinery/door/airlock/BorgAltShiftClick(mob/M) // Emergency mode doors on/off. Forwards to AI code.
+	AIAltShiftClick(M)
 
 /*
 	As with AI, these are not used in click code,
