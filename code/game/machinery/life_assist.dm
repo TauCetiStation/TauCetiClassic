@@ -261,7 +261,7 @@
 		return
 
 	add_overlay("di_beaker")
-	if(beaker.reagents.total_volume)
+	if(beaker && beaker.reagents && beaker.reagents.total_volume)
 		var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
 		var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
