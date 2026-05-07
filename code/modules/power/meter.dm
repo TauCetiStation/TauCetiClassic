@@ -94,12 +94,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 /obj/machinery/power/meter/proc/account_connected_message(mob/user)
 	to_chat(user, "Счёт подключен успешно")
-	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER, 15, TRUE, extrarange = -(world.view - 1))
+	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
 
 /obj/machinery/power/meter/proc/fail_retrieve()
 	paid = FALSE
 	update_icon()
-	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 15, TRUE, extrarange = -(world.view - 1))
+	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
 
 /obj/machinery/power/meter/proc/try_retrieve_funds()
 	if(!powerused || !credits_per_kwh)
