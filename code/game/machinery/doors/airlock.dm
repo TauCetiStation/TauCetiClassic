@@ -234,13 +234,14 @@ var/global/list/airlock_overlays = list()
 	// Raise door bolts
 	if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		to_chat(user, "The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
-	else if(!locked)
+		return
+	if(!locked)
 		to_chat(user, "The door bolts are already up.<br>\n")
-	else
-		if(hasPower())
-			unbolt()
-		else
-			to_chat(user, "Cannot raise door bolts due to power failure.<br>\n")
+		return
+	if(!hasPower())
+		to_chat(user, "Cannot raise door bolts due to power failure.<br>\n")
+		return
+	unbolt()
 
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
