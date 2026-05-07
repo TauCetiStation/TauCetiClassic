@@ -77595,15 +77595,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics)
-"knf" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/light_switch{
-	pixel_y = -25
-	},
-/turf/simulated/floor{
-	icon_state = "browncorner"
-	},
-/area/station/hallway/secondary/entry)
 "kob" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
@@ -100427,7 +100418,7 @@ bis
 bis
 bkB
 bis
-knf
+iDb
 bmq
 bTp
 bis
