@@ -217,12 +217,30 @@ var/global/list/airlock_overlays = list()
 	playsound(src, door_bolt_down_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, -4)
 	update_icon()
 
+/obj/machinery/door/airlock/proc/AIBolt(mob/user)
+	if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		to_chat(user, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
+	else if(!locked)
+		bolt()
+
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
 		return
 	locked = 0
 	playsound(src, door_bolt_up_sound, VOL_EFFECTS_MASTER, 40, FALSE, null, -4)
 	update_icon()
+
+/obj/machinery/door/airlock/proc/AIUnbolt(mob/user)
+	// Raise door bolts
+	if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		to_chat(user, "The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
+	else if(!locked)
+		to_chat(user, "The door bolts are already up.<br>\n")
+	else
+		if(hasPower())
+			unbolt()
+		else
+			to_chat(user, "Cannot raise door bolts due to power failure.<br>\n")
 
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
@@ -730,10 +748,7 @@ var/global/list/airlock_overlays = list()
 
 				if(4)
 					// Drop door bolts
-					if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						to_chat(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
-					else if(!locked)
-						bolt()
+					AIBolt(usr)
 
 				if(5)
 					// Un-electrify door
@@ -794,15 +809,7 @@ var/global/list/airlock_overlays = list()
 
 				if(4)
 					// Raise door bolts
-					if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						to_chat(usr, "The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
-					else if(!locked)
-						to_chat(usr, "The door bolts are already up.<br>\n")
-					else
-						if(hasPower())
-							unbolt()
-						else
-							to_chat(usr, "Cannot raise door bolts due to power failure.<br>\n")
+					AIUnbolt(usr)
 
 				if(5)
 					// Electrify door for 30 seconds

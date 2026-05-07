@@ -113,6 +113,7 @@
 	return
 
 /obj/machinery/door/airlock/AICtrlShiftClick(mob/M)
+
 	if(!can_still_interact_with(M))
 		return
 	if(!issilicon(M))
@@ -141,14 +142,14 @@
 	return
 
 
-/atom/proc/AICtrlClick()
+/atom/proc/AICtrlClick(mob/M)
 	return
 
-/obj/machinery/door/airlock/AICtrlClick() // Bolts doors
+/obj/machinery/door/airlock/AICtrlClick(mob/M) // Bolts doors
 	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
+		AIUnbolt(M)
 	else
-		Topic("aiDisable=4", list("aiDisable"="4"), 1)
+		AIBolt(M)
 
 /obj/machinery/power/apc/AICtrlClick(mob/user) // turns off/on APCs.
 	if(user.incapacitated() || aidisabled)
