@@ -53,6 +53,11 @@
 		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = get_turf(spawnloc)
 
+	if(is_leader)
+		M.job = JOB_ERT_LEADER
+	else
+		M.job = JOB_ERT_MEMBER
+
 	if(is_leader && leader_outfit)
 		M.equipOutfit(leader_outfit)
 	else

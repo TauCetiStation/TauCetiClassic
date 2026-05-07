@@ -85,3 +85,5 @@
 
 #define JOB_BLUESHIELD "Blueshield Officer"
 #define JOB_LAWYER "Internal Affairs Agent"
+#define JOB_ERT_LEADER "ERT Leader"
+#define JOB_ERT_MEMBER "ERT Member"
