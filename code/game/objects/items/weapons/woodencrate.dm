@@ -72,7 +72,7 @@
 			insides.add_filter("add_item_[i])", 1, layering_filter(x = rand(insides_boundaries[1][1], insides_boundaries[2][1]), y = rand(insides_boundaries[1][2], insides_boundaries[2][2]), icon = icon(I.icon, I.icon_state), flags = FILTER_OVERLAY))
 			i++
 
-		insides.add_filter("insides_mask", 1, alpha_mask_filter(icon = insides_mask, flags = MASK_INVERSE))
+		insides.add_filter("insides_mask", 1, alpha_mask_filter(icon = insides_mask, y = 14))
 
 		add_overlay(insides)
 	else
