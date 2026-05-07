@@ -72,8 +72,8 @@
 			detach()
 		else if(ishuman(over_object))
 			var/mob/living/carbon/human/H = over_object
-			if(HAS_TRAIT(H, TRAIT_EXTERNAL_VENTILATION))
-				visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
+			if(HAS_TRAIT(H, assist_trait))
+				visible_message("<span class='notice'>[H] уже подключен к [CASE(src, DATIVE_CASE)]</span>")
 				return
 			attach(H)
 
