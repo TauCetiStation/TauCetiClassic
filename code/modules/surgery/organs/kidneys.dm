@@ -79,6 +79,9 @@
 	if(is_robotic() && (!is_bruised() || !is_broken()))
 		owner.adjustToxLoss(-0.25)
 
+	if(HAS_TRAIT(owner, TRAIT_EXTERNAL_KIDNEY))
+		owner.adjustToxLoss(-1)
+
 	// Coffee is really bad for you with busted kidneys.
 	// This should probably be expanded in some way, but fucked if I know
 	// what else kidneys can process in our reagent list.

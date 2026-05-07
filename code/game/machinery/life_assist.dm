@@ -87,6 +87,15 @@
 	detach(rip = TRUE)
 	return TRUE
 
+/obj/machinery/life_assist/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+
+	if(moving_diagonally)
+		return .
+
+	if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
+
 
 
 /obj/machinery/life_assist/artificial_ventilation
@@ -186,3 +195,84 @@
 	icon_state_detached = "cooler_idle"
 
 	assist_trait = TRAIT_EXTERNAL_COOLING
+
+/obj/machinery/life_assist/hemodialysis
+	name = "Hemodialysis Machine"
+	cases = list("аппарат для гемодиализа", "аппарата для гемодиализа", "аппарату для гемодиализа", "аппарат для гемодализа", "аппаратом для гемодиализа", "аппарате для гемодиализа")
+	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "hemo_idle"
+	desc = "Аппарат для гемодиализа. Заменяет функции почек."
+
+	density = TRUE
+
+	icon_state_attached = "hemo_pumping"
+	icon_state_detached = "hemo_idle"
+
+	assist_trait = TRAIT_EXTERNAL_KIDNEY
+	var/filtertick = TRUE
+
+	var/obj/item/weapon/reagent_containers/glass/beaker/beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large
+
+/obj/machinery/life_assist/hemodialysis/attackby(obj/item/weapon/W, mob/user)
+	if (!istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || (stat & BROKEN) || beaker)
+		return
+	if(do_after(user, 10, target = src))
+		if(!user.drop_from_inventory(W, src))
+			return
+		beaker = W
+		visible_message("<span class='notice'>[beaker] is attached to \the [src]</span>")
+		update_icon()
+
+/obj/machinery/life_assist/hemodialysis/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(user.is_busy() || issilicon(user))
+		return
+	if(beaker && do_after(user, 20, target = src))
+		user.put_in_hands(beaker)
+		visible_message("<span class='notice'>[beaker] is detached from \the [src]</span>")
+		beaker = null
+		update_icon()
+
+/obj/machinery/life_assist/hemodialysis/process()
+	if(!attached || !beaker || (beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
+		return
+
+	filtertick = !filtertick
+
+	if(filtertick && beaker.reagents.has_reagent("blood"))
+		attached.inject_blood(beaker, 5)
+		update_icon()
+		return
+
+	attached.blood_trans_to(beaker, 5)
+	playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+	for(var/datum/reagent/x in attached.reagents.reagent_list)
+		attached.reagents.trans_to(beaker, 3)
+
+	update_icon()
+
+/obj/machinery/life_assist/hemodialysis/update_icon()
+	..()
+	cut_overlays()
+	if(!beaker)
+		return
+
+	add_overlay("di_beaker")
+	if(beaker.reagents.total_volume)
+		var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
+
+		var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
+		switch(percent)
+			if(0 to 9)		filling.icon_state = "reagent0"
+			if(10 to 24) 	filling.icon_state = "reagent10"
+			if(25 to 49)	filling.icon_state = "reagent25"
+			if(50 to 74)	filling.icon_state = "reagent50"
+			if(75 to 79)	filling.icon_state = "reagent75"
+			if(80 to 90)	filling.icon_state = "reagent80"
+			if(91 to INFINITY)	filling.icon_state = "reagent100"
+
+		filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
+		add_overlay(filling)

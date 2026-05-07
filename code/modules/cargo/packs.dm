@@ -1385,6 +1385,20 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "CBM crate"
 	group = "Medical / Science"
 
+/datum/supply_pack/external_cooling_device
+	name = "External Cooling Device"
+	contains = list(/obj/machinery/life_assist/external_cooling_device)
+	crate_type = /obj/structure/largecrate
+	crate_name = "ECD crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/hemodialysis
+	name = "Hemodialysis Machine"
+	contains = list(/obj/machinery/life_assist/hemodialysis)
+	crate_type = /obj/structure/largecrate
+	crate_name = "HEMO crate"
+	group = "Medical / Science"
+
 //----------------------------------------------
 //-----------------HYDROPONICS------------------
 //----------------------------------------------

@@ -40836,7 +40836,7 @@
 	},
 /area/station/security/checkpoint)
 "bul" = (
-/obj/machinery/iv_drip,
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -50236,8 +50236,7 @@
 /area/station/medical/cryo)
 "bKP" = (
 /obj/machinery/light/smart,
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
