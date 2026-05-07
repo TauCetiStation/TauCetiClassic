@@ -86,16 +86,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 			return
 
 		connected_account_number = account_num
-		to_chat(user, "Счёт подключен успешно")
+		account_connected_message(user)
 		return
 
 	if(!paid)
 		try_retrieve_funds()
 
+/obj/machinery/power/meter/proc/account_connected_message(mob/user)
+	to_chat(user, "Счёт подключен успешно")
+	playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER, 15, TRUE, extrarange = -(world.view - 1))
+
 /obj/machinery/power/meter/proc/fail_retrieve()
 	paid = FALSE
 	update_icon()
-	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 25, TRUE, extrarange = world.view - 4)
+	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 15, TRUE, extrarange = -(world.view - 1))
 
 /obj/machinery/power/meter/proc/try_retrieve_funds()
 	if(!powerused || !credits_per_kwh)
@@ -236,21 +240,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I
 		connected_account_number = Card.associated_account_number
-		to_chat(user, "Счёт подключен успешно")
+		account_connected_message(user)
 
 	else if(panel_open && istype(I, /obj/item/device/pda) && I.GetID())
 		visible_message("<span class='info'>[user] прикладывает кпк к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		connected_account_number = Card.associated_account_number
-		to_chat(user, "Счёт подключен успешно")
+		account_connected_message(user)
 
 	else if(panel_open && istype(I, /obj/item/weapon/ewallet))
 		visible_message("<span class='info'>[user] прикладывает чип к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/ewallet/Wallet = I
 		connected_account_number = Wallet.account_number
-		to_chat(user, "Счёт подключен успешно")
+		account_connected_message(user)
 
 	return ..()
 
@@ -301,7 +305,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	powerused += available_power
 
 	if(round(powerused_last KWH * credits_per_kwh) < round(powerused KWH * credits_per_kwh))
-		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 25, TRUE, extrarange = world.view - 4)
+		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 10, TRUE, extrarange = -(world.view - 1))
 
 	update_icon()
 
