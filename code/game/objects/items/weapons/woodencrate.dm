@@ -95,6 +95,32 @@
 
 		add_overlay(picture)
 
+/obj/item/weapon/woodencrate/proc/can_be_inserted(obj/item/W)
+	if(!istype(W) || (W.flags & ABSTRACT) || W.anchored)
+		return FALSE//Not an item
+
+	if(loc == W)
+		return FALSE //Means the item is already in the storage item
+
+	if(istype(W, /obj/item/weapon/packageWrap) || istagger(W))
+		return FALSE
+
+	if (W.flags_2 & CANT_BE_INSERTED)
+		return FALSE
+
+	if (W.w_class > SIZE_SMALL)
+		return FALSE
+
+	if(contents.len >= max_items)
+		return FALSE
+
+	if(contents.len)
+		var/obj/item/I = contents[1]
+		if(W.type != I.type)
+			return FALSE
+
+	return TRUE
+
 /obj/item/weapon/woodencrate/attackby(obj/item/weapon/W, mob/user)
 	if(!open && isprying(W))
 		if(user.is_busy()) return
@@ -133,10 +159,7 @@
 				update_icon()
 				return
 
-			if(W.type != I.type)
-				return ..()
-
-		if(contents.len >= max_items)
+		if(!can_be_inserted(W))
 			return ..()
 
 		desc = "[initial(desc)] Содержит: [W.name]"
@@ -155,8 +178,8 @@
 	var/list/items = list()
 	items["Pickup"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
-	for(var/obj/item/thing in contents)
-		items[thing] = image(icon = thing.icon, icon_state = thing.icon_state)
+	var/obj/item/thing = contents[rand(1, contents.len)]
+	items[thing] = image(icon = thing.icon, icon_state = thing.icon_state)
 
 	var/obj/item/selection = show_radial_menu(user, src, items, require_near = TRUE, tooltips = TRUE)
 
