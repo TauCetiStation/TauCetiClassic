@@ -4,7 +4,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 /obj/machinery/power/meter
 	name = "power meter unit"
 	cases = list("счётчик электроэнергии", "счётчика электроэнергии", "счётчику электроэнергии", "счётчик электроэнергии", "счётчиком электроэнергии", "счётчике электроэнергии")
-	desc = "Счётчик используемой электроэнергии."
+	desc = "Опломбированный счётчик используемой электроэнергии."
 	icon_state = "powermeter"
 	density = TRUE
 	anchored = TRUE
@@ -14,6 +14,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	process_last = TRUE
 
 	required_skills = null
+
+	armor = list(MELEE = 75, BULLET = 25, LASER = 25, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 100, ACID = 100)
+	damage_deflection = 30
+
+	resistance_flags = CAN_BE_HIT|FIRE_PROOF
 
 	var/obj/machinery/power/terminal/terminal = null
 
@@ -90,7 +95,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 /obj/machinery/power/meter/proc/fail_retrieve()
 	paid = FALSE
 	update_icon()
-	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
+	playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 25, TRUE, extrarange = world.view - 4)
 
 /obj/machinery/power/meter/proc/try_retrieve_funds()
 	if(!powerused || !credits_per_kwh)
@@ -227,22 +232,25 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 
 	if(panel_open && istype(I, /obj/item/weapon/card/id))
-		visible_message("<span class='info'>[usr] прикладывает карту к [C_CASE(src, DATIVE_CASE)].</span>")
+		visible_message("<span class='info'>[user] прикладывает карту к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I
 		connected_account_number = Card.associated_account_number
+		to_chat(user, "Счёт подключен успешно")
 
 	else if(panel_open && istype(I, /obj/item/device/pda) && I.GetID())
-		visible_message("<span class='info'>[usr] прикладывает кпк к [C_CASE(src, DATIVE_CASE)].</span>")
+		visible_message("<span class='info'>[user] прикладывает кпк к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/card/id/Card = I.GetID()
 		connected_account_number = Card.associated_account_number
+		to_chat(user, "Счёт подключен успешно")
 
 	else if(panel_open && istype(I, /obj/item/weapon/ewallet))
-		visible_message("<span class='info'>[usr] прикладывает чип к [C_CASE(src, DATIVE_CASE)].</span>")
+		visible_message("<span class='info'>[user] прикладывает чип к [C_CASE(src, DATIVE_CASE)].</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/ewallet/Wallet = I
 		connected_account_number = Wallet.account_number
+		to_chat(user, "Счёт подключен успешно")
 
 	return ..()
 
@@ -293,7 +301,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	powerused += available_power
 
 	if(round(powerused_last KWH * credits_per_kwh) < round(powerused KWH * credits_per_kwh))
-		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 25, TRUE)
+		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 25, TRUE, extrarange = world.view - 4)
 
 	update_icon()
 
