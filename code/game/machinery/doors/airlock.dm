@@ -220,7 +220,8 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/proc/AIBolt(mob/user)
 	if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		to_chat(user, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
-	else if(!locked)
+		return
+	if(!locked)
 		bolt()
 
 /obj/machinery/door/airlock/proc/unbolt()
