@@ -271,7 +271,7 @@
 	else
 		dat += "Положите пациента."
 
-	var/datum/browser/popup = new(user, "window=autodoc_console", src.name)
+	var/datum/browser/popup = new(user, "window=autodoc_console", (CASE(src, NOMINATIVE_CASE)))
 	popup.set_content(dat)
 	popup.open()
 
