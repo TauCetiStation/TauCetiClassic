@@ -257,7 +257,7 @@
 		dat += "<input type='hidden' name='choice' value='choosen_surgeries'>"
 		for(var/target_zone in global.auto_surgeries)
 			var/obj/item/organ/external/bodypart = H.get_bodypart(target_zone)
-			dat += "<b>[CASE(bodypart, NOMINATIVE_CASE)]</b><br>"
+			dat += "<b>[С_CASE(bodypart, NOMINATIVE_CASE)]</b><br>"
 			var/list/surgeries_list = global.auto_surgeries[target_zone]
 			if(surgeries_list.len)
 				for(var/datum/auto_surgery/surgery in surgeries_list)
