@@ -116,8 +116,6 @@
 
 	if(!can_still_interact_with(M))
 		return
-	if(!issilicon(M))
-		return
 	if(!secondsMainPowerLost && !secondsBackupPowerLost)
 		loseMainPower()
 		loseBackupPower()
@@ -146,6 +144,8 @@
 	return
 
 /obj/machinery/door/airlock/AICtrlClick(mob/M) // Bolts doors
+	if(!can_still_interact_with(M))
+		return
 	if(locked)
 		AIUnbolt(M)
 	else
