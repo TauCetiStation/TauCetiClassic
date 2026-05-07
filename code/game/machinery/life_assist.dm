@@ -243,11 +243,11 @@
 	filtertick = !filtertick
 
 	if(filtertick && beaker.reagents.has_reagent("blood"))
-		attached.inject_blood(beaker, 5)
+		attached.inject_blood(beaker, 9)
 		update_icon()
 		return
 
-	attached.blood_trans_to(beaker, 5)
+	attached.blood_trans_to(beaker, 10)
 	playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	for(var/datum/reagent/x in attached.reagents.reagent_list)
 		attached.reagents.trans_to(beaker, 3)
