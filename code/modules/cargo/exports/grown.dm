@@ -8,6 +8,16 @@
 	cost = 250
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter)
 
+/datum/export/cheese
+	unit_name = "cheese wheel"
+	cost = 200
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel)
+
+/datum/export/cheesewedge
+	unit_name = "cheese wedge"
+	cost = 25
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/cheesewedge)
+
 /*
 /export/grown subtype
 
