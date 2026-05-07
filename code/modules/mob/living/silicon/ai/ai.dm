@@ -37,7 +37,7 @@ var/global/list/ai_verbs_default = list(
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
-	shouldnt_see = list(/obj/effect/rune)
+	shouldnt_see = list(/obj/effect/rune, /obj/item/mine/replicator)
 	w_class = SIZE_HUMAN
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/camera = null
@@ -948,3 +948,6 @@ var/global/list/ai_verbs_default = list(
 		pixel_y = 8
 	else
 		pixel_y = 0
+
+/mob/living/silicon/ai/is_antag()
+	return laws?.zeroth

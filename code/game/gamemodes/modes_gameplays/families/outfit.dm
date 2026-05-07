@@ -24,13 +24,21 @@
 
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/colt/rubber = 3,
-		/obj/item/ammo_box/c45 = 2,
+		/obj/item/ammo_box/magazine/colt = 2,
 		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
 	)
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty,
 	)
+
+/datum/outfit/families_police/beatcop/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	var/obj/item/clothing/under/U = H.w_uniform
+	if(istype(U))
+		var/obj/item/clothing/accessory/holster/armpit/holster = new (U)
+		LAZYADD(U.accessories, holster)
+		holster.on_attached(U, H, TRUE)
 
 /datum/outfit/families_police/beatcop/armored
 	name = "Families: Вооруженный Офицер"
@@ -39,8 +47,9 @@
 	suit_store = /obj/item/weapon/gun/projectile/shotgun/dungeon
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/teargas = 1,
-		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
-		/obj/item/ammo_box/magazine/colt/rubber = 3,
+		/obj/item/ammo_box/eight_shells/buckshot = 2,
+		/obj/item/ammo_box/magazine/colt/rubber = 1,
+		/obj/item/ammo_box/magazine/colt = 2,
 		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
 	)
 
@@ -54,9 +63,10 @@
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
-		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
+		/obj/item/ammo_box/eight_shells/buckshot = 2,
 		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
-		/obj/item/ammo_box/magazine/colt/rubber = 3,
+		/obj/item/ammo_box/magazine/colt/rubber = 1,
+		/obj/item/ammo_box/magazine/colt = 2,
 	)
 
 /datum/outfit/families_police/beatcop/fbi

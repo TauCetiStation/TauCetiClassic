@@ -12,6 +12,7 @@
 // render_flags bitmask, affects render but not access
 // todo: move it to mob traits when Lummox allow us init list manipulations
 #define HIDE_TAIL         (1<<0)
+#define HIDE_EARS		  (1<<0)
 #define HIDE_WINGS        (1<<1)
 #define HIDE_UNIFORM      (1<<2)
 #define HIDE_TOP_HAIR     (1<<3) // replaced BLOCKHEADHAIR, stops hair from rendering
