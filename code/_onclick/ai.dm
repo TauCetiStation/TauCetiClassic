@@ -101,20 +101,27 @@
 		if(!active_module.AIAltClickHandle(A))
 			return
 	A.AIAltClick(src)
+/mob/living/silicon/ai/CtrlShiftClickOn(atom/A)
+	A.AICtrlShiftClick(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
 	I have no idea why it was in atoms.dm instead of respective files.
 */
 
-/atom/proc/AICtrlShiftClick()
+/atom/proc/AICtrlShiftClick(mob/M)
 	return
 
-/obj/machinery/door/airlock/AICtrlShiftClick()
-	if(emagged)
+/obj/machinery/door/airlock/AICtrlShiftClick(mob/M)
+	if(!can_still_interact_with(M))
 		return
-	return
-
+	if(!issilicon(M))
+		return
+	if(!secondsMainPowerLost && !secondsBackupPowerLost)
+		loseMainPower()
+		loseBackupPower()
+	else
+		to_chat(M, "Питание уже отключено!")
 /atom/proc/AIShiftClick(mob/living/silicon/ai/user)
 	user.examinate(src)
 
@@ -168,7 +175,6 @@
 		enable_emergency_access(M)
 	else
 		disable_emergency_access(M)
-
 //
 // Override AdjacentQuick for AltClicking
 //

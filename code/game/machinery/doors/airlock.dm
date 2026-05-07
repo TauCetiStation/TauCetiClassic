@@ -199,10 +199,12 @@ var/global/list/airlock_overlays = list()
 					cont = TRUE
 			spawnPowerRestoreRunning = FALSE
 			updateDialog()
+			update_icon()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
 	if(secondsBackupPowerLost < 60)
 		secondsBackupPowerLost = 60
+	update_icon()
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
 	if(secondsBackupPowerLost > 0)
@@ -716,7 +718,6 @@ var/global/list/airlock_overlays = list()
 					// Disrupt main power
 					if(!secondsMainPowerLost)
 						loseMainPower()
-						update_icon()
 					else
 						to_chat(usr, "Main power is already offline.")
 
