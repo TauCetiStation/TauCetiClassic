@@ -1,7 +1,7 @@
 /obj/item/weapon/woodencrate
 	name = "wooden crate"
 	cases = list("деревянный ящик", "деревянного ящика", "деревянному ящику", "деревянный ящик", "деревянным ящиком", "деревянном ящике")
-	desc = "Простой ящик для хранения одинаковых предметов."
+	desc = "Ящик для хранения одинаковых предметов."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "woodencrate_open"
 	w_class = SIZE_NORMAL
