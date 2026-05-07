@@ -121,7 +121,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		return
 
 	charge_to_account(meter_acc.account_number, "Счётчик электроэнергии", "Оплата электроэнергии", src.name, -pay_amount)
-	charge_to_account(global.department_accounts["Engineering"], "Счётчик электроэнергии", "Прибыль за электроэнергию", src.name, pay_amount)
+	charge_to_account(global.department_accounts[DEP_ENGINEERING].account_number, "Счётчик электроэнергии", "Прибыль за электроэнергию", src.name, pay_amount)
 
 	powerused = 0
 	paid = TRUE
