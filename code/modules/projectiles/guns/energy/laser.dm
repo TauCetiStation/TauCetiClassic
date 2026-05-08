@@ -23,6 +23,17 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
 
+/obj/item/weapon/gun/energy/laser/big //the bigger version of lasrifle with bigger powercell
+	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Этот экземпляр имеет батарейку повышенной емкости и обладает большим размером."
+	w_class = SIZE_NORMAL
+	m_amt = 4000
+
+/obj/item/weapon/gun/energy/laser/big/atom_init()
+	. = ..()
+	if(power_supply)
+		power_supply.maxcharge = 2000
+		power_supply.charge = 2000
+
 /obj/item/weapon/gun/energy/laser/selfcharging
 	name = "selfcharging laser gun"
 	var/charge_rate = 30
@@ -86,10 +97,18 @@
 	desc = "В пушке Л.А.З.Е.Р. излучающая среда заключена в трубку с ураном-235 и подвергается воздействию высокого потока нейтронов в активной зоне ядерного реактора. Эта невероятная технология может помочь ВАМ достичь высоких скоростей электронного излучения при малых объемах лазера!"
 	icon_state = "lasercannon"
 	item_state = null
+	w_class = SIZE_NORMAL
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 	fire_delay = 20
+
+/obj/item/weapon/gun/energy/lasercannon/atom_init()
+	. = ..()
+	if(power_supply)
+		power_supply.maxcharge = 2000
+		power_supply.charge = 2000
+
 
 /obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
 	if(isrobot(src.loc))

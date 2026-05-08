@@ -2372,9 +2372,6 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser,
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
@@ -2383,6 +2380,13 @@
 	},
 /obj/machinery/light/small/emergency{
 	dir = 1
+	},
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = 2
+	},
+/obj/item/weapon/gun/energy/laser/big,
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = -2
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
