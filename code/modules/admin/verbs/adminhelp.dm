@@ -599,7 +599,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(current_ticket)
 		if(tgui_alert(src, "You already have a ticket open. Is this for the same issue?",, list("Yes","No")) != "No")
 			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg, FALSE)
+				current_ticket.MessageNoRecipient(msg, TRUE)
 				current_ticket.TimeoutVerb()
 				return
 			else
