@@ -741,6 +741,7 @@ var/global/list/poly_color_palette = list(
 	// Male variant
 	return is_belt ? "d_belt" : "d"
 
+
 /// Returns the pattern icon_state for the mob overlay
 /obj/item/clothing/under/proc/get_poly_pattern_state(mob/living/carbon/human/H)
 	if(!poly_pattern)
