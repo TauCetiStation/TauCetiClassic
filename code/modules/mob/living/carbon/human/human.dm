@@ -1134,56 +1134,6 @@
 
 	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
 
-/mob/living/carbon/human/proc/remotesay() //#Z2
-	set name = "Project mind"
-	set category = "Superpower"
-
-	if(stat!=CONSCIOUS)
-		reset_view(0)
-		remoteview_target = null
-		return
-
-	if(!(REMOTE_TALK in src.mutations))
-		src.verbs -= /mob/living/carbon/human/proc/remotesay
-		return
-
-	var/list/names = list()
-	var/list/creatures = list()
-	var/list/namecounts = list()
-
-	var/turf/src_turf = get_turf(src)
-	if(!src_turf)
-		return
-
-	for(var/mob/living/carbon/M as anything in carbon_list)
-		var/name = M.real_name
-		if(name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		var/turf/temp_turf = get_turf(M)
-		if(!temp_turf || temp_turf.z != src_turf.z)
-			continue
-		creatures[name] += M
-
-	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
-	if(isnull(target))
-		return
-
-	var/say = sanitize(input("What do you wish to say"))
-	if(!say)
-		return
-	var/mob/T = creatures[target]
-	if(REMOTE_TALK in T.mutations)
-		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
-	else
-		to_chat(T, "<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
-	to_chat(usr, "<span class='notice'>You project your mind into [T.real_name]: [say]</span>")
-	to_chat(observer_list, "<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
-	log_say("Telepathic message from [key_name(src)] to [key_name(T)]: [say]")
-
 /mob/living/carbon/human/proc/remoteobserve()
 	set name = "Remote View"
 	set category = "Superpower"
