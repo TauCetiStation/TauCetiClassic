@@ -283,15 +283,12 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
 	if(log_to_bridge)
-		var/list/adm = get_admin_counts(R_BAN)
-		var/list/activemins = adm["present"]
-		if(activemins.len <= 0) // If there are still no active admins in the game
-			world.send2bridge(
-				type = list(BRIDGE_ADMINLOG),
-				attachment_title = "**Ticket #[id]** from **[key_name(initiator)]**",
-				attachment_msg = sanitize(msg),
-				attachment_color = BRIDGE_COLOR_ADMINALERT,
-			)
+		world.send2bridge(
+			type = list(BRIDGE_ADMINLOG),
+			attachment_title = "**Ticket #[id]** from **[key_name(initiator)]**",
+			attachment_msg = sanitize(msg),
+			attachment_color = BRIDGE_COLOR_ADMINALERT,
+		)
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
