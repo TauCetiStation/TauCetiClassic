@@ -37,6 +37,7 @@
 
 	var/assigned_role
 	var/special_role
+	var/is_ert_leader = FALSE
 
 	var/holy_role = NONE
 
