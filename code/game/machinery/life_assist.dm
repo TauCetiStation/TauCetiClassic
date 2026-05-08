@@ -223,7 +223,7 @@
 		if(!user.drop_from_inventory(W, src))
 			return
 		beaker = W
-		visible_message("<span class='notice'>[CASE(beaker, NOMINATIVE_CASE)] вставлен в [CASE(src, ACCUSATIVE_CASE]</span>")
+		visible_message("<span class='notice'>[CASE(beaker, NOMINATIVE_CASE)] вставлен в [CASE(src, ACCUSATIVE_CASE)]</span>")
 		update_icon()
 
 /obj/machinery/life_assist/hemodialysis/attack_hand(mob/user)
