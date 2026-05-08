@@ -106,7 +106,7 @@
 	max_temperature = 30000
 	infra_luminosity = 8
 	internal_damage_threshold = 40
-	force = 50
+	force = 40
 	wreckage = /obj/effect/decal/mecha_wreckage/durand/vindicator
 	animated = 1
 
