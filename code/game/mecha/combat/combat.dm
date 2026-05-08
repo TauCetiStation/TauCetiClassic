@@ -1,5 +1,5 @@
 /obj/mecha/combat
-	force = 40
+	force = 30
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/window, /obj/structure/grille, /turf/simulated/wall)
