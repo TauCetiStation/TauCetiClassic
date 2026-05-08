@@ -14110,18 +14110,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"cdT" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkredcorners"
-	},
-/area/station/security/brig)
 "cea" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -19584,7 +19572,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -24591,7 +24578,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -26056,12 +26042,6 @@
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/outerlabs)
-"eub" = (
-/obj/effect/spawner/aspect/mech/gygax/ultra,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/hos)
 "eue" = (
 /obj/machinery/door/window/southright{
 	dir = 8;
@@ -30061,10 +30041,6 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/dormitories)
-"fky" = (
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "fkz" = (
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
@@ -33968,7 +33944,6 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -36659,7 +36634,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -39806,7 +39780,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -40953,7 +40926,6 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor/carpet,
 /area/station/cargo/qm)
 "hll" = (
@@ -58202,7 +58174,6 @@
 	},
 /area/station/bridge/captain_quarters)
 "kFL" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -59928,13 +59899,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/hallway)
-"kYI" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "kYK" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -71840,7 +71804,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -72811,7 +72774,6 @@
 	},
 /area/station/ai_monitored/eva)
 "nBP" = (
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -77061,7 +77023,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -82791,7 +82752,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -83220,7 +83180,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -85243,6 +85202,7 @@
 	name = "Brig left APC";
 	pixel_x = -27
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -87327,13 +87287,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/brig)
-"qtF" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor,
-/area/station/engineering/engine)
 "qtG" = (
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -88248,7 +88201,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -94999,7 +94951,6 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -141207,7 +141158,7 @@ atB
 mun
 eXK
 xLy
-kYI
+hdK
 cbf
 rJq
 rJq
@@ -141464,7 +141415,7 @@ kFL
 qUL
 wrv
 xLy
-kYI
+hdK
 oXL
 azw
 tro
@@ -150890,7 +150841,7 @@ pGN
 pAC
 gvJ
 qEw
-cdT
+lYN
 lYN
 lYN
 wyR
@@ -153967,7 +153918,7 @@ jFJ
 mtX
 tWL
 frM
-eub
+hdc
 box
 hdc
 pQG
@@ -169132,7 +169083,7 @@ poq
 myw
 iZr
 nUG
-qtF
+wCr
 dTy
 bSW
 qxL
@@ -171709,7 +171660,7 @@ uVU
 lXH
 cOs
 vBh
-fky
+qdl
 tYs
 sEX
 tYs
@@ -171966,7 +171917,7 @@ upZ
 eKu
 qdl
 afd
-fky
+qdl
 afd
 eyd
 fXX
@@ -172223,7 +172174,7 @@ pis
 bnT
 ceb
 xEz
-fky
+qdl
 cOs
 jVD
 aAo

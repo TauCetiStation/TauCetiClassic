@@ -49,7 +49,6 @@
 
 /datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
-		implants += /obj/item/weapon/implant/mind_protect/loyalty
 		implants += /obj/item/weapon/implant/dexplosive
 		head = /obj/item/clothing/head/soft/nt_pmc_cap
 		uniform = /obj/item/clothing/under/tactical

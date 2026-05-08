@@ -277,6 +277,10 @@
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
 	else if(strafe)
+		if(occupant?.client?.keys_held["Alt"])
+			if(direction != dir)
+				return mechturn(direction)
+			return FALSE
 		move_result	= mechstep(direction)
 	else if(direction == dir || direction == prev_move_dir)
 		move_result = mechstep(dir)

@@ -277,6 +277,15 @@
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
+/obj/item/weapon/reagent_containers/food/snacks/khel_tiraza
+	name = "Khel`Tiraza"
+	desc = "Не знаю, съедобно ли это, но выглядит дорого."
+	icon_state = "khel-tiraza"
+	item_state_world = "khel-tiraza_world"
+	bitesize = 2
+	list_reagents = list("nutriment" = 2, "sugar" = 2, "poisonberryjuice" = 10)
+	food_type = VERY_TASTY_FOOD
+	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
