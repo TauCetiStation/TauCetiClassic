@@ -82,9 +82,9 @@
 	var/heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 40	// Heat damage level 2 above this point.
 	var/heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 640	// Heat damage level 3 above this point.
 
-	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 15
-	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 30
-	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 45
+	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 85
 
 	var/body_temperature = BODYTEMP_NORMAL	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0					//IS_SYNTHETIC species will gain this much temperature every second
@@ -617,10 +617,6 @@
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
-
-	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
-	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
-	breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
