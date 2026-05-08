@@ -10,7 +10,7 @@
 	damage_absorption = list(BRUTE=0.5,BURN=1.1,BULLET=0.65,LASER=0.85,ENERGY=0.9,BOMB=0.8)
 	max_temperature = 30000
 	infra_luminosity = 8
-	force = 40
+	force = 30
 	var/defence = FALSE
 	var/defence_deflect = 35
 	wreckage = /obj/effect/decal/mecha_wreckage/durand
