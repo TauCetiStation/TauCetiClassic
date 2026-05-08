@@ -120,7 +120,7 @@
 		loseMainPower()
 		loseBackupPower()
 	else
-		to_chat(M, "Питание уже отключено!")
+		to_chat(M, "<span class='notice'>Питание уже отключено!</span>")
 /atom/proc/AIShiftClick(mob/living/silicon/ai/user)
 	user.examinate(src)
 
