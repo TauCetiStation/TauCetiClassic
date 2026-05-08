@@ -8,7 +8,7 @@
 	step_in = 4
 	health = 500
 	deflect_chance = 25
-	damage_absorption = list(BRUTE=0.5,BURN=0.7,BULLET=0.45,LASER=0.75,ENERGY=0.7,BOMB=0.7)
+	damage_absorption = list(BRUTE=0.5,BURN=0.7,BULLET=0.45,LASER=0.6,ENERGY=0.7,BOMB=0.7)
 	max_temperature = 60000
 	infra_luminosity = 3
 	var/zoom_mode = FALSE
