@@ -42803,9 +42803,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bxw" = (
-/obj/machinery/computer/med_data{
-	dir = 4
-	},
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -50236,7 +50234,8 @@
 /area/station/medical/cryo)
 "bKP" = (
 /obj/machinery/light/smart,
-/obj/machinery/life_assist/hemodialysis,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
