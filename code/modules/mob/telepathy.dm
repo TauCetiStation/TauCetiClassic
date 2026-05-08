@@ -20,8 +20,8 @@
 	var/datum/species/S = all_species[get_species()]
 	if(S && S.flags[IS_SYNTHETIC])
 		return FALSE
-//		if(!M.client)
-//			continue
+		if(!M.client)
+			continue
 
 	return TRUE
 
