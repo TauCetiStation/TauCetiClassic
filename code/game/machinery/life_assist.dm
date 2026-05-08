@@ -28,15 +28,15 @@
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
 	attached = H
 	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, PROC_REF(resolve_stranded)))
-	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
+	visible_message("<span class='notice'>[usr] подключает трубки [CASE(src, GENITIVE_CASE)] к [H].</span>")
 	assist(H)
 	update_icon()
 
 /obj/machinery/life_assist/proc/detach(rip = FALSE)
 	if(!rip)
-		visible_message("<span class='notice'>[attached] is detached from \the [src]</span>")
+		visible_message("<span class='notice'>[attached] отключен от [CASE(src, GENITIVE_CASE)]</span>")
 	else
-		visible_message("<span class='warning'>The tubes are ripped out of [attached], doesn't that hurt?</span>")
+		visible_message("<span class='warning'>Трубки [CASE(src, GENITIVE_CASE)] с силой вырываются из тела [attached], оставляя за собой раны.</span>")
 		attached.apply_damage(15, BRUTE, BP_CHEST)
 
 	qdel(GetComponent(/datum/component/bounded))
@@ -100,9 +100,10 @@
 
 /obj/machinery/life_assist/artificial_ventilation
 	name = "artificial ventilation machine"
+	cases = list("аппарат ИВЛ", "аппарата ИВЛ", "аппарату ИВЛ", "аппарат ИВЛ", "аппаратом ИВЛ", "аппарате ИВЛ")
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "av_idle"
-	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
+	desc = "Аппарат искусственной вентиляции лёгких. Заменяет функции лёгких."
 
 	icon_state_attached = "av_ventilating"
 	icon_state_detached = "av_idle"
@@ -119,7 +120,7 @@
 			return
 		holding = W
 		add_overlay(holding.icon_state)
-		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
+		visible_message("<span class='notice'>[CASE(holding, NOMINATIVE_CASE)] вставлен в [CASE(src, ACCUSATIVE_CASE)]</span>")
 		if(attached)
 			update_internal(attached, TRUE)
 
@@ -132,7 +133,7 @@
 		return
 	if(holding && do_after(user, 20, target = src))
 		user.put_in_hands(holding)
-		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
+		visible_message("<span class='notice'>[CASE(holding, NOMINATIVE_CASE)] извлечён из [CASE(src, GENITIVE_CASE)]</span>")
 		cut_overlay(holding.icon_state)
 		holding = null
 		if(attached)
@@ -151,7 +152,7 @@
 		return
 	if(connect && holding)
 		if(attached.internal)
-			visible_message("<span class='notice'>\the [attached] is already attached to tank</span>")
+			visible_message("<span class='notice'>[attached] уже подключен к другому баллону</span>")
 			return
 		attached.internal = holding
 	else if(attached.internal == holding)
@@ -159,9 +160,10 @@
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
+	cases = list("аппарат ВИК", "аппарата ВИК", "аппарату ВИК", "аппарат ВИК", "аппаратом ВИК", "аппарате ВИК")
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cpb_idle"
-	desc = "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart"
+	desc = "Аппарат вспомогательного и искусственного кровообращения. Заменяет функции сердца."
 
 	density = TRUE
 
@@ -185,9 +187,10 @@
 
 /obj/machinery/life_assist/external_cooling_device
 	name = "External Cooling Device"
+	cases = list("аппарат вспомогательного охлаждения", "аппарата вспомогательного охлаждения", "аппарату вспомогательного охлаждения", "аппарат вспомогательного охлаждения", "аппаратом вспомогательного охлаждения", "аппарате вспомогательного охлаждения")
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cooler_idle"
-	desc = "External Cooling Device rapidly cools down any connected machine. There are IPC-compatible jacks."
+	desc = "Аппарат для вспомогательного охлаждения подключённой машинерии. Имеет разъёмы для подключения к СПУ."
 
 	density = TRUE
 
@@ -220,7 +223,7 @@
 		if(!user.drop_from_inventory(W, src))
 			return
 		beaker = W
-		visible_message("<span class='notice'>[beaker] is attached to \the [src]</span>")
+		visible_message("<span class='notice'>[CASE(beaker, NOMINATIVE_CASE)] вставлен в [CASE(src, ACCUSATIVE_CASE]</span>")
 		update_icon()
 
 /obj/machinery/life_assist/hemodialysis/attack_hand(mob/user)
@@ -232,7 +235,7 @@
 		return
 	if(beaker && do_after(user, 20, target = src))
 		user.put_in_hands(beaker)
-		visible_message("<span class='notice'>[beaker] is detached from \the [src]</span>")
+		visible_message("<span class='notice'>[CASE(beaker, NOMINATIVE_CASE)] извлечён из [CASE(src, GENITIVE_CASE)]</span>")
 		beaker = null
 		update_icon()
 
