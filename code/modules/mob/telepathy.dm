@@ -63,10 +63,10 @@
 			M.next_telepathy_clue = world.time + 30 SECONDS
 
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
+	to_chat(M, "<span class='notice'><span class='bold'>[src]</span> [verb]:</span> [message]")
+
 	if(runechat_message)
-		M.show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
-	else
-		M.show_runechat_message(source, language, runechat_message, null, SHOWMSG_AUDIO) // runechat message ass null and we don`t show somerhing
+		show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
 
 /mob/proc/add_remote_hearer(mob/hearer)
 	LAZYADD(remote_hearers, hearer)
@@ -153,7 +153,7 @@
 	else
 		to_chat(src, "<span class='notice'>You hear a voice that seems to echo around the room:</span> [msg]")
 
-	telepathy_eavesdrop(source, msg, "has heard a voice speak",, msg)
+	telepathy_eavesdrop(source, msg, "has heard a voice speak", null, msg)
 
 /mob/proc/multi_telepathy_say()
 	var/list/mob/targets = list()
@@ -173,6 +173,7 @@
 		if(QDELETED(M))
 			continue
 		M.telepathy_hear(src, msg)
+
 	typing_buble_prepare(bubble_recipients)
 
 /mob/proc/nearby_telepathy_say()

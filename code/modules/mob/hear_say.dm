@@ -268,7 +268,7 @@
 	else
 		to_chat(src, "[part_a][speaker_name][part_b][formatted][part_c]")
 
-	telepathy_eavesdrop(speaker, "[speaker_name][formatted]", "has heard", language)
+	telepathy_eavesdrop(speaker, "[speaker_name] [formatted]", "has heard", language, "[speaker_name] [formatted]")
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	var/speaker_name = speaker.name
@@ -314,4 +314,4 @@
 
 	to_chat(src, heard)
 
-	telepathy_eavesdrop(src, message, pick("has seen", "has heard"))
+	telepathy_eavesdrop(src, message, pick("has seen", "has heard"), null, message)
