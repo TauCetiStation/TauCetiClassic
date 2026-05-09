@@ -195,7 +195,7 @@
 	var/image/typing_bubble = image('icons/mob/talk.dmi', src, "robot0", MOB_LAYER + 1)
 	typing_bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	typing_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), typing_bubble, bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), typing_bubble, bubble_recipients, 3 SECONDS)
 
 /datum/action/telepathy/project_mind
 	name = "Project Mind"
