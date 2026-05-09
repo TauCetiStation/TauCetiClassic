@@ -113,3 +113,4 @@
 /obj/mecha/combat/durand/vindicator/atom_init()
 	. = ..()
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
