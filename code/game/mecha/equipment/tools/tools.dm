@@ -1198,3 +1198,44 @@
 	chassis.density = TRUE
 	chassis.opacity = TRUE
 	aiming = FALSE
+
+/********EMP Shield********/
+/obj/item/mecha_parts/mecha_equipment/defensive/emp_shield
+	name = "Advanced EMP Shielding Module"
+	desc = "A powerful EMP shielding module that provides protection, completely neutralizing EMP effects up to six times before requiring replacement."
+	icon_state = "emp_shield"
+	origin_tech = "magnets=4"
+	var/uses = 6
+
+/obj/item/mecha_parts/mecha_equipment/defensive/emp_shield/can_attach(obj/mecha/M)
+	if(!istype(M))
+		return 0
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/defensive/emp_shield/emp_act(severity)
+	if (uses > 0) 
+		uses-- 
+		if (istype(loc, /obj/mecha)) 
+			var/obj/mecha/M = loc
+			to_chat(M.occupant, "<span class='warning'>[src] absorbs the EMP strike. [uses] charges remaining!</span>")
+			playsound(M, 'sound/effects/empulse.ogg', 50, 1)
+			M.visible_message("<span class='warning'>[M] shimmers as it absorbs the EMP strike!</span>")
+
+			if (uses <= 0) 
+				to_chat(M.occupant, "<span class='danger'>[src] is depleted and disintegrates!</span>")
+				playsound(M, 'sound/effects/sparks4.ogg', 50, 1)
+				detach(M) 
+				M.equipment -= src 
+				src.loc = null 
+				return FALSE 
+			return TRUE 
+
+	
+	return FALSE
+
+/obj/mecha/emp_act(severity)
+	for(var/obj/item/mecha_parts/mecha_equipment/defensive/emp_shield/S in equipment)
+		if(S.uses > 0)
+			S.emp_act(severity)
+			return 
+	..() 
