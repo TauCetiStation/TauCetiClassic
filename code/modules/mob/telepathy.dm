@@ -63,7 +63,8 @@
 			M.next_telepathy_clue = world.time + 30 SECONDS
 
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
-	to_chat(M, "<span class='notice'><span class='bold'>[src]</span> [verb]:</span> [message]")
+	if(M in src.remote_hearers)
+		to_chat(M, "<span class='notice'><span class='bold'>[src]</span> [verb]:</span> [message]")
 
 	if(runechat_message)
 		show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
