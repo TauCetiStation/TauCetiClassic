@@ -1,6 +1,6 @@
 /mob
-	var/list/mob/remote_hearers = list()
-	var/list/mob/remote_hearing = list()
+	var/list/mob/remote_hearers
+	var/list/mob/remote_hearing
 
 	var/next_telepathy_clue = 0
 
@@ -20,8 +20,8 @@
 	var/datum/species/S = all_species[get_species()]
 	if(S && S.flags[IS_SYNTHETIC])
 		return FALSE
-		if(!M.client)
-			continue
+	if(!client)
+		return FALSE
 
 	return TRUE
 
@@ -63,8 +63,8 @@
 			M.next_telepathy_clue = world.time + 30 SECONDS
 
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
-
 	M.show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
+
 
 /mob/proc/add_remote_hearer(mob/hearer)
 	LAZYADD(remote_hearers, hearer)
@@ -72,7 +72,7 @@
 
 /mob/proc/remove_remote_hearer(mob/hearer)
 	LAZYREMOVE(remote_hearers, hearer)
-	LAZYCLEARLIST(hearer.remote_hearing)
+	LAZYREMOVE(hearer.remote_hearing, src)
 
 /mob/proc/toggle_telepathy_hear()
 	set name = "Toggle Telepathic Eavesdropping"
@@ -80,7 +80,7 @@
 	set category = "Superpower"
 
 	var/list/mob/targets = list()
-	for(var/mob/M in view_or_range(7, src.loc, "view"))
+	for(var/mob/M in hearers(7, src))
 		if(!M.telepathy_targetable())
 			continue
 		if(M == src)
@@ -89,11 +89,11 @@
 			continue
 		targets += M
 
-	if(remote_hearing.len)
+	if(remote_hearing)
 		for(var/mob/M in remote_hearing)
 			targets += M
 
-	var/mob/target = tgui_input_list(usr, "Who do you want to project your thoughts to?", "Choose target", targets)
+	var/mob/target = tgui_input_list(usr, "Who do you want to share your thoughts with?", "Choose target", targets)
 
 	if(isnull(target))
 		return
@@ -126,8 +126,8 @@
 	if(incapacitated())
 		return
 
-	if(!remote_hearing.len)
-		neardy_telepathy_say()
+	if(!remote_hearing)
+		nearby_telepathy_say()
 	else
 		multi_telepathy_say()
 
@@ -173,7 +173,7 @@
 		M.telepathy_hear(src, msg)
 	typing_buble_prepare(bubble_recipients)
 
-/mob/proc/neardy_telepathy_say()
+/mob/proc/nearby_telepathy_say()
 	var/list/client/bubble_recipients = list(src.client)
 	var/mob/target = toggle_telepathy_hear()
 	if(isnull(target))
