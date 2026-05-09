@@ -256,6 +256,7 @@ This is emryo growth procs
 	affected_mob.updatehealth()
 	to_chat(baby, "<span class='warning'>You tear at your host's insides!</span>")
 
+
 	var/chest_broken = FALSE
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
