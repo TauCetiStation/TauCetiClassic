@@ -11197,10 +11197,10 @@
 /area/shuttle/vox/arkship_hold)
 "azM" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
+/obj/item/clothing/head/wintercoat/wiz_red,
+/obj/item/clothing/head/wintercoat/wiz_red,
+/obj/item/clothing/head/wintercoat/wiz_blue,
+/obj/item/clothing/head/wintercoat/wiz_blue,
 /obj/item/clothing/head/wizard/ushanka/brown_white,
 /obj/item/clothing/head/wizard/ushanka/brown,
 /obj/item/clothing/head/wizard/ushanka/black_white,

@@ -611,7 +611,7 @@
 		return
 	update_inv_mob()
 
-/obj/item/clothing/suit/hooded/carp_costume
+/obj/item/clothing/suit/storage/hooded/carp_costume
 	name = "carp costume"
 	desc = "A costume made from 'synthetic' carp scales, it smells."
 	icon_state = "carp_casual"
@@ -621,7 +621,7 @@
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
-/obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
+/obj/item/clothing/suit/storage/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
 	icon_state = "ian"
@@ -630,7 +630,7 @@
 	allowed = list()
 	hoodtype = /obj/item/clothing/head/hooded/ian_hood
 
-/obj/item/clothing/suit/hooded/angel_suit
+/obj/item/clothing/suit/storage/hooded/angel_suit
 	name = "Angel Suit"
 	desc = "Angel costume, which Emits aura of light."
 	icon_state = "angela_suit"

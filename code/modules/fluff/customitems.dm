@@ -23,11 +23,12 @@
 #define FLUFF_TYPE_BACKPACK "backpack"
 #define FLUFF_TYPE_TIE  "tie"
 #define FLUFF_TYPE_BEDSHEET "bedsheet"
+#define FLUFF_TYPE_HOODED "hooded"
 // other
 //#define FLUFF_TYPE_ROBOT "robot"
 #define FLUFF_TYPE_GHOST "ghost"
 
-#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE, FLUFF_TYPE_BEDSHEET)
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE, FLUFF_TYPE_BEDSHEET, FLUFF_TYPE_HOODED)
 
 
 /obj/item/customitem
@@ -79,6 +80,9 @@
 
 /obj/item/weapon/bedsheet/custom
 	name = "Custom bedsheet"
+
+/obj/item/clothing/suit/storage/hooded/custom
+	name = "Custom hooded"
 
 /datum/custom_item
 	var/item_type // FLUFF_TYPES_LIST
@@ -309,6 +313,18 @@
 				item = labcoat
 			if(FLUFF_TYPE_BEDSHEET)
 				item = new /obj/item/weapon/bedsheet/custom()
+			if(FLUFF_TYPE_HOODED)
+				var/obj/item/clothing/suit/storage/hooded/custom/hooded = new /obj/item/clothing/suit/storage/hooded/custom()
+				if(hooded.hood)
+					hooded.hood.icon_custom = custom_item_info.icon
+					hooded.hood.icon = custom_item_info.icon
+					hooded.hood.icon_state = "[custom_item_info.icon_state]_hood"
+					hooded.hood.item_state = "[custom_item_info.icon_state]_hood_mob"
+				hooded.base_icon_state = custom_item_info.icon_state
+				hooded.icon_suit_up = "[custom_item_info.icon_state]_t"
+				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
+					hooded.flags |= ONESIZEFITSALL
+				item = hooded
 
 		if(!item)
 			continue

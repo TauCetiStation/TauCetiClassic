@@ -42,7 +42,7 @@
 	new /obj/item/weapon/storage/lockbox/medal/captain(src)
 	new /obj/item/weapon/storage/pouch/medium_generic(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
+		new /obj/item/clothing/suit/storage/hooded/wintercoat/captain(src)
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 
@@ -183,7 +183,7 @@
 	new /obj/item/weapon/storage/lockbox/medal/hos(src)
 	new /obj/item/weapon/storage/pouch/medium_generic(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/suit/storage/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 
@@ -244,7 +244,7 @@
 	new /obj/item/weapon/storage/box/mines/shock(src)
 	new /obj/item/weapon/storage/pouch/ammo(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/suit/storage/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 
@@ -300,7 +300,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/suit/storage/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/ushanka(src)
 

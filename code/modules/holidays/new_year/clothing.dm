@@ -22,7 +22,7 @@
 //////////////////////////////////////////////
 ////////////Winter suits//////////////////////
 //////////////////////////////////////////////
-/obj/item/clothing/suit/hooded/wintercoat
+/obj/item/clothing/suit/storage/hooded/wintercoat
 	name = "winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	hoodtype = /obj/item/clothing/head/wintercoat
@@ -38,7 +38,7 @@
 
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 
-/obj/item/clothing/suit/hooded/wintercoat/atom_init()
+/obj/item/clothing/suit/storage/hooded/wintercoat/atom_init()
 	. = ..()
 	icon_suit_up = "[icon_state]_t"
 
@@ -49,7 +49,7 @@
 	render_flags = parent_type::render_flags | HIDE_TOP_HAIR
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
-/obj/item/clothing/suit/hooded/wintercoat/captain
+/obj/item/clothing/suit/storage/hooded/wintercoat/captain
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
 	hoodtype = /obj/item/clothing/head/wintercoat/captain
@@ -61,7 +61,7 @@
 	name = "captain's winter hood"
 	icon_state = "coatcaptain_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/security
+/obj/item/clothing/suit/storage/hooded/wintercoat/security
 	name = "security winter coat"
 	icon_state = "coatsecurity"
 	hoodtype = /obj/item/clothing/head/wintercoat/security
@@ -72,7 +72,7 @@
 	name = "security winter hood"
 	icon_state = "coatsecurity_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/medical
+/obj/item/clothing/suit/storage/hooded/wintercoat/medical
 	name = "medical winter coat"
 	icon_state = "coatmedical"
 	hoodtype = /obj/item/clothing/head/wintercoat/medical
@@ -83,7 +83,7 @@
 	name = "medical winter hood"
 	icon_state = "coatmedical_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/science
+/obj/item/clothing/suit/storage/hooded/wintercoat/science
 	name = "science winter coat"
 	icon_state = "coatscience"
 	hoodtype = /obj/item/clothing/head/wintercoat/science
@@ -94,7 +94,7 @@
 	name = "science winter hood"
 	icon_state = "coatscience_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/engineering
+/obj/item/clothing/suit/storage/hooded/wintercoat/engineering
 	name = "engineering winter coat"
 	icon_state = "coatengineer"
 	hoodtype = /obj/item/clothing/head/wintercoat/engineering
@@ -105,7 +105,7 @@
 	name = "engineering winter hood"
 	icon_state = "coatengineer_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
+/obj/item/clothing/suit/storage/hooded/wintercoat/engineering/atmos
 	name = "atmospherics winter coat"
 	icon_state = "coatatmos"
 	hoodtype = /obj/item/clothing/head/wintercoat/engineering/atmos
@@ -114,7 +114,7 @@
 	name = "atmospherics winter hood"
 	icon_state = "coatatmos_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/hydro
+/obj/item/clothing/suit/storage/hooded/wintercoat/hydro
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"
 	hoodtype = /obj/item/clothing/head/wintercoat/hydro
@@ -124,7 +124,7 @@
 	name = "hydroponics winter hood"
 	icon_state = "coathydro_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/cargo
+/obj/item/clothing/suit/storage/hooded/wintercoat/cargo
 	name = "cargo winter coat"
 	icon_state = "coatcargo"
 	hoodtype = /obj/item/clothing/head/wintercoat/cargo
@@ -133,7 +133,7 @@
 	name = "cargo winter hood"
 	icon_state = "coatcargo_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/miner
+/obj/item/clothing/suit/storage/hooded/wintercoat/miner
 	name = "mining winter coat"
 	icon_state = "coatminer"
 	hoodtype = /obj/item/clothing/head/wintercoat/miner
@@ -144,7 +144,7 @@
 	name = "mining winter hood"
 	icon_state = "coatminer_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/wiz_blue
+/obj/item/clothing/suit/storage/hooded/wintercoat/wiz_blue
 	name = "Blue wizard winter coat"
 	icon_state = "coatwizblue"
 	hoodtype = /obj/item/clothing/head/wintercoat/wiz_blue
@@ -153,7 +153,7 @@
 	name = "Blue wizard winter hood"
 	icon_state = "coatwizblue_hood"
 
-/obj/item/clothing/suit/hooded/wintercoat/wiz_red
+/obj/item/clothing/suit/storage/hooded/wintercoat/wiz_red
 	name = "Red wizard winter coat"
 	icon_state = "coatwizred"
 	hoodtype = /obj/item/clothing/head/wintercoat/wiz_red
