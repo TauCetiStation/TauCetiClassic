@@ -1872,6 +1872,7 @@
 	..()
 	H.real_name = pick(global.serpentid_names)
 	H.name = H.real_name
+	H.r_eyes = 90
 	var/list/color_variables = list("#003300",
 									"#333300",
 									"#663300",
