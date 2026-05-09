@@ -8,7 +8,7 @@ on:
   pull_request_target:
 
 jobs:
-  triage:
+  labeler:
     permissions:
       contents: read # may be required due to overwrite/add ambiguity
       pull-requests: write # required to apply labels to PRs
