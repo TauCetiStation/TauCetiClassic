@@ -14,6 +14,8 @@
 	var/opened = FALSE
 	var/locked = TRUE
 	var/overlay_color = null
+	var/list/connectors_overlays = list()
+	var/list/suit_storage_overlays = list()
 //ultra violet stat
 	var/UV = FALSE
 	var/superUV = FALSE
@@ -43,9 +45,12 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/atom_init()
 	. = ..()
 
+	var/obj/item/weapon/circuitboard/suit_storage/ssu_type = new /obj/item/weapon/circuitboard/suit_storage(null)
+	ssu_type.update_circut(src)
+
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/circuitboard/suit_storage(null)
+	component_parts += ssu_type
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -69,11 +74,16 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 			TANK   = new tank_type(src)
 	set_power_use(IDLE_POWER_USE)
 	update_icon()						//in update icon, we add src connectors icons and search neardy Suit Storage Units
-	ssu_left?.add_connectors() 			//to add connector sprites for neardy staying Suit Storage Units
-	ssu_right?.add_connectors()
+	ssu_left?.update_connectors() 			//to add connector sprites for neardy staying Suit Storage Units
+	ssu_right?.update_connectors()
 
-/obj/machinery/suit_storage_unit/proc/add_connectors()
-	var/list/connectors_overlays = list()
+/obj/machinery/suit_storage_unit/proc/update_connectors()
+	if(length(connectors_overlays))
+		cut_overlay(connectors_overlays)
+		LAZYCLEARLIST(connectors_overlays)
+	if(QDELETED(src))
+		return
+
 	var/mutable_appearance/I
 	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
 	if(ssu_left)
@@ -92,9 +102,10 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	add_overlay(connectors_overlays)
 
 /obj/machinery/suit_storage_unit/update_icon()
-	cut_overlays()
-	var/list/suit_storage_overlays = list()
-	add_connectors(suit_storage_overlays)
+	if(length(suit_storage_overlays))
+		cut_overlay(suit_storage_overlays)
+		LAZYCLEARLIST(suit_storage_overlays)
+	update_connectors(suit_storage_overlays)
 	if(!ishardsuit(SUIT))
 		if(SUIT)
 			suit_storage_overlays += mutable_appearance(icon_state = "suit")
@@ -150,9 +161,9 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/Destroy()
 	. = ..()
-	ssu_left?.update_icon()
+	ssu_left?.update_connectors()
 	ssu_left = null
-	ssu_right?.update_icon()
+	ssu_right?.update_connectors()
 	ssu_right = null
 
 /obj/machinery/suit_storage_unit/ex_act(severity)

@@ -978,13 +978,19 @@ to destroy them and players will be able to make replacements.
 	names_of_suit_storage = list()
 	radial_icons = list()					// Force clear list befor add some
 	for(var/obj/machinery/suit_storage_unit/type as anything in typesof(/obj/machinery/suit_storage_unit))
-		var/full_name = initial(type::name)
 		if(!emagged)
 			if(type::syndie || type::ignore)
 				continue
-		ASSERT(!names_of_suit_storage[full_name])
-		names_of_suit_storage[full_name] = type
-		radial_icons[full_name] = icon(initial(type::icon), initial(type::icon_state))
+		ASSERT(!names_of_suit_storage[type::name])
+		names_of_suit_storage[type::name] = type
+		radial_icons[type::name] = icon(type::icon, type::icon_state)
+
+/obj/item/weapon/circuitboard/suit_storage/proc/update_circut(obj/ssu)
+	if(issuitstorage(ssu))
+		var/obj/machinery/suit_storage_unit/suit_storage_type = ssu
+		name = "circuit board ([suit_storage_type.name])"
+		build_path = suit_storage_type.type
+		req_access = suit_storage_type.req_access
 
 /obj/item/weapon/circuitboard/suit_storage/emag_act(mob/user)
 	if(emagged)
@@ -1005,8 +1011,6 @@ to destroy them and players will be able to make replacements.
 
 		to_chat(user, "<span class='notice'>You set the board to [suit_storage_name].</span>")
 
-		name = "circuit board ([suit_storage_name])"
-		build_path = suit_storage_type
-		req_access = suit_storage_type.req_access
+		update_circut(suit_storage_type)
 		return
 	return ..()
