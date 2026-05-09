@@ -199,3 +199,4 @@
 /obj/mecha/working/ripley/Destroy()
 	drop_cargo()
 	return ..()
+
