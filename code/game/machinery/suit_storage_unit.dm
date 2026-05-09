@@ -11,10 +11,8 @@
 	anchored = TRUE
 	density = TRUE
 	var/syndie = FALSE
-	var/powered = TRUE //starts powered
 	var/opened = FALSE
 	var/locked = TRUE
-	var/broken = FALSE
 	var/overlay_color = null
 //ultra violet stat
 	var/UV = FALSE
@@ -29,7 +27,7 @@ Make a child SSU, name it something then set the TYPE vars to your desired suit 
 	var/helmet_type = null
 	var/mask_type   = null
 	var/suit_type   = null
-	var/boot_type  = null
+	var/boot_type   = null
 	var/tank_type   = null
 /*
 All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
@@ -96,76 +94,57 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/update_icon()
 	cut_overlays()
 	var/list/suit_storage_overlays = list()
-	var/mutable_appearance/I
 	add_connectors(suit_storage_overlays)
 	if(!ishardsuit(SUIT))
 		if(SUIT)
-			I = mutable_appearance(icon_state = "suit")
-			suit_storage_overlays += I
+			suit_storage_overlays += mutable_appearance(icon_state = "suit")
 		if(HELMET)
-			I = mutable_appearance(icon_state = "helmet")
-			suit_storage_overlays += I
+			suit_storage_overlays += mutable_appearance(icon_state = "helmet")
 		if(BOOTS)
-			I = mutable_appearance(icon_state = "boots")
-			suit_storage_overlays += I
+			suit_storage_overlays += mutable_appearance(icon_state = "boots")
+
 	else
 		var/obj/item/clothing/suit/space/rig/RIG_SUIT = SUIT
 		if(RIG_SUIT?.helmet)
-			I = mutable_appearance(icon_state = "suit&helmet")
-			suit_storage_overlays += I
+			suit_storage_overlays += mutable_appearance(icon_state = "suit&helmet")
 		else
 			if(SUIT)
-				I = mutable_appearance(icon_state = "suit")
-				suit_storage_overlays += I
+				suit_storage_overlays += mutable_appearance(icon_state = "suit")
 			if(HELMET)
-				I = mutable_appearance(icon_state = "helmet")
-				suit_storage_overlays += I
-		if(RIG_SUIT?.boots)
-			I = mutable_appearance(icon_state = "boots")
-			suit_storage_overlays += I
-		else if(BOOTS)
-			I = mutable_appearance(icon_state = "boots")
-			suit_storage_overlays += I
+				suit_storage_overlays += mutable_appearance(icon_state = "helmet")
+		if(RIG_SUIT?.boots || BOOTS)
+			suit_storage_overlays += mutable_appearance(icon_state = "boots")
 
 	var/mutable_appearance/door_I = mutable_appearance(icon_state = "[opened ? "door_open" : "door_closed"]")
-	var/mutable_appearance/unit_color = mutable_appearance(icon_state = "[broken ? "suitholder_broken_color" : "suitholder_color"]")
+	var/mutable_appearance/unit_color = mutable_appearance(icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
 	if(overlay_color)
 		door_I.color = overlay_color
 		unit_color.color = overlay_color
 		suit_storage_overlays += unit_color
-	if(!opened && !broken)
+	if(!opened && !(stat & BROKEN))
 		suit_storage_overlays += door_I
 		if(locked && !emagged && !UV)
-			I = mutable_appearance(icon_state = "lock_closed")
-			suit_storage_overlays += I
+			suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
 		else
-			I = mutable_appearance(icon_state = "lock_open")
-			suit_storage_overlays += I
+			suit_storage_overlays += mutable_appearance(icon_state = "lock_open")
 	else
 		suit_storage_overlays += door_I
-
-	if(broken)
+	if(stat & BROKEN)
 		icon_state = "suitholder_broken"
 	if(UV && !superUV)
 		suit_storage_overlays += door_I
-		I = mutable_appearance(icon_state = "lock_closed")
-		suit_storage_overlays += I
-		I = mutable_appearance(icon_state = "termalclean")
-		suit_storage_overlays += I
+		suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
+		suit_storage_overlays += mutable_appearance(icon_state = "termalclean")
 		add_overlay(suit_storage_overlays)
 		return
 	else if(UV && superUV)
 		suit_storage_overlays += door_I
-		I = mutable_appearance(icon_state = "lock_closed")
-		suit_storage_overlays += I
-		I = mutable_appearance(icon_state = "termalclean_emag")
-		suit_storage_overlays += I
+		suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
+		suit_storage_overlays += mutable_appearance(icon_state = "termalclean_emag")
 		add_overlay(suit_storage_overlays)
 		return
 	if(panel_open)
-		I = mutable_appearance(icon_state = "panel_open")
-		suit_storage_overlays += I
-
+		suit_storage_overlays += mutable_appearance(icon_state = "panel_open")
 	add_overlay(suit_storage_overlays)
 
 
@@ -259,8 +238,8 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(occupant && !superUV)
 		to_chat(user, "<span class ='danger'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>")
 		return
-	if(broken)
-		to_chat(user, "<span class='warning'>The [src] appears to be broken.</span>")
+	if(stat & BROKEN)
+		to_chat(user, "<span class='warning'>The [src] appears to be stat & BROKEN.</span>")
 		return
 	if(user.loc == src)
 		to_chat(user, "<span class='notice'>You can't reach the lock from inside.</span>")
@@ -327,7 +306,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 					TANK   = null
 				if(BOOTS)
 					BOOTS  = null
-			broken = TRUE
+			stat &= ~BROKEN
 			visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
 		opened = TRUE
@@ -406,7 +385,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/CtrlClick(mob/user)
 	add_fingerprint(user)
-	if(!powered || broken)
+	if(stat & (BROKEN|NOPOWER))
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 	if(UV)
@@ -417,7 +396,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(!powered || broken)
+	if(stat & (BROKEN|NOPOWER))
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 	if(UV)
@@ -465,7 +444,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(UV)
 		return
-	if(!powered || broken)
+	if(stat & (BROKEN|NOPOWER))
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 

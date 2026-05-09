@@ -978,15 +978,13 @@ to destroy them and players will be able to make replacements.
 	names_of_suit_storage = list()
 	radial_icons = list()					// Force clear list befor add some
 	for(var/obj/machinery/suit_storage_unit/type as anything in typesof(/obj/machinery/suit_storage_unit))
-		var/full_name = initial(type.name)
+		var/full_name = initial(type::name)
 		if(!emagged)
-			if(type.ignore)
+			if(type::syndie || type::ignore)
 				continue
-		else if(!type.syndie || type.ignore)
-			continue
 		ASSERT(!names_of_suit_storage[full_name])
 		names_of_suit_storage[full_name] = type
-		radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
+		radial_icons[full_name] = icon(initial(type::icon), initial(type::icon_state))
 
 /obj/item/weapon/circuitboard/suit_storage/emag_act(mob/user)
 	if(emagged)
