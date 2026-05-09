@@ -103,9 +103,7 @@ This is emryo growth procs
 	if(!controlled_by_ai)
 		if(istype(loc, /turf) || !(contents.len))
 			if(baby)
-				var/atom/movable/mob_container
-				mob_container = baby
-				mob_container.forceMove(get_turf(affected_mob))
+				baby.forceMove(get_turf(affected_mob))
 				baby.reset_view()
 			qdel(src)
 			return FALSE
@@ -211,9 +209,7 @@ This is emryo growth procs
 	else
 		if(baby)
 			STOP_PROCESSING(SSobj, src)
-			var/atom/movable/mob_container
-			mob_container = baby
-			mob_container.forceMove(affected_mob)
+			baby.forceMove(affected_mob)
 			baby.reset_view()
 
 //only aliens will see this HUD
