@@ -6,7 +6,7 @@
 	icon_state = "marauder"
 	initial_icon = "marauder"
 	step_in = 5
-	health = 500
+	health = 600
 	deflect_chance = 25
 	damage_absorption = list(BRUTE=0.5,BURN=0.7,BULLET=0.45,LASER=0.6,ENERGY=0.7,BOMB=0.7)
 	max_temperature = 60000
