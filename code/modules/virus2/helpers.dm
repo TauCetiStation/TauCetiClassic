@@ -57,7 +57,7 @@
 		var/armor = H.getarmor(target_zone, MELEE)
 		var/bioarmor = H.getarmor(target_zone, BIO)
 
-		return max((100 - max(armor, bioarmor/2)), 0) / 2
+		return max(((100 - max(armor, bioarmor * 0.8)) * max(0.3, 0.02 * M.getBruteLoss())), 0)
 	return 100
 
 //Checks if table-passing table can reach target (5 tile radius)
