@@ -1872,13 +1872,9 @@
 	..()
 	H.real_name = pick(global.serpentid_names)
 	H.name = H.real_name
-	var/list/color_variables = list("#003300",
-									"#333300",
-									"#663300",
-									"#800000",
-									"#000066",
-									"#660033",
-									"#003366")
+	var/list/color_variables = list("#00ff00",
+									"#ffff00",
+									"#0080ff")
 	var/color_gain = pick(color_variables)
 	H.r_skin = hex2num(copytext(color_gain, 2, 4))
 	H.g_skin = hex2num(copytext(color_gain, 4, 6))
