@@ -289,7 +289,7 @@
 	show_runechat_message(speaker, null, runechat_message, null, SHOWMSG_VISUAL)
 	show_message(message, SHOWMSG_VISUAL)
 
-	telepathy_eavesdrop(speaker, message, "has seen", language)
+	telepathy_eavesdrop(speaker, message, "has seen", language, runechat_message)
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""

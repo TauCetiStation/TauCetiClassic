@@ -63,8 +63,10 @@
 			M.next_telepathy_clue = world.time + 30 SECONDS
 
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
-	M.show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
-
+	if(runechat_message)
+		M.show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
+	else
+		M.show_runechat_message(source, language, runechat_message, null, SHOWMSG_AUDIO) // runechat message ass null and we don`t show somerhing
 
 /mob/proc/add_remote_hearer(mob/hearer)
 	LAZYADD(remote_hearers, hearer)
