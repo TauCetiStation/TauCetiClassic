@@ -20,8 +20,6 @@
 	var/datum/species/S = all_species[get_species()]
 	if(S && S.flags[IS_SYNTHETIC])
 		return FALSE
-	if(!client)
-		return FALSE
 
 	return TRUE
 
@@ -62,9 +60,9 @@
 			to_chat(M, "<span class='warning'>You feel as if somebody is eavesdropping on you.</span>")
 			M.next_telepathy_clue = world.time + 30 SECONDS
 
-	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
-	if(M in src.remote_hearers)
-		to_chat(M, "<span class='notice'><span class='bold'>[src]</span> [verb]:</span> [message]")
+
+	for(var/mob/hearers in M.remote_hearers)
+		to_chat(hearers, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
 
 	if(runechat_message)
 		show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
@@ -92,7 +90,7 @@
 			continue
 		targets += M
 
-	if(remote_hearing)
+	if(length(remote_hearing))
 		for(var/mob/M in remote_hearing)
 			targets += M
 
@@ -108,11 +106,11 @@
 		to_chat(src, "<span class='notice'>They don't have a mind to eavesdrop on.</span>")
 		return
 
-	if(src in target.remote_hearers)
+	if(src in target?.remote_hearers)
 		target.remove_remote_hearer(src)
 		to_chat(src, "<span class='notice'>You stop telepathically eavesdropping on [target].</span>")
 
-	else if(remote_hearing?.len < CLEAR_TELEPATHY_TARGETS)
+	else if(length(remote_hearing) < CLEAR_TELEPATHY_TARGETS)
 		target.add_remote_hearer(src)
 		to_chat(src, "<span class='notice'>You start telepathically eavesdropping on [target].</span>")
 
@@ -149,8 +147,6 @@
 	var/mob/M = source
 	if(ismob(M) && (REMOTE_TALK in M.mutations))
 		to_chat(src, "<span class='notice'>You hear <b>[M.real_name]'s voice</b>:</span> [msg]")
-	else if(ismob(M))
-		to_chat(M, "<span class='notice'>You project your mind into <b>[src]</b>:</span> [msg]")
 	else
 		to_chat(src, "<span class='notice'>You hear a voice that seems to echo around the room:</span> [msg]")
 
@@ -163,7 +159,8 @@
 		if(!M.telepathy_targetable())
 			continue
 		targets += M
-		bubble_recipients += M.client
+		if(M.client)
+			bubble_recipients += M.client
 
 	var/msg = input("What do you wish to say?", "Telepathic Message") as text|null
 	if(!msg)
@@ -182,7 +179,8 @@
 	var/mob/target = toggle_telepathy_hear()
 	if(isnull(target))
 		return
-	bubble_recipients += target
+	if(target.client)
+		bubble_recipients += target
 	var/msg = input("What do you wish to say?", "Telepathic Message") as text|null
 	if(!msg)
 		return
