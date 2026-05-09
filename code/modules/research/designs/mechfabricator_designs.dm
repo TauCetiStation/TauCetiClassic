@@ -852,6 +852,16 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
+/datum/design/emp_shield
+	name = "EMP Shield"
+	desc = "A device that protects exosuits from EMP pulses."
+	id = "emp_shield"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield
+	materials = list(MAT_METAL=10000, MAT_GOLD=1500, MAT_SILVER=2000)
+	construction_time = 60
+	category = list("Exosuit Equipment")
+
 /datum/design/mech_syringe_gun
 	name = "Exosuit Module (Syringe Gun)"
 	desc = "Exosuit-mounted syringe gun and chemical synthesizer."
