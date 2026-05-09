@@ -495,13 +495,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				src.currently_vending = R
 				if(ishuman(usr))
 					var/mob/living/carbon/human/H = usr
-					if(istype(H.wear_id, /obj/item/device/pda) && H.wear_id.GetID())
-						var/obj/item/weapon/card/I = H.wear_id.GetID()
-						scan_card(I)
-
-					else if(istype(H.wear_id, /obj/item/weapon/card))
-						var/obj/item/weapon/card/I = H.wear_id
-						scan_card(I)
+					var/obj/item/weapon/card/id/ID = H?.wear_id?.GetID()
+					if(istype(ID, /obj/item/weapon/card/id))
+						scan_card(ID)
 				updateUsrDialog()
 		return
 
