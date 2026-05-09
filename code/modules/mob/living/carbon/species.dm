@@ -1787,7 +1787,7 @@
 	deformed = null
 	skeleton = null
 	eyes_icon = 'icons/mob/human/eyes_serpentid.dmi'
-	eyes_colorable_layer = "serpentid_eyes"
+	eyes_colorable_layer = "serpentid_colorable"
 	eyes_static_layer = null
 	damage_mask = FALSE
 	gender_body_icons = FALSE
