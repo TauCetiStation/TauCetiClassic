@@ -96,7 +96,7 @@
 		for(var/mob/M in remote_hearing)
 			targets += M
 
-	var/mob/target = tgui_input_list(usr, "Who do you want to share your thoughts with?", "Choose target", targets)
+	var/mob/target = tgui_input_list(usr, "Who do you want to telepathically link up with?", "Choose wisely", targets)
 
 	if(isnull(target))
 		return
