@@ -23,8 +23,8 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
-	force = 45
-	max_equip = 4
+	force = 55
+	max_equip = 6
 	var/thrusters_active = FALSE
 	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 
@@ -91,6 +91,8 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
+    ME = new /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield(src)
+	ME.attach(src)
 	smoke_system.set_up(3, 0, src)
 	smoke_system.attach(src)
 
@@ -103,6 +105,8 @@
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
+    ME = new /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield(src)
 	ME.attach(src)
 	smoke_system.set_up(3, 0, src)
 	smoke_system.attach(src)
@@ -129,7 +133,8 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
-
+    ME = new /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield(src)
+	ME.attach(src)
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)
 	if(zoom_mode)
 		if(world.time - last_message > 20)
