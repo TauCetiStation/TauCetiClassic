@@ -264,6 +264,7 @@ This is emryo growth procs
 		if(chest && (chest.status & ORGAN_BROKEN))
 			chest_broken = TRUE
 
+
 	if(chest_broken || affected_mob.stat == DEAD || affected_mob.health <= 0 || bite_count >= 6)
 		baby.forceMove(get_turf(affected_mob))
 		baby.reset_view()
