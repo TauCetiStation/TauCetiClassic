@@ -214,7 +214,7 @@
 	assist_trait = TRAIT_EXTERNAL_KIDNEY
 	var/filtertick = TRUE
 	var/remove_blood_amount = 10
-	var/blood_return_effectiveness = 90 PERCENT
+	var/blood_return_effectiveness = 0.9
 	var/filtering_amount = 3
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large
