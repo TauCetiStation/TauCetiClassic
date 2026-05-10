@@ -33,7 +33,7 @@
 	for(var/mob/M as anything in remote_hearers)
 		M.telepathy_hear_eavesdrop(source, src, message, verb, language, runechat_message)
 
-/mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language, runechat_message)
+/mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language = null, runechat_message)
 	var/dist = get_dist(src, hearer)
 	if(z != hearer.z)
 		dist += 25
@@ -64,8 +64,7 @@
 	for(var/mob/hearers in M.remote_hearers)
 		to_chat(hearers, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
 
-	if(runechat_message)
-		show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
+	M.show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
 
 /mob/proc/add_remote_hearer(mob/hearer)
 	LAZYADD(remote_hearers, hearer)
@@ -171,7 +170,7 @@
 		if(QDELETED(M))
 			continue
 		M.telepathy_hear(src, msg)
-
+	show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
 	typing_buble_prepare(bubble_recipients)
 
 /mob/proc/nearby_telepathy_say()
@@ -186,6 +185,7 @@
 		return
 	msg = add_period(capitalize(sanitize(trim(msg))))
 
+	show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
 	typing_buble_prepare(bubble_recipients)
 	target.telepathy_hear(src, msg)
 
