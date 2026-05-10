@@ -197,9 +197,7 @@ const EmitterControls = (props, context) => {
           average: [9, 14],
           bad: [15, 20],
         }}
-        onChange={(e, value) =>
-          act('radiationDuration', { duration: value })
-        }
+        onChange={(e, value) => act('radiationDuration', { duration: value })}
       />
       <Box textAlign="center">
         <Box inline preserveWhitespace color="grey" mb={2}>
@@ -219,9 +217,7 @@ const EmitterControls = (props, context) => {
           average: [4, 6],
           bad: [7, 10],
         }}
-        onChange={(e, value) =>
-          act('radiationIntensity', { intensity: value })
-        }
+        onChange={(e, value) => act('radiationIntensity', { intensity: value })}
       />
       <Box textAlign="center">
         <Box inline preserveWhitespace color="grey" mb={2}>
@@ -240,9 +236,7 @@ const EmitterControls = (props, context) => {
             maxValue={15}
             stepPixelSize={4}
             width="30px"
-            onChange={(e, value) =>
-              act('changeUITarget', { target: value })
-            }
+            onChange={(e, value) => act('changeUITarget', { target: value })}
             format={(num) => num.toString(16).toUpperCase()}
           />
         </Box>
@@ -322,7 +316,8 @@ const DnaModifyScreen = (props, context) => {
   const { dnaType, title, dnaField, pulseAction, showUITarget } = props;
 
   const selectedBlock = dnaType === 'UI' ? selectedUIBlock : selectedSEBlock;
-  const selectedSubBlock = dnaType === 'UI' ? selectedUISubBlock : selectedSESubBlock;
+  const selectedSubBlock =
+    dnaType === 'UI' ? selectedUISubBlock : selectedSESubBlock;
 
   return (
     <Stack>
@@ -345,10 +340,7 @@ const DnaModifyScreen = (props, context) => {
         <Section fill title="Emitter controls" width="180px">
           <EmitterControls showUITarget={showUITarget} />
           <Box textAlign="center">
-            <Button
-              icon="radiation"
-              m={1}
-              onClick={() => act(pulseAction)}>
+            <Button icon="radiation" m={1} onClick={() => act(pulseAction)}>
               Irradiate block
             </Button>
             <Button
@@ -418,7 +410,10 @@ const BufferEntry = (props) => {
                   ml={1}
                   tooltip="Change label"
                   onClick={() =>
-                    act('bufferOption', { bufferId, bufferOption: 'changeLabel' })
+                    act('bufferOption', {
+                      bufferId,
+                      bufferOption: 'changeLabel',
+                    })
                   }
                 />
               </LabeledList.Item>
@@ -430,7 +425,9 @@ const BufferEntry = (props) => {
               </LabeledList.Item>
             </>
           ) : (
-            <Box color="grey" pl={1}>Empty.</Box>
+            <Box color="grey" pl={1}>
+              Empty.
+            </Box>
           )}
           <LabeledList.Item label="Options">
             <Button
@@ -446,7 +443,10 @@ const BufferEntry = (props) => {
               disabled={!buf.data || !isInjectorReady}
               tooltip={!isInjectorReady ? INJECTOR_TOOLTIP : ''}
               onClick={() =>
-                act('bufferOption', { bufferId, bufferOption: 'createInjector' })
+                act('bufferOption', {
+                  bufferId,
+                  bufferOption: 'createInjector',
+                })
               }>
               Injector
             </Button>
@@ -517,12 +517,10 @@ const DataDiskSection = (props) => {
       </Flex>
       <Box p={1} style={DATA_BOX_STYLE} backgroundColor={DATA_BOX_BG}>
         <LabeledList>
-          {!!hasDisk && (
-            disk.data ? (
+          {!!hasDisk &&
+            (disk.data ? (
               <>
-                <LabeledList.Item label="Label">
-                  {disk.label}
-                </LabeledList.Item>
+                <LabeledList.Item label="Label">{disk.label}</LabeledList.Item>
                 <LabeledList.Item label="Subject">
                   {disk.owner || 'Unknown'}
                 </LabeledList.Item>
@@ -531,11 +529,14 @@ const DataDiskSection = (props) => {
                 </LabeledList.Item>
               </>
             ) : (
-              <Box color="grey" pl={1}>Disk is blank.</Box>
-            )
-          )}
+              <Box color="grey" pl={1}>
+                Disk is blank.
+              </Box>
+            ))}
           {!hasDisk && (
-            <Box color="grey" pl={1}>No disk inserted.</Box>
+            <Box color="grey" pl={1}>
+              No disk inserted.
+            </Box>
           )}
         </LabeledList>
       </Box>
@@ -545,13 +546,8 @@ const DataDiskSection = (props) => {
 
 const ChemicalsScreen = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    occupant,
-    beakerLabel,
-    beakerVolume,
-    beakerMaxVolume,
-    injectAmount,
-  } = data;
+  const { occupant, beakerLabel, beakerVolume, beakerMaxVolume, injectAmount } =
+    data;
   return (
     <Section
       fill
@@ -582,9 +578,7 @@ const ChemicalsScreen = (props, context) => {
               value={injectAmount}
               minValue={0}
               maxValue={beakerVolume}
-              onChange={(e, value) =>
-                act('injectAmount', { amount: value })
-              }
+              onChange={(e, value) => act('injectAmount', { amount: value })}
             />
             <Button
               inline
@@ -607,8 +601,20 @@ const SCREEN_COMPONENTS = {
 };
 
 const SCREEN_PARAMS = {
-  1: { dnaType: 'UI', title: 'Modify unique identifier', dnaField: 'uniqueIdentity', pulseAction: 'pulseUIRadiation', showUITarget: true },
-  2: { dnaType: 'SE', title: 'Modify structural enzymes', dnaField: 'structuralEnzymes', pulseAction: 'pulseSERadiation', showUITarget: false },
+  1: {
+    dnaType: 'UI',
+    title: 'Modify unique identifier',
+    dnaField: 'uniqueIdentity',
+    pulseAction: 'pulseUIRadiation',
+    showUITarget: true,
+  },
+  2: {
+    dnaType: 'SE',
+    title: 'Modify structural enzymes',
+    dnaField: 'structuralEnzymes',
+    pulseAction: 'pulseSERadiation',
+    showUITarget: false,
+  },
 };
 
 const MainScreen = (props, context) => {
