@@ -50,7 +50,7 @@
 	to_chat(world, "<span class='shadowling'><font size=3>s</span></font>")
 	var/shadowling_alive = FALSE
 	for(var/datum/role/shadowling/S in faction.members)
-		if(S.antag.current.stat != DEAD && ishuman(S.antag.current)) //&& S.antag.current != antag.current) //We have at least one S-ling alive
+		if(S.antag.current.stat != DEAD && ishuman(S.antag.current)) //We have at least one S-ling alive
 			shadowling_alive = TRUE
 			break
 
