@@ -310,7 +310,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			return
 		if("mediaServerChanged")
 			var/id = text2num(href_list["id"])
-			if(id >= 1 && id <= config.media_base_urls.len)
+			if(id >= 1 && id <= length(config.media_base_urls))
 				prefs.snd_jukebox_mediaserver = config.media_base_urls[id]
 				if(istype(media))
 					media.update_music()
