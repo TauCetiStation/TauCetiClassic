@@ -31,13 +31,6 @@ var/global/list/ventcrawl_machinery = list(
 		return FALSE
 	return ventcrawl_carry()
 
-/mob/living/LateLogin()
-	. = ..()
-	//login during ventcrawl
-	if(is_ventcrawling && istype(loc, /obj/machinery/atmospherics)) //attach us back into the pipes
-		remove_ventcrawl()
-		add_ventcrawl(loc)
-
 /mob/living/carbon/slime/can_ventcrawl()
 	if(Victim)
 		to_chat(src, "<span class='warning'>You cannot ventcrawl while feeding.</span>")
