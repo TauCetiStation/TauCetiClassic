@@ -30,12 +30,7 @@
 	icon_state = "advgun"
 	origin_tech = "combat=6;magnets=5;powerstorage=2;syndicate=1"
 	fire_delay = 4
-
-/obj/item/weapon/gun/energy/gun/adv/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
