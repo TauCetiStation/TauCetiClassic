@@ -27,6 +27,8 @@
 	power_gen = 5000
 	time_per_sheet = 80
 	board_path = /obj/item/weapon/circuitboard/pacman/scrap
+	emitted_gas = "carbon_dioxide"
+	consumed_gas = "oxygen"
 
 /obj/machinery/power/port_gen/pacman/scrap/overheat()
 	explosion(src.loc, 1, 5, 2, -1)
