@@ -646,12 +646,12 @@
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 	make_exact_fit()
 
-/obj/item/weapon/storage/box/shotgun/a774clip
+/obj/item/weapon/storage/box/a774clip
 	name = "box of Mosin-Nagant clips"
 	desc = "A small cardboard box. It holds several 5-round stripper clips of 7.74x54mm ammunition, ready to be loaded into a Mosin-Nagant."
 	icon_state = "box"
 
-/obj/item/weapon/storage/box/shotgun/a774clip/atom_init()
+/obj/item/weapon/storage/box/a774clip/atom_init()
 	. = ..()
 	for(var/i in 1 to 5)
 		new /obj/item/ammo_box/magazine/a774clip(src)

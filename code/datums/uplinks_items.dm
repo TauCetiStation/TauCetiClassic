@@ -1241,7 +1241,7 @@
 /datum/uplink_item/revolution/mosin_ammo
 	name = "Mosin-Nagant Ammo Box"
 	desc = "A box containing several 5-round stripper clips of 7.74mm ammunition for the Mosin-Nagant bolt-action rifle."
-	item = /obj/item/weapon/storage/box/shotgun/a774clip
+	item = /obj/item/weapon/storage/box/a774clip
 	cost = 1
 
 /datum/uplink_item/revolution/stechkin
