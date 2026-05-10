@@ -306,7 +306,6 @@
 			user.drop_from_inventory(I, src)
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
-			SStgui.try_update_ui(user, src)
 		return FALSE
 	return ..()
 
@@ -321,6 +320,11 @@
 	if(!isnull(connected))
 		spawn(250)
 		injector_ready = 1
+
+/obj/machinery/computer/scan_consolenew/can_interact_with(mob/user)
+	if(!isnull(connected) && user == connected.occupant)
+		return FALSE
+	return ..()
 
 /obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(list/buffer)
 	var/list/arr = list()
@@ -354,20 +358,19 @@
 	tgui_interact(user)
 
 /obj/machinery/computer/scan_consolenew/tgui_interact(mob/user, datum/tgui/ui)
-	if(connected && connected.is_operational())
-		if(user == connected.occupant)
-			return
-
-		ui = SStgui.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "DnaModifier", name)
-			ui.open()
-	else
-		to_chat(user, "<span class='warning'>Error: No scanner detected</span>")
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DnaModifier", name)
+		ui.open()
 
 /obj/machinery/computer/scan_consolenew/tgui_data(mob/user)
 	var/list/data = list()
 	data["selectedMenuKey"] = selected_menu_key
+	data["irradiating"] = irradiating
+	data["hasScanner"] = connected && connected.is_operational()
+	if(!data["hasScanner"])
+		return data		//No point gathering more data if it has no operational scanner
+
 	data["opened"] = connected.open
 	data["locked"] = connected.locked
 	data["hasOccupant"] = !isnull(connected.occupant)
@@ -396,7 +399,6 @@
 	data["maxRadiationDuration"] = MAX_RAD_DURATION
 	data["radiationIntensity"] = radiation_intensity
 	data["radiationDuration"] = radiation_duration
-	data["irradiating"] = irradiating
 
 	data["dnaBlockSize"] = DNA_BLOCK_SIZE
 	data["selectedUIBlock"] = selected_ui_block
@@ -615,7 +617,6 @@
 				var/obj/item/weapon/reagent_containers/glass/B = connected.beaker
 				B.forceMove(connected.loc)
 				connected.beaker = null
-				SStgui.try_update_ui(ui.user, src, ui)
 
 		if("wipeDisk")
 			if (!disk || disk.read_only)

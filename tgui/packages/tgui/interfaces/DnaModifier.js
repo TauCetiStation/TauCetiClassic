@@ -40,38 +40,46 @@ const INJECTOR_TOOLTIP = 'Preparing the next injector...';
 
 export const DnaModifier = (props, context) => {
   const { act, data } = useBackend(context);
-  const { selectedMenuKey, irradiating } = data;
+  const { selectedMenuKey, irradiating, hasScanner } = data;
   return (
     <Window resizable width={640} height={530}>
       <Window.Content scrollable={selectedMenuKey === 3 && !irradiating}>
-        <Scanner />
-        <Tabs fluid>
-          <Tabs.Tab
-            icon="dna"
-            selected={selectedMenuKey === 1}
-            onClick={() => act('selectMenuKey', { menu: 1 })}>
-            Modify U.I.
-          </Tabs.Tab>
-          <Tabs.Tab
-            icon="dna"
-            selected={selectedMenuKey === 2}
-            onClick={() => act('selectMenuKey', { menu: 2 })}>
-            Modify S.E.
-          </Tabs.Tab>
-          <Tabs.Tab
-            icon="database"
-            selected={selectedMenuKey === 3}
-            onClick={() => act('selectMenuKey', { menu: 3 })}>
-            Transfer buffers
-          </Tabs.Tab>
-          <Tabs.Tab
-            icon="flask"
-            selected={selectedMenuKey === 4}
-            onClick={() => act('selectMenuKey', { menu: 4 })}>
-            Chemicals
-          </Tabs.Tab>
-        </Tabs>
-        <MainScreen />
+        {!hasScanner ? (
+          <Box bold color="bad" fontSize="24px" textAlign="center" mt={5}>
+            No scanner detected! Please, place a scanner next to the console.
+          </Box>
+        ) : (
+          <>
+            <Scanner />
+            <Tabs fluid>
+              <Tabs.Tab
+                icon="dna"
+                selected={selectedMenuKey === 1}
+                onClick={() => act('selectMenuKey', { menu: 1 })}>
+                Modify U.I.
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="dna"
+                selected={selectedMenuKey === 2}
+                onClick={() => act('selectMenuKey', { menu: 2 })}>
+                Modify S.E.
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="database"
+                selected={selectedMenuKey === 3}
+                onClick={() => act('selectMenuKey', { menu: 3 })}>
+                Transfer buffers
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="flask"
+                selected={selectedMenuKey === 4}
+                onClick={() => act('selectMenuKey', { menu: 4 })}>
+                Chemicals
+              </Tabs.Tab>
+            </Tabs>
+            <MainScreen />
+          </>
+        )}
       </Window.Content>
       {!!irradiating && (
         <Dimmer textAlign="center">
