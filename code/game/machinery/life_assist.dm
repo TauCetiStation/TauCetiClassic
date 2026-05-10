@@ -219,7 +219,7 @@
 /obj/machinery/life_assist/hemodialysis/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || (stat & BROKEN) || beaker)
 		return
-	if(do_after(user, 10, target = src))
+	if(do_after(user, 1 SECOND, target = src))
 		if(!user.drop_from_inventory(W, src))
 			return
 		beaker = W
