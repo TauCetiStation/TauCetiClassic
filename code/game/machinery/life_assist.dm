@@ -114,7 +114,7 @@
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN) || holding)
-		return
+		return ..()
 	if(do_after(user, 10, target = src))
 		if(!user.drop_from_inventory(W, src))
 			return
@@ -213,12 +213,16 @@
 
 	assist_trait = TRAIT_EXTERNAL_KIDNEY
 	var/filtertick = TRUE
+	var/remove_blood_amount = 10
+	var/blood_return_effectiveness = 90 PERCENT
+	var/filtering_amount = 3
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large
 
 /obj/machinery/life_assist/hemodialysis/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || (stat & BROKEN) || beaker)
-		return
+		return ..()
+
 	if(do_after(user, 1 SECOND, target = src))
 		if(!user.drop_from_inventory(W, src))
 			return
@@ -245,15 +249,15 @@
 
 	filtertick = !filtertick
 
-	if(filtertick && beaker.reagents.has_reagent("blood"))
-		attached.inject_blood(beaker, 9)
+	if(filtertick)
+		attached.inject_blood(beaker, min(round(remove_blood_amount * blood_return_effectiveness), beaker.reagents.get_reagent_amount("blood")))
 		update_icon()
 		return
 
-	attached.blood_trans_to(beaker, 10)
+	attached.blood_trans_to(beaker, remove_blood_amount)
 	playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	for(var/datum/reagent/x in attached.reagents.reagent_list)
-		attached.reagents.trans_to(beaker, 3)
+		attached.reagents.trans_to(beaker, filtering_amount)
 
 	update_icon()
 
