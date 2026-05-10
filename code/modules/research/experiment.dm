@@ -51,6 +51,7 @@
 	var/list/saved_slimecores = list()
 	//xenoarcheology stuff
 	var/list/saved_artifacts = list()
+	var/list/saved_mobs = list()
 
 /datum/experiment_data/proc/init_known_tech()
 	for(var/tech in tech_points_rarity)
@@ -194,6 +195,9 @@
 
 	for(var/interaction_type in saved_best_score)
 		saved_best_score[interaction_type] = max(saved_best_score[interaction_type], O.saved_best_score[interaction_type])
+
+	for(var/mob_type in O.saved_mobs)
+		saved_mobs |= mob_type
 
 
 // Grants research points when explosion happens nearby
@@ -347,6 +351,27 @@
 	if(istype(target, /obj/item/weapon/disk/research_points))
 		var/obj/item/weapon/disk/research_points/disk = target
 		to_chat(user, "<span class='notice'>[disk] stores approximately [disk.stored_points] research points</span>")
+		return
+
+	if(istype(target, /mob/living/simple_animal/headcrab))
+		var/obj/machinery/computer/rdconsole/target_console
+		for(var/obj/machinery/computer/rdconsole/console in global.RDcomputer_list)
+			if(console.id == DEFAULT_SCIENCE_CONSOLE_ID)
+				target_console = console
+				break
+
+		if(!target_console)
+			to_chat(user, "<span class='warning'>No active R&D console detected. Cannot transmit scan data.</span>")
+			return
+
+		if(/mob/living/simple_animal/headcrab in target_console.files.experiments.saved_mobs)
+			to_chat(user, "<span class='notice'>[src] already has data about this creature stored in R&D.</span>")
+			return
+
+		target_console.files.experiments.saved_mobs += /mob/living/simple_animal/headcrab
+		target_console.files.research_points += 10000
+		playsound(loc, 'sound/machines/ping.ogg', 30, 1)
+		to_chat(user, "<span class='notice'>[src] scans [target] and transmits 10000 research points to the R&D console.</span>")
 		return
 
 	if(istype(target,/obj/item/weapon/paper/autopsy_report))
