@@ -25,6 +25,12 @@ decreasing cost from low grown potency
 use it if low potency results garbage from harvested crop
 */
 
+/datum/export/grown
+	unit_name = "natural grown food"
+	cost = 5
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown)
+	include_subtypes = TRUE
+
 /datum/export/grown/get_cost(obj/O)
 	var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
 	var/ratio = G.potency / 100
