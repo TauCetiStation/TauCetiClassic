@@ -58,7 +58,7 @@
 		if(!T.antag.current)
 			continue
 
-		to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
+		to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS IS DEAD!!!</span></font>")
 
 		if(shadowling_alive)
 			continue
