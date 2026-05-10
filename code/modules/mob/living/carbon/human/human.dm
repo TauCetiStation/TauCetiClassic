@@ -1277,6 +1277,14 @@
 		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
 
+/mob/living/carbon/human/proc/rupture_heart()
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+
+	if(!IO || IO.is_robotic())
+		return
+
+	IO.damage = max(IO.damage, IO.min_broken_damage)
+
 /*
 /mob/living/carbon/human/verb/simulate()
 	set name = "sim"

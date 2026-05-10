@@ -9,7 +9,7 @@ This is emryo growth procs
 	death()
 
 /mob/living/carbon/human/on_larva_erupt(mob/living/larva)
-	organs_by_name[O_HEART].damage = rand(50, 100)
+	rupture_heart()
 	rupture_lung()
 	. = ..()
 	apply_damage(rand(150, 250), BRUTE, BP_CHEST)
