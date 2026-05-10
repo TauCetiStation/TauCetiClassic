@@ -16,9 +16,31 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
+const PATIENT_STATS = [
+  { color: 'good', label: 'conscious' },
+  { color: 'average', label: 'unconscious' },
+  { color: 'bad', label: 'dead' },
+];
+
+const DNA_BLOCK_ACTIONS = { SE: 'selectSEBlock', UI: 'selectUIBlock' };
+
+const DATA_BOX_STYLE = {
+  border: '2px solid rgba(62, 97, 137, 0.5)',
+};
+
+const DATA_BOX_BG = 'rgba(10, 10, 10, 0.5)';
+
+const dnaDataTypeLabel = (type) =>
+  type === 'ui' ? 'Unique identifier' : 'Structural enzymes';
+
+const dnaDataDescription = (buf) =>
+  dnaDataTypeLabel(buf.type) + (buf.ue ? ' + unique enzymes' : '');
+
+const INJECTOR_TOOLTIP = 'Preparing the next injector...';
+
 export const DnaModifier = (props, context) => {
   const { act, data } = useBackend(context);
-  const { selectedMenuKey, opened, locked, irradiating } = data;
+  const { selectedMenuKey, irradiating } = data;
   return (
     <Window resizable width={640} height={530}>
       <Window.Content scrollable={selectedMenuKey === 3 && !irradiating}>
@@ -62,13 +84,8 @@ export const DnaModifier = (props, context) => {
 };
 
 const Scanner = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const { hasOccupant, occupant } = data;
-  const stats = [
-    ['good', 'conscious'],
-    ['average', 'unconscious'],
-    ['bad', 'dead'],
-  ];
   return (
     <Section title="Scanner" buttons={<ScannerButtons />}>
       {!hasOccupant ? (
@@ -80,8 +97,8 @@ const Scanner = (props, context) => {
               <LabeledList.Item label="Patient" preserveWhitespace>
                 {occupant.name}
                 {' - '}
-                <Box inline color={stats[occupant.stat][0]}>
-                  {stats[occupant.stat][1]}
+                <Box inline color={PATIENT_STATS[occupant.stat].color}>
+                  {PATIENT_STATS[occupant.stat].label}
                 </Box>
               </LabeledList.Item>
               <LabeledList.Item label="Health">
@@ -110,13 +127,11 @@ const Scanner = (props, context) => {
                   value={occupant.radiationLevel}
                   minValue={0}
                   maxValue={100}
-                  format={() => {
-                    return '';
-                  }}
+                  format={() => ''}
                   ranges={{
-                    'good': [0, 49],
-                    'average': [50, 74],
-                    'bad': [75, 100],
+                    good: [0, 49],
+                    average: [50, 74],
+                    bad: [75, 100],
                   }}
                 />
               </Flex.Item>
@@ -165,7 +180,6 @@ const EmitterControls = (props, context) => {
     radiationIntensity,
     radiationDuration,
     selectedUITarget,
-    selectedUITargetHex,
   } = data;
   const { showUITarget } = props;
 
@@ -184,9 +198,7 @@ const EmitterControls = (props, context) => {
           bad: [15, 20],
         }}
         onChange={(e, value) =>
-          act('radiationDuration', {
-            duration: value,
-          })
+          act('radiationDuration', { duration: value })
         }
       />
       <Box textAlign="center">
@@ -208,9 +220,7 @@ const EmitterControls = (props, context) => {
           bad: [7, 10],
         }}
         onChange={(e, value) =>
-          act('radiationIntensity', {
-            intensity: value,
-          })
+          act('radiationIntensity', { intensity: value })
         }
       />
       <Box textAlign="center">
@@ -231,13 +241,9 @@ const EmitterControls = (props, context) => {
             stepPixelSize={4}
             width="30px"
             onChange={(e, value) =>
-              act('changeUITarget', {
-                target: value,
-              })
+              act('changeUITarget', { target: value })
             }
-            format={(num) => {
-              return num.toString(16).toUpperCase();
-            }}
+            format={(num) => num.toString(16).toUpperCase()}
           />
         </Box>
       )}
@@ -256,12 +262,7 @@ const DnaBlocks = (props, context) => {
     blocks.push(characters.slice(i, i + dnaBlockSize));
   }
 
-  let action = '';
-  if (dnaType === 'SE') {
-    action = 'selectSEBlock';
-  } else if (dnaType === 'UI') {
-    action = 'selectUIBlock';
-  }
+  const action = DNA_BLOCK_ACTIONS[dnaType];
 
   return (
     <Flex wrap justify="space-evenly">
@@ -280,7 +281,7 @@ const DnaBlocks = (props, context) => {
               {blockIndex + 1}
             </Box>
             {block.map((char, charIndex) => {
-              let index = blockIndex * dnaBlockSize + charIndex;
+              const index = blockIndex * dnaBlockSize + charIndex;
               return (
                 <Button
                   selected={
@@ -307,362 +308,320 @@ const DnaBlocks = (props, context) => {
   );
 };
 
-const MainScreen = (props, context) => {
+const DnaModifyScreen = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    selectedMenuKey,
     hasOccupant,
-    isInjectorReady,
-    hasDisk,
-    disk,
-    buffers,
-    radiationIntensity,
-    radiationDuration,
-    irradiating,
+    occupant,
     dnaBlockSize,
     selectedUIBlock,
     selectedUISubBlock,
     selectedSEBlock,
     selectedSESubBlock,
-    selectedUITarget,
-    selectedUITargetHex,
+  } = data;
+  const { dnaType, title, dnaField, pulseAction, showUITarget } = props;
+
+  const selectedBlock = dnaType === 'UI' ? selectedUIBlock : selectedSEBlock;
+  const selectedSubBlock = dnaType === 'UI' ? selectedUISubBlock : selectedSESubBlock;
+
+  return (
+    <Stack>
+      <Stack.Item grow>
+        <Section fill title={title}>
+          {!hasOccupant ? (
+            <Box color="average">No patient detected</Box>
+          ) : (
+            <DnaBlocks
+              dnaString={occupant[dnaField]}
+              selectedBlock={selectedBlock}
+              selectedSubBlock={selectedSubBlock}
+              dnaBlockSize={dnaBlockSize}
+              dnaType={dnaType}
+            />
+          )}
+        </Section>
+      </Stack.Item>
+      <Stack.Item>
+        <Section fill title="Emitter controls" width="180px">
+          <EmitterControls showUITarget={showUITarget} />
+          <Box textAlign="center">
+            <Button
+              icon="radiation"
+              m={1}
+              onClick={() => act(pulseAction)}>
+              Irradiate block
+            </Button>
+            <Button
+              m={1}
+              icon="triangle-exclamation"
+              onClick={() => act('pulseRadiation')}>
+              Pulse radiation
+            </Button>
+          </Box>
+        </Section>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const TransferBuffersScreen = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { buffers, hasOccupant, isInjectorReady, hasDisk, disk } = data;
+  return (
+    <Section title="Transfer buffers">
+      {buffers.map((buf, index) => (
+        <BufferEntry
+          key={index}
+          buf={buf}
+          index={index}
+          hasOccupant={hasOccupant}
+          isInjectorReady={isInjectorReady}
+          hasDisk={hasDisk}
+          act={act}
+        />
+      ))}
+      <DataDiskSection disk={disk} hasDisk={hasDisk} act={act} />
+    </Section>
+  );
+};
+
+const BufferEntry = (props) => {
+  const { buf, index, hasOccupant, isInjectorReady, hasDisk, act } = props;
+  const bufferId = index + 1;
+  return (
+    <Box mb={3}>
+      <Flex mb={1} align="baseline">
+        <Flex.Item grow bold preserveWhitespace>
+          {'Buffer ' + bufferId}
+        </Flex.Item>
+        <Flex.Item align="right">
+          <Button
+            icon="xmark"
+            mb={-5}
+            tooltip="Clear buffer"
+            color="bad"
+            disabled={!buf.data}
+            onClick={() =>
+              act('bufferOption', { bufferId, bufferOption: 'clear' })
+            }
+          />
+        </Flex.Item>
+      </Flex>
+      <Box p={1} style={DATA_BOX_STYLE} backgroundColor={DATA_BOX_BG}>
+        <LabeledList>
+          {buf.data ? (
+            <>
+              <LabeledList.Item label="Label">
+                {buf.label}
+                <Button
+                  icon="pen-to-square"
+                  ml={1}
+                  tooltip="Change label"
+                  onClick={() =>
+                    act('bufferOption', { bufferId, bufferOption: 'changeLabel' })
+                  }
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Subject">
+                {buf.owner || 'Unknown'}
+              </LabeledList.Item>
+              <LabeledList.Item label="Stored data">
+                {dnaDataDescription(buf)}
+              </LabeledList.Item>
+            </>
+          ) : (
+            <Box color="grey" pl={1}>Empty.</Box>
+          )}
+          <LabeledList.Item label="Options">
+            <Button
+              icon="download"
+              disabled={!hasDisk && !hasOccupant}
+              onClick={() =>
+                act('bufferOption', { bufferId, bufferOption: 'loadFrom' })
+              }>
+              Load from...
+            </Button>
+            <Button
+              icon="syringe"
+              disabled={!buf.data || !isInjectorReady}
+              tooltip={!isInjectorReady ? INJECTOR_TOOLTIP : ''}
+              onClick={() =>
+                act('bufferOption', { bufferId, bufferOption: 'createInjector' })
+              }>
+              Injector
+            </Button>
+            <Button
+              icon="syringe"
+              disabled={!buf.data || !isInjectorReady}
+              tooltip={!isInjectorReady ? INJECTOR_TOOLTIP : ''}
+              onClick={() =>
+                act('bufferOption', {
+                  bufferId,
+                  bufferOption: 'createInjector',
+                  createBlockInjector: 1,
+                })
+              }>
+              Block injector
+            </Button>
+            <Button
+              icon="radiation"
+              disabled={!buf.data || !hasOccupant}
+              onClick={() =>
+                act('bufferOption', { bufferId, bufferOption: 'transfer' })
+              }>
+              Transfer to occupant
+            </Button>
+            <Button
+              icon="floppy-disk"
+              disabled={!hasDisk || !buf.data}
+              onClick={() =>
+                act('bufferOption', { bufferId, bufferOption: 'saveDisk' })
+              }>
+              Export to disk
+            </Button>
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
+    </Box>
+  );
+};
+
+const DataDiskSection = (props) => {
+  const { disk, hasDisk, act } = props;
+  return (
+    <Box>
+      <Flex mb={1} align="baseline">
+        <Flex.Item grow bold preserveWhitespace>
+          Data disk
+        </Flex.Item>
+        <Flex.Item align="right">
+          <Button
+            icon="eject"
+            mb={-5}
+            mr={1}
+            tooltip="Eject disk"
+            disabled={!hasDisk}
+            onClick={() => act('ejectDisk')}
+          />
+        </Flex.Item>
+        <Flex.Item align="right">
+          <Button
+            icon="xmark"
+            mb={-5}
+            tooltip="Wipe disk"
+            color="bad"
+            disabled={!disk.data}
+            onClick={() => act('wipeDisk')}
+          />
+        </Flex.Item>
+      </Flex>
+      <Box p={1} style={DATA_BOX_STYLE} backgroundColor={DATA_BOX_BG}>
+        <LabeledList>
+          {!!hasDisk && (
+            disk.data ? (
+              <>
+                <LabeledList.Item label="Label">
+                  {disk.label}
+                </LabeledList.Item>
+                <LabeledList.Item label="Subject">
+                  {disk.owner || 'Unknown'}
+                </LabeledList.Item>
+                <LabeledList.Item label="Stored data">
+                  {dnaDataDescription(disk)}
+                </LabeledList.Item>
+              </>
+            ) : (
+              <Box color="grey" pl={1}>Disk is blank.</Box>
+            )
+          )}
+          {!hasDisk && (
+            <Box color="grey" pl={1}>No disk inserted.</Box>
+          )}
+        </LabeledList>
+      </Box>
+    </Box>
+  );
+};
+
+const ChemicalsScreen = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
     occupant,
-    isBeakerLoaded,
     beakerLabel,
     beakerVolume,
     beakerMaxVolume,
     injectAmount,
   } = data;
-  switch (selectedMenuKey) {
-    case 1:
-      return (
-        <Stack>
-          <Stack.Item grow>
-            <Section fill title="Modify unique identifier">
-              {!hasOccupant ? (
-                <Box color="average">No patient detected</Box>
-              ) : (
-                <DnaBlocks
-                  dnaString={occupant.uniqueIdentity}
-                  selectedBlock={selectedUIBlock}
-                  selectedSubBlock={selectedUISubBlock}
-                  dnaBlockSize={dnaBlockSize}
-                  dnaType="UI"
-                />
-              )}
-            </Section>
-          </Stack.Item>
-
-          <Stack.Item>
-            <Section fill title="Emitter controls" width="180px">
-              <EmitterControls showUITarget />
-              <Box textAlign="center">
-                <Button
-                  icon="radiation"
-                  m={1}
-                  onClick={() => act('pulseUIRadiation')}>
-                  Irradiate block
-                </Button>
-                <Button
-                  m={1}
-                  icon="triangle-exclamation"
-                  onClick={() => act('pulseRadiation')}>
-                  Pulse radiation
-                </Button>
-              </Box>
-            </Section>
-          </Stack.Item>
-        </Stack>
-      );
-    case 2:
-      return (
-        <Stack>
-          <Stack.Item grow>
-            <Section fill title="Modify structural enzymes">
-              {!hasOccupant ? (
-                <Box color="average">No patient detected</Box>
-              ) : (
-                <DnaBlocks
-                  dnaString={occupant.structuralEnzymes}
-                  selectedBlock={selectedSEBlock}
-                  selectedSubBlock={selectedSESubBlock}
-                  dnaBlockSize={dnaBlockSize}
-                  dnaType="SE"
-                />
-              )}
-            </Section>
-          </Stack.Item>
-
-          <Stack.Item>
-            <Section fill title="Emitter controls" width="180px">
-              <EmitterControls />
-              <Box textAlign="center">
-                <Button
-                  icon="radiation"
-                  m={1}
-                  onClick={() => act('pulseSERadiation')}>
-                  Irradiate block
-                </Button>
-                <Button
-                  m={1}
-                  icon="triangle-exclamation"
-                  onClick={() => act('pulseRadiation')}>
-                  Pulse radiation
-                </Button>
-              </Box>
-            </Section>
-          </Stack.Item>
-        </Stack>
-      );
-    case 3:
-      return (
-        <Section title="Transfer buffers">
-          {buffers.map((buf, index) => {
-            return (
-              <Box key={index} mb={3}>
-                <Flex mb={1} align="baseline">
-                  <Flex.Item grow bold preserveWhitespace>
-                    {'Buffer ' + (index + 1)}
-                  </Flex.Item>
-                  <Flex.Item align="right">
-                    <Button
-                      icon="xmark"
-                      mb={-5}
-                      tooltip="Clear buffer"
-                      color="bad"
-                      disabled={!buf.data}
-                      onClick={() =>
-                        act('bufferOption', {
-                          bufferId: index + 1,
-                          bufferOption: 'clear',
-                        })
-                      }
-                    />
-                  </Flex.Item>
-                </Flex>
-                <Box
-                  p={1}
-                  style={{ border: '2px solid rgba(62, 97, 137, 0.5)' }}
-                  backgroundColor="rgba(10, 10, 10, 0.5)">
-                  <LabeledList>
-                    {!!buf.data && (
-                      <LabeledList.Item label="Label">
-                        {buf.label}
-                        <Button
-                          icon="pen-to-square"
-                          ml={1}
-                          tooltip="Change label"
-                          onClick={() =>
-                            act('bufferOption', {
-                              bufferId: index + 1,
-                              bufferOption: 'changeLabel',
-                            })
-                          }
-                        />
-                      </LabeledList.Item>
-                    )}
-                    {!!buf.data && (
-                      <LabeledList.Item label="Subject">
-                        {buf.owner ? buf.owner : 'Unknown'}
-                      </LabeledList.Item>
-                    )}
-                    {!!buf.data && (
-                      <LabeledList.Item label="Stored data">
-                        {buf.type === 'ui'
-                          ? 'Unique identifier'
-                          : 'Structural enzymes'}
-                        {buf.ue ? ' + unique enzymes' : ''}
-                      </LabeledList.Item>
-                    )}
-                    {!buf.data && (
-                      <Box color="grey" pl={1}>
-                        Empty.
-                      </Box>
-                    )}
-                    <LabeledList.Item label="Options">
-                      <Button
-                        icon="download"
-                        disabled={!hasDisk && !hasOccupant}
-                        onClick={() =>
-                          act('bufferOption', {
-                            bufferId: index + 1,
-                            bufferOption: 'loadFrom',
-                          })
-                        }>
-                        Load from...
-                      </Button>
-                      <Button
-                        icon="syringe"
-                        disabled={!buf.data || !isInjectorReady}
-                        tooltip={
-                          !isInjectorReady
-                            ? 'Preparing the next injector...'
-                            : ''
-                        }
-                        onClick={() =>
-                          act('bufferOption', {
-                            bufferId: index + 1,
-                            bufferOption: 'createInjector',
-                          })
-                        }>
-                        Injector
-                      </Button>
-                      <Button
-                        icon="syringe"
-                        disabled={!buf.data || !isInjectorReady}
-                        tooltip={
-                          !isInjectorReady
-                            ? 'Preparing the next injector...'
-                            : ''
-                        }
-                        onClick={() =>
-                          act('bufferOption', {
-                            bufferId: index + 1,
-                            bufferOption: 'createInjector',
-                            createBlockInjector: 1,
-                          })
-                        }>
-                        Block injector
-                      </Button>
-                      <Button
-                        icon="radiation"
-                        disabled={!buf.data || !hasOccupant}
-                        onClick={() =>
-                          act('bufferOption', {
-                            bufferId: index + 1,
-                            bufferOption: 'transfer',
-                          })
-                        }>
-                        Transfer to occupant
-                      </Button>
-                      <Button
-                        icon="floppy-disk"
-                        disabled={!hasDisk || !buf.data}
-                        onClick={() =>
-                          act('bufferOption', {
-                            bufferId: index + 1,
-                            bufferOption: 'saveDisk',
-                          })
-                        }>
-                        Export to disk
-                      </Button>
-                    </LabeledList.Item>
-                  </LabeledList>
-                </Box>
-              </Box>
-            );
-          })}
-          <Box>
-            <Flex mb={1} align="baseline">
-              <Flex.Item grow bold preserveWhitespace>
-                Data disk
-              </Flex.Item>
-              <Flex.Item align="right">
-                <Button
-                  icon="eject"
-                  mb={-5}
-                  mr={1}
-                  tooltip="Eject disk"
-                  disabled={!hasDisk}
-                  onClick={() => act('ejectDisk')}
-                />
-              </Flex.Item>
-              <Flex.Item align="right">
-                <Button
-                  icon="xmark"
-                  mb={-5}
-                  tooltip="Wipe disk"
-                  color="bad"
-                  disabled={!disk.data}
-                  onClick={() => act('wipeDisk')}
-                />
-              </Flex.Item>
-            </Flex>
-            <Box
-              p={1}
-              style={{ border: '2px solid rgba(62, 97, 137, 0.5)' }}
-              backgroundColor="rgba(10, 10, 10, 0.5)">
-              <LabeledList>
-                {!!disk.data && !!hasDisk && (
-                  <LabeledList.Item label="Label">
-                    {disk.label}
-                  </LabeledList.Item>
-                )}
-                {!!disk.data && !!hasDisk && (
-                  <LabeledList.Item label="Subject">
-                    {disk.owner ? disk.owner : 'Unknown'}
-                  </LabeledList.Item>
-                )}
-                {!!disk.data && !!hasDisk && (
-                  <LabeledList.Item label="Stored data">
-                    {disk.type === 'ui'
-                      ? 'Unique identifier'
-                      : 'Structural enzymes'}
-                    {disk.ue ? ' + unique enzymes' : ''}
-                  </LabeledList.Item>
-                )}
-                {!disk.data && !!hasDisk && (
-                  <Box color="grey" pl={1}>
-                    Disk is blank.
-                  </Box>
-                )}
-                {!hasDisk && (
-                  <Box color="grey" pl={1}>
-                    No disk inserted.
-                  </Box>
-                )}
-              </LabeledList>
-            </Box>
-          </Box>
-        </Section>
-      );
-    case 4:
-      return (
-        <Section
-          fill
-          title="Chemicals injection"
-          buttons={
+  return (
+    <Section
+      fill
+      title="Chemicals injection"
+      buttons={
+        <Button
+          icon="eject"
+          disabled={!beakerMaxVolume}
+          onClick={() => act('ejectBeaker')}>
+          Eject beaker
+        </Button>
+      }>
+      {!beakerMaxVolume ? (
+        <Box color="average">No beaker detected</Box>
+      ) : (
+        <LabeledList>
+          <LabeledList.Item label={beakerLabel || 'Beaker'}>
+            <ProgressBar
+              value={beakerVolume}
+              maxValue={beakerMaxVolume}
+              maxWidth={20}>
+              {beakerVolume}/{beakerMaxVolume}
+            </ProgressBar>
+          </LabeledList.Item>
+          <LabeledList.Item label="Inject">
+            <NumberInput
+              inline
+              value={injectAmount}
+              minValue={0}
+              maxValue={beakerVolume}
+              onChange={(e, value) =>
+                act('injectAmount', { amount: value })
+              }
+            />
             <Button
-              icon="eject"
-              disabled={!beakerMaxVolume}
-              onClick={() => act('ejectBeaker')}>
-              Eject beaker
-            </Button>
-          }>
-          {!beakerMaxVolume ? (
-            <Box color="average">No beaker detected</Box>
-          ) : (
-            <LabeledList>
-              <LabeledList.Item label={beakerLabel ? beakerLabel : 'Beaker'}>
-                <ProgressBar
-                  value={beakerVolume}
-                  maxValue={beakerMaxVolume}
-                  maxWidth={20}>
-                  {beakerVolume}/{beakerMaxVolume}
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Inject">
-                <NumberInput
-                  inline
-                  value={injectAmount}
-                  minValue={0}
-                  maxValue={beakerVolume}
-                  onChange={(e, value) =>
-                    act('injectAmount', {
-                      amount: value,
-                    })
-                  }
-                />
-                <Button
-                  inline
-                  icon="syringe"
-                  disabled={!injectAmount || !occupant}
-                  onClick={() => act('injectRejuvenators')}
-                />
-              </LabeledList.Item>
-            </LabeledList>
-          )}
-        </Section>
-      );
+              inline
+              icon="syringe"
+              disabled={!injectAmount || !occupant}
+              onClick={() => act('injectRejuvenators')}
+            />
+          </LabeledList.Item>
+        </LabeledList>
+      )}
+    </Section>
+  );
+};
+
+const SCREEN_COMPONENTS = {
+  1: DnaModifyScreen,
+  2: DnaModifyScreen,
+  3: TransferBuffersScreen,
+  4: ChemicalsScreen,
+};
+
+const SCREEN_PARAMS = {
+  1: { dnaType: 'UI', title: 'Modify unique identifier', dnaField: 'uniqueIdentity', pulseAction: 'pulseUIRadiation', showUITarget: true },
+  2: { dnaType: 'SE', title: 'Modify structural enzymes', dnaField: 'structuralEnzymes', pulseAction: 'pulseSERadiation', showUITarget: false },
+};
+
+const MainScreen = (props, context) => {
+  const { data } = useBackend(context);
+  const { selectedMenuKey } = data;
+  const ScreenComponent = SCREEN_COMPONENTS[selectedMenuKey];
+  if (!ScreenComponent) {
+    return null;
   }
+  const screenParams = SCREEN_PARAMS[selectedMenuKey];
+  return screenParams ? (
+    <ScreenComponent {...screenParams} />
+  ) : (
+    <ScreenComponent />
+  );
 };
