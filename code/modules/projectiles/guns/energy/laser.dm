@@ -10,12 +10,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
-
-/obj/item/weapon/gun/energy/laser/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"

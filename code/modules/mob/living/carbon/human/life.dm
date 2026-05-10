@@ -377,6 +377,7 @@ var/global/list/tourette_bad_words= list(
 		return null
 
 	if(!(HAS_TRAIT(src, TRAIT_EXTERNAL_VENTILATION) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
+		internal.update_actions_icons(src, TRUE)
 		internal = null
 		return null
 
