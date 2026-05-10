@@ -12,6 +12,7 @@
 	var/colourName = DYE_RED // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/edible = 1
+	var/list/synth_phrases
 
 	var/list/actions
 	var/list/arrows
@@ -27,8 +28,24 @@
 
 /obj/item/toy/crayon/attack(mob/living/carbon/M, mob/user)
 	if(edible && (M == user))
+		var/synth = FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.species && H.species.flags[IS_SYNTHETIC])
+				synth = TRUE
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
-		user.nutrition += 5
+		user.nutrition += synth ? 100 : 5
+		if(synth && length(synth_phrases))
+			if(M.silent || HAS_TRAIT(M, TRAIT_MUTE))
+				user.visible_message("<font size=3><b>[user] выразительно жуёт мелок в полной тишине.</b></font>",
+									 "<font size=3><b>Вы выразительно жуёте мелок, но звук не выходит.</b></font>")
+			else if(HAS_TRAIT(M, TRAIT_MIMING))
+				user.visible_message("<font size=3><b>[user]: ...</b></font>",
+									 "<font size=3><b>Вы: ...</b></font>")
+			else
+				var/phrase = pick(synth_phrases)
+				user.visible_message("<font size=3><b>[user] громко заявляет: \"[phrase]\"</b></font>",
+									 "<font size=3><b>Вы громко заявляете: \"[phrase]\"</b></font>")
 		uses = max(0, uses - 5)
 		if(!uses)
 			to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
@@ -213,36 +230,66 @@
 	colour = "#da0000"
 	shadeColour = "#810c0c"
 	colourName = DYE_RED
+	synth_phrases = list(
+		"Объявляю <font color='#da0000'>КРАСНУЮ ТРЕВОГУ</font>. Шучу. Просто десерт.",
+		"<font color='#da0000'>Бочки</font> красные.",
+		"Боюсь, я не могу это съесть, Дэйв... <font color='#da0000'>уже съел</font>."
+	)
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	colour = "#ff9300"
 	shadeColour = "#a55403"
 	colourName = DYE_ORANGE
+	synth_phrases = list(
+		"<font color='#ff9300'>ORANGE BOX</font> на ужин. Третьего не будет.",
+		"Я нынче в <font color='#ff9300'>оранжевом костюме</font>.",
+		"Тестируем <font color='#ff9300'>оранжевый портал</font> жеванием.",
+		"<font color='#ff9300'>Hey, apple!</font>"
+	)
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	colour = "#fff200"
 	shadeColour = "#886422"
 	colourName = DYE_YELLOW
+	synth_phrases = list(
+		"<font color='#fff200'>ЖЁЛТЫЙ</font>! ВЫСОКОЕ НАПРЯЖЕНИЕ ВКУСА!",
+		"<font color='#fff200'>Wakka wakka wakka</font>",
+		"We all live in a <font color='#fff200'>yellow submarine</font>...",
+	)
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	colour = "#a8e61d"
 	shadeColour = "#61840f"
 	colourName = DYE_GREEN
+	synth_phrases = list(
+		"<font color='#a8e61d'>Зелёный мелок делают из людей.</font>",
+		"<font color='#a8e61d'>Зелёный</font> свет получен. Жую дальше.",
+		"<font color='#a8e61d'>Малахитовое стекло</font> хрустит на зубах."
+	)
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	colour = "#00b7ef"
 	shadeColour = "#0082a8"
 	colourName = DYE_BLUE
+	synth_phrases = list(
+		"<font color='#00b7ef'>Синий</font> экран смерти изнутри ничего так.",
+		"<font color='#00b7ef'>Юникоды U+1F499</font> в моих логах."
+	)
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	colour = "#da00ff"
 	shadeColour = "#810cff"
 	colourName = DYE_PURPLE
+	synth_phrases = list(
+		"Мне <font color='#da00ff'>фиолетово</font>. И всё.",
+		"Запах <font color='#da00ff'>сирени и крыжовника</font>.",
+		"<font color='#da00ff'>Тиамат</font> повернула одну из голов в мою сторону."
+	)
 
 /obj/item/toy/crayon/chalk
 	name = "white chalk"
@@ -251,6 +298,11 @@
 	colour = "#ffffff"
 	shadeColour = "#cecece"
 	colourName = DYE_WHITE
+	synth_phrases = list(
+		"<font color='#ffffff'>Белый</font> шум на завтрак.",
+		"Я ел <font color='#ffffff'>гипс</font> и не жаловался.",
+		"Я не IPC. Я <font color='#ffffff'>МЕЛКОПРИЁМНИК</font>."
+	)
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
@@ -258,6 +310,7 @@
 	colour = "#ffffff"
 	shadeColour = "#000000"
 	colourName = DYE_MIME
+	synth_phrases = list("...")
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#ffffff" && shadeColour != "#000000")
@@ -275,6 +328,13 @@
 	colour = "#fff000"
 	shadeColour = "#000fff"
 	colourName = DYE_RAINBOW
+	synth_phrases = list(
+		"<font color='#ff0000'>В</font><font color='#ff7f00'>С</font><font color='#ffff00'>Е</font> <font color='#00ff00'>Ц</font><font color='#00bfff'>В</font><font color='#0000ff'>Е</font><font color='#7f00ff'>Т</font><font color='#ff00ff'>А</font> СРАЗУ. БАНКЕТ НА КОЛЁСАХ!",
+		"<font color='#ff0000'>Б</font><font color='#ff7f00'>У</font><font color='#ffff00'>Т</font><font color='#00ff00'>Е</font><font color='#0000ff'>Р</font><font color='#7f00ff'>Б</font><font color='#ff00ff'>Р</font><font color='#ff0000'>О</font><font color='#ff7f00'>Д</font> ИЗ СПЕКТРА!",
+		"<font color='#ff0000'>R</font><font color='#ff7f00'>O</font><font color='#ffff00'>Y</font> <font color='#00ff00'>G</font> <font color='#0000ff'>B</font><font color='#7f00ff'>I</font><font color='#ff00ff'>V</font>. Запомнил порядок? Я тоже.",
+		"Считаю <font color='#ff0000'>длину</font> <font color='#ff7f00'>волны</font> <font color='#ffff00'>каждого</font> <font color='#00ff00'>укуса</font>. <font color='#0000ff'>Невкусно</font> <font color='#7f00ff'>между</font> <font color='#ff00ff'>440-570нм</font>.",
+		"<font color='#ff0000'>Reading</font> <font color='#ff7f00'>Rainbow</font>! <font color='#ffff00'>Take</font> <font color='#00ff00'>a</font> <font color='#0000ff'>look</font> <font color='#7f00ff'>it's</font> <font color='#ff00ff'>in</font> <font color='#ff0000'>a</font> <font color='#ff7f00'>book</font>."
+	)
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color
