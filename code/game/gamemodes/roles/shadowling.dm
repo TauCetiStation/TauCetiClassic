@@ -62,9 +62,9 @@
 
 		if(shadowling_alive)
 			continue
-
 		SEND_SIGNAL(T.antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
 		SEND_SIGNAL(T.antag.current, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
+		to_chat(T.antag.current, "<span class='shadowling'><font size=3>Последний мастер пал! Ваши оковы упали, вы потеряли смысл жизни! Почти... Нужно создать нового мастера! Соберите вокруг себя четверых живых и разумных гуманоидов, и произведите ритуал Возвышения!</span></font>")
 		T.antag.current.AddSpell(new /obj/effect/proc_holder/spell/no_target/shadow_ascension)
 
 /datum/role/shadowling/RemoveFromRole(datum/mind/M, msg_admins)

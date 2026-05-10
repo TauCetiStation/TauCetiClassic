@@ -536,7 +536,7 @@
 	user.playsound_local(null, 'sound/effects/singlebeat.ogg', VOL_EFFECTS_MASTER, 50)
 	var/list/mobs_around = list()
 	for(var/mob/living/L in range(1, user)) //Not exactly thralls
-		if(L.stat != DEAD && !isshadowling(L) && L.client)
+		if(L.stat != DEAD && !isshadowling(L) && L.mind)
 			if(!do_after(user, 5 SECONDS, FALSE, user))
 				continue
 			to_chat(L, "<span class='shadowling'><b><i>Твоя душа будет участвовать в тёмном ритуале</b></i></span>")
