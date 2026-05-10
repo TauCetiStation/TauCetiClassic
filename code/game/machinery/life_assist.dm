@@ -233,7 +233,7 @@
 
 	if(user.is_busy() || issilicon(user))
 		return
-	if(beaker && do_after(user, 20, target = src))
+	if(beaker && do_after(user, 2 SECONDS, target = src))
 		user.put_in_hands(beaker)
 		visible_message("<span class='notice'>[CASE(beaker, NOMINATIVE_CASE)] извлечён из [CASE(src, GENITIVE_CASE)]</span>")
 		beaker = null
