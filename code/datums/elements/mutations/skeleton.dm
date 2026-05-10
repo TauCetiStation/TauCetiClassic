@@ -29,6 +29,7 @@
 		BP_L_LEG  = /obj/item/organ/external/l_leg/skeleton,
 		BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton,
 		BP_TAIL   = /obj/item/organ/external/tail/skeleton,
+		BP_EARS   = /obj/item/organ/external/ears/skeleton,
 	)
 
 #define SKELETON_MOOD_EVENT "skeleton"

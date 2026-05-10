@@ -75,14 +75,21 @@
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
-		"[SERPENTID]" = SOUNDIN_GRUNT_INSECTOID,
-		"[MOTH]" = SOUNDIN_GRUNT_INSECTOID,
+		"[TAJARAN][FEMALE]" = SOUNDIN_TAJARAN_FEMALE_LIGHT_PAIN,
+		"[TAJARAN][MALE]" = SOUNDIN_TAJARAN_MALE_LIGHT_PAIN,
+		"[SKRELL][FEMALE]" = SOUNDIN_SKRELL_LIGHT_PAIN,
+		"[SKRELL][MALE]" = SOUNDIN_SKRELL_LIGHT_PAIN,
+		"[UNATHI][FEMALE]" = SOUNDIN_UNATHI_LIGHT_PAIN,
+		"[UNATHI][MALE]" = SOUNDIN_UNATHI_LIGHT_PAIN,
+		"[VOX][NEUTER]" = SOUNDIN_VOX_LIGHT_PAIN,
+		"[SERPENTID][NEUTER]" = SOUNDIN_GRUNT_INSECTOID,
+		"[MOTH][NEUTER]" = SOUNDIN_GRUNT_INSECTOID,
 	)
 
-	var/hash = "[user.get_species()]"
+	var/hash = "[user.get_species()][user.gender]"
 
 	if(grunt_by_gender_species[hash])
-		return grunt_by_gender_species[hash]
+		return pick(grunt_by_gender_species[hash])
 	return get_sound_by_voice(user, SOUNDIN_MALE_LIGHT_PAIN, SOUNDIN_FEMALE_LIGHT_PAIN)
 
 /datum/emote/human/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
@@ -113,6 +120,9 @@
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
+		"[UNATHI]" = SOUNDIN_UNATHI_PASSIVE_PAIN,
+		"[SKRELL]" = SOUNDIN_SKRELL_PASSIVE_PAIN,
+		"[VOX]" = SOUNDIN_VOX_PASSIVE_PAIN,
 		"[SERPENTID]" = SOUNDIN_GRUNT_INSECTOID,
 		"[MOTH]" = SOUNDIN_GRUNT_INSECTOID,
 	)
@@ -120,7 +130,7 @@
 	var/hash = "[user.get_species()]"
 
 	if(grunt_by_gender_species[hash])
-		return grunt_by_gender_species[hash]
+		return pick(grunt_by_gender_species[hash])
 	var/female_groans = SOUNDIN_FEMALE_PASSIVE_PAIN
 	var/male_groans = SOUNDIN_MALE_PASSIVE_PAIN
 	if(user.get_species() != SKRELL && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66))
@@ -157,13 +167,20 @@
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/scream_by_gender_species = list(
-		"[SERPENTID]" = SOUNDIN_SCREAM_INSECTOID,
-		"[MOTH]" = SOUNDIN_SCREAM_INSECTOID,
+		"[TAJARAN][FEMALE]" = SOUNDIN_TAJARAN_MALE_HEAVY_PAIN,
+		"[TAJARAN][MALE]" = SOUNDIN_TAJARAN_MALE_HEAVY_PAIN,
+		"[SKRELL][FEMALE]" = SOUNDIN_SKRELL_HEAVY_PAIN,
+		"[SKRELL][MALE]" = SOUNDIN_SKRELL_HEAVY_PAIN,
+		"[UNATHI][FEMALE]" = SOUNDIN_UNATHI_HEAVY_PAIN,
+		"[UNATHI][MALE]" = SOUNDIN_UNATHI_HEAVY_PAIN,
+		"[VOX][NEUTER]" = SOUNDIN_VOX_HEAVY_PAIN,
+		"[SERPENTID][NEUTER]" = SOUNDIN_SCREAM_INSECTOID,
+		"[MOTH][NEUTER]" = SOUNDIN_SCREAM_INSECTOID,
 	)
-	var/hash = "[user.get_species()]"
+	var/hash = "[user.get_species()][user.gender]"
 
 	if(scream_by_gender_species[hash])
-		return scream_by_gender_species[hash]
+		return pick(scream_by_gender_species[hash])
 	return get_sound_by_voice(user, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_FEMALE_HEAVY_PAIN)
 
 /datum/emote/human/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)

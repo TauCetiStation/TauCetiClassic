@@ -339,12 +339,7 @@ Class Procs:
 /obj/machinery/Topic(href, href_list)
 	..()
 
-	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !can_interact_with(usr))
-		usr.unset_machine(src)
-		return FALSE
-
-	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(usr))
-		allowed_fail(usr)
+	if(!can_still_interact_with(usr))
 		return FALSE
 
 	usr.set_machine(src)
