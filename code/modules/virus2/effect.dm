@@ -168,6 +168,7 @@
 	chance_maxm = 20
 	pools = list(POOL_NEGATIVE_VIRUS)
 	var/activated = FALSE
+	var/signal_setup = TRUE
 	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
 
 /datum/disease2/effect/zombie/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -179,10 +180,14 @@
 		UnregisterSignal(H, COMSIG_MOB_DIED)
 		return
 
+	if(signal_setup)
+		RegisterSignal(A, COMSIG_MOB_DIED, PROC_REF(handle_infected_death))
+		signal_setup = FALSE
+
 	if(!(H.can_zombified()))
 		return
 
-	if(infected_organ == null && holder.ticks == 0)
+	if(infected_organ == null && holder.ticks <= 1)
 		var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
 		organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
 		for(var/o in organs)
@@ -231,9 +236,10 @@
 	if(holder.stage > 9) //rip
 		activated = TRUE
 		H.suiciding = TRUE
-		UnregisterSignal(H, COMSIG_MOB_DIED)
 		H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
 		H.updatehealth()
+		H.death()
+		UnregisterSignal(H, COMSIG_MOB_DIED)
 		disease.dead = TRUE
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
@@ -1700,3 +1706,7 @@
 /datum/disease2/effect/conductivity/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustWater(holder.stage)
 	A.myseed.react_to_disease_effect(A, src, holder)
+
+/datum/disease2/effect/conductivity/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(A, TRAIT_CONDUCT, VIRUS_TRAIT)
+	trait_added = FALSE

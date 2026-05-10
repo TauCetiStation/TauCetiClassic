@@ -8,17 +8,18 @@
 		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
 		QDEL_IN(animation, 2 SECOND)
 
-	for(var/obj/item/organ/internal/IO in organs)
-		if(prob(33))
-			IO.remove(src)
-			IO.forceMove(get_turf(src))
-			IO.throw_at(get_edge_target_turf(loc, pick(alldirs)), rand(1, 3), throw_speed)
+	if(!HAS_TRAIT(src, ELEMENT_TRAIT_SMOLL))
+		for(var/obj/item/organ/internal/IO in organs)
+			if(prob(33))
+				IO.remove(src)
+				IO.forceMove(get_turf(src))
+				IO.throw_at(get_edge_target_turf(loc, pick(alldirs)), rand(1, 3), throw_speed)
 
-	for(var/obj/item/organ/external/BP in bodyparts)
-		// Only make the limb drop if it's not too damaged
-		if(prob(100 - BP.get_damage()))
-			// Override the current limb status and don't cause an explosion
-			BP.droplimb(TRUE, null, DROPLIMB_EDGE)
+		for(var/obj/item/organ/external/BP in bodyparts)
+			// Only make the limb drop if it's not too damaged
+			if(prob(100 - BP.get_damage()))
+				// Override the current limb status and don't cause an explosion
+				BP.droplimb(TRUE, null, DROPLIMB_EDGE)
 
 	..()
 

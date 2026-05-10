@@ -44,7 +44,7 @@
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=5;materials=3"
-	recoil = 0 //extra kickback
+	recoil = LOW_RECOIL //extra kickback
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
 	var/open
 

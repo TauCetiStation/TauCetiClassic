@@ -53,7 +53,7 @@
 	priority = 3
 	can_infect = 0
 	blood_level = 1
-	allowed_species = list(DIONA, IPC, VOX, PODMAN) // Just so you can fail on fixing IPC's groin organs.
+	allowed_species = null // Allows surgery for all species, whereas previously it was only allowed for DIONA, IPC, VOX, and PODMAN
 
 /datum/surgery_step/groin_organs/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
@@ -82,13 +82,19 @@
 /datum/surgery_step/groin_organs/fixing/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
 		return FALSE
-	var/is_groin_organ_damaged = FALSE
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
-	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+	var/list/dead_organs = list()
+	var/has_treatable = FALSE
+	for(var/obj/item/organ/internal/IO as anything in BP.bodypart_organs)
 		if(IO.damage > 0)
-			is_groin_organ_damaged = TRUE
-			break
-	return is_groin_organ_damaged
+			if(IO.status & ORGAN_DEAD)
+				dead_organs += IO
+			else
+				has_treatable = TRUE
+	if(has_treatable)
+		return TRUE
+	necrotic_organs_warning(user, target, dead_organs)
+	return FALSE
 
 /datum/surgery_step/groin_organs/fixing/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
@@ -100,10 +106,11 @@
 		else
 			tool_name = "the bandaid"
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
+	var/list/dead_organs = list()
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.status & ORGAN_DEAD)
-			user.visible_message("[target]'s [IO.name] is dead.")
-			return
+			dead_organs += IO
+			continue
 		if(IO && IO.damage > 0)
 			if(!IO.is_robotic())
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].",
@@ -111,6 +118,7 @@
 			else
 				user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>",
 				"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
+	necrotic_organs_warning(user, target, dead_organs)
 
 	if(HAS_TRAIT(target, TRAIT_NO_PAIN))
 		to_chat(target, "You notice slight movement in your groin.")
@@ -131,7 +139,7 @@
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
-				return
+				continue
 			if(!IO.is_robotic())
 				user.visible_message("<span class='notice'>[user] treats damage to [target]'s [IO.name] with [tool_name].</span>",
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )
@@ -168,7 +176,7 @@
 	/obj/item/weapon/wrench = 70
 	)
 
-	allowed_species = list(IPC)
+	allowed_species = null // Allows the surgery on prosthetic organs for all species, whereas previously it was only allowed for IPC
 
 	min_duration = 70
 	max_duration = 90

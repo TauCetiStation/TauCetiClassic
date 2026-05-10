@@ -35,7 +35,6 @@
 	global.implant_list += src
 	if(iscarbon(loc))
 		inject(loc)
-		loc = null
 
 /obj/item/weapon/implant/Destroy()
 	if(implanted_mob)

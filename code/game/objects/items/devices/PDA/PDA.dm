@@ -738,13 +738,7 @@
 
 	if(mode == 8 || mode == 81 || mode == 82)
 	 	// find active QMs and technicians
-		var/manifest = global.data_core.get_manifest()
-		var/no_cargonauts = TRUE
-		for(var/civ in manifest["civ"])
-			if(civ["active"] == "Active" && (civ["rank"] in list("Quartermaster", "Cargo Technician")))
-				no_cargonauts = FALSE
-				break
-		data["no_cargonauts"] = no_cargonauts
+		data["no_cargonauts"] = !check_active_cargonauts()
 		// pass onlineshop data...
 		var/list/categories_frontend = list()
 		for(var/index in global.shop_categories)
@@ -2073,5 +2067,12 @@
 			return
 		chiptune_player.repeat = Ring.replays
 		chiptune_player.parse_song_text(Ring.melody)
+
+/obj/item/device/pda/proc/open_shop_page(mob/user, referrer_account_number = null)
+	category_shop_page = 1
+	mode = 8
+	referrer_account = referrer_account_number
+
+	attack_self(user)
 
 #undef TRANSCATION_COOLDOWN

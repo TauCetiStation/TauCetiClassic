@@ -516,3 +516,26 @@
 	name = "Mark"
 	desc = "Your will, and with it your soul, have been weakened! Well, does it really matter? Maybe you should just accept your fate?"
 	icon_state = "asleep"
+
+//WEAKENED
+/datum/status_effect/cursed_talk
+	id = "cursed_talk"
+	alert_type = /atom/movable/screen/alert/status_effect/cursed_talk
+
+/atom/movable/screen/alert/status_effect/cursed_talk
+	name = "Паранормальный ужас"
+	desc = "Вы против своей воли говорите о ужасных и мерзких вещах."
+	icon_state = "cursed_talk"
+
+/datum/status_effect/cursed_talk/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(!.)
+		return
+	duration = world.time + set_duration
+
+/datum/status_effect/cursed_talk/on_apply()
+	ADD_TRAIT(owner, TRAIT_CURSED_TALK, id)
+	return TRUE
+
+/datum/status_effect/cursed_talk/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_CURSED_TALK, id)

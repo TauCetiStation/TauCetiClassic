@@ -303,6 +303,8 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			acc_number = 0
 		G.fields["acc_number"] = acc_number
 
+		G.fields["auto_created"] = TRUE
+
 		general += G
 
 		//Medical Record
@@ -323,6 +325,9 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			M.fields["notes"] = H.med_record
 		else
 			M.fields["notes"] = "No notes found."
+
+		M.fields["auto_created"] = TRUE
+
 		medical += M
 
 		//Security Record
@@ -339,6 +344,9 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			S.fields["notes"] = H.sec_record
 		else
 			S.fields["notes"] = "No notes."
+
+		S.fields["auto_created"] = TRUE
+
 		security += S
 
 		//Locked Record
@@ -357,6 +365,9 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		L.fields["religion"]	= H.religion
 		L.fields["identity"]	= H.dna.UI
 		L.fields["image"]		= ticon
+
+		L.fields["auto_created"] = TRUE
+
 		locked += L
 
 		SSStatistics.score.crew_total++
