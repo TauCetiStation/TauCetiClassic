@@ -1415,7 +1415,7 @@
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
 	bodypart_butcher_results = list()
 
-	restricted_inventory_slots = list(SLOT_BELT, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK)
+	restricted_inventory_slots = list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BACK)
 
 	has_organ = list(
 		O_BRAIN   = /obj/item/organ/internal/brain
