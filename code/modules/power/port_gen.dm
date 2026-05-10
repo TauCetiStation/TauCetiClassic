@@ -80,7 +80,7 @@
 	var/emitted_moles_per_sheet = 1.0
 
 	var/consumed_gas = null
-	var/consumed_moles_per_sheet = 0.3
+	var/consumed_moles_per_sheet = 1.0
 
 	var/heat_transfer_coefficient = 1.0
 
@@ -193,7 +193,7 @@
 	var/malfunctions_heat_margin = safety_heat_margin - ((PORT_GEN_MAX_MALFUNCTIONS - malfunctions) / PORT_GEN_MAX_MALFUNCTIONS) * (safety_heat_margin - 10)
 
 	// The fact that all heat margins have the safety_heat_margin - 10 means that even at max no one factor can cause a kaboom.
-	var/heat_bound = PORT_GEN_HEAT_OVERHEAT_EXPLOSION - safety_heat_margin + power_output_heat_margin + malfunctions_heat_margin + surplus_load_heat_margin
+	var/heat_bound = round(PORT_GEN_HEAT_OVERHEAT_EXPLOSION - safety_heat_margin + power_output_heat_margin + malfunctions_heat_margin + surplus_load_heat_margin)
 
 	heat = max(0, heat + rand(-7 + heat_increase_bias, 7 + heat_increase_bias))
 	if(heat >= heat_bound)
@@ -277,7 +277,7 @@
 
 	if(SPT_PROB(malfunction_prob_per_second, seconds_per_tick) && emitted_gas)
 		var/datum/gas_mixture/env = loc.return_air()
-		if(env && SPT_PROB(env.get_gas(emitted_gas), seconds_per_tick))
+		if(env && SPT_PROB(env.get_gas(emitted_gas) / emitted_moles_per_sheet, seconds_per_tick))
 			add_malfunction()
 
 	if(SPT_PROB(malfunctions * 10, seconds_per_tick))
@@ -300,16 +300,14 @@
 		return
 
 	// The environment is too hot for us to cool down if it takes us 0 energy to increase the temperature to our peak.
-	if(env.get_thermal_energy_change(heat) <=  0)
+	if(env.get_thermal_energy_change(T0C + heat) <=  0)
 		return
 
-	var/try_remove_heat = min(heat, rand(0, 2))
-	var/transfer_moles = 0.25 * env.total_moles
+	var/try_remove_heat = min(heat, rand(0, 4))
+	if(try_remove_heat <= 0)
+		return
 
-	var/datum/gas_mixture/removed = env.remove(transfer_moles)
-	removed.add_thermal_energy(try_remove_heat * power_gen * heat_transfer_coefficient)
-
-	env.merge(removed)
+	env.add_thermal_energy(try_remove_heat * power_gen * heat_transfer_coefficient)
 
 	heat = max(heat - try_remove_heat, 0)
 	updateDialog()
