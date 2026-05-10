@@ -308,6 +308,13 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		if("testVolume")
 			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), vary = FALSE, channel = CHANNEL_VOLUMETEST)
 			return
+		if("mediaServerChanged")
+			var/id = text2num(href_list["id"])
+			if(id >= 1 && id <= config.media_base_urls.len)
+				prefs.snd_jukebox_mediaserver = config.media_base_urls[id]
+				if(istype(media))
+					media.update_music()
+			return
 		else
 			return
 
@@ -360,6 +367,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_JUKEBOX]" = prefs.snd_jukebox_vol
 		)
 
+	var/media_server = prefs.snd_jukebox_mediaserver
+
 	var/list/sliders_hint = list(
 		"[VOL_MUSIC]" = "Lobby music.",
 		"[VOL_AMBIENT]" = "Music and sound effects of ambient type.",
@@ -371,6 +380,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_ADMIN]" = "Admin sounds and music.",
 		"[VOL_JUKEBOX]" = "In-game jukebox's volume."
 		)
+
+	var/mediaserver_hint = "If you have problems loading jukebox music, try switching the server."
 
 	var/dat = {"
 		<style>
@@ -430,6 +441,22 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				</tr>
 			"}
 
+		if(category == "Jukebox")
+			var/list/L = config.media_base_urls
+			dat += {"
+				<tr>
+					<td>Media server <span title="[mediaserver_hint]">(?)</span>:</td>
+					<td>
+						<select id="media_server" onChange="changeMediaServer()">
+					"}
+			for(var/i = 1; i <= L.len; i++)
+				dat += "<option value=\"[i]\" [media_server == config.media_base_urls[i] ? "selected" : ""]>[config.media_base_urls[i]]</option>"
+			dat += {"
+						</select>
+					</td>
+				</tr>
+			"}
+
 		dat += {"
 			</table>
 		"}
@@ -454,6 +481,12 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 					}, 300);
 				}
 
+			}
+
+			function changeMediaServer() {
+				var sel = document.getElementById("media_server");
+				var id = sel.options\[sel.selectedIndex\].value;
+				window.location = 'byond://?_src_=updateVolume&proc=mediaServerChanged&server=' + encodeURIComponent(server);
 			}
 
 			function setVolume(slider_id) {

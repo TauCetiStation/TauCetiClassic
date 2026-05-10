@@ -100,7 +100,7 @@ function SetVolume(volume) {
 		return
 	var/obj/machinery/media/M = A.media_source
 	if(M && M.playing)
-		targetURL = M.media_url
+		targetURL = owner.prefs.snd_jukebox_mediaserver + M.media_url
 		targetStartTime = M.media_start_time
 		//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
 	//else
