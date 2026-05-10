@@ -219,7 +219,7 @@
 
 		enthralling = FALSE
 		to_chat(usr, "<span class='shadowling'>You marked <b>[target]</b>!</span>")
-		target.visible_message("<span class='large'>[target]'s expression appears slightly apatic!</span>", "<span class='shadowling'>Thinking...It is too hard, too complicated, maybe, there is no need to do so?</b></span>")
+		target.visible_message("<span class='large'>[target]'s expression appears slightly apatic!</span>", "<span class='shadowling'>Thinking...It is too hard, too complicated, maybe, there is no need to do so?</span>")
 		target.apply_status_effect(/datum/status_effect/thrall_mark, role)
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
