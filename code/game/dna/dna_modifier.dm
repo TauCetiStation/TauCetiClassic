@@ -328,6 +328,17 @@
 		arr += "[i]: [EncodeDNABlock(buffer[i])]"
 	return arr
 
+/obj/machinery/computer/scan_consolenew/proc/do_irradiate(duration, datum/tgui/ui)
+	irradiating = duration
+	var/lock_state = connected.locked
+	connected.locked = TRUE
+
+	while(irradiating > 0)
+		sleep(1 SECONDS)
+		irradiating--
+
+	return lock_state
+
 /obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(obj/item/weapon/dnainjector/I, blk, datum/dna2/record/buffer)
 	var/pos = findtext(blk,":")
 	if(!pos)
@@ -457,16 +468,10 @@
 				connected.toggle_open(usr)
 
 		if ("pulseRadiation")
-			irradiating = radiation_duration
-			var/lock_state = connected.locked
-			connected.locked = TRUE//lock it
-			SStgui.try_update_ui(ui.user, src, ui) // update all UIs attached to src
-
-			sleep(radiation_duration SECONDS)
-
-			irradiating = 0
+			var/lock_state = do_irradiate(radiation_duration, ui)
 
 			if (!connected.occupant)
+				connected.locked = lock_state
 				return
 
 			if (prob(95))
@@ -526,16 +531,10 @@
 				return FALSE
 			var/block = connected.occupant.dna.GetUISubBlock(selected_ui_block, selected_ui_subblock)
 
-			irradiating = radiation_duration
-			var/lock_state = connected.locked
-			connected.locked = TRUE//lock it
-			SStgui.try_update_ui(ui.user, src, ui) // update all UIs attached to src
-
-			sleep(radiation_duration SECONDS) // sleep for radiation_duration seconds
-
-			irradiating = 0
+			var/lock_state = do_irradiate(radiation_duration, ui)
 
 			if (!connected.occupant)
+				connected.locked = lock_state
 				return
 
 			if (prob(80 + connected.precision_coeff + radiation_duration / 2))
@@ -582,22 +581,14 @@
 
 			var/block = connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
 
-			irradiating = radiation_duration
-			var/lock_state = connected.locked
-			connected.locked = TRUE //lock it
-			SStgui.try_update_ui(ui.user, src, ui) // update all UIs attached to src
-
-			sleep(radiation_duration SECONDS) // sleep for radiation_duration seconds
-
-			irradiating = 0
+			var/lock_state = do_irradiate(radiation_duration, ui)
 
 			if(!connected)
+				connected?.locked = lock_state
 				return FALSE
 
 			if(connected.occupant)
 				if (prob(80 + connected.precision_coeff + radiation_duration / 2))
-					// FIXME: Find out what these corresponded to and change them to the WHATEVERBLOCK they need to be.
-					//if ((selected_se_block != 2 || selected_se_block != 12 || selected_se_block != 8 || selected_se_block || 10) && prob (20))
 					var/real_SE_block = selected_se_block
 					block = miniscramble(block, radiation_intensity, radiation_duration)
 					if(prob(20 - connected.scan_level ** 2))
@@ -606,19 +597,16 @@
 						else if (selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
 							real_SE_block--
 
-					//testing("Irradiated SE block [real_SE_block]:[selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
 					connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
 					connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
-					domutcheck(connected.occupant, connected, block != null, 1)//#Z2
+					domutcheck(connected.occupant, connected, block != null, 1)
 				else
 					connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
 					if	(prob(80 - radiation_duration))
-						//testing("Random bad mut!")
 						randmutb(connected.occupant)
-						domutcheck(connected.occupant, connected, block != null, 1)//#Z2
+						domutcheck(connected.occupant, connected, block != null, 1)
 					else
 						randmuti(connected.occupant)
-						//testing("Random identity mut!")
 						connected.occupant.UpdateAppearance()
 			connected.locked = lock_state
 
@@ -712,14 +700,7 @@
 				if (!connected.occupant || (NOCLONE in connected.occupant.mutations) || !connected.occupant.dna)
 					return FALSE
 
-				irradiating = 2
-				var/lock_state = connected.locked
-				connected.locked = TRUE//lock it
-				SStgui.try_update_ui(ui.user, src, ui) // update all UIs attached to src
-
-				sleep(2 SECONDS)
-
-				irradiating = 0
+				var/lock_state = do_irradiate(2, ui)
 				connected.locked = lock_state
 
 				var/datum/dna2/record/buf = buffers[bufferId]
