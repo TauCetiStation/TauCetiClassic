@@ -204,9 +204,9 @@ REQ_CULT_GHOSTWRITER 6
 # CHAT_BRIDGE http://localhost:3000
 
 ## Determines where to pull the jukebox playlist and music from. List of options for players, use space as divider. First option is default and will be used by server.
-MEDIA_BASE_URLS https://jukebox.taucetistation.org/ https://jukebox-cf.taucetistation.org/
+#MEDIA_BASE_URLS https://jukebox.taucetistation.org/ https://jukebox-cf.taucetistation.org/
 
-MEDIA_SECRET ieshongo0EHah5aiShooS9itheeCh9l
+#MEDIA_SECRET mediasecretkey
 
 ## guard (geoip and stuff)
 #GUARD_EMAIL contact@taucetistation.org
