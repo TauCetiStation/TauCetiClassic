@@ -103,9 +103,14 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	airlock_list -= src
 	QDEL_NULL(wires)
-	if(prob(50))
-		electronics.make_broken()
-	drop_from_contents(electronics)
+	switch(pick(1,2,3))
+		if(1)
+			drop_from_contents(electronics)
+		if(2)
+			electronics.make_broken()
+			drop_from_contents(electronics)
+		if(3)
+			QDEL_NULL(electronics)
 	closeOther = null
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)
