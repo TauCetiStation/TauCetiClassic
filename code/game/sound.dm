@@ -486,7 +486,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			function changeMediaServer() {
 				var sel = document.getElementById("media_server");
 				var id = sel.options\[sel.selectedIndex\].value;
-				window.location = 'byond://?_src_=updateVolume&proc=mediaServerChanged&server=' + encodeURIComponent(server);
+				window.location = 'byond://?_src_=updateVolume&proc=mediaServerChanged&id=' + encodeURIComponent(id);
 			}
 
 			function setVolume(slider_id) {
