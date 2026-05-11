@@ -103,6 +103,8 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	airlock_list -= src
 	QDEL_NULL(wires)
+	if(prob(50))
+		electronics.make_broken()
 	drop_from_contents(electronics)
 	closeOther = null
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
@@ -1210,10 +1212,7 @@ var/global/list/airlock_overlays = list()
 		update_electronics_acces(ae)
 
 	if(operating == -1)
-		ae.icon_state = "door_electronics_smoked"
-		ae.item_state_inventory = "door_electronics_smoked"
-		ae.item_state_world = "door_electronics_smoked_w"
-		ae.broken = TRUE
+		ae.make_broken()
 		operating = 0
 	..()
 

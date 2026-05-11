@@ -38,6 +38,12 @@
 			return
 	tgui_interact(user)
 
+/obj/item/weapon/airlock_electronics/proc/make_broken()
+	icon_state = "door_electronics_smoked"
+	item_state_inventory = "door_electronics_smoked"
+	item_state_world = "door_electronics_smoked_w"
+	broken = TRUE
+
 /obj/item/weapon/airlock_electronics/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
