@@ -82,6 +82,9 @@ var/global/list/airlock_overlays = list()
 	..()
 	airlock_list += src
 	wires = new(src)
+	electronics = new(src)
+	update_electronics_acces(electronics)
+
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
@@ -100,7 +103,7 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	airlock_list -= src
 	QDEL_NULL(wires)
-	QDEL_NULL(electronics)
+	drop_from_contents(electronics)
 	closeOther = null
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)
@@ -171,6 +174,18 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/proc/regainMainPower()
 	if(secondsMainPowerLost > 0)
 		secondsMainPowerLost = 0
+
+/obj/machinery/door/airlock/proc/update_electronics_acces(obj/electronics)
+	if(!istype(electronics, /obj/item/weapon/airlock_electronics))
+		return
+	var/obj/item/weapon/airlock_electronics/ae = electronics
+	if(!req_access)
+		check_access()
+	if(req_access.len)
+		ae.conf_access = req_access
+	else if (req_one_access.len)
+		ae.conf_access = req_one_access
+		ae.one_access = 1
 
 /obj/machinery/door/airlock/proc/loseMainPower()
 	if(secondsMainPowerLost <= 0)
@@ -1192,13 +1207,7 @@ var/global/list/airlock_overlays = list()
 		ae.loc = loc
 	else
 		ae = new /obj/item/weapon/airlock_electronics(loc)
-		if(!req_access)
-			check_access()
-		if(req_access.len)
-			ae.conf_access = req_access
-		else if (req_one_access.len)
-			ae.conf_access = req_one_access
-			ae.one_access = 1
+		update_electronics_acces(ae)
 
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
