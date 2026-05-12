@@ -374,7 +374,7 @@
 
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
+/mob/verb/pointed(atom/A as mob|obj|turf in view(), params as text)
 	set name = "Point To"
 	set category = "Object"
 
@@ -388,7 +388,7 @@
 	if(client && !(A in view(client.view, src)))
 		return FALSE
 
-	point_at(A)
+	point_at(A, params = params)
 
 	// TODO: replace with a "COMSIG_MOB_POINTED" signal
 	if (isliving(A))

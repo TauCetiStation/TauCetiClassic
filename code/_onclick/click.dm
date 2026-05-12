@@ -79,7 +79,7 @@
 		return
 
 	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
-		MiddleShiftClickOn(A)
+		MiddleShiftClickOn(A, params)
 		return
 	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
@@ -245,16 +245,16 @@
 	Middle Shift click
 	For point to
 */
-/mob/proc/MiddleShiftClickOn(atom/A)
+/mob/proc/MiddleShiftClickOn(atom/A, params)
 	var/obj/item/I = get_active_hand()
 	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLESHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
 
-	A.MiddleShiftClick(src)
+	A.MiddleShiftClick(src, params)
 
-/atom/proc/MiddleShiftClick(mob/user)
+/atom/proc/MiddleShiftClick(mob/user, params)
 	if(user.client && user.client.eye == user)
-		user.pointed(src)
+		user.pointed(src, params)
 
 /*
 	Middle click
