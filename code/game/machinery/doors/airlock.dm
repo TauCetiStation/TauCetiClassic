@@ -101,20 +101,7 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	airlock_list -= src
 	QDEL_NULL(wires)
-	switch(pick(1,2,3))
-		if(1)
-			if(!electronics)
-				electronics = new(src)
-				copy_electronics_access_to(electronics)
-			drop_from_contents(electronics)
-		if(2)
-			if(!electronics)
-				electronics = new(src)
-				copy_electronics_access_to(electronics)
-			electronics.make_broken()
-			drop_from_contents(electronics)
-		if(3)
-			QDEL_NULL(electronics)
+	QDEL_NULL(electronics)
 	closeOther = null
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)
@@ -1203,6 +1190,18 @@ var/global/list/airlock_overlays = list()
 
 	if(!disassembled)
 		A.update_integrity(A.max_integrity * 0.5)
+		var/obj/item/weapon/airlock_electronics/AE
+		if(prob(75))
+			if(!electronics)
+				AE = new /obj/item/weapon/airlock_electronics(src)
+				copy_electronics_access_to(AE)
+				AE.loc = loc
+			else
+				AE = electronics
+				electronics = null
+				AE.loc = loc
+			if(prob(25))
+				AE.make_broken()
 		return ..()
 
 	if(user)
@@ -1216,6 +1215,7 @@ var/global/list/airlock_overlays = list()
 	else
 		AE = new /obj/item/weapon/airlock_electronics(loc)
 		copy_electronics_access_to(AE)
+		AE.loc = loc
 
 	if(operating == -1)
 		AE.make_broken()
