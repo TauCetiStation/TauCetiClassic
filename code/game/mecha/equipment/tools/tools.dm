@@ -386,10 +386,10 @@
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					var/obj/structure/door_assembly/da = new /obj/structure/door_assembly(target)
-					da.anchored = TRUE
-					da.state = ASSEMBLY_WIRED
-					da.update_state()
+					var/obj/structure/door_assembly/DA = new /obj/structure/door_assembly(target)
+					DA.anchored = TRUE
+					DA.state = ASSEMBLY_WIRED
+					DA.update_state()
 	return
 
 
