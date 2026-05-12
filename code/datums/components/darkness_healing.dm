@@ -18,7 +18,7 @@
 		return
 
 	var/turf/T = H.loc
-	if(round(10 * T.get_lumcount()) < LIGHT_HEAL_THRESHOLD)
+	if(round(T.get_lumcount(), 0.1) < LIGHT_HEAL_THRESHOLD)
 		H.heal_overall_damage(1 * multiplier, 1 * multiplier)
 		H.adjustToxLoss(-0.5 * multiplier)
 		H.adjustBrainLoss(-0.5 * multiplier)

@@ -42,12 +42,10 @@
 	S.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 	S.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
 	S.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
-	RegisterSignal(S, COMSIG_MOB_DIED, PROC_REF(shadowling_death_signal))
+	RegisterSignal(S, COMSIG_MOB_DIED, PROC_REF(on_shadowling_death))
 
-/datum/role/shadowling/proc/shadowling_death_signal()
+/datum/role/shadowling/proc/on_shadowling_death()
 	SIGNAL_HANDLER
-	to_chat(antag.current, "<span class='shadowling'><font size=3>asd</span></font>")
-	to_chat(world, "<span class='shadowling'><font size=3>s</span></font>")
 	var/shadowling_alive = FALSE
 	for(var/datum/role/shadowling/S in faction.members)
 		if(S.antag.current.stat != DEAD && ishuman(S.antag.current)) //We have at least one S-ling alive
@@ -194,6 +192,8 @@
 	return dat
 
 /datum/role/thrall/RoleTopic(href, href_list, datum/mind/M, admin_auth)
+	if(!M.current)
+		return
 	if(href_list["get_mark"])
 		get_mark()
 	if(href_list["get_shadow_ascension"])

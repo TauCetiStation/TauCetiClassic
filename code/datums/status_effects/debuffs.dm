@@ -490,25 +490,21 @@
 	id = "mark"
 	alert_type = /atom/movable/screen/alert/status_effect/thrall_mark
 	duration = 2 MINUTES
-	var/datum/role/thrall/role
+	var/datum/weakref/role_weakref
 
 /datum/status_effect/thrall_mark/on_creation(mob/living/new_owner, datum/role/thrall/R)
 	. = ..()
 	if(istype(R))
-		role = R
+		role_weakref = WEAKREF(R)
 
-/datum/status_effect/thrall_mark/Destroy()
-	owner = null
-	return ..()
-
-/datum/status_effect/thrall_mark/tick()
+/datum/status_effect/thrall_mark/tick(seconds_per_tick)
 	if(owner && !owner.client)
 		duration = max(duration, world.time + 1 SECOND)
 
-	if(prob(2))
+	if(SPT_PROB(2, seconds_per_tick))
 		owner.Weaken(1)
 		to_chat(owner, "Ow...")
-	else if(prob(2))
+	else if(SPT_PROB(1, seconds_per_tick))
 		owner.Paralyse(1)
 		to_chat(owner, "I forgot...Something...")
 

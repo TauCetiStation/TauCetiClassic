@@ -155,8 +155,8 @@
 		target.resetOxyLoss() //In case the shadowling was choking them out
 		target.losebreath = 0
 		add_faction_member(faction, target)
-		if(M && M.role)
-			var/datum/role/thrall/thrall = M.role
+		if(M && M.role_weakref)
+			var/datum/role/thrall/thrall = M.role_weakref.resolve()
 			thrall.get_mark()
 			target.remove_status_effect(M)
 

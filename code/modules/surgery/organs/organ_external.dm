@@ -1163,8 +1163,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner) || HAS_TRAIT(owner, TRAIT_CULT_EYES)) // todo: red eyes trait
 				eyes_colorable_layer.color = "#ff0000"
 			if(HAS_TRAIT(owner, TRAIT_GLOWING_EYES))
-				if(eyes_colorable_layer.color == "#000000") //Black doesn't glow, so...
-					eyes_colorable_layer.color = "#ff0000"
+				var/list/hsl = rgb2num(eyes_colorable_layer.color, COLORSPACE_HSL)
+				if(hsl[3] < 60) //We have dark eyes, lets make it brighter
+					var/new_hex = color_luminance_max(rgb(r_eyes, g_eyes, b_eyes), 60)
+					r_eyes = HEX_VAL_RED(new_hex)
+					g_eyes = HEX_VAL_GREEN(new_hex)
+					b_eyes = HEX_VAL_BLUE(new_hex)
+					eyes_colorable_layer.color = rgb(r_eyes, g_eyes, b_eyes)
 				eyes_colorable_layer.plane = LIGHTING_LAMPS_PLANE
 				eyes_colorable_layer.layer = ABOVE_LIGHTING_LAYER
 

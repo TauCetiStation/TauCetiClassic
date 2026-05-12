@@ -1472,7 +1472,7 @@
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
-		light_amount = round(10 * T.get_lumcount())
+		light_amount = round(T.get_lumcount(), 0.1)
 
 	if(light_amount > LIGHT_DAM_THRESHOLD)
 		H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
