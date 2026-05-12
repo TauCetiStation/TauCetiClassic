@@ -1181,6 +1181,16 @@ var/global/list/airlock_overlays = list()
 	assembly.created_name = name
 	assembly.update_state()
 
+/obj/machinery/door/airlock/proc/get_or_create_electronics(obj/item/weapon/airlock_electronics/target)
+	if(!electronics)
+		target = new /obj/item/weapon/airlock_electronics(loc)
+		copy_electronics_access_to(target)
+	else
+		target = electronics
+		electronics = null
+		target.forceMove(loc)
+	return target
+
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(flags & NODECONSTRUCT)
 		return ..()
@@ -1192,14 +1202,7 @@ var/global/list/airlock_overlays = list()
 		A.update_integrity(A.max_integrity * 0.5)
 		var/obj/item/weapon/airlock_electronics/AE
 		if(prob(75))
-			if(!electronics)
-				AE = new /obj/item/weapon/airlock_electronics(src)
-				copy_electronics_access_to(AE)
-				AE.loc = loc
-			else
-				AE = electronics
-				electronics = null
-				AE.loc = loc
+			AE = get_or_create_electronics(AE)
 			if(prob(25))
 				AE.make_broken()
 		return ..()
