@@ -82,8 +82,6 @@ var/global/list/airlock_overlays = list()
 	..()
 	airlock_list += src
 	wires = new(src)
-	electronics = new(src)
-	update_electronics_acces(electronics)
 
 	if(glass && !inner_material)
 		inner_material = "glass"
@@ -103,6 +101,8 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	airlock_list -= src
 	QDEL_NULL(wires)
+	electronics = new(src)
+	copy_electronics_access_to(electronics)
 	switch(pick(1,2,3))
 		if(1)
 			drop_from_contents(electronics)
@@ -182,17 +182,17 @@ var/global/list/airlock_overlays = list()
 	if(secondsMainPowerLost > 0)
 		secondsMainPowerLost = 0
 
-/obj/machinery/door/airlock/proc/update_electronics_acces(obj/electronics)
-	if(!istype(electronics, /obj/item/weapon/airlock_electronics))
+/obj/machinery/door/airlock/proc/copy_electronics_access_to(obj/item/weapon/airlock_electronics/target)
+	if(!istype(target, /obj/item/weapon/airlock_electronics))
 		return
-	var/obj/item/weapon/airlock_electronics/ae = electronics
+	var/obj/item/weapon/airlock_electronics/AE = target
 	if(!req_access)
 		check_access()
 	if(req_access.len)
-		ae.conf_access = req_access
+		AE.conf_access = req_access
 	else if (req_one_access.len)
-		ae.conf_access = req_one_access
-		ae.one_access = 1
+		AE.conf_access = req_one_access
+		AE.one_access = 1
 
 /obj/machinery/door/airlock/proc/loseMainPower()
 	if(secondsMainPowerLost <= 0)
@@ -1207,17 +1207,17 @@ var/global/list/airlock_overlays = list()
 	if(user)
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
-	var/obj/item/weapon/airlock_electronics/ae
+	var/obj/item/weapon/airlock_electronics/AE
 	if(electronics)
-		ae = electronics
+		AE = electronics
 		electronics = null
-		ae.loc = loc
+		AE.loc = loc
 	else
-		ae = new /obj/item/weapon/airlock_electronics(loc)
-		update_electronics_acces(ae)
+		AE = new /obj/item/weapon/airlock_electronics(loc)
+		copy_electronics_access_to(AE)
 
 	if(operating == -1)
-		ae.make_broken()
+		AE.make_broken()
 		operating = 0
 	..()
 
