@@ -763,7 +763,17 @@
 
 	// Rotate the arrow to face the target direction
 	var/matrix/rotated_matrix = new()
-	rotated_matrix.TurnTo(0, get_pixel_angle(-final_y, -final_x))
+
+	// When pointing at self, arrow comes from outside toward the click point
+	if(pointed_atom == src)
+		var/dist = sqrt(final_x * final_x + final_y * final_y)
+		if(dist > 0)
+			visual.pixel_x = final_x + (final_x / dist) * world.icon_size
+			visual.pixel_y = final_y + (final_y / dist) * world.icon_size
+		rotated_matrix.TurnTo(0, get_pixel_angle(final_y, final_x))
+	else
+		rotated_matrix.TurnTo(0, get_pixel_angle(-final_y, -final_x))
+
 	visual.transform = rotated_matrix
 
 	animate(visual, pixel_x = final_x, pixel_y = final_y, time = 1.7, easing = EASE_OUT)
