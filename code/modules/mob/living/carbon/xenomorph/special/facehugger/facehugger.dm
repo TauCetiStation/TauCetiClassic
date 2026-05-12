@@ -323,7 +323,6 @@
 			new_xeno.key = FH.key
 			var/datum/action/embryo_kick/kick_action = new(new_embryo)
 			kick_action.Grant(new_xeno)
-			new_embryo.kick_action = kick_action
 			qdel(current_hugger)
 		target.unEquip(src)
 		target.add_status_flags(XENO_HOST)
