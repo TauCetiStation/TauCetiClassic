@@ -503,10 +503,10 @@
 
 	if(SPT_PROB(2, seconds_per_tick))
 		owner.Weaken(1)
-		to_chat(owner, "Ow...")
+		to_chat(owner, "<span class='notice'>Ow...</span>")
 	else if(SPT_PROB(1, seconds_per_tick))
 		owner.Paralyse(1)
-		to_chat(owner, "I forgot...Something...")
+		to_chat(owner, "<span class='notice'>I forgot...Something...</span>")
 
 /atom/movable/screen/alert/status_effect/thrall_mark
 	name = "Mark"
