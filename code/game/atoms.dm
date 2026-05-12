@@ -750,16 +750,20 @@
 
 	// If click params are available, use exact click position instead of tile center
 	var/list/click_params = params2list(params)
-	if(length(click_params) && click_params["screen-loc"] && ismob(src))
-		var/mob/user = src
-		var/list/actual_view = getviewsize(user.client ? user.client.view : world.view)
-		var/list/split_coords = splittext(click_params["screen-loc"], ",")
-		final_x = (text2num(splittext(split_coords[1], ":")[1]) - actual_view[1] / 2) * world.icon_size + (text2num(splittext(split_coords[1], ":")[2]) - world.icon_size)
-		final_y = (text2num(splittext(split_coords[2], ":")[1]) - actual_view[2] / 2) * world.icon_size + (text2num(splittext(split_coords[2], ":")[2]) - world.icon_size)
+	if(length(click_params))
+		var/click_x = 16
+		var/click_y = 16
+		if(click_params["icon-x"])
+			click_x = text2num(click_params["icon-x"])
+		if(click_params["icon-y"])
+			click_y = text2num(click_params["icon-y"])
+
+		final_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x + (click_x - 16)
+		final_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y + (click_y - 16)
 
 	// Rotate the arrow to face the target direction
 	var/matrix/rotated_matrix = new()
-	rotated_matrix.TurnTo(0, Get_Pixel_Angle(-final_y, -final_x))
+	rotated_matrix.TurnTo(0, get_pixel_angle(-final_y, -final_x))
 	visual.transform = rotated_matrix
 
 	animate(visual, pixel_x = final_x, pixel_y = final_y, time = 1.7, easing = EASE_OUT)
