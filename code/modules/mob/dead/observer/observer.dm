@@ -139,14 +139,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	if(href_list["track"])
 		var/atom/target = locate(href_list["track"])
-		if(target && target != src)
-			if(ismovable(target))
-				ManualFollow(target)
-			else
-				var/turf/target_turf = get_turf(target)
-				if(target_turf && isturf(target_turf))
-					abstract_move(target_turf)
-			return
+		Follow(target)
+		return
 
 	if(href_list["x"] && href_list["y"] && href_list["z"])
 		var/tx = text2num(href_list["x"])
@@ -381,6 +375,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 // This is the ghost's follow verb with an argument
+/mob/dead/observer/proc/Follow(atom/target)
+	if(!target || target == src)
+		return
+	if(ismovable(target))
+		ManualFollow(target)
+	else
+		var/turf/T = get_turf(target)
+		if(T)
+			abstract_move(T)
+
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target))
 		return
