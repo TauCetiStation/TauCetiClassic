@@ -169,7 +169,7 @@
 		if(modifiers[MIDDLE_CLICK])
 			if(!COOLDOWN_FINISHED(src, point_to))
 				return
-			point_at(A)
+			point_at(A, params = params)
 			COOLDOWN_START(src, point_to, 3 SECONDS)
 			return
 		A.examine(src)
