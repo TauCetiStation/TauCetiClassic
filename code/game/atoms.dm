@@ -733,7 +733,7 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point)
+/atom/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point, params)
 	if (!isturf(loc))
 		return FALSE
 
@@ -745,6 +745,23 @@
 	var/obj/visual = new arrow_type(our_tile, invisibility)
 	QDEL_IN(visual, 20)
 
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+	var/final_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x
+	var/final_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y
+
+	// If click params are available, use exact click position instead of tile center
+	var/list/click_params = params2list(params)
+	if(length(click_params) && click_params["screen-loc"] && ismob(src))
+		var/mob/user = src
+		var/list/actual_view = getviewsize(user.client ? user.client.view : world.view)
+		var/list/split_coords = splittext(click_params["screen-loc"], ",")
+		final_x = (text2num(splittext(split_coords[1], ":")[1]) - actual_view[1] / 2) * world.icon_size + (text2num(splittext(split_coords[1], ":")[2]) - world.icon_size)
+		final_y = (text2num(splittext(split_coords[2], ":")[1]) - actual_view[2] / 2) * world.icon_size + (text2num(splittext(split_coords[2], ":")[2]) - world.icon_size)
+
+	// Rotate the arrow to face the target direction
+	var/matrix/rotated_matrix = new()
+	rotated_matrix.TurnTo(0, Get_Pixel_Angle(-final_y, -final_x))
+	visual.transform = rotated_matrix
+
+	animate(visual, pixel_x = final_x, pixel_y = final_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
