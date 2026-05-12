@@ -255,16 +255,12 @@ This is emryo growth procs
 	affected_mob.on_larva_bite(bite_count)
 	affected_mob.updatehealth()
 	to_chat(baby, "<span class='warning'>You tear at your host's insides!</span>")
-
-
 	var/chest_broken = FALSE
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
 		var/obj/item/organ/external/chest = H.bodyparts_by_name[BP_CHEST]
 		if(chest && (chest.status & ORGAN_BROKEN))
 			chest_broken = TRUE
-
-
 	if(chest_broken || affected_mob.stat == DEAD || affected_mob.health <= 0 || bite_count >= 6)
 		baby.forceMove(get_turf(affected_mob))
 		baby.reset_view()
@@ -274,7 +270,8 @@ This is emryo growth procs
 			affected_mob.gib()
 		else
 			affected_mob.on_larva_erupt(baby)
-		qdel(src)
+		if(!QDELETED(src))
+			qdel(src)
 
 /datum/action/embryo_kick
 	name = "Kick Host"
@@ -282,12 +279,9 @@ This is emryo growth procs
 	button_icon = 'icons/hud/screen1_xeno.dmi'
 	button_icon_state = "chest_burst"
 	check_flags = 0
-	var/datum/weakref/embryo_ref = null
-
-/datum/action/embryo_kick/New(obj/item/alien_embryo/E)
-	embryo_ref = WEAKREF(E)
-	..()
 
 /datum/action/embryo_kick/Activate()
-	var/obj/item/alien_embryo/embryo = embryo_ref?.resolve()
-	embryo?.kick()
+	if(QDELETED(target))
+		return
+	var/obj/item/alien_embryo/embryo = target
+	embryo.kick()
