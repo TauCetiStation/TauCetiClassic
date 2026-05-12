@@ -187,14 +187,13 @@ var/global/list/airlock_overlays = list()
 		secondsMainPowerLost = 0
 
 /obj/machinery/door/airlock/proc/copy_electronics_access_to(obj/item/weapon/airlock_electronics/target)
-	var/obj/item/weapon/airlock_electronics/AE = target
 	if(!req_access)
 		check_access()
 	if(req_access.len)
-		AE.conf_access = req_access
+		target.conf_access = req_access
 	else if (req_one_access.len)
-		AE.conf_access = req_one_access
-		AE.one_access = 1
+		target.conf_access = req_one_access
+		target.one_access = 1
 
 /obj/machinery/door/airlock/proc/loseMainPower()
 	if(secondsMainPowerLost <= 0)
