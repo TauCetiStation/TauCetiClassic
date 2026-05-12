@@ -187,8 +187,6 @@ var/global/list/airlock_overlays = list()
 		secondsMainPowerLost = 0
 
 /obj/machinery/door/airlock/proc/copy_electronics_access_to(obj/item/weapon/airlock_electronics/target)
-	if(!istype(target, /obj/item/weapon/airlock_electronics))
-		return
 	var/obj/item/weapon/airlock_electronics/AE = target
 	if(!req_access)
 		check_access()
