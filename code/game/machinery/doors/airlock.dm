@@ -1211,14 +1211,7 @@ var/global/list/airlock_overlays = list()
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 	var/obj/item/weapon/airlock_electronics/AE
-	if(electronics)
-		AE = electronics
-		electronics = null
-		AE.loc = loc
-	else
-		AE = new /obj/item/weapon/airlock_electronics(loc)
-		copy_electronics_access_to(AE)
-		AE.loc = loc
+	AE = get_or_create_electronics(AE)
 
 	if(operating == -1)
 		AE.make_broken()

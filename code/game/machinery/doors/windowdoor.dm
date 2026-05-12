@@ -82,11 +82,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 				AE.conf_access = src.req_access
 			else if (src.req_one_access.len)
 				AE.conf_access = src.req_one_access
-				AE.one_access = 1
+				AE.one_access = TRUE
 		else
 			AE = electronics
 			electronics = null
-			AE.loc = src.loc
+			AE.forceMove(loc)
 		AE.unres_sides = unres_sides
 		if(operating == -1)
 			AE.make_broken()
