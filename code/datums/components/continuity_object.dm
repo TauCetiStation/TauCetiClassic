@@ -4,7 +4,7 @@
 	var/datum/callback/saveproc
 	var/datum/callback/loadproc
 
-/datum/component/continuity_object/Initialize(datum/callback/_saveproc = null, datum/callback/_loadproc = null, special_id = "no_id")
+/datum/component/continuity_object/Initialize(datum/callback/_saveproc = null, datum/callback/_loadproc = null, file_path = null, special_id = "no_id")
 	if(!_saveproc || !_loadproc)
 		qdel(src)
 		return
@@ -18,12 +18,17 @@
 	saveproc = _saveproc
 	loadproc = _loadproc
 
-	save_path = replacetext("[parent.type]", "/", "_")
+	if(file_path)
+		save_path = "[file_path]"
+	else
+		save_path = replacetext("[parent.type]", "/", "_")
+
 	save_path += "/[special_id]"
 
 	SScontinuity.add_object(src, save_path)
 
 	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), PROC_REF(on_destroyed))
+	RegisterSignal(parent, list(COMSIG_CONTINUITY_SAVE), PROC_REF(preemptive_save))
 
 /datum/component/continuity_object/proc/save()
 	return saveproc.Invoke()
@@ -33,7 +38,7 @@
 
 /datum/component/continuity_object/proc/on_destroyed()
 	SScontinuity.remove_object(src, save_path)
-	UnregisterSignal(parent, list(COMSIG_PARENT_QDELETING))
+	UnregisterSignal(parent, list(COMSIG_PARENT_QDELETING, COMSIG_CONTINUITY_SAVE))
 	QDEL_NULL(saveproc)
 	QDEL_NULL(loadproc)
 	qdel(src)

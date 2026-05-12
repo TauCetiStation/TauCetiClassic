@@ -8,27 +8,30 @@
 	var/list/pet_monkey_names = list("Pun Pun", "Bubbles", "Mojo", "George", "Darwin", "Aldo", "Caeser", "Kanzi", "Kong", "Terk", "Grodd", "Mala", "Bojangles", "Coco", "Able", "Baker", "Scatter", "Norbit", "Travis")
 	var/list/rare_pet_monkey_names = list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky")
 	holder_type = /obj/item/weapon/holder/monkey/punpun
-	var/datum/component/continuity_object/Continuity
 
 /mob/living/carbon/monkey/punpun/atom_init()
-	Continuity = AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)))
+	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun")
 	. = ..()
 
 /mob/living/carbon/monkey/punpun/death(gibbed)
-	if(gibbed && Continuity)
-		Continuity.preemptive_save(TRUE, gibbed)
-		Continuity = null
+	if(gibbed)
+		SEND_SIGNAL(src, COMSIG_CONTINUITY_SAVE, TRUE, gibbed)
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory(save_data)
 	var/list/data = params2list(save_data)
-	if(data.len)
-		ancestor_name = data["ancestor_name"]
-		ancestor_chain = text2num(data["ancestor_chain"])
-		relic_mask = text2path(data["relic_mask"])
+	if(!data.len)
+		return
 
-	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, SLOT_WEAR_MASK)
+	ancestor_name = sanitize_name(data["ancestor_name"])
+
+	var/ancestor_num = text2num(data["ancestor_chain"])
+	if(ancestor_num >= 1)
+		ancestor_chain = ancestor_num
+
+	var/obj/item/mask = continuity_create_item_or_null(data["relic_mask"])
+	if(mask)
+		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
 
 	if(ancestor_name)
 		name = ancestor_name
@@ -47,6 +50,7 @@
 		"ancestor_chain" = "",
 		"relic_mask" = "",
 	)
+
 	if(gibbed)
 		data["ancestor_name"] = null
 		data["ancestor_chain"] = "1"
@@ -54,12 +58,12 @@
 		return list2params(data)
 
 	if(dead && istext(ancestor_name) && isnum(ancestor_chain))
-		data["ancestor_name"] = ancestor_name
+		data["ancestor_name"] = sanitize_name(ancestor_name)
 		data["ancestor_chain"] = "[ancestor_chain + 1]"
 	if(!ancestor_name && istext(name))	//new monkey name this round
-		data["ancestor_name"] = name
-	if(wear_mask && istype(wear_mask, wear_mask.type) && !(wear_mask.flags_2 & NO_CONTINUITY))
-		data["relic_mask"] = wear_mask.type
+		data["ancestor_name"] = sanitize_name(name)
+	if(wear_mask && isitem(wear_mask))
+		data["relic_mask"] = wear_mask.continuity_save()
 	else
 		data["relic_mask"] = null
 

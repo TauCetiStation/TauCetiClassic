@@ -704,8 +704,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
 
-	var/datum/component/continuity_object/Continuity
-
 /mob/living/simple_animal/parrot/Poly/atom_init()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
@@ -724,7 +722,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	else
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 
-	Continuity = AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)))
+	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/poly")
 
 	. = ..()
 
@@ -735,9 +733,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	rounds_survived = min(--rounds_survived,0)
 	if(rounds_survived < longest_deathstreak)
 		longest_deathstreak = rounds_survived
-	if(Continuity)
-		Continuity.preemptive_save()
-		Continuity = null
+	SEND_SIGNAL(src, COMSIG_CONTINUITY_SAVE)
 	if(go_ghost)
 		var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
 		if(mind)

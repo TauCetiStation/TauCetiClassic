@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(continuity)
 /datum/controller/subsystem/continuity/proc/continuity_save_things()
 	for(var/save_path in continuity_objects)
 		var/list/objects_list = continuity_objects[save_path]
-		var/savefile/S = new /savefile("[PERSISTENT_CACHE_FOLDER]/[save_path].sav")
+		var/File = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
 
 		var/datalist = list()
 
@@ -31,20 +31,23 @@ SUBSYSTEM_DEF(continuity)
 			var/datum/component/continuity_object/object = thing
 			datalist += object.save()
 
-		S << list2params(datalist)
+		WRITE_FILE(File, json_encode(datalist))
 
 /datum/controller/subsystem/continuity/proc/continuity_load_things()
 	for(var/save_path in continuity_objects)
 		var/list/objects_list = continuity_objects[save_path]
-		var/savefile/S = new /savefile("[PERSISTENT_CACHE_FOLDER]/[save_path].sav")
-
-		var/paramsholder
-		S >> paramsholder
-		var/list/datalist = params2list(paramsholder)
+		var/File = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
+		var/filetext = file2text(File)
+		if(!filetext)
+			continue
+		var/list/datalist = json_decode(filetext)
+		world.log << datalist.len
+		world.log << list2params(datalist)
 
 		if(!datalist.len)
 			continue
 
 		for(var/datum/component/continuity_object/object in objects_list)
 			var/objectparams = pick_n_take(datalist)
+			world.log << objectparams
 			object.load(objectparams)
