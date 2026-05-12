@@ -180,10 +180,10 @@ RCD
 				if(!use_tool(target, user, 3 SECONDS, amount = 20))
 					return
 				activate()
-				var/obj/structure/door_assembly/da = new /obj/structure/door_assembly(target)
-				da.anchored = TRUE
-				da.state = ASSEMBLY_WIRED
-				da.update_state()
+				var/obj/structure/door_assembly/DA = new /obj/structure/door_assembly(target)
+				DA.anchored = TRUE
+				DA.state = ASSEMBLY_WIRED
+				DA.update_state()
 				return TRUE
 
 		if(RCD_MODE_DECONSTRUCT)
