@@ -32,4 +32,4 @@ SUBSYSTEM_DEF(cargoshop)
 	advertisement_lot = WEAKREF(pick(ad_items_list))
 
 /datum/controller/subsystem/cargoshop/proc/get_advertisement_lot()
-	return advertisement_lot.resolve()
+	return advertisement_lot?.resolve()
