@@ -971,26 +971,30 @@ to destroy them and players will be able to make replacements.
 	var/list/radial_icons = list()
 
 /obj/item/weapon/circuitboard/suit_storage/atom_init()
-	take_storage_by_type()
+	update_build_types()
 	return ..()
 
-/obj/item/weapon/circuitboard/suit_storage/proc/take_storage_by_type()
+/obj/item/weapon/circuitboard/suit_storage/proc/update_build_types()
 	names_of_suit_storage = list()
 	radial_icons = list()					// Force clear list befor add some
-	for(var/obj/machinery/suit_storage_unit/type as anything in typesof(/obj/machinery/suit_storage_unit))
-		if(!emagged)
-			if(type::syndie || type::ignore)
+	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
+		switch(typepath::build_type)
+			if(SUIT_STORAGE_BUILD_NONE)
 				continue
-		ASSERT(!names_of_suit_storage[type::name])
-		names_of_suit_storage[type::name] = type
-		radial_icons[type::name] = icon(type::icon, type::icon_state)
+			if(SUIT_STORAGE_BUILD_DEFAULT)
+				if(emagged)
+					continue
+			if(SUIT_STORAGE_BUILD_SYNDIE)
+				if(!emagged)
+					continue
 
-/obj/item/weapon/circuitboard/suit_storage/proc/update_circut(obj/ssu)
-	if(issuitstorage(ssu))
-		var/obj/machinery/suit_storage_unit/suit_storage_type = ssu
-		name = "circuit board ([suit_storage_type.name])"
-		build_path = suit_storage_type.type
-		req_access = suit_storage_type.req_access
+		ASSERT(!names_of_suit_storage[typepath::name])
+		names_of_suit_storage[typepath::name] = typepath
+		radial_icons[typepath::name] = icon(typepath::icon, typepath::icon_state)
+
+/obj/item/weapon/circuitboard/suit_storage/proc/update_circut(obj/machinery/suit_storage_unit/typepath)
+	name = "circuit board ([typepath::name])"
+	build_path = typepath::type
 
 /obj/item/weapon/circuitboard/suit_storage/emag_act(mob/user)
 	if(emagged)
@@ -998,7 +1002,7 @@ to destroy them and players will be able to make replacements.
 		return FALSE
 	to_chat(user, "<span class='notice'>You override the circuit lock and open controls.</span>")
 	emagged = TRUE
-	take_storage_by_type()
+	update_build_types()
 	return TRUE
 
 /obj/item/weapon/circuitboard/suit_storage/attackby(obj/item/I, mob/user, params)

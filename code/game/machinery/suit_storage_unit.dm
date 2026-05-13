@@ -7,10 +7,9 @@
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "suitholder"
 	damage_deflection = 25
-	var/ignore = FALSE
+	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
 	anchored = TRUE
 	density = TRUE
-	var/syndie = FALSE
 	var/opened = FALSE
 	var/locked = TRUE
 	var/overlay_color = null
@@ -21,11 +20,7 @@
 	var/superUV = FALSE
 	var/cycletime_left = null
 
-/*
-Erro's idea on standarising SSUs whle keeping creation of other SSU types easy:
-Make a child SSU, name it something then set the TYPE vars to your desired suit output. New() should take it from there by itself.
-*/
-	var/fulled = FALSE
+	var/fulled = FALSE // For map placeing suit storages, when false, create empty suit storage
 	var/helmet_type = null
 	var/mask_type   = null
 	var/suit_type   = null
@@ -46,7 +41,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	. = ..()
 
 	var/obj/item/weapon/circuitboard/suit_storage/ssu_type = new /obj/item/weapon/circuitboard/suit_storage(null)
-	ssu_type.update_circut(src)
+	ssu_type.update_circut(type)
 
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
@@ -86,14 +81,14 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 	var/mutable_appearance/I
 	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
-	if(ssu_left)
+	if(!QDELETED(ssu_left))
 		I = mutable_appearance(icon_state = "left_connect")
 		if(overlay_color)
 			I.color = overlay_color
 		connectors_overlays += I
 
 	ssu_right = locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST)
-	if(ssu_right)
+	if(!QDELETED(ssu_right))
 		I = mutable_appearance(icon_state = "right_connect")
 		if(overlay_color)
 			I.color = overlay_color
@@ -369,9 +364,9 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	visible_message("[user] starts squeezing into the suit storage unit!", 3)
 	if(do_after(user, 5 SECOND, target = src))
 		mobToMove.stop_pulling()
-		mobToMove.loc = src
+		mobToMove.forceMove(src)
 		occupant = mobToMove
-		G ? qdel(G) : null
+		QDEL_NULL(G)
 		add_fingerprint(user)
 		update_icon()
 		return
@@ -572,7 +567,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 //Abandoned
 /obj/machinery/suit_storage_unit/abandoned
 	name = "Abandoned Storage Unit"
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 
 /obj/machinery/suit_storage_unit/abandoned/atom_init()
 
@@ -596,21 +591,21 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/syndicate_unit
 	name = "Suit Storega Unit"
 	req_access = list(access_syndicate)
-	syndie = TRUE
+	build_type =  SUIT_STORAGE_BUILD_SYNDIE
 	emagged = TRUE
 
 	overlay_color = COLOR_DARK_GUNMETAL
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light
 	name = "Syndicate Hardsuit Storage Unit"
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/rig/syndi
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
-/obj/machinery/suit_storage_unit/syndicate_unit/heavy
+/obj/machinery/suit_storage_unit/syndicate_unit/light/heavy
 	name = "Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/heavy
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
@@ -618,7 +613,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
-/obj/machinery/suit_storage_unit/syndicate_unit/chem
+/obj/machinery/suit_storage_unit/syndicate_unit/light/chem
 	name = "Hazmat Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/hazmat
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
@@ -628,7 +623,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
 	name = "Syndicate Striker Suit Storage Unit"
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/syndicate/elite
 	helmet_type = /obj/item/clothing/suit/space/syndicate/elite
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -637,7 +632,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
 	name = "Elite Syndicate Hardsuit Storage Unit"
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -772,7 +767,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	overlay_color = COLOR_BROWN
 
 /obj/machinery/suit_storage_unit/skrell
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/oxygen
@@ -790,7 +785,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	helmet_type = /obj/item/clothing/head/helmet/space/skrell/black
 
 /obj/machinery/suit_storage_unit/unathi
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/oxygen
@@ -831,7 +826,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	overlay_color = COLOR_GUNMETAL
 
 /obj/machinery/suit_storage_unit/wizard
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 	name = "Strange Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/wizard
 	mask_type = /obj/item/clothing/mask/gas/coloured
@@ -841,7 +836,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	overlay_color = COLOR_DARK_PURPLE
 
 /obj/machinery/suit_storage_unit/vox
-	ignore = TRUE
+	build_type =  SUIT_STORAGE_BUILD_NONE
 	mask_type = /obj/item/clothing/mask/gas/vox
 	boot_type = /obj/item/clothing/shoes/magboots/vox
 	tank_type = /obj/item/weapon/tank/nitrogen
