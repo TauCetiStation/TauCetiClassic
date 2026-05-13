@@ -227,7 +227,8 @@ fields = alist(...)
 				data[field_name] = newdata
 
 			if("custom")
-				var/newdata = src.fields[field_name]["callback"].Invoke(field_data)
+				var/datum/callback/call_proc = src.fields[field_name]["callback"]
+				var/newdata = call_proc.Invoke(field_data)
 				if(isnull(newdata))
 					return null
 
