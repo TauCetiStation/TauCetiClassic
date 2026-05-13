@@ -29,8 +29,9 @@ SUBSYSTEM_DEF(continuity)
 				continue
 
 			var/datum/component/continuity_object/object = thing
-			datalist += object.save()
+			datalist += list(object.save())
 
+		fdel(File)
 		WRITE_FILE(File, json_encode(datalist))
 
 /datum/controller/subsystem/continuity/proc/continuity_load_things()
@@ -41,13 +42,10 @@ SUBSYSTEM_DEF(continuity)
 		if(!filetext)
 			continue
 		var/list/datalist = json_decode(filetext)
-		world.log << datalist.len
-		world.log << list2params(datalist)
 
-		if(!datalist.len)
+		if(!datalist || !datalist.len)
 			continue
 
 		for(var/datum/component/continuity_object/object in objects_list)
 			var/objectparams = pick_n_take(datalist)
-			world.log << objectparams
 			object.load(objectparams)

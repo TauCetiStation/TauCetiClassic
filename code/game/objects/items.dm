@@ -1112,36 +1112,3 @@
 	forceMove(P)
 
 	return P
-
-/obj/item/proc/continuity_save()
-	if(flags_2 & NO_CONTINUITY)
-		return null
-
-	return list2params(list("type" = src.type, "data" = list2params(continuity_generate_data() )))
-
-/obj/item/proc/continuity_generate_data()
-	return list("name" = sanitize_name(src.name))
-
-/obj/item/proc/continuity_load(save_data)
-	var/list/data = params2list(save_data)
-	if(!data.len)
-		return
-
-	if(data["name"])
-		name = sanitize_name(data["name"])
-	return data
-
-/proc/continuity_create_item_or_null(save_data)
-	var/list/data = params2list(save_data)
-	if(!data.len)
-		return
-
-	var/item_type = text2path(data["type"])
-	if(!ispath(item_type, /obj/item))
-		return
-
-	var/item_params = data["data"]
-
-	var/obj/item/I = new item_type
-	I.continuity_load(item_params)
-	return I

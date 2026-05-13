@@ -10,7 +10,11 @@
 	holder_type = /obj/item/weapon/holder/monkey/punpun
 
 /mob/living/carbon/monkey/punpun/atom_init()
-	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun")
+	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun", list(
+		"ancestor_name" = list("field_type" = "string", "can_be_null" = TRUE),
+		"ancestor_chain" = list("field_type" = "int", "min_num" = 1),
+		"relic_mask" = list("field_type" = "custom", "callback" = CALLBACK(src, PROC_REF(check_mask_data))),
+	))
 	. = ..()
 
 /mob/living/carbon/monkey/punpun/death(gibbed)
@@ -19,19 +23,21 @@
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory(save_data)
-	var/list/data = params2list(save_data)
-	if(!data.len)
-		return
 
-	ancestor_name = sanitize_name(data["ancestor_name"])
+	ancestor_name = save_data["ancestor_name"][1]
 
-	var/ancestor_num = text2num(data["ancestor_chain"])
+	var/ancestor_num = save_data["ancestor_chain"][1]
 	if(ancestor_num >= 1)
 		ancestor_chain = ancestor_num
 
-	var/obj/item/mask = continuity_create_item_or_null(data["relic_mask"])
-	if(mask)
-		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
+	var/list/mask_list = save_data["relic_mask"]
+	if(mask_list)
+		var/mask_type = mask_list["type"]
+		var/mask_name = mask_list["name"]
+		if(mask_type && mask_name)
+			var/obj/item/mask = new mask_type
+			mask.name = mask_name
+			equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
 
 	if(ancestor_name)
 		name = ancestor_name
@@ -47,24 +53,44 @@
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
 	var/list/data = list(
 		"ancestor_name" = "",
-		"ancestor_chain" = "",
+		"ancestor_chain" = ancestor_chain,
 		"relic_mask" = "",
 	)
 
 	if(gibbed)
 		data["ancestor_name"] = null
-		data["ancestor_chain"] = "1"
+		data["ancestor_chain"] = 1
 		data["relic_mask"] = null
-		return list2params(data)
+		return data
 
 	if(dead && istext(ancestor_name) && isnum(ancestor_chain))
-		data["ancestor_name"] = sanitize_name(ancestor_name)
-		data["ancestor_chain"] = "[ancestor_chain + 1]"
+		data["ancestor_name"] = ancestor_name
+		data["ancestor_chain"] = ancestor_chain + 1
 	if(!ancestor_name && istext(name))	//new monkey name this round
-		data["ancestor_name"] = sanitize_name(name)
+		data["ancestor_name"] = name
 	if(wear_mask && isitem(wear_mask))
-		data["relic_mask"] = wear_mask.continuity_save()
+		data["relic_mask"] = list("type" = wear_mask.type, "name" = wear_mask.name)
 	else
 		data["relic_mask"] = null
 
-	return list2params(data)
+	return data
+
+/mob/living/carbon/monkey/punpun/proc/check_mask_data(list/mask_data)
+	if(!mask_data || !islist(mask_data))
+		return list()
+
+	if(!("type" in mask_data) || !("name" in mask_data))
+		return null
+
+	if(istext(mask_data["type"]))
+		mask_data["type"] = text2path(mask_data["type"])
+
+	if(!ispath(mask_data["type"]))
+		return null
+
+	if(!istext(mask_data["name"]))
+		return null
+
+	mask_data["name"] = sanitize(mask_data["name"])
+
+	return mask_data
