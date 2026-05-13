@@ -355,24 +355,8 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 
 	qdel(src)
 
-/proc/get_random_unique_unsold_onlineshop_lot_or_null()
-	if(!global.online_shop_lots_hashed?.len)
-		return null
-
-	var/list/ad_items_list = list()
-	for(var/hash in global.online_shop_lots_hashed) //pick a single unsold item from each hash category
-		var/list/hashed_lots = global.online_shop_lots_hashed[hash]
-		for(var/datum/shop_lot/lot in hashed_lots)
-			if(lot.sold)
-				continue
-
-			ad_items_list += lot
-			break
-
-	return pick(ad_items_list)
-
 /proc/get_onlineshop_advertisement(atom/source, referrer_account = null, no_link = FALSE)
-	var/datum/shop_lot/lot = get_random_unique_unsold_onlineshop_lot_or_null()
+	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
 	if(!lot)
 		return
 
