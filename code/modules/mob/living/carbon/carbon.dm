@@ -1192,6 +1192,8 @@
 		set_EyesVision("greyscale")
 		return FALSE
 
+	set_EyesVision(null)
+
 	sight = initial(sight)
 	var/new_lighting_alpha = initial(lighting_alpha)
 
