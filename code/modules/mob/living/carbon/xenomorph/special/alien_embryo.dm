@@ -63,6 +63,7 @@ This is emryo growth procs
 	var/next_growth_limit = MAX_EMBRYO_GROWTH
 	COOLDOWN_DECLARE(next_kick)
 	var/bite_count = 0
+	var/datum/weakref/kick_action_ref
 
 /obj/item/alien_embryo/atom_init()
 	..()
@@ -80,8 +81,10 @@ This is emryo growth procs
 	detach_from_host()
 	if(baby)
 		baby.clear_alert("alien_embryo")
-		var/datum/action/embryo_kick/A = locate() in baby.actions
-		qdel(A)
+	var/datum/action/embryo_kick/kick_action = kick_action_ref?.resolve()
+	if(kick_action)
+		qdel(kick_action)
+	kick_action_ref = null
 	baby = null
 	return ..()
 
