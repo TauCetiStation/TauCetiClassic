@@ -184,7 +184,7 @@
 
 /obj/item/clothing/examine(mob/user)
 	..()
-	var/check_stats = armor[MELEE] >= PROTECTION_REQUERED_FOR_ORGANS || armor[BULLET] >= PROTECTION_REQUERED_FOR_ORGANS || armor[LASER] >= PROTECTION_REQUERED_FOR_ORGANS || armor[ENERGY] >= PROTECTION_REQUERED_FOR_ORGANS
+	var/check_stats = armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS
 	if(potentially_protected_organs.len && check_stats)
 		to_chat(user, "<a href='byond://?src=\ref[src];show_organ_protection=1'>Show vital organs protection</a>")
 	for(var/obj/item/clothing/accessory/A in accessories)
@@ -193,13 +193,13 @@
 /obj/item/clothing/Topic(href, href_list)
 	..()
 	if(href_list["show_organ_protection"])
-		if(armor[MELEE] >= PROTECTION_REQUERED_FOR_ORGANS)
+		if(armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS)
 			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>impacts.</b></span>")
-		if(armor[BULLET] >= PROTECTION_REQUERED_FOR_ORGANS)
+		if(armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS)
 			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>bullets.</b></span>")
-		if(armor[LASER] >= PROTECTION_REQUERED_FOR_ORGANS)
+		if(armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS)
 			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>lasers.</b></span>")
-		if(armor[ENERGY] >= PROTECTION_REQUERED_FOR_ORGANS)
+		if(armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS)
 			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>energy weapons.</b></span>")
 
 /obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/A, mob/user)

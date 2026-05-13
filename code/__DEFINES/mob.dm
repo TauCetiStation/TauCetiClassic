@@ -276,4 +276,4 @@
 #define BLOOD_VOLUME_SURVIVE_P 30
 
 //The percentage of protection required to prevent organ damage
-#define PROTECTION_REQUERED_FOR_ORGANS 25
+#define PROTECTION_REQUIRED_FOR_ORGANS 25
