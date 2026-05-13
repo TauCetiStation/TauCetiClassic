@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Apply labels based on changed files
-        uses: actions/labeler@v6
+        uses: actions/labeler@v6.1.0
         with:
           configuration-path: .github/LABELER.yml
       - name: Check for conflicting PRs
-        uses: eps1lon/actions-label-merge-conflict@v3
+        uses: eps1lon/actions-label-merge-conflict@v3.0.2
         with:
           dirtyLabel: "Merge Conflict"
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
