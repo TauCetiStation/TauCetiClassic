@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(continuity)
 		var/list/objects_list = continuity_objects[save_path]
 		var/File = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
 
-		var/datalist = list()
+		var/list/datalist = list()
 
 		for(var/thing in objects_list)
 			if(istext(thing))
