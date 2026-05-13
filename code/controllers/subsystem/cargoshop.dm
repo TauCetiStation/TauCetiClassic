@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(cargoshop)
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
 
-	var/datum/shop_lot/advertisement_lot
+	var/datum/weakref/advertisement_lot
 
 /datum/controller/subsystem/cargoshop/fire()
 	update_advertisement_lot()
@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(cargoshop)
 	if(!ad_items_list.len)
 		return
 
-	advertisement_lot = pick(ad_items_list)
+	advertisement_lot = WEAKREF(pick(ad_items_list))
 
 /datum/controller/subsystem/cargoshop/proc/get_advertisement_lot()
-	return advertisement_lot
+	return advertisement_lot.resolve()

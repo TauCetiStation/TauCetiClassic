@@ -168,6 +168,8 @@ var/global/online_shop_referrer_revenue = 0.50
 		return FALSE
 
 	Lot.sold = TRUE
+	if(Lot == SScargoshop.get_advertisement_lot())
+		SScargoshop.update_advertisement_lot()
 
 	for(var/i in 1 to 3)
 		if(global.online_shop_lots_latest[i] == Lot)
