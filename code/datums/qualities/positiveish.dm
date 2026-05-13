@@ -459,9 +459,19 @@
 	new /obj/item/weapon/paper/mlm(brief)
 
 	var/thing_path = random2path(/obj/random/trader_product_safer)
-	for(var/i in 1 to rand(7, 10))
+	var/itemsamount = rand(7, 10)
+	var/itemname
+	for(var/i in 1 to itemsamount)
+		if(i == 1)
+			var/obj/item/I = new thing_path(brief)
+			itemname = I.name
+			continue
 		new thing_path(brief)
 
 	brief.make_exact_fit()
 
 	H.equip_or_collect(brief, SLOT_L_HAND)
+
+	var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+	if(MA)
+		charge_to_account(MA.account_number, "ООО Horns&Hooves ltd", "Покупка [itemsamount]шт. [itemname]", "НаноФлейм.su", -1000)
