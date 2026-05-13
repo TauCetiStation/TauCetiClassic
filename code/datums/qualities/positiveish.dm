@@ -447,3 +447,21 @@
 /datum/quality/positiveish/allchannels/add_effect(mob/living/carbon/human/H)
 	H.equip_or_collect(new /obj/item/device/encryptionkey/allchannels(H), SLOT_R_STORE)
 	to_chat(H, "<span class='notice'>Возможно, чтобы установить ключ шифрования, придётся расковырять наушник отверткой. Только не попадись охране!</span>")
+
+/datum/quality/positiveish/prodavan
+	name = "Greetings, I'm from the NanoFlame company"
+	desc = "Послушав советы тренера по личностному росту, ты потратил все свои сбережения на товары компании НаноФлейм, теперь придётся кому-то их сбагрить..."
+	requirement = "Нет."
+
+/datum/quality/positiveish/prodavan/add_effect(mob/living/carbon/human/H)
+	var/obj/item/weapon/storage/briefcase/brief = new
+
+	new /obj/item/weapon/paper/mlm(brief)
+
+	var/thing_path = random2path(/obj/random/trader_product_safer)
+	for(var/i in 1 to rand(7, 10))
+		new thing_path(brief)
+
+	brief.make_exact_fit()
+
+	H.equip_or_collect(brief, SLOT_L_HAND)
