@@ -116,7 +116,7 @@ fields = alist(...)
 			for(var/i = 1, i <= length(field), i += length(char))
 				char = field[i]
 
-				if(!char in params["allowed_characters"])
+				if(!(char in params["allowed_characters"]))
 					stack_trace("Tried saving [field] for [parent]. Text contains bad characters")
 					return null
 
