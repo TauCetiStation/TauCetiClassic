@@ -655,6 +655,12 @@
 				if( !(slot_flags & SLOT_FLAGS_MASK) )
 					return 0
 				return 1
+			if(SLOT_NECK)
+				if(MO.neck)
+					return 0
+				if(!(slot_flags & SLOT_FLAGS_NECK))
+					return 0
+				return 1
 			if(SLOT_BACK)
 				if(MO.back)
 					return 0
