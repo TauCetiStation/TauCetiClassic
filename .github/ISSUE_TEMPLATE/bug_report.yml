@@ -1,22 +1,11 @@
 name: "Сообщить о проблеме"
 description: "Если что-то работает не так, как ожидалось."
+labels: ["Bug"]
 type: Bug
 body:
   - type: markdown
     attributes:
       value: "## В игре есть кнопка «Bug Report» в правом верхнем углу игры, при её нажатии часть информации ниже заполнится автоматически."
-
-  - type: checkboxes
-    id: feature_scope
-    attributes:
-      label: "Категория бага"
-      description: "К какому типу контента относится проблема?"
-      options:
-        - label: "Код 👨‍💻"
-        - label: "Спрайты 🎨"
-        - label: "Карты 🗺️"
-        - label: "Перевод/Описание 🧠"
-
 
   - type: textarea
     id: description

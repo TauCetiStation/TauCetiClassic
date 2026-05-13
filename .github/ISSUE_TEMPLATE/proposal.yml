@@ -1,17 +1,8 @@
 name: "Оставить предложение"
 description: "Любые идеи."
+labels: ["Proposal"]
 type: Feature
 body:
-  - type: checkboxes
-    id: feature_scope
-    attributes:
-      label: "Что потребует изменений?"
-      description: "Выберите тип изменений"
-      options:
-        - label: "Код 👨‍💻"
-        - label: "Спрайты 🎨"
-        - label: "Карты 🗺️"
-        - label: "Перевод/Описание 🧠"
 
   - type: textarea
     id: description
