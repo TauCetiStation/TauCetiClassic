@@ -63,6 +63,18 @@
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return null
 
+/// Outputs a consolidated warning about necrotic organs that can't be treated by "fix" step.
+/datum/surgery_step/proc/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
+	if(!length(dead_organs))
+		return
+	var/list/organ_names = list()
+	for(var/obj/item/organ/internal/IO as anything in dead_organs)
+		organ_names += IO.name
+	if(organ_names.len == 1)
+		to_chat(user, "<span class='warning'>[target]'s [organ_names[1]] is necrotic and can't be treated this way.</span>")
+	else
+		to_chat(user, "<span class='warning'>[target]'s [get_english_list(organ_names)] are necrotic and can't be treated this way.</span>")
+
 /proc/spread_germs_to_organ(obj/item/organ/external/BP, mob/living/carbon/human/user, obj/item/tool)
 	if(!istype(user) || !istype(BP))
 		return

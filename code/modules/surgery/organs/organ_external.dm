@@ -270,7 +270,7 @@
 	if(gender_state)
 		var/gender_icon = FALSE
 		switch(body_zone)
-			if(BP_CHEST, BP_GROIN, BP_HEAD)
+			if(BP_CHEST, BP_GROIN, BP_HEAD, BP_EARS)
 				gender_icon = species.gender_body_icons
 			if(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)
 				gender_icon = species.gender_limb_icons
@@ -953,6 +953,23 @@ Note that amputating the affected organ does in fact remove the infection from t
 		bones_appearance_behind.blend_mode = BLEND_INSET_OVERLAY
 		bones_appearance_behind.alpha = 175
 		base_appearance_behind.add_overlay(bones_appearance_behind)
+
+/obj/item/organ/external/ears
+	name = "ears"
+	cases = list("ухо", "уха", "уху", "уши", "ушами", "ушах")
+
+	icon_state = "ears"
+	default_icon_layer = HEAD_LAYER
+
+	body_zone = BP_EARS
+	parent_bodypart = BP_HEAD
+
+	cannot_amputate = TRUE
+	leaves_stump = FALSE
+
+	max_pumped = 0
+
+	vital = FALSE
 
 /obj/item/organ/external/wings
 	name = "wings"

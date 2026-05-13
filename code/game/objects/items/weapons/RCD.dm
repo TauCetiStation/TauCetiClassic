@@ -267,7 +267,7 @@ RCD
 
 /obj/item/weapon/rcd/proc/canBuildOnTurf(turf/target)
 	for(var/atom/AT in target)
-		if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
+		if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
 			return FALSE
 	return TRUE
 

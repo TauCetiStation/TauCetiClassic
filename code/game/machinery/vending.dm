@@ -493,6 +493,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 					updateUsrDialog()
 			else
 				src.currently_vending = R
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					var/obj/item/weapon/card/id/ID = H?.wear_id?.GetID()
+					if(istype(ID))
+						scan_card(ID)
 				updateUsrDialog()
 		return
 

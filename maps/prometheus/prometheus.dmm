@@ -4045,7 +4045,6 @@
 	name = "MedBay largecell apc left";
 	pixel_x = -27
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -4636,9 +4635,16 @@
 	desc = "A remote control-switch for a door to space.";
 	id = "xenobioout6";
 	name = "Containment Release Switch";
-	pixel_x = -28;
-	req_access = list(55);
-	pixel_y = 7
+	pixel_x = -25;
+	pixel_y = 6;
+	req_access = list(55)
+	},
+/obj/machinery/door_control{
+	id = "xenobio7";
+	name = "Containment 7 Blast Doors";
+	pixel_x = -25;
+	pixel_y = -6;
+	req_access = list(55)
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -6115,7 +6121,6 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -8274,13 +8279,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"bvk" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
-	},
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "bvK" = (
 /obj/machinery/vending/donut,
 /obj/machinery/status_display{
@@ -15918,13 +15916,6 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/obj/machinery/door_control{
-	id = "xenobio4";
-	name = "Containment Blast Doors";
-	pixel_y = -36;
-	req_access = list(55);
-	pixel_x = 3
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -15936,13 +15927,6 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
-	},
-/obj/machinery/door_control{
-	id = "xenobio3";
-	name = "Containment Blast Doors";
-	pixel_y = -36;
-	req_access = list(55);
-	pixel_x = -3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -16009,13 +15993,6 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/storage)
-"dvY" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/miningoffice)
 "dwf" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -17573,13 +17550,6 @@
 	},
 /area/station/civilian/bar)
 "dMo" = (
-/obj/machinery/door_control{
-	id = "xenobio5";
-	name = "Containment Blast Doors";
-	pixel_x = -41;
-	req_access = list(55);
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
@@ -19121,12 +19091,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/medical/reception)
-"egQ" = (
-/obj/structure/sign/departments/science{
-	icon_state = "xenobio3"
-	},
-/turf/simulated/wall,
-/area/station/rnd/xenobiology)
 "ehl" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -20673,7 +20637,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "exM" = (
@@ -21976,13 +21939,6 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/office)
-"eNU" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor,
-/area/station/engineering/engine)
 "eNX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -22454,6 +22410,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
+	},
+/obj/machinery/camera{
+	c_tag = "RnD Containment Room 2";
+	dir = 8;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24306,7 +24267,27 @@
 	},
 /area/station/medical/reception)
 "fpi" = (
-/obj/structure/table,
+/obj/machinery/door_control{
+	id = "xenobio4";
+	name = "Containment 4 Blast Doors";
+	pixel_x = -25;
+	pixel_y = -6;
+	req_access = list(55)
+	},
+/obj/machinery/door_control{
+	id = "xenobio6";
+	name = "Containment 6 Blast Doors";
+	pixel_x = -25;
+	pixel_y = 6;
+	req_access = list(55)
+	},
+/obj/machinery/door_control{
+	id = "xenobio5";
+	name = "Containment 5 Blast Doors";
+	pixel_x = -37;
+	req_access = list(55)
+	},
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitepurple"
@@ -24601,13 +24582,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/machinery/door_control{
-	id = "xenobio6";
-	name = "Containment Blast Doors";
-	pixel_y = 42;
-	req_access = list(55);
-	pixel_x = 3
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -25468,6 +25442,11 @@
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/machinery/camera{
+	c_tag = "RnD Containment Room 1";
+	dir = 4;
+	network = list("SS13","Research")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -28574,13 +28553,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door_control{
-	id = "xenobio1";
-	name = "Containment Blast Doors";
-	pixel_y = 43;
-	req_access = list(55);
-	pixel_x = -3
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -29245,7 +29217,6 @@
 	name = "Medbay top APC";
 	pixel_y = 27
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -32907,16 +32878,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"hkP" = (
-/obj/machinery/door_control{
-	id = "xenobio7";
-	name = "Containment Blast Doors";
-	pixel_x = 36;
-	req_access = list(55);
-	pixel_y = -7
-	},
-/turf/simulated/wall/r_wall,
-/area/station/rnd/xenobiology)
 "hlc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -39317,7 +39278,26 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "iTg" = (
-/obj/structure/closet,
+/obj/machinery/door_control{
+	id = "xenobio3";
+	name = "Containment 3 Blast Doors";
+	pixel_x = 25;
+	pixel_y = -6;
+	req_access = list(55)
+	},
+/obj/machinery/door_control{
+	id = "xenobio1";
+	name = "Containment 1 Blast Doors";
+	pixel_x = 25;
+	pixel_y = 6;
+	req_access = list(55)
+	},
+/obj/machinery/door_control{
+	id = "xenobio2";
+	name = "Containment 2 Blast Doors";
+	pixel_x = 37;
+	req_access = list(55)
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitepurple"
@@ -48578,7 +48558,6 @@
 	pixel_y = -28
 	},
 /obj/machinery/light/small,
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "darkbrown"
 	},
@@ -49344,7 +49323,7 @@
 	},
 /area/station/civilian/kitchen)
 "lut" = (
-/obj/structure/table,
+/obj/structure/closet,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitepurple"
@@ -53211,14 +53190,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"mrh" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/red,
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "mrw" = (
 /obj/structure/closet/bombcloset,
 /obj/machinery/alarm{
@@ -53240,13 +53211,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"mrM" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "mrP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -57141,7 +57105,7 @@
 /obj/machinery/requests_console/science{
 	pixel_x = -28
 	},
-/obj/structure/reagent_dispensers/aqueous_foam_tank,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurple"
@@ -67527,7 +67491,6 @@
 	},
 /area/station/security/hos)
 "pXN" = (
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -67806,13 +67769,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cryo)
 "qaE" = (
-/obj/machinery/door_control{
-	id = "xenobio2";
-	name = "Containment Blast Doors";
-	pixel_x = 41;
-	req_access = list(55);
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -71136,7 +71092,6 @@
 /area/station/engineering/monitoring)
 "qTz" = (
 /obj/item/weapon/flora/random,
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -71631,7 +71586,6 @@
 	c_tag = "Cargo Mining office";
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -72158,16 +72112,6 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/monitoring)
-"rfV" = (
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/armoury)
 "rfW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -75409,13 +75353,6 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"rWm" = (
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellow"
-	},
-/area/station/engineering/engine)
 "rWA" = (
 /obj/machinery/flasher_button{
 	id = "solitary1";
@@ -78301,7 +78238,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -88645,7 +88581,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "vkU" = (
@@ -91696,7 +91631,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -93698,12 +93632,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
-"wwB" = (
-/obj/effect/spawner/aspect/mech/gygax/ultra,
-/turf/simulated/floor{
-	icon_state = "darkred"
-	},
-/area/station/security/hos)
 "wwC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -97948,18 +97876,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"xzG" = (
-/obj/effect/decal/turf_decal{
-	dir = 6;
-	icon_state = "warn"
-	},
-/obj/item/weapon/paper/inventory{
-	pixel_x = 24
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/armoury)
 "xzI" = (
 /obj/effect/landmark{
 	name = "xeno_spawn"
@@ -126045,13 +125961,13 @@ cJy
 iRy
 iRy
 cJy
-hkP
 bsl
 bsl
 bsl
 bsl
+aXv
 bsl
-egQ
+nMQ
 gEh
 nMQ
 bsl
@@ -127595,9 +127511,9 @@ bsl
 bsl
 nMQ
 gEh
-egQ
+nMQ
 bsl
-bsl
+aXv
 bsl
 bsl
 bsl
@@ -131041,7 +130957,7 @@ wtc
 uaB
 fzS
 dBb
-dvY
+hgs
 wsM
 ghi
 gVM
@@ -135177,7 +135093,7 @@ sEc
 pKw
 mfd
 lKX
-mrM
+tIV
 oCy
 fou
 bNI
@@ -135434,7 +135350,7 @@ fcR
 qHH
 hyp
 lKX
-bvk
+dNM
 qog
 lZs
 sBD
@@ -135691,7 +135607,7 @@ off
 gGm
 lqw
 ozn
-mrh
+dGe
 sPq
 gBi
 kiN
@@ -139273,7 +139189,7 @@ lhk
 ptb
 ube
 aad
-eNU
+jJd
 xPY
 tye
 tye
@@ -139785,7 +139701,7 @@ jHt
 tnQ
 tye
 gpR
-rWm
+ube
 knx
 jJd
 xNs
@@ -140301,7 +140217,7 @@ tye
 gLh
 ube
 tsE
-eNU
+jJd
 xPY
 tye
 tye
@@ -143328,7 +143244,7 @@ iJi
 wrb
 gMo
 bAf
-wwB
+rTJ
 kxs
 gTE
 xkd
@@ -146166,7 +146082,7 @@ gOu
 wWk
 mhV
 mhV
-rfV
+dxK
 lei
 dwv
 wWk
@@ -146686,7 +146602,7 @@ dHl
 wWk
 uOS
 kZX
-xzG
+fVV
 ucF
 wWk
 dgG
