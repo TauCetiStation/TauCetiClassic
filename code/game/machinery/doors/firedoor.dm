@@ -4,7 +4,6 @@
 	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_open"
 	var/base_state = "door"
-	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
 	glass = 0
 	always_transparent = TRUE
@@ -18,7 +17,7 @@
 	//These are frequenly used with windows, so make sure zones can pass.
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
 	block_air_zones = 0
-
+	var/alarmed = FALSE
 	var/hatch_open = 0
 	var/blocked = 0
 	var/nextstate = null
@@ -26,9 +25,8 @@
 	var/list/areas_added
 	var/list/users_to_open
 	var/pdiff_alert = 0
-	var/pdiff = 0
-
-	var/lockdown = 0 // When the door has detected a problem, it locks.
+	var/pdiff = FALSE
+	var/lockdown = FALSE // When the door has detected a problem, it locks.
 	var/next_process_time = 0
 	var/list/tile_info[4]
 	var/list/dir_alerts[4] // 4 dirs, bitflags
@@ -155,33 +153,24 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
 
-	var/alarmed = 0
+	check_alarms()		//Checks if there are fire alarms in any areas associated with that firedoor
 
-	for(var/area/A in areas_added)		//Checks if there are fire alarms in any areas associated with that firedoor
-		if(A.fire || A.air_doors_activated)
-			alarmed = 1
-			break
-
-	var/needs_to_close = 0
 	if(density)
+		INVOKE_ASYNC(src, PROC_REF(open))
 		if(alarmed)
-			needs_to_close = 1
-		spawn()
-			open()
+			new /obj/structure/fans/tiny/holo_wall(loc)
+			addtimer(CALLBACK(src, PROC_REF(close)), 9 SECONDS)
 	else
-		spawn()
-			close()
+		INVOKE_ASYNC(src, PROC_REF(close))
 
-	if(needs_to_close)
-		spawn(50)
-			alarmed = 0
-			for(var/area/A in areas_added)		//Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
-				if(A.fire || A.air_doors_activated)
-					alarmed = 1
-					break
-			if(alarmed && !blocked)
-				nextstate = CLOSED
-				close()
+
+
+/obj/machinery/door/firedoor/proc/check_alarms()
+	alarmed = initial(alarmed)			//dump alarms to check area`s
+	for(var/area/A in areas_added)		//Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
+		if(A.fire || A.air_doors_activated)
+			alarmed = TRUE
+			break
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
@@ -248,11 +237,9 @@
 					"You force \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \the [C]!",\
 					"You hear metal strain and groan, and a door [density ? "open" : "close"].")
 			if(density)
-				spawn(0)
-					open()
+				INVOKE_ASYNC(src, PROC_REF(open))
 			else
-				spawn(0)
-					close()
+				INVOKE_ASYNC(src, PROC_REF(close))
 			return
 
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
@@ -356,43 +343,43 @@
 /obj/machinery/door/firedoor/process()
 	if(density)
 		if(next_process_time <= world.time)
-			next_process_time = world.time + 100		// 10 second delays between process updates
-			var/changed = 0
-			lockdown=0
+			next_process_time = world.time + 10 SECONDS		// 10 second delays between process updates
+			var/changed = FALSE
+			lockdown = FALSE
 			// Pressure alerts
 			pdiff = getOPressureDifferential(src.loc)
 			if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-				lockdown = 1
+				lockdown = TRUE
 				if(!pdiff_alert)
-					pdiff_alert = 1
-					changed = 1 // update_icon()
+					pdiff_alert = TRUE
+					changed = TRUE // update_icon()
 			else
 				if(pdiff_alert)
-					pdiff_alert = 0
-					changed = 1 // update_icon()
+					pdiff_alert = FALSE
+					changed = TRUE // update_icon()
 
 			tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
 			var/old_alerts = dir_alerts
 			for(var/index in 1 to 4)
-				var/list/tileinfo=tile_info[index]
-				if(tileinfo==null)
+				var/list/tileinfo = tile_info[index]
+				if(!tileinfo)
 					continue // Bad data.
 				var/celsius = convert_k2c(tileinfo[1])
 
-				var/alerts=0
+				var/alerts = 0
 
 				// Temperatures
 				if(celsius >= FIREDOOR_MAX_TEMP)
 					alerts |= FIREDOOR_ALERT_HOT
-					lockdown = 1
+					lockdown = TRUE
 				else if(celsius <= FIREDOOR_MIN_TEMP)
 					alerts |= FIREDOOR_ALERT_COLD
-					lockdown = 1
+					lockdown = TRUE
 
 				dir_alerts[index]=alerts
 
 			if(dir_alerts != old_alerts)
-				changed = 1
+				changed = TRUE
 			if(changed)
 				update_icon()
 	else
