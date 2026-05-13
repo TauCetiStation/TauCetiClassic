@@ -91,7 +91,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
 	ME.attach(src)
-    ME = new /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield(src)
+ ME = new /obj/item/mecha_parts/mecha_equipment/defensive/emp_shield(src)
 	ME.attach(src)
 	smoke_system.set_up(3, 0, src)
 	smoke_system.attach(src)
