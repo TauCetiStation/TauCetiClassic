@@ -3,7 +3,6 @@ description: "Любые идеи."
 labels: ["Proposal"]
 type: Feature
 body:
-
   - type: textarea
     id: description
     validations:
