@@ -333,7 +333,7 @@
 /obj/machinery/door_control/attack_hand(mob/user)
 	if(buildstage != DOOR_CONTROL_COMPLETE || wiresexposed || !connected_doors.len)
 		return
-	if(..())
+	if(!..())
 		return
 	add_fingerprint(user)
 	activate(user)
