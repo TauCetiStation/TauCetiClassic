@@ -29,7 +29,13 @@ SUBSYSTEM_DEF(continuity)
 				continue
 
 			var/datum/component/continuity_object/object = thing
-			datalist += list(object.save())
+			var/objectlist = object.save()
+			if(isnull(objectlist))
+				continue
+			datalist += list(objectlist)
+
+		if(!datalist.len)
+			continue
 
 		fdel(File)
 		WRITE_FILE(File, json_encode(datalist))
