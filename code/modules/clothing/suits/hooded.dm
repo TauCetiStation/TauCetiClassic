@@ -1,47 +1,52 @@
-/obj/item/clothing/suit/hooded
+/obj/item/clothing/suit/storage/hooded
 	item_action_types = list(/datum/action/item_action/hands_free/hood)
 	var/obj/item/clothing/head/hood
 	var/hoodtype = /obj/item/clothing/head //so the chaplain hoodie or other hoodies can override this
 	var/hooded = FALSE
 	var/icon_suit_up
+	var/base_icon_state = null // used for fluff hooded
+	allowed = list(/obj/item/weapon/tank)
 
 /datum/action/item_action/hands_free/hood
 	name = "Hood"
 
 /datum/action/item_action/hands_free/hood/Activate()
-	var/obj/item/clothing/suit/hooded/S = target
+	var/obj/item/clothing/suit/storage/hooded/S = target
 	S.ToggleHood()
 
-/obj/item/clothing/suit/hooded/atom_init()
+/obj/item/clothing/suit/storage/hooded/atom_init()
 	. = ..()
 	hood = new hoodtype(src)
 	hood.canremove = FALSE
 	hood.unacidable = FALSE
 
-/obj/item/clothing/suit/hooded/Destroy()
+/obj/item/clothing/suit/storage/hooded/Destroy()
 	qdel(hood)
 	return ..()
 
-/obj/item/clothing/suit/hooded/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/suit/storage/hooded/equipped(mob/living/carbon/human/user, slot)
 	if(slot != user.wear_suit)
 		RemoveHood()
 	..()
 
-/obj/item/clothing/suit/hooded/proc/RemoveHood()
+/obj/item/clothing/suit/storage/hooded/proc/RemoveHood()
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
 		H.unEquip(hood, 1)
 	hood.loc = src
 	hooded = !hooded
 	if(icon_suit_up)
-		icon_state = initial(icon_state)
+		if(base_icon_state)
+			icon_state = base_icon_state
+		else
+			icon_state = initial(icon_state)
 		update_inv_mob()
 
-/obj/item/clothing/suit/hooded/dropped()
+/obj/item/clothing/suit/storage/hooded/dropped()
 	..()
 	RemoveHood()
 
-/obj/item/clothing/suit/hooded/proc/ToggleHood()
+/obj/item/clothing/suit/storage/hooded/proc/ToggleHood()
 	if(!hooded)
 		if(ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc

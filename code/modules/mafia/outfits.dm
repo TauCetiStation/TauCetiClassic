@@ -33,7 +33,7 @@
 /datum/outfit/mafia/chaplain
 	name = "Mafia Chaplain"
 
-	suit = /obj/item/clothing/suit/hooded/skhima
+	suit = /obj/item/clothing/suit/storage/hooded/skhima
 	uniform = /obj/item/clothing/under/rank/chaplain
 
 /datum/outfit/mafia/md

@@ -48,8 +48,8 @@
 	return pick(\
 				/obj/item/clothing/suit/tajaran/furs,\
 				/obj/item/clothing/suit/unathi/robe ,\
-				/obj/item/clothing/suit/hooded/skhima,\
-				/obj/item/clothing/suit/hooded/nun,\
+				/obj/item/clothing/suit/storage/hooded/skhima,\
+				/obj/item/clothing/suit/storage/hooded/nun,\
 				/obj/item/clothing/suit/chef_classic,\
 				/obj/item/clothing/suit/suspenders,\
 				/obj/item/clothing/suit/pirate,\
@@ -292,15 +292,15 @@
 				prob(12);/obj/item/clothing/head/helmet/space/santahat,\
 				prob(12);/obj/item/clothing/suit/space/santa,\
 				prob(12);/obj/item/clothing/shoes/winterboots,\
-				prob(3);/obj/item/clothing/suit/hooded/wintercoat,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/security,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/engineering,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/science,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/medical,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/cargo,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/hydro,\
-				prob(1);/obj/item/clothing/suit/hooded/wintercoat/captain,\
+				prob(3);/obj/item/clothing/suit/storage/hooded/wintercoat,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/security,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/engineering/atmos,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/engineering,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/science,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/medical,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/cargo,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/hydro,\
+				prob(1);/obj/item/clothing/suit/storage/hooded/wintercoat/captain,\
 				prob(12);/obj/item/weapon/storage/backpack/santabag,\
 			)
 

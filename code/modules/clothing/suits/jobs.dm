@@ -36,7 +36,7 @@
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
 
-/obj/item/clothing/suit/hooded/skhima
+/obj/item/clothing/suit/storage/hooded/skhima
 	name = "Skhima Suit"
 	desc = "That's an ancient religion robe Skhima, decorated with white runes and symbols. Commonly weared by monks."
 	icon_state = "skhima"
@@ -53,7 +53,7 @@
 					/obj/item/weapon/storage/fancy/crayons,
 					/obj/item/weapon/paper)
 
-/obj/item/clothing/suit/hooded/nun
+/obj/item/clothing/suit/storage/hooded/nun
 	name = "nun robe"
 	desc = "A religion female suit commonly weared by monastery sisters."
 	icon_state = "nun"
@@ -70,7 +70,7 @@
 					/obj/item/weapon/storage/fancy/crayons,
 					/obj/item/weapon/paper)
 
-/obj/item/clothing/suit/hooded/nun/verb/adjust_sleeves()
+/obj/item/clothing/suit/storage/hooded/nun/verb/adjust_sleeves()
 	set name = "Toggle Sleeves"
 	set category = "Object"
 	set src in usr

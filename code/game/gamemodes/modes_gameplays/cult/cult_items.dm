@@ -114,7 +114,7 @@
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
 
-/obj/item/clothing/suit/hooded/cultrobes
+/obj/item/clothing/suit/storage/hooded/cultrobes
 	name = "cult robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
@@ -178,7 +178,7 @@
 
 /obj/item/weapon/storage/backpack/cultpack/armor/atom_init()
 	. = ..()
-	new /obj/item/clothing/suit/hooded/cultrobes(src)
+	new /obj/item/clothing/suit/storage/hooded/cultrobes(src)
 	new /obj/item/clothing/shoes/boots/cult(src)
 
 /obj/item/weapon/storage/backpack/cultpack/space_armor

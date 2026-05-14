@@ -32,7 +32,7 @@
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
 			new /obj/item/clothing/head/santa(src)
-			new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat/security(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 
 
@@ -62,7 +62,7 @@
 		new /obj/item/clothing/shoes/black(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
-			new /obj/item/clothing/suit/hooded/wintercoat(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 			new /obj/item/clothing/head/santa(src)
 
@@ -78,8 +78,8 @@
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/under/rank/chaplain/light(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/suit/hooded/skhima(src)
-	new /obj/item/clothing/suit/hooded/nun(src)
+	new /obj/item/clothing/suit/storage/hooded/skhima(src)
+	new /obj/item/clothing/suit/storage/hooded/nun(src)
 	new /obj/item/clothing/shoes/jolly_gravedigger(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/weapon/storage/backpack/chaplain(src)
@@ -157,7 +157,7 @@
 		new /obj/item/clothing/head/beret/eng(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
-			new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat/engineering/atmos(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 
 
@@ -181,7 +181,7 @@
 		new /obj/item/clothing/head/beret/eng(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		for (var/i in 1 to 3)
-			new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat/engineering(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 
 
@@ -244,7 +244,7 @@
 		new /obj/item/clothing/gloves/black(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		for (var/i in 1 to 2)
-			new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat/science(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 			new /obj/item/clothing/head/santa(src)
 
@@ -284,7 +284,7 @@
 		new /obj/item/clothing/suit/storage/labcoat/genetics(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		for (var/i in 1 to 2)
-			new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat/science(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 			new /obj/item/clothing/head/santa(src)
 
@@ -306,7 +306,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
+		new /obj/item/clothing/suit/storage/hooded/wintercoat/medical(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 
@@ -337,7 +337,7 @@
 		for (var/i in 1 to 2)
 			new /obj/item/clothing/shoes/winterboots(src)
 			new /obj/item/clothing/head/santa(src)
-			new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat/medical(src)
 
 
 /obj/structure/closet/wardrobe/grey
@@ -354,7 +354,7 @@
 		new /obj/item/clothing/head/soft/grey(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		for (var/i in 1 to 2)
-			new /obj/item/clothing/suit/hooded/wintercoat(src)
+			new /obj/item/clothing/suit/storage/hooded/wintercoat(src)
 			new /obj/item/clothing/shoes/winterboots(src)
 			new /obj/item/clothing/head/santa(src)
 
@@ -398,7 +398,7 @@
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat(src)
+		new /obj/item/clothing/suit/storage/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 
