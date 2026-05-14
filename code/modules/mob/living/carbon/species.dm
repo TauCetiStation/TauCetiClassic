@@ -1491,6 +1491,7 @@
 		H.SetWeakened(0)
 		H.SetStunned(0)
 
+	H.verbs += /mob/proc/toggle_telepathy_hear //Not gene cause we dont need two other abilities from gene
 /datum/species/golem
 	name = GOLEM
 	icobase = 'icons/mob/human/golem.dmi'
