@@ -63,7 +63,49 @@
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
+	COOLDOWN_DECLARE(hook)
 
+/obj/item/clothing/gloves/shadowling/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
+	if(!isliving(A) || !proximity)
+		return FALSE
+	var/mob/living/L = A
+	switch(attacker.a_intent)
+		if(INTENT_HELP) //Heal
+			if(isshadowthrall(L))
+				to_chat(L, "<span class='notice'>You feel revitalized.</span>")
+				L.apply_damages(-3, -3, -1, -4, -1, -5, attacker.get_targetzone())
+				L.apply_effects(-2, -2, -2, -5, -5, -5, -1, -5)
+				playsound(src, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER, 50)
+		if(INTENT_PUSH) //Stun
+			playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
+			attacker.visible_message("<span class='warning'><B>[attacker] slashes [L]!</B></span>", blind_message = "<span class='warning'>You hear some otherworldy sounds</span>")
+			L.log_combat(attacker, "attacked with [src] (INTENT: [uppertext(attacker.a_intent)])")
+			L.apply_effect(35, AGONY, 0)
+		if(INTENT_HARM) //Agressive disorientation
+			L.apply_effect(10, AGONY, 0)
+			L.blurEyes(3)
+			L.apply_status_effect(/datum/status_effect/cursed_talk, 5 SECONDS)
+			playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
+	return FALSE
+
+/obj/item/clothing/gloves/shadowling/proc/hook(mob/source, atom/target, params)
+	if(get_dist(source, target) <= 1 || source.incapacitated() || source.in_throw_mode || source == target || (!isturf(target.loc) && !isturf(target)))
+		return
+	if(COOLDOWN_FINISHED(src, hook) && source.a_intent == INTENT_GRAB)
+		var/obj/item/projectile/hook/dark/H = new(get_turf(src))
+		H.Fire(target, source, params)
+		COOLDOWN_START(src, hook, 4 SECONDS)
+
+/obj/item/clothing/gloves/shadowling/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLOVES)
+		RegisterSignal(user, COMSIG_MOB_CLICK, PROC_REF(hook))
+	else
+		UnregisterSignal(user, list(COMSIG_MOB_CLICK))
+
+/obj/item/clothing/gloves/shadowling/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOB_CLICK))
 
 /obj/item/clothing/head/shadowling
 	name = "chitin helm"
@@ -114,14 +156,14 @@
 	switch(usr.lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
 			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 			flash_protection = FLASHES_AMPLIFIER
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
 			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_VISIBLE)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE

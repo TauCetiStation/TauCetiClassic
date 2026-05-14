@@ -1405,6 +1405,7 @@
 	skeleton = null
 	eyes_colorable_layer = "default"
 	eyes_static_layer = "shadowling"
+	default_eyes_color = "#ff0000"
 
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws
@@ -1438,7 +1439,9 @@
 	has_organ = list(
 		O_BRAIN   = /obj/item/organ/internal/brain
 		,O_HEART = /obj/item/organ/internal/heart
-		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision) // A huge buff to be honest.
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision // A huge buff to be honest.
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys)
 
 	race_traits = list(
 		TRAIT_NO_BREATHE,
