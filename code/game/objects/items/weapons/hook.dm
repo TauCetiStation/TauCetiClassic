@@ -13,12 +13,6 @@
 	force = 18
 	global_access = TRUE
 
-/obj/item/weapon/gun/magic/hook/newshot()
-	. = ..()
-	if(usr.incapacitated())
-		return FALSE
-	return TRUE
-
 /obj/item/weapon/gun/magic/hook/suicide_act(mob/living/user)
 	if(!ishuman(user))
 		user.visible_message("[user] is using the [src] on their head! It looks like theyre trying to commit suicide!")
@@ -39,6 +33,17 @@
 	name = "hook"
 	desc = "A hook."
 	projectile_type = /obj/item/projectile/hook
+	var/obj/item/projectile/hook/H
+
+/obj/item/ammo_casing/magic/hook/ready_proj(atom/target, mob/living/user, quiet)
+	. = ..()
+	if(!BB)
+		return
+	H = BB
+
+/obj/item/ammo_casing/magic/hook/throw_proj(obj/item/weapon/gun/weapon, atom/target, turf/targloc, mob/living/user, params, boolet_number)
+	. = ..()
+	H.set_chain()
 
 /obj/item/projectile/hook
 	name = "hook"
@@ -54,12 +59,16 @@
 
 /obj/item/projectile/hook/Fire(atom/A, mob/living/user, params)
 	. = ..()
-	if(firer)
-		initial_chain = Beam(user, icon_state = "chain")
-		initial_chain.visuals.color = color
-		ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
-		ADD_TRAIT(firer, TRAIT_INCAPACITATED, REF(src))
-		addtimer(CALLBACK(src, PROC_REF(remove_immobilization)), IMMOBILIZATION_TIMER, TIMER_STOPPABLE) // safety if we miss, if we get a hit we stay immobilized
+	set_chain()
+
+/obj/item/projectile/hook/proc/set_chain()
+	if(!firer)
+		return
+	initial_chain = Beam(firer, icon_state = "chain")
+	initial_chain.visuals.color = color
+	ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
+	ADD_TRAIT(firer, TRAIT_INCAPACITATED, REF(src))
+	addtimer(CALLBACK(src, PROC_REF(remove_immobilization)), IMMOBILIZATION_TIMER, TIMER_STOPPABLE) // safety if we miss, if we get a hit we stay immobilized
 
 /obj/item/projectile/hook/proc/remove_immobilization()
 	REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))

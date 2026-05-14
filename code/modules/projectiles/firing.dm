@@ -71,7 +71,7 @@
 		BB.p_y = between(0, BB.p_y + rand(-radius, radius), world.icon_size)
 
 	if(BB)
-		BB.Fire(target, user, params, boolet_number)
+		BB.process(boolet_number)
 	BB = null
 	return 1
 

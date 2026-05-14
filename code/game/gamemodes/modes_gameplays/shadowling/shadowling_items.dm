@@ -89,7 +89,7 @@
 	return FALSE
 
 /obj/item/clothing/gloves/shadowling/proc/hook(mob/source, atom/target, params)
-	if(get_dist(source, target) <= 1 || source.incapacitated() || source.in_throw_mode || source == target || (!isturf(target.loc) && !isturf(target)))
+	if(get_dist(source, target) <= 1 || source.incapacitated() || source.in_throw_mode || source == target || (target in source))
 		return
 	if(COOLDOWN_FINISHED(src, hook) && source.a_intent == INTENT_GRAB)
 		var/obj/item/projectile/hook/dark/H = new(get_turf(src))
@@ -101,11 +101,11 @@
 	if(slot == SLOT_GLOVES)
 		RegisterSignal(user, COMSIG_MOB_CLICK, PROC_REF(hook))
 	else
-		UnregisterSignal(user, list(COMSIG_MOB_CLICK))
+		UnregisterSignal(user, COMSIG_MOB_CLICK)
 
 /obj/item/clothing/gloves/shadowling/dropped(mob/user)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_MOB_CLICK))
+	UnregisterSignal(user, COMSIG_MOB_CLICK)
 
 /obj/item/clothing/head/shadowling
 	name = "chitin helm"
