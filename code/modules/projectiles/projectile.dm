@@ -305,7 +305,7 @@
 			P.pixel_y = location.pixel_y
 			P.activate()
 
-/obj/item/projectile/proc/Fire(atom/A, mob/living/user, params=null)
+/obj/item/projectile/proc/Fire(atom/A, mob/living/user, params=null, boolet_number)
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(A)
 	firer = user
@@ -323,7 +323,7 @@
 		if(mouse_control[ICON_Y])
 			p_y = text2num(mouse_control[ICON_Y])
 
-	process()
+	process(boolet_number)
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!
