@@ -82,7 +82,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 		var/datum/money_account/meter_acc = attempt_account_access_with_user_input(account_num, 2, user)
 		if(!meter_acc)
-			to_chat(user, "Счёта не существует или пин-код набран неправильно")
+			to_chat(user, "<span class='notice'>Счёта не существует или пин-код набран неправильно</span>")
 			return
 
 		connected_account_number = account_num
@@ -288,6 +288,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 	if(powernet == terminal.powernet)
 		return FALSE
+
+	for(var/obj/machinery/power/meter/M in (powernet.nodes - src))
+		return FALSE
+
+	for(var/obj/machinery/power/terminal/Term in powernet.nodes)
+		if(Term.master && istype(Term.master, /obj/machinery/power/meter))
+			return FALSE
 
 	return paid
 
