@@ -48,6 +48,7 @@
 	var/incendiary = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 	var/impact_force = 0
+	var/close_range_impact_force = 0 // impact_force at a distance of two tiles, for shotguns projectiles
 
 	var/hitscan = 0	// whether the projectile should be hitscan
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
