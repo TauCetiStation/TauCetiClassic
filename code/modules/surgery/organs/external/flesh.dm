@@ -97,15 +97,13 @@
 
 	var/is_parent_damaged_enough = cur_damage + damage_amt >= BP.max_damage + cutoff_internal_organ_damage_threshold
 	var/are_organs_protected = protection >= PROTECTION_REQUIRED_FOR_ORGANS
-	var/organs_will_be_damaged = TRUE
 
 	if(BP.bodypart_organs.len && is_parent_damaged_enough)
 	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		var/obj/item/clothing/covered_by = get_clothing_by_covered_bodypart(BP.owner, IO.parent_bodypart)
-		if(covered_by && (IO.organ_tag in covered_by.potentially_protected_organs) && are_organs_protected)
-			organs_will_be_damaged = FALSE
-		if(organs_will_be_damaged)
+		var/organs_not_will_be_damaged = covered_by && (IO.organ_tag in covered_by.potentially_protected_organs) && are_organs_protected
+		if(!organs_not_will_be_damaged)
 			IO.take_damage(damage_amt / 10)
 
 	if(used_weapon)
