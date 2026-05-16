@@ -107,7 +107,7 @@ fields = alist(...)
 					stack_trace("Tried saving [field] for [parent]. Text contains bad characters")
 					return null
 
-		if("in_list" in params && !(field in params["in_list"]))
+		if(("in_list" in params) && !(field in params["in_list"]))
 			stack_trace("Tried saving [field] for [parent]. Not an allowed string")
 			return null
 
