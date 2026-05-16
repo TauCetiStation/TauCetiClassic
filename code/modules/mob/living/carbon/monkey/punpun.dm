@@ -11,9 +11,9 @@
 
 /mob/living/carbon/monkey/punpun/atom_init()
 	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun", list(
-		"ancestor_name" = list("field_type" = "string", "can_be_null" = TRUE),
+		"ancestor_name" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE),
 		"ancestor_chain" = list("field_type" = "int", "min_num" = 1),
-		"relic_mask" = list("field_type" = "custom", "callback" = CALLBACK(src, PROC_REF(check_mask_data))),
+		"relic_mask" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE),
 	))
 	. = ..()
 
@@ -30,14 +30,11 @@
 	if(ancestor_num >= 1)
 		ancestor_chain = ancestor_num
 
-	var/list/mask_list = save_data["relic_mask"]
-	if(mask_list)
-		var/mask_type = mask_list["type"]
-		var/mask_name = mask_list["name"]
-		if(mask_type && mask_name)
-			var/obj/item/mask = new mask_type
-			mask.name = mask_name
-			equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
+	var/mask_type = save_data["relic_mask"][1]
+	if(mask_type)
+		mask_type = text2path(mask_type)
+		var/obj/item/mask = new mask_type
+		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
 
 	if(ancestor_name)
 		name = ancestor_name
@@ -69,28 +66,8 @@
 	if(!ancestor_name && istext(name))	//new monkey name this round
 		data["ancestor_name"] = name
 	if(wear_mask && isitem(wear_mask))
-		data["relic_mask"] = list("type" = wear_mask.type, "name" = wear_mask.name)
+		data["relic_mask"] = "[wear_mask.type]"
 	else
 		data["relic_mask"] = null
 
 	return data
-
-/mob/living/carbon/monkey/punpun/proc/check_mask_data(list/mask_data)
-	if(!mask_data || !islist(mask_data))
-		return list()
-
-	if(!("type" in mask_data) || !("name" in mask_data))
-		return null
-
-	if(istext(mask_data["type"]))
-		mask_data["type"] = text2path(mask_data["type"])
-
-	if(!ispath(mask_data["type"]))
-		return null
-
-	if(!istext(mask_data["name"]))
-		return null
-
-	mask_data["name"] = sanitize(mask_data["name"])
-
-	return mask_data

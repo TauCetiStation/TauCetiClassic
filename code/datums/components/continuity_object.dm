@@ -68,38 +68,21 @@
 
 fields = alist(...)
 
-//boolean
-"varname" = list("field_type" = "bool")
-
 //string
-"varname" = list("field_type" = "string", "max_length" = 999, "can_be_null" = TRUE, "allowed_characters" = list())
+"varname" = list("field_type" = "string", "max_length" = 999, "can_be_null" = TRUE, "in_list" = list(), "allowed_characters" = list())
 
 //int
 "varname" = list("field_type" = "int", "max_num" = 999, "min_num" = -999, "can_be_null" = TRUE)
 
-//type
-"varname" = list("field_type" = "type", "allowed_types" = list())
-
-
-//reagent
-"varname" = list("field_type" = "reagent", "allowed_reagent_ids" = list())
-
 */
-
-/datum/component/continuity_object/proc/sanitize_bool(list/field_data, list/params)
-	for(var/field in field_data)
-		if(!isnum(field))
-			return FALSE
-
-		if(!(field in list(FALSE, TRUE)))
-			return FALSE
-
-	return field_data
 
 /datum/component/continuity_object/proc/sanitize_string(list/field_data, list/params)
 	var/list/newdata = list()
 	for(var/field in field_data)
-		if(!("can_be_null" in params) && (isnull(field) || length(field) == 0))
+		if(isnull(field) || length(field) == 0)
+			if("can_be_null" in params)
+				continue
+
 			stack_trace("Tried saving [field] for [parent]. Is null")
 			return null
 
@@ -107,7 +90,11 @@ fields = alist(...)
 			stack_trace("Tried saving [field] for [parent]. Not a text")
 			return null
 
-		if(("max_length" in params) && (length(field) > params["max_length"]))
+		if(!("max_length" in params))
+			stack_trace("Tried saving [field] for [parent]. No max_length param")
+			return null
+
+		if((length(field) > params["max_length"]))
 			stack_trace("Tried saving [field] for [parent]. Text is longer than it should be")
 			return null
 
@@ -120,6 +107,10 @@ fields = alist(...)
 					stack_trace("Tried saving [field] for [parent]. Text contains bad characters")
 					return null
 
+		if("in_list" in params && !(field in params["in_list"]))
+			stack_trace("Tried saving [field] for [parent]. Not an allowed string")
+			return null
+
 		newdata += sanitize(field)
 
 	return newdata
@@ -127,6 +118,9 @@ fields = alist(...)
 /datum/component/continuity_object/proc/sanitize_int(list/field_data, list/params)
 	for(var/field in field_data)
 		if(!("can_be_null" in params) && isnull(field))
+			if("can_be_null" in params)
+				return field_data
+
 			stack_trace("Tried saving [field] for [parent]. Is null")
 			return null
 
@@ -144,42 +138,6 @@ fields = alist(...)
 
 	return field_data
 
-/datum/component/continuity_object/proc/sanitize_type(list/field_data, list/params)
-	var/list/newdata = list()
-	for(var/field in field_data)
-		if(istext(field))
-			field = text2path(field)
-
-		if(!field || !ispath(field))
-			stack_trace("Tried saving [field] for [parent]. Not a path")
-			return null
-
-		if(!(field in params["allowed_types"]))
-			stack_trace("Tried saving [field] for [parent]. Not an allowed type")
-			return null
-
-		newdata += field
-
-	return newdata
-
-/datum/component/continuity_object/proc/sanitize_reagent(list/field_data, list/params)
-	for(var/field in field_data)
-		if(!istext(field))
-			stack_trace("Tried saving [field] for [parent]. Not a reagent string")
-			return null
-
-		if(!(field in global.reagents_list))
-			stack_trace("Tried saving [field] for [parent]. Not a reagent id")
-			return null
-
-		if(!(field in params["allowed_reagent_ids"]))
-			stack_trace("Tried saving [field] for [parent]. Not an allowed id")
-			return null
-
-	return field_data
-
-
-
 /datum/component/continuity_object/proc/sanitize_data(list/data)
 	for(var/field_name in data)
 		if(!(field_name in src.fields))
@@ -191,13 +149,6 @@ fields = alist(...)
 			field_data = list(field_data)
 
 		switch(src.fields[field_name]["field_type"])
-			if("bool")
-				var/newdata = sanitize_bool(field_data, src.fields[field_name])
-				if(isnull(newdata))
-					return null
-
-				data[field_name] = newdata
-
 			if("string")
 				var/newdata = sanitize_string(field_data, src.fields[field_name])
 				if(isnull(newdata))
@@ -207,28 +158,6 @@ fields = alist(...)
 
 			if("int")
 				var/newdata = sanitize_int(field_data, src.fields[field_name])
-				if(isnull(newdata))
-					return null
-
-				data[field_name] = newdata
-
-			if("type")
-				var/newdata = sanitize_type(field_data, src.fields[field_name])
-				if(isnull(newdata))
-					return null
-
-				data[field_name] = newdata
-
-			if("reagent")
-				var/newdata = sanitize_reagent(field_data, src.fields[field_name])
-				if(isnull(newdata))
-					return null
-
-				data[field_name] = newdata
-
-			if("custom")
-				var/datum/callback/call_proc = src.fields[field_name]["callback"]
-				var/newdata = call_proc.Invoke(field_data)
 				if(isnull(newdata))
 					return null
 
