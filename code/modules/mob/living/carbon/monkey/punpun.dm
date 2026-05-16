@@ -34,7 +34,7 @@
 
 	var/list/mask_list = save_data["relic_mask"]
 	if(mask_list.len)
-		mask_type = text2path(mask_list[1])
+		var/mask_type = text2path(mask_list[1])
 		var/obj/item/mask = new mask_type
 		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
 
