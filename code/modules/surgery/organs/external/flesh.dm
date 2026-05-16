@@ -105,7 +105,7 @@
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		if(covered_by && (IO.organ_tag in covered_by.potentially_protected_organs) && are_organs_protected)
 			organs_will_be_damaged = FALSE
-		if(organs_will_be_damaged == TRUE)
+		if(organs_will_be_damaged)
 			IO.take_damage(damage_amt / 10)
 
 	if(used_weapon)
