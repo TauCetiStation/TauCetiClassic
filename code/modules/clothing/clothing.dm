@@ -32,7 +32,7 @@
 /obj/item/clothing/atom_init()
 	. = ..()
 	if(body_parts_covered & UPPER_TORSO)
-		potentially_protected_organs += O_HEART
+		potentially_protected_organs |= O_HEART
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
