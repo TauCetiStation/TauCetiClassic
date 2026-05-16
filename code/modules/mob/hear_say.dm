@@ -27,7 +27,7 @@
 				if(!iszombie(H))
 					message = stars(message, 40)
 
-	if(!(sdisabilities & DEAF || ear_deaf) && client && client.prefs.show_runechat)
+	if(!(sdisabilities & DEAF || ear_deaf) && client?.prefs.show_runechat)
 		var/list/span_list = list()
 		if(copytext_char(message, -2) == "!!")
 			span_list.Add("yell")
@@ -56,6 +56,9 @@
 	if(sdisabilities & DEAF || ear_deaf)
 		if(speaker == src)
 			message = "<span class='warning'>You cannot hear yourself speak!</span>"
+		else if((REMOTE_TALK in mutations) && length(remote_hearing))
+			if(speaker in remote_hearing)
+				message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>"
 		else
 			message = "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [P_THEM(speaker)]."
 	else
@@ -88,6 +91,8 @@
 	if(!message)
 		return FALSE
 
+	if(length(remote_hearers))
+		telepathy_eavesdrop(speaker, message, "has heard", language)
 	to_chat(src, message)
 
 	if(ishuman(speaker))
@@ -268,7 +273,8 @@
 	else
 		to_chat(src, "[part_a][speaker_name][part_b][formatted][part_c]")
 
-	telepathy_eavesdrop(speaker, "[speaker_name] [formatted]", "has heard", language, "[speaker_name] [formatted]")
+	if(speaker != src)
+		telepathy_eavesdrop(speaker, "[speaker_name] [formatted]", "has heard", language, "[speaker_name] [formatted]")
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	var/speaker_name = speaker.name
@@ -289,7 +295,8 @@
 	show_runechat_message(speaker, null, runechat_message, null, SHOWMSG_VISUAL)
 	show_message(message, SHOWMSG_VISUAL)
 
-	telepathy_eavesdrop(speaker, message, "has seen", language, runechat_message)
+	if(speaker == src)
+		telepathy_eavesdrop(speaker, message, "has seen", language, runechat_message)
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
