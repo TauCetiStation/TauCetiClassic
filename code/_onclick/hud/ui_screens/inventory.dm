@@ -122,6 +122,26 @@
 		M.OpenCraftingMenu()
 		usr.next_move = world.time + 6
 
+/atom/movable/screen/inventory/crawl
+	name = "toggle crawl"
+	icon = 'icons/hud/screen1_Midnight.dmi'
+	icon_state = "crawl"
+	screen_loc = ui_crawl
+
+	copy_flags = NONE
+
+/atom/movable/screen/inventory/crawl/action()
+	var/mob/living/M = usr
+	M.crawl()
+
+/atom/movable/screen/inventory/crawl/update_icon(mob/mymob)
+	icon_state = (mymob.crawling == TRUE) ? "crawl_on" : "crawl_off"
+
+/atom/movable/screen/inventory/crawl/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
+	hud.mymob.crawl_hud_icon = src
+
 /atom/movable/screen/inventory/mask
 	name = "mask"
 	icon_state = "mask"
