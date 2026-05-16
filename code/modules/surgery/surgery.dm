@@ -138,7 +138,7 @@
 	)
 	var/zone = zone_by_clothing_part[covered]
 	for(var/obj/item/clothing/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
-		if(I && I.body_parts_covered & zone)
+		if(I && (I.body_parts_covered & zone))
 			return I
 	return FALSE
 
