@@ -64,8 +64,6 @@
 	for(var/mob/hearers in M.remote_hearers)
 		to_chat(hearers, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
 
-	M.show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
-
 /mob/proc/add_remote_hearer(mob/hearer)
 	LAZYADD(remote_hearers, hearer)
 	LAZYADD(hearer.remote_hearing, src)
@@ -144,7 +142,7 @@
 		msg = stars(msg, star_chance)
 
 	var/mob/M = source
-	if(ismob(M) && (REMOTE_TALK in M.mutations))
+	if(ismob(M) && (REMOTE_TALK in mutations))
 		to_chat(src, "<span class='notice'>You hear <b>[M.real_name]'s voice</b>:</span> [msg]")
 	else
 		to_chat(src, "<span class='notice'>You hear a voice that seems to echo around the room:</span> [msg]")
@@ -170,7 +168,7 @@
 		if(QDELETED(M))
 			continue
 		M.telepathy_hear(src, msg)
-	show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
+		M.show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
 	typing_buble_prepare(bubble_recipients)
 
 /mob/proc/nearby_telepathy_say()
@@ -185,7 +183,7 @@
 		return
 	msg = add_period(capitalize(sanitize(trim(msg))))
 
-	show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
+	target.show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
 	typing_buble_prepare(bubble_recipients)
 	target.telepathy_hear(src, msg)
 
