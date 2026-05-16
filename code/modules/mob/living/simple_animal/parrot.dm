@@ -723,7 +723,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 
 	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/poly", list(
-		"phrases" = list("field_type" = "string", "can_be_null" = TRUE),
+		"phrases" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE),
 		"roundssurvived" = list("field_type" = "int", "min_num" = 0),
 		"longestsurvival" = list("field_type" = "int", "min_num" = 0),
 		"longestdeathstreak" = list("field_type" = "int", "min_num" = 0),
@@ -749,9 +749,15 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory(list/save_data)
 	speech_buffer = save_data["phrases"]
-	rounds_survived = save_data["roundssurvived"][1]
-	longest_survival = save_data["longestsurvival"][1]
-	longest_deathstreak = save_data["longestdeathstreak"][1]
+	var/list/rounds_survived_list = save_data["roundssurvived"]
+	if(rounds_survived_list.len)
+		rounds_survived = rounds_survived_list[1]
+	var/list/longest_survival_list = save_data["longestsurvival"]
+	if(longest_survival_list.len)
+		longest_survival = longest_survival_list[1]
+	var/list/longest_deathstreak_list = save_data["longestdeathstreak"]
+	if(longest_deathstreak_list.len)
+		longest_deathstreak = longest_death_streak_list[1]
 
 	if(isnull(speech_buffer))
 		speech_buffer = list()

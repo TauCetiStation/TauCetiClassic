@@ -24,15 +24,17 @@
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory(save_data)
 
-	ancestor_name = save_data["ancestor_name"][1]
+	var/list/ancestor_list = save_data["ancestor_name"]
+	if(ancestor_list.len)
+		ancestor_name = ancestor_list[1]
 
 	var/ancestor_num = save_data["ancestor_chain"][1]
 	if(ancestor_num >= 1)
 		ancestor_chain = ancestor_num
 
-	var/mask_type = save_data["relic_mask"][1]
-	if(mask_type)
-		mask_type = text2path(mask_type)
+	var/list/mask_list = save_data["relic_mask"]
+	if(mask_list.len)
+		mask_type = text2path(mask_list[1])
 		var/obj/item/mask = new mask_type
 		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
 
