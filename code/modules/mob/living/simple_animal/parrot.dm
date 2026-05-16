@@ -757,7 +757,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		longest_survival = longest_survival_list[1]
 	var/list/longest_deathstreak_list = save_data["longestdeathstreak"]
 	if(longest_deathstreak_list.len)
-		longest_deathstreak = longest_death_streak_list[1]
+		longest_deathstreak = longest_deathstreak_list[1]
 
 	if(isnull(speech_buffer))
 		speech_buffer = list()
