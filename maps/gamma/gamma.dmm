@@ -49166,7 +49166,6 @@
 "iQg" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/weapon/vending_refill/coffee,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
@@ -60786,7 +60785,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/antechamber)
 "lfH" = (
-/obj/item/weapon/vending_refill/donut,
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"

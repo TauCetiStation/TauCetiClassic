@@ -3465,9 +3465,6 @@
 /area/station/security/main)
 "afJ" = (
 /obj/structure/table,
-/obj/item/weapon/vending_refill/dinnerware,
-/obj/item/weapon/vending_refill/dinnerware,
-/obj/item/weapon/vending_refill/dinnerware,
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "afK" = (
@@ -30173,7 +30170,6 @@
 "dJf" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/weapon/circuitboard/vendor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dJi" = (
@@ -31745,9 +31741,6 @@
 /area/station/medical/sleeper)
 "eeb" = (
 /obj/structure/table/woodentable/poker,
-/obj/item/weapon/vending_refill/cigarette,
-/obj/item/weapon/vending_refill/cigarette,
-/obj/item/weapon/vending_refill/cigarette,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -62699,14 +62692,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/minisat_secure_area)
-"lsw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/woodentable,
-/obj/item/weapon/vending_refill/cola,
-/obj/item/weapon/vending_refill/cola,
-/obj/item/weapon/vending_refill/cola,
-/turf/simulated/floor/plating,
-/area/station/maintenance/science)
 "lsx" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/backpack/satchel/withwallet,
@@ -75844,9 +75829,6 @@
 "oEF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable,
-/obj/item/weapon/vending_refill/snack,
-/obj/item/weapon/vending_refill/snack,
-/obj/item/weapon/vending_refill/snack,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "oEK" = (
@@ -83870,9 +83852,6 @@
 /area/station/civilian/dormitories/service_bedrooms)
 "qCM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/vending_refill/boozeomat,
-/obj/item/weapon/vending_refill/boozeomat,
-/obj/item/weapon/vending_refill/boozeomat,
 /obj/structure/table/woodentable/poker,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -95585,9 +95564,6 @@
 /area/station/maintenance/cargo)
 "twa" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/vending_refill/assist,
-/obj/item/weapon/vending_refill/assist,
-/obj/item/weapon/vending_refill/assist,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "twi" = (
@@ -138090,7 +138066,7 @@ qkA
 fRJ
 kVW
 cjx
-lsw
+oEF
 juy
 jTm
 jra
