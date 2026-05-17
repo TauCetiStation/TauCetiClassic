@@ -568,3 +568,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 /obj/effect/landmark/red_team
 	name = "Red Team"
 	icon_state = "x"
+
+
+/obj/effect/landmark/brand_items
+	name = "Brand Item Location"
