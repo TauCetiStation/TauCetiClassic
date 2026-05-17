@@ -61,7 +61,6 @@ var/global/list/airlock_overlays = list()
 	var/close_timer_id = null
 	var/datum/wires/airlock/wires = null
 	var/denying = FALSE
-
 	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
@@ -578,13 +577,10 @@ var/global/list/airlock_overlays = list()
 	return TRUE
 
 /obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0)
-	if (isElectrified())
-		if (isitem(mover))
-			var/obj/item/i = mover
-			if (params2numberlist(i.materials)[MAT_METAL])
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
+	if (isElectrified() && isitem(mover))
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
 	return ..()
 
 /obj/machinery/door/airlock/attack_paw(mob/user)

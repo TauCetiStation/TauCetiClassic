@@ -1,6 +1,6 @@
 /obj
 	//var/datum/module/mod		//not used
-	var/materials = "" // Resources used for construction and recycling
+	var/materials = null // Resources used for construction and recycling
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
@@ -49,7 +49,7 @@
 	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 	verbs -= /obj/proc/remove_price_tag
 
-/obj/proc/can_be_disassembled()
+/obj/proc/can_be_recycled()
 	/*
 	Returns TRUE if this item can be safely disassembled by recycling.
 	TODO: Add more implementations and use this proc in RnD deconstruction and autolathe recycling

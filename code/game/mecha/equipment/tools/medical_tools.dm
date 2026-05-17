@@ -249,7 +249,7 @@
 	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
 
-/obj/item/mecha_parts/mecha_equipment/cable_layer/can_be_disassembled()
+/obj/item/mecha_parts/mecha_equipment/cable_layer/can_be_recycled()
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/atom_init()

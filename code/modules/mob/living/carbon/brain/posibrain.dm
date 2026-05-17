@@ -13,7 +13,7 @@
 
 	var/ping_cd = 0//attack_ghost cooldown
 
-/obj/item/device/mmi/posibrain/can_be_disassembled()
+/obj/item/device/mmi/posibrain/can_be_recycled()
 	return TRUE
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)

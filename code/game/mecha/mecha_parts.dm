@@ -17,6 +17,10 @@
 	var/datum/construction/construct
 	flags = CONDUCT
 
+// TODO: Mecha disassembling
+/obj/item/mecha_parts/chassis/can_be_recycled()
+	return FALSE
+
 /obj/item/mecha_parts/chassis/attackby(obj/item/I, mob/user, params)
 	if(!construct || !construct.action(I, user))
 		return ..()

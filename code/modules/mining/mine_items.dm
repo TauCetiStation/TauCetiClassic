@@ -428,7 +428,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
-/obj/item/weapon/pickaxe/drill/jackhammer/can_be_disassembled()
+/obj/item/weapon/pickaxe/drill/jackhammer/can_be_recycled()
 	return TRUE
 
 /obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
@@ -542,7 +542,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/list/installed_upgrades = list()
 	var/max_upgrades = 3
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/can_be_disassembled()
+/obj/item/weapon/gun/energy/kinetic_accelerator/can_be_recycled()
 	if(!contents.len)
 		return TRUE
 	for(var/A as anything in contents)
@@ -707,7 +707,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	var/emagged = FALSE
 
-/obj/item/weapon/gun/energy/laser/cutter/can_be_disassembled()
+/obj/item/weapon/gun/energy/laser/cutter/can_be_recycled()
 	return TRUE
 
 /obj/item/projectile/beam/plasma_cutter

@@ -158,8 +158,7 @@
 		QUALITY_WELDING = 1
 	)
 
-	materials = MAT_METAL+"=70" // Cost to make in the autolathe
-	materials = MAT_GLASS+"=30"
+	materials = MAT_METAL+"=70;"+MAT_GLASS+"=30" // Cost to make in the autolathe
 
 	origin_tech = "engineering=1" // R&D tech level
 

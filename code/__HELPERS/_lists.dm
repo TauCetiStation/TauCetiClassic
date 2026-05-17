@@ -842,14 +842,14 @@
 	var/temp_list = list()
 	var/params_list = params2list(params)
 
-	for(var/key as anything in params_list)
+	for(var/key in params_list)
 		temp_list[key] = text2num(params_list[key])
 	return temp_list
 
 /proc/numberlist2params(list/number_list)
 	var/temp_list = list()
 
-	for(var/key as anything in number_list)
+	for(var/key in number_list)
 		temp_list[key] = num2text(number_list[key])
 
 	return list2params(temp_list)

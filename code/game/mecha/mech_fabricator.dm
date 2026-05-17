@@ -617,23 +617,17 @@
 	if(isrobot(user))
 		return FALSE
 
-	var/list/disallowed_types = list(
-		/obj/item/mecha_parts/chassis, // No way to fully disassemble mecha chassis and im lazy to make a way to disassemble it...
-	)
-
-	if(is_type_in_list(I, disallowed_types))
-		return FALSE
-
-	if(!I.can_be_disassembled())
+	if(!I.can_be_recycled())
 		to_chat(user, "<span class='warning'>You need to fully disassemble \the [I] before recycling.</span>")
 		return TRUE
 
 	var/list/materials_to_add = get_recycled_materials(I)
 
 	if(!materials_to_add.len)
+		to_chat(user, "<span class='warning'>No useful resources to recycle in \the [I].</span>")
 		return FALSE
 
-	for(var/material as anything in materials_to_add)
+	for(var/material in materials_to_add)
 		if((resources[material] + materials_to_add[material]) >= res_max_amount)
 			to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
 			return TRUE
@@ -648,7 +642,7 @@
 	var/checks = CALLBACK(src, PROC_REF(do_after_checks), user, I)
 
 	if(do_after(user, I.w_class * FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER, target = src, extra_checks = checks))
-		for(var/material as anything in materials_to_add)
+		for(var/material in materials_to_add)
 			resources[material] += materials_to_add[material]
 
 		qdel(I)
@@ -672,7 +666,7 @@
 		if((D.build_type & build_type) && istype(I, D.build_path))
 			var/list/materials_to_add = list()
 			var/list/item_materials = params2numberlist(I.materials)
-			for(var/material as anything in item_materials)
+			for(var/material in item_materials)
 				if(material in resources)
 					materials_to_add[material] = round(item_materials[material] * resource_coeff_recycle, 1)
 			return materials_to_add
@@ -684,7 +678,7 @@
 
 /obj/machinery/mecha_part_fabricator/deconstruction()
 	. = ..()
-	for(var/material as anything in resources)
+	for(var/material in resources)
 		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 
 /obj/machinery/mecha_part_fabricator/update_icon()

@@ -264,7 +264,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	medaltype = "medal-silver"
-	materials = null
+	materials = MAT_SILVER+"=1000"
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -293,7 +293,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	medaltype = "medal-gold"
-	materials = null
+	materials = MAT_GOLD+"=1000"
 	unacidable = TRUE
 
 /obj/item/clothing/accessory/medal/gold/captain
@@ -319,6 +319,7 @@
 	desc = "An eccentric medal made of plasma."
 	icon_state = "plasma"
 	medaltype = "medal-plasma"
+	materials = MAT_PHORON+"=1000"
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"

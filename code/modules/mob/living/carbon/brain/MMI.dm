@@ -165,7 +165,7 @@
 
 	var/obj/item/device/radio/radio = null//Let's give it a radio.
 
-/obj/item/device/mmi/radio_enabled/can_be_disassembled()
+/obj/item/device/mmi/radio_enabled/can_be_recycled()
 	if(!contents.len)
 		return TRUE
 	for(var/A as anything in contents)
