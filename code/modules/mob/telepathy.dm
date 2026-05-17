@@ -169,6 +169,7 @@
 			continue
 		M.telepathy_hear(src, msg)
 		M.show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
+	show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
 	typing_buble_prepare(bubble_recipients)
 
 /mob/proc/nearby_telepathy_say()
@@ -182,7 +183,7 @@
 	if(!msg)
 		return
 	msg = add_period(capitalize(sanitize(trim(msg))))
-
+	show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
 	target.show_runechat_message(src, null, capitalize(msg), null, SHOWMSG_AUDIO)
 	typing_buble_prepare(bubble_recipients)
 	target.telepathy_hear(src, msg)
