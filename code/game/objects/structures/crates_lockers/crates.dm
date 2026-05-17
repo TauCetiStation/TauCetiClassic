@@ -364,6 +364,31 @@
 	desc = "A crate of emergency rations."
 	name = "Emergency Rations"
 
+/obj/structure/closet/crate/secure/freezer
+	desc = "A secure freezer."
+	name = "Freezer"
+	icon_state = "freezersec"
+	icon_opened = "freezersecopen"
+	icon_closed = "freezersec"
+	req_access = list(access_cargo)
+	var/target_temp = T0C - 40
+	var/cooling_power = 40
+
+/obj/structure/closet/crate/secure/freezer/return_air()
+	var/datum/gas_mixture/gas = (..())
+	if(!gas)
+		return null
+	var/datum/gas_mixture/newgas = new/datum/gas_mixture()
+	newgas.copy_from(gas)
+	if(newgas.temperature <= target_temp)
+		return
+
+	if((newgas.temperature - cooling_power) > target_temp)
+		newgas.temperature -= cooling_power
+	else
+		newgas.temperature = target_temp
+	return newgas
+
 
 /obj/structure/closet/crate/freezer/rations/PopulateContents()
 	for(var/i in 1 to 2)

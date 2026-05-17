@@ -180,7 +180,6 @@
 		/obj/item/clothing/glasses/threedglasses = 25,
 		/obj/item/clothing/glasses/gar = 34,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/clothing
 	private = FALSE
 
 /obj/machinery/vending/theater

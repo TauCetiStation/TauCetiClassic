@@ -55,7 +55,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/shut_up = 1 //Stop spouting those godawful pitches!
 	var/extended_inventory = 0 //can we access the hidden inventory?
 	var/obj/item/weapon/coin/coin
-	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 	var/datum/data/vending_product/unstable_product = null
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
@@ -77,7 +76,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	wires = new(src)
 	src.anchored = TRUE
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 
 	camera = new(src)
 
@@ -106,16 +104,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	QDEL_NULL(camera)
 	return ..()
 
-/obj/machinery/vending/RefreshParts()
-	..()
-	// eat refills
-	for(var/obj/item/weapon/vending_refill/refill in component_parts)
-		component_parts -= refill
-		qdel(refill)
-
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
-	if(refill_canister)
-		return ..()
 	//the non constructable vendors drop metal instead of a machine frame.
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 3)
@@ -155,43 +144,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	load = max_load
 	return
 
-/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, mob/user)  //Restocking from TG
-	var/total = 0
-
-	var/to_restock = 0
-	for(var/datum/data/vending_product/machine_content in product_records)
-		to_restock += machine_content.max_amount - machine_content.amount
-
-	if(to_restock <= refill.charges)
-		for(var/datum/data/vending_product/machine_content in product_records)
-			if(machine_content.amount != machine_content.max_amount)
-				to_chat(usr, "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>")
-				machine_content.amount = machine_content.max_amount
-		refill.charges -= to_restock
-		total = to_restock
-	else
-		var/tmp_charges = refill.charges
-		for(var/datum/data/vending_product/machine_content in product_records)
-			var/restock = CEIL(((machine_content.max_amount - machine_content.amount) / to_restock) * tmp_charges)
-			if(restock > refill.charges)
-				restock = refill.charges
-			machine_content.amount += restock
-			refill.charges -= restock
-			total += restock
-			if(restock)
-				to_chat(usr, "<span class='notice'>[restock] of [machine_content.product_name]</span>")
-			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
-				break
-	load += total
-	return total
-
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
 	if(panel_open)
 		if(default_unfasten_wrench(user, W, time = 60))
-			return
-
-		if(isprying(W))
-			default_deconstruction_crowbar(W)
 			return
 
 		if(istype(W, /obj/item/device/lens) && W.type != camera.lens)
@@ -262,24 +217,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
 
-	else if(istype(W, refill_canister) && refill_canister != null)
-		if(stat & (BROKEN|NOPOWER))
-			to_chat(user, "<span class='notice'>It does nothing.</span>")
-		else if(panel_open)
-			//if the panel is open we attempt to refill the machine
-			var/obj/item/weapon/vending_refill/canister = W
-			if(canister.charges == 0)
-				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
-			else
-				var/transfered = refill_inventory(canister, user)
-				if(transfered)
-					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
-				else
-					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
-			return;
-		else
-			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
-
 	else if (istype(W, /obj/item/weapon/ewallet))
 		user.drop_from_inventory(W, src)
 		ewallet = W
@@ -297,25 +234,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	else
 		to_chat(user, "You short out the product lock on [src].")
 	return TRUE
-
-/obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
-	var/list/all_products = product_records + hidden_records + coin_records + emag_records
-	for(var/datum/data/vending_product/machine_content in all_products)
-		while(machine_content.amount !=0)
-			var/safety = 0 //to avoid infinite loop
-			for(var/obj/item/weapon/vending_refill/VR in component_parts)
-				safety++
-				if(VR.charges < initial(VR.charges))
-					VR.charges++
-					machine_content.amount--
-					if(!machine_content.amount)
-						break
-				else
-					safety--
-			if(safety <= 0)
-				break
-	load = 0
-	..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
 	if(!currently_vending)
@@ -636,32 +554,25 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	if(refill_canister)
-		//Dropping actual items
-		var/max_drop = rand(5, 7)
-		for(var/i = 1, i < max_drop, i++)
-			var/datum/data/vending_product/R = pick(src.product_records)
-			var/dump_path = R.product_path
-			if(!R.amount)
-				continue
-			new dump_path(src.loc)
+	//Dropping actual items
+	var/max_drop = rand(7, 10)
+	for(var/i = 1, i < max_drop, i++)
+		var/datum/data/vending_product/R = pick(src.product_records)
+		var/dump_path = R.product_path
+		if(!R.amount)
+			continue
+		new dump_path(src.loc)
+		substract_product(R)
+
+	//Dropping remaining items as a trash
+	var/dropped_amount = 0
+	for(var/datum/data/vending_product/R in src.product_records)
+		while(R.amount > 0)
+			dropped_amount++
 			substract_product(R)
 
-		//Dropping remaining items in a pack
-		var/refilling = 0
-		for(var/datum/data/vending_product/R in src.product_records)
-			while(R.amount > 0)
-				refilling++
-				substract_product(R)
-
-		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
-		Refill.charges = refilling
-	else //If no canister - drop everything
-		for(var/datum/data/vending_product/R in src.product_records)
-			while(R.amount > 0)
-				var/dump_path = R.product_path
-				new dump_path(src.loc)
-				substract_product(R)
+	if(dropped_amount > 30)
+		new /obj/random/scrap/safe_even(loc)
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
