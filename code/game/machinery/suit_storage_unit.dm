@@ -600,26 +600,20 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	name = "Syndicate Hardsuit Storage Unit"
 	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/rig/syndi
-	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
-	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light/heavy
 	name = "Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/heavy
-	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
-	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light/chem
 	name = "Hazmat Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/hazmat
-	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
-	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
 	name = "Syndicate Striker Suit Storage Unit"
@@ -654,7 +648,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_research)
 	suit_type = /obj/item/clothing/suit/space/rig/science
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_VIOLET
 
@@ -663,7 +656,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_rd)
 	suit_type = /obj/item/clothing/suit/space/rig/science/rd
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_DARK_PURPLE
 
@@ -673,22 +665,20 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_engine)
 	suit_type  = /obj/item/clothing/suit/space/rig/engineering
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/engine/atmos
 	name = "Atmospheric Hardsuit Storage Unit"
 	req_access = list(access_atmospherics)
 	suit_type = /obj/item/clothing/suit/space/rig/atmos
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_TEAL
+
 /obj/machinery/suit_storage_unit/engine/chief
 	name = "Chief Engineer Hardsuit Storage Unit"
 	req_access = list(access_ce)
 	suit_type = /obj/item/clothing/suit/space/rig/engineering/chief
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_TITANIUM
 
@@ -698,7 +688,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_security)
 	suit_type = /obj/item/clothing/suit/space/rig/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_CRIMSON
 
@@ -707,7 +696,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_hos)
 	suit_type = /obj/item/clothing/suit/space/rig/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_CRIMSON_RED
 
@@ -717,7 +705,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_medbay_storage)
 	suit_type = /obj/item/clothing/suit/space/rig/medical
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_CYAN
 
@@ -726,14 +713,12 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_paramedic)
 	suit_type = /obj/item/clothing/suit/space/rig/medical
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/medical/cmo
 	name = "Chief Medical Officer Hardsuit Storage Unit"
 	req_access = list(access_cmo)
 	suit_type = /obj/item/clothing/suit/space/rig/medical/cmo
 	mask_type = /obj/item/clothing/mask/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 
 	overlay_color = COLOR_CYAN_BLUE
 

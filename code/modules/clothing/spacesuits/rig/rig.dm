@@ -905,6 +905,7 @@
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm,
 	/datum/action/item_action/hands_free/toggle_space_suit_mode)
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
+	BOOTS_TYPE = /obj/item/clothing/shoes/magboots/syndie
 
 /datum/action/item_action/hands_free/toggle_space_suit_mode
 	name = "Toggle space suit mode"
