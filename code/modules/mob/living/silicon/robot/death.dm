@@ -1,6 +1,3 @@
-/mob/living/silicon/robot/spawn_gibs()
-	robogibs(loc)
-
 /mob/living/silicon/robot/gib()
 	//robots don't die when gibbed. instead they drop their MMI'd brain
 	var/atom/movable/overlay/animation = new(loc)

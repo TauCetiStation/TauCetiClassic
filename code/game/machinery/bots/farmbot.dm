@@ -91,7 +91,7 @@
 /obj/machinery/bot/farmbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Hyrdoponic Assisting Unit v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 	dat += "Water Tank: "
 	if ( tank )
@@ -99,19 +99,19 @@
 	else
 		dat += "Error: Water Tank not Found"
 
-	dat += "<br>Fertilizer Storage: <A href='?src=\ref[src];eject=1'>[get_total_ferts()]/[Max_Fertilizers]</a>"
+	dat += "<br>Fertilizer Storage: <A href='byond://?src=\ref[src];eject=1'>[get_total_ferts()]/[Max_Fertilizers]</a>"
 
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
 	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += "<TT>Watering Controls:<br>"
-		dat += " Water Plants : <A href='?src=\ref[src];water=1'>[src.setting_water ? "Yes" : "No"]</A><BR>"
-		dat += " Refill Watertank : <A href='?src=\ref[src];refill=1'>[src.setting_refill ? "Yes" : "No"]</A><BR>"
+		dat += " Water Plants : <A href='byond://?src=\ref[src];water=1'>[src.setting_water ? "Yes" : "No"]</A><BR>"
+		dat += " Refill Watertank : <A href='byond://?src=\ref[src];refill=1'>[src.setting_refill ? "Yes" : "No"]</A><BR>"
 		dat += "<br>Fertilizer Controls:<br>"
-		dat += " Fertilize Plants : <A href='?src=\ref[src];fertilize=1'>[src.setting_fertilize ? "Yes" : "No"]</A><BR>"
+		dat += " Fertilize Plants : <A href='byond://?src=\ref[src];fertilize=1'>[src.setting_fertilize ? "Yes" : "No"]</A><BR>"
 		dat += "<br>Weeding Controls:<br>"
-		dat += " Weed Plants : <A href='?src=\ref[src];weed=1'>[src.setting_weed ? "Yes" : "No"]</A><BR>"
-		dat += "<br>Ignore Weeds : <A href='?src=\ref[src];ignoreWeed=1'>[src.setting_ignoreWeeds ? "Yes" : "No"]</A><BR>"
-		dat += "Ignore Mushrooms : <A href='?src=\ref[src];ignoreMush=1'>[src.setting_ignoreMushrooms ? "Yes" : "No"]</A><BR>"
+		dat += " Weed Plants : <A href='byond://?src=\ref[src];weed=1'>[src.setting_weed ? "Yes" : "No"]</A><BR>"
+		dat += "<br>Ignore Weeds : <A href='byond://?src=\ref[src];ignoreWeed=1'>[src.setting_ignoreWeeds ? "Yes" : "No"]</A><BR>"
+		dat += "Ignore Mushrooms : <A href='byond://?src=\ref[src];ignoreMush=1'>[src.setting_ignoreMushrooms ? "Yes" : "No"]</A><BR>"
 		dat += "</TT>"
 
 	var/datum/browser/popup = new(user, "window=autofarm", src.name)
@@ -161,6 +161,7 @@
 		if ( get_total_ferts() >= Max_Fertilizers )
 			to_chat(user, "The fertilizer storage is full!")
 			return
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You insert [W] into [src]</span>.")
 		user.drop_from_inventory(W, src)
 		flick("farmbot_hatch",src)

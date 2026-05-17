@@ -119,7 +119,7 @@
 		t_state = mouth.icon_state
 
 	var/skip = FALSE
-	if(!(t_state in icon_states(mouth.lefthand_file))) //oh, god, no! plz NO! not those icon_custom, icon_override, icon_graytide, icon_whatever9000namedifferent_icons_with_million_ifs...
+	if(!icon_exists(mouth.lefthand_file, t_state)) //oh, god, no! plz NO! not those icon_custom, icon_override, icon_graytide, icon_whatever9000namedifferent_icons_with_million_ifs...
 		t_state = "uni_item"
 		skip = TRUE
 
@@ -169,7 +169,7 @@
 
 	apply_standing_overlay(LAYERIAN_MOUTH)
 
-/mob/living/carbon/ian/proc/update_inv_neck()
+/mob/living/carbon/ian/update_inv_neck()
 	//remove_standing_overlay(LAYERIAN_NECKCUFF) incase icons ever will be added.
 
 	if(!neck)

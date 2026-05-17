@@ -6,10 +6,15 @@
 	probability = 20
 
 /datum/game_mode/junkyard/Setup()
+	. = ..()
+
+	if(!.)
+		return FALSE
+
 	SSjunkyard.populate_junkyard()
 	for(var/obj/machinery/gateway/center/G in gateways_list)
 		if(G.name == "Junkyard Gateway")
 			G.toggleon()
-	if(SSjunkyard.junkyard_initialised)
-		return TRUE
-	return FALSE
+
+	if(!SSjunkyard.junkyard_initialised)
+		return FALSE

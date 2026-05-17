@@ -22,6 +22,9 @@
 	QDEL_NULL(overload_action)
 	return ..()
 
+/obj/mecha/combat/gygax/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 3000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
@@ -30,6 +33,36 @@
 /obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Remove(user)
+
+/obj/mecha/combat/gygax/security/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME
+
+	var/obj/item/mecha_parts/mecha_equipment/main_weapon = pick(
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse,
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
+	)
+	ME = new main_weapon(src)
+	ME.attach(src)
+
+	var/obj/item/mecha_parts/mecha_equipment/side_weapon = pick(
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot,
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
+	)
+	ME = new side_weapon(src)
+	ME.attach(src)
+
+	var/obj/item/mecha_parts/mecha_equipment/support_equipment = pick(
+		/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
+		/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
+		/obj/item/mecha_parts/mecha_equipment/repair_droid,
+		/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+	)
+	ME = new support_equipment(src)
+	ME.attach(src)
 
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
@@ -43,6 +76,13 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/ultra
 	animated = 1
 
+/obj/mecha/combat/gygax/ultra/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
+/obj/mecha/combat/gygax/ultra/ert
+	dna_lockable = TRUE
+
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit used by Nanotrasen Death Squads. A significantly upgraded Gygax security mech."
 	name = "Dark Gygax"
@@ -54,6 +94,7 @@
 	max_temperature = 45000
 	overload_coeff = 1
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark
+	dna_lockable = TRUE
 	max_equip = 4
 	step_energy_drain = 5
 
@@ -67,6 +108,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
 	ME.attach(src)
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/gygax/dark/add_cell(obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
@@ -126,7 +168,7 @@
 	var/output = {"<div class='wr'>
 						<div class='header'>Special</div>
 						<div class='links'>
-						<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a>
+						<a href='byond://?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a>
 						</div>
 						</div>
 						"}

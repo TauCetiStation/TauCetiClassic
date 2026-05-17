@@ -326,23 +326,14 @@
 	item_state = "satchel-flat"
 	w_class = SIZE_SMALL //Can fit in backpacks itself.
 	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
-	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
-
-/obj/item/weapon/storage/backpack/satchel/flat/hide(intact)
-	if(intact)
-		invisibility = 101
-		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
-		icon_state = "[initial(icon_state)]2"
-	else
-		invisibility = initial(invisibility)
-		anchored = FALSE
-		icon_state = initial(icon_state)
 
 /obj/item/weapon/storage/backpack/satchel/flat/atom_init()
 	. = ..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE, use_anchor = TRUE)
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "suspicious looking dufflebag"
@@ -352,7 +343,6 @@
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
 	max_storage_space = DEFAULT_BACKPACK_STORAGE + 10
-	slowdown = 0.5
 
 /obj/item/weapon/storage/backpack/dufflebag/marinad
 	name = "marine dufflebag"
@@ -410,4 +400,3 @@
 /obj/item/weapon/storage/backpack/dufflebag/cops
 	name = "NanoTrasen bag"
 	desc = "A large duffel bag for holding extra NanoTrasen gear."
-	slowdown = 0

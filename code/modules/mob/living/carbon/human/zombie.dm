@@ -1,3 +1,5 @@
+// todo: need to cleanup and sort out this file
+
 /obj/item/weapon/melee/zombie_hand
 	name = "zombie claw"
 	desc = "A zombie's claw is its primary tool, capable of infecting \
@@ -114,103 +116,109 @@
 
 			H.infect_zombie_virus(target_zone)
 
-/datum/species/zombie/on_life(mob/living/carbon/human/H)
-	if(!H.life_tick % 3)
+/mob/living/carbon/human/proc/can_zombified() // todo: need to expand pull with new races, preferably automatically
+    return species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)
+
+/mob/living/carbon/human/proc/handle_infected_death() //Death of human
+	if(!can_zombified())
 		return
-	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
-	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
-	var/obj/item/organ/internal/eyes = H.bodyparts_by_name[O_EYES]
-	var/obj/item/organ/internal/brain = H.bodyparts_by_name[O_BRAIN]
-	if(eyes)
-		eyes.damage = 0
-	if(brain)
-		brain.damage = 0
-	H.setBrainLoss(0)
-	H.setBlurriness(0)
-	H.eye_blind = 0
+	preprerevive_zombie(300)
 
-	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
-		H.drop_l_hand()
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
-	if(RArm && !(RArm.is_stump) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
-		H.drop_r_hand()
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+/mob/living/carbon/human/proc/preprerevive_zombie(delay)
+	addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), delay)
+	to_chat(src, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
+		Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
+		который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
 
-	if(H.stat != DEAD && prob(10))
-		playsound(H, pick(spooks), VOL_EFFECTS_MASTER)
-
-/datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
-	if(!gibbed)
-		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
-		to_chat(H, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
-			Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
-			который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
-
-/mob/living/carbon/human/proc/handle_infected_death()
-	if(species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
-		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), src), rand(600,700))
-		to_chat(src, "<span class='cult'>Твоё сердце останавливается, но вместе с этим просыпается ненасытный ГОЛОД... \
-					Вот только жизнь не покинула твоё бездыханное тело. Этот голод не отпускает тебя, ты ещё восстанешь, что бы распространять болезнь и сеять смерть!</span>")
-
-/proc/prerevive_zombie(mob/living/carbon/human/H)
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	if(H.organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
-		if(!H.key && H.mind)
+/mob/living/carbon/human/proc/prerevive_zombie()
+	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
+	if(organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
+		var/free_body = TRUE
+		if(!key && mind)
 			for(var/mob/dead/observer/ghost in player_list)
-				if(ghost.mind == H.mind && ghost.can_reenter_corpse)
-					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"))
+				if(ghost.mind == mind && ghost.can_reenter_corpse)
+					free_body = FALSE
+					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"), 10 SECONDS)
 					if(answer == "Yes")
 						ghost.reenter_corpse()
+					else
+						create_spawner(/datum/spawner/living/zombie, src)
+		if(free_body)
+			create_spawner(/datum/spawner/living/zombie, src)
 
-		H.visible_message("<span class='danger'>[H]'s body starts to move!</span>")
-		addtimer(CALLBACK(null, PROC_REF(revive_zombie), H), 40)
+		visible_message("<span class='danger'>[src]'s body starts to move!</span>")
+		addtimer(CALLBACK(src, PROC_REF(revive_zombie)), 40)
 
-/proc/revive_zombie(mob/living/carbon/human/H)
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	if(!H.organs_by_name[O_BRAIN] || !BP || BP.is_stump)
+/mob/living/carbon/human/proc/revive_zombie()
+	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
+	if(!organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
-	//zombie have NO_PAIN and can't adjust/sets halloss
-	H.setHalLoss(0)
 	//remove all blind-blur effects
-	H.cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
-	H.sdisabilities &= ~BLIND
-	H.blinded = FALSE
-	H.setBlurriness(0)
-	H.handle_vision(TRUE)
+	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
+	sdisabilities &= ~BLIND
+	blinded = FALSE
+	setBlurriness(0)
+	handle_vision(TRUE)
 
-	if(!iszombie(H))
-		H.zombify()
+	if(!iszombie(src))
+		zombify()
 
+	resetToxLoss(0)
+	resetOxyLoss(0)
+	resetCloneLoss(0)
+	resetBrainLoss(0)
+	resetHalLoss(0)
 	//del wounds and embedded implants in limbs, heal
-	for(var/obj/item/organ/external/limb in H.bad_bodyparts)
+	for(var/obj/item/organ/external/limb in bad_bodyparts)
 		limb.rejuvenate()
 
-	H.setCloneLoss(0)
-	H.setBrainLoss(0)
-	H.SetParalysis(0)
-	H.SetStunned(0)
-	H.SetWeakened(0)
-	H.nutrition = NUTRITION_LEVEL_NORMAL
-	H.SetSleeping(0)
-	H.radiation = 0
-	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
-	H.restore_blood()
+	SetParalysis(0)
+	SetStunned(0)
+	SetWeakened(0)
+	setDrugginess(0)
+	SetSleeping(0)
+	SetDrunkenness(0)
+
+	nutrition = NUTRITION_LEVEL_NORMAL
+	radiation = 0
+	heal_overall_damage(getBruteLoss(), getFireLoss())
+	restore_blood()
+
+	// make the icons look correct
+	// i think we can pull burned/husked zombies, need to see how it works
+	//REMOVE_TRAIT(src, TRAIT_HUSK, GENERIC_TRAIT)
+	//REMOVE_TRAIT(src, TRAIT_BURNT, GENERIC_TRAIT)
+
+	if(reagents)
+		reagents.clear_reagents()
+
+	suiciding = FALSE
+	ear_deaf = 0
+	ear_damage = 0
+
+	//shock_stage = 0
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	Heart?.heart_normalize()
+
+	restore_all_bodyparts()
+	restore_all_organs()
+	cure_all_viruses()
 
 	// remove the character from the list of the dead
-	if(H.stat == DEAD)
-		dead_mob_list -= H
-		alive_mob_list += H
-		H.tod = null
-		H.timeofdeath = 0
-	H.stat = CONSCIOUS
-	H.update_canmove()
-	H.regenerate_icons()
-	H.med_hud_set_health()
-	H.clear_alert("embeddedobject")
+	if(stat == DEAD)
+		dead_mob_list -= src
+		alive_mob_list += src
+		tod = null
+		timeofdeath = 0
+	stat = CONSCIOUS
+	update_canmove()
+	regenerate_icons()
+	med_hud_set_health()
+	clear_alert("embeddedobject")
 
-	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
-	to_chat(H, "<span class='cult'>Твой голод всё также ненасытен! Пора его утолить!</span>")
-	H.visible_message("<span class='danger'>[H] suddenly wakes up!</span>")
+	playsound(src, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
+	to_chat(src, "<span class='cult'>Твой голод всё также ненасытен! Пора его утолить!</span>")
+	visible_message("<span class='danger'>[src] suddenly wakes up!</span>")
 
 /mob/living/carbon/proc/is_infected_with_zombie_virus()
 	for(var/ID in virus2)
@@ -227,11 +235,6 @@
 
 /mob/living/carbon/human/update_eye_blur()
 	if(iszombie(src))
-		return
-	return ..()
-
-/mob/living/carbon/human/embed(obj/item/I)
-	if(species.flags[NO_EMBED])
 		return
 	return ..()
 
@@ -261,26 +264,22 @@
 	D.infectionchance = 100
 	D.antigen |= ANTIGEN_Z
 	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
+	Z.RegisterSignal(src, COMSIG_MOB_DIED, PROC_REF(handle_infected_death))
+	Z.signal_setup = FALSE
 
 	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
 /mob/living/carbon/human/proc/zombify()
-	if(iszombie(src))
+	if(HAS_TRAIT_FROM(src, ELEMENT_TRAIT_ZOMBIE, INNATE_TRAIT))
 		return
 
-	switch(species.name)
-		if(TAJARAN)
-			set_species(ZOMBIE_TAJARAN, TRUE, TRUE)
-		if(SKRELL)
-			set_species(ZOMBIE_SKRELL, TRUE, TRUE)
-		if(UNATHI)
-			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
-		else
-			set_species(ZOMBIE, TRUE, TRUE)
+	ADD_TRAIT(src, ELEMENT_TRAIT_ZOMBIE, INNATE_TRAIT)
 
 	to_chat(src, "<span class='cult large'>Ты ГОЛОДЕН!</span><br>\
 	<span class='cult'>Теперь ты зомби! Не пытайся вылечиться, не вреди своим собратьям мёртвым, не помогай какому бы то ни было не-зомби. \
 	Теперь ты - воплощение голода, смерти и жестокости. Распространяй болезнь и УБИВАЙ.</span>")
+
+	update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/zombies)
 
 var/global/list/zombie_list = list()
 
@@ -318,7 +317,7 @@ var/global/list/zombie_list = list()
 	var/min_dist = 999
 
 	for(var/mob/living/carbon/human/H as anything in human_list)
-		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
+		if(H.stat == DEAD || iszombie(H) || H.z != user.z || !H.can_zombified() )
 			continue
 		var/turf/target_turf = get_turf(H)
 		var/target_dist = get_dist(target_turf, self_turf)
@@ -391,3 +390,117 @@ var/global/list/zombie_list = list()
 	tracker = null
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
+
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol
+	name = "romerol"
+	desc = "As if in mockery, someone kindly engraved in small print directly on the glass of the vial: \"Romerol. The REAL zombie powder.\""
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol/atom_init()
+	. = ..()
+	reagents.add_reagent("romerol", 15)
+	update_icon()
+
+/datum/reagent/romerol
+	name = "Romerol"
+	id = "romerol"
+	// the REAL zombie powder
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#123524" // RGB (18, 53, 36)
+	custom_metabolism = 1
+	taste_message = "brains"
+	//restrict_species = list(IPC, DIONA, VOX)
+
+/datum/reagent/romerol/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.infect_zombie_virus(null, TRUE, TRUE)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/zombie
+	name = "biowarfare hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives to quickly make warcrimes in the field. This one is left unlabelled."
+	volume = 50
+	list_reagents = list("romerol" = 50)
+	amount_per_transfer_from_this = 5
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol
+	name = "Z-virus"
+	desc = "Makes warcrimes"
+	icon_state = "bonepen"
+	item_state = "bonepen"
+	volume = 35
+	list_reagents = list("romerol" = 5, "cyanide" = 30)
+
+/obj/item/weapon/grenade/chem_grenade/romerol
+	name = "biowarfare grenade"
+	icon_state = "pyrog"
+	item_state = "flashbang"
+	desc = "A red grenade with an unusual design, a biohazard sign is engraved on the side. Does massive war crimes."
+	path = 2
+	stage = 2
+	det_time = 2 SECONDS
+
+/obj/item/weapon/grenade/chem_grenade/romerol/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent("sugar", 75)
+	B1.reagents.add_reagent("potassium", 75)
+	B2.reagents.add_reagent("phosphorus", 75)
+
+	B2.reagents.add_reagent("romerol", 20)
+	B1.reagents.add_reagent("cyanide", 55)
+
+	beakers += B1
+	beakers += B2
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+	var/obj/item/device/assembly/timer/tmr = detonator.a_left
+	tmr.time = 2
+
+/obj/item/weapon/implanter/zombie
+	name = "implanter (Z)"
+	init_type = /obj/item/weapon/implant/zombie
+
+/obj/item/weapon/implant/zombie
+	name = "retaliation"
+	desc = "And boom goes the weasel."
+	icon_state = "implant_evil"
+	legal = FALSE
+	activation_emote = "deathgasp"
+	uses = 1
+	delete_after_use = TRUE
+	implant_data = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Retaliation's implant<BR>
+<b>Life:</b> Activates upon death.<BR>
+<b>Important Notes:</b> Prevent the implant from falling into the hands of the enemy<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains special chemicals that bring the deceased back to life a few seconds after death. Allows you to take revenge on your enemy. Use away from allies.<BR>
+<b>Special Features:</b> Replaces the explosion implant<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+
+/obj/item/weapon/implant/zombie/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	for(var/obj/item/weapon/implant/dexplosive/I in C)
+		qdel(I)
+
+/obj/item/weapon/implant/zombie/activate()
+	if(!implanted_mob)
+		return FALSE
+	var/mob/living/carbon/human/H = implanted_mob
+	if(!H || !H.can_zombified())
+		return FALSE
+	if(H.stat != DEAD)
+		H.adjustToxLoss(H.maxHealth * 2.5)
+		H.adjustFireLoss(H.maxHealth)
+		H.death(FALSE)
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 5 SECONDS)
+	to_chat(H, "<span class='cult'>Твоё сердце умолкает, а вместе с ним и хладеет твоё тело, и лишь голод начинает разгораться с невиданной силой!</span>")
+	qdel(src)

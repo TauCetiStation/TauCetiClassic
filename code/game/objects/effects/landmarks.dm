@@ -75,9 +75,9 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	switch(name)
 		if ("awaystart")
 			awaydestinations += src
-		if("Wizard")
+		/*if("Wizard")
 			wizardstart += loc
-			return INITIALIZE_HINT_QDEL
+			return INITIALIZE_HINT_QDEL*/
 		//prisoners
 		if("prisonwarp")
 			prisonwarp += loc
@@ -102,8 +102,8 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 		//if("ninjastart") // "ninja", not "ninjastart"
 		//	ninjastart += src
 		//	return INITIALIZE_HINT_QDEL
-		//if("eorgwarp")
-		//	eorgwarp += loc
+		//if("Gladiator")
+		//	Gladiator += loc
 		//	return INITIALIZE_HINT_QDEL
 		if("prisonerstart")
 			prisonerstart += loc
@@ -148,10 +148,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 // Assistats
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
-	icon_state = "Test Subject"
-
-/obj/effect/landmark/start/assistant/test_subject
-	name = "Test Subject"
+	icon_state = "Assistant"
 
 /obj/effect/landmark/start/assistant/waiter
 	name = "Waiter"
@@ -342,6 +339,9 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 // Roles
 /obj/effect/landmark/start/wizard
 	name = "Wizard"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "wiznerd_spawn"
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/velocity_officer
 	name = "Velocity Officer"
@@ -422,7 +422,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/costume/butler/atom_init()
 	..()
-	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/accessory/tie/waistcoat(loc)
 	new /obj/item/clothing/under/suit_jacket(loc)
 	new /obj/item/clothing/head/that(loc)
 	return INITIALIZE_HINT_QDEL
@@ -444,7 +444,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/costume/prig/atom_init()
 	..()
-	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/accessory/tie/waistcoat(loc)
 	new /obj/item/clothing/glasses/monocle(loc)
 	var/CHOICE = pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
 	new CHOICE(loc)
@@ -559,3 +559,12 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/junkyard_bum // don't exists on map, randomly spawned by junkyard generator
 	name = "Junkyard Bum"
+
+// generic event map landmarks
+/obj/effect/landmark/blue_team
+	name = "Blue Team"
+	icon_state = "x2"
+
+/obj/effect/landmark/red_team
+	name = "Red Team"
+	icon_state = "x"

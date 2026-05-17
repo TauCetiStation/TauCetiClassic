@@ -69,13 +69,30 @@
 	return
 
 /datum/game_mode/proc/Setup()
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!can_start(TRUE))
 		return FALSE
+
 	SetupFactions()
-	var/FactionSuccess = CreateFactions()
-	if(!FactionSuccess)
+
+	if(!CreateFactions())
 		DropAll()
-	return FactionSuccess
+		return FALSE
+
+	RegisterCustomFactions()
+
+	return TRUE
+
+// for custom factions, if they where created before ticker initialization
+var/global/list/datum/faction/preinit_factions
+
+/datum/game_mode/proc/RegisterCustomFactions()
+	if(!global.preinit_factions)
+		return
+	for(var/faction in preinit_factions)
+		factions += faction
+	preinit_factions = null
 
 // it is necessary in those rare cases when the gamemode did not start for those reasons
 // that cannot be detected BEFORE the creation of a human
@@ -90,6 +107,8 @@
 /*===FACTION RELATED STUFF===*/
 
 /datum/game_mode/proc/CreateFactions()
+	if(!length(factions_allowed))
+		return TRUE
 	var/player_count = get_player_count(FALSE)
 	for(var/faction_type in factions_allowed)
 		if(isnum(factions_allowed[faction_type]))
@@ -185,7 +204,7 @@
 	addtimer(CALLBACK(src, PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 	addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
-	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended, /datum/game_mode/imposter)
+	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended)
 	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 

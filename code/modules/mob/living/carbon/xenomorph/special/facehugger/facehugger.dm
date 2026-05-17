@@ -321,6 +321,9 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
+			var/datum/action/embryo_kick/kick_action = new(new_embryo)
+			new_embryo.kick_action_ref = WEAKREF(kick_action)
+			kick_action.Grant(new_xeno)
 			qdel(current_hugger)
 		target.unEquip(src)
 		target.add_status_flags(XENO_HOST)
@@ -356,7 +359,7 @@
 	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] curls up into a ball and exudes a strange substance!</span>")
 	for(var/mob/living/carbon/human/H in view(1, src))
-		if(!mouth_is_protected())
+		if(!mouth_is_protected(H.wear_mask))
 			H.invoke_vomit_async()
 
 /obj/item/clothing/mask/facehugger/verb/hide_fh()

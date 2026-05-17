@@ -1,3 +1,30 @@
+/obj/structure/ladder/jacob/atom_init(mapload, obj/structure/ladder/lad_up, obj/structure/ladder/lad_down)
+	..()
+	if(lad_up)
+		src.up = lad_up
+		lad_up.down = src
+		lad_up.update_icon()
+	if(lad_down)
+		src.down = lad_down
+		lad_down.up = src
+		lad_down.update_icon()
+
+/obj/item/jacobs_ladder
+	name = "jacob's ladder"
+	desc = "A celestial ladder that violates the laws of physics."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "ladder00"
+
+/obj/item/jacobs_ladder/attack_self(mob/user)
+	var/turf/T = get_turf(src)
+	var/obj/structure/ladder/jacob/last_ladder = null
+	for(var/i in 1 to world.maxz)
+		if(is_centcom_level(i))
+			continue
+		var/turf/T2 = locate(T.x, T.y, i)
+		last_ladder = new /obj/structure/ladder/jacob(T2, null, last_ladder)
+	qdel(src)
+
 /obj/structure/ladder
 	name = "ladder"
 	desc = "A sturdy metal ladder."

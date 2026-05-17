@@ -8,12 +8,18 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/cargo/request_resources,
 				/datum/form/cargo/delivery,
 				/datum/form/cargo/bay_items,
-				/datum/form/cargo/miner_bill
+				/datum/form/cargo/miner_bill,
+				/datum/form/cargo/warehouse_invoice_form,
+				/datum/form/cargo/resource_extraction_report,
+				/datum/form/cargo/recycling_of_resources,
+				/datum/form/cargo/deliveries_from_the_warehouse,
+				/datum/form/cargo/magazine_of_autolathe,
+				/datum/form/cargo/refueling_autolathe
 				)
 		),
 		"HR" = list(
 			"color"= "#496a7c",
-			"name" = "Отдел Кадров",
+			"name" = "Отдел кадров",
 			"content" = list(
 				/datum/form/hr/temp_access,
 				/datum/form/hr/const_access,
@@ -26,14 +32,16 @@ var/global/list/predefined_forms_list = list(
 		),
 		"Medical" = list(
 			"color"= "#c4d8af",
-			"name" = "Медицинское Управление",
+			"name" = "Медицинский отдел",
 			"content" = list(
 				/datum/form/med/prescription,
 				/datum/form/med/surgery,
 				/datum/form/med/autopsy,
 				/datum/form/med/chem_tracking,
 				/datum/form/med/work_incapacity,
-				/datum/form/med/chem_request
+				/datum/form/med/chem_request,
+				/datum/form/med/psych_exam,
+				/datum/form/med/medical_services
 				)
 		),
 		"RnD" = list(
@@ -59,7 +67,7 @@ var/global/list/predefined_forms_list = list(
 		),
 		"Security" = list(
 			"color"= "#d6a2a4",
-			"name" = "Служба Безопасности",
+			"name" = "Служба безопасности",
 			"content" = list(
 				/datum/form/sec/investigation,
 				/datum/form/sec/raport,
@@ -69,14 +77,17 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/sec/execution,
 				/datum/form/sec/loyal_voluntary,
 				/datum/form/sec/test_subject_transfer,
-				/datum/form/sec/loyalty_force
+				/datum/form/sec/loyalty_force,
+				/datum/form/sec/using_combat_exoskeleton
 				)
 		),
 		"Engineering" = list(
 			"color"= "#ebc66e",
-			"name" = "Инженерный Отдел",
+			"name" = "Инженерный отдел",
 			"content" = list(
-				/datum/form/eng/maintentance
+				/datum/form/eng/maintentance,
+				/datum/form/eng/repair,
+				/datum/form/eng/report
 			)
 		),
 		"Important" = list(
@@ -98,7 +109,8 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/misc/kitchen_menu,
 				/datum/form/misc/incident_report,
 				/datum/form/misc/transport_visa,
-				/datum/form/misc/clearance_protocol
+				/datum/form/misc/clearance_protocol,
+				/datum/form/misc/petition_form
 			)
 		)
 	)
@@ -113,7 +125,7 @@ var/global/list/predefined_forms_list = list(
     index = "1A"
     name = "Запрос на предмет, отсутствующий в стандартном списке заказов, но возможный для производства в карго"
     content = @{"
-        [center][large][b]Отдел Поставок КСН "Исход"[/b]
+        [center][large][b]Отдел Поставок [sname][/b]
         Запрос в Отдел Поставок[/large][/center]
         [hr]Полное имя заказчика: [field]
         Заказ: [field]
@@ -131,7 +143,7 @@ var/global/list/predefined_forms_list = list(
     index = "1B"
     name = "Заказ шахтёрам"
     content = @{"
-        [center][large][b]Отдел Поставок КСН "Исход"[/b]
+        [center][large][b]Отдел Поставок [sname][/b]
         Запрос в Отдел Поставок на поставки сырья[/large][/center]
         [hr]Полное имя заказчика: [field]
         Материалы: [field]
@@ -149,7 +161,7 @@ var/global/list/predefined_forms_list = list(
     index = "1C"
     name = "Заказ на почтовую пересылку"
     content = @{"
-        [center][large][b]Отдел Поставок КСН "Исход"[/b]
+        [center][large][b]Отдел Поставок [sname][/b]
         Заказ на почтовую пересылку[/large][/center]
         [hr]Полное имя заказчика: [field]
         Посылка: [field]
@@ -166,7 +178,7 @@ var/global/list/predefined_forms_list = list(
     index = "1D"
     name = "Складская опись"
     content = @{"
-        [center][large][b]Отдел Поставок КСН "Исход"[/b]
+        [center][large][b]Отдел Поставок [sname][/b]
         Складская опись[/large][/center]
         [hr]Время составления описи: [time]
         Опись составил: [field]
@@ -182,7 +194,7 @@ var/global/list/predefined_forms_list = list(
     index = "1E"
     name = "Форма для шахтёрской накладной"
     content = @{"
-        [center][large][b]Отдел Поставок КСН "Исход"[/b]
+        [center][large][b]Отдел Поставок [sname][/b]
         Накладная на поставки с шахтерского аванпоста[/large][/center]
         [hr]Время составления накладной: [time]
         Номер поставки: [field]
@@ -190,21 +202,158 @@ var/global/list/predefined_forms_list = list(
         Железная руда: [field], Металл: [field], Пласталь: [field]
         Песок: [field], Стекло: [field], Укрепленное стекло: [field]
         Золотая руда: [field], Золотой слиток(слитки): [field]
-        Серебряная руда: [field], Серебряный слиток(слитки): [field] 
+        Серебряная руда: [field], Серебряный слиток(слитки): [field]
         Неочищенная плазма: [field], Твердая плазма: [field]
         Уран: [field], Очищенный уран: [field]
         Алмаз: [field], Ограненный алмаз(алмазы): [field]
-        Разное: [field] 
+        Разное: [field]
         [hr]Составитель: [sfield]
         Принимающий сотрудник: [sfield]
         [hr][small]*В случае получения разрешения на заказ он должен быть отмечен штампом "Одобрено" и штампом Квартирмейстера. Заказы, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что заказывать, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+	"}
+
+/datum/form/cargo/warehouse_invoice_form
+    index = "1F"
+    name = "Форма накладной для поставок на склад"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Накладная поставок на склад[/large][/center]
+		[hr]Номер поставки: [field]
+		Время поставки: [field]
+		Поставщик (отдел или должность): [field]
+		[hr]Содержимое поставки:
+		[small]В скобках пометить количество.[/small]
+		[list][*][field]
+		[*][field]
+		[*][field]
+		[hr]Принявший поставку: [sfield]
+		Поставщик: [sfield]
+		[hr][small]*В случае получения разрешения на поставку она должна быть отмечена штампом "Одобрено" и штампом Квартирмейстера. Поставки, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что поставлять, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/resource_extraction_report
+    index = "1G"
+    name = "Форма отчета о добыче ресурсов"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Отчет о добыче ресурсов[/large][/center]
+		[hr]Время начала добычи: [field]
+		Время окончания добычи: [field]
+		Используемое добывающее оборудование:[field]
+		[hr][b]Добытые руды/материалы[/b]
+		Железная руда: [field], Металл: [field], Пласталь: [field]
+		Песок: [field], Стекло: [field], Укрепленное стекло: [field]
+		Золотая руда: [field], Золотой слиток(слитки): [field]
+		Серебряная руда: [field], Серебряный слиток(слитки): [field]
+		Неочищенная плазма: [field], Твердая плазма: [field]
+		Уран: [field], Очищенный уран: [field]
+		Алмаз: [field], Ограненный алмаз(алмазы): [field]
+		Разное: [field]
+		[hr]Составитель: [sfield]
+		Принимающий сотрудник: [sfield]
+		[hr][small]*Отчет должен быть предоставлен Квартирмейстеру и отмечен его штампом. После заполния, документ должен хранится в кабинете Квартирмейстера до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/recycling_of_resources
+    index = "1H"
+    name = "Форма отчета о переработке ресурсов"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Отчет о переработке ресурсов[/large][/center]
+		[hr]Время переработки: [field]
+		[hr][b]Переработанные руды/материалы[/b]
+		Железная руда: [field]
+		Песок: [field]
+		Золотая руда: [field]
+		Серебряная руда: [field]
+		Неочищенная плазма: [field]
+		Уран: [field]
+		Алмаз: [field]
+		Разное: [field]
+		[hr][b]Полученные после переработки материалы[/b]
+		Металл: [field], Пласталь: [field]
+		Стекло: [field], Укрепленное стекло: [field]
+		Золотой слиток(слитки): [field]
+		Серебряный слиток(слитки): [field]
+		Твердая плазма: [field]
+		Очищенный уран: [field]
+		Ограненный алмаз(алмазы): [field]
+		Разное: [field]
+		[hr]Составитель: [sfield]
+		Принимающий сотрудник: [sfield]
+		[hr][small]*Отчет должен быть предоставлен Квартирмейстеру и отмечен его штампом. После заполния, документ должен хранится в кабинете Квартирмейстера до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/deliveries_from_the_warehouse
+    index = "1I"
+    name = "Форма накладной для поставок со склада"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Накладная поставок со склада[/large][/center]
+		[hr]Время поставки: [field]
+		Номер поставки: [field]
+		Пункт поставки: [field]
+		Способ доставки: [field]
+		[hr]Содержимое поставки:
+		[small]В скобках пометить количество.[/small]
+		[list][*][field]
+		[*][field]
+		[*][field]
+		[hr]Принявший поставку: [sfield]
+		Поставщик: [sfield]
+		[hr][small]*В случае получения разрешения на поставку она должна быть отмечена штампом "Одобрено" и штампом Квартирмейстера. Поставки, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что поставлять, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/magazine_of_autolathe
+    index = "1J"
+    name = "Журнал использования автолата"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Накладная поставок со склада[/large][/center]
+		[hr]Время поставки: [field]
+		Номер поставки: [field]
+		Пункт поставки: [field]
+		Способ доставки: [field]
+		[hr]Содержимое поставки:
+		[small]В скобках пометить количество.[/small]
+		[list][*][field]
+		[*][field]
+		[*][field]
+		[hr]Принявший поставку: [sfield]
+		Поставщик: [sfield]
+		[hr][small]*В случае получения разрешения на поставку она должна быть отмечена штампом "Одобрено" и штампом Квартирмейстера. Поставки, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что поставлять, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/refueling_autolathe
+    index = "1K"
+    name = "Журнал заправки автолата"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Журнал заправки автолата[/large][/center]
+		[hr][table][/br]
+		[tr][/br]
+		[th]Время заправки[/th][/br]
+		[th]Заправленные ресурсы (металл/стекло)[/th][/br]
+		[th]Заправщик[/th][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][field][/td][/br]
+		[td][field][/td][/br]
+		[td][sfield][/td][/br]
+		[/tr][/br]
+		[/table]
 	"}
 
 /datum/form/hr/temp_access
     index = "2A"
     name = "Форма для получения временного дополнительного доступа в помещения на станции"
     content = @{"
-        [center][large][b]Отдел Кадров КСН "Исход"[/b]
+        [center][large][b]Отдел Кадров [sname][/b]
         Анкета на получение временного дополнительного доступа[/large][/center]
         [hr]Полное имя составителя: [field]
         Должность: [field]
@@ -221,7 +370,7 @@ var/global/list/predefined_forms_list = list(
     index = "2B"
     name = "Форма для получения постоянного дополнительного доступа в помещения на станции"
     content = @{"
-        [center][large][b]Отдел Кадров КСН "Исход"[/b]
+        [center][large][b]Отдел Кадров [sname][/b]
         Анкета на получение постоянного дополнительного доступа[/large][/center]
         [hr]Полное имя составителя: [field]
         Должность: [field]
@@ -237,7 +386,7 @@ var/global/list/predefined_forms_list = list(
     index = "2C"
     name = "Форма для снятия сотрудника с занимаемого поста"
     content = @{"
-        [center][large][b]Отдел Кадров КСН "Исход"[/b]
+        [center][large][b]Отдел Кадров [sname][/b]
         Анкета на увольнение/понижение[/center][/large]
         [hr]Полное имя сотрудника: [field]
         Должность: [field]
@@ -254,7 +403,7 @@ var/global/list/predefined_forms_list = list(
     index = "2D"
     name = "Сертификат о выдаче и получении дополнительного доступа"
     content = @{"
-        [center][large][b]Отдел Кадров КСН "Исход"[/b]
+        [center][large][b]Отдел Кадров [sname][/b]
         Сертификат о выдаче дополнительного доступа[/large][/center]
         [hr]Полное имя сотрудника: [field]
         Должность: [field]
@@ -269,7 +418,7 @@ var/global/list/predefined_forms_list = list(
     index = "2E"
     name = "Обновленная форма смены профессии, или должности"
     content = @{"
-        [center][large][b]Отдел Кадров КСН "Исход"[/b]
+        [center][large][b]Отдел Кадров [sname][/b]
         Анкета смены занимаемой должности[/large][/center]
         [hr]Полное имя составителя: [field]
         Текущая должность: [field]
@@ -286,7 +435,7 @@ var/global/list/predefined_forms_list = list(
     index = "2F"
     name = "Форма запроса подопытного в целях эксплуатации"
     content = @{"
-        [center][large][b]Отдел Кадров КСН "Исход"[/b]
+        [center][large][b]Отдел Кадров [sname][/b]
         Форма запроса подопытного в целях эксплуатации[/large][/center]
         [hr]Полное имя: [field]
         Должность: [field]
@@ -301,14 +450,14 @@ var/global/list/predefined_forms_list = list(
     index = "2G"
     name = "Форма получения новой ID карты"
     content = @{"
-        [center][large][b]Отдел Кадров КСН "Исход"[/b]
+        [center][large][b]Отдел Кадров [sname][/b]
         Форма получения новой ID карты[/large][/center]
         [hr]Полное имя сотрудника: [field]
         Текущая должность: [field]
         Причина: [field]
         [hr]Составитель: [sfield]
-        Текущий начальник отдела: [sfield] 
-        Глава Отдела Кадров: [sfield] 
+        Текущий начальник отдела: [sfield]
+        Глава Отдела Кадров: [sfield]
         [hr]Место для штампов.
 	"}
 
@@ -316,7 +465,7 @@ var/global/list/predefined_forms_list = list(
     index = "3A"
     name = "Форма для назначения пациентам лекарства"
     content = @{"
-        [center][large][b]Медицинское Управление КСН "Исход"[/b]
+        [center][large][b]Медицинское Управление [sname][/b]
         Рецепт на медицинский препарат[/large][/center]
         [hr]Полное имя пациента: [field]
         Назначенные препараты: [field]
@@ -329,7 +478,7 @@ var/global/list/predefined_forms_list = list(
     index = "3B"
     name = "Форма для составления отчёта о проведённой операции"
     content = @{"
-        [center][large][b]Медицинское Управление КСН "Исход"[/b]
+        [center][large][b]Медицинское Управление [sname][/b]
         Отчёт о проведённой операции[/large][/center]
         [hr]Вид и место операции: [field]
         [hr]Полное имя оперирующего: [field]
@@ -345,7 +494,7 @@ var/global/list/predefined_forms_list = list(
     index = "3С"
     name = "Форма отчета о вскрытии"
     content = @{"
-        [center][large][b]Медицинское Управление КСН "Исход"[/b]
+        [center][large][b]Медицинское Управление [sname][/b]
         Отчет о вскрытии тела[/large][/center]
         [hr]Полное имя умершего: [field]
         Раса: [field]
@@ -358,14 +507,14 @@ var/global/list/predefined_forms_list = list(
         [hr]Вероятная причина смерти: [field]
         Примечания: [field]
         [hr]Патологоанатом: [sfield]
-        [hr][small]Настоящим я заявляю, что после заполнения отчета, описанного в данном документе, я взял на себя ответственность за тело и определил причину смерти в соответствии с разделом 38-701b патологического кодекса NanoTrasen и что информация, содержащаяся в документе, верна и правильна в меру моих знаний и убеждений.[/small]
+        [hr][small]Настоящим я заявляю, что после заполнения отчета, описанного в данном документе, я взял на себя ответственность за тело и определил причину смерти в соответствии с разделом 38-701b патологического кодекса НаноТрейзен и что информация, содержащаяся в документе, верна и правильна в меру моих знаний и убеждений.[/small]
 	"}
 
 /datum/form/med/chem_tracking
     index = "3D"
     name = "Форма для отслеживания выданных химических препаратовГруппы полей копируются по необходимости (несколько препаратов/химикатом/заказчиков)"
     content = @{"
-        [center][large][b]Медицинское Управление КСН "Исход"[/b]
+        [center][large][b]Медицинское Управление [sname][/b]
         Список выдачи препаратов[/large][/center]
         [hr]Выданный препарат(ы): [field]
         Время выдачи: [time]
@@ -380,7 +529,7 @@ var/global/list/predefined_forms_list = list(
     index = "3E"
     name = "Форма для справки о нетрудоспособности"
     content = @{"
-        [center][large][b]Медицинское Управление КСН "Исход"[/b]
+        [center][large][b]Медицинское Управление [sname][/b]
         Справка о нетрудоспособности[/large][/center]
         [hr]Полное имя сотрудника: [field]
         Пол: [field]
@@ -396,21 +545,57 @@ var/global/list/predefined_forms_list = list(
 	"}
 
 /datum/form/med/chem_request
-    index = "3G"
+    index = "3F"
     name = "Заказ химикам"
     content = @{"
-        [center][large][b]Медицинское Управление КСН "Исход"[/b]
+        [center][large][b]Медицинское Управление [sname][/b]
         Запрос в химическую лабораторию на выдачу препарата[/large][/center]
         Необходимые препараты: [field]
         Количество: [field]
         [hr]Заказчик: [sfield]
 	"}
 
+/datum/form/med/psych_exam
+	index = "3G"
+	name = "Форма для справки о прохождении психиатрического осмотра"
+	content = @{"
+		[center][large][b]Медицинское Управление [sname][/b]
+		Справка о прохождении психиатрического осмотра[/large][/center]
+		[hr]Полное имя сотрудника: [field]
+		Пол: [field]
+		Возраст: [field]
+		Должность: [field]
+		[hr]Оценка психического состояния: [field]
+		Выявленные расстройства: [field]
+		Дополнительная информация: [field]
+		Примечания: [field]
+		[hr]Врач, проводивший осмотр: [sfield]
+		Главный врач: [sfield]
+		[hr][small]*Этот документ подтверждает прохождение работником станции психиатрического осмотра.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/med/medical_services
+	index = "3H"
+	name = "Справка об оказании медицинских услуг"
+	content = @{"
+		[center][large][b]Медицинское Управление [sname][/b]
+		Справка об оказании медицинских услуг[/large][/center]
+		[hr]Полное имя пациента: [field]
+		Должность: [field]
+		Диагноз: [field]
+		Оказанная медицинская помощь: [field]
+		[hr]Лечащий врач: [sfield]
+		[hr][small]*Приложить результаты сканирования пациента.[/small]
+		[small]**Приложить форму 3B при наличии.[/small]
+		[hr]Место для штампов.
+	"}
+
 /datum/form/rnd/experiment
     index = "4A"
     name = "Заявка на легализацию опасных экспериментов"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Разрешение на проведение опасного для жизни эксперимента[/large][/center]
         [hr]Полное имя подопытного: [field]
         Должность: [field]
@@ -432,7 +617,7 @@ var/global/list/predefined_forms_list = list(
     index = "4B"
     name = "Запрос на разрешение проведения экспериментальной генной терапии"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Запрос на разрешение проведения экспериментальной генной терапии[/large][/center]
         [hr]Полное имя подопытного: [field]
         Должность: [field]
@@ -453,7 +638,7 @@ var/global/list/predefined_forms_list = list(
     index = "4C"
     name = "Заявка на добровольное пожертвование своего мозга для целей кибернетики"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Запрос на разрешение проведения прижизненной кибернетизации[/large][/center]
         [hr]Полное имя подопытного: [field]
         Должность: [field]
@@ -471,9 +656,9 @@ var/global/list/predefined_forms_list = list(
     index = "4D"
     name = "Форма кредитования прототипов из научно-исследовательского в другие отделы"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Займ оборудования[/large][/center]
-        [hr][block][center]Следующие предметы числятся на учете как "экспериментальные". NanoTrasen не несет ответственности за ущерб, полученный в ходе использования этого оборудования.
+        [hr][block][center]Следующие предметы числятся на учете как "экспериментальные". НаноТрейзен не несет ответственности за ущерб, полученный в ходе использования этого оборудования.
         Получатель должен использовать эти предметы только по их прямому назначению. Получатель не должен делится этим оборудованием с любыми другими лицами без прямого одобрения командного состава станции.[/center][/block][hr]Имя получающего: [field]
         Полное имя получателя: [field]
         Полное имя выдающего предметы в займ: [field]
@@ -488,13 +673,13 @@ var/global/list/predefined_forms_list = list(
     index = "4E"
     name = "Форма передачи экзоскелета"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Передача в пользование шагохода[/large][/center]
         [hr]Полное имя получателя: [field]
         Полное имя передающего: [field]
         Категория шагохода: [field]
         Модель шагохода: [field]
-        Причина выдачи: [field] 
+        Причина выдачи: [field]
         [hr]Получатель: [sfield]
         Передающий: [sfield]
         [hr]Место для штампов.
@@ -504,7 +689,7 @@ var/global/list/predefined_forms_list = list(
     index = "4F"
     name = "Форма отчета об исследовании неизвестного объекта"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Отчет о изучении неизвестного объекта[/large][/center]
         [hr]Кодовое название объекта: [field]
         Полное имя ученого (составителя): [field]
@@ -525,7 +710,7 @@ var/global/list/predefined_forms_list = list(
     index = "4G"
     name = "Форма разрешения на транспортировку исследуемого объекта на ЦК"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Транспортировка и передача исследуемого субъекта на СН "ЦентКом"[/large][/center]
         [hr]Кодовое название объекта: [field]
         Полное имя ученого (составителя): [field]
@@ -546,13 +731,13 @@ var/global/list/predefined_forms_list = list(
     index = "4H"
     name = "Форма запроса на изготовление экзоскелета"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Запрос на изготовление экзоскелета[/large][/center]
         [hr]Полное имя заказчика: [field]
         Должность заказчика: [field]
         Категория шагохода: [field]
         Модель шагохода: [field]
-        Причина: [field] 
+        Причина: [field]
         [hr]Заказчик: [sfield]
         Специалист по производству экзоскелетов: [sfield]
         [hr]Место для штампов.
@@ -562,7 +747,7 @@ var/global/list/predefined_forms_list = list(
     index = "4I"
     name = "Форма разрешения на пользование экзоскелетом"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Разрешение на пользование экзоскелетом[/large][/center]
         [hr]Полное имя пилота: [field]
         Должность пилота: [field]
@@ -579,7 +764,7 @@ var/global/list/predefined_forms_list = list(
     index = "4J"
     name = "Форма отчета о испытании взрывного устройства"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Отчет о испытании взрывного устройства[/large][/center]
         [hr]Полное имя испытателя: [field]
         Полное имя изготовителя: [field]
@@ -597,7 +782,7 @@ var/global/list/predefined_forms_list = list(
     index = "4K"
     name = "Форма отчета о проведенных исследованиях"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Отчет о проведенных исследованиях[/large][/center]
         [hr]Полное имя исследователя: [field]
         Области исследования: [field]
@@ -613,7 +798,7 @@ var/global/list/predefined_forms_list = list(
     index = "4L"
     name = "Форма отчета о сканировании ценных научно-исследовательских объектов"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Отчет о сканировании ценных научно-исследовательских объектов[/large][/center]
         [hr]Полное имя сканировщика: [field]
         Полное имя сотрудника, предоставившего объект/объекты: [field]
@@ -631,7 +816,7 @@ var/global/list/predefined_forms_list = list(
     index = "4M"
     name = "Форма отчета об исследовании заброшенного объекта в дальнем космосе"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Отчет об исследовании заброшенного объекта в дальнем космосе[/large][/center]
         [hr]Полное имя оператора телепада: [field]
         Полное имя исследователя: [field]
@@ -653,7 +838,7 @@ var/global/list/predefined_forms_list = list(
     index = "4N"
     name = "Форма акта об изготовлении прототипов"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Акт об изготовлении прототипов[/large][/center]
         [hr]Полное имя изготовителя: [field]
         Прототипы: [field]
@@ -670,7 +855,7 @@ var/global/list/predefined_forms_list = list(
     index = "4O"
     name = "Форма акта об изготовлении экзоскелетов"
     content = @{"
-        [center][large][b]Отдел Исследований и Разработок КСН "Исход"[/b]
+        [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Акт об изготовлении экзоскелета[/large][/center]
         [hr]Полное имя изготовителя: [field]
         Категория шагохода: [field]
@@ -688,7 +873,7 @@ var/global/list/predefined_forms_list = list(
     index = "5A"
     name = "Дополнительное назначение экспертизы"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Протокол задержания[/large][/center]
         [hr]Полное имя офицера проводившего задержание: [field]
         Полное имя задержанного: [field]
@@ -705,7 +890,7 @@ var/global/list/predefined_forms_list = list(
     index = "5B"
     name = "Отчет криминалиста/детектива"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Отчет криминалиста[/large][/center]
         [hr]Полное имя криминалиста: [field]
         Тип преступления: [field]
@@ -721,7 +906,7 @@ var/global/list/predefined_forms_list = list(
     index = "5C"
     name = "Официальный ордер на обыск"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Ордер на обыск[/large][/center]
         [hr]Полное имя цели осмотра: [field]
         Полное имя офицера(ов): [field]
@@ -740,7 +925,7 @@ var/global/list/predefined_forms_list = list(
     index = "5D"
     name = "Свидетельский лист"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Свидетельский лист[/large][/center]
         [hr]Полное имя свидетеля: [field]
         Полное имя офицера составителя: [field]
@@ -758,7 +943,7 @@ var/global/list/predefined_forms_list = list(
     index = "5E"
     name = "Форма легального ношения и использования оружия"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Разрешение на оружие[/large][/center]
         [hr]Полное имя заказчика: [field]
         Полное имя выдавшего оружие: [field]
@@ -775,7 +960,7 @@ var/global/list/predefined_forms_list = list(
     index = "5F"
     name = "Форма приказа о проведении казни"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Приказ о высшей мере наказания[/large][/center]
         [hr]Полное имя арестанта: [field]
         Причина казни: [field]
@@ -790,7 +975,7 @@ var/global/list/predefined_forms_list = list(
     index = "5G"
     name = "Форма заявления на добровольное внедрение импланта лояльности"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Заявление на добровольное внедрение импланта лояльности[/large][/center]
         [hr]Полное имя лица, которому внедряется имплант: [field]
         Должность: [field]
@@ -804,7 +989,7 @@ var/global/list/predefined_forms_list = list(
     index = "5H"
     name = "Заявление на добровольно принудительный перевод в подопытные"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Заявление на добровольно-принудительный перевод в статус "Подопытный"[/large][/center]
         [hr]Полное имя лица, переводящегося в подопытные: [field]
         Должность: [field]
@@ -819,7 +1004,7 @@ var/global/list/predefined_forms_list = list(
     index = "5I"
     name = "Заявление на принудительное введение импланта лояльности"
     content = @{"
-        [center][large][b]Служба Безопасности КСН "Исход"[/b]
+        [center][large][b]Служба Безопасности [sname][/b]
         Заявление на принудительное введение импланта лояльности[/large][/center]
         [hr]Полное имя лица, которому внедряется имплант: [field]
         Должность: [field]
@@ -830,11 +1015,27 @@ var/global/list/predefined_forms_list = list(
         [hr]Место для штампов.
 	"}
 
+/datum/form/sec/using_combat_exoskeleton
+    index = "5J"
+    name = "Форма легального пилотирования и использования боевого экзоскелета"
+    content = @{"
+        [center][large][b]Служба Безопасности [sname][/b]
+		Разрешение на пилотирование боевого экзоскелета[/large][/center]
+		[hr]Полное имя заказчика: [field]
+		Тип экзоскелета: [field]
+		[small]Включая название, если таковое имеется.[/small]
+		Цель выдачи: [field]
+		Примечания: [field]
+		[hr]Заказчик: [sfield]
+		Капитан/Глава Службы Безопасности: [sfield]
+		[hr]Место для штампов.
+	"}
+
 /datum/form/eng/maintentance
     index = "6A"
     name = "Эксплуатация отсека"
     content = @{"
-        [center][large][b]Инженерный Отдел КСН "Исход"[/b]
+        [center][large][b]Инженерный Отдел [sname][/b]
         Документ по эксплуатации отсека[/center][/large]
         [hr]Полное имя ответственного за постройку: [field]
         Полное имя помощника(ов): [field]
@@ -850,11 +1051,45 @@ var/global/list/predefined_forms_list = list(
         [hr]Место для штампов.
 	"}
 
+/datum/form/eng/repair
+	index = "6B"
+	name = "Документ по ремонтным работам"
+	content = @{"
+		[center][large][b]Инженерный Отдел [sname][/b]
+		Документ по ремонтным работам[/center][/large]
+		[hr]Полное имя ответственного за ремонт: [field]
+		Полное имя помощника(ов)(при наличии): [field]
+		[hr]Место проведения работ: [field]
+		Объекты, подлежащие ремонту: [field]
+		Затраченные материалы и компоненты: [field]
+		[hr]Ответственный за ремонт: [sfield]
+		Помощник(и): [sfield]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/eng/report
+	index = "6C"
+	name = "Форма для отчёта о работе отдела"
+	content = @{"
+		[center][large][b]Инженерный Отдел [sname][/b]
+		Отчёт о работе отдела[/center][/large]
+		[hr]Главный инженер: [field]
+		Сотрудники отдела: [field]
+		[hr]Тип силовой установки: [field]
+		Статус силовой установки: [field]
+		Выходная мощность: [field]
+		Статус атмосферного отсека: [field]
+		[hr]Оценка готовновсти отдела к ЧС и ЧП: [field]
+		Примечания: [field]
+		[hr]Главный инженер: [sfield]
+		[hr]Место для штампов.
+	"}
+
 /datum/form/command/shuttle
     index = "11A"
     name = "Форма для отчета о причинах вызова экстренного эвакуационного шаттла"
     content = @{"
-        [center][large][b]Командный Cостав КСН "Исход"[/b]
+        [center][large][b]Командный Cостав [sname][/b]
         Отчет по причине вызова экстренного эвакуационного шаттла[/large][/center]
         [hr]Полное имя представителя командования: [field]
         Должность: [field]
@@ -869,7 +1104,7 @@ var/global/list/predefined_forms_list = list(
     index = "11B"
     name = "Форма для отчета вызова экстренной команды"
     content = @{"
-        [center][large][b]Командный Cостав КСН "Исход"[/b]
+        [center][large][b]Командный Cостав [sname][/b]
         Отчет вызова экстренной команды[/large][/center]
         [hr]Полное имя представителя командования: [field]
         Должность: [field]
@@ -886,22 +1121,22 @@ var/global/list/predefined_forms_list = list(
     index = "11C"
     name = @{"Форма инициации кода "Дельта""}
     content = @{"
-        [center][large][b]Командный Cостав КСН "Исход"[/b]
+        [center][large][b]Командный Cостав [sname][/b]
         Инициация кода "Дельта"[large][/center]
         [hr]Полное имя представителя командования: [field]
         Должность: [field]
         Бортовое время: [time]
         Причина инициации кода "Дельта": [field]
         [hr]Составитель: [sfield]
-        [hr][small]*Внимание, инициируя код "Дельта" данное лицо берет на себя полную ответственность за происходящее. Данная глава станции КСН "Исход" полностью понимает, что активация кода "Дельта" крайняя мера и означает, что ситуация на станции полностью вышла из под контроля[/small]
+        [hr][small]*Внимание, инициируя код "Дельта" данное лицо берет на себя полную ответственность за происходящее. Данная глава станции [sname] полностью понимает, что активация кода "Дельта" крайняя мера и означает, что ситуация на станции полностью вышла из под контроля[/small]
         [hr]Место для штампов.
 	"}
 
 /datum/form/command/incident_report
     index = "11D"
-    name = @{"Форма отчета об инциденте на КСН "Исход""}
+    name = @{"Форма отчета об инциденте на [sname]"}
     content = @{"
-        [center][large][b]Командный Cостав КСН "Исход"[/b]
+        [center][large][b]Командный Cостав [sname][/b]
         Стандартный отчет о произошедшем инциденте[/large][/center]
         [hr]Полное имя представителя командования: [field]
         Должность: [field]
@@ -918,7 +1153,7 @@ var/global/list/predefined_forms_list = list(
     index = "11E"
     name = "Отчет агента внутренних дел"
     content = @{"
-        [center][large][b]КСН "Исход"[/b]
+        [center][large][b][sname][/b]
         Отчет Агента Внутренних Дел[/large][/center]
         [hr]Полное имя Агента: [field]
         Субъект/интересующий инцидент под вопросом: [field]
@@ -1025,7 +1260,7 @@ var/global/list/predefined_forms_list = list(
     index = "5R"
     name = "Форма для описания происшествия"
     content = @{"
-		[center][large][b]Служба Безопасности КСН "Исход"[/b]
+		[center][large][b]Служба Безопасности [sname][/b]
 		Заявление о правонарушении[/large][/center]
 		[hr]Полное имя пострадавшего: [field]
 		Тип происшествия: [field]
@@ -1072,4 +1307,64 @@ var/global/list/predefined_forms_list = list(
 		[hr]Запросивший: [sfield]
 		Офицер, выдавший разрешение: [sfield]
 		[hr]Место для штампов.
+	"}
+
+/datum/form/misc/petition_form
+    index = "15V"
+    name = "Форма петиции"
+    content = @{"
+		[h] Цель петиции: [field] [/h]
+		[table][/br]
+		[tr][/br]
+		[th]Член экипажа[/th][/br]
+		[th]Подпись[/th][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[/table]
 	"}

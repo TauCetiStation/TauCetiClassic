@@ -49,6 +49,14 @@
 	construction = MAT_GLASS+"=40"
 	rating = 2.5
 
+/obj/item/weapon/stock_parts/cell/energy_weapon
+	name = "weapon power cell"
+	desc = "A special power cell designed for heavy-duty use in energy weapons."
+	maxcharge = 1500
+
+/obj/item/weapon/stock_parts/cell/energy_weapon/extended
+	maxcharge = 2000
+
 /obj/item/weapon/stock_parts/cell/secborg/empty
 	init_full = FALSE
 

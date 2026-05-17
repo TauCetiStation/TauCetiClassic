@@ -60,9 +60,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	pass_flags = PASSTABLE
 	ventcrawler = TRUE
-	can_enter_vent_with = list(
-		/obj/effect/proc_holder/spell,
-	)
 
 	maxHealth = 60
 	health = 60
@@ -116,20 +113,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	var/disintegrating = FALSE
 
-	var/list/replicator_spells = list(
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/trap,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/generator,
-		/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction,
-		/obj/effect/proc_holder/spell/no_target/transfer_to_idle,
-		/obj/effect/proc_holder/spell/no_target/transfer_to_area,
-		/obj/effect/proc_holder/spell/no_target/toggle_light,
-		/obj/effect/proc_holder/spell/no_target/set_mail_tag,
-		/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult,
-	)
-
 	var/datum/skills/skills
 
 	var/image/indicator
@@ -158,9 +141,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	real_name = name
 	chat_color_name = name
 	scatter_offset()
-
-	for(var/spell in replicator_spells)
-		AddSpell(new spell(src))
 
 	skills = new
 	skills.add_available_skillset(/datum/skillset/replicator)
@@ -230,6 +210,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		S.dirt = 0
 
 	for(var/A in T)
+		if(istype(A, /obj/effect/overlay/replicator))
+			continue
+
 		if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
 			qdel(A)
 
@@ -314,7 +297,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	indicator.color = state2color[state]
 	overlays += indicator
 
-/mob/living/simple_animal/hostile/replicator/Login()
+/mob/living/simple_animal/hostile/replicator/LateLogin()
 	..()
 
 	if(leader)
@@ -568,7 +551,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	animation.master = src
 
 //	flick("gibbed-r", animation)
-	robogibs(loc)
+	new /obj/effect/gibspawner/robot(get_turf(loc))
 
 	dead_mob_list -= src
 	QDEL_IN(src, 15)
@@ -669,7 +652,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	if(is_controlled())
 		if(user == src && FR.upgrades_amount > length(RAI.acquired_upgrades))
-			to_chat(user, "<span class='bold notice'><a href='?src=\ref[src];replicator_upgrade=1'>Upgrade Prospectives Analyzed. Click here to upgrade.</a></span>")
+			to_chat(user, "<span class='bold notice'><a href='byond://?src=\ref[src];replicator_upgrade=1'>Upgrade Prospectives Analyzed. Click here to upgrade.</a></span>")
 		return
 
 	switch(state)
@@ -766,3 +749,17 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 /mob/living/simple_animal/hostile/replicator/FireBurn(firelevel, last_temperature, air_multiplier)
 	var/mx = 50.0 * firelevel / vsc.fire_firelevel_multiplier * air_multiplier
 	apply_damage(maxHealth * 3.0 * mx, BURN)
+
+/obj/item/weapon/reagent_containers/food/snacks/bluespacewaffle
+	name = "bluespace waffles"
+	desc = "You shouldn't try it. Probably..."
+	eat_sound = 'sound/machines/cyclotron.ogg'
+	icon_state = "rofflewaffles"
+	bitesize = 5.3
+	food_moodlet = /datum/mood_event/very_tasty_food
+	food_type = VERY_TASTY_FOOD
+	list_reagents = list("space_drugs" = 5, "nutriment" = 20, "prismaline" = 1.5)
+
+/obj/item/weapon/reagent_containers/food/snacks/bluespacewaffle/attack(mob/living/M, mob/user, def_zone, silent)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(do_teleport), M, get_turf(M), 4, 1, null, null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg'), 0.5 SECONDS)

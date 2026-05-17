@@ -17,7 +17,7 @@ var/global/const/RND_WIRE_SHOCK   = 4
 	. += "The green light is [R.shocked ? "off" : "on"]."
 	. += "The blue light is [R.hacked ? "off" : "on"]."
 
-/datum/wires/rnd/update_cut(index, mended)
+/datum/wires/rnd/update_cut(index, mended, mob/user)
 	var/obj/machinery/r_n_d/R = holder
 
 	switch(index)
@@ -26,11 +26,13 @@ var/global/const/RND_WIRE_SHOCK   = 4
 
 		if(RND_WIRE_DISABLE)
 			R.disabled = !mended
-			R.shock(usr, 50)
+			if(user)
+				R.shock(usr, 50)
 
 		if (RND_WIRE_SHOCK)
 			R.shocked = !mended
-			R.shock(usr, 50)
+			if(user)
+				R.shock(usr, 50)
 
 /datum/wires/rnd/update_pulsed(index)
 	var/obj/machinery/r_n_d/R = holder

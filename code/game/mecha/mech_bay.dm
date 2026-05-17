@@ -99,7 +99,7 @@
 	var/data
 	if(!recharge_port)
 		data += "<div class='Section'>No recharging port detected.</div><BR>"
-		data += "<A href='?src=\ref[src];reconnect=1'>Reconnect</A>"
+		data += "<A href='byond://?src=\ref[src];reconnect=1'>Reconnect</A>"
 	else
 		data += "<div class='Section__title'>Mech status</div>"
 		if(!recharge_port.recharging_mech)

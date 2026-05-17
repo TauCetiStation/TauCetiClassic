@@ -128,7 +128,7 @@
 				occupant = occupant_body = C
 				break
 			if(isbrain(M))
-				var/obj/item/brain/B = M
+				var/obj/item/organ/internal/brain/B = M
 				occupant = B.brainmob
 				occupant_body = B
 				break
@@ -754,7 +754,7 @@
 					connected.occupant.name = buf.dna.real_name
 				connected.occupant.UpdateAppearance(buf.dna.UI.Copy())
 			else if (buf.types & DNA2_BUF_SE)
-				connected.occupant.dna.SE = buf.dna.SE
+				connected.occupant.dna.SE = buf.dna.SE.Copy()
 				connected.occupant.dna.UpdateSE()
 				domutcheck(connected.occupant,connected)
 			connected.occupant.radiation += rand(15 / (connected.damage_coeff), 40 / connected.damage_coeff)

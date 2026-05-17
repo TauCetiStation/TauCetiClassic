@@ -60,7 +60,6 @@
 	if(C)
 		var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
 		if(!A.action.button || A.last_resort)
-			C.purchasedpowers -= src
 			qdel(src)
 			return
 

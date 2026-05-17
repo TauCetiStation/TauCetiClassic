@@ -36,60 +36,6 @@
 	H.health = 50
 	H.maxHealth = 50
 
-
-/datum/quality/negativeish/depression
-	name = "Depression"
-	desc = "Ты в депрессии и чувствуешь себя уныло. Так и живём."
-	requirement = "Нет."
-
-/datum/quality/negativeish/depression/add_effect(mob/living/carbon/human/H, latespawn)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_depression", /datum/mood_event/depression)
-
-
-/datum/quality/negativeish/true_keeper
-	name = "True Keeper"
-	desc = "Ты не должен покидать бриг ЛЮБОЙ ЦЕНОЙ. Он ведь загнётся без твоего надзора!"
-	requirement = "Смотритель."
-
-	jobs_required = list(
-		"Warden",
-	)
-
-/datum/quality/negativeish/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
-	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
-
-/datum/quality/negativeish/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
-	if(istype(A, /area/station/security))
-		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "true_keeper_failure")
-
-/datum/quality/negativeish/true_keeper/proc/on_exit(datum/source, area/A, atom/NewLoc)
-	if(istype(A, /area/station/security))
-		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "true_keeper_failure", /datum/mood_event/true_keeper_failure)
-
-
-/datum/quality/negativeish/rts
-	name = "RTS"
-	desc = "Ты не должен покидать мостик. Ты ведь мозг станции, а мозг должен быть в самом защищенном месте."
-	requirement = "Капитан."
-
-	jobs_required = list(
-		"Captain",
-	)
-
-/datum/quality/negativeish/rts/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
-	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
-
-/datum/quality/negativeish/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
-	if(istype(A, /area/station/bridge))
-		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "rts_failure")
-
-/datum/quality/negativeish/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
-	if(istype(A, /area/station/bridge))
-		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
-
-
 /datum/quality/negativeish/soulless
 	name = "Soulless"
 	desc = "У тебя нет души."
@@ -107,7 +53,7 @@
 	H.r_facial = H.r_hair
 	H.g_facial = H.g_hair
 	H.b_facial = H.b_hair
-	H.regenerate_icons()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 
 /datum/quality/negativeish/dirty
@@ -143,10 +89,7 @@
 	H.dyed_b_facial = dirt_b
 	H.facial_painted = TRUE
 
-	H.apply_recolor()
-	H.update_body()
-	H.regenerate_icons()
-
+	H.regenerate_icons(update_body_preferences = TRUE)
 
 /datum/quality/negativeish/non_comprende
 	name = "Non Comprende"
@@ -198,7 +141,8 @@
 	requirement = "Все, кроме СБ и глав."
 
 /datum/quality/negativeish/salackyi/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return !(H.mind.assigned_role in global.command_positions) && !(H.mind.assigned_role in global.security_positions)
+	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+	return !(length(J.departments & list(DEP_COMMAND, DEP_SECURITY)))
 
 /datum/quality/negativeish/salackyi/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
@@ -276,7 +220,8 @@ var/global/list/allergen_reagents_list
 	return !H.species.flags[IS_SYNTHETIC]
 
 /datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
-	H.ChangeToHusk()
+	ADD_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT) // generic trait so we can heal it later
+	H.update_body()
 
 /datum/quality/negativeish/delicate
 	name = "Quality Food Enjoyer"
@@ -292,7 +237,7 @@ var/global/list/allergen_reagents_list
 	requirement = "Нет."
 
 /datum/quality/negativeish/greatappetite/add_effect(mob/living/carbon/human/H, latespawn)
-	H.metabolism_factor.AddModifier("Appetite", multiple = 2)
+	H.mob_metabolism_mod.ModAdditive(1, src) // +100%
 
 /datum/quality/negativeish/proudandwalking
 	name = "Proud and Walking"
@@ -321,3 +266,11 @@ var/global/list/allergen_reagents_list
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
 		return
 	H.adjustBrainLoss(60)
+
+/datum/quality/negativeish/dyslalia
+	name = "Dyslalia"
+	desc = "Слая судьба подалила тебе мношество дефектов лечи."
+	requirement = "Нет."
+
+/datum/quality/negativeish/dyslalia/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_DYSLALIA, QUALITY_TRAIT)

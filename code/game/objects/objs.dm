@@ -56,6 +56,12 @@
 	*/
 	return contents.len == 0
 
+/obj/proc/add_price_tag(description, price, category, account_num)
+	price_tag = list("description" = description, "price" = price, "category" = category, "account" = account_num)
+	verbs += /obj/proc/remove_price_tag
+
+	underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+
 /obj/proc/get_current_temperature()
 	/*
 	It actually returns a rise in temperature from the enviroment since I don't know why.
@@ -195,12 +201,6 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
-	return
-
-/obj/proc/hides_under_flooring()
-	return level == 1
-
 // haha we spam with empty lists recursively for every mob and object in view for each SAY call
 // todo: we don't need these listeners procs, replace with get_hearers_in_view
 /atom/movable/proc/get_listeners()
@@ -269,7 +269,7 @@
 				return FALSE
 		return TRUE
 
-/obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density
 
 // To be called from things that spill objects on the floor.

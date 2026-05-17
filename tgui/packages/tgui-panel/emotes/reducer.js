@@ -12,4 +12,3 @@ export const emotesReducer = (state = initialState, action) => {
   }
   return state;
 };
-  

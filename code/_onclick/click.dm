@@ -53,6 +53,11 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
+	if(client.click_intercept_time)
+		if(client.click_intercept_time >= world.time)
+			client.click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
+			return
+		client.click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -124,6 +129,14 @@
 		W.update_inv_mob()
 		return
 
+	// Prevents any actions when using detective stuff (for taking forensic samples from atoms)
+	if(istype(W, /obj/item/weapon/swab) || istype(W, /obj/item/weapon/forensic_sample_kit) || istype(W, /obj/item/device/detective_scanner))
+		// Used only in HELP intent
+		// We are handling taking samples from mobs in attack()
+		if(a_intent == INTENT_HELP && A.Adjacent(src) && !ismob(A))
+			W.afterattack(A, src, TRUE, params)
+			return
+
 	if(istype(W, /obj/item/device/pda))
 		var/obj/item/device/pda/P = W
 		if(P.pda_paymod)
@@ -159,6 +172,18 @@
 				W.afterattack(A, src, FALSE, params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
+
+/client/MouseDown(datum/object, location, control, params)
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
+	..()
+
+/client/MouseUp(object, location, control, params)
+	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
+		click_intercept_time = world.time
+
+/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	..()
 
 // Default behavior: ignore double clicks (don't add normal clicks, as it will do three clicks instead of two with double).
 /mob/proc/DblClickOn(atom/A, params)
@@ -410,8 +435,9 @@
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
-		//do nothing
-	else if(modifiers[LEFT_CLICK])
+		return
+
+	if(modifiers[LEFT_CLICK])
 		if(modifiers[ALT_CLICK])
 			C.cob.rotate_object()
 		else
@@ -419,6 +445,7 @@
 	else if(modifiers[RIGHT_CLICK])
 		C.cob.remove_build_overlay(C)
 
+// todo: move to fullscreens?
 /atom/movable/screen/click_catcher
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "click_catcher"

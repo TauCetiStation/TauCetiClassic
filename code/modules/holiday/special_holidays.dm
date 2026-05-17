@@ -52,7 +52,7 @@
 	. = ..()
 	global.maintenance_loot += list(
 		list(
-			/obj/item/weapon/reagent_containers/food/snacks/egg = 15,
+			/obj/random/foods/boiledegg = 15,
 		) = maint_holiday_weight,
 	)
 

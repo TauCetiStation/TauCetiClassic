@@ -13,17 +13,17 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/laugh/get_impaired_msg(mob/user)
-	return "opens and closes [P_THEIR(user.gender)] mouth, smiling."
+	return "opens and closes [P_THEIR(user)] mouth, smiling."
 
 /datum/emote/human/laugh/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/laugh_by_gender_species = list(
 		"[SKRELL][FEMALE]" = SOUNDIN_LAUGH_SKRELL_FEMALE,
 		"[SKRELL][MALE]" = SOUNDIN_LAUGH_SKRELL_MALE,
+		"[SERPENTID][NEUTER]" = SOUNDIN_LAUGH_INSECTOID,
+		"[MOTH][NEUTER]" = SOUNDIN_LAUGH_INSECTOID,
 	)
 
 	var/hash = "[user.get_species()][user.gender]"
@@ -47,12 +47,10 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/giggle/get_impaired_msg(mob/user)
-	return "opens and closes [P_THEIR(user.gender)] mouth slightly, smiling."
+	return "opens and closes [P_THEIR(user)] mouth slightly, smiling."
 
 /datum/emote/human/grunt
 	key = "grunt"
@@ -69,15 +67,29 @@
 
 	cloud = "cloud-pain"
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/grunt/get_impaired_msg(mob/user)
-	return "clenches [P_THEIR(user.gender)] teeth."
+	return "clenches [P_THEIR(user)] teeth."
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/grunt_by_gender_species = list(
+		"[TAJARAN][FEMALE]" = SOUNDIN_TAJARAN_FEMALE_LIGHT_PAIN,
+		"[TAJARAN][MALE]" = SOUNDIN_TAJARAN_MALE_LIGHT_PAIN,
+		"[SKRELL][FEMALE]" = SOUNDIN_SKRELL_LIGHT_PAIN,
+		"[SKRELL][MALE]" = SOUNDIN_SKRELL_LIGHT_PAIN,
+		"[UNATHI][FEMALE]" = SOUNDIN_UNATHI_LIGHT_PAIN,
+		"[UNATHI][MALE]" = SOUNDIN_UNATHI_LIGHT_PAIN,
+		"[VOX][NEUTER]" = SOUNDIN_VOX_LIGHT_PAIN,
+		"[SERPENTID][NEUTER]" = SOUNDIN_GRUNT_INSECTOID,
+		"[MOTH][NEUTER]" = SOUNDIN_GRUNT_INSECTOID,
+	)
+
+	var/hash = "[user.get_species()][user.gender]"
+
+	if(grunt_by_gender_species[hash])
+		return pick(grunt_by_gender_species[hash])
 	return get_sound_by_voice(user, SOUNDIN_MALE_LIGHT_PAIN, SOUNDIN_FEMALE_LIGHT_PAIN)
 
 /datum/emote/human/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
@@ -100,15 +112,25 @@
 
 	cloud = "cloud-pain"
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/groan/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth slightly."
+	return "opens [P_THEIR(user)] mouth slightly."
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/grunt_by_gender_species = list(
+		"[UNATHI]" = SOUNDIN_UNATHI_PASSIVE_PAIN,
+		"[SKRELL]" = SOUNDIN_SKRELL_PASSIVE_PAIN,
+		"[VOX]" = SOUNDIN_VOX_PASSIVE_PAIN,
+		"[SERPENTID]" = SOUNDIN_GRUNT_INSECTOID,
+		"[MOTH]" = SOUNDIN_GRUNT_INSECTOID,
+	)
+
+	var/hash = "[user.get_species()]"
+
+	if(grunt_by_gender_species[hash])
+		return pick(grunt_by_gender_species[hash])
 	var/female_groans = SOUNDIN_FEMALE_PASSIVE_PAIN
 	var/male_groans = SOUNDIN_MALE_PASSIVE_PAIN
 	if(user.get_species() != SKRELL && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66))
@@ -137,15 +159,28 @@
 
 	cloud = "cloud-scream"
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/scream/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth like a fish gasping for air!"
+	return "opens [P_THEIR(user)] mouth like a fish gasping for air!"
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/scream_by_gender_species = list(
+		"[TAJARAN][FEMALE]" = SOUNDIN_TAJARAN_MALE_HEAVY_PAIN,
+		"[TAJARAN][MALE]" = SOUNDIN_TAJARAN_MALE_HEAVY_PAIN,
+		"[SKRELL][FEMALE]" = SOUNDIN_SKRELL_HEAVY_PAIN,
+		"[SKRELL][MALE]" = SOUNDIN_SKRELL_HEAVY_PAIN,
+		"[UNATHI][FEMALE]" = SOUNDIN_UNATHI_HEAVY_PAIN,
+		"[UNATHI][MALE]" = SOUNDIN_UNATHI_HEAVY_PAIN,
+		"[VOX][NEUTER]" = SOUNDIN_VOX_HEAVY_PAIN,
+		"[SERPENTID][NEUTER]" = SOUNDIN_SCREAM_INSECTOID,
+		"[MOTH][NEUTER]" = SOUNDIN_SCREAM_INSECTOID,
+	)
+	var/hash = "[user.get_species()][user.gender]"
+
+	if(scream_by_gender_species[hash])
+		return pick(scream_by_gender_species[hash])
 	return get_sound_by_voice(user, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_FEMALE_HEAVY_PAIN)
 
 /datum/emote/human/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
@@ -166,13 +201,11 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/cough/get_impaired_msg(mob/user)
-	return "moves [P_THEIR(user.gender)] face forward as [P_THEY(user.gender)] open and close [P_THEIR(user.gender)] mouth!"
+	return "moves [P_THEIR(user)] face forward as [P_THEY(user)] open and close [P_THEIR(user)] mouth!"
 
 /datum/emote/human/cough/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_MBCOUGH, SOUNDIN_FBCOUGH)
@@ -193,13 +226,12 @@
 
 	sound = 'sound/voice/hiccup.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/hiccup/get_impaired_msg(mob/user)
-	return "spasms suddenly while opening [P_THEIR(user.gender)] mouth."
+	return "spasms suddenly while opening [P_THEIR(user)] mouth."
+
 
 /datum/emote/human/choke
 	key = "choke"
@@ -214,16 +246,14 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
+	required_bodyparts = list(BP_HEAD)
 
 	cloud = "cloud-gasp"
 
 /datum/emote/human/choke/get_impaired_msg(mob/user)
-	return "clutches [P_THEIR(user.gender)] throat desperately!"
+	return "clutches [P_THEIR(user)] throat desperately!"
 
 /datum/emote/human/snore
 	key = "snore"
@@ -238,13 +268,12 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/snore/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth wide to take a breath."
+	return "opens [P_THEIR(user)] mouth wide to take a breath."
+
 
 // TO-DO: make so intentional sniffing reveals how a reagent solution held in hand smells?
 /datum/emote/human/sniff
@@ -261,9 +290,7 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/human/sneeze
@@ -280,10 +307,11 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
+
+/datum/emote/human/sneeze/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_SNEEZE_MALE, SOUNDIN_SNEEZE_FEMALE)
 
 
 /datum/emote/human/gasp
@@ -300,13 +328,14 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
+	required_stat = CONSCIOUS
+	required_bodyparts = list(BP_HEAD)
+	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 	cloud = "cloud-gasp"
+
+/datum/emote/human/gasp/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_GASP_MALE, SOUNDIN_GASP_FEMALE)
 
 
 /datum/emote/human/sigh
@@ -322,13 +351,14 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/human/sigh/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth."
+	return "opens [P_THEIR(user)] mouth."
+
+/datum/emote/human/sigh/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_SIGH_MALE, SOUNDIN_SIGH_FEMALE)
 
 /datum/emote/human/mumble
 	key = "mumble"
@@ -343,13 +373,11 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
+	required_stat = CONSCIOUS
+	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/human/mumble/get_impaired_msg(mob/user)
-	return "opens and closes [P_THEIR(user.gender)] mouth."
+	return "opens and closes [P_THEIR(user)] mouth."
 
 /datum/emote/human/hmm_think
 	key = "hmm"
@@ -366,12 +394,10 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_think/get_impaired_msg(mob/user)
-	return "scratches [P_THEIR(user.gender)] chin thougtfully..."
+	return "scratches [P_THEIR(user)] chin thougtfully..."
 
 /datum/emote/human/hmm_think/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_THINK_MALE, SOUNDIN_HMM_THINK_FEMALE)
@@ -391,12 +417,10 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_question/get_impaired_msg(mob/user)
-	return "curls [P_THEIR(user.gender)] eyebrows questioningly..?"
+	return "curls [P_THEIR(user)] eyebrows questioningly..?"
 
 /datum/emote/human/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_QUESTION_MALE, SOUNDIN_HMM_QUESTION_FEMALE)
@@ -416,12 +440,10 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_excited/get_impaired_msg(mob/user)
-	return "curls [P_THEIR(user.gender)] eyebrows excitedly!"
+	return "curls [P_THEIR(user)] eyebrows excitedly!"
 
 /datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_EXCLAIM_MALE, SOUNDIN_HMM_EXCLAIM_FEMALE)
@@ -442,9 +464,7 @@
 
 	age_variations = TRUE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
 
 /datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_WOO_MALE, SOUNDIN_WOO_FEMALE)
@@ -464,10 +484,44 @@
 	message_type = SHOWMSG_AUDIO
 
 	age_variations = TRUE
+	soundless_for_mute = FALSE
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
+	required_stat = CONSCIOUS
+
+	// Mouth getting a bit dry
+	cooldown = 3 SECONDS
 
 /datum/emote/human/spit/get_sound(mob/user, emote_key, intentional)
 	return pick('sound/voice/spit_1.ogg','sound/voice/spit_2.ogg')
+
+/datum/emote/human/spit/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+	. = ..()
+	// We don't really have a hydration system, so this is the limit.
+	user.nutrition -= 10
+
+	var/obj/item/cover
+
+	if(user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH))
+		cover = user.wear_mask
+	else if(user.head && (user.head.flags & MASKCOVERSMOUTH))
+		cover = user.head
+
+	if(cover)
+		cover.make_wet()
+		return
+
+	var/turf/T = get_step(user, user.dir)
+
+	if(!T)
+		return
+
+	var/made_wet = FALSE
+
+	for(var/mob/living/carbon/C in T)
+		if(!C.shoes)
+			continue
+		C.shoes.make_wet()
+		made_wet = TRUE
+
+	if(prob(50) && !made_wet)
+		user.shoes?.make_wet()

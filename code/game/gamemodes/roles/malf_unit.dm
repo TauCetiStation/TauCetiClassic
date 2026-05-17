@@ -35,7 +35,7 @@
 	for(var/datum/AI_Module/module in current_ai.current_modules)
 		qdel(module)
 
-	current_ai.laws = new /datum/ai_laws/nanotrasen
+	current_ai.laws = new /datum/ai_laws/crewsimov
 	current_ai.show_laws()
 	current_ai.icon_state = "ai"
 
@@ -52,7 +52,7 @@
 			if (R.emagged)
 				n_e_robots++
 		dat += "<br>[n_e_robots] of [AI.connected_robots.len] slaved cyborgs are emagged."
-		dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];malf_unemag_borgs=1;'>(Unemag)</a><br>"
+		dat += "<a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];malf_unemag_borgs=1;'>(Unemag)</a><br>"
 	return dat
 
 /datum/role/malfAI/RoleTopic(href, href_list, datum/mind/M, admin_auth)
@@ -92,7 +92,7 @@
 	var/mob/living/silicon/robot/robot = antag.current
 	if (istype(robot) && robot.emagged)
 		dat += "<br>Cyborg: Is emagged! 0th law: [robot.laws.zeroth]"
-		dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];unemag=1;'>(Unemag)</a><br>"
+		dat += "<a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];unemag=1;'>(Unemag)</a><br>"
 	return dat
 
 /datum/role/malfbot/RoleTopic(href, href_list, datum/mind/M, admin_auth)

@@ -32,31 +32,29 @@
 				{{:helper.link("Circuit Construction Menu", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled', data.has_circuit_imprinter ? 'sciMenuButton' : null)}}
 			</div>
 			
-			<div class="statusDisplayRecords">
-				<div class="item">
-					<div class="itemContent" style="width: 100%;">
-						{{if !data.destroy_data}}
-						<span class="average">No Destructive Analyzer detected</span>
+			<div class="item statusDisplayRecords">
+				<div class="itemContent">
+					{{if !data.destroy_data}}
+					<span class="average">No Destructive Analyzer detected</span>
+					{{else}}
+						{{if !data.destroy_data.has_item}}
+							<span class="average">No item loaded inside Destructive Analyzer</span>
 						{{else}}
-							{{if !data.destroy_data.has_item}}
-								<span class="average">No item loaded inside Destructive Analyzer</span>
-							{{else}}
-								<span class="average">Destructive Analyzer:</span><br>
-								Name: {{:data.destroy_data.item_name}}<br>
-								Detected tech:<br>
-								<table>
-								{{for data.destroy_data.tech_data}}
-									<tr>
-										<td>{{:value.name}}</td><td>{{:helper.displayBar(value.level, 0, 5, 'good', value.level)}}</td>
-									</tr>
-								{{/for}}
-								</table>
-								Estimated research value: {{:data.destroy_data.item_tech_points}} points ({{:data.destroy_data.item_tech_mod}}%)<br>
-								{{:helper.link("Deconstruct item", '', {'deconstruct' : 1})}}
-								{{:helper.link("Eject", '', {'eject_item' : 1})}}
-							{{/if}}
+							<span class="average">Destructive Analyzer:</span><br>
+							Name: {{:data.destroy_data.item_name}}<br>
+							Detected tech:<br>
+							<table>
+							{{for data.destroy_data.tech_data}}
+								<tr>
+									<td>{{:value.name}}</td><td>{{:helper.displayBar(value.level, 0, 5, 'good', value.level)}}</td>
+								</tr>
+							{{/for}}
+							</table>
+							Estimated research value: {{:data.destroy_data.item_tech_points}} points ({{:data.destroy_data.item_tech_mod}}%)<br>
+							{{:helper.link("Deconstruct item", '', {'deconstruct' : 1})}}
+							{{:helper.link("Eject", '', {'eject_item' : 1})}}
 						{{/if}}
-					</div>
+					{{/if}}
 				</div>
 			</div>
 			
@@ -99,6 +97,7 @@
 				</div>
 			{{/if}}
 		</td>
+		<td style="width: 20px" valign="top"></td>
 		<td style="width: 450px" valign="top">
 			<H2>Technology Research</H2>
 			<div class="statusDisplayRecords">

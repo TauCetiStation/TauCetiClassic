@@ -14,12 +14,12 @@
 	if(!affecting)	return//If no mob is wearing the suit. I almost forgot about this variable.
 	var/mob/living/carbon/human/U = affecting
 	var/mob/living/silicon/ai/A = AI
-	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
+	var/mob/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/spider_os)
-	assets.send(U)
+	assets.send(display_to)
 
-	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#B65B5B\"><style>a, a:link, a:visited, a:active, a:hover { color: #B65B5B; }img {border-style:none;}</style>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>SpiderOS</title>[get_browse_zoom_style(display_to.client)]</head><body bgcolor=\"#3D5B43\" text=\"#B65B5B\"><style>a, a:link, a:visited, a:active, a:hover { color: #B65B5B; }img {border-style:none;}</style>"
 	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
 	if(spideros)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=sos_1.png> Return</a>"
@@ -250,4 +250,4 @@
 	dat += "</body></html>"
 
 	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
-	display_to << browse(dat,"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	display_to << browse(dat,"window=spideros;[get_browse_size_parameter(display_to.client, 400, 444)];border=1;can_resize=1;can_close=0;can_minimize=0")

@@ -27,7 +27,7 @@
 				if(ishuman(target) || ismonkey(target))
 					var/mob/living/carbon/C = target
 					if(C.has_brain()) // Their brain is already taken out
-						var/obj/item/brain/B = new(C.loc)
+						var/obj/item/organ/internal/brain/B = new(C.loc)
 						B.transfer_identity(C)
 				target.gib()
 			if("disintegrate")
@@ -49,7 +49,7 @@
 			else if (amt_dam_fire <= 0)
 				target.heal_overall_damage(amt_dam_brute,amt_dam_fire)
 		target.adjustToxLoss(amt_dam_tox)
-		target.oxyloss += amt_dam_oxy
+		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
 		target.Weaken(amt_weakened)
 		target.Paralyse(amt_paralysis)

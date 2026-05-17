@@ -18,6 +18,7 @@
 	var/list/spawn_locs = list()
 	var/list/pre_escapees = list()
 	var/blobwincount = 0
+	var/blobwincount_base = 500
 
 /datum/faction/blob_conglomerate/New()
 	..()
@@ -81,7 +82,7 @@
 		M.add_ventcrawl(V)
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
-	blobwincount = 500 * max_roles
+	blobwincount = blobwincount_base * max_roles
 
 /datum/faction/blob_conglomerate/forgeObjectives()
 	if(!..())
@@ -142,12 +143,17 @@
 				aiPlayer.set_zeroth_law(law)
 
 		if(FS_DEFEATED) //Cleanup time
-			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
-			announcement.play()
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
+			if(istype(SSticker.mode, /datum/game_mode/blob))
+				var/datum/announcement/centcomm/blob/biohazard_station_unlock_alt/announcement = new
+				announcement.play()
+				SSshuttle.incall(0.5)
+			else
+				var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
+				announcement.play()
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""
@@ -208,9 +214,9 @@ Message ends."}
 	var/dat = ..()
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
-		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
+		dat += "<span class='danger'>ИИ не смог установить карантин.</span>"
 	else
-		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
+		dat += "<span class='good'>ИИ смог установить карантин.</span><BR>"
 	return dat
 
 /datum/faction/blob_conglomerate/get_scorestat()
@@ -218,16 +224,16 @@ Message ends."}
 	var/datum/station_state/end = new
 	end.count()
 	var/list/result = check_quarantaine()
-	dat += {"<B><U>BLOB STATS</U></B><BR>
-	<b>Total blobs: [blobs.len]</b><br>
-	<b>Station Integrity: [round(end.score(start)*100)]%</b><br>
+	dat += {"<B><U>Статистика блоба</U></B><BR>
+	<b>Количество блобов: [blobs.len]</b><br>
+	<b>Целостность станции: [round(end.score(start)*100)]%</b><br>
 	<br>
-	<b>Quarantaine status:</b><br>
-	Dead humans: <b>[result["numDead"]]</b><br>
-	Alive humans still on board: <b>[result["numAlive"]]</b><br>
-	Humans in space: <b>[result["numSpace"]]</b><br>
-	Humans off-station: <b>[result["numOffStation"]]</b><br>
-	Pre-escapes: <b>[pre_escapees.len]</b><br>
+	<b>Состояние карантина:</b><br>
+	Экипажа мертво: <b>[result["numDead"]]</b><br>
+	Экипажа на борту станции: <b>[result["numAlive"]]</b><br>
+	Экипажа в космосе: <b>[result["numSpace"]]</b><br>
+	Экипажа вне станции: <b>[result["numOffStation"]]</b><br>
+	Счастливчики: <b>[pre_escapees.len]</b><br>
 	<HR>"}
 	return dat
 
@@ -259,6 +265,11 @@ Message ends."}
 					result["numAlive"]++
 	return result
 
+/datum/faction/blob_conglomerate/more_tiles
+	name = F_BLOBCONGLOMERATE_HARD
+	ID = F_BLOBCONGLOMERATE_HARD
+	blobwincount_base = 750
+
 /datum/station_state
 	var/floor = 0
 	var/wall = 0
@@ -280,16 +291,10 @@ Message ends."}
 					floor += 1
 
 			if(iswallturf(T))
-				if(T.intact)
-					wall += 2
-				else
-					wall += 1
+				wall += 2
 
 			if(istype(T, /turf/simulated/wall/r_wall))
-				if(T.intact)
-					r_wall += 2
-				else
-					r_wall += 1
+				r_wall += 2
 
 			for(var/obj/O in T.contents)
 				if(istype(O, /obj/structure/window))

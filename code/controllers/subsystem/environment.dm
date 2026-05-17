@@ -9,7 +9,6 @@ SUBSYSTEM_DEF(environment)
 
 	var/list/turf_type = list()
 	var/list/turf_image = list()
-	var/list/turf_light_color = list()
 
 	var/list/air = list()
 	var/list/air_pressure = list()
@@ -37,8 +36,7 @@ SUBSYSTEM_DEF(environment)
 
 /datum/controller/subsystem/environment/proc/update(z_value, new_envtype)
 	if(envtype.len < z_value)
-		envtype.len = turf_type.len = turf_image.len = turf_light_color.len = \
-			air.len = air_pressure.len = z_value
+		envtype.len = turf_type.len = turf_image.len = air.len = air_pressure.len = z_value
 
 	if(!env_datums[new_envtype])
 		error("[new_envtype] is not valid environment type, revert to space")
@@ -51,7 +49,6 @@ SUBSYSTEM_DEF(environment)
 	envtype[z_value] = new_envtype
 	turf_type[z_value] = E.turf_type
 	turf_image[z_value] = E.turf_image
-	turf_light_color[z_value] = E.turf_light_color
 	air[z_value] = E.air
 	air_pressure[z_value] = E.air_pressure
 

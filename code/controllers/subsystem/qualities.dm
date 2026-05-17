@@ -37,6 +37,10 @@ SUBSYSTEM_DEF(qualities)
 			qdel(Q)
 			continue
 
+		if(Q.holidays_required && !Q.is_holiday())
+			qdel(Q)
+			continue
+
 		qualities_by_name[Q.name] = Q
 		qualities_by_type[Q.type] = Q
 
@@ -70,7 +74,7 @@ SUBSYSTEM_DEF(qualities)
 
 		possible_qualities -= Q
 
-		if(Q.max_amount >= 0 && Q.amount > Q.max_amount)
+		if(Q.max_amount >= 0 && Q.amount >= Q.max_amount)
 			continue
 		if(!Q.satisfies_availability(C))
 			continue
@@ -80,7 +84,7 @@ SUBSYSTEM_DEF(qualities)
 
 	if(!selected_quality)
 		if(C.mob)
-			to_chat(C.mob, "<span class='warning'>В бухгалтерии всё перепутали, и мы, к сожалению не смогли найти твою особенность. В награду за терпение, за то что ты такой крутой, держи очки.</span>")
+			to_chat(C.mob, "<span class='warning'>В бухгалтерии всё перепутали, и мы, к сожалению, не смогли найти твою особенность. В награду за терпение и за то, что ты такой крутой, держи очки.</span>")
 		selected_quality = qualities_by_type[/datum/quality/positiveish/sunglasses]
 
 	return selected_quality

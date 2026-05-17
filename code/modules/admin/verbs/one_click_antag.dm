@@ -10,14 +10,14 @@
 
 /datum/admins/proc/one_click_antag()
 
-	var/dat = {"<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
-		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
-		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
-		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
-		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=7'>Make Aliens (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=8'>Make Vox Raiders (Requires Ghosts)</a><br>
+	var/dat = {"<a href='byond://?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=3'>Make Revs</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=4'>Make Cult</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=7'>Make Aliens (Requires Ghosts)</a><br>
+		<a href='byond://?src=\ref[src];makeAntag=8'>Make Vox Raiders (Requires Ghosts)</a><br>
 		"}
 	var/datum/browser/popup = new(usr, "oneclickantag", "One-click Antagonist", 400, 400)
 	popup.set_content(dat)
@@ -96,8 +96,7 @@
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
 
-	randomize_human(new_character)
-	new_character.age = rand(new_character.species.min_age, new_character.species.min_age * 1.5)
+	new_character.randomize_appearance()
 
 	new_character.dna.ready_dna(new_character)
 	new_character.key = G_found.key
@@ -110,10 +109,7 @@
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
 	var/syndicate_commando_name = pick(last_names)
 
-	new_syndicate_commando.gender = pick(MALE, FEMALE)
-
-	var/datum/preferences/A = new()//Randomize appearance for the commando.
-	A.randomize_appearance_for(new_syndicate_commando)
+	new_syndicate_commando.randomize_appearance()
 
 	new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
 	new_syndicate_commando.name = new_syndicate_commando.real_name

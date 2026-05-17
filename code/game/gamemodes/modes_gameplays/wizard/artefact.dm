@@ -44,10 +44,11 @@
 	M.makeSkeleton()
 	M.revive()
 	spooky_scaries |= M
-	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(M, "<span class='userdanger'>[user.real_name] your master now, assist them even if it costs you your new life!</span>")
+	to_chat(M, "<h2><span class='userdanger'>You have been revived by </span>[user.real_name]!</h2>")
+	M.mind.store_memory("<B>You have been revived by [user.real_name]!</B>")
+	to_chat(M, "<h2><span class='userdanger'>[user.real_name] your master now, assist them even if it costs you your new life!</span></h2>")
+	M.mind.store_memory("<B>[user.real_name] your master, assist them even if it costs you your new life!</B>")
 	equip_roman_skeleton(M)
-	M.regenerate_icons()
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
 /obj/item/device/necromantic_stone/proc/check_spooky()
@@ -65,6 +66,8 @@
 	listclearnulls(spooky_scaries)
 
 /obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
+	for(var/obj/item/weapon/implant/I in H.implants)
+		qdel(I)
 	for(var/obj/item/I in H)
 		H.remove_from_mob(I)
 	H.sec_hud_set_implants()
@@ -127,7 +130,7 @@
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 
-	if(H.ismindprotect())
+	if(ismindprotect(H))
 		to_chat(H, "<span class='notice'>Something prevents you from becoming a magic girl that you've allways dreamed of</span>")
 		return
 

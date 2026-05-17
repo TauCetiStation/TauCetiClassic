@@ -131,6 +131,9 @@
 /atom/movable/screen/inventory/mask/monkey
 	screen_loc = ui_monkey_mask
 
+/atom/movable/screen/inventory/neck/monkey
+	screen_loc = ui_monkey_neck
+
 /atom/movable/screen/inventory/back
 	name = "back"
 	icon_state = "back"
@@ -220,3 +223,9 @@
 	icon_state = "belt"
 	screen_loc = ui_belt
 	slot_id = SLOT_BELT
+
+/atom/movable/screen/inventory/neck
+	name = "neck"
+	icon_state = "neck"
+	screen_loc = ui_neck
+	slot_id = SLOT_NECK

@@ -16,6 +16,7 @@
 							/obj/item/toy/blink								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,
 							/obj/item/toy/sword								= 2,
+							/obj/item/toy/dualsword							= 2,
 							/obj/item/toy/gun								= 2,
 							/obj/item/toy/crossbow							= 2,
 							/obj/item/clothing/suit/syndicatefake			= 2,
@@ -73,6 +74,10 @@
 							/obj/item/toy/figure/secofficer					= 1,
 							/obj/item/toy/figure/virologist					= 1,
 							/obj/item/toy/figure/warden						= 1,
+							/obj/item/toy/figure/iaa						= 1,
+							/obj/item/toy/figure/blueofficer				= 1,
+							/obj/item/toy/figure/xenobio					= 1,
+							/obj/item/toy/figure/xenoarcheolog				= 1,
 							/obj/item/toy/prize/poly/polyclassic			= 1,
 							/obj/item/toy/prize/poly/polypink				= 1,
 							/obj/item/toy/prize/poly/polydark				= 1,
@@ -118,7 +123,8 @@
 							/obj/random/plushie								= 1,
 							/obj/random/plushie								= 1,
 							/obj/random/plushie								= 1,
-							/obj/random/plushie								= 1
+							/obj/random/plushie								= 1,
+							/obj/item/toy/foamblade							= 1
 							)
 
 	light_color = "#00ff00"

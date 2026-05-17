@@ -53,3 +53,19 @@
 		var/image/I = SSholomaps.holomap_cache[shuttle]
 		I.loc = activator.holomap_obj
 		holomap_images += I
+
+/obj/item/holochip/team_red
+	color_filter = HOLOMAP_TEAM_COLOR
+	holomap_custom_key = TEAM_NAME_RED
+
+/obj/item/holochip/team_red/atom_init()
+	. = ..()
+	frequency = "[FREQ_TEAM_RED]"
+
+/obj/item/holochip/team_blue
+	color_filter = HOLOMAP_TEAM_COLOR
+	holomap_custom_key = TEAM_NAME_BLUE
+
+/obj/item/holochip/team_red/atom_init()
+	. = ..()
+	frequency = "[FREQ_TEAM_BLUE]"

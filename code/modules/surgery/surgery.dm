@@ -63,6 +63,18 @@
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return null
 
+/// Outputs a consolidated warning about necrotic organs that can't be treated by "fix" step.
+/datum/surgery_step/proc/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
+	if(!length(dead_organs))
+		return
+	var/list/organ_names = list()
+	for(var/obj/item/organ/internal/IO as anything in dead_organs)
+		organ_names += IO.name
+	if(organ_names.len == 1)
+		to_chat(user, "<span class='warning'>[target]'s [organ_names[1]] is necrotic and can't be treated this way.</span>")
+	else
+		to_chat(user, "<span class='warning'>[target]'s [get_english_list(organ_names)] are necrotic and can't be treated this way.</span>")
+
 /proc/spread_germs_to_organ(obj/item/organ/external/BP, mob/living/carbon/human/user, obj/item/tool)
 	if(!istype(user) || !istype(BP))
 		return
@@ -89,7 +101,7 @@
 /proc/checks_for_surgery(mob/living/carbon/M, mob/living/user, check_covering = TRUE)
 	if(!user.Adjacent(M))
 		return FALSE
-	if(!can_operate(M))
+	if(!can_operate(M, user))
 		return FALSE
 	if(!istype(M))
 		return FALSE
@@ -140,7 +152,13 @@
 	if(ishuman(M))
 		covered = get_human_covering(M)
 
-	if(!handle_fumbling(user, M, SKILL_TASK_CHALLENGING, list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
+	var/skillcheck = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			skillcheck = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+
+	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, skillcheck, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
 	for(var/datum/surgery_step/S in surgery_steps)
@@ -159,12 +177,12 @@
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(!H.species.flags[NO_PAIN] && !HAS_TRAIT(H, TRAIT_IMMOBILIZED))
+				if(!HAS_TRAIT(H, TRAIT_NO_PAIN) && !HAS_TRAIT(H, TRAIT_IMMOBILIZED))
 					H.adjustHalLoss(25)
-				if(prob(H.halloss) && !H.incapacitated(NONE))
+				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
-			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if(user.mood_prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
@@ -208,5 +226,5 @@
 /datum/surgery_step/ipc
 	can_infect = FALSE
 	allowed_species = list(IPC)
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_NOVICE)
 	skills_speed_bonus = -0.2

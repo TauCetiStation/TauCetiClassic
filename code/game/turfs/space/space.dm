@@ -2,8 +2,6 @@
 	icon = 'icons/turf/space.dmi'
 	name = "space"
 	icon_state = "0"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	force_lighting_update = TRUE
 
 	oxygen = 0
 	carbon_dioxide = 0
@@ -17,10 +15,13 @@
 
 	flags = NOBLOODY | NOSTEPSOUND
 
+	level_light_source = TRUE
+
 /**
   * Space Initialize
   *
   * Doesn't call parent, see [/atom/proc/atom_init]
+  * With any changes here keep in mind HOW MANY space turfs we have
   */
 /turf/environment/space/atom_init()
 	SHOULD_CALL_PARENT(FALSE)
@@ -28,6 +29,9 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 	icon_state = SPACE_ICON_STATE
+
+	if(level_light_source)
+		LEVEL_LIGHTING_SOURCE(src)
 
 	if(light_power && light_range)
 		update_light()
@@ -38,17 +42,8 @@
 	return INITIALIZE_HINT_NORMAL
 
 /turf/environment/space/Destroy()
+	SHOULD_CALL_PARENT(FALSE)
 	return QDEL_HINT_LETMELIVE
-
-/turf/environment/space/proc/update_starlight()
-	if(config.starlight)
-		for(var/t in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(isspaceturf(t))
-				//let's NOT update this that much pls
-				continue
-			set_light(2, 2)
-			return
-		set_light(0)
 
 /turf/environment/space/attack_paw(mob/user)
 	return attack_hand(user)

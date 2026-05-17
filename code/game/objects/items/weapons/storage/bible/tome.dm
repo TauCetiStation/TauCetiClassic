@@ -50,7 +50,7 @@
 		to_chat(user, "В культе всего [cultists] [pluralize_russian(cultists, "последователь", "последователя", "последователей")]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
-		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
+		to_chat(user, "<a href='byond://?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
 	else
 		..()
 
@@ -80,6 +80,13 @@
 		var/obj/structure/cult/tech_table/T = target
 		if(T.researching)
 			to_chat(user, "<span class='warning'>Вы не можете уничтожить стол, пока идёт исследование.</span>")
+			return FALSE
+	if(istype(target, /obj/structure/altar_of_gods))
+		if(istype(get_area(target), /area/custom/cult))
+			to_chat(user, "<span class='warning'>Ты не можешь уничтожить алтарь в Раю!</span>")
+			return FALSE
+		if(length(religion.altars) < 2)
+			to_chat(user, "<span class='warning'>Ты не можешь уничтожить последний алтарь!</span>")
 			return FALSE
 	return TRUE
 
@@ -210,9 +217,11 @@
 	if(ispath(choice.building_type, /obj/structure/altar_of_gods))
 		var/turf/targeted_turf = get_step(src, user.dir)
 		for(var/obj/structure/altar_of_gods/altar in religion.altars)
-			if(targeted_turf.z == altar.z && get_dist_euclidian(targeted_turf, get_turf(altar)) <= 70)
-				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого.</span>")
-				return
+			if(targeted_turf.z == altar.z)
+				var/distance = get_dist_euclidian(targeted_turf, get_turf(altar))
+				if(distance <= 70)
+					to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого. Ближайший алтарь в [round(distance)] шагах к [dir2text_ru(get_dir(src, get_turf(altar)))]у.</span>")
+					return
 
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return

@@ -28,11 +28,10 @@
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
 	flags_inv = 0
-	body_parts_covered = 0
+	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
 	force = 0
 	hitsound = list()
 
@@ -41,7 +40,8 @@
 	name = "chaplain's hood"
 	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|EYES
 
@@ -57,7 +57,7 @@
 	name = "nun hood"
 	desc = "A religious female hood commonly worn by monastery sisters."
 	icon_state = "nun_hood"
-	flags = BLOCKHAIR
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	siemens_coefficient = 0.9
 
 //HoS
@@ -72,12 +72,23 @@
 	valid_accessory_slots = list("dermal")
 	restricted_accessory_slots = list("dermal")
 
+/obj/item/clothing/head/hos_hat
+	name = "head of security's hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
+	icon_state = "hoshat"
+	item_state = "hoshat"
+	w_class = SIZE_TINY
+	siemens_coefficient = 0.9
+	body_parts_covered = 0
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
+
 //Medical
 /obj/item/clothing/head/surgery
 	name = "surgical cap"
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs."
 	icon_state = "surgcap_blue"
-	flags = BLOCKHEADHAIR
+	render_flags = parent_type::render_flags | HIDE_TOP_HAIR
 
 /obj/item/clothing/head/surgery/purple
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs. This one is deep purple."
@@ -100,7 +111,7 @@
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
+	body_parts_covered = HEAD
 
 /obj/item/clothing/head/det_hat/gray
 	name = "detective's gray hat"

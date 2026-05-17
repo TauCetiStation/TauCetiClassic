@@ -19,7 +19,7 @@
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 
-	level = PIPE_HIDDEN_LEVEL
+	undertile = FALSE
 	layer = GAS_SCRUBBER_LAYER
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY //connects to regular and supply pipes
@@ -136,7 +136,7 @@
 
 	var/obj/machinery/atmospherics/node = NODE1
 
-	if(!T.is_plating() && node && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
+	if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node && node.undertile && istype(node, /obj/machinery/atmospherics/pipe))
 		vent_icon += "h"
 
 	if(welded)
@@ -148,6 +148,8 @@
 
 	add_overlay(icon_manager.get_atmos_icon("device", , , vent_icon))
 
+	update_underlays()
+
 /obj/machinery/atmospherics/components/unary/vent_pump/update_underlays()
 	if(..())
 		underlays.Cut()
@@ -157,17 +159,13 @@
 
 		var/obj/machinery/atmospherics/node = NODE1
 
-		if(!T.is_plating() && node && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node && node.undertile && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if(node)
 				add_underlay(T, node, dir, node.icon_connect_type)
 			else
 				add_underlay(T,, dir)
-
-/obj/machinery/atmospherics/components/unary/vent_pump/hide()
-	update_icon()
-	update_underlays()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/can_pump()
 	if(stat & (NOPOWER|BROKEN))
@@ -378,7 +376,7 @@
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
-		if(!WT.use_tool(src, user, 20, volume = 50))
+		if(!WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 			to_chat(user, "<span class='notice'>You must remain close to finish this task.</span>")
 			return
 

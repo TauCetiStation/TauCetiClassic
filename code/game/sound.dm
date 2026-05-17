@@ -101,7 +101,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
-		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls 
+		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls
 			return
 
 		//sound volume falloff with pressure
@@ -167,7 +167,14 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /mob/proc/playsound_lobbymusic()
 	if(!SSticker || !SSticker.login_music || !client)
 		return
-	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
+
+	var/music = SSticker.login_music
+
+	var/datum/map_module/MM = SSmapping.get_map_module()
+	if(MM && MM.map_lobby_music)
+		music = MM.map_lobby_music
+
+	playsound_music(music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
 	if(!client || !client.prefs_ready)
@@ -276,7 +283,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 			prefs.snd_jukebox_vol = vol
 
-			if(istype(media)) // will be updated in "/mob/living/Login()" if changed in lobby.
+			if(istype(media)) // will be updated in "/mob/living/LateLogin()" if changed in lobby.
 				media.update_volume()
 
 				if(!vol && old_vol) // only play/stop if last change is a mute or unmute state.
@@ -300,6 +307,13 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			return
 		if("testVolume")
 			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), vary = FALSE, channel = CHANNEL_VOLUMETEST)
+			return
+		if("mediaServerChanged")
+			var/id = text2num(href_list["id"])
+			if(id >= 1 && id <= length(config.media_base_urls))
+				prefs.snd_jukebox_mediaserver = config.media_base_urls[id]
+				if(istype(media))
+					media.update_music()
 			return
 		else
 			return
@@ -353,6 +367,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_JUKEBOX]" = prefs.snd_jukebox_vol
 		)
 
+	var/media_server = prefs.snd_jukebox_mediaserver
+
 	var/list/sliders_hint = list(
 		"[VOL_MUSIC]" = "Lobby music.",
 		"[VOL_AMBIENT]" = "Music and sound effects of ambient type.",
@@ -364,6 +380,8 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		"[VOL_ADMIN]" = "Admin sounds and music.",
 		"[VOL_JUKEBOX]" = "In-game jukebox's volume."
 		)
+
+	var/mediaserver_hint = "If you have problems loading jukebox music, try switching the server."
 
 	var/dat = {"
 		<style>
@@ -418,7 +436,23 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 						<input type="range" class="volume_slider" min="0" max="100" value="[slider_value]" id="[slider_id]" onchange="updateVolume([slider_id])">
 					</td>
 					<td>
-						<p><b><center><a href='?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
+						<p><b><center><a href='byond://?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
+					</td>
+				</tr>
+			"}
+
+		if(category == "Jukebox")
+			var/list/L = config.media_base_urls
+			dat += {"
+				<tr>
+					<td>Media server <span title="[mediaserver_hint]">(?)</span>:</td>
+					<td>
+						<select id="media_server" onChange="changeMediaServer()">
+					"}
+			for(var/i = 1; i <= L.len; i++)
+				dat += "<option value=\"[i]\" [media_server == config.media_base_urls[i] ? "selected" : ""]>[config.media_base_urls[i]]</option>"
+			dat += {"
+						</select>
 					</td>
 				</tr>
 			"}
@@ -447,6 +481,12 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 					}, 300);
 				}
 
+			}
+
+			function changeMediaServer() {
+				var sel = document.getElementById("media_server");
+				var id = sel.options\[sel.selectedIndex\].value;
+				window.location = 'byond://?_src_=updateVolume&proc=mediaServerChanged&id=' + encodeURIComponent(id);
 			}
 
 			function setVolume(slider_id) {

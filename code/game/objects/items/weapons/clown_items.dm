@@ -49,6 +49,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
+	item_state_world = "soap_world"
 	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
@@ -64,14 +65,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
 	icon_state = "soapnt"
+	item_state_world = "soapnt_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
 	icon_state = "soapdeluxe"
+	item_state_world = "soapdeluxe_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
+	item_state_world = "soapsyndie_world"
 	list_reagents = list("cleaner" = 3, "cyanide" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/afterattack(atom/target, mob/user, proximity, params)
@@ -119,7 +123,7 @@
 						var/washglasses = !((H.head.flags_inv & HIDEEYES) || (H.wear_mask && H.wear_mask.flags_inv & HIDEEYES))
 						if(!(washmask && H.wear_mask && H.wear_mask.clean_blood()))
 							H.lip_style = null
-							H.update_body()
+							H.update_body(BP_HEAD, update_preferences = TRUE)
 						if(H.glasses && washglasses)
 							H.glasses.clean_blood()
 						if(H.l_ear && washears)
@@ -161,8 +165,8 @@
 						if(H.gloves && H.gloves.clean_blood())
 							H.gloves.germ_level = 0
 						else
-							if(H.bloody_hands)
-								H.bloody_hands = 0
+							if(H.dirty_hands_transfers)
+								H.dirty_hands_transfers = 0
 								H.update_inv_slot(SLOT_GLOVES)
 							H.germ_level = 0
 			H.clean_blood()
@@ -180,6 +184,23 @@
 /*
  * Bike Horns
  */
+
+/obj/item/weapon/bikehorn/gold
+	name = "golden bike horn"
+	desc = "Golden? Clearly, it's made with bananium! Honk!"
+	icon = 'icons/obj/golden_bikehorn.dmi'
+	icon_state = "gold_horn"
+	item_state = "bike_horn"
+	COOLDOWN_DECLARE(golden_horn_cooldown)
+
+/obj/item/weapon/bikehorn/gold/honk(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, golden_horn_cooldown))
+		return
+	var/turf/T = get_turf(src)
+	for(var/mob/living/M in ohearers(7, T))
+		M.SpinAnimation(7, 1)
+	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 
 /obj/item/weapon/bikehorn
 	name = "bike horn"

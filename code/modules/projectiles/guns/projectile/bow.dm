@@ -7,12 +7,9 @@
 	icon_state = "bolt"
 	item_state = "bolt"
 	throwforce = 8
-	w_class = SIZE_SMALL
+	w_class = SIZE_TINY
 	sharp = 1
 	edge = 0
-
-/obj/item/weapon/arrow/proc/removed() //Helper for metal rods falling apart.
-	return
 
 /obj/item/weapon/arrow/quill
 
@@ -23,30 +20,14 @@
 	item_state = "quill"
 	throwforce = 5
 
-/obj/item/weapon/arrow/rod
-
-	name = "metal rod"
-	cases = list("стержень", "стержня", "стержню", "стержень", "стерженем", "стержне")
-	desc = "Не плачь по мне, Орифена."
-	icon_state = "metal-rod"
-
-/obj/item/weapon/arrow/rod/removed(mob/user)
-	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
-		to_chat(user, "[src] при выпуске из арбалета разлетается на россыпь осколков из перенапряженного металла.")
-		var/obj/item/weapon/shard/shrapnel/S = new()
-		S.loc = get_turf(src)
-		qdel(src)
-
 /obj/item/weapon/crossbow
 	name = "powered crossbow"
 	cases = list("арбалет", "арбалета", "арбалету", "арбалет", "арбалетом", "арбалете")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
-	w_class = SIZE_BIG
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
-
 	w_class = SIZE_SMALL
 
 	var/tension = 0                       // Current draw on the bow.
@@ -67,17 +48,6 @@
 			arrow = I
 			user.visible_message("[user] вставляет [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].","Вы вставляете [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].")
 			icon_state = "crossbow-nocked"
-			return
-
-		else if(istype(I, /obj/item/stack/rods))
-			var/obj/item/stack/rods/R = I
-			if(!R.use(1))
-				return
-			arrow = new /obj/item/weapon/arrow/rod(src)
-			arrow.fingerprintslast = src.fingerprintslast
-			arrow.forceMove(src)
-			icon_state = "crossbow-nocked"
-			user.visible_message("[user] хаотично вставляет [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].","Вы хаотично вставляете [CASE(arrow, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].")
 			if(cell)
 				if(cell.charge >= 500)
 					to_chat(user, "<span class='notice'>В результате [CASE(arrow, ACCUSATIVE_CASE)] начинает раскаляться докрасна.</span>")
@@ -92,8 +62,8 @@
 			cell = I
 			to_chat(user, "<span class='notice'>Вы вставляете батарейку в [CASE(src, ACCUSATIVE_CASE)] и подключаете его к катушке зажигания.</span>")
 			if(arrow)
-				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
-					to_chat(user, "<span class='notice'>[CASE(arrow, ACCUSATIVE_CASE)] мерцает и трещит, раскаляясь докрасна.</span>")
+				if(istype(arrow,/obj/item/weapon/arrow) && arrow.throwforce < 15 && cell.charge >= 500)
+					to_chat(user, "<span class='notice'>[capitalize(CASE(arrow, ACCUSATIVE_CASE))] мерцает и трещит, раскаляясь докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
@@ -107,7 +77,7 @@
 			cell = null
 			to_chat(user, "<span class='notice'>Вы вынимаете батарейку из [CASE(src, GENITIVE_CASE)] [I].</span>")
 		else
-			to_chat(user, "<span class='notice'>[CASE(src, ACCUSATIVE_CASE)] не имеет батарейки внутри.</span>")
+			to_chat(user, "<span class='notice'>[capitalize(CASE(src, ACCUSATIVE_CASE))] не имеет батарейки внутри.</span>")
 
 	else
 		return ..()
@@ -118,7 +88,6 @@
 			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскивает [CASE(arrow, ACCUSATIVE_CASE)].","Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскиваете [CASE(arrow, ACCUSATIVE_CASE)].")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
-			A.removed(user)
 			arrow = null
 		else
 			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)].", "Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)].")
@@ -154,7 +123,7 @@
 
 	if(tension>=max_tension)
 		tension = max_tension
-		to_chat(user, "[CASE(src, ACCUSATIVE_CASE)] лязгает, когда вы натягиваете тетиву до максимального натяжения!")
+		to_chat(user, "[capitalize(CASE(src, ACCUSATIVE_CASE))] лязгает, когда вы натягиваете тетиву до максимального натяжения!")
 	else
 		user.visible_message("[user] натягивает тетиву [CASE(src, GENITIVE_CASE)]!", "Вы продолжаете натягивать тетиву [CASE(src, GENITIVE_CASE)]!")
 		spawn(25) increase_tension(user)
@@ -170,11 +139,11 @@
 		return
 
 	if(!tension)
-		to_chat(user, "Вы не натянули [CASE(arrow, ACCUSATIVE_CASE)] на тетиву!")
+		to_chat(user, "Вы не натянули тетиву!")
 		return 0
 
 	if (!arrow)
-		to_chat(user, "[CASE(arrow, ACCUSATIVE_CASE)] отсутствует в арбалете!")
+		to_chat(user, "Болт отсутствует в арбалете!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)

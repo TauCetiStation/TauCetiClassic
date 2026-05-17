@@ -199,6 +199,17 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/r4046/chem/EMP(src)
 
+//Explosion 40x46mm
+/obj/item/weapon/storage/box/r4046/explosion
+	name = "box of 40x46mm explosive grenades (WARNING)"
+	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
+	icon_state = "4046_box(exp)"
+
+/obj/item/weapon/storage/box/r4046/explosion/atom_init()
+	. = ..()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/r4046/explosive(src)
+
 //EMPs
 /obj/item/weapon/storage/box/emps
 	name = "box of emp grenades"
@@ -635,6 +646,17 @@
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/a774clip
+	name = "box of Mosin-Nagant clips"
+	desc = "A small cardboard box. It holds several 5-round stripper clips of 7.74x54mm ammunition, ready to be loaded into a Mosin-Nagant."
+	icon_state = "box"
+
+/obj/item/weapon/storage/box/a774clip/atom_init()
+	. = ..()
+	for(var/i in 1 to 5)
+		new /obj/item/ammo_box/magazine/a774clip(src)
+	make_exact_fit()
+
 //Hair sprays
 /obj/item/weapon/storage/box/hairdyes
 	name = "hair spray dye box"
@@ -734,3 +756,13 @@
 	name = "NT box"
 	desc = "It's a blue box with an 'N' on it. Glory to NanoTrasen!"
 	icon_state = "nanotrasen_box"
+
+/obj/item/weapon/storage/box/swabs
+	name = "Swab kit box"
+	desc = "Sterile equipment inside. Do not allow contamination."
+	icon_state = "dnabox"
+
+/obj/item/weapon/storage/box/swabs/atom_init()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/swab(src)

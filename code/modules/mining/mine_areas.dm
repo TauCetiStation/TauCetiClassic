@@ -10,7 +10,7 @@
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/asteroid/mine/explored
 	name = "Mine"
@@ -102,6 +102,40 @@
 
 /area/asteroid/mine/unexplored/safe/InitSpawnArea()
 	return
+
+/area/asteroid/mine/unexplored/dangerous
+	icon_state = "unexplored_dangerous"
+
+// More mobs at one time, ~3 fauna around player always
+/area/asteroid/mine/unexplored/dangerous/InitSpawnArea()
+	AddComponent(/datum/component/spawn_area,
+		"asteroid",
+		CALLBACK(src, PROC_REF(Spawn)),
+		CALLBACK(src, PROC_REF(Despawn)),
+		CALLBACK(src, PROC_REF(CheckSpawn)),
+		8,
+		16,
+		15 SECONDS,
+		2 MINUTES,
+	)
+
+/area/asteroid/mine/unexplored/dangerous/Entered(atom/movable/A, atom/OldLoc)
+	. = ..()
+	if(!ismob(A) || istype(A, /mob/living/simple_animal/hostile/asteroid))
+		return
+	var/mob/M = A
+	if(!HAS_TRAIT(A, TRAIT_CAVE_EXPLORER))
+		M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/oxy, 7)
+	else
+		M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/impaired, 1)
+	to_chat(A, "<span class='warning'>Suspension of particles obstructs the view. This area are more dangerous.</span>")
+
+/area/asteroid/mine/unexplored/dangerous/Exited(atom/movable/A, atom/NewLoc)
+	. = ..()
+	if(!ismob(A) || istype(A, /mob/living/simple_animal/hostile/asteroid))
+		return
+	var/mob/M = A
+	M.clear_fullscreen("mine_veil")
 
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"
