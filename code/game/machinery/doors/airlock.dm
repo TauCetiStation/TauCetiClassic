@@ -577,7 +577,7 @@ var/global/list/airlock_overlays = list()
 	return TRUE
 
 /obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0)
-	if (isElectrified() && isitem(mover))
+	if (isElectrified() && isitem(mover) && (mover.flags & CONDUCT))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
