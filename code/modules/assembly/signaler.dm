@@ -3,7 +3,7 @@
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
 	item_state = "signaler"
-	construction = MAT_METAL+"=1000;"+MAT_GLASS+"=200"
+	materials = MAT_METAL+"=1000;"+MAT_GLASS+"=200"
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 

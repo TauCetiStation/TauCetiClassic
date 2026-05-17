@@ -303,7 +303,7 @@
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	construction = MAT_METAL+"=3000;"+MAT_GLASS+"=1300"
+	materials = MAT_METAL+"=3000;"+MAT_GLASS+"=1300"
 	origin_tech = "materials=1;engineering=1"
 
 	var/mode = 1

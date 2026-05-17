@@ -15,7 +15,7 @@ RCD
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL
-	construction = MAT_METAL+"=50000"
+	materials = MAT_METAL+"=50000"
 	origin_tech = "engineering=4;materials=2"
 	usesound = 'sound/machines/click.ogg'
 
@@ -319,12 +319,11 @@ RCD
 
 /obj/item/weapon/rcd_ammo/small
 	name = "small compressed matter cartridge"
-	construction = MAT_METAL+"=30000;"+MAT_GLASS+"=15000"
+	materials = MAT_METAL+"=30000;"+MAT_GLASS+"=15000"
 	matter = 25
 /obj/item/weapon/rcd_ammo/medium
 	name = "medium compressed matter cartridge"
-	m_amt = 60000
-	g_amt = 30000
+	materials = MAT_METAL+"=60000;"+MAT_GLASS+"=30000"
 	matter = 50
 /obj/item/weapon/rcd_ammo/large
 	name = "large compressed matter cartridge"

@@ -109,7 +109,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
 	item_state = "syringe_kit"
-	construction = MAT_METAL+"=25000;"+MAT_GLASS+"=15000"
+	materials = MAT_METAL+"=25000;"+MAT_GLASS+"=15000"
 
 /obj/item/newscaster_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)

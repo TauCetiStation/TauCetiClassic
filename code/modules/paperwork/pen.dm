@@ -20,7 +20,7 @@
 	w_class = SIZE_MINUSCULE
 	throw_speed = 4
 	throw_range = 15
-	construction = MAT_METAL+"=10"
+	materials = MAT_METAL+"=10"
 	var/colour = "black"	// can we make it HEX?
 	var/click_cooldown = 0
 

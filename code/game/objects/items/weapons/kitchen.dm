@@ -70,7 +70,7 @@
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
 	overlay_food_string = "food_spoon"
-	construction = MAT_METAL+"=250"
+	materials = MAT_METAL+"=250"
 
 /obj/item/weapon/kitchen/utensil/pspoon
 	name = "plastic spoon"
@@ -89,7 +89,7 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 	overlay_food_string = "food_fork"
-	construction = MAT_METAL+"=300"
+	materials = MAT_METAL+"=300"
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -144,7 +144,7 @@
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
-	construction = MAT_METAL+"=12000"
+	materials = MAT_METAL+"=12000"
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	qualities = list(
@@ -235,7 +235,7 @@
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
-	construction = MAT_METAL+"=12000"
+	materials = MAT_METAL+"=12000"
 	sweep_step = 2
 
 /*
@@ -296,7 +296,7 @@
 	throw_range = 5
 	w_class = SIZE_SMALL
 	flags = CONDUCT
-	construction = MAT_METAL+"=3000"
+	materials = MAT_METAL+"=3000"
 	max_w_class = SIZE_SMALL
 	opened = TRUE
 	max_storage_space = 18

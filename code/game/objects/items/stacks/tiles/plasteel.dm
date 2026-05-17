@@ -4,7 +4,7 @@
 	desc = "Those could not work as a pretty decent throwing weapon."
 	w_class = SIZE_SMALL
 	force = 6.0
-	construction = MAT_METAL+"=937.5"
+	materials = MAT_METAL+"=937.5"
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 3

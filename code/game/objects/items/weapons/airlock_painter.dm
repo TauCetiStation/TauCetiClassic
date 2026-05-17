@@ -6,7 +6,7 @@
 
 	w_class = SIZE_SMALL
 
-	construction = MAT_METAL+"=50;"+MAT_GLASS+"=50"
+	materials = MAT_METAL+"=50;"+MAT_GLASS+"=50"
 	origin_tech = "engineering=1"
 
 	flags = CONDUCT

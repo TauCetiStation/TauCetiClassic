@@ -13,7 +13,7 @@
 	force = 4.0
 	var/list/syringes = list()
 	var/max_syringes = 1
-	construction = MAT_METAL+"=2000"
+	materials = MAT_METAL+"=2000"
 	can_suicide_with = FALSE
 
 /obj/item/weapon/gun/syringe/atom_init()

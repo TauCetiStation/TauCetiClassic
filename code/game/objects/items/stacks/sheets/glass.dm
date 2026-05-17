@@ -41,7 +41,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	construction = MAT_GLASS+"=3750"
+	materials = MAT_GLASS+"=3750"
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/glass/atom_init()
@@ -53,7 +53,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	construction = MAT_GLASS+"=0"
+	materials = null
 
 /obj/item/stack/sheet/glass/attackby(obj/item/I, mob/user, params)
 	if(iscoil(I))
@@ -126,7 +126,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	construction = MAT_METAL+"=1875;"+MAT_GLASS+"=3750"
+	materials = MAT_METAL+"=1875;"+MAT_GLASS+"=3750"
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/atom_init()
@@ -138,7 +138,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	construction = MAT_METAL+"=0;"+MAT_GLASS+"=0"
+	materials = null
 
 /*
  * Phoron Glass sheets
@@ -148,7 +148,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	desc = "A very strong and very resistant sheet of a phoron-glass alloy."
 	singular_name = "phoron glass sheet"
 	icon_state = "sheet-phoronglass"
-	construction = MAT_GLASS+"=7500"
+	materials = MAT_GLASS+"=7500"
 	origin_tech = "materials=3;phorontech=2"
 
 /obj/item/stack/sheet/glass/phoronglass/atom_init()
@@ -163,7 +163,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	desc = "Phoron glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced phoron glass sheet"
 	icon_state = "sheet-phoronrglass"
-	construction = MAT_METAL+"=1875;"+MAT_GLASS+"=7500"
+	materials = MAT_METAL+"=1875;"+MAT_GLASS+"=7500"
 	origin_tech = "materials=4;phorontech=2"
 
 /obj/item/stack/sheet/glass/phoronrglass/atom_init()

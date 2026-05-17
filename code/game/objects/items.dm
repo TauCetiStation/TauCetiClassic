@@ -47,7 +47,6 @@
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	var/list/materials = list()
 	var/list/allowed = null //suit storage stuff.
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
@@ -1017,7 +1016,7 @@
 	if(qual_prying <= 0)
 		return
 
-	var/chance = w_class / (qual_prying * (params2numberlist(construction)[MAT_METAL] || 0) + 1)
+	var/chance = w_class / (qual_prying * (params2numberlist(materials)[MAT_METAL] || 0) + 1)
 
 	if(prob(chance * 100))
 		qdel(src)

@@ -6,7 +6,7 @@
 	item_state_inventory = "door_electronics"
 	item_state_world = "door_electronics_w"
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=50;"+MAT_GLASS+"=50"
+	materials = MAT_METAL+"=50;"+MAT_GLASS+"=50"
 
 	//Emagged
 	var/broken = FALSE

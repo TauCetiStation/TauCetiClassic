@@ -121,8 +121,7 @@
 	name = "Empty Disk"
 	desc = "Вау, это та самая дискета с сохранением?"
 	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
+	materials = MAT_METAL+"=30;"+MAT_GLASS+"=10"
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/atom_init()
@@ -140,8 +139,7 @@
 	name = "Empty Disk"
 	desc = "Вау, это та самая дискета с сохранением?"
 	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
+	materials = MAT_METAL+"=30;"+MAT_GLASS+"=10"
 	var/datum/tech/stored
 	var/datum/technology/stored_technology
 
@@ -171,8 +169,7 @@
 	item_state_world = "datadisk9_world"
 	item_state_inventory = "datadisk9"
 	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
+	materials = MAT_METAL+"=30;"+MAT_GLASS+"=10"
 	var/stored_points
 
 /obj/item/weapon/disk/research_points/atom_init()

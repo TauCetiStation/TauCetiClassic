@@ -11,7 +11,7 @@
 	icon_state = "card-pay-idle"
 
 	slot_flags = SLOT_FLAGS_BELT
-	construction = MAT_METAL+"=7000;"+MAT_GLASS+"=2000"
+	materials = MAT_METAL+"=7000;"+MAT_GLASS+"=2000"
 
 	layer = DEFAULT_MACHINERY_LAYER //Хотим чтобы предметы на столе были всегда выше терминала.
 

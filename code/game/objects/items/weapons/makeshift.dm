@@ -235,7 +235,7 @@
 	force = 9
 	throwforce = 10
 	w_class = SIZE_SMALL
-	construction = MAT_METAL+"=1875"
+	materials = MAT_METAL+"=1875"
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/weapon/noose

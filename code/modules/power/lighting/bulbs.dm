@@ -10,7 +10,7 @@
 	throwforce = 5
 	w_class = SIZE_TINY
 
-	construction = MAT_METAL+"=50" // in case of mats change tweak lightreplacer
+	materials = MAT_METAL+"=50" // in case of mats change tweak lightreplacer
 
 	var/status = LIGHT_OK // LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/fitting = LAMP_FITTING_TUBE
@@ -25,7 +25,7 @@
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	item_state = "c_tube"
-	construction = MAT_GLASS+"=100"
+	materials = MAT_GLASS+"=100"
 	fitting = LAMP_FITTING_TUBE
 	light_mode = /datum/light_mode/default
 
@@ -46,7 +46,7 @@
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
 	item_state = "contvapour"
-	construction = MAT_GLASS+"=100"
+	materials = MAT_GLASS+"=100"
 	fitting = LAMP_FITTING_BULB
 	light_mode = /datum/light_mode/default/bulb
 

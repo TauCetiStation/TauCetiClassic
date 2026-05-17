@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	w_class = SIZE_BIG
-	construction = MAT_METAL+"=10000;"+MAT_GLASS+"=2500"
+	materials = MAT_METAL+"=10000;"+MAT_GLASS+"=2500"
 	var/code = 2
 
 /obj/item/device/radio/electropack/attack_hand(mob/user)

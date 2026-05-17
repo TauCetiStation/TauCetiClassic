@@ -322,7 +322,7 @@
 	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
-	construction = MAT_METAL+"=200"
+	materials = MAT_METAL+"=200"
 	origin_tech = "engineering=1;biotech=1"
 
 	var/datum/experiment_data/experiments

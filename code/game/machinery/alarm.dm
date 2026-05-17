@@ -919,7 +919,7 @@ Just a object used in constructing air alarms
 	item_state_world = "airalarm_electronics_w"
 	desc = "Looks like a circuit. Probably is."
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=50;"+MAT_GLASS+"=50"
+	materials = MAT_METAL+"=50;"+MAT_GLASS+"=50"
 
 
 /*
@@ -1271,7 +1271,7 @@ Just a object used in constructing fire alarms
 	item_state_world = "firealarm_electronics_w"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=50;"+MAT_GLASS+"=50"
+	materials = MAT_METAL+"=50;"+MAT_GLASS+"=50"
 
 
 /*

@@ -170,7 +170,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = SIZE_NORMAL
-	construction = MAT_METAL+"=3750" //one sheet, but where can you make them?
+	materials = MAT_METAL+"=3750" //one sheet, but where can you make them?
 	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
@@ -263,7 +263,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	throwforce = 4.0
 	item_state = "shovel"
 	w_class = SIZE_SMALL
-	construction = MAT_METAL+"=50"
+	materials = MAT_METAL+"=50"
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	usesound = 'sound/effects/shovel_digging.ogg'
@@ -327,7 +327,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 15.0
 	throwforce = 4.0
 	w_class = SIZE_NORMAL
-	construction = MAT_METAL+"=3750"
+	materials = MAT_METAL+"=3750"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/drill.ogg'
 	hitsound = list('sound/items/drill_hit.ogg')

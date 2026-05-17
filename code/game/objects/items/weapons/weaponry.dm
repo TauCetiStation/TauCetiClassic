@@ -89,7 +89,7 @@
 	edge = FALSE
 	throw_speed = 3
 	throw_range = 6
-	construction = MAT_METAL+"=12000"
+	materials = MAT_METAL+"=12000"
 	origin_tech = "materials=1"
 	hitsound = list('sound/weapons/Genhit.ogg')
 	attack_verb = list("stubbed", "poked")

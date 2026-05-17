@@ -289,7 +289,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = SIZE_SMALL
-	construction = MAT_METAL+"=3250"
+	materials = MAT_METAL+"=3250"
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -345,7 +345,7 @@
 	icon_state = "357-7"
 	flags = CONDUCT
 	w_class = SIZE_MINUSCULE
-	construction = MAT_METAL+"=500"
+	materials = MAT_METAL+"=500"
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()

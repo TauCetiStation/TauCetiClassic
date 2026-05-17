@@ -5,7 +5,7 @@
 	icon_state = ""
 	flags = CONDUCT
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=100;"+MAT_GLASS+"=0"
+	materials = MAT_METAL+"=100"
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10

@@ -6,7 +6,7 @@
 	item_state_world = "taperecorderidle_world"
 	item_state = "recorder"
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=60;"+MAT_GLASS+"=30"
+	materials = MAT_METAL+"=60;"+MAT_GLASS+"=30"
 	var/emagged = FALSE
 	var/recording = FALSE
 	var/playing = FALSE

@@ -10,7 +10,7 @@
 	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
-	construction = MAT_METAL+"=200"
+	materials = MAT_METAL+"=200"
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = TRUE
 	var/output_to_chat = TRUE
@@ -97,7 +97,7 @@
 		to_chat(usr, "Сканер больше не показывает повреждения конечностей.")
 
 /obj/item/device/healthanalyzer/rad_laser
-	materials = list(MAT_METAL=400)
+	materials = MAT_METAL+"=400"
 	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does

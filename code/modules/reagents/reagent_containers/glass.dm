@@ -316,7 +316,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	construction = MAT_METAL+"=0;"+MAT_GLASS+"=500"
+	materials = MAT_GLASS+"=500"
 	volume = 60
 	var/list/filling_states = list()
 	possible_transfer_amounts = list(5,10,15,25,30,60)
@@ -371,7 +371,7 @@
 	desc = "Это большая мензурка."
 	gender = FEMALE
 	icon_state = "beakerlarge"
-	construction = MAT_GLASS+"=5000"
+	materials = MAT_GLASS+"=5000"
 	volume = 150
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,150)
@@ -382,7 +382,7 @@
 	cases = list("криостазисная мензурка", "криостазисной мензурки", "криостазисной мензурке", "криостазисную мензурку", "криостазисной мензуркой", "криостазисной мензурке")
 	desc = "Криостазисная мензурка, позволяющая хранить химические вещества без протекания реакций."
 	icon_state = "beakernoreact"
-	construction = MAT_GLASS+"=500"
+	materials = MAT_GLASS+"=500"
 	amount_per_transfer_from_this = 10
 	flags = OPENCONTAINER | NOREACT
 
@@ -392,7 +392,7 @@
 	desc = "Блюспейс мензурка, работающая на экспериментальной технологии."
 	gender = FEMALE
 	icon_state = "beakerbluespace"
-	construction = MAT_GLASS+"=5000"
+	materials = MAT_GLASS+"=5000"
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
@@ -407,7 +407,7 @@
 	desc = "Маленькая стеклянная пробирка."
 	gender = FEMALE
 	icon_state = "vial"
-	construction = MAT_GLASS+"=250"
+	materials = MAT_GLASS+"=250"
 	volume = 25
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25)
@@ -478,7 +478,7 @@
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
-	construction = MAT_METAL+"=200;"+MAT_GLASS+"=0"
+	materials = MAT_METAL+"=200"
 	w_class = SIZE_SMALL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)

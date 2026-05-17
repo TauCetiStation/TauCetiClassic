@@ -24,7 +24,7 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=150"
+	materials = MAT_METAL+"=150"
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -59,7 +59,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	construction = MAT_METAL+"=75;"+MAT_GLASS+"=0"
+	materials = MAT_METAL+"=75"
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
@@ -102,7 +102,7 @@
 	throw_speed = 2
 	throw_range = 9
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=80"
+	materials = MAT_METAL+"=80"
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/wirecutters-pinch.ogg')
 	attack_verb = list("pinched", "nipped")
@@ -158,8 +158,8 @@
 		QUALITY_WELDING = 1
 	)
 
-	construction = MAT_METAL+"=70" // Cost to make in the autolathe
-	construction = MAT_GLASS+"=30"
+	materials = MAT_METAL+"=70" // Cost to make in the autolathe
+	materials = MAT_GLASS+"=30"
 
 	origin_tech = "engineering=1" // R&D tech level
 
@@ -478,7 +478,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "indwelder"
 	max_fuel = 40
-	construction = MAT_METAL+"=70;"+MAT_GLASS+"=60"
+	materials = MAT_METAL+"=70;"+MAT_GLASS+"=60"
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/hugetank
@@ -487,7 +487,7 @@
 	icon_state = "hugewelder"
 	max_fuel = 80
 	w_class = SIZE_SMALL
-	construction = MAT_METAL+"=70;"+MAT_GLASS+"=120"
+	materials = MAT_METAL+"=70;"+MAT_GLASS+"=120"
 	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
@@ -496,7 +496,7 @@
 	icon_state = "expwelder"
 	max_fuel = 40
 	w_class = SIZE_SMALL
-	construction = MAT_METAL+"=70;"+MAT_GLASS+"=120"
+	materials = MAT_METAL+"=70;"+MAT_GLASS+"=120"
 	toolspeed = 0.5
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
@@ -530,7 +530,7 @@
 
 	w_class = SIZE_SMALL
 
-	construction = MAT_METAL+"=50"
+	materials = MAT_METAL+"=50"
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
@@ -550,7 +550,7 @@
 	throwforce = 5.0
 
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=15"
+	materials = MAT_METAL+"=15"
 
 	qualities = list(
 		QUALITY_PRYING = 0.7
@@ -598,7 +598,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "drill_bolt"
 	item_state = "drill"
-	materials = list(MAT_METAL=150, MAT_SILVER=50)
+	materials = MAT_METAL+"=150;"+MAT_SILVER+"=50"
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	throwforce = 8
@@ -636,7 +636,7 @@
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
-	materials = list(MAT_METAL=150, MAT_SILVER=50)
+	materials = MAT_METAL+"=150;"+MAT_SILVER+"=50"
 	toolspeed = 0.7
 	sharp = 1
 	qualities = list(

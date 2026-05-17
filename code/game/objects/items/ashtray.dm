@@ -73,7 +73,7 @@
 	icon_broken  = "ashtray_bork_bl"
 	max_butts = 14
 	max_integrity = 48
-	construction = MAT_METAL+"=30;"+MAT_GLASS+"=30"
+	materials = MAT_METAL+"=30;"+MAT_GLASS+"=30"
 	empty_desc = "Cheap plastic ashtray."
 	throwforce = 3.0
 
@@ -92,7 +92,7 @@
 	icon_broken  = "ashtray_bork_br"
 	max_butts = 10
 	max_integrity = 144
-	construction = MAT_METAL+"=80"
+	materials = MAT_METAL+"=80"
 	empty_desc = "Massive bronze ashtray."
 	throwforce = 10.0
 
@@ -111,7 +111,7 @@
 	icon_broken  = "ashtray_bork_gl"
 	max_butts = 12
 	max_integrity = 24
-	construction = MAT_GLASS+"=60"
+	materials = MAT_GLASS+"=60"
 	empty_desc = "Glass ashtray. Looks fragile."
 	throwforce = 6.0
 

@@ -32,7 +32,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	throw_speed = 2
 	throw_range = 9
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=75;"+MAT_GLASS+"=25"
+	materials = MAT_METAL+"=75;"+MAT_GLASS+"=25"
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 

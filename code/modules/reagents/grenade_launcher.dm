@@ -9,7 +9,7 @@
 	force = 5.0
 	var/list/grenades = list()
 	var/max_grenades = 5
-	construction = MAT_METAL+"=2000"
+	materials = MAT_METAL+"=2000"
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
 

@@ -6,7 +6,7 @@
 	desc = "Ручной сканер, который показывает состояние растений."
 	icon = 'icons/obj/device.dmi'
 	w_class = SIZE_MINUSCULE
-	construction = MAT_METAL+"=200;"+MAT_GLASS+"=50"
+	materials = MAT_METAL+"=200;"+MAT_GLASS+"=50"
 	origin_tech = "materials=1;biotech=1"
 	icon_state = "hydro"
 	item_state = "plantanalyzer"
@@ -1836,7 +1836,7 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = SIZE_TINY
-	construction = MAT_METAL+"=2550"
+	materials = MAT_METAL+"=2550"
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 

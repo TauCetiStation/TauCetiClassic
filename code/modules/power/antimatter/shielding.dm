@@ -209,7 +209,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	construction = MAT_METAL+"=100"
+	materials = MAT_METAL+"=100"
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
 	if(ispulsing(I) && istype(loc, /turf))

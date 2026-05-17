@@ -14,7 +14,7 @@
 	var/charge = 0
 	var/maxcharge = 1000
 	var/init_full = TRUE // initialize charge with maxcharge
-	construction = MAT_METAL+"=700;"+MAT_GLASS+"=50"
+	materials = MAT_METAL+"=700;"+MAT_GLASS+"=50"
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
@@ -39,14 +39,14 @@
 	origin_tech = "powerstorage=1"
 	maxcharge = 500
 	init_full = FALSE
-	construction = MAT_GLASS+"=40"
+	materials = MAT_GLASS+"=40"
 	rating = 2
 
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
 	origin_tech = "powerstorage=1"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
-	construction = MAT_GLASS+"=40"
+	materials = MAT_GLASS+"=40"
 	rating = 2.5
 
 /obj/item/weapon/stock_parts/cell/energy_weapon
@@ -65,14 +65,14 @@
 	desc = "A special power cell designed for heavy-duty use in area power controllers."
 	origin_tech = "powerstorage=1"
 	maxcharge = 500
-	construction = MAT_GLASS+"=40"
+	materials = MAT_GLASS+"=40"
 
 /obj/item/weapon/stock_parts/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
 	maxcharge = 10000
-	construction = MAT_GLASS+"=60"
+	materials = MAT_GLASS+"=60"
 	rating = 3
 
 /obj/item/weapon/stock_parts/cell/high/empty
@@ -83,7 +83,7 @@
 	origin_tech = "powerstorage=5"
 	icon_state = "scell"
 	maxcharge = 20000
-	construction = MAT_GLASS+"=70"
+	materials = MAT_GLASS+"=70"
 	rating = 4
 
 /obj/item/weapon/stock_parts/cell/super/empty
@@ -94,7 +94,7 @@
 	origin_tech = "powerstorage=6"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	construction = MAT_GLASS+"=80"
+	materials = MAT_GLASS+"=80"
 	rating = 5
 
 /obj/item/weapon/stock_parts/cell/hyper/empty
@@ -105,7 +105,7 @@
 	origin_tech = "powerstorage=7"
 	icon_state = "bscell"
 	maxcharge = 40000
-	construction = MAT_GLASS+"=80"
+	materials = MAT_GLASS+"=80"
 	rating = 6
 	//chargerate = 4000
 
@@ -117,7 +117,7 @@
 	icon_state = "icell"
 	origin_tech =  null
 	maxcharge = 30000
-	construction = MAT_GLASS+"=80"
+	materials = MAT_GLASS+"=80"
 	rating = 6
 
 /obj/item/weapon/stock_parts/cell/infinite/use()
@@ -131,7 +131,7 @@
 	icon_state = "potato_cell" //"potato_battery"
 	charge = 100
 	maxcharge = 300
-	construction = MAT_METAL+"=0;"+MAT_GLASS+"=0"
+	materials = null
 	minor_fault = 1
 	rating = 1
 
@@ -142,5 +142,5 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
 	maxcharge = 10000
-	construction = MAT_METAL+"=0;"+MAT_GLASS+"=0"
+	materials = null
 	rating = 3

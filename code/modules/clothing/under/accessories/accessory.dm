@@ -82,7 +82,7 @@
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
 	layer_priority = 0.1
-	construction = MAT_METAL+"=150;"+MAT_GLASS+"=20"
+	materials = MAT_METAL+"=150;"+MAT_GLASS+"=20"
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
@@ -197,7 +197,7 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	layer_priority = 0.1
-	construction = MAT_METAL+"=1000"
+	materials = MAT_METAL+"=1000"
 	var/medaltype = "medal" //Sprite used for medalbox
 	var/commended = FALSE
 
@@ -264,7 +264,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	medaltype = "medal-silver"
-	construction = MAT_METAL+"=0"
+	materials = null
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -293,7 +293,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	medaltype = "medal-gold"
-	construction = MAT_METAL+"=0"
+	materials = null
 	unacidable = TRUE
 
 /obj/item/clothing/accessory/medal/gold/captain

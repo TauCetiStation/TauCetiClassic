@@ -5,7 +5,7 @@
 	icon_state = "laser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	w_class = SIZE_SMALL
-	construction = MAT_METAL+"=2000"
+	materials = MAT_METAL+"=2000"
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	slot_flags = SLOT_FLAGS_BACK
@@ -21,7 +21,7 @@
 /obj/item/weapon/gun/energy/laser/big //the bigger version of lasrifle with bigger powercell
 	name = "extended-capacity laser rifle"
 	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Этот экземпляр имеет батарейку повышенной емкости и обладает большим размером."
-	m_amt = 4000
+	materials = MAT_METAL+"=4000"
 	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon/extended
 	flags_2 = CANT_BE_INSERTED
 

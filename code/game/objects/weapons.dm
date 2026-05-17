@@ -14,4 +14,4 @@
 	sharp = 1
 	edge = 1
 	can_embed = 1
-	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	materials = MAT_METAL+"=500;"+MAT_GLASS+"=500"

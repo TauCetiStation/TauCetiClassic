@@ -84,7 +84,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "syringe_kit"
-	construction = MAT_METAL+"=500"
+	materials = MAT_METAL+"=500"
 	throwforce = 2
 	w_class = SIZE_TINY
 	throw_speed = 4
