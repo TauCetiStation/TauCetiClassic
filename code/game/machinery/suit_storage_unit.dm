@@ -580,7 +580,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				suit_type = /obj/item/clothing/suit/space/rig/syndi
 				mask_type = /obj/item/clothing/mask/gas/syndicate
 				tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
-				boot_type = /obj/item/clothing/shoes/magboots/syndie
 			if(2)
 				suit_type = /obj/item/clothing/suit/space/rig/wizard
 				mask_type = /obj/item/clothing/mask/gas/coloured
