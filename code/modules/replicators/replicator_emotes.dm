@@ -1,7 +1,7 @@
 /datum/emote/clickable/help_replicator
 	key = "help"
-	message_1p = "You asked for help."
-	message_3p = "requests assistance."
+	message_1p = "Вы просите помощи."
+	message_3p = "нуждается в помощи."
 	cooldown = 10 SECONDS
 	duration = 7 SECONDS
 	message_type = SHOWMSG_AUDIO
@@ -39,14 +39,14 @@
 /datum/emote/replicator/beep
 	key = "beep"
 
-	message_1p = "You beep."
-	message_3p = "beeps."
+	message_1p = "Вы издаёте би-и-ип."
+	message_3p = "издаёт би-и-ип."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "издаёт роботизированные звуки."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -71,15 +71,15 @@
 /datum/emote/replicator/beep/exclamation
 	key = "beep!"
 
-	message_1p = "You beep!"
-	message_3p = "beeps!"
+	message_1p = "Вы издаёте би-и-ип!"
+	message_3p = "издаёт би-и-ип!"
 
 	cloud = "robot2"
 
 /datum/emote/replicator/beep/question
 	key = "beep?"
 
-	message_1p = "You beep?"
-	message_3p = "beeps?"
+	message_1p = "Вы издаёте би-и-ип?"
+	message_3p = "издаёт би-и-ип?"
 
 	cloud = "robot1"

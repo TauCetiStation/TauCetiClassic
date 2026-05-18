@@ -14,8 +14,8 @@
 /datum/emote/robot/salute
 	key = "salute"
 
-	message_1p = "Вы отдаёте честь."
-	message_3p = "отдаёт честь."
+	message_1p = "Вы салютуете."
+	message_3p = "салютует."
 
 	message_type = SHOWMSG_VISUAL
 
