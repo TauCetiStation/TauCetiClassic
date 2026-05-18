@@ -42,18 +42,11 @@
 
 	return ..()
 
-/mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)
-	var/impact_force = P.impact_force
-	var/distance = get_dist(P.starting, loc)
-	if(distance <= 2)
-		impact_force += P.close_range_impact_force
-	return impact_force
-
 /mob/living/proc/prob_miss(obj/item/projectile/P)
 	return prob(20 + P.get_miss_modifier()) // no bopyparts -> no reason to check def_zone
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/impact_force = get_projectile_impact_force(P, def_zone)
+	var/impact_force = P.get_full_impact_force(src)
 	if(impact_force && is_impact_force_affected(impact_force, get_dir(P, src)))
 		if(isturf(loc))
 			loc.add_blood(src)

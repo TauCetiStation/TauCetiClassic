@@ -383,3 +383,15 @@ var/global/static/list/taser_projectiles = list(
 	/obj/item/projectile/beam/stun,
 	/obj/item/ammo_casing/energy/electrode
 )
+
+/obj/item/projectile/proc/get_full_impact_force(mob/living/target)
+	var/full_impact_force = impact_force
+	var/distance = get_dist(starting, target.loc)
+	if(distance <= 2)
+		full_impact_force += close_range_impact_force
+	if(isreplicator(target))
+		full_impact_force *= 0.1
+		if(damage_type == BRUTE)
+			damage += damage * 0.1
+	return full_impact_force
+
