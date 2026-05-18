@@ -948,3 +948,6 @@ var/global/list/ai_verbs_default = list(
 		pixel_y = 8
 	else
 		pixel_y = 0
+
+/mob/living/silicon/ai/is_antag()
+	return laws?.zeroth

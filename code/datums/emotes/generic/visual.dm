@@ -133,7 +133,7 @@
 /datum/emote/deathgasp
 	key = "deathgasp"
 
-	message_1p = "Вы замираете и обмякаете, ваши глаза становятся мертвыми и безжизненными..."
+	message_1p = "Вы бьётесь в короткой агонии и обмякаете, ваш остекленевший взгляд устремляется в пустоту..."
 
 	message_impaired_reception = "Вы слышите глухой удар."
 
@@ -142,4 +142,4 @@
 	required_intentional_stat = CONSCIOUS
 
 /datum/emote/deathgasp/get_emote_message_3p(mob/user)
-	return "замирает и обмякает, [THEIR_RU(user)] глаза становятся мертвыми и безжизненными..."
+	return "бьется в короткой агонии и обмякает, остекленевший взгляд устремляется в пустоту..."

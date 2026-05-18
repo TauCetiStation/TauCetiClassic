@@ -110,7 +110,6 @@
 	IO.status |= ORGAN_CUT_AWAY
 	IO.remove(target)
 	IO.loc = get_turf(target)
-	IO.transfer_identity(target)
 	target.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 
 /datum/surgery_step/brain/saw_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

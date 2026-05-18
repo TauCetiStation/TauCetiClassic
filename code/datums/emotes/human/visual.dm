@@ -163,7 +163,7 @@
 /datum/emote/human/deathgasp
 	key = "deathgasp"
 
-	message_1p = "Вы замираете и обмякаете, ваши глаза становятся мертвыми и безжизненными..."
+	message_1p = "Вы бьётесь в короткой агонии и обмякаете, ваш остекленевший взгляд устремляется в пустоту..."
 
 	message_impaired_reception = "You hear a thud."
 
@@ -172,7 +172,7 @@
 	required_intentional_stat = CONSCIOUS
 
 /datum/emote/human/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
-	return "замирает и обмякает, [THEIR_RU(user)] глаза становятся мертвыми и безжизненными..."
+	return "бьется в короткой агонии и обмякает, остекленевший взгляд устремляется в пустоту..."
 
 /datum/emote/human/flip
 	key = "flip"
