@@ -2,7 +2,7 @@ var/global/const/CAMERA_WIRE_FOCUS    = 1
 var/global/const/CAMERA_WIRE_POWER    = 2
 var/global/const/CAMERA_WIRE_LIGHT    = 4
 var/global/const/CAMERA_WIRE_ALARM    = 8
-var/global/const/CAMERA_WIRE_NOTHING1 = 16
+var/global/const/CAMERA_WIRE_AI       = 16
 var/global/const/CAMERA_WIRE_NOTHING2 = 32
 
 /datum/wires/camera
@@ -16,6 +16,7 @@ var/global/const/CAMERA_WIRE_NOTHING2 = 32
 	. += "[(C.can_use(check_paint = FALSE) ? "The power link light is on." : "The power link light is off.")]"
 	. += "[(C.light_disabled ? "The camera light is off." : "The camera light is on.")]"
 	. += "[(C.alarm_on ? "The alarm light is on." : "The alarm light is off.")]"
+	. += "[(C.hidden ? "The cyan light is off." : "The cyan light is blinking.")]"
 
 /datum/wires/camera/can_use()
 	var/obj/machinery/camera/C = holder
@@ -41,6 +42,10 @@ var/global/const/CAMERA_WIRE_NOTHING2 = 32
 			else
 				C.cancelCameraAlarm()
 
+		if(CAMERA_WIRE_AI)
+			C.hidden = !mended
+			cameranet.updateVisibility(C, 0)
+
 /datum/wires/camera/update_pulsed(index)
 	var/obj/machinery/camera/C = holder
 
@@ -59,4 +64,4 @@ var/global/const/CAMERA_WIRE_NOTHING2 = 32
 			C.audible_message("[bicon(C)] *beep*")
 
 /datum/wires/camera/proc/is_deconstructable()
-	return is_index_cut(CAMERA_WIRE_POWER) && is_index_cut(CAMERA_WIRE_FOCUS) && is_index_cut(CAMERA_WIRE_LIGHT) && is_index_cut(CAMERA_WIRE_NOTHING1) && is_index_cut(CAMERA_WIRE_NOTHING2)
+	return is_index_cut(CAMERA_WIRE_POWER) && is_index_cut(CAMERA_WIRE_FOCUS) && is_index_cut(CAMERA_WIRE_LIGHT) && is_index_cut(CAMERA_WIRE_AI) && is_index_cut(CAMERA_WIRE_NOTHING2)

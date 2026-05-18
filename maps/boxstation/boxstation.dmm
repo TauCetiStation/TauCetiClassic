@@ -6808,7 +6808,9 @@
 "alk" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Bay South";
-	dir = 5
+	dir = 5;
+	network = list("CARGO");
+	hidden = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -14037,10 +14039,15 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/eva)
 "axK" = (
-/obj/machinery/computer/security/mining,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 24
+	},
+/obj/structure/filingcabinet{
+	req_access = list(41)
+	},
+/obj/item/weapon/paper/depacc{
+	department_name = "Cargo"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -16410,18 +16417,10 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aCa" = (
-/obj/structure/filingcabinet{
-	req_access = list(41)
-	},
-/obj/item/weapon/paper/depacc{
-	department_name = "Cargo"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/portrait/captain{
-	pixel_x = 32
-	},
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -23078,13 +23077,14 @@
 "aOI" = (
 /obj/machinery/camera{
 	c_tag = "Quartermaster's Office";
-	dir = 8
-	},
-/obj/machinery/alarm{
 	dir = 8;
-	pixel_x = 24
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/item/weapon/flora/pottedplant/ficus,
+/obj/item/portrait/captain{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -24948,7 +24948,9 @@
 /area/station/security/checkpoint)
 "aSa" = (
 /obj/machinery/camera{
-	c_tag = "Cargo Bay Warehouse"
+	c_tag = "Cargo Bay Warehouse";
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/structure/rack,
 /obj/random/science/circuit,
@@ -27558,7 +27560,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Lobby";
-	dir = 8
+	dir = 8;
+	network = list("CARGO");
+	hidden = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -29360,7 +29364,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -27
 	},
-/obj/structure/closet/secure_closet/quartermaster,
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -29408,6 +29412,10 @@
 /obj/item/weapon/coin/silver{
 	pixel_x = -8;
 	pixel_y = -2
+	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -25
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -32825,7 +32833,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Mining office";
-	dir = 6
+	dir = 6;
+	network = list("CARGO");
+	hidden = 1
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -34980,6 +34990,10 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/computer/security/mining{
+	network = list("CARGO", "MINE");
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -36295,7 +36309,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Office";
-	dir = 8
+	dir = 8;
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/machinery/computer/vending{
 	dir = 8
@@ -43367,7 +43383,9 @@
 "byv" = (
 /obj/machinery/camera{
 	c_tag = "Recycler Office";
-	dir = 1
+	dir = 1;
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54838,7 +54856,9 @@
 "bTT" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Bay East";
-	dir = 1
+	dir = 1;
+	network = list("CARGO");
+	hidden = 1
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -71903,7 +71923,9 @@
 "eZS" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Delivery Office";
-	dir = 4
+	dir = 4;
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -72112,7 +72134,9 @@
 "fqb" = (
 /obj/machinery/camera{
 	c_tag = "Recycler External North";
-	dir = 8
+	dir = 8;
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -72288,7 +72312,9 @@
 /area/station/hallway/secondary/exit)
 "fAb" = (
 /obj/machinery/camera{
-	c_tag = "Recycler External South"
+	c_tag = "Recycler External South";
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/structure/fence/metal{
 	color = "yellow";
@@ -75299,7 +75325,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Recycler Office";
-	dir = 10
+	dir = 10;
+	network = list("CARGO");
+	hidden = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -76349,7 +76377,9 @@
 "jyb" = (
 /obj/machinery/camera{
 	c_tag = "Disposals";
-	dir = 8
+	dir = 8;
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
@@ -87887,7 +87917,9 @@
 /area/station/engineering/engine)
 "xoX" = (
 /obj/machinery/camera{
-	c_tag = "Cargo Bay West"
+	c_tag = "Cargo Bay West";
+	network = list("CARGO");
+	hidden = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "loadingarea"

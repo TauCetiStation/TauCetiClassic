@@ -78,6 +78,9 @@
 		if(!c)
 			continue
 
+		if(c.hidden)
+			continue
+
 		var/restricted = 0
 		for(var/N in c.network)
 			if(N in RESTRICTED_CAMERA_NETWORKS)
@@ -152,7 +155,7 @@
 		if(restricted)
 			continue
 
-		if(c.can_use())
+		if(c.can_use() && !c.hidden)
 			cameras += c
 
 	for(var/turf/t in range(10, locate(x + 8, y + 8, z)))
@@ -165,6 +168,9 @@
 			continue
 
 		if(!c.can_use())
+			continue
+
+		if(c.hidden)
 			continue
 
 		for(var/turf/t in c.can_see())
