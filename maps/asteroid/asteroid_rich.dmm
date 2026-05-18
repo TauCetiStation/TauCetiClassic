@@ -1649,6 +1649,12 @@
 	icon_state = "brownchoco"
 	},
 /area/asteroid/mine/eva)
+"do" = (
+/obj/machinery/suit_storage_unit/wizard{
+	fulled = 1
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/dwarf)
 "dp" = (
 /obj/effect/decal/turf_decal/set_burned,
 /obj/effect/decal/cleanable/dirt,
@@ -6736,8 +6742,8 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "sW" = (
 /obj/machinery/suit_storage_unit/wizard,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/dwarf)
+/turf/simulated/mineral/random/caves/high_chance,
+/area/asteroid/mine/unexplored/dangerous)
 "sX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -55827,7 +55833,7 @@ pC
 uP
 sv
 sI
-sW
+do
 tf
 ts
 tA
@@ -62241,7 +62247,7 @@ sp
 sp
 pC
 pC
-pC
+sW
 pC
 pC
 pC

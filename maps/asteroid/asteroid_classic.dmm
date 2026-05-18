@@ -8860,15 +8860,8 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sW" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
-	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
-	},
-/obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
-	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
+/obj/machinery/suit_storage_unit/wizard{
+	fulled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
