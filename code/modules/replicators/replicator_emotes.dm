@@ -39,13 +39,13 @@
 /datum/emote/replicator/beep
 	key = "beep"
 
-	message_1p = "Вы издаёте би-и-ип."
-	message_3p = "издаёт би-и-ип."
+	message_1p = "Вы пикаете."
+	message_3p = "пикает."
 
 	message_impaired_production = "издаёт слабый звук."
 	message_impaired_reception = "мерцает."
 
-	message_miming = "издаёт роботизированные звуки."
+	message_miming = "изображает звуки робота."
 	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -71,15 +71,15 @@
 /datum/emote/replicator/beep/exclamation
 	key = "beep!"
 
-	message_1p = "Вы издаёте би-и-ип!"
-	message_3p = "издаёт би-и-ип!"
+	message_1p = "Вы пикаете!"
+	message_3p = "пикает!"
 
 	cloud = "robot2"
 
 /datum/emote/replicator/beep/question
 	key = "beep?"
 
-	message_1p = "Вы издаёте би-и-ип?"
-	message_3p = "издаёт би-и-ип?"
+	message_1p = "Вы пикаете?"
+	message_3p = "пикает?"
 
 	cloud = "robot1"
