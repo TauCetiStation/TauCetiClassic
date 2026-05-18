@@ -74,7 +74,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	return ..()
 
 /datum/music_player/proc/interact(mob/living/user)
-	if(!istype(user) || !instrument.Adjacent(user) || isAI(user) || user.incapacitated())
+	if(!istype(user) || !instrument.Adjacent(user) || isAI(user) || isdrone(user) || user.incapacitated())
 		return
 
 	var/html = ""
@@ -141,7 +141,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 /datum/music_player/Topic(herf, href_list)
 	..()
 
-	if(instrument.Adjacent(usr) && isliving(usr) && !isAI(usr))
+	if(instrument.Adjacent(usr) && isliving(usr) && !isAI(usr) && !isdrone(usr))
 		if(href_list["newsong"])
 			playing = FALSE
 			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
