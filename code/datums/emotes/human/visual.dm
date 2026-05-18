@@ -101,7 +101,7 @@
 	key = "eyebrow"
 
 	message_1p = "Вы приподнимаете бровь."
-	message_3p = "поднимает бровь."
+	message_3p = "приподнимает бровь."
 
 	message_type = SHOWMSG_VISUAL
 

@@ -194,7 +194,7 @@
 	message_1p = "Вы кашляете."
 	message_3p = "кашляет."
 
-	message_impaired_production = "сильно дергается!"
+	message_impaired_production = "сильно содрогается!"
 
 	message_miming = "изображает кашель."
 	message_muzzled = "пытается покашлять."
@@ -205,7 +205,7 @@
 	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/cough/get_impaired_msg(mob/user)
-	return "дергается своим лицом вперед, открывая и закрывая свой рот!"
+	return "подается вперед, открывая и закрывая рот!"
 
 /datum/emote/human/cough/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_MBCOUGH, SOUNDIN_FBCOUGH)
@@ -317,13 +317,13 @@
 /datum/emote/human/gasp
 	key = "gasp"
 
-	message_1p = "Вы ловите ртом воздух с трудом!"
-	message_3p = "жадно ловит ртом воздух!"
+	message_1p = "Вы судорожно вдыхаете!"
+	message_3p = "судорожно вдыхает!"
 
-	message_impaired_production = "жадно втягивает воздух!"
-	message_impaired_reception = "жадно втягивает воздух!"
+	message_impaired_production = "резко втягивает воздух!"
+	message_impaired_reception = "резко втягивает воздух!"
 
-	message_miming = "изображает удушье!"
+	message_miming = "беззвучно ловит ртом воздух!"
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO

@@ -13,8 +13,8 @@
 /datum/emote/human/rock
 	key = "rock"
 
-	message_1p = "Вы показываете рукой камень."
-	message_3p = "показывает рукой камень."
+	message_1p = "Вы показываете камень."
+	message_3p = "показывает камень."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -29,8 +29,8 @@
 /datum/emote/human/paper
 	key = "paper"
 
-	message_1p = "Вы показываете рукой бумагу."
-	message_3p = "показывает рукой бумагу."
+	message_1p = "Вы показываете бумагу."
+	message_3p = "показывает бумагу."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -45,8 +45,8 @@
 /datum/emote/human/scissors
 	key = "scissors"
 
-	message_1p = "Вы показываете рукой ножницы."
-	message_3p = "показывает рукой ножницы."
+	message_1p = "Вы показываете ножницы."
+	message_3p = "показывает ножницы."
 
 	message_type = SHOWMSG_VISUAL
 

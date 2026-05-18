@@ -50,7 +50,7 @@
 	key = "eyebrow"
 
 	message_1p = "Вы приподнимаете бровь."
-	message_3p = "поднимает бровь."
+	message_3p = "приподнимает бровь."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -97,8 +97,8 @@
 /datum/emote/collapse
 	key = "collapse"
 
-	message_1p = "Вы падаете в обморок!"
-	message_3p = "падает в обморок!"
+	message_1p = "Вы падаете!"
+	message_3p = "падает!"
 
 	message_type = SHOWMSG_VISUAL
 
