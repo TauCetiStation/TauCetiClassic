@@ -332,9 +332,8 @@ var/global/list/all_supply_groups = list("Bureaucracy / Arts", "Security", "Huma
 					/obj/item/clothing/head/helmet/tactical/marinad,
 					/obj/item/clothing/glasses/sunglasses/hud/sechud/tactical,
 					/obj/item/clothing/gloves/security/marinad,
-					/obj/item/weapon/storage/belt/security/tactical/marines,
+					/obj/item/weapon/storage/belt/security/tactical,
 					/obj/item/clothing/shoes/boots,
-					/obj/item/device/radio/headset/headset_sec/marinad,
 					/obj/item/weapon/storage/backpack/dufflebag/marinad,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
 	additional_costs = 12500
