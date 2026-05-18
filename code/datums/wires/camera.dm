@@ -43,8 +43,9 @@ var/global/const/CAMERA_WIRE_NOTHING2 = 32
 				C.cancelCameraAlarm()
 
 		if(CAMERA_WIRE_AI)
-			C.hidden = !mended
-			cameranet.updateVisibility(C, 0)
+			if(C.hidden == mended)
+				C.hidden = !mended
+				cameranet.updateVisibility(C, 0)
 
 /datum/wires/camera/update_pulsed(index)
 	var/obj/machinery/camera/C = holder
