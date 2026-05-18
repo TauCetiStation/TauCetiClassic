@@ -102,8 +102,7 @@
 	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		var/obj/item/clothing/covered_by = get_clothing_by_covered_bodypart(BP.owner, IO.parent_bodypart)
-		var/organs_not_will_be_damaged = covered_by && (IO.organ_tag in covered_by.potentially_protected_organs) && are_organs_protected
-		if(!organs_not_will_be_damaged)
+		if(!covered_by || !(IO.organ_tag in covered_by.potentially_protected_organs) || !are_organs_protected)
 			IO.take_damage(damage_amt / 10)
 
 	if(used_weapon)
