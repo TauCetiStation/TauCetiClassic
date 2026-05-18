@@ -4,10 +4,10 @@
 	message_1p = "Вы смеётесь."
 	message_3p = "смеётся."
 
-	message_impaired_production = "тихо посмеивается."
+	message_impaired_production = "беззвучно смеётся."
 
 	message_miming = "изображает смех."
-	message_muzzled = "издаёт сдавленный смех."
+	message_muzzled = "глухо хихикает."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -16,7 +16,7 @@
 	required_stat = CONSCIOUS
 
 /datum/emote/human/laugh/get_impaired_msg(mob/user)
-	return "открывает и закрывает свой рот, улыбаясь."
+	return "открывает и закрывает рот, улыбаясь."
 
 /datum/emote/human/laugh/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/laugh_by_gender_species = list(
@@ -40,17 +40,17 @@
 	message_1p = "Вы хихикаете."
 	message_3p = "хихикает."
 
-	message_impaired_production = "слегка улыбается и тихо хихикает."
+	message_impaired_production = "слегка улыбается и беззвучно хихикает."
 
 	message_miming = "изображает хихикание."
-	message_muzzled = "издаёт сдавленное хихикание."
+	message_muzzled = "сдавленно хихикает."
 
 	message_type = SHOWMSG_AUDIO
 
 	required_stat = CONSCIOUS
 
 /datum/emote/human/giggle/get_impaired_msg(mob/user)
-	return "открывает и закрывает слегка свой рот, улыбаясь."
+	return "слегка приоткрывает и закрывает рот, улыбаясь."
 
 /datum/emote/human/grunt
 	key = "grunt"
@@ -71,7 +71,7 @@
 	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/grunt/get_impaired_msg(mob/user)
-	return "стиснул свои зубы."
+	return "стискивает зубы."
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
@@ -103,10 +103,10 @@
 	message_1p = "Вы стонете."
 	message_3p = "стонет."
 
-	message_impaired_production = "корчится и тихо постанывает."
+	message_impaired_production = "корчится и слегка вздыхает."
 
-	message_miming = "изображает боль"
-	message_muzzled = "издаёт сдавленный шум"
+	message_miming = "изображает боль!"
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -116,7 +116,7 @@
 	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/groan/get_impaired_msg(mob/user)
-	return "приоткрывает свой рот."
+	return "приоткрывает рот."
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
@@ -150,7 +150,7 @@
 	message_1p = "Вы кричите!"
 	message_3p = "кричит!"
 
-	message_impaired_production = "кривит лицо в муках!"
+	message_impaired_production = "искажает лицо в мучительной гримасе!"
 
 	message_miming = "изображает крик!"
 	message_muzzled = "издаёт громкое мычание!"
@@ -163,7 +163,7 @@
 	blocklist_unintentional_traits = list(TRAIT_NO_PAIN)
 
 /datum/emote/human/scream/get_impaired_msg(mob/user)
-	return "открывает свой рот как рыбка хватающая ртом воздух!"
+	return "открывает рот, словно рыба, глотающая воздух!"
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/scream_by_gender_species = list(
@@ -197,7 +197,7 @@
 	message_impaired_production = "сильно содрогается!"
 
 	message_miming = "изображает кашель."
-	message_muzzled = "пытается покашлять."
+	message_muzzled = "глухо кашляет."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -217,7 +217,7 @@
 	message_1p = "Вы икаете."
 	message_3p = "икает."
 
-	message_impaired_production = "издаёт слаыбй шум."
+	message_impaired_production = "издаёт слабый звук."
 
 	message_miming = "изображает икоту."
 	message_muzzled = "издаёт сдавленный звук."
@@ -230,7 +230,7 @@
 	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/hiccup/get_impaired_msg(mob/user)
-	return "неожиданно содрогается, открыв свой рот."
+	return "неожиданно содрогается, открывая рот."
 
 
 /datum/emote/human/choke
