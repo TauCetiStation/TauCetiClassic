@@ -335,6 +335,7 @@ var/global/list/all_supply_groups = list("Bureaucracy / Arts", "Security", "Huma
 					/obj/item/weapon/storage/belt/security/tactical,
 					/obj/item/clothing/shoes/boots,
 					/obj/item/weapon/storage/backpack/dufflebag/marinad,
+					/obj/item/weapon/gun/projectile/shotgun,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
 	additional_costs = 500
 	crate_type = /obj/structure/closet/crate/secure
