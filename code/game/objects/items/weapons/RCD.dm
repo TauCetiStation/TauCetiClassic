@@ -24,7 +24,7 @@ RCD
 	var/max_matter = 100
 	var/working = 0
 	var/mode = RCD_MODE_FLOOR_WALLS
-	var/list/available_modes = list(RCD_MODE_FLOOR_WALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT)
+	var/list/available_modes = list(RCD_MODE_FLOOR_WALLS, RCD_MODE_AIRLOCK_ASSEMBLY, RCD_MODE_DECONSTRUCT)
 	var/canRwall = 0
 	var/disabled = 0
 
@@ -48,7 +48,7 @@ RCD
 	switch(mode)
 		if(RCD_MODE_FLOOR_WALLS)  mode_overlay = "floornwall"
 		if(RCD_MODE_DECONSTRUCT)  mode_overlay = "deconstruct"
-		if(RCD_MODE_AIRLOCK)      mode_overlay = "airlock"
+		if(RCD_MODE_AIRLOCK_ASSEMBLY)      mode_overlay = "airlock assembly"
 		else                      mode_overlay = "floornwall"
 	add_overlay(image(icon, "sel_[mode_overlay][overlay_suffix]"))
 
@@ -97,7 +97,7 @@ RCD
 		return
 
 	var/static/radial_floor_wall = image(icon = 'icons/turf/floors.dmi', icon_state = "plating")
-	var/static/radial_airlock = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "full")
+	var/static/radial_airlock = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "construction")
 	var/static/radial_pipe = image(icon = 'icons/obj/pipes/disposal.dmi', icon_state = "conpipe-s")
 	var/static/radial_deconstruct = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_trash")
 
@@ -105,8 +105,8 @@ RCD
 
 	if(RCD_MODE_FLOOR_WALLS in available_modes)
 		options[RCD_MODE_FLOOR_WALLS] = radial_floor_wall
-	if(RCD_MODE_AIRLOCK in available_modes)
-		options[RCD_MODE_AIRLOCK] = radial_airlock
+	if(RCD_MODE_AIRLOCK_ASSEMBLY in available_modes)
+		options[RCD_MODE_AIRLOCK_ASSEMBLY] = radial_airlock
 	if(RCD_MODE_DECONSTRUCT in available_modes)
 		options[RCD_MODE_DECONSTRUCT] = radial_deconstruct
 	if(RCD_MODE_PNEUMATIC in available_modes)
@@ -170,17 +170,20 @@ RCD
 				F.ChangeTurf(/turf/simulated/wall)
 				return TRUE
 
-		if(RCD_MODE_AIRLOCK)
+		if(RCD_MODE_AIRLOCK_ASSEMBLY)
 			if(isfloorturf(target))
 				if(!canBuildOnTurf(target))
-					to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
+					to_chat(user, "<span class='warning'>You can't build airlock assembly here.</span>")
 					return FALSE
 
-				to_chat(user, "<span class='notice'>Building Airlock...</span>")
-				if(!use_tool(target, user, 5 SECONDS, amount = 20))
+				to_chat(user, "<span class='notice'>Building Airlock Assembly...</span>")
+				if(!use_tool(target, user, 3 SECONDS, amount = 20))
 					return
 				activate()
-				new /obj/machinery/door/airlock(target)
+				var/obj/structure/door_assembly/DA = new /obj/structure/door_assembly(target)
+				DA.anchored = TRUE
+				DA.state = ASSEMBLY_WIRED
+				DA.update_state()
 				return TRUE
 
 		if(RCD_MODE_DECONSTRUCT)
