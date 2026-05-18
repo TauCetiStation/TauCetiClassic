@@ -1808,6 +1808,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Wizard costume crate"
 	group = "Miscellaneous"
 
+/datum/supply_pack/replicator
+	name = "replicator"
+	contains = list(/obj/structure/closet/critter/replicator)
+	crate_name = "Replicator crate"
+	group = "Miscellaneous"
+
 /datum/supply_pack/conveyor
 	name = "Conveyor Assembly Crate"
 	contains = list(/obj/item/conveyor_construct,
