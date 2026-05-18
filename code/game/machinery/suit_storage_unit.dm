@@ -570,6 +570,8 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	build_type =  SUIT_STORAGE_BUILD_NONE
 
 /obj/machinery/suit_storage_unit/abandoned/atom_init()
+	if(!fulled)
+		return ..()
 
 	if(prob(50))
 		occupant = new /mob/living/simple_animal/hostile/xenomorph/queen(src)
