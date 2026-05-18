@@ -324,6 +324,73 @@ var/global/list/all_supply_groups = list("Bureaucracy / Arts", "Security", "Huma
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/marines_armor
+
+	name = "Marines armor crate"
+	contains = list(/obj/item/clothing/under/tactical/marinad,
+					/obj/item/clothing/suit/marinad,
+					/obj/item/clothing/head/helmet/tactical/marinad,
+					/obj/item/clothing/glasses/sunglasses/hud/sechud/tactical,
+					/obj/item/clothing/gloves/security/marinad,
+					/obj/item/weapon/storage/belt/security/tactical/marines,
+					/obj/item/clothing/shoes/boots,
+					/obj/item/device/radio/headset/headset_sec/marinad,
+					/obj/item/weapon/storage/backpack/dufflebag/marinad,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
+	additional_costs = 12500
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Marines Armor crate"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_pack/marines_weapon
+
+	name = "Marines weapon crate"
+	contains = list(
+					/obj/item/weapon/gun/projectile/automatic/m41a,
+					/obj/item/weapon/gun/projectile/automatic/m41a,
+					/obj/item/ammo_box/magazine/m41a,
+					/obj/item/ammo_box/magazine/m41a)
+	additional_costs = 10500
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Marines Weapon crate"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_pack/marines_armor
+
+	name = "Marines armor crate"
+	contains = list(/obj/item/clothing/under/tactical/marinad,
+					/obj/item/clothing/suit/marinad,
+					/obj/item/clothing/head/helmet/tactical/marinad,
+					/obj/item/clothing/glasses/sunglasses/hud/sechud/tactical,
+					/obj/item/clothing/gloves/security/marinad,
+					/obj/item/weapon/storage/belt/security/tactical/marines,
+					/obj/item/clothing/shoes/boots,
+					/obj/item/device/radio/headset/headset_sec/marinad,
+					/obj/item/weapon/storage/backpack/dufflebag/marinad,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
+	additional_costs = 12500
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Marines Armor crate"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_pack/marines_weapon_supplies
+
+	name = "Marines supplies crate"
+	contains = list(
+					/obj/item/ammo_box/magazine/m41a,
+					/obj/item/ammo_box/magazine/m41a,
+					/obj/item/ammo_box/magazine/m41a,
+					/obj/item/ammo_box/magazine/m41a)
+	additional_costs = 1800
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Marines Supplies crate"
+	access = access_armory
+	group = "Security"
+
+
 /datum/supply_pack/mind_shields
 	name = "Mind shields implant crate"
 	contains = list (/obj/item/weapon/storage/lockbox/mind_shields)
