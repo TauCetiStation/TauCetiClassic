@@ -44,10 +44,21 @@
 	return ..()
 
 /obj/item/device/synth/unable_to_play(mob/living/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.incapacitated())
+			return TRUE
+		// Синт должен быть активен в руке (манипуляторе) борга
+		return (R.module_active != src)
+
 	return ..() || loc != user
 
 /obj/item/device/synth/attack_self(mob/living/user)
-	MP.interact(user)
+	if(unable_to_play(user))
+		return
+
+	if(MP)
+		MP.interact(user)
 
 /obj/item/device/synth/examine(mob/user)
 	. = ..()
