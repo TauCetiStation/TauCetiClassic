@@ -55,13 +55,13 @@
 /datum/emote/human/grunt
 	key = "grunt"
 
-	message_1p = "Вы ворчите."
-	message_3p = "ворчит."
+	message_1p = "Вы кряхтите."
+	message_3p = "кряхтит."
 
-	message_impaired_production = "корчится, слегка вздыхая."
+	message_impaired_production = "корчится и слегка вздыхает."
 
-	message_miming = "изображает ворчание!"
-	message_muzzled = "тихо ворчит!"
+	message_miming = "изображает кряхтение!"
+	message_muzzled = "издаёт сдавленное кряхтение!"
 
 	message_type = SHOWMSG_AUDIO
 
