@@ -336,40 +336,11 @@ var/global/list/all_supply_groups = list("Bureaucracy / Arts", "Security", "Huma
 					/obj/item/clothing/shoes/boots,
 					/obj/item/weapon/storage/backpack/dufflebag/marinad,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
-	additional_costs = 12500
+	additional_costs = 4000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Marines Armor crate"
 	access = access_armory
 	group = "Security"
-
-/datum/supply_pack/marines_weapon
-
-	name = "Marines weapon crate"
-	contains = list(
-					/obj/item/weapon/gun/projectile/automatic/m41a,
-					/obj/item/weapon/gun/projectile/automatic/m41a,
-					/obj/item/ammo_box/magazine/m41a,
-					/obj/item/ammo_box/magazine/m41a)
-	additional_costs = 10500
-	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Marines Weapon crate"
-	access = access_armory
-	group = "Security"
-
-/datum/supply_pack/marines_weapon_supplies
-
-	name = "Marines supplies crate"
-	contains = list(
-					/obj/item/ammo_box/magazine/m41a,
-					/obj/item/ammo_box/magazine/m41a,
-					/obj/item/ammo_box/magazine/m41a,
-					/obj/item/ammo_box/magazine/m41a)
-	additional_costs = 1800
-	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Marines Supplies crate"
-	access = access_armory
-	group = "Security"
-
 
 /datum/supply_pack/mind_shields
 	name = "Mind shields implant crate"
