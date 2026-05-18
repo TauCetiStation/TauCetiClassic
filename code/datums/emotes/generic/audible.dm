@@ -106,10 +106,10 @@
 	message_impaired_production = "сильно содрогается!"
 
 	message_miming = "изображает кашель."
-	message_muzzled = "пытается покашлять."
+	message_muzzled = "глухо кашляет."
 
 	required_stat = CONSCIOUS
 	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/cough/get_impaired_msg(mob/user)
-	return "подается вперед, открывая и закрывая рот!"
+	return "подаётся вперёд, открывая и закрывая рот!"
