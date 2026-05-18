@@ -48,7 +48,6 @@
 		var/mob/living/silicon/robot/R = user
 		if(R.incapacitated())
 			return TRUE
-		// Синт должен быть активен в руке (манипуляторе) борга
 		return (R.module_active != src)
 
 	return ..() || loc != user

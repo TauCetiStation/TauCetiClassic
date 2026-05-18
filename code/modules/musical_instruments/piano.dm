@@ -10,6 +10,11 @@
 	var/sound_path = "sound/musical_instruments/piano"
 
 /obj/structure/device/piano/unable_to_play(mob/living/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		return R.incapacitated() || !Adjacent(R) || !anchored
+
+	// Для обычных людей (включает проверку user.lying)
 	return ..() || !Adjacent(user) || !anchored
 
 /obj/structure/device/piano/atom_init()
@@ -21,6 +26,11 @@
 	return ..()
 
 /obj/structure/device/piano/attack_hand(mob/living/user)
+	if(!anchored)
+		return
+	MP.interact(user)
+
+/obj/structure/device/piano/attack_robot(mob/living/silicon/robot/user)
 	if(!anchored)
 		return
 	MP.interact(user)
