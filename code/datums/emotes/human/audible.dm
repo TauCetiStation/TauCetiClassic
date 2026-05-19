@@ -253,18 +253,18 @@
 	cloud = "cloud-gasp"
 
 /datum/emote/human/choke/get_impaired_msg(mob/user)
-	return "отчаянно хватается за своё горло!"
+	return "отчаянно хватается за горло!"
 
 /datum/emote/human/snore
 	key = "snore"
 
-	message_1p = "Вы сопите."
-	message_3p = "сопит."
+	message_1p = "Вы храпите."
+	message_3p = "храпит."
 
 	message_impaired_production = "издаёт звук."
 
-	message_miming = "изображает сопение."
-	message_muzzled = "издаёт звук."
+	message_miming = "изображает храп."
+	message_muzzled = "сопит."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -272,21 +272,21 @@
 	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/human/snore/get_impaired_msg(mob/user)
-	return "открывает свой рот широко, чтобы сделать вдох."
+	return "широко открывает рот, чтобы сделать вдох."
 
 
 // TO-DO: make so intentional sniffing reveals how a reagent solution held in hand smells?
 /datum/emote/human/sniff
 	key = "sniff"
 
-	message_1p = "Вы принюхиваетесь."
-	message_3p = "принюхивается."
+	message_1p = "Вы шмыгаете носом."
+	message_3p = "шмыгает носом."
 
-	message_impaired_production = "принюхивается."
-	message_impaired_reception = "принюхивается."
+	message_impaired_production = "шмыгает носом."
+	message_impaired_reception = "шмыгает носом."
 
-	message_miming = "принюхивается."
-	message_muzzled = "издаёт сдавленный звук."
+	message_miming = "беззвучно шмыгает носом."
+	message_muzzled = "шмыгает носом."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -296,14 +296,14 @@
 /datum/emote/human/sneeze
 	key = "sneeze"
 
-	message_1p = "Вы чихнули."
+	message_1p = "Вы чихаете."
 	message_3p = "чихает."
 
 	message_impaired_production = "издаёт странный звук."
 	message_impaired_reception = "чихает."
 
-	message_miming = "чихает."
-	message_muzzled = "издаёт странный звук."
+	message_miming = "беззвучно чихает."
+	message_muzzled = "глухо чихает."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -341,12 +341,12 @@
 /datum/emote/human/sigh
 	key = "sigh"
 
-	message_1p = "Вы вздохнули."
+	message_1p = "Вы вздыхаете."
 	message_3p = "вздыхает."
 
 	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "изображает вздох."
+	message_miming = "беззвучно вздыхает."
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -355,7 +355,7 @@
 	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/human/sigh/get_impaired_msg(mob/user)
-	return "открывает свой рот."
+	return "открывает рот."
 
 /datum/emote/human/sigh/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_SIGH_MALE, SOUNDIN_SIGH_FEMALE)
@@ -368,8 +368,8 @@
 
 	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "изображает вздох."
-	message_muzzled = "раздражается!"
+	message_miming = "беззвучно вздыхает."
+	message_muzzled = "раздражённо морщится!"
 
 	message_type = SHOWMSG_AUDIO
 
@@ -377,18 +377,18 @@
 	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/human/mumble/get_impaired_msg(mob/user)
-	return "открывает и закрывает [THEIR_RU(user)] рот."
+	return "открывает и закрывает рот."
 
 /datum/emote/human/hmm_think
 	key = "hmm"
 
-	message_1p = "Вы задумались..."
-	message_3p = "о чём-то задумчиво размышляет..."
+	message_1p = "Вы задумчиво хмыкаете..."
+	message_3p = "задумчиво хмыкает..."
 
-	message_impaired_production = "о чём-то задумался"
+	message_impaired_production = "задумчиво мычит..."
 
-	message_miming = "изображает из себя философа"
-	message_muzzled = "невнятно бормочет..."
+	message_miming = "изображает философские раздумья..."
+	message_muzzled = "глухо и задумчиво мычит..."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -397,7 +397,7 @@
 	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_think/get_impaired_msg(mob/user)
-	return "задумчиво потирает свой подбородок..."
+	return "задумчиво почёсывает подбородок..."
 
 /datum/emote/human/hmm_think/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_THINK_MALE, SOUNDIN_HMM_THINK_FEMALE)
@@ -405,13 +405,13 @@
 /datum/emote/human/hmm_question
 	key = "hmm?"
 
-	message_1p = "Вы задумались и вопросительно подняли бровь."
-	message_3p = "вопросительно бормочет..?"
+	message_1p = "Вы вопросительно хмыкаете и приподнимаете бровь..?"
+	message_3p = "вопросительно хмыкает..?"
 
-	message_impaired_production = "вопросительно бормочет..?"
+	message_impaired_production = "вопросительно мычит..?"
 
-	message_miming = "вопросительно поднимает бровь..?"
-	message_muzzled = "тихо и загадочно бормочет..."
+	message_miming = "вопросительно приподнимает бровь..?"
+	message_muzzled = "глухо и вопросительно мычит..?"
 
 	message_type = SHOWMSG_AUDIO
 
@@ -420,7 +420,7 @@
 	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_question/get_impaired_msg(mob/user)
-	return "вопросительно приподнимает свои брови..?"
+	return "вопросительно приподнимает бровь..?"
 
 /datum/emote/human/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_QUESTION_MALE, SOUNDIN_HMM_QUESTION_FEMALE)
@@ -428,13 +428,13 @@
 /datum/emote/human/hmm_excited
 	key = "hmm!"
 
-	message_1p = "Вы взволнованно бормочете!"
-	message_3p = "взволнованно о чём-то бормочет."
+	message_1p = "Вы воодушевлённо хмыкаете!"
+	message_3p = "воодушевлённо хмыкает."
 
-	message_impaired_production = "взволнованно бормочет!"
+	message_impaired_production = "воодушевлённо мычит!"
 
-	message_miming = "с удивлением поднимает бровь!"
-	message_muzzled = "издаёт сдавленное, но взволнованное бормотание!"
+	message_miming = "оживлённо поднимает брови!"
+	message_muzzled = "глухо и оживлённо мычит!"
 
 	message_type = SHOWMSG_AUDIO
 
@@ -443,7 +443,7 @@
 	required_stat = CONSCIOUS
 
 /datum/emote/human/hmm_excited/get_impaired_msg(mob/user)
-	return "взволнованно приподнимает свои брови!"
+	return "оживлённо поднимает брови!"
 
 /datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_EXCLAIM_MALE, SOUNDIN_HMM_EXCLAIM_FEMALE)
@@ -451,14 +451,14 @@
 /datum/emote/human/woo
 	key = "woo"
 
-	message_1p = "Вы прокричали с восторгом!"
-	message_3p = "восторженно кричит!"
+	message_1p = "Вы восторженно ликуете!"
+	message_3p = "восторженно ликует!"
 
-	message_impaired_production = "восторженно кричит!"
-	message_impaired_reception = "восторженно кричит!"
+	message_impaired_production = "восторженно ликует!"
+	message_impaired_reception = "восторженно ликует!"
 
-	message_miming = "изображает восторг!"
-	message_muzzled = "выглядит взволнованно..."
+	message_miming = "восторженно жестикулирует!"
+	message_muzzled = "выглядит возбуждённо."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -472,10 +472,10 @@
 /datum/emote/human/spit
 	key = "spit"
 
-	message_1p = "Вы плюетесь."
-	message_3p = "плюется."
+	message_1p = "Вы смачно плюёте."
+	message_3p = "смачно плюёт."
 
-	message_impaired_production = "плюется."
+	message_impaired_production = "смачно плюёт."
 	message_impaired_reception = "плюется."
 
 	message_miming = "изображает плевок."

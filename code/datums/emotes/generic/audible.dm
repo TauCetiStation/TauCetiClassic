@@ -41,8 +41,8 @@
 	message_1p = "Вы судорожно вдыхаете!"
 	message_3p = "судорожно вдыхает!"
 
-	message_impaired_production = "резко втягивает воздух!"
-	message_impaired_reception = "резко втягивает воздух!"
+	message_impaired_production = "жадно втягивает воздух!"
+	message_impaired_reception = "жадно втягивает воздух!"
 
 	message_miming = "беззвучно ловит ртом воздух!"
 	message_muzzled = "издаёт сдавленный звук."
