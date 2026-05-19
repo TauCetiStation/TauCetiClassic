@@ -476,10 +476,10 @@
 	message_3p = "смачно плюёт."
 
 	message_impaired_production = "смачно плюёт."
-	message_impaired_reception = "плюется."
+	message_impaired_reception = "смачно плюёт."
 
-	message_miming = "изображает плевок."
-	message_muzzled = "пытается собрать слюну во рту..."
+	message_miming = "беззвучно набирает невидимую слюну и сплёвывает."
+	message_muzzled = "пытается набрать слюну."
 
 	message_type = SHOWMSG_AUDIO
 
