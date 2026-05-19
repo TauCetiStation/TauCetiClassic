@@ -35,7 +35,9 @@ module.exports = (env = {}, argv) => {
       'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
     },
     output: {
-      path: argv.useTmpFolder ? path.resolve(__dirname, './public/.tmp') : path.resolve(__dirname, './public'),
+      path: argv.useTmpFolder
+        ? path.resolve(__dirname, './public/.tmp')
+        : path.resolve(__dirname, './public'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
@@ -69,6 +71,15 @@ module.exports = (env = {}, argv) => {
               loader: require.resolve('css-loader'),
               options: {
                 esModule: false,
+                url: {
+                  filter: (url, resourcePath) => {
+                    // Ignore font files so webpack doesn't try to load them
+                    if (/\.(woff|woff2|eot|ttf|otf)$/i.test(url)) {
+                      return false;
+                    }
+                    return true;
+                  },
+                },
               },
             },
             {
