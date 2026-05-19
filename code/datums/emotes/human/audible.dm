@@ -6,7 +6,7 @@
 
 	message_impaired_production = "беззвучно смеётся."
 
-	message_miming = "изображает смех."
+	message_miming = "сотрясается в беззвучном хохоте."
 	message_muzzled = "глухо хихикает."
 
 	message_type = SHOWMSG_AUDIO
@@ -42,7 +42,7 @@
 
 	message_impaired_production = "слегка улыбается и беззвучно хихикает."
 
-	message_miming = "изображает хихикание."
+	message_miming = "беззучно хихикает."
 	message_muzzled = "сдавленно хихикает."
 
 	message_type = SHOWMSG_AUDIO
@@ -60,7 +60,7 @@
 
 	message_impaired_production = "корчится и слегка вздыхает."
 
-	message_miming = "изображает приступ боли!"
+	message_miming = "картинно морщится в гримасе боли!"
 	message_muzzled = "глухо мычит!"
 
 	message_type = SHOWMSG_AUDIO
@@ -105,7 +105,7 @@
 
 	message_impaired_production = "корчится и слегка вздыхает."
 
-	message_miming = "изображает боль!"
+	message_miming = "театрально корчится, изображая мучительную боль!"
 	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -152,7 +152,7 @@
 
 	message_impaired_production = "искажает лицо в мучительной гримасе!"
 
-	message_miming = "изображает крик!"
+	message_miming = "запрокидывает голову в оглушительном, но беззвучном вопле!"
 	message_muzzled = "издаёт громкое мычание!"
 
 	message_type = SHOWMSG_AUDIO
@@ -196,7 +196,7 @@
 
 	message_impaired_production = "сильно содрогается!"
 
-	message_miming = "изображает кашель."
+	message_miming = "содрогается в беззвучном кашле."
 	message_muzzled = "глухо кашляет."
 
 	message_type = SHOWMSG_AUDIO
@@ -219,7 +219,7 @@
 
 	message_impaired_production = "издаёт слабый звук."
 
-	message_miming = "изображает икоту."
+	message_miming = "подпрыгивает на месте, разыгрывая приступ икоты."
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -241,7 +241,7 @@
 
 	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "задыхается."
+	message_miming = "театрально хватается за горло, изображая удушье."
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -263,7 +263,7 @@
 
 	message_impaired_production = "издаёт звук."
 
-	message_miming = "изображает храп."
+	message_miming = "надувает и сдувает щеки в немом храпе."
 	message_muzzled = "сопит."
 
 	message_type = SHOWMSG_AUDIO
@@ -285,7 +285,7 @@
 	message_impaired_production = "шмыгает носом."
 	message_impaired_reception = "шмыгает носом."
 
-	message_miming = "беззвучно шмыгает носом."
+	message_miming = "комично морщит нос, беззвучно шмыгая."
 	message_muzzled = "шмыгает носом."
 
 	message_type = SHOWMSG_AUDIO
@@ -302,7 +302,7 @@
 	message_impaired_production = "издаёт странный звук."
 	message_impaired_reception = "чихает."
 
-	message_miming = "беззвучно чихает."
+	message_miming = "застывает на мгновение и разражается немым чихом."
 	message_muzzled = "глухо чихает."
 
 	message_type = SHOWMSG_AUDIO
@@ -346,7 +346,7 @@
 
 	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "беззвучно вздыхает."
+	message_miming = "вздымает и опускает грудь, разыгрывая глубокий вздох."
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -368,7 +368,7 @@
 
 	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "беззвучно вздыхает."
+	message_miming = "шевелит губами, изображая невнятное бормотание."
 	message_muzzled = "раздражённо морщится!"
 
 	message_type = SHOWMSG_AUDIO
@@ -387,7 +387,7 @@
 
 	message_impaired_production = "задумчиво мычит..."
 
-	message_miming = "изображает философские раздумья..."
+	message_miming = "застывает в позе мыслителя, изображая глубокие философские раздумья..."
 	message_muzzled = "глухо и задумчиво мычит..."
 
 	message_type = SHOWMSG_AUDIO
@@ -433,7 +433,7 @@
 
 	message_impaired_production = "воодушевлённо мычит!"
 
-	message_miming = "оживлённо поднимает брови!"
+	message_miming = "вскидывает брови, разыгрывая радостное озарение!"
 	message_muzzled = "глухо и оживлённо мычит!"
 
 	message_type = SHOWMSG_AUDIO

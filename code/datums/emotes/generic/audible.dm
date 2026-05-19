@@ -7,7 +7,7 @@
 	message_impaired_production = "издаёт слабый звук."
 	message_impaired_reception = "делает печальное лицо."
 
-	message_miming = "хнычет."
+	message_miming = "беззвучно и жалобно поскуливает, скривив лицо в страдальческой гримасе."
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -24,7 +24,7 @@
 
 	message_impaired_production = "издаёт громкий звук!"
 
-	message_miming = "изображает рёв!"
+	message_miming = "широко разевает рот в яростной гримасе!"
 	message_muzzled = "издаёт громкий звук!"
 
 	message_type = SHOWMSG_AUDIO
@@ -63,7 +63,7 @@
 
 	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "задыхается."
+	message_miming = "театрально хватается за горло, изображая удушье."
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
@@ -85,7 +85,7 @@
 
 	message_impaired_production = "тихо стонет."
 
-	message_miming = "изображает, что стонет!"
+	message_miming = "закатывает глаза в немом стоне!"
 	message_muzzled = "тихо стонет!"
 
 	message_type = SHOWMSG_AUDIO
@@ -105,7 +105,7 @@
 
 	message_impaired_production = "сильно содрогается!"
 
-	message_miming = "изображает кашель."
+	message_miming = "содрогается в беззвучном кашле."
 	message_muzzled = "глухо кашляет."
 
 	required_stat = CONSCIOUS
