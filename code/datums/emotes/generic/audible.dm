@@ -41,8 +41,8 @@
 	message_1p = "Вы судорожно вдыхаете!"
 	message_3p = "судорожно вдыхает!"
 
-	message_impaired_production = "жадно втягивает воздух!"
-	message_impaired_reception = "жадно втягивает воздух!"
+	message_impaired_production = "жадно ловит ртом воздух!"
+	message_impaired_reception = "жадно ловит ртом воздух!"
 
 	message_miming = "беззвучно ловит ртом воздух!"
 	message_muzzled = "издаёт сдавленный звук."
@@ -74,7 +74,7 @@
 	cloud = "cloud-gasp"
 
 /datum/emote/choke/get_impaired_msg(mob/user)
-	return "отчаянно хватается за своё горло!"
+	return "отчаянно хватается за горло!"
 
 
 /datum/emote/moan
@@ -94,7 +94,7 @@
 	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/moan/get_impaired_msg(mob/user)
-	return "широко открывает свой рот"
+	return "широко открывает рот"
 
 
 /datum/emote/cough

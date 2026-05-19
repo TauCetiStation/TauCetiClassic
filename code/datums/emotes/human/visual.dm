@@ -146,7 +146,7 @@
 	blocklist_unintentional_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 /datum/emote/human/shake/get_emote_message_3p(mob/living/carbon/human/user)
-	return "качает своей головой."
+	return "качает головой."
 
 
 /datum/emote/human/twitch

@@ -241,7 +241,7 @@
 
 	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "изображает удушье."
+	message_miming = "задыхается."
 	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
