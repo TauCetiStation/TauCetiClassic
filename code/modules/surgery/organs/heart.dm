@@ -3,6 +3,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart-on"
 	item_state_world = "heart-on_world"
+	base_icon_state = "heart"
 	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
@@ -254,8 +255,8 @@
 /obj/item/organ/internal/heart/cybernetic
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. It has a built-in coagulator that slows bleeding."
-	icon_state = "heart-prosthetic"
-	item_state_world = "heart-prosthetic_world"
+	icon_state = "heart-prosthetic-on"
+	item_state_world = "heart-prosthetic-on_world"
 	base_icon_state = "heart-prosthetic"
 	status = ORGAN_ROBOT
 	durability = 0.8
